@@ -32,7 +32,6 @@ class ScreenshotDialog: DialogController {
     
     // Computed variables
     var myDocument: MyDocument { return parent.mydocument! }
-    // var numItems: Int { return carousel.numberOfItems }
     var currentItem: Int { return carousel.currentItemIndex }
     var centerItem: Int { return screenshots.count / 2 }
     var lastItem: Int { return screenshots.count - 1 }

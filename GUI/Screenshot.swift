@@ -163,32 +163,6 @@ class Screenshot {
         return collectFiles(in: folder(forDisk: diskID))
     }
     
-    /*
-    static func swapFiles(forDisk diskID: UInt64, _ i: Int, _ j: Int) throws {
-        
-        guard let path = folder(forDisk: diskID) else { return }
-        guard let url1 = url(forItem: i, in: path) else { return }
-        guard let url2 = url(forItem: j, in: path) else { return }
-        guard let temp = newUrl(diskID: diskID) else { return }
-        
-        track("Swapping files for items \(i) and \(j)")
-        
-        try FileManager.default.moveItem(at: url1, to: temp)
-        try FileManager.default.moveItem(at: url2, to: url1)
-        try FileManager.default.moveItem(at: temp, to: url2)
-    }
-
-    static func deleteFile(forDisk diskID: UInt64, _ i: Int) throws {
-        
-        guard let path = folder(forDisk: diskID) else { return }
-        guard let url = url(forItem: i, in: path) else { return }
-        
-        track("Deleting file for item \(i)")
-        
-        try FileManager.default.removeItem(at: url)
-    }
-    */
-    
     static func deleteFolder(withUrl url: URL?) {
         
         let files = Screenshot.collectFiles(in: url)

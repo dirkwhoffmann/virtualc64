@@ -49,16 +49,15 @@ extension MyController: NSWindowDelegate {
         timer?.invalidate()
         timer = nil
         timerLock.unlock()
+        snapshotTimer?.invalidate()
+        snapshotTimer = nil
 
         // Disconnect and close auxiliary windows
         inspector?.c64 = nil
         inspector?.close()
         monitor?.c64 = nil
         monitor?.close()
-        
-        // Close virtual keyboard
-        // virtualKeyboard?.close()
-                
+                        
         // Disconnect the audio engine from the emulator
         macAudio.shutDown()
         
