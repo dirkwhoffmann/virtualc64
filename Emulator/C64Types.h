@@ -119,7 +119,6 @@ struct C64ModelEnum : Reflection<C64ModelEnum, C64Model> {
             case C64_MODEL_NTSC:      return "NTSC";
             case C64_MODEL_NTSC_II:   return "NTSC_II";
             case C64_MODEL_NTSC_OLD:  return "NTSC_OLD";
-            case C64_MODEL_CUSTOM:    return "CUSTOM";
             case C64_MODEL_COUNT:     return "???";
         }
         return "???";

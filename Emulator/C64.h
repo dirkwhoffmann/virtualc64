@@ -235,9 +235,6 @@ public:
 
     // Configures the C64 to match a specific C64 model
     void configure(C64Model model);
-
-    // Returns the C64 model matching the current configuration
-    C64Model getModel() const;
         
     // Updates the VICII function table according to the selected model
     void updateVicFunctionTable();

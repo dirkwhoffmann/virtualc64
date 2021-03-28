@@ -285,19 +285,81 @@ C64::configure(Option option, long id, long value)
 void
 C64::configure(C64Model model)
 {
-    if (model != C64_MODEL_CUSTOM) {
-        
-        suspend();
-        configure(OPT_VIC_REVISION, configurations[model].vic);
-        configure(OPT_GRAY_DOT_BUG, configurations[model].grayDotBug);
-        configure(OPT_GLUE_LOGIC,   configurations[model].glue);
-        configure(OPT_CIA_REVISION, configurations[model].cia);
-        configure(OPT_TIMER_B_BUG,  configurations[model].timerBBug);
-        configure(OPT_SID_REVISION, configurations[model].sid);
-        configure(OPT_SID_FILTER,   configurations[model].sidFilter);
-        configure(OPT_RAM_PATTERN,  configurations[model].pattern);
-        resume();
+    suspend();
+    
+    switch(model) {
+            
+        case C64_MODEL_PAL:
+            configure(OPT_VIC_REVISION, VICREV_PAL_6569_R3);
+            configure(OPT_GRAY_DOT_BUG, false);
+            configure(OPT_CIA_REVISION, MOS_6526);
+            configure(OPT_TIMER_B_BUG,  true);
+            configure(OPT_SID_REVISION, MOS_6581);
+            configure(OPT_SID_FILTER,   true);
+            configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+            configure(OPT_RAM_PATTERN,  RAM_PATTERN_C64);
+            break;
+            
+        case C64_MODEL_PAL_II:
+            configure(OPT_VIC_REVISION, VICREV_PAL_8565);
+            configure(OPT_GRAY_DOT_BUG, true);
+            configure(OPT_CIA_REVISION, MOS_8521);
+            configure(OPT_TIMER_B_BUG,  false);
+            configure(OPT_SID_REVISION, MOS_8580);
+            configure(OPT_SID_FILTER,   true);
+            configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
+            configure(OPT_RAM_PATTERN,  RAM_PATTERN_C64C);
+            break;
+
+        case C64_MODEL_PAL_OLD:
+            configure(OPT_VIC_REVISION, VICREV_PAL_6569_R1);
+            configure(OPT_GRAY_DOT_BUG, false);
+            configure(OPT_CIA_REVISION, MOS_6526);
+            configure(OPT_TIMER_B_BUG,  true);
+            configure(OPT_SID_REVISION, MOS_6581);
+            configure(OPT_SID_FILTER,   true);
+            configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+            configure(OPT_RAM_PATTERN,  RAM_PATTERN_C64);
+            break;
+
+        case C64_MODEL_NTSC:
+            configure(OPT_VIC_REVISION, VICREV_NTSC_6567);
+            configure(OPT_GRAY_DOT_BUG, false);
+            configure(OPT_CIA_REVISION, MOS_6526);
+            configure(OPT_TIMER_B_BUG,  false);
+            configure(OPT_SID_REVISION, MOS_6581);
+            configure(OPT_SID_FILTER,   true);
+            configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+            configure(OPT_RAM_PATTERN,  RAM_PATTERN_C64);
+            break;
+
+        case C64_MODEL_NTSC_II:
+            configure(OPT_VIC_REVISION, VICREV_NTSC_8562);
+            configure(OPT_GRAY_DOT_BUG, true);
+            configure(OPT_CIA_REVISION, MOS_8521);
+            configure(OPT_TIMER_B_BUG,  true);
+            configure(OPT_SID_REVISION, MOS_8580);
+            configure(OPT_SID_FILTER,   true);
+            configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
+            configure(OPT_RAM_PATTERN,  RAM_PATTERN_C64C);
+            break;
+
+        case C64_MODEL_NTSC_OLD:
+            configure(OPT_VIC_REVISION, VICREV_NTSC_6567_R56A);
+            configure(OPT_GRAY_DOT_BUG, false);
+            configure(OPT_CIA_REVISION, MOS_6526);
+            configure(OPT_TIMER_B_BUG,  false);
+            configure(OPT_SID_REVISION, MOS_6581);
+            configure(OPT_SID_FILTER,   true);
+            configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+            configure(OPT_RAM_PATTERN,  RAM_PATTERN_C64);
+            break;
+
+        default:
+            assert(false);
     }
+    
+    resume();
 }
 
 bool
@@ -321,34 +383,6 @@ C64::setConfigItem(Option option, long value)
         default:
             return false;
     }
-}
-
-C64Model
-C64::getModel() const
-{
-    VICRevision vicref = (VICRevision)vic.getConfigItem(OPT_VIC_REVISION);
-    bool grayDotBug    = vic.getConfigItem(OPT_GRAY_DOT_BUG);
-    bool glueLogic     = vic.getConfigItem(OPT_GLUE_LOGIC);
-    CIARevision ciaref = (CIARevision)cia1.getConfigItem(OPT_CIA_REVISION);
-    bool timerBBug     = cia1.getConfigItem(OPT_TIMER_B_BUG);
-    SIDRevision sidref = (SIDRevision)sid.getConfigItem(OPT_SID_REVISION);
-    bool sidFilter     = sid.getConfigItem(OPT_SID_FILTER);
-    RamPattern pattern = (RamPattern)mem.getConfigItem(OPT_RAM_PATTERN);
-    
-    // Try to find a matching configuration
-    for (unsigned i = 0; i < sizeof(configurations) / sizeof(C64ConfigurationDeprecated); i++) {
-        
-        if (vicref     != configurations[i].vic) continue;
-        if (grayDotBug != configurations[i].grayDotBug) continue;
-        if (glueLogic  != configurations[i].glue) continue;
-        if (ciaref     != configurations[i].cia) continue;
-        if (timerBBug  != configurations[i].timerBBug) continue;
-        if (sidref     != configurations[i].sid) continue;
-        if (sidFilter  != configurations[i].sidFilter) continue;
-        if (pattern    != configurations[i].pattern) continue;
-        return (C64Model)i;
-    }
-    return C64_MODEL_CUSTOM;
 }
 
 void

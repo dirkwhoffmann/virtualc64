@@ -108,7 +108,6 @@ enum_long(C64_MODEL)
     C64_MODEL_NTSC,
     C64_MODEL_NTSC_II,
     C64_MODEL_NTSC_OLD,
-    C64_MODEL_CUSTOM,
     C64_MODEL_COUNT
 };
 typedef C64_MODEL C64Model;
@@ -204,6 +203,7 @@ typedef struct
 }
 C64Configuration;
 
+/*
 typedef struct
 {
     VICRevision vic;
@@ -238,3 +238,4 @@ static const C64ConfigurationDeprecated configurations[] = {
     // C64_OLD_NTSC
     { VICREV_NTSC_6567_R56A, false, MOS_6526, false, MOS_6581, true, GLUE_LOGIC_DISCRETE, RAM_PATTERN_C64 }
 };
+*/
