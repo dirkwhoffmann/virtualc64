@@ -45,7 +45,7 @@ struct OptionEnum : Reflection<OptionEnum, Option> {
     static const char *key(Option value)
     {
         switch (value) {
-                
+            case OPT_CYCLE_LIMIT:         return "CYCLE_LIMIT";
             case OPT_VIC_REVISION:        return "VIC_REVISION";
             case OPT_PALETTE:             return "PALETTE";
             case OPT_GRAY_DOT_BUG:        return "GRAY_DOT_BUG";
@@ -250,13 +250,14 @@ struct ErrorCodeEnum : Reflection<ErrorCodeEnum, ErrorCode> {
 
 enum_int(ACTION_FLAG)
 {
-    ACTION_FLAG_STOP          = 0b00000001,
-    ACTION_FLAG_CPU_JAMMED    = 0b00000010,
-    ACTION_FLAG_EXTERNAL_NMI  = 0b00000100,
-    ACTION_FLAG_INSPECT       = 0b00001000,
-    ACTION_FLAG_BREAKPOINT    = 0b00010000,
-    ACTION_FLAG_WATCHPOINT    = 0b00100000,
-    ACTION_FLAG_AUTO_SNAPSHOT = 0b01000000,
-    ACTION_FLAG_USER_SNAPSHOT = 0b10000000
+    ACTION_FLAG_STOP          = 0b000000001,
+    ACTION_FLAG_CPU_JAMMED    = 0b000000010,
+    ACTION_FLAG_EXTERNAL_NMI  = 0b000000100,
+    ACTION_FLAG_INSPECT       = 0b000001000,
+    ACTION_FLAG_BREAKPOINT    = 0b000010000,
+    ACTION_FLAG_WATCHPOINT    = 0b000100000,
+    ACTION_FLAG_AUTO_SNAPSHOT = 0b001000000,
+    ACTION_FLAG_USER_SNAPSHOT = 0b010000000,
+    ACTION_FLAG_CYCLE_LIMIT   = 0b100000000,
 };
 typedef ACTION_FLAG ActionFlag;

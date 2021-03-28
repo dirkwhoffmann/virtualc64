@@ -2080,10 +2080,12 @@
     [self c64]->loadFromSnapshot((Snapshot *)proxy->obj);
 }
 
+/*
 - (C64Config)config
 {
     return [self c64]->getConfig();
 }
+*/
 
 - (NSInteger)getConfig:(Option)opt
 {

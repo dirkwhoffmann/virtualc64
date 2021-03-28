@@ -39,6 +39,9 @@
 
 enum_long(OPT)
 {
+    // C64
+    OPT_CYCLE_LIMIT,
+    
     // VICII
     OPT_VIC_REVISION,
     OPT_PALETTE,

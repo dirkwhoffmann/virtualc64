@@ -357,6 +357,14 @@ C64::setConfigItem(Option option, long value)
             durationOfOneCycle = 10000000000 / newFrequency;
             return true;
         }
+            
+        case OPT_CYCLE_LIMIT:
+        {
+            if (config.cycleLimit == value) return false;
+            
+            config.cycleLimit = value;
+            return true;
+        }
         default:
             return false;
     }
@@ -915,6 +923,12 @@ C64::runLoop()
                 break;
             }
             
+            // Has the cycle limit been reached?
+            if (runLoopCtrl & ACTION_FLAG_CYCLE_LIMIT) {
+                msg("Cycle limit reached (> %lld).", config.cycleLimit);
+                exit(1);
+            }
+            
             assert(runLoopCtrl == 0);
         }
     }
@@ -958,6 +972,9 @@ void
 C64::executeOneFrame()
 {
     do { executeOneLine(); } while (rasterLine != 0 && runLoopCtrl == 0);
+
+    // Check if the cycle limit has been reached
+    if ((Cycle)cpu.cycle > config.cycleLimit) runLoopCtrl |= ACTION_FLAG_CYCLE_LIMIT;
 }
 
 void
