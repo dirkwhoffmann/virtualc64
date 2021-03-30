@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "C64Config.h"
+#include "config.h"
 #include <assert.h>
 #include <sys/types.h>
 

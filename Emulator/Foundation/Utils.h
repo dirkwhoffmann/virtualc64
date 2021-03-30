@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "C64Config.h"
+#include "config.h"
 #include "C64Constants.h"
 #include "Debug.h"
 #include "Errors.h"

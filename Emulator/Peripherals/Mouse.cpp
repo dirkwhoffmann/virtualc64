@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#include "config.h"
 #include "C64.h"
 
 Mouse::Mouse(C64 &ref, ControlPort& pref) : C64Component(ref), port(pref)

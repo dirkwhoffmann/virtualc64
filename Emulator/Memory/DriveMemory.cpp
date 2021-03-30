@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#include "config.h"
 #include "C64.h"
 
 DriveMemory::DriveMemory(C64 &ref, Drive &dref) : C64Component(ref), drive(dref)

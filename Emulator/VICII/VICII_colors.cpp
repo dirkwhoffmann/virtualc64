@@ -11,6 +11,7 @@
 // http://www.pepto.de/projects/colorvic/
 // http://unusedino.de/ec64/technical/misc/vic656x/colors/
 
+#include "config.h"
 #include "C64.h"
 
 double gammaCorrect(double value, double source, double target)

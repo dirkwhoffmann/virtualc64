@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#include "config.h"
 #include "C64.h"
 
 TOD::TOD(C64 &ref, CIA &ciaref) : C64Component(ref), cia(ciaref)

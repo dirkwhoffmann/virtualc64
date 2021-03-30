@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#include "config.h"
 #include "FSDevice.h"
 
 FSBlock::FSBlock(FSDevice& _device, u32 _nr) : device(_device), nr(_nr)

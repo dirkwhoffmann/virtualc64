@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#include "config.h"
 #include "C64.h"
 
 Isepic::Isepic(C64 &ref) : Cartridge(ref)

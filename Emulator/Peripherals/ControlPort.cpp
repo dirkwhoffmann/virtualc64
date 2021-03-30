@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
  
+#include "config.h"
 #include "C64.h"
 
 ControlPort::ControlPort(C64 &ref, PortId id) : C64Component(ref), nr(id)

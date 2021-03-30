@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#include "config.h"
 #include "C64.h"
 
 Drive::Drive(DriveID id, C64 &ref) : C64Component(ref), deviceNr(id)

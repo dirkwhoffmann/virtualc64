@@ -28,6 +28,7 @@
  *
  */
 
+#include "config.h"
 #include "C64.h"
 
 FastSID::FastSID(C64 &ref, SIDBridge &bridgeref, int n) : C64Component(ref), bridge(bridgeref), nr(n)

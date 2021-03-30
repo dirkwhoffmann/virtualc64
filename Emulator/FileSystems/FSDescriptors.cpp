@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-// #include "FSDescriptors.h"
+#include "config.h"
 #include "C64.h"
 
 FSDeviceDescriptor::FSDeviceDescriptor(DiskType type, DOSType dos)

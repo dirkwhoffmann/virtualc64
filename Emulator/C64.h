@@ -15,7 +15,7 @@
 #include "MsgQueue.h"
 
 // Configuration items
-#include "C64Config.h"
+#include "config.h"
 
 // Data types and constants
 #include "C64Types.h"

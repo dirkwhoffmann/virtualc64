@@ -28,6 +28,7 @@
  *
  */
 
+#include "config.h"
 #include "FastSID.h"
 #include "waves.h"
 

@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#include "config.h"
 #include "CartridgeRom.h"
 
 CartridgeRom::CartridgeRom(C64 &ref) : C64Component(ref)
