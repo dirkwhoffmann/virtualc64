@@ -86,6 +86,7 @@ sprint16b(char *s, u16 value)
     s[16] = 0;
 }
 
+/*
 void hexdump(u8 *p, usize size, usize cols, usize pad)
 {
     while (size) {
@@ -117,6 +118,7 @@ void hexdumpLongwords(u8 *p, usize size, usize cols)
 {
     hexdump(p, size, cols, 4);
 }
+*/
 
 bool isZero(const u8 *ptr, usize size)
 {

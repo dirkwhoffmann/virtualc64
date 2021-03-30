@@ -9,6 +9,7 @@
 
 #include "config.h"
 #include "FSDevice.h"
+#include "Macros.h"
 
 void
 FSDirEntry::init(PETName<16> name, TSLink ref, usize numBlocks)

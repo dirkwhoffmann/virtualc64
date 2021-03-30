@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include "Types.h"
+
 /* This file provides several macros for printing messages:
  *
  *   - msg    Information messages  (Show up in all builds)
@@ -50,5 +52,15 @@ prefix(); fprintf(stderr, "%s: " format, getDescription(), ##__VA_ARGS__); }
 
 #define debug(verbose, format, ...)
 #define trace(verbose, format, ...)
+
+#endif
+
+#ifdef __cplusplus
+
+// Prints a hex dump of a buffer to the console (for debugging)
+void hexdump(u8 *p, isize size, isize cols, isize pad);
+void hexdump(u8 *p, isize size, isize cols = 32);
+void hexdumpWords(u8 *p, isize size, isize cols = 32);
+void hexdumpLongwords(u8 *p, isize size, isize cols = 32);
 
 #endif

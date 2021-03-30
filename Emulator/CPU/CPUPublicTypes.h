@@ -26,7 +26,7 @@ enum_long(CPUREV)
 };
 typedef CPUREV CPURevision;
 
-enum_byte(INTSRC)
+enum_u8(INTSRC)
 {
     INTSRC_CIA  = 0x01,
     INTSRC_VIC  = 0x02,

@@ -248,7 +248,7 @@ struct ErrorCodeEnum : Reflection<ErrorCodeEnum, ErrorCode> {
 // Private data types
 //
 
-enum_int(ACTION_FLAG)
+enum_long(ACTION_FLAG)
 {
     ACTION_FLAG_STOP          = 0b000000001,
     ACTION_FLAG_CPU_JAMMED    = 0b000000010,

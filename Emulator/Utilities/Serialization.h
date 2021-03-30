@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "Macros.h"
 #include "C64Types.h"
 #include "Buffers.h"
 #include "CPUInstructions.h"
@@ -140,6 +141,7 @@ public:
     COUNT(const float)
     COUNT(const double)
 
+    /*
     COUNT(const MemoryType)
     COUNT(const CartridgeType)
     COUNT(const DriveModel)
@@ -152,8 +154,9 @@ public:
     COUNT(const SamplingMethod)
     COUNT(const GlueLogic)
     COUNT(const FlashState)
+    */
     COUNT(const reSID::EnvelopeGenerator::State)
-    
+
     STRUCT(VICIIRegisters)
     STRUCT(SpriteSR)
     STRUCT(DiskData)
@@ -213,6 +216,7 @@ public:
     DESERIALIZEF(float)
     DESERIALIZED(double)
  
+    /*
     DESERIALIZE64(MemoryType)
     DESERIALIZE64(CartridgeType)
     DESERIALIZE64(DriveModel)
@@ -225,6 +229,7 @@ public:
     DESERIALIZE64(SamplingMethod)
     DESERIALIZE64(GlueLogic)
     DESERIALIZE64(FlashState)
+    */
     DESERIALIZE32(reSID::EnvelopeGenerator::State)
 
     STRUCT(VICIIRegisters)
@@ -292,6 +297,7 @@ public:
     SERIALIZEF(const float)
     SERIALIZED(const double)
  
+    /*
     SERIALIZE64(const MemoryType)
     SERIALIZE64(const CartridgeType)
     SERIALIZE64(const DriveModel)
@@ -304,6 +310,7 @@ public:
     SERIALIZE64(const SamplingMethod)
     SERIALIZE64(const GlueLogic)
     SERIALIZE64(const FlashState)
+    */
     SERIALIZE32(const reSID::EnvelopeGenerator::State)
 
     STRUCT(VICIIRegisters)
@@ -364,9 +371,11 @@ public:
     RESET(float)
     RESET(double)
 
+    /*
     RESET(MemoryType)
     RESET(MicroInstruction)
-
+    */
+    
     STRUCT(VICIIRegisters)
     STRUCT(SpriteSR)
     STRUCT(DiskData)

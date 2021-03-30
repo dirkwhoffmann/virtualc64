@@ -41,6 +41,7 @@ bool releaseBuild();
 // Handling low level data objects
 //
 
+/*
 // Returns a byte from a u16 value
 #define LO_BYTE(x) (u8)((x) & 0xFF)
 #define HI_BYTE(x) (u8)((x) >> 8)
@@ -115,7 +116,7 @@ bool releaseBuild();
 #define W8BE_ALIGNED(a,v)  { *(u8 *)(a) = (u8)(v); }
 #define W16BE_ALIGNED(a,v) { *(u16 *)(a) = ntohs((u16)v); }
 #define W32BE_ALIGNED(a,v) { *(u32 *)(a) = ntohl((u32)v); }
-
+*/
 
 //
 // Pretty printing
@@ -134,11 +135,12 @@ void sprint8b(char *s, u8 value);
 void sprint16b(char *s, u16 value);
 
 // Prints a hex dump of a buffer to the console (for debugging)
+/*
 void hexdump(u8 *p, usize size, usize cols, usize pad);
 void hexdump(u8 *p, usize size, usize cols = 32);
 void hexdumpWords(u8 *p, usize size, usize cols = 32);
 void hexdumpLongwords(u8 *p, usize size, usize cols = 32);
-
+*/
 
 //
 // Accessing memory
