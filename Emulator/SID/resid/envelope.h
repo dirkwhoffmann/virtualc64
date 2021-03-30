@@ -38,8 +38,11 @@ class EnvelopeGenerator
 {
 public:
   EnvelopeGenerator();
-
-  enum State { ATTACK, DECAY_SUSTAIN, RELEASE, FREEZED };
+    
+  typedef int State;
+  enum : int { ATTACK, DECAY_SUSTAIN, RELEASE, FREEZED };
+    
+  // enum State { ATTACK, DECAY_SUSTAIN, RELEASE, FREEZED };
 
   void set_chip_model(chip_model model);
 

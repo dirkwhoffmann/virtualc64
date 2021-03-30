@@ -155,7 +155,7 @@ public:
     COUNT(const GlueLogic)
     COUNT(const FlashState)
     */
-    COUNT(const reSID::EnvelopeGenerator::State)
+    // COUNT(const reSID::EnvelopeGenerator::State)
 
     STRUCT(VICIIRegisters)
     STRUCT(SpriteSR)
@@ -230,7 +230,7 @@ public:
     DESERIALIZE64(GlueLogic)
     DESERIALIZE64(FlashState)
     */
-    DESERIALIZE32(reSID::EnvelopeGenerator::State)
+    // DESERIALIZE32(reSID::EnvelopeGenerator::State)
 
     STRUCT(VICIIRegisters)
     STRUCT(SpriteSR)
@@ -311,7 +311,7 @@ public:
     SERIALIZE64(const GlueLogic)
     SERIALIZE64(const FlashState)
     */
-    SERIALIZE32(const reSID::EnvelopeGenerator::State)
+    // SERIALIZE32(const reSID::EnvelopeGenerator::State)
 
     STRUCT(VICIIRegisters)
     STRUCT(SpriteSR)
