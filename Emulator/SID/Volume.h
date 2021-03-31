@@ -37,6 +37,17 @@ template <typename T> struct AudioVolume {
         & delta;
     }
     
+    template <class W>
+    void operator<<(W& worker)
+    {
+        worker
+        
+        << current
+        << normal
+        << target
+        << delta;
+    }
+    
     // Setter and getter
     T get() const { return current; }
     void set(T value) { current = normal = target[0] = value; }

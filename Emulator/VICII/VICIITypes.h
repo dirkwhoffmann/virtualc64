@@ -316,6 +316,23 @@ struct VICIIRegisters
         & sprExpandX
         & colors;
     }
+    
+    template <class W>
+    void operator<<(W& worker)
+    {
+        worker
+        
+        << sprX
+        << sprY
+        << ctrl1
+        << sprEnable
+        << ctrl2
+        << sprExpandY
+        << sprPriority
+        << sprMC
+        << sprExpandX
+        << colors;
+    }
 };
 
 struct SpriteSR
@@ -355,5 +372,19 @@ struct SpriteSR
         & mcFlop
         & expFlop
         & colBits;
+    }
+    
+    template <class W>
+    void operator<<(W& worker)
+    {
+        worker
+        
+        << data
+        << chunk1
+        << chunk2
+        << chunk3
+        << mcFlop
+        << expFlop
+        << colBits;
     }
 };

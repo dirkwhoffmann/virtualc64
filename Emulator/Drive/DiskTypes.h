@@ -85,6 +85,14 @@ union DiskData
         
         & track;
     }
+    
+    template <class W>
+    void operator<<(W& worker)
+    {
+        worker
+        
+        << track;
+    }
 };
 
 
@@ -111,5 +119,13 @@ union DiskLength
         worker
         
         & track;
+    }
+    
+    template <class W>
+    void operator<<(W& worker)
+    {
+        worker
+        
+        << track;
     }
 };

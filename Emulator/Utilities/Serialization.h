@@ -141,22 +141,6 @@ public:
     COUNT(const float)
     COUNT(const double)
 
-    /*
-    COUNT(const MemoryType)
-    COUNT(const CartridgeType)
-    COUNT(const DriveModel)
-    COUNT(const InsertionStatus)
-    COUNT(const MicroInstruction)
-    COUNT(const CIARevision)
-    COUNT(const VICIIRevision)
-    COUNT(const SIDRevision)
-    COUNT(const SIDEngine)
-    COUNT(const SamplingMethod)
-    COUNT(const GlueLogic)
-    COUNT(const FlashState)
-    */
-    // COUNT(const reSID::EnvelopeGenerator::State)
-
     STRUCT(VICIIRegisters)
     STRUCT(SpriteSR)
     STRUCT(DiskData)
@@ -170,6 +154,13 @@ public:
         for(usize i = 0; i < N; ++i) {
             *this & v[i];
         }
+        return *this;
+    }
+    
+    template <class T>
+    SerCounter& operator>>(T &v)
+    {
+        v << *this;
         return *this;
     }
 };
@@ -216,22 +207,6 @@ public:
     DESERIALIZEF(float)
     DESERIALIZED(double)
  
-    /*
-    DESERIALIZE64(MemoryType)
-    DESERIALIZE64(CartridgeType)
-    DESERIALIZE64(DriveModel)
-    DESERIALIZE64(InsertionStatus)
-    DESERIALIZE64(MicroInstruction)
-    DESERIALIZE64(CIARevision)
-    DESERIALIZE64(VICIIRevision)
-    DESERIALIZE64(SIDRevision)
-    DESERIALIZE64(SIDEngine)
-    DESERIALIZE64(SamplingMethod)
-    DESERIALIZE64(GlueLogic)
-    DESERIALIZE64(FlashState)
-    */
-    // DESERIALIZE32(reSID::EnvelopeGenerator::State)
-
     STRUCT(VICIIRegisters)
     STRUCT(SpriteSR)
     STRUCT(DiskData)
@@ -244,6 +219,22 @@ public:
     {
         for(usize i = 0; i < N; ++i) {
             *this & v[i];
+        }
+        return *this;
+    }
+
+    template <class T>
+    SerReader& operator>>(T &v)
+    {
+        v << *this;
+        return *this;
+    }
+    
+    template <class T, isize N>
+    SerReader& operator>>(T (&v)[N])
+    {
+        for(isize i = 0; i < N; ++i) {
+            v[i] << *this;
         }
         return *this;
     }
@@ -297,22 +288,6 @@ public:
     SERIALIZEF(const float)
     SERIALIZED(const double)
  
-    /*
-    SERIALIZE64(const MemoryType)
-    SERIALIZE64(const CartridgeType)
-    SERIALIZE64(const DriveModel)
-    SERIALIZE64(const InsertionStatus)
-    SERIALIZE64(const MicroInstruction)
-    SERIALIZE64(const CIARevision)
-    SERIALIZE64(const VICIIRevision)
-    SERIALIZE64(const SIDRevision)
-    SERIALIZE64(const SIDEngine)
-    SERIALIZE64(const SamplingMethod)
-    SERIALIZE64(const GlueLogic)
-    SERIALIZE64(const FlashState)
-    */
-    // SERIALIZE32(const reSID::EnvelopeGenerator::State)
-
     STRUCT(VICIIRegisters)
     STRUCT(SpriteSR)
     STRUCT(DiskData)
@@ -325,6 +300,22 @@ public:
     {
         for(usize i = 0; i < N; ++i) {
             *this & v[i];
+        }
+        return *this;
+    }
+
+    template <class T>
+    SerWriter& operator>>(T &v)
+    {
+        v << *this;
+        return *this;
+    }
+    
+    template <class T, isize N>
+    SerWriter& operator>>(T (&v)[N])
+    {
+        for(isize i = 0; i < N; ++i) {
+            v[i] << *this;
         }
         return *this;
     }
@@ -370,11 +361,6 @@ public:
     RESET(unsigned long long)
     RESET(float)
     RESET(double)
-
-    /*
-    RESET(MemoryType)
-    RESET(MicroInstruction)
-    */
     
     STRUCT(VICIIRegisters)
     STRUCT(SpriteSR)
@@ -388,6 +374,22 @@ public:
     {
         for(usize i = 0; i < N; ++i) {
             *this & v[i];
+        }
+        return *this;
+    }
+    
+    template <class T>
+    SerResetter& operator>>(T &v)
+    {
+        v << *this;
+        return *this;
+    }
+    
+    template <class T, isize N>
+    SerResetter& operator>>(T (&v)[N])
+    {
+        for(isize i = 0; i < N; ++i) {
+            v[i] << *this;
         }
         return *this;
     }
