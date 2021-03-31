@@ -921,23 +921,22 @@ SIDBridge::handleBufferUnderflow()
     
     trace(SID_DEBUG, "BUFFER UNDERFLOW (r: %d w: %d)\n", stream.r, stream.w);
 
-    // Determine the elapsed seconds since the last pointer adjustment.
-    u64 now = Oscillator::nanos();
-    double elapsedTime = (double)(now - lastAlignment) / 1000000000.0;
-    lastAlignment = now;
-
+    // Reset the write pointer
+    alignWritePtr();
+    
+    // Determine the elapsed seconds since the last pointer adjustment
+    auto elapsedTime = util::Time::now() - lastAlignment;
+    lastAlignment = util::Time::now();
+    
     // Adjust the sample rate, if condition (1) holds
-    if (elapsedTime > 10.0) {
-        
+    if (elapsedTime.asSeconds() > 10.0) {
+
         bufferUnderflows++;
         
         // Increase the sample rate based on what we've measured
-        int offPerSecond = (int)(samplesAhead / elapsedTime);
+        isize offPerSecond = (isize)(stream.count() / elapsedTime.asSeconds());
         setSampleRate(getSampleRate() + offPerSecond);
     }
-
-    // Reset the write pointer
-    alignWritePtr();
 }
 
 void
@@ -950,29 +949,32 @@ SIDBridge::handleBufferOverflow()
     
     trace(SID_DEBUG, "BUFFER OVERFLOW (r: %d w: %d)\n", stream.r, stream.w);
     
-    // Determine the elapsed seconds since the last pointer adjustment
-    u64 now = Oscillator::nanos();
-    double elapsedTime = (double)(now - lastAlignment) / 1000000000.0;
-    lastAlignment = now;
+    // Reset the write pointer
+    alignWritePtr();
+    
+    // Determine the number of elapsed seconds since the last adjustment
+    auto elapsedTime = util::Time::now() - lastAlignment;
+    lastAlignment = util::Time::now();
+    trace(SID_DEBUG, "elapsedTime: %f\n", elapsedTime.asSeconds());
     
     // Adjust the sample rate, if condition (1) holds
-    if (elapsedTime > 10.0) {
+    if (elapsedTime.asSeconds() > 10.0) {
         
         bufferOverflows++;
         
         // Decrease the sample rate based on what we've measured
-        int offPerSecond = (int)(samplesAhead / elapsedTime);
-        setSampleRate(getSampleRate() - offPerSecond);
+        isize offPerSecond = (isize)(stream.count() / elapsedTime.asSeconds());
+        double newSampleRate = getSampleRate() - offPerSecond;
+
+        trace(SID_DEBUG, "Changing sample rate to %f\n", newSampleRate);
+        setSampleRate(newSampleRate);
     }
-    
-    // Reset the write pointer
-    alignWritePtr();
 }
 
 void
 SIDBridge::ignoreNextUnderOrOverflow()
 {
-    lastAlignment = Oscillator::nanos();
+    lastAlignment = util::Time::now();
 }
 
 void

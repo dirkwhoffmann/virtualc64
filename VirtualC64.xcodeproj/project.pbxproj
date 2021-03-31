@@ -227,6 +227,7 @@
 		50D5F88A24F5573D0062EF13 /* DiskErrorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D5F88924F5573D0062EF13 /* DiskErrorController.swift */; };
 		50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8421720A82CF500EB859A /* MetalViewEvents.swift */; };
 		50DBB44B2025CE5700489271 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB44A2025CE5700489271 /* Utils.swift */; };
+		50DD82A02614D47E00B84EB3 /* Chrono.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DD829E2614D47E00B84EB3 /* Chrono.cpp */; };
 		50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8E2008E615008A8761 /* Shaders.swift */; };
 		50DF719425021FCA00953E2E /* Keycap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DF719325021FCA00953E2E /* Keycap.swift */; };
 		50E2D9AC25991E4B009A986B /* AnyCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E2D9AA25991E4B009A986B /* AnyCollection.cpp */; };
@@ -626,6 +627,8 @@
 		50D8421720A82CF500EB859A /* MetalViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalViewEvents.swift; sourceTree = "<group>"; };
 		50DAABD824F0108A005D426F /* VICIITypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VICIITypes.h; sourceTree = "<group>"; };
 		50DBB44A2025CE5700489271 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		50DD829E2614D47E00B84EB3 /* Chrono.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Chrono.cpp; sourceTree = "<group>"; };
+		50DD829F2614D47E00B84EB3 /* Chrono.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Chrono.h; sourceTree = "<group>"; };
 		50DEAD8E2008E615008A8761 /* Shaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
 		50DF719325021FCA00953E2E /* Keycap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keycap.swift; sourceTree = "<group>"; };
 		50E2D9AA25991E4B009A986B /* AnyCollection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnyCollection.cpp; sourceTree = "<group>"; };
@@ -778,10 +781,13 @@
 			children = (
 				500FAA63261376C50062488E /* Types.h */,
 				500FAA64261377050062488E /* Macros.h */,
-				50CCC309256FAC870052619A /* Concurrency.h */,
-				50CCC308256FAC870052619A /* Concurrency.cpp */,
 				50E806BE25A1C2B800F08732 /* Reflection.h */,
 				5093D6A824B19E9200BDF924 /* Serialization.h */,
+				504C42F024AF29AB00E69CAE /* TimeDelayed.h */,
+				50DD829F2614D47E00B84EB3 /* Chrono.h */,
+				50DD829E2614D47E00B84EB3 /* Chrono.cpp */,
+				50CCC309256FAC870052619A /* Concurrency.h */,
+				50CCC308256FAC870052619A /* Concurrency.cpp */,
 				50F062E4258DFC2A009A6B21 /* Debug.h */,
 				500FAA652613790A0062488E /* Debug.cpp */,
 			);
@@ -1279,7 +1285,6 @@
 				500C7C43259FC09B00F5CC1F /* Errors.h */,
 				504C42F224AF29AB00E69CAE /* Utils.h */,
 				504C42EF24AF29AB00E69CAE /* Utils.cpp */,
-				504C42F024AF29AB00E69CAE /* TimeDelayed.h */,
 				50549B46257D1B6A006FE39C /* Buffers.h */,
 				50F420C9250BA3460043DE56 /* Colors.h */,
 				50F420C8250BA3460043DE56 /* Colors.cpp */,
@@ -1518,6 +1523,7 @@
 				504C439824AF29AC00E69CAE /* sid.cc in Sources */,
 				50769B8A24BB1B87006FE743 /* Configuration.swift in Sources */,
 				504C438424AF29AC00E69CAE /* Utils.cpp in Sources */,
+				50DD82A02614D47E00B84EB3 /* Chrono.cpp in Sources */,
 				50BE4B6624E7F965008F39C9 /* String.swift in Sources */,
 				5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */,
 				504C437724AF29AC00E69CAE /* G64File.cpp in Sources */,

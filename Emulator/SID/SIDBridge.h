@@ -15,6 +15,7 @@
 #include "SIDStreams.h"
 #include "FastSID.h"
 #include "ReSID.h"
+#include "Chrono.h"
 
 /* Architecture of the audio pipeline
  *
@@ -78,7 +79,7 @@ private:
     double sampleRate = 44100.0;
         
     // Time stamp of the last write pointer alignment
-    u64 lastAlignment = 0;
+    util::Time lastAlignment;
 
     // Master volumes (fadable)
     Volume volL;
@@ -213,7 +214,6 @@ private:
         << config.pan
         << cycles
         << cpuFrequency
-        << lastAlignment
         >> volL
         >> volR
         << vol

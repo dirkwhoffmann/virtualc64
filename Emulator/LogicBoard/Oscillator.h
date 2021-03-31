@@ -10,25 +10,9 @@
 #pragma once
 
 #include "C64Component.h"
-
-#ifdef __MACH__
-#include <mach/mach_time.h>
-#endif
+#include "Chrono.h"
 
 class Oscillator : public C64Component {
-    
-#ifdef __MACH__
-
-    // Information about the Mach system timer
-    static mach_timebase_info_data_t tb;
-
-    // Converts kernel time to nanoseconds
-    static u64 abs_to_nanos(u64 abs) { return abs * tb.numer / tb.denom; }
-    
-    // Converts nanoseconds to kernel time
-    static u64 nanos_to_abs(u64 nanos) { return nanos * tb.denom / tb.numer; }
-
-#endif
     
     /* The heart of this class is method sychronize() which puts the thread to
      * sleep for a certain interval. In order to calculate the delay, the
@@ -40,8 +24,18 @@ class Oscillator : public C64Component {
     // C64 clock
     Cycle clockBase = 0;
 
-    // Kernel clock (Nanoseconds)
-    u64 timeBase = 0;
+    // Counts the number of calls to 'synchronize'
+    isize syncCounter = 0;
+    
+    // Kernel clock
+    util::Time timeBase;
+
+    // The current CPU load (%)
+    float cpuLoad = 0.0;
+    
+    // Clocks for measuring the CPU load
+    util::Clock nonstopClock;
+    util::Clock loadClock;
 
     
     //
@@ -51,6 +45,7 @@ class Oscillator : public C64Component {
 public:
     
     Oscillator(C64& ref);
+    
     const char *getDescription() const override;
 
 private:
@@ -69,11 +64,13 @@ private:
     {
     }
 
+    /*
     template <class T>
     void applyToHardResetItems(T& worker)
     {
         worker & clockBase;
     }
+    */
     
     template <class T>
     void applyToResetItems(T& worker)
@@ -86,27 +83,14 @@ private:
     
     
     //
-    // Reading the system clock
-    //
-    
-public:
-
-    // Returns the current kernel time the nano seconds
-    static u64 nanos();
-    
-    
-    //
     // Managing emulation speed
     //
-        
+       
+public:
+    
     // Restarts the synchronization timer
     void restart();
 
     // Puts the emulator thread to rest
     void synchronize();
-    
-private:
-    
-    // Puts the thread to rest until the target time has been reached
-    void waitUntil(u64 deadline);
 };
