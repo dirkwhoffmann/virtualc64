@@ -201,23 +201,23 @@ private:
     {
         worker
         
-        & config.revision
-        & config.enabled
-        & config.address
-        & config.filter
-        & config.engine
-        & config.sampling
-        & config.volL
-        & config.volR
-        & config.vol
-        & config.pan
-        & cycles
-        & cpuFrequency
-        & lastAlignment
-        & volL
-        & volR
-        & vol
-        & pan;
+        << config.revision
+        << config.enabled
+        << config.address
+        << config.filter
+        << config.engine
+        << config.sampling
+        << config.volL
+        << config.volR
+        << config.vol
+        << config.pan
+        << cycles
+        << cpuFrequency
+        << lastAlignment
+        << volL
+        << volR
+        << vol
+        << pan;
     }
     
     template <class T>
@@ -225,7 +225,7 @@ private:
     {
         worker
         
-        & cycles;
+        << cycles;
     }
     
     usize _size() override { COMPUTE_SNAPSHOT_SIZE }

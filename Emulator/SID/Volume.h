@@ -31,10 +31,10 @@ template <typename T> struct AudioVolume {
     {
         worker
         
-        & current
-        & normal
-        & target
-        & delta;
+        << current
+        << normal
+        << target
+        << delta;
     }
     
     template <class W>

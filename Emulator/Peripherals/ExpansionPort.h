@@ -80,9 +80,9 @@ private:
     {
         worker
         
-        & crtType
-        & gameLine
-        & exromLine;
+        << crtType
+        << gameLine
+        << exromLine;
     }
     
     template <class T>

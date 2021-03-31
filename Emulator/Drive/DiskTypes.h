@@ -83,7 +83,7 @@ union DiskData
     {
         worker
         
-        & track;
+        << track;
     }
     
     template <class W>
@@ -118,7 +118,7 @@ union DiskLength
     {
         worker
         
-        & track;
+        << track;
     }
     
     template <class W>

@@ -207,21 +207,21 @@ private:
     {
         worker
         
-        & waveTableOffset
-        & waveTableCounter
-        & step
-        & ringmod
-        & adsrm
-        & adsr
-        & adsrInc
-        & adsrCmp
-        & lsfr
-        & filterIO
-        & filterType
-        & filterLow
-        & filterRef
-        & filterDy
-        & filterResDy;
+        << waveTableOffset
+        << waveTableCounter
+        << step
+        << ringmod
+        << adsrm
+        << adsr
+        << adsrInc
+        << adsrCmp
+        << lsfr
+        << filterIO
+        << filterType
+        << filterLow
+        << filterRef
+        << filterDy
+        << filterResDy;
     }
     
     usize _size() override { COMPUTE_SNAPSHOT_SIZE }

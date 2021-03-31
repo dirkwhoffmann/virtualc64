@@ -105,14 +105,14 @@ inline void writeDouble(u8 *& buf, double value)
 //
 
 #define COUNT(type) \
-auto& operator&(type& v) \
+auto& operator<<(type& v) \
 { \
 count += sizeof(type); \
 return *this; \
 }
 
 #define STRUCT(type) \
-auto& operator&(type& v) \
+auto& operator<<(type& v) \
 { \
 v.applyToItems(*this); \
 return *this; \
@@ -149,10 +149,10 @@ public:
     template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
 
     template <class T, usize N>
-    SerCounter& operator&(T (&v)[N])
+    SerCounter& operator<<(T (&v)[N])
     {
         for(usize i = 0; i < N; ++i) {
-            *this & v[i];
+            *this << v[i];
         }
         return *this;
     }
@@ -171,7 +171,7 @@ public:
 //
 
 #define DESERIALIZE(type,function) \
-SerReader& operator&(type& v) \
+SerReader& operator<<(type& v) \
 { \
 v = (type)function(ptr); \
 return *this; \
@@ -215,10 +215,10 @@ public:
     template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
 
     template <class T, usize N>
-    SerReader& operator&(T (&v)[N])
+    SerReader& operator<<(T (&v)[N])
     {
         for(usize i = 0; i < N; ++i) {
-            *this & v[i];
+            *this << v[i];
         }
         return *this;
     }
@@ -252,7 +252,7 @@ public:
 //
 
 #define SERIALIZE(type,function,cast) \
-SerWriter& operator&(type& v) \
+SerWriter& operator<<(type& v) \
 { \
 function(ptr, (cast)v); \
 return *this; \
@@ -296,10 +296,10 @@ public:
     template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
 
     template <class T, usize N>
-    SerWriter& operator&(T (&v)[N])
+    SerWriter& operator<<(T (&v)[N])
     {
         for(usize i = 0; i < N; ++i) {
-            *this & v[i];
+            *this << v[i];
         }
         return *this;
     }
@@ -333,7 +333,7 @@ public:
 //
 
 #define RESET(type) \
-SerResetter& operator&(type& v) \
+SerResetter& operator<<(type& v) \
 { \
 v = (type)0; \
 return *this; \
@@ -370,10 +370,10 @@ public:
     template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
 
     template <class T, usize N>
-    SerResetter& operator&(T (&v)[N])
+    SerResetter& operator<<(T (&v)[N])
     {
         for(usize i = 0; i < N; ++i) {
-            *this & v[i];
+            *this << v[i];
         }
         return *this;
     }

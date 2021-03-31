@@ -130,14 +130,14 @@ private:
     {
         worker
         
-        & tod.value
-        & latch.value
-        & alarm.value
-        & frozen
-        & stopped
-        & matching
-        & hz
-        & frequencyCounter;
+        << tod.value
+        << latch.value
+        << alarm.value
+        << frozen
+        << stopped
+        << matching
+        << hz
+        << frequencyCounter;
     }
     
     usize _size() override { COMPUTE_SNAPSHOT_SIZE }

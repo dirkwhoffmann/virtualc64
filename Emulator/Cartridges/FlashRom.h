@@ -93,8 +93,8 @@ private:
     {
         worker
         
-        & state
-        & baseState;
+        << state
+        << baseState;
     }
     
     template <class T>

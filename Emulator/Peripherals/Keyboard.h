@@ -115,9 +115,9 @@ private:
     {
         worker
         
-        & kbMatrixRow
-        & kbMatrixCol
-        & shiftLock;
+        << kbMatrixRow
+        << kbMatrixCol
+        << shiftLock;
     }
     
     usize _size() override { COMPUTE_SNAPSHOT_SIZE }

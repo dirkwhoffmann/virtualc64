@@ -239,10 +239,10 @@ private:
     {
         worker
         
-        & durationOfOneCpuCycle
-        & config.type
-        & config.connected
-        & insertionStatus;
+        << durationOfOneCpuCycle
+        << config.type
+        << config.connected
+        << insertionStatus;
     }
     
     template <class T>
@@ -250,22 +250,22 @@ private:
     {
         worker
         
-        & spinning
-        & redLED
-        & elapsedTime
-        & nextClock
-        & nextCarry
-        & carryCounter
-        & counterUF4
-        & bitReadyTimer
-        & byteReadyCounter
-        & halftrack
-        & offset
-        & zone
-        & readShiftreg
-        & writeShiftreg
-        & sync
-        & byteReady;
+        << spinning
+        << redLED
+        << elapsedTime
+        << nextClock
+        << nextCarry
+        << carryCounter
+        << counterUF4
+        << bitReadyTimer
+        << byteReadyCounter
+        << halftrack
+        << offset
+        << zone
+        << readShiftreg
+        << writeShiftreg
+        << sync
+        << byteReady;
     }
     
     usize _size() override { COMPUTE_SNAPSHOT_SIZE }

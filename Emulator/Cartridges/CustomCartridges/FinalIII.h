@@ -50,13 +50,13 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker & freeezeButtonIsPressed;
+        worker << freeezeButtonIsPressed;
     }
     
     template <class T>
     void applyToResetItems(T& worker)
     {
-        worker & qD;
+        worker << qD;
     }
     
     usize __size() { COMPUTE_SNAPSHOT_SIZE }

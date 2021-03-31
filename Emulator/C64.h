@@ -275,8 +275,8 @@ private:
     {
         worker
         
-        & frequency
-        & durationOfOneCycle;
+        << frequency
+        << durationOfOneCycle;
     }
     
     template <class T>
@@ -284,11 +284,11 @@ private:
     {
         worker
         
-        & frame
-        & rasterLine
-        & rasterCycle
-        & warpMode
-        & ultimax;
+        << frame
+        << rasterLine
+        << rasterCycle
+        << warpMode
+        << ultimax;
     }
     
     usize _size() override { COMPUTE_SNAPSHOT_SIZE }

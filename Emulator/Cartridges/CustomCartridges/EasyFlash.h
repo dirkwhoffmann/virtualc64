@@ -66,7 +66,7 @@ private:
     {
         worker
         
-        & jumper;
+        << jumper;
     }
     
     template <class T>
@@ -74,9 +74,9 @@ private:
     {
         worker
         
-        & bankReg
-        & modeReg
-        & bank;
+        << bankReg
+        << modeReg
+        << bank;
     }
     
     usize __size() { COMPUTE_SNAPSHOT_SIZE }

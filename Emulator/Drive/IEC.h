@@ -96,21 +96,21 @@ private:
     {
         worker
         
-        & atnLine
-        & clockLine
-        & dataLine
-        & isDirtyC64Side
-        & isDirtyDriveSide
-        & device1Atn
-        & device1Clock
-        & device1Data
-        & device2Atn
-        & device2Clock
-        & device2Data
-        & ciaAtn
-        & ciaClock
-        & ciaData
-        & busActivity;
+        << atnLine
+        << clockLine
+        << dataLine
+        << isDirtyC64Side
+        << isDirtyDriveSide
+        << device1Atn
+        << device1Clock
+        << device1Data
+        << device2Atn
+        << device2Clock
+        << device2Data
+        << ciaAtn
+        << ciaClock
+        << ciaData
+        << busActivity;
     }
     
     usize _size() override { COMPUTE_SNAPSHOT_SIZE }

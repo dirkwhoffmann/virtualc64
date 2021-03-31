@@ -50,7 +50,7 @@ private:
     {
         worker
         
-        & active;
+        << active;
     }
     
     template <class T>

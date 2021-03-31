@@ -57,7 +57,7 @@ private:
     {
         worker
         
-        & cycle;
+        << cycle;
     }
     
     usize __size() { COMPUTE_SNAPSHOT_SIZE }

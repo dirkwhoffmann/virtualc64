@@ -93,9 +93,9 @@ private:
     {
         worker
         
-        & size
-        & type
-        & durationInCycles;
+        << size
+        << type
+        << durationInCycles;
     }
     
     template <class T>
@@ -103,13 +103,13 @@ private:
     {
         worker
         
-        & head
-        & headInCycles
-        & headInSeconds
-        & nextRisingEdge
-        & nextFallingEdge
-        & playKey
-        & motor;
+        << head
+        << headInCycles
+        << headInSeconds
+        << nextRisingEdge
+        << nextFallingEdge
+        << playKey
+        << motor;
     }
     
     usize _size() override { COMPUTE_SNAPSHOT_SIZE }

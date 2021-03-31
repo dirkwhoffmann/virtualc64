@@ -305,16 +305,16 @@ struct VICIIRegisters
     {        
         worker
         
-        & sprX
-        & sprY
-        & ctrl1
-        & sprEnable
-        & ctrl2
-        & sprExpandY
-        & sprPriority
-        & sprMC
-        & sprExpandX
-        & colors;
+        << sprX
+        << sprY
+        << ctrl1
+        << sprEnable
+        << ctrl2
+        << sprExpandY
+        << sprPriority
+        << sprMC
+        << sprExpandX
+        << colors;
     }
     
     template <class W>
@@ -365,13 +365,13 @@ struct SpriteSR
     {
         worker
         
-        & data
-        & chunk1
-        & chunk2
-        & chunk3
-        & mcFlop
-        & expFlop
-        & colBits;
+        << data
+        << chunk1
+        << chunk2
+        << chunk3
+        << mcFlop
+        << expFlop
+        << colBits;
     }
     
     template <class W>

@@ -243,35 +243,35 @@ private:
     {
         worker
         
-        & cycle
-        & next
-        & reg.a
-        & reg.x
-        & reg.y
-        & reg.pc
-        & reg.pc0
-        & reg.sp
-        & reg.sr.n
-        & reg.sr.v
-        & reg.sr.b
-        & reg.sr.d
-        & reg.sr.i
-        & reg.sr.z
-        & reg.sr.c
-        & reg.adl
-        & reg.adh
-        & reg.idl
-        & reg.d
-        & reg.ovl
-        & rdyLine
-        & rdyLineUp
-        & rdyLineDown
-        & nmiLine
-        & irqLine
-        & edgeDetector
-        & levelDetector
-        & doNmi
-        & doIrq;
+        << cycle
+        << next
+        << reg.a
+        << reg.x
+        << reg.y
+        << reg.pc
+        << reg.pc0
+        << reg.sp
+        << reg.sr.n
+        << reg.sr.v
+        << reg.sr.b
+        << reg.sr.d
+        << reg.sr.i
+        << reg.sr.z
+        << reg.sr.c
+        << reg.adl
+        << reg.adh
+        << reg.idl
+        << reg.d
+        << reg.ovl
+        << rdyLine
+        << rdyLineUp
+        << rdyLineDown
+        << nmiLine
+        << irqLine
+        << edgeDetector
+        << levelDetector
+        << doNmi
+        << doIrq;
     }
     
     usize _size() override { COMPUTE_SNAPSHOT_SIZE }

@@ -109,11 +109,11 @@ private:
     {
         worker
         
-        & ram
-        & colorRam
-        & rom
-        & peekSrc
-        & pokeTarget;
+        << ram
+        << colorRam
+        << rom
+        << peekSrc
+        << pokeTarget;
     }
     
     template <class T>

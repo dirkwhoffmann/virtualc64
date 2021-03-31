@@ -39,7 +39,7 @@ private:
     {
         worker
         
-        & protect;
+        << protect;
     }
     
     usize __size() { COMPUTE_SNAPSHOT_SIZE }

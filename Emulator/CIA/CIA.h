@@ -276,8 +276,8 @@ private:
     {
         worker
         
-        & config.revision
-        & config.timerBBug;
+        << config.revision
+        << config.timerBBug;
     }
     
     template <class T>
@@ -285,36 +285,36 @@ private:
     {
         worker
         
-        & counterA
-        & counterB
-        & latchA
-        & latchB
-        & delay
-        & feed
-        & CRA
-        & CRB
-        & icr
-        & icrAck
-        & imr
-        & PB67TimerMode
-        & PB67TimerOut
-        & PB67Toggle
-        & PRA
-        & PRB
-        & DDRA
-        & DDRB
-        & PA
-        & PB
-        & sdr
-        & serClk
-        & serCounter
-        & CNT
-        & INT
-        & tiredness
-        & idleCycles
-        & sleeping
-        & sleepCycle
-        & wakeUpCycle;
+        << counterA
+        << counterB
+        << latchA
+        << latchB
+        << delay
+        << feed
+        << CRA
+        << CRB
+        << icr
+        << icrAck
+        << imr
+        << PB67TimerMode
+        << PB67TimerOut
+        << PB67Toggle
+        << PRA
+        << PRB
+        << DDRA
+        << DDRB
+        << PA
+        << PB
+        << sdr
+        << serClk
+        << serCounter
+        << CNT
+        << INT
+        << tiredness
+        << idleCycles
+        << sleeping
+        << sleepCycle
+        << wakeUpCycle;
     }
     
     usize _size() override { COMPUTE_SNAPSHOT_SIZE }

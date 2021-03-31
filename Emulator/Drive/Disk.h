@@ -204,10 +204,10 @@ private:
     {
         worker
         
-        & writeProtected
-        & modified
-        & data
-        & length;
+        << writeProtected
+        << modified
+        << data
+        << length;
     }
     
     template <class T>

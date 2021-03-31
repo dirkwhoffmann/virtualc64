@@ -60,8 +60,8 @@ private:
     {
         worker
         
-        & size
-        & loadAddress;
+        << size
+        << loadAddress;
     }
     
     template <class T>

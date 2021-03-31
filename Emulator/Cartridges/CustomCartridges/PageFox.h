@@ -53,7 +53,7 @@ private:
     {
         worker
         
-        & ctrlReg;
+        << ctrlReg;
     }
     
     template <class T>

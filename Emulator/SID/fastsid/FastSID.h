@@ -162,9 +162,9 @@ private:
     {
         worker
         
-        & model
-        & cpuFrequency
-        & emulateFilter;
+        << model
+        << cpuFrequency
+        << emulateFilter;
     }
     
     template <class T>
@@ -172,11 +172,11 @@ private:
     {
         worker
         
-        & sidreg
-        & speed1
-        & executedCycles
-        & computedSamples
-        & latchedDataBus;
+        << sidreg
+        << speed1
+        << executedCycles
+        << computedSamples
+        << latchedDataBus;
     }
     
     usize _size() override { COMPUTE_SNAPSHOT_SIZE }

@@ -48,8 +48,8 @@ private:
     {
         worker
         
-        & bank
-        & page;
+        << bank
+        << page;
     }
     
     template <class T>

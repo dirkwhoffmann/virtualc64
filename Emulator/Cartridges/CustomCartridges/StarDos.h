@@ -48,8 +48,8 @@ private:
     {
         worker
         
-        & voltage
-        & latestVoltageUpdate;
+        << voltage
+        << latestVoltageUpdate;
     }
     
     usize __size() { COMPUTE_SNAPSHOT_SIZE }

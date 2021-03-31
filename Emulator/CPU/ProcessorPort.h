@@ -84,11 +84,11 @@ private:
     {
         worker
         
-        & port
-        & direction
-        & dischargeCycleBit3
-        & dischargeCycleBit6
-        & dischargeCycleBit7;
+        << port
+        << direction
+        << dischargeCycleBit3
+        << dischargeCycleBit6
+        << dischargeCycleBit7;
     }
     
     usize _size() override { COMPUTE_SNAPSHOT_SIZE }

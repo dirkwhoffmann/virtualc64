@@ -179,13 +179,13 @@ private:
     {
         worker
         
-        & gameLineInCrtFile
-        & exromLineInCrtFile
-        & numPackets
-        & ramCapacity
-        & battery
-        & control
-        & switchPos;
+        << gameLineInCrtFile
+        << exromLineInCrtFile
+        << numPackets
+        << ramCapacity
+        << battery
+        << control
+        << switchPos;
     }
     
     template <class T>
@@ -193,13 +193,13 @@ private:
     {
         worker
         
-        & chipL
-        & chipH
-        & mappedBytesL
-        & mappedBytesH
-        & offsetL
-        & offsetH
-        & led;
+        << chipL
+        << chipH
+        << mappedBytesL
+        << mappedBytesH
+        << offsetL
+        << offsetH
+        << led;
     }
     
 protected:

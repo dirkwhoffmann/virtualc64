@@ -47,8 +47,8 @@ private:
     {
         worker
         
-        & oldPeekSource
-        & oldPokeTarget;
+        << oldPeekSource
+        << oldPokeTarget;
     }
     
     template <class T>
@@ -56,7 +56,7 @@ private:
     {
         worker
         
-        & page;
+        << page;
     }
     
     usize __size() { COMPUTE_SNAPSHOT_SIZE }

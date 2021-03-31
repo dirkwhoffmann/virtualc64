@@ -246,33 +246,33 @@ private:
     {
         worker
         
-        & pa
-        & ca1
-        & ca2
-        & pb
-        & cb1
-        & cb2
-        & ddra
-        & ddrb
-        & ora
-        & orb
-        & ira
-        & irb
-        & t1
-        & t1_latch_lo
-        & t1_latch_hi
-        & t2
-        & t2_latch_lo
-        & pcr
-        & acr
-        & ier
-        & ifr
-        & sr
-        & delay
-        & feed
-        & tiredness
-        & wakeUpCycle
-        & idleCounter;
+        << pa
+        << ca1
+        << ca2
+        << pb
+        << cb1
+        << cb2
+        << ddra
+        << ddrb
+        << ora
+        << orb
+        << ira
+        << irb
+        << t1
+        << t1_latch_lo
+        << t1_latch_hi
+        << t2
+        << t2_latch_lo
+        << pcr
+        << acr
+        << ier
+        << ifr
+        << sr
+        << delay
+        << feed
+        << tiredness
+        << wakeUpCycle
+        << idleCounter;
     }
     
     usize _size() override { COMPUTE_SNAPSHOT_SIZE }

@@ -59,8 +59,8 @@ private:
     {
         worker
         
-        & ram
-        & rom;
+        << ram
+        << rom;
     }
     
     template <class T>
