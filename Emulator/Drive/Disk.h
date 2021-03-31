@@ -206,8 +206,8 @@ private:
         
         << writeProtected
         << modified
-        << data
-        << length;
+        >> data
+        >> length;
     }
     
     template <class T>

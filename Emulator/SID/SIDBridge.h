@@ -214,8 +214,8 @@ private:
         << cycles
         << cpuFrequency
         << lastAlignment
-        << volL
-        << volR
+        >> volL
+        >> volR
         << vol
         << pan;
     }

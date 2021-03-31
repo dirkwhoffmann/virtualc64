@@ -74,6 +74,15 @@ public:
         << timeStamp;
     }
     
+    template <class W>
+    void operator<<(W& worker)
+    {
+        worker
+        
+        << pipeline
+        << timeStamp;
+    }
+
 
     //
     // Accessing

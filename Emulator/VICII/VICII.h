@@ -636,8 +636,8 @@ private:
     {
         worker
         
-        << reg.current
-        << reg.delayed
+        >> reg.current
+        >> reg.delayed
         << rasterIrqLine
         << latchedLPX
         << latchedLPY
@@ -660,7 +660,7 @@ private:
         << sr.latchedColor
         << sr.colorbits
         << sr.remainingBits
-        << spriteSr
+        >> spriteSr
         << spriteSrActive
         << spriteSpriteCollision
         << spriteBackgroundColllision
@@ -695,9 +695,9 @@ private:
         << dataBusPhi1
         << dataBusPhi2
         << addrBus
-        << baLine
+        >> baLine
         << bankAddr
-        << gAccessResult
+        >> gAccessResult
         << delay
         << bufferoffset;
     }

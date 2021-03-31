@@ -111,13 +111,6 @@ count += sizeof(type); \
 return *this; \
 }
 
-#define STRUCT(type) \
-auto& operator<<(type& v) \
-{ \
-v.applyToItems(*this); \
-return *this; \
-}
-
 #define __ ,
 
 class SerCounter
@@ -140,14 +133,7 @@ public:
     COUNT(const unsigned long long)
     COUNT(const float)
     COUNT(const double)
-
-    STRUCT(VICIIRegisters)
-    STRUCT(SpriteSR)
-    STRUCT(DiskData)
-    STRUCT(DiskLength)
-    STRUCT(Volume)
-    template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
-
+    
     template <class T, usize N>
     SerCounter& operator<<(T (&v)[N])
     {
@@ -161,6 +147,15 @@ public:
     SerCounter& operator>>(T &v)
     {
         v << *this;
+        return *this;
+    }
+    
+    template <class T, isize N>
+    SerCounter& operator>>(T (&v)[N])
+    {
+        for(isize i = 0; i < N; ++i) {
+            v[i] << *this;
+        }
         return *this;
     }
 };
@@ -206,14 +201,7 @@ public:
     DESERIALIZE64(unsigned long long)
     DESERIALIZEF(float)
     DESERIALIZED(double)
- 
-    STRUCT(VICIIRegisters)
-    STRUCT(SpriteSR)
-    STRUCT(DiskData)
-    STRUCT(DiskLength)
-    STRUCT(Volume)
-    template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
-
+     
     template <class T, usize N>
     SerReader& operator<<(T (&v)[N])
     {
@@ -287,13 +275,6 @@ public:
     SERIALIZE64(const unsigned long long)
     SERIALIZEF(const float)
     SERIALIZED(const double)
- 
-    STRUCT(VICIIRegisters)
-    STRUCT(SpriteSR)
-    STRUCT(DiskData)
-    STRUCT(DiskLength)
-    STRUCT(Volume)
-    template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
 
     template <class T, usize N>
     SerWriter& operator<<(T (&v)[N])
@@ -361,13 +342,6 @@ public:
     RESET(unsigned long long)
     RESET(float)
     RESET(double)
-    
-    STRUCT(VICIIRegisters)
-    STRUCT(SpriteSR)
-    STRUCT(DiskData)
-    STRUCT(DiskLength)
-    STRUCT(Volume)
-    template <class T, int capacity> STRUCT(TimeDelayed<T __ capacity>)
 
     template <class T, usize N>
     SerResetter& operator<<(T (&v)[N])
