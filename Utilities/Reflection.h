@@ -11,9 +11,10 @@
 
 #ifdef __cplusplus
 
-#include "Aliases.h"
+#include "Types.h"
 #include <map>
-#include <stdio.h>
+
+namespace util {
 
 #define assert_enum(e,v) assert(e##Enum::isValid(v))
 
@@ -21,7 +22,7 @@ template <class T, typename E> struct Reflection {
 
     // Returns the shortened key as a C string
     static const char *key(long nr) { return T::key((E)nr); }
-    
+
     // Collects all key / value pairs
     static std::map <string, long> pairs(long min = 1) {
         
@@ -52,30 +53,8 @@ template <class T, typename E> struct Reflection {
         
         return result;
     }
-    
-    /*
-    // Verifies a key (used by the configuration methods)
-    [[deprecated]] static bool verify(long nr, long min = 1) {
-        
-        if (T::isValid(nr)) return true;
-        
-        printf("ERROR: %ld doesn't specify a valid key.\nValid keys: ", nr);
-        
-        for (long i = 0, j = 0 ;; i++) {
-            
-            if (T::isValid(i)) {
-                
-                if (j++) printf(", ");
-                if (T::prefix()) printf("%s_", T::prefix());
-                printf("%s", key(i));
-           
-            } else if (i >= min) break;
-        }
-        
-        printf("\n");
-        return false;
-    }
-    */
 };
+
+}
 
 #endif

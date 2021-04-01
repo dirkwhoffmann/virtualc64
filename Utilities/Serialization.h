@@ -17,51 +17,44 @@
 #include "Volume.h"
 #include "envelope.h"
 
-#include <arpa/inet.h>
+namespace util {
 
 //
 // Basic memory buffer I/O
 //
 
-inline u8 read8(u8 *& buf)
+inline u8 read8(const u8 *& buf)
 {
     u8 result = R8BE(buf);
     buf += 1;
     return result;
 }
 
-inline u16 read16(u8 *& buf)
+inline u16 read16(const u8 *& buf)
 {
     u16 result = R16BE(buf);
     buf += 2;
     return result;
 }
 
-inline u32 read32(u8 *& buf)
+inline u32 read32(const u8 *& buf)
 {
     u32 result = R32BE(buf);
     buf += 4;
     return result;
 }
 
-inline u64 read64(u8 *& buf)
+inline u64 read64(const u8 *& buf)
 {
     u32 hi = read32(buf);
     u32 lo = read32(buf);
     return ((u64)hi << 32) | lo;
 }
 
-inline float readFloat(u8 *& buf)
+inline double readDouble(const u8 *& buf)
 {
-    float result;
-    *((u32 *)(&result)) = read32(buf);
-    return result;
-}
-
-inline double readDouble(u8 *& buf)
-{
-    double result;
-    *((u64 *)(&result)) = read64(buf);
+    double result = 0;
+    for (isize i = 0; i < 8; i++) ((u8 *)&result)[i] = read8(buf);
     return result;
 }
  
@@ -89,14 +82,9 @@ inline void write64(u8 *& buf, u64 value)
     write32(buf, (u32)(value));
 }
 
-inline void writeFloat(u8 *& buf, float value)
-{
-    write32(buf, *((u32 *)(&value)));
-}
-
 inline void writeDouble(u8 *& buf, double value)
 {
-    write64(buf, *((u64 *)(&value)));
+    for (isize i = 0; i < 8; i++) write8(buf, ((u8 *)&value)[i]);
 }
 
 
@@ -104,40 +92,45 @@ inline void writeDouble(u8 *& buf, double value)
 // Counter (determines the state size)
 //
 
-#define COUNT(type) \
+#define COUNT(type,size) \
 auto& operator<<(type& v) \
 { \
-count += sizeof(type); \
+count += size; \
 return *this; \
 }
 
-#define __ ,
+#define COUNT8(type) static_assert(sizeof(type) == 1); COUNT(type,1)
+#define COUNT16(type) static_assert(sizeof(type) == 2); COUNT(type,2)
+#define COUNT64(type) static_assert(sizeof(type) <= 8); COUNT(type,8)
+#define COUNTD(type) static_assert(sizeof(type) <= 8); COUNT(type,8)
 
 class SerCounter
 {
 public:
 
-    usize count;
+    isize count;
 
     SerCounter() { count = 0; }
 
-    COUNT(const bool)
-    COUNT(const char)
-    COUNT(const signed char)
-    COUNT(const unsigned char)
-    COUNT(const short)
-    COUNT(const unsigned short)
-    COUNT(const int)
-    COUNT(const unsigned int)
-    COUNT(const long long)
-    COUNT(const unsigned long long)
-    COUNT(const float)
-    COUNT(const double)
-    
-    template <class T, usize N>
+    COUNT8(const bool)
+    COUNT8(const char)
+    COUNT8(const signed char)
+    COUNT8(const unsigned char)
+    COUNT16(const short)
+    COUNT16(const unsigned short)
+    COUNT64(const int)
+    COUNT64(const unsigned int)
+    COUNT64(const long)
+    COUNT64(const unsigned long)
+    COUNT64(const long long)
+    COUNT64(const unsigned long long)
+    COUNTD(const float)
+    COUNTD(const double)
+       
+    template <class T, isize N>
     SerCounter& operator<<(T (&v)[N])
     {
-        for(usize i = 0; i < N; ++i) {
+        for(isize i = 0; i < N; ++i) {
             *this << v[i];
         }
         return *this;
@@ -174,18 +167,16 @@ return *this; \
 
 #define DESERIALIZE8(type)  static_assert(sizeof(type) == 1); DESERIALIZE(type,read8)
 #define DESERIALIZE16(type) static_assert(sizeof(type) == 2); DESERIALIZE(type,read16)
-#define DESERIALIZE32(type) static_assert(sizeof(type) == 4); DESERIALIZE(type,read32)
-#define DESERIALIZE64(type) static_assert(sizeof(type) == 8); DESERIALIZE(type,read64)
-#define DESERIALIZEF(type) static_assert(sizeof(type) == 4); DESERIALIZE(type,readFloat)
-#define DESERIALIZED(type) static_assert(sizeof(type) == 8); DESERIALIZE(type,readDouble)
+#define DESERIALIZE64(type) static_assert(sizeof(type) <= 8); DESERIALIZE(type,read64)
+#define DESERIALIZED(type) static_assert(sizeof(type) <= 8); DESERIALIZE(type,readDouble)
 
 class SerReader
 {
 public:
 
-    u8 *ptr;
+    const u8 *ptr;
 
-    SerReader(u8 *p) : ptr(p)
+    SerReader(const u8 *p) : ptr(p)
     {
     }
 
@@ -195,22 +186,24 @@ public:
     DESERIALIZE8(unsigned char)
     DESERIALIZE16(short)
     DESERIALIZE16(unsigned short)
-    DESERIALIZE32(int)
-    DESERIALIZE32(unsigned int)
+    DESERIALIZE64(int)
+    DESERIALIZE64(unsigned int)
+    DESERIALIZE64(long)
+    DESERIALIZE64(unsigned long)
     DESERIALIZE64(long long)
     DESERIALIZE64(unsigned long long)
-    DESERIALIZEF(float)
+    DESERIALIZED(float)
     DESERIALIZED(double)
-     
-    template <class T, usize N>
+        
+    template <class T, isize N>
     SerReader& operator<<(T (&v)[N])
     {
-        for(usize i = 0; i < N; ++i) {
+        for(isize i = 0; i < N; ++i) {
             *this << v[i];
         }
         return *this;
     }
-
+    
     template <class T>
     SerReader& operator>>(T &v)
     {
@@ -226,8 +219,8 @@ public:
         }
         return *this;
     }
-
-    void copy(void *dst, usize n)
+    
+    void copy(void *dst, isize n)
     {
         memcpy(dst, (void *)ptr, n);
         ptr += n;
@@ -248,10 +241,8 @@ return *this; \
 
 #define SERIALIZE8(type)  static_assert(sizeof(type) == 1); SERIALIZE(type,write8,u8)
 #define SERIALIZE16(type) static_assert(sizeof(type) == 2); SERIALIZE(type,write16,u16)
-#define SERIALIZE32(type) static_assert(sizeof(type) == 4); SERIALIZE(type,write32,u32)
-#define SERIALIZE64(type) static_assert(sizeof(type) == 8); SERIALIZE(type,write64,u64)
-#define SERIALIZEF(type) static_assert(sizeof(type) == 4); SERIALIZE(type,writeFloat,float)
-#define SERIALIZED(type) static_assert(sizeof(type) == 8); SERIALIZE(type,writeDouble,double)
+#define SERIALIZE64(type) static_assert(sizeof(type) <= 8); SERIALIZE(type,write64,u64)
+#define SERIALIZED(type) static_assert(sizeof(type) <= 8); SERIALIZE(type,writeDouble,double)
 
 class SerWriter
 {
@@ -269,17 +260,19 @@ public:
     SERIALIZE8(const unsigned char)
     SERIALIZE16(const short)
     SERIALIZE16(const unsigned short)
-    SERIALIZE32(const int)
-    SERIALIZE32(const unsigned int)
+    SERIALIZE64(const int)
+    SERIALIZE64(const unsigned int)
+    SERIALIZE64(const long)
+    SERIALIZE64(const unsigned long)
     SERIALIZE64(const long long)
     SERIALIZE64(const unsigned long long)
-    SERIALIZEF(const float)
+    SERIALIZED(const float)
     SERIALIZED(const double)
-
-    template <class T, usize N>
+        
+    template <class T, isize N>
     SerWriter& operator<<(T (&v)[N])
     {
-        for(usize i = 0; i < N; ++i) {
+        for(isize i = 0; i < N; ++i) {
             *this << v[i];
         }
         return *this;
@@ -300,12 +293,13 @@ public:
         }
         return *this;
     }
-
-    void copy(const void *src, usize n)
+    
+    void copy(const void *src, isize n)
     {
         memcpy((void *)ptr, src, n);
         ptr += n;
     }
+
 };
 
 
@@ -343,15 +337,15 @@ public:
     RESET(float)
     RESET(double)
 
-    template <class T, usize N>
+    template <class T, isize N>
     SerResetter& operator<<(T (&v)[N])
     {
-        for(usize i = 0; i < N; ++i) {
+        for(isize i = 0; i < N; ++i) {
             *this << v[i];
         }
         return *this;
     }
-    
+
     template <class T>
     SerResetter& operator>>(T &v)
     {
@@ -368,3 +362,5 @@ public:
         return *this;
     }
 };
+
+}

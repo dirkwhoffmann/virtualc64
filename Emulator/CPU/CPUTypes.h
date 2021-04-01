@@ -28,7 +28,7 @@
 // Reflection APIs
 //
 
-struct CPURevisionEnum : Reflection<CPURevisionEnum, CPURevision> {
+struct CPURevisionEnum : util::Reflection<CPURevisionEnum, CPURevision> {
     
     static bool isValid(long value)
     {
@@ -48,7 +48,7 @@ struct CPURevisionEnum : Reflection<CPURevisionEnum, CPURevision> {
     }
 };
 
-struct IntSourceEnum : Reflection<IntSourceEnum, IntSource> {
+struct IntSourceEnum : util::Reflection<IntSourceEnum, IntSource> {
     
     static bool isValid(long value)
     {
@@ -79,7 +79,7 @@ struct IntSourceEnum : Reflection<IntSourceEnum, IntSource> {
     static std::map <string, long> pairs() { return Reflection::pairs(INTSRC_KBD); }
 };
 
-struct BreakpointTypeEnum : Reflection<BreakpointTypeEnum, BreakpointType> {
+struct BreakpointTypeEnum : util::Reflection<BreakpointTypeEnum, BreakpointType> {
     
     static bool isValid(long value)
     {

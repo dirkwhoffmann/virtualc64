@@ -39,7 +39,7 @@ CartridgeRom::_reset()
 usize
 CartridgeRom::_size()
 {
-    SerCounter counter;
+    util::SerCounter counter;
     applyToPersistentItems(counter);
     applyToResetItems(counter);
     
@@ -47,9 +47,9 @@ CartridgeRom::_size()
 }
 
 usize
-CartridgeRom::_load(u8 *buffer)
+CartridgeRom::_load(const u8 *buffer)
 {
-    SerReader reader(buffer);
+    util::SerReader reader(buffer);
     applyToPersistentItems(reader);
     applyToResetItems(reader);
     
@@ -58,7 +58,7 @@ CartridgeRom::_load(u8 *buffer)
     rom = new u8[size];
     
     // Read packet data
-    for (int i = 0; i < size; i++) rom[i] = read8(reader.ptr);
+    for (int i = 0; i < size; i++) rom[i] = util::read8(reader.ptr);
 
     trace(SNP_DEBUG, "Recreated from %ld bytes\n", reader.ptr - buffer);
     return reader.ptr - buffer;
@@ -67,12 +67,12 @@ CartridgeRom::_load(u8 *buffer)
 usize
 CartridgeRom::_save(u8 *buffer)
 {
-    SerWriter writer(buffer);
+    util::SerWriter writer(buffer);
     applyToPersistentItems(writer);
     applyToResetItems(writer);
 
     // Write packet data
-    for (int i = 0; i < size; i++) write8(writer.ptr, rom[i]);
+    for (int i = 0; i < size; i++) util::write8(writer.ptr, rom[i]);
 
     trace(SNP_DEBUG, "Serialized to %ld bytes\n", writer.ptr - buffer);
     return writer.ptr - buffer;

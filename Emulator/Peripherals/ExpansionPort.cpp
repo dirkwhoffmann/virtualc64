@@ -31,7 +31,7 @@ ExpansionPort::_reset()
 usize
 ExpansionPort::_size()
 {
-    SerCounter counter;
+    util::SerCounter counter;
     applyToPersistentItems(counter);
     applyToResetItems(counter);
     
@@ -40,9 +40,9 @@ ExpansionPort::_size()
 }
 
 usize
-ExpansionPort::_load(u8 *buffer)
+ExpansionPort::_load(const u8 *buffer)
 {
-    SerReader reader(buffer);
+    util::SerReader reader(buffer);
     applyToPersistentItems(reader);
     applyToResetItems(reader);
     
@@ -59,7 +59,7 @@ ExpansionPort::_load(u8 *buffer)
 usize
 ExpansionPort::_save(u8 *buffer)
 {
-    SerWriter writer(buffer);
+    util::SerWriter writer(buffer);
     applyToPersistentItems(writer);
     applyToResetItems(writer);
         

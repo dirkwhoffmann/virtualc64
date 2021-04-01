@@ -106,7 +106,7 @@ FastVoice::init(FastSID *owner, unsigned voiceNr, FastVoice *prevVoice)
 }
 
 usize
-FastVoice::didLoadFromBuffer(u8 *buffer)
+FastVoice::didLoadFromBuffer(const u8 *buffer)
 {
     updateWaveTablePtr();
     return 0;

@@ -34,7 +34,7 @@
 // Reflection APIs
 //
 
-struct OptionEnum : Reflection<OptionEnum, Option> {
+struct OptionEnum : util::Reflection<OptionEnum, Option> {
     
     static bool isValid(long value)
     {
@@ -101,7 +101,7 @@ struct OptionEnum : Reflection<OptionEnum, Option> {
     }
 };
 
-struct C64ModelEnum : Reflection<C64ModelEnum, C64Model> {
+struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
     
     static bool isValid(long value)
     {
@@ -125,7 +125,7 @@ struct C64ModelEnum : Reflection<C64ModelEnum, C64Model> {
     }
 };
 
-struct RomTypeEnum : Reflection<RomTypeEnum, RomType> {
+struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
     
     static bool isValid(long value)
     {
@@ -147,7 +147,7 @@ struct RomTypeEnum : Reflection<RomTypeEnum, RomType> {
     }
 };
 
-struct EmulatorStateEnum : Reflection<EmulatorStateEnum, EmulatorState> {
+struct EmulatorStateEnum : util::Reflection<EmulatorStateEnum, EmulatorState> {
     
     static bool isValid(long value)
     {
@@ -168,7 +168,7 @@ struct EmulatorStateEnum : Reflection<EmulatorStateEnum, EmulatorState> {
     }
 };
 
-struct InspectionTargetEnum : Reflection<InspectionTargetEnum, InspectionTarget> {
+struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionTarget> {
     
     static bool isValid(long value)
     {

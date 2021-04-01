@@ -70,7 +70,7 @@ private:
     }
     
     usize _size() override;
-    usize _load(u8 *buffer) override;
+    usize _load(const u8 *buffer) override;
     usize _save(u8 *buffer) override;
 
     

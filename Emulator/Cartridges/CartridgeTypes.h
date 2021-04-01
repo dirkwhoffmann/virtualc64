@@ -16,7 +16,7 @@
 // Reflection APIs
 //
 
-struct FlashStateEnum : Reflection<FlashStateEnum, FlashState> {
+struct FlashStateEnum : util::Reflection<FlashStateEnum, FlashState> {
     
     static bool isValid(long value)
     {

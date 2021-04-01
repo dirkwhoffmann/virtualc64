@@ -12,7 +12,7 @@
 #include "CIAPublicTypes.h"
 #include "Reflection.h"
 
-struct CIARevisionEnum : Reflection<CIARevisionEnum, CIARevision> {
+struct CIARevisionEnum : util::Reflection<CIARevisionEnum, CIARevision> {
     
     static bool isValid(long value)
     {
@@ -32,7 +32,7 @@ struct CIARevisionEnum : Reflection<CIARevisionEnum, CIARevision> {
     }
 };
 
-struct CIARegEnum : Reflection<CIARegEnum, CIAReg> {
+struct CIARegEnum : util::Reflection<CIARegEnum, CIAReg> {
 
     static bool isValid(long value)
     {

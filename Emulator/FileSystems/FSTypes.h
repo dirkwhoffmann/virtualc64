@@ -16,7 +16,7 @@
 // Reflection APIs
 //
 
-struct DOSTypeEnum : Reflection<DOSTypeEnum, DOSType> {
+struct DOSTypeEnum : util::Reflection<DOSTypeEnum, DOSType> {
     
     static bool isValid(long value)
     {
@@ -35,7 +35,7 @@ struct DOSTypeEnum : Reflection<DOSTypeEnum, DOSType> {
     }
 };
 
-struct FSFileTypeEnum : Reflection<FSFileTypeEnum, FSFileType> {
+struct FSFileTypeEnum : util::Reflection<FSFileTypeEnum, FSFileType> {
     
     static bool isValid(long value)
     {
@@ -58,7 +58,7 @@ struct FSFileTypeEnum : Reflection<FSFileTypeEnum, FSFileType> {
     }
 };
 
-struct FSBlockTypeEnum : Reflection<FSBlockTypeEnum, FSBlockType> {
+struct FSBlockTypeEnum : util::Reflection<FSBlockTypeEnum, FSBlockType> {
     
     static bool isValid(long value)
     {
@@ -80,7 +80,7 @@ struct FSBlockTypeEnum : Reflection<FSBlockTypeEnum, FSBlockType> {
     }
 };
 
-struct FSUsageEnum : Reflection<FSUsageEnum, FSUsage> {
+struct FSUsageEnum : util::Reflection<FSUsageEnum, FSUsage> {
     
     static bool isValid(long value)
     {

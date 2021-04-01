@@ -16,7 +16,7 @@
 // Reflection APIs
 //
 
-struct MsgTypeEnum : Reflection<MsgType, MsgType> {
+struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
     
     static bool isValid(long value)
     {

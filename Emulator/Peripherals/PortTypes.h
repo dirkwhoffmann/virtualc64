@@ -16,7 +16,7 @@
 // Reflection APIs
 //
 
-struct ControlPortDeviceEnum : Reflection<ControlPortDeviceEnum, ControlPortDevice> {
+struct ControlPortDeviceEnum : util::Reflection<ControlPortDeviceEnum, ControlPortDevice> {
     
     static bool isValid(long value)
     {
@@ -37,7 +37,7 @@ struct ControlPortDeviceEnum : Reflection<ControlPortDeviceEnum, ControlPortDevi
     }
 };
 
-struct GamePadActionEnum : Reflection<GamePadActionEnum, GamePadAction> {
+struct GamePadActionEnum : util::Reflection<GamePadActionEnum, GamePadAction> {
     
     static bool isValid(long value)
     {
@@ -67,7 +67,7 @@ struct GamePadActionEnum : Reflection<GamePadActionEnum, GamePadAction> {
     }
 };
 
-struct CRTModeEnum : Reflection<CRTModeEnum, CRTMode> {
+struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
     
     static bool isValid(long value)
     {

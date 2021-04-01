@@ -78,9 +78,9 @@ FlashRom::_dump() const
 }
 
 usize
-FlashRom::didLoadFromBuffer(u8 *buffer)
+FlashRom::didLoadFromBuffer(const u8 *buffer)
 {
-    SerReader reader(buffer);
+    util::SerReader reader(buffer);
     reader.copy(rom, romSize);
 
     return romSize;
@@ -89,7 +89,7 @@ FlashRom::didLoadFromBuffer(u8 *buffer)
 usize
 FlashRom::didSaveToBuffer(u8 *buffer)
 {
-    SerWriter writer(buffer);
+    util::SerWriter writer(buffer);
     writer.copy(rom, romSize);
 
     return romSize;

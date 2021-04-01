@@ -443,7 +443,7 @@ SIDBridge::_dumpConfig() const
 }
 
 usize
-SIDBridge::didLoadFromBuffer(u8 *buffer)
+SIDBridge::didLoadFromBuffer(const u8 *buffer)
 {
     clearRingbuffer();
     for (usize i = 0; i < 4; i++) sidStream[i].clear(0);

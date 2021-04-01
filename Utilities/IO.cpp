@@ -203,58 +203,9 @@ matchingBufferHeader(const u8 *buffer, const u8 *header, isize len)
     return true;
 }
 
-bool
-loadFile(const char *path, u8 **buffer, isize *size)
+bool loadFile(const string &path, u8 **bufptr, isize *size)
 {
-    assert(path != nullptr);
-    assert(buffer != nullptr);
-    assert(size != nullptr);
-
-    *buffer = nullptr;
-    *size = 0;
-    
-    // Get file size
-    isize bytes = getSizeOfFile(path);
-    if (bytes == -1) return false;
-    
-    // Open file
-    FILE *file = fopen(path, "r");
-    if (file == nullptr) return false;
-     
-    // Allocate memory
-    u8 *data = new u8[bytes];
-    if (data == nullptr) { fclose(file); return false; }
-    
-    // Read data
-    for (isize i = 0; i < bytes; i++) {
-        int c = fgetc(file);
-        if (c == EOF) break;
-        data[i] = (u8)c;
-    }
-    
-    fclose(file);
-    *buffer = data;
-    *size = bytes;
-    return true;
-}
-
-bool
-loadFile(const char *path, const char *name, u8 **buffer, isize *size)
-{
-    assert(path != nullptr);
-    assert(name != nullptr);
-
-    char *fullpath = new char[strlen(path) + strlen(name) + 2];
-    strcpy(fullpath, path);
-    strcat(fullpath, "/");
-    strcat(fullpath, name);
-    
-    return loadFile(fullpath, buffer, size);
-}
-
-bool loadFile(const std::string &path, u8 **bufptr, isize *lenptr)
-{
-    assert(bufptr); assert(lenptr);
+    assert(bufptr); assert(size);
 
     std::ifstream stream(path);
     if (!stream.is_open()) return false;
@@ -264,13 +215,13 @@ bool loadFile(const std::string &path, u8 **bufptr, isize *lenptr)
     stream.read((char *)buf, len);
     
     *bufptr = buf;
-    *lenptr = len;
+    *size = len;
     return true;
 }
 
-bool loadFile(const std::string &path, const std::string &name, u8 **bufptr, isize *lenptr)
+bool loadFile(const string &path, const string &name, u8 **bufptr, isize *size)
 {
-    return loadFile(path + "/" + name, bufptr, lenptr);
+    return loadFile(path + "/" + name, bufptr, size);
 }
 
 isize

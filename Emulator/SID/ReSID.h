@@ -158,10 +158,10 @@ private:
     }
     
     usize _size() override { COMPUTE_SNAPSHOT_SIZE }
-    usize _load(u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
+    usize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     usize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-    usize didLoadFromBuffer(u8 *buffer) override;
-    usize willSaveToBuffer(u8 *buffer) override;
+    usize didLoadFromBuffer(const u8 *buffer) override;
+    usize willSaveToBuffer(const u8 *buffer) override;
 
 
     //

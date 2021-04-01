@@ -16,7 +16,7 @@
 // Reflection APIs
 //
 
-struct MemoryTypeEnum : Reflection<MemoryTypeEnum, MemoryType> {
+struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
     
     static bool isValid(long value)
     {
@@ -43,7 +43,7 @@ struct MemoryTypeEnum : Reflection<MemoryTypeEnum, MemoryType> {
     }
 };
 
-struct RamPatternEnum : Reflection<RamPatternEnum, RamPattern> {
+struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
     
     static bool isValid(long value)
     {

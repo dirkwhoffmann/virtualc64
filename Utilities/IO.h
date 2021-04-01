@@ -68,11 +68,8 @@ bool matchingStreamHeader(std::istream &stream, const u8 *header, isize len);
 bool matchingBufferHeader(const u8 *buffer, const u8 *header, isize len);
 
 // Loads a file from disk
-bool loadFile(const char *path, u8 **buffer, isize *size);
-bool loadFile(const char *path, const char *name, u8 **buffer, isize *size);
-
-bool loadFile(const std::string &path, u8 **bufptr, long *lenptr);
-bool loadFile(const std::string &path, const std::string &name, u8 **bufptr, isize *size);
+bool loadFile(const string &path, u8 **bufptr, isize *size);
+bool loadFile(const string &path, const string &name, u8 **bufptr, isize *size);
 
 
 //

@@ -33,7 +33,7 @@ private:
     void _reset() override { };
     
     usize _size() override { return 0; }
-    usize _load(u8 *buffer) override { return 0; }
+    usize _load(const u8 *buffer) override { return 0; }
     usize _save(u8 *buffer) override { return 0; }
     
     

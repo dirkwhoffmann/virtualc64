@@ -16,7 +16,7 @@
 // Reflection APIs
 //
 
-struct FileTypeEnum : Reflection<FileTypeEnum, FileType> {
+struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
     
     static bool isValid(long value)
     {
@@ -48,7 +48,7 @@ struct FileTypeEnum : Reflection<FileTypeEnum, FileType> {
     }
 };
 
-struct TAPVersionEnum : Reflection<TAPVersionEnum, TAPVersion> {
+struct TAPVersionEnum : util::Reflection<TAPVersionEnum, TAPVersion> {
     
     static bool isValid(long value)
     {

@@ -144,8 +144,8 @@ public:
     virtual usize _size() = 0;
     
     // Loads the internal state from a memory buffer
-    usize load(u8 *buffer);
-    virtual usize _load(u8 *buffer) = 0;
+    usize load(const u8 *buffer);
+    virtual usize _load(const u8 *buffer) = 0;
     
     // Saves the internal state to a memory buffer
     usize save(u8 *buffer);
@@ -155,9 +155,9 @@ public:
      * override these methods to add custom behavior if not all elements can be
      * processed by the default implementation.
      */
-    virtual usize willLoadFromBuffer(u8 *buffer) { return 0; }
-    virtual usize didLoadFromBuffer(u8 *buffer) { return 0; }
-    virtual usize willSaveToBuffer(u8 *buffer) {return 0; }
+    virtual usize willLoadFromBuffer(const u8 *buffer) { return 0; }
+    virtual usize didLoadFromBuffer(const u8 *buffer) { return 0; }
+    virtual usize willSaveToBuffer(const u8 *buffer) {return 0; }
     virtual usize didSaveToBuffer(u8 *buffer) { return 0; }
     
     
@@ -252,19 +252,19 @@ protected:
 //
 
 #define COMPUTE_SNAPSHOT_SIZE \
-SerCounter counter; \
+util::SerCounter counter; \
 applyToPersistentItems(counter); \
 applyToResetItems(counter); \
 return counter.count;
 
 #define RESET_SNAPSHOT_ITEMS \
-SerResetter resetter; \
+util::SerResetter resetter; \
 applyToResetItems(resetter);
 
     // trace(SNP_DEBUG, "Resetted\n");
 
 #define LOAD_SNAPSHOT_ITEMS \
-SerReader reader(buffer); \
+util::SerReader reader(buffer); \
 applyToPersistentItems(reader); \
 applyToResetItems(reader); \
 return reader.ptr - buffer;
@@ -272,7 +272,7 @@ return reader.ptr - buffer;
     // trace(SNP_DEBUG, "Recreated from %d bytes\n", reader.ptr - buffer);
 
 #define SAVE_SNAPSHOT_ITEMS \
-SerWriter writer(buffer); \
+util::SerWriter writer(buffer); \
 applyToPersistentItems(writer); \
 applyToResetItems(writer); \
 return writer.ptr - buffer;

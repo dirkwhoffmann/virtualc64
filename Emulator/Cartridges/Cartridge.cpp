@@ -226,7 +226,7 @@ Cartridge::_dump() const
 usize
 Cartridge::_size()
 {
-    SerCounter counter;
+    util::SerCounter counter;
     applyToPersistentItems(counter);
     applyToResetItems(counter);
  
@@ -241,13 +241,13 @@ Cartridge::_size()
 }
 
 usize
-Cartridge::_load(u8 *buffer)
+Cartridge::_load(const u8 *buffer)
 {
     dealloc();
     
     printf("Cartridge::_load = %d\n", numPackets);
 
-    SerReader reader(buffer);
+    util::SerReader reader(buffer);
     applyToPersistentItems(reader);
     applyToResetItems(reader);
     
@@ -264,7 +264,7 @@ Cartridge::_load(u8 *buffer)
     if (ramCapacity) {
         assert(externalRam == nullptr);
         externalRam = new u8[ramCapacity];
-        for (unsigned i = 0; i < ramCapacity; i++) externalRam[i] = read8(reader.ptr);
+        for (unsigned i = 0; i < ramCapacity; i++) externalRam[i] = util::read8(reader.ptr);
     }
 
     trace(SNP_DEBUG, "Recreated from %ld bytes\n", reader.ptr - buffer);
@@ -276,7 +276,7 @@ Cartridge::_save(u8 *buffer)
 {
     printf("Cartridge::_save = %d\n", numPackets);
 
-    SerWriter writer(buffer);
+    util::SerWriter writer(buffer);
     applyToPersistentItems(writer);
     applyToResetItems(writer);
     
@@ -291,7 +291,7 @@ Cartridge::_save(u8 *buffer)
     // Save on-board RAM
     if (ramCapacity) {
         assert(externalRam != nullptr);
-        for (unsigned i = 0; i < ramCapacity; i++) write8(writer.ptr, externalRam[i]);
+        for (unsigned i = 0; i < ramCapacity; i++) util::write8(writer.ptr, externalRam[i]);
     }
     
     trace(SNP_DEBUG, "Serialized %ld bytes\n", writer.ptr - buffer);

@@ -16,7 +16,7 @@
 // Reflection APIs
 //
 
-struct MouseModelEnum : Reflection<MouseModelEnum, MouseModel> {
+struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
     
     static bool isValid(long value)
     {
@@ -37,7 +37,7 @@ struct MouseModelEnum : Reflection<MouseModelEnum, MouseModel> {
     }
 };
 
-struct PortIdEnum : Reflection<PortIdEnum, PortId> {
+struct PortIdEnum : util::Reflection<PortIdEnum, PortId> {
     
     static bool isValid(long value)
     {

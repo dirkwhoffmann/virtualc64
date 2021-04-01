@@ -58,7 +58,7 @@ enum_long(ERROR_CODE)
 typedef ERROR_CODE ErrorCode;
 
 #ifdef __cplusplus
-struct ErrorCodeEnum : Reflection<ErrorCodeEnum, ErrorCode> {
+struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
     
     static bool isValid(long value)
     {

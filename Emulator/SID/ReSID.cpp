@@ -104,14 +104,14 @@ ReSID::_inspect()
 }
 
 usize
-ReSID::didLoadFromBuffer(u8 *buffer)
+ReSID::didLoadFromBuffer(const u8 *buffer)
 {
     sid->write_state(st);
     return 0;
 }
  
 usize
-ReSID::willSaveToBuffer(u8 *buffer)
+ReSID::willSaveToBuffer(const u8 *buffer)
 {
     st = sid->read_state();
     return 0;

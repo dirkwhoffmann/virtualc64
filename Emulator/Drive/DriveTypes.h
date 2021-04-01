@@ -16,7 +16,7 @@
 // Reflection APIs
 //
 
-struct DriveTypeEnum : Reflection<DriveTypeEnum, DriveModel> {
+struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveModel> {
     
     static bool isValid(long value)
     {
@@ -35,7 +35,7 @@ struct DriveTypeEnum : Reflection<DriveTypeEnum, DriveModel> {
     }
 };
 
-struct InsertionStatusEnum : Reflection<InsertionStatusEnum, InsertionStatus> {
+struct InsertionStatusEnum : util::Reflection<InsertionStatusEnum, InsertionStatus> {
     
     static bool isValid(long value)
     {

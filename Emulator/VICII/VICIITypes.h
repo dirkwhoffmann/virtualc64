@@ -59,7 +59,7 @@ VICClrSprBgCollReg);
 // Reflection APIs
 //
 
-struct VICIIRevisionEnum : Reflection<VICIIRevisionEnum, VICIIRevision> {
+struct VICIIRevisionEnum : util::Reflection<VICIIRevisionEnum, VICIIRevision> {
     
     static bool isValid(long value)
     {
@@ -90,7 +90,7 @@ struct VICIIRevisionEnum : Reflection<VICIIRevisionEnum, VICIIRevision> {
     static std::map <string, long> pairs() { return Reflection::pairs(VICII_NTSC_8562); }
 };
 
-struct GlueLogicEnum : Reflection<GlueLogicEnum, GlueLogic> {
+struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
     
     static bool isValid(long value)
     {
@@ -110,7 +110,7 @@ struct GlueLogicEnum : Reflection<GlueLogicEnum, GlueLogic> {
     }
 };
 
-struct PaletteEnum : Reflection<PaletteEnum, Palette> {
+struct PaletteEnum : util::Reflection<PaletteEnum, Palette> {
     
     static bool isValid(long value)
     {
@@ -134,7 +134,7 @@ struct PaletteEnum : Reflection<PaletteEnum, Palette> {
     }
 };
 
-struct ScreenGeometryEnum : Reflection<ScreenGeometryEnum, ScreenGeometry> {
+struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry> {
     
     static bool isValid(long value)
     {
@@ -156,7 +156,7 @@ struct ScreenGeometryEnum : Reflection<ScreenGeometryEnum, ScreenGeometry> {
     }
 };
 
-struct DisplayModeEnum : Reflection<DisplayModeEnum, DisplayMode> {
+struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
     
     static bool isValid(long value)
     {
@@ -191,7 +191,7 @@ struct DisplayModeEnum : Reflection<DisplayModeEnum, DisplayMode> {
     static std::map <string, long> pairs() { return Reflection::pairs(0x70); }
 };
 
-struct MemAccessEnum : Reflection<MemAccessEnum, MemAccess> {
+struct MemAccessEnum : util::Reflection<MemAccessEnum, MemAccess> {
     
     static bool isValid(long value)
     {
@@ -215,7 +215,7 @@ struct MemAccessEnum : Reflection<MemAccessEnum, MemAccess> {
     }
 };
 
-struct DmaDisplayModeEnum : Reflection<DmaDisplayModeEnum, DmaDisplayMode> {
+struct DmaDisplayModeEnum : util::Reflection<DmaDisplayModeEnum, DmaDisplayMode> {
     
     static bool isValid(long value)
     {

@@ -16,7 +16,7 @@
 // Reflection APIs
 //
 
-struct SIDRevisionEnum : Reflection<SIDRevisionEnum, SIDRevision> {
+struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
     
     static bool isValid(long value)
     {
@@ -36,7 +36,7 @@ struct SIDRevisionEnum : Reflection<SIDRevisionEnum, SIDRevision> {
     }
 };
 
-struct SIDEngineEnum : Reflection<SIDEngineEnum, SIDEngine> {
+struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
     
     static bool isValid(long value)
     {
@@ -56,7 +56,7 @@ struct SIDEngineEnum : Reflection<SIDEngineEnum, SIDEngine> {
     }
 };
 
-struct SamplingMethodEnum : Reflection<SamplingMethodEnum, SamplingMethod> {
+struct SamplingMethodEnum : util::Reflection<SamplingMethodEnum, SamplingMethod> {
     
     static bool isValid(long value)
     {

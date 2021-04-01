@@ -16,7 +16,7 @@
 // Reflection APIs
 //
 
-struct DiskTypeEnum : Reflection<DiskTypeEnum, DiskType> {
+struct DiskTypeEnum : util::Reflection<DiskTypeEnum, DiskType> {
     
     static bool isValid(long value)
     {
@@ -36,7 +36,7 @@ struct DiskTypeEnum : Reflection<DiskTypeEnum, DiskType> {
     }
 };
 
-struct CBMFileTypeEnum : Reflection<CBMFileTypeEnum, CBMFileType> {
+struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
     
     static bool isValid(long value)
     {
