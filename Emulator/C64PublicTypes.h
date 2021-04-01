@@ -22,12 +22,9 @@
 #include "CartridgePublicTypes.h"
 #include "DiskPublicTypes.h"
 #include "DrivePublicTypes.h"
-#include "FilePublicTypes.h"
 #include "FSPublicTypes.h"
 #include "MemoryPublicTypes.h"
 #include "MsgQueuePublicTypes.h"
-#include "MousePublicTypes.h"
-// #include "PortTypes.h"
 
 //
 // Enumerations

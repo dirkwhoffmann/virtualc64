@@ -9,13 +9,24 @@
 
 #pragma once
 
-#include "MousePublicTypes.h"
+#include "Aliases.h"
 #include "Reflection.h"
 
 //
-// Reflection APIs
+// Enumerations
 //
 
+enum_long(MOUSE_MODEL)
+{
+    MOUSE_C1350,
+    MOUSE_C1351,
+    MOUSE_NEOS,
+    
+    MOUSE_COUNT
+};
+typedef MOUSE_MODEL MouseModel;
+
+#ifdef __cplusplus
 struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
     
     static bool isValid(long value)
@@ -36,7 +47,19 @@ struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
         return "???";
     }
 };
+#endif
 
+enum_long(PORT_ID)
+{
+    PORT_NONE,
+    PORT_ONE,
+    PORT_TWO,
+    
+    PORT_COUNT
+};
+typedef PORT_ID PortId;
+
+#ifdef __cplusplus
 struct PortIdEnum : util::Reflection<PortIdEnum, PortId> {
     
     static bool isValid(long value)
@@ -57,3 +80,15 @@ struct PortIdEnum : util::Reflection<PortIdEnum, PortId> {
         return "???";
     }
 };
+#endif
+
+
+//
+// Structures
+//
+
+typedef struct
+{
+    MouseModel model;
+}
+MouseConfig;
