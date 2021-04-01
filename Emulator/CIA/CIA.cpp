@@ -51,7 +51,9 @@ CIA::setConfigItem(Option option, i64 value)
             
         case OPT_CIA_REVISION:
             
-            if (!CIARevisionEnum::verify(value)) return false;
+            if (!CIARevisionEnum::isValid(value)) {
+                throw ConfigArgError(CIARevisionEnum::keyList());
+            }
             if (config.revision == value)  return false;
             
             config.revision = (CIARevision)value;

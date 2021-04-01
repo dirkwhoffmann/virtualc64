@@ -181,7 +181,9 @@ VICII::setConfigItem(Option option, i64 value)
             
         case OPT_VIC_REVISION:
             
-            if (!VICIIRevisionEnum::verify(value)) return false;
+            if (!VICIIRevisionEnum::isValid(value)) {
+                throw ConfigArgError(VICIIRevisionEnum::keyList());
+            }
             if (config.revision == value) return false;
             
             suspend();
@@ -192,7 +194,9 @@ VICII::setConfigItem(Option option, i64 value)
             
         case OPT_PALETTE:
             
-            if (!PaletteEnum::verify(value)) return false;
+            if (!PaletteEnum::isValid(value)) {
+                throw ConfigArgError(PaletteEnum::keyList());
+            }
             if (config.palette == value) return false;
             
             suspend();
@@ -316,7 +320,9 @@ VICII::setConfigItem(Option option, i64 value)
 
         case OPT_GLUE_LOGIC:
             
-            if (!GlueLogicEnum::verify(value)) return false;
+            if (!GlueLogicEnum::isValid(value)) {
+                throw ConfigArgError(GlueLogicEnum::keyList());
+            }
             if (config.glueLogic == value) return false;
             
             config.glueLogic = (GlueLogic)value;

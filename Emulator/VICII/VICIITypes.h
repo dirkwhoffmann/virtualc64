@@ -87,7 +87,7 @@ struct VICIIRevisionEnum : Reflection<VICIIRevisionEnum, VICIIRevision> {
         return "???";
     }
     
-    static bool verify(long nr) { return Reflection::verify(nr,VICII_NTSC_8562); }
+    static std::map <string, long> pairs() { return Reflection::pairs(VICII_NTSC_8562); }
 };
 
 struct GlueLogicEnum : Reflection<GlueLogicEnum, GlueLogic> {
@@ -188,7 +188,7 @@ struct DisplayModeEnum : Reflection<DisplayModeEnum, DisplayMode> {
         return "???";
     }
 
-    static bool verify(long nr) { return Reflection::verify(nr, 0x70); }
+    static std::map <string, long> pairs() { return Reflection::pairs(0x70); }
 };
 
 struct MemAccessEnum : Reflection<MemAccessEnum, MemAccess> {

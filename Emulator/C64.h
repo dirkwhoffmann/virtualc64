@@ -233,8 +233,8 @@ public:
     i64 getConfigItem(Option option, long id) const;
     
     // Sets a single configuration item
-    bool configure(Option option, i64 value);
-    bool configure(Option option, long id, i64 value);
+    bool configure(Option option, i64 value) throws;
+    bool configure(Option option, long id, i64 value) throws;
 
     // Configures the C64 to match a specific C64 model
     void configure(C64Model model);

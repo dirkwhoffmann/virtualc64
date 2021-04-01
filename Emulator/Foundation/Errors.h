@@ -12,6 +12,10 @@
 #include "ErrorTypes.h"
 #include "Exception.h"
 
+//
+// VCError
+//
+
 struct VC64Error : public std::exception
 {
     ErrorCode errorCode;
@@ -22,4 +26,40 @@ struct VC64Error : public std::exception
 
         return  ErrorCodeEnum::key(errorCode);
     }
+};
+
+
+//
+// ConfigError
+//
+
+struct ConfigError : public std::exception
+{
+    string description;
+    
+    ConfigError(const string &s) : description(s) { }
+    
+    const char *what() const throw() override {
+        return  description.c_str();
+    }
+};
+
+struct ConfigArgError : ConfigError {
+    ConfigArgError(const string &s) : ConfigError(s) { };
+};
+
+struct ConfigFileNotFoundError : ConfigError {
+    ConfigFileNotFoundError(const string &s) : ConfigError(s) { };
+};
+
+struct ConfigFileReadError : ConfigError {
+    ConfigFileReadError(const string &s) : ConfigError(s) { };
+};
+
+struct ConfigLockedError : ConfigError {
+    ConfigLockedError() : ConfigError("") { };
+};
+
+struct ConfigUnsupportedError : ConfigError {
+    ConfigUnsupportedError() : ConfigError("") { };
 };

@@ -118,8 +118,9 @@ SIDBridge::setConfigItem(Option option, i64 value)
             
         case OPT_SID_REVISION:
             
-            
-            if (!SIDRevisionEnum::verify(value)) return false;
+            if (!SIDRevisionEnum::isValid(value)) {
+                throw ConfigArgError(SIDRevisionEnum::keyList());
+            }
             if (config.revision == value) return false;
             
             suspend();
@@ -144,7 +145,9 @@ SIDBridge::setConfigItem(Option option, i64 value)
             
         case OPT_SID_ENGINE:
             
-            if (!SIDEngineEnum::verify(value)) return false;
+            if (!SIDEngineEnum::isValid(value)) {
+                throw ConfigArgError(SIDEngineEnum::keyList());
+            }
             if (config.engine == value) return false;
 
             suspend();
@@ -155,7 +158,9 @@ SIDBridge::setConfigItem(Option option, i64 value)
             
         case OPT_SID_SAMPLING:
             
-            if (!SamplingMethodEnum::verify(value)) return false;
+            if (!SamplingMethodEnum::isValid(value)) {
+                throw ConfigArgError(SamplingMethodEnum::keyList());
+            }
             if (config.sampling == value)  return false;
 
             suspend();

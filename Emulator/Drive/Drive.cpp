@@ -92,7 +92,9 @@ Drive::setConfigItem(Option option, long id, i64 value)
             
         case OPT_DRIVE_TYPE:
         {
-            if (!DriveTypeEnum::verify(value)) return false;
+            if (!DriveTypeEnum::isValid(value)) {
+                throw ConfigArgError(DriveTypeEnum::keyList());
+            }
             if (config.type == value) return false;
             
             config.type = (DriveModel)value;

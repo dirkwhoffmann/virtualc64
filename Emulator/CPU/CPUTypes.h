@@ -76,7 +76,7 @@ struct IntSourceEnum : Reflection<IntSourceEnum, IntSource> {
         return "???";
     }
     
-    static bool verify(long nr) { return Reflection::verify(nr, INTSRC_KBD); }
+    static std::map <string, long> pairs() { return Reflection::pairs(INTSRC_KBD); }
 };
 
 struct BreakpointTypeEnum : Reflection<BreakpointTypeEnum, BreakpointType> {
