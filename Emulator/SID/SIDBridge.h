@@ -10,7 +10,7 @@
 #pragma once
 
 #include "C64Component.h"
-#include "SIDPublicTypes.h"
+#include "SIDTypes.h"
 #include "Volume.h"
 #include "SIDStreams.h"
 #include "FastSID.h"

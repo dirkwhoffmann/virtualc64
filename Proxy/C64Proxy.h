@@ -14,6 +14,9 @@
 #include "ErrorTypes.h"
 #include "CIATypes.h"
 #include "CPUTypes.h"
+#include "PortTypes.h"
+#include "SIDTypes.h"
+#include "VICIITypes.h"
 #include "C64PublicTypes.h"
 
 //

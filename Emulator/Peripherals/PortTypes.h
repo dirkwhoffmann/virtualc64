@@ -9,13 +9,23 @@
 
 #pragma once
 
-#include "PortPublicTypes.h"
+#include "Aliases.h"
 #include "Reflection.h"
 
 //
-// Reflection APIs
+// Enumerations
 //
 
+enum_long(CPDEVICE)
+{
+    CPDEVICE_NONE,
+    CPDEVICE_MOUSE,
+    CPDEVICE_JOYSTICK,
+    CPDEVICE_COUNT
+};
+typedef CPDEVICE ControlPortDevice;
+
+#ifdef __cplusplus
 struct ControlPortDeviceEnum : util::Reflection<ControlPortDeviceEnum, ControlPortDevice> {
     
     static bool isValid(long value)
@@ -36,7 +46,27 @@ struct ControlPortDeviceEnum : util::Reflection<ControlPortDeviceEnum, ControlPo
         return "???";
     }
 };
+#endif
 
+enum_long(GAME_PAD_ACTION)
+{
+    PULL_UP,       // Pull the joystick up
+    PULL_DOWN,     // Pull the joystick down
+    PULL_LEFT,     // Pull the joystick left
+    PULL_RIGHT,    // Pull the joystick right
+    PRESS_FIRE,    // Press the joystick button
+    PRESS_LEFT,    // Press the left mouse button
+    PRESS_RIGHT,   // Press the right mouse button
+    RELEASE_X,     // Move back to neutral horizontally
+    RELEASE_Y,     // Move back to neutral vertically
+    RELEASE_XY,    // Move back to neutral
+    RELEASE_FIRE,  // Release the joystick button
+    RELEASE_LEFT,  // Release the left mouse button
+    RELEASE_RIGHT  // Release the right mouse button
+};
+typedef GAME_PAD_ACTION GamePadAction;
+
+#ifdef __cplusplus
 struct GamePadActionEnum : util::Reflection<GamePadActionEnum, GamePadAction> {
     
     static bool isValid(long value)
@@ -66,7 +96,19 @@ struct GamePadActionEnum : util::Reflection<GamePadActionEnum, GamePadAction> {
         return "???";
     }
 };
+#endif
 
+enum_long(CRTMODE)
+{
+    CRTMODE_16K,
+    CRTMODE_8K,
+    CRTMODE_ULTIMAX,
+    CRTMODE_OFF,
+    CRTMODE_COUNT
+};
+typedef CRTMODE CRTMode;
+
+#ifdef __cplusplus
 struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
     
     static bool isValid(long value)
@@ -88,3 +130,4 @@ struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
         return "???";
     }
 };
+#endif

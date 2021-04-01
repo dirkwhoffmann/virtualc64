@@ -20,7 +20,6 @@
 #include "Aliases.h"
 
 #include "CartridgePublicTypes.h"
-#include "CIATypes.h"
 #include "DiskPublicTypes.h"
 #include "DrivePublicTypes.h"
 #include "FilePublicTypes.h"
@@ -28,9 +27,7 @@
 #include "MemoryPublicTypes.h"
 #include "MsgQueuePublicTypes.h"
 #include "MousePublicTypes.h"
-#include "PortPublicTypes.h"
-#include "SIDPublicTypes.h"
-#include "VICIITypes.h"
+// #include "PortTypes.h"
 
 //
 // Enumerations
