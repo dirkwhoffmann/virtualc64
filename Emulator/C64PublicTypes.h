@@ -21,7 +21,6 @@
 
 #include "CartridgePublicTypes.h"
 #include "CIAPublicTypes.h"
-#include "CPUPublicTypes.h"
 #include "DiskPublicTypes.h"
 #include "DrivePublicTypes.h"
 #include "FilePublicTypes.h"

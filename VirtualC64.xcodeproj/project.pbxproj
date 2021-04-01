@@ -403,7 +403,6 @@
 		504C42E124AF29AB00E69CAE /* C64Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64Memory.cpp; sourceTree = "<group>"; };
 		504C42E224AF29AB00E69CAE /* MemoryPublicTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemoryPublicTypes.h; sourceTree = "<group>"; };
 		504C42E424AF29AB00E69CAE /* C64Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Memory.h; sourceTree = "<group>"; };
-		504C42E624AF29AB00E69CAE /* CPUPublicTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUPublicTypes.h; sourceTree = "<group>"; };
 		504C42E724AF29AB00E69CAE /* CPUInstructions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUInstructions.h; sourceTree = "<group>"; };
 		504C42E824AF29AB00E69CAE /* CPU.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPU.h; sourceTree = "<group>"; };
 		504C42E924AF29AB00E69CAE /* CPU.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CPU.cpp; sourceTree = "<group>"; };
@@ -1010,7 +1009,6 @@
 		504C42E524AF29AB00E69CAE /* CPU */ = {
 			isa = PBXGroup;
 			children = (
-				504C42E624AF29AB00E69CAE /* CPUPublicTypes.h */,
 				5052A7BF25A0703D00E62EDD /* CPUTypes.h */,
 				504C42E824AF29AB00E69CAE /* CPU.h */,
 				504C42E924AF29AB00E69CAE /* CPU.cpp */,
