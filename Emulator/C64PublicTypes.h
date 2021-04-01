@@ -30,7 +30,7 @@
 #include "MousePublicTypes.h"
 #include "PortPublicTypes.h"
 #include "SIDPublicTypes.h"
-#include "VICIIPublicTypes.h"
+#include "VICIITypes.h"
 
 //
 // Enumerations

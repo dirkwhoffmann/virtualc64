@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "VICIIPublicTypes.h"
+#include "Aliases.h"
 #include "Reflection.h"
 
 //
@@ -55,10 +55,23 @@ VICSetDisplayState | \
 VICClrSprSprCollReg | \
 VICClrSprBgCollReg);
 
+
 //
-// Reflection APIs
+// Enumerations
 //
 
+enum_long(VICII_REV)
+{
+    VICII_PAL_6569_R1 = 1,
+    VICII_PAL_6569_R3 = 2,
+    VICII_PAL_8565 = 4,
+    VICII_NTSC_6567_R56A = 8,
+    VICII_NTSC_6567 = 16,
+    VICII_NTSC_8562 = 32
+};
+typedef VICII_REV VICIIRevision;
+
+#ifdef __cplusplus
 struct VICIIRevisionEnum : util::Reflection<VICIIRevisionEnum, VICIIRevision> {
     
     static bool isValid(long value)
@@ -89,7 +102,17 @@ struct VICIIRevisionEnum : util::Reflection<VICIIRevisionEnum, VICIIRevision> {
     
     static std::map <string, long> pairs() { return Reflection::pairs(VICII_NTSC_8562); }
 };
+#endif
 
+enum_long(GLUE_LOGIC)
+{
+    GLUE_LOGIC_DISCRETE,
+    GLUE_LOGIC_IC,
+    GLUE_LOGIC_COUNT
+};
+typedef GLUE_LOGIC GlueLogic;
+
+#ifdef __cplusplus
 struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
     
     static bool isValid(long value)
@@ -109,7 +132,21 @@ struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
         return "???";
     }
 };
+#endif
 
+enum_long(PALETTE)
+{
+    PALETTE_COLOR,
+    PALETTE_BLACK_WHITE,
+    PALETTE_PAPER_WHITE,
+    PALETTE_GREEN,
+    PALETTE_AMBER,
+    PALETTE_SEPIA,
+    PALETTE_COUNT
+};
+typedef PALETTE Palette;
+
+#ifdef __cplusplus
 struct PaletteEnum : util::Reflection<PaletteEnum, Palette> {
     
     static bool isValid(long value)
@@ -133,7 +170,19 @@ struct PaletteEnum : util::Reflection<PaletteEnum, Palette> {
         return "???";
     }
 };
+#endif
 
+enum_long(SCREEN_GEOMETRY)
+{
+    SCREEN_GEOMETRY_25_40 = 1,
+    SCREEN_GEOMETRY_25_38,
+    SCREEN_GEOMETRY_24_40,
+    SCREEN_GEOMETRY_24_38,
+    SCREEN_GEOMETRY_COUNT
+};
+typedef SCREEN_GEOMETRY ScreenGeometry;
+
+#ifdef __cplusplus
 struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry> {
     
     static bool isValid(long value)
@@ -155,7 +204,22 @@ struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry>
         return "???";
     }
 };
+#endif
 
+enum_long(DISPLAY_MODE)
+{
+    DISPLAY_MODE_STANDARD_TEXT       = 0x00,
+    DISPLAY_MODE_MULTICOLOR_TEXT     = 0x10,
+    DISPLAY_MODE_STANDARD_BITMAP     = 0x20,
+    DISPLAY_MODE_MULTICOLOR_BITMAP   = 0x30,
+    DISPLAY_MODE_EXTENDED_BG_COLOR   = 0x40,
+    DISPLAY_MODE_INVALID_TEXT        = 0x50,
+    DISPLAY_MODE_INV_STANDARD_BITMAP = 0x60,
+    DISPLAY_MODE_INV_MULTICOL_BITMAP = 0x70
+};
+typedef DISPLAY_MODE DisplayMode;
+
+#ifdef __cplusplus
 struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
     
     static bool isValid(long value)
@@ -190,7 +254,21 @@ struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
 
     static std::map <string, long> pairs() { return Reflection::pairs(0x70); }
 };
+#endif
 
+enum_long(MEMACCESS)
+{
+    MEMACCESS_R,     // Memory Refresh
+    MEMACCESS_I,     // Idle read
+    MEMACCESS_C,     // Character access
+    MEMACCESS_G,     // Graphics access
+    MEMACCESS_P,     // Sprite pointer access
+    MEMACCESS_S,     // Sprite data access
+    MEMACCESS_COUNT
+};
+typedef MEMACCESS MemAccess;
+
+#ifdef __cplusplus
 struct MemAccessEnum : util::Reflection<MemAccessEnum, MemAccess> {
     
     static bool isValid(long value)
@@ -214,7 +292,18 @@ struct MemAccessEnum : util::Reflection<MemAccessEnum, MemAccess> {
         return "???";
     }
 };
+#endif
 
+enum_long(DMA_DISPLAY_MODE)
+{
+    DMA_DISPLAY_MODE_FG_LAYER,
+    DMA_DISPLAY_MODE_BG_LAYER,
+    DMA_DISPLAY_MODE_ODD_EVEN_LAYERS,
+    DMA_DISPLAY_MODE_COUNT
+};
+typedef DMA_DISPLAY_MODE DmaDisplayMode;
+
+#ifdef __cplusplus
 struct DmaDisplayModeEnum : util::Reflection<DmaDisplayModeEnum, DmaDisplayMode> {
     
     static bool isValid(long value)
@@ -235,10 +324,7 @@ struct DmaDisplayModeEnum : util::Reflection<DmaDisplayModeEnum, DmaDisplayMode>
         return "???";
     }
 };
-
-//
-// Private types
-//
+#endif
 
 enum VICIIMode
 {
@@ -287,6 +373,112 @@ enum VICIIColorRegs
     COLREG_SPR7       = 0xE
 };
 
+
+//
+// Structures
+//
+
+typedef struct
+{
+    VICIIRevision revision;
+    bool grayDotBug;
+    GlueLogic glueLogic;
+    Palette palette;
+    
+    // Debugging
+    bool hideSprites;
+    bool dmaDebug;
+    bool dmaChannel[6];
+    u32 dmaColor[6];
+    DmaDisplayMode dmaDisplayMode;
+    u8 dmaOpacity;
+    u16 cutLayers;
+    u8 cutOpacity;
+    
+    // Cheating
+    bool checkSSCollisions;
+    bool checkSBCollisions;
+}
+VICIIConfig;
+
+typedef struct
+{
+    bool vertical;
+    bool main;
+}
+FrameFlipflops;
+
+typedef struct
+{
+    // Counters
+    u16 rasterLine;
+    u8 rasterCycle;
+    u32 yCounter;
+    u16 xCounter;
+    u16 vc;
+    u16 vcBase;
+    u8 rc;
+    u8 vmli;
+
+    // Display
+    u8 ctrl1;
+    u8 ctrl2;
+    u8 dy;
+    u8 dx;
+    bool denBit;
+    bool badLine;
+    bool displayState;
+    bool vblank;
+    ScreenGeometry screenGeometry;
+    FrameFlipflops frameFF;
+    DisplayMode displayMode;
+    u8 borderColor;
+    u8 bgColor0;
+    u8 bgColor1;
+    u8 bgColor2;
+    u8 bgColor3;
+    
+    // Memory
+    u8 memSelect;
+    bool ultimax;
+    u16 memoryBankAddr;
+    u16 screenMemoryAddr;
+    u16 charMemoryAddr;
+
+    // Interrupts
+    u16 irqRasterline;
+    u8 irr;
+    u8 imr;
+
+    // Lightpen
+    u8 latchedLPX;
+    u8 latchedLPY;
+    bool lpLine;
+    bool lpIrqHasOccurred;
+    
+    // Debugging
+    
+}
+VICIIInfo;
+
+typedef struct
+{
+    u16 x;
+    u8 y;
+    bool enabled;
+    bool expandX;
+    bool expandY;
+    bool priority;
+    bool multicolor;
+    bool ssCollision;
+    bool sbCollision;
+    u8 color;
+    u8 extraColor1;
+    u8 extraColor2;
+}
+SpriteInfo;
+    
+#ifdef __cplusplus
 struct VICIIRegisters
 {
     u16 sprX[8];     // D000, D002, ..., D00E, upper bits from D010
@@ -388,3 +580,4 @@ struct SpriteSR
         << colBits;
     }
 };
+#endif
