@@ -15,6 +15,7 @@
 #include "CIATypes.h"
 #include "CPUTypes.h"
 #include "FileTypes.h"
+#include "FSTypes.h"
 #include "MouseTypes.h"
 #include "PortTypes.h"
 #include "SIDTypes.h"

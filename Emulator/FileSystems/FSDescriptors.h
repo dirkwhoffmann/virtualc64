@@ -10,7 +10,7 @@
 #pragma once
 
 #include "C64Object.h"
-#include "FSPublicTypes.h"
+#include "FSTypes.h"
 
 /* To create a FSDevice, the layout parameters of the represendet device have
  * to be provided. This is done by passing a structure of type FSDeviceLayout
