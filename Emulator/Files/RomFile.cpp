@@ -9,6 +9,7 @@
 
 #include "config.h"
 #include "C64.h"
+#include "IO.h"
 
 const u8 RomFile::magicBasicRomBytes[basicRomSignatureCnt][3] = {
 
@@ -86,9 +87,9 @@ RomFile::isBasicRomStream(std::istream &stream)
 
     for (usize i = 0; i < basicRomSignatureCnt; i++) {
         
-        if (matchingStreamHeader(stream,
-                                 magicBasicRomBytes[i],
-                                 sizeof(magicBasicRomBytes[i]))) {
+        if (util::matchingStreamHeader(stream,
+                                       magicBasicRomBytes[i],
+                                       sizeof(magicBasicRomBytes[i]))) {
             return true;
         }
     }
@@ -102,9 +103,9 @@ RomFile::isCharRomStream(std::istream &stream)
 
     for (usize i = 0; i < basicRomSignatureCnt; i++) {
         
-        if (matchingStreamHeader(stream,
-                                 magicCharRomBytes[i],
-                                 sizeof(magicCharRomBytes[i]))) {
+        if (util::matchingStreamHeader(stream,
+                                       magicCharRomBytes[i],
+                                       sizeof(magicCharRomBytes[i]))) {
             return true;
         }
     }
@@ -118,9 +119,9 @@ RomFile::isKernalRomStream(std::istream &stream)
 
     for (usize i = 0; i < kernalRomSignatureCnt; i++) {
         
-        if (matchingStreamHeader(stream,
-                                 magicKernalRomBytes[i],
-                                 sizeof(magicKernalRomBytes[i]))) {
+        if (util::matchingStreamHeader(stream,
+                                       magicKernalRomBytes[i],
+                                       sizeof(magicKernalRomBytes[i]))) {
             return true;
         }
     }
@@ -134,9 +135,9 @@ RomFile::isVC1541RomStream(std::istream &stream)
 
     for (usize i = 0; i < vc1541RomSignatureCnt; i++) {
         
-        if (matchingStreamHeader(stream,
-                                 magicVC1541RomBytes[i],
-                                 sizeof(magicVC1541RomBytes[i]))) {
+        if (util::matchingStreamHeader(stream,
+                                       magicVC1541RomBytes[i],
+                                       sizeof(magicVC1541RomBytes[i]))) {
             return true;
         }
     }

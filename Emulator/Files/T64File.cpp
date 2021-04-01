@@ -11,6 +11,7 @@
 #include "TAPFile.h"
 #include "T64File.h"
 #include "FSDevice.h"
+#include "IO.h"
 
 /* "Anmerkung: Der String muß nicht wortwörtlich so vorhanden sein. Man sollte nach den
  *  Substrings 'C64' und 'tape' suchen." [Power64 doc]
@@ -20,7 +21,7 @@
 bool
 T64File::isCompatibleName(const std::string &name)
 {
-    auto s = suffix(name);
+    auto s = util::extractSuffix(name);
     return s == "t64" || s == "T64";
 }
 
@@ -34,8 +35,8 @@ T64File::isCompatibleStream(std::istream &stream)
     
     // T64 files must begin with "C64" and must not begin with "C64-TAPE"
     return
-    !matchingStreamHeader(stream, magicTAP, sizeof(magicTAP)) &&
-    matchingStreamHeader(stream, magicT64, sizeof(magicT64));
+    !util::matchingStreamHeader(stream, magicTAP, sizeof(magicTAP)) &&
+    util::matchingStreamHeader(stream, magicT64, sizeof(magicT64));
 }
 
 T64File *

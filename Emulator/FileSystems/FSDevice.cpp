@@ -10,6 +10,7 @@
 #include "config.h"
 #include "FSDevice.h"
 #include "Disk.h"
+#include "IO.h"
 
 FSDevice *
 FSDevice::makeWithFormat(FSDeviceDescriptor &layout)
@@ -146,7 +147,7 @@ FSDevice::makeWithFolder(const std::string &path)
     assert(device);
     
     // Write BAM
-    auto name = PETName<16>(extractFileName(path));
+    auto name = PETName<16>(util::extractName(path));
     device->bamPtr()->writeBAM(name);
     
     // Import the folder
@@ -808,13 +809,13 @@ FSDevice::importDirectory(const std::string &path, DIR *dir)
         std::string full = path + "/" + name;
         
         msg("importDirectory: Processing %s (%s)\n", name.c_str(), full.c_str());
-        
+
         if (item->d_type == DT_DIR) continue;
         
         u8 *buf; long len;
-        if (loadFile(full, &buf, &len)) {
+        if (util::loadFile(full, &buf, &len)) {
             
-            PETName<16> pet = PETName<16>(stripSuffix(name));
+            PETName<16> pet = PETName<16>(util::stripSuffix(name));
             if (!makeFile(pet, buf, len)) {
                 warn("Failed to import file %s\n", name.c_str());
                 result = false;
@@ -882,7 +883,7 @@ bool
 FSDevice::exportDirectory(const std::string &path, ErrorCode *err)
 {
     // Only proceed if path points to an empty directory
-    usize numItems = numDirectoryItems(path);
+    usize numItems = util::numDirectoryItems(path);
     if (numItems != 0) {
         if (err) *err = ERROR_DIR_NOT_EMPTY;
         return false;

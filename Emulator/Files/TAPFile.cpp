@@ -9,11 +9,12 @@
 
 #include "config.h"
 #include "TAPFile.h"
+#include "IO.h"
 
 bool
 TAPFile::isCompatibleName(const std::string &name)
 {
-    auto s = suffix(name);
+    auto s = util::extractSuffix(name);
     return s == "tap" || s == "TAP" || s == "t64" || s == "T64";
 }
 
@@ -24,7 +25,7 @@ TAPFile::isCompatibleStream(std::istream &stream)
         0x43, 0x36, 0x34, 0x2D, 0x54, 0x41, 0x50, 0x45, 0x2D, 0x52, 0x41, 0x57 };
     
     if (streamLength(stream) < 0x15) return false;
-    return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
+    return util::matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 
 PETName<16>

@@ -9,11 +9,12 @@
 
 #include "config.h"
 #include "G64File.h"
+#include "IO.h"
 
 bool
 G64File::isCompatibleName(const std::string &name)
 {
-    auto s = suffix(name);
+    auto s = util::extractSuffix(name);
     return s == "g64" || s == "G64";
 }
 
@@ -24,7 +25,7 @@ G64File::isCompatibleStream(std::istream &stream)
     const u8 magicBytes[] = { 'G', 'C', 'R', '-', '1', '5', '4', '1' };
 
     if (streamLength(stream) < 0x2AC) return false;
-    return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
+    return util::matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 
 G64File::G64File(usize capacity)

@@ -10,11 +10,12 @@
 #include "config.h"
 #include "PRGFile.h"
 #include "FSDevice.h"
+#include "IO.h"
 
 bool
 PRGFile::isCompatibleName(const std::string &name)
 {
-    auto s = suffix(name);
+    auto s = util::extractSuffix(name);
     return s == "prg" || s == "PRG";
 }
 

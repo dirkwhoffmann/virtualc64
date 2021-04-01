@@ -11,11 +11,12 @@
 #include "CRTFile.h"
 #include "Cartridge.h"
 #include "Checksum.h"
+#include "IO.h"
 
 bool
 CRTFile::isCompatibleName(const std::string &name)
 {
-    auto s = suffix(name);
+    auto s = util::extractSuffix(name);
     return s == "crt" || s == "CRT";
 }
 
@@ -26,7 +27,7 @@ CRTFile::isCompatibleStream(std::istream &stream)
         'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ' };
     
     if (streamLength(stream) < 0x40) return false;
-    return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
+    return util::matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 
 PETName<16>

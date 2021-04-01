@@ -9,11 +9,12 @@
 
 #include "config.h"
 #include "C64.h"
+#include "IO.h"
 
 bool
 D64File::isCompatibleName(const std::string &name)
 {
-    auto s = suffix(name);
+    auto s = util::extractSuffix(name);
     return s == "d64" || s == "D64";
 }
 

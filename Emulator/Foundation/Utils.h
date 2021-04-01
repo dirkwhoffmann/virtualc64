@@ -154,6 +154,7 @@ bool isZero(const u8 *ptr, usize size);
 // Handling files
 //
 
+/*
 // Extracts a certain component from a path
 string extractFileName(const string &s);
 string extractSuffix(const string &s);
@@ -179,7 +180,7 @@ bool matchingStreamHeader(std::istream &stream, const u8 *header, usize length);
 // Loads a file from disk
 bool loadFile(const std::string &path, u8 **bufptr, long *lenptr);
 bool loadFile(const std::string &path, const std::string &name, u8 **bufptr, long *lenptr);
-
+*/
 
 //
 // Handling streams

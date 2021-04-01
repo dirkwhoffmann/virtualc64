@@ -9,6 +9,7 @@
 
 #include "config.h"
 #include "C64.h"
+#include "IO.h"
 
 bool
 Snapshot::isCompatibleName(const std::string &name)
@@ -22,7 +23,7 @@ Snapshot::isCompatibleStream(std::istream &stream)
     const u8 magicBytes[] = { 'V', 'C', '6', '4' };
     
     if (streamLength(stream) < 0x15) return false; 
-    return matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
+    return util::matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 
 Snapshot::Snapshot(usize capacity)

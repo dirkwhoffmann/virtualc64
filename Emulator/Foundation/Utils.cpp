@@ -128,6 +128,7 @@ bool isZero(const u8 *ptr, usize size)
     return true;
 }
 
+/*
 string
 extractFileName(const string &s)
 {
@@ -248,6 +249,7 @@ bool loadFile(const std::string &path, const std::string &name, u8 **bufptr, lon
 {
     return loadFile(path + "/" + name, bufptr, lenptr);
 }
+*/
 
 usize
 streamLength(std::istream &stream)
