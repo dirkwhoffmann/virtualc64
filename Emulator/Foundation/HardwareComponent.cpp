@@ -13,7 +13,6 @@
 
 HardwareComponent::~HardwareComponent()
 {
-	debug(RUN_DEBUG, "Terminated\n");
 }
 
 void

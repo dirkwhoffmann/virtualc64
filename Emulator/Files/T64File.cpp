@@ -42,8 +42,6 @@ T64File::isCompatibleStream(std::istream &stream)
 T64File *
 T64File::makeWithFileSystem(class FSDevice &fs)
 {
-    debug(FILE_DEBUG, "Creating T64 archive...\n");
-    
     // Analyze the file system
     u16 numFiles = (u16)fs.numFiles();
     std::vector<u64> length(numFiles);
@@ -146,8 +144,6 @@ T64File::makeWithFileSystem(class FSDevice &fs)
         fs.copyFile(n, ptr, length[n], 2);
         ptr += length[n];
     }
-
-    debug(FILE_DEBUG, "T64 file created");
 
     return t64;
 }

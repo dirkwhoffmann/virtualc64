@@ -17,6 +17,7 @@
 		50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50031B39206FB0FC00A1969B /* SnapshotController.swift */; };
 		5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5009CF3224C0B8EF00F674FF /* Preferences.swift */; };
 		500E34142615BF5E006A38DA /* IO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34122615BF5E006A38DA /* IO.cpp */; };
+		500E34172615C40D006A38DA /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34152615C40D006A38DA /* Parser.cpp */; };
 		500EA6C724B09037009AA7D7 /* C64Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EA6C524B09037009AA7D7 /* C64Component.cpp */; };
 		500FAA6626137BA20062488E /* Debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500FAA652613790A0062488E /* Debug.cpp */; };
 		50133B97200D4EED00167227 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50133B96200D4EED00167227 /* MetalView.swift */; };
@@ -284,6 +285,8 @@
 		500C7C43259FC09B00F5CC1F /* Errors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Errors.h; sourceTree = "<group>"; };
 		500E34122615BF5E006A38DA /* IO.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IO.cpp; sourceTree = "<group>"; };
 		500E34132615BF5E006A38DA /* IO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IO.h; sourceTree = "<group>"; };
+		500E34152615C40D006A38DA /* Parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
+		500E34162615C40D006A38DA /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
 		500EA6C524B09037009AA7D7 /* C64Component.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64Component.cpp; sourceTree = "<group>"; };
 		500EA6C624B09037009AA7D7 /* C64Component.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Component.h; sourceTree = "<group>"; };
 		500FAA63261376C50062488E /* Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
@@ -721,6 +724,7 @@
 			isa = PBXGroup;
 			children = (
 				504C42F824AF29AB00E69CAE /* config.h */,
+				500FAA62261376980062488E /* Utilities */,
 				504C428D24AF29AB00E69CAE /* Emulator */,
 				5070D72224AF3330005862D0 /* Proxy */,
 				50176C6D0A6F7357009E80BD /* GUI */,
@@ -808,6 +812,8 @@
 				5055D5B526158ABC005D3DA6 /* Checksum.cpp */,
 				500E34132615BF5E006A38DA /* IO.h */,
 				500E34122615BF5E006A38DA /* IO.cpp */,
+				500E34162615C40D006A38DA /* Parser.h */,
+				500E34152615C40D006A38DA /* Parser.cpp */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -859,7 +865,6 @@
 				504268AC24F0F76F006BB841 /* C64Types.h */,
 				504C42F624AF29AB00E69CAE /* C64.h */,
 				504C42F724AF29AB00E69CAE /* C64.cpp */,
-				500FAA62261376980062488E /* Utilities */,
 				50A2D7AF24AF945200671F38 /* Foundation */,
 				50ACF4DC256EB451003B5690 /* LogicBoard */,
 				504C42E524AF29AB00E69CAE /* CPU */,
@@ -1549,6 +1554,7 @@
 				504C437724AF29AC00E69CAE /* G64File.cpp in Sources */,
 				5052A7C125A0AC0700E62EDD /* Errors.swift in Sources */,
 				5085D89D25B848940043B15C /* Joystick.cpp in Sources */,
+				500E34172615C40D006A38DA /* Parser.cpp in Sources */,
 				504C438924AF29AC00E69CAE /* NeosMouse.cpp in Sources */,
 				5080501825873EC9004FE1F5 /* ExportDialog.swift in Sources */,
 				504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */,

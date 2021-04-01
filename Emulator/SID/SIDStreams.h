@@ -19,7 +19,7 @@ typedef struct { float left; float right; } SamplePair;
 class StereoStream : public RingBuffer < SamplePair, 12288 > {
     
     // Mutex for synchronizing read / write accesses
-    Mutex mutex;
+    util::Mutex mutex;
 
     
     //

@@ -11,6 +11,8 @@
 
 #include <pthread.h>
 
+namespace util {
+
 class Mutex
 {
     pthread_mutex_t mutex;
@@ -24,14 +26,29 @@ public:
     int unlock();
 };
 
+class ReentrantMutex
+{
+    pthread_mutex_t mutex;
+
+public:
+    
+    ReentrantMutex();
+    ~ReentrantMutex();
+    
+    int lock();
+    int unlock();
+};
+
 class AutoMutex
 {
-    Mutex &mutex;
+    ReentrantMutex &mutex;
 
 public:
 
     bool active = true;
 
-    AutoMutex(Mutex &ref) : mutex(ref) { mutex.lock(); }
+    AutoMutex(ReentrantMutex &ref) : mutex(ref) { mutex.lock(); }
     ~AutoMutex() { mutex.unlock(); }
 };
+
+}

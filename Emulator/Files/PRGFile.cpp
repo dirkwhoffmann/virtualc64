@@ -31,8 +31,6 @@ PRGFile::makeWithFileSystem(FSDevice &fs)
     unsigned item = 0;
     usize itemSize = fs.fileSize(item);
 
-    debug(FILE_DEBUG, "Creating PRG archive...\n");
-
     // Only proceed if the requested file exists
     if (fs.numFiles() <= item) throw VC64Error(ERROR_FS_HAS_NO_FILES);
         
