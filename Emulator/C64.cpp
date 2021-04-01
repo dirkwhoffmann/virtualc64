@@ -9,6 +9,7 @@
 
 #include "config.h"
 #include "C64.h"
+#include "Checksum.h"
 
 //
 // Emulator thread
@@ -1207,13 +1208,13 @@ C64::romCRC32(RomType type) const
     switch (type) {
             
         case ROM_TYPE_BASIC:
-            return hasRom(ROM_TYPE_BASIC)  ? crc32(mem.rom + 0xA000, 0x2000) : 0;
+            return hasRom(ROM_TYPE_BASIC)  ? util::crc32(mem.rom + 0xA000, 0x2000) : 0;
         case ROM_TYPE_CHAR:
-            return hasRom(ROM_TYPE_CHAR)   ? crc32(mem.rom + 0xD000, 0x1000) : 0;
+            return hasRom(ROM_TYPE_CHAR)   ? util::crc32(mem.rom + 0xD000, 0x1000) : 0;
         case ROM_TYPE_KERNAL:
-            return hasRom(ROM_TYPE_KERNAL) ? crc32(mem.rom + 0xE000, 0x2000) : 0;
+            return hasRom(ROM_TYPE_KERNAL) ? util::crc32(mem.rom + 0xE000, 0x2000) : 0;
         case ROM_TYPE_VC1541:
-            return hasRom(ROM_TYPE_VC1541) ? crc32(drive8.mem.rom, 0x4000) : 0;
+            return hasRom(ROM_TYPE_VC1541) ? util::crc32(drive8.mem.rom, 0x4000) : 0;
         default:
             assert(false);
     }
@@ -1225,13 +1226,13 @@ C64::romFNV64(RomType type) const
     switch (type) {
             
         case ROM_TYPE_BASIC:
-            return hasRom(ROM_TYPE_BASIC)  ? fnv_1a_64(mem.rom + 0xA000, 0x2000) : 0;
+            return hasRom(ROM_TYPE_BASIC)  ? util::fnv_1a_64(mem.rom + 0xA000, 0x2000) : 0;
         case ROM_TYPE_CHAR:
-            return hasRom(ROM_TYPE_CHAR)   ? fnv_1a_64(mem.rom + 0xD000, 0x1000) : 0;
+            return hasRom(ROM_TYPE_CHAR)   ? util::fnv_1a_64(mem.rom + 0xD000, 0x1000) : 0;
         case ROM_TYPE_KERNAL:
-            return hasRom(ROM_TYPE_KERNAL) ? fnv_1a_64(mem.rom + 0xE000, 0x2000) : 0;
+            return hasRom(ROM_TYPE_KERNAL) ? util::fnv_1a_64(mem.rom + 0xE000, 0x2000) : 0;
         case ROM_TYPE_VC1541:
-            return hasRom(ROM_TYPE_VC1541) ? fnv_1a_64(drive8.mem.rom, 0x4000) : 0;
+            return hasRom(ROM_TYPE_VC1541) ? util::fnv_1a_64(drive8.mem.rom, 0x4000) : 0;
         default:
             assert(false);
     }

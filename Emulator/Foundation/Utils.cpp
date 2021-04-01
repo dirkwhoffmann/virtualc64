@@ -262,6 +262,7 @@ streamLength(std::istream &stream)
     return (usize)(end - beg);
 }
 
+/*
 u32
 fnv_1a_32(const u8 *addr, usize size)
 {
@@ -315,3 +316,4 @@ crc32forByte(u32 r)
         r = (r & 1? 0: (u32)0xEDB88320L) ^ r >> 1;
     return r ^ (u32)0xFF000000L;
 }
+*/

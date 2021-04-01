@@ -18,6 +18,7 @@
 #include "P00File.h"
 #include "D64File.h"
 #include "G64File.h"
+#include "Checksum.h"
 
 AnyFile::AnyFile(usize capacity)
 {
@@ -45,7 +46,7 @@ AnyFile::getName() const
 u64
 AnyFile::fnv() const
 {
-    return data ? fnv_1a_64(data, size) : 0;    
+    return data ? util::fnv_1a_64(data, size) : 0;
 }
 
 void

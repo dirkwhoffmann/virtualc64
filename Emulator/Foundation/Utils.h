@@ -192,6 +192,7 @@ usize streamLength(std::istream &stream);
 // Computing checksums
 //
 
+/*
 // Returns the FNV-1a seed value
 inline u32 fnv_1a_init32() { return 0x811c9dc5; }
 inline u64 fnv_1a_init64() { return 0xcbf29ce484222325; }
@@ -207,3 +208,4 @@ u64 fnv_1a_64(const u8 *addr, usize size);
 // Computes a CRC-32 checksum for a given buffer
 u32 crc32(const u8 *addr, usize size);
 u32 crc32forByte(u32 r);
+*/

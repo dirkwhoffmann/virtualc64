@@ -10,11 +10,7 @@
 #include "config.h"
 #include "CRTFile.h"
 #include "Cartridge.h"
-
-/*
-const u8 CRTFile::magicBytes[] = {
-    'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ' };
-*/
+#include "Checksum.h"
 
 bool
 CRTFile::isCompatibleName(const std::string &name)
@@ -113,7 +109,7 @@ CRTFile::repair()
     // Individual errors
     //
     
-    switch (fnv_1a_64(data, size)) {
+    switch (util::fnv_1a_64(data, size)) {
 
         case 0xb2a479a5a2ee6cd5: // Mikro Assembler
 
