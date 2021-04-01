@@ -18,7 +18,6 @@
 
 #include "CartridgeTypes.h"
 #include "CIATypes.h"
-#include "CPUTypes.h"
 #include "DriveTypes.h"
 #include "DiskTypes.h"
 #include "FileTypes.h"

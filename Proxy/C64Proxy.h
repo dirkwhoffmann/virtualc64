@@ -12,6 +12,7 @@
 
 #include "C64Constants.h"
 #include "ErrorTypes.h"
+#include "CIATypes.h"
 #include "CPUTypes.h"
 #include "C64PublicTypes.h"
 

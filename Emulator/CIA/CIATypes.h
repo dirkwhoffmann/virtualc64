@@ -9,9 +9,18 @@
 
 #pragma once
 
-#include "CIAPublicTypes.h"
+#include "Aliases.h"
 #include "Reflection.h"
 
+enum_long(CIAREV)
+{
+    MOS_6526,
+    MOS_8521,
+    CIAREV_COUNT
+};
+typedef CIAREV CIARevision;
+
+#ifdef __cplusplus
 struct CIARevisionEnum : util::Reflection<CIARevisionEnum, CIARevision> {
     
     static bool isValid(long value)
@@ -31,7 +40,31 @@ struct CIARevisionEnum : util::Reflection<CIARevisionEnum, CIARevision> {
         return "";
     }
 };
+#endif
 
+enum_long(CIAREG)
+{
+    CIAREG_PRA,
+    CIAREG_PRB,
+    CIAREG_DDRA,
+    CIAREG_DDRB,
+    CIAREG_TALO,
+    CIAREG_TAHI,
+    CIAREG_TBLO,
+    CIAREG_TBHI,
+    CIAREG_TODTHS,
+    CIAREG_TODSEC,
+    CIAREG_TODMIN,
+    CIAREG_TODHR,
+    CIAREG_SDR,
+    CIAREG_ICR,
+    CIAREG_CRA,
+    CIAREG_CRB,
+    CIAREG_COUNT
+};
+typedef CIAREG CIAReg;
+
+#ifdef __cplusplus
 struct CIARegEnum : util::Reflection<CIARegEnum, CIAReg> {
 
     static bool isValid(long value)
@@ -65,3 +98,83 @@ struct CIARegEnum : util::Reflection<CIARegEnum, CIAReg> {
         return "???";
     }
 };
+#endif
+
+
+//
+// Structures
+//
+
+typedef struct
+{
+    CIARevision revision;
+    bool timerBBug;
+}
+CIAConfig;
+
+typedef union
+{
+    struct {
+        u8 tenth;
+        u8 sec;
+        u8 min;
+        u8 hour;
+    };
+    u32 value;
+}
+TimeOfDay;
+
+typedef struct
+{
+    TimeOfDay time;
+    TimeOfDay latch;
+    TimeOfDay alarm;
+}
+TODInfo;
+
+typedef struct
+{
+    struct {
+        u8 port;
+        u8 reg;
+        u8 dir;
+    } portA;
+
+    struct {
+        u8 port;
+        u8 reg;
+        u8 dir;
+    } portB;
+
+    struct {
+        u16 count;
+        u16 latch;
+        bool running;
+        bool toggle;
+        bool pbout;
+        bool oneShot;
+    } timerA;
+
+    struct {
+        u16 count;
+        u16 latch;
+        bool running;
+        bool toggle;
+        bool pbout;
+        bool oneShot;
+    } timerB;
+
+    u8 sdr;
+    u8 ssr;
+    u8 icr;
+    u8 imr;
+    bool intLine;
+    
+    TODInfo tod;
+    bool todIntEnable;
+    
+    Cycle idleSince;
+    Cycle idleTotal;
+    double idlePercentage;
+}
+CIAInfo;

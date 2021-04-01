@@ -20,7 +20,7 @@
 #include "Aliases.h"
 
 #include "CartridgePublicTypes.h"
-#include "CIAPublicTypes.h"
+#include "CIATypes.h"
 #include "DiskPublicTypes.h"
 #include "DrivePublicTypes.h"
 #include "FilePublicTypes.h"
