@@ -547,7 +547,6 @@
 		5080501725873EC9004FE1F5 /* ExportDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportDialog.swift; sourceTree = "<group>"; };
 		508050192587A16D004FE1F5 /* FSDescriptors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDescriptors.cpp; sourceTree = "<group>"; };
 		5080501A2587A16D004FE1F5 /* FSDescriptors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSDescriptors.h; sourceTree = "<group>"; };
-		5080501D2587A1B0004FE1F5 /* FSPublicTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSPublicTypes.h; sourceTree = "<group>"; };
 		508081E725110FFE0084B060 /* Dinamic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Dinamic.cpp; sourceTree = "<group>"; };
 		508081E825110FFE0084B060 /* Dinamic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Dinamic.h; sourceTree = "<group>"; };
 		508081EA2511206D0084B060 /* StructuredBasic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StructuredBasic.cpp; sourceTree = "<group>"; };
@@ -1271,7 +1270,6 @@
 		5080501C2587A177004FE1F5 /* FileSystems */ = {
 			isa = PBXGroup;
 			children = (
-				5080501D2587A1B0004FE1F5 /* FSPublicTypes.h */,
 				50B1A61B25A20DFB00201A2C /* FSTypes.h */,
 				5080501A2587A16D004FE1F5 /* FSDescriptors.h */,
 				508050192587A16D004FE1F5 /* FSDescriptors.cpp */,

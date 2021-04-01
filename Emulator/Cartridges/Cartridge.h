@@ -10,7 +10,7 @@
 #pragma once
 
 #include "C64Component.h"
-#include "CartridgePublicTypes.h"
+#include "CartridgeTypes.h"
 #include "CartridgeRom.h"
 #include "CRTFile.h"
 

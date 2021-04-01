@@ -10,7 +10,7 @@
 #pragma once
 
 #include "C64Component.h"
-#include "CartridgePublicTypes.h"
+#include "CartridgeTypes.h"
 
 /* This class implements a Flash Rom module of type Am29F040B. Flash Roms
  * of this type are used, e.g., by the EasyFlash cartridge. The implementation

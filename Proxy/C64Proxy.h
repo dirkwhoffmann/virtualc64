@@ -12,6 +12,7 @@
 
 #include "C64Constants.h"
 #include "ErrorTypes.h"
+#include "CartridgeTypes.h"
 #include "CIATypes.h"
 #include "CPUTypes.h"
 #include "FileTypes.h"
