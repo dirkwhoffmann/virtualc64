@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "Errors.h"
 #include "C64PublicTypes.h"
 #include "Utils.h"
 #include "Concurrency.h"

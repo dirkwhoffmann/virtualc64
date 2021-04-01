@@ -140,6 +140,8 @@
 		50549B45257D1A6C006FE39C /* C64Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B44257D1A6C006FE39C /* C64Constants.cpp */; };
 		50549B49257D288E006FE39C /* SIDStreams.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B47257D288E006FE39C /* SIDStreams.cpp */; };
 		5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5055A83E1BC7996900399A20 /* MetalKit.framework */; };
+		5055D5B1261585EA005D3DA6 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5AF261585EA005D3DA6 /* Exception.cpp */; };
+		5055D5B42615886E005D3DA6 /* Errors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B32615886E005D3DA6 /* Errors.cpp */; };
 		505D492821C155DD00A7C575 /* RomConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505D492721C155DD00A7C575 /* RomConf.swift */; };
 		505F8FE72580BD780066ACE4 /* AudioConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F8FE62580BD780066ACE4 /* AudioConf.swift */; };
 		505F8FE92582435E0066ACE4 /* PeripheralsConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F8FE82582435E0066ACE4 /* PeripheralsConf.swift */; };
@@ -514,6 +516,10 @@
 		50549B47257D288E006FE39C /* SIDStreams.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SIDStreams.cpp; sourceTree = "<group>"; };
 		50549B48257D288E006FE39C /* SIDStreams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIDStreams.h; sourceTree = "<group>"; };
 		5055A83E1BC7996900399A20 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		5055D5AF261585EA005D3DA6 /* Exception.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Exception.cpp; sourceTree = "<group>"; };
+		5055D5B0261585EA005D3DA6 /* Exception.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Exception.h; sourceTree = "<group>"; };
+		5055D5B226158849005D3DA6 /* ErrorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ErrorTypes.h; sourceTree = "<group>"; };
+		5055D5B32615886E005D3DA6 /* Errors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Errors.cpp; sourceTree = "<group>"; };
 		505D492721C155DD00A7C575 /* RomConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomConf.swift; sourceTree = "<group>"; };
 		505F8FE62580BD780066ACE4 /* AudioConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioConf.swift; sourceTree = "<group>"; };
 		505F8FE82582435E0066ACE4 /* PeripheralsConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralsConf.swift; sourceTree = "<group>"; };
@@ -790,6 +796,8 @@
 				50CCC308256FAC870052619A /* Concurrency.cpp */,
 				50F062E4258DFC2A009A6B21 /* Debug.h */,
 				500FAA652613790A0062488E /* Debug.cpp */,
+				5055D5B0261585EA005D3DA6 /* Exception.h */,
+				5055D5AF261585EA005D3DA6 /* Exception.cpp */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1282,7 +1290,9 @@
 				50A2D7AE24AF944500671F38 /* C64Constants.h */,
 				50549B44257D1A6C006FE39C /* C64Constants.cpp */,
 				50A2D7B024AF94B400671F38 /* Aliases.h */,
+				5055D5B226158849005D3DA6 /* ErrorTypes.h */,
 				500C7C43259FC09B00F5CC1F /* Errors.h */,
+				5055D5B32615886E005D3DA6 /* Errors.cpp */,
 				504C42F224AF29AB00E69CAE /* Utils.h */,
 				504C42EF24AF29AB00E69CAE /* Utils.cpp */,
 				50549B46257D1B6A006FE39C /* Buffers.h */,
@@ -1557,6 +1567,7 @@
 				5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */,
 				5002FA7B21C2650600DA4BBC /* HardwareConf.swift in Sources */,
 				504C435B24AF29AC00E69CAE /* StarDos.cpp in Sources */,
+				5055D5B42615886E005D3DA6 /* Errors.cpp in Sources */,
 				5002FA8121C2654B00DA4BBC /* ControlsPrefs.swift in Sources */,
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
 				500EA6C724B09037009AA7D7 /* C64Component.cpp in Sources */,
@@ -1635,6 +1646,7 @@
 				506D4D0D20B331A00093C5C6 /* MyFormatter.swift in Sources */,
 				5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */,
 				50A9A088250DE90900723D32 /* PageFox.cpp in Sources */,
+				5055D5B1261585EA005D3DA6 /* Exception.cpp in Sources */,
 				504C436E24AF29AC00E69CAE /* Epyx.cpp in Sources */,
 				505F8FE72580BD780066ACE4 /* AudioConf.swift in Sources */,
 				504C43A924AF29AC00E69CAE /* Drive.cpp in Sources */,

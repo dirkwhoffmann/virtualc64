@@ -72,7 +72,7 @@ typedef i32 HeadPos;
  * lists, since the latter cause the compiler to embed unwanted runtime checks
  * in the code.
  */
-#define throws
+// #define throws
 
 
 //

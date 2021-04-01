@@ -6,20 +6,3 @@
 //
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
-
-#pragma once
-
-#include "ErrorTypes.h"
-#include "Exception.h"
-
-struct VC64Error : public std::exception
-{
-    ErrorCode errorCode;
-    
-    VC64Error(ErrorCode code) : errorCode(code) { }
-    
-    const char *what() const throw() override {
-
-        return  ErrorCodeEnum::key(errorCode);
-    }
-};

@@ -9,6 +9,8 @@
 
 #pragma once
 
+#ifdef __cplusplus
+
 #include "Aliases.h"
 #include <stdio.h>
 
@@ -41,3 +43,5 @@ template <class T, typename E> struct Reflection {
         return false;
     }
 };
+
+#endif

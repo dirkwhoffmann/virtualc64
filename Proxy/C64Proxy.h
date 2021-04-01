@@ -11,6 +11,7 @@
 #import <MetalKit/MetalKit.h>
 
 #include "C64Constants.h"
+#include "ErrorTypes.h"
 #include "C64PublicTypes.h"
 
 //
