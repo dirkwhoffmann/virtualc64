@@ -15,8 +15,8 @@
 #pragma once
 
 // #include "C64Types.h"
-#include "CartridgeTypes.h"
-#include "CIATypes.h"
+// #include "CartridgeTypes.h"
+// #include "CIATypes.h"
 #include "DriveTypes.h"
 #include "DiskTypes.h"
 #include "FileTypes.h"

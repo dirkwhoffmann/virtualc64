@@ -9,9 +9,10 @@
 
 #pragma once
 
+#include "CIATypes.h"
 #include "C64Component.h"
 
-class CIA;
+// class CIA;
 
 inline u8 incBCD(u8 x)
 {
@@ -25,7 +26,7 @@ inline u8 incBCD(u8 x)
  */
 class TOD : public C64Component {
     
-    friend CIA;
+    friend class CIA;
     
 private:
     
@@ -33,7 +34,7 @@ private:
     TODInfo info;
     
     // Reference to the connected CIA
-    CIA &cia;
+    class CIA &cia;
     
     // Time of day clock
 	TimeOfDay tod;

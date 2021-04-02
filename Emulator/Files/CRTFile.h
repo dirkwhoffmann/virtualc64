@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include "CartridgeTypes.h"
+
 /* For details about the .CRT format,
  * see: http://vice-emu.sourceforge.net/vice_16.html
  *      http://ist.uwaterloo.ca/~schepers/formats/CRT.TXT
