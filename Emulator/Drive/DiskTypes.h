@@ -223,14 +223,6 @@ union DiskData
     };
     
     u8 track[43][2 * maxBytesOnTrack];
-
-    template <class T>
-    void applyToItems(T& worker)
-    {
-        worker
-        
-        << track;
-    }
     
     template <class W>
     void operator<<(W& worker)
@@ -260,14 +252,6 @@ union DiskLength
     
     u16 track[43][2];
 
-    template <class T>
-    void applyToItems(T& worker)
-    {
-        worker
-        
-        << track;
-    }
-    
     template <class W>
     void operator<<(W& worker)
     {

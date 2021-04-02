@@ -10,9 +10,6 @@
 #include "config.h"
 #include "VICII.h"
 #include "C64.h"
-#include "C64Memory.h"
-#include "CIA.h"
-#include "ExpansionPort.h"
 
 void
 VICII::setUltimax(bool value) {

@@ -64,16 +64,7 @@ public:
     //
     
 public:
-        
-    template <class W>
-    void applyToItems(W& worker)
-    {
-        worker
-        
-        << pipeline
-        << timeStamp;
-    }
-    
+            
     template <class W>
     void operator<<(W& worker)
     {

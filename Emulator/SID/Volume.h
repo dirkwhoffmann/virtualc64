@@ -7,6 +7,9 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#include "Aliases.h"
+#include "Serialization.h"
+
 #pragma once
 
 /* An object of this class stores a single volume value and provides the means
@@ -26,17 +29,6 @@ template <typename T> struct AudioVolume {
     T delta[2] = { 1.0, 1.0 };
 
     // Serializing
-    template <class W>
-    void applyToItems(W& worker)
-    {
-        worker
-        
-        << current
-        << normal
-        << target
-        << delta;
-    }
-    
     template <class W>
     void operator<<(W& worker)
     {

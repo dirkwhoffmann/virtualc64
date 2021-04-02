@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "VICII.h"
 #include "C64.h"
 
 /* All cycles are processed in this order:

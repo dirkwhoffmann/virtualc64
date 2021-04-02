@@ -505,7 +505,6 @@
 		5052A7BF25A0703D00E62EDD /* CPUTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUTypes.h; sourceTree = "<group>"; };
 		5052A7C025A0AC0700E62EDD /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		50549B44257D1A6C006FE39C /* Constants.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Constants.cpp; sourceTree = "<group>"; };
-		50549B46257D1B6A006FE39C /* Buffers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffers.h; sourceTree = "<group>"; };
 		50549B47257D288E006FE39C /* SIDStreams.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SIDStreams.cpp; sourceTree = "<group>"; };
 		50549B48257D288E006FE39C /* SIDStreams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIDStreams.h; sourceTree = "<group>"; };
 		5055A83E1BC7996900399A20 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
@@ -1285,7 +1284,6 @@
 				5055D5B226158849005D3DA6 /* ErrorTypes.h */,
 				500C7C43259FC09B00F5CC1F /* Error.h */,
 				5055D5B32615886E005D3DA6 /* Error.cpp */,
-				50549B46257D1B6A006FE39C /* Buffers.h */,
 				50F420C9250BA3460043DE56 /* Colors.h */,
 				50F420C8250BA3460043DE56 /* Colors.cpp */,
 				504C42EC24AF29AB00E69CAE /* C64Object.h */,

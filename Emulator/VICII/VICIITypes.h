@@ -492,23 +492,6 @@ struct VICIIRegisters
     u8  sprExpandX;  // D01D
     u8  colors[15];  // D020 - D02E
     
-    template <class T>
-    void applyToItems(T& worker)
-    {        
-        worker
-        
-        << sprX
-        << sprY
-        << ctrl1
-        << sprEnable
-        << ctrl2
-        << sprExpandY
-        << sprPriority
-        << sprMC
-        << sprExpandX
-        << colors;
-    }
-    
     template <class W>
     void operator<<(W& worker)
     {
@@ -551,20 +534,6 @@ struct SpriteSR
      * (synchronized with mcFlop).
      */
     u8 colBits;
-    
-    template <class T>
-    void applyToItems(T& worker)
-    {
-        worker
-        
-        << data
-        << chunk1
-        << chunk2
-        << chunk3
-        << mcFlop
-        << expFlop
-        << colBits;
-    }
     
     template <class W>
     void operator<<(W& worker)
