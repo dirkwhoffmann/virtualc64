@@ -8,11 +8,12 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "EasyFlash.h"
 #include "C64.h"
 
 EasyFlash::EasyFlash(C64 &ref) : Cartridge(ref)
 {
-    subComponents = vector <HardwareComponent *> {
+    subComponents = std::vector <HardwareComponent *> {
         
         &flashRomL,
         &flashRomH

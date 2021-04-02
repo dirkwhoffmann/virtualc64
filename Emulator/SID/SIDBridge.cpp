@@ -8,11 +8,12 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "SIDBridge.h"
 #include "C64.h"
 
 SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
 {        
-    subComponents = vector<HardwareComponent *> {
+    subComponents = std::vector<HardwareComponent *> {
         
         &resid[0],
         &resid[1],

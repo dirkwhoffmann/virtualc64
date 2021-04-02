@@ -9,6 +9,9 @@
 
 #pragma once
 
+#include "C64Component.h"
+#include "PortTypes.h"
+
 class Joystick : public C64Component {
     
     // Reference to the control port this device belongs to

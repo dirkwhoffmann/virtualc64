@@ -13,6 +13,7 @@
 #include "C64Object.h"
 #include "Serialization.h"
 #include "Concurrency.h"
+#include <vector>
 
 /* This class defines the base functionality of all hardware components. It
  * comprises functions for initializing, configuring, and serializing the
@@ -23,7 +24,7 @@ class HardwareComponent : public C64Object {
 public:
 
     // Sub components
-    vector<HardwareComponent *> subComponents;
+    std::vector<HardwareComponent *> subComponents;
     
 protected:
     

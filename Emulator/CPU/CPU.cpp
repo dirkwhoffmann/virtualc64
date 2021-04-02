@@ -9,11 +9,12 @@
 
 #include "config.h"
 #include "C64.h"
+#include "C64Component.h"
 
 template <typename M>
 CPU<M>::CPU(C64& ref, M& memref) : C64Component(ref), mem(memref)
 {
-    subComponents = vector<HardwareComponent *> {
+    subComponents = std::vector<HardwareComponent *> {
         
         &pport,
         &debugger

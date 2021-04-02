@@ -8,13 +8,14 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "Drive.h"
 #include "C64.h"
 
 Drive::Drive(DriveID id, C64 &ref) : C64Component(ref), deviceNr(id)
 {
     assert(deviceNr == DRIVE8 || deviceNr == DRIVE9);
 	
-    subComponents = vector <HardwareComponent *> {
+    subComponents = std::vector <HardwareComponent *> {
         
         &mem,
         &cpu,

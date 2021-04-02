@@ -10,6 +10,8 @@
 #pragma once
 
 #include "DriveTypes.h"
+#include "DriveMemory.h"
+#include "CPU.h"
 #include "VIA.h"
 #include "Disk.h"
 

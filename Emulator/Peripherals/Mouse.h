@@ -11,6 +11,7 @@
 
 #include "MouseTypes.h"
 #include "C64Component.h"
+#include "PortTypes.h"
 #include "Mouse1350.h"
 #include "Mouse1351.h"
 #include "NeosMouse.h"

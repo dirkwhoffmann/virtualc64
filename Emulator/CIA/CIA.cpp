@@ -8,11 +8,12 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "CIA.h"
 #include "C64.h"
 
 CIA::CIA(C64 &ref) : C64Component(ref)
 {    
-    subComponents = vector<HardwareComponent *> { &tod };
+    subComponents = std::vector<HardwareComponent *> { &tod };
     
     config.revision = MOS_6526;
     config.timerBBug = true;

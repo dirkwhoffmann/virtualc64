@@ -10,6 +10,7 @@
 #pragma once
 
 #include "Cartridge.h"
+#include "FlashRom.h"
 
 class EasyFlash : public Cartridge {
     

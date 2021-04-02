@@ -21,7 +21,7 @@
 #include <mutex>
 #include <queue>
 
-using std::vector;
+// using std::vector;
 using std::map;
 using std::pair;
 using std::swap;

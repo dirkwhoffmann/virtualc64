@@ -8,11 +8,12 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "Mouse.h"
 #include "C64.h"
 
 Mouse::Mouse(C64 &ref, ControlPort& pref) : C64Component(ref), port(pref)
 {
-    subComponents = vector<HardwareComponent *> {
+    subComponents = std::vector<HardwareComponent *> {
         
         &mouse1350,
         &mouse1351,

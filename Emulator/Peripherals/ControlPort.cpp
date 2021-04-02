@@ -8,13 +8,14 @@
 // -----------------------------------------------------------------------------
  
 #include "config.h"
+#include "ControlPort.h"
 #include "C64.h"
 
 ControlPort::ControlPort(C64 &ref, PortId id) : C64Component(ref), nr(id)
 {
     assert_enum(PortId, id);
     
-    subComponents = vector<HardwareComponent *> {
+    subComponents = std::vector<HardwareComponent *> {
         
         &mouse,
         &joystick

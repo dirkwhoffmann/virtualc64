@@ -29,11 +29,12 @@
  */
 
 #include "config.h"
+#include "FastSID.h"
 #include "C64.h"
 
 FastSID::FastSID(C64 &ref, SIDBridge &bridgeref, int n) : C64Component(ref), bridge(bridgeref), nr(n)
 {    
-    subComponents = vector<HardwareComponent *> {
+    subComponents = std::vector<HardwareComponent *> {
         
         &voice[0],
         &voice[1],

@@ -11,8 +11,6 @@
 
 #include "AnyCollection.h"
 
-using std::vector;
-
 class Folder : public AnyCollection {
     
     FSDevice *fs = nullptr;

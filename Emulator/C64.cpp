@@ -56,7 +56,7 @@ C64::C64()
 {
     trace(RUN_DEBUG, "Creating virtual C64 [%p]\n", this);
         
-    subComponents = vector<HardwareComponent *> {
+    subComponents = std::vector<HardwareComponent *> {
         
         &mem,
         &cpu,

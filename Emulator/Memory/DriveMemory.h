@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "DriveMemory.h"
+#include "C64Component.h"
 
 class DriveMemory : public C64Component {
     
