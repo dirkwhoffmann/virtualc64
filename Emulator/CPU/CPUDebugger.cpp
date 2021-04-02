@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "CPUDebugger.h"
 #include "C64.h"
 #include "IO.h"
 

@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "CPUTypes.h"
 #include "C64Component.h"
 
 // Base structure for a single breakpoint or watchpoint

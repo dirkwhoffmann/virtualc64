@@ -9,7 +9,6 @@
 
 #include "config.h"
 #include "MsgQueue.h"
-#include "C64Types.h"
 
 void
 MsgQueue::addListener(const void *listener, Callback *func)

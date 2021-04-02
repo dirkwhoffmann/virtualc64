@@ -9,8 +9,7 @@
 
 #include "config.h"
 #include "CPU.h"
-#include "C64Memory.h"
-#include "DriveMemory.h"
+#include "C64.h"
 
 template <typename M>
 CPU<M>::CPU(C64& ref, M& memref) : C64Component(ref), mem(memref)

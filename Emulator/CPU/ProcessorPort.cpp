@@ -9,10 +9,7 @@
 
 #include "config.h"
 #include "ProcessorPort.h"
-#include "C64Memory.h"
-#include "CPU.h"
-#include "Datasette.h"
-#include "VICII.h"
+#include "C64.h"
 
 void
 ProcessorPort::_dump() const

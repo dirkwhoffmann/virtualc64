@@ -31,6 +31,7 @@
 #include "config.h"
 #include "FastSID.h"
 #include "C64.h"
+#include <cmath>
 
 FastSID::FastSID(C64 &ref, SIDBridge &bridgeref, int n) : C64Component(ref), bridge(bridgeref), nr(n)
 {    
