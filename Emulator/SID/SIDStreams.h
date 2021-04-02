@@ -11,12 +11,13 @@
 
 #include "Buffers.h"
 #include "Concurrency.h"
+#include "RingBuffer.h"
 
-typedef RingBuffer<short, 2048> SampleStream;
+typedef util::RingBuffer<short, 2048> SampleStream;
 
 typedef struct { float left; float right; } SamplePair;
 
-class StereoStream : public RingBuffer < SamplePair, 12288 > {
+class StereoStream : public util::RingBuffer < SamplePair, 12288 > {
     
     // Mutex for synchronizing read / write accesses
     util::Mutex mutex;

@@ -80,20 +80,6 @@ MsgQueue::put(MsgType type, long data)
 }
 
 void
-MsgQueue::dump()
-{
-    for (int i = queue.begin(); i != queue.end(); i = queue.next(i)) {
-        msg("%02d", i); dump(queue.elements[i]);
-    }
-}
-
-void
-MsgQueue::dump(const Message &msg)
-{
-    msg("%s [%ld]\n", MsgTypeEnum::key(msg.type), msg.data);
-}
-
-void
 MsgQueue::propagate(const Message &msg) const
 {
     for (auto i = listeners.begin(); i != listeners.end(); i++) {

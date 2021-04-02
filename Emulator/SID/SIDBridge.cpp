@@ -746,8 +746,8 @@ SIDBridge::executeUntil(Cycle targetCycle)
 {
     assert(targetCycle >= cycles);
     
-    usize missingCycles  = targetCycle - cycles;
-    usize consumedCycles = executeCycles(missingCycles);
+    isize missingCycles  = targetCycle - cycles;
+    isize consumedCycles = executeCycles(missingCycles);
 
     cycles += consumedCycles;
     
@@ -757,7 +757,7 @@ SIDBridge::executeUntil(Cycle targetCycle)
 }
 
 usize
-SIDBridge::executeCycles(usize numCycles)
+SIDBridge::executeCycles(isize numCycles)
 {
     isize numSamples;
     
@@ -820,7 +820,7 @@ SIDBridge::executeCycles(usize numCycles)
 }
 
 void
-SIDBridge::mixSingleSID(usize numSamples)
+SIDBridge::mixSingleSID(isize numSamples)
 {    
     stream.lock();
     
@@ -833,7 +833,7 @@ SIDBridge::mixSingleSID(usize numSamples)
           vol[0], pan[0], volL.current, volR.current);
 
     // Convert sound samples to floating point values and write into ringbuffer
-    for (usize i = 0; i < numSamples; i++) {
+    for (isize i = 0; i < numSamples; i++) {
         
         // Read SID sample from ring buffer
         float ch0 = (float)sidStream[0].read() * vol[0];
@@ -856,7 +856,7 @@ SIDBridge::mixSingleSID(usize numSamples)
 }
         
 void
-SIDBridge::mixMultiSID(usize numSamples)
+SIDBridge::mixMultiSID(isize numSamples)
 {
     stream.lock();
     
@@ -869,7 +869,7 @@ SIDBridge::mixMultiSID(usize numSamples)
           vol[0], pan[0], volL.current, volR.current);
 
     // Convert sound samples to floating point values and write into ringbuffer
-    for (usize i = 0; i < numSamples; i++) {
+    for (isize i = 0; i < numSamples; i++) {
         
         float ch0, ch1, ch2, ch3, l, r;
         
@@ -994,7 +994,7 @@ SIDBridge::ignoreNextUnderOrOverflow()
 }
 
 void
-SIDBridge::copyMono(float *target, usize n)
+SIDBridge::copyMono(float *target, isize n)
 {
     stream.lock();
     
@@ -1008,7 +1008,7 @@ SIDBridge::copyMono(float *target, usize n)
 }
 
 void
-SIDBridge::copyStereo(float *target1, float *target2, usize n)
+SIDBridge::copyStereo(float *target1, float *target2, isize n)
 {
     stream.lock();
     
@@ -1022,7 +1022,7 @@ SIDBridge::copyStereo(float *target1, float *target2, usize n)
 }
 
 void
-SIDBridge::copyInterleaved(float *target, usize n)
+SIDBridge::copyInterleaved(float *target, isize n)
 {
     stream.lock();
     

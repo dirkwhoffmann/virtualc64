@@ -222,7 +222,7 @@ ReSID::poke(u16 addr, u8 value)
 }
 
 i64
-ReSID::executeCycles(usize numCycles, SampleStream &stream)
+ReSID::executeCycles(isize numCycles, SampleStream &stream)
 {
     short buf[2049];
     usize buflength = 2048;
@@ -233,7 +233,7 @@ ReSID::executeCycles(usize numCycles, SampleStream &stream)
     }
     
     // Let reSID compute sound samples
-    usize samples = 0;
+    isize samples = 0;
     reSID::cycle_count cycles = (reSID::cycle_count)numCycles;
     while (cycles) {
         int resid = sid->clock(cycles, buf + samples, int(buflength) - int(samples));
@@ -248,13 +248,13 @@ ReSID::executeCycles(usize numCycles, SampleStream &stream)
     }
     
     // Write samples into ringbuffer
-    if (samples) { for (usize i = 0; i < samples; i++) stream.write(buf[i]); }
+    if (samples) { for (isize i = 0; i < samples; i++) stream.write(buf[i]); }
     
     return samples;
 }
 
 i64
-ReSID::executeCycles(usize numCycles)
+ReSID::executeCycles(isize numCycles)
 {
     return executeCycles(numCycles, bridge.sidStream[nr]);
 }

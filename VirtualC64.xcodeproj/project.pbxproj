@@ -566,6 +566,7 @@
 		50A9A087250DE90900723D32 /* PageFox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageFox.h; sourceTree = "<group>"; };
 		50AA3EBF2616F60800C96EDB /* MemUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemUtils.h; sourceTree = "<group>"; };
 		50AA3EC02616F62500C96EDB /* MemUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MemUtils.cpp; sourceTree = "<group>"; };
+		50AA3EC2261718D700C96EDB /* RingBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RingBuffer.h; sourceTree = "<group>"; };
 		50ACF4D9256EB43B003B5690 /* Oscillator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Oscillator.cpp; sourceTree = "<group>"; };
 		50ACF4DA256EB43B003B5690 /* Oscillator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Oscillator.h; sourceTree = "<group>"; };
 		50AFE0D32616E93A00D71E75 /* HardwareComponentTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HardwareComponentTypes.h; sourceTree = "<group>"; };
@@ -784,6 +785,7 @@
 				500FAA63261376C50062488E /* Types.h */,
 				500FAA64261377050062488E /* Macros.h */,
 				50E806BE25A1C2B800F08732 /* Reflection.h */,
+				50AA3EC2261718D700C96EDB /* RingBuffer.h */,
 				5093D6A824B19E9200BDF924 /* Serialization.h */,
 				504C42F024AF29AB00E69CAE /* TimeDelayed.h */,
 				50DD829F2614D47E00B84EB3 /* Chrono.h */,

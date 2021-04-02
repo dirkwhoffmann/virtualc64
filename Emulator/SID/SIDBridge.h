@@ -314,13 +314,13 @@ public:
     void executeUntil(Cycle targetCycle);
 
     // Executes SID for a certain number of CPU cycles
-	usize executeCycles(usize numCycles);
+	usize executeCycles(isize numCycles);
 
 private:
     
     // Called by executeCycles to produce the final stereo stream
-    void mixSingleSID(usize numSamples);
-    void mixMultiSID(usize numSamples);
+    void mixSingleSID(isize numSamples);
+    void mixMultiSID(isize numSamples);
 
     
     //
@@ -329,9 +329,9 @@ private:
     
 public:
     
-    void copyMono(float *buffer, usize n);
-    void copyStereo(float *left, float *right, usize n);
-    void copyInterleaved(float *buffer, usize n);
+    void copyMono(float *buffer, isize n);
+    void copyStereo(float *left, float *right, isize n);
+    void copyInterleaved(float *buffer, isize n);
 
     
      

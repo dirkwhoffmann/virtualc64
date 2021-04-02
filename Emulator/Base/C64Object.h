@@ -10,9 +10,6 @@
 #pragma once
 
 #include "Error.h"
-#include "C64Types.h"
-#include "Concurrency.h"
-#include "Colors.h"
 
 /* Base class for all C64 objects. This class contains a textual description
  * of the object and offers various functions for printing debug messages and

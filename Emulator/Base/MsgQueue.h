@@ -11,11 +11,12 @@
 
 #include "MsgQueueTypes.h"
 #include "HardwareComponent.h"
+#include "RingBuffer.h"
 
 class MsgQueue : public HardwareComponent {
         
     // Ring buffer storing all pending messages
-    RingBuffer<Message, 64> queue;
+    util::RingBuffer<Message, 64> queue;
             
     // List of registered listeners
     std::vector<std::pair <const void *, Callback *> > listeners;
@@ -56,10 +57,6 @@ public:
     // Writes a message into the queue and propagates it to all listeners
     void put(MsgType type, long data = 0);
     
-    // Dumps the current contents of the message queue to the console
-    void dump();
-    void dump(const Message &msg);
-
 private:
     
     // Used by 'put' to propagates a single message to all registered listeners

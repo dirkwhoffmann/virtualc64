@@ -10,6 +10,7 @@
 #pragma once
 
 #include "AnyFile.h"
+#include "C64Types.h"
 
 class RomFile : public AnyFile {
     

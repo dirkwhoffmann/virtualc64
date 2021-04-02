@@ -11,10 +11,6 @@
 
 #include "HardwareComponent.h"
 
-//
-// Forward declarations of all components
-//
-
 class C64;
 class C64Memory;
 class DriveMemory;

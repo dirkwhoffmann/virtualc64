@@ -11,9 +11,10 @@
 
 #include "VICIITypes.h"
 #include "C64Component.h"
-#include "TimeDelayed.h"
-#include "MemoryTypes.h"
+#include "Colors.h"
 #include "Constants.h"
+#include "MemoryTypes.h"
+#include "TimeDelayed.h"
 
 class VICII : public C64Component {
 
