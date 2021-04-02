@@ -12,8 +12,6 @@
 #include "CIATypes.h"
 #include "C64Component.h"
 
-// class CIA;
-
 inline u8 incBCD(u8 x)
 {
     return ((x & 0xF) == 9) ? (x & 0xF0) + 0x10 : (x & 0xF0) + ((x + 1) & 0xF);

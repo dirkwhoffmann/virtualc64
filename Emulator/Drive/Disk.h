@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "DiskTypes.h"
 #include "C64Component.h"
 #include "PETName.h"
 

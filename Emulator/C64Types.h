@@ -14,15 +14,11 @@
 
 #pragma once
 
-// #include "C64Types.h"
-// #include "CartridgeTypes.h"
-// #include "CIATypes.h"
-#include "DriveTypes.h"
-#include "DiskTypes.h"
+// #include "DiskTypes.h"
 #include "FileTypes.h"
 #include "FSTypes.h"
-#include "MemoryTypes.h"
-#include "MsgQueueTypes.h"
+// #include "MemoryTypes.h"
+// #include "MsgQueueTypes.h"
 #include "MouseTypes.h"
 #include "PortTypes.h"
 #include "SIDTypes.h"

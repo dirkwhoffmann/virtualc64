@@ -9,6 +9,10 @@
 
 #pragma once
 
+#include "DriveTypes.h"
+#include "VIA.h"
+#include "Disk.h"
+
 /*
  * This implementation is based on the following two documents written
  * by Ruud Baltissen. Ruud, thank you for this excellent work!
@@ -17,9 +21,6 @@
  * Schematics:  http://www.baltissen.org/images/1540.gif
  */
  
-#include "VIA.h"
-#include "Disk.h"
-
 class Drive : public C64Component {
     
     //

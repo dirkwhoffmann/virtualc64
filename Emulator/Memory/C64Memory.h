@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "C64Memory.h"
+#include "MemoryTypes.h"
 
 class C64Memory : public C64Component {
 

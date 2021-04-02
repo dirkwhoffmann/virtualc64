@@ -10,6 +10,7 @@
 #pragma once
 
 #include "C64Object.h"
+#include "DiskTypes.h"
 #include "FSTypes.h"
 
 /* To create a FSDevice, the layout parameters of the represendet device have
