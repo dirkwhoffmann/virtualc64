@@ -217,7 +217,7 @@ C64::getConfigItem(Option option, long id) const
         case OPT_DRIVE_CONNECT:
         case OPT_DRIVE_POWER_SWITCH:
         {
-            assert(isDriveID(id));
+            assert(id == DRIVE8 || id == DRIVE9);
             const Drive &drive = id == DRIVE8 ? drive8 : drive9;
             return drive.getConfigItem(option);
         }

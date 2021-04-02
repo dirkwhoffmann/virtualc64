@@ -9,13 +9,28 @@
 
 #pragma once
 
-#include "DrivePublicTypes.h"
+#include "Aliases.h"
 #include "Reflection.h"
 
 //
-// Reflection APIs
+// Enumerations
 //
 
+enum_long(DRIVE_ID)
+{
+    DRIVE8 = 8,
+    DRIVE9 = 9
+};
+typedef DRIVE_ID DriveID;
+
+enum_long(DRIVE_MODEL)
+{
+    DRIVE_MODEL_VC1541II,
+    DRIVE_MODEL_COUNT
+};
+typedef DRIVE_MODEL DriveModel;
+
+#ifdef __cplusplus
 struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveModel> {
     
     static bool isValid(long value)
@@ -23,7 +38,7 @@ struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveModel> {
         return (unsigned long)value < DRIVE_MODEL_COUNT;
     }
     
-    static const char *prefix() { return "DRIVE"; }
+    static const char *prefix() { return "DRIVE_MODEL"; }
     static const char *key(DriveModel value)
     {
         switch (value) {
@@ -34,7 +49,19 @@ struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveModel> {
         return "???";
     }
 };
+#endif
 
+enum_long(DISK_INSERTION_STATUS)
+{
+    DISK_FULLY_EJECTED,
+    DISK_PARTIALLY_INSERTED,
+    DISK_FULLY_INSERTED,
+    DISK_PARTIALLY_EJECTED,
+    DISK_INSERTION_STATUS_COUNT
+};
+typedef DISK_INSERTION_STATUS InsertionStatus;
+
+#ifdef __cplusplus
 struct InsertionStatusEnum : util::Reflection<InsertionStatusEnum, InsertionStatus> {
     
     static bool isValid(long value)
@@ -56,3 +83,17 @@ struct InsertionStatusEnum : util::Reflection<InsertionStatusEnum, InsertionStat
         return "???";
     }
 };
+#endif
+
+
+//
+// Structures
+//
+
+typedef struct
+{
+    DriveModel type;
+    bool connected;
+    bool switchedOn;
+}
+DriveConfig;

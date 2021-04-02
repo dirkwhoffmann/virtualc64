@@ -11,10 +11,12 @@
 #import <MetalKit/MetalKit.h>
 
 #include "C64Constants.h"
-#include "ErrorTypes.h"
 #include "CartridgeTypes.h"
 #include "CIATypes.h"
 #include "CPUTypes.h"
+#include "DiskTypes.h"
+#include "DriveTypes.h"
+#include "ErrorTypes.h"
 #include "FileTypes.h"
 #include "FSTypes.h"
 #include "MouseTypes.h"
