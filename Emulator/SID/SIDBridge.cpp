@@ -9,7 +9,13 @@
 
 #include "config.h"
 #include "SIDBridge.h"
-#include "C64.h"
+#include "CIA.h"
+#include "C64Component.h"
+#include "C64Memory.h"
+#include "ControlPort.h"
+#include "CPU.h"
+#include "MsgQueue.h"
+#include "VICII.h"
 
 SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
 {        
