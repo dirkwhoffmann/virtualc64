@@ -14,8 +14,7 @@
 
 #pragma once
 
-#include "C64PublicTypes.h"
-
+// #include "C64Types.h"
 #include "CartridgeTypes.h"
 #include "CIATypes.h"
 #include "DriveTypes.h"
@@ -29,77 +28,24 @@
 #include "SIDTypes.h"
 #include "VICIITypes.h"
 
+
 //
-// Reflection APIs
+// Enumerations
 //
 
-struct OptionEnum : util::Reflection<OptionEnum, Option> {
-    
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < OPT_COUNT;
-    }
-
-    static const char *prefix() { return "OPT"; }
-    static const char *key(Option value)
-    {
-        switch (value) {
-            case OPT_CYCLE_LIMIT:         return "CYCLE_LIMIT";
-            case OPT_VIC_REVISION:        return "VIC_REVISION";
-            case OPT_PALETTE:             return "PALETTE";
-            case OPT_GRAY_DOT_BUG:        return "GRAY_DOT_BUG";
-            case OPT_HIDE_SPRITES:        return "HIDE_SPRITES";
-            case OPT_DMA_DEBUG:           return "DMA_DEBUG";
-            case OPT_DMA_CHANNEL_R:       return "DMA_CHANNEL_R";
-            case OPT_DMA_CHANNEL_I:       return "DMA_CHANNEL_I";
-            case OPT_DMA_CHANNEL_C:       return "DMA_CHANNEL_C";
-            case OPT_DMA_CHANNEL_G:       return "DMA_CHANNEL_G";
-            case OPT_DMA_CHANNEL_P:       return "DMA_CHANNEL_P";
-            case OPT_DMA_CHANNEL_S:       return "DMA_CHANNEL_S";
-            case OPT_DMA_COLOR_R:         return "DMA_COLOR_R";
-            case OPT_DMA_COLOR_I:         return "DMA_COLOR_I";
-            case OPT_DMA_COLOR_C:         return "DMA_COLOR_C";
-            case OPT_DMA_COLOR_G:         return "DMA_COLOR_G";
-            case OPT_DMA_COLOR_P:         return "DMA_COLOR_P";
-            case OPT_DMA_COLOR_S:         return "DMA_COLOR_S";
-            case OPT_DMA_DISPLAY_MODE:    return "DMA_DISPLAY_MODE";
-            case OPT_DMA_OPACITY:         return "DMA_OPACITY";
-            case OPT_CUT_LAYERS:          return "CUT_LAYERS";
-            case OPT_CUT_OPACITY:         return "CUT_OPACITY";
-            case OPT_SS_COLLISIONS:       return "SS_COLLISIONS";
-            case OPT_SB_COLLISIONS:       return "SB_COLLISIONS";
-                
-            case OPT_GLUE_LOGIC:          return "GLUE_LOGIC";
-                
-            case OPT_CIA_REVISION:        return "CIA_REVISION";
-            case OPT_TIMER_B_BUG:         return "TIMER_B_BUG";
-                
-            case OPT_SID_ENABLE:          return "SID_ENABLE";
-            case OPT_SID_ADDRESS:         return "SID_ADDRESS";
-            case OPT_SID_REVISION:        return "SID_REVISION";
-            case OPT_SID_FILTER:          return "SID_FILTER";
-            case OPT_AUDPAN:              return "AUDPAN";
-            case OPT_AUDVOL:              return "AUDVOL";
-            case OPT_AUDVOLL:             return "AUDVOLL";
-            case OPT_AUDVOLR:             return "AUDVOLR";
-                
-            case OPT_SID_ENGINE:          return "SID_ENGINE";
-            case OPT_SID_SAMPLING:        return "SID_SAMPLING";
-                
-            case OPT_RAM_PATTERN:         return "RAM_PATTERN";
-                
-            case OPT_DRIVE_TYPE:          return "DRIVE_TYPE";
-            case OPT_DRIVE_CONNECT:       return "DRIVE_CONNECT";
-            case OPT_DRIVE_POWER_SWITCH:  return "DRIVE_POWER_SWITCH";
-                
-            case OPT_DEBUGCART:           return "DEBUGCART";
-
-            case OPT_COUNT:               return "???";
-        }
-        return "???";
-    }
+enum_long(C64_MODEL)
+{
+    C64_MODEL_PAL,
+    C64_MODEL_PAL_II,
+    C64_MODEL_PAL_OLD,
+    C64_MODEL_NTSC,
+    C64_MODEL_NTSC_II,
+    C64_MODEL_NTSC_OLD,
+    C64_MODEL_COUNT
 };
+typedef C64_MODEL C64Model;
 
+#ifdef __cplusplus
 struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
     
     static bool isValid(long value)
@@ -123,7 +69,19 @@ struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
         return "???";
     }
 };
+#endif
 
+enum_long(ROM_TYPE)
+{
+    ROM_TYPE_BASIC,
+    ROM_TYPE_CHAR,
+    ROM_TYPE_KERNAL,
+    ROM_TYPE_VC1541,
+    ROM_TYPE_COUNT
+};
+typedef ROM_TYPE RomType;
+
+#ifdef __cplusplus
 struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
     
     static bool isValid(long value)
@@ -145,7 +103,18 @@ struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
         return "???";
     }
 };
+#endif
 
+enum_long(EMULATOR_STATE)
+{
+    EMULATOR_STATE_OFF,
+    EMULATOR_STATE_PAUSED,
+    EMULATOR_STATE_RUNNING,
+    EMULATOR_STATE_COUNT
+};
+typedef EMULATOR_STATE EmulatorState;
+
+#ifdef __cplusplus
 struct EmulatorStateEnum : util::Reflection<EmulatorStateEnum, EmulatorState> {
     
     static bool isValid(long value)
@@ -166,7 +135,21 @@ struct EmulatorStateEnum : util::Reflection<EmulatorStateEnum, EmulatorState> {
         return "???";
     }
 };
+#endif
 
+enum_long(INSPECTION_TARGET)
+{
+    INSPECTION_TARGET_NONE,
+    INSPECTION_TARGET_CPU,
+    INSPECTION_TARGET_MEM,
+    INSPECTION_TARGET_CIA,
+    INSPECTION_TARGET_VIC,
+    INSPECTION_TARGET_SID,
+    INSPECTION_TARGET_COUNT
+};
+typedef INSPECTION_TARGET InspectionTarget;
+
+#ifdef __cplusplus
 struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionTarget> {
     
     static bool isValid(long value)
@@ -190,6 +173,19 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
         return "???";
     }
 };
+#endif
+
+
+//
+// Structures
+//
+
+typedef struct
+{
+    Cycle cycleLimit;
+}
+C64Config;
+
 
 //
 // Private data types

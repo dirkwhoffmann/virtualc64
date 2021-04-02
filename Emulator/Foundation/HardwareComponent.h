@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "HardwareComponentTypes.h"
 #include "C64Object.h"
 #include "Serialization.h"
 #include "Concurrency.h"

@@ -571,6 +571,7 @@
 		50A9A087250DE90900723D32 /* PageFox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageFox.h; sourceTree = "<group>"; };
 		50ACF4D9256EB43B003B5690 /* Oscillator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Oscillator.cpp; sourceTree = "<group>"; };
 		50ACF4DA256EB43B003B5690 /* Oscillator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Oscillator.h; sourceTree = "<group>"; };
+		50AFE0D32616E93A00D71E75 /* HardwareComponentTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HardwareComponentTypes.h; sourceTree = "<group>"; };
 		50B165AD25B06A03009B576D /* TextureToolbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureToolbox.swift; sourceTree = "<group>"; };
 		50B171051EE6AB840019E8D4 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyControllerTouchBar.swift; sourceTree = "<group>"; };
@@ -1294,6 +1295,7 @@
 				50F420C8250BA3460043DE56 /* Colors.cpp */,
 				504C42EC24AF29AB00E69CAE /* C64Object.h */,
 				504C42ED24AF29AB00E69CAE /* C64Object.cpp */,
+				50AFE0D32616E93A00D71E75 /* HardwareComponentTypes.h */,
 				504C42F524AF29AB00E69CAE /* HardwareComponent.h */,
 				504C42EE24AF29AB00E69CAE /* HardwareComponent.cpp */,
 				500EA6C624B09037009AA7D7 /* C64Component.h */,

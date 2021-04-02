@@ -19,13 +19,14 @@
 #include "ErrorTypes.h"
 #include "FileTypes.h"
 #include "FSTypes.h"
+#include "HardwareComponentTypes.h"
 #include "MemoryTypes.h"
 #include "MouseTypes.h"
 #include "MsgQueueTypes.h"
 #include "PortTypes.h"
 #include "SIDTypes.h"
 #include "VICIITypes.h"
-#include "C64PublicTypes.h"
+#include "C64Types.h"
 
 //
 // Forward declarations

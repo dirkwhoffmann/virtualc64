@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "C64PublicTypes.h"
+#include "C64Types.h"
 
 template <class T, usize capacity> struct RingBuffer
 {

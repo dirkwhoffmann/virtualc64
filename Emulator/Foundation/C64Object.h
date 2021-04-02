@@ -11,7 +11,7 @@
 
 #include "Debug.h"
 #include "Errors.h"
-#include "C64PublicTypes.h"
+#include "C64Types.h"
 #include "Utils.h"
 #include "Concurrency.h"
 #include "Colors.h"
