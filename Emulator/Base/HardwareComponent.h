@@ -17,9 +17,30 @@
 
 /* This class defines the base functionality of all hardware components. It
  * comprises functions for initializing, configuring, and serializing the
- * emulator, as well as functions for powering up and down, running and pausing.
+ * emulator, as well as functions for powering up and down, running and
+ * pausing. Furthermore, a 'synchronized' macro is provided to prevent mutual
+ * execution of certain code components.
  */
+
+#define synchronized \
+for (util::AutoMutex _am(mutex); _am.active; _am.active = false)
+
+namespace Dump {
+enum Category : usize {
+    
+    Config    = 0b0000001,
+    State     = 0b0000010,
+    Registers = 0b0000100,
+    Events    = 0b0001000,
+    Checksums = 0b0010000,
+    Dma       = 0b0100000,
+    BankMap   = 0b1000000
+};
+}
+
 class HardwareComponent : public C64Object {
+    
+    friend class C64;
     
 public:
 
@@ -52,6 +73,12 @@ protected:
      */
     bool debugMode = false;
     
+    /* Mutex for implementing the 'synchronized' macro. The macro can be used
+     * to prevent multiple threads to enter the same code block. It mimics the
+     * behaviour of the well known Java construct 'synchronized(this) { }'.
+     */
+    util::ReentrantMutex mutex;
+
     
     //
     // Initializing

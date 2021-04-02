@@ -11,28 +11,15 @@
 
 #include "Error.h"
 #include "C64Types.h"
-// #include "Utils.h"
 #include "Concurrency.h"
 #include "Colors.h"
-
-#define synchronized \
-for (util::AutoMutex _am(mutex); _am.active; _am.active = false)
 
 /* Base class for all C64 objects. This class contains a textual description
  * of the object and offers various functions for printing debug messages and
  * warnings.
  */
 class C64Object {
-                     
-protected:
-    
-    /* Mutex for implementing the 'synchronized' macro. The macro can be used
-     * to prevent multiple threads to enter the same code block. It mimics the
-     * behaviour of the well known Java construct 'synchronized(this) { }'.
-     */
-    util::ReentrantMutex mutex;
-
-    
+                             
     //
     // Initializing
     //

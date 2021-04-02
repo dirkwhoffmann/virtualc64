@@ -407,7 +407,6 @@
 		504C42EE24AF29AB00E69CAE /* HardwareComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HardwareComponent.cpp; sourceTree = "<group>"; };
 		504C42F024AF29AB00E69CAE /* TimeDelayed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeDelayed.h; sourceTree = "<group>"; };
 		504C42F124AF29AB00E69CAE /* MsgQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MsgQueue.cpp; sourceTree = "<group>"; };
-		504C42F224AF29AB00E69CAE /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		504C42F424AF29AB00E69CAE /* MsgQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MsgQueue.h; sourceTree = "<group>"; };
 		504C42F524AF29AB00E69CAE /* HardwareComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HardwareComponent.h; sourceTree = "<group>"; };
 		504C42F624AF29AB00E69CAE /* C64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64.h; sourceTree = "<group>"; };
@@ -1284,7 +1283,6 @@
 				5055D5B226158849005D3DA6 /* ErrorTypes.h */,
 				500C7C43259FC09B00F5CC1F /* Error.h */,
 				5055D5B32615886E005D3DA6 /* Error.cpp */,
-				504C42F224AF29AB00E69CAE /* Utils.h */,
 				50549B46257D1B6A006FE39C /* Buffers.h */,
 				50F420C9250BA3460043DE56 /* Colors.h */,
 				50F420C8250BA3460043DE56 /* Colors.cpp */,

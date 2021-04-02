@@ -16,7 +16,9 @@
 #include "CPU.h"
 #include "MsgQueue.h"
 #include "VICII.h"
+
 #include <algorithm>
+#include <cmath>
 
 SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
 {        

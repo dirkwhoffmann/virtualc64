@@ -7,13 +7,16 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-// This implementation is mainly based on the following articles by pepto:
-// http://www.pepto.de/projects/colorvic/
-// http://unusedino.de/ec64/technical/misc/vic656x/colors/
-
 #include "config.h"
 #include "C64.h"
+
 #include <algorithm>
+#include <cmath>
+
+/* This implementation is mainly based on the following articles by pepto:
+ * http://www.pepto.de/projects/colorvic/
+ * http://unusedino.de/ec64/technical/misc/vic656x/colors/
+ */
 
 double gammaCorrect(double value, double source, double target)
 {
@@ -27,15 +30,6 @@ double gammaCorrect(double value, double source, double target)
     
     return round(value);
 }
-
-/*
-u32
-VICII::getColor(unsigned nr) const
-{
-    assert(nr < 16);
-    return rgbaTable[nr];
-}
-*/
 
 u32
 VICII::getColor(unsigned nr, Palette palette)
