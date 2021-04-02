@@ -198,7 +198,7 @@ FSBlock::check(u32 byte, u8 *expected, bool strict) const
             if (byte == 0) EXPECT_TRACK_REF (data[byte + 1]);
             if (byte == 1) EXPECT_SECTOR_REF(data[byte - 1]);
                         
-            if (!utils::isZero(data + byte, 0x20)) {
+            if (!util::isZero(data + byte, 0x20)) {
             
                 switch (byte & 0x1F) {
                         

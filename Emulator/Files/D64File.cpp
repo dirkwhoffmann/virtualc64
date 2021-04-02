@@ -10,6 +10,7 @@
 #include "config.h"
 #include "C64.h"
 #include "IO.h"
+#include "MemUtils.h"
 
 bool
 D64File::isCompatibleName(const std::string &name)
@@ -195,5 +196,5 @@ D64File::offset(Track track, Sector sector) const
 void
 D64File::dump(Track track, Sector sector) const
 {
-    hexdump(data + offset(track, sector), 256);
+    util::hexdump(data + offset(track, sector), 256);
 }
