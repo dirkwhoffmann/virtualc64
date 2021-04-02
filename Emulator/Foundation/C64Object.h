@@ -16,16 +16,6 @@
 #include "Concurrency.h"
 #include "Colors.h"
 
-#include <vector>
-#include <map>
-#include <mutex>
-#include <queue>
-
-// using std::vector;
-using std::map;
-using std::pair;
-using std::swap;
-
 #define synchronized \
 for (util::AutoMutex _am(mutex); _am.active; _am.active = false)
 

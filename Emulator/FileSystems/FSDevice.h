@@ -16,6 +16,7 @@
 #include "AnyCollection.h"
 
 #include <dirent.h>
+#include <vector>
 
 class FSDevice : C64Object {
     
