@@ -122,7 +122,7 @@ AnyFile::writeToStream(std::ostream &stream, ErrorCode *err)
 {
     *err = ERROR_OK;
     try { return writeToStream(stream); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.data; }
     return 0;
 }
 
@@ -148,7 +148,7 @@ AnyFile::writeToFile(const char *path, ErrorCode *err)
 {
     *err = ERROR_OK;
     try { return writeToFile(path); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.data; }
     return 0;
 }
 
@@ -166,6 +166,6 @@ AnyFile::writeToBuffer(u8 *buf, ErrorCode *err)
 {
     *err = ERROR_OK;
     try { return writeToBuffer(buf); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.data; }
     return 0;
 }

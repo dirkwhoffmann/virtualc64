@@ -11,7 +11,7 @@
 
 #include "config.h"
 #include "Constants.h"
-#include "Errors.h"
+#include "Error.h"
 #include "C64Types.h"
 
 #include <limits.h>
@@ -30,14 +30,3 @@
 #include <set>
 #include <sstream>
 #include <fstream>
-
-// Returns true if this executable is a release build
-// bool releaseBuild();
-
-
-
-//
-// Accessing memory
-//
-
-

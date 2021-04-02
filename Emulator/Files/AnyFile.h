@@ -82,7 +82,7 @@ public:
     {
         *err = ERROR_OK;
         try { return make <T> (stream); }
-        catch (VC64Error &exception) { *err = exception.errorCode; }
+        catch (VC64Error &exception) { *err = exception.data; }
         return nullptr;
     }
         
@@ -97,7 +97,7 @@ public:
     {
         *err = ERROR_OK;
         try { return make <T> (buf, len); }
-        catch (VC64Error &exception) { *err = exception.errorCode; }
+        catch (VC64Error &exception) { *err = exception.data; }
         return nullptr;
     }
     
@@ -114,7 +114,7 @@ public:
     {
         *err = ERROR_OK;
         try { return make <T> (path); }
-        catch (VC64Error &exception) { *err = exception.errorCode; }
+        catch (VC64Error &exception) { *err = exception.data; }
         return nullptr;
     }
     
@@ -127,7 +127,7 @@ public:
     {
         *err = ERROR_OK;
         try { return make <T> (disk); }
-        catch (VC64Error &exception) { *err = exception.errorCode; }
+        catch (VC64Error &exception) { *err = exception.data; }
         return nullptr;
     }
 
@@ -140,7 +140,7 @@ public:
     {
         *err = ERROR_OK;
         try { return make <T> (fs); }
-        catch (VC64Error &exception) { *err = exception.errorCode; }
+        catch (VC64Error &exception) { *err = exception.data; }
         return nullptr;
     }
     

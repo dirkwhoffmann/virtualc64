@@ -59,7 +59,7 @@ FSDevice::makeWithD64(D64File &d64, ErrorCode *err)
 {
     *err = ERROR_OK;
     try { return makeWithD64(d64); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.data; }
     return nullptr;
 }
   
@@ -97,7 +97,7 @@ FSDevice::makeWithDisk(class Disk &disk, ErrorCode *err)
 {
     *err = ERROR_OK;
     try { return makeWithDisk(disk); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.data; }
     return nullptr;
 }
 
@@ -135,7 +135,7 @@ FSDevice::makeWithCollection(AnyCollection &collection, ErrorCode *err)
 {
     *err = ERROR_OK;
     try { return makeWithCollection(collection); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.data; }
     return nullptr;
 }
 
@@ -163,7 +163,7 @@ FSDevice::makeWithFolder(const std::string &path, ErrorCode *err)
 {
     *err = ERROR_OK;
     try { return makeWithFolder(path); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.data; }
     return nullptr;
 }
 

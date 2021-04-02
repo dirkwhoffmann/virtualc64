@@ -8,18 +8,16 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Utils.h"
+#include "Error.h"
 
-#include <ctype.h>
-
-/*
-bool
-releaseBuild()
+const char *
+VC64Error::what() const throw()
 {
-#ifdef RELEASEBUILD
-    return true;
-#else
-    return false;
-#endif
+    return  ErrorCodeEnum::key(data);
 }
-*/
+
+const char *
+ConfigError::what() const throw()
+{
+    return  description.c_str();
+}

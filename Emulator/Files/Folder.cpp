@@ -43,7 +43,7 @@ Folder::makeWithFolder(const std::string &path, ErrorCode *err)
     *err = ERROR_OK;
     
     try { return makeWithFolder(path); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.data; }
     return nullptr;
 }
 

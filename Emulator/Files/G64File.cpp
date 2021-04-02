@@ -123,7 +123,7 @@ G64File::makeWithDisk(class Disk &disk, ErrorCode *err)
     *err = ERROR_OK;
     
     try { return makeWithDisk(disk); }
-    catch (VC64Error &exception) { *err = exception.errorCode; }
+    catch (VC64Error &exception) { *err = exception.data; }
     return nullptr;
 }
 

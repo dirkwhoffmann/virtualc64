@@ -1567,7 +1567,7 @@ C64::saveRom(RomType type, const char *path, ErrorCode *ec)
     *ec = ERROR_OK;
     
     try { saveRom(type, path); }
-    catch (VC64Error &exception) { *ec = exception.errorCode; }
+    catch (VC64Error &exception) { *ec = exception.data; }
 }
 
 bool
