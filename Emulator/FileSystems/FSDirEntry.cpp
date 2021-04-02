@@ -10,6 +10,7 @@
 #include "config.h"
 #include "FSDevice.h"
 #include "Macros.h"
+#include "MemUtils.h"
 
 void
 FSDirEntry::init(PETName<16> name, TSLink ref, usize numBlocks)
@@ -33,7 +34,7 @@ FSDirEntry::init(const char *name, TSLink ref, usize numBlocks)
 bool
 FSDirEntry::isEmpty() const
 {
-    return isZero(&fileType, 30);
+    return utils::isZero(&fileType, 30);
 }
 
 const char *

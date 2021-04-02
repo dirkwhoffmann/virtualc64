@@ -7,19 +7,16 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "config.h"
-#include "Utils.h"
+#include "MemUtils.h"
 
-#include <ctype.h>
+namespace utils {
 
-/*
-bool
-releaseBuild()
+bool isZero(const u8 *ptr, usize size)
 {
-#ifdef RELEASEBUILD
+    for (usize i = 0; i < size; i++) {
+        if (ptr[i]) return false;
+    }
     return true;
-#else
-    return false;
-#endif
 }
-*/
+
+}

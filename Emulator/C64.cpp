@@ -1217,6 +1217,7 @@ C64::romCRC32(RomType type) const
             return hasRom(ROM_TYPE_VC1541) ? util::crc32(drive8.mem.rom, 0x4000) : 0;
         default:
             assert(false);
+            return 0;
     }
 }
 
@@ -1235,6 +1236,7 @@ C64::romFNV64(RomType type) const
             return hasRom(ROM_TYPE_VC1541) ? util::fnv_1a_64(drive8.mem.rom, 0x4000) : 0;
         default:
             assert(false);
+            return 0;
     }
 }
 

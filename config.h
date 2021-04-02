@@ -90,6 +90,17 @@ static const int FORCE_UNSUPPORTED_CRT  = 0;
 static const int FORCE_SNAPSHOT_TOO_OLD = 0;
 static const int FORCE_SNAPSHOT_TOO_NEW = 0;
 
+
+#ifdef RELEASEBUILD
+static const int releaseBuild = 1;
+#define NDEBUG
+#else
+static const int releaseBuild = 0;
+#endif
+
+#include <assert.h>
+
+
 // IDEAS:
 // Update IEC bus inside CIA and VIA. Use delay flags if neccessary
 // Use a simpler implementation for the raster irq trigger. Edge sensitive

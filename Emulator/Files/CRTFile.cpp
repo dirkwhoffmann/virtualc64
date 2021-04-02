@@ -26,7 +26,7 @@ CRTFile::isCompatibleStream(std::istream &stream)
     const u8 magicBytes[] = {
         'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ' };
     
-    if (streamLength(stream) < 0x40) return false;
+    if (util::streamLength(stream) < 0x40) return false;
     return util::matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 

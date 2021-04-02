@@ -94,7 +94,7 @@ AnyFile::readFromFile(const char *path)
     assert(result == size);
     
     this->path = string(path);
-    return size;
+    return result;
 }
 
 usize
@@ -106,7 +106,8 @@ AnyFile::readFromBuffer(const u8 *buf, usize len)
     
     usize result = readFromStream(stream);
     assert(result == size);
-    return size;
+    
+    return result;
 }
 
 usize
@@ -139,7 +140,7 @@ AnyFile::writeToFile(const char *path)
     usize result = writeToStream(stream);
     assert(result == size);
     
-    return size;
+    return result;
 }
 
 usize

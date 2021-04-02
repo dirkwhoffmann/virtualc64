@@ -120,6 +120,7 @@ VICII::getColor(unsigned nr, Palette palette)
             luma = luma_pepto;
             break;
         default:
+            luma = nullptr;
             assert(false);
     }
     

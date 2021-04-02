@@ -22,7 +22,7 @@ PRGFile::isCompatibleName(const std::string &name)
 bool
 PRGFile::isCompatibleStream(std::istream &stream)
 {
-    return (streamLength(stream) >= 2);
+    return (util::streamLength(stream) >= 2);
 }
 
 PRGFile *

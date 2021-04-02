@@ -1950,7 +1950,7 @@
 
 - (BOOL)releaseBuild
 {
-    return releaseBuild();
+    return releaseBuild;
 }
 
 - (BOOL)warp

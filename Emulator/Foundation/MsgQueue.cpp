@@ -66,8 +66,8 @@ MsgQueue::put(MsgType type, long data)
         
         // Delete the oldest message if the queue overflows
         if (queue.isFull()) {
-            auto msg = queue.read();
-            debug(QUEUE_DEBUG, "Lost %s\n", MsgTypeEnum::key(msg.type));
+            queue.read();
+            debug(QUEUE_DEBUG, "Lost message\n");
         }
     
         // Write data

@@ -9,6 +9,7 @@
 
 #include "config.h"
 #include "C64.h"
+#include "IO.h"
 
 #define CHECK_WATCHPOINT(x) \
 if (checkWatchpoints && cpu.debugger.watchpointMatches(x)) { \
@@ -649,11 +650,11 @@ C64Memory::memdump(u16 addr, long num, bool hex, MemoryType src)
             if (hex) {
                 *p++ = ' ';
                 *p++ = ' ';
-                sprint8x(p, spypeek(addr++, src));
+                util::sprint8x(p, spypeek(addr++, src));
                 p += 2;
             } else {
                 *p++ = ' ';
-                sprint8d(p, spypeek(addr++, src));
+                util::sprint8d(p, spypeek(addr++, src));
                 p += 3;
             }
         }

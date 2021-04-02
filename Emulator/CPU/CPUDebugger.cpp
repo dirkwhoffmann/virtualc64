@@ -9,6 +9,12 @@
 
 #include "config.h"
 #include "C64.h"
+#include "IO.h"
+
+using util::sprint8x;
+using util::sprint8d;
+using util::sprint16x;
+using util::sprint16d;
 
 //
 // Guard

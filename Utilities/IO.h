@@ -92,4 +92,21 @@ isize streamLength(std::istream &stream);
 #define EMULATED(x) ((x) ? "emulated" : "not emulated")
 #define DUMP(x) std::setw(24) << std::right << std::setfill(' ') << (x) << " : "
 
+
+//
+// Pretty printing
+//
+
+// Writes an integer into a string in decimal format
+void sprint8d(char *s, u8 value);
+void sprint16d(char *s, u16 value);
+
+// Writes an integer into a string in hexadecimal format
+void sprint8x(char *s, u8 value);
+void sprint16x(char *s, u16 value);
+
+// Writes an integer into a string in binary format
+void sprint8b(char *s, u8 value);
+void sprint16b(char *s, u16 value);
+
 }

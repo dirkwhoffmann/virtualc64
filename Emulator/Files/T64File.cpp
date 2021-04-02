@@ -31,7 +31,7 @@ T64File::isCompatibleStream(std::istream &stream)
     const u8 magicT64[] = { 'C', '6', '4' };
     const u8 magicTAP[] = { 'C', '6', '4', '-', 'T', 'A', 'P', 'E' };
 
-    if (streamLength(stream) < 0x40) return false;
+    if (util::streamLength(stream) < 0x40) return false;
     
     // T64 files must begin with "C64" and must not begin with "C64-TAPE"
     return

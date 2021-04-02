@@ -9,6 +9,7 @@
 
 #include "config.h"
 #include "C64.h"
+#include "IO.h"
 
 const Disk::TrackDefaults Disk::trackDefaults[43] = {
     
@@ -598,11 +599,11 @@ Disk::sectorBytesAsString(u8 *buffer, usize length, bool hex)
         u8 value = decodeGcr(buffer + gcrOffset);
 
         if (hex) {
-            sprint8x(text + strOffset, value);
+            util::sprint8x(text + strOffset, value);
             text[strOffset + 2] = ' ';
             strOffset += 3;
         } else {
-            sprint8d(text + strOffset, value);
+            util::sprint8d(text + strOffset, value);
             text[strOffset + 3] = ' ';
             strOffset += 4;
         }

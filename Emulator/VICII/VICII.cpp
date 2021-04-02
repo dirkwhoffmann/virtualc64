@@ -784,7 +784,9 @@ VICII::lightpenX() const
             return 2 + (cycle < 14 ? 400 + (8 * cycle) : (cycle - 14) * 8);
             
         default:
+            
             assert(false);
+            return 0;
     }
 }
 

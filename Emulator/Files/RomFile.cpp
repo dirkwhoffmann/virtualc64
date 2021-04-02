@@ -83,7 +83,7 @@ RomFile::isRomStream(RomType type, std::istream &stream)
 bool
 RomFile::isBasicRomStream(std::istream &stream)
 {
-    if (streamLength(stream) != 0x2000) return false;
+    if (util::streamLength(stream) != 0x2000) return false;
 
     for (usize i = 0; i < basicRomSignatureCnt; i++) {
         
@@ -99,7 +99,7 @@ RomFile::isBasicRomStream(std::istream &stream)
 bool
 RomFile::isCharRomStream(std::istream &stream)
 {
-    if (streamLength(stream) != 0x1000) return false;
+    if (util::streamLength(stream) != 0x1000) return false;
 
     for (usize i = 0; i < basicRomSignatureCnt; i++) {
         
@@ -115,7 +115,7 @@ RomFile::isCharRomStream(std::istream &stream)
 bool
 RomFile::isKernalRomStream(std::istream &stream)
 {
-    if (streamLength(stream) != 0x2000) return false;
+    if (util::streamLength(stream) != 0x2000) return false;
 
     for (usize i = 0; i < kernalRomSignatureCnt; i++) {
         
@@ -131,7 +131,7 @@ RomFile::isKernalRomStream(std::istream &stream)
 bool
 RomFile::isVC1541RomStream(std::istream &stream)
 {
-    if (streamLength(stream) != 0x4000) return false;
+    if (util::streamLength(stream) != 0x4000) return false;
 
     for (usize i = 0; i < vc1541RomSignatureCnt; i++) {
         

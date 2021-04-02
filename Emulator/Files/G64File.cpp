@@ -24,7 +24,7 @@ G64File::isCompatibleStream(std::istream &stream)
     // const u8 magicBytes[] = { 0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31 };
     const u8 magicBytes[] = { 'G', 'C', 'R', '-', '1', '5', '4', '1' };
 
-    if (streamLength(stream) < 0x2AC) return false;
+    if (util::streamLength(stream) < 0x2AC) return false;
     return util::matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 

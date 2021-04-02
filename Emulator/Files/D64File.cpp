@@ -21,7 +21,7 @@ D64File::isCompatibleName(const std::string &name)
 bool
 D64File::isCompatibleStream(std::istream &stream)
 {
-    usize len = streamLength(stream);
+    usize len = util::streamLength(stream);
     
     return
     len == D64_683_SECTORS ||
@@ -137,6 +137,9 @@ D64File::readFromStream(std::istream &stream)
             break;
             
         default:
+            
+            numSectors = 0;
+            errorCodes = false;
             assert(false);
     }
         

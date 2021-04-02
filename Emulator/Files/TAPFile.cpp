@@ -24,7 +24,7 @@ TAPFile::isCompatibleStream(std::istream &stream)
     const u8 magicBytes[] = {
         0x43, 0x36, 0x34, 0x2D, 0x54, 0x41, 0x50, 0x45, 0x2D, 0x52, 0x41, 0x57 };
     
-    if (streamLength(stream) < 0x15) return false;
+    if (util::streamLength(stream) < 0x15) return false;
     return util::matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 

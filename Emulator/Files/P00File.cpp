@@ -24,7 +24,7 @@ P00File::isCompatibleStream(std::istream &stream)
 {
     const u8 magicBytes[] = { 0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65 };
 
-    if (streamLength(stream) < 0x1A) return false;
+    if (util::streamLength(stream) < 0x1A) return false;
     return util::matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 

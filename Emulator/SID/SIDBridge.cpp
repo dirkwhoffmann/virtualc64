@@ -799,6 +799,7 @@ SIDBridge::executeCycles(usize numCycles)
             break;
 
         default:
+            numSamples = 0;
             assert(false);
     }
     

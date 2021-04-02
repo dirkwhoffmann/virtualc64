@@ -7,19 +7,13 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "config.h"
-#include "Utils.h"
+#pragma once
 
-#include <ctype.h>
+#include "Types.h"
 
-/*
-bool
-releaseBuild()
-{
-#ifdef RELEASEBUILD
-    return true;
-#else
-    return false;
-#endif
+namespace utils {
+
+// Checks if a certain memory area is all zero
+bool isZero(const u8 *ptr, usize size);
+
 }
-*/

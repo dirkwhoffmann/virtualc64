@@ -14,6 +14,7 @@ const char *
 FlashRom::getStateAsString(FlashState state)
 {
     switch(state) {
+            
         case FLASH_READ:return "FLASH_READ";
         case FLASH_MAGIC_1: return "FLASH_MAGIC_1";
         case FLASH_MAGIC_2: return "FLASH_MAGIC_2";
@@ -27,8 +28,10 @@ FlashRom::getStateAsString(FlashState state)
         case FLASH_SECTOR_ERASE: return "FLASH_SECTOR_ERASE";
         case FLASH_SECTOR_ERASE_TIMEOUT: return "FLASH_SECTOR_ERASE_TIMEOUT";
         case FLASH_SECTOR_ERASE_SUSPEND: return "FLASH_SECTOR_ERASE_SUSPEND";
+        
         default:
             assert(false);
+            return "";
     }
 }
 
