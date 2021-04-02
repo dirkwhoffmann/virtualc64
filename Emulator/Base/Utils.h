@@ -10,7 +10,7 @@
 #pragma once
 
 #include "config.h"
-#include "C64Constants.h"
+#include "Constants.h"
 #include "Errors.h"
 #include "C64Types.h"
 

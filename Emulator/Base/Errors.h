@@ -16,11 +16,11 @@
 // VCError
 //
 
-struct VC64Error : public std::exception
+struct VC64Error : public util::Exception
 {
     ErrorCode errorCode;
     
-    VC64Error(ErrorCode code) : errorCode(code) { }
+    VC64Error(ErrorCode code) : Exception((i64)code) { }
     
     const char *what() const throw() override {
 

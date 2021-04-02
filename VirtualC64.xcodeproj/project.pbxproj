@@ -138,7 +138,7 @@
 		5051A1621B88661000CBFB5A /* 1541_track_change_1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1611B88661000CBFB5A /* 1541_track_change_1.aiff */; };
 		50520F8B25108FC400C7D47F /* Folder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50520F8925108FC400C7D47F /* Folder.cpp */; };
 		5052A7C125A0AC0700E62EDD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5052A7C025A0AC0700E62EDD /* Errors.swift */; };
-		50549B45257D1A6C006FE39C /* C64Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B44257D1A6C006FE39C /* C64Constants.cpp */; };
+		50549B45257D1A6C006FE39C /* Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B44257D1A6C006FE39C /* Constants.cpp */; };
 		50549B49257D288E006FE39C /* SIDStreams.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B47257D288E006FE39C /* SIDStreams.cpp */; };
 		5055A83F1BC7996900399A20 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5055A83E1BC7996900399A20 /* MetalKit.framework */; };
 		5055D5B1261585EA005D3DA6 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5AF261585EA005D3DA6 /* Exception.cpp */; };
@@ -507,7 +507,7 @@
 		50520F8A25108FC400C7D47F /* Folder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Folder.h; sourceTree = "<group>"; };
 		5052A7BF25A0703D00E62EDD /* CPUTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUTypes.h; sourceTree = "<group>"; };
 		5052A7C025A0AC0700E62EDD /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
-		50549B44257D1A6C006FE39C /* C64Constants.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64Constants.cpp; sourceTree = "<group>"; };
+		50549B44257D1A6C006FE39C /* Constants.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Constants.cpp; sourceTree = "<group>"; };
 		50549B46257D1B6A006FE39C /* Buffers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffers.h; sourceTree = "<group>"; };
 		50549B47257D288E006FE39C /* SIDStreams.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SIDStreams.cpp; sourceTree = "<group>"; };
 		50549B48257D288E006FE39C /* SIDStreams.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIDStreams.h; sourceTree = "<group>"; };
@@ -561,7 +561,7 @@
 		50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		50A0E0200A8F33120067714C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		50A0E0240A8F332A0067714C /* System.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = System.framework; path = /System/Library/Frameworks/System.framework; sourceTree = "<absolute>"; };
-		50A2D7AE24AF944500671F38 /* C64Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Constants.h; sourceTree = "<group>"; };
+		50A2D7AE24AF944500671F38 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		50A2D7B024AF94B400671F38 /* Aliases.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Aliases.h; sourceTree = "<group>"; };
 		50A519401B8DA230006771E2 /* drive_click.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = drive_click.aiff; sourceTree = "<group>"; };
 		50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = drive_snatch_uae.aiff; sourceTree = "<group>"; };
@@ -854,7 +854,7 @@
 				504268AC24F0F76F006BB841 /* C64Types.h */,
 				504C42F624AF29AB00E69CAE /* C64.h */,
 				504C42F724AF29AB00E69CAE /* C64.cpp */,
-				50A2D7AF24AF945200671F38 /* Foundation */,
+				50A2D7AF24AF945200671F38 /* Base */,
 				50ACF4DC256EB451003B5690 /* LogicBoard */,
 				504C42E524AF29AB00E69CAE /* CPU */,
 				504C435224AF29AC00E69CAE /* CIA */,
@@ -1277,12 +1277,12 @@
 			path = FileSystems;
 			sourceTree = "<group>";
 		};
-		50A2D7AF24AF945200671F38 /* Foundation */ = {
+		50A2D7AF24AF945200671F38 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				50A2D7AE24AF944500671F38 /* C64Constants.h */,
-				50549B44257D1A6C006FE39C /* C64Constants.cpp */,
 				50A2D7B024AF94B400671F38 /* Aliases.h */,
+				50A2D7AE24AF944500671F38 /* Constants.h */,
+				50549B44257D1A6C006FE39C /* Constants.cpp */,
 				5055D5B226158849005D3DA6 /* ErrorTypes.h */,
 				500C7C43259FC09B00F5CC1F /* Errors.h */,
 				5055D5B32615886E005D3DA6 /* Errors.cpp */,
@@ -1302,7 +1302,7 @@
 				504C42F424AF29AB00E69CAE /* MsgQueue.h */,
 				504C42F124AF29AB00E69CAE /* MsgQueue.cpp */,
 			);
-			path = Foundation;
+			path = Base;
 			sourceTree = "<group>";
 		};
 		50ACF4DC256EB451003B5690 /* LogicBoard */ = {
@@ -1713,7 +1713,7 @@
 				504C435A24AF29AC00E69CAE /* WarpSpeed.cpp in Sources */,
 				50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */,
 				50D3092424C7152700B92563 /* Inspector.swift in Sources */,
-				50549B45257D1A6C006FE39C /* C64Constants.cpp in Sources */,
+				50549B45257D1A6C006FE39C /* Constants.cpp in Sources */,
 				504C438C24AF29AC00E69CAE /* VICII_draw.cpp in Sources */,
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
 				50BE4B6C24E7FB9E008F39C9 /* CGImage.swift in Sources */,

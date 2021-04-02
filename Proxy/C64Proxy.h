@@ -10,7 +10,7 @@
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
 
-#include "C64Constants.h"
+#include "Constants.h"
 #include "CartridgeTypes.h"
 #include "CIATypes.h"
 #include "CPUTypes.h"
