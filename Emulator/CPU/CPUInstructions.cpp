@@ -9,6 +9,10 @@
 
 #include "config.h"
 #include "C64.h"
+#include "C64Memory.h"
+#include "CPU.h"
+#include "DriveMemory.h"
+#include "ExpansionPort.h"
 
 template <typename M> void
 CPU<M>::adc(u8 op)

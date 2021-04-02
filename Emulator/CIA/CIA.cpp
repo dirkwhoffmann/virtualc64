@@ -9,7 +9,13 @@
 
 #include "config.h"
 #include "CIA.h"
-#include "C64.h"
+#include "ControlPort.h"
+#include "CPU.h"
+#include "C64Memory.h"
+#include "DriveMemory.h"
+#include "IEC.h"
+#include "Keyboard.h"
+#include "VICII.h"
 
 CIA::CIA(C64 &ref) : C64Component(ref)
 {    

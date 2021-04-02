@@ -8,7 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "C64.h"
+#include "Colors.h"
 
 RgbColor::RgbColor(const GpuColor &c)
 {

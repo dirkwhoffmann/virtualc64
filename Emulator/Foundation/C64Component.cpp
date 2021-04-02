@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "C64Component.h"
 #include "C64.h"
 
 C64Component::C64Component(C64& ref) :

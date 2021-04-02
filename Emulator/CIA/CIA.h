@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "C64Component.h"
 #include "TOD.h"
 
 // Action flags

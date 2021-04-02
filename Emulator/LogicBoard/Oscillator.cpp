@@ -9,7 +9,8 @@
 
 #include "config.h"
 #include "Oscillator.h"
-#include "C64.h"
+#include "CPU.h"
+#include "VICII.h"
 
 Oscillator::Oscillator(C64& ref) : C64Component(ref)
 {
