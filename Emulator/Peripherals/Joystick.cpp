@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "Joystick.h"
 #include "C64.h"
 
 const char *

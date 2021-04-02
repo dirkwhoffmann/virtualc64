@@ -8,8 +8,9 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "C64.h"
 #include "NeosMouse.h"
+#include "C64.h"
+
 #include <algorithm>
 
 void

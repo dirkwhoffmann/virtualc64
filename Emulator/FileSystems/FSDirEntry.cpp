@@ -8,8 +8,10 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "FSDevice.h"
-#include "Macros.h"
+#include "FSDirEntry.h"
+#include "C64.h"
+// #include "FSDevice.h"
+// #include "Macros.h"
 #include "MemUtils.h"
 
 void

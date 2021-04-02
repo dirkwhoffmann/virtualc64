@@ -8,8 +8,9 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "C64.h"
 #include "Mouse1351.h"
+#include "C64.h"
+
 #include <algorithm>
 
 void

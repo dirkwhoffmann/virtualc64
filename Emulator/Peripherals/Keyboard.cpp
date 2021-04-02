@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "Keyboard.h"
 #include "C64.h"
 
 KeyAction::KeyAction(Action _type, u8 _nr, u64 _delay)

@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include "C64Component.h"
+
 /*
  * This implementation is mainly based on the document
  *
@@ -16,10 +18,6 @@
  *
  * and the Hoxs64 implementation by David Horrocks.
  */
-
-#include "C64Component.h"
-
-class Drive;
 
 #define VIACountA0       (1ULL << 0)  // Forces timer 1 to decrement every cycle
 #define VIACountA1       (1ULL << 1)

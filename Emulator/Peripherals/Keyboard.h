@@ -10,6 +10,7 @@
 #pragma once
 
 #include "C64Component.h"
+
 #include <queue>
 
 struct KeyAction {

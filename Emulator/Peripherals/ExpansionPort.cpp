@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "ExpansionPort.h"
 #include "C64.h"
 
 ExpansionPort::~ExpansionPort()

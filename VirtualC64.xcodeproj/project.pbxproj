@@ -486,7 +486,6 @@
 		504C434D24AF29AC00E69CAE /* Drive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drive.cpp; sourceTree = "<group>"; };
 		504C434E24AF29AC00E69CAE /* Disk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Disk.h; sourceTree = "<group>"; };
 		504C434F24AF29AC00E69CAE /* DriveMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriveMemory.h; sourceTree = "<group>"; };
-		504C435024AF29AC00E69CAE /* DiskPublicTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiskPublicTypes.h; sourceTree = "<group>"; };
 		504C435324AF29AC00E69CAE /* CIA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CIA.h; sourceTree = "<group>"; };
 		504C435424AF29AC00E69CAE /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
 		504C435524AF29AC00E69CAE /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
@@ -1132,7 +1131,6 @@
 				504C434A24AF29AC00E69CAE /* VIA.cpp */,
 				504C434624AF29AC00E69CAE /* IEC.h */,
 				504C433C24AF29AC00E69CAE /* IEC.cpp */,
-				504C435024AF29AC00E69CAE /* DiskPublicTypes.h */,
 				504268AD24F12705006BB841 /* DiskTypes.h */,
 				504C434E24AF29AC00E69CAE /* Disk.h */,
 				504C434824AF29AC00E69CAE /* Disk.cpp */,

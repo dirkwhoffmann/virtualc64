@@ -12,8 +12,6 @@
 #include "C64Component.h"
 #include "Constants.h"
 
-class TAPFile;
-
 class Datasette : public C64Component {
     
     //

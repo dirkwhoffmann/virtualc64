@@ -9,6 +9,11 @@
 
 #pragma once
 
+#include "SIDTypes.h"
+#include "C64Component.h"
+#include "SIDStreams.h"
+#include "resid/sid.h"
+
 /* This class is a wrapper around the third-party reSID library.
  *
  *   List of modifications applied to reSID:
@@ -22,10 +27,6 @@
  *     - To Norah (Elysium)
  *     - Vortex (LMan)
  */
-
-#include "C64Component.h"
-#include "SIDStreams.h"
-#include "resid/sid.h"
 
 class ReSID : public C64Component {
         

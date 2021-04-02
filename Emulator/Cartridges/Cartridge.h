@@ -9,8 +9,8 @@
 
 #pragma once
 
-#include "C64Component.h"
 #include "CartridgeTypes.h"
+#include "C64Component.h"
 #include "CartridgeRom.h"
 #include "CRTFile.h"
 

@@ -9,8 +9,8 @@
 
 #pragma once
 
-#include "C64Component.h"
 #include "PortTypes.h"
+#include "C64Component.h"
 
 class Joystick : public C64Component {
     

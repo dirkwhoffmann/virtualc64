@@ -10,10 +10,11 @@
 #pragma once
 
 #include "DriveTypes.h"
-#include "DriveMemory.h"
+#include "C64Component.h"
 #include "CPU.h"
-#include "VIA.h"
 #include "Disk.h"
+#include "DriveMemory.h"
+#include "VIA.h"
 
 /*
  * This implementation is based on the following two documents written

@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "FSDescriptors.h"
 #include "C64.h"
 
 FSDeviceDescriptor::FSDeviceDescriptor(DiskType type, DOSType dos)

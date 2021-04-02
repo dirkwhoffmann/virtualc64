@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "DriveMemory.h"
 #include "C64.h"
 
 DriveMemory::DriveMemory(C64 &ref, Drive &dref) : C64Component(ref), drive(dref)

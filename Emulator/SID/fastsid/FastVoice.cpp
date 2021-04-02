@@ -31,6 +31,7 @@
 #include "config.h"
 #include "FastSID.h"
 #include "waves.h"
+
 #include <algorithm>
 
 u16 FastVoice::wavetable10[2][4096];

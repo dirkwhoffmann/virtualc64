@@ -10,6 +10,8 @@
 #pragma once
 
 #include "PortTypes.h"
+#include "C64Component.h"
+#include "Cartridge.h"
 
 /*
  * For more information: http://www.c64-wiki.com/index.php/Cartridge
@@ -26,9 +28,6 @@
  *
  *  As well read the Commodore 64 Programmers Reference Guide pages 260-267.
  */
-
-#include "C64Component.h"
-#include "Cartridge.h"
 
 class ExpansionPort : public C64Component {
     

@@ -9,10 +9,7 @@
 
 #pragma once
 
-#include "Aliases.h"
 #include "AnyFile.h"
-#include "PETName.h"
-#include <string>
 
 class AnyCollection : public AnyFile {
 

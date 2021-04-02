@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "Snapshot.h"
 #include "C64.h"
 #include "IO.h"
 

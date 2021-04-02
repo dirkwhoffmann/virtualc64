@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "Datasette.h"
 #include "C64.h"
 
 Datasette::~Datasette()

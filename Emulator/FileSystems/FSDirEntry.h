@@ -9,6 +9,10 @@
 
 #pragma once
 
+#include "Aliases.h"
+#include "FSTypes.h"
+#include "PETName.h"
+
 struct FSDirEntry
 {
     u8 nextDirTrack;      // $00

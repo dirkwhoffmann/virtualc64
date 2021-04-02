@@ -8,7 +8,6 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "TAPFile.h"
 #include "T64File.h"
 #include "FSDevice.h"
 #include "IO.h"

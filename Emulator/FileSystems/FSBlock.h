@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include "FSTypes.h"
+#include "C64Object.h"
 #include "PETName.h"
 
 class FSBlock : C64Object {

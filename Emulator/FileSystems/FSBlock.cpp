@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "FSBlock.h"
 #include "FSDevice.h"
 #include "MemUtils.h"
 

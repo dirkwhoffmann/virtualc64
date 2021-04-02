@@ -9,15 +9,6 @@
 
 #include "config.h"
 #include "AnyFile.h"
-#include "Snapshot.h"
-#include "RomFile.h"
-#include "TAPFile.h"
-#include "CRTFile.h"
-#include "T64File.h"
-#include "PRGFile.h"
-#include "P00File.h"
-#include "D64File.h"
-#include "G64File.h"
 #include "Checksum.h"
 
 AnyFile::AnyFile(usize capacity)
