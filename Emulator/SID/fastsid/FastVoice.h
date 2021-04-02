@@ -28,6 +28,7 @@
 
 #pragma once
 
+#include "SIDTypes.h"
 #include "HardwareComponent.h"
 
 // Waveform types

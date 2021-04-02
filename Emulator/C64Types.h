@@ -7,16 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-/* This file defines all constants and data types that are not exposed to the
- * GUI. It also defines several data type extensions such as Reflections
- * APIs for various enum data types.
- */
-
 #pragma once
-
-#include "FileTypes.h"
-#include "FSTypes.h"
-#include "SIDTypes.h"
 
 
 //
