@@ -108,7 +108,7 @@ public:
 public:
     
     SIDInfo getInfo() { return HardwareComponent::getInfo(info); }
-    VoiceInfo getVoiceInfo(unsigned nr) { return HardwareComponent::getInfo(voiceInfo[nr]); }
+    VoiceInfo getVoiceInfo(isize nr) { return HardwareComponent::getInfo(voiceInfo[nr]); }
     
 private:
     

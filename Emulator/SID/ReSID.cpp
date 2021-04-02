@@ -79,27 +79,27 @@ ReSID::_inspect()
         reSID::SID::State state = sid->read_state();
         u8 *reg = (u8 *)state.sid_register;
         
-        info.volume = reg[0x18] & 0x0F;
+        info.volume = reg[0x18] & 0xF;
         info.filterModeBits = reg[0x18] & 0xF0;
         info.filterType = reg[0x18] & 0x70;
         info.filterCutoff = (reg[0x16] << 3) | (reg[0x15] & 0x07);
         info.filterResonance = reg[0x17] >> 4;
         info.filterEnableBits = reg[0x17] & 0x0F;
         
-        for (unsigned i = 0; i < 3; i++, reg += 7) {
+        for (isize i = 0; i < 3; i++, reg += 7) {
             
-            for (unsigned j = 0; j < 7; j++) voiceInfo[i].reg[j] = reg[j];
-            voiceInfo[i].frequency = HI_LO(reg[0x01], reg[0x00]);
-            voiceInfo[i].pulseWidth = ((reg[3] & 0x0F) << 8) | reg[0x02];
-            voiceInfo[i].waveform = reg[0x04] & 0xF0;
-            voiceInfo[i].ringMod = (reg[0x04] & 0x04) != 0;
-            voiceInfo[i].hardSync = (reg[0x04] & 0x02) != 0;
-            voiceInfo[i].gateBit = (reg[0x04] & 0x01) != 0;
-            voiceInfo[i].testBit = (reg[0x04] & 0x08) != 0;
-            voiceInfo[i].attackRate = reg[0x05] >> 4;
-            voiceInfo[i].decayRate = reg[0x05] & 0x0F;
-            voiceInfo[i].sustainRate = reg[0x06] >> 4;
-            voiceInfo[i].releaseRate = reg[0x06] & 0x0F;
+            for (isize j = 0; j < 7; j++) voiceInfo[i].reg[j] = reg[j];
+            voiceInfo[i].frequency = HI_LO(reg[0x1], reg[0x0]);
+            voiceInfo[i].pulseWidth = ((reg[0x3] & 0xF) << 8) | reg[0x02];
+            voiceInfo[i].waveform = reg[0x4] & 0xF0;
+            voiceInfo[i].ringMod = (reg[0x4] & 0x4) != 0;
+            voiceInfo[i].hardSync = (reg[0x4] & 0x2) != 0;
+            voiceInfo[i].gateBit = (reg[0x4] & 0x1) != 0;
+            voiceInfo[i].testBit = (reg[0x4] & 0x8) != 0;
+            voiceInfo[i].attackRate = reg[0x5] >> 4;
+            voiceInfo[i].decayRate = reg[0x5] & 0xF;
+            voiceInfo[i].sustainRate = reg[0x6] >> 4;
+            voiceInfo[i].releaseRate = reg[0x6] & 0xF;
         }
     }
 }
