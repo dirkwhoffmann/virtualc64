@@ -9,13 +9,31 @@
 
 #pragma once
 
-#include "MemoryPublicTypes.h"
+#include "Aliases.h"
 #include "Reflection.h"
 
 //
-// Reflection APIs
+// Enumerations
 //
 
+// Memory source identifiers. The identifiers are used inside the peek and poke
+// lookup tables to indicate the source and target of a peek or poke operation.
+enum_long(M_TYPE)
+{
+    M_RAM = 1,
+    M_CHAR,
+    M_KERNAL,
+    M_BASIC,
+    M_IO,
+    M_CRTLO,
+    M_CRTHI,
+    M_PP,
+    M_NONE,
+    M_COUNT
+};
+typedef M_TYPE MemoryType;
+
+#ifdef __cplusplus
 struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
     
     static bool isValid(long value)
@@ -42,7 +60,17 @@ struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
         return "???";
     }
 };
+#endif
 
+enum_long(RAM_PATTERN)
+{
+    RAM_PATTERN_C64,
+    RAM_PATTERN_C64C,
+    RAM_PATTERN_COUNT
+};
+typedef RAM_PATTERN RamPattern;
+
+#ifdef __cplusplus
 struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
     
     static bool isValid(long value)
@@ -62,3 +90,30 @@ struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
         return "???";
     }
 };
+#endif
+
+
+//
+// Structures
+//
+
+typedef struct
+{
+    RamPattern ramPattern;
+    bool debugcart;
+}
+MemConfig;
+
+typedef struct
+{
+    bool exrom;
+    bool game;
+    bool loram;
+    bool hiram;
+    bool charen;
+    u8   bankMap;
+    
+    MemoryType peekSrc[16];
+    MemoryType vicPeekSrc[16];
+}
+MemInfo;

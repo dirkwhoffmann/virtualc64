@@ -588,7 +588,6 @@
 		50B485FC24FA1D3200844133 /* iCarousel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		50B485FE24FA1D4100844133 /* iCarousel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
-		50B99CF024B0DA6B008BC9F8 /* MsgQueuePublicTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MsgQueuePublicTypes.h; sourceTree = "<group>"; };
 		50BE4B5424E7F77F008F39C9 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		50BE4B5724E7F80C008F39C9 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		50BE4B5924E7F81B008F39C9 /* NSColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColor.swift; sourceTree = "<group>"; };
@@ -1299,7 +1298,6 @@
 				504C42EE24AF29AB00E69CAE /* HardwareComponent.cpp */,
 				500EA6C624B09037009AA7D7 /* C64Component.h */,
 				500EA6C524B09037009AA7D7 /* C64Component.cpp */,
-				50B99CF024B0DA6B008BC9F8 /* MsgQueuePublicTypes.h */,
 				50E806C025A1DE9200F08732 /* MsgQueueTypes.h */,
 				504C42F424AF29AB00E69CAE /* MsgQueue.h */,
 				504C42F124AF29AB00E69CAE /* MsgQueue.cpp */,
