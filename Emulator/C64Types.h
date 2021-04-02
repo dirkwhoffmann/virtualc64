@@ -14,15 +14,9 @@
 
 #pragma once
 
-// #include "DiskTypes.h"
 #include "FileTypes.h"
 #include "FSTypes.h"
-// #include "MemoryTypes.h"
-// #include "MsgQueueTypes.h"
-#include "MouseTypes.h"
-#include "PortTypes.h"
 #include "SIDTypes.h"
-#include "VICIITypes.h"
 
 
 //

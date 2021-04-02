@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "VICIITypes.h"
 #include "C64Component.h"
 #include "TimeDelayed.h"
 

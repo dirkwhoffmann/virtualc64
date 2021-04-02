@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include "PortTypes.h"
+
 /*
  * For more information: http://www.c64-wiki.com/index.php/Cartridge
  *

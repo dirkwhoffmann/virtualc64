@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "MouseTypes.h"
 #include "C64Component.h"
 #include "Mouse1350.h"
 #include "Mouse1351.h"
