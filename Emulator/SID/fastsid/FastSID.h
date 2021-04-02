@@ -31,6 +31,7 @@
 #include "C64Component.h"
 #include "FastVoice.h"
 #include "SIDStreams.h"
+#include "Constants.h"
 
 class FastSID : public C64Component {
         

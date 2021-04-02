@@ -741,7 +741,7 @@ VIA6522::sleep()
     if (!(delay & VIACountA1)) sleepA = UINT64_MAX;
     if (!(delay & VIACountB1)) sleepB = UINT64_MAX;
     
-    wakeUpCycle = MIN(sleepA, sleepB);
+    wakeUpCycle = std::min(sleepA, sleepB);
 }
 
 void

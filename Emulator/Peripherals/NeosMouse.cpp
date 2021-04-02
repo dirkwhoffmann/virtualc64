@@ -10,6 +10,7 @@
 #include "config.h"
 #include "C64.h"
 #include "NeosMouse.h"
+#include <algorithm>
 
 void
 NeosMouse::_reset()
@@ -134,17 +135,17 @@ NeosMouse::latchPosition(i64 targetX, i64 targetY)
     if (abs(targetY - mouseY) / 8 > shiftY) mouseY = targetY;
     
     // Move mouse coordinates towards target coordinates
-    if (targetX < mouseX) mouseX -= MIN(mouseX - targetX, shiftX);
-    else if (targetX > mouseX) mouseX += MIN(targetX - mouseX, shiftX);
-    if (targetY < mouseY) mouseY -= MIN(mouseY - targetY, shiftY);
-    else if (targetY > mouseY) mouseY += MIN(targetY - mouseY, shiftY);
+    if (targetX < mouseX) mouseX -= std::min(mouseX - targetX, shiftX);
+    else if (targetX > mouseX) mouseX += std::min(targetX - mouseX, shiftX);
+    if (targetY < mouseY) mouseY -= std::min(mouseY - targetY, shiftY);
+    else if (targetY > mouseY) mouseY += std::min(targetY - mouseY, shiftY);
     
     //
     // Compute deltas and latch values
     //
     
-    i64 dx = MAX(MIN((latchedX - mouseX), 127), -128);
-    i64 dy = MAX(MIN((mouseY - latchedY), 127), -128);
+    i64 dx = std::clamp(latchedX - mouseX, 127LL, -128LL);
+    i64 dy = std::clamp(mouseY - latchedY, 127LL, -128LL);
     
     deltaX = (u8)dx;
     deltaY = (u8)dy;

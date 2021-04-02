@@ -10,6 +10,7 @@
 #pragma once
 
 #include "C64Component.h"
+#include "Constants.h"
 
 class TAPFile;
 

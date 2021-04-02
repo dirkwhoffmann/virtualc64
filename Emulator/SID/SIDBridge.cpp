@@ -16,6 +16,7 @@
 #include "CPU.h"
 #include "MsgQueue.h"
 #include "VICII.h"
+#include <algorithm>
 
 SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
 {        
@@ -179,7 +180,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
             
         case OPT_AUDVOLL:
             
-            config.volL = MIN(100, MAX(0, value));
+            config.volL = std::clamp((int)value, 0, 100);
             volL.set(pow((double)config.volL / 50, 1.4));
 
             if (wasMuted != isMuted()) {
@@ -189,7 +190,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
             
         case OPT_AUDVOLR:
 
-            config.volR = MIN(100, MAX(0, value));
+            config.volR = std::clamp((int)value, 0, 100);
             volR.set(pow((double)config.volR / 50, 1.4));
 
             if (wasMuted != isMuted()) {
@@ -262,7 +263,7 @@ SIDBridge::setConfigItem(Option option, long id, i64 value)
             
             assert(id >= 0 && id <= 3);
 
-            config.vol[id] = MIN(100, MAX(0, value));
+            config.vol[id] = std::clamp((int)value, 0, 100);
             vol[id] = pow((double)config.vol[id] / 100, 1.4) * 0.000025;
 #ifdef __EMSCRIPTEN__
             vol[id] *= 0.15;
@@ -756,7 +757,7 @@ SIDBridge::executeUntil(Cycle targetCycle)
 usize
 SIDBridge::executeCycles(usize numCycles)
 {
-    usize numSamples;
+    isize numSamples;
     
     // Run reSID for at least one cycle to make pipelined writes work
     if (numCycles == 0) {
@@ -780,10 +781,10 @@ SIDBridge::executeCycles(usize numCycles)
             
             // Run all other SIDS (if any)
             if (config.enabled > 1) {
-                for (usize i = 1; i < 4; i++) {
+                for (isize i = 1; i < 4; i++) {
                     if (isEnabled(i)) {
-                        u64 numSamples2 = fastsid[i].executeCycles(numCycles, sidStream[i]);
-                        numSamples = MIN(numSamples, numSamples2);
+                        isize numSamples2 = fastsid[i].executeCycles(numCycles, sidStream[i]);
+                        numSamples = std::min(numSamples, numSamples2);
                     }
                 }
             }
@@ -796,10 +797,10 @@ SIDBridge::executeCycles(usize numCycles)
             
             // Run all other SIDS (if any)
             if (config.enabled > 1) {
-                for (usize i = 1; i < 4; i++) {
+                for (isize i = 1; i < 4; i++) {
                     if (isEnabled(i)) {
-                        u64 numSamples2 = resid[i].executeCycles(numCycles, sidStream[i]);
-                        numSamples = MIN(numSamples, numSamples2);
+                        isize numSamples2 = resid[i].executeCycles(numCycles, sidStream[i]);
+                        numSamples = std::min(numSamples, numSamples2);
                     }
                 }
             }

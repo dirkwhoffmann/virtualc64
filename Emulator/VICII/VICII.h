@@ -13,6 +13,7 @@
 #include "C64Component.h"
 #include "TimeDelayed.h"
 #include "MemoryTypes.h"
+#include "Constants.h"
 
 class VICII : public C64Component {
 

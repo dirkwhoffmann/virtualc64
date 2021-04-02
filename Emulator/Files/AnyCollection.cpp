@@ -9,7 +9,6 @@
 
 #include "config.h"
 #include "AnyCollection.h"
-#include "Utils.h"
 
 u16
 AnyCollection::readWordBE(unsigned nr, u64 pos) const

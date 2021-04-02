@@ -31,6 +31,7 @@
 #include "config.h"
 #include "FastSID.h"
 #include "waves.h"
+#include <algorithm>
 
 u16 FastVoice::wavetable10[2][4096];
 u16 FastVoice::wavetable20[2][4096];
@@ -381,8 +382,8 @@ FastVoice::applyFilter()
         filterLow += filterRef * filterDy * 0.1;
         filterRef += (filterIO - filterLow - (filterRef * filterResDy)) * filterDy;
         sample = filterRef - (filterIO / 8);
-        sample = MAX(sample, -128);
-        sample = MIN(sample, 127);
+        sample = std::max(sample, -128.f);
+        sample = std::max(sample, 127.f);
         filterIO = (signed char)sample;
         return;
     }

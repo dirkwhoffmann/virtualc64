@@ -11,6 +11,7 @@
 #include "FSDevice.h"
 #include "Disk.h"
 #include "IO.h"
+#include <set>
 
 FSDevice *
 FSDevice::makeWithFormat(FSDeviceDescriptor &layout)
@@ -647,8 +648,8 @@ FSDevice::check(bool strict)
     for (u32 i = 0; i < numBlocks; i++) {
 
         if (blocks[i]->check(strict) > 0) {
-            min = MIN(min, i);
-            max = MAX(max, i);
+            min = std::min(min, (long)i);
+            max = std::max(max, (long)i);
             blocks[i]->corrupted = (u32)++total;
         } else {
             blocks[i]->corrupted = 0;

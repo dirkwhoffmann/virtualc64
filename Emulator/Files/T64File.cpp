@@ -12,11 +12,7 @@
 #include "T64File.h"
 #include "FSDevice.h"
 #include "IO.h"
-
-/* "Anmerkung: Der String muß nicht wortwörtlich so vorhanden sein. Man sollte nach den
- *  Substrings 'C64' und 'tape' suchen." [Power64 doc]
- */
-// const u8 T64File::magicBytes[] = { 0x43, 0x36, 0x34 };
+#include "Macros.h"
 
 bool
 T64File::isCompatibleName(const std::string &name)
@@ -52,7 +48,7 @@ T64File::makeWithFileSystem(class FSDevice &fs)
     }
     
     // Create new archive
-    u16 maxFiles = MAX(numFiles, 30);
+    u16 maxFiles = std::max(numFiles, (u16)30);
     usize fileSize = 64 + maxFiles * 32 + dataLength;
     T64File *t64 = new T64File(fileSize);
     

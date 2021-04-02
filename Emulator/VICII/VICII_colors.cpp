@@ -13,16 +13,17 @@
 
 #include "config.h"
 #include "C64.h"
+#include <algorithm>
 
 double gammaCorrect(double value, double source, double target)
 {
     // Reverse gamma correction of source
     double factor = pow(255.0, 1.0 - source);
-    value = MIN(MAX(factor * pow(value, source), 0), 255);
+    value = std::clamp(factor * pow(value, source), 0.0, 255.0);
     
     // Correct gamma for target
     factor = pow(255.0, 1.0 - (1.0 / target));
-    value = MIN(MAX(factor * pow(value, 1 / target), 0), 255);
+    value = std::clamp(factor * pow(value, 1 / target), 0.0, 255.0);
     
     return round(value);
 }
@@ -216,9 +217,9 @@ VICII::getColor(unsigned nr, Palette palette)
     double r = y             + 1.140 * v;
     double g = y - 0.396 * u - 0.581 * v;
     double b = y + 2.029 * u;
-    r = MAX(MIN(r, 255), 0);
-    g = MAX(MIN(g, 255), 0);
-    b = MAX(MIN(b, 255), 0);
+    r = std::clamp(r, 0.0, 255.0);
+    g = std::clamp(g, 0.0, 255.0);
+    b = std::clamp(b, 0.0, 255.0);
     
     // Apply Gamma correction for PAL models
     if (isPAL()) {

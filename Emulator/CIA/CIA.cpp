@@ -559,7 +559,7 @@ CIA::sleep()
     // CIAs with stopped timers can sleep forever
     if (!(feed & CIACountA0)) sleepA = INT64_MAX;
     if (!(feed & CIACountB0)) sleepB = INT64_MAX;
-    Cycle sleep = MIN(sleepA, sleepB);
+    Cycle sleep = std::min(sleepA, sleepB);
 
     // ZZzzz
     sleepCycle = cpu.cycle;

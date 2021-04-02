@@ -10,6 +10,7 @@
 #include "config.h"
 #include "C64.h"
 #include "Mouse1351.h"
+#include <algorithm>
 
 void
 Mouse1351::_reset()
@@ -54,8 +55,8 @@ Mouse1351::executeX(i64 targetX)
     if (abs(targetX - mouseX) / 8 > shiftX) mouseX = targetX;
     
     // Move mouse coordinates towards target coordinates
-    if (targetX < mouseX) mouseX -= MIN(mouseX - targetX, shiftX);
-    else if (targetX > mouseX) mouseX += MIN(targetX - mouseX, shiftX);
+    if (targetX < mouseX) mouseX -= std::min(mouseX - targetX, shiftX);
+    else if (targetX > mouseX) mouseX += std::min(targetX - mouseX, shiftX);
 }
 
 void
@@ -67,6 +68,6 @@ Mouse1351::executeY(i64 targetY)
     if (abs(targetY - mouseY) / 8 > shiftY) mouseY = targetY;
     
     // Move mouse coordinates towards target coordinates
-    if (targetY < mouseY) mouseY -= MIN(mouseY - targetY, shiftY);
-    else if (targetY > mouseY) mouseY += MIN(targetY - mouseY, shiftY);
+    if (targetY < mouseY) mouseY -= std::min(mouseY - targetY, shiftY);
+    else if (targetY > mouseY) mouseY += std::min(targetY - mouseY, shiftY);
 }

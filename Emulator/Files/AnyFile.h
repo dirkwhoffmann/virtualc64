@@ -12,6 +12,8 @@
 #include "C64Object.h"
 #include "FileTypes.h"
 #include "PETName.h"
+#include <sstream>
+#include <fstream>
 
 /* All media files are organized in the class hierarchy displayed below. Two
  * abstract classes are involed: AnyFile and AnyCollection. AnyFiles provides

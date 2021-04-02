@@ -415,7 +415,7 @@ FastSID::updateInternals()
         } else {
             voice[i].filterDy = lowPassParam[cutoff];
         }
-        voice[i].filterResDy = MAX(filterResTable[res] - voice[i].filterDy, 1.0);
+        voice[i].filterResDy = std::max(filterResTable[res] - voice[i].filterDy, 1.0);
     }
 }
     

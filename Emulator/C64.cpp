@@ -1628,7 +1628,7 @@ C64::flash(AnyCollection *file, unsigned nr)
         case FILETYPE_PRG:
         case FILETYPE_FOLDER:
             
-            size = MIN(size - 2, 0x10000 - addr);
+            size = std::min(size - 2, (u64)(0x10000 - addr));
             file->copyItem(nr, mem.ram + addr, size, 2);
             break;
             
@@ -1653,7 +1653,7 @@ C64::flash(const FSDevice &fs, usize nr)
     
     suspend();
                 
-    size = MIN(size - 2, 0x10000 - addr);
+    size = std::min(size - 2, (u64)(0x10000 - addr));
     fs.copyFile(nr, mem.ram + addr, size, 2);
 
     resume();
