@@ -12,15 +12,15 @@ extension ConfigurationController {
     func awakeVideoPrefsFromNib() {
         
         // Check for available upscalers
-        let upscalers = parent.renderer.kernelManager.upscalerGallery
+        let upscalers = parent.renderer.ressources.upscalerGallery
         for i in 0 ..< upscalers.count {
             if let item = vidUpscalerPopUp.menu?.item(withTag: i) {
                 item.isEnabled = (upscalers[i] != nil)
             }
         }
         
-        // Create dot mask textures
-        parent.renderer.buildDotMasks()
+        // Update dot mask textures
+        parent.renderer.ressources.buildDotMasks()
         updatePalettePreviewImages()
     }
     
@@ -54,7 +54,7 @@ extension ConfigurationController {
         
         vidDotMaskPopUp.selectItem(withTag: Int(config.dotMask))
         for i in 0 ... 4 {
-            vidDotMaskPopUp.item(at: i)?.image = renderer.dotmaskImages[i]
+            vidDotMaskPopUp.item(at: i)?.image = renderer.ressources.dotmaskImages[i]
         }
         vidDotMaskBrightnessSlider.floatValue = config.dotMaskBrightness
         vidDotMaskBrightnessSlider.isEnabled = config.dotMask > 0
@@ -196,7 +196,7 @@ extension ConfigurationController {
     
     @IBAction func vidDotMaskAction(_ sender: NSPopUpButton!) {
         
-        config.dotMask = Int32(sender.selectedTag())
+        config.dotMask = sender.selectedTag()
         refresh()
     }
     

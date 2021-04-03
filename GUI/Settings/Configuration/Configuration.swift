@@ -22,7 +22,7 @@ class Configuration {
     var c64: C64Proxy { return parent.c64 }
     var renderer: Renderer { return parent.renderer }
     var gamePadManager: GamePadManager { return parent.gamePadManager }
-    var kernelManager: KernelManager { return renderer.kernelManager }
+    var kernelManager: RessourceManager { return renderer.ressources }
     
     //
     // Hardware
@@ -376,14 +376,15 @@ class Configuration {
     }
     var dotMask = VideoDefaults.tft.dotMask {
         didSet {
-            renderer.shaderOptions.dotMask = dotMask
-            renderer.buildDotMasks()
+            renderer.shaderOptions.dotMask = Int32(dotMask)
+            kernelManager.buildDotMasks()
+            if !kernelManager.selectDotMask(dotMask) { dotMask = oldValue }
         }
     }
     var dotMaskBrightness = VideoDefaults.tft.dotMaskBrightness {
         didSet {
             renderer.shaderOptions.dotMaskBrightness = dotMaskBrightness
-            renderer.buildDotMasks()
+            kernelManager.buildDotMasks()
         }
     }
     var scanlines = VideoDefaults.tft.scanlines {
@@ -719,8 +720,6 @@ class Configuration {
         disalignment = defaults.disalignment
         disalignmentH = defaults.disalignmentH
         disalignment = defaults.disalignment
-        
-        renderer.buildDotMasks()
     }
     
     func loadVideoDefaults(_ defaults: VideoDefaults) {
@@ -754,7 +753,7 @@ class Configuration {
          bloomRadiusB = defaults.float(forKey: Keys.Vid.bloomRadiusB)
          bloomBrightness = defaults.float(forKey: Keys.Vid.bloomBrightness)
          bloomWeight = defaults.float(forKey: Keys.Vid.bloomWeight)
-         dotMask = Int32(defaults.integer(forKey: Keys.Vid.dotMask))
+         dotMask = defaults.integer(forKey: Keys.Vid.dotMask)
          dotMaskBrightness = defaults.float(forKey: Keys.Vid.dotMaskBrightness)
          scanlines = defaults.integer(forKey: Keys.Vid.scanlines)
          scanlineBrightness = defaults.float(forKey: Keys.Vid.scanlineBrightness)
@@ -764,7 +763,6 @@ class Configuration {
          disalignmentV = defaults.float(forKey: Keys.Vid.disalignmentV)
          
          renderer.updateTextureRect()
-         renderer.buildDotMasks()
          
          c64.resume()
      }

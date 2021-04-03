@@ -190,7 +190,7 @@
 		50B485F924F96E9400844133 /* ImportDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B485F824F96E9400844133 /* ImportDialog.xib */; };
 		50B485FB24F9911600844133 /* ImportDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B485FA24F9911600844133 /* ImportDialog.swift */; };
 		50B485FD24FA1D3200844133 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B485FC24FA1D3200844133 /* iCarousel.m */; };
-		50B7566C2617703100CE1865 /* KernelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7566B2617703100CE1865 /* KernelManager.swift */; };
+		50B7566C2617703100CE1865 /* RessourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7566B2617703100CE1865 /* RessourceManager.swift */; };
 		50B929F221C2B5C90039E8F2 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */; };
 		50BE4B5524E7F77F008F39C9 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5424E7F77F008F39C9 /* URL.swift */; };
 		50BE4B5824E7F80C008F39C9 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5724E7F80C008F39C9 /* FileManager.swift */; };
@@ -585,7 +585,7 @@
 		50B485FA24F9911600844133 /* ImportDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportDialog.swift; sourceTree = "<group>"; };
 		50B485FC24FA1D3200844133 /* iCarousel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		50B485FE24FA1D4100844133 /* iCarousel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
-		50B7566B2617703100CE1865 /* KernelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KernelManager.swift; sourceTree = "<group>"; };
+		50B7566B2617703100CE1865 /* RessourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RessourceManager.swift; sourceTree = "<group>"; };
 		50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
 		50BE4B5424E7F77F008F39C9 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		50BE4B5724E7F80C008F39C9 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
@@ -1190,7 +1190,7 @@
 				5018BFB224B48DD500551848 /* RendererSetup.swift */,
 				5031D59B200B81D20088C802 /* Animation.swift */,
 				50D8421720A82CF500EB859A /* MetalViewEvents.swift */,
-				50B7566B2617703100CE1865 /* KernelManager.swift */,
+				50B7566B2617703100CE1865 /* RessourceManager.swift */,
 				50DEAD8E2008E615008A8761 /* Shaders.swift */,
 				50C72DE51BC7F42100F1863B /* Shaders.metal */,
 				50B165AD25B06A03009B576D /* TextureToolbox.swift */,
@@ -1633,7 +1633,7 @@
 				504C437924AF29AC00E69CAE /* Snapshot.cpp in Sources */,
 				504C437F24AF29AC00E69CAE /* C64Memory.cpp in Sources */,
 				504C43AA24AF29AC00E69CAE /* TOD.cpp in Sources */,
-				50B7566C2617703100CE1865 /* KernelManager.swift in Sources */,
+				50B7566C2617703100CE1865 /* RessourceManager.swift in Sources */,
 				506D4D0D20B331A00093C5C6 /* MyFormatter.swift in Sources */,
 				5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */,
 				50A9A088250DE90900723D32 /* PageFox.cpp in Sources */,

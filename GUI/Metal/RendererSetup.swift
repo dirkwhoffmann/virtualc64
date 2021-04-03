@@ -25,7 +25,7 @@ extension Renderer {
         buildLayers()
         buildTextures()
         buildSamplers()
-        buildDotMasks()
+        // buildDotMasks()
         buildPipeline()
         buildVertexBuffer()
         
@@ -52,8 +52,6 @@ extension Renderer {
     
     func buildShaders() {
         
-        kernelManager = KernelManager.init(view: mtkView, device: device, renderer: self)
-
         shaderOptions = ShaderOptions.init(
             blur: config.blur,
             blurRadius: config.blurRadius,
@@ -63,7 +61,7 @@ extension Renderer {
             bloomRadiusB: config.bloomRadiusB,
             bloomBrightness: config.bloomBrightness,
             bloomWeight: config.bloomWeight,
-            dotMask: config.dotMask,
+            dotMask: Int32(config.dotMask),
             dotMaskBrightness: config.dotMaskBrightness,
             scanlines: Int32(config.scanlines),
             scanlineBrightness: config.scanlineBrightness,
@@ -72,6 +70,8 @@ extension Renderer {
             disalignmentH: config.disalignmentH,
             disalignmentV: config.disalignmentV
         )
+        
+        ressources = RessourceManager.init(view: mtkView, device: device, renderer: self)
     }
     
     func buildLayers() {
@@ -147,6 +147,7 @@ extension Renderer {
         samplerNearest = device.makeSamplerState(descriptor: descriptor)
     }
     
+    /*
     func buildDotMasks() {
         
         let selected = shaderOptions.dotMask
@@ -212,15 +213,16 @@ extension Renderer {
             }
             
             // Store preview image
-            dotmaskImages[n] = image?.resizeSharp(width: 12, height: 12)
+            ressources.dotmaskImages[n] = image?.resizeSharp(width: 12, height: 12)
         }
     }
+    */
     
     func buildPipeline() {
                 
         // Read vertex and fragment shader from library
-        let vertexFunc = kernelManager.makeFunction(name: "vertex_main")
-        let fragmentFunc = kernelManager.makeFunction(name: "fragment_main")
+        let vertexFunc = ressources.makeFunction(name: "vertex_main")
+        let fragmentFunc = ressources.makeFunction(name: "fragment_main")
         assert(vertexFunc != nil)
         assert(fragmentFunc != nil)
         

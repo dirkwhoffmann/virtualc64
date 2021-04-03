@@ -45,9 +45,6 @@ class Renderer: NSObject, MTKViewDelegate {
     var queue: MTLCommandQueue! = nil
     var pipeline: MTLRenderPipelineState! = nil
     var depthState: MTLDepthStencilState! = nil
-    var commandBuffer: MTLCommandBuffer! = nil
-    // var commandEncoder: MTLRenderCommandEncoder! = nil
-    // var drawable: CAMetalDrawable! = nil
     
     //
     // Metal layers
@@ -69,10 +66,10 @@ class Renderer: NSObject, MTKViewDelegate {
     // Ressources
     //
     
-    var kernelManager: KernelManager! = nil
+    var ressources: RessourceManager! = nil
     
     //
-    // Buffers and uniforms
+    // Buffers and Uniforms
     //
     
     var bgRect: Node?
@@ -131,25 +128,8 @@ class Renderer: NSObject, MTKViewDelegate {
     /* Dotmask texture (variable size). This texture is used by the fragment
      * shader to emulate a dotmask effect.
      */
-    var dotMaskTexture: MTLTexture! = nil
+    // var dotMaskTexture: MTLTexture! = nil
     
-    /*
-    // Array holding all available upscalers
-    var upscalerGallery = [ComputeKernel?](repeating: nil, count: 3)
-
-    // The currently selected enhancer
-    var upscaler: ComputeKernel!
-
-    // Array holding all available bloom filters
-    var bloomFilterGallery = [ComputeKernel?](repeating: nil, count: 3)
-
-    // Array holding all available scanline filters
-    var scanlineFilterGallery = [ComputeKernel?](repeating: nil, count: 3)
-    */
-    
-    // Array holding dotmask preview images
-    var dotmaskImages = [NSImage?](repeating: nil, count: 5)
-
     //
     // Texture samplers
     //
@@ -346,19 +326,19 @@ class Renderer: NSObject, MTKViewDelegate {
     //  Drawing
     //
     
-    func makeCommandBuffer() {
+    func makeCommandBuffer() -> MTLCommandBuffer {
     
-        var bloomFilter: ComputeKernel! { return kernelManager.bloomFilter }
-        var upscaler: ComputeKernel! { return kernelManager.upscaler }
-        var scanlineFilter: ComputeKernel! { return kernelManager.scanlineFilter }
+        var bloomFilter: ComputeKernel! { return ressources.bloomFilter }
+        var upscaler: ComputeKernel! { return ressources.upscaler }
+        var scanlineFilter: ComputeKernel! { return ressources.scanlineFilter }
 
-        commandBuffer = queue.makeCommandBuffer()
-        precondition(commandBuffer != nil, "Command buffer must not be nil")
+        let commandBuffer = queue.makeCommandBuffer()!
+        // precondition(commandBuffer != nil, "Command buffer must not be nil")
     
         // Set uniforms for the fragment shader
         fragmentUniforms.alpha = 1.0
-        fragmentUniforms.dotMaskHeight = Int32(dotMaskTexture.height)
-        fragmentUniforms.dotMaskWidth = Int32(dotMaskTexture.width)
+        fragmentUniforms.dotMaskHeight = Int32(ressources.dotMask.height)
+        fragmentUniforms.dotMaskWidth = Int32(ressources.dotMask.width)
         fragmentUniforms.scanlineDistance = Int32(size.height / 256)
         
         // Compute the bloom textures
@@ -406,9 +386,11 @@ class Renderer: NSObject, MTKViewDelegate {
                              target: scanlineTexture,
                              options: &shaderOptions,
                              length: MemoryLayout<ShaderOptions>.stride)
+        
+        return commandBuffer
     }
     
-    func makeCommandEncoder(drawable: CAMetalDrawable) -> MTLRenderCommandEncoder {
+    func makeCommandEncoder(drawable: CAMetalDrawable, buffer: MTLCommandBuffer) -> MTLRenderCommandEncoder {
         
         // Create render pass descriptor
         let descriptor = MTLRenderPassDescriptor.init()
@@ -423,10 +405,10 @@ class Renderer: NSObject, MTKViewDelegate {
         descriptor.depthAttachment.storeAction = MTLStoreAction.dontCare
         
         // Create command encoder
-        let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
+        let commandEncoder = buffer.makeRenderCommandEncoder(descriptor: descriptor)!
         commandEncoder.setRenderPipelineState(pipeline)
         commandEncoder.setDepthStencilState(depthState)
-        commandEncoder.setFragmentTexture(dotMaskTexture, index: 4)
+        commandEncoder.setFragmentTexture(ressources.dotMask, index: 4)
         commandEncoder.setFragmentBytes(&shaderOptions,
                                         length: MemoryLayout<ShaderOptions>.stride,
                                         index: 0)
@@ -595,20 +577,24 @@ class Renderer: NSObject, MTKViewDelegate {
                     
             updateTexture()
             
-            makeCommandBuffer()
-           let encoder = makeCommandEncoder(drawable: drawable)
+            // Create the command buffer
+            let buffer = makeCommandBuffer()
             
+            // Create the command encoder
+            let encoder = makeCommandEncoder(drawable: drawable, buffer: buffer)
+            
+            // Render the scene
             if fullscreen && !parent.pref.keepAspectRatio {
                 drawScene2D(encoder: encoder)
             } else {
                 drawScene3D(encoder: encoder)
             }
             
-            // Draw the entire scene
+            // Commit the command buffer
             encoder.endEncoding()
-            commandBuffer.addCompletedHandler { _ in self.semaphore.signal() }
-            commandBuffer.present(drawable)
-            commandBuffer.commit()
+            buffer.addCompletedHandler { _ in self.semaphore.signal() }
+            buffer.present(drawable)
+            buffer.commit()
         }
     }
 }
