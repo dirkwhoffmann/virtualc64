@@ -9,6 +9,18 @@
 
 extension Canvas {
     
+    func buildVertexBuffers() {
+                
+        quad2D = Node.init(device: device,
+                           x: -1.0, y: -1.0, z: 0.0, w: 2.0, h: 2.0,
+                           t: renderer.textureRect)
+        
+        quad3D = Quad.init(device: device,
+                           x1: -0.64, y1: -0.48, z1: -0.64,
+                           x2: 0.64, y2: 0.48, z2: 0.64,
+                           t: renderer.textureRect)
+    }
+
     func buildTextures() {
         
         track()

@@ -54,9 +54,14 @@ class Canvas: Layer {
     var scanlineTexture: MTLTexture! = nil
     
     //
-    // Uniforms
+    // Buffers and Uniforms
     //
     
+    var quad2D: Node?
+    var quad3D: Quad?
+    
+    var vertexUniforms2D = VertexUniforms(mvp: matrix_identity_float4x4)
+    var vertexUniforms3D = VertexUniforms(mvp: matrix_identity_float4x4)
     var fragmentUniforms = FragmentUniforms(alpha: 1.0,
                                             dotMaskWidth: 0,
                                             dotMaskHeight: 0,
@@ -69,6 +74,7 @@ class Canvas: Layer {
     override init(renderer: Renderer) {
 
         super.init(renderer: renderer)
+        buildVertexBuffers()
         buildTextures()
         
         // Start with a negative alpha to keep the splash screen for a while
@@ -162,7 +168,7 @@ class Canvas: Layer {
     func render2D(encoder: MTLRenderCommandEncoder) {
         
         // Configure vertex shader
-        encoder.setVertexBytes(&renderer.vertexUniforms2D,
+        encoder.setVertexBytes(&vertexUniforms2D,
                                length: MemoryLayout<VertexUniforms>.stride,
                                index: 1)
         
@@ -181,7 +187,7 @@ class Canvas: Layer {
                                  index: 1)
         
         // Draw
-        renderer.quad2D!.drawPrimitives(encoder)
+        quad2D!.drawPrimitives(encoder)
     }
     
     func render3D(encoder: MTLRenderCommandEncoder) {
@@ -228,7 +234,7 @@ class Canvas: Layer {
         if renderForeground {
             
             // Configure vertex shader
-            encoder.setVertexBytes(&renderer.vertexUniforms3D,
+            encoder.setVertexBytes(&vertexUniforms3D,
                                    length: MemoryLayout<VertexUniforms>.stride,
                                    index: 1)
             
@@ -247,7 +253,7 @@ class Canvas: Layer {
                                      index: 1)
             
             // Draw (part of) cube
-            renderer.quad3D!.draw(encoder, allSides: renderer.animates != 0)
+            quad3D!.draw(encoder, allSides: renderer.animates != 0)
         }
     }
 }

@@ -62,11 +62,7 @@ class Renderer: NSObject, MTKViewDelegate {
     //
     
     var bgRect: Node?
-    var quad2D: Node?
-    var quad3D: Quad?
     
-    var vertexUniforms2D = VertexUniforms(mvp: matrix_identity_float4x4)
-    var vertexUniforms3D = VertexUniforms(mvp: matrix_identity_float4x4)
     var vertexUniformsBg = VertexUniforms(mvp: matrix_identity_float4x4)
 
     // Texture to hold the pixel depth information

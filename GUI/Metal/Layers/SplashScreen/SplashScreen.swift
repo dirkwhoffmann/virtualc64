@@ -14,4 +14,7 @@ class SplashScreen: Layer {
         super.init(renderer: renderer)
     }
 
+    func buildVertexBuffers() {
+    
+    }
 }

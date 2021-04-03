@@ -135,19 +135,13 @@ extension Renderer {
     }
     
     func buildVertexBuffers() {
-        
+
         bgRect = Node.init(device: device,
                            x: -1.0, y: -1.0, z: 0.99, w: 2.0, h: 2.0,
                            t: NSRect.init(x: 0.0, y: 0.0, width: 1.0, height: 1.0))
-        
-        quad2D = Node.init(device: device,
-                           x: -1.0, y: -1.0, z: 0.0, w: 2.0, h: 2.0,
-                           t: textureRect)
-        
-        quad3D = Quad.init(device: device,
-                           x1: -0.64, y1: -0.48, z1: -0.64,
-                           x2: 0.64, y2: 0.48, z2: 0.64,
-                           t: textureRect)
+
+        splashScreen.buildVertexBuffers()
+        canvas.buildVertexBuffers()
     }
     
     func buildMatricesBg() {
@@ -169,7 +163,7 @@ extension Renderer {
         let view  = matrix_identity_float4x4
         let proj  = matrix_identity_float4x4
         
-        vertexUniforms2D.mvp = proj * view * model
+        canvas.vertexUniforms2D.mvp = proj * view * model
     }
     
     func buildMatrices3D() {
@@ -205,7 +199,7 @@ extension Renderer {
         // Chain all transformations
         let model = transEye * rotX * transRotX * rotY * rotZ
         
-        vertexUniforms3D.mvp = proj * view * model
+        canvas.vertexUniforms3D.mvp = proj * view * model
     }
     
     func buildDepthBuffer() {
