@@ -28,11 +28,11 @@ public class MetalView: MTKView {
     
     override open func awakeFromNib() {
 
-        track()
         setupDragAndDrop()
     }
     
     override public var acceptsFirstResponder: Bool { return true }
+    override public func resignFirstResponder() -> Bool { return false }
     
     // Adjusts view height by a certain number of pixels
     func adjustHeight(_ height: CGFloat) {

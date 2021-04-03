@@ -20,12 +20,11 @@ extension Renderer {
     
     func setupMetal() {
         
-        track()
-        
         buildMetal()
+        buildShaders()
+        buildLayers()
         buildTextures()
         buildSamplers()
-        buildKernels()
         buildDotMasks()
         buildPipeline()
         buildVertexBuffer()
@@ -48,11 +47,40 @@ extension Renderer {
         
         // Command queue
         queue = device.makeCommandQueue()
-        assert(queue != nil, "Metal command queue must not be nil")
+        assert(queue != nil, "Metal command queue must not be nil")        
+    }
+    
+    func buildShaders() {
         
-        // Shader library
-        library = device.makeDefaultLibrary()
-        assert(library != nil, "Metal library must not be nil")
+        kernelManager = KernelManager.init(view: mtkView, device: device, renderer: self)
+
+        shaderOptions = ShaderOptions.init(
+            blur: config.blur,
+            blurRadius: config.blurRadius,
+            bloom: Int32(config.bloom),
+            bloomRadiusR: config.bloomRadiusR,
+            bloomRadiusG: config.bloomRadiusG,
+            bloomRadiusB: config.bloomRadiusB,
+            bloomBrightness: config.bloomBrightness,
+            bloomWeight: config.bloomWeight,
+            dotMask: config.dotMask,
+            dotMaskBrightness: config.dotMaskBrightness,
+            scanlines: Int32(config.scanlines),
+            scanlineBrightness: config.scanlineBrightness,
+            scanlineWeight: config.scanlineWeight,
+            disalignment: config.disalignment,
+            disalignmentH: config.disalignmentH,
+            disalignmentV: config.disalignmentV
+        )
+    }
+    
+    func buildLayers() {
+        
+        /*
+        splashScreen = SplashScreen.init(renderer: self)
+        canvas = Canvas.init(renderer: self)
+        console = Console.init(renderer: self)
+        */
     }
     
     func buildTextures() {
@@ -117,48 +145,6 @@ extension Renderer {
         descriptor.minFilter = MTLSamplerMinMagFilter.nearest
         descriptor.magFilter = MTLSamplerMinMagFilter.nearest
         samplerNearest = device.makeSamplerState(descriptor: descriptor)
-    }
-    
-    internal func buildKernels() {
-        
-        assert(library != nil)
-        
-        shaderOptions = ShaderOptions.init(
-            blur: config.blur,
-            blurRadius: config.blurRadius,
-            bloom: config.bloom,
-            bloomRadiusR: config.bloomRadiusR,
-            bloomRadiusG: config.bloomRadiusG,
-            bloomRadiusB: config.bloomRadiusB,
-            bloomBrightness: config.bloomBrightness,
-            bloomWeight: config.bloomWeight,
-            dotMask: config.dotMask,
-            dotMaskBrightness: config.dotMaskBrightness,
-            scanlines: config.scanlines,
-            scanlineBrightness: config.scanlineBrightness,
-            scanlineWeight: config.scanlineWeight,
-            disalignment: config.disalignment,
-            disalignmentH: config.disalignmentH,
-            disalignmentV: config.disalignmentV
-        )
-        
-        // let oc = (TextureSize.original.width, TextureSize.original.height)
-        let uc = (TextureSize.upscaled.width, TextureSize.upscaled.width)
-
-        // Build upscalers
-        upscalerGallery[0] = BypassUpscaler.init(device: device, library: library, cutout: uc)
-        upscalerGallery[1] = EPXUpscaler.init(device: device, library: library, cutout: uc)
-        upscalerGallery[2] = XBRUpscaler.init(device: device, library: library, cutout: uc)
-        
-        // Build bloom filters
-        bloomFilterGallery[0] = BypassFilter.init(device: device, library: library, cutout: uc)
-        bloomFilterGallery[1] = SplitFilter.init(device: device, library: library, cutout: uc)
-        bloomFilterGallery[2] = SplitFilter.init(device: device, library: library, cutout: uc)
-        
-        // Build scanline filters
-        scanlineFilterGallery[0] = BypassFilter.init(device: device, library: library, cutout: uc)
-        scanlineFilterGallery[1] = SimpleScanlines(device: device, library: library, cutout: uc)
-        scanlineFilterGallery[2] = BypassFilter.init(device: device, library: library, cutout: uc)
     }
     
     func buildDotMasks() {
@@ -231,13 +217,10 @@ extension Renderer {
     }
     
     func buildPipeline() {
-        
-        track()
-        precondition(library != nil)
-        
-        // Get vertex and fragment shader from library
-        let vertexFunc = library.makeFunction(name: "vertex_main")
-        let fragmentFunc = library.makeFunction(name: "fragment_main")
+                
+        // Read vertex and fragment shader from library
+        let vertexFunc = kernelManager.makeFunction(name: "vertex_main")
+        let fragmentFunc = kernelManager.makeFunction(name: "fragment_main")
         assert(vertexFunc != nil)
         assert(fragmentFunc != nil)
         
@@ -458,5 +441,26 @@ extension Renderer {
                                    0.0,
                                    1.0)
         return m
+    }
+    
+    //
+    // Error handling
+    //
+    
+    func metalAssert(_ cond: Bool, _ msg: String) {
+        
+        if !cond {
+            
+            let alert = NSAlert()
+            
+            alert.alertStyle = .critical
+            alert.icon = NSImage.init(named: "metal")
+            alert.messageText = "Failed to initialize Metal Hardware"
+            alert.informativeText = msg
+            alert.addButton(withTitle: "OK")
+            alert.runModal()
+            
+            exit(1)
+        }
     }
 }

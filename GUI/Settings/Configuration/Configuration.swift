@@ -22,7 +22,8 @@ class Configuration {
     var c64: C64Proxy { return parent.c64 }
     var renderer: Renderer { return parent.renderer }
     var gamePadManager: GamePadManager { return parent.gamePadManager }
-        
+    var kernelManager: KernelManager { return renderer.kernelManager }
+    
     //
     // Hardware
     //
@@ -342,7 +343,9 @@ class Configuration {
         didSet { renderer.updateTextureRect() }
     }
     var upscaler = VideoDefaults.tft.upscaler {
-        didSet { if !renderer.selectUpscaler(upscaler) { upscaler = oldValue } }
+        didSet {
+            if !kernelManager.selectUpscaler(upscaler) { upscaler = oldValue }
+        }
     }
     var blur = VideoDefaults.tft.blur {
         didSet { renderer.shaderOptions.blur = blur }
@@ -351,7 +354,10 @@ class Configuration {
         didSet { renderer.shaderOptions.blurRadius = blurRadius }
     }
     var bloom = VideoDefaults.tft.bloom {
-        didSet { renderer.shaderOptions.bloom = bloom }
+        didSet {
+            renderer.shaderOptions.bloom = Int32(bloom)
+            if !kernelManager.selectBloomFilter(bloom) { bloom = oldValue }
+        }
     }
     var bloomRadiusR = VideoDefaults.tft.bloomRadiusR {
         didSet { renderer.shaderOptions.bloomRadiusR = bloomRadiusR }
@@ -381,7 +387,10 @@ class Configuration {
         }
     }
     var scanlines = VideoDefaults.tft.scanlines {
-        didSet { renderer.shaderOptions.scanlines = scanlines }
+        didSet {
+            renderer.shaderOptions.scanlines = Int32(scanlines)
+            if !kernelManager.selectScanlineFilter(scanlines) { scanlines = oldValue }
+        }
     }
     var scanlineBrightness = VideoDefaults.tft.scanlineBrightness {
         didSet { renderer.shaderOptions.scanlineBrightness = scanlineBrightness }
@@ -739,7 +748,7 @@ class Configuration {
 
          upscaler = defaults.integer(forKey: Keys.Vid.upscaler)
          
-         bloom = Int32(defaults.integer(forKey: Keys.Vid.bloom))
+         bloom = defaults.integer(forKey: Keys.Vid.bloom)
          bloomRadiusR = defaults.float(forKey: Keys.Vid.bloomRadiusR)
          bloomRadiusG = defaults.float(forKey: Keys.Vid.bloomRadiusG)
          bloomRadiusB = defaults.float(forKey: Keys.Vid.bloomRadiusB)
@@ -747,7 +756,7 @@ class Configuration {
          bloomWeight = defaults.float(forKey: Keys.Vid.bloomWeight)
          dotMask = Int32(defaults.integer(forKey: Keys.Vid.dotMask))
          dotMaskBrightness = defaults.float(forKey: Keys.Vid.dotMaskBrightness)
-         scanlines = Int32(defaults.integer(forKey: Keys.Vid.scanlines))
+         scanlines = defaults.integer(forKey: Keys.Vid.scanlines)
          scanlineBrightness = defaults.float(forKey: Keys.Vid.scanlineBrightness)
          scanlineWeight = defaults.float(forKey: Keys.Vid.scanlineWeight)
          disalignment = Int32(defaults.integer(forKey: Keys.Vid.disalignment))

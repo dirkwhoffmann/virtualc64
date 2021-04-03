@@ -9,9 +9,14 @@
 
 struct Vertex {
     
-    var x, y, z, tx, ty: Float // Position and texture data
+    // Coordinate
+    var x, y, z: Float
+    
+    // Texture coordinate
+    var tx, ty: Float
     
     init(x: Float, y: Float, z: Float, t: NSPoint) {
+        
         self.x = x
         self.y = y
         self.z = z
@@ -149,7 +154,9 @@ class Quad {
     func draw(_ commandEncoder: MTLRenderCommandEncoder, allSides: Bool) {
         
         front.drawPrimitives(commandEncoder)
+        
         if allSides {
+            
             back.drawPrimitives(commandEncoder)
             left.drawPrimitives(commandEncoder)
             right.drawPrimitives(commandEncoder)

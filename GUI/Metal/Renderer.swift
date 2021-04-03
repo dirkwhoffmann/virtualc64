@@ -28,9 +28,7 @@ class Renderer: NSObject, MTKViewDelegate {
     var prefs: Preferences { return parent.pref }
     var config: Configuration { return parent.config }
 
-    /* Number of drawn frames since power up. This value is used to determine
-     * the fps value shown in the emulator's bottom bar.
-     */
+    // Number of drawn frames since power up
     var frames: Int64 = 0
     
     /* Synchronization semaphore. The semaphore is locked in function draw()
@@ -44,7 +42,6 @@ class Renderer: NSObject, MTKViewDelegate {
     // Metal objects
     //
 
-    var library: MTLLibrary! = nil
     var queue: MTLCommandQueue! = nil
     var pipeline: MTLRenderPipelineState! = nil
     var depthState: MTLDepthStencilState! = nil
@@ -67,6 +64,12 @@ class Renderer: NSObject, MTKViewDelegate {
         return CGSize(width: frameSize.width * scale,
                       height: frameSize.height * scale)
     }
+    
+    //
+    // Ressources
+    //
+    
+    var kernelManager: KernelManager! = nil
     
     //
     // Buffers and uniforms
@@ -130,6 +133,7 @@ class Renderer: NSObject, MTKViewDelegate {
      */
     var dotMaskTexture: MTLTexture! = nil
     
+    /*
     // Array holding all available upscalers
     var upscalerGallery = [ComputeKernel?](repeating: nil, count: 3)
 
@@ -141,7 +145,8 @@ class Renderer: NSObject, MTKViewDelegate {
 
     // Array holding all available scanline filters
     var scanlineFilterGallery = [ComputeKernel?](repeating: nil, count: 3)
-
+    */
+    
     // Array holding dotmask preview images
     var dotmaskImages = [NSImage?](repeating: nil, count: 5)
 
@@ -337,38 +342,16 @@ class Renderer: NSObject, MTKViewDelegate {
         buildVertexBuffer()
     }
         
-    // Tries to select a new upscaler
-    func selectUpscaler(_ nr: Int) -> Bool {
-        
-        if nr < upscalerGallery.count && upscalerGallery[nr] != nil {
-            upscaler = upscalerGallery[nr]!
-            return true
-        }
-        return false
-    }
-    
-    // Returns the compute kernel of the currently selected bloom filter
-    func currentBloomFilter() -> ComputeKernel {
-        
-        var nr = Int(shaderOptions.bloom)
-        if bloomFilterGallery.count <= nr || bloomFilterGallery[nr] == nil { nr = 0 }
-        return bloomFilterGallery[nr]!
-    }
-    
-    // Returns the compute kernel of the currently selected scanline filter
-    func currentScanlineFilter() -> ComputeKernel {
-        
-        var nr = Int(shaderOptions.scanlines)
-        if scanlineFilterGallery.count <= nr || scanlineFilterGallery[nr] == nil { nr = 0 }
-        return scanlineFilterGallery[nr]!
-    }
-    
     //
     //  Drawing
     //
     
     func startFrame() {
     
+        var bloomFilter: ComputeKernel! { return kernelManager.bloomFilter }
+        var upscaler: ComputeKernel! { return kernelManager.upscaler }
+        var scanlineFilter: ComputeKernel! { return kernelManager.scanlineFilter }
+
         commandBuffer = queue.makeCommandBuffer()
         precondition(commandBuffer != nil, "Command buffer must not be nil")
     
@@ -377,13 +360,16 @@ class Renderer: NSObject, MTKViewDelegate {
         fragmentUniforms.dotMaskHeight = Int32(dotMaskTexture.height)
         fragmentUniforms.dotMaskWidth = Int32(dotMaskTexture.width)
         fragmentUniforms.scanlineDistance = Int32(size.height / 256)
-       
+        
         // Compute the bloom textures
         if shaderOptions.bloom != 0 {
-            let bloomFilter = currentBloomFilter()
             bloomFilter.apply(commandBuffer: commandBuffer,
-                              textures: [emulatorTexture, bloomTextureR, bloomTextureG, bloomTextureB],
-                              options: &shaderOptions)
+                              textures: [emulatorTexture,
+                                         bloomTextureR,
+                                         bloomTextureG,
+                                         bloomTextureB],
+                              options: &shaderOptions,
+                              length: MemoryLayout<ShaderOptions>.stride)
             
             func applyGauss(_ texture: inout MTLTexture, radius: Float) {
                 
@@ -398,11 +384,13 @@ class Renderer: NSObject, MTKViewDelegate {
             applyGauss(&bloomTextureB, radius: shaderOptions.bloomRadiusB)
         }
         
-        // Upscale the C64 texture
+        // Run the upscaler
         upscaler.apply(commandBuffer: commandBuffer,
                        source: emulatorTexture,
-                       target: upscaledTexture)
-    
+                       target: upscaledTexture,
+                       options: nil,
+                       length: 0)
+        
         // Blur the upscaled texture
         if #available(OSX 10.13, *), shaderOptions.blur > 0 {
             let gauss = MPSImageGaussianBlur(device: device,
@@ -413,11 +401,11 @@ class Renderer: NSObject, MTKViewDelegate {
         }
         
         // Emulate scanlines
-        let scanlineFilter = currentScanlineFilter()
         scanlineFilter.apply(commandBuffer: commandBuffer,
-                                source: upscaledTexture,
-                                target: scanlineTexture,
-                                options: &shaderOptions)
+                             source: upscaledTexture,
+                             target: scanlineTexture,
+                             options: &shaderOptions,
+                             length: MemoryLayout<ShaderOptions>.stride)
         
         // Create render pass descriptor
         let descriptor = MTLRenderPassDescriptor.init()

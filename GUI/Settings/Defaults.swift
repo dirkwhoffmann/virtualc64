@@ -1040,7 +1040,7 @@ struct VideoDefaults {
     // Shader options
     let blur: Int32
     let blurRadius: Float
-    let bloom: Int32
+    let bloom: Int
     let bloomRadiusR: Float
     let bloomRadiusG: Float
     let bloomRadiusB: Float
@@ -1050,7 +1050,7 @@ struct VideoDefaults {
     let flickerWeight: Float
     let dotMask: Int32
     let dotMaskBrightness: Float
-    let scanlines: Int32
+    let scanlines: Int
     let scanlineBrightness: Float
     let scanlineWeight: Float
     let disalignment: Int32

@@ -12,7 +12,7 @@ extension ConfigurationController {
     func awakeVideoPrefsFromNib() {
         
         // Check for available upscalers
-        let upscalers = parent.renderer.upscalerGallery
+        let upscalers = parent.renderer.kernelManager.upscalerGallery
         for i in 0 ..< upscalers.count {
             if let item = vidUpscalerPopUp.menu?.item(withTag: i) {
                 item.isEnabled = (upscalers[i] != nil)
@@ -160,7 +160,7 @@ extension ConfigurationController {
     
     @IBAction func vidBloomAction(_ sender: NSPopUpButton!) {
         
-        config.bloom = Int32(sender.selectedTag())
+        config.bloom = sender.selectedTag()
         refresh()
     }
     
@@ -208,7 +208,7 @@ extension ConfigurationController {
     
     @IBAction func vidScanlinesAction(_ sender: NSPopUpButton!) {
         
-        config.scanlines = Int32(sender.selectedTag())
+        config.scanlines = sender.selectedTag()
         refresh()
     }
     

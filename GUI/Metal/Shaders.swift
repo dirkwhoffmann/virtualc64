@@ -48,44 +48,6 @@ struct ShaderOptions: Codable {
     var disalignmentV: Float
 }
 
-// Default settings for TFT monitor emulation (retro effects off)
-/*
-var ShaderDefaultsTFT = ShaderOptions(blur: 1,
-                                      blurRadius: 0,
-                                      bloom: 0,
-                                      bloomRadiusR: 1.0,
-                                      bloomRadiusG: 1.0,
-                                      bloomRadiusB: 1.0,
-                                      bloomBrightness: 0.4,
-                                      bloomWeight: 1.21,
-                                      dotMask: 0,
-                                      dotMaskBrightness: 0.7,
-                                      scanlines: 0,
-                                      scanlineBrightness: 0.55,
-                                      scanlineWeight: 0.11,
-                                      disalignment: 0,
-                                      disalignmentH: 0.001,
-                                      disalignmentV: 0.001)
-
-// Default settings for CRT monitor emulation (retro effects on)
-var ShaderDefaultsCRT = ShaderOptions(blur: 1,
-                                      blurRadius: 1.5,
-                                      bloom: 1,
-                                      bloomRadiusR: 1.0,
-                                      bloomRadiusG: 1.0,
-                                      bloomRadiusB: 1.0,
-                                      bloomBrightness: 0.4,
-                                      bloomWeight: 1.21,
-                                      dotMask: 1,
-                                      dotMaskBrightness: 0.5,
-                                      scanlines: 2,
-                                      scanlineBrightness: 0.55,
-                                      scanlineWeight: 0.11,
-                                      disalignment: 0,
-                                      disalignmentH: 0.001,
-                                      disalignmentV: 0.001)
-*/
-
 //
 // Additional uniforms needed by the fragment shader
 //
@@ -158,36 +120,40 @@ class ComputeKernel: NSObject {
             return nil
         }
     }
-    
-    func apply(commandBuffer: MTLCommandBuffer, source: MTLTexture, target: MTLTexture,
-               options: UnsafeRawPointer? = nil) {
+
+    func apply(commandBuffer: MTLCommandBuffer,
+               source: MTLTexture, target: MTLTexture,
+               options: UnsafeRawPointer?, length: Int) {
         
-        apply(commandBuffer: commandBuffer, textures: [source, target], options: options)
+        if let encoder = commandBuffer.makeComputeCommandEncoder() {
+            
+            encoder.setTexture(source, index: 0)
+            encoder.setTexture(target, index: 1)
+
+            apply(encoder: encoder, options: options, length: length)
+        }
     }
 
     func apply(commandBuffer: MTLCommandBuffer, textures: [MTLTexture],
-               options: UnsafeRawPointer? = nil) {
+               options: UnsafeRawPointer?, length: Int) {
         
         if let encoder = commandBuffer.makeComputeCommandEncoder() {
             
             for (index, texture) in textures.enumerated() {
                 encoder.setTexture(texture, index: index)
             }
-            apply(encoder: encoder, options: options)
+            apply(encoder: encoder, options: options, length: length)
         }
     }
-
-    func apply(encoder: MTLComputeCommandEncoder, options: UnsafeRawPointer? = nil) {
+    
+    private func apply(encoder: MTLComputeCommandEncoder,
+                       options: UnsafeRawPointer?, length: Int) {
         
         // Bind pipeline
         encoder.setComputePipelineState(kernel)
         
         // Pass in shader options
-        if options != nil {
-            encoder.setBytes(options!,
-                             length: MemoryLayout<ShaderOptions>.stride,
-                             index: 0)
-        }
+        if let opt = options { encoder.setBytes(opt, length: length, index: 0) }
 
         // Determine thread group size and number of groups
         let groupW = kernel.threadExecutionWidth

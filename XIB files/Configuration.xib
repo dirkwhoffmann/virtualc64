@@ -108,7 +108,7 @@
             <windowStyleMask key="styleMask" titled="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="646" height="486"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1536" height="935"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1095"/>
             <value key="minSize" type="size" width="646" height="486"/>
             <value key="maxSize" type="size" width="646" height="486"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
@@ -1980,6 +1980,9 @@ Gw
                                             <rect key="frame" x="164" y="130" width="120" height="15"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="5" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="j2u-rp-YOK"/>
+                                            <connections>
+                                                <action selector="vidBloomRadiusBAction:" target="-2" id="J4w-qw-Go6"/>
+                                            </connections>
                                         </slider>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="afb-Zh-Cq9">
                                             <rect key="frame" x="84" y="83" width="72" height="16"/>
