@@ -23,9 +23,8 @@ extension Renderer {
         buildMetal()
         buildShaders()
         buildLayers()
-        buildTextures()
+        // buildTextures()
         buildSamplers()
-        // buildDotMasks()
         buildPipeline()
         buildVertexBuffer()
         
@@ -71,64 +70,16 @@ extension Renderer {
             disalignmentV: config.disalignmentV
         )
         
-        ressources = RessourceManager.init(view: mtkView, device: device, renderer: self)
+        ressourceManager = RessourceManager.init(view: mtkView, device: device, renderer: self)
     }
     
     func buildLayers() {
         
-        /*
         splashScreen = SplashScreen.init(renderer: self)
         canvas = Canvas.init(renderer: self)
         console = Console.init(renderer: self)
-        */
     }
-    
-    func buildTextures() {
         
-        track()
-        
-        // Texture usages
-        let r: MTLTextureUsage = [ .shaderRead ]
-        let rwt: MTLTextureUsage = [ .shaderRead, .shaderWrite, .renderTarget ]
-        let rwtp: MTLTextureUsage = [ .shaderRead, .shaderWrite, .renderTarget, .pixelFormatView ]
-        
-        // Background texture used in window mode
-        bgTexture = device.makeTexture(size: TextureSize.background, usage: r)
-        assert(bgTexture != nil, "Failed to create bgTexture")
-        
-        // Background texture used in fullscreen mode
-        let c1 = (0x00, 0x00, 0x00, 0xFF)
-        let c2 = (0x44, 0x44, 0x44, 0xFF)
-        bgFullscreenTexture = device.makeTexture(size: TextureSize.background, gradient: [c1, c2], usage: r)
-        assert(bgFullscreenTexture != nil, "Failed to create bgFullscreenTexture")
-
-        // Emulator texture (long frames)
-        emulatorTexture = device.makeTexture(size: TextureSize.original, usage: r)
-        assert(emulatorTexture != nil, "Failed to create emulatorTexture")
-        
-        // Build bloom textures
-        bloomTextureR = device.makeTexture(size: TextureSize.original, usage: rwt)
-        bloomTextureG = device.makeTexture(size: TextureSize.original, usage: rwt)
-        bloomTextureB = device.makeTexture(size: TextureSize.original, usage: rwt)
-        assert(bloomTextureR != nil, "Failed to create bloomTextureR")
-        assert(bloomTextureG != nil, "Failed to create bloomTextureG")
-        assert(bloomTextureB != nil, "Failed to create bloomTextureB")
-        
-        // Upscaled texture
-        upscaledTexture = device.makeTexture(size: TextureSize.upscaled, usage: rwtp)
-        scanlineTexture = device.makeTexture(size: TextureSize.upscaled, usage: rwtp)
-        assert(upscaledTexture != nil, "Failed to create upscaledTexture")
-        assert(scanlineTexture != nil, "Failed to create scanlineTexture")
-
-        var w = emulatorTexture.width
-        var h = emulatorTexture.height
-        track("Emulator texture created: \(w) x \(h)")
-        
-        w = upscaledTexture.width
-        h = upscaledTexture.height
-        track("Upscaled texture created: \(w) x \(h)")
-    }
-    
     internal func buildSamplers() {
         
         let descriptor = MTLSamplerDescriptor()
@@ -221,8 +172,8 @@ extension Renderer {
     func buildPipeline() {
                 
         // Read vertex and fragment shader from library
-        let vertexFunc = ressources.makeFunction(name: "vertex_main")
-        let fragmentFunc = ressources.makeFunction(name: "fragment_main")
+        let vertexFunc = ressourceManager.makeFunction(name: "vertex_main")
+        let fragmentFunc = ressourceManager.makeFunction(name: "fragment_main")
         assert(vertexFunc != nil)
         assert(fragmentFunc != nil)
         

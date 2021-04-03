@@ -51,6 +51,9 @@ class Renderer: NSObject, MTKViewDelegate {
     //
     
     var metalLayer: CAMetalLayer! = nil
+    var splashScreen: SplashScreen! = nil
+    var canvas: Canvas! = nil
+    var console: Console! = nil
     
     // Current canvas size
     var size: CGSize {
@@ -66,7 +69,7 @@ class Renderer: NSObject, MTKViewDelegate {
     // Ressources
     //
     
-    var ressources: RessourceManager! = nil
+    var ressourceManager: RessourceManager! = nil
     
     //
     // Buffers and Uniforms
@@ -85,50 +88,8 @@ class Renderer: NSObject, MTKViewDelegate {
                                             dotMaskHeight: 0,
                                             scanlineDistance: 0)
     
-    //
-    // Textures
-    //
-
-    // Background texture
-    var bgTexture: MTLTexture! = nil
-    var bgFullscreenTexture: MTLTexture! = nil
-    
     // Texture to hold the pixel depth information
     var depthTexture: MTLTexture! = nil
-    
-    /* Emulator texture as provided by the emulator. The C64 screen is 428
-     * pixels wide and 284 high and covers the upper left part of the emulator
-     * texture. The emulator texture is updated in function updateTexture()
-     * which is called periodically in drawRect().
-     */
-    var emulatorTexture: MTLTexture! = nil
-
-    /* Bloom textures. To emulate a bloom effect, the emulator texture is first
-     * split into it's R, G, and B parts. Each texture is then run through a
-     * Gaussian blur filter with a large radius. These blurred textures are
-     * passed into the fragment shader as a secondary textures where they are
-     * recomposed with the upscaled primary texture.
-     */
-    var bloomTextureR: MTLTexture! = nil
-    var bloomTextureG: MTLTexture! = nil
-    var bloomTextureB: MTLTexture! = nil
-
-    /* Upscaled emulator texture. In the first texture processing stage, the
-     * emulator texture is bumped up by a factor of 4. The user can choose
-     * between bypass upscaling which simply replaces each pixel by a 4x4 quad
-     * or more sophisticated upscaling algorithms such as xBr.
-     */
-    var upscaledTexture: MTLTexture! = nil
-    
-    /* Upscaled texture with scanlines. In the second texture processing stage,
-     * a scanline effect is applied to the upscaled texture.
-     */
-    var scanlineTexture: MTLTexture! = nil
-    
-    /* Dotmask texture (variable size). This texture is used by the fragment
-     * shader to emulate a dotmask effect.
-     */
-    // var dotMaskTexture: MTLTexture! = nil
     
     //
     // Texture samplers
@@ -190,36 +151,7 @@ class Renderer: NSObject, MTKViewDelegate {
         mtkView.delegate = self
         mtkView.device = device
     }
-    
-    //
-    // Managing textures
-    //
         
-    func updateBgTexture(bytes: UnsafeMutablePointer<UInt32>) {
-        
-        bgTexture.replace(w: 512, h: 512, buffer: bytes)
-    }
-    
-    func updateTexture() {
-        
-        let buf = parent.c64.vic.stableEmuTexture()
-        precondition(buf != nil)
-        
-        let pixelSize = 4
-        // let width = Int(NTSC_WIDTH)
-        // let height = Int(PAL_HEIGHT)
-        let rowBytes = TEX_WIDTH * pixelSize
-        let imageBytes = rowBytes * TEX_HEIGHT
-        let region = MTLRegionMake2D(0, 0, TEX_WIDTH, TEX_HEIGHT)
-        
-        emulatorTexture.replace(region: region,
-                                mipmapLevel: 0,
-                                slice: 0,
-                                withBytes: buf!,
-                                bytesPerRow: rowBytes,
-                                bytesPerImage: imageBytes)
-    }
-    
     var maxTextureRect: CGRect {
         
         if parent.c64.vic.isPAL() {
@@ -321,185 +253,6 @@ class Renderer: NSObject, MTKViewDelegate {
         textureRect = computeTextureRect()
         buildVertexBuffer()
     }
-        
-    //
-    //  Drawing
-    //
-    
-    func makeCommandBuffer() -> MTLCommandBuffer {
-    
-        var bloomFilter: ComputeKernel! { return ressources.bloomFilter }
-        var upscaler: ComputeKernel! { return ressources.upscaler }
-        var scanlineFilter: ComputeKernel! { return ressources.scanlineFilter }
-
-        let commandBuffer = queue.makeCommandBuffer()!
-        // precondition(commandBuffer != nil, "Command buffer must not be nil")
-    
-        // Set uniforms for the fragment shader
-        fragmentUniforms.alpha = 1.0
-        fragmentUniforms.dotMaskHeight = Int32(ressources.dotMask.height)
-        fragmentUniforms.dotMaskWidth = Int32(ressources.dotMask.width)
-        fragmentUniforms.scanlineDistance = Int32(size.height / 256)
-        
-        // Compute the bloom textures
-        if shaderOptions.bloom != 0 {
-            bloomFilter.apply(commandBuffer: commandBuffer,
-                              textures: [emulatorTexture,
-                                         bloomTextureR,
-                                         bloomTextureG,
-                                         bloomTextureB],
-                              options: &shaderOptions,
-                              length: MemoryLayout<ShaderOptions>.stride)
-            
-            func applyGauss(_ texture: inout MTLTexture, radius: Float) {
-                
-                if #available(OSX 10.13, *) {
-                    let gauss = MPSImageGaussianBlur(device: device, sigma: radius)
-                    gauss.encode(commandBuffer: commandBuffer,
-                                 inPlaceTexture: &texture, fallbackCopyAllocator: nil)
-                }
-            }
-            applyGauss(&bloomTextureR, radius: shaderOptions.bloomRadiusR)
-            applyGauss(&bloomTextureG, radius: shaderOptions.bloomRadiusG)
-            applyGauss(&bloomTextureB, radius: shaderOptions.bloomRadiusB)
-        }
-        
-        // Run the upscaler
-        upscaler.apply(commandBuffer: commandBuffer,
-                       source: emulatorTexture,
-                       target: upscaledTexture,
-                       options: nil,
-                       length: 0)
-        
-        // Blur the upscaled texture
-        if #available(OSX 10.13, *), shaderOptions.blur > 0 {
-            let gauss = MPSImageGaussianBlur(device: device,
-                                             sigma: shaderOptions.blurRadius)
-            gauss.encode(commandBuffer: commandBuffer,
-                         inPlaceTexture: &upscaledTexture,
-                         fallbackCopyAllocator: nil)
-        }
-        
-        // Emulate scanlines
-        scanlineFilter.apply(commandBuffer: commandBuffer,
-                             source: upscaledTexture,
-                             target: scanlineTexture,
-                             options: &shaderOptions,
-                             length: MemoryLayout<ShaderOptions>.stride)
-        
-        return commandBuffer
-    }
-    
-    func makeCommandEncoder(drawable: CAMetalDrawable, buffer: MTLCommandBuffer) -> MTLRenderCommandEncoder {
-        
-        // Create render pass descriptor
-        let descriptor = MTLRenderPassDescriptor.init()
-        descriptor.colorAttachments[0].texture = drawable.texture
-        descriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1)
-        descriptor.colorAttachments[0].loadAction = MTLLoadAction.clear
-        descriptor.colorAttachments[0].storeAction = MTLStoreAction.store
-        
-        descriptor.depthAttachment.texture = depthTexture
-        descriptor.depthAttachment.clearDepth = 1
-        descriptor.depthAttachment.loadAction = MTLLoadAction.clear
-        descriptor.depthAttachment.storeAction = MTLStoreAction.dontCare
-        
-        // Create command encoder
-        let commandEncoder = buffer.makeRenderCommandEncoder(descriptor: descriptor)!
-        commandEncoder.setRenderPipelineState(pipeline)
-        commandEncoder.setDepthStencilState(depthState)
-        commandEncoder.setFragmentTexture(ressources.dotMask, index: 4)
-        commandEncoder.setFragmentBytes(&shaderOptions,
-                                        length: MemoryLayout<ShaderOptions>.stride,
-                                        index: 0)
-                
-        // Finally, we have to decide for a texture sampler. We use a linear
-        // interpolation sampler, if Gaussian blur is enabled, and a nearest
-        // neighbor sampler if Gaussian blur is disabled.
-        let sampler = shaderOptions.blur > 0 ? samplerLinear : samplerNearest
-        commandEncoder.setFragmentSamplerState(sampler, index: 0)
-
-        return commandEncoder
-    }
-    
-    func drawScene2D(encoder: MTLRenderCommandEncoder) {
-        
-        // Configure vertex shader
-        encoder.setVertexBytes(&vertexUniforms2D,
-                               length: MemoryLayout<VertexUniforms>.stride,
-                               index: 1)
-        
-        // Configure fragment shader
-        encoder.setFragmentTexture(scanlineTexture, index: 0)
-        encoder.setFragmentBytes(&fragmentUniforms,
-                                 length: MemoryLayout<FragmentUniforms>.stride,
-                                 index: 1)
-        
-        // Draw
-        quad2D!.drawPrimitives(encoder)
-    }
-    
-    func drawScene3D(encoder: MTLRenderCommandEncoder) {
-        
-        let paused = parent.c64.paused
-        let poweredOff = parent.c64.poweredOff
-        let renderBackground = poweredOff || animates != 0 || fullscreen
-        let renderForeground = alpha.current > 0.0
-        
-        // Perform a single animation step
-        if animates != 0 { performAnimationStep() }
-        
-        if renderBackground {
-            
-            // Update background texture
-            if !fullscreen {
-                let buffer = parent.c64.vic.noise()
-                updateBgTexture(bytes: buffer!)
-            }
-            
-            // Configure vertex shader
-            encoder.setVertexBytes(&vertexUniformsBg,
-                                   length: MemoryLayout<VertexUniforms>.stride,
-                                   index: 1)
-            
-            // Configure fragment shader
-            if fullscreen {
-                fragmentUniforms.alpha = 1.0
-                encoder.setFragmentTexture(bgFullscreenTexture, index: 0)
-                encoder.setFragmentTexture(bgFullscreenTexture, index: 1)
-            } else {
-                fragmentUniforms.alpha = noise.current
-                encoder.setFragmentTexture(bgTexture, index: 0)
-                encoder.setFragmentTexture(bgTexture, index: 1)
-            }
-            encoder.setFragmentBytes(&fragmentUniforms,
-                                     length: MemoryLayout<FragmentUniforms>.stride,
-                                     index: 1)
-            
-            // Draw
-            bgRect!.drawPrimitives(encoder)
-        }
-        
-        if renderForeground {
-            
-            // Configure vertex shader
-            encoder.setVertexBytes(&vertexUniforms3D,
-                                   length: MemoryLayout<VertexUniforms>.stride,
-                                   index: 1)
-            // Configure fragment shader
-            fragmentUniforms.alpha = paused ? 0.5 : alpha.current
-            encoder.setFragmentTexture(scanlineTexture, index: 0)
-            encoder.setFragmentTexture(bloomTextureR, index: 1)
-            encoder.setFragmentTexture(bloomTextureG, index: 2)
-            encoder.setFragmentTexture(bloomTextureB, index: 3)
-            encoder.setFragmentBytes(&fragmentUniforms,
-                                     length: MemoryLayout<FragmentUniforms>.stride,
-                                     index: 1)
-            
-            // Draw (part of) cube
-            quad3D!.draw(encoder, allSides: animates != 0)
-        }
-    }
 
     //
     // Managing layout
@@ -535,13 +288,13 @@ class Renderer: NSObject, MTKViewDelegate {
         switch source {
             
         case .entire:
-            return screenshot(texture: emulatorTexture, rect: maxTextureRectScaled)
+            return screenshot(texture: canvas.emulatorTexture, rect: maxTextureRectScaled)
         case .entireUpscaled:
-            return screenshot(texture: upscaledTexture, rect: maxTextureRectScaled)
+            return screenshot(texture: canvas.upscaledTexture, rect: maxTextureRectScaled)
         case .visible:
-            return screenshot(texture: emulatorTexture, rect: textureRect)
+            return screenshot(texture: canvas.emulatorTexture, rect: textureRect)
         case .visibleUpscaled:
-            return screenshot(texture: upscaledTexture, rect: textureRect)
+            return screenshot(texture: canvas.upscaledTexture, rect: textureRect)
         }
     }
 
@@ -558,7 +311,186 @@ class Renderer: NSObject, MTKViewDelegate {
         
         return NSImage.make(texture: texture, rect: rect)
     }
+      
+    //
+    //  Drawing
+    //
+    
+    func makeCommandBuffer() -> MTLCommandBuffer {
+    
+        var bloomFilter: ComputeKernel! { return ressourceManager.bloomFilter }
+        var upscaler: ComputeKernel! { return ressourceManager.upscaler }
+        var scanlineFilter: ComputeKernel! { return ressourceManager.scanlineFilter }
+
+        let commandBuffer = queue.makeCommandBuffer()!
+        // precondition(commandBuffer != nil, "Command buffer must not be nil")
+    
+        // Set uniforms for the fragment shader
+        fragmentUniforms.alpha = 1.0
+        fragmentUniforms.dotMaskHeight = Int32(ressourceManager.dotMask.height)
+        fragmentUniforms.dotMaskWidth = Int32(ressourceManager.dotMask.width)
+        fragmentUniforms.scanlineDistance = Int32(size.height / 256)
         
+        // Compute the bloom textures
+        if shaderOptions.bloom != 0 {
+            bloomFilter.apply(commandBuffer: commandBuffer,
+                              textures: [canvas.emulatorTexture,
+                                         canvas.bloomTextureR,
+                                         canvas.bloomTextureG,
+                                         canvas.bloomTextureB],
+                              options: &shaderOptions,
+                              length: MemoryLayout<ShaderOptions>.stride)
+            
+            func applyGauss(_ texture: inout MTLTexture, radius: Float) {
+                
+                if #available(OSX 10.13, *) {
+                    let gauss = MPSImageGaussianBlur(device: device, sigma: radius)
+                    gauss.encode(commandBuffer: commandBuffer,
+                                 inPlaceTexture: &texture, fallbackCopyAllocator: nil)
+                }
+            }
+            applyGauss(&canvas.bloomTextureR, radius: shaderOptions.bloomRadiusR)
+            applyGauss(&canvas.bloomTextureG, radius: shaderOptions.bloomRadiusG)
+            applyGauss(&canvas.bloomTextureB, radius: shaderOptions.bloomRadiusB)
+        }
+        
+        // Run the upscaler
+        upscaler.apply(commandBuffer: commandBuffer,
+                       source: canvas.emulatorTexture,
+                       target: canvas.upscaledTexture,
+                       options: nil,
+                       length: 0)
+        
+        // Blur the upscaled texture
+        if #available(OSX 10.13, *), shaderOptions.blur > 0 {
+            let gauss = MPSImageGaussianBlur(device: device,
+                                             sigma: shaderOptions.blurRadius)
+            gauss.encode(commandBuffer: commandBuffer,
+                         inPlaceTexture: &canvas.upscaledTexture,
+                         fallbackCopyAllocator: nil)
+        }
+        
+        // Emulate scanlines
+        scanlineFilter.apply(commandBuffer: commandBuffer,
+                             source: canvas.upscaledTexture,
+                             target: canvas.scanlineTexture,
+                             options: &shaderOptions,
+                             length: MemoryLayout<ShaderOptions>.stride)
+        
+        return commandBuffer
+    }
+    
+    func makeCommandEncoder(drawable: CAMetalDrawable, buffer: MTLCommandBuffer) -> MTLRenderCommandEncoder {
+        
+        // Create render pass descriptor
+        let descriptor = MTLRenderPassDescriptor.init()
+        descriptor.colorAttachments[0].texture = drawable.texture
+        descriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1)
+        descriptor.colorAttachments[0].loadAction = MTLLoadAction.clear
+        descriptor.colorAttachments[0].storeAction = MTLStoreAction.store
+        
+        descriptor.depthAttachment.texture = depthTexture
+        descriptor.depthAttachment.clearDepth = 1
+        descriptor.depthAttachment.loadAction = MTLLoadAction.clear
+        descriptor.depthAttachment.storeAction = MTLStoreAction.dontCare
+        
+        // Create command encoder
+        let commandEncoder = buffer.makeRenderCommandEncoder(descriptor: descriptor)!
+        commandEncoder.setRenderPipelineState(pipeline)
+        commandEncoder.setDepthStencilState(depthState)
+        commandEncoder.setFragmentTexture(ressourceManager.dotMask, index: 4)
+        commandEncoder.setFragmentBytes(&shaderOptions,
+                                        length: MemoryLayout<ShaderOptions>.stride,
+                                        index: 0)
+                
+        // Finally, we have to decide for a texture sampler. We use a linear
+        // interpolation sampler, if Gaussian blur is enabled, and a nearest
+        // neighbor sampler if Gaussian blur is disabled.
+        let sampler = shaderOptions.blur > 0 ? samplerLinear : samplerNearest
+        commandEncoder.setFragmentSamplerState(sampler, index: 0)
+
+        return commandEncoder
+    }
+    
+    func drawScene2D(encoder: MTLRenderCommandEncoder) {
+        
+        // Configure vertex shader
+        encoder.setVertexBytes(&vertexUniforms2D,
+                               length: MemoryLayout<VertexUniforms>.stride,
+                               index: 1)
+        
+        // Configure fragment shader
+        encoder.setFragmentTexture(canvas.scanlineTexture, index: 0)
+        encoder.setFragmentBytes(&fragmentUniforms,
+                                 length: MemoryLayout<FragmentUniforms>.stride,
+                                 index: 1)
+        
+        // Draw
+        quad2D!.drawPrimitives(encoder)
+    }
+    
+    func drawScene3D(encoder: MTLRenderCommandEncoder) {
+        
+        let paused = parent.c64.paused
+        let poweredOff = parent.c64.poweredOff
+        let renderBackground = poweredOff || animates != 0 || fullscreen
+        let renderForeground = alpha.current > 0.0
+        
+        // Perform a single animation step
+        if animates != 0 { performAnimationStep() }
+        
+        if renderBackground {
+            
+            // Update background texture
+            if !fullscreen {
+                let buffer = parent.c64.vic.noise()
+                canvas.updateBgTexture(bytes: buffer!)
+            }
+            
+            // Configure vertex shader
+            encoder.setVertexBytes(&vertexUniformsBg,
+                                   length: MemoryLayout<VertexUniforms>.stride,
+                                   index: 1)
+            
+            // Configure fragment shader
+            if fullscreen {
+                fragmentUniforms.alpha = 1.0
+                encoder.setFragmentTexture(canvas.bgFullscreenTexture, index: 0)
+                encoder.setFragmentTexture(canvas.bgFullscreenTexture, index: 1)
+            } else {
+                fragmentUniforms.alpha = noise.current
+                encoder.setFragmentTexture(canvas.bgTexture, index: 0)
+                encoder.setFragmentTexture(canvas.bgTexture, index: 1)
+            }
+            encoder.setFragmentBytes(&fragmentUniforms,
+                                     length: MemoryLayout<FragmentUniforms>.stride,
+                                     index: 1)
+            
+            // Draw
+            bgRect!.drawPrimitives(encoder)
+        }
+        
+        if renderForeground {
+            
+            // Configure vertex shader
+            encoder.setVertexBytes(&vertexUniforms3D,
+                                   length: MemoryLayout<VertexUniforms>.stride,
+                                   index: 1)
+            // Configure fragment shader
+            fragmentUniforms.alpha = paused ? 0.5 : alpha.current
+            encoder.setFragmentTexture(canvas.scanlineTexture, index: 0)
+            encoder.setFragmentTexture(canvas.bloomTextureR, index: 1)
+            encoder.setFragmentTexture(canvas.bloomTextureG, index: 2)
+            encoder.setFragmentTexture(canvas.bloomTextureB, index: 3)
+            encoder.setFragmentBytes(&fragmentUniforms,
+                                     length: MemoryLayout<FragmentUniforms>.stride,
+                                     index: 1)
+            
+            // Draw (part of) cube
+            quad3D!.draw(encoder, allSides: animates != 0)
+        }
+    }
+    
     //
     // Methods from MTKViewDelegate
     //
@@ -575,7 +507,7 @@ class Renderer: NSObject, MTKViewDelegate {
         semaphore.wait()
         if let drawable = metalLayer.nextDrawable() {
                     
-            updateTexture()
+            canvas.updateTexture()
             
             // Create the command buffer
             let buffer = makeCommandBuffer()

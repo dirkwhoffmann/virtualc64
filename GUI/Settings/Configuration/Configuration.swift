@@ -22,7 +22,7 @@ class Configuration {
     var c64: C64Proxy { return parent.c64 }
     var renderer: Renderer { return parent.renderer }
     var gamePadManager: GamePadManager { return parent.gamePadManager }
-    var kernelManager: RessourceManager { return renderer.ressources }
+    var kernelManager: RessourceManager { return renderer.ressourceManager }
     
     //
     // Hardware
