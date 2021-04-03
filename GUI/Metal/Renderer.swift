@@ -9,7 +9,7 @@
 
 import Metal
 import MetalKit
-import MetalPerformanceShaders
+// import MetalPerformanceShaders
 
 enum ScreenshotSource: Int {
         
@@ -75,7 +75,7 @@ class Renderer: NSObject, MTKViewDelegate {
     // Indicates if an animation is currently performed
      var animates = 0
     
-    // Animation parameters
+    // Geometry animation parameters
     var angleX = AnimatedFloat(0.0)
     var angleY = AnimatedFloat(0.0)
     var angleZ = AnimatedFloat(0.0)
@@ -84,16 +84,17 @@ class Renderer: NSObject, MTKViewDelegate {
     var shiftY = AnimatedFloat(0.0)
     var shiftZ = AnimatedFloat(0.0)
     
+    // Color animation parameters
     var alpha = AnimatedFloat(0.0)
     var noise = AnimatedFloat(0.0)
     
-    // Animation variables for smooth texture zooming
+    // Texture animation parameters
     var cutoutX1 = AnimatedFloat.init()
     var cutoutY1 = AnimatedFloat.init()
     var cutoutX2 = AnimatedFloat.init()
     var cutoutY2 = AnimatedFloat.init()
             
-    // Is set to true when fullscreen mode is entered
+    // Indicates if fullscreen mode is enabled
     var fullscreen = false
         
     //
@@ -138,7 +139,7 @@ class Renderer: NSObject, MTKViewDelegate {
         buildMatrices2D()
         buildMatrices3D()
     
-        // Rebuild depth buffer
+        // Rebuild the depth buffer
         ressourceManager.buildDepthBuffer()
     }
     
@@ -146,7 +147,7 @@ class Renderer: NSObject, MTKViewDelegate {
     
         track()
     }
-      
+    
     //
     //  Drawing
     //
@@ -208,8 +209,8 @@ class Renderer: NSObject, MTKViewDelegate {
         
         semaphore.wait()
         if let drawable = metalLayer.nextDrawable() {
-                    
-            canvas.updateTexture()
+                 
+            canvas.update(frames: frames)
             
             // Create the command buffer
             let buffer = makeCommandBuffer()
@@ -218,11 +219,9 @@ class Renderer: NSObject, MTKViewDelegate {
             let encoder = makeCommandEncoder(drawable: drawable, buffer: buffer)
             
             // Render the scene
-            if fullscreen && !parent.pref.keepAspectRatio {
-                canvas.render2D(encoder: encoder)
-            } else {
-                canvas.render3D(encoder: encoder)
-            }
+            let flat = fullscreen && !parent.pref.keepAspectRatio
+            if canvas.isTransparent { splashScreen.render(encoder: encoder) }
+            if canvas.isVisible { canvas.render(encoder: encoder, flat: flat) }
             
             // Commit the command buffer
             encoder.endEncoding()

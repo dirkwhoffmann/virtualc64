@@ -33,6 +33,10 @@ extension Renderer {
         
         track()
         
+        // Command queue
+        queue = device.makeCommandQueue()
+        assert(queue != nil, "Metal command queue must not be nil")
+
         // Metal layer
         metalLayer = view.layer as? CAMetalLayer
         assert(metalLayer != nil, "Metal layer must not be nil")
@@ -41,10 +45,6 @@ extension Renderer {
         metalLayer.pixelFormat = MTLPixelFormat.bgra8Unorm
         metalLayer.framebufferOnly = true
         metalLayer.frame = metalLayer.frame
-        
-        // Command queue
-        queue = device.makeCommandQueue()
-        assert(queue != nil, "Metal command queue must not be nil")        
     }
     
     func buildShaders() {

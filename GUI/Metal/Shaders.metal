@@ -69,6 +69,7 @@ struct ShaderOptions {
 struct FragmentUniforms {
     
     float alpha;
+    float white;
     uint dotMaskWidth;
     uint dotMaskHeight;
     uint scanlineDistance;
@@ -176,7 +177,6 @@ fragment half4 fragment_main(ProjectedVertex vert [[ stage_in ]],
     }
 
     if (options.dotMask) {
-        
         uint xoffset = x % uniforms.dotMaskWidth;
         uint yoffset = y % uniforms.dotMaskHeight;
         float4 dotColor = dotMask.read(uint2(xoffset, yoffset));
@@ -185,6 +185,7 @@ fragment half4 fragment_main(ProjectedVertex vert [[ stage_in ]],
         color += gain - loose;
     }
     
+    color = mix(color, float4(1.0, 1.0, 1.0, 1.0), uniforms.white);
     return half4(color.r, color.g, color.b, uniforms.alpha);
 }
 

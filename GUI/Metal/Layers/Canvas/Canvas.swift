@@ -66,6 +66,7 @@ class Canvas: Layer {
     var vertexUniforms2D = VertexUniforms(mvp: matrix_identity_float4x4)
     var vertexUniforms3D = VertexUniforms(mvp: matrix_identity_float4x4)
     var fragmentUniforms = FragmentUniforms(alpha: 1.0,
+                                            white: 0.0,
                                             dotMaskWidth: 0,
                                             dotMaskHeight: 0,
                                             scanlineDistance: 0)
@@ -85,9 +86,15 @@ class Canvas: Layer {
     }
     
     //
-    // Updating textures
+    // Updating
     //
         
+    override func update(frames: Int64) {
+            
+        super.update(frames: frames)
+        updateTexture()
+    }
+    
     func updateBgTexture(bytes: UnsafeMutablePointer<UInt32>) {
         
         bgTexture.replace(w: 512, h: 512, buffer: bytes)
@@ -199,6 +206,11 @@ class Canvas: Layer {
                              target: scanlineTexture,
                              options: &renderer.shaderOptions,
                              length: MemoryLayout<ShaderOptions>.stride)
+    }
+    
+    func render(encoder: MTLRenderCommandEncoder, flat: Bool) {
+        
+        flat ? render2D(encoder: encoder) : render3D(encoder: encoder)
     }
     
     func render2D(encoder: MTLRenderCommandEncoder) {

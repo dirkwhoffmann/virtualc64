@@ -561,6 +561,7 @@ extension MyController {
             
         case .POWER_ON:
             
+            renderer.canvas.open(delay: 1.5)
             virtualKeyboard = nil
             renderer.blendIn()
             // renderer.zoomIn()

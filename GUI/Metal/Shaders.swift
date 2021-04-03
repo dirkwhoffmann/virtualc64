@@ -55,6 +55,7 @@ struct ShaderOptions: Codable {
 struct FragmentUniforms {
     
     var alpha: Float
+    var white: Float
     var dotMaskWidth: Int32
     var dotMaskHeight: Int32
     var scanlineDistance: Int32
