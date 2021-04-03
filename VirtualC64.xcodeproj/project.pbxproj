@@ -185,6 +185,7 @@
 		50A22A272618723E00C9FB1E /* CanvasInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A262618723E00C9FB1E /* CanvasInit.swift */; };
 		50A22A2A2618725200C9FB1E /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A292618725200C9FB1E /* Console.swift */; };
 		50A22A2C2618726100C9FB1E /* ConsoleInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A2B2618726100C9FB1E /* ConsoleInit.swift */; };
+		50A22A2F2618845800C9FB1E /* TextureRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A2E2618845800C9FB1E /* TextureRect.swift */; };
 		50A519411B8DA230006771E2 /* drive_click.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519401B8DA230006771E2 /* drive_click.aiff */; };
 		50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */; };
 		50A9A088250DE90900723D32 /* PageFox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A9A086250DE90900723D32 /* PageFox.cpp */; };
@@ -571,6 +572,7 @@
 		50A22A262618723E00C9FB1E /* CanvasInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasInit.swift; sourceTree = "<group>"; };
 		50A22A292618725200C9FB1E /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		50A22A2B2618726100C9FB1E /* ConsoleInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleInit.swift; sourceTree = "<group>"; };
+		50A22A2E2618845800C9FB1E /* TextureRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureRect.swift; sourceTree = "<group>"; };
 		50A2D7AE24AF944500671F38 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		50A2D7B024AF94B400671F38 /* Aliases.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Aliases.h; sourceTree = "<group>"; };
 		50A519401B8DA230006771E2 /* drive_click.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = drive_click.aiff; sourceTree = "<group>"; };
@@ -1202,6 +1204,7 @@
 				5092A5B0200BC4B70037754D /* DragAndDrop.swift */,
 				5018BFB024B48DC400551848 /* Renderer.swift */,
 				5018BFB224B48DD500551848 /* RendererSetup.swift */,
+				50A22A2E2618845800C9FB1E /* TextureRect.swift */,
 				5031D59B200B81D20088C802 /* Animation.swift */,
 				50D8421720A82CF500EB859A /* MetalViewEvents.swift */,
 				50B7566B2617703100CE1865 /* RessourceManager.swift */,
@@ -1682,6 +1685,7 @@
 				5002FA7F21C2653600DA4BBC /* GeneralPrefs.swift in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
 				504C435E24AF29AC00E69CAE /* FinalIII.cpp in Sources */,
+				50A22A2F2618845800C9FB1E /* TextureRect.swift in Sources */,
 				50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */,
 				506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */,
 				505D492821C155DD00A7C575 /* RomConf.swift in Sources */,

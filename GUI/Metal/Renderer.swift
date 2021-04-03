@@ -31,11 +31,7 @@ class Renderer: NSObject, MTKViewDelegate {
     // Number of drawn frames since power up
     var frames: Int64 = 0
     
-    /* Synchronization semaphore. The semaphore is locked in function draw()
-     * and released in function endFrame(). It's puprpose is to prevent a new
-     * frame from being drawn if the previous isn't finished yet. Not sure if
-     * we really need it.
-     */
+    // Frame synchronization semaphore
     var semaphore = DispatchSemaphore(value: 1)
     
     //
@@ -54,17 +50,7 @@ class Renderer: NSObject, MTKViewDelegate {
     var splashScreen: SplashScreen! = nil
     var canvas: Canvas! = nil
     var console: Console! = nil
-    
-    // Current canvas size
-    var size: CGSize {
         
-        let frameSize = mtkView.frame.size
-        let scale = mtkView.layer?.contentsScale ?? 1
-        
-        return CGSize(width: frameSize.width * scale,
-                      height: frameSize.height * scale)
-    }
-    
     //
     // Ressources
     //
@@ -152,108 +138,15 @@ class Renderer: NSObject, MTKViewDelegate {
         mtkView.device = device
     }
         
-    var maxTextureRect: CGRect {
+    var size: CGSize {
         
-        if parent.c64.vic.isPAL() {
-            return CGRect.init(x: 104, y: 16, width: 487 - 104, height: 299 - 16)
-        } else {
-            return CGRect.init(x: 104, y: 16, width: 487 - 104, height: 249 - 16)
-        }
+        let frameSize = mtkView.frame.size
+        let scale = mtkView.layer?.contentsScale ?? 1
+        
+        return CGSize(width: frameSize.width * scale,
+                      height: frameSize.height * scale)
     }
-
-    var maxTextureRectScaled: CGRect {
-        
-        let texW = CGFloat(TextureSize.original.width)
-        let texH = CGFloat(TextureSize.original.height)
-        var rect = maxTextureRect
-        rect.origin.x /= texW
-        rect.origin.y /= texH
-        rect.size.width /= texW
-        rect.size.height /= texH
-        return rect
-    }
-
-    func computeTextureRect() -> CGRect {
-                
-        // Display the whole texture if zoom is set
-        if zoom { return CGRect.init(x: 0.0, y: 0.0, width: 1.0, height: 1.0) }
-        
-        let rect = maxTextureRect
-        let aw = rect.minX
-        let dw = rect.maxX
-        let ah = rect.minY
-        let dh = rect.maxY
-        
-        /*
-        var aw: CGFloat, dw: CGFloat, ah: CGFloat, dh: CGFloat
-        if parent.c64.vic.isPAL() {
-            
-            aw = CGFloat(104)
-            dw = CGFloat(487)
-            ah = CGFloat(16)
-            dh = CGFloat(299)
-            
-        } else {
-            
-            aw = CGFloat(104)
-            dw = CGFloat(487)
-            ah = CGFloat(16)
-            dh = CGFloat(249)
-        }
-        */
-        
-        /*
-         *       aw <--------- maxWidth --------> dw
-         *    ah |-----|---------------------|-----|
-         *     ^ |     bw                   cw     |
-         *     | -  bh *<----- width  ------>*     -
-         *     | |     ^                     ^     |
-         *     | |     |                     |     |
-         *     | |   height                height  |
-         *     | |     |                     |     |
-         *     | |     v                     v     |
-         *     | -  ch *<----- width  ------>*     -
-         *     v |                                 |
-         *    dh |-----|---------------------|-----|
-         *
-         *      aw/ah - dw/dh = largest posible texture cutout
-         *      bw/bh - cw/ch = currently used texture cutout
-         */
-        let maxWidth = dw - aw
-        let maxHeight = dh - ah
-        
-        let hZoom = CGFloat(config.hZoom)
-        let vZoom = CGFloat(config.vZoom)
-        let hCenter = CGFloat(config.hCenter)
-        let vCenter = CGFloat(config.vCenter)
-
-        /*
-        let hZoom = CGFloat(0)
-        let vZoom = CGFloat(0)
-        let hCenter = CGFloat(0)
-        let vCenter = CGFloat(0)
-        */
-        
-        let width = (1 - hZoom) * maxWidth
-        let bw = aw + hCenter * (maxWidth - width)
-        let height = (1 - vZoom) * maxHeight
-        let bh = ah + vCenter * (maxHeight - height)
-        
-        let texW = CGFloat(TextureSize.original.width)
-        let texH = CGFloat(TextureSize.original.height)
-        
-        return CGRect.init(x: bw / texW,
-                           y: bh / texH,
-                           width: width / texW,
-                           height: height / texH)
-    }
-     
-    func updateTextureRect() {
-        
-        textureRect = computeTextureRect()
-        buildVertexBuffer()
-    }
-
+    
     //
     // Managing layout
     //
