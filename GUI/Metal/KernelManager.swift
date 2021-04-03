@@ -89,7 +89,6 @@ class KernelManager {
         
         if nr >= 0 && nr < scanlineFilterGallery.count && scanlineFilterGallery[nr] != nil {
             scanlineFilter = scanlineFilterGallery[nr]!
-            track("Selected scanline filter \(nr)")
             return true
         }
         return false

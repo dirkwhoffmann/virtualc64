@@ -47,7 +47,7 @@ class Renderer: NSObject, MTKViewDelegate {
     var depthState: MTLDepthStencilState! = nil
     var commandBuffer: MTLCommandBuffer! = nil
     var commandEncoder: MTLRenderCommandEncoder! = nil
-    var drawable: CAMetalDrawable! = nil
+    // var drawable: CAMetalDrawable! = nil
     
     //
     // Metal layers
@@ -408,7 +408,7 @@ class Renderer: NSObject, MTKViewDelegate {
                              length: MemoryLayout<ShaderOptions>.stride)
     }
     
-    func makeCommandEncoder() {
+    func makeCommandEncoder(drawable: CAMetalDrawable) {
         
         // Create render pass descriptor
         let descriptor = MTLRenderPassDescriptor.init()
@@ -518,20 +518,6 @@ class Renderer: NSObject, MTKViewDelegate {
         }
     }
 
-    func endFrame() {
-    
-        commandEncoder.endEncoding()
-    
-        commandBuffer.addCompletedHandler { _ in
-            self.semaphore.signal()
-        }
-        
-        if drawable != nil {
-            commandBuffer.present(drawable)
-            commandBuffer.commit()
-        }
-    }
-        
     //
     // Managing layout
     //
@@ -604,14 +590,12 @@ class Renderer: NSObject, MTKViewDelegate {
         frames += 1
         
         semaphore.wait()
-        drawable = metalLayer.nextDrawable()
-        
-        if drawable != nil {
-            
+        if let drawable = metalLayer.nextDrawable() {
+                    
             updateTexture()
             
             makeCommandBuffer()
-            makeCommandEncoder()
+            makeCommandEncoder(drawable: drawable)
             
             if fullscreen && !parent.pref.keepAspectRatio {
                 drawScene2D()
@@ -619,7 +603,11 @@ class Renderer: NSObject, MTKViewDelegate {
                 drawScene3D()
             }
             
-            endFrame()
+            // Draw the entire scene
+            commandEncoder.endEncoding()
+            commandBuffer.addCompletedHandler { _ in self.semaphore.signal() }
+            commandBuffer.present(drawable)
+            commandBuffer.commit()
         }
     }
 }
