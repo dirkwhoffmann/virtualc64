@@ -563,15 +563,11 @@ extension MyController {
             
             renderer.canvas.open(delay: 1.5)
             virtualKeyboard = nil
-            renderer.blendIn()
-            // renderer.zoomIn()
             toolbar.validateVisibleItems()
             inspector?.fullRefresh()
 
         case .POWER_OFF:
             
-            renderer.blendOut()
-            // renderer.zoomOut(steps: 20)
             toolbar.validateVisibleItems()
             inspector?.fullRefresh()
             
@@ -766,12 +762,12 @@ extension MyController {
             
             track("MSG_USER_SNAPSHOT_TAKEN")
             mydocument.snapshots.append(c64.latestUserSnapshot)
-            renderer.blendIn(steps: 20)
+            renderer.snapToFront()
             
         case .SNAPSHOT_RESTORED:
             
             track("MSG_SNAPSHOT_RESTORED")
-            renderer.blendIn(steps: 20)
+            renderer.snapToFront()
             renderer.canvas.updateTextureRect()
             hideOrShowDriveMenus()
             refreshStatusBar()

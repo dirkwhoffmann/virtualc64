@@ -29,11 +29,7 @@ extension Canvas {
         let r: MTLTextureUsage = [ .shaderRead ]
         let rwt: MTLTextureUsage = [ .shaderRead, .shaderWrite, .renderTarget ]
         let rwtp: MTLTextureUsage = [ .shaderRead, .shaderWrite, .renderTarget, .pixelFormatView ]
-        
-        // Background texture used in window mode
-        bgTexture = device.makeTexture(size: TextureSize.background, usage: r)
-        assert(bgTexture != nil, "Failed to create bgTexture")
-        
+                
         // Background texture used in fullscreen mode
         let c1 = (0x00, 0x00, 0x00, 0xFF)
         let c2 = (0x44, 0x44, 0x44, 0xFF)

@@ -12,7 +12,7 @@ import simd
 struct AnimationType {
     
     static let geometry = 1
-    static let alpha = 2
+    static let color = 2
     static let texture = 4
 }
 
@@ -88,6 +88,7 @@ extension Renderer {
         }
         
         // Check for alpha channel animation
+        /*
         if (animates & AnimationType.alpha) != 0 {
             
             alpha.move()
@@ -99,6 +100,7 @@ extension Renderer {
                 animates -= AnimationType.alpha
             }
         }
+        */
         
         // Check for texture animation
         if (animates & AnimationType.texture) != 0 {
@@ -185,19 +187,13 @@ extension Renderer {
         angleX.target = 0.0
         angleY.target = 0.0
         angleZ.target = 0.0
-        alpha.current = 0.0
-        alpha.target = 1.0
-        noise.current = 0.0
-        noise.target = 0.0
         
         shiftZ.steps = steps
         angleX.steps = steps
         angleY.steps = steps
         angleZ.steps = steps
-        alpha.steps = steps
-        noise.steps = steps
         
-        animates |= AnimationType.geometry + AnimationType.alpha
+        animates |= AnimationType.geometry
     }
     
     func zoomOut(steps: Int = 40) {
@@ -208,17 +204,13 @@ extension Renderer {
         angleX.target = 0.0
         angleY.target = 0.0
         angleZ.target = 0.0
-        alpha.target = 0.0
-        noise.target = 1.0
         
         shiftZ.steps = steps
         angleX.steps = steps
         angleY.steps = steps
         angleZ.steps = steps
-        alpha.steps = steps
-        noise.steps = steps
         
-        animates |= AnimationType.geometry + AnimationType.alpha
+        animates |= AnimationType.geometry
     }
     
     func rotate(x: Float = 0.0, y: Float = 0.0, z: Float = 0.0) {
@@ -251,15 +243,13 @@ extension Renderer {
         angleX.target = 0.0
         angleY.target = 0.0
         angleZ.target = 0.0
-        alpha.target = 1.0
         
         shiftY.steps = steps
         angleX.steps = steps
         angleY.steps = steps
         angleZ.steps = steps
-        alpha.steps = 1
         
-        animates |= AnimationType.geometry + AnimationType.alpha
+        animates |= AnimationType.geometry
     }
     
     func snapToFront() {
@@ -277,6 +267,7 @@ extension Renderer {
     // Alpha channel animations
     //
     
+    /*
     func blend(from: Float, to: Float, steps: Int) {
         
         track("Blending...")
@@ -284,17 +275,15 @@ extension Renderer {
         angleX.target = 0
         angleY.target = 0
         angleZ.target = 0
-        alpha.current = from
-        alpha.target = to
         
         angleX.steps = steps
         angleY.steps = steps
         angleZ.steps = steps
-        alpha.steps = steps
         
         animates |= AnimationType.alpha
     }
-    
+    */
+    /*
     func blendIn(steps: Int = 40) {
         
         noise.target = 0.0
@@ -308,4 +297,5 @@ extension Renderer {
         noise.steps = steps
         blend(from: 1.0, to: 0.0, steps: steps)
     }
+    */
 }

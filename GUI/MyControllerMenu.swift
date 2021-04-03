@@ -343,7 +343,7 @@ extension MyController: NSMenuItemValidation {
         try? screenshot.save(id: mydocument.bootDiskID)
         
         // Create a visual effect
-        renderer.blendIn(steps: 20)
+        renderer.snapToFront()
     }
     
     @IBAction func browseScreenshotsAction(_ sender: Any!) {

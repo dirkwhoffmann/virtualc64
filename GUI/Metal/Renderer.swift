@@ -85,8 +85,8 @@ class Renderer: NSObject, MTKViewDelegate {
     var shiftZ = AnimatedFloat(0.0)
     
     // Color animation parameters
-    var alpha = AnimatedFloat(0.0)
-    var noise = AnimatedFloat(0.0)
+    // var alpha = AnimatedFloat(0.0)
+    // var noise = AnimatedFloat(0.0)
     
     // Texture animation parameters
     var cutoutX1 = AnimatedFloat.init()
