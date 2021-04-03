@@ -346,7 +346,7 @@ class Renderer: NSObject, MTKViewDelegate {
     //  Drawing
     //
     
-    func startFrame() {
+    func makeCommandBuffer() {
     
         var bloomFilter: ComputeKernel! { return kernelManager.bloomFilter }
         var upscaler: ComputeKernel! { return kernelManager.upscaler }
@@ -406,6 +406,9 @@ class Renderer: NSObject, MTKViewDelegate {
                              target: scanlineTexture,
                              options: &shaderOptions,
                              length: MemoryLayout<ShaderOptions>.stride)
+    }
+    
+    func makeCommandEncoder() {
         
         // Create render pass descriptor
         let descriptor = MTLRenderPassDescriptor.init()
@@ -438,8 +441,6 @@ class Renderer: NSObject, MTKViewDelegate {
     
     func drawScene2D() {
     
-        startFrame()
-    
         // Configure vertex shader
         commandEncoder.setVertexBytes(&vertexUniforms2D,
                                       length: MemoryLayout<VertexUniforms>.stride,
@@ -453,8 +454,6 @@ class Renderer: NSObject, MTKViewDelegate {
         
         // Draw
         quad2D!.drawPrimitives(commandEncoder)
-        
-        endFrame()
     }
     
     func drawScene3D() {
@@ -466,8 +465,6 @@ class Renderer: NSObject, MTKViewDelegate {
 
         // Perform a single animation step
         if animates != 0 { performAnimationStep() }
-        
-        startFrame()
         
         if renderBackground {
             
@@ -519,8 +516,6 @@ class Renderer: NSObject, MTKViewDelegate {
             // Draw (part of) cube
             quad3D!.draw(commandEncoder, allSides: animates != 0)
         }
-                
-        endFrame()
     }
 
     func endFrame() {
@@ -535,8 +530,6 @@ class Renderer: NSObject, MTKViewDelegate {
             commandBuffer.present(drawable)
             commandBuffer.commit()
         }
-        
-        frames += 1
     }
         
     //
@@ -608,6 +601,8 @@ class Renderer: NSObject, MTKViewDelegate {
     
     func draw(in view: MTKView) {
         
+        frames += 1
+        
         semaphore.wait()
         drawable = metalLayer.nextDrawable()
         
@@ -615,11 +610,16 @@ class Renderer: NSObject, MTKViewDelegate {
             
             updateTexture()
             
+            makeCommandBuffer()
+            makeCommandEncoder()
+            
             if fullscreen && !parent.pref.keepAspectRatio {
                 drawScene2D()
             } else {
                 drawScene3D()
             }
+            
+            endFrame()
         }
     }
 }
