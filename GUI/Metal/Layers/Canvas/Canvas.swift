@@ -149,4 +149,83 @@ class Canvas: Layer {
                              options: &renderer.shaderOptions,
                              length: MemoryLayout<ShaderOptions>.stride)
     }
+    
+    func render2D(encoder: MTLRenderCommandEncoder) {
+        
+        // Configure vertex shader
+        encoder.setVertexBytes(&renderer.vertexUniforms2D,
+                               length: MemoryLayout<VertexUniforms>.stride,
+                               index: 1)
+        
+        // Configure fragment shader
+        encoder.setFragmentTexture(scanlineTexture, index: 0)
+        encoder.setFragmentBytes(&renderer.fragmentUniforms,
+                                 length: MemoryLayout<FragmentUniforms>.stride,
+                                 index: 1)
+        
+        // Draw
+        renderer.quad2D!.drawPrimitives(encoder)
+    }
+    
+    func render3D(encoder: MTLRenderCommandEncoder) {
+        
+        let paused = c64.paused
+        let poweredOff = c64.poweredOff
+        let renderBackground = poweredOff || renderer.animates != 0 || renderer.fullscreen
+        let renderForeground = renderer.alpha.current > 0.0
+        
+        // Perform a single animation step
+        if renderer.animates != 0 { renderer.performAnimationStep() }
+        
+        if renderBackground {
+            
+            // Update background texture
+            if !renderer.fullscreen {
+                let buffer = c64.vic.noise()
+                updateBgTexture(bytes: buffer!)
+            }
+            
+            // Configure vertex shader
+            encoder.setVertexBytes(&renderer.vertexUniformsBg,
+                                   length: MemoryLayout<VertexUniforms>.stride,
+                                   index: 1)
+            
+            // Configure fragment shader
+            if renderer.fullscreen {
+                renderer.fragmentUniforms.alpha = 1.0
+                encoder.setFragmentTexture(bgFullscreenTexture, index: 0)
+                encoder.setFragmentTexture(bgFullscreenTexture, index: 1)
+            } else {
+                renderer.fragmentUniforms.alpha = renderer.noise.current
+                encoder.setFragmentTexture(bgTexture, index: 0)
+                encoder.setFragmentTexture(bgTexture, index: 1)
+            }
+            encoder.setFragmentBytes(&renderer.fragmentUniforms,
+                                     length: MemoryLayout<FragmentUniforms>.stride,
+                                     index: 1)
+            
+            // Draw
+            renderer.bgRect!.drawPrimitives(encoder)
+        }
+        
+        if renderForeground {
+            
+            // Configure vertex shader
+            encoder.setVertexBytes(&renderer.vertexUniforms3D,
+                                   length: MemoryLayout<VertexUniforms>.stride,
+                                   index: 1)
+            // Configure fragment shader
+            renderer.fragmentUniforms.alpha = paused ? 0.5 : renderer.alpha.current
+            encoder.setFragmentTexture(scanlineTexture, index: 0)
+            encoder.setFragmentTexture(bloomTextureR, index: 1)
+            encoder.setFragmentTexture(bloomTextureG, index: 2)
+            encoder.setFragmentTexture(bloomTextureB, index: 3)
+            encoder.setFragmentBytes(&renderer.fragmentUniforms,
+                                     length: MemoryLayout<FragmentUniforms>.stride,
+                                     index: 1)
+            
+            // Draw (part of) cube
+            renderer.quad3D!.draw(encoder, allSides: renderer.animates != 0)
+        }
+    }
 }

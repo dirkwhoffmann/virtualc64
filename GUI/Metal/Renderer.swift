@@ -366,85 +366,6 @@ class Renderer: NSObject, MTKViewDelegate {
         return commandEncoder
     }
     
-    func drawScene2D(encoder: MTLRenderCommandEncoder) {
-        
-        // Configure vertex shader
-        encoder.setVertexBytes(&vertexUniforms2D,
-                               length: MemoryLayout<VertexUniforms>.stride,
-                               index: 1)
-        
-        // Configure fragment shader
-        encoder.setFragmentTexture(canvas.scanlineTexture, index: 0)
-        encoder.setFragmentBytes(&fragmentUniforms,
-                                 length: MemoryLayout<FragmentUniforms>.stride,
-                                 index: 1)
-        
-        // Draw
-        quad2D!.drawPrimitives(encoder)
-    }
-    
-    func drawScene3D(encoder: MTLRenderCommandEncoder) {
-        
-        let paused = parent.c64.paused
-        let poweredOff = parent.c64.poweredOff
-        let renderBackground = poweredOff || animates != 0 || fullscreen
-        let renderForeground = alpha.current > 0.0
-        
-        // Perform a single animation step
-        if animates != 0 { performAnimationStep() }
-        
-        if renderBackground {
-            
-            // Update background texture
-            if !fullscreen {
-                let buffer = parent.c64.vic.noise()
-                canvas.updateBgTexture(bytes: buffer!)
-            }
-            
-            // Configure vertex shader
-            encoder.setVertexBytes(&vertexUniformsBg,
-                                   length: MemoryLayout<VertexUniforms>.stride,
-                                   index: 1)
-            
-            // Configure fragment shader
-            if fullscreen {
-                fragmentUniforms.alpha = 1.0
-                encoder.setFragmentTexture(canvas.bgFullscreenTexture, index: 0)
-                encoder.setFragmentTexture(canvas.bgFullscreenTexture, index: 1)
-            } else {
-                fragmentUniforms.alpha = noise.current
-                encoder.setFragmentTexture(canvas.bgTexture, index: 0)
-                encoder.setFragmentTexture(canvas.bgTexture, index: 1)
-            }
-            encoder.setFragmentBytes(&fragmentUniforms,
-                                     length: MemoryLayout<FragmentUniforms>.stride,
-                                     index: 1)
-            
-            // Draw
-            bgRect!.drawPrimitives(encoder)
-        }
-        
-        if renderForeground {
-            
-            // Configure vertex shader
-            encoder.setVertexBytes(&vertexUniforms3D,
-                                   length: MemoryLayout<VertexUniforms>.stride,
-                                   index: 1)
-            // Configure fragment shader
-            fragmentUniforms.alpha = paused ? 0.5 : alpha.current
-            encoder.setFragmentTexture(canvas.scanlineTexture, index: 0)
-            encoder.setFragmentTexture(canvas.bloomTextureR, index: 1)
-            encoder.setFragmentTexture(canvas.bloomTextureG, index: 2)
-            encoder.setFragmentTexture(canvas.bloomTextureB, index: 3)
-            encoder.setFragmentBytes(&fragmentUniforms,
-                                     length: MemoryLayout<FragmentUniforms>.stride,
-                                     index: 1)
-            
-            // Draw (part of) cube
-            quad3D!.draw(encoder, allSides: animates != 0)
-        }
-    }
-    
     //
     // Methods from MTKViewDelegate
     //
@@ -471,9 +392,9 @@ class Renderer: NSObject, MTKViewDelegate {
             
             // Render the scene
             if fullscreen && !parent.pref.keepAspectRatio {
-                drawScene2D(encoder: encoder)
+                canvas.render2D(encoder: encoder)
             } else {
-                drawScene3D(encoder: encoder)
+                canvas.render3D(encoder: encoder)
             }
             
             // Commit the command buffer
