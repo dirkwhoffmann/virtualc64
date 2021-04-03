@@ -180,11 +180,8 @@
 		50A0E0250A8F332A0067714C /* System.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A0E0240A8F332A0067714C /* System.framework */; };
 		50A22A1D261871E600C9FB1E /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A1C261871E600C9FB1E /* Layer.swift */; };
 		50A22A202618720100C9FB1E /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A1F2618720100C9FB1E /* SplashScreen.swift */; };
-		50A22A232618721900C9FB1E /* SplashScreenInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A222618721900C9FB1E /* SplashScreenInit.swift */; };
 		50A22A252618723200C9FB1E /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A242618723200C9FB1E /* Canvas.swift */; };
-		50A22A272618723E00C9FB1E /* CanvasInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A262618723E00C9FB1E /* CanvasInit.swift */; };
 		50A22A2A2618725200C9FB1E /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A292618725200C9FB1E /* Console.swift */; };
-		50A22A2C2618726100C9FB1E /* ConsoleInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A2B2618726100C9FB1E /* ConsoleInit.swift */; };
 		50A22A2F2618845800C9FB1E /* TextureRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A2E2618845800C9FB1E /* TextureRect.swift */; };
 		50A519411B8DA230006771E2 /* drive_click.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519401B8DA230006771E2 /* drive_click.aiff */; };
 		50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */; };
@@ -567,11 +564,8 @@
 		50A0E0240A8F332A0067714C /* System.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = System.framework; path = /System/Library/Frameworks/System.framework; sourceTree = "<absolute>"; };
 		50A22A1C261871E600C9FB1E /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
 		50A22A1F2618720100C9FB1E /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
-		50A22A222618721900C9FB1E /* SplashScreenInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenInit.swift; sourceTree = "<group>"; };
 		50A22A242618723200C9FB1E /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
-		50A22A262618723E00C9FB1E /* CanvasInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasInit.swift; sourceTree = "<group>"; };
 		50A22A292618725200C9FB1E /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
-		50A22A2B2618726100C9FB1E /* ConsoleInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleInit.swift; sourceTree = "<group>"; };
 		50A22A2E2618845800C9FB1E /* TextureRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureRect.swift; sourceTree = "<group>"; };
 		50A2D7AE24AF944500671F38 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		50A2D7B024AF94B400671F38 /* Aliases.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Aliases.h; sourceTree = "<group>"; };
@@ -1298,38 +1292,11 @@
 			isa = PBXGroup;
 			children = (
 				50A22A1C261871E600C9FB1E /* Layer.swift */,
-				50A22A212618720600C9FB1E /* SplashScreen */,
-				50A22A282618724700C9FB1E /* Canvas */,
-				50A22A2D2618726600C9FB1E /* Console */,
+				50A22A1F2618720100C9FB1E /* SplashScreen.swift */,
+				50A22A242618723200C9FB1E /* Canvas.swift */,
+				50A22A292618725200C9FB1E /* Console.swift */,
 			);
 			path = Layers;
-			sourceTree = "<group>";
-		};
-		50A22A212618720600C9FB1E /* SplashScreen */ = {
-			isa = PBXGroup;
-			children = (
-				50A22A1F2618720100C9FB1E /* SplashScreen.swift */,
-				50A22A222618721900C9FB1E /* SplashScreenInit.swift */,
-			);
-			path = SplashScreen;
-			sourceTree = "<group>";
-		};
-		50A22A282618724700C9FB1E /* Canvas */ = {
-			isa = PBXGroup;
-			children = (
-				50A22A242618723200C9FB1E /* Canvas.swift */,
-				50A22A262618723E00C9FB1E /* CanvasInit.swift */,
-			);
-			path = Canvas;
-			sourceTree = "<group>";
-		};
-		50A22A2D2618726600C9FB1E /* Console */ = {
-			isa = PBXGroup;
-			children = (
-				50A22A292618725200C9FB1E /* Console.swift */,
-				50A22A2B2618726100C9FB1E /* ConsoleInit.swift */,
-			);
-			path = Console;
 			sourceTree = "<group>";
 		};
 		50A2D7AF24AF945200671F38 /* Base */ = {
@@ -1617,7 +1584,6 @@
 				5002FA8121C2654B00DA4BBC /* ControlsPrefs.swift in Sources */,
 				50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */,
 				500EA6C724B09037009AA7D7 /* C64Component.cpp in Sources */,
-				50A22A2C2618726100C9FB1E /* ConsoleInit.swift in Sources */,
 				501B80C325B1702500C90284 /* MyDocumentController.swift in Sources */,
 				504C438324AF29AC00E69CAE /* HardwareComponent.cpp in Sources */,
 				50E9B92D201F299500065A89 /* MyController.swift in Sources */,
@@ -1697,7 +1663,6 @@
 				50B7566C2617703100CE1865 /* RessourceManager.swift in Sources */,
 				506D4D0D20B331A00093C5C6 /* MyFormatter.swift in Sources */,
 				5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */,
-				50A22A232618721900C9FB1E /* SplashScreenInit.swift in Sources */,
 				50A9A088250DE90900723D32 /* PageFox.cpp in Sources */,
 				5055D5B1261585EA005D3DA6 /* Exception.cpp in Sources */,
 				504C436E24AF29AC00E69CAE /* Epyx.cpp in Sources */,
@@ -1756,7 +1721,6 @@
 				504C439724AF29AC00E69CAE /* voice.cc in Sources */,
 				504C436224AF29AC00E69CAE /* GeoRam.cpp in Sources */,
 				50B485FB24F9911600844133 /* ImportDialog.swift in Sources */,
-				50A22A272618723E00C9FB1E /* CanvasInit.swift in Sources */,
 				5002FA7D21C2651B00DA4BBC /* VideoConf.swift in Sources */,
 				508081E925110FFE0084B060 /* Dinamic.cpp in Sources */,
 				504C43A324AF29AC00E69CAE /* ProcessorPort.cpp in Sources */,

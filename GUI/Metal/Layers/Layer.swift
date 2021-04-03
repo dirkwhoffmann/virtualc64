@@ -11,6 +11,7 @@ class Layer: NSObject {
     
     let renderer: Renderer
 
+    var ressourceManager: RessourceManager { return renderer.ressourceManager }
     var device: MTLDevice { return renderer.device }
     var view: MTKView { return renderer.view }
     var c64: C64Proxy { return renderer.parent.c64 }

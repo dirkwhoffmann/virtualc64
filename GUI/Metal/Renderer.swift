@@ -41,6 +41,7 @@ class Renderer: NSObject, MTKViewDelegate {
     var queue: MTLCommandQueue! = nil
     var pipeline: MTLRenderPipelineState! = nil
     var depthState: MTLDepthStencilState! = nil
+    var descriptor: MTLRenderPassDescriptor! = nil
     
     //
     // Layers
@@ -162,35 +163,15 @@ class Renderer: NSObject, MTKViewDelegate {
     
     func makeCommandEncoder(drawable: CAMetalDrawable, buffer: MTLCommandBuffer) -> MTLRenderCommandEncoder {
         
-        // Create render pass descriptor
-        let descriptor = MTLRenderPassDescriptor.init()
+        // Update the render pass descriptor
         descriptor.colorAttachments[0].texture = drawable.texture
-        descriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1)
-        descriptor.colorAttachments[0].loadAction = MTLLoadAction.clear
-        descriptor.colorAttachments[0].storeAction = MTLStoreAction.store
-        
         descriptor.depthAttachment.texture = ressourceManager.depthTexture
-        descriptor.depthAttachment.clearDepth = 1
-        descriptor.depthAttachment.loadAction = MTLLoadAction.clear
-        descriptor.depthAttachment.storeAction = MTLStoreAction.dontCare
-        
+
         // Create command encoder
         let commandEncoder = buffer.makeRenderCommandEncoder(descriptor: descriptor)!
         commandEncoder.setRenderPipelineState(pipeline)
         commandEncoder.setDepthStencilState(depthState)
-        commandEncoder.setFragmentBytes(&shaderOptions,
-                                        length: MemoryLayout<ShaderOptions>.stride,
-                                        index: 0)
                 
-        // Finally, we have to decide for a texture sampler. We use a linear
-        // interpolation sampler, if Gaussian blur is enabled, and a nearest
-        // neighbor sampler otherwise.
-        if shaderOptions.blur > 0 {
-            commandEncoder.setFragmentSamplerState(ressourceManager.samplerLinear, index: 0)
-        } else {
-            commandEncoder.setFragmentSamplerState(ressourceManager.samplerNearest, index: 0)
-        }
-
         return commandEncoder
     }
     

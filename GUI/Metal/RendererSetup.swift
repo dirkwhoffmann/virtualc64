@@ -22,6 +22,7 @@ extension Renderer {
         
         buildMetal()
         buildShaders()
+        buildDescriptors()
         buildLayers()
         buildPipeline()
         buildVertexBuffers()
@@ -45,6 +46,18 @@ extension Renderer {
         metalLayer.pixelFormat = MTLPixelFormat.bgra8Unorm
         metalLayer.framebufferOnly = true
         metalLayer.frame = metalLayer.frame
+    }
+    
+    func buildDescriptors() {
+        
+        // Render pass descriptor
+        descriptor = MTLRenderPassDescriptor.init()
+        descriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1)
+        descriptor.colorAttachments[0].loadAction = MTLLoadAction.clear
+        descriptor.colorAttachments[0].storeAction = MTLStoreAction.store
+        descriptor.depthAttachment.clearDepth = 1
+        descriptor.depthAttachment.loadAction = MTLLoadAction.clear
+        descriptor.depthAttachment.storeAction = MTLStoreAction.dontCare
     }
     
     func buildShaders() {

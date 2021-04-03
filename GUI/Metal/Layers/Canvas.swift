@@ -11,7 +11,6 @@ import MetalPerformanceShaders
 
 class Canvas: Layer {
     
-    var ressourceManager: RessourceManager { return renderer.ressourceManager }
     var bloomFilter: ComputeKernel! { return ressourceManager.bloomFilter }
     var upscaler: ComputeKernel! { return ressourceManager.upscaler }
     var scanlineFilter: ComputeKernel! { return ressourceManager.scanlineFilter }
@@ -19,9 +18,6 @@ class Canvas: Layer {
     //
     // Textures
     //
-
-    // Background texture
-    var bgFullscreenTexture: MTLTexture! = nil
     
     /* Emulator texture as provided by the emulator. The C64 screen is 428
      * pixels wide and 284 high and covers the upper left part of the emulator
@@ -80,8 +76,58 @@ class Canvas: Layer {
         buildVertexBuffers()
         buildTextures()
         
-        // Start with a negative alpha to keep the splash screen for a while
-        alpha.set(-2.5)
+        /* We start with a negative alpha value to give it some time until
+         * it becomes greater than 0. During this time, the splash screen will
+         * be fully visible. */
+        alpha.set(-1.0)
+    }
+    
+    func buildVertexBuffers() {
+                
+        quad2D = Node.init(device: device,
+                           x: -1.0, y: -1.0, z: 0.0, w: 2.0, h: 2.0,
+                           t: textureRect)
+        
+        quad3D = Quad.init(device: device,
+                           x1: -0.64, y1: -0.48, z1: -0.64,
+                           x2: 0.64, y2: 0.48, z2: 0.64,
+                           t: textureRect)
+    }
+
+    func buildTextures() {
+        
+        track()
+        
+        // Texture usages
+        let r: MTLTextureUsage = [ .shaderRead ]
+        let rwt: MTLTextureUsage = [ .shaderRead, .shaderWrite, .renderTarget ]
+        let rwtp: MTLTextureUsage = [ .shaderRead, .shaderWrite, .renderTarget, .pixelFormatView ]
+                
+        // Emulator texture (long frames)
+        emulatorTexture = device.makeTexture(size: TextureSize.original, usage: r)
+        assert(emulatorTexture != nil, "Failed to create emulatorTexture")
+        
+        // Build bloom textures
+        bloomTextureR = device.makeTexture(size: TextureSize.original, usage: rwt)
+        bloomTextureG = device.makeTexture(size: TextureSize.original, usage: rwt)
+        bloomTextureB = device.makeTexture(size: TextureSize.original, usage: rwt)
+        assert(bloomTextureR != nil, "Failed to create bloomTextureR")
+        assert(bloomTextureG != nil, "Failed to create bloomTextureG")
+        assert(bloomTextureB != nil, "Failed to create bloomTextureB")
+        
+        // Upscaled texture
+        upscaledTexture = device.makeTexture(size: TextureSize.upscaled, usage: rwtp)
+        scanlineTexture = device.makeTexture(size: TextureSize.upscaled, usage: rwtp)
+        assert(upscaledTexture != nil, "Failed to create upscaledTexture")
+        assert(scanlineTexture != nil, "Failed to create scanlineTexture")
+
+        var w = emulatorTexture.width
+        var h = emulatorTexture.height
+        track("Emulator texture created: \(w) x \(h)")
+        
+        w = upscaledTexture.width
+        h = upscaledTexture.height
+        track("Upscaled texture created: \(w) x \(h)")
     }
     
     //
@@ -212,6 +258,35 @@ class Canvas: Layer {
                              length: MemoryLayout<ShaderOptions>.stride)
     }
     
+    func setupFragmentShader(encoder: MTLRenderCommandEncoder) {
+        
+        // Setup textures
+        encoder.setFragmentTexture(scanlineTexture, index: 0)
+        encoder.setFragmentTexture(bloomTextureR, index: 1)
+        encoder.setFragmentTexture(bloomTextureG, index: 2)
+        encoder.setFragmentTexture(bloomTextureB, index: 3)
+        encoder.setFragmentTexture(ressourceManager.dotMask, index: 4)
+
+        // Select the texture sampler
+        if renderer.shaderOptions.blur > 0 {
+            encoder.setFragmentSamplerState(ressourceManager.samplerLinear, index: 0)
+        } else {
+            encoder.setFragmentSamplerState(ressourceManager.samplerNearest, index: 0)
+        }
+        
+        // Setup uniforms
+        fragmentUniforms.alpha = c64.paused ? 0.5 : alpha.current
+        fragmentUniforms.dotMaskHeight = Int32(ressourceManager.dotMask.height)
+        fragmentUniforms.dotMaskWidth = Int32(ressourceManager.dotMask.width)
+        fragmentUniforms.scanlineDistance = Int32(renderer.size.height / 256)
+        encoder.setFragmentBytes(&renderer.shaderOptions,
+                                 length: MemoryLayout<ShaderOptions>.stride,
+                                 index: 0)
+        encoder.setFragmentBytes(&fragmentUniforms,
+                                 length: MemoryLayout<FragmentUniforms>.stride,
+                                 index: 1)
+    }
+    
     func render(encoder: MTLRenderCommandEncoder, flat: Bool) {
         
         flat ? render2D(encoder: encoder) : render3D(encoder: encoder)
@@ -219,33 +294,20 @@ class Canvas: Layer {
     
     func render2D(encoder: MTLRenderCommandEncoder) {
         
-        // Configure vertex shader
+        // Configure the vertex shader
         encoder.setVertexBytes(&vertexUniforms2D,
                                length: MemoryLayout<VertexUniforms>.stride,
                                index: 1)
         
-        // Configure fragment shader
-        fragmentUniforms.alpha = 1.0
-        fragmentUniforms.dotMaskHeight = Int32(ressourceManager.dotMask.height)
-        fragmentUniforms.dotMaskWidth = Int32(ressourceManager.dotMask.width)
-        fragmentUniforms.scanlineDistance = Int32(renderer.size.height / 256)
-        encoder.setFragmentTexture(scanlineTexture, index: 0)
-        encoder.setFragmentTexture(bloomTextureR, index: 1)
-        encoder.setFragmentTexture(bloomTextureG, index: 2)
-        encoder.setFragmentTexture(bloomTextureB, index: 3)
-        encoder.setFragmentTexture(ressourceManager.dotMask, index: 4)
-        encoder.setFragmentBytes(&fragmentUniforms,
-                                 length: MemoryLayout<FragmentUniforms>.stride,
-                                 index: 1)
-        
-        // Draw
+        // Configure the fragment shader
+        setupFragmentShader(encoder: encoder)
+
+        // Draw rectangle
         quad2D!.drawPrimitives(encoder)
     }
     
     func render3D(encoder: MTLRenderCommandEncoder) {
-        
-        let paused = c64.paused
-        
+                
         // Perform a single animation step
         if renderer.animates != 0 { renderer.performAnimationStep() }
         
@@ -255,18 +317,7 @@ class Canvas: Layer {
                                index: 1)
         
         // Configure fragment shader
-        fragmentUniforms.alpha = paused ? 0.5 : alpha.current
-        fragmentUniforms.dotMaskHeight = Int32(ressourceManager.dotMask.height)
-        fragmentUniforms.dotMaskWidth = Int32(ressourceManager.dotMask.width)
-        fragmentUniforms.scanlineDistance = Int32(renderer.size.height / 256)
-        encoder.setFragmentTexture(scanlineTexture, index: 0)
-        encoder.setFragmentTexture(bloomTextureR, index: 1)
-        encoder.setFragmentTexture(bloomTextureG, index: 2)
-        encoder.setFragmentTexture(bloomTextureB, index: 3)
-        encoder.setFragmentTexture(ressourceManager.dotMask, index: 4)
-        encoder.setFragmentBytes(&fragmentUniforms,
-                                 length: MemoryLayout<FragmentUniforms>.stride,
-                                 index: 1)
+        setupFragmentShader(encoder: encoder)
         
         // Draw (part of) the cube
         quad3D!.draw(encoder, allSides: renderer.animates != 0)
