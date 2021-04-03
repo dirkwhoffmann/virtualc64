@@ -54,6 +54,15 @@ class Canvas: Layer {
     var scanlineTexture: MTLTexture! = nil
     
     //
+    // Uniforms
+    //
+    
+    var fragmentUniforms = FragmentUniforms(alpha: 1.0,
+                                            dotMaskWidth: 0,
+                                            dotMaskHeight: 0,
+                                            scanlineDistance: 0)
+
+    //
     // Initializing
     //
     
@@ -158,8 +167,16 @@ class Canvas: Layer {
                                index: 1)
         
         // Configure fragment shader
+        fragmentUniforms.alpha = 1.0
+        fragmentUniforms.dotMaskHeight = Int32(ressourceManager.dotMask.height)
+        fragmentUniforms.dotMaskWidth = Int32(ressourceManager.dotMask.width)
+        fragmentUniforms.scanlineDistance = Int32(renderer.size.height / 256)
         encoder.setFragmentTexture(scanlineTexture, index: 0)
-        encoder.setFragmentBytes(&renderer.fragmentUniforms,
+        encoder.setFragmentTexture(bloomTextureR, index: 1)
+        encoder.setFragmentTexture(bloomTextureG, index: 2)
+        encoder.setFragmentTexture(bloomTextureB, index: 3)
+        encoder.setFragmentTexture(ressourceManager.dotMask, index: 4)
+        encoder.setFragmentBytes(&fragmentUniforms,
                                  length: MemoryLayout<FragmentUniforms>.stride,
                                  index: 1)
         
@@ -192,15 +209,15 @@ class Canvas: Layer {
             
             // Configure fragment shader
             if renderer.fullscreen {
-                renderer.fragmentUniforms.alpha = 1.0
+                fragmentUniforms.alpha = 1.0
                 encoder.setFragmentTexture(bgFullscreenTexture, index: 0)
                 encoder.setFragmentTexture(bgFullscreenTexture, index: 1)
             } else {
-                renderer.fragmentUniforms.alpha = renderer.noise.current
+                fragmentUniforms.alpha = renderer.noise.current
                 encoder.setFragmentTexture(bgTexture, index: 0)
                 encoder.setFragmentTexture(bgTexture, index: 1)
             }
-            encoder.setFragmentBytes(&renderer.fragmentUniforms,
+            encoder.setFragmentBytes(&fragmentUniforms,
                                      length: MemoryLayout<FragmentUniforms>.stride,
                                      index: 1)
             
@@ -214,13 +231,18 @@ class Canvas: Layer {
             encoder.setVertexBytes(&renderer.vertexUniforms3D,
                                    length: MemoryLayout<VertexUniforms>.stride,
                                    index: 1)
+            
             // Configure fragment shader
-            renderer.fragmentUniforms.alpha = paused ? 0.5 : renderer.alpha.current
+            fragmentUniforms.alpha = paused ? 0.5 : renderer.alpha.current
+            fragmentUniforms.dotMaskHeight = Int32(ressourceManager.dotMask.height)
+            fragmentUniforms.dotMaskWidth = Int32(ressourceManager.dotMask.width)
+            fragmentUniforms.scanlineDistance = Int32(renderer.size.height / 256)
             encoder.setFragmentTexture(scanlineTexture, index: 0)
             encoder.setFragmentTexture(bloomTextureR, index: 1)
             encoder.setFragmentTexture(bloomTextureG, index: 2)
             encoder.setFragmentTexture(bloomTextureB, index: 3)
-            encoder.setFragmentBytes(&renderer.fragmentUniforms,
+            encoder.setFragmentTexture(ressourceManager.dotMask, index: 4)
+            encoder.setFragmentBytes(&fragmentUniforms,
                                      length: MemoryLayout<FragmentUniforms>.stride,
                                      index: 1)
             

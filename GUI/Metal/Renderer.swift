@@ -43,7 +43,7 @@ class Renderer: NSObject, MTKViewDelegate {
     var depthState: MTLDepthStencilState! = nil
     
     //
-    // Metal layers
+    // Layers
     //
     
     var metalLayer: CAMetalLayer! = nil
@@ -69,23 +69,12 @@ class Renderer: NSObject, MTKViewDelegate {
     var vertexUniforms3D = VertexUniforms(mvp: matrix_identity_float4x4)
     var vertexUniformsBg = VertexUniforms(mvp: matrix_identity_float4x4)
 
-    var fragmentUniforms = FragmentUniforms(alpha: 1.0,
-                                            dotMaskWidth: 0,
-                                            dotMaskHeight: 0,
-                                            scanlineDistance: 0)
-    
     // Texture to hold the pixel depth information
     var depthTexture: MTLTexture! = nil
     
     //
     // Texture samplers
     //
-    
-    // Nearest neighbor sampler
-    var samplerNearest: MTLSamplerState! = nil
-
-    // Linear interpolation sampler
-    var samplerLinear: MTLSamplerState! = nil
     
     // Shader options
     var shaderOptions: ShaderOptions!
@@ -113,10 +102,7 @@ class Renderer: NSObject, MTKViewDelegate {
     
     // Part of the texture that is currently visible
     var textureRect = CGRect.init() { didSet { buildVertexBuffers() } }
-    
-    // Indicates if the whole texture should be displayed
-    // var zoom = false
-    
+        
     // Is set to true when fullscreen mode is entered
     var fullscreen = false
         
@@ -136,7 +122,11 @@ class Renderer: NSObject, MTKViewDelegate {
         mtkView.delegate = self
         mtkView.device = device
     }
-        
+    
+    //
+    // Managing layout
+    //
+
     var size: CGSize {
         
         let frameSize = mtkView.frame.size
@@ -145,11 +135,7 @@ class Renderer: NSObject, MTKViewDelegate {
         return CGSize(width: frameSize.width * scale,
                       height: frameSize.height * scale)
     }
-    
-    //
-    // Managing layout
-    //
-    
+        
     func reshape(withSize size: CGSize) {
     
         reshape()
@@ -210,16 +196,6 @@ class Renderer: NSObject, MTKViewDelegate {
     
     func makeCommandBuffer() -> MTLCommandBuffer {
     
-        var bloomFilter: ComputeKernel! { return ressourceManager.bloomFilter }
-        var upscaler: ComputeKernel! { return ressourceManager.upscaler }
-        var scanlineFilter: ComputeKernel! { return ressourceManager.scanlineFilter }
-
-        // Set uniforms for the fragment shader (where shall this be put?)
-        fragmentUniforms.alpha = 1.0
-        fragmentUniforms.dotMaskHeight = Int32(ressourceManager.dotMask.height)
-        fragmentUniforms.dotMaskWidth = Int32(ressourceManager.dotMask.width)
-        fragmentUniforms.scanlineDistance = Int32(size.height / 256)
-
         let commandBuffer = queue.makeCommandBuffer()!
         canvas.makeCommandBuffer(buffer: commandBuffer)
         
@@ -244,16 +220,18 @@ class Renderer: NSObject, MTKViewDelegate {
         let commandEncoder = buffer.makeRenderCommandEncoder(descriptor: descriptor)!
         commandEncoder.setRenderPipelineState(pipeline)
         commandEncoder.setDepthStencilState(depthState)
-        commandEncoder.setFragmentTexture(ressourceManager.dotMask, index: 4)
         commandEncoder.setFragmentBytes(&shaderOptions,
                                         length: MemoryLayout<ShaderOptions>.stride,
                                         index: 0)
                 
         // Finally, we have to decide for a texture sampler. We use a linear
         // interpolation sampler, if Gaussian blur is enabled, and a nearest
-        // neighbor sampler if Gaussian blur is disabled.
-        let sampler = shaderOptions.blur > 0 ? samplerLinear : samplerNearest
-        commandEncoder.setFragmentSamplerState(sampler, index: 0)
+        // neighbor sampler otherwise.
+        if shaderOptions.blur > 0 {
+            commandEncoder.setFragmentSamplerState(ressourceManager.samplerLinear, index: 0)
+        } else {
+            commandEncoder.setFragmentSamplerState(ressourceManager.samplerNearest, index: 0)
+        }
 
         return commandEncoder
     }

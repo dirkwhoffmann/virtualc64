@@ -23,7 +23,6 @@ extension Renderer {
         buildMetal()
         buildShaders()
         buildLayers()
-        buildSamplers()
         buildPipeline()
         buildVertexBuffers()
         
@@ -78,96 +77,7 @@ extension Renderer {
         canvas = Canvas.init(renderer: self)
         console = Console.init(renderer: self)
     }
-        
-    internal func buildSamplers() {
-        
-        let descriptor = MTLSamplerDescriptor()
-        descriptor.sAddressMode = MTLSamplerAddressMode.clampToEdge
-        descriptor.tAddressMode = MTLSamplerAddressMode.clampToEdge
-        descriptor.mipFilter = MTLSamplerMipFilter.notMipmapped
-        
-        // Nearest neighbor sampler
-        descriptor.minFilter = MTLSamplerMinMagFilter.linear
-        descriptor.magFilter = MTLSamplerMinMagFilter.linear
-        samplerLinear = device.makeSamplerState(descriptor: descriptor)
-        
-        // Linear sampler
-        descriptor.minFilter = MTLSamplerMinMagFilter.nearest
-        descriptor.magFilter = MTLSamplerMinMagFilter.nearest
-        samplerNearest = device.makeSamplerState(descriptor: descriptor)
-    }
-    
-    /*
-    func buildDotMasks() {
-        
-        let selected = shaderOptions.dotMask
-        let max  = UInt8(85 + shaderOptions.dotMaskBrightness * 170)
-        let base = UInt8((1 - shaderOptions.dotMaskBrightness) * 85)
-        let none = UInt8(30 + (1 - shaderOptions.dotMaskBrightness) * 55)
-        
-        let R = UInt32.init(r: max, g: base, b: base)
-        let G = UInt32.init(r: base, g: max, b: base)
-        let B = UInt32.init(r: base, g: base, b: max)
-        let M = UInt32.init(r: max, g: base, b: max)
-        let W = UInt32.init(r: max, g: max, b: max)
-        let N = UInt32.init(r: none, g: none, b: none)
-        
-        let maskSize = [
-            CGSize.init(width: 1, height: 1),
-            CGSize.init(width: 3, height: 1),
-            CGSize.init(width: 4, height: 1),
-            CGSize.init(width: 3, height: 9),
-            CGSize.init(width: 4, height: 8)
-        ]
-        
-        let maskData = [
-            
-            [ W ],
-            [ M, G, N ],
-            [ R, G, B, N ],
-            [ M, G, N,
-              M, G, N,
-              N, N, N,
-              N, M, G,
-              N, M, G,
-              N, N, N,
-              G, N, M,
-              G, N, M,
-              N, N, N],
-            [ R, G, B, N,
-              R, G, B, N,
-              R, G, B, N,
-              N, N, N, N,
-              B, N, R, G,
-              B, N, R, G,
-              B, N, R, G,
-              N, N, N, N]
-        ]
-        
-        for n in 0 ... 4 {
-            
-            // Create image representation in memory
-            let cap = Int(maskSize[n].width) * Int(maskSize[n].height)
-            let mask = calloc(cap, MemoryLayout<UInt32>.size)!
-            let ptr = mask.bindMemory(to: UInt32.self, capacity: cap)
-            for i in 0 ... cap - 1 {
-                ptr[i] = maskData[n][i]
-            }
-            
-            // Create image
-            let image = NSImage.make(data: mask, rect: maskSize[n])
-            
-            // Create texture if the dotmask is the currently selected mask
-            if n == selected {
-                dotMaskTexture = image?.toTexture(device: device)
-            }
-            
-            // Store preview image
-            ressources.dotmaskImages[n] = image?.resizeSharp(width: 12, height: 12)
-        }
-    }
-    */
-    
+
     func buildPipeline() {
                 
         // Read vertex and fragment shader from library

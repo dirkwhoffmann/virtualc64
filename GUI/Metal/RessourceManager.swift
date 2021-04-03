@@ -14,6 +14,10 @@ class RessourceManager {
     
     var library: MTLLibrary! = nil
  
+    //
+    // Textures
+    //
+    
     // Dotmask gallery
     var dotMaskGallery = [MTLTexture?](repeating: nil, count: 5)
 
@@ -23,6 +27,10 @@ class RessourceManager {
     // Dotmask preview images
     var dotmaskImages = [NSImage?](repeating: nil, count: 5)
 
+    //
+    // Shaders
+    //
+    
     // Filter galleries
     var upscalerGallery = [ComputeKernel?](repeating: nil, count: 3)
     var bloomFilterGallery = [ComputeKernel?](repeating: nil, count: 3)
@@ -34,6 +42,16 @@ class RessourceManager {
     var scanlineFilter: ComputeKernel!
     
     //
+    // Samplers
+    //
+    
+    // Nearest neighbor sampler
+    var samplerNearest: MTLSamplerState! = nil
+
+    // Linear interpolation sampler
+    var samplerLinear: MTLSamplerState! = nil
+    
+    //
     // Initializing
     //
     
@@ -42,8 +60,27 @@ class RessourceManager {
         self.device = device
         self.renderer = renderer
         
+        buildSamplers()
         buildDotMasks()
         buildKernels()
+    }
+    
+    internal func buildSamplers() {
+        
+        let descriptor = MTLSamplerDescriptor()
+        descriptor.sAddressMode = MTLSamplerAddressMode.clampToEdge
+        descriptor.tAddressMode = MTLSamplerAddressMode.clampToEdge
+        descriptor.mipFilter = MTLSamplerMipFilter.notMipmapped
+        
+        // Nearest neighbor sampler
+        descriptor.minFilter = MTLSamplerMinMagFilter.linear
+        descriptor.magFilter = MTLSamplerMinMagFilter.linear
+        samplerLinear = device.makeSamplerState(descriptor: descriptor)
+        
+        // Linear sampler
+        descriptor.minFilter = MTLSamplerMinMagFilter.nearest
+        descriptor.magFilter = MTLSamplerMinMagFilter.nearest
+        samplerNearest = device.makeSamplerState(descriptor: descriptor)
     }
     
     internal func buildDotMasks() {
