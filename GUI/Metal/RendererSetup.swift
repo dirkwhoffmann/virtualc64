@@ -149,27 +149,10 @@ extension Renderer {
     
     func buildVertexBuffers() {
 
-        bgRect = Node.init(device: device,
-                           x: -1.0, y: -1.0, z: 0.99, w: 2.0, h: 2.0,
-                           t: NSRect.init(x: 0.0, y: 0.0, width: 1.0, height: 1.0))
-
         splashScreen.buildVertexBuffers()
         canvas.buildVertexBuffers()
     }
-    
-    func buildMatricesBg() {
         
-        let model  = matrix_identity_float4x4
-        let view   = matrix_identity_float4x4
-        let aspect = Float(size.width) / Float(size.height)
-        let proj   = Renderer.perspectiveMatrix(fovY: (Float(65.0 * (.pi / 180.0))),
-                                                aspect: aspect,
-                                                nearZ: 0.1,
-                                                farZ: 100.0)
-        
-        vertexUniformsBg.mvp = proj * view * model
-    }
-    
     func buildMatrices2D() {
         
         let model = matrix_identity_float4x4

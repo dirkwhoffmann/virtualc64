@@ -61,11 +61,7 @@ class Renderer: NSObject, MTKViewDelegate {
     //
     // Buffers and Uniforms
     //
-    
-    // DEPRECATED. IMPLEMENT IN SPLASH SCREEN
-    var bgRect: Node?
-    var vertexUniformsBg = VertexUniforms(mvp: matrix_identity_float4x4)
-        
+
     // Shader options
     var shaderOptions: ShaderOptions!
     
@@ -136,7 +132,6 @@ class Renderer: NSObject, MTKViewDelegate {
     func reshape() {
 
         // Rebuild matrices
-        buildMatricesBg()
         buildMatrices2D()
         buildMatrices3D()
     
