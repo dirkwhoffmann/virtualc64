@@ -322,60 +322,14 @@ class Renderer: NSObject, MTKViewDelegate {
         var upscaler: ComputeKernel! { return ressourceManager.upscaler }
         var scanlineFilter: ComputeKernel! { return ressourceManager.scanlineFilter }
 
-        let commandBuffer = queue.makeCommandBuffer()!
-        // precondition(commandBuffer != nil, "Command buffer must not be nil")
-    
-        // Set uniforms for the fragment shader
+        // Set uniforms for the fragment shader (where shall this be put?)
         fragmentUniforms.alpha = 1.0
         fragmentUniforms.dotMaskHeight = Int32(ressourceManager.dotMask.height)
         fragmentUniforms.dotMaskWidth = Int32(ressourceManager.dotMask.width)
         fragmentUniforms.scanlineDistance = Int32(size.height / 256)
-        
-        // Compute the bloom textures
-        if shaderOptions.bloom != 0 {
-            bloomFilter.apply(commandBuffer: commandBuffer,
-                              textures: [canvas.emulatorTexture,
-                                         canvas.bloomTextureR,
-                                         canvas.bloomTextureG,
-                                         canvas.bloomTextureB],
-                              options: &shaderOptions,
-                              length: MemoryLayout<ShaderOptions>.stride)
-            
-            func applyGauss(_ texture: inout MTLTexture, radius: Float) {
-                
-                if #available(OSX 10.13, *) {
-                    let gauss = MPSImageGaussianBlur(device: device, sigma: radius)
-                    gauss.encode(commandBuffer: commandBuffer,
-                                 inPlaceTexture: &texture, fallbackCopyAllocator: nil)
-                }
-            }
-            applyGauss(&canvas.bloomTextureR, radius: shaderOptions.bloomRadiusR)
-            applyGauss(&canvas.bloomTextureG, radius: shaderOptions.bloomRadiusG)
-            applyGauss(&canvas.bloomTextureB, radius: shaderOptions.bloomRadiusB)
-        }
-        
-        // Run the upscaler
-        upscaler.apply(commandBuffer: commandBuffer,
-                       source: canvas.emulatorTexture,
-                       target: canvas.upscaledTexture,
-                       options: nil,
-                       length: 0)
-        
-        // Blur the upscaled texture
-        if #available(OSX 10.13, *), shaderOptions.blur > 0 {
-            let gauss = MPSImageGaussianBlur(device: device,
-                                             sigma: shaderOptions.blurRadius)
-            gauss.encode(commandBuffer: commandBuffer,
-                         inPlaceTexture: &canvas.upscaledTexture,
-                         fallbackCopyAllocator: nil)
-        }
-        
-        // Emulate scanlines
-        scanlineFilter.apply(commandBuffer: commandBuffer,
-                             source: canvas.upscaledTexture,
-                             target: canvas.scanlineTexture,
-                             options: &shaderOptions,
-                             length: MemoryLayout<ShaderOptions>.stride)
+
+        let commandBuffer = queue.makeCommandBuffer()!
+        canvas.makeCommandBuffer(buffer: commandBuffer)
         
         return commandBuffer
     }

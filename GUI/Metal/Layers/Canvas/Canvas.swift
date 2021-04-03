@@ -12,6 +12,9 @@ import MetalPerformanceShaders
 class Canvas: Layer {
     
     var ressourceManager: RessourceManager { return renderer.ressourceManager }
+    var bloomFilter: ComputeKernel! { return ressourceManager.bloomFilter }
+    var upscaler: ComputeKernel! { return ressourceManager.upscaler }
+    var scanlineFilter: ComputeKernel! { return ressourceManager.scanlineFilter }
 
     //
     // Textures
@@ -78,8 +81,6 @@ class Canvas: Layer {
         precondition(buf != nil)
         
         let pixelSize = 4
-        // let width = Int(NTSC_WIDTH)
-        // let height = Int(PAL_HEIGHT)
         let rowBytes = TEX_WIDTH * pixelSize
         let imageBytes = rowBytes * TEX_HEIGHT
         let region = MTLRegionMake2D(0, 0, TEX_WIDTH, TEX_HEIGHT)
@@ -90,5 +91,62 @@ class Canvas: Layer {
                                 withBytes: buf!,
                                 bytesPerRow: rowBytes,
                                 bytesPerImage: imageBytes)
+    }
+    
+    //
+    // Rendering
+    //
+    
+    func makeCommandBuffer(buffer: MTLCommandBuffer) {
+                        
+        func applyGauss(_ texture: inout MTLTexture, radius: Float) {
+            
+            if #available(OSX 10.13, *) {
+                let gauss = MPSImageGaussianBlur(device: device, sigma: radius)
+                gauss.encode(commandBuffer: buffer,
+                             inPlaceTexture: &texture, fallbackCopyAllocator: nil)
+            }
+        }
+        
+        // Compute the bloom textures
+        if renderer.shaderOptions.bloom != 0 {
+            
+            bloomFilter.apply(commandBuffer: buffer,
+                              textures: [emulatorTexture,
+                                         bloomTextureR,
+                                         bloomTextureG,
+                                         bloomTextureB],
+                              options: &renderer.shaderOptions,
+                              length: MemoryLayout<ShaderOptions>.stride)
+            
+            applyGauss(&bloomTextureR, radius: renderer.shaderOptions.bloomRadiusR)
+            applyGauss(&bloomTextureG, radius: renderer.shaderOptions.bloomRadiusG)
+            applyGauss(&bloomTextureB, radius: renderer.shaderOptions.bloomRadiusB)
+        }
+        
+        // Run the upscaler
+        upscaler.apply(commandBuffer: buffer,
+                       source: emulatorTexture,
+                       target: upscaledTexture,
+                       options: nil,
+                       length: 0)
+        
+        // Blur the upscaled texture
+        if renderer.shaderOptions.blur > 0 {
+            
+            let sigma = renderer.shaderOptions.blurRadius
+            let gauss = MPSImageGaussianBlur(device: device, sigma: sigma)
+            
+            gauss.encode(commandBuffer: buffer,
+                         inPlaceTexture: &upscaledTexture,
+                         fallbackCopyAllocator: nil)
+        }
+        
+        // Add scanlines
+        scanlineFilter.apply(commandBuffer: buffer,
+                             source: upscaledTexture,
+                             target: scanlineTexture,
+                             options: &renderer.shaderOptions,
+                             length: MemoryLayout<ShaderOptions>.stride)
     }
 }
