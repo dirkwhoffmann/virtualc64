@@ -638,7 +638,7 @@ extension MyController {
         case .PAL,
              .NTSC:
             
-            renderer.updateTextureRect()
+            renderer.canvas.updateTextureRect()
     
         case .DRIVE_HEAD:
             
@@ -771,7 +771,7 @@ extension MyController {
             
             track("MSG_SNAPSHOT_RESTORED")
             renderer.blendIn(steps: 20)
-            renderer.updateTextureRect()
+            renderer.canvas.updateTextureRect()
             hideOrShowDriveMenus()
             refreshStatusBar()
             

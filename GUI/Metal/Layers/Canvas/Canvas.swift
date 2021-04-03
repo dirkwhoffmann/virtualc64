@@ -53,6 +53,9 @@ class Canvas: Layer {
      */
     var scanlineTexture: MTLTexture! = nil
     
+    // Part of the texture that is currently visible
+    var textureRect = CGRect.init() { didSet { buildVertexBuffers() } }
+
     //
     // Buffers and Uniforms
     //
@@ -106,6 +109,39 @@ class Canvas: Layer {
                                 withBytes: buf!,
                                 bytesPerRow: rowBytes,
                                 bytesPerImage: imageBytes)
+    }
+    
+    //
+    // Screenshots
+    //
+    
+    func screenshot(source: ScreenshotSource) -> NSImage? {
+
+        switch source {
+            
+        case .entire:
+            return screenshot(texture: emulatorTexture, rect: largestVisibleNormalized)
+        case .entireUpscaled:
+            return screenshot(texture: upscaledTexture, rect: largestVisibleNormalized)
+        case .visible:
+            return screenshot(texture: emulatorTexture, rect: textureRect)
+        case .visibleUpscaled:
+            return screenshot(texture: upscaledTexture, rect: textureRect)
+        }
+    }
+
+    func screenshot(texture: MTLTexture, rect: CGRect) -> NSImage? {
+        
+        // Use the blitter to copy the texture data back from the GPU
+        let queue = texture.device.makeCommandQueue()!
+        let commandBuffer = queue.makeCommandBuffer()!
+        let blitEncoder = commandBuffer.makeBlitCommandEncoder()!
+        blitEncoder.synchronize(texture: texture, slice: 0, level: 0)
+        blitEncoder.endEncoding()
+        commandBuffer.commit()
+        commandBuffer.waitUntilCompleted()
+        
+        return NSImage.make(texture: texture, rect: rect)
     }
     
     //

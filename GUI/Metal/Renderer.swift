@@ -61,19 +61,19 @@ class Renderer: NSObject, MTKViewDelegate {
     // Buffers and Uniforms
     //
     
+    // DEPRECATED. IMPLEMENT IN SPLASH SCREEN
     var bgRect: Node?
-    
     var vertexUniformsBg = VertexUniforms(mvp: matrix_identity_float4x4)
 
     // Texture to hold the pixel depth information
     var depthTexture: MTLTexture! = nil
-    
-    //
-    // Texture samplers
-    //
-    
+        
     // Shader options
     var shaderOptions: ShaderOptions!
+    
+    //
+    // Animations
+    //
     
     // Indicates if an animation is currently performed
      var animates = 0
@@ -95,10 +95,7 @@ class Renderer: NSObject, MTKViewDelegate {
     var cutoutY1 = AnimatedFloat.init()
     var cutoutX2 = AnimatedFloat.init()
     var cutoutY2 = AnimatedFloat.init()
-    
-    // Part of the texture that is currently visible
-    var textureRect = CGRect.init() { didSet { buildVertexBuffers() } }
-        
+            
     // Is set to true when fullscreen mode is entered
     var fullscreen = false
         
@@ -151,39 +148,6 @@ class Renderer: NSObject, MTKViewDelegate {
     public func cleanup() {
     
         track()
-    }
-
-    //
-    // Screenshots
-    //
-    
-    func screenshot(source: ScreenshotSource) -> NSImage? {
-
-        switch source {
-            
-        case .entire:
-            return screenshot(texture: canvas.emulatorTexture, rect: largestVisibleNormalized)
-        case .entireUpscaled:
-            return screenshot(texture: canvas.upscaledTexture, rect: largestVisibleNormalized)
-        case .visible:
-            return screenshot(texture: canvas.emulatorTexture, rect: textureRect)
-        case .visibleUpscaled:
-            return screenshot(texture: canvas.upscaledTexture, rect: textureRect)
-        }
-    }
-
-    func screenshot(texture: MTLTexture, rect: CGRect) -> NSImage? {
-        
-        // Use the blitter to copy the texture data back from the GPU
-        let queue = texture.device.makeCommandQueue()!
-        let commandBuffer = queue.makeCommandBuffer()!
-        let blitEncoder = commandBuffer.makeBlitCommandEncoder()!
-        blitEncoder.synchronize(texture: texture, slice: 0, level: 0)
-        blitEncoder.endEncoding()
-        commandBuffer.commit()
-        commandBuffer.waitUntilCompleted()
-        
-        return NSImage.make(texture: texture, rect: rect)
     }
       
     //

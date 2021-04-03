@@ -37,7 +37,7 @@ class Configuration {
         get { return c64.getConfig(.GRAY_DOT_BUG) != 0 }
         set { c64.configure(.GRAY_DOT_BUG, enable: newValue) }
     }
-
+    
     var vicHideSprites: Bool {
         get { return c64.getConfig(.HIDE_SPRITES) != 0 }
         set { c64.configure(.HIDE_SPRITES, enable: newValue) }
@@ -47,47 +47,47 @@ class Configuration {
         get { return c64.getConfig(.DMA_DEBUG) != 0 }
         set { c64.configure(.DMA_DEBUG, enable: newValue) }
     }
-
+    
     var dmaChannelR: Bool {
         get { return c64.getConfig(.DMA_CHANNEL_R) != 0 }
         set { c64.configure(.DMA_CHANNEL_R, enable: newValue) }
     }
-
+    
     var dmaChannelI: Bool {
         get { return c64.getConfig(.DMA_CHANNEL_I) != 0 }
         set { c64.configure(.DMA_CHANNEL_I, enable: newValue) }
     }
-
+    
     var dmaChannelC: Bool {
         get { return c64.getConfig(.DMA_CHANNEL_C) != 0 }
         set { c64.configure(.DMA_CHANNEL_C, enable: newValue) }
     }
-
+    
     var dmaChannelG: Bool {
         get { return c64.getConfig(.DMA_CHANNEL_G) != 0 }
         set { c64.configure(.DMA_CHANNEL_G, enable: newValue) }
     }
-
+    
     var dmaChannelP: Bool {
         get { return c64.getConfig(.DMA_CHANNEL_P) != 0 }
         set { c64.configure(.DMA_CHANNEL_P, enable: newValue) }
     }
-
+    
     var dmaChannelS: Bool {
         get { return c64.getConfig(.DMA_CHANNEL_S) != 0 }
         set { c64.configure(.DMA_CHANNEL_S, enable: newValue) }
     }
-
+    
     var dmaColorR: NSColor {
         get { return NSColor.init(abgr: UInt32(c64.getConfig(.DMA_COLOR_R))) }
         set { c64.configure(.DMA_COLOR_R, value: newValue.gpuColor) }
     }
-
+    
     var dmaColorI: NSColor {
         get { return NSColor.init(abgr: UInt32(c64.getConfig(.DMA_COLOR_I))) }
         set { c64.configure(.DMA_COLOR_I, value: newValue.gpuColor) }
     }
-
+    
     var dmaColorC: NSColor {
         get { return NSColor.init(abgr: UInt32(c64.getConfig(.DMA_COLOR_C))) }
         set { c64.configure(.DMA_COLOR_C, value: newValue.gpuColor) }
@@ -97,12 +97,12 @@ class Configuration {
         get { return NSColor.init(abgr: UInt32(c64.getConfig(.DMA_COLOR_G))) }
         set { c64.configure(.DMA_COLOR_G, value: newValue.gpuColor) }
     }
-
+    
     var dmaColorP: NSColor {
         get { return NSColor.init(abgr: UInt32(c64.getConfig(.DMA_COLOR_P))) }
         set { c64.configure(.DMA_COLOR_P, value: newValue.gpuColor) }
     }
-
+    
     var dmaColorS: NSColor {
         get { return NSColor.init(abgr: UInt32(c64.getConfig(.DMA_COLOR_S))) }
         set { c64.configure(.DMA_COLOR_S, value: newValue.gpuColor) }
@@ -112,42 +112,42 @@ class Configuration {
         get { return c64.getConfig(.DMA_DISPLAY_MODE) }
         set { c64.configure(.DMA_DISPLAY_MODE, value: newValue) }
     }
-
+    
     var dmaOpacity: Int {
         get { return c64.getConfig(.DMA_OPACITY) }
         set { c64.configure(.DMA_OPACITY, value: newValue) }
     }
-
+    
     var vicCutLayers: Int {
         get { return c64.getConfig(.CUT_LAYERS) }
         set { c64.configure(.CUT_LAYERS, value: newValue) }
     }
-
+    
     var vicCutOpacity: Int {
         get { return c64.getConfig(.CUT_OPACITY) }
         set { c64.configure(.CUT_OPACITY, value: newValue) }
     }
-
+    
     var vicSSCollisions: Bool {
         get { return c64.getConfig(.SS_COLLISIONS) != 0 }
         set { c64.configure(.SS_COLLISIONS, enable: newValue) }
     }
-
+    
     var vicSBCollisions: Bool {
         get { return c64.getConfig(.SB_COLLISIONS) != 0 }
         set { c64.configure(.SB_COLLISIONS, enable: newValue) }
     }
-
+    
     var ciaRevision: Int {
         get { return c64.getConfig(.CIA_REVISION) }
         set { c64.configure(.CIA_REVISION, value: newValue) }
     }
-
+    
     var ciaTimerBBug: Bool {
         get { return c64.getConfig(.TIMER_B_BUG) != 0}
         set { c64.configure(.TIMER_B_BUG, enable: newValue) }
     }
-
+    
     var sidRevision: Int {
         get { return c64.getConfig(.SID_REVISION) }
         set { c64.configure(.SID_REVISION, value: newValue) }
@@ -157,7 +157,7 @@ class Configuration {
         get { return c64.getConfig(.SID_FILTER) != 0 }
         set { c64.configure(.SID_FILTER, enable: newValue) }
     }
- 
+    
     var glueLogic: Int {
         get { return c64.getConfig(.GLUE_LOGIC) }
         set { c64.configure(.GLUE_LOGIC, value: newValue) }
@@ -167,7 +167,7 @@ class Configuration {
         get { return c64.getConfig(.RAM_PATTERN) }
         set { c64.configure(.RAM_PATTERN, value: newValue) }
     }
-
+    
     //
     // Peripherals
     //
@@ -186,29 +186,29 @@ class Configuration {
         get { return c64.getConfig(.DRIVE_CONNECT, drive: .DRIVE8) != 0 }
         set { c64.configure(.DRIVE_CONNECT, drive: .DRIVE8, enable: newValue )}
     }
-        
+    
     var drive9Connected: Bool {
         get { return c64.getConfig(.DRIVE_CONNECT, drive: .DRIVE9) != 0 }
         set { c64.configure(.DRIVE_CONNECT, drive: .DRIVE9, enable: newValue )}
     }
-
+    
     var drive8PowerSwitch: Bool {
         get { return c64.getConfig(.DRIVE_POWER_SWITCH, drive: .DRIVE8) != 0 }
         set { c64.configure(.DRIVE_POWER_SWITCH, drive: .DRIVE8, enable: newValue )}
     }
-
+    
     var drive9PowerSwitch: Bool {
         get { return c64.getConfig(.DRIVE_POWER_SWITCH, drive: .DRIVE9) != 0 }
         set { c64.configure(.DRIVE_POWER_SWITCH, drive: .DRIVE9, enable: newValue )}
     }
-
+    
     var gameDevice1 = PeripheralsDefaults.std.gameDevice1 {
         didSet {
-                         
+            
             // Try to connect the device (may disconnect the other device)
             gamePadManager.connect(slot: gameDevice1, port: 1)
             gamePadManager.listDevices()
-
+            
             // Avoid double mappings
             if gameDevice1 != -1 && gameDevice1 == gameDevice2 {
                 gameDevice2 = -1
@@ -219,11 +219,11 @@ class Configuration {
     }
     var gameDevice2 = PeripheralsDefaults.std.gameDevice2 {
         didSet {
- 
+            
             // Try to connect the device (may disconnect the other device)
             gamePadManager.connect(slot: gameDevice2, port: 2)
             gamePadManager.listDevices()
-
+            
             // Avoid double mappings
             if gameDevice2 != -1 && gameDevice2 == gameDevice1 {
                 gameDevice1 = -1
@@ -232,11 +232,11 @@ class Configuration {
             parent.toolbar.validateVisibleItems()
         }
     }
-
+    
     //
     // Audio
     //
-
+    
     var sidEnable1: Bool {
         get { return c64.getConfig(.SID_ENABLE, id: 1) != 0 }
         set { c64.configure(.SID_ENABLE, id: 1, enable: newValue) }
@@ -331,16 +331,16 @@ class Configuration {
         set { c64.vic.setSaturation(newValue) }
     }
     var hCenter = VideoDefaults.tft.hCenter {
-        didSet { renderer.updateTextureRect() }
+        didSet { renderer.canvas.updateTextureRect() }
     }
     var vCenter = VideoDefaults.tft.vCenter {
-        didSet { renderer.updateTextureRect() }
+        didSet { renderer.canvas.updateTextureRect() }
     }
     var hZoom = VideoDefaults.tft.hZoom {
-        didSet { renderer.updateTextureRect() }
+        didSet { renderer.canvas.updateTextureRect() }
     }
     var vZoom = VideoDefaults.tft.vZoom {
-        didSet { renderer.updateTextureRect() }
+        didSet { renderer.canvas.updateTextureRect() }
     }
     var upscaler = VideoDefaults.tft.upscaler {
         didSet {
@@ -410,7 +410,7 @@ class Configuration {
     }
     
     init(with controller: MyController) { parent = controller }
-
+    
     //
     // Roms
     //
@@ -433,12 +433,12 @@ class Configuration {
         load(UserDefaults.vc1541RomUrl, type: .VC1541_ROM)
         c64.resume()
     }
-
+    
     func saveRomUserDefaults() {
         
         track()
         var url: URL?
-
+        
         func save(_ type: RomType) throws {
             
             if url == nil { throw VC64Error(ErrorCode.FILE_CANT_WRITE) }
@@ -464,7 +464,7 @@ class Configuration {
                                   "Unable to access the application defaults folder")
             }
         }
-            
+        
         c64.resume()
     }
     
@@ -478,10 +478,10 @@ class Configuration {
         
         vicRevision = defaults.vicRevision.rawValue
         vicGrayDotBug = defaults.vicGrayDotBug
-
+        
         ciaRevision = defaults.ciaRevision.rawValue
         ciaTimerBBug = defaults.ciaTimerBBug
-
+        
         sidRevision = defaults.sidRevision.rawValue
         sidFilter = defaults.sidFilter
         
@@ -491,7 +491,7 @@ class Configuration {
         sidAddress1 = defaults.sidAddress1
         sidAddress2 = defaults.sidAddress2
         sidAddress3 = defaults.sidAddress3
-
+        
         glueLogic = defaults.glueLogic.rawValue
         ramPattern = defaults.ramPattern.rawValue
         
@@ -506,10 +506,10 @@ class Configuration {
         
         vicRevision = defaults.integer(forKey: Keys.Hwd.vicRevision)
         vicGrayDotBug = defaults.bool(forKey: Keys.Hwd.vicGrayDotBug)
-
+        
         ciaRevision = defaults.integer(forKey: Keys.Hwd.ciaRevision)
         ciaTimerBBug = defaults.bool(forKey: Keys.Hwd.ciaTimerBBug)
-
+        
         sidRevision = defaults.integer(forKey: Keys.Hwd.sidRevision)
         sidFilter = defaults.bool(forKey: Keys.Hwd.sidFilter)
         sidEnable1 = defaults.bool(forKey: Keys.Hwd.sidEnable1)
@@ -530,13 +530,13 @@ class Configuration {
         track()
         
         let defaults = UserDefaults.standard
-
+        
         defaults.set(vicRevision, forKey: Keys.Hwd.vicRevision)
         defaults.set(vicGrayDotBug, forKey: Keys.Hwd.vicGrayDotBug)
-
+        
         defaults.set(ciaRevision, forKey: Keys.Hwd.ciaRevision)
         defaults.set(ciaTimerBBug, forKey: Keys.Hwd.ciaTimerBBug)
-
+        
         defaults.set(sidRevision, forKey: Keys.Hwd.sidRevision)
         defaults.set(sidFilter, forKey: Keys.Hwd.sidFilter)
         defaults.set(sidEnable1, forKey: Keys.Hwd.sidEnable1)
@@ -549,7 +549,7 @@ class Configuration {
         defaults.set(glueLogic, forKey: Keys.Hwd.glueLogic)
         defaults.set(ramPattern, forKey: Keys.Hwd.ramPattern)
     }
-
+    
     //
     // Peripherals
     //
@@ -557,7 +557,7 @@ class Configuration {
     func loadPeripheralsDefaults(_ defaults: PeripheralsDefaults) {
         
         c64.suspend()
-                
+        
         drive8Connected = defaults.driveConnect[0]
         drive8Type = defaults.driveModel[0].rawValue
         drive9Connected = defaults.driveConnect[1]
@@ -565,7 +565,7 @@ class Configuration {
         
         gameDevice1 = defaults.gameDevice1
         gameDevice2 = defaults.gameDevice2
-
+        
         c64.resume()
     }
     
@@ -582,7 +582,7 @@ class Configuration {
         
         gameDevice1 = defaults.integer(forKey: Keys.Per.gameDevice1)
         gameDevice2 = defaults.integer(forKey: Keys.Per.gameDevice2)
-
+        
         c64.resume()
     }
     
@@ -591,12 +591,12 @@ class Configuration {
         track()
         
         let defaults = UserDefaults.standard
-
+        
         defaults.set(drive8Connected, forKey: Keys.Per.drive8Connect)
         defaults.set(drive8Type, forKey: Keys.Per.drive8Model)
         defaults.set(drive9Connected, forKey: Keys.Per.drive9Connect)
         defaults.set(drive9Type, forKey: Keys.Per.drive9Model)
-
+        
         defaults.set(gameDevice1, forKey: Keys.Per.gameDevice1)
         defaults.set(gameDevice2, forKey: Keys.Per.gameDevice2)
     }
@@ -611,7 +611,7 @@ class Configuration {
         
         sidEngine = defaults.sidEngine.rawValue
         sidSampling = defaults.sidSampling.rawValue
-
+        
         vol0 = defaults.vol0
         vol1 = defaults.vol1
         vol2 = defaults.vol2
@@ -632,10 +632,10 @@ class Configuration {
         let defaults = UserDefaults.standard
         
         c64.suspend()
-
+        
         sidEngine = defaults.integer(forKey: Keys.Aud.sidEngine)
         sidSampling = defaults.integer(forKey: Keys.Aud.sidSampling)
-
+        
         vol0 = defaults.integer(forKey: Keys.Aud.vol0)
         vol1 = defaults.integer(forKey: Keys.Aud.vol1)
         vol2 = defaults.integer(forKey: Keys.Aud.vol2)
@@ -647,7 +647,7 @@ class Configuration {
         
         volL = defaults.integer(forKey: Keys.Aud.volL)
         volR = defaults.integer(forKey: Keys.Aud.volR)
-                
+        
         c64.resume()
     }
     
@@ -656,10 +656,10 @@ class Configuration {
         track()
         
         let defaults = UserDefaults.standard
-                
+        
         defaults.set(sidEngine, forKey: Keys.Aud.sidEngine)
         defaults.set(sidSampling, forKey: Keys.Aud.sidSampling)
-
+        
         defaults.set(vol0, forKey: Keys.Aud.vol0)
         defaults.set(vol1, forKey: Keys.Aud.vol1)
         defaults.set(vol2, forKey: Keys.Aud.vol2)
@@ -696,7 +696,7 @@ class Configuration {
         hZoom = defaults.hZoom
         vZoom = defaults.vZoom
         
-        renderer.updateTextureRect()
+        renderer.canvas.updateTextureRect()
     }
     
     func loadShaderDefaults(_ defaults: VideoDefaults) {
@@ -723,81 +723,81 @@ class Configuration {
     }
     
     func loadVideoDefaults(_ defaults: VideoDefaults) {
-         
-         loadColorDefaults(defaults)
-         loadGeometryDefaults(defaults)
-         loadShaderDefaults(defaults)
-     }
-
-     func loadVideoUserDefaults() {
-         
-         let defaults = UserDefaults.standard
-         
-         c64.suspend()
-         
-         palette = defaults.integer(forKey: Keys.Vid.palette)
-         brightness = defaults.double(forKey: Keys.Vid.brightness)
-         contrast = defaults.double(forKey: Keys.Vid.contrast)
-         saturation = defaults.double(forKey: Keys.Vid.saturation)
-
-         hCenter = defaults.float(forKey: Keys.Vid.hCenter)
-         vCenter = defaults.float(forKey: Keys.Vid.vCenter)
-         hZoom = defaults.float(forKey: Keys.Vid.hZoom)
-         vZoom = defaults.float(forKey: Keys.Vid.vZoom)
-
-         upscaler = defaults.integer(forKey: Keys.Vid.upscaler)
-         
-         bloom = defaults.integer(forKey: Keys.Vid.bloom)
-         bloomRadiusR = defaults.float(forKey: Keys.Vid.bloomRadiusR)
-         bloomRadiusG = defaults.float(forKey: Keys.Vid.bloomRadiusG)
-         bloomRadiusB = defaults.float(forKey: Keys.Vid.bloomRadiusB)
-         bloomBrightness = defaults.float(forKey: Keys.Vid.bloomBrightness)
-         bloomWeight = defaults.float(forKey: Keys.Vid.bloomWeight)
-         dotMask = defaults.integer(forKey: Keys.Vid.dotMask)
-         dotMaskBrightness = defaults.float(forKey: Keys.Vid.dotMaskBrightness)
-         scanlines = defaults.integer(forKey: Keys.Vid.scanlines)
-         scanlineBrightness = defaults.float(forKey: Keys.Vid.scanlineBrightness)
-         scanlineWeight = defaults.float(forKey: Keys.Vid.scanlineWeight)
-         disalignment = Int32(defaults.integer(forKey: Keys.Vid.disalignment))
-         disalignmentH = defaults.float(forKey: Keys.Vid.disalignmentH)
-         disalignmentV = defaults.float(forKey: Keys.Vid.disalignmentV)
-         
-         renderer.updateTextureRect()
-         
-         c64.resume()
-     }
-     
-     func saveVideoUserDefaults() {
-         
-         track()
-         
-         let defaults = UserDefaults.standard
-         
-         defaults.set(palette, forKey: Keys.Vid.palette)
-         defaults.set(brightness, forKey: Keys.Vid.brightness)
-         defaults.set(contrast, forKey: Keys.Vid.contrast)
-         defaults.set(saturation, forKey: Keys.Vid.saturation)
-
-         defaults.set(hCenter, forKey: Keys.Vid.hCenter)
-         defaults.set(vCenter, forKey: Keys.Vid.vCenter)
-         defaults.set(hZoom, forKey: Keys.Vid.hZoom)
-         defaults.set(vZoom, forKey: Keys.Vid.vZoom)
-
-         defaults.set(upscaler, forKey: Keys.Vid.upscaler)
-         
-         defaults.set(bloom, forKey: Keys.Vid.bloom)
-         defaults.set(bloomRadiusR, forKey: Keys.Vid.bloomRadiusR)
-         defaults.set(bloomRadiusG, forKey: Keys.Vid.bloomRadiusG)
-         defaults.set(bloomRadiusB, forKey: Keys.Vid.bloomRadiusB)
-         defaults.set(bloomBrightness, forKey: Keys.Vid.bloomBrightness)
-         defaults.set(bloomWeight, forKey: Keys.Vid.bloomWeight)
-         defaults.set(dotMask, forKey: Keys.Vid.dotMask)
-         defaults.set(dotMaskBrightness, forKey: Keys.Vid.dotMaskBrightness)
-         defaults.set(scanlines, forKey: Keys.Vid.scanlines)
-         defaults.set(scanlineBrightness, forKey: Keys.Vid.scanlineBrightness)
-         defaults.set(scanlineWeight, forKey: Keys.Vid.scanlineWeight)
-         defaults.set(disalignment, forKey: Keys.Vid.disalignment)
-         defaults.set(disalignmentH, forKey: Keys.Vid.disalignmentH)
-         defaults.set(disalignmentV, forKey: Keys.Vid.disalignmentV)
-     }
+        
+        loadColorDefaults(defaults)
+        loadGeometryDefaults(defaults)
+        loadShaderDefaults(defaults)
+    }
+    
+    func loadVideoUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+        
+        c64.suspend()
+        
+        palette = defaults.integer(forKey: Keys.Vid.palette)
+        brightness = defaults.double(forKey: Keys.Vid.brightness)
+        contrast = defaults.double(forKey: Keys.Vid.contrast)
+        saturation = defaults.double(forKey: Keys.Vid.saturation)
+        
+        hCenter = defaults.float(forKey: Keys.Vid.hCenter)
+        vCenter = defaults.float(forKey: Keys.Vid.vCenter)
+        hZoom = defaults.float(forKey: Keys.Vid.hZoom)
+        vZoom = defaults.float(forKey: Keys.Vid.vZoom)
+        
+        upscaler = defaults.integer(forKey: Keys.Vid.upscaler)
+        
+        bloom = defaults.integer(forKey: Keys.Vid.bloom)
+        bloomRadiusR = defaults.float(forKey: Keys.Vid.bloomRadiusR)
+        bloomRadiusG = defaults.float(forKey: Keys.Vid.bloomRadiusG)
+        bloomRadiusB = defaults.float(forKey: Keys.Vid.bloomRadiusB)
+        bloomBrightness = defaults.float(forKey: Keys.Vid.bloomBrightness)
+        bloomWeight = defaults.float(forKey: Keys.Vid.bloomWeight)
+        dotMask = defaults.integer(forKey: Keys.Vid.dotMask)
+        dotMaskBrightness = defaults.float(forKey: Keys.Vid.dotMaskBrightness)
+        scanlines = defaults.integer(forKey: Keys.Vid.scanlines)
+        scanlineBrightness = defaults.float(forKey: Keys.Vid.scanlineBrightness)
+        scanlineWeight = defaults.float(forKey: Keys.Vid.scanlineWeight)
+        disalignment = Int32(defaults.integer(forKey: Keys.Vid.disalignment))
+        disalignmentH = defaults.float(forKey: Keys.Vid.disalignmentH)
+        disalignmentV = defaults.float(forKey: Keys.Vid.disalignmentV)
+        
+        renderer.canvas.updateTextureRect()
+        
+        c64.resume()
+    }
+    
+    func saveVideoUserDefaults() {
+        
+        track()
+        
+        let defaults = UserDefaults.standard
+        
+        defaults.set(palette, forKey: Keys.Vid.palette)
+        defaults.set(brightness, forKey: Keys.Vid.brightness)
+        defaults.set(contrast, forKey: Keys.Vid.contrast)
+        defaults.set(saturation, forKey: Keys.Vid.saturation)
+        
+        defaults.set(hCenter, forKey: Keys.Vid.hCenter)
+        defaults.set(vCenter, forKey: Keys.Vid.vCenter)
+        defaults.set(hZoom, forKey: Keys.Vid.hZoom)
+        defaults.set(vZoom, forKey: Keys.Vid.vZoom)
+        
+        defaults.set(upscaler, forKey: Keys.Vid.upscaler)
+        
+        defaults.set(bloom, forKey: Keys.Vid.bloom)
+        defaults.set(bloomRadiusR, forKey: Keys.Vid.bloomRadiusR)
+        defaults.set(bloomRadiusG, forKey: Keys.Vid.bloomRadiusG)
+        defaults.set(bloomRadiusB, forKey: Keys.Vid.bloomRadiusB)
+        defaults.set(bloomBrightness, forKey: Keys.Vid.bloomBrightness)
+        defaults.set(bloomWeight, forKey: Keys.Vid.bloomWeight)
+        defaults.set(dotMask, forKey: Keys.Vid.dotMask)
+        defaults.set(dotMaskBrightness, forKey: Keys.Vid.dotMaskBrightness)
+        defaults.set(scanlines, forKey: Keys.Vid.scanlines)
+        defaults.set(scanlineBrightness, forKey: Keys.Vid.scanlineBrightness)
+        defaults.set(scanlineWeight, forKey: Keys.Vid.scanlineWeight)
+        defaults.set(disalignment, forKey: Keys.Vid.disalignment)
+        defaults.set(disalignmentH, forKey: Keys.Vid.disalignmentH)
+        defaults.set(disalignmentV, forKey: Keys.Vid.disalignmentV)
+    }
 }

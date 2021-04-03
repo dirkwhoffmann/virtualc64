@@ -110,10 +110,11 @@ extension Renderer {
             cont = cutoutX1.animates() || cutoutY1.animates() || cutoutX2.animates() || cutoutY2.animates()
             
             // Update texture cutout
-            textureRect = CGRect.init(x: CGFloat(cutoutX1.current),
-                                      y: CGFloat(cutoutY1.current),
-                                      width: CGFloat(cutoutX2.current - cutoutX1.current),
-                                      height: CGFloat(cutoutY2.current - cutoutY1.current))
+            let x = CGFloat(cutoutX1.current)
+            let y = CGFloat(cutoutY1.current)
+            let w = CGFloat(cutoutX2.current - cutoutX1.current)
+            let h = CGFloat(cutoutY2.current - cutoutY1.current)
+            canvas.textureRect = CGRect.init(x: x, y: y, width: w, height: h)
             buildVertexBuffers()
             
             // Check if animation has terminated
@@ -131,7 +132,7 @@ extension Renderer {
 
         track("Zooming texture in...")
 
-        let target = visibleNormalized
+        let target = canvas.visibleNormalized
         
         cutoutX1.target = Float(target.minX)
         cutoutY1.target = Float(target.minY)
@@ -150,8 +151,8 @@ extension Renderer {
 
         track("Zooming texture out...")
         
-        let current = textureRect
-        let target = entireNormalized
+        let current = canvas.textureRect
+        let target = canvas.entireNormalized
         
         cutoutX1.current = Float(current.minX)
         cutoutY1.current = Float(current.minY)
