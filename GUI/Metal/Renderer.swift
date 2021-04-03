@@ -21,7 +21,7 @@ enum ScreenshotSource: Int {
 
 class Renderer: NSObject, MTKViewDelegate {
     
-    let mtkView: MTKView
+    let view: MTKView
     let device: MTLDevice
     let parent: MyController
     
@@ -35,7 +35,7 @@ class Renderer: NSObject, MTKViewDelegate {
     var semaphore = DispatchSemaphore(value: 1)
     
     //
-    // Metal objects
+    // Metal entities
     //
 
     var queue: MTLCommandQueue! = nil
@@ -64,9 +64,6 @@ class Renderer: NSObject, MTKViewDelegate {
     // DEPRECATED. IMPLEMENT IN SPLASH SCREEN
     var bgRect: Node?
     var vertexUniformsBg = VertexUniforms(mvp: matrix_identity_float4x4)
-
-    // Texture to hold the pixel depth information
-    var depthTexture: MTLTexture! = nil
         
     // Shader options
     var shaderOptions: ShaderOptions!
@@ -105,15 +102,15 @@ class Renderer: NSObject, MTKViewDelegate {
     
     init(view: MTKView, device: MTLDevice, controller: MyController) {
         
-        self.mtkView = view
+        self.view = view
         self.device = device
         self.parent = controller
         super.init()
         
         setupMetal()
         
-        mtkView.delegate = self
-        mtkView.device = device
+        view.delegate = self
+        view.device = device
     }
     
     //
@@ -122,8 +119,8 @@ class Renderer: NSObject, MTKViewDelegate {
 
     var size: CGSize {
         
-        let frameSize = mtkView.frame.size
-        let scale = mtkView.layer?.contentsScale ?? 1
+        let frameSize = view.frame.size
+        let scale = view.layer?.contentsScale ?? 1
         
         return CGSize(width: frameSize.width * scale,
                       height: frameSize.height * scale)
@@ -142,7 +139,7 @@ class Renderer: NSObject, MTKViewDelegate {
         buildMatrices3D()
     
         // Rebuild depth buffer
-        buildDepthBuffer()
+        ressourceManager.buildDepthBuffer()
     }
     
     public func cleanup() {
@@ -171,7 +168,7 @@ class Renderer: NSObject, MTKViewDelegate {
         descriptor.colorAttachments[0].loadAction = MTLLoadAction.clear
         descriptor.colorAttachments[0].storeAction = MTLStoreAction.store
         
-        descriptor.depthAttachment.texture = depthTexture
+        descriptor.depthAttachment.texture = ressourceManager.depthTexture
         descriptor.depthAttachment.clearDepth = 1
         descriptor.depthAttachment.loadAction = MTLLoadAction.clear
         descriptor.depthAttachment.storeAction = MTLStoreAction.dontCare

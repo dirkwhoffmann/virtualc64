@@ -34,7 +34,7 @@ extension Renderer {
         track()
         
         // Metal layer
-        metalLayer = mtkView.layer as? CAMetalLayer
+        metalLayer = view.layer as? CAMetalLayer
         assert(metalLayer != nil, "Metal layer must not be nil")
         
         metalLayer.device = device
@@ -68,7 +68,7 @@ extension Renderer {
             disalignmentV: config.disalignmentV
         )
         
-        ressourceManager = RessourceManager.init(view: mtkView, device: device, renderer: self)
+        ressourceManager = RessourceManager.init(view: view, device: device, renderer: self)
     }
     
     func buildLayers() {
@@ -201,24 +201,7 @@ extension Renderer {
         
         canvas.vertexUniforms3D.mvp = proj * view * model
     }
-    
-    func buildDepthBuffer() {
         
-        let width = Int(size.width)
-        let height = Int(size.height)
-        
-        let descriptor = MTLTextureDescriptor.texture2DDescriptor(
-            pixelFormat: MTLPixelFormat.depth32Float,
-            width: width,
-            height: height,
-            mipmapped: false)
-        descriptor.resourceOptions = MTLResourceOptions.storageModePrivate
-        descriptor.usage = MTLTextureUsage.renderTarget
-        
-        depthTexture = device.makeTexture(descriptor: descriptor)
-        precondition(depthTexture != nil, "Failed to create depth texture")
-    }
-    
     //
     // Matrix utilities
     //

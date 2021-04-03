@@ -18,6 +18,9 @@ class RessourceManager {
     // Textures
     //
     
+    // Pixel depth information
+    var depthTexture: MTLTexture! = nil
+    
     // Dotmask gallery
     var dotMaskGallery = [MTLTexture?](repeating: nil, count: 5)
 
@@ -63,6 +66,23 @@ class RessourceManager {
         buildSamplers()
         buildDotMasks()
         buildKernels()
+    }
+    
+    internal func buildDepthBuffer() {
+        
+        let width = Int(renderer.size.width)
+        let height = Int(renderer.size.height)
+        
+        let descriptor = MTLTextureDescriptor.texture2DDescriptor(
+            pixelFormat: MTLPixelFormat.depth32Float,
+            width: width,
+            height: height,
+            mipmapped: false)
+        descriptor.resourceOptions = MTLResourceOptions.storageModePrivate
+        descriptor.usage = MTLTextureUsage.renderTarget
+        
+        depthTexture = device.makeTexture(descriptor: descriptor)
+        precondition(depthTexture != nil, "Failed to create depth texture")
     }
     
     internal func buildSamplers() {

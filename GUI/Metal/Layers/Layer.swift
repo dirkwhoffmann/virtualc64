@@ -12,7 +12,7 @@ class Layer: NSObject {
     let renderer: Renderer
 
     var device: MTLDevice { return renderer.device }
-    var view: MTKView { return renderer.mtkView }
+    var view: MTKView { return renderer.view }
     var c64: C64Proxy { return renderer.parent.c64 }
     
     // Alpha channel
