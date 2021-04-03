@@ -46,7 +46,7 @@ class Renderer: NSObject, MTKViewDelegate {
     var pipeline: MTLRenderPipelineState! = nil
     var depthState: MTLDepthStencilState! = nil
     var commandBuffer: MTLCommandBuffer! = nil
-    var commandEncoder: MTLRenderCommandEncoder! = nil
+    // var commandEncoder: MTLRenderCommandEncoder! = nil
     // var drawable: CAMetalDrawable! = nil
     
     //
@@ -408,7 +408,7 @@ class Renderer: NSObject, MTKViewDelegate {
                              length: MemoryLayout<ShaderOptions>.stride)
     }
     
-    func makeCommandEncoder(drawable: CAMetalDrawable) {
+    func makeCommandEncoder(drawable: CAMetalDrawable) -> MTLRenderCommandEncoder {
         
         // Create render pass descriptor
         let descriptor = MTLRenderPassDescriptor.init()
@@ -423,7 +423,7 @@ class Renderer: NSObject, MTKViewDelegate {
         descriptor.depthAttachment.storeAction = MTLStoreAction.dontCare
         
         // Create command encoder
-        commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)
+        let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
         commandEncoder.setRenderPipelineState(pipeline)
         commandEncoder.setDepthStencilState(depthState)
         commandEncoder.setFragmentTexture(dotMaskTexture, index: 4)
@@ -437,32 +437,33 @@ class Renderer: NSObject, MTKViewDelegate {
         let sampler = shaderOptions.blur > 0 ? samplerLinear : samplerNearest
         commandEncoder.setFragmentSamplerState(sampler, index: 0)
 
+        return commandEncoder
     }
     
-    func drawScene2D() {
-    
+    func drawScene2D(encoder: MTLRenderCommandEncoder) {
+        
         // Configure vertex shader
-        commandEncoder.setVertexBytes(&vertexUniforms2D,
-                                      length: MemoryLayout<VertexUniforms>.stride,
-                                      index: 1)
-
+        encoder.setVertexBytes(&vertexUniforms2D,
+                               length: MemoryLayout<VertexUniforms>.stride,
+                               index: 1)
+        
         // Configure fragment shader
-        commandEncoder.setFragmentTexture(scanlineTexture, index: 0)
-        commandEncoder.setFragmentBytes(&fragmentUniforms,
-                                        length: MemoryLayout<FragmentUniforms>.stride,
-                                        index: 1)
+        encoder.setFragmentTexture(scanlineTexture, index: 0)
+        encoder.setFragmentBytes(&fragmentUniforms,
+                                 length: MemoryLayout<FragmentUniforms>.stride,
+                                 index: 1)
         
         // Draw
-        quad2D!.drawPrimitives(commandEncoder)
+        quad2D!.drawPrimitives(encoder)
     }
     
-    func drawScene3D() {
-    
+    func drawScene3D(encoder: MTLRenderCommandEncoder) {
+        
         let paused = parent.c64.paused
         let poweredOff = parent.c64.poweredOff
         let renderBackground = poweredOff || animates != 0 || fullscreen
         let renderForeground = alpha.current > 0.0
-
+        
         // Perform a single animation step
         if animates != 0 { performAnimationStep() }
         
@@ -475,46 +476,46 @@ class Renderer: NSObject, MTKViewDelegate {
             }
             
             // Configure vertex shader
-            commandEncoder.setVertexBytes(&vertexUniformsBg,
-                                          length: MemoryLayout<VertexUniforms>.stride,
-                                          index: 1)
+            encoder.setVertexBytes(&vertexUniformsBg,
+                                   length: MemoryLayout<VertexUniforms>.stride,
+                                   index: 1)
             
             // Configure fragment shader
             if fullscreen {
                 fragmentUniforms.alpha = 1.0
-                commandEncoder.setFragmentTexture(bgFullscreenTexture, index: 0)
-                commandEncoder.setFragmentTexture(bgFullscreenTexture, index: 1)
+                encoder.setFragmentTexture(bgFullscreenTexture, index: 0)
+                encoder.setFragmentTexture(bgFullscreenTexture, index: 1)
             } else {
                 fragmentUniforms.alpha = noise.current
-                commandEncoder.setFragmentTexture(bgTexture, index: 0)
-                commandEncoder.setFragmentTexture(bgTexture, index: 1)
+                encoder.setFragmentTexture(bgTexture, index: 0)
+                encoder.setFragmentTexture(bgTexture, index: 1)
             }
-            commandEncoder.setFragmentBytes(&fragmentUniforms,
-                                            length: MemoryLayout<FragmentUniforms>.stride,
-                                            index: 1)
+            encoder.setFragmentBytes(&fragmentUniforms,
+                                     length: MemoryLayout<FragmentUniforms>.stride,
+                                     index: 1)
             
             // Draw
-            bgRect!.drawPrimitives(commandEncoder)
+            bgRect!.drawPrimitives(encoder)
         }
         
         if renderForeground {
             
             // Configure vertex shader
-            commandEncoder.setVertexBytes(&vertexUniforms3D,
-                                          length: MemoryLayout<VertexUniforms>.stride,
-                                          index: 1)
+            encoder.setVertexBytes(&vertexUniforms3D,
+                                   length: MemoryLayout<VertexUniforms>.stride,
+                                   index: 1)
             // Configure fragment shader
             fragmentUniforms.alpha = paused ? 0.5 : alpha.current
-            commandEncoder.setFragmentTexture(scanlineTexture, index: 0)
-            commandEncoder.setFragmentTexture(bloomTextureR, index: 1)
-            commandEncoder.setFragmentTexture(bloomTextureG, index: 2)
-            commandEncoder.setFragmentTexture(bloomTextureB, index: 3)
-            commandEncoder.setFragmentBytes(&fragmentUniforms,
-                                            length: MemoryLayout<FragmentUniforms>.stride,
-                                            index: 1)
+            encoder.setFragmentTexture(scanlineTexture, index: 0)
+            encoder.setFragmentTexture(bloomTextureR, index: 1)
+            encoder.setFragmentTexture(bloomTextureG, index: 2)
+            encoder.setFragmentTexture(bloomTextureB, index: 3)
+            encoder.setFragmentBytes(&fragmentUniforms,
+                                     length: MemoryLayout<FragmentUniforms>.stride,
+                                     index: 1)
             
             // Draw (part of) cube
-            quad3D!.draw(commandEncoder, allSides: animates != 0)
+            quad3D!.draw(encoder, allSides: animates != 0)
         }
     }
 
@@ -595,16 +596,16 @@ class Renderer: NSObject, MTKViewDelegate {
             updateTexture()
             
             makeCommandBuffer()
-            makeCommandEncoder(drawable: drawable)
+           let encoder = makeCommandEncoder(drawable: drawable)
             
             if fullscreen && !parent.pref.keepAspectRatio {
-                drawScene2D()
+                drawScene2D(encoder: encoder)
             } else {
-                drawScene3D()
+                drawScene3D(encoder: encoder)
             }
             
             // Draw the entire scene
-            commandEncoder.endEncoding()
+            encoder.endEncoding()
             commandBuffer.addCompletedHandler { _ in self.semaphore.signal() }
             commandBuffer.present(drawable)
             commandBuffer.commit()
