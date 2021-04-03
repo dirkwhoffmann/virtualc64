@@ -114,7 +114,7 @@ extension Renderer {
                                       y: CGFloat(cutoutY1.current),
                                       width: CGFloat(cutoutX2.current - cutoutX1.current),
                                       height: CGFloat(cutoutY2.current - cutoutY1.current))
-            buildVertexBuffer()
+            buildVertexBuffers()
             
             // Check if animation has terminated
             if !cont {
@@ -127,78 +127,49 @@ extension Renderer {
     // Texture animations
     //
     
-    func zoomTexture(steps: Int = 30) {
-                
-        let targetRect = computeTextureRect()
-        
-        cutoutX1.current = Float(textureRect.minX)
-        cutoutY1.current = Float(textureRect.minY)
-        cutoutX2.current = Float(textureRect.maxX)
-        cutoutY2.current = Float(textureRect.maxY)
-        
-        cutoutX1.target = Float(targetRect.minX)
-        cutoutY1.target = Float(targetRect.minY)
-        cutoutX2.target = Float(targetRect.maxX)
-        cutoutY2.target = Float(targetRect.maxY)
-        
-        cutoutX1.steps = steps
-        cutoutY1.steps = steps
-        cutoutX2.steps = steps
-        cutoutY2.steps = steps
-        
-        animates |= AnimationType.texture
-    }
-    
     func zoomTextureIn(steps: Int = 30) {
-        
+
         track("Zooming texture in...")
+
+        let target = visibleNormalized
         
-        zoom = false
-        zoomTexture()
-    }
-    /*
-        let targetRect = computeTextureRect()
-        
-        cutoutX1.target = Float(targetRect.minX)
-        cutoutY1.target = Float(targetRect.minY)
-        cutoutX2.target = Float(targetRect.maxX)
-        cutoutY2.target = Float(targetRect.maxY)
-        
+        cutoutX1.target = Float(target.minX)
+        cutoutY1.target = Float(target.minY)
+        cutoutX2.target = Float(target.maxX)
+        cutoutY2.target = Float(target.maxY)
+
         cutoutX1.steps = steps
         cutoutY1.steps = steps
         cutoutX2.steps = steps
         cutoutY2.steps = steps
-        
+
         animates |= AnimationType.texture
     }
-    */
-    
+
     func zoomTextureOut(steps: Int = 30) {
-        
+
         track("Zooming texture out...")
         
-        zoom = true
-        zoomTexture()
-    }
-    /*
-        cutoutX1.current = Float(textureRect.minX)
-        cutoutY1.current = Float(textureRect.minY)
-        cutoutX2.current = Float(textureRect.maxX)
-        cutoutY2.current = Float(textureRect.maxY)
+        let current = textureRect
+        let target = entireNormalized
         
-        cutoutX1.target = 0.0
-        cutoutY1.target = 0.0
-        cutoutX2.target = 1.0
-        cutoutY2.target = 1.0
-        
+        cutoutX1.current = Float(current.minX)
+        cutoutY1.current = Float(current.minY)
+        cutoutX2.current = Float(current.maxX)
+        cutoutY2.current = Float(current.maxY)
+
+        cutoutX1.target = Float(target.minX)
+        cutoutY1.target = Float(target.minY)
+        cutoutX2.target = Float(target.maxX)
+        cutoutY2.target = Float(target.maxY)
+
         cutoutX1.steps = steps
         cutoutY1.steps = steps
         cutoutX2.steps = steps
         cutoutY2.steps = steps
-        
+
         animates |= AnimationType.texture
     }
-    */
     
     //
     // Geometry animations

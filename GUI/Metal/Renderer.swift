@@ -112,10 +112,10 @@ class Renderer: NSObject, MTKViewDelegate {
     var cutoutY2 = AnimatedFloat.init()
     
     // Part of the texture that is currently visible
-    var textureRect = CGRect.init()
+    var textureRect = CGRect.init() { didSet { buildVertexBuffers() } }
     
     // Indicates if the whole texture should be displayed
-    var zoom = false
+    // var zoom = false
     
     // Is set to true when fullscreen mode is entered
     var fullscreen = false
@@ -131,7 +131,6 @@ class Renderer: NSObject, MTKViewDelegate {
         self.parent = controller
         super.init()
         
-        textureRect = computeTextureRect()
         setupMetal()
         
         mtkView.delegate = self
@@ -181,9 +180,9 @@ class Renderer: NSObject, MTKViewDelegate {
         switch source {
             
         case .entire:
-            return screenshot(texture: canvas.emulatorTexture, rect: maxTextureRectScaled)
+            return screenshot(texture: canvas.emulatorTexture, rect: largestVisibleNormalized)
         case .entireUpscaled:
-            return screenshot(texture: canvas.upscaledTexture, rect: maxTextureRectScaled)
+            return screenshot(texture: canvas.upscaledTexture, rect: largestVisibleNormalized)
         case .visible:
             return screenshot(texture: canvas.emulatorTexture, rect: textureRect)
         case .visibleUpscaled:

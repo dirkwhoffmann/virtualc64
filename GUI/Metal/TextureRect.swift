@@ -20,7 +20,19 @@ extension Renderer {
                            height: rect.height / texH)
     }
     
-    var maxTextureRect: CGRect {
+    // Returns the used texture area (including HBLANK and VBLANK)
+    var entire: CGRect {
+        
+        return CGRect.init(x: 0, y: 0, width: TEX_WIDTH, height: TEX_HEIGHT)
+    }
+    
+    var entireNormalized: CGRect {
+        
+        return normalize(entire)
+    }
+    
+    // Returns the largest visibile texture area (excluding HBLANK and VBLANK)
+    var largestVisible: CGRect {
         
         if parent.c64.vic.isPAL() {
             return CGRect.init(x: 104, y: 16, width: 487 - 104, height: 299 - 16)
@@ -29,39 +41,13 @@ extension Renderer {
         }
     }
 
-    var maxTextureRectScaled: CGRect {
+    var largestVisibleNormalized: CGRect {
         
-        return normalize(maxTextureRect)
+        return normalize(largestVisible)
     }
 
-    func computeTextureRect() -> CGRect {
-                
-        // Display the whole texture if zoom is set
-        if zoom { return CGRect.init(x: 0.0, y: 0.0, width: 1.0, height: 1.0) }
-        
-        let rect = maxTextureRect
-        let aw = rect.minX
-        let dw = rect.maxX
-        let ah = rect.minY
-        let dh = rect.maxY
-        
-        /*
-        var aw: CGFloat, dw: CGFloat, ah: CGFloat, dh: CGFloat
-        if parent.c64.vic.isPAL() {
-            
-            aw = CGFloat(104)
-            dw = CGFloat(487)
-            ah = CGFloat(16)
-            dh = CGFloat(299)
-            
-        } else {
-            
-            aw = CGFloat(104)
-            dw = CGFloat(487)
-            ah = CGFloat(16)
-            dh = CGFloat(249)
-        }
-        */
+    // Returns the visible texture area based on the zoom and center parameters
+    var visible: CGRect {
         
         /*
          *       aw <--------- maxWidth --------> dw
@@ -80,38 +66,24 @@ extension Renderer {
          *      aw/ah - dw/dh = largest posible texture cutout
          *      bw/bh - cw/ch = currently used texture cutout
          */
-        let maxWidth = dw - aw
-        let maxHeight = dh - ah
         
-        let hZoom = CGFloat(config.hZoom)
-        let vZoom = CGFloat(config.vZoom)
-        let hCenter = CGFloat(config.hCenter)
-        let vCenter = CGFloat(config.vCenter)
-
-        /*
-        let hZoom = CGFloat(0)
-        let vZoom = CGFloat(0)
-        let hCenter = CGFloat(0)
-        let vCenter = CGFloat(0)
-        */
+        let max = largestVisible
         
-        let width = (1 - hZoom) * maxWidth
-        let bw = aw + hCenter * (maxWidth - width)
-        let height = (1 - vZoom) * maxHeight
-        let bh = ah + vCenter * (maxHeight - height)
+        let width = (1 - CGFloat(config.hZoom)) * max.width
+        let bw = max.minX + CGFloat(config.hCenter) * (max.width - width)
+        let height = (1 - CGFloat(config.vZoom)) * max.height
+        let bh = max.minY + CGFloat(config.vCenter) * (max.height - height)
         
-        let texW = CGFloat(TextureSize.original.width)
-        let texH = CGFloat(TextureSize.original.height)
-        
-        return CGRect.init(x: bw / texW,
-                           y: bh / texH,
-                           width: width / texW,
-                           height: height / texH)
+        return CGRect.init(x: bw, y: bh, width: width, height: height)
     }
-     
+    
+    var visibleNormalized: CGRect {
+        
+        return normalize(visible)
+    }
+
     func updateTextureRect() {
         
-        textureRect = computeTextureRect()
-        buildVertexBuffer()
+        textureRect = visibleNormalized
     }
 }
