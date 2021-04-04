@@ -207,8 +207,8 @@ class Renderer: NSObject, MTKViewDelegate {
             
             // Render the scene
             let flat = fullscreen && !parent.pref.keepAspectRatio
-            if canvas.isTransparent || animates != 0 { splashScreen.render(encoder: encoder) }
-            if canvas.isVisible { canvas.render(encoder: encoder, flat: flat) }
+            if canvas.isTransparent || animates != 0 { splashScreen.render(encoder) }
+            if canvas.isVisible { canvas.render(encoder, flat: flat) }
             
             // Commit the command buffer
             encoder.endEncoding()
