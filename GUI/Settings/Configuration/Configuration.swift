@@ -22,7 +22,7 @@ class Configuration {
     var c64: C64Proxy { return parent.c64 }
     var renderer: Renderer { return parent.renderer }
     var gamePadManager: GamePadManager { return parent.gamePadManager }
-    var kernelManager: RessourceManager { return renderer.ressourceManager }
+    var ressourceManager: RessourceManager { return renderer.ressourceManager }
     
     //
     // Hardware
@@ -344,7 +344,7 @@ class Configuration {
     }
     var upscaler = VideoDefaults.tft.upscaler {
         didSet {
-            if !kernelManager.selectUpscaler(upscaler) { upscaler = oldValue }
+            if !ressourceManager.selectUpscaler(upscaler) { upscaler = oldValue }
         }
     }
     var blur = VideoDefaults.tft.blur {
@@ -356,7 +356,7 @@ class Configuration {
     var bloom = VideoDefaults.tft.bloom {
         didSet {
             renderer.shaderOptions.bloom = Int32(bloom)
-            if !kernelManager.selectBloomFilter(bloom) { bloom = oldValue }
+            if !ressourceManager.selectBloomFilter(bloom) { bloom = oldValue }
         }
     }
     var bloomRadiusR = VideoDefaults.tft.bloomRadiusR {
@@ -377,20 +377,20 @@ class Configuration {
     var dotMask = VideoDefaults.tft.dotMask {
         didSet {
             renderer.shaderOptions.dotMask = Int32(dotMask)
-            kernelManager.buildDotMasks()
-            if !kernelManager.selectDotMask(dotMask) { dotMask = oldValue }
+            ressourceManager.buildDotMasks()
+            if !ressourceManager.selectDotMask(dotMask) { dotMask = oldValue }
         }
     }
     var dotMaskBrightness = VideoDefaults.tft.dotMaskBrightness {
         didSet {
             renderer.shaderOptions.dotMaskBrightness = dotMaskBrightness
-            kernelManager.buildDotMasks()
+            ressourceManager.buildDotMasks()
         }
     }
     var scanlines = VideoDefaults.tft.scanlines {
         didSet {
             renderer.shaderOptions.scanlines = Int32(scanlines)
-            if !kernelManager.selectScanlineFilter(scanlines) { scanlines = oldValue }
+            if !ressourceManager.selectScanlineFilter(scanlines) { scanlines = oldValue }
         }
     }
     var scanlineBrightness = VideoDefaults.tft.scanlineBrightness {

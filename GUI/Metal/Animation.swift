@@ -57,19 +57,15 @@ class AnimatedFloat {
 
 extension Renderer {
     
-    func performAnimationStep() {
-        
-        assert(animates != 0)
-        
-        var cont: Bool
-        
-        // Check for geometry animation
+    func animate() {
+
+        // Geometry animations
         if (animates & AnimationType.geometry) != 0 {
             
             angleX.move()
             angleY.move()
             angleZ.move()
-            cont = angleX.animates() || angleY.animates() || angleZ.animates()
+            var cont = angleX.animates() || angleY.animates() || angleZ.animates()
             
             shiftX.move()
             shiftY.move()
@@ -87,39 +83,36 @@ extension Renderer {
             buildMatrices3D()
         }
         
-        // Check for alpha channel animation
-        /*
-        if (animates & AnimationType.alpha) != 0 {
+        // Color animations
+        if (animates & AnimationType.color) != 0 {
+                        
+            white.move()
             
-            alpha.move()
-            noise.move()
-            cont = alpha.animates() || noise.animates()
+            let cont = white.animates()
             
-            // Check if animation has terminated
             if !cont {
-                animates -= AnimationType.alpha
+                animates -= AnimationType.color
             }
         }
-        */
         
-        // Check for texture animation
+        // Texture animations
         if (animates & AnimationType.texture) != 0 {
             
             cutoutX1.move()
             cutoutY1.move()
             cutoutX2.move()
             cutoutY2.move()
-            cont = cutoutX1.animates() || cutoutY1.animates() || cutoutX2.animates() || cutoutY2.animates()
+            let cont = cutoutX1.animates() || cutoutY1.animates() || cutoutX2.animates() || cutoutY2.animates()
             
             // Update texture cutout
             let x = CGFloat(cutoutX1.current)
             let y = CGFloat(cutoutY1.current)
             let w = CGFloat(cutoutX2.current - cutoutX1.current)
             let h = CGFloat(cutoutY2.current - cutoutY1.current)
-            canvas.textureRect = CGRect.init(x: x, y: y, width: w, height: h)
-            buildVertexBuffers()
             
-            // Check if animation has terminated
+            // Update texture cutout
+            canvas.textureRect = CGRect.init(x: x, y: y, width: w, height: h)
+            
             if !cont {
                 animates -= AnimationType.texture
             }
@@ -264,38 +257,17 @@ extension Renderer {
     }
     
     //
-    // Alpha channel animations
+    // Color animation
     //
     
-    /*
-    func blend(from: Float, to: Float, steps: Int) {
+    func flash() {
         
-        track("Blending...")
+        track("Flashing...")
         
-        angleX.target = 0
-        angleY.target = 0
-        angleZ.target = 0
+        white.current = 1.0
+        white.target = 0.0
+        white.steps = 20
         
-        angleX.steps = steps
-        angleY.steps = steps
-        angleZ.steps = steps
-        
-        animates |= AnimationType.alpha
+        animates |= AnimationType.color
     }
-    */
-    /*
-    func blendIn(steps: Int = 40) {
-        
-        noise.target = 0.0
-        noise.steps = steps
-        blend(from: 0.0, to: 1.0, steps: steps)
-    }
-    
-    func blendOut(steps: Int = 40) {
-        
-        noise.target = 1.0
-        noise.steps = steps
-        blend(from: 1.0, to: 0.0, steps: steps)
-    }
-    */
 }

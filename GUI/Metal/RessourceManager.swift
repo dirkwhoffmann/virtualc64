@@ -34,12 +34,12 @@ class RessourceManager {
     // Shaders
     //
     
-    // Filter galleries
+    // Shader galleries
     var upscalerGallery = [ComputeKernel?](repeating: nil, count: 3)
     var bloomFilterGallery = [ComputeKernel?](repeating: nil, count: 3)
     var scanlineFilterGallery = [ComputeKernel?](repeating: nil, count: 3)
     
-    // The currently selected filters
+    // The currently selected shaders
     var upscaler: ComputeKernel!
     var bloomFilter: ComputeKernel!
     var scanlineFilter: ComputeKernel!
@@ -73,6 +73,9 @@ class RessourceManager {
         let width = Int(renderer.size.width)
         let height = Int(renderer.size.height)
         
+        precondition(width != 0)
+        precondition(height != 0)
+        
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(
             pixelFormat: MTLPixelFormat.depth32Float,
             width: width,
@@ -105,10 +108,11 @@ class RessourceManager {
     
     internal func buildDotMasks() {
      
-        let options = renderer.shaderOptions!
-        let max  = UInt8(85 + options.dotMaskBrightness * 170)
-        let base = UInt8((1 - options.dotMaskBrightness) * 85)
-        let none = UInt8(30 + (1 - options.dotMaskBrightness) * 55)
+        let brightness = renderer.shaderOptions.dotMaskBrightness
+        
+        let max  = UInt8(85 + brightness * 170)
+        let base = UInt8((1 - brightness) * 85)
+        let none = UInt8(30 + (1 - brightness) * 55)
         
         let R = UInt32.init(r: max, g: base, b: base)
         let G = UInt32.init(r: base, g: max, b: base)

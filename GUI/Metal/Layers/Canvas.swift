@@ -131,7 +131,7 @@ class Canvas: Layer {
     }
     
     //
-    // Screenshots
+    //  Taking screenshots
     //
     
     func screenshot(source: ScreenshotSource) -> NSImage? {
@@ -204,8 +204,6 @@ class Canvas: Layer {
     //
     
     func makeCommandBuffer(buffer: MTLCommandBuffer) {
-                        
-        if c64.poweredOff { return }
         
         func applyGauss(_ texture: inout MTLTexture, radius: Float) {
             
@@ -215,7 +213,10 @@ class Canvas: Layer {
                              inPlaceTexture: &texture, fallbackCopyAllocator: nil)
             }
         }
-        
+
+        // Only proceed if the emulator is powered on
+        if c64.poweredOff { return }
+                
         // Compute the bloom textures
         if renderer.shaderOptions.bloom != 0 {
             
@@ -276,6 +277,7 @@ class Canvas: Layer {
         
         // Setup uniforms
         fragmentUniforms.alpha = c64.paused ? 0.5 : alpha.current
+        fragmentUniforms.white = renderer.white.current
         fragmentUniforms.dotMaskHeight = Int32(ressourceManager.dotMask.height)
         fragmentUniforms.dotMaskWidth = Int32(ressourceManager.dotMask.width)
         fragmentUniforms.scanlineDistance = Int32(renderer.size.height / 256)
@@ -307,10 +309,7 @@ class Canvas: Layer {
     }
     
     func render3D(encoder: MTLRenderCommandEncoder) {
-                
-        // Perform a single animation step
-        if renderer.animates != 0 { renderer.performAnimationStep() }
-        
+                        
         // Configure vertex shader
         encoder.setVertexBytes(&vertexUniforms3D,
                                length: MemoryLayout<VertexUniforms>.stride,

@@ -18,11 +18,11 @@ struct TextureSize {
 
 extension Renderer {
     
-    func setupMetal() {
+    func setup() {
         
         buildMetal()
-        buildShaders()
         buildDescriptors()
+        buildShaders()
         buildLayers()
         buildPipeline()
         buildVertexBuffers()

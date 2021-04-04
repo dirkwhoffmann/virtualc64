@@ -555,97 +555,78 @@ extension MyController {
             track("Unregistered from message queue")
 
         case .CONFIG:
-
             inspector?.fullRefresh()
             refreshStatusBar()
             
         case .POWER_ON:
-            
             renderer.canvas.open(delay: 1.5)
             virtualKeyboard = nil
             toolbar.validateVisibleItems()
             inspector?.fullRefresh()
 
         case .POWER_OFF:
-            
             toolbar.validateVisibleItems()
             inspector?.fullRefresh()
             
         case .RUN:
-            
             needsSaving = true
             toolbar.validateVisibleItems()
             inspector?.fullRefresh()
             refreshStatusBar()
     
         case .PAUSE:
-            
             toolbar.validateVisibleItems()
             inspector?.fullRefresh()
             refreshStatusBar()
 
         case .RESET:
-
             mydocument.deleteBootDiskID()
             mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
             inspector?.fullRefresh()
 
         case .MUTE_ON:
-            
             muted = true
             refreshStatusBar()
             
         case .MUTE_OFF:
-            
             muted = false
             refreshStatusBar()
 
         case .WARP_ON,
              .WARP_OFF:
-            
             refreshStatusBar()
             
         case .BASIC_ROM_LOADED,
              .CHAR_ROM_LOADED,
              .KERNAL_ROM_LOADED,
              .DRIVE_ROM_LOADED:
-            
             break
             
         case .ROM_MISSING:
-            
-            // openConfigurator()
             break
                 
         case .CPU_OK:
-            
             break
             
         case .BREAKPOINT_REACHED,
              .WATCHPOINT_REACHED:
-            
-            track("MSG_BREAKPOINT_REACHED MSG_WATCHPOINT_REACHED")
             inspector?.fullRefresh()
             inspector?.scrollToPC()
             
         case .CPU_JAMMED:
-            
             refreshStatusBar()
             
         case .PAL,
              .NTSC:
-            
             renderer.canvas.updateTextureRect()
     
         case .DRIVE_HEAD:
-            
             if pref.driveSounds && pref.driveHeadSound {
                 macAudio.playSound(name: "1541_track_change_2", volume: 1.0)
             }
             refreshStatusBarTracks(drive: DriveID.init(rawValue: msg.data)!)
                         
         case .DISK_INSERTED:
-            
             if pref.driveSounds && pref.driveInsertSound {
                 macAudio.playSound(name: "1541_door_closed_2", volume: 0.2)
             }
@@ -654,7 +635,6 @@ extension MyController {
             inspector?.fullRefresh()
 
         case .DISK_EJECTED:
-            
             if pref.driveSounds && pref.driveEjectSound {
                 macAudio.playSound(name: "1541_door_open_1", volume: 0.15)
             }
@@ -669,35 +649,27 @@ extension MyController {
              .DISK_UNSAVED,
              .DRIVE_LED_ON,
              .DRIVE_LED_OFF:
-            
             refreshStatusBar()
     
         case .IEC_BUS_BUSY:
-            
-            // track("IEC_BUS_BUSY")
             updateWarp()
             refreshStatusBarDriveActivity()
 
         case .IEC_BUS_IDLE:
-
-            // track("IEC_BUS_IDLE")
             updateWarp()
             refreshStatusBarDriveActivity()
 
         case .DRIVE_MOTOR_ON,
              .DRIVE_MOTOR_OFF:
-
             refreshStatusBarDriveActivity()
             
         case .DRIVE_CONNECT,
              .DRIVE_DISCONNECT,
              .DRIVE_POWER_ON,
              .DRIVE_POWER_OFF:
-            
             refreshStatusBar()
                         
         case .DRIVE_ACTIVE:
-            
             if pref.driveSounds && pref.driveConnectSound {
                 macAudio.playSound(name: "1541_power_on_0", volume: 0.15)
             }
@@ -705,75 +677,55 @@ extension MyController {
             refreshStatusBar()
             
         case .DRIVE_INACTIVE:
-            
-            if pref.driveSounds && pref.driveConnectSound {
-                // playSound(name: "drive_click", volume: 1.0)
-            }
             hideOrShowDriveMenus()
             refreshStatusBar()
 
         case .VC1530_TAPE:
-            
             mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
             refreshStatusBar()
 
         case .VC1530_NO_TAPE,
              .VC1530_PROGRESS:
-            
             refreshStatusBar()
 
         case .CRT_UNSUPPORTED:
-
             VC64Error.unsupportedCrtAlert(type: msg.data)
             
         case .CRT_ATTACHED:
-
             mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
             refreshStatusBar()
 
         case .CRT_DETACHED:
-            
             refreshStatusBar()
             
         case .CART_SWITCH:
-
             break
             
         case .KB_AUTO_RELEASE:
-            
             if virtualKeyboard?.window?.isVisible == true {
                 virtualKeyboard!.refresh()
             }
             
         case .SNAPSHOT_TOO_OLD:
-            
             VC64Error.init(.SNP_TOO_OLD).warning("Unable to restore snapshot")
                         
         case .SNAPSHOT_TOO_NEW:
-            
             VC64Error.init(.SNP_TOO_NEW).warning("Unable to restore snapshot")
 
         case .AUTO_SNAPSHOT_TAKEN:
-            
-            track("MSG_AUTO_SNAPSHOT_TAKEN")
             mydocument.snapshots.append(c64.latestAutoSnapshot)
 
         case .USER_SNAPSHOT_TAKEN:
-            
-            track("MSG_USER_SNAPSHOT_TAKEN")
             mydocument.snapshots.append(c64.latestUserSnapshot)
-            renderer.snapToFront()
+            renderer.flash()
             
         case .SNAPSHOT_RESTORED:
-            
-            track("MSG_SNAPSHOT_RESTORED")
-            renderer.snapToFront()
+            renderer.rotateRight()
             renderer.canvas.updateTextureRect()
-            hideOrShowDriveMenus()
             refreshStatusBar()
-            
+            hideOrShowDriveMenus()
+
         default:
-            
             track("Unknown message: \(msg)")
             assert(false)
         }

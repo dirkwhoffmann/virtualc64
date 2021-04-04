@@ -35,7 +35,7 @@ public class MetalView: MTKView {
     override public func resignFirstResponder() -> Bool { return false }
     
     // Adjusts view height by a certain number of pixels
-    func adjustHeight(_ height: CGFloat) {
+    fileprivate func adjustHeight(_ height: CGFloat) {
     
         var newFrame = frame
         newFrame.origin.y -= height

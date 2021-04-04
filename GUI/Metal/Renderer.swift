@@ -8,8 +8,6 @@
 // -----------------------------------------------------------------------------
 
 import Metal
-import MetalKit
-// import MetalPerformanceShaders
 
 enum ScreenshotSource: Int {
         
@@ -59,17 +57,16 @@ class Renderer: NSObject, MTKViewDelegate {
     var ressourceManager: RessourceManager! = nil
     
     //
-    // Buffers and Uniforms
+    // Uniforms
     //
 
-    // Shader options
     var shaderOptions: ShaderOptions!
     
     //
     // Animations
     //
     
-    // Indicates if an animation is currently performed
+    // Indicates if an animation is in progress
      var animates = 0
     
     // Geometry animation parameters
@@ -80,11 +77,10 @@ class Renderer: NSObject, MTKViewDelegate {
     var shiftX = AnimatedFloat(0.0)
     var shiftY = AnimatedFloat(0.0)
     var shiftZ = AnimatedFloat(0.0)
-    
+
     // Color animation parameters
-    // var alpha = AnimatedFloat(0.0)
-    // var noise = AnimatedFloat(0.0)
-    
+    var white = AnimatedFloat(0.0)
+        
     // Texture animation parameters
     var cutoutX1 = AnimatedFloat.init()
     var cutoutY1 = AnimatedFloat.init()
@@ -103,12 +99,13 @@ class Renderer: NSObject, MTKViewDelegate {
         self.view = view
         self.device = device
         self.parent = controller
+        
         super.init()
-        
-        setupMetal()
-        
+                
         view.delegate = self
         view.device = device
+        
+        setup()
     }
     
     //
@@ -163,11 +160,23 @@ class Renderer: NSObject, MTKViewDelegate {
         descriptor.depthAttachment.texture = ressourceManager.depthTexture
 
         // Create command encoder
-        let commandEncoder = buffer.makeRenderCommandEncoder(descriptor: descriptor)!
-        commandEncoder.setRenderPipelineState(pipeline)
-        commandEncoder.setDepthStencilState(depthState)
+        let encoder = buffer.makeRenderCommandEncoder(descriptor: descriptor)!
+        encoder.setRenderPipelineState(pipeline)
+        encoder.setDepthStencilState(depthState)
                 
-        return commandEncoder
+        return encoder
+    }
+    
+    //
+    // Updating
+    //
+    
+    func update(frames: Int64) {
+                         
+        if animates != 0 { animate() }
+        
+        // console.update(frames: frames)
+        canvas.update(frames: frames)
     }
     
     //
@@ -182,12 +191,11 @@ class Renderer: NSObject, MTKViewDelegate {
     func draw(in view: MTKView) {
         
         frames += 1
+        update(frames: frames)
         
         semaphore.wait()
         if let drawable = metalLayer.nextDrawable() {
                  
-            canvas.update(frames: frames)
-            
             // Create the command buffer
             let buffer = makeCommandBuffer()
             

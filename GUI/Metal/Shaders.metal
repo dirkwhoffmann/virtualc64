@@ -153,8 +153,6 @@ fragment half4 fragment_main(ProjectedVertex vert [[ stage_in ]],
     } else {
         color = texture.sample(texSampler, float2(vert.texCoords.x, vert.texCoords.y));
     }
-
-    // float luma = (0.2126 * color.r) + (0.7152 * color.g) + (0.0722 * color.b);
     
     // Apply bloom effect (if enabled)
     if (options.bloom) {
@@ -163,7 +161,6 @@ fragment half4 fragment_main(ProjectedVertex vert [[ stage_in ]],
         float4 bloom_b = bloomTextureB.sample(texSampler, tc);
         float4 bColor = bloom_r + bloom_g + bloom_b;
         bColor = pow(bColor, options.bloomWeight) * options.bloomBrightness;
-        // color = bColor;
         color = saturate(color + bColor);
     }
     
@@ -176,6 +173,7 @@ fragment half4 fragment_main(ProjectedVertex vert [[ stage_in ]],
                                 1.0);
     }
 
+    // Apply dot mask effect
     if (options.dotMask) {
         uint xoffset = x % uniforms.dotMaskWidth;
         uint yoffset = y % uniforms.dotMaskHeight;
