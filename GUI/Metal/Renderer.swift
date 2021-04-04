@@ -153,16 +153,16 @@ class Renderer: NSObject, MTKViewDelegate {
         return commandBuffer
     }
     
-    func makeCommandEncoder(drawable: CAMetalDrawable, buffer: MTLCommandBuffer) -> MTLRenderCommandEncoder {
+    func makeCommandEncoder(_ drawable: CAMetalDrawable, _ buffer: MTLCommandBuffer) -> MTLRenderCommandEncoder? {
         
         // Update the render pass descriptor
         descriptor.colorAttachments[0].texture = drawable.texture
         descriptor.depthAttachment.texture = ressourceManager.depthTexture
 
         // Create command encoder
-        let encoder = buffer.makeRenderCommandEncoder(descriptor: descriptor)!
-        encoder.setRenderPipelineState(pipeline)
-        encoder.setDepthStencilState(depthState)
+        let encoder = buffer.makeRenderCommandEncoder(descriptor: descriptor)
+        encoder?.setRenderPipelineState(pipeline)
+        encoder?.setDepthStencilState(depthState)
                 
         return encoder
     }
@@ -200,11 +200,14 @@ class Renderer: NSObject, MTKViewDelegate {
             let buffer = makeCommandBuffer()
             
             // Create the command encoder
-            let encoder = makeCommandEncoder(drawable: drawable, buffer: buffer)
+            guard let encoder = makeCommandEncoder(drawable, buffer) else {
+                semaphore.signal()
+                return
+            }
             
             // Render the scene
             let flat = fullscreen && !parent.pref.keepAspectRatio
-            if canvas.isTransparent { splashScreen.render(encoder: encoder) }
+            if canvas.isTransparent || animates != 0 { splashScreen.render(encoder: encoder) }
             if canvas.isVisible { canvas.render(encoder: encoder, flat: flat) }
             
             // Commit the command buffer
