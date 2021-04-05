@@ -115,7 +115,7 @@ class MyToolbar: NSToolbar {
         if parent.virtualKeyboard?.window?.isVisible == true {
             track("Virtual keyboard already open")
         } else {
-            track("Opeining virtual keyboard as a sheet")
+            track("Opening virtual keyboard as a sheet")
             parent.virtualKeyboard?.showSheet()
         }
     }

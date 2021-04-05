@@ -99,6 +99,9 @@ enum_long(MSG)
     MSG_USER_SNAPSHOT_TAKEN,
     MSG_SNAPSHOT_RESTORED,
     
+    // Console
+    MSG_CLOSE_CONSOLE,
+    
     MSG_COUNT
 };
 typedef MSG MsgType;
@@ -185,6 +188,8 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_AUTO_SNAPSHOT_TAKEN:  return "AUTO_SNAPSHOT_TAKEN";
             case MSG_USER_SNAPSHOT_TAKEN:  return "USER_SNAPSHOT_TAKEN";
             case MSG_SNAPSHOT_RESTORED:    return "SNAPSHOT_RESTORED";
+                
+            case MSG_CLOSE_CONSOLE:        return "CLOSE_CONSOLE";
                 
             case MSG_COUNT:                return "???";
         }

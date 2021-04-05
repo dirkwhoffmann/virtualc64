@@ -22,8 +22,7 @@ enum class Token
     none,
     
     // Components
-    agnus, amiga, audio, blitter, cia, controlport, copper, cpu, denise, dfn,
-    dc, keyboard, memory, monitor, mouse, paula, serial, rtc,
+    c64,audio, cia, controlport, cpu, drive, keyboard, memory, monitor, mouse,
 
     // Commands
     about, audiate, autosync, clear, config, connect, disconnect, dsksync,

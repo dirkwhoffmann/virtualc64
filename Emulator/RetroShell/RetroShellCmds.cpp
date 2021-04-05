@@ -20,7 +20,6 @@
 // Top-level commands
 //
 
-/*
 template <> void
 RetroShell::exec <Token::clear> (Arguments &argv, long param)
 {
@@ -32,7 +31,6 @@ RetroShell::exec <Token::close> (Arguments &argv, long param)
 {
     messageQueue.put(MSG_CLOSE_CONSOLE);
 }
-*/
 
 template <> void
 RetroShell::exec <Token::easteregg> (Arguments& argv, long param)
@@ -59,50 +57,49 @@ RetroShell::exec <Token::source> (Arguments &argv, long param)
 }
 
 //
-// Amiga
+// C64
 //
 
-/*
 template <> void
-RetroShell::exec <Token::amiga, Token::on> (Arguments &argv, long param)
+RetroShell::exec <Token::c64, Token::on> (Arguments &argv, long param)
 {
-    amiga.powerOn();
+    c64.powerOn();
 }
 
 template <> void
-RetroShell::exec <Token::amiga, Token::off> (Arguments &argv, long param)
+RetroShell::exec <Token::c64, Token::off> (Arguments &argv, long param)
 {
-    amiga.powerOff();
+    c64.powerOff();
 }
 
 template <> void
-RetroShell::exec <Token::amiga, Token::run> (Arguments &argv, long param)
+RetroShell::exec <Token::c64, Token::run> (Arguments &argv, long param)
 {
-    amiga.run();
+    c64.run();
 }
 
 template <> void
-RetroShell::exec <Token::amiga, Token::pause> (Arguments &argv, long param)
+RetroShell::exec <Token::c64, Token::pause> (Arguments &argv, long param)
 {
-    amiga.pause();
+    c64.pause();
 }
 
 template <> void
-RetroShell::exec <Token::amiga, Token::reset> (Arguments &argv, long param)
+RetroShell::exec <Token::c64, Token::reset> (Arguments &argv, long param)
 {
-    amiga.reset(true);
+    c64.reset();
 }
 
 template <> void
-RetroShell::exec <Token::amiga, Token::inspect> (Arguments &argv, long param)
+RetroShell::exec <Token::c64, Token::inspect> (Arguments &argv, long param)
 {
-    dump(amiga, Dump::State);
+    dump(c64, Dump::State);
 }
 
 //
 // Memory
 //
-
+/*
 template <> void
 RetroShell::exec <Token::memory, Token::config> (Arguments& argv, long param)
 {

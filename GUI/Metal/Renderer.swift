@@ -175,7 +175,7 @@ class Renderer: NSObject, MTKViewDelegate {
                          
         if animates != 0 { animate() }
         
-        // console.update(frames: frames)
+        console.update(frames: frames)
         canvas.update(frames: frames)
     }
     

@@ -1465,6 +1465,93 @@
 @end
 
 //
+// RetroShell proxy
+//
+
+@implementation RetroShellProxy
+
+- (RetroShell *)shell
+{
+    return (RetroShell *)obj;
+}
+
++ (instancetype)make:(RetroShell *)shell
+{
+    if (shell == nullptr) { return nil; }
+    
+    RetroShellProxy *proxy = [[self alloc] initWith: shell];
+    return proxy;
+}
+
+-(NSInteger)cposRel
+{
+    return [self shell]->cposRel();
+}
+
+-(NSString *)getText
+{
+    const char *str = [self shell]->text();
+    return str ? [NSString stringWithUTF8String:str] : nullptr;
+}
+
+- (void)pressUp
+{
+    [self shell]->pressUp();
+}
+
+- (void)pressDown
+{
+    [self shell]->pressDown();
+}
+
+- (void)pressLeft
+{
+    [self shell]->pressLeft();
+}
+
+- (void)pressRight
+{
+    [self shell]->pressRight();
+}
+
+- (void)pressHome
+{
+    [self shell]->pressHome();
+}
+
+- (void)pressEnd
+{
+    [self shell]->pressEnd();
+}
+
+- (void)pressBackspace
+{
+    [self shell]->pressBackspace();
+}
+
+- (void)pressDelete
+{
+    [self shell]->pressDelete();
+}
+
+- (void)pressReturn
+{
+    [self shell]->pressReturn();
+}
+
+- (void)pressTab
+{
+    [self shell]->pressTab();
+}
+
+- (void)pressKey:(char)c
+{
+    [self shell]->pressKey(c);
+}
+
+@end
+
+//
 // AnyFile
 //
 
@@ -1888,9 +1975,23 @@
 
 @implementation C64Proxy
 
-@synthesize mem, cpu, breakpoints, watchpoints, vic, cia1, cia2, sid;
-@synthesize keyboard, port1, port2, iec;
-@synthesize expansionport, drive8, drive9, datasette;
+@synthesize breakpoints;
+@synthesize cia1;
+@synthesize cia2;
+@synthesize cpu;
+@synthesize datasette;
+@synthesize drive8;
+@synthesize drive9;
+@synthesize expansionport;
+@synthesize iec;
+@synthesize keyboard;
+@synthesize mem;
+@synthesize port1;
+@synthesize port2;
+@synthesize retroShell;
+@synthesize sid;
+@synthesize vic;
+@synthesize watchpoints;
 
 - (instancetype) init
 {
@@ -1901,22 +2002,23 @@
     C64 *c64 = new C64();
     obj = c64;
     
-    mem = [[MemoryProxy alloc] initWith:&c64->mem];
-    cpu = [[CPUProxy alloc] initWith:&c64->cpu];
     breakpoints = [[GuardsProxy alloc] initWith:&c64->cpu.debugger.breakpoints];
-    watchpoints = [[GuardsProxy alloc] initWith:&c64->cpu.debugger.watchpoints];
-    vic = [[VICProxy alloc] initWith:&c64->vic];
     cia1 = [[CIAProxy alloc] initWith:&c64->cia1];
     cia2 = [[CIAProxy alloc] initWith:&c64->cia2];
-    sid = [[SIDProxy alloc] initWith:&c64->sid];
-    keyboard = [[KeyboardProxy alloc] initWith:&c64->keyboard];
-    port1 = [[ControlPortProxy alloc] initWith:&c64->port1];
-    port2 = [[ControlPortProxy alloc] initWith:&c64->port2];
-    iec = [[IECProxy alloc] initWith:&c64->iec];
-    expansionport = [[ExpansionPortProxy alloc] initWith:&c64->expansionport];
+    cpu = [[CPUProxy alloc] initWith:&c64->cpu];
+    datasette = [[DatasetteProxy alloc] initWith:&c64->datasette];
     drive8 = [[DriveProxy alloc] initWithVC1541:&c64->drive8];
     drive9 = [[DriveProxy alloc] initWithVC1541:&c64->drive9];
-    datasette = [[DatasetteProxy alloc] initWith:&c64->datasette];
+    expansionport = [[ExpansionPortProxy alloc] initWith:&c64->expansionport];
+    iec = [[IECProxy alloc] initWith:&c64->iec];
+    keyboard = [[KeyboardProxy alloc] initWith:&c64->keyboard];
+    mem = [[MemoryProxy alloc] initWith:&c64->mem];
+    port1 = [[ControlPortProxy alloc] initWith:&c64->port1];
+    port2 = [[ControlPortProxy alloc] initWith:&c64->port2];
+    retroShell = [[RetroShellProxy alloc] initWith:&c64->retroShell];
+    sid = [[SIDProxy alloc] initWith:&c64->sid];
+    vic = [[VICProxy alloc] initWith:&c64->vic];
+    watchpoints = [[GuardsProxy alloc] initWith:&c64->cpu.debugger.watchpoints];
 
     return self;
 }

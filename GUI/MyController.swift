@@ -725,6 +725,9 @@ extension MyController {
             refreshStatusBar()
             hideOrShowDriveMenus()
 
+        case .CLOSE_CONSOLE:
+            renderer.console.close(delay: 0.25)
+            
         default:
             track("Unknown message: \(msg)")
             assert(false)

@@ -55,6 +55,7 @@
 @class MyController;
 @class P00FileProxy;
 @class PRGFileProxy;
+@class RetroShellProxy;
 @class RomFileProxy;
 @class SIDProxy;
 @class SnapshotProxy;
@@ -104,6 +105,7 @@
     KeyboardProxy *keyboard;
     MemoryProxy *mem;
     MouseProxy *mouse;
+    RetroShellProxy *retroShell;
     SIDProxy *sid;
     VICProxy *vic;
 }
@@ -122,6 +124,7 @@
 @property (readonly, strong) IECProxy *iec;
 @property (readonly, strong) KeyboardProxy *keyboard;
 @property (readonly, strong) MemoryProxy *mem;
+@property (readonly, strong) RetroShellProxy *retroShell;
 @property (readonly, strong) SIDProxy *sid;
 @property (readonly, strong) VICProxy *vic;
 
@@ -573,6 +576,30 @@
 @property BOOL autofire;
 @property NSInteger autofireBullets;
 @property float autofireFrequency;
+
+@end
+
+
+//
+// RetroShell proxy
+//
+
+@interface RetroShellProxy : Proxy { }
+
+@property (readonly) NSInteger cposRel;
+
+- (NSString *)getText;
+- (void)pressUp;
+- (void)pressDown;
+- (void)pressLeft;
+- (void)pressRight;
+- (void)pressHome;
+- (void)pressEnd;
+- (void)pressBackspace;
+- (void)pressDelete;
+- (void)pressReturn;
+- (void)pressTab;
+- (void)pressKey:(char)c;
 
 @end
 

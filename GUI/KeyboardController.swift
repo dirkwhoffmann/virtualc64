@@ -63,10 +63,11 @@ class KeyboardController: NSObject {
     
     func keyDown(with event: NSEvent) {
                 
+        // Intercept if the console is open
+        if renderer.console.isVisible { renderer.console.keyDown(with: event); return }
+
         // Ignore repeating keys
-        if event.isARepeat {
-            return
-        }
+        if event.isARepeat { return }
         
         // Exit fullscreen mode if escape key is pressed
         if event.keyCode == kVK_Escape && renderer.fullscreen && pref.exitOnEsc {
@@ -79,13 +80,14 @@ class KeyboardController: NSObject {
             return
         }
         
-        // track("keyDown: \(event.characters ?? "") \(event.keyCode)")
         keyDown(with: MacKey.init(event: event))
     }
     
     func keyUp(with event: NSEvent) {
                 
-        // track("keyUp: \(event.characters ?? "") \(event.keyCode)")
+        // Intercept if the console is open
+        if renderer.console.isVisible { renderer.console.keyUp(with: event); return }
+        
         keyUp(with: MacKey.init(event: event))
     }
     

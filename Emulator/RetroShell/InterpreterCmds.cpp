@@ -18,7 +18,6 @@ Interpreter::registerInstructions()
     // Commands
     //
     
-    /*
     root.add({"clear"},
              "command", "Clears the console window",
              &RetroShell::exec <Token::clear>);
@@ -28,7 +27,6 @@ Interpreter::registerInstructions()
              "command", "Hides the debug console",
              &RetroShell::exec <Token::close>);
     root.seek("close")->hidden = true;
-    */
     
     root.add({"joshua"},
              "command", "",
@@ -41,45 +39,45 @@ Interpreter::registerInstructions()
     
     
     //
-    // Amiga
+    // C64
     //
     
-    /*
-    root.add({"amiga"},
-             "component", "The virtual Amiga");
+    root.add({"c64"},
+             "component", "The virtual Commodore 64");
         
-    root.add({"amiga", "power"},
+    root.add({"c64", "power"},
              "command", "Switches the Amiga on or off");
     
-    root.add({"amiga", "power", "on"},
+    root.add({"c64", "power", "on"},
              "state", "Switches the Amiga on",
-             &RetroShell::exec <Token::amiga, Token::on>);
+             &RetroShell::exec <Token::c64, Token::on>);
 
-    root.add({"amiga", "power", "off"},
+    root.add({"c64", "power", "off"},
              "state", "Switches the Amiga off",
-             &RetroShell::exec <Token::amiga, Token::off>);
+             &RetroShell::exec <Token::c64, Token::off>);
 
-    root.add({"amiga", "run"},
+    root.add({"c64", "run"},
              "command", "Starts the emulator thread",
-             &RetroShell::exec <Token::amiga, Token::run>);
+             &RetroShell::exec <Token::c64, Token::run>);
 
-    root.add({"amiga", "pause"},
+    root.add({"c64", "pause"},
              "command", "Halts the emulator thread",
-             &RetroShell::exec <Token::amiga, Token::pause>);
+             &RetroShell::exec <Token::c64, Token::pause>);
     
-    root.add({"amiga", "reset"},
+    root.add({"c64", "reset"},
              "command", "Performs a hard reset",
-             &RetroShell::exec <Token::amiga, Token::reset>);
+             &RetroShell::exec <Token::c64, Token::reset>);
     
-    root.add({"amiga", "inspect"},
+    root.add({"c64", "inspect"},
              "command", "Displays the component state",
-             &RetroShell::exec <Token::amiga, Token::inspect>);
+             &RetroShell::exec <Token::c64, Token::inspect>);
 
     
     //
     // Memory
     //
     
+    /*
     root.add({"memory"},
              "component", "Ram and Rom");
     
