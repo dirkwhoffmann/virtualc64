@@ -61,13 +61,25 @@ RetroShell::exec <Token::source> (Arguments &argv, long param)
 //
 
 template <> void
-RetroShell::exec <Token::c64, Token::on> (Arguments &argv, long param)
+RetroShell::exec <Token::c64, Token::inspect> (Arguments &argv, long param)
+{
+    dump(c64, Dump::State);
+}
+
+template <> void
+RetroShell::exec <Token::c64, Token::config> (Arguments &argv, long param)
+{
+    dump(c64, Dump::Config);
+}
+
+template <> void
+RetroShell::exec <Token::c64, Token::power, Token::on> (Arguments &argv, long param)
 {
     c64.powerOn();
 }
 
 template <> void
-RetroShell::exec <Token::c64, Token::off> (Arguments &argv, long param)
+RetroShell::exec <Token::c64, Token::power, Token::off> (Arguments &argv, long param)
 {
     c64.powerOff();
 }
@@ -90,11 +102,6 @@ RetroShell::exec <Token::c64, Token::reset> (Arguments &argv, long param)
     c64.reset();
 }
 
-template <> void
-RetroShell::exec <Token::c64, Token::inspect> (Arguments &argv, long param)
-{
-    dump(c64, Dump::State);
-}
 
 //
 // Memory

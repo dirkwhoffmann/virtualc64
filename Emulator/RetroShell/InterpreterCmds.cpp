@@ -45,16 +45,20 @@ Interpreter::registerInstructions()
     root.add({"c64"},
              "component", "The virtual Commodore 64");
         
+    root.add({"c64", "config"},
+             "command", "Displays the current configuration",
+             &RetroShell::exec <Token::c64, Token::config>);
+
     root.add({"c64", "power"},
              "command", "Switches the C64 on or off");
     
     root.add({"c64", "power", "on"},
              "state", "Switches the C64 on",
-             &RetroShell::exec <Token::c64, Token::on>);
+             &RetroShell::exec <Token::c64, Token::power, Token::on>);
 
     root.add({"c64", "power", "off"},
              "state", "Switches the C64 off",
-             &RetroShell::exec <Token::c64, Token::off>);
+             &RetroShell::exec <Token::c64, Token::power, Token::off>);
 
     root.add({"c64", "run"},
              "command", "Starts the emulator thread",

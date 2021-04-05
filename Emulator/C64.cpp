@@ -10,6 +10,7 @@
 #include "config.h"
 #include "C64.h"
 #include "Checksum.h"
+#include "IO.h"
 
 //
 // Emulator thread
@@ -705,18 +706,23 @@ C64::_pause()
 void
 C64::_dump(Dump::Category category, std::ostream& os) const
 {
-    msg("C64:\n");
-    msg("----\n\n");
-    msg("              Machine type : %s\n", vic.isPAL() ? "PAL" : "NTSC");
-    msg("         Frames per second : %f\n", vic.getFramesPerSecond());
-    msg("     Rasterlines per frame : %ld\n", vic.getRasterlinesPerFrame());
-    msg("     Cycles per rasterline : %d\n", vic.getCyclesPerLine());
-    msg("             Current cycle : %llu\n", cpu.cycle);
-    msg("             Current frame : %llu\n", frame);
-    msg("        Current rasterline : %d\n", rasterLine);
-    msg("  Current rasterline cycle : %d\n", rasterCycle);
-    msg("              Ultimax mode : %s\n\n", getUltimax() ? "YES" : "NO");
-    msg("\n");
+    if (category & Dump::Config) {
+    
+        os << DUMP("Cycle limit") << (isize)config.cycleLimit << std::endl;
+    }
+    
+    if (category & Dump::State) {
+        
+        os << DUMP("Machine type") << (vic.isPAL() ? "PAL" : "NTSC") << std::endl;
+        os << DUMP("Frames per second") << vic.getFramesPerSecond() << std::endl;
+        os << DUMP("Rasterlines per frame") << (isize)vic.getRasterlinesPerFrame() << std::endl;
+        os << DUMP("Cycles per rasterline") << (isize)vic.getCyclesPerLine() << std::endl;
+        os << DUMP("Current cycle") << (isize)cpu.cycle << std::endl;
+        os << DUMP("Current frame") << (isize)frame << std::endl;
+        os << DUMP("Current rasterline") << (isize)rasterLine << std::endl;
+        os << DUMP("Current rasterline cycle") << (isize)rasterCycle << std::endl;
+        os << DUMP("Ultimax mode") << YESNO(getUltimax()) << std::endl;
+    }
 }
 
 void
