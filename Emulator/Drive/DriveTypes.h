@@ -100,8 +100,8 @@ typedef struct
     
     // Drive sounds
     i16 pan;
+    u8 powerVolume;
     u8 stepVolume;
-    u8 pollVolume;
     u8 insertVolume;
     u8 ejectVolume;
 }

@@ -35,8 +35,8 @@ extension ConfigurationController {
 
         // Drives
         /*
+        audPowerVolume.integerValue = config.powerVolume
         audStepVolume.integerValue = config.stepVolume
-        audPollVolume.integerValue = config.pollVolume
         audInsertVolume.integerValue = config.insertVolume
         audEjectVolume.integerValue = config.ejectVolume
         */
@@ -114,15 +114,15 @@ extension ConfigurationController {
         refresh()
     }
 
-    @IBAction func audStepVolumeAction(_ sender: NSSlider!) {
+    @IBAction func audPowerVolumeAction(_ sender: NSSlider!) {
 
-        config.stepVolume = sender.integerValue
+        config.powerVolume = sender.integerValue
         refresh()
     }
 
-    @IBAction func audPollVolumeAction(_ sender: NSSlider!) {
+    @IBAction func audStepVolumeAction(_ sender: NSSlider!) {
 
-        config.pollVolume = sender.integerValue
+        config.stepVolume = sender.integerValue
         refresh()
     }
 

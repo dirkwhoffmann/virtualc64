@@ -28,8 +28,8 @@ Drive::Drive(DriveID id, C64 &ref) : C64Component(ref), deviceNr(id)
     config.switchedOn = true;
     config.type = DRIVE_VC1541II;
     config.pan = deviceNr == DRIVE8 ? 100 : -100;
+    config.powerVolume = 128;
     config.stepVolume = 128;
-    config.pollVolume = 128;
     config.insertVolume = 128;
     config.ejectVolume = 128;
 
@@ -62,8 +62,8 @@ Drive::getConfigItem(Option option) const
         case OPT_DRIVE_CONNECT:       return (i64)config.connected;
         case OPT_DRIVE_POWER_SWITCH:  return (i64)config.switchedOn;
         case OPT_DRIVE_PAN:           return (i64)config.pan;
+        case OPT_POWER_VOLUME:        return (i64)config.powerVolume;
         case OPT_STEP_VOLUME:         return (i64)config.stepVolume;
-        case OPT_POLL_VOLUME:         return (i64)config.pollVolume;
         case OPT_INSERT_VOLUME:       return (i64)config.insertVolume;
         case OPT_EJECT_VOLUME:        return (i64)config.ejectVolume;
             
@@ -145,8 +145,10 @@ Drive::setConfigItem(Option option, long id, i64 value)
             reset();
             resume();
             messageQueue.put(value ? MSG_DRIVE_POWER_ON : MSG_DRIVE_POWER_OFF, deviceNr);
-            if (wasActive != active)
-                messageQueue.put(active ? MSG_DRIVE_ACTIVE : MSG_DRIVE_INACTIVE, deviceNr);
+            if (wasActive != active) {
+                messageQueue.put(active ? MSG_DRIVE_ACTIVE : MSG_DRIVE_INACTIVE,
+                                 config.pan << 24 | config.stepVolume << 16 | deviceNr);
+            }
             return true;
         }
         case OPT_DRIVE_PAN:
@@ -157,20 +159,20 @@ Drive::setConfigItem(Option option, long id, i64 value)
             config.pan = value;
             return true;
         }
+        case OPT_POWER_VOLUME:
+        {
+            if (config.powerVolume == value) {
+                return false;
+            }
+            config.powerVolume = value;
+            return true;
+        }
         case OPT_STEP_VOLUME:
         {
             if (config.stepVolume == value) {
                 return false;
             }
             config.stepVolume = value;
-            return true;
-        }
-        case OPT_POLL_VOLUME:
-        {
-            if (config.pollVolume == value) {
-                return false;
-            }
-            config.pollVolume = value;
             return true;
         }
         case OPT_EJECT_VOLUME:
@@ -547,7 +549,8 @@ Drive::vsyncHandler()
             insertionStatus = DISK_FULLY_EJECTED;
             
             // Inform listeners
-            c64.putMessage(MSG_DISK_EJECT, deviceNr);
+            c64.putMessage(MSG_DISK_EJECT,
+                           config.pan << 24 | config.stepVolume << 16 | halftrack << 8 | deviceNr);
             
             // Schedule the next transition
             diskChangeCounter = 17;
@@ -583,7 +586,8 @@ Drive::vsyncHandler()
             diskToInsert = nullptr;
 
             // Inform listeners
-            c64.putMessage(MSG_DISK_INSERT, deviceNr);
+            c64.putMessage(MSG_DISK_INSERT,
+                           config.pan << 24 | config.stepVolume << 16 | halftrack << 8 | deviceNr);
             return;
         }
         default:

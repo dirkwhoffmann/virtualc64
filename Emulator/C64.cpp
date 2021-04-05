@@ -217,8 +217,8 @@ C64::getConfigItem(Option option, long id) const
         case OPT_DRIVE_CONNECT:
         case OPT_DRIVE_POWER_SWITCH:
         case OPT_DRIVE_PAN:
+        case OPT_POWER_VOLUME:
         case OPT_STEP_VOLUME:
-        case OPT_POLL_VOLUME:
         case OPT_INSERT_VOLUME:
         case OPT_EJECT_VOLUME:
         {

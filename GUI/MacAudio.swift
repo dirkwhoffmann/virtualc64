@@ -153,18 +153,45 @@ public class MacAudio: NSObject {
         }
     }
     
-    // Plays a sound file
+    //
+    // Playing sound files
+    //
+    
+    func playPowerSound(volume: Int, pan: Int) {
+        
+        playSound(name: "1541_power_on_0", volume: volume, pan: pan)
+    }
+
+    func playStepSound(volume: Int, pan: Int) {
+                
+        playSound(name: "1541_track_change_2", volume: volume, pan: pan)
+    }
+
+    func playInsertSound(volume: Int, pan: Int) {
+        
+        playSound(name: "1541_door_closed_2", volume: volume, pan: pan)
+    }
+ 
+    func playEjectSound(volume: Int, pan: Int) {
+        
+        playSound(name: "1541_door_open_1", volume: volume, pan: pan)
+    }
+    
     func playSound(name: String, volume: Int, pan: Int) {
         
+        track("playIntSound: \(name) \(volume) \(pan)")
+
         let p = pan <= 100 ? pan : pan <= 300 ? 200 - pan : -400 + pan
         
-        let scaledVolume = Float(volume) / 100.0
+        let scaledVolume = Float(volume) / 255.0
         let scaledPan = Float(p) / 100.0
                 
         playSound(name: name, volume: scaledVolume, pan: scaledPan)
     }
     
     func playSound(name: String, volume: Float, pan: Float) {
+        
+        track("playSound: \(name) \(volume) \(pan)")
         
         // Check for cached players for this sound file
         if audioPlayers[name] == nil {

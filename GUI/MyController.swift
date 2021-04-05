@@ -542,9 +542,9 @@ extension MyController {
 
         var driveNr: Int { return msg.data & 0xFF }
         var driveId: DriveID { return DriveID.init(rawValue: driveNr)! }
-        var driveTrack: Int { return (msg.data >> 8) & 0xFF; }
-        var driveVol: Int { return (msg.data >> 16) & 0xFF; }
-        var drivePan: Int { return (msg.data >> 24) & 0xFF; }
+        var halftrack: Int { return (msg.data >> 8) & 0xFF; }
+        var vol: Int { return (msg.data >> 16) & 0xFF; }
+        var pan: Int { return (msg.data >> 24) & 0xFF; }
         
         // track("msg: \(msg)")
         
@@ -631,28 +631,18 @@ extension MyController {
     
         case .DRIVE_STEP:
             if pref.driveSounds && pref.driveHeadSound {
-                macAudio.playSound(name: "1541_track_change_2",
-                                   volume: 1.0,
-                                   pan: Float(pref.driveSoundPan))
+                macAudio.playStepSound(volume: vol, pan: pan)
             }
             refreshStatusBarTracks(drive: driveId)
                         
         case .DISK_INSERT:
-            if pref.driveSounds && pref.driveInsertSound {
-                macAudio.playSound(name: "1541_door_closed_2",
-                                   volume: 0.2,
-                                   pan: Float(pref.driveSoundPan))
-            }
+            macAudio.playInsertSound(volume: vol, pan: pan)
             mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
             refreshStatusBarDiskIcons(drive: driveId)
             inspector?.fullRefresh()
 
         case .DISK_EJECT:
-            if pref.driveSounds && pref.driveEjectSound {
-                macAudio.playSound(name: "1541_door_open_1",
-                                   volume: 0.15,
-                                   pan: Float(pref.driveSoundPan))
-            }
+            macAudio.playEjectSound(volume: vol, pan: pan)
             refreshStatusBarDiskIcons(drive: driveId)
             inspector?.fullRefresh()
 
@@ -685,11 +675,7 @@ extension MyController {
             refreshStatusBar()
                         
         case .DRIVE_ACTIVE:
-            if pref.driveSounds && pref.driveConnectSound {
-                macAudio.playSound(name: "1541_power_on_0",
-                                   volume: 0.15,
-                                   pan: Float(pref.driveSoundPan))
-            }
+            macAudio.playPowerSound(volume: vol, pan: pan)
             hideOrShowDriveMenus()
             refreshStatusBar()
             

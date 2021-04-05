@@ -75,8 +75,8 @@ enum_long(OPT)
     OPT_DRIVE_CONNECT,
     OPT_DRIVE_POWER_SWITCH,
     OPT_DRIVE_PAN,
+    OPT_POWER_VOLUME,
     OPT_STEP_VOLUME,
-    OPT_POLL_VOLUME,
     OPT_INSERT_VOLUME,
     OPT_EJECT_VOLUME,
     
@@ -147,8 +147,8 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_DRIVE_CONNECT:       return "DRIVE_CONNECT";
             case OPT_DRIVE_POWER_SWITCH:  return "DRIVE_POWER_SWITCH";
             case OPT_DRIVE_PAN:           return "DRIVE_PAN";
+            case OPT_POWER_VOLUME:        return "POWER_VOLUME";
             case OPT_STEP_VOLUME:         return "STEP_VOLUME";
-            case OPT_POLL_VOLUME:         return "POLL_VOLUME";
             case OPT_INSERT_VOLUME:       return "INSERT_VOLUME";
             case OPT_EJECT_VOLUME:        return "EJECT_VOLUME";
                 
