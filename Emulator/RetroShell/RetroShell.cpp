@@ -2,7 +2,7 @@
 // This file is part of VirtualC64
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
-// Licensed under the GNU General Public License v2
+// Licensed under the GNU General Public License v3
 //
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
@@ -27,7 +27,7 @@ RetroShell::RetroShell(C64& ref) : C64Component(ref), interpreter(ref)
     *this << " (" << __DATE__ << " " << __TIME__ << ")" << '\n';
     *this << '\n';
     *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
-    *this << "Licensed under the GNU General Public License v2" << '\n';
+    *this << "Licensed under the GNU General Public License v3" << '\n';
     *this << '\n';
 
     printHelp();
