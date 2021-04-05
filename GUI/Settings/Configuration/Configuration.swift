@@ -309,6 +309,22 @@ class Configuration {
         get { return c64.getConfig(.AUDVOLR) }
         set { c64.configure(.AUDVOLR, value: newValue) }
     }
+    var stepVolume: Int {
+        get { return c64.getConfig(.STEP_VOLUME, drive: .DRIVE8) }
+        set { c64.configure(.STEP_VOLUME, value: newValue) }
+    }
+    var pollVolume: Int {
+        get { return c64.getConfig(.POLL_VOLUME, drive: .DRIVE8) }
+        set { c64.configure(.POLL_VOLUME, value: newValue) }
+    }
+    var insertVolume: Int {
+        get { return c64.getConfig(.INSERT_VOLUME, drive: .DRIVE8) }
+        set { c64.configure(.INSERT_VOLUME, value: newValue) }
+    }
+    var ejectVolume: Int {
+        get { return c64.getConfig(.EJECT_VOLUME, drive: .DRIVE8) }
+        set { c64.configure(.EJECT_VOLUME, value: newValue) }
+    }
     
     //
     // Video

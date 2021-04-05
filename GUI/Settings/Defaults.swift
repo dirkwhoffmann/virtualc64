@@ -780,7 +780,7 @@ extension Keys {
 struct PeripheralsDefaults {
     
     var driveConnect: [Bool]
-    var driveModel: [DriveModel]
+    var driveModel: [DriveType]
     
     var gameDevice1: Int
     var gameDevice2: Int

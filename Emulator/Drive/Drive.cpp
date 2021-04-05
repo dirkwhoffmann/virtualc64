@@ -26,8 +26,13 @@ Drive::Drive(DriveID id, C64 &ref) : C64Component(ref), deviceNr(id)
     
     config.connected = false;
     config.switchedOn = true;
-    config.type = DRIVE_MODEL_VC1541II;
-    
+    config.type = DRIVE_VC1541II;
+    config.pan = deviceNr == DRIVE8 ? 100 : -100;
+    config.stepVolume = 128;
+    config.pollVolume = 128;
+    config.insertVolume = 128;
+    config.ejectVolume = 128;
+
     insertionStatus = DISK_FULLY_EJECTED;
     disk.clearDisk();
 }
@@ -53,9 +58,14 @@ Drive::getConfigItem(Option option) const
 {
     switch (option) {
             
-        case OPT_DRIVE_TYPE:          return config.type;
-        case OPT_DRIVE_CONNECT:       return config.connected;
-        case OPT_DRIVE_POWER_SWITCH:  return config.switchedOn;
+        case OPT_DRIVE_TYPE:          return (i64)config.type;
+        case OPT_DRIVE_CONNECT:       return (i64)config.connected;
+        case OPT_DRIVE_POWER_SWITCH:  return (i64)config.switchedOn;
+        case OPT_DRIVE_PAN:           return (i64)config.pan;
+        case OPT_STEP_VOLUME:         return (i64)config.stepVolume;
+        case OPT_POLL_VOLUME:         return (i64)config.pollVolume;
+        case OPT_INSERT_VOLUME:       return (i64)config.insertVolume;
+        case OPT_EJECT_VOLUME:        return (i64)config.ejectVolume;
             
         default:
             assert(false);
@@ -98,7 +108,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
             }
             if (config.type == value) return false;
             
-            config.type = (DriveModel)value;
+            config.type = (DriveType)value;
             return true;
         }
         case OPT_DRIVE_CONNECT:
@@ -137,6 +147,46 @@ Drive::setConfigItem(Option option, long id, i64 value)
             messageQueue.put(value ? MSG_DRIVE_POWER_ON : MSG_DRIVE_POWER_OFF, deviceNr);
             if (wasActive != active)
                 messageQueue.put(active ? MSG_DRIVE_ACTIVE : MSG_DRIVE_INACTIVE, deviceNr);
+            return true;
+        }
+        case OPT_DRIVE_PAN:
+        {
+            if (config.pan == value) {
+                return false;
+            }
+            config.pan = value;
+            return true;
+        }
+        case OPT_STEP_VOLUME:
+        {
+            if (config.stepVolume == value) {
+                return false;
+            }
+            config.stepVolume = value;
+            return true;
+        }
+        case OPT_POLL_VOLUME:
+        {
+            if (config.pollVolume == value) {
+                return false;
+            }
+            config.pollVolume = value;
+            return true;
+        }
+        case OPT_EJECT_VOLUME:
+        {
+            if (config.ejectVolume == value) {
+                return false;
+            }
+            config.ejectVolume = value;
+            return true;
+        }
+        case OPT_INSERT_VOLUME:
+        {
+            if (config.insertVolume == value) {
+                return false;
+            }
+            config.insertVolume = value;
             return true;
         }
         default:
@@ -369,7 +419,8 @@ Drive::moveHeadUp()
    
     assert(disk.isValidHeadPos(halftrack, offset));
     
-    c64.putMessage(MSG_DRIVE_HEAD, deviceNr);
+    c64.putMessage(MSG_DRIVE_STEP,
+                   config.pan << 24 | config.stepVolume << 16 | halftrack << 8 | deviceNr);
 }
 
 void
@@ -387,7 +438,8 @@ Drive::moveHeadDown()
     
     assert(disk.isValidHeadPos(halftrack, offset));
     
-    c64.putMessage(MSG_DRIVE_HEAD, deviceNr);
+    c64.putMessage(MSG_DRIVE_STEP,
+                   config.pan << 24 | config.stepVolume << 16 | halftrack << 8 | deviceNr);
 }
 
 void
@@ -495,7 +547,7 @@ Drive::vsyncHandler()
             insertionStatus = DISK_FULLY_EJECTED;
             
             // Inform listeners
-            c64.putMessage(MSG_DISK_EJECTED, deviceNr);
+            c64.putMessage(MSG_DISK_EJECT, deviceNr);
             
             // Schedule the next transition
             diskChangeCounter = 17;
@@ -531,7 +583,7 @@ Drive::vsyncHandler()
             diskToInsert = nullptr;
 
             // Inform listeners
-            c64.putMessage(MSG_DISK_INSERTED, deviceNr);
+            c64.putMessage(MSG_DISK_INSERT, deviceNr);
             return;
         }
         default:

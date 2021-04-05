@@ -540,6 +540,12 @@ extension MyController {
     
     func processMessage(_ msg: Message) {
 
+        var driveNr: Int { return msg.data & 0xFF }
+        var driveId: DriveID { return DriveID.init(rawValue: driveNr)! }
+        var driveTrack: Int { return (msg.data >> 8) & 0xFF; }
+        var driveVol: Int { return (msg.data >> 16) & 0xFF; }
+        var drivePan: Int { return (msg.data >> 24) & 0xFF; }
+        
         // track("msg: \(msg)")
         
         // TODO: REPLACE BY COMPUTED VARIABLE
@@ -547,7 +553,7 @@ extension MyController {
             precondition(msg.data == 8 || msg.data == 9)
             return msg.data == 8
         }
-        var driveID: DriveID { return msg.data == 8 ? .DRIVE8 : .DRIVE9 }
+        // var driveID: DriveID { return msg.data == 8 ? .DRIVE8 : .DRIVE9 }
 
         switch msg.type {
     
@@ -623,25 +629,31 @@ extension MyController {
              .NTSC:
             renderer.canvas.updateTextureRect()
     
-        case .DRIVE_HEAD:
+        case .DRIVE_STEP:
             if pref.driveSounds && pref.driveHeadSound {
-                macAudio.playSound(name: "1541_track_change_2", volume: 1.0)
+                macAudio.playSound(name: "1541_track_change_2",
+                                   volume: 1.0,
+                                   pan: Float(pref.driveSoundPan))
             }
-            refreshStatusBarTracks(drive: DriveID.init(rawValue: msg.data)!)
+            refreshStatusBarTracks(drive: driveId)
                         
-        case .DISK_INSERTED:
+        case .DISK_INSERT:
             if pref.driveSounds && pref.driveInsertSound {
-                macAudio.playSound(name: "1541_door_closed_2", volume: 0.2)
+                macAudio.playSound(name: "1541_door_closed_2",
+                                   volume: 0.2,
+                                   pan: Float(pref.driveSoundPan))
             }
             mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
-            refreshStatusBarDiskIcons(drive: driveID)
+            refreshStatusBarDiskIcons(drive: driveId)
             inspector?.fullRefresh()
 
-        case .DISK_EJECTED:
+        case .DISK_EJECT:
             if pref.driveSounds && pref.driveEjectSound {
-                macAudio.playSound(name: "1541_door_open_1", volume: 0.15)
+                macAudio.playSound(name: "1541_door_open_1",
+                                   volume: 0.15,
+                                   pan: Float(pref.driveSoundPan))
             }
-            refreshStatusBarDiskIcons(drive: driveID)
+            refreshStatusBarDiskIcons(drive: driveId)
             inspector?.fullRefresh()
 
         case .FILE_FLASHED:
@@ -674,7 +686,9 @@ extension MyController {
                         
         case .DRIVE_ACTIVE:
             if pref.driveSounds && pref.driveConnectSound {
-                macAudio.playSound(name: "1541_power_on_0", volume: 0.15)
+                macAudio.playSound(name: "1541_power_on_0",
+                                   volume: 0.15,
+                                   pan: Float(pref.driveSoundPan))
             }
             hideOrShowDriveMenus()
             refreshStatusBar()

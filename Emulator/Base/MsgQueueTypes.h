@@ -70,9 +70,9 @@ enum_long(MSG)
     MSG_DRIVE_LED_OFF,
     MSG_DRIVE_MOTOR_ON,
     MSG_DRIVE_MOTOR_OFF,
-    MSG_DRIVE_HEAD,
-    MSG_DISK_INSERTED,
-    MSG_DISK_EJECTED,
+    MSG_DRIVE_STEP,
+    MSG_DISK_INSERT,
+    MSG_DISK_EJECT,
     MSG_DISK_SAVED,
     MSG_DISK_UNSAVED,
     MSG_DISK_PROTECT,
@@ -164,9 +164,9 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_DRIVE_LED_OFF:        return "DRIVE_LED_OFF";
             case MSG_DRIVE_MOTOR_ON:       return "DRIVE_MOTOR_ON";
             case MSG_DRIVE_MOTOR_OFF:      return "DRIVE_MOTOR_OFF";
-            case MSG_DRIVE_HEAD:           return "DRIVE_HEAD";
-            case MSG_DISK_INSERTED:        return "DISK_INSERTED";
-            case MSG_DISK_EJECTED:         return "DISK_EJECTED";
+            case MSG_DRIVE_STEP:           return "DRIVE_STEP";
+            case MSG_DISK_INSERT:          return "DISK_INSERT";
+            case MSG_DISK_EJECT:           return "DISK_EJECT";
             case MSG_DISK_SAVED:           return "DISK_SAVED";
             case MSG_DISK_UNSAVED:         return "DISK_UNSAVED";
             case MSG_DISK_PROTECT:         return "DISK_PROTECT";

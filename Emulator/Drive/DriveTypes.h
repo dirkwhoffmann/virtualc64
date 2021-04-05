@@ -23,28 +23,28 @@ enum_long(DRIVE_ID)
 };
 typedef DRIVE_ID DriveID;
 
-enum_long(DRIVE_MODEL)
+enum_long(DRIVE_TYPE)
 {
-    DRIVE_MODEL_VC1541II,
-    DRIVE_MODEL_COUNT
+    DRIVE_VC1541II,
+    DRIVE_COUNT
 };
-typedef DRIVE_MODEL DriveModel;
+typedef DRIVE_TYPE DriveType;
 
 #ifdef __cplusplus
-struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveModel> {
+struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value < DRIVE_MODEL_COUNT;
+        return (unsigned long)value < DRIVE_COUNT;
     }
     
-    static const char *prefix() { return "DRIVE_MODEL"; }
-    static const char *key(DriveModel value)
+    static const char *prefix() { return "DRIVE"; }
+    static const char *key(DriveType value)
     {
         switch (value) {
                 
-            case DRIVE_MODEL_VC1541II:  return "VC1541II";
-            case DRIVE_MODEL_COUNT:     return "???";
+            case DRIVE_VC1541II:  return "VC1541II";
+            case DRIVE_COUNT:     return "???";
         }
         return "???";
     }
@@ -92,8 +92,17 @@ struct InsertionStatusEnum : util::Reflection<InsertionStatusEnum, InsertionStat
 
 typedef struct
 {
-    DriveModel type;
+    DriveType type;
+    
+    // State
     bool connected;
     bool switchedOn;
+    
+    // Drive sounds
+    i16 pan;
+    u8 stepVolume;
+    u8 pollVolume;
+    u8 insertVolume;
+    u8 ejectVolume;
 }
 DriveConfig;

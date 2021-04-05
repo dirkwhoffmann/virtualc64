@@ -154,7 +154,17 @@ public class MacAudio: NSObject {
     }
     
     // Plays a sound file
-    func playSound(name: String, volume: Float = 1.0) {
+    func playSound(name: String, volume: Int, pan: Int) {
+        
+        let p = pan <= 100 ? pan : pan <= 300 ? 200 - pan : -400 + pan
+        
+        let scaledVolume = Float(volume) / 100.0
+        let scaledPan = Float(p) / 100.0
+                
+        playSound(name: name, volume: scaledVolume, pan: scaledPan)
+    }
+    
+    func playSound(name: String, volume: Float, pan: Float) {
         
         // Check for cached players for this sound file
         if audioPlayers[name] == nil {
@@ -180,7 +190,7 @@ public class MacAudio: NSObject {
         for player in audioPlayers[name]! where !player.isPlaying {
             
             player.volume = volume
-            player.pan = Float(prefs.driveSoundPan)
+            player.pan = pan
             player.play()
             return
         }

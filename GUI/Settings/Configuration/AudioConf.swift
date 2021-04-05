@@ -28,19 +28,19 @@ extension ConfigurationController {
         audPan1.integerValue = config.pan1
         audPan2.integerValue = config.pan2
         audPan3.integerValue = config.pan3
-        /*
-        audVol1.isEnabled = sid1
-        audVol2.isEnabled = sid2
-        audVol3.isEnabled = sid3
-        audPan1.isEnabled = sid1
-        audPan2.isEnabled = sid2
-        audPan3.isEnabled = sid3
-        */
-        
+ 
         // Out
         audVolL.integerValue = config.volL
         audVolR.integerValue = config.volR
 
+        // Drives
+        /*
+        audStepVolume.integerValue = config.stepVolume
+        audPollVolume.integerValue = config.pollVolume
+        audInsertVolume.integerValue = config.insertVolume
+        audEjectVolume.integerValue = config.ejectVolume
+        */
+        
         // Buttons
         audPowerButton.isHidden = !bootable
     }
@@ -114,6 +114,30 @@ extension ConfigurationController {
         refresh()
     }
 
+    @IBAction func audStepVolumeAction(_ sender: NSSlider!) {
+
+        config.stepVolume = sender.integerValue
+        refresh()
+    }
+
+    @IBAction func audPollVolumeAction(_ sender: NSSlider!) {
+
+        config.pollVolume = sender.integerValue
+        refresh()
+    }
+
+    @IBAction func audInsertVolumeAction(_ sender: NSSlider!) {
+
+        config.insertVolume = sender.integerValue
+        refresh()
+    }
+
+    @IBAction func audEjectVolumeAction(_ sender: NSSlider!) {
+
+        config.ejectVolume = sender.integerValue
+        refresh()
+    }
+    
     @IBAction func audEngineAction(_ sender: NSPopUpButton!) {
         
         config.sidEngine = sender.selectedTag()
