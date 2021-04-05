@@ -20,12 +20,11 @@ class MyToolbar: NSToolbar {
     var c64: C64Proxy { parent.c64 }
 
     override func validateVisibleItems() {
-                   
-        let kb = keyboardButton.view as? NSButton
-        
+                           
         // Disable the keyboard button of the virtual keyboard is open
         let visible = parent.virtualKeyboard?.window?.isVisible ?? false
-        kb?.isEnabled = !visible
+        let view = keyboardButton.view as? NSButton
+        view?.isEnabled = !visible
         
         // Update input devices
         parent.gamePadManager.refresh(popup: controlPort1)
@@ -121,7 +120,7 @@ class MyToolbar: NSToolbar {
         }
     }
     
-    @IBAction func toolbarPrefAction(_ sender: NSSegmentedControl) {
+    @IBAction func preferencesAction(_ sender: NSSegmentedControl) {
 
         track()
         

@@ -334,10 +334,10 @@
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <connections>
+                                <action selector="keyboardAction:" target="1845" id="ZjQ-aX-vhb"/>
+                            </connections>
                         </button>
-                        <connections>
-                            <action selector="keyboardAction:" target="1845" id="NNk-ee-Fgv"/>
-                        </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="1850"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="1851"/>
@@ -355,7 +355,7 @@
                                 </segments>
                             </segmentedCell>
                             <connections>
-                                <action selector="toolbarPrefAction:" target="1845" id="9U2-Ut-IjO"/>
+                                <action selector="preferencesAction:" target="1845" id="9U2-Ut-IjO"/>
                             </connections>
                         </segmentedControl>
                     </toolbarItem>
