@@ -29,7 +29,8 @@ drive8(ref.drive8),
 drive9(ref.drive9),
 datasette(ref.datasette),
 messageQueue(ref.messageQueue),
-oscillator(ref.oscillator)
+oscillator(ref.oscillator),
+retroShell(ref.retroShell)
 {
 };
 

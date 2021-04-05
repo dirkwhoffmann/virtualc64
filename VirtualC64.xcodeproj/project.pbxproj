@@ -39,6 +39,11 @@
 		5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */; };
 		50300AEE258B2C5400D261E3 /* FSDirEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50300AEC258B2C5400D261E3 /* FSDirEntry.cpp */; };
 		5031D59C200B81D20088C802 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D59B200B81D20088C802 /* Animation.swift */; };
+		5036E0B7261AEF000048E66A /* Interpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0AF261AEF000048E66A /* Interpreter.cpp */; };
+		5036E0B9261AEF000048E66A /* Command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B2261AEF000048E66A /* Command.cpp */; };
+		5036E0BA261AEF000048E66A /* RetroShell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B3261AEF000048E66A /* RetroShell.cpp */; };
+		5036E0BB261AEF000048E66A /* InterpreterCmds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B5261AEF000048E66A /* InterpreterCmds.cpp */; };
+		5036E0BC261AEF000048E66A /* RetroShellCmds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B6261AEF000048E66A /* RetroShellCmds.cpp */; };
 		5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA8E20B6C263000D9193 /* CPUPanel.swift */; };
 		5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9020B6C281000D9193 /* MemoryPanel.swift */; };
 		5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9220B6C298000D9193 /* CIAPanel.swift */; };
@@ -318,6 +323,14 @@
 		50300AEC258B2C5400D261E3 /* FSDirEntry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDirEntry.cpp; sourceTree = "<group>"; };
 		50300AED258B2C5400D261E3 /* FSDirEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSDirEntry.h; sourceTree = "<group>"; };
 		5031D59B200B81D20088C802 /* Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
+		5036E0AE261AEF000048E66A /* RetroShell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RetroShell.h; sourceTree = "<group>"; };
+		5036E0AF261AEF000048E66A /* Interpreter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Interpreter.cpp; sourceTree = "<group>"; };
+		5036E0B1261AEF000048E66A /* Interpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Interpreter.h; sourceTree = "<group>"; };
+		5036E0B2261AEF000048E66A /* Command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Command.cpp; sourceTree = "<group>"; };
+		5036E0B3261AEF000048E66A /* RetroShell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RetroShell.cpp; sourceTree = "<group>"; };
+		5036E0B4261AEF000048E66A /* Command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Command.h; sourceTree = "<group>"; };
+		5036E0B5261AEF000048E66A /* InterpreterCmds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InterpreterCmds.cpp; sourceTree = "<group>"; };
+		5036E0B6261AEF000048E66A /* RetroShellCmds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RetroShellCmds.cpp; sourceTree = "<group>"; };
 		5038CA8E20B6C263000D9193 /* CPUPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUPanel.swift; sourceTree = "<group>"; };
 		5038CA9020B6C281000D9193 /* MemoryPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryPanel.swift; sourceTree = "<group>"; };
 		5038CA9220B6C298000D9193 /* CIAPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIAPanel.swift; sourceTree = "<group>"; };
@@ -830,6 +843,21 @@
 			path = GUI;
 			sourceTree = "<group>";
 		};
+		5036E0AD261AEF000048E66A /* RetroShell */ = {
+			isa = PBXGroup;
+			children = (
+				5036E0AE261AEF000048E66A /* RetroShell.h */,
+				5036E0AF261AEF000048E66A /* Interpreter.cpp */,
+				5036E0B1261AEF000048E66A /* Interpreter.h */,
+				5036E0B2261AEF000048E66A /* Command.cpp */,
+				5036E0B3261AEF000048E66A /* RetroShell.cpp */,
+				5036E0B4261AEF000048E66A /* Command.h */,
+				5036E0B5261AEF000048E66A /* InterpreterCmds.cpp */,
+				5036E0B6261AEF000048E66A /* RetroShellCmds.cpp */,
+			);
+			path = RetroShell;
+			sourceTree = "<group>";
+		};
 		5038CA9820B6C2D8000D9193 /* Inspector */ = {
 			isa = PBXGroup;
 			children = (
@@ -876,6 +904,7 @@
 				504C428E24AF29AB00E69CAE /* Cartridges */,
 				504C42C624AF29AB00E69CAE /* Files */,
 				5080501C2587A177004FE1F5 /* FileSystems */,
+				5036E0AD261AEF000048E66A /* RetroShell */,
 			);
 			path = Emulator;
 			sourceTree = "<group>";
@@ -1538,6 +1567,7 @@
 				50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */,
 				50D3091E24C5CE1A00B92563 /* MyControllerStatusBar.swift in Sources */,
 				504C436624AF29AC00E69CAE /* Kcs.cpp in Sources */,
+				5036E0BA261AEF000048E66A /* RetroShell.cpp in Sources */,
 				504C438724AF29AC00E69CAE /* C64.cpp in Sources */,
 				504C43A424AF29AC00E69CAE /* Keyboard.cpp in Sources */,
 				504C439924AF29AC00E69CAE /* filter.cc in Sources */,
@@ -1569,6 +1599,7 @@
 				50AA3EC12616F62500C96EDB /* MemUtils.cpp in Sources */,
 				504C437624AF29AC00E69CAE /* P00File.cpp in Sources */,
 				5038CA9520B6C2AC000D9193 /* VICPanel.swift in Sources */,
+				5036E0BC261AEF000048E66A /* RetroShellCmds.cpp in Sources */,
 				504C435F24AF29AC00E69CAE /* SuperGames.cpp in Sources */,
 				50BE4B5C24E7F857008F39C9 /* Data.swift in Sources */,
 				50BE4B6424E7F941008F39C9 /* NSControl.swift in Sources */,
@@ -1590,6 +1621,7 @@
 				50DBB44B2025CE5700489271 /* Utils.swift in Sources */,
 				504C436F24AF29AC00E69CAE /* Comal80.cpp in Sources */,
 				50E2D9AC25991E4B009A986B /* AnyCollection.cpp in Sources */,
+				5036E0B9261AEF000048E66A /* Command.cpp in Sources */,
 				50B929F221C2B5C90039E8F2 /* PreferencesWindow.swift in Sources */,
 				505184E024F23CB6002C6124 /* Storage.swift in Sources */,
 				504C43A824AF29AC00E69CAE /* DriveMemory.cpp in Sources */,
@@ -1647,6 +1679,7 @@
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
 				504C436B24AF29AC00E69CAE /* MikroAss.cpp in Sources */,
 				506D3DD020224BF4009742CF /* MyDocument.swift in Sources */,
+				5036E0BB261AEF000048E66A /* InterpreterCmds.cpp in Sources */,
 				50CCC30A256FAC870052619A /* Concurrency.cpp in Sources */,
 				5002FA7F21C2653600DA4BBC /* GeneralPrefs.swift in Sources */,
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
@@ -1711,6 +1744,7 @@
 				50300AEE258B2C5400D261E3 /* FSDirEntry.cpp in Sources */,
 				507A49A024C8D66A00DBF984 /* GuardTableView.swift in Sources */,
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
+				5036E0B7261AEF000048E66A /* Interpreter.cpp in Sources */,
 				504C439D24AF29AC00E69CAE /* version.cc in Sources */,
 				504C436324AF29AC00E69CAE /* Kingsoft.cpp in Sources */,
 				50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */,

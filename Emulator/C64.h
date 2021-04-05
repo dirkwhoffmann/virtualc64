@@ -15,7 +15,7 @@
 #include "MsgQueue.h"
 
 // Configuration items
-#include "config.h"
+// #include "config.h"
 
 // Data types and constants
 #include "C64Types.h"
@@ -47,6 +47,7 @@
 #include "CIA.h"
 #include "CPU.h"
 #include "Oscillator.h"
+#include "RetroShell.h"
 
 // Cartridges
 #include "Cartridge.h"
@@ -108,7 +109,10 @@ public:
     
     // Datasette
     Datasette datasette = Datasette(*this);
-        
+    
+    // Command console
+    RetroShell retroShell = RetroShell(*this);
+    
     /* Communication channel to the GUI. The GUI registers a listener and a
      * callback function to retrieve messages.
      */

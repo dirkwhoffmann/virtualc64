@@ -33,6 +33,7 @@ class Mouse1351;
 class NeosMouse;
 class MsgQueue;
 class Oscillator;
+class RetroShell;
 
 // class File;
 class AnyFile;
@@ -72,6 +73,7 @@ protected:
     Datasette &datasette;
     MsgQueue &messageQueue;
     Oscillator &oscillator;
+    RetroShell &retroShell;
     
     Drive *drive[2] = { &drive8, &drive9 };
 
