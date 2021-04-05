@@ -7,6 +7,16 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+struct InputDevice {
+    
+    static let none = -1
+    static let keyset1 = 0
+    static let keyset2 = 1
+    static let mouse = 2
+    static let joystick1 = 3
+    static let joystick2 = 4
+}
+
 /* An object of this class holds and manages an array of GamePad objects.
  * Up to five gamepads are managed. The first three gamepads are initialized
  * by default and represent a mouse and two keyboard emulated joysticks.

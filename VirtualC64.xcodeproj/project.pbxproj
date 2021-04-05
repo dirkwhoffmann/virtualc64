@@ -51,7 +51,6 @@
 		5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9620B6C2BE000D9193 /* SIDPanel.swift */; };
 		503C1DD124FC10F400D91141 /* SnapshotDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 503C1DD024FC10F400D91141 /* SnapshotDialog.xib */; };
 		503C1DD324FCD1BF00D91141 /* SnapshotDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503C1DD224FCD1BF00D91141 /* SnapshotDialog.swift */; };
-		503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */; };
 		503E199020C42C6D007E91F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 503E198F20C42C6D007E91F1 /* Assets.xcassets */; };
 		504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429124AF29AB00E69CAE /* Ocean.cpp */; };
 		504C435A24AF29AC00E69CAE /* WarpSpeed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429224AF29AB00E69CAE /* WarpSpeed.cpp */; };
@@ -338,7 +337,6 @@
 		5038CA9620B6C2BE000D9193 /* SIDPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIDPanel.swift; sourceTree = "<group>"; };
 		503C1DD024FC10F400D91141 /* SnapshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SnapshotDialog.xib; sourceTree = "<group>"; };
 		503C1DD224FCD1BF00D91141 /* SnapshotDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotDialog.swift; sourceTree = "<group>"; };
-		503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerToolbar.swift; sourceTree = "<group>"; };
 		503E198F20C42C6D007E91F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		504268AC24F0F76F006BB841 /* C64Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Types.h; sourceTree = "<group>"; };
 		504268AD24F12705006BB841 /* DiskTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskTypes.h; sourceTree = "<group>"; };
@@ -768,7 +766,6 @@
 				501B80C225B1702500C90284 /* MyDocumentController.swift */,
 				50E9B92C201F299500065A89 /* MyController.swift */,
 				50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */,
-				503DAC612011DDFC0015EFF5 /* MyControllerToolbar.swift */,
 				50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */,
 				50D3091D24C5CE1A00B92563 /* MyControllerStatusBar.swift */,
 				505184DD24F23484002C6124 /* MyControllerStorage.swift */,
@@ -1645,7 +1642,6 @@
 				5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */,
 				50BE4B6224E7F8DE008F39C9 /* NSTableView.swift in Sources */,
 				50549B49257D288E006FE39C /* SIDStreams.cpp in Sources */,
-				503DAC622011DDFC0015EFF5 /* MyControllerToolbar.swift in Sources */,
 				504C437524AF29AC00E69CAE /* PRGFile.cpp in Sources */,
 				504C43A524AF29AC00E69CAE /* ExpansionPort.cpp in Sources */,
 				504C436524AF29AC00E69CAE /* Funplay.cpp in Sources */,

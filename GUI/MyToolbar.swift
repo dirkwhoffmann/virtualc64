@@ -10,52 +10,115 @@
 class MyToolbar: NSToolbar {
     
     @IBOutlet weak var parent: MyController!
-    
-    // Toolbar items
     @IBOutlet weak var controlPort1: NSPopUpButton!
     @IBOutlet weak var controlPort2: NSPopUpButton!
-    @IBOutlet weak var powerButton: NSToolbarItem!
-    @IBOutlet weak var pauseButton: NSToolbarItem!
-    @IBOutlet weak var resetButton: NSToolbarItem!
     @IBOutlet weak var keyboardButton: NSToolbarItem!
     @IBOutlet weak var snapshotSegCtrl: NSSegmentedControl!
     @IBOutlet weak var screenshotSegCtrl: NSSegmentedControl!
+    @IBOutlet weak var controlsSegCtrl: NSSegmentedControl!
+    
+    var c64: C64Proxy { parent.c64 }
 
     override func validateVisibleItems() {
-                
-        let c64 = parent.c64!
-        let pause = pauseButton.view as? NSButton
-        let reset = resetButton.view as? NSButton
+                   
         let kb = keyboardButton.view as? NSButton
         
-        // Disable the Keyboard button of the virtual keyboard is open
+        // Disable the keyboard button of the virtual keyboard is open
         let visible = parent.virtualKeyboard?.window?.isVisible ?? false
         kb?.isEnabled = !visible
         
-        // Disable the Pause and Reset button if the emulator if powered off
-        let poweredOn = c64.poweredOn
-        pause?.isEnabled = poweredOn
-        reset?.isEnabled = poweredOn
-
-        // Adjust the appearance of the Pause button
-        if c64.running {
-            pause?.image = NSImage.init(named: "pauseTemplate")
-            pauseButton.label = "State" // Pause"
-        } else {
-            pause?.image = NSImage.init(named: "runTemplate")
-            pauseButton.label = "State" // Run"
-        }
-        
-        // Change the label of reset button. If we don't do this, the
-        // label color does not change (at least in macOS Mojave)
-        resetButton.label = ""
-        resetButton.label = "Reset"
-
-        // Update input device selectors
+        // Update input devices
         parent.gamePadManager.refresh(popup: controlPort1)
         parent.gamePadManager.refresh(popup: controlPort2)
         controlPort1.selectItem(withTag: parent.config.gameDevice1)
         controlPort2.selectItem(withTag: parent.config.gameDevice2)
+    }
+    
+    func updateToolbar() {
+        
+        if c64.poweredOn {
+            controlsSegCtrl.setEnabled(true, forSegment: 0) // Pause
+            controlsSegCtrl.setEnabled(true, forSegment: 1) // Reset
+            controlsSegCtrl.setToolTip("Power off", forSegment: 2) // Power
+        } else {
+            controlsSegCtrl.setEnabled(false, forSegment: 0) // Pause
+            controlsSegCtrl.setEnabled(false, forSegment: 1) // Reset
+            controlsSegCtrl.setToolTip("Power on", forSegment: 2) // Power
+        }
+        if c64.running {
+            controlsSegCtrl.setToolTip("Pause", forSegment: 0)
+            controlsSegCtrl.setImage(NSImage.init(named: "pauseTemplate"), forSegment: 0)
+        } else {
+            controlsSegCtrl.setToolTip("Run", forSegment: 0)
+            controlsSegCtrl.setImage(NSImage.init(named: "runTemplate"), forSegment: 0)
+        }
+    }
+    
+    //
+    // Action methods
+    //
+    
+    @IBAction func port1Action(_ sender: NSPopUpButton) {
+        
+        parent.config.gameDevice1 = sender.selectedTag()
+    }
+ 
+    @IBAction func port2Action(_ sender: NSPopUpButton) {
+        
+        parent.config.gameDevice2 = sender.selectedTag()
+    }
+                
+    @IBAction func inspectAction(_ sender: NSSegmentedControl) {
+        
+        switch sender.selectedSegment {
+            
+        case 0: parent.inspectorAction(sender)
+        case 1: parent.monitorAction(sender)
+        case 2: parent.consoleAction(sender)
+            
+        default: assert(false)
+        }
+    }
+    
+     @IBAction func snapshotAction(_ sender: NSSegmentedControl) {
+        
+        switch sender.selectedSegment {
+            
+        case 0: parent.takeSnapshotAction(self)
+        case 1: parent.restoreSnapshotAction(self)
+        case 2: parent.browseSnapshotsAction(self)
+            
+        default: assert(false)
+        }
+    }
+    
+    @IBAction func screenshotAction(_ sender: NSSegmentedControl) {
+        
+        track()
+        
+        switch sender.selectedSegment {
+            
+        case 0: parent.takeScreenshotAction(self)
+        case 1: parent.browseScreenshotsAction(self)
+            
+        default: assert(false)
+        }
+    }
+    
+    @IBAction func keyboardAction(_ sender: Any!) {
+        
+        track()
+
+        if parent.virtualKeyboard == nil {
+            let name = NSNib.Name("VirtualKeyboard")
+            parent.virtualKeyboard = VirtualKeyboardController.make(parent: parent, nibName: name)
+        }
+        if parent.virtualKeyboard?.window?.isVisible == true {
+            track("Virtual keyboard already open")
+        } else {
+            track("Opeining virtual keyboard as a sheet")
+            parent.virtualKeyboard?.showSheet()
+        }
     }
     
     @IBAction func toolbarPrefAction(_ sender: NSSegmentedControl) {
@@ -66,6 +129,18 @@ class MyToolbar: NSToolbar {
 
         case 0: parent.preferencesAction(sender)
         case 1: parent.configureAction(sender)
+
+        default: assert(false)
+        }
+    }
+    
+    @IBAction func controlsAction(_ sender: NSSegmentedControl) {
+
+        switch sender.selectedSegment {
+
+        case 0: parent.stopAndGoAction(self)
+        case 1: parent.resetAction(self)
+        case 2: parent.powerAction(self)
 
         default: assert(false)
         }

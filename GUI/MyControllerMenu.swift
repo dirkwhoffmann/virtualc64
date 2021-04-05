@@ -301,6 +301,15 @@ extension MyController: NSMenuItemValidation {
         monitor?.showWindow(self)
     }
     
+    @IBAction func consoleAction(_ sender: Any!) {
+        
+        if renderer.console.isVisible {
+            renderer.console.close(delay: 0.25)
+        } else {
+            renderer.console.open(delay: 0.25)
+        }
+    }
+    
     @IBAction func takeSnapshotAction(_ sender: Any!) {
         
         c64.requestUserSnapshot()
@@ -343,7 +352,7 @@ extension MyController: NSMenuItemValidation {
         try? screenshot.save(id: mydocument.bootDiskID)
         
         // Create a visual effect
-        renderer.snapToFront()
+        renderer.flash()
     }
     
     @IBAction func browseScreenshotsAction(_ sender: Any!) {
@@ -459,18 +468,6 @@ extension MyController: NSMenuItemValidation {
     //
     // Action methods (Keyboard menu)
     //
-
-    /*
-    func openVirtualKeyboard() {
-        
-        track()
-        if virtualKeyboard == nil {
-            let name = NSNib.Name("VirtualKeyboard")
-            virtualKeyboard = VirtualKeyboardController.make(parent: self, nibName: name)
-        }
-        virtualKeyboard?.showSheet()
-    }
-    */
     
     @IBAction func stickyKeyboardAction(_ sender: Any!) {
         

@@ -181,7 +181,7 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var warpIcon: NSButton!
     
     // Toolbar
-    @IBOutlet weak var toolbar: NSToolbar!
+    @IBOutlet weak var toolbar: MyToolbar!
 
     // Debug panel (commons)
     var hex = true
@@ -561,21 +561,21 @@ extension MyController {
         case .POWER_ON:
             renderer.canvas.open(delay: 1.5)
             virtualKeyboard = nil
-            toolbar.validateVisibleItems()
+            toolbar.updateToolbar()
             inspector?.fullRefresh()
 
         case .POWER_OFF:
-            toolbar.validateVisibleItems()
+            toolbar.updateToolbar()
             inspector?.fullRefresh()
             
         case .RUN:
             needsSaving = true
-            toolbar.validateVisibleItems()
+            toolbar.updateToolbar()
             inspector?.fullRefresh()
             refreshStatusBar()
     
         case .PAUSE:
-            toolbar.validateVisibleItems()
+            toolbar.updateToolbar()
             inspector?.fullRefresh()
             refreshStatusBar()
 
