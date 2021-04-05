@@ -187,7 +187,7 @@ public:
     
 private:
     
-    void _dump() const override;
+    void _dump(Dump::Category category, std::ostream& os) const override;
     void _dump(int nr) const;
     void _dump(SIDInfo &info, VoiceInfo (&vinfo)[3]) const;
 

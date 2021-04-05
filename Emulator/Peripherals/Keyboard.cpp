@@ -50,8 +50,8 @@ Keyboard::_reset()
     releaseAll();
 }
 
-void 
-Keyboard::_dump() const
+void
+Keyboard::_dump(Dump::Category category, std::ostream& os) const
 {
 	msg("Keyboard:\n");
 	msg("---------\n\n");

@@ -224,18 +224,27 @@ HardwareComponent::dumpConfig() const
     msg("\n");
 }
 
+void HardwareComponent::dump(Dump::Category category, std::ostream& ss) const
+{
+    _dump(category, ss);
+}
+
+void
+HardwareComponent::dump(Dump::Category category) const
+{
+    dump(category, std::cout);
+}
+
+void
+HardwareComponent::dump(std::ostream& ss) const
+{
+    dump((Dump::Category)(-1), ss);
+}
+
 void
 HardwareComponent::dump() const
 {
-    // Dump all subcomponents
-    for (HardwareComponent *c : subComponents) {
-        c->dump();
-    }
-
-    // Dump this component
-    msg("%s (%p):\n", getDescription(), this);
-    _dump();
-    msg("\n");
+    dump((Dump::Category)(-1));
 }
 
 void

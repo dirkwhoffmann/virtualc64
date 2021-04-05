@@ -162,9 +162,16 @@ public:
         return result;
     }
     
-    // Dumps debug information about the internal state to the console
+    /* Prints debug information about this component. The additional 'flags'
+     * parameter is a bit field which can be used to limit the displayed
+     * information to certain categories.
+     */
+    void dump(Dump::Category category, std::ostream& ss) const;
+    virtual void _dump(Dump::Category category, std::ostream& ss) const { };
+
+    void dump(Dump::Category category) const;
+    void dump(std::ostream& ss) const;
     void dump() const;
-    virtual void _dump() const { }
     
  
     //

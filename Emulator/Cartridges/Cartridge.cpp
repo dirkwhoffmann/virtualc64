@@ -206,7 +206,7 @@ Cartridge::resetWithoutDeletingRam()
 }
 
 void
-Cartridge::_dump() const
+Cartridge::_dump(Dump::Category category, std::ostream& os) const
 {
     msg("\n");
     msg("Cartridge\n");

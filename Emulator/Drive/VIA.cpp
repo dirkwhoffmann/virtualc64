@@ -31,8 +31,8 @@ void VIA6522::_reset()
     feed = (VIACountA0 | VIACountB0);
 }
 
-void 
-VIA6522::_dump() const
+void
+VIA6522::_dump(Dump::Category category, std::ostream& os) const
 {
     const char *latchingA = inputLatchingEnabledA() ? "enabled" : "disabled";
     const char *latchingB = inputLatchingEnabledB() ? "enabled" : "disabled";

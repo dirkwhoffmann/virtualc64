@@ -42,8 +42,8 @@ TOD::_reset()
     hz = 60;
 }
 
-void 
-TOD::_dump() const
+void
+TOD::_dump(Dump::Category category, std::ostream& os) const
 {
 	msg("            Time of day : %02X:%02X:%02X:%02X\n",
         tod.hour, tod.min, tod.sec, tod.tenth);

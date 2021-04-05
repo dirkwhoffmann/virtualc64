@@ -68,7 +68,7 @@ FlashRom::_reset()
 }
 
 void
-FlashRom::_dump() const
+FlashRom::_dump(Dump::Category category, std::ostream& os) const
 {
     msg("FlashRom\n");
     msg("--------\n\n");

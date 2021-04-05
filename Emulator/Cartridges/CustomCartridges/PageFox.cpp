@@ -23,9 +23,9 @@ PageFox::_reset()
 }
 
 void
-PageFox::_dump() const
+PageFox::_dump(Dump::Category category, std::ostream& os) const
 {
-    Cartridge::_dump();
+    Cartridge::_dump(category, os);
     
     msg("PageFox\n");
     msg("-------\n\n");

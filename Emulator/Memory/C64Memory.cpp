@@ -180,8 +180,8 @@ C64Memory::_inspect()
     }
 }
 
-void 
-C64Memory::_dump() const
+void
+C64Memory::_dump(Dump::Category category, std::ostream& os) const
 {
 	msg("C64 Memory:\n");
 	msg("-----------\n");

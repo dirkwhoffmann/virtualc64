@@ -33,8 +33,8 @@ IEC::_reset()
     ciaData = 1;
 }
 
-void 
-IEC::_dump() const
+void
+IEC::_dump(Dump::Category category, std::ostream& os) const
 {
 	msg("IEC bus\n");
 	msg("-------\n");

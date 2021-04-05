@@ -703,7 +703,7 @@ C64::_pause()
 }
 
 void
-C64::_dump() const
+C64::_dump(Dump::Category category, std::ostream& os) const
 {
     msg("C64:\n");
     msg("----\n\n");

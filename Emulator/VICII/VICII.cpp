@@ -449,8 +449,8 @@ VICII::_dumpConfig() const
     msg("    Glue logic : %lld (%s)\n", config.glueLogic, GlueLogicEnum::key(config.glueLogic));
 }
 
-void 
-VICII::_dump() const
+void
+VICII::_dump(Dump::Category category, std::ostream& os) const
 {
     u8 ctrl1 = reg.current.ctrl1;
     u8 ctrl2 = reg.current.ctrl2; 

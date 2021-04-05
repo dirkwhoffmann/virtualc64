@@ -384,7 +384,7 @@ RetroShell::dump(HardwareComponent &component, Dump::Category category)
     std::stringstream ss; string line;
     
     c64.suspend();
-    // component.dump(category, ss);
+    component.dump(category, ss);
     c64.resume();
     
     while(std::getline(ss, line)) *this << line << '\n';

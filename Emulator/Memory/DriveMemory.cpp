@@ -27,8 +27,8 @@ DriveMemory::_reset()
     }
 }
 
-void 
-DriveMemory::_dump() const
+void
+DriveMemory::_dump(Dump::Category category, std::ostream& os) const
 {
 	msg("VC1541 Memory:\n");
 	msg("--------------\n\n");

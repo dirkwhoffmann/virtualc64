@@ -466,8 +466,8 @@ SIDBridge::_pause()
     clearSampleBuffers();
 }
 
-void 
-SIDBridge::_dump() const
+void
+SIDBridge::_dump(Dump::Category category, std::ostream& os) const
 {
     _dump(0);
 }

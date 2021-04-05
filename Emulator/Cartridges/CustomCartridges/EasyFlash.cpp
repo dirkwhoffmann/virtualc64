@@ -43,9 +43,9 @@ EasyFlash::_reset()
 }
 
 void
-EasyFlash::_dump() const
+EasyFlash::_dump(Dump::Category category, std::ostream& os) const
 {
-    Cartridge::_dump();
+    Cartridge::_dump(category, os);
     
     msg("EasyFlash\n");
     msg("---------\n\n");

@@ -74,7 +74,7 @@ ExpansionPort::_save(u8 *buffer)
 }
 
 void
-ExpansionPort::_dump() const
+ExpansionPort::_dump(Dump::Category category, std::ostream& os) const
 {
     msg("Expansion port\n");
     msg("--------------\n");

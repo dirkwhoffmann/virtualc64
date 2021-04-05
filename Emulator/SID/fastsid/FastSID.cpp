@@ -158,7 +158,7 @@ FastSID::setClockFrequency(u32 frequency)
 }
 
 void
-FastSID::_dump() const
+FastSID::_dump(Dump::Category category, std::ostream& os) const
 {
     msg("    Chip model: %s\n",
         (model == MOS_6581) ? "6581" :

@@ -196,8 +196,8 @@ Drive::setConfigItem(Option option, long id, i64 value)
     }
 }
 
-void 
-Drive::_dump() const
+void
+Drive::_dump(Dump::Category category, std::ostream& os) const
 {
 	msg("VC1541\n");
 	msg("------\n\n");

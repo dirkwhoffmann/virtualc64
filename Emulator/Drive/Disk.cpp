@@ -191,7 +191,7 @@ Disk::_reset()
 }
 
 void
-Disk::_dump() const
+Disk::_dump(Dump::Category category, std::ostream& os) const
 {
     msg("Floppy disk\n");
     msg("-----------\n\n");

@@ -63,8 +63,8 @@ private:
     
 private:
     
-    void _dump() const override;
-
+    void _dump(Dump::Category category, std::ostream& os) const override;
+    
     
     //
     // Serializing

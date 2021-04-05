@@ -18,7 +18,7 @@ Joystick::getDescription() const
 }
 
 void
-Joystick::_dump() const
+Joystick::_dump(Dump::Category category, std::ostream& os) const
 {
     msg("ControlPort %lld:\n", port.nr);
     msg("--------------\n");
