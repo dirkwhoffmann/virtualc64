@@ -95,6 +95,10 @@ extension MyController: NSMenuItemValidation {
             item.title = drive.isSwitchedOn() ? "Switch off" : "Switch on"
             return true
 
+        case #selector(MyController.dragAndDropTargetAction(_:)):
+            item.state = drive === dragAndDropDrive ? .on : .off
+            return true
+            
         // Tape menu
         case #selector(MyController.insertRecentTapeAction(_:)):
             return validateURLlist(myAppDelegate.recentlyInsertedTapeURLs, image: smallTape)
@@ -713,6 +717,13 @@ extension MyController: NSMenuItemValidation {
         case .DRIVE9: config.drive9PowerSwitch = !config.drive9PowerSwitch
         default: fatalError()
         }         
+    }
+    
+    @IBAction func dragAndDropTargetAction(_ sender: NSMenuItem!) {
+        
+        let id = DriveID(rawValue: sender.tag)!
+        let drive = c64.drive(id)
+        dragAndDropDrive = (dragAndDropDrive === drive) ? nil : drive
     }
     
     //

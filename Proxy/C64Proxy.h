@@ -464,9 +464,9 @@
 @property (readonly) VIAProxy *via1;
 @property (readonly) VIAProxy *via2;
 @property (readonly) DiskProxy *disk;
-
 - (VIAProxy *)via:(NSInteger)num;
 
+@property (readonly) DriveID id;
 - (DriveConfig)getConfig;
 
 - (BOOL)isConnected;

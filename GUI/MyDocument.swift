@@ -226,8 +226,18 @@ class MyDocument: NSDocument {
         if attachment == nil { return false }
 
         // If the attachment is a snapshot, flash it and return
-        if let s = attachment as? SnapshotProxy { c64.flash(s); return true }
+        if let proxy = attachment as? SnapshotProxy {
+            c64.flash(proxy)
+            return true
+        }
 
+        // Try to insert the attachment into the drop drive (if any)
+        if let id = parent.dragAndDropDrive?.id {
+            if mountAttachmentAsDisk(drive: id) {
+                return true
+            }
+        }
+        
         runMountDialog()
         return true
     }
@@ -251,6 +261,13 @@ class MyDocument: NSDocument {
                     drive.insertFileSystem(fs)
                     return true
                 }
+            }
+        }
+        if let file = attachment as? G64FileProxy {
+            
+            if proceedWithUnexportedDisk(drive: id) {
+                drive.insertG64(file)
+                return true
             }
         }
         if let file = attachment as? AnyCollectionProxy {

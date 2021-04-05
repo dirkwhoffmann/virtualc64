@@ -1172,6 +1172,11 @@
     return (Drive *)obj;
 }
 
+- (DriveID)id
+{
+    return [self drive]->getDeviceNr();
+}
+
 - (VIAProxy *)via:(NSInteger)num {
 	switch (num) {
 		case 1:

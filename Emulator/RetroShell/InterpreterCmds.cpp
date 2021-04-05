@@ -46,14 +46,14 @@ Interpreter::registerInstructions()
              "component", "The virtual Commodore 64");
         
     root.add({"c64", "power"},
-             "command", "Switches the Amiga on or off");
+             "command", "Switches the C64 on or off");
     
     root.add({"c64", "power", "on"},
-             "state", "Switches the Amiga on",
+             "state", "Switches the C64 on",
              &RetroShell::exec <Token::c64, Token::on>);
 
     root.add({"c64", "power", "off"},
-             "state", "Switches the Amiga off",
+             "state", "Switches the C64 off",
              &RetroShell::exec <Token::c64, Token::off>);
 
     root.add({"c64", "run"},

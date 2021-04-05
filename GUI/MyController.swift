@@ -111,6 +111,9 @@ class MyController: NSWindowController, MessageReceiver {
     var smallTape = NSImage.init(named: "tapeTemplate")!.resize(size: iconSize)
     var smallCart = NSImage.init(named: "crtTemplate")!.resize(size: iconSize)
     
+    // Drive that receives drag and drop inputs
+    var dragAndDropDrive: DriveProxy?
+    
     // Remembers the running state for the pauseInBackground feature
     var pauseInBackgroundSavedState = false
     
