@@ -2116,6 +2116,11 @@
     [self c64]->reset();
 }
 
+- (void)shutdown
+{
+    [self c64]->shutdown();
+}
+
 - (BOOL)poweredOn
 {
     return [self c64]->isPoweredOn();
@@ -2272,11 +2277,6 @@
 - (void)addListener:(const void *)sender function:(Callback *)func
 {
     [self c64]->addListener(sender, func);
-}
-
-- (void)removeListener:(const void *)sender
-{
-    [self c64]->removeListener(sender);
 }
 
 - (void)stopAndGo

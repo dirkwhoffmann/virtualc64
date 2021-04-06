@@ -593,6 +593,9 @@ extension MyController {
             mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
             inspector?.fullRefresh()
 
+        case .SHUTDOWN:
+            shutDown()
+
         case .MUTE_ON:
             muted = true
             refreshStatusBar()

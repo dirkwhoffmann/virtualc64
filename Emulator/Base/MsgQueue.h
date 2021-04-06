@@ -54,10 +54,7 @@ public:
     
     // Registers a listener together with it's callback function
     void addListener(const void *listener, Callback *func);
-    
-    // Unregisters a listener
-    void removeListener(const void *listener);
-    
+        
     // Returns the next pending message, or nullptr if the queue is empty
     Message get();
     

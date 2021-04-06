@@ -26,19 +26,6 @@ MsgQueue::addListener(const void *listener, Callback *func)
     put(MSG_REGISTER);
 }
 
-void
-MsgQueue::removeListener(const void *listener)
-{
-    put(MSG_UNREGISTER);
-    
-    synchronized {
-        
-        for (auto it = listeners.begin(); it != listeners.end(); it++) {
-            if (it->first == listener) { listeners.erase(it);  break; }
-        }
-    }
-}
-
 Message
 MsgQueue::get()
 {

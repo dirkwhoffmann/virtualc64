@@ -31,6 +31,7 @@ enum_long(MSG)
     MSG_RUN,
     MSG_PAUSE,
     MSG_RESET,
+    MSG_SHUTDOWN,
     MSG_WARP_ON,
     MSG_WARP_OFF,
     MSG_MUTE_ON,
@@ -130,6 +131,7 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_RUN:                  return "RUN";
             case MSG_PAUSE:                return "PAUSE";
             case MSG_RESET:                return "RESET";
+            case MSG_SHUTDOWN:             return "SHUTDOWN";
             case MSG_WARP_ON:              return "WARP_ON";
             case MSG_WARP_OFF:             return "WARP_OFF";
             case MSG_MUTE_ON:              return "MUTE_ON";

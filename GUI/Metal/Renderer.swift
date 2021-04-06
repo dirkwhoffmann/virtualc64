@@ -135,12 +135,7 @@ class Renderer: NSObject, MTKViewDelegate {
         // Rebuild the depth buffer
         ressourceManager.buildDepthBuffer()
     }
-    
-    public func cleanup() {
-    
-        track()
-    }
-    
+        
     //
     //  Drawing
     //

@@ -306,6 +306,7 @@ public:
     void powerOff();
     void run();
     void pause();
+    void shutdown();
     
     void setWarp(bool enable);
     bool inWarpMode() const { return warpMode; }
@@ -348,12 +349,7 @@ public:
     void addListener(const void *sender, void(*func)(const void *, long, long) ) {
         messageQueue.addListener(sender, func);
     }
-    
-    // Removes a listener callback function
-    void removeListener(const void *sender) {
-        messageQueue.removeListener(sender);
-    }
-    
+        
     // Gets a notification message from message queue
     Message getMessage() { return messageQueue.get(); }
     

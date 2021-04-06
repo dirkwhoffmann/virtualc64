@@ -58,19 +58,25 @@ extension MyController: NSWindowDelegate {
         monitor?.c64 = nil
         monitor?.close()
                         
-        // Disconnect the audio engine from the emulator
+        // Disconnect the audio engine
         macAudio.shutDown()
         
-        // Unsubscribe from the message queue
-        let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
-        c64.removeListener(myself)
-  
-        // Stop metal
-        renderer.cleanup()
+        // Disconnect all game pads
+        gamePadManager.shutDown()
         
-        // Kill the emulator
+        // Power off the emulator
+        c64.pause()
+        c64.powerOff()
+        
+        // Ask the emulator to shutdown and to send the MSG_SHUTDOWN message
+        c64.shutdown()
+    }
+    
+    func shutDown() {
+        
+        track("Shutting down the emulator")
         c64.kill()
-        c64 = nil        
+        c64 = nil
     }
     
     public func windowWillEnterFullScreen(_ notification: Notification) {

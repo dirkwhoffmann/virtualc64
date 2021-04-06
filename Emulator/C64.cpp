@@ -687,6 +687,21 @@ C64::pause()
 }
 
 void
+C64::shutdown()
+{
+    // Assure the emulator is powered off
+    assert(isPoweredOff());
+    
+    /* Send the SHUTDOWN message which is the last message ever send. The
+     * purpose of this message is to signal the GUI that no more messages will
+     * show up in the message queue. When the GUI receives this message, it
+     * knows that the Amiga is powered off and the message queue empty. From
+     * this time on, it is safe to destroy the emulator object.
+     */
+    messageQueue.put(MSG_SHUTDOWN);
+}
+
+void
 C64::inspect()
 {
     switch(inspectionTarget) {

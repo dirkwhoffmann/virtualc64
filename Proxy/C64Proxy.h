@@ -143,6 +143,7 @@
 - (void)powerOff;
 - (void)inspect;
 - (void)reset;
+- (void)shutdown;
 
 @property (readonly) BOOL poweredOn;
 @property (readonly) BOOL poweredOff;
@@ -174,7 +175,6 @@
 
 - (Message)message;
 - (void)addListener:(const void *)sender function:(Callback *)func;
-- (void)removeListener:(const void *)sender;
 
 - (void)stopAndGo;
 - (void)stepInto;
