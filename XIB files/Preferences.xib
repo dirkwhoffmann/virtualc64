@@ -61,12 +61,6 @@
                 <outlet property="genAutoSnapshots" destination="DON-RP-HPW" id="bQG-hM-4dz"/>
                 <outlet property="genCloseWithoutAskingButton" destination="f7R-rS-Csv" id="Htu-GY-zf4"/>
                 <outlet property="genDriveBlankDiskFormat" destination="bwB-V1-tah" id="LeB-tg-x37"/>
-                <outlet property="genDriveConnectSound" destination="MoH-pd-2Vc" id="cOj-52-AIy"/>
-                <outlet property="genDriveEjectSound" destination="eoZ-fx-PYz" id="TyN-G5-UZp"/>
-                <outlet property="genDriveHeadSound" destination="fAM-PN-etl" id="cEY-KM-L7X"/>
-                <outlet property="genDriveInsertSound" destination="NLO-3F-AyX" id="aGw-Ou-zrF"/>
-                <outlet property="genDriveSoundPan" destination="u7j-T4-a5u" id="dY7-nD-dzc"/>
-                <outlet property="genDriveSounds" destination="x3B-1Z-mQV" id="zwp-hD-uhN"/>
                 <outlet property="genEjectUnasked" destination="TCJ-4m-Fvr" id="2tQ-by-wbz"/>
                 <outlet property="genExitOnEscButton" destination="8tU-em-5LP" id="yfd-1d-BGx"/>
                 <outlet property="genPauseInBackground" destination="UxY-mR-8ll" id="qPU-uQ-Fnx"/>
@@ -146,7 +140,7 @@ DQ
                                             </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fwF-Xv-2d2">
-                                            <rect key="frame" x="317" y="423" width="143" height="20"/>
+                                            <rect key="frame" x="10" y="233" width="143" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Floppy Drives" id="KDa-p9-5aM">
                                                 <font key="font" metaFont="systemBold"/>
@@ -154,19 +148,8 @@ DQ
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x3B-1Z-mQV">
-                                            <rect key="frame" x="317" y="359" width="197" height="25"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="Play drive sounds" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="ksV-cN-cy7">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="genDriveSoundsAction:" target="-2" id="VJ0-so-DH8"/>
-                                            </connections>
-                                        </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZCE-Ts-7pP">
-                                            <rect key="frame" x="11" y="267" width="231" height="17"/>
+                                            <rect key="frame" x="10" y="432" width="231" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Snapshots" id="SJs-0z-guq">
                                                 <font key="font" metaFont="systemBold"/>
@@ -175,7 +158,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DON-RP-HPW">
-                                            <rect key="frame" x="11" y="235" width="161" height="25"/>
+                                            <rect key="frame" x="10" y="400" width="161" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Take a snapshot every " bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="PC6-8I-ova">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -186,7 +169,7 @@ DQ
                                             </connections>
                                         </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="67N-11-Cx6">
-                                            <rect key="frame" x="211" y="238" width="56" height="17"/>
+                                            <rect key="frame" x="210" y="403" width="56" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="seconds" id="0dS-cm-ZAr">
                                                 <font key="font" metaFont="system"/>
@@ -195,7 +178,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ITl-Yu-WOZ">
-                                            <rect key="frame" x="173" y="235" width="32" height="22"/>
+                                            <rect key="frame" x="172" y="400" width="32" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="255" drawsBackground="YES" id="jfw-f6-Alj">
                                                 <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="f6L-xT-cG0">
@@ -210,17 +193,8 @@ DQ
                                                 <action selector="genSnapshotIntervalAction:" target="-2" id="rtm-gu-JEo"/>
                                             </connections>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kfl-9t-0Ir">
-                                            <rect key="frame" x="312" y="231" width="143" height="20"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Format of blank disks: " id="uGs-WD-6AO">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZVY-Zp-SG1">
-                                            <rect key="frame" x="11" y="392" width="81" height="20"/>
+                                            <rect key="frame" x="315" y="398" width="81" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Activation:" id="Uib-ME-7Ug">
                                                 <font key="font" metaFont="system"/>
@@ -228,38 +202,8 @@ DQ
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NIk-qg-Cd5">
-                                            <rect key="frame" x="358" y="263" width="97" height="20"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Drive position:" id="fma-il-YyI">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bwB-V1-tah">
-                                            <rect key="frame" x="457" y="228" width="137" height="26"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Unformatted" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="BeQ-dd-nVf" id="yzc-i7-oeL">
-                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="menu"/>
-                                                <menu key="menu" title="OtherViews" autoenablesItems="NO" id="UXj-wP-rsB">
-                                                    <items>
-                                                        <menuItem title="Unformatted" state="on" id="BeQ-dd-nVf">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                        <menuItem title="Formatted" tag="1" id="nsJ-Zt-GPQ">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                    </items>
-                                                </menu>
-                                            </popUpButtonCell>
-                                            <connections>
-                                                <action selector="genBlankDiskFormatAction:" target="-2" id="a9O-cb-1cm"/>
-                                            </connections>
-                                        </popUpButton>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YaP-a1-P0K">
-                                            <rect key="frame" x="93" y="389" width="197" height="26"/>
+                                            <rect key="frame" x="397" y="395" width="197" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="During disk activity" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="Utc-gC-7hC" id="5U1-d9-SYr">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -282,52 +226,8 @@ DQ
                                                 <action selector="genWarpModeAction:" target="-2" id="GrP-3b-Ynu"/>
                                             </connections>
                                         </popUpButton>
-                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MoH-pd-2Vc">
-                                            <rect key="frame" x="459" y="295" width="125" height="25"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="Drive connection" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="SVk-dj-D6K">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="genDriveConnectSoundAction:" target="-2" id="E6m-Od-zGF"/>
-                                            </connections>
-                                        </button>
-                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NLO-3F-AyX">
-                                            <rect key="frame" x="334" y="327" width="122" height="25"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="Disk insertion" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="1Fi-4M-G2A">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="genDriveInsertSoundAction:" target="-2" id="NES-ig-lOG"/>
-                                            </connections>
-                                        </button>
-                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eoZ-fx-PYz">
-                                            <rect key="frame" x="334" y="295" width="122" height="25"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="Disk ejection" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="JRW-FL-GST">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="genDriveEjectSoundAction:" target="-2" id="Tcs-d8-TS6"/>
-                                            </connections>
-                                        </button>
-                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fAM-PN-etl">
-                                            <rect key="frame" x="459" y="327" width="122" height="25"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="Head movement" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="N4y-Ki-mNM">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="genDriveHeadSoundAction:" target="-2" id="JpH-bj-FBX"/>
-                                            </connections>
-                                        </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gug-gb-6um">
-                                            <rect key="frame" x="11" y="359" width="231" height="20"/>
+                                            <rect key="frame" x="316" y="355" width="231" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Full Screen Mode" id="sDk-cX-Mdh">
                                                 <font key="font" metaFont="systemBold"/>
@@ -336,7 +236,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XLu-74-7AG">
-                                            <rect key="frame" x="11" y="327" width="274" height="25"/>
+                                            <rect key="frame" x="316" y="323" width="274" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Keep aspect ratio" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Rmz-U8-xDt">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -347,7 +247,7 @@ DQ
                                             </connections>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8tU-em-5LP">
-                                            <rect key="frame" x="11" y="295" width="274" height="25"/>
+                                            <rect key="frame" x="316" y="291" width="274" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Exit by pressing the ESC key " bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5ZV-zg-Nxv">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -358,7 +258,7 @@ DQ
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bh0-j6-w1x">
-                                            <rect key="frame" x="15" y="423" width="143" height="20"/>
+                                            <rect key="frame" x="316" y="429" width="143" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Warp Mode" id="emI-xx-rOx">
                                                 <font key="font" metaFont="systemBold"/>
@@ -367,7 +267,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TCJ-4m-Fvr">
-                                            <rect key="frame" x="317" y="391" width="274" height="25"/>
+                                            <rect key="frame" x="316" y="197" width="274" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Eject unsaved disks without asking" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="rRj-oV-ir5">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -377,32 +277,8 @@ DQ
                                                 <action selector="genEjectWithoutAskingAction:" target="-2" id="7k0-2z-Ao8"/>
                                             </connections>
                                         </button>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u7j-T4-a5u">
-                                            <rect key="frame" x="457" y="260" width="137" height="26"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Left" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" tag="-1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="um2-vz-Kdh" id="8QN-wf-stg">
-                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="menu"/>
-                                                <menu key="menu" title="OtherViews" autoenablesItems="NO" id="zXZ-7L-tbn">
-                                                    <items>
-                                                        <menuItem title="Left" state="on" tag="-1" id="um2-vz-Kdh">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                        <menuItem title="Center" id="YOH-FS-X7B">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                        <menuItem title="Right" tag="1" id="Xdg-sw-Kh7">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                    </items>
-                                                </menu>
-                                            </popUpButtonCell>
-                                            <connections>
-                                                <action selector="genDriveSoundPanAction:" target="-2" id="jqB-AL-vnT"/>
-                                            </connections>
-                                        </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z1f-aS-ewB">
-                                            <rect key="frame" x="10" y="195" width="231" height="17"/>
+                                            <rect key="frame" x="10" y="358" width="231" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Screenshots" id="fUa-UZ-nEF">
                                                 <font key="font" metaFont="systemBold"/>
@@ -411,7 +287,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ygb-ub-D6Y">
-                                            <rect key="frame" x="16" y="165" width="76" height="18"/>
+                                            <rect key="frame" x="16" y="328" width="76" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Source:" id="xe4-qG-Qin">
                                                 <font key="font" metaFont="system"/>
@@ -420,7 +296,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UhB-rO-Fiw">
-                                            <rect key="frame" x="93" y="160" width="197" height="26"/>
+                                            <rect key="frame" x="93" y="323" width="197" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Visible Texture" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="c0K-0Y-Tno" id="pNL-rb-1Sm">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -447,7 +323,7 @@ DQ
                                             </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RGS-3w-Ood">
-                                            <rect key="frame" x="16" y="133" width="76" height="18"/>
+                                            <rect key="frame" x="16" y="296" width="76" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Target:" id="qSx-fs-LRd">
                                                 <font key="font" metaFont="system"/>
@@ -456,7 +332,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D2B-Jp-9bV">
-                                            <rect key="frame" x="317" y="194" width="143" height="20"/>
+                                            <rect key="frame" x="316" y="229" width="143" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Miscellaneous" id="jLu-Ya-Lit">
                                                 <font key="font" metaFont="systemBold"/>
@@ -487,7 +363,7 @@ DQ
                                             </connections>
                                         </button>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LXm-7Y-K8D">
-                                            <rect key="frame" x="93" y="128" width="197" height="26"/>
+                                            <rect key="frame" x="93" y="291" width="197" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="TIFF image" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="zI1-92-BIY" id="YOJ-SC-eY8">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -514,6 +390,36 @@ DQ
                                             </popUpButtonCell>
                                             <connections>
                                                 <action selector="genScreenshotTargetAction:" target="-2" id="0fx-Tv-s2a"/>
+                                            </connections>
+                                        </popUpButton>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kfl-9t-0Ir">
+                                            <rect key="frame" x="10" y="198" width="143" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Format of blank disks: " id="uGs-WD-6AO">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bwB-V1-tah">
+                                            <rect key="frame" x="153" y="195" width="137" height="26"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <popUpButtonCell key="cell" type="push" title="Unformatted" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="BeQ-dd-nVf" id="yzc-i7-oeL">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="menu"/>
+                                                <menu key="menu" title="OtherViews" autoenablesItems="NO" id="UXj-wP-rsB">
+                                                    <items>
+                                                        <menuItem title="Unformatted" state="on" id="BeQ-dd-nVf">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="Formatted" tag="1" id="nsJ-Zt-GPQ">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="genBlankDiskFormatAction:" target="-2" id="a9O-cb-1cm"/>
                                             </connections>
                                         </popUpButton>
                                     </subviews>

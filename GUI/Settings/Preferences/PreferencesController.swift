@@ -22,12 +22,6 @@ class PreferencesController: DialogController {
     // Drive
     @IBOutlet weak var genDriveBlankDiskFormat: NSPopUpButton!
     @IBOutlet weak var genEjectUnasked: NSButton!
-    @IBOutlet weak var genDriveSounds: NSButton!
-    @IBOutlet weak var genDriveSoundPan: NSPopUpButton!
-    @IBOutlet weak var genDriveInsertSound: NSButton!
-    @IBOutlet weak var genDriveEjectSound: NSButton!
-    @IBOutlet weak var genDriveHeadSound: NSButton!
-    @IBOutlet weak var genDriveConnectSound: NSButton!
 
     // Fullscreen
     @IBOutlet weak var genAspectRatioButton: NSButton!

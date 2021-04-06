@@ -31,12 +31,6 @@ class Preferences {
         set { driveBlankDiskFormat = DOSType.init(rawValue: newValue) ?? .NODOS }
     }
     var driveEjectUnasked = GeneralDefaults.std.driveEjectUnasked
-    var driveSounds = GeneralDefaults.std.driveSounds
-    var driveSoundPan = GeneralDefaults.std.driveSoundPan
-    var driveInsertSound = GeneralDefaults.std.driveInsertSound
-    var driveEjectSound = GeneralDefaults.std.driveEjectSound
-    var driveHeadSound = GeneralDefaults.std.driveHeadSound
-    var driveConnectSound = GeneralDefaults.std.driveConnectSound
     
     // Fullscreen
     var keepAspectRatio = GeneralDefaults.std.keepAspectRatio
@@ -135,13 +129,6 @@ class Preferences {
         
         // Floppy
         driveBlankDiskFormatIntValue = defaults.integer(forKey: Keys.Gen.driveBlankDiskFormat)
-        driveEjectUnasked = defaults.bool(forKey: Keys.Gen.driveEjectUnasked)
-        driveSounds = defaults.bool(forKey: Keys.Gen.driveSounds)
-        driveSoundPan = defaults.double(forKey: Keys.Gen.driveSoundPan)
-        driveInsertSound = defaults.bool(forKey: Keys.Gen.driveInsertSound)
-        driveEjectSound = defaults.bool(forKey: Keys.Gen.driveEjectSound)
-        driveHeadSound = defaults.bool(forKey: Keys.Gen.driveHeadSound)
-        driveConnectSound = defaults.bool(forKey: Keys.Gen.driveConnectSound)
         
         // Fullscreen
         keepAspectRatio = defaults.bool(forKey: Keys.Gen.keepAspectRatio)
@@ -157,6 +144,7 @@ class Preferences {
         warpModeIntValue = defaults.integer(forKey: Keys.Gen.warpMode)
         
         // Misc
+        driveEjectUnasked = defaults.bool(forKey: Keys.Gen.driveEjectUnasked)
         pauseInBackground = defaults.bool(forKey: Keys.Gen.pauseInBackground)
         closeWithoutAsking = defaults.bool(forKey: Keys.Gen.closeWithoutAsking)
     }
@@ -166,14 +154,6 @@ class Preferences {
         let defaults = UserDefaults.standard
         
         // Floppy
-        defaults.set(screenshotTargetIntValue, forKey: Keys.Gen.screenshotTarget)
-        defaults.set(driveEjectUnasked, forKey: Keys.Gen.driveEjectUnasked)
-        defaults.set(driveSounds, forKey: Keys.Gen.driveSounds)
-        defaults.set(driveSoundPan, forKey: Keys.Gen.driveSoundPan)
-        defaults.set(driveInsertSound, forKey: Keys.Gen.driveInsertSound)
-        defaults.set(driveEjectSound, forKey: Keys.Gen.driveEjectSound)
-        defaults.set(driveHeadSound, forKey: Keys.Gen.driveHeadSound)
-        defaults.set(driveConnectSound, forKey: Keys.Gen.driveConnectSound)
         defaults.set(driveBlankDiskFormatIntValue, forKey: Keys.Gen.driveBlankDiskFormat)
         
         // Fullscreen
@@ -184,11 +164,13 @@ class Preferences {
         defaults.set(autoSnapshots, forKey: Keys.Gen.autoSnapshots)
         defaults.set(snapshotInterval, forKey: Keys.Gen.autoSnapshotInterval)
         defaults.set(screenshotSource, forKey: Keys.Gen.screenshotSource)
-        
+        defaults.set(screenshotTargetIntValue, forKey: Keys.Gen.screenshotTarget)
+
         // Warp mode
         defaults.set(warpModeIntValue, forKey: Keys.Gen.warpMode)
         
         // Misc
+        defaults.set(driveEjectUnasked, forKey: Keys.Gen.driveEjectUnasked)
         defaults.set(pauseInBackground, forKey: Keys.Gen.pauseInBackground)
         defaults.set(closeWithoutAsking, forKey: Keys.Gen.closeWithoutAsking)
     }

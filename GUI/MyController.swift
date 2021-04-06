@@ -633,9 +633,7 @@ extension MyController {
             renderer.canvas.updateTextureRect()
     
         case .DRIVE_STEP:
-            if pref.driveSounds && pref.driveHeadSound {
-                macAudio.playStepSound(volume: vol, pan: pan)
-            }
+            macAudio.playStepSound(volume: vol, pan: pan)
             refreshStatusBarTracks(drive: driveId)
                         
         case .DISK_INSERT:

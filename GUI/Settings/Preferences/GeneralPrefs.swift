@@ -16,17 +16,6 @@ extension PreferencesController {
         // Drive
         genDriveBlankDiskFormat.selectItem(withTag: pref.driveBlankDiskFormatIntValue)
         genEjectUnasked.state = pref.driveEjectUnasked ? .on : .off
-        genDriveSounds.state = pref.driveSounds ? .on : .off
-        genDriveSoundPan.selectItem(withTag: Int(pref.driveSoundPan))
-        genDriveInsertSound.state = pref.driveInsertSound ? .on : .off
-        genDriveEjectSound.state = pref.driveEjectSound ? .on : .off
-        genDriveHeadSound.state = pref.driveHeadSound ? .on : .off
-        genDriveConnectSound.state = pref.driveConnectSound ? .on : .off
-        genDriveSoundPan.isEnabled = pref.driveSounds
-        genDriveInsertSound.isEnabled = pref.driveSounds
-        genDriveEjectSound.isEnabled = pref.driveSounds
-        genDriveHeadSound.isEnabled = pref.driveSounds
-        genDriveConnectSound.isEnabled = pref.driveSounds
         
         // Fullscreen
         genAspectRatioButton.state = pref.keepAspectRatio ? .on : .off
@@ -56,43 +45,6 @@ extension PreferencesController {
     //
     // Action methods (Drive)
     //
-    
-    @IBAction func genDriveSoundsAction(_ sender: NSButton!) {
-        
-        pref.driveSounds = sender.state == .on
-        refresh()
-    }
-    
-    @IBAction func genDriveSoundPanAction(_ sender: NSPopUpButton!) {
-        
-        pref.driveSoundPan = Double(sender.selectedTag())
-        refresh()
-    }
-    
-    @IBAction func genDriveInsertSoundAction(_ sender: NSButton!) {
-        
-        pref.driveInsertSound = sender.state == .on
-        refresh()
-    }
-    
-    @IBAction func genDriveEjectSoundAction(_ sender: NSButton!) {
-        
-        pref.driveEjectSound = sender.state == .on
-        refresh()
-    }
-    
-    @IBAction func genDriveHeadSoundAction(_ sender: NSButton!) {
-        
-        pref.driveHeadSound = sender.state == .on
-        refresh()
-    }
-    
-    @IBAction func genDriveConnectSoundAction(_ sender: NSButton!) {
-        
-        track()
-        pref.driveConnectSound = sender.state == .on
-        refresh()
-    }
     
     @IBAction func genBlankDiskFormatAction(_ sender: NSPopUpButton!) {
         

@@ -161,13 +161,6 @@ struct GeneralDefaults {
     
     // Drives
     let driveBlankDiskFormat: DOSType
-    let driveEjectUnasked: Bool
-    let driveSounds: Bool
-    let driveSoundPan: Double
-    let driveInsertSound: Bool
-    let driveEjectSound: Bool
-    let driveHeadSound: Bool
-    let driveConnectSound: Bool
     
     // Snapshots and Screenshots
     let autoSnapshots: Bool
@@ -183,6 +176,7 @@ struct GeneralDefaults {
     let warpMode: WarpMode
     
     // Miscellaneous
+    let driveEjectUnasked: Bool
     let pauseInBackground: Bool
     let closeWithoutAsking: Bool
     
@@ -193,13 +187,6 @@ struct GeneralDefaults {
     static let std = GeneralDefaults.init(
         
         driveBlankDiskFormat: .CBM,
-        driveEjectUnasked: false,
-        driveSounds: true,
-        driveSoundPan: 1.0,
-        driveInsertSound: false,
-        driveEjectSound: false,
-        driveHeadSound: true,
-        driveConnectSound: false,
         
         autoSnapshots: false,
         autoSnapshotInterval: 20,
@@ -211,6 +198,7 @@ struct GeneralDefaults {
         
         warpMode: .auto,
         
+        driveEjectUnasked: false,
         pauseInBackground: false,
         closeWithoutAsking: false
     )
@@ -224,13 +212,6 @@ extension UserDefaults {
         let dictionary: [String: Any] = [
             
             Keys.Gen.driveBlankDiskFormat: Int(defaults.driveBlankDiskFormat.rawValue),
-            Keys.Gen.driveEjectUnasked: defaults.driveEjectUnasked,
-            Keys.Gen.driveSounds: defaults.driveSounds,
-            Keys.Gen.driveSoundPan: defaults.driveSoundPan,
-            Keys.Gen.driveInsertSound: defaults.driveInsertSound,
-            Keys.Gen.driveEjectSound: defaults.driveEjectSound,
-            Keys.Gen.driveHeadSound: defaults.driveHeadSound,
-            Keys.Gen.driveConnectSound: defaults.driveConnectSound,
             
             Keys.Gen.autoSnapshots: defaults.autoSnapshots,
             Keys.Gen.autoSnapshotInterval: defaults.autoSnapshotInterval,
@@ -241,7 +222,8 @@ extension UserDefaults {
             Keys.Gen.exitOnEsc: defaults.exitOnEsc,
             
             Keys.Gen.warpMode: Int(defaults.warpMode.rawValue),
-            
+
+            Keys.Gen.driveEjectUnasked: defaults.driveEjectUnasked,
             Keys.Gen.pauseInBackground: defaults.pauseInBackground,
             Keys.Gen.closeWithoutAsking: defaults.closeWithoutAsking
         ]
