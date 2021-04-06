@@ -419,6 +419,7 @@ extension MyController: NSMenuItemValidation {
 
         renderer.rotateLeft()
         c64.reset()
+        c64.powerOn()
         c64.run()
     }
 
@@ -436,6 +437,7 @@ extension MyController: NSMenuItemValidation {
             return
         }
         
+        c64.powerOn()
         c64.run()
     }
      

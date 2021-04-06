@@ -14,9 +14,6 @@
 #include "Serialization.h"
 #include "MsgQueue.h"
 
-// Configuration items
-// #include "config.h"
-
 // Data types and constants
 #include "C64Types.h"
 
@@ -156,6 +153,9 @@ public:
     
 private:
     
+    // The current emulator state
+    EmulatorState state = EMULATOR_STATE_OFF;
+    
     /* Run loop control. This variable is checked at the end of each runloop
      * iteration. Most of the time, the variable is 0 which causes the runloop
      * to repeat. A value greater than 0 means that one or more runloop control
@@ -175,15 +175,7 @@ private:
     // The emulator thread
     pthread_t p = (pthread_t)0;
     
-    // Mutex to coordinate the order of execution
-    pthread_mutex_t threadLock;
-    
-    /* Mutex to synchronize the access to all state changing methods such as
-     * run(), pause(), etc.
-     */
-    pthread_mutex_t stateChangeLock;
-    
-    
+
     //
     // Operation modes
     //
@@ -337,13 +329,9 @@ private:
 
 public:
     
-    /* Requests the emulator thread to stop and locks the threadLock.
-     * The function is called in all state changing methods to obtain ownership
-     * of the emulator thread. After returning, the emulator is either powered
-     * off (if it was powered off before) or paused (if it was running before).
-     */
-    void acquireThreadLock();
-    
+    // Returns true if the currently executed thread is the emulator thread
+    bool isEmulatorThread() { return pthread_self() == p; }
+
     /* Returns true if a call to powerOn() will be successful.
      * It returns false, e.g., if no Rom is installed.
      */

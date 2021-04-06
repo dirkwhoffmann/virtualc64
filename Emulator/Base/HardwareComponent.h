@@ -53,15 +53,6 @@ public:
     
 protected:
     
-    /* State model. The virtual hardware components can be in three different
-     * states called 'Off', 'Paused', and 'Running':
-     *
-     *        Off: The C64 is turned off
-     *     Paused: The C64 is turned on, but there is no emulator thread
-     *    Running: The C64 is turned on and the emulator thread running
-     */
-    EmulatorState state = EMULATOR_STATE_OFF;
-    
     /* Indicates if the emulator should be executed in warp mode. To speed up
      * emulation (e.g., during disk accesses), the virtual hardware may be put
      * into warp mode. In this mode, the emulation thread is no longer paused
@@ -203,6 +194,10 @@ public:
 public:
     
     /* State model. At any time, a component is in one of three states:
+     *
+     *        Off: The Amiga is turned off
+     *     Paused: The Amiga is turned on, but there is no emulator thread
+     *    Running: The Amiga is turned on and the emulator thread running
      *
      *          -----------------------------------------------
      *         |                     run()                     |

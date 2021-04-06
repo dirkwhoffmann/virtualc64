@@ -133,69 +133,29 @@ HardwareComponent::save(u8 *buffer)
 void
 HardwareComponent::powerOn()
 {
-    if (isPoweredOn()) return;
-    assert(!isRunning());
-    
-    // Power all subcomponents on
-    for (HardwareComponent *c : subComponents)  c->powerOn();
-    
-    // Reset all non-persistant snapshot items
-    _reset();
-    
-    // Power this component on
+    for (auto c : subComponents) { c->powerOn(); }
     _powerOn();
-
-    state = EMULATOR_STATE_PAUSED;
 }
 
 void
 HardwareComponent::powerOff()
 {
-    if (isPoweredOff()) return;
-    
-    // Pause if needed
-    pause();
-    
-    // Power off this component
     _powerOff();
-    
-    // Power all subcomponents off
-    for (HardwareComponent *c : subComponents) c->powerOff();
-
-    state = EMULATOR_STATE_OFF;
+    for (auto c : subComponents) { c->powerOff(); }
 }
 
 void
 HardwareComponent::run()
 {
-    if (isRunning()) return;
-    
-    // Power on if needed
-    powerOn();
-    
-    // Start all subcomponents
-    for (HardwareComponent *c : subComponents) {
-        c->run();
-    }
-    
-    // Start this component
+    for (auto c : subComponents) { c->run(); }
     _run();
-    
-    state = EMULATOR_STATE_RUNNING;
 }
 
 void
 HardwareComponent::pause()
 {
-    if (!isRunning()) return;
-    
-    // Pause this component
     _pause();
-
-    // Pause all subcomponents
-    for (HardwareComponent *c : subComponents) c->pause();
-
-    state = EMULATOR_STATE_PAUSED;
+    for (auto c : subComponents) { c->pause(); }
 }
 
 void

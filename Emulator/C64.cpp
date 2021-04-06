@@ -81,19 +81,11 @@ C64::C64()
     // Set up the initial state
     initialize();
     _reset();
-        
-    // Initialize mutexes
-    pthread_mutex_init(&threadLock, nullptr);
-    pthread_mutex_init(&stateChangeLock, nullptr);
 }
 
 C64::~C64()
 {
     trace(RUN_DEBUG, "Destroying C64[%p]\n", this);
-    powerOff();
-    
-    pthread_mutex_destroy(&threadLock);
-    pthread_mutex_destroy(&stateChangeLock);
 }
 
 void
@@ -585,93 +577,113 @@ C64::setDebug(bool enable)
 void
 C64::powerOn()
 {
-    trace(RUN_DEBUG, "powerOn()\n");
+    assert(!isEmulatorThread());
     
-    pthread_mutex_lock(&stateChangeLock);
-    
-    if (!isPoweredOn() && isReady()) {
+    debug(RUN_DEBUG, "powerOn()\n");
         
-        acquireThreadLock();
+    if (isPoweredOff() && isReady()) {
+        
+        assert(p == nullptr);
+        
+        // Perform a reset
+        reset();
+        
+        // Switch state
+        state = EMULATOR_STATE_PAUSED;
+        
+        // Power on all subcomponents
         HardwareComponent::powerOn();
+        
+        // Update the recorded debug information
+        inspect();
+
+        // Inform the GUI
+        messageQueue.put(MSG_POWER_ON);
     }
-    
-    pthread_mutex_unlock(&stateChangeLock);
 }
 
 void
 C64::_powerOn()
 {
     trace(RUN_DEBUG, "_powerOn()\n");
-        
-    putMessage(MSG_POWER_ON);
 }
 
 void
 C64::powerOff()
 {
-    trace(RUN_DEBUG, "powerOff()\n");
+    assert(!isEmulatorThread());
+    assert(!isRunning());
     
-    pthread_mutex_lock(&stateChangeLock);
-    
-    if (!isPoweredOff()) {
+    debug(RUN_DEBUG, "powerOff()\n");
+            
+    if (isPoweredOn()) {
+           
+        // Switch state
+        state = EMULATOR_STATE_OFF;
         
-        acquireThreadLock();
+        // Power off all subcomponents
         HardwareComponent::powerOff();
+        
+        // Update the recorded debug information
+        inspect();
+        
+        // Inform the GUI
+        messageQueue.put(MSG_POWER_OFF);
     }
-    
-    pthread_mutex_unlock(&stateChangeLock);
 }
 
 void
 C64::_powerOff()
 {
     trace(RUN_DEBUG, "_powerOff()\n");
-    
-    putMessage(MSG_POWER_OFF);
 }
 
 void
 C64::run()
 {
-    trace(RUN_DEBUG, "run()\n");
+    assert(isPoweredOn());
     
-    pthread_mutex_lock(&stateChangeLock);
-    
+    debug(RUN_DEBUG, "run()\n");
+            
     if (!isRunning() && isReady()) {
         
-        acquireThreadLock();
-        HardwareComponent::run();
+        assert(p == nullptr);
+
+        // Switch state
+        state = EMULATOR_STATE_RUNNING;
+
+        // Create the emulator thread
+        pthread_create(&p, nullptr, threadMain, (void *)this);
+
+        // Inform the GUI
+        messageQueue.put(MSG_RUN);
     }
-    
-    pthread_mutex_unlock(&stateChangeLock);
 }
 
 void
 C64::_run()
 {
-    trace(RUN_DEBUG, "_run()\n");
-    
-    // Start the emulator thread
-    pthread_create(&p, nullptr, threadMain, (void *)this);
-    
-    // Inform the GUI
-    putMessage(MSG_RUN);
 }
 
 void
 C64::pause()
 {
-    trace(RUN_DEBUG, "pause()\n");
-    
-    pthread_mutex_lock(&stateChangeLock);
-    
+    debug(RUN_DEBUG, "pause()\n");
+
     if (!isPaused()) {
+                
+        // Ask the emulator thread to terminate
+        signalStop();
         
-        acquireThreadLock();
-        HardwareComponent::pause();
+        // Wait until the emulator thread has terminated
+        pthread_join(p, nullptr);
+                
+        // Update the recorded debug information
+        inspect();
+        
+        // Inform the GUI
+        messageQueue.put(MSG_PAUSE);
     }
-    
-    pthread_mutex_unlock(&stateChangeLock);
 }
 
 void
@@ -754,62 +766,24 @@ C64::_setDebug(bool enable)
 void
 C64::suspend()
 {
-    pthread_mutex_lock(&stateChangeLock);
-    
-    trace(RUN_DEBUG, "Suspending (%d)...\n", suspendCounter);
+    debug(RUN_DEBUG, "Suspending (%zu)...\n", suspendCounter);
     
     if (suspendCounter || isRunning()) {
-        
-        acquireThreadLock();
-        assert(!isRunning()); // At this point, the emulator is already paused
-        
+        pause();
         suspendCounter++;
     }
-    
-    pthread_mutex_unlock(&stateChangeLock);
 }
 
 void
 C64::resume()
 {
-    pthread_mutex_lock(&stateChangeLock);
-    
     trace(RUN_DEBUG, "Resuming (%d)...\n", suspendCounter);
     
     if (suspendCounter && --suspendCounter == 0) {
-        
-        acquireThreadLock();
-        HardwareComponent::run();
+        run();
     }
-    
-    pthread_mutex_unlock(&stateChangeLock);
 }
-
-void
-C64::acquireThreadLock()
-{
-    // Free the lock
-    if (state == EMULATOR_STATE_RUNNING) {
-        
-        // Assure the emulator thread exists
-        assert(p != (pthread_t)0);
-        
-        // Free the lock by terminating the thread
-        requestStop();
-        
-    } else {
-        
-        // There must be no emulator thread
-        assert(p == (pthread_t)0);
-        
-        // It's save to free the lock immediately
-        pthread_mutex_unlock(&threadLock);
-    }
-    
-    // Acquire the lock
-    pthread_mutex_lock(&threadLock);
-}
-
+ 
 bool
 C64::isReady(ErrorCode *err) const
 {
@@ -850,15 +824,6 @@ C64::threadDidTerminate()
     
     // Trash the thread pointer
     p = (pthread_t)0;
-    
-    // Pause all components
-    HardwareComponent::pause();
-    
-    // Finish the current instruction to reach a clean state
-    finishInstruction();
-    
-    // Release the thread lock
-    pthread_mutex_unlock(&threadLock);
 }
 
 void
@@ -866,9 +831,11 @@ C64::runLoop()
 {
     trace(RUN_DEBUG, "runLoop()\n");
     
-    // Prepare to run
+    // Leave pause mode
+    HardwareComponent::run();
+    
+    // Restart the synchronization timer
     oscillator.restart();
-    // restartTimer();
     
     // Enter the loop
     while (1) {
@@ -947,6 +914,13 @@ C64::runLoop()
             assert(runLoopCtrl == 0);
         }
     }
+    
+    // Finish the current instruction to reach a clean state
+    finishInstruction();
+    
+    // Enter pause mode
+    state = EMULATOR_STATE_PAUSED;
+    HardwareComponent::pause();
 }
 
 void
