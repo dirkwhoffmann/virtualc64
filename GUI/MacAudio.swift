@@ -174,24 +174,25 @@ public class MacAudio: NSObject {
  
     func playEjectSound(volume: Int, pan: Int) {
         
+        track()
         playSound(name: "1541_door_open_1", volume: volume, pan: pan)
     }
     
     func playSound(name: String, volume: Int, pan: Int) {
         
-        track("playIntSound: \(name) \(volume) \(pan)")
+        // track("playIntSound: \(name) \(volume) \(pan)")
 
-        let p = pan <= 100 ? pan : pan <= 300 ? 200 - pan : -400 + pan
+        let p = pan <= 50 ? pan : pan <= 150 ? 100 - pan : -200 + pan
         
-        let scaledVolume = Float(volume) / 255.0
-        let scaledPan = Float(p) / 100.0
+        let scaledVolume = Float(volume) / 100.0
+        let scaledPan = Float(p) / 50.0
                 
         playSound(name: name, volume: scaledVolume, pan: scaledPan)
     }
     
     func playSound(name: String, volume: Float, pan: Float) {
         
-        track("playSound: \(name) \(volume) \(pan)")
+        // track("playSound: \(name) \(volume) \(pan)")
         
         // Check for cached players for this sound file
         if audioPlayers[name] == nil {

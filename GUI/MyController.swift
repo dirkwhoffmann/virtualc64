@@ -645,6 +645,7 @@ extension MyController {
             inspector?.fullRefresh()
 
         case .DISK_EJECT:
+            track()
             macAudio.playEjectSound(volume: vol, pan: pan)
             refreshStatusBarDiskIcons(drive: driveId)
             inspector?.fullRefresh()

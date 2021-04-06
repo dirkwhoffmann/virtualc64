@@ -28,12 +28,12 @@ Drive::Drive(DriveID id, C64 &ref) : C64Component(ref), deviceNr(id)
     config.connected = false;
     config.switchedOn = true;
     config.type = DRIVE_VC1541II;
-    config.pan = deviceNr == DRIVE8 ? 100 : -100;
-    config.powerVolume = 128;
-    config.stepVolume = 128;
-    config.insertVolume = 128;
-    config.ejectVolume = 128;
-
+    config.pan = 0;
+    config.powerVolume = 50;
+    config.stepVolume = 50;
+    config.insertVolume = 50;
+    config.ejectVolume = 50;
+    
     insertionStatus = DISK_FULLY_EJECTED;
     disk.clearDisk();
 }
@@ -89,6 +89,16 @@ Drive::setConfigItem(Option option, i64 value)
             
             durationOfOneCpuCycle = duration;
             return true;
+        }
+        case OPT_POWER_VOLUME:
+        case OPT_STEP_VOLUME:
+        case OPT_INSERT_VOLUME:
+        case OPT_EJECT_VOLUME:
+        case OPT_DRIVE_PAN:
+        {
+            bool result1 = setConfigItem(option, DRIVE8, value);
+            bool result2 = setConfigItem(option, DRIVE9, value);
+            return result1 || result2;
         }
         default:
             return false;
@@ -148,7 +158,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
             messageQueue.put(value ? MSG_DRIVE_POWER_ON : MSG_DRIVE_POWER_OFF, deviceNr);
             if (wasActive != active) {
                 messageQueue.put(active ? MSG_DRIVE_ACTIVE : MSG_DRIVE_INACTIVE,
-                                 config.pan << 24 | config.stepVolume << 16 | deviceNr);
+                                 config.pan << 24 | config.powerVolume << 16 | deviceNr);
             }
             return true;
         }
@@ -162,6 +172,8 @@ Drive::setConfigItem(Option option, long id, i64 value)
         }
         case OPT_POWER_VOLUME:
         {
+            value = std::clamp(value, 0LL, 100LL);
+
             if (config.powerVolume == value) {
                 return false;
             }
@@ -170,6 +182,8 @@ Drive::setConfigItem(Option option, long id, i64 value)
         }
         case OPT_STEP_VOLUME:
         {
+            value = std::clamp(value, 0LL, 100LL);
+
             if (config.stepVolume == value) {
                 return false;
             }
@@ -178,14 +192,19 @@ Drive::setConfigItem(Option option, long id, i64 value)
         }
         case OPT_EJECT_VOLUME:
         {
+            value = std::clamp(value, 0LL, 100LL);
+            
             if (config.ejectVolume == value) {
                 return false;
             }
             config.ejectVolume = value;
+            printf("New eject volume: %d\n", config.ejectVolume);
             return true;
         }
         case OPT_INSERT_VOLUME:
         {
+            value = std::clamp(value, 0LL, 100LL);
+            
             if (config.insertVolume == value) {
                 return false;
             }
@@ -577,7 +596,7 @@ Drive::vsyncHandler()
             
             // Inform listeners
             c64.putMessage(MSG_DISK_EJECT,
-                           config.pan << 24 | config.stepVolume << 16 | halftrack << 8 | deviceNr);
+                           config.pan << 24 | config.ejectVolume << 16 | halftrack << 8 | deviceNr);
             
             // Schedule the next transition
             diskChangeCounter = 17;
@@ -614,7 +633,7 @@ Drive::vsyncHandler()
 
             // Inform listeners
             c64.putMessage(MSG_DISK_INSERT,
-                           config.pan << 24 | config.stepVolume << 16 | halftrack << 8 | deviceNr);
+                           config.pan << 24 | config.insertVolume << 16 | halftrack << 8 | deviceNr);
             return;
         }
         default:

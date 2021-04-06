@@ -309,10 +309,6 @@ class Configuration {
         get { return c64.getConfig(.AUDVOLR) }
         set { c64.configure(.AUDVOLR, value: newValue) }
     }
-    var powerVolume: Int {
-        get { return c64.getConfig(.POWER_VOLUME, drive: .DRIVE8) }
-        set { c64.configure(.POWER_VOLUME, value: newValue) }
-    }
     var stepVolume: Int {
         get { return c64.getConfig(.STEP_VOLUME, drive: .DRIVE8) }
         set { c64.configure(.STEP_VOLUME, value: newValue) }
@@ -325,7 +321,15 @@ class Configuration {
         get { return c64.getConfig(.EJECT_VOLUME, drive: .DRIVE8) }
         set { c64.configure(.EJECT_VOLUME, value: newValue) }
     }
-    
+    var drive8Pan: Int {
+        get { return c64.getConfig(.DRIVE_PAN, drive: .DRIVE8) }
+        set { c64.configure(.DRIVE_PAN, drive: .DRIVE8, value: newValue) }
+    }
+    var drive9Pan: Int {
+        get { return c64.getConfig(.DRIVE_PAN, drive: .DRIVE9) }
+        set { c64.configure(.DRIVE_PAN, drive: .DRIVE9, value: newValue) }
+    }
+
     //
     // Video
     //

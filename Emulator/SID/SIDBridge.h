@@ -270,30 +270,30 @@ public:
     // Reads a audio sample pair without moving the read pointer
     void ringbufferData(usize offset, float *left, float *right);
             
-    /* Handles a buffer underflow condition.
-     * A buffer underflow occurs when the computer's audio device needs sound
-     * samples than SID hasn't produced, yet.
+    /* Handles a buffer underflow condition. A buffer underflow occurs when the
+     * audio device of the host machine needs sound samples than SID hasn't
+     * produced, yet.
      */
     void handleBufferUnderflow();
     
-    /* Handles a buffer overflow condition.
-     * A buffer overflow occurs when SID is producing more samples than the
-     * computer's audio device is able to consume.
+    /* Handles a buffer overflow condition. A buffer overflow occurs when SID
+     * is producing more samples than the audio device of the host machine is
+     * able to consume.
      */
     void handleBufferOverflow();
     
     // Signals to ignore the next underflow or overflow condition.
     void ignoreNextUnderOrOverflow();
     
-    /* Aligns the write pointer.
-     * This function puts the write pointer somewhat ahead of the read pointer.
-     * With a standard sample rate of 44100 Hz, 735 samples is 1/60 sec.
+    /* Aligns the write pointer. This function puts the write pointer somewhat
+     * ahead of the read pointer. With a standard sample rate of 44100 Hz, 735
+     * samples is 1/60 sec.
      */
     const u32 samplesAhead = 8 * 735;
     void alignWritePtr() { stream.clear(SamplePair {0,0} ); stream.align(samplesAhead); }
     
-    /* Executes SID until a certain cycle is reached.
-     * // The function returns the number of produced sound samples (not yet).
+    /* Executes SID until a certain cycle is reached. The function returns the
+     * number of produced sound samples (not yet).
      */
     void executeUntil(Cycle targetCycle);
 
@@ -318,7 +318,6 @@ public:
     void copyInterleaved(float *buffer, isize n);
 
     
-     
 	//
 	// Accessig memory
 	//

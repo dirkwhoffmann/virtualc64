@@ -10,9 +10,7 @@
 extension ConfigurationController {
     
     func refreshAudioTab() {
-                
-        track()
-                
+                                
         // Engine
         audEngine.selectItem(withTag: config.sidEngine)
         audFilter.state = config.sidFilter ? .on : .off
@@ -34,13 +32,12 @@ extension ConfigurationController {
         audVolR.integerValue = config.volR
 
         // Drives
-        /*
-        audPowerVolume.integerValue = config.powerVolume
         audStepVolume.integerValue = config.stepVolume
         audInsertVolume.integerValue = config.insertVolume
         audEjectVolume.integerValue = config.ejectVolume
-        */
-        
+        audDrive8Pan.integerValue = config.drive8Pan
+        audDrive9Pan.integerValue = config.drive9Pan
+
         // Buttons
         audPowerButton.isHidden = !bootable
     }
@@ -114,12 +111,6 @@ extension ConfigurationController {
         refresh()
     }
 
-    @IBAction func audPowerVolumeAction(_ sender: NSSlider!) {
-
-        config.powerVolume = sender.integerValue
-        refresh()
-    }
-
     @IBAction func audStepVolumeAction(_ sender: NSSlider!) {
 
         config.stepVolume = sender.integerValue
@@ -138,6 +129,18 @@ extension ConfigurationController {
         refresh()
     }
     
+    @IBAction func audDrive8PanAction(_ sender: NSSlider!) {
+        
+        config.drive8Pan = sender.integerValue
+        refresh()
+    }
+
+    @IBAction func audDrive9PanAction(_ sender: NSSlider!) {
+        
+        config.drive9Pan = sender.integerValue
+        refresh()
+    }
+
     @IBAction func audEngineAction(_ sender: NSPopUpButton!) {
         
         config.sidEngine = sender.selectedTag()
