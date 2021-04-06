@@ -644,6 +644,12 @@ class Configuration {
         volL = defaults.volL
         volR = defaults.volR
         
+        drive8Pan = defaults.drivePan[0]
+        drive9Pan = defaults.drivePan[1]
+        stepVolume = defaults.stepVolume
+        insertVolume = defaults.insertVolume
+        ejectVolume = defaults.ejectVolume
+        
         c64.resume()
     }
     
@@ -668,6 +674,12 @@ class Configuration {
         volL = defaults.integer(forKey: Keys.Aud.volL)
         volR = defaults.integer(forKey: Keys.Aud.volR)
         
+        drive8Pan = defaults.integer(forKey: Keys.Aud.drive8Pan)
+        drive9Pan = defaults.integer(forKey: Keys.Aud.drive9Pan)
+        stepVolume = defaults.integer(forKey: Keys.Aud.stepVolume)
+        insertVolume = defaults.integer(forKey: Keys.Aud.insertVolume)
+        ejectVolume = defaults.integer(forKey: Keys.Aud.ejectVolume)
+
         c64.resume()
     }
     
@@ -691,6 +703,12 @@ class Configuration {
         
         defaults.set(volL, forKey: Keys.Aud.volL)
         defaults.set(volR, forKey: Keys.Aud.volR)
+        
+        defaults.set(drive8Pan, forKey: Keys.Aud.drive8Pan)
+        defaults.set(drive9Pan, forKey: Keys.Aud.drive9Pan)
+        defaults.set(stepVolume, forKey: Keys.Aud.stepVolume)
+        defaults.set(insertVolume, forKey: Keys.Aud.insertVolume)
+        defaults.set(ejectVolume, forKey: Keys.Aud.ejectVolume)
     }
     
     //

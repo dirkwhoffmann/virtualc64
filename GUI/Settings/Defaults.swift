@@ -861,6 +861,13 @@ extension Keys {
         // Out
         static let volL               = "VC64_AUD_VolumeL"
         static let volR               = "VC64_AUD_VolumeR"
+        
+        // Drive volumes
+        static let stepVolume         = "VC64_AUD_StepVolume"
+        static let insertVolume       = "VC64_AUD_InsertVolume"
+        static let ejectVolume        = "VC64_AUD_EjectVolume"
+        static let drive8Pan          = "VC64_AUD_Drive8Pan"
+        static let drive9Pan          = "VC64_AUD_Drive9Pan"
     }
 }
 
@@ -884,6 +891,12 @@ struct AudioDefaults {
     let volL: Int
     let volR: Int
     
+    // Drive
+    var drivePan: [Int]
+    var stepVolume: Int
+    var insertVolume: Int
+    var ejectVolume: Int
+    
     //
     // Schemes
     //
@@ -903,7 +916,12 @@ struct AudioDefaults {
         pan3: 0,
         
         volL: 50,
-        volR: 50
+        volR: 50,
+        
+        drivePan: [0, 0],
+        stepVolume: 50,
+        insertVolume: 50,
+        ejectVolume: 50
     )
     
     static let stereo = AudioDefaults.init(
@@ -921,7 +939,12 @@ struct AudioDefaults {
         pan3: 50,
         
         volL: 50,
-        volR: 50
+        volR: 50,
+        
+        drivePan: [50, 150],
+        stepVolume: 50,
+        insertVolume: 50,
+        ejectVolume: 50
     )
 }
 
@@ -945,7 +968,13 @@ extension UserDefaults {
             Keys.Aud.pan3: defaults.pan3,
             
             Keys.Aud.volL: defaults.volL,
-            Keys.Aud.volR: defaults.volR
+            Keys.Aud.volR: defaults.volR,
+
+            Keys.Aud.drive8Pan: defaults.drivePan[0],
+            Keys.Aud.drive9Pan: defaults.drivePan[1],
+            Keys.Aud.stepVolume: defaults.stepVolume,
+            Keys.Aud.insertVolume: defaults.insertVolume,
+            Keys.Aud.ejectVolume: defaults.ejectVolume
         ]
 
         let userDefaults = UserDefaults.standard
@@ -969,7 +998,14 @@ extension UserDefaults {
                      Keys.Aud.pan3,
                      
                      Keys.Aud.volL,
-                     Keys.Aud.volR]
+                     Keys.Aud.volR,
+        
+                     Keys.Aud.drive8Pan,
+                     Keys.Aud.drive9Pan,
+                     Keys.Aud.stepVolume,
+                     Keys.Aud.insertVolume,
+                     Keys.Aud.ejectVolume
+        ]
 
         for key in keys { userDefaults.removeObject(forKey: key) }
     }
