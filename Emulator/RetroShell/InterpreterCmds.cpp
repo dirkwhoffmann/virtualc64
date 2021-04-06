@@ -81,7 +81,6 @@ Interpreter::registerInstructions()
     // Memory
     //
     
-    /*
     root.add({"memory"},
              "component", "Ram and Rom");
     
@@ -92,38 +91,11 @@ Interpreter::registerInstructions()
     root.add({"memory", "set"},
              "command", "Configures the component");
         
-    root.add({"memory", "set", "chip"},
-             "key", "Configures the amouts of chip memory",
-             &RetroShell::exec <Token::memory, Token::set, Token::chip>, 1);
-
-    root.add({"memory", "set", "slow"},
-             "key", "Configures the amouts of slow memory",
-             &RetroShell::exec <Token::memory, Token::set, Token::slow>, 1);
-
-    root.add({"memory", "set", "fast"},
-             "key", "Configures the amouts of flow memory",
-             &RetroShell::exec <Token::memory, Token::set, Token::fast>, 1);
-
-    root.add({"memory", "set", "extstart"},
-             "key", "Sets the start address for Rom extensions",
-             &RetroShell::exec <Token::memory, Token::set, Token::extstart>, 1);
-
-    root.add({"memory", "set", "slowramdelay"},
-             "key", "Enables or disables slow Ram bus delays",
-             &RetroShell::exec <Token::memory, Token::set, Token::slowramdelay>, 1);
-
-    root.add({"memory", "set", "bankmap"},
-             "key", "Selects the bank mapping scheme",
-             &RetroShell::exec <Token::memory, Token::set, Token::bankmap>, 1);
-
-    root.add({"memory", "set", "unmapped"},
-             "key", "Determines the behaviour of unmapped memory",
-             &RetroShell::exec <Token::memory, Token::set, Token::unmappingtype>, 1);
-
     root.add({"memory", "set", "raminit"},
              "key", "Determines how Ram is initialized on startup",
              &RetroShell::exec <Token::memory, Token::set, Token::raminitpattern>, 1);
     
+    /*
     root.add({"memory", "load"},
              "command", "Installs a Rom image");
             
@@ -134,27 +106,18 @@ Interpreter::registerInstructions()
     root.add({"memory", "load", "extrom"},
              "command", "Installs a Rom extension",
              &RetroShell::exec <Token::memory, Token::load, Token::extrom>, 1);
+    */
 
     root.add({"memory", "inspect"},
-             "command", "Displays the component state");
-
-    root.add({"memory", "inspect", "state"},
-             "command", "Displays the current state",
-             &RetroShell::exec <Token::memory, Token::inspect, Token::state>);
-
-    root.add({"memory", "inspect", "bankmap"},
-             "command", "Displays the bank map",
-             &RetroShell::exec <Token::memory, Token::inspect, Token::bankmap>);
-
-    root.add({"memory", "inspect", "checksum"},
-             "command", "Computes memory checksums",
-             &RetroShell::exec <Token::memory, Token::inspect, Token::checksums>);
+             "command", "Displays the component state",
+             &RetroShell::exec <Token::memory, Token::inspect>);
 
     
     //
     // CPU
     //
     
+    /*
     root.add({"cpu"},
              "component", "Motorola 68k CPU");
     

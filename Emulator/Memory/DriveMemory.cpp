@@ -10,6 +10,7 @@
 #include "config.h"
 #include "DriveMemory.h"
 #include "C64.h"
+#include "IO.h"
 
 DriveMemory::DriveMemory(C64 &ref, Drive &dref) : C64Component(ref), drive(dref)
 {
@@ -30,10 +31,13 @@ DriveMemory::_reset()
 void
 DriveMemory::_dump(dump::Category category, std::ostream& os) const
 {
-	msg("VC1541 Memory:\n");
-	msg("--------------\n\n");
-    msg("VC1541 ROM :%s loaded\n", c64.hasRom(ROM_TYPE_VC1541) ? "" : " not");
-	msg("\n");
+    using namespace util;
+    
+    if (category & dump::State) {
+        
+        os << tab("Drive ROM");
+        os << bol(c64.hasRom(ROM_TYPE_VC1541)) << std::endl;
+    }
 }
 
 u8 

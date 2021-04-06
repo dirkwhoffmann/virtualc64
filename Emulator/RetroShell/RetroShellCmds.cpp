@@ -106,13 +106,14 @@ RetroShell::exec <Token::c64, Token::reset> (Arguments &argv, long param)
 //
 // Memory
 //
-/*
+
 template <> void
 RetroShell::exec <Token::memory, Token::config> (Arguments& argv, long param)
 {
-    dump(amiga.mem, Dump::Config);
+    dump(c64.mem, dump::Config);
 }
 
+/*
 template <> void
 RetroShell::exec <Token::memory, Token::load, Token::rom> (Arguments& argv, long param)
 {
@@ -130,77 +131,26 @@ RetroShell::exec <Token::memory, Token::load, Token::extrom> (Arguments& argv, l
 
     amiga.mem.loadExtFromFile(path.c_str());
 }
-
-template <> void
-RetroShell::exec <Token::memory, Token::set, Token::chip> (Arguments& argv, long param)
-{
-    amiga.configure(OPT_CHIP_RAM, util::parseNum(argv.front()));
-}
-
-template <> void
-RetroShell::exec <Token::memory, Token::set, Token::slow> (Arguments& argv, long param)
-{
-    amiga.configure(OPT_SLOW_RAM, util::parseNum(argv.front()));
-}
-
-template <> void
-RetroShell::exec <Token::memory, Token::set, Token::fast> (Arguments& argv, long param)
-{
-    amiga.configure(OPT_FAST_RAM, util::parseNum(argv.front()));
-}
-
-template <> void
-RetroShell::exec <Token::memory, Token::set, Token::extstart> (Arguments& argv, long param)
-{
-    amiga.configure(OPT_EXT_START, util::parseNum(argv.front()));
-}
-
-template <> void
-RetroShell::exec <Token::memory, Token::set, Token::slowramdelay> (Arguments& argv, long param)
-{
-    amiga.configure(OPT_SLOW_RAM_DELAY, util::parseBool(argv.front()));
-}
-
-template <> void
-RetroShell::exec <Token::memory, Token::set, Token::bankmap> (Arguments& argv, long param)
-{
-    amiga.configure(OPT_BANKMAP, util::parseEnum <BankMapEnum> (argv.front()));
-}
-
-template <> void
-RetroShell::exec <Token::memory, Token::set, Token::unmappingtype> (Arguments& argv, long param)
-{
-    amiga.configure(OPT_UNMAPPING_TYPE, util::parseEnum <UnmappedMemoryEnum> (argv.front()));
-}
+*/
 
 template <> void
 RetroShell::exec <Token::memory, Token::set, Token::raminitpattern> (Arguments& argv, long param)
 {
-    amiga.configure(OPT_RAM_INIT_PATTERN, util::parseEnum <RamInitPatternEnum> (argv.front()));
+    c64.configure(OPT_RAM_PATTERN, util::parseEnum <RamPatternEnum> (argv.front()));
 }
 
 template <> void
-RetroShell::exec <Token::memory, Token::inspect, Token::state> (Arguments& argv, long param)
+RetroShell::exec <Token::memory, Token::inspect> (Arguments& argv, long param)
 {
-    dump(amiga.mem, Dump::State);
+    dump(c64.mem, dump::State);
 }
 
-template <> void
-RetroShell::exec <Token::memory, Token::inspect, Token::bankmap> (Arguments& argv, long param)
-{
-    dump(amiga.mem, Dump::BankMap);
-}
-
-template <> void
-RetroShell::exec <Token::memory, Token::inspect, Token::checksums> (Arguments& argv, long param)
-{
-    dump(amiga.mem, Dump::Checksums);
-}
 
 //
 // CPU
 //
 
+/*
 template <> void
 RetroShell::exec <Token::cpu, Token::inspect, Token::state> (Arguments& argv, long param)
 {

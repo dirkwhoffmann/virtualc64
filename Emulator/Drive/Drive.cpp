@@ -10,6 +10,7 @@
 #include "config.h"
 #include "Drive.h"
 #include "C64.h"
+#include "IO.h"
 
 Drive::Drive(DriveID id, C64 &ref) : C64Component(ref), deviceNr(id)
 {
@@ -199,13 +200,39 @@ Drive::setConfigItem(Option option, long id, i64 value)
 void
 Drive::_dump(dump::Category category, std::ostream& os) const
 {
-	msg("VC1541\n");
-	msg("------\n\n");
-	msg(" Bit ready timer : %d\n", bitReadyTimer);
-	msg("   Head position : Track %d, Bit offset %d\n", halftrack, offset);
-	msg("            SYNC : %d\n", sync);
-    msg("       Read mode : %s\n", readMode() ? "YES" : "NO");
-	msg("\n");
+    using namespace util;
+    
+    if (category & dump::Config) {
+    
+        os << tab("Drive type");
+        os << DriveTypeEnum::key(config.type) << std::endl;
+        os << tab("Connected");
+        os << bol(config.connected) << std::endl;
+        os << tab("Power switch");
+        os << bol(config.switchedOn, "on", "off") << std::endl;
+        os << tab("Pan");
+        os << config.pan << std::endl;
+        os << tab("Power volume");
+        os << dec(config.powerVolume) << std::endl;
+        os << tab("Step volume");
+        os << dec(config.stepVolume) << std::endl;
+        os << tab("Insert volume");
+        os << dec(config.insertVolume) << std::endl;
+        os << tab("Eject volume");
+        os << dec(config.ejectVolume) << std::endl;
+    }
+    
+    if (category & dump::State) {
+        
+        os << tab("Bit ready timer");
+        os << bitReadyTimer << std::endl;
+        os << tab("Head position");
+        os << halftrack << "::" << offset << std::endl;
+        os << tab("SYNC");
+        os << bol(sync) << std::endl;
+        os << tab("Read mode");
+        os << bol(readMode()) << std::endl;
+    }
 }
 
 void

@@ -183,21 +183,31 @@ C64Memory::_inspect()
 void
 C64Memory::_dump(dump::Category category, std::ostream& os) const
 {
-	msg("C64 Memory:\n");
-	msg("-----------\n");
-    msg("    Basic ROM: %s loaded\n", c64.hasRom(ROM_TYPE_BASIC)  ? "" : " not");
-	msg("Character ROM: %s loaded\n", c64.hasRom(ROM_TYPE_CHAR)   ? "" : " not");
-    msg("   Kernal ROM: %s loaded\n", c64.hasRom(ROM_TYPE_KERNAL) ? "" : " not");
-	msg("\n");
+    using namespace util;
+    
+    if (category & dump::Config) {
+    
+        os << tab("Ram pattern");
+        os << RamPatternEnum::key(config.ramPattern) << std::endl;
+        os << tab("debugcart");
+        os << bol(config.debugcart) << std::endl;
+    }
+    
+    if (category & dump::State) {
+        
+        os << tab("Basic ROM");
+        os << bol(c64.hasRom(ROM_TYPE_BASIC)) << std::endl;
+        os << tab("Character ROM");
+        os << bol(c64.hasRom(ROM_TYPE_CHAR)) << std::endl;
+        os << tab("Kernal ROM");
+        os << bol(c64.hasRom(ROM_TYPE_KERNAL)) << std::endl;
+    }
 }
-
+    
 void
 C64Memory::eraseWithPattern(RamPattern pattern)
 {
-    if (!RamPatternEnum::isValid(pattern)) {
-        warn("Unknown RAM init pattern. Falling back to default.\n");
-        pattern = RAM_PATTERN_C64;
-    }
+    assert_enum(RamPattern, pattern);
     
     if (pattern == RAM_PATTERN_C64) {
         for (unsigned i = 0; i < sizeof(ram); i++)
