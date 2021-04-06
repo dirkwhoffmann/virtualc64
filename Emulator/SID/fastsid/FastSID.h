@@ -49,7 +49,7 @@ class FastSID : public C64Component {
 private:
     
     // The three SID voices
-    FastVoice voice[3];
+    FastVoice voice[3] = { FastVoice(c64), FastVoice(c64), FastVoice(c64) };
 
     
 public:

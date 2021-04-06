@@ -116,7 +116,7 @@ public:
     /* Communication channel to the GUI. The GUI registers a listener and a
      * callback function to retrieve messages.
      */
-    MsgQueue messageQueue;
+    MsgQueue messageQueue = MsgQueue(*this);
 
     
     //
@@ -304,6 +304,11 @@ private:
     //
     
 public:
+
+    bool isPoweredOff() const override { return state == EMULATOR_STATE_OFF; }
+    bool isPoweredOn() const override { return state != EMULATOR_STATE_OFF; }
+    bool isPaused() const override { return state == EMULATOR_STATE_PAUSED; }
+    bool isRunning() const override { return state == EMULATOR_STATE_RUNNING; }
 
     void powerOn();
     void powerOff();

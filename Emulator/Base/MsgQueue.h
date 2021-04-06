@@ -10,10 +10,10 @@
 #pragma once
 
 #include "MsgQueueTypes.h"
-#include "HardwareComponent.h"
+#include "C64Component.h"
 #include "RingBuffer.h"
 
-class MsgQueue : public HardwareComponent {
+class MsgQueue : public C64Component {
         
     // Ring buffer storing all pending messages
     util::RingBuffer<Message, 64> queue;
@@ -21,6 +21,13 @@ class MsgQueue : public HardwareComponent {
     // List of registered listeners
     std::vector<std::pair <const void *, Callback *> > listeners;
 
+    
+    //
+    // Initializing
+    //
+    
+    using C64Component::C64Component;
+    
     
     //
     // Methods from HardwareComponent

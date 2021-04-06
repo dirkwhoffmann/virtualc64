@@ -223,10 +223,10 @@ public:
      * Additional component flags: warp (on / off), debug (on / off)
      */
     
-    bool isPoweredOff() { return state == EMULATOR_STATE_OFF; }
-    bool isPoweredOn() { return state != EMULATOR_STATE_OFF; }
-    bool isPaused() { return state == EMULATOR_STATE_PAUSED; }
-    bool isRunning() { return state == EMULATOR_STATE_RUNNING; }
+    virtual bool isPoweredOff() const = 0;
+    virtual bool isPoweredOn() const = 0;
+    virtual bool isPaused() const = 0;
+    virtual bool isRunning() const = 0;
     
 protected:
     

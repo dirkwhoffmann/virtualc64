@@ -34,6 +34,30 @@ retroShell(ref.retroShell)
 {
 };
 
+bool
+C64Component::isPoweredOff() const
+{
+    return c64.isPoweredOff();
+}
+
+bool
+C64Component::isPoweredOn() const
+{
+    return c64.isPoweredOn();
+}
+
+bool
+C64Component::isPaused() const
+{
+    return c64.isPaused();
+}
+
+bool
+C64Component::isRunning() const
+{
+    return c64.isRunning();
+}
+
 void
 C64Component::suspend()
 {
