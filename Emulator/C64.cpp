@@ -704,24 +704,26 @@ C64::_pause()
 }
 
 void
-C64::_dump(Dump::Category category, std::ostream& os) const
+C64::_dump(dump::Category category, std::ostream& os) const
 {
-    if (category & Dump::Config) {
+    using namespace util;
     
-        os << DUMP("Cycle limit") << (isize)config.cycleLimit << std::endl;
+    if (category & dump::Config) {
+    
+        os << tab("Cycle limit") << config.cycleLimit << std::endl;
     }
     
-    if (category & Dump::State) {
-        
-        os << DUMP("Machine type") << (vic.isPAL() ? "PAL" : "NTSC") << std::endl;
-        os << DUMP("Frames per second") << vic.getFramesPerSecond() << std::endl;
-        os << DUMP("Rasterlines per frame") << (isize)vic.getRasterlinesPerFrame() << std::endl;
-        os << DUMP("Cycles per rasterline") << (isize)vic.getCyclesPerLine() << std::endl;
-        os << DUMP("Current cycle") << (isize)cpu.cycle << std::endl;
-        os << DUMP("Current frame") << (isize)frame << std::endl;
-        os << DUMP("Current rasterline") << (isize)rasterLine << std::endl;
-        os << DUMP("Current rasterline cycle") << (isize)rasterCycle << std::endl;
-        os << DUMP("Ultimax mode") << YESNO(getUltimax()) << std::endl;
+    if (category & dump::State) {
+                
+        os << tab("Machine type") << bol(vic.isPAL(), "PAL", "NTSC") << std::endl;
+        os << tab("Frames per second") << vic.getFramesPerSecond() << std::endl;
+        os << tab("Rasterlines per frame") << vic.getRasterlinesPerFrame() << std::endl;
+        os << tab("Cycles per rasterline") << vic.getCyclesPerLine() << std::endl;
+        os << tab("Current cycle") << cpu.cycle << std::endl;
+        os << tab("Current frame") << frame << std::endl;
+        os << tab("Current rasterline") << rasterLine << std::endl;
+        os << tab("Current rasterline cycle") << dec(rasterCycle) << std::endl;
+        os << tab("Ultimax mode") << bol(getUltimax()) << std::endl;
     }
 }
 

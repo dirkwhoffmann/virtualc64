@@ -32,7 +32,7 @@ Expert::_reset()
 }
 
 void
-Expert::_dump(Dump::Category category, std::ostream& os) const
+Expert::_dump(dump::Category category, std::ostream& os) const
 {
     msg("             active: %d\n", active);
     msg("             switch: %d ", getSwitch());

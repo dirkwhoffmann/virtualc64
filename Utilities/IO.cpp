@@ -301,4 +301,33 @@ sprint16b(char *s, u16 value)
     s[16] = 0;
 }
 
+std::ostream &
+dec::operator()(std::ostream &os) const
+{
+    os << std::dec << value;
+    return os;
+};
+
+std::ostream &
+hex::operator()(std::ostream &os) const
+{
+    os << std::hex << "0x" << std::setw(2) << std::setfill('0') << value;
+    return os;
+};
+
+std::ostream &
+tab::operator()(std::ostream &os) const {
+    os << std::setw(pads) << std::right << std::setfill(' ') << str << " : ";
+    return os;
+}
+
+std::ostream &
+bol::operator()(std::ostream &os) const {
+    os << (value ? str1 : str2);
+    return os;
+}
+
+const string &bol::yes = "yes";
+const string &bol::no = "no";
+
 }

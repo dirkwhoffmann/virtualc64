@@ -12,7 +12,7 @@
 #include "C64.h"
 
 void
-ProcessorPort::_dump(Dump::Category category, std::ostream& os) const
+ProcessorPort::_dump(dump::Category category, std::ostream& os) const
 {
     msg("Processor port:\n");
     msg("---------------\n\n");

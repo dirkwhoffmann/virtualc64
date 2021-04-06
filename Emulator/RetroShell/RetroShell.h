@@ -164,6 +164,6 @@ public:
 
 private:
     
-    void dump(HardwareComponent &component, Dump::Category category);
+    void dump(HardwareComponent &component, dump::Category category);
 
 };

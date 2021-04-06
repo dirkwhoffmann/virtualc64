@@ -36,7 +36,7 @@ private:
     // Initializing
     //
 
-    void _dump(Dump::Category category, std::ostream& os) const override;
+    void _dump(dump::Category category, std::ostream& os) const override;
     
     
     //

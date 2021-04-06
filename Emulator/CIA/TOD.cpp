@@ -43,7 +43,7 @@ TOD::_reset()
 }
 
 void
-TOD::_dump(Dump::Category category, std::ostream& os) const
+TOD::_dump(dump::Category category, std::ostream& os) const
 {
 	msg("            Time of day : %02X:%02X:%02X:%02X\n",
         tod.hour, tod.min, tod.sec, tod.tenth);

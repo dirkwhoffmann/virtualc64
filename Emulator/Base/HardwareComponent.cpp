@@ -224,13 +224,13 @@ HardwareComponent::dumpConfig() const
     msg("\n");
 }
 
-void HardwareComponent::dump(Dump::Category category, std::ostream& ss) const
+void HardwareComponent::dump(dump::Category category, std::ostream& ss) const
 {
     _dump(category, ss);
 }
 
 void
-HardwareComponent::dump(Dump::Category category) const
+HardwareComponent::dump(dump::Category category) const
 {
     dump(category, std::cout);
 }
@@ -238,13 +238,13 @@ HardwareComponent::dump(Dump::Category category) const
 void
 HardwareComponent::dump(std::ostream& ss) const
 {
-    dump((Dump::Category)(-1), ss);
+    dump((dump::Category)(-1), ss);
 }
 
 void
 HardwareComponent::dump() const
 {
-    dump((Dump::Category)(-1));
+    dump((dump::Category)(-1));
 }
 
 void

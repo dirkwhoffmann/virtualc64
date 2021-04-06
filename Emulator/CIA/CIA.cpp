@@ -117,7 +117,7 @@ CIA::_inspect()
 }
 
 void
-CIA::_dump(Dump::Category category, std::ostream& os) const
+CIA::_dump(dump::Category category, std::ostream& os) const
 {
     msg("                Sleeping : %s\n", sleeping ? "yes" : "no");
     msg("               Tiredness : %d\n", tiredness);

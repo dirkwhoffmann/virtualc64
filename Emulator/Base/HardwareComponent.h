@@ -28,7 +28,7 @@
 #define synchronized \
 for (util::AutoMutex _am(mutex); _am.active; _am.active = false)
 
-namespace Dump {
+namespace dump {
 enum Category : usize {
     
     Config    = 0b0000001,
@@ -39,8 +39,9 @@ enum Category : usize {
     Dma       = 0b0100000,
     BankMap   = 0b1000000
 };
-}
 
+}
+    
 class HardwareComponent : public C64Object {
     
     friend class C64;
@@ -81,8 +82,8 @@ protected:
      * behaviour of the well known Java construct 'synchronized(this) { }'.
      */
     util::ReentrantMutex mutex;
-
     
+
     //
     // Initializing
     //
@@ -166,10 +167,10 @@ public:
      * parameter is a bit field which can be used to limit the displayed
      * information to certain categories.
      */
-    void dump(Dump::Category category, std::ostream& ss) const;
-    virtual void _dump(Dump::Category category, std::ostream& ss) const { };
+    void dump(dump::Category category, std::ostream& ss) const;
+    virtual void _dump(dump::Category category, std::ostream& ss) const { };
 
-    void dump(Dump::Category category) const;
+    void dump(dump::Category category) const;
     void dump(std::ostream& ss) const;
     void dump() const;
     
@@ -286,36 +287,37 @@ protected:
     void setDebug(bool enable);
     virtual void _setDebug(bool enable) { }
 
-//
-// Standard implementations of _reset, _load, and _save
-//
-
+    
+    //
+    // Standard implementations of _reset, _load, and _save
+    //
+    
 #define COMPUTE_SNAPSHOT_SIZE \
 util::SerCounter counter; \
 applyToPersistentItems(counter); \
 applyToResetItems(counter); \
 return counter.count;
-
+    
 #define RESET_SNAPSHOT_ITEMS \
 util::SerResetter resetter; \
 applyToResetItems(resetter);
-
+    
     // trace(SNP_DEBUG, "Resetted\n");
-
+    
 #define LOAD_SNAPSHOT_ITEMS \
 util::SerReader reader(buffer); \
 applyToPersistentItems(reader); \
 applyToResetItems(reader); \
 return reader.ptr - buffer;
-
+    
     // trace(SNP_DEBUG, "Recreated from %d bytes\n", reader.ptr - buffer);
-
+    
 #define SAVE_SNAPSHOT_ITEMS \
 util::SerWriter writer(buffer); \
 applyToPersistentItems(writer); \
 applyToResetItems(writer); \
 return writer.ptr - buffer;
-
+    
     // trace(SNP_DEBUG, "Serialized to %d bytes\n", writer.ptr - buffer);
-
+    
 };

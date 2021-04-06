@@ -51,7 +51,7 @@ Keyboard::_reset()
 }
 
 void
-Keyboard::_dump(Dump::Category category, std::ostream& os) const
+Keyboard::_dump(dump::Category category, std::ostream& os) const
 {
 	msg("Keyboard:\n");
 	msg("---------\n\n");

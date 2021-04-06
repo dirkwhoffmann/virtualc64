@@ -379,7 +379,7 @@ RetroShell::exec(std::istream &stream)
 }
 
 void
-RetroShell::dump(HardwareComponent &component, Dump::Category category)
+RetroShell::dump(HardwareComponent &component, dump::Category category)
 {
     std::stringstream ss; string line;
     

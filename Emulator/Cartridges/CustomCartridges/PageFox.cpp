@@ -23,7 +23,7 @@ PageFox::_reset()
 }
 
 void
-PageFox::_dump(Dump::Category category, std::ostream& os) const
+PageFox::_dump(dump::Category category, std::ostream& os) const
 {
     Cartridge::_dump(category, os);
     

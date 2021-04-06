@@ -450,7 +450,7 @@ VICII::_dumpConfig() const
 }
 
 void
-VICII::_dump(Dump::Category category, std::ostream& os) const
+VICII::_dump(dump::Category category, std::ostream& os) const
 {
     u8 ctrl1 = reg.current.ctrl1;
     u8 ctrl2 = reg.current.ctrl2; 

@@ -34,7 +34,7 @@ IEC::_reset()
 }
 
 void
-IEC::_dump(Dump::Category category, std::ostream& os) const
+IEC::_dump(dump::Category category, std::ostream& os) const
 {
 	msg("IEC bus\n");
 	msg("-------\n");

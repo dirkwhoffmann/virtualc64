@@ -467,7 +467,7 @@ SIDBridge::_pause()
 }
 
 void
-SIDBridge::_dump(Dump::Category category, std::ostream& os) const
+SIDBridge::_dump(dump::Category category, std::ostream& os) const
 {
     _dump(0);
 }

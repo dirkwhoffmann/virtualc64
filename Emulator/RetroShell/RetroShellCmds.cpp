@@ -63,13 +63,13 @@ RetroShell::exec <Token::source> (Arguments &argv, long param)
 template <> void
 RetroShell::exec <Token::c64, Token::inspect> (Arguments &argv, long param)
 {
-    dump(c64, Dump::State);
+    dump(c64, dump::State);
 }
 
 template <> void
 RetroShell::exec <Token::c64, Token::config> (Arguments &argv, long param)
 {
-    dump(c64, Dump::Config);
+    dump(c64, dump::Config);
 }
 
 template <> void

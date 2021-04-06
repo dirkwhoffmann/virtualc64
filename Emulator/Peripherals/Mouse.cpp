@@ -32,7 +32,7 @@ void Mouse::_reset()
 }
 
 void
-Mouse::_dump(Dump::Category category, std::ostream& os) const
+Mouse::_dump(dump::Category category, std::ostream& os) const
 {
     msg("Mouse %lld:\n", port.nr);
     msg("--------\n");

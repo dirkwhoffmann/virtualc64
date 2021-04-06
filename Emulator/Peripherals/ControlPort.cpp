@@ -23,7 +23,7 @@ ControlPort::ControlPort(C64 &ref, PortId id) : C64Component(ref), nr(id)
 }
 
 void
-ControlPort::_dump(Dump::Category category, std::ostream& os) const
+ControlPort::_dump(dump::Category category, std::ostream& os) const
 {
 }
 
