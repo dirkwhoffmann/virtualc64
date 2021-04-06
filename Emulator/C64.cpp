@@ -234,7 +234,7 @@ C64::configure(Option option, i64 value)
     bool changed = HardwareComponent::configure(option, value);
         
     // Inform the GUI if the configuration has changed
-    if (changed) messageQueue.put(MSG_CONFIG);
+    if (changed) msgQueue.put(MSG_CONFIG);
     
     // Dump the current configuration in debugging mode
     if (changed && CNF_DEBUG) dump(dump::Config);
@@ -251,7 +251,7 @@ C64::configure(Option option, long id, i64 value)
     bool changed = HardwareComponent::configure(option, id, value);
     
     // Inform the GUI if the configuration has changed
-    if (changed) messageQueue.put(MSG_CONFIG);
+    if (changed) msgQueue.put(MSG_CONFIG);
     
     // Dump the current configuration in debugging mode
     if (changed && CNF_DEBUG) dump(dump::Config);
@@ -598,7 +598,7 @@ C64::powerOn()
         inspect();
 
         // Inform the GUI
-        messageQueue.put(MSG_POWER_ON);
+        msgQueue.put(MSG_POWER_ON);
     }
 }
 
@@ -628,7 +628,7 @@ C64::powerOff()
         inspect();
         
         // Inform the GUI
-        messageQueue.put(MSG_POWER_OFF);
+        msgQueue.put(MSG_POWER_OFF);
     }
 }
 
@@ -656,7 +656,7 @@ C64::run()
         pthread_create(&p, nullptr, threadMain, (void *)this);
 
         // Inform the GUI
-        messageQueue.put(MSG_RUN);
+        msgQueue.put(MSG_RUN);
     }
 }
 
@@ -682,7 +682,7 @@ C64::pause()
         inspect();
         
         // Inform the GUI
-        messageQueue.put(MSG_PAUSE);
+        msgQueue.put(MSG_PAUSE);
     }
 }
 
@@ -698,7 +698,7 @@ C64::shutdown()
      * knows that the Amiga is powered off and the message queue empty. From
      * this time on, it is safe to destroy the emulator object.
      */
-    messageQueue.put(MSG_SHUTDOWN);
+    msgQueue.put(MSG_SHUTDOWN);
 }
 
 void
@@ -1183,11 +1183,11 @@ C64::loadFromSnapshot(Snapshot *snapshot)
     
     // Check if this snapshot is compatible with the emulator
     if (snapshot->isTooOld() || FORCE_SNAPSHOT_TOO_OLD) {
-        messageQueue.put(MSG_SNAPSHOT_TOO_OLD);
+        msgQueue.put(MSG_SNAPSHOT_TOO_OLD);
         return false;
     }
     if (snapshot->isTooNew() || FORCE_SNAPSHOT_TOO_NEW) {
-        messageQueue.put(MSG_SNAPSHOT_TOO_NEW);
+        msgQueue.put(MSG_SNAPSHOT_TOO_NEW);
         return false;
     }
     
@@ -1198,7 +1198,7 @@ C64::loadFromSnapshot(Snapshot *snapshot)
     keyboard.releaseAll();
     
     // Inform the GUI
-    messageQueue.put(MSG_SNAPSHOT_RESTORED);
+    msgQueue.put(MSG_SNAPSHOT_RESTORED);
     
     if (SNP_DEBUG) dump();
     return true;
@@ -1640,7 +1640,7 @@ C64::flash(AnyCollection *file, unsigned nr)
     }
     resume();
     
-    messageQueue.put(MSG_FILE_FLASHED);
+    msgQueue.put(MSG_FILE_FLASHED);
     return result;
 }
 
@@ -1660,6 +1660,6 @@ C64::flash(const FSDevice &fs, usize nr)
 
     resume();
     
-    messageQueue.put(MSG_FILE_FLASHED);
+    msgQueue.put(MSG_FILE_FLASHED);
     return result;
 }

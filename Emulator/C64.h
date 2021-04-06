@@ -113,7 +113,7 @@ public:
     /* Communication channel to the GUI. The GUI registers a listener and a
      * callback function to retrieve messages.
      */
-    MsgQueue messageQueue = MsgQueue(*this);
+    MsgQueue msgQueue = MsgQueue(*this);
 
     
     //
@@ -347,14 +347,14 @@ public:
     
     // Registers a listener callback function
     void addListener(const void *sender, void(*func)(const void *, long, long) ) {
-        messageQueue.addListener(sender, func);
+        msgQueue.addListener(sender, func);
     }
         
     // Gets a notification message from message queue
-    Message getMessage() { return messageQueue.get(); }
+    Message getMessage() { return msgQueue.get(); }
     
     // Feeds a notification message into message queue
-    void putMessage(MsgType msg, u64 data = 0) { messageQueue.put(msg, data); }
+    void putMessage(MsgType msg, u64 data = 0) { msgQueue.put(msg, data); }
     
     
  
