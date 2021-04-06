@@ -80,7 +80,6 @@
 @interface HardwareComponentProxy : Proxy { }
 
 - (void)dump;
-- (void)dumpConfig;
 
 @end
 

@@ -10,6 +10,7 @@
 #include "config.h"
 #include "VICII.h"
 #include "C64.h"
+#include "IO.h"
 
 #define SPR0 0x01
 #define SPR1 0x02
@@ -439,51 +440,83 @@ VICII::_inspect()
 }
 
 void
-VICII::_dumpConfig() const
-{
-    msg("    Chip model : %s\n", VICIIRevisionEnum::key(config.revision));
-    msg("  Gray dot bug : %s\n", config.grayDotBug ? "yes" : "no");
-    msg("           PAL : %s\n", isPAL() ? "yes" : "no");
-    msg("          NTSC : %s\n", isNTSC() ? "yes" : "no");
-    msg("is656x, is856x : %d %d\n", is656x(), is856x());
-    msg("    Glue logic : %lld (%s)\n", config.glueLogic, GlueLogicEnum::key(config.glueLogic));
-}
-
-void
 VICII::_dump(dump::Category category, std::ostream& os) const
 {
-    u8 ctrl1 = reg.current.ctrl1;
-    u8 ctrl2 = reg.current.ctrl2; 
-    int yscroll = ctrl1 & 0x07;
-    int xscroll = ctrl2 & 0x07;
-    DisplayMode mode = (DisplayMode)((ctrl1 & 0x60) | (ctrl2 & 0x10));
+    using namespace util;
     
-	msg("     Bank address : %04X\n", bankAddr);
-    msg("    Screen memory : %04X\n", VM13VM12VM11VM10() << 6);
-	msg(" Character memory : %04X\n", (CB13CB12CB11() << 10) % 0x4000);
-	msg("X/Y raster scroll : %d / %d\n", xscroll, yscroll);
-    msg("    Control reg 1 : %02X\n", reg.current.ctrl1);
-    msg("    Control reg 2 : %02X\n", reg.current.ctrl2);
-	msg("     Display mode : %s\n", DisplayModeEnum::key(mode));
-    msg("          badLine : %s\n", badLine ? "yes" : "no");
-    msg("    DENwasSetIn30 : %s\n", DENwasSetInRasterline30 ? "yes" : "no");
-	msg("               VC : %02X\n", vc);
-	msg("           VCBASE : %02X\n", vcBase);
-	msg("               RC : %02X\n", rc);
-	msg("             VMLI : %02X\n", vmli);
-	msg("          BA line : %s\n", baLine.current() ? "low" : "high");
-    msg("      MainFrameFF : %d\n", flipflops.current.main);
-    msg("  VerticalFrameFF : %d\n", flipflops.current.vertical);
-	msg("     DisplayState : %s\n", displayState ? "on" : "off");
-    msg("    SpriteDisplay : %02X (%02X)\n", spriteDisplay, spriteDisplayDelayed);
-	msg("        SpriteDma : %02X ( ", spriteDmaOnOff);
-	for (usize i = 0; i < 8; i++)
-		msg("%d ", (spriteDmaOnOff & (1 << i)) != 0 );
-	msg(")\n");
-	msg("      Y expansion : %02X ( ", expansionFF);
-	for (usize i = 0; i < 8; i++) 
-		msg("%d ", (expansionFF & (1 << i)) != 0);
-	msg(")\n");
+    if (category & dump::Config) {
+
+        os << tab("Chip model");
+        os << VICIIRevisionEnum::key(config.revision) << std::endl;
+        os << tab("Chip model");
+        os << VICIIRevisionEnum::key(config.revision) << std::endl;
+        os << tab("Gray dot bug");
+        os << bol(config.grayDotBug) << std::endl;
+        os << tab("PAL");
+        os << bol(isPAL()) << std::endl;
+        os << tab("NTSC");
+        os << bol (isNTSC()) << std::endl;
+        os << tab("is656x");
+        os << bol(is656x()) << std::endl;
+        os << tab("is856x");
+        os << bol(is856x()) << std::endl;
+        os << tab("Glue logic");
+        os << GlueLogicEnum::key(config.glueLogic) << std::endl;
+    }
+    
+    if (category & dump::State) {
+        
+        u8 ctrl1 = reg.current.ctrl1;
+        u8 ctrl2 = reg.current.ctrl2;
+        int yscroll = ctrl1 & 0x07;
+        int xscroll = ctrl2 & 0x07;
+        DisplayMode mode = (DisplayMode)((ctrl1 & 0x60) | (ctrl2 & 0x10));
+        u16 screenMem = VM13VM12VM11VM10() << 6;
+        u16 charMem = (CB13CB12CB11() << 10) % 0x4000;
+        
+        os << tab("Bank address");
+        os << hex(bankAddr) << std::endl;
+        os << tab("Screen memory");
+        os << hex(screenMem) << std::endl;
+        os << tab("Character memory");
+        os << hex(charMem) << std::endl;
+        os << tab("X/Y raster scroll : ");
+        os << xscroll << " / " << yscroll << std::endl;
+        os << tab("Control reg 1");
+        os << hex(reg.current.ctrl1) << std::endl;
+        os << tab("Control reg 2");
+        os << hex(reg.current.ctrl2) << std::endl;
+        os << tab("Display mode");
+        os << DisplayModeEnum::key(mode) << std::endl;
+        os << tab("badLine");
+        os << bol(badLine) << std::endl;
+        os << tab("DENwasSetIn30");
+        os << bol(DENwasSetInRasterline30) << std::endl;
+        os << tab("VC");
+        os << hex(vc) << std::endl;
+        os << tab("VCBASE");
+        os << hex(vcBase) << std::endl;
+        os << tab("RC");
+        os << hex(rc) << std::endl;
+        os << tab("VMLI");
+        os << hex(vmli) << std::endl;
+        os << tab("BA line");
+        os << bol(baLine.current(), "low", "high") << std::endl;
+        os << tab("MainFrameFF");
+        os << bol(flipflops.current.main, "set", "cleared") << std::endl;
+        os << tab("VerticalFrameFF");
+        os << bol(flipflops.current.vertical, "set", "cleared") << std::endl;
+        os << tab("DisplayState");
+        os << bol(displayState, "on", "off") << std::endl;
+        os << tab("SpriteDisplay");
+        os << hex(spriteDisplay) << " / " << hex(spriteDisplayDelayed) << std::endl;
+        os << tab("SpriteDma");
+        os << hex(spriteDmaOnOff) << std::endl;
+        os << tab("Y expansion");
+        os << hex(expansionFF) << std::endl;
+        os << tab("expansionFF");
+        os << hex(expansionFF) << std::endl;
+    }
 }
 
 SpriteInfo

@@ -171,11 +171,7 @@ public:
     SamplingMethod getSamplingMethod() const;
     void setSamplingMethod(SamplingMethod method);
 
-private:
-    
-    void _dumpConfig() const override;
-    
-    
+        
     //
     // Analyzing
     //

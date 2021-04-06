@@ -245,7 +245,7 @@ C64::configure(Option option, i64 value)
     if (changed) messageQueue.put(MSG_CONFIG);
     
     // Dump the current configuration in debugging mode
-    if (changed && CNF_DEBUG) dumpConfig();
+    if (changed && CNF_DEBUG) dump(dump::Config);
 
     return changed;
 }
@@ -262,7 +262,7 @@ C64::configure(Option option, long id, i64 value)
     if (changed) messageQueue.put(MSG_CONFIG);
     
     // Dump the current configuration in debugging mode
-    if (changed && CNF_DEBUG) dumpConfig();
+    if (changed && CNF_DEBUG) dump(dump::Config);
 
     return changed;
 }

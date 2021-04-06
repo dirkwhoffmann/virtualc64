@@ -117,22 +117,18 @@ public:
      * setConfigItem(). The function returns true iff the current configuration
      * has changed.
      */
-    bool configure(Option option, i64 value);
-    bool configure(Option option, long id, i64 value);
+    bool configure(Option option, i64 value) throws;
+    bool configure(Option option, long id, i64 value) throws;
     
     /* Requests the change of a single configuration item. Each sub-component
      * checks if it is responsible for the requested configuration item. If
      * yes, it changes the internal state. If no, it ignores the request.
      * The function returns true iff the current configuration has changed.
      */
-    virtual bool setConfigItem(Option option, i64 value) { return false; }
-    virtual bool setConfigItem(Option option, long id, i64 value) { return false; }
-    
-    // Dumps debug information about the current configuration to the console
-    void dumpConfig() const;
-    virtual void _dumpConfig() const { }
-    
-    
+    virtual bool setConfigItem(Option option, i64 value) throws { return false; }
+    virtual bool setConfigItem(Option option, long id, i64 value) throws { return false; }
+        
+
     //
     // Analyzing
     //

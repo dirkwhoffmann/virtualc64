@@ -597,10 +597,6 @@ public:
     void setDmaDebugColor(MemAccess type, GpuColor color);
     void setDmaDebugColor(MemAccess type, RgbColor color);
     
-private:
-    
-    void _dumpConfig() const override;
-
 
     //
     // Analyzing

@@ -47,11 +47,6 @@
     [self hwc]->dump();
 }
 
-- (void)dumpConfig
-{
-    [self hwc]->dumpConfig();
-}
-
 @end
 
 //

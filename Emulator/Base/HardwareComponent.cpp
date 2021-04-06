@@ -210,20 +210,6 @@ HardwareComponent::inspect()
     _inspect();
 }
 
-void
-HardwareComponent::dumpConfig() const
-{
-    // Dump the configuration of all subcomponents
-    for (HardwareComponent *c : subComponents) {
-        c->dumpConfig();
-    }
-
-    // Dump the configuration of this component
-    msg("%s (%p):\n", getDescription(), this);
-    _dumpConfig();
-    msg("\n");
-}
-
 void HardwareComponent::dump(dump::Category category, std::ostream& ss) const
 {
     _dump(category, ss);

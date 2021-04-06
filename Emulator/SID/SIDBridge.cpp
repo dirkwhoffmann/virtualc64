@@ -10,6 +10,7 @@
 #include "config.h"
 #include "SIDBridge.h"
 #include "C64.h"
+#include "IO.h"
 
 #include <algorithm>
 #include <cmath>
@@ -427,25 +428,6 @@ SIDBridge::setSamplingMethod(SamplingMethod method)
     }
 }
 
-void
-SIDBridge::_dumpConfig() const
-{
-    msg("  Chip revision : %s\n",   SIDRevisionEnum::key(config.revision));
-    msg("    Enable mask : %x\n",   config.enabled);
-    msg("  1st extra SID : %x\n",   config.address[1]);
-    msg("  2nd extra SID : %x\n",   config.address[2]);
-    msg("  3rd extra SID : %x\n",   config.address[3]);
-    msg("         Filter : %s\n",   config.filter ? "yes" : "no");
-    msg("         Engine : %s\n",   SIDEngineEnum::key(config.engine));
-    msg("       Sampling : %s\n",   SamplingMethodEnum::key(config.sampling));
-    msg("       Volume 1 : %lld\n", config.vol[0]);
-    msg("       Volume 2 : %lld\n", config.vol[1]);
-    msg("       Volume 3 : %lld\n", config.vol[2]);
-    msg("       Volume 4 : %lld\n", config.vol[3]);
-    msg("       Volume L : %lld\n", config.volL);
-    msg("       Volume R : %lld\n", config.volR);
-}
-
 usize
 SIDBridge::didLoadFromBuffer(const u8 *buffer)
 {
@@ -469,6 +451,40 @@ SIDBridge::_pause()
 void
 SIDBridge::_dump(dump::Category category, std::ostream& os) const
 {
+    using namespace util;
+    
+    if (category & dump::Config) {
+        
+        os << tab("Chip revision");
+        os << SIDRevisionEnum::key(config.revision) << std::endl;
+        os << tab("Enable mask");
+        os << dec(config.enabled) << std::endl;
+        os << tab("1st extra SID");
+        os << hex(config.address[1]) << std::endl;
+        os << tab("2nd extra SID");
+        os << hex(config.address[2]) << std::endl;
+        os << tab("3rd extra SID");
+        os << hex(config.address[3]) << std::endl;
+        os << tab("Filter");
+        os << bol(config.filter) << std::endl;
+        os << tab("Engine");
+        os << SIDEngineEnum::key(config.engine) << std::endl;
+        os << tab("Sampling : %s\n");
+        os << SamplingMethodEnum::key(config.sampling) << std::endl;
+        os << tab("Volume 1\n");
+        os << config.vol[0] << std::endl;
+        os << tab("Volume 2\n");
+        os << config.vol[1] << std::endl;
+        os << tab("Volume 3\n");
+        os << config.vol[2] << std::endl;
+        os << tab("Volume 4 \n");
+        os << config.vol[3] << std::endl;
+        os << tab("Volume L\n");
+        os << config.volL << std::endl;
+        os << tab("Volume R\n");
+        os << config.volR << std::endl;
+    }
+                                
     _dump(0);
 }
 
