@@ -106,8 +106,8 @@ private:
     isize _size() override { return __size() + romSize; }
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-    usize didLoadFromBuffer(const u8 *buffer) override;
-    usize didSaveToBuffer(u8 *buffer) override;
+    isize didLoadFromBuffer(const u8 *buffer) override;
+    isize didSaveToBuffer(u8 *buffer) override;
 
     
     //

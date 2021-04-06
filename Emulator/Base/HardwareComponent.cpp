@@ -66,10 +66,10 @@ HardwareComponent::configure(Option option, long id, i64 value)
     return result;
 }
 
-usize
+isize
 HardwareComponent::size()
 {
-    usize result = _size();
+    isize result = _size();
 
     for (HardwareComponent *c : subComponents) {
         result += c->size();
@@ -78,7 +78,7 @@ HardwareComponent::size()
     return result;
 }
 
-usize
+isize
 HardwareComponent::load(const u8 *buffer)
 {    
     const u8 *ptr = buffer;
@@ -104,7 +104,7 @@ HardwareComponent::load(const u8 *buffer)
     return ptr - buffer;
 }
 
-usize
+isize
 HardwareComponent::save(u8 *buffer)
 {
     u8 *ptr = buffer;

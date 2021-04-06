@@ -164,11 +164,10 @@ public:
      * information to certain categories.
      */
     void dump(dump::Category category, std::ostream& ss) const;
-    virtual void _dump(dump::Category category, std::ostream& ss) const { };
-
     void dump(dump::Category category) const;
     void dump(std::ostream& ss) const;
     void dump() const;
+    virtual void _dump(dump::Category category, std::ostream& ss) const { };
     
  
     //
@@ -176,25 +175,25 @@ public:
     //
     
     // Returns the size of the internal state in bytes
-    usize size();
+    isize size();
     virtual isize _size() = 0;
     
     // Loads the internal state from a memory buffer
-    usize load(const u8 *buffer);
+    isize load(const u8 *buffer);
     virtual isize _load(const u8 *buffer) = 0;
     
     // Saves the internal state to a memory buffer
-    usize save(u8 *buffer);
+    isize save(u8 *buffer);
     virtual isize _save(u8 *buffer) = 0;
     
     /* Delegation methods called inside load() or save(). Some components
      * override these methods to add custom behavior if not all elements can be
      * processed by the default implementation.
      */
-    virtual usize willLoadFromBuffer(const u8 *buffer) { return 0; }
-    virtual usize didLoadFromBuffer(const u8 *buffer) { return 0; }
-    virtual usize willSaveToBuffer(const u8 *buffer) {return 0; }
-    virtual usize didSaveToBuffer(u8 *buffer) { return 0; }
+    virtual isize willLoadFromBuffer(const u8 *buffer) { return 0; }
+    virtual isize didLoadFromBuffer(const u8 *buffer) { return 0; }
+    virtual isize willSaveToBuffer(const u8 *buffer) {return 0; }
+    virtual isize didSaveToBuffer(u8 *buffer) { return 0; }
     
     
     //

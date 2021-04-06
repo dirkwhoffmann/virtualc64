@@ -27,7 +27,7 @@ Joystick::_dump(dump::Category category, std::ostream& os) const
     msg("  bitmask : %02X\n", getControlPort());
 }
 
-usize
+isize
 Joystick::didLoadFromBuffer(const u8 *buffer)
 {
     // Discard any active joystick movements

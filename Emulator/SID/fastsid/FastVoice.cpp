@@ -107,7 +107,7 @@ FastVoice::init(FastSID *owner, unsigned voiceNr, FastVoice *prevVoice)
     sidreg = owner->sidreg + (voiceNr * 7);
 }
 
-usize
+isize
 FastVoice::didLoadFromBuffer(const u8 *buffer)
 {
     updateWaveTablePtr();

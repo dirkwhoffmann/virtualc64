@@ -428,7 +428,7 @@ SIDBridge::setSamplingMethod(SamplingMethod method)
     }
 }
 
-usize
+isize
 SIDBridge::didLoadFromBuffer(const u8 *buffer)
 {
     clearRingbuffer();

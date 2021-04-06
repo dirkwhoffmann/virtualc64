@@ -84,8 +84,8 @@ private:
     isize _size() override { return Cartridge::_size() + __size(); }
     isize _load(const u8 *buffer) override { return Cartridge::_load(buffer); }
     isize _save(u8 *buffer) override { return Cartridge::_save(buffer); }
-    usize didLoadFromBuffer(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    usize didSaveToBuffer(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+    isize didLoadFromBuffer(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
+    isize didSaveToBuffer(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
 
     
     //

@@ -80,7 +80,7 @@ FlashRom::_dump(dump::Category category, std::ostream& os) const
     msg("       rom: %p\n\n", rom);
 }
 
-usize
+isize
 FlashRom::didLoadFromBuffer(const u8 *buffer)
 {
     util::SerReader reader(buffer);
@@ -89,7 +89,7 @@ FlashRom::didLoadFromBuffer(const u8 *buffer)
     return romSize;
 }
 
-usize
+isize
 FlashRom::didSaveToBuffer(u8 *buffer)
 {
     util::SerWriter writer(buffer);
