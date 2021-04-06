@@ -130,7 +130,10 @@ SIDBridge::setConfigItem(Option option, i64 value)
             
             suspend();
             config.revision = (SIDRevision)value;
-            setRevision((SIDRevision)value);
+            for (int i = 0; i < 4; i++) {
+                resid[i].setRevision(value);
+                fastsid[i].setRevision(value);
+            }
             resume();
             
             return true;
@@ -143,7 +146,10 @@ SIDBridge::setConfigItem(Option option, i64 value)
 
             suspend();
             config.filter = value;
-            setAudioFilter(value);
+            for (int i = 0; i < 4; i++) {
+                resid[i].setAudioFilter(value);
+                fastsid[i].setAudioFilter(value);
+            }
             resume();
             
             return true;
@@ -170,7 +176,10 @@ SIDBridge::setConfigItem(Option option, i64 value)
 
             suspend();
             config.sampling = (SamplingMethod)value;
-            setSamplingMethod((SamplingMethod)value);
+            for (int i = 0; i < 4; i++) {
+                resid[i].setSamplingMethod(value);
+                // Note: fastSID has no such option
+            }
             resume();
             
             return true;
@@ -330,30 +339,6 @@ SIDBridge::setClockFrequency(u32 frequency)
     }
 }
 
-SIDRevision
-SIDBridge::getRevision() const
-{
-    SIDRevision result = resid[0].getRevision();
-    
-    for (int i = 0; i < 4; i++) {
-        assert(resid[i].getRevision() == result);
-        assert(fastsid[i].getRevision() == result);
-    }
-    
-    return result;
-}
-
-void
-SIDBridge::setRevision(SIDRevision revision)
-{
-    trace(SID_DEBUG, "Setting SID revision to %s\n", SIDRevisionEnum::key(revision));
-
-    for (int i = 0; i < 4; i++) {
-        resid[i].setRevision(revision);
-        fastsid[i].setRevision(revision);
-    }
-}
-
 double
 SIDBridge::getSampleRate() const
 {
@@ -378,54 +363,6 @@ SIDBridge::setSampleRate(double rate)
         resid[i].setSampleRate(rate);
         fastsid[i].setSampleRate(rate);
     }    
-}
-
-bool
-SIDBridge::getAudioFilter() const
-{
-    bool result = resid[0].getAudioFilter();
-    
-    for (int i = 0; i < 4; i++) {
-        assert(resid[i].getAudioFilter() == result);
-        assert(fastsid[i].getAudioFilter() == result);
-    }
-    
-    return result;
-}
-
-void
-SIDBridge::setAudioFilter(bool enable)
-{
-    trace(SID_DEBUG, "%s audio filter\n", enable ? "Enabling" : "Disabling");
-
-    for (int i = 0; i < 4; i++) {
-        resid[i].setAudioFilter(enable);
-        fastsid[i].setAudioFilter(enable);
-    }
-}
-
-SamplingMethod
-SIDBridge::getSamplingMethod() const
-{
-    SamplingMethod result = resid[0].getSamplingMethod();
-    
-    for (int i = 0; i < 4; i++) {
-        assert(resid[i].getSamplingMethod() == result);
-        // Note: fastSID has no such option
-    }
-    
-    return result;
-}
-
-void
-SIDBridge::setSamplingMethod(SamplingMethod method)
-{
-    trace(SID_DEBUG, "Setting sampling method to %s\n",SamplingMethodEnum::key(method));
-
-    for (int i = 0; i < 4; i++) {
-        resid[i].setSamplingMethod(method);
-        // Note: fastSID has no such option
-    }
 }
 
 isize

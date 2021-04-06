@@ -155,23 +155,11 @@ public:
 
     u32 getClockFrequency();
     void setClockFrequency(u32 frequency);
-
-    // DEPRECATED: Use OPT_xxx
-    SIDRevision getRevision() const;
-    void setRevision(SIDRevision revision);
     
     double getSampleRate() const;
     void setSampleRate(double rate);
     
-    // DEPRECATED: Use OPT_xxx
-    bool getAudioFilter() const;
-    void setAudioFilter(bool enable);
 
-    // DEPRECATED: Use OPT_xxx
-    SamplingMethod getSamplingMethod() const;
-    void setSamplingMethod(SamplingMethod method);
-
-        
     //
     // Analyzing
     //
