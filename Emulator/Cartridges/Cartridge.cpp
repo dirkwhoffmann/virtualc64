@@ -224,7 +224,7 @@ Cartridge::_dump(dump::Category category, std::ostream& os) const
     msg("\n");
 }
 
-usize
+isize
 Cartridge::_size()
 {
     util::SerCounter counter;
@@ -241,7 +241,7 @@ Cartridge::_size()
     return ramCapacity + packetSize + counter.count;
 }
 
-usize
+isize
 Cartridge::_load(const u8 *buffer)
 {
     dealloc();
@@ -272,7 +272,7 @@ Cartridge::_load(const u8 *buffer)
     return reader.ptr - buffer;
 }
 
-usize
+isize
 Cartridge::_save(u8 *buffer)
 {
     printf("Cartridge::_save = %d\n", numPackets);

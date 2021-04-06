@@ -79,9 +79,9 @@ private:
 
 private:
 
-    usize _size() override { return 0; }
-    usize _load(const u8 *buffer) override {return 0; }
-    usize _save(u8 *buffer) override { return 0; }
+    isize _size() override { return 0; }
+    isize _load(const u8 *buffer) override {return 0; }
+    isize _save(u8 *buffer) override { return 0; }
 
     
     //

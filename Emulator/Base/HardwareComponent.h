@@ -181,15 +181,15 @@ public:
     
     // Returns the size of the internal state in bytes
     usize size();
-    virtual usize _size() = 0;
+    virtual isize _size() = 0;
     
     // Loads the internal state from a memory buffer
     usize load(const u8 *buffer);
-    virtual usize _load(const u8 *buffer) = 0;
+    virtual isize _load(const u8 *buffer) = 0;
     
     // Saves the internal state to a memory buffer
     usize save(u8 *buffer);
-    virtual usize _save(u8 *buffer) = 0;
+    virtual isize _save(u8 *buffer) = 0;
     
     /* Delegation methods called inside load() or save(). Some components
      * override these methods to add custom behavior if not all elements can be

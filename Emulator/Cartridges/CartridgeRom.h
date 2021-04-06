@@ -69,9 +69,9 @@ private:
     {
     }
     
-    usize _size() override;
-    usize _load(const u8 *buffer) override;
-    usize _save(u8 *buffer) override;
+    isize _size() override;
+    isize _load(const u8 *buffer) override;
+    isize _save(u8 *buffer) override;
 
     
     //
