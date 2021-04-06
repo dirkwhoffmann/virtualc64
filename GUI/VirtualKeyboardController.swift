@@ -37,14 +37,12 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
     func showSheet() {
         
         autoClose = true
-        track("autoClose = \(autoClose)")
         super.showSheet()
     }
     
     func showWindow() {
         
         autoClose = false
-        track("autoClose = \(autoClose)")
         super.showWindow(self)
     }
     

@@ -792,7 +792,6 @@
 				5080501725873EC9004FE1F5 /* ExportDialog.swift */,
 				503C1DD224FCD1BF00D91141 /* SnapshotDialog.swift */,
 				50031B39206FB0FC00A1969B /* SnapshotController.swift */,
-				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
 				50B485FE24FA1D4100844133 /* iCarousel.h */,
 				50B485FC24FA1D3200844133 /* iCarousel.m */,
 			);
@@ -1423,13 +1422,14 @@
 		50FE5B342039B392006CE7C7 /* Peripherals */ = {
 			isa = PBXGroup;
 			children = (
+				50B1A61E25A2386F00201A2C /* HIDExtensions.swift */,
+				50FF818E1F88D9100004548A /* GamePad.swift */,
+				50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */,
+				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
+				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
 				50FE5B352039B3B7006CE7C7 /* MacKey.swift */,
 				50FE5B372039B3C5006CE7C7 /* C64Key.swift */,
 				50DF719325021FCA00953E2E /* Keycap.swift */,
-				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
-				50FF818E1F88D9100004548A /* GamePad.swift */,
-				50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */,
-				50B1A61E25A2386F00201A2C /* HIDExtensions.swift */,
 			);
 			name = Peripherals;
 			sourceTree = "<group>";
