@@ -36,7 +36,7 @@ CRTFile::getName() const
     return PETName<16>(data + 0x20, 0x00);
 }
 
-usize
+isize
 CRTFile::readFromStream(std::istream &stream)
 {
     usize result = AnyFile::readFromStream(stream);

@@ -41,13 +41,13 @@ AnyFile::fnv() const
 }
 
 void
-AnyFile::flash(u8 *buffer, usize offset)
+AnyFile::flash(u8 *buffer, isize offset)
 {
     assert(buffer);
     memcpy(buffer + offset, data, size);
 }
 
-usize
+isize
 AnyFile::readFromStream(std::istream &stream)
 {
     // Get stream size
@@ -70,8 +70,8 @@ AnyFile::readFromStream(std::istream &stream)
     return size;
 }
 
-usize
-AnyFile::readFromFile(const char *path)
+isize
+AnyFile::readFromFile(const string  &path)
 {
     assert(path);
         
@@ -88,8 +88,8 @@ AnyFile::readFromFile(const char *path)
     return result;
 }
 
-usize
-AnyFile::readFromBuffer(const u8 *buf, usize len)
+isize
+AnyFile::readFromBuffer(const u8 *buf, isize len)
 {
     assert(buf);
 

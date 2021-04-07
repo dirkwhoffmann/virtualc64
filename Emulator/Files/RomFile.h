@@ -82,5 +82,5 @@ public:
     //
     
     FileType type() const override { return romType; }
-    usize readFromStream(std::istream &stream) override;
+    isize readFromStream(std::istream &stream) override;
 };

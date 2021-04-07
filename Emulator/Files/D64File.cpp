@@ -84,7 +84,7 @@ D64File::getName() const
     return PETName<16>(data + offset(18, 0) + 0x90);
 }
 
-usize
+isize
 D64File::readFromStream(std::istream &stream)
 {
     usize result = AnyFile::readFromStream(stream);

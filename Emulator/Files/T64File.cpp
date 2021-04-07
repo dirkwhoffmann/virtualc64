@@ -162,7 +162,7 @@ T64File::collectionCount() const
 }
 
 PETName<16>
-T64File::itemName(unsigned nr) const
+T64File::itemName(isize nr) const
 {
     assert(nr < collectionCount());
     
@@ -171,16 +171,16 @@ T64File::itemName(unsigned nr) const
 }
 
 u64
-T64File::itemSize(unsigned nr) const
+T64File::itemSize(isize nr) const
 {
     assert(nr < collectionCount());
     
     // Return the number of data bytes plus 2 (for the loading address header)
-    return memEnd(nr) - memStart(nr) + 2;
+    return (u64)(memEnd(nr) - memStart(nr) + 2);
 }
 
 u8
-T64File::readByte(unsigned nr, u64 pos) const
+T64File::readByte(isize nr, u64 pos) const
 {
     assert(nr < collectionCount());
     assert(pos < itemSize(nr));
@@ -189,7 +189,7 @@ T64File::readByte(unsigned nr, u64 pos) const
     if (pos <= 1) return pos ? HI_BYTE(memStart(nr)) : LO_BYTE(memStart(nr));
     
     // Locate the first byte of the requested file
-    unsigned i = 0x48 + (nr * 0x20);
+    isize i = 0x48 + (nr * 0x20);
     u64 start = LO_LO_HI_HI(data[i], data[i+1], data[i+2], data[i+3]);
 
     // Locate the requested byte
@@ -200,13 +200,13 @@ T64File::readByte(unsigned nr, u64 pos) const
 }
 
 u16
-T64File::memStart(unsigned nr) const
+T64File::memStart(isize nr) const
 {
     return LO_HI(data[0x42 + nr * 0x20], data[0x43 + nr * 0x20]);
 }
 
 u16
-T64File::memEnd(unsigned nr) const
+T64File::memEnd(isize nr) const
 {
     return LO_HI(data[0x44 + nr * 0x20], data[0x45 + nr * 0x20]);
 }

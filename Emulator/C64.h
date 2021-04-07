@@ -552,8 +552,8 @@ public:
     
     // Flashes a single file into memory
     bool flash(AnyFile *file);
-    bool flash(AnyCollection *file, unsigned item);
-    bool flash(const FSDevice &fs, usize item);
+    bool flash(AnyCollection *file, isize item);
+    bool flash(const FSDevice &fs, isize item);
     
     //
     // Set and query ultimax mode

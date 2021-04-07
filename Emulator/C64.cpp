@@ -1624,12 +1624,12 @@ C64::flash(AnyFile *file)
 }
 
 bool
-C64::flash(AnyCollection *file, unsigned nr)
+C64::flash(AnyCollection *file, isize nr)
 {
     bool result = true;
     
-    u16 addr = file->itemLoadAddr(nr);
-    u64 size = file->itemSize(nr);
+    u16 addr = (u16)file->itemLoadAddr(nr);
+    u64 size = (u64)file->itemSize(nr);
     if (size <= 2) return false;
     
     suspend();
@@ -1657,7 +1657,7 @@ C64::flash(AnyCollection *file, unsigned nr)
 }
 
 bool
-C64::flash(const FSDevice &fs, usize nr)
+C64::flash(const FSDevice &fs, isize nr)
 {
     bool result = true;
     

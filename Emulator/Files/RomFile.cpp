@@ -468,7 +468,7 @@ RomFile::revision(RomIdentifier rev)
     }
 }
 
-usize
+isize
 RomFile::readFromStream(std::istream &stream)
 {
     romType =

@@ -180,7 +180,7 @@ public:
     //
 
     // Copies the file contents into a buffer starting at the provided offset
-    void flash(u8 *buf, usize offset = 0);
+    void flash(u8 *buf, isize offset = 0);
 
     
     //
@@ -189,9 +189,9 @@ public:
     
 protected:
 
-    virtual usize readFromStream(std::istream &stream) throws;
-    usize readFromFile(const char *path) throws;
-    usize readFromBuffer(const u8 *buf, usize len) throws;
+    virtual isize readFromStream(std::istream &stream) throws;
+    isize readFromFile(const string &path) throws;
+    isize readFromBuffer(const u8 *buf, isize len) throws;
 
 public:
     
