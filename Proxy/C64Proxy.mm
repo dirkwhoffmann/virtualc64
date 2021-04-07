@@ -2309,14 +2309,29 @@
     return RomFile::isRomFile(type, [[url path] UTF8String]);
 }
 
-- (void) loadRom:(RomFileProxy *)proxy
+- (void) loadRom:(NSURL *)url error:(ErrorCode *)ec
 {
-    [self c64]->installRom((RomFile *)proxy->obj);
+    try {
+        [self c64]->loadRom(string([[url path] UTF8String]));
+        *ec = ERROR_OK;
+    } catch (VC64Error &exception) {
+        *ec = exception.data;
+    }
 }
 
-- (void) saveRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)err
+- (void) loadRom:(RomFileProxy *)proxy
 {
-    [self c64]->saveRom(type, [[url path] UTF8String], err);
+    [self c64]->loadRom((RomFile *)proxy->obj);
+}
+
+- (void) saveRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)ec
+{
+    try {
+        [self c64]->saveRom(type, [[url path] UTF8String]);
+        *ec = ERROR_OK;
+    } catch (VC64Error &exception) {
+        *ec = exception.data;
+    }
 }
 
 - (void) deleteRom:(RomType)type

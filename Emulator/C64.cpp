@@ -1446,7 +1446,14 @@ C64::mega65KernalRev() const
 }
 
 void
-C64::installRom(RomFile *file)
+C64::loadRom(const string &path)
+{
+    RomFile *file = RomFile::make <RomFile> (path.c_str());
+    loadRom(file);
+}
+
+void
+C64::loadRom(RomFile *file)
 {
     assert(file);
     
@@ -1566,9 +1573,7 @@ C64::saveRom(RomType type, const char *path)
 void
 C64::saveRom(RomType type, const char *path, ErrorCode *ec)
 {
-    *ec = ERROR_OK;
-    
-    try { saveRom(type, path); }
+    try { saveRom(type, path); *ec = ERROR_OK; }
     catch (VC64Error &exception) { *ec = exception.data; }
 }
 

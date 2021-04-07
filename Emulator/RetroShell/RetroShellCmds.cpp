@@ -113,6 +113,12 @@ RetroShell::exec <Token::memory, Token::config> (Arguments& argv, long param)
     dump(c64.mem, dump::Config);
 }
 
+template <> void
+RetroShell::exec <Token::memory, Token::load> (Arguments& argv, long param)
+{
+    c64.loadRom(argv.front());
+}
+
 /*
 template <> void
 RetroShell::exec <Token::memory, Token::load, Token::rom> (Arguments& argv, long param)

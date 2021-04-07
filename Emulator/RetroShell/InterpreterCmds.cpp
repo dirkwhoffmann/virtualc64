@@ -95,6 +95,9 @@ Interpreter::registerInstructions()
              "key", "Determines how Ram is initialized on startup",
              &RetroShell::exec <Token::memory, Token::set, Token::raminitpattern>, 1);
     
+    root.add({"memory", "load"},
+             "command", "Installs a Rom image",
+             &RetroShell::exec <Token::memory, Token::load>, 1);
     /*
     root.add({"memory", "load"},
              "command", "Installs a Rom image");

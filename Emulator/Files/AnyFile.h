@@ -109,7 +109,7 @@ public:
         if (!T::isCompatibleName(path)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
         
         std::ifstream stream(path);
-        if (!stream.is_open()) throw VC64Error(ERROR_FILE_NOT_FOUND);
+        if (!stream.is_open()) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
         return make <T> (stream);
     }
 

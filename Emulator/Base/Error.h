@@ -19,7 +19,8 @@
 struct VC64Error : public util::Exception
 {
     VC64Error(ErrorCode code) : Exception((i64)code) { }
-    
+    VC64Error(ErrorCode code, const string &s) : Exception(s, (i64)code) { }
+
     const char *what() const throw() override;    
 };
 

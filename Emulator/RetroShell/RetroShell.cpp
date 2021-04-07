@@ -347,8 +347,18 @@ RetroShell::exec(const string &command, bool verbose)
         *this << '\n';
         
     } catch (VC64Error &err) {
-        *this << err.what();
-        *this << '\n';
+        
+        switch (err.data) {
+                
+            case ERROR_FILE_NOT_FOUND:
+                *this << err.description << " not found" << '\n';
+                success = true; // Don't break the execution
+                break;
+                
+            default:
+                *this << "Command failed with error code " << (isize)err.data;
+                *this << " (" << err.what() << ")" << '\n';
+        }
     }
     
     return success;

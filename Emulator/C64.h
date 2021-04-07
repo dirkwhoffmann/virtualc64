@@ -534,7 +534,8 @@ private:
 public:
     
     // Installs a Rom
-    void installRom(RomFile *file);
+    void loadRom(const string &path) throws;
+    void loadRom(RomFile *file);
     
     // Erases an installed Rom
     void deleteRom(RomType type);

@@ -146,7 +146,6 @@ Interpreter::exec(Arguments &argv, bool verbose)
     if ((isize)argv.size() > current->numArgs) throw TooManyArgumentsError(current->tokens());
     
     // Call the command handler
-    printf("TODO:CALL COMMAND HANDLER FOR command object %p\n", current);
     (retroShell.*(current->action))(argv, current->param);
 }
 

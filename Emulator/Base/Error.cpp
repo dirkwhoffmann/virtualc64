@@ -13,7 +13,7 @@
 const char *
 VC64Error::what() const throw()
 {
-    return  ErrorCodeEnum::key(data);
+    return ErrorCodeEnum::key(data);
 }
 
 const char *

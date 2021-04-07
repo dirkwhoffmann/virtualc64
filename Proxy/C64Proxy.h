@@ -185,6 +185,7 @@
 
 - (BOOL) isRom:(RomType)type url:(NSURL *)url;
 
+- (void) loadRom:(NSURL *)url error:(ErrorCode *)ec;
 - (void) loadRom:(RomFileProxy *)proxy;
 - (void) saveRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)ec;
 - (void) deleteRom:(RomType)type;
