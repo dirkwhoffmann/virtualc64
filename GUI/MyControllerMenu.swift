@@ -561,7 +561,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction func newDiskAction(_ sender: NSMenuItem!) {
         
         let id = DriveID(rawValue: sender.tag)!
-        c64.drive(id)?.insertNewDisk(pref.driveBlankDiskFormat)
+        c64.drive(id)?.insertNewDisk(config.blankDiskFormat)
         myAppDelegate.clearRecentlyExportedDiskURLs(drive: id)
     }
     

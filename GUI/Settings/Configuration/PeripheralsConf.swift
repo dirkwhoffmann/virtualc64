@@ -19,6 +19,9 @@ extension ConfigurationController {
         perDrive8Type.selectItem(withTag: config.drive8Type)
         perDrive9Type.selectItem(withTag: config.drive9Type)
         
+        // Disk
+        perBlankDiskFormat.selectItem(withTag: config.blankDiskFormatIntValue)
+
         // Ports
         parent.gamePadManager.refresh(popup: perControlPort1, hide: true)
         parent.gamePadManager.refresh(popup: perControlPort2, hide: true)
@@ -26,7 +29,7 @@ extension ConfigurationController {
         perControlPort2.selectItem(withTag: config.gameDevice2)
 
         // Power button
-        hwPowerButton.isHidden = !bootable
+        perPowerButton.isHidden = !bootable
     }
     
     @IBAction func perDriveTypeAction(_ sender: NSPopUpButton!) {
@@ -48,7 +51,14 @@ extension ConfigurationController {
         }
         refresh()
     }
-    
+        
+    @IBAction func perBlankDiskFormatAction(_ sender: NSPopUpButton!) {
+        
+        let tag = sender.selectedTag()
+        config.blankDiskFormatIntValue = tag
+        refresh()
+    }
+
     @IBAction func perControlPortAction(_ sender: NSPopUpButton!) {
         
         track("port: \(sender.tag) device: \(sender.selectedTag())")

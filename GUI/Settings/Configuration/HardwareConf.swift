@@ -27,8 +27,6 @@ extension ConfigurationController {
                         
         track()
         
-        // let poweredOff = c64.isPoweredOff
-
         // VIC
         hwVicModelPopup.selectItem(withTag: config.vicRevision)
         
@@ -63,9 +61,6 @@ extension ConfigurationController {
         hwSidEnable1.state = config.sidEnable1 ? .on : .off
         hwSidEnable2.state = config.sidEnable2 ? .on : .off
         hwSidEnable3.state = config.sidEnable3 ? .on : .off
-        // hwSidEnable1.isEnabled = poweredOff
-        // hwSidEnable2.isEnabled = poweredOff
-        // hwSidEnable3.isEnabled = poweredOff
         hwSidAddress1.selectItem(withTag: config.sidAddress1)
         hwSidAddress2.selectItem(withTag: config.sidAddress2)
         hwSidAddress3.selectItem(withTag: config.sidAddress3)
@@ -75,19 +70,7 @@ extension ConfigurationController {
 
         // Startup
         hwRamPatternPopup.selectItem(withTag: config.ramPattern)
-        
-        // Drive
-        perDrive8Connect.state = config.drive8Connected ? .on : .off
-        perDrive9Connect.state = config.drive9Connected ? .on : .off
-        perDrive8Type.selectItem(withTag: config.drive8Type)
-        perDrive9Type.selectItem(withTag: config.drive9Type)
-        
-        // Ports
-        parent.gamePadManager.refresh(popup: perControlPort1, hide: true)
-        parent.gamePadManager.refresh(popup: perControlPort2, hide: true)
-        perControlPort1.selectItem(withTag: config.gameDevice1)
-        perControlPort2.selectItem(withTag: config.gameDevice2)
-                
+
         // Power button
         hwPowerButton.isHidden = !bootable
     }

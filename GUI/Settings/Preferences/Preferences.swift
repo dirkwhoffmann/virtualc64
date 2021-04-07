@@ -23,15 +23,7 @@ class Preferences {
     //
     // General
     //
-    
-    // Floppy
-    var driveBlankDiskFormat = GeneralDefaults.std.driveBlankDiskFormat
-    var driveBlankDiskFormatIntValue: Int {
-        get { return Int(driveBlankDiskFormat.rawValue) }
-        set { driveBlankDiskFormat = DOSType.init(rawValue: newValue) ?? .NODOS }
-    }
-    var driveEjectUnasked = GeneralDefaults.std.driveEjectUnasked
-    
+        
     // Fullscreen
     var keepAspectRatio = GeneralDefaults.std.keepAspectRatio
     var exitOnEsc = GeneralDefaults.std.exitOnEsc
@@ -58,6 +50,7 @@ class Preferences {
     }
     
     // Misc
+    var driveEjectUnasked = GeneralDefaults.std.driveEjectUnasked
     var closeWithoutAsking = GeneralDefaults.std.closeWithoutAsking
     var pauseInBackground = GeneralDefaults.std.pauseInBackground
     
@@ -126,10 +119,7 @@ class Preferences {
     func loadGeneralUserDefaults() {
         
         let defaults = UserDefaults.standard
-        
-        // Floppy
-        driveBlankDiskFormatIntValue = defaults.integer(forKey: Keys.Gen.driveBlankDiskFormat)
-        
+                
         // Fullscreen
         keepAspectRatio = defaults.bool(forKey: Keys.Gen.keepAspectRatio)
         exitOnEsc = defaults.bool(forKey: Keys.Gen.exitOnEsc)
@@ -152,9 +142,6 @@ class Preferences {
     func saveGeneralUserDefaults() {
         
         let defaults = UserDefaults.standard
-        
-        // Floppy
-        defaults.set(driveBlankDiskFormatIntValue, forKey: Keys.Gen.driveBlankDiskFormat)
         
         // Fullscreen
         defaults.set(keepAspectRatio, forKey: Keys.Gen.keepAspectRatio)

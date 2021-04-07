@@ -202,6 +202,12 @@ class Configuration {
         set { c64.configure(.DRIVE_POWER_SWITCH, drive: .DRIVE9, enable: newValue )}
     }
     
+    var blankDiskFormat = PeripheralsDefaults.std.blankDiskFormat
+    var blankDiskFormatIntValue: Int {
+        get { return Int(blankDiskFormat.rawValue) }
+        set { blankDiskFormat = DOSType.init(rawValue: newValue) ?? .NODOS }
+    }
+
     var gameDevice1 = PeripheralsDefaults.std.gameDevice1 {
         didSet {
             
@@ -583,6 +589,8 @@ class Configuration {
         drive9Connected = defaults.driveConnect[1]
         drive9Type = defaults.driveModel[1].rawValue
         
+        blankDiskFormat = defaults.blankDiskFormat
+        
         gameDevice1 = defaults.gameDevice1
         gameDevice2 = defaults.gameDevice2
         
@@ -600,6 +608,8 @@ class Configuration {
         drive9Connected = defaults.bool(forKey: Keys.Per.drive9Connect)
         drive9Type = defaults.integer(forKey: Keys.Per.drive9Model)
         
+        blankDiskFormatIntValue = defaults.integer(forKey: Keys.Per.blankDiskFormat)
+        
         gameDevice1 = defaults.integer(forKey: Keys.Per.gameDevice1)
         gameDevice2 = defaults.integer(forKey: Keys.Per.gameDevice2)
         
@@ -616,6 +626,8 @@ class Configuration {
         defaults.set(drive8Type, forKey: Keys.Per.drive8Model)
         defaults.set(drive9Connected, forKey: Keys.Per.drive9Connect)
         defaults.set(drive9Type, forKey: Keys.Per.drive9Model)
+        
+        defaults.set(blankDiskFormatIntValue, forKey: Keys.Per.blankDiskFormat)
         
         defaults.set(gameDevice1, forKey: Keys.Per.gameDevice1)
         defaults.set(gameDevice2, forKey: Keys.Per.gameDevice2)

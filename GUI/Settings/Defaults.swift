@@ -127,7 +127,6 @@ struct Keys {
     struct Gen {
         
         // Drives
-        static let driveBlankDiskFormat   = "VC64_GEN_DriveBlankDiskFormat"
         static let driveEjectUnasked      = "VC64_GEN_EjectUnasked"
         static let driveSounds            = "VC64_GEN_DriveSounds"
         static let driveSoundPan          = "VC64_GEN_DriveSoundPan"
@@ -158,10 +157,7 @@ struct Keys {
 }
 
 struct GeneralDefaults {
-    
-    // Drives
-    let driveBlankDiskFormat: DOSType
-    
+        
     // Snapshots and Screenshots
     let autoSnapshots: Bool
     let autoSnapshotInterval: Int
@@ -185,9 +181,7 @@ struct GeneralDefaults {
     //
     
     static let std = GeneralDefaults.init(
-        
-        driveBlankDiskFormat: .CBM,
-        
+                
         autoSnapshots: false,
         autoSnapshotInterval: 20,
         screenshotSource: 0,
@@ -210,9 +204,7 @@ extension UserDefaults {
         
         let defaults = GeneralDefaults.std
         let dictionary: [String: Any] = [
-            
-            Keys.Gen.driveBlankDiskFormat: Int(defaults.driveBlankDiskFormat.rawValue),
-            
+
             Keys.Gen.autoSnapshots: defaults.autoSnapshots,
             Keys.Gen.autoSnapshotInterval: defaults.autoSnapshotInterval,
             Keys.Gen.screenshotSource: defaults.screenshotSource,
@@ -237,8 +229,7 @@ extension UserDefaults {
         
         let defaults = UserDefaults.standard
         
-        let keys = [ Keys.Gen.driveBlankDiskFormat,
-                     Keys.Gen.driveEjectUnasked,
+        let keys = [ Keys.Gen.driveEjectUnasked,
                      Keys.Gen.driveSounds,
                      Keys.Gen.driveSoundPan,
                      Keys.Gen.driveInsertSound,
@@ -429,9 +420,7 @@ struct KeyboardDefaults {
 extension UserDefaults {
     
     static func registerKeyboardUserDefaults() {
-        
-        track()
-        
+                
         let defaults = KeyboardDefaults.symbolicMapping
         let dictionary: [String: Any] = [
             
@@ -748,14 +737,17 @@ extension Keys {
     struct Per {
                 
         // Drive
-        static let drive8Connect  = "VC64_PER_Drive8Connect"
-        static let drive8Model    = "VC64_PER_Drive8Type"
-        static let drive9Connect  = "VC64_PER_Drive9Connect"
-        static let drive9Model    = "VC64_PER_Drive9Type"
+        static let drive8Connect    = "VC64_PER_Drive8Connect"
+        static let drive8Model      = "VC64_PER_Drive8Type"
+        static let drive9Connect    = "VC64_PER_Drive9Connect"
+        static let drive9Model      = "VC64_PER_Drive9Type"
         
+        // Disks
+        static let blankDiskFormat  = "VC64_PER_BlankDiskFormat"
+
         // Ports
-        static let gameDevice1    = "VC64_PER_ControlPort1"
-        static let gameDevice2    = "VC64_PER_ControlPort2"
+        static let gameDevice1      = "VC64_PER_ControlPort1"
+        static let gameDevice2      = "VC64_PER_ControlPort2"
     }
 }
 
@@ -764,6 +756,8 @@ struct PeripheralsDefaults {
     var driveConnect: [Bool]
     var driveModel: [DriveType]
     
+    let blankDiskFormat: DOSType
+
     var gameDevice1: Int
     var gameDevice2: Int
     
@@ -773,11 +767,12 @@ struct PeripheralsDefaults {
     
     static let std = PeripheralsDefaults.init(
         
-        driveConnect:  [true, false],
-        driveModel:     [.VC1541II, .VC1541II],
+        driveConnect:    [true, false],
+        driveModel:      [.VC1541II, .VC1541II],
         
-        gameDevice1:   -1,
-        gameDevice2:   -1
+        blankDiskFormat: .CBM,
+        gameDevice1:     -1,
+        gameDevice2:     -1
     )
 }
 
@@ -788,13 +783,15 @@ extension UserDefaults {
         let defaults = PeripheralsDefaults.std
         let dictionary: [String: Any] = [
                         
-            Keys.Per.drive8Connect: defaults.driveConnect[0],
-            Keys.Per.drive8Model:   defaults.driveModel[0].rawValue,
-            Keys.Per.drive9Connect: defaults.driveConnect[1],
-            Keys.Per.drive9Model:   defaults.driveModel[1].rawValue,
+            Keys.Per.drive8Connect:   defaults.driveConnect[0],
+            Keys.Per.drive8Model:     defaults.driveModel[0].rawValue,
+            Keys.Per.drive9Connect:   defaults.driveConnect[1],
+            Keys.Per.drive9Model:     defaults.driveModel[1].rawValue,
             
-            Keys.Per.gameDevice1:   defaults.gameDevice1,
-            Keys.Per.gameDevice2:   defaults.gameDevice2
+            Keys.Per.blankDiskFormat: defaults.blankDiskFormat.rawValue,
+            
+            Keys.Per.gameDevice1:     defaults.gameDevice1,
+            Keys.Per.gameDevice2:     defaults.gameDevice2
         ]
         
         let userDefaults = UserDefaults.standard
@@ -809,6 +806,8 @@ extension UserDefaults {
                     Keys.Per.drive8Model,
                     Keys.Per.drive9Connect,
                     Keys.Per.drive9Model,
+                    
+                    Keys.Per.blankDiskFormat,
                     
                     Keys.Per.gameDevice1,
                     Keys.Per.gameDevice2

@@ -19,10 +19,6 @@ class PreferencesController: DialogController {
     // General preferences
     //
         
-    // Drive
-    @IBOutlet weak var genDriveBlankDiskFormat: NSPopUpButton!
-    @IBOutlet weak var genEjectUnasked: NSButton!
-
     // Fullscreen
     @IBOutlet weak var genAspectRatioButton: NSButton!
     @IBOutlet weak var genExitOnEscButton: NSButton!
@@ -37,6 +33,7 @@ class PreferencesController: DialogController {
     @IBOutlet weak var genWarpMode: NSPopUpButton!
 
     // Misc
+    @IBOutlet weak var genEjectUnasked: NSButton!
     @IBOutlet weak var genPauseInBackground: NSButton!
     @IBOutlet weak var genCloseWithoutAskingButton: NSButton!
     

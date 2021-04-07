@@ -12,11 +12,7 @@ extension PreferencesController {
     func refreshGeneralTab() {
         
         track()
-        
-        // Drive
-        genDriveBlankDiskFormat.selectItem(withTag: pref.driveBlankDiskFormatIntValue)
-        genEjectUnasked.state = pref.driveEjectUnasked ? .on : .off
-        
+                
         // Fullscreen
         genAspectRatioButton.state = pref.keepAspectRatio ? .on : .off
         genExitOnEscButton.state = pref.exitOnEsc ? .on : .off
@@ -32,6 +28,7 @@ extension PreferencesController {
         genWarpMode.selectItem(withTag: pref.warpModeIntValue)
         
         // Miscellaneous
+        genEjectUnasked.state = pref.driveEjectUnasked ? .on : .off
         genPauseInBackground.state = pref.pauseInBackground ? .on : .off
         genCloseWithoutAskingButton.state = pref.closeWithoutAsking ? .on : .off
     }
@@ -40,17 +37,6 @@ extension PreferencesController {
 
         track()
         refreshGeneralTab()
-    }
-
-    //
-    // Action methods (Drive)
-    //
-    
-    @IBAction func genBlankDiskFormatAction(_ sender: NSPopUpButton!) {
-        
-        let tag = sender.selectedTag()
-        pref.driveBlankDiskFormatIntValue = tag
-        refresh()
     }
     
     //
@@ -113,6 +99,12 @@ extension PreferencesController {
     // Action methods (Miscellaneous)
     //
     
+    @IBAction func genEjectWithoutAskingAction(_ sender: NSButton!) {
+        
+        pref.driveEjectUnasked = (sender.state == .on)
+        refresh()
+    }
+
     @IBAction func genPauseInBackgroundAction(_ sender: NSButton!) {
         
         pref.pauseInBackground = (sender.state == .on)
@@ -127,13 +119,7 @@ extension PreferencesController {
         }
         refresh()
     }
-    
-    @IBAction func genEjectWithoutAskingAction(_ sender: NSButton!) {
         
-        pref.driveEjectUnasked = (sender.state == .on)
-        refresh()
-    }
-    
     //
     // Action methods (Misc)
     //

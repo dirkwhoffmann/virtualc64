@@ -60,7 +60,6 @@
                 <outlet property="genAspectRatioButton" destination="XLu-74-7AG" id="Xjx-CV-MUc"/>
                 <outlet property="genAutoSnapshots" destination="DON-RP-HPW" id="bQG-hM-4dz"/>
                 <outlet property="genCloseWithoutAskingButton" destination="f7R-rS-Csv" id="Htu-GY-zf4"/>
-                <outlet property="genDriveBlankDiskFormat" destination="bwB-V1-tah" id="LeB-tg-x37"/>
                 <outlet property="genEjectUnasked" destination="TCJ-4m-Fvr" id="2tQ-by-wbz"/>
                 <outlet property="genExitOnEscButton" destination="8tU-em-5LP" id="yfd-1d-BGx"/>
                 <outlet property="genPauseInBackground" destination="UxY-mR-8ll" id="qPU-uQ-Fnx"/>
@@ -83,7 +82,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="646" height="526"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1095"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1536" height="935"/>
             <value key="minSize" type="size" width="646" height="526"/>
             <value key="maxSize" type="size" width="646" height="526"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
@@ -139,15 +138,6 @@ DQ
                                                 <action selector="genPresetAction:" target="-2" id="Lj6-EB-kht"/>
                                             </connections>
                                         </popUpButton>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fwF-Xv-2d2">
-                                            <rect key="frame" x="10" y="233" width="143" height="20"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Floppy Drives" id="KDa-p9-5aM">
-                                                <font key="font" metaFont="systemBold"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZCE-Ts-7pP">
                                             <rect key="frame" x="10" y="432" width="231" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
@@ -390,36 +380,6 @@ DQ
                                             </popUpButtonCell>
                                             <connections>
                                                 <action selector="genScreenshotTargetAction:" target="-2" id="0fx-Tv-s2a"/>
-                                            </connections>
-                                        </popUpButton>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kfl-9t-0Ir">
-                                            <rect key="frame" x="10" y="198" width="143" height="20"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Format of blank disks: " id="uGs-WD-6AO">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bwB-V1-tah">
-                                            <rect key="frame" x="153" y="195" width="137" height="26"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Unformatted" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="BeQ-dd-nVf" id="yzc-i7-oeL">
-                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="menu"/>
-                                                <menu key="menu" title="OtherViews" autoenablesItems="NO" id="UXj-wP-rsB">
-                                                    <items>
-                                                        <menuItem title="Unformatted" state="on" id="BeQ-dd-nVf">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                        <menuItem title="Formatted" tag="1" id="nsJ-Zt-GPQ">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                    </items>
-                                                </menu>
-                                            </popUpButtonCell>
-                                            <connections>
-                                                <action selector="genBlankDiskFormatAction:" target="-2" id="a9O-cb-1cm"/>
                                             </connections>
                                         </popUpButton>
                                     </subviews>
