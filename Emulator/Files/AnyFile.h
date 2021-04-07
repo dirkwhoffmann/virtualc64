@@ -195,17 +195,14 @@ protected:
 
 public:
     
-    virtual usize writeToStream(std::ostream &stream) throws;
-    usize writeToStream(std::ostream &stream, ErrorCode *ec);
+    virtual isize writeToStream(std::ostream &stream) throws;
+    isize writeToStream(std::ostream &stream, ErrorCode *ec);
 
     isize writeToFile(const string &path) throws;
     isize writeToFile(const string &path, ErrorCode *ec);
-
-    [[deprecated]] usize writeToFile(const char *path) throws; // DEPRECATED
-    [[deprecated]] usize writeToFile(const char *path, ErrorCode *ec); // DEPRECATED
     
-    usize writeToBuffer(u8 *buf) throws;
-    usize writeToBuffer(u8 *buf, ErrorCode *ec);
+    isize writeToBuffer(u8 *buf) throws;
+    isize writeToBuffer(u8 *buf, ErrorCode *ec);
 
 
     //
