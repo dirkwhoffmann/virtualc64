@@ -1595,7 +1595,7 @@
 
 - (NSInteger)writeToFile:(NSString *)path error:(ErrorCode *)err
 {
-    return [self file]->writeToFile([path fileSystemRepresentation], err);
+    return [self file]->writeToFile(string([path fileSystemRepresentation]), err);
 }
 
 @end

@@ -1453,6 +1453,13 @@ C64::loadRom(const string &path)
 }
 
 void
+C64::loadRom(const string &path, ErrorCode *ec)
+{
+    try { loadRom(path); *ec = ERROR_OK; }
+    catch (VC64Error &exception) { *ec = exception.data; }
+}
+
+void
 C64::loadRom(RomFile *file)
 {
     assert(file);
@@ -1524,7 +1531,7 @@ C64::deleteRom(RomType type)
 }
 
 void
-C64::saveRom(RomType type, const char *path)
+C64::saveRom(RomType type, const string &path)
 {
     switch (type) {
             
@@ -1571,7 +1578,7 @@ C64::saveRom(RomType type, const char *path)
 }
 
 void
-C64::saveRom(RomType type, const char *path, ErrorCode *ec)
+C64::saveRom(RomType type, const string &path, ErrorCode *ec)
 {
     try { saveRom(type, path); *ec = ERROR_OK; }
     catch (VC64Error &exception) { *ec = exception.data; }

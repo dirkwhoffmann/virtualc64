@@ -535,14 +535,15 @@ public:
     
     // Installs a Rom
     void loadRom(const string &path) throws;
+    void loadRom(const string &path, ErrorCode *ec);
     void loadRom(RomFile *file);
     
     // Erases an installed Rom
     void deleteRom(RomType type);
     
     // Saves a Rom to disk
-    void saveRom(RomType rom, const char *path) throws;
-    void saveRom(RomType rom, const char *path, ErrorCode *ec);
+    void saveRom(RomType rom, const string &path) throws;
+    void saveRom(RomType rom, const string &path, ErrorCode *ec);
 
     
     //

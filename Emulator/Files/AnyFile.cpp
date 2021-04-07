@@ -117,8 +117,8 @@ AnyFile::writeToStream(std::ostream &stream, ErrorCode *err)
     return 0;
 }
 
-usize
-AnyFile::writeToFile(const char *path)
+isize
+AnyFile::writeToFile(const string &path)
 {
     assert(path);
         
@@ -134,13 +134,11 @@ AnyFile::writeToFile(const char *path)
     return result;
 }
 
-usize
-AnyFile::writeToFile(const char *path, ErrorCode *err)
+isize
+AnyFile::writeToFile(const string &path, ErrorCode *ec)
 {
-    *err = ERROR_OK;
-    try { return writeToFile(path); }
-    catch (VC64Error &exception) { *err = exception.data; }
-    return 0;
+    try { *ec = ERROR_OK; return writeToFile(path); }
+    catch (VC64Error &exception) { *ec = exception.data; return 0; }
 }
 
 usize
