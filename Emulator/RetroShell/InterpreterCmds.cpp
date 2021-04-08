@@ -165,139 +165,47 @@ Interpreter::registerInstructions()
 
     
     //
-    // Agnus
+    // VICII
     //
     
-    /*
-    root.add({"agnus"},
-             "component", "Custom chip");
-
-    root.add({"agnus", "config"},
-             "command", "Displays the current configuration",
-             &RetroShell::exec <Token::agnus, Token::config>);
-    
-    root.add({"agnus", "set"},
-             "command", "Configures the component");
-        
-    root.add({"agnus", "set", "revision"},
-             "key", "Selects the emulated chip model",
-             &RetroShell::exec <Token::agnus, Token::set, Token::revision>, 1);
-
-    root.add({"agnus", "set", "slowrammirror"},
-             "key", "Enables or disables ECS Slow Ram mirroring",
-             &RetroShell::exec <Token::agnus, Token::set, Token::slowrammirror>, 1);
-
-    root.add({"agnus", "inspect"},
-             "command", "Displays the internal state");
-
-    root.add({"agnus", "inspect", "state"},
-             "category", "Displays the current state",
-             &RetroShell::exec <Token::agnus, Token::inspect, Token::state>);
-
-    root.add({"agnus", "inspect", "registers"},
-             "category", "Displays the current register value",
-             &RetroShell::exec <Token::agnus, Token::inspect, Token::registers>);
-
-    root.add({"agnus", "inspect", "events"},
-             "category", "Displays scheduled events",
-             &RetroShell::exec <Token::agnus, Token::inspect, Token::events>);
-    
-    
-    //
-    // Blitter
-    //
-    
-    root.add({"blitter"},
-             "component", "Custom Chip (Agnus)");
-    
-    root.add({"blitter", "config"},
-             "command", "Displays the current configuration",
-             &RetroShell::exec <Token::blitter, Token::config>);
-    
-    root.add({"blitter", "set"},
-             "command", "Configures the component");
-        
-    root.add({"blitter", "set", "accuracy"},
-             "level", "Selects the emulation accuracy level",
-             &RetroShell::exec <Token::blitter, Token::set, Token::accuracy>, 1);
-
-    root.add({"blitter", "inspect"},
-             "command", "Displays the internal state");
-
-    root.add({"blitter", "inspect", "state"},
-             "category", "Displays the internal state",
-             &RetroShell::exec <Token::blitter, Token::inspect, Token::state>);
-
-    root.add({"blitter", "inspect", "registers"},
-             "category", "Displays the current register value",
-             &RetroShell::exec <Token::blitter, Token::inspect, Token::registers>);
-
-    
-    //
-    // Copper
-    //
-    
-    root.add({"copper"},
-             "component", "Custom Chip (Agnus)");
-    
-    root.add({"copper", "inspect"},
-             "command", "Displays the internal state");
-
-    root.add({"copper", "inspect", "state"},
-             "category", "Displays the current state",
-             &RetroShell::exec <Token::copper, Token::inspect, Token::state>);
-
-    root.add({"copper", "inspect", "registers"},
-             "category", "Displays the current register value",
-             &RetroShell::exec <Token::copper, Token::inspect, Token::registers>);
-
-    
-    //
-    // Denise
-    //
-    
-    root.add({"denise"},
+    root.add({"vicii"},
              "component", "Custom chip");
     
-        root.add({"denise", "config"},
+    root.add({"vicii", "config"},
              "command", "Displays the current configuration",
-             &RetroShell::exec <Token::denise, Token::config>);
+             &RetroShell::exec <Token::vicii, Token::config>);
 
-    root.add({"denise", "set"},
+    root.add({"vicii", "set"},
              "command", "Configures the component");
 
-    root.add({"denise", "set", "revision"},
+    root.add({"vicii", "set", "revision"},
              "key", "Selects the emulated chip model",
-             &RetroShell::exec <Token::denise, Token::set, Token::revision>, 1);
+             &RetroShell::exec <Token::vicii, Token::set, Token::revision>, 1);
     
-    root.add({"denise", "set", "clxsprspr"},
+    root.add({"vicii", "set", "graydotbug"},
+             "key", "Enables or disables the gray dot bug",
+             &RetroShell::exec <Token::vicii, Token::set, Token::graydotbug>, 1);
+
+    root.add({"vicii", "set", "sscollisions"},
              "key", "Enables or disables sprite-sprite collision detection",
-             &RetroShell::exec <Token::denise, Token::set, Token::clxsprspr>, 1);
+             &RetroShell::exec <Token::vicii, Token::set, Token::sscollisions>, 1);
 
-    root.add({"denise", "set", "clxsprplf"},
-             "key", "Enables or disables sprite-playfield collision detection",
-             &RetroShell::exec <Token::denise, Token::set, Token::clxsprplf>, 1);
-
-    root.add({"denise", "set", "clxplfplf"},
-             "key", "Enables or disables playfield-playfield collision detection",
-             &RetroShell::exec <Token::denise, Token::set, Token::clxplfplf>, 1);
+    root.add({"vicii", "set", "sbcollisions"},
+             "key", "Enables or disables sprite-background collision detection",
+             &RetroShell::exec <Token::vicii, Token::set, Token::sbcollisions>, 1);
     
-    root.add({"denise", "inspect"},
+    root.add({"vicii", "inspect"},
              "command", "Displays the internal state");
 
-    root.add({"denise", "inspect", "state"},
+    root.add({"vicii", "inspect", "state"},
              "category", "Displays the current state",
-             &RetroShell::exec <Token::denise, Token::inspect, Token::state>);
-
-    root.add({"denise", "inspect", "registers"},
-             "category", "Displays the current register value",
-             &RetroShell::exec <Token::denise, Token::inspect, Token::registers>);
+             &RetroShell::exec <Token::vicii, Token::inspect, Token::state>);
 
     
     //
     // Monitor
     //
-
+/*
     root.add({"monitor"},
              "component", "Amiga monitor");
 

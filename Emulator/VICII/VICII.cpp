@@ -448,8 +448,6 @@ VICII::_dump(dump::Category category, std::ostream& os) const
 
         os << tab("Chip model");
         os << VICIIRevisionEnum::key(config.revision) << std::endl;
-        os << tab("Chip model");
-        os << VICIIRevisionEnum::key(config.revision) << std::endl;
         os << tab("Gray dot bug");
         os << bol(config.grayDotBug) << std::endl;
         os << tab("PAL");
@@ -480,7 +478,7 @@ VICII::_dump(dump::Category category, std::ostream& os) const
         os << hex(screenMem) << std::endl;
         os << tab("Character memory");
         os << hex(charMem) << std::endl;
-        os << tab("X/Y raster scroll : ");
+        os << tab("X/Y raster scroll");
         os << xscroll << " / " << yscroll << std::endl;
         os << tab("Control reg 1");
         os << hex(reg.current.ctrl1) << std::endl;

@@ -23,6 +23,7 @@ enum class Token
     
     // Components
     c64,audio, cia, controlport, cpu, drive, keyboard, memory, monitor, mouse,
+    vicii,
 
     // Commands
     about, audiate, autosync, clear, config, connect, disconnect, dsksync,
@@ -33,11 +34,11 @@ enum class Token
     checksums, devices, events, registers, state,
     
     // Keys
-    accuracy, bankmap, brightness, chip, clxsprspr, clxsprplf, clxplfplf,
+    accuracy, bankmap, brightness, chip,
     contrast, defaultbb, defaultfs, device, esync, extrom, extstart, fast,
-    filter, joystick, keyset, mechanics, model, palette, pan, poll, pullup,
-    raminitpattern, revision, rom, sampling, saturation, searchpath,
-    shakedetector, slow, slowramdelay, slowrammirror, speed, step, tod,
+    filter, graydotbug, joystick, keyset, mechanics, model, palette, pan, poll, pullup,
+    raminitpattern, revision, rom, sampling, saturation, sbcollisions, searchpath,
+    shakedetector, slow, slowramdelay, slowrammirror, speed, sscollisions, step, tod,
     timerbbug, unmappingtype, velocity, volume, wom
 };
 

@@ -215,140 +215,58 @@ RetroShell::exec <Token::cia, Token::inspect, Token::tod> (Arguments& argv, long
 }
 
 //
-// Agnus
+// VICII
 //
+
+template <> void
+RetroShell::exec <Token::vicii, Token::config> (Arguments& argv, long param)
+{
+    dump(c64.vic, dump::Config);
+}
+
+template <> void
+RetroShell::exec <Token::vicii, Token::set, Token::revision> (Arguments &argv, long param)
+{
+    c64.configure(OPT_VIC_REVISION, util::parseEnum <VICIIRevisionEnum> (argv.front()));
+}
+
+template <> void
+RetroShell::exec <Token::vicii, Token::set, Token::graydotbug> (Arguments &argv, long param)
+{
+    c64.configure(OPT_GRAY_DOT_BUG, util::parseBool(argv.front()));
+}
+
+template <> void
+RetroShell::exec <Token::vicii, Token::set, Token::sscollisions> (Arguments &argv, long param)
+{
+    c64.configure(OPT_SS_COLLISIONS, util::parseBool(argv.front()));
+}
+
+template <> void
+RetroShell::exec <Token::vicii, Token::set, Token::sbcollisions> (Arguments &argv, long param)
+{
+    c64.configure(OPT_SB_COLLISIONS, util::parseBool(argv.front()));
+}
+
+template <> void
+RetroShell::exec <Token::vicii, Token::inspect, Token::state> (Arguments& argv, long param)
+{
+    dump(c64.vic, dump::State);
+}
 
 /*
 template <> void
-RetroShell::exec <Token::agnus, Token::config> (Arguments &argv, long param)
+RetroShell::exec <Token::vicii, Token::inspect, Token::registers> (Arguments& argv, long param)
 {
-    dump(amiga.agnus, Dump::Config);
+    dump(c64.vic, dump::Registers);
 }
-
-template <> void
-RetroShell::exec <Token::agnus, Token::set, Token::revision> (Arguments &argv, long param)
-{
-    amiga.configure(OPT_AGNUS_REVISION, util::parseEnum <AgnusRevisionEnum> (argv.front()));
-}
-
-template <> void
-RetroShell::exec <Token::agnus, Token::set, Token::slowrammirror> (Arguments &argv, long param)
-{
-    amiga.configure(OPT_SLOW_RAM_MIRROR, util::parseBool(argv.front()));
-}
-
-template <> void
-RetroShell::exec <Token::agnus, Token::inspect, Token::state> (Arguments &argv, long param)
-{
-    dump(amiga.agnus, Dump::State);
-}
-
-template <> void
-RetroShell::exec <Token::agnus, Token::inspect, Token::registers> (Arguments &argv, long param)
-{
-    dump(amiga.agnus, Dump::Registers);
-}
-
-template <> void
-RetroShell::exec <Token::agnus, Token::inspect, Token::events> (Arguments &argv, long param)
-{
-    dump(amiga.agnus, Dump::Events);
-}
-
-//
-// Blitter
-//
-
-template <> void
-RetroShell::exec <Token::blitter, Token::config> (Arguments& argv, long param)
-{
-    dump(amiga.agnus.blitter, Dump::Config);
-}
-
-template <> void
-RetroShell::exec <Token::blitter, Token::set, Token::accuracy> (Arguments &argv, long param)
-{
-    amiga.configure(OPT_BLITTER_ACCURACY, util::parseNum(argv.front()));
-}
-
-template <> void
-RetroShell::exec <Token::blitter, Token::inspect, Token::state> (Arguments& argv, long param)
-{
-    dump(amiga.agnus.blitter, Dump::State);
-}
-
-template <> void
-RetroShell::exec <Token::blitter, Token::inspect, Token::registers> (Arguments& argv, long param)
-{
-    dump(amiga.agnus.blitter, Dump::Registers);
-}
-
-//
-// Copper
-//
-
-template <> void
-RetroShell::exec <Token::copper, Token::inspect, Token::state> (Arguments& argv, long param)
-{
-    dump(amiga.agnus.copper, Dump::State);
-}
-
-template <> void
-RetroShell::exec <Token::copper, Token::inspect, Token::registers> (Arguments& argv, long param)
-{
-    dump(amiga.agnus.copper, Dump::Registers);
-}
-
-//
-// Denise
-//
-
-template <> void
-RetroShell::exec <Token::denise, Token::config> (Arguments& argv, long param)
-{
-    dump(amiga.denise, Dump::Config);
-}
-
-template <> void
-RetroShell::exec <Token::denise, Token::set, Token::revision> (Arguments &argv, long param)
-{
-    amiga.configure(OPT_DENISE_REVISION, util::parseEnum <DeniseRevisionEnum> (argv.front()));
-}
-
-template <> void
-RetroShell::exec <Token::denise, Token::set, Token::clxsprspr> (Arguments &argv, long param)
-{
-    amiga.configure(OPT_CLX_SPR_SPR, util::parseBool(argv.front()));
-}
-
-template <> void
-RetroShell::exec <Token::denise, Token::set, Token::clxsprplf> (Arguments &argv, long param)
-{
-    amiga.configure(OPT_CLX_SPR_PLF, util::parseBool(argv.front()));
-}
-
-template <> void
-RetroShell::exec <Token::denise, Token::set, Token::clxplfplf> (Arguments &argv, long param)
-{
-    amiga.configure(OPT_CLX_PLF_PLF, util::parseBool(argv.front()));
-}
-
-template <> void
-RetroShell::exec <Token::denise, Token::inspect, Token::state> (Arguments& argv, long param)
-{
-    dump(amiga.denise, Dump::State);
-}
-
-template <> void
-RetroShell::exec <Token::denise, Token::inspect, Token::registers> (Arguments& argv, long param)
-{
-    dump(amiga.denise, Dump::Registers);
-}
+*/
 
 //
 // Monitor
 //
 
+/*
 template <> void
 RetroShell::exec <Token::monitor, Token::set, Token::palette> (Arguments& argv, long param)
 {
