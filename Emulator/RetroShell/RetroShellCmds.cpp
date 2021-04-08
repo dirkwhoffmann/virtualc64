@@ -152,44 +152,35 @@ RetroShell::exec <Token::cpu, Token::inspect, Token::registers> (Arguments& argv
 // CIA
 //
 
-/*
 template <> void
 RetroShell::exec <Token::cia, Token::config> (Arguments &argv, long param)
 {
     if (param == 0) {
-        dump(amiga.ciaA, Dump::Config);
+        dump(c64.cia1, dump::Config);
     } else {
-        dump(amiga.ciaB, Dump::Config);
+        dump(c64.cia2, dump::Config);
     }
 }
 
 template <> void
 RetroShell::exec <Token::cia, Token::set, Token::revision> (Arguments &argv, long param)
 {
+    auto value = util::parseEnum <CIARevisionEnum> (argv.front());
+    
     if (param == 0) {
-        amiga.ciaA.configure(OPT_CIA_REVISION, util::parseEnum <CIARevisionEnum> (argv.front()));
+        c64.cia1.configure(OPT_CIA_REVISION, value);
     } else {
-        amiga.ciaB.configure(OPT_CIA_REVISION, util::parseEnum <CIARevisionEnum> (argv.front()));
+        c64.cia2.configure(OPT_CIA_REVISION, value);
     }
 }
 
 template <> void
-RetroShell::exec <Token::cia, Token::set, Token::todbug> (Arguments &argv, long param)
+RetroShell::exec <Token::cia, Token::set, Token::timerbbug> (Arguments &argv, long param)
 {
     if (param == 0) {
-        amiga.ciaA.configure(OPT_TODBUG, util::parseBool(argv.front()));
+        c64.cia1.configure(OPT_TIMER_B_BUG, util::parseBool(argv.front()));
     } else {
-        amiga.ciaB.configure(OPT_TODBUG, util::parseBool(argv.front()));
-    }
-}
-
-template <> void
-RetroShell::exec <Token::cia, Token::set, Token::esync> (Arguments &argv, long param)
-{
-    if (param == 0) {
-        amiga.ciaA.configure(OPT_ECLOCK_SYNCING, util::parseBool(argv.front()));
-    } else {
-        amiga.ciaB.configure(OPT_ECLOCK_SYNCING, util::parseBool(argv.front()));
+        c64.cia2.configure(OPT_TIMER_B_BUG, util::parseBool(argv.front()));
     }
 }
 
@@ -197,9 +188,9 @@ template <> void
 RetroShell::exec <Token::cia, Token::inspect, Token::state> (Arguments& argv, long param)
 {
     if (param == 0) {
-        dump(amiga.ciaA, Dump::State);
+        dump(c64.cia1, dump::State);
     } else {
-        dump(amiga.ciaB, Dump::State);
+        dump(c64.cia2, dump::State);
     }
 }
 
@@ -207,9 +198,9 @@ template <> void
 RetroShell::exec <Token::cia, Token::inspect, Token::registers> (Arguments& argv, long param)
 {
     if (param == 0) {
-        dump(amiga.ciaA, Dump::Registers);
+        dump(c64.cia1, dump::Registers);
     } else {
-        dump(amiga.ciaB, Dump::Registers);
+        dump(c64.cia2, dump::Registers);
     }
 }
 
@@ -217,9 +208,9 @@ template <> void
 RetroShell::exec <Token::cia, Token::inspect, Token::tod> (Arguments& argv, long param)
 {
     if (param == 0) {
-        dump(amiga.ciaA.tod, Dump::State);
+        dump(c64.cia1.tod, dump::State);
     } else {
-        dump(amiga.ciaB.tod, Dump::State);
+        dump(c64.cia2.tod, dump::State);
     }
 }
 
@@ -227,6 +218,7 @@ RetroShell::exec <Token::cia, Token::inspect, Token::tod> (Arguments& argv, long
 // Agnus
 //
 
+/*
 template <> void
 RetroShell::exec <Token::agnus, Token::config> (Arguments &argv, long param)
 {

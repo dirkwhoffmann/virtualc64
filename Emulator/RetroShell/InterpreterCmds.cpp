@@ -127,52 +127,48 @@ Interpreter::registerInstructions()
     // CIA
     //
     
-    /*
-    root.add({"ciaa"},
-             "component", "Complex Interface Adapter A");
+    root.add({"cia1"},
+             "component", "Complex Interface Adapter 1");
 
-    root.add({"ciab"},
-             "component", "Complex Interface Adapter B");
+    root.add({"cia2"},
+             "component", "Complex Interface Adapter 2");
 
-    root.add({"ciaa","ciab"}, {"", "config"},
+    root.add({"cia1","cia2"}, {"", "config"},
              "command", "Displays the current configuration",
              &RetroShell::exec <Token::cia, Token::config>);
 
-    root.add({"ciaa","ciab"}, {"", "set"},
+    root.add({"cia1","cia2"}, {"", "set"},
              "command", "Configures the component");
         
-    root.add({"ciaa","ciab"}, {"", "set", "revision"},
+    root.add({"cia1","cia2"}, {"", "set", "revision"},
              "key", "Selects the emulated chip model",
              &RetroShell::exec <Token::cia, Token::set, Token::revision>, 1);
 
-    root.add({"ciaa","ciab"}, {"", "set", "todbug"},
-             "key", "Enables or disables the TOD hardware bug",
-             &RetroShell::exec <Token::cia, Token::set, Token::todbug>, 1);
+    root.add({"cia1","cia2"}, {"", "set", "timerbbug"},
+             "key", "Enables or disables the timer B hardware bug",
+             &RetroShell::exec <Token::cia, Token::set, Token::timerbbug>, 1);
 
-    root.add({"ciaa","ciab"}, {"", "set", "esync"},
-             "key", "Turns E-clock syncing on or off",
-             &RetroShell::exec <Token::cia, Token::set, Token::esync>, 1);
-
-    root.add({"ciaa","ciab"}, {"", "inspect"},
+    root.add({"cia1","cia2"}, {"", "inspect"},
              "command", "Displays the component state");
 
-    root.add({"ciaa","ciab"}, {"", "inspect", "state"},
+    root.add({"cia1","cia2"}, {"", "inspect", "state"},
              "category", "Displays the current state",
              &RetroShell::exec <Token::cia, Token::inspect, Token::state>);
 
-    root.add({"ciaa","ciab"}, {"", "inspect", "registers"},
+    root.add({"cia1","cia2"}, {"", "inspect", "registers"},
              "category", "Displays the current register values",
              &RetroShell::exec <Token::cia, Token::inspect, Token::registers>);
 
-    root.add({"ciaa","ciab"}, {"", "inspect", "tod"},
-             "category", "Displays the state of the 24-bit counter",
+    root.add({"cia1","cia2"}, {"", "inspect", "tod"},
+             "category", "Displays the state of the TOD clock",
              &RetroShell::exec <Token::cia, Token::inspect, Token::tod>);
 
     
     //
     // Agnus
     //
-
+    
+    /*
     root.add({"agnus"},
              "component", "Custom chip");
 

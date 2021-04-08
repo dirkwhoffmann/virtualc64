@@ -10,6 +10,7 @@
 #include "config.h"
 #include "CIA.h"
 #include "C64.h"
+#include "IO.h"
 
 CIA::CIA(C64 &ref) : C64Component(ref)
 {    
@@ -119,36 +120,50 @@ CIA::_inspect()
 void
 CIA::_dump(dump::Category category, std::ostream& os) const
 {
-    msg("                Sleeping : %s\n", sleeping ? "yes" : "no");
-    msg("               Tiredness : %d\n", tiredness);
-    msg(" Most recent sleep cycle : %lld\n", sleepCycle);
-    msg("Most recent wakeup cycle : %lld\n", wakeUpCycle);
-    msg("\n");
-    msg("               Counter A : %04X\n", info.timerA.count);
-    msg("                 Latch A : %04X\n", info.timerA.latch);
-    msg("         Data register A : %02X\n", info.portA.reg);
-    msg("   Data port direction A : %02X\n", info.portA.dir);
-    msg("             Data port A : %02X\n", info.portA.port);
-    msg("      Control register A : %02X\n", CRA);
-    msg("\n");
-    msg("               Counter B : %04X\n", info.timerB.count);
-    msg("                 Latch B : %04X\n", info.timerB.latch);
-    msg("         Data register B : %02X\n", info.portB.reg);
-    msg("   Data port direction B : %02X\n", info.portB.dir);
-    msg("             Data port B : %02X\n", info.portB.port);
-    msg("      Control register B : %02X\n", CRB);
-    msg("\n");
-    msg("   Interrupt control reg : %02X\n", info.icr);
-    msg("      Interrupt mask reg : %02X\n", info.imr);
-    msg("\n");
-//    msg("                     SDR : %02X %02X\n", info.sdr, sdr);
-//    msg("              serCounter : %02X\n", serCounter);
-    msg("\n");
-    msg("                     CNT : %d\n", CNT);
-    msg("                     INT : %d\n", INT);
-    msg("\n");
-
-    // tod.dump();
+    using namespace util;
+    
+    if (category & dump::Config) {
+    
+        os << tab("Revision");
+        os << CIARevisionEnum::key(config.revision) << std::endl;
+        os << tab("Timer B bug");
+        os << bol(config.timerBBug) << std::endl;
+    }
+    
+    if (category & dump::State) {
+        
+        os << tab("Sleeping") << bol(sleeping) << std::endl;
+        os << tab("Tiredness") << dec(tiredness) << std::endl;
+        os << tab("Sleep cycle") << dec(sleepCycle) << std::endl;
+        os << tab("Wakeup cycle") << dec(wakeUpCycle) << std::endl;
+        os << tab("CNT") << dec(CNT) << std::endl;
+        os << tab("INT") << dec(INT) << std::endl;
+    }
+    
+    if (category & dump::Registers) {
+        
+        os << tab("Counter A") << dec(counterA) << std::endl;
+        os << tab("Latch A") << dec(latchA) << std::endl;
+        os << tab("Data register A") << hex(PRA) << std::endl;
+        os << tab("Data port direction A") << hex(DDRA) << std::endl;
+        os << tab("Data port A") << hex(PA) << std::endl;
+        os << tab("Control register A") << hex(CRA) << std::endl;
+        os << std::endl;
+        os << tab("Counter B") << dec(counterB) << std::endl;
+        os << tab("Latch B") << dec(latchB) << std::endl;
+        os << tab("Data register B") << hex(PRB) << std::endl;
+        os << tab("Data port direction B") << hex(DDRB) << std::endl;
+        os << tab("Data port B") << hex(PB) << std::endl;
+        os << tab("Control register B") << hex(CRB) << std::endl;
+        os << std::endl;
+        os << tab("Interrupt control reg") << hex(icr) << std::endl;
+        os << tab("Interrupt mask reg") << hex(imr) << std::endl;
+        os << std::endl;
+        os << tab("SDR") << hex(sdr) << std::endl;
+        // os << tab("SSR") << hex(ssr) << std::endl;
+        os << tab("serCounter") << dec(serCounter) << std::endl;
+        os << std::endl;
+    }
 }
 
 void

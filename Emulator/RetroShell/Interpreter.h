@@ -37,8 +37,8 @@ enum class Token
     contrast, defaultbb, defaultfs, device, esync, extrom, extstart, fast,
     filter, joystick, keyset, mechanics, model, palette, pan, poll, pullup,
     raminitpattern, revision, rom, sampling, saturation, searchpath,
-    shakedetector, slow, slowramdelay, slowrammirror, speed, step, tod, todbug,
-    unmappingtype, velocity, volume, wom
+    shakedetector, slow, slowramdelay, slowrammirror, speed, step, tod,
+    timerbbug, unmappingtype, velocity, volume, wom
 };
 
 struct TooFewArgumentsError : public util::ParseError {
