@@ -51,9 +51,7 @@ class SIDBridge : public C64Component {
     //
     // Sub components
     //
-        
-private:
-    
+            
     FastSID fastsid[4] = {
         
         FastSID(c64, *this, 0),
@@ -70,6 +68,8 @@ private:
         ReSID(c64, *this, 3)
     };
         
+private:
+    
     // CPU cycle at the last call to executeUntil()
     Cycle cycles = 0;
     
@@ -168,12 +168,13 @@ public:
     
     SIDInfo getInfo(unsigned nr);
     VoiceInfo getVoiceInfo(unsigned nr, unsigned voice);
-    
+    HardwareComponent &getSID(isize nr);
+
 private:
     
     void _dump(dump::Category category, std::ostream& os) const override;
     void _dump(dump::Category category, std::ostream& os, isize nr) const;
-    // void _dump(int nr) const;
+
     void _dump(SIDInfo &info, VoiceInfo (&vinfo)[3]) const;
 
     

@@ -120,8 +120,9 @@ ReSID::_dump(dump::Category category, std::ostream& os) const
     
     if (category & dump::State) {
    
-        os << tab("Engine : ReSID") << std::endl;
-        os << tab("Chip model");
+        os << tab("Chip");
+        os << "ReSID " << dec(nr) << std::endl;
+        os << tab("Model");
         os << SIDRevisionEnum::key(getRevision()) << std::endl;
         os << tab("Sampling rate");
         os << getSampleRate() << std::endl;
@@ -143,10 +144,10 @@ ReSID::_dump(dump::Category category, std::ostream& os) const
     
     if (category & dump::Registers) {
    
-        for (isize i = 0; i < 0x1C; i++) {
-            
-            os << tab("Register " + std::to_string(i));
-            os << hex(reg[i]) << std::endl;
+        for (isize i = 0; i <= 0x1C; i++) {
+   
+            os << "  " << hex((u8)i) << ": " << hex(reg[i]);
+            if ((i + 1) % 8 == 0) os << std::endl;
         }
     }
 }

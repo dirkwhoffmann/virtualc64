@@ -420,18 +420,7 @@ SIDBridge::_dump(dump::Category category, std::ostream& os) const
         os << config.volL << std::endl;
         os << tab("Volume R");
         os << config.volR << std::endl;
-    }
-     
-    if (category & dump::State) {
-
-        _dump(category, os, 0);
-        os << std::endl;
-        _dump(category, os, 1);
-        os << std::endl;
-        _dump(category, os, 2);
-        os << std::endl;
-        _dump(category, os, 3);
-    }
+    }     
 }
 
 void
@@ -529,6 +518,17 @@ SIDBridge::getVoiceInfo(unsigned nr, unsigned voice)
     }
     
     return info;
+}
+
+HardwareComponent &
+SIDBridge::getSID(isize nr)
+{
+    assert(nr >= 0 && nr <= 3);
+    if (config.engine == SIDENGINE_FASTSID) {
+        return fastsid[nr];
+    } else {
+        return resid[nr];
+    }
 }
 
 void

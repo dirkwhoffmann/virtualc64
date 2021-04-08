@@ -170,5 +170,4 @@ public:
 private:
     
     void dump(HardwareComponent &component, dump::Category category);
-
 };

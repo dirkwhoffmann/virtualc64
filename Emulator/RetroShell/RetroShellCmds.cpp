@@ -333,24 +333,20 @@ RetroShell::exec <Token::sid, Token::set, Token::filter> (Arguments& argv, long 
 template <> void
 RetroShell::exec <Token::sid, Token::set, Token::volume> (Arguments& argv, long param)
 {
-    assert(param >= 0 && param <= 3);
+    auto value = util::parseNum(argv.front());
     
-    auto value = util::parseNum(argv.front());
-    c64.configure(OPT_AUDVOL, param, value);
-}
-
-template <> void
-RetroShell::exec <Token::sid, Token::set, Token::volume, Token::left> (Arguments& argv, long param)
-{
-    auto value = util::parseNum(argv.front());
-    c64.configure(OPT_AUDVOLL, value);
-}
-
-template <> void
-RetroShell::exec <Token::sid, Token::set, Token::volume, Token::right> (Arguments& argv, long param)
-{
-    auto value = util::parseNum(argv.front());
-    c64.configure(OPT_AUDVOLR, value);
+    switch (param) {
+            
+        case 0: c64.configure(OPT_AUDVOL, 0, value); break;
+        case 1: c64.configure(OPT_AUDVOL, 1, value); break;
+        case 2: c64.configure(OPT_AUDVOL, 2, value); break;
+        case 3: c64.configure(OPT_AUDVOL, 3, value); break;
+        case 4: c64.configure(OPT_AUDVOLL, value); break;
+        case 5: c64.configure(OPT_AUDVOLR, value); break;
+            
+        default:
+            assert(false);
+    }
 }
 
 template <> void
@@ -361,15 +357,25 @@ RetroShell::exec <Token::sid, Token::set, Token::pan> (Arguments& argv, long par
 }
 
 template <> void
-RetroShell::exec <Token::sid, Token::inspect, Token::state> (Arguments& argv, long param)
+RetroShell::exec <Token::sid, Token::inspect, Token::sid> (Arguments& argv, long param)
 {
     dump(c64.sid, dump::State);
 }
 
 template <> void
+RetroShell::exec <Token::sid, Token::inspect, Token::state> (Arguments& argv, long param)
+{
+    auto value = util::parseNum(argv.front());
+    if (value < 0 || value > 3) throw ConfigArgError("0, 1, 2, or 3");
+    dump(c64.sid.getSID(value), dump::State);
+}
+
+template <> void
 RetroShell::exec <Token::sid, Token::inspect, Token::registers> (Arguments& argv, long param)
 {
-    dump(c64.sid, dump::Registers);
+    auto value = util::parseNum(argv.front());
+    if (value < 0 || value > 3) throw ConfigArgError("0, 1, 2, or 3");
+    dump(c64.sid.getSID(value), dump::Registers);
 }
 
 //

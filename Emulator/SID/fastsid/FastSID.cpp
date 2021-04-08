@@ -171,8 +171,9 @@ FastSID::_dump(dump::Category category, std::ostream& os) const
     
     if (category & dump::State) {
 
-        os << tab("Engine : FastSID") << std::endl;
-        os << tab("Chip model");
+        os << tab("Chip");
+        os << "FastSID " << dec(nr) << std::endl;
+        os << tab("Model");
         os << SIDRevisionEnum::key(model) << std::endl;
         os << tab("Sampling rate");
         os << dec(sampleRate) << std::endl;
