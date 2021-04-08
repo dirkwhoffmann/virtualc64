@@ -119,26 +119,6 @@ RetroShell::exec <Token::memory, Token::load> (Arguments& argv, long param)
     c64.loadRom(argv.front());
 }
 
-/*
-template <> void
-RetroShell::exec <Token::memory, Token::load, Token::rom> (Arguments& argv, long param)
-{
-    auto path = argv.front();
-    if (!util::fileExists(path)) throw ConfigFileNotFoundError(path);
-
-    amiga.mem.loadRomFromFile(path.c_str());
-}
-
-template <> void
-RetroShell::exec <Token::memory, Token::load, Token::extrom> (Arguments& argv, long param)
-{
-    auto path = argv.front();
-    if (!util::fileExists(path)) throw ConfigFileNotFoundError(path);
-
-    amiga.mem.loadExtFromFile(path.c_str());
-}
-*/
-
 template <> void
 RetroShell::exec <Token::memory, Token::set, Token::raminitpattern> (Arguments& argv, long param)
 {
@@ -156,23 +136,23 @@ RetroShell::exec <Token::memory, Token::inspect> (Arguments& argv, long param)
 // CPU
 //
 
-/*
 template <> void
 RetroShell::exec <Token::cpu, Token::inspect, Token::state> (Arguments& argv, long param)
 {
-    dump(amiga.cpu, Dump::State);
+    dump(c64.cpu, dump::State);
 }
 
 template <> void
 RetroShell::exec <Token::cpu, Token::inspect, Token::registers> (Arguments& argv, long param)
 {
-    dump(amiga.cpu, Dump::Registers);
+    dump(c64.cpu, dump::Registers);
 }
 
 //
 // CIA
 //
 
+/*
 template <> void
 RetroShell::exec <Token::cia, Token::config> (Arguments &argv, long param)
 {

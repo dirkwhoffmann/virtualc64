@@ -10,6 +10,7 @@
 #include "config.h"
 #include "CPU.h"
 #include "C64.h"
+#include "IO.h"
 
 template <typename M>
 CPU<M>::CPU(C64& ref, M& memref) : C64Component(ref), mem(memref)
@@ -75,21 +76,49 @@ CPU<M>::_setDebug(bool enable)
 template <typename M> void
 CPU<M>::_dump(dump::Category category, std::ostream& os) const
 {
-	msg("CPU:\n");
-	msg("----\n\n");
+    using namespace util;
 
-	msg("      Rdy line : %s\n", rdyLine ? "high" : "low");
-    msg("      Nmi line : %02X\n", nmiLine);
-    msg(" Edge detector : %02X\n", edgeDetector.current());
-    msg("         doNmi : %s\n", doNmi ? "yes" : "no");
-    msg("      Irq line : %02X\n", irqLine);
-    msg("Level detector : %02X\n", levelDetector.current());
-    msg("         doIrq : %s\n", doIrq ? "yes" : "no");
-    msg("   IRQ routine : %02X%02X\n", mem.spypeek(0xFFFF), mem.spypeek(0xFFFE));
-    msg("   NMI routine : %02X%02X\n", mem.spypeek(0xFFFB), mem.spypeek(0xFFFA));
-	msg("\n");
+    if (category & dump::Registers) {
+
+        os << tab("PC") << hex(reg.pc) << std::endl;
+        os << tab("SP") << hex(reg.sp) << std::endl;
+        os << tab("A") << hex(reg.a) << std::endl;
+        os << tab("X") << hex(reg.x) << std::endl;
+        os << tab("Y") << hex(reg.y) << std::endl;
+        os << tab("Flags");
+        os << (reg.sr.n ? "N" : "n");
+        os << (reg.sr.v ? "V" : "v");
+        os << (reg.sr.b ? "B" : "b");
+        os << (reg.sr.d ? "D" : "d");
+        os << (reg.sr.i ? "I" : "i");
+        os << (reg.sr.z ? "Z" : "z");
+        os << (reg.sr.c ? "C" : "c");
+        os << std::endl;
+    }
     
-    // pport.dump();
+    if (category & dump::State) {
+    
+        os << tab("Cycle");
+        os << dec(cycle) << std::endl;
+        os << tab("Rdy line");
+        os << bol(rdyLine, "high", "low") << std::endl;
+        os << tab("Nmi line");
+        os << hex(nmiLine) << std::endl;
+        os << tab("Edge detector");
+        os << hex(edgeDetector.current()) << std::endl;
+        os << tab("doNmi");
+        os << bol(doNmi) << std::endl;
+        os << tab("Irq line");
+        os << hex(irqLine) << std::endl;
+        os << tab("Edge detector");
+        os << hex(levelDetector.current()) << std::endl;
+        os << tab("doIrq");
+        os << bol(doIrq) << std::endl;
+        os << tab("IRQ routine");
+        os << hex(HI_W_LO_W(mem.spypeek(0xFFFF), mem.spypeek(0xFFFE))) << std::endl;
+        os << tab("NMI routine");
+        os << hex(HI_W_LO_W(mem.spypeek(0xFFFB), mem.spypeek(0xFFFA))) << std::endl;
+    }
 }
 
 template <typename M> u8

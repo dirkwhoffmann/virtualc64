@@ -98,18 +98,6 @@ Interpreter::registerInstructions()
     root.add({"memory", "load"},
              "command", "Installs a Rom image",
              &RetroShell::exec <Token::memory, Token::load>, 1);
-    /*
-    root.add({"memory", "load"},
-             "command", "Installs a Rom image");
-            
-    root.add({"memory", "load", "rom"},
-             "command", "Installs a Kickstart Rom",
-             &RetroShell::exec <Token::memory, Token::load, Token::rom>, 1);
-
-    root.add({"memory", "load", "extrom"},
-             "command", "Installs a Rom extension",
-             &RetroShell::exec <Token::memory, Token::load, Token::extrom>, 1);
-    */
 
     root.add({"memory", "inspect"},
              "command", "Displays the component state",
@@ -120,7 +108,6 @@ Interpreter::registerInstructions()
     // CPU
     //
     
-    /*
     root.add({"cpu"},
              "component", "Motorola 68k CPU");
     
@@ -140,6 +127,7 @@ Interpreter::registerInstructions()
     // CIA
     //
     
+    /*
     root.add({"ciaa"},
              "component", "Complex Interface Adapter A");
 

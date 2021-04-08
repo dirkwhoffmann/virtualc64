@@ -75,9 +75,8 @@ protected:
     // Internal state
     //
     
-    /* Debug mode
-     * In debug mode, the CPU checks for breakpoints and records executed
-     * instruction in the log buffer.
+    /* Debug mode. In debug mode, the CPU checks for breakpoints and records
+     * executed instruction in the log buffer.
      */
     bool debugMode;
     
