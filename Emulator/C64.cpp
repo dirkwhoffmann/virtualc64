@@ -146,6 +146,9 @@ C64::getConfigItem(Option option) const
             
         case OPT_VIC_REVISION:
         case OPT_PALETTE:
+        case OPT_BRIGHTNESS:
+        case OPT_CONTRAST:
+        case OPT_SATURATION:
         case OPT_GRAY_DOT_BUG:
         case OPT_GLUE_LOGIC:
         case OPT_HIDE_SPRITES:
@@ -792,7 +795,7 @@ C64::suspend()
 void
 C64::resume()
 {
-    trace(RUN_DEBUG, "Resuming (%d)...\n", suspendCounter);
+    trace(RUN_DEBUG, "Resuming (%zd)...\n", suspendCounter);
     
     if (suspendCounter && --suspendCounter == 0) {
         run();

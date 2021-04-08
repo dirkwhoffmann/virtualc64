@@ -380,11 +380,17 @@ enum VICIIColorRegs
 
 typedef struct
 {
+    // Silicon
     VICIIRevision revision;
     bool grayDotBug;
     GlueLogic glueLogic;
-    Palette palette;
     
+    // Colors
+    Palette palette;
+    isize brightness;
+    isize contrast;
+    isize saturation;
+
     // Debugging
     bool hideSprites;
     bool dmaDebug;

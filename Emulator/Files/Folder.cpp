@@ -54,10 +54,10 @@ Folder::collectionName()
     return fs->getName();
 }
 
-u64
+isize
 Folder::collectionCount() const
 {
-    return fs->numFiles();
+    return (isize)fs->numFiles();
 }
 
 PETName<16>

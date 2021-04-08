@@ -453,10 +453,11 @@ private:
     /* The brightness, contrast, and saturation parameters used for computing
      * the color palette. Valid values: 0.0 - 100.0
      */
-    double brightness = 50.0;
-    double contrast = 100.0;
-    double saturation = 50.0;
-
+    /*
+    [[deprecated]] double brightness = 50.0;
+    [[deprecated]] double contrast = 100.0;
+    [[deprecated]] double saturation = 50.0;
+    */
  
     //
     // Pipeline
@@ -792,12 +793,14 @@ public:
     u32 getColor(unsigned nr, Palette palette);
     
     // Gets or sets a monitor parameter
+    /*
     double getBrightness() const { return brightness; }
     void setBrightness(double value);
     double getContrast() const { return contrast; }
     void setContrast(double value);
     double getSaturation() const { return saturation; }
     void setSaturation(double value);
+    */
     
 private:
     

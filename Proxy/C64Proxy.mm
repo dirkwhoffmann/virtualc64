@@ -399,6 +399,7 @@
     return [self vicii]->getColor((unsigned)nr, palette);
 }
 
+/*
 - (double)brightness
 {
     return [self vicii]->getBrightness();
@@ -423,6 +424,7 @@
 {
     [self vicii]->setSaturation(value);
 }
+ */
 - (u32 *)noise
 {
     return [self vicii]->getNoise();

@@ -73,8 +73,6 @@ AnyFile::readFromStream(std::istream &stream)
 isize
 AnyFile::readFromFile(const string  &path)
 {
-    assert(path);
-        
     std::ifstream stream(path);
 
     if (!stream.is_open()) {
@@ -118,8 +116,6 @@ AnyFile::writeToStream(std::ostream &stream, ErrorCode *err)
 isize
 AnyFile::writeToFile(const string &path)
 {
-    assert(path);
-        
     std::ofstream stream(path);
 
     if (!stream.is_open()) {
@@ -127,7 +123,7 @@ AnyFile::writeToFile(const string &path)
     }
     
     isize result = writeToStream(stream);
-    assert(result == size);
+    assert(result == (isize)size);
     
     return result;
 }

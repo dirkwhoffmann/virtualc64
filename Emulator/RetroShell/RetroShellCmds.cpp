@@ -266,31 +266,30 @@ RetroShell::exec <Token::vicii, Token::inspect, Token::registers> (Arguments& ar
 // Monitor
 //
 
-/*
 template <> void
 RetroShell::exec <Token::monitor, Token::set, Token::palette> (Arguments& argv, long param)
 {
-    amiga.configure(OPT_PALETTE, util::parseEnum <PaletteEnum> (argv.front()));
+    c64.configure(OPT_PALETTE, util::parseEnum <PaletteEnum> (argv.front()));
 }
 
 template <> void
 RetroShell::exec <Token::monitor, Token::set, Token::brightness> (Arguments& argv, long param)
 {
-    amiga.configure(OPT_BRIGHTNESS, util::parseNum(argv.front()));
+    c64.configure(OPT_BRIGHTNESS, util::parseNum(argv.front()));
 }
 
 template <> void
 RetroShell::exec <Token::monitor, Token::set, Token::contrast> (Arguments& argv, long param)
 {
-    amiga.configure(OPT_CONTRAST, util::parseNum(argv.front()));
+    c64.configure(OPT_CONTRAST, util::parseNum(argv.front()));
 }
 
 template <> void
 RetroShell::exec <Token::monitor, Token::set, Token::saturation> (Arguments& argv, long param)
 {
-    amiga.configure(OPT_SATURATION, util::parseNum(argv.front()));
+    c64.configure(OPT_SATURATION, util::parseNum(argv.front()));
 }
-*/
+
 
 //
 // SID

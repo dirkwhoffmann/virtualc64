@@ -205,9 +205,9 @@ Interpreter::registerInstructions()
     //
     // Monitor
     //
-/*
+
     root.add({"monitor"},
-             "component", "Amiga monitor");
+             "component", "C64 monitor");
 
     root.add({"monitor", "set"},
              "command", "Configures the component");
@@ -217,18 +217,17 @@ Interpreter::registerInstructions()
              &RetroShell::exec <Token::monitor, Token::set, Token::palette>, 1);
 
     root.add({"monitor", "set", "brightness"},
-             "key", "Adjusts the brightness of the Amiga texture",
+             "key", "Adjusts the monitor brightness",
              &RetroShell::exec <Token::monitor, Token::set, Token::brightness>, 1);
 
     root.add({"monitor", "set", "contrast"},
-             "key", "Adjusts the contrast of the Amiga texture",
+             "key", "Adjusts the monitor contrast",
              &RetroShell::exec <Token::monitor, Token::set, Token::contrast>, 1);
 
     root.add({"monitor", "set", "saturation"},
-             "key", "Adjusts the saturation of the Amiga texture",
+             "key", "Adjusts the color saturation",
              &RetroShell::exec <Token::monitor, Token::set, Token::saturation>, 1);
 
-    */
     
     //
     // SID

@@ -24,6 +24,9 @@ enum_long(OPT)
     // VICII
     OPT_VIC_REVISION,
     OPT_PALETTE,
+    OPT_BRIGHTNESS,
+    OPT_CONTRAST,
+    OPT_SATURATION,
     OPT_GRAY_DOT_BUG,
     OPT_HIDE_SPRITES,
     OPT_DMA_DEBUG,
@@ -102,6 +105,9 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_CYCLE_LIMIT:         return "CYCLE_LIMIT";
             case OPT_VIC_REVISION:        return "VIC_REVISION";
             case OPT_PALETTE:             return "PALETTE";
+            case OPT_BRIGHTNESS:          return "BRIGHTNESS";
+            case OPT_CONTRAST:            return "CONTRAST";
+            case OPT_SATURATION:          return "SATURATION";
             case OPT_GRAY_DOT_BUG:        return "GRAY_DOT_BUG";
             case OPT_HIDE_SPRITES:        return "HIDE_SPRITES";
             case OPT_DMA_DEBUG:           return "DMA_DEBUG";

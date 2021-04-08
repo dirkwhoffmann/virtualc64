@@ -861,7 +861,7 @@ SIDBridge::handleBufferUnderflow()
     // (1) The consumer runs slightly faster than the producer.
     // (2) The producer is halted or not startet yet.
     
-    trace(SID_DEBUG, "BUFFER UNDERFLOW (r: %d w: %d)\n", stream.r, stream.w);
+    trace(SID_DEBUG, "BUFFER UNDERFLOW (r: %zd w: %zd)\n", stream.r, stream.w);
 
     // Reset the write pointer
     alignWritePtr();
@@ -889,7 +889,7 @@ SIDBridge::handleBufferOverflow()
     // (1) The consumer runs slightly slower than the producer
     // (2) The consumer is halted or not startet yet
     
-    trace(SID_DEBUG, "BUFFER OVERFLOW (r: %d w: %d)\n", stream.r, stream.w);
+    trace(SID_DEBUG, "BUFFER OVERFLOW (r: %zd w: %zd)\n", stream.r, stream.w);
     
     // Reset the write pointer
     alignWritePtr();

@@ -23,7 +23,7 @@ public:
     virtual PETName<16> collectionName() = 0;
     
     // Returns the number of items stored in this collection
-    virtual u64 collectionCount() const = 0;
+    virtual isize collectionCount() const = 0;
     
     // Returns the name of a certain item
     virtual PETName<16> itemName(isize nr) const = 0;

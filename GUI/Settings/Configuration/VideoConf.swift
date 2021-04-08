@@ -31,9 +31,9 @@ extension ConfigurationController {
         // Video
         vidUpscalerPopUp.selectItem(withTag: config.upscaler)
         vidPalettePopUp.selectItem(withTag: config.palette)
-        vidBrightnessSlider.doubleValue = config.brightness
-        vidContrastSlider.doubleValue = config.contrast
-        vidSaturationSlider.doubleValue = config.saturation
+        vidBrightnessSlider.integerValue = config.brightness
+        vidContrastSlider.integerValue = config.contrast
+        vidSaturationSlider.integerValue = config.saturation
         
         // Effects
         vidBlurPopUp.selectItem(withTag: Int(config.blur))
@@ -120,19 +120,19 @@ extension ConfigurationController {
     
     @IBAction func vidBrightnessAction(_ sender: NSSlider!) {
         
-        config.brightness = sender.doubleValue
+        config.brightness = sender.integerValue
         refresh()
     }
     
     @IBAction func vidContrastAction(_ sender: NSSlider!) {
         
-        config.contrast = sender.doubleValue
+        config.contrast = sender.integerValue
         refresh()
     }
     
     @IBAction func vidSaturationAction(_ sender: NSSlider!) {
         
-        config.saturation = sender.doubleValue
+        config.saturation = sender.integerValue
         refresh()
     }
 

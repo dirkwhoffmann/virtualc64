@@ -1041,9 +1041,9 @@ struct VideoDefaults {
     
     // Colors
     let palette: Palette
-    let brightness: Double
-    let contrast: Double
-    let saturation: Double
+    let brightness: Int
+    let contrast: Int
+    let saturation: Int
     
     // Geometry
     let hCenter: Float
@@ -1082,9 +1082,9 @@ struct VideoDefaults {
     static let tft = VideoDefaults.init(
         
         palette: .COLOR,
-        brightness: 50.0,
-        contrast: 100.0,
-        saturation: 50.0,
+        brightness: 50,
+        contrast: 100,
+        saturation: 50,
         
         hCenter: 0,
         vCenter: 0,
@@ -1117,9 +1117,9 @@ struct VideoDefaults {
     static let crt = VideoDefaults.init(
         
         palette: .COLOR,
-        brightness: 50.0,
-        contrast: 100.0,
-        saturation: 50.0,
+        brightness: 50,
+        contrast: 100,
+        saturation: 50,
         
         hCenter: 0,
         vCenter: 0,

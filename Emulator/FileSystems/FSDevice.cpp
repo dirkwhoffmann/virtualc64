@@ -115,8 +115,8 @@ FSDevice::makeWithCollection(AnyCollection &collection)
     device->bamPtr()->writeBAM(name);
 
     // Loop over all items
-    u32 numberOfItems = (u32)collection.collectionCount();
-    for (u32 i = 0; i < numberOfItems; i++) {
+    isize numberOfItems = collection.collectionCount();
+    for (isize i = 0; i < numberOfItems; i++) {
         
         // Serialize item into a buffer
         u64 size = collection.itemSize(i);

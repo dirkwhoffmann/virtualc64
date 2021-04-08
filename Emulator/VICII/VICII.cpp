@@ -22,9 +22,17 @@
 #define SPR7 0x80
 
 VICII::VICII(C64 &ref) : C64Component(ref)
-{    
+{
+    // Silicon
     config.grayDotBug = true;
+    
+    // Colors
     config.palette = PALETTE_COLOR;
+    config.brightness = 50;
+    config.contrast = 100;
+    config.saturation = 50;
+    
+    // Debugger
     config.cutLayers = 0xFF;
     config.cutOpacity = 0xFF;
     config.dmaOpacity = 0x80;
@@ -35,8 +43,6 @@ VICII::VICII(C64 &ref) : C64Component(ref)
     config.dmaChannel[MEMACCESS_G] = true;
     config.dmaChannel[MEMACCESS_P] = true;
     config.dmaChannel[MEMACCESS_S] = true;
-
-    // Assign default DMA debugging colors
     setDmaDebugColor(MEMACCESS_R, RgbColor(1.0, 0.0, 0.0));
     setDmaDebugColor(MEMACCESS_I, RgbColor(1.0, 0.8, 0.0));
     setDmaDebugColor(MEMACCESS_C, RgbColor(1.0, 1.0, 0.0));
@@ -147,6 +153,9 @@ VICII::getConfigItem(Option option) const
             
         case OPT_VIC_REVISION:     return config.revision;
         case OPT_PALETTE:          return config.palette;
+        case OPT_BRIGHTNESS:       return config.brightness;
+        case OPT_CONTRAST:         return config.contrast;
+        case OPT_SATURATION:       return config.saturation;
         case OPT_GRAY_DOT_BUG:     return config.grayDotBug;
         case OPT_GLUE_LOGIC:       return config.glueLogic;
         case OPT_DMA_DEBUG:        return config.dmaDebug;
@@ -207,6 +216,42 @@ VICII::setConfigItem(Option option, i64 value)
             resume();
             return true;
             
+        case OPT_BRIGHTNESS:
+            
+            if (config.brightness < 0 || config.brightness > 100) {
+                throw ConfigArgError("Expected 0...100");
+            }
+            if (config.brightness == value) {
+                return false;
+            }
+            config.brightness = value;
+            updatePalette();
+            return true;
+            
+        case OPT_CONTRAST:
+
+            if (config.contrast < 0 || config.contrast > 100) {
+                throw ConfigArgError("Expected 0...100");
+            }
+            if (config.contrast == value) {
+                return false;
+            }
+            config.contrast = value;
+            updatePalette();
+            return true;
+
+        case OPT_SATURATION:
+        
+            if (config.saturation < 0 || config.saturation > 100) {
+                throw ConfigArgError("Expected 0...100");
+            }
+            if (config.saturation == value) {
+                return false;
+            }
+            config.saturation = value;
+            updatePalette();
+            return true;
+
         case OPT_GRAY_DOT_BUG:
             
             config.grayDotBug = value;

@@ -170,7 +170,7 @@ private:
     bool stopFlag = false; 
     
     // The invocation counter for implementing suspend() / resume()
-    unsigned suspendCounter = 0;
+    isize suspendCounter = 0;
     
     // The emulator thread
     pthread_t p = (pthread_t)0;

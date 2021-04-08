@@ -155,7 +155,7 @@ T64File::collectionName()
     return PETName<16>(data + 0x28, 0x20);
 }
 
-u64
+isize
 T64File::collectionCount() const
 {
     return LO_HI(data[0x24], data[0x25]);
@@ -212,14 +212,14 @@ T64File::memEnd(isize nr) const
 }
 
 bool
-T64File::directoryItemIsPresent(int item)
+T64File::directoryItemIsPresent(isize item)
 {
-    int first = 0x40 + (item * 0x20);
-    int last  = 0x60 + (item * 0x20);
-    int i;
+    isize first = 0x40 + (item * 0x20);
+    isize last  = 0x60 + (item * 0x20);
+    isize i;
     
     // check for zeros...
-    if (last < (long)size)
+    if (last < (isize)size)
         for (i = first; i < last; i++)
             if (data[i] != 0)
                 return true;
@@ -230,8 +230,8 @@ T64File::directoryItemIsPresent(int item)
 void
 T64File::repair()
 {
-    unsigned i, n;
-    u16 noOfItems = collectionCount();
+    isize i, n;
+    isize noOfItems = collectionCount();
 
     //
     // 1. Repair number of items, if this value is zero
@@ -242,10 +242,10 @@ T64File::repair()
         while (directoryItemIsPresent(noOfItems))
             noOfItems++;
 
-        u16 noOfItemsStatedInHeader = collectionCount();
+        isize noOfItemsStatedInHeader = collectionCount();
         if (noOfItems != noOfItemsStatedInHeader) {
             
-            warn("T64: Changing number of items from %d to %d.\n",
+            warn("T64: Changing number of items from %zd to %zd.\n",
                   noOfItemsStatedInHeader, noOfItems);
             
             data[0x24] = LO_BYTE(noOfItems);
@@ -287,7 +287,7 @@ T64File::repair()
             // Let's assume that the rest of the file data belongs to this file ...
             u16 fixedEndAddrInMemory = startAddrInMemory + (size - startAddrInContainer);
 
-            warn("T64: Changing end address of item %d from %04X to %04X.\n",
+            warn("T64: Changing end address of item %zd from %04X to %04X.\n",
                  i, endAddrInMemory, fixedEndAddrInMemory);
 
             data[n] = LO_BYTE(fixedEndAddrInMemory);

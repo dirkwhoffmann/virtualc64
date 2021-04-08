@@ -304,12 +304,14 @@
 - (void *)stableEmuTexture;
 - (NSColor *)color:(NSInteger)nr;
 - (UInt32)rgbaColor:(NSInteger)nr palette:(Palette)palette;
+/*
 - (double)brightness;
 - (void)setBrightness:(double)value;
 - (double)contrast;
 - (void)setContrast:(double)value;
 - (double)saturation;
 - (void)setSaturation:(double)value;
+*/
 
 - (VICIIInfo)getInfo;
 - (SpriteInfo)getSpriteInfo:(NSInteger)sprite;

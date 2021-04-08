@@ -74,7 +74,7 @@ P00File::collectionName()
     return PETName<16>(data + 8, 0x00);
 }
 
-u64
+isize
 P00File::collectionCount() const
 {
     return 1;

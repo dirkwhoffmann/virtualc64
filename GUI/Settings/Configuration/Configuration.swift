@@ -344,17 +344,17 @@ class Configuration {
         get { return c64.getConfig(.PALETTE) }
         set { c64.configure(.PALETTE, value: newValue) }
     }
-    var brightness: Double {
-        get { return c64.vic.brightness() }
-        set { c64.vic.setBrightness(newValue) }
+    var brightness: Int {
+        get { return c64.getConfig(.BRIGHTNESS) }
+        set { c64.configure(.BRIGHTNESS, value: newValue) }
     }
-    var contrast: Double {
-        get { return c64.vic.contrast() }
-        set { c64.vic.setContrast(newValue) }
+    var contrast: Int {
+        get { return c64.getConfig(.CONTRAST) }
+        set { c64.configure(.CONTRAST, value: newValue) }
     }
-    var saturation: Double {
-        get { c64.vic.saturation() }
-        set { c64.vic.setSaturation(newValue) }
+    var saturation: Int {
+        get { c64.getConfig(.SATURATION) }
+        set { c64.configure(.SATURATION, value: newValue) }
     }
     var hCenter = VideoDefaults.tft.hCenter {
         didSet { renderer.canvas.updateTextureRect() }
@@ -786,9 +786,9 @@ class Configuration {
         c64.suspend()
         
         palette = defaults.integer(forKey: Keys.Vid.palette)
-        brightness = defaults.double(forKey: Keys.Vid.brightness)
-        contrast = defaults.double(forKey: Keys.Vid.contrast)
-        saturation = defaults.double(forKey: Keys.Vid.saturation)
+        brightness = defaults.integer(forKey: Keys.Vid.brightness)
+        contrast = defaults.integer(forKey: Keys.Vid.contrast)
+        saturation = defaults.integer(forKey: Keys.Vid.saturation)
         
         hCenter = defaults.float(forKey: Keys.Vid.hCenter)
         vCenter = defaults.float(forKey: Keys.Vid.vCenter)

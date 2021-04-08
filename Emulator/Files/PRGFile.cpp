@@ -49,7 +49,7 @@ PRGFile::collectionName()
     return PETName<16>(getName());
 }
 
-u64
+isize
 PRGFile::collectionCount() const
 {
     return 1;

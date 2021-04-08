@@ -160,10 +160,15 @@ VICII::getColor(unsigned nr, Palette palette)
     //
     
     // Normalize
+    /*
     double brightness = this->brightness - 50.0;
     double contrast = this->contrast / 100.0 + 0.2;
     double saturation = this->saturation / 1.25;
-        
+    */
+    double brightness = config.brightness - 50.0;
+    double contrast = config.contrast / 100.0 + 0.2;
+    double saturation = config.saturation / 1.25;
+
     // Compute Y, U, and V
     double ang = angle[nr];
     y = luma[nr];
@@ -226,10 +231,12 @@ VICII::getColor(unsigned nr, Palette palette)
     return LO_LO_HI_HI((u8)r, (u8)g, (u8)b, 0xFF);
 }
 
+/*
 void
 VICII::setBrightness(double value)
 {
     brightness = value;
+    c64.configure(OPT_BRIGHTNESS, (i64)value);
     updatePalette();
 }
 
@@ -237,6 +244,7 @@ void
 VICII::setContrast(double value)
 {
     contrast = value;
+    c64.configure(OPT_CONTRAST, (i64)value);
     updatePalette();
 }
 
@@ -244,201 +252,14 @@ void
 VICII::setSaturation(double value)
 {
     saturation = value;
+    c64.configure(OPT_SATURATION, (i64)value);
     updatePalette();
 }
+*/
 
 void
 VICII::updatePalette()
 {
-#if 0
-    double y[16], u[16], v[16];
-    
-    // LUMA levels (varies between VICII models)
-    #define LUMA_VICE(x,y,z) ((double)(x - y) * 256)/((double)(z - y))
-    #define LUMA_COLORES(x) (x * 7.96875)
-    
-    double luma_vice_6569_r1[16] = { /* taken from VICE 3.2 */
-        LUMA_VICE( 630,630,1850), LUMA_VICE(1850,630,1850),
-        LUMA_VICE( 900,630,1850), LUMA_VICE(1560,630,1850),
-        LUMA_VICE(1260,630,1850), LUMA_VICE(1260,630,1850),
-        LUMA_VICE( 900,630,1850), LUMA_VICE(1560,630,1850),
-        LUMA_VICE(1260,630,1850), LUMA_VICE( 900,630,1850),
-        LUMA_VICE(1260,630,1850), LUMA_VICE( 900,630,1850),
-        LUMA_VICE(1260,630,1850), LUMA_VICE(1560,630,1850),
-        LUMA_VICE(1260,630,1850), LUMA_VICE(1560,630,1850)
-    };
-    
-    double luma_vice_6569_r3[16] = { /* taken from VICE 3.2 */
-        LUMA_VICE( 700,700,1850), LUMA_VICE(1850,700,1850),
-        LUMA_VICE(1090,700,1850), LUMA_VICE(1480,700,1850),
-        LUMA_VICE(1180,700,1850), LUMA_VICE(1340,700,1850),
-        LUMA_VICE(1020,700,1850), LUMA_VICE(1620,700,1850),
-        LUMA_VICE(1180,700,1850), LUMA_VICE(1020,700,1850),
-        LUMA_VICE(1340,700,1850), LUMA_VICE(1090,700,1850),
-        LUMA_VICE(1300,700,1850), LUMA_VICE(1620,700,1850),
-        LUMA_VICE(1300,700,1850), LUMA_VICE(1480,700,1850),
-    };
-    
-    double luma_vice_6567[16] = { /* taken from VICE 3.2 */
-        LUMA_VICE( 590,590,1825), LUMA_VICE(1825,590,1825),
-        LUMA_VICE( 950,590,1825), LUMA_VICE(1380,590,1825),
-        LUMA_VICE(1030,590,1825), LUMA_VICE(1210,590,1825),
-        LUMA_VICE( 860,590,1825), LUMA_VICE(1560,590,1825),
-        LUMA_VICE(1030,590,1825), LUMA_VICE( 860,590,1825),
-        LUMA_VICE(1210,590,1825), LUMA_VICE( 950,590,1825),
-        LUMA_VICE(1160,590,1825), LUMA_VICE(1560,590,1825),
-        LUMA_VICE(1160,590,1825), LUMA_VICE(1380,590,1825)
-    };
-    
-    double luma_vice_6567_r65a[16] = { /* taken from VICE 3.2 */
-        LUMA_VICE( 560,560,1825), LUMA_VICE(1825,560,1825),
-        LUMA_VICE( 840,560,1825), LUMA_VICE(1500,560,1825),
-        LUMA_VICE(1180,560,1825), LUMA_VICE(1180,560,1825),
-        LUMA_VICE( 840,560,1825), LUMA_VICE(1500,560,1825),
-        LUMA_VICE(1180,560,1825), LUMA_VICE( 840,560,1825),
-        LUMA_VICE(1180,560,1825), LUMA_VICE( 840,560,1825),
-        LUMA_VICE(1180,560,1825), LUMA_VICE(1500,560,1825),
-        LUMA_VICE(1180,560,1825), LUMA_VICE(1500,560,1825),
-    };
-    
-    double luma_pepto[16] = { /* taken from Pepto's Colodore palette */
-        LUMA_COLORES(0),  LUMA_COLORES(32),
-        LUMA_COLORES(10), LUMA_COLORES(20),
-        LUMA_COLORES(12), LUMA_COLORES(16),
-        LUMA_COLORES(8),  LUMA_COLORES(24),
-        LUMA_COLORES(12), LUMA_COLORES(8),
-        LUMA_COLORES(16), LUMA_COLORES(10),
-        LUMA_COLORES(15), LUMA_COLORES(24),
-        LUMA_COLORES(15), LUMA_COLORES(20)
-    };
-    
-    double *luma;
-    switch(model) {
-        case PAL_6569_R1:
-            luma = luma_vice_6569_r1;
-            break;
-        case PAL_6569_R3:
-            luma = luma_vice_6569_r3;
-            break;
-        case NTSC_6567:
-            luma = luma_vice_6567;
-            break;
-        case NTSC_6567_R56A:
-            luma = luma_vice_6567_r65a;
-            break;
-        case PAL_8565:
-        case NTSC_8562:
-            luma = luma_pepto;
-            break;
-        default:
-            assert(false);
-    }
-
-    // Angles in the color plane
-
-    #define ANGLE_PEPTO(x) (x * 22.5 * M_PI / 180.0)
-    #define ANGLE_COLORES(x) ((x * 22.5 + 11.5) * M_PI / 180.0)
-    
-    // Pepto's first approach
-    // http://unusedino.de/ec64/technical/misc/vic656x/colors/
-
-    // Pepto's second approach
-    // http://www.pepto.de/projects/colorvic/
-    
-    double angle[16] = {
-        NAN,               NAN,
-        ANGLE_COLORES(4),  ANGLE_COLORES(12),
-        ANGLE_COLORES(2),  ANGLE_COLORES(10),
-        ANGLE_COLORES(15), ANGLE_COLORES(7),
-        ANGLE_COLORES(5),  ANGLE_COLORES(6),
-        ANGLE_COLORES(4),  NAN,
-        NAN,               ANGLE_COLORES(10),
-        ANGLE_COLORES(15), NAN
-    };
-    
-    //
-    // Compute YUV values (adapted from Pepto)
-    //
-    
-    // Normalize
-    double brightness = this->brightness - 50.0;
-    double contrast = this->contrast / 100.0 + 0.2;
-    double saturation = this->saturation / 1.25;
-        
-    // Compute all sixteen colors
-    for (unsigned i = 0; i < 16; i++) {
-        
-        // Compute Y, U, and V
-        double ang = angle[i];
-        y[i] = luma[i];
-        u[i] = isnan(ang) ? 0 : cos(ang) * saturation;
-        v[i] = isnan(ang) ? 0 : sin(ang) * saturation;
-        
-        // Apply brightness and contrast
-        y[i] *= contrast;
-        u[i] *= contrast;
-        v[i] *= contrast;
-        y[i] += brightness;
-    }
-    
-    // Translate to monochrome if applicable
-    for (unsigned i = 0; i < 16; i++) {
-
-        switch(palette) {
-
-            case BLACK_WHITE_PALETTE:
-                u[i] = 0.0;
-                v[i] = 0.0;
-                break;
-
-            case PAPER_WHITE_PALETTE:
-                u[i] = -128.0 + 120.0;
-                v[i] = -128.0 + 133.0;
-                break;
-
-            case GREEN_PALETTE:
-                u[i] = -128.0 + 29.0;
-                v[i] = -128.0 + 64.0;
-                break;
-                
-            case AMBER_PALETTE:
-                u[i] = -128.0 + 24.0;
-                v[i] = -128.0 + 178.0;
-                break;
-                
-            case SEPIA_PALETTE:
-                u[i] = -128.0 + 97.0;
-                v[i] = -128.0 + 154.0;
-                break;
-                
-            default:
-                assert(palette == COLOR_PALETTE);
-        }
-    }
-    
-    // Convert YUV values to RGB
-    for (unsigned i = 0; i < 16; i++) {
-    
-        double r = y[i]                + 1.140 * v[i];
-        double g = y[i] - 0.396 * u[i] - 0.581 * v[i];
-        double b = y[i] + 2.029 * u[i];
-        r = MAX(MIN(r, 255), 0);
-        g = MAX(MIN(g, 255), 0);
-        b = MAX(MIN(b, 255), 0);
-        
-        // Apply Gamma correction for PAL models
-        if (isPAL()) {
-            r = gammaCorrect(r, 2.8, 2.2);
-            g = gammaCorrect(g, 2.8, 2.2);
-            b = gammaCorrect(b, 2.8, 2.2);
-        }
-        
-        // Store result
-        u32 rgba = LO_LO_HI_HI((u8)r, (u8)g, (u8)b, 0xFF);
-        rgbaTable[i] = rgba;
-    }
-#endif
-    
     for (unsigned i = 0; i < 16; i++) {
         rgbaTable[i] = getColor(i, config.palette);
     }
