@@ -399,32 +399,6 @@
     return [self vicii]->getColor((unsigned)nr, palette);
 }
 
-/*
-- (double)brightness
-{
-    return [self vicii]->getBrightness();
-}
-- (void)setBrightness:(double)value
-{
-    [self vicii]->setBrightness(value);
-}
-- (double)contrast
-{
-    return [self vicii]->getContrast();
-}
-- (void)setContrast:(double)value
-{
-    [self vicii]->setContrast(value);
-}
-- (double)saturation
-{
-    return [self vicii]->getSaturation();
-}
-- (void)setSaturation:(double)value
-{
-    [self vicii]->setSaturation(value);
-}
- */
 - (u32 *)noise
 {
     return [self vicii]->getNoise();

@@ -160,11 +160,6 @@ VICII::getColor(unsigned nr, Palette palette)
     //
     
     // Normalize
-    /*
-    double brightness = this->brightness - 50.0;
-    double contrast = this->contrast / 100.0 + 0.2;
-    double saturation = this->saturation / 1.25;
-    */
     double brightness = config.brightness - 50.0;
     double contrast = config.contrast / 100.0 + 0.2;
     double saturation = config.saturation / 1.25;
@@ -230,32 +225,6 @@ VICII::getColor(unsigned nr, Palette palette)
     
     return LO_LO_HI_HI((u8)r, (u8)g, (u8)b, 0xFF);
 }
-
-/*
-void
-VICII::setBrightness(double value)
-{
-    brightness = value;
-    c64.configure(OPT_BRIGHTNESS, (i64)value);
-    updatePalette();
-}
-
-void
-VICII::setContrast(double value)
-{
-    contrast = value;
-    c64.configure(OPT_CONTRAST, (i64)value);
-    updatePalette();
-}
-
-void
-VICII::setSaturation(double value)
-{
-    saturation = value;
-    c64.configure(OPT_SATURATION, (i64)value);
-    updatePalette();
-}
-*/
 
 void
 VICII::updatePalette()
