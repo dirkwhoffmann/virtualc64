@@ -158,9 +158,14 @@ public:
     
     // void handler(const string& command) throws;
     
-    template <Token t1> void exec(Arguments& argv, long param) throws;
-    template <Token t1, Token t2> void exec(Arguments& argv, long param) throws;
-    template <Token t1, Token t2, Token t3> void exec(Arguments& argv, long param) throws;
+    template <Token t1>
+    void exec(Arguments& argv, long param) throws;
+    template <Token t1, Token t2>
+    void exec(Arguments& argv, long param) throws;
+    template <Token t1, Token t2, Token t3>
+    void exec(Arguments& argv, long param) throws;
+    template <Token t1, Token t2, Token t3, Token t4>
+    void exec(Arguments& argv, long param) throws;
 
 private:
     

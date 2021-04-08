@@ -10,6 +10,7 @@
 #include "config.h"
 #include "ReSID.h"
 #include "C64.h"
+#include "IO.h"
 
 ReSID::ReSID(C64 &ref, SIDBridge &bridgeref, int n) : C64Component(ref), bridge(bridgeref), nr(n)
 {
@@ -100,6 +101,52 @@ ReSID::_inspect()
             voiceInfo[i].decayRate = reg[0x5] & 0xF;
             voiceInfo[i].sustainRate = reg[0x6] >> 4;
             voiceInfo[i].releaseRate = reg[0x6] & 0xF;
+        }
+    }
+}
+
+void
+ReSID::_dump(dump::Category category, std::ostream& os) const
+{
+    using namespace util;
+    
+    reSID::SID::State state = sid->read_state();
+    u8 *reg = (u8 *)state.sid_register;
+    u8 ft = info.filterType;
+    string fts =
+    ft == FASTSID_LOW_PASS ? "LOW_PASS" :
+    ft == FASTSID_HIGH_PASS ? "HIGH_PASS" :
+    ft == FASTSID_BAND_PASS ? "BAND_PASS" : "???";
+    
+    if (category & dump::State) {
+   
+        os << tab("Engine : ReSID") << std::endl;
+        os << tab("Chip model");
+        os << SIDRevisionEnum::key(getRevision()) << std::endl;
+        os << tab("Sampling rate");
+        os << getSampleRate() << std::endl;
+        os << tab("CPU frequency");
+        os << dec(getClockFrequency()) << std::endl;
+        os << tab("Emulate filter");
+        os << bol(getAudioFilter()) << std::endl;
+        os << tab("Volume");
+        os << dec((u8)(reg[0x18] & 0xF)) << std::endl;
+        os << tab("Filter type");
+        os << fts << std::endl;
+        os << tab("Filter cut off");
+        os << dec((u16)(reg[0x16] << 3 | (reg[0x15] & 0x07))) << std::endl;
+        os << tab("Filter resonance");
+        os << dec((u8)(reg[0x17] >> 4)) << std::endl;
+        os << tab("Filter enable bits");
+        os << hex((u8)(reg[0x17] & 0x0F));
+    }
+    
+    if (category & dump::Registers) {
+   
+        for (isize i = 0; i < 0x1C; i++) {
+            
+            os << tab("Register " + std::to_string(i));
+            os << hex(reg[i]) << std::endl;
         }
     }
 }

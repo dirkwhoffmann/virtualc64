@@ -169,7 +169,7 @@ Interpreter::registerInstructions()
     //
     
     root.add({"vicii"},
-             "component", "Custom chip");
+             "component", "Video Interface Controller");
     
     root.add({"vicii", "config"},
              "command", "Displays the current configuration",
@@ -228,90 +228,85 @@ Interpreter::registerInstructions()
              "key", "Adjusts the saturation of the Amiga texture",
              &RetroShell::exec <Token::monitor, Token::set, Token::saturation>, 1);
 
+    */
     
     //
-    // Audio
+    // SID
     //
     
-    root.add({"audio"},
-             "component", "Audio Unit (Paula)");
-    
-    root.add({"audio", "config"},
-             "command", "Displays the current configuration",
-             &RetroShell::exec <Token::audio, Token::config>);
+    root.add({"sid"},
+             "component", "Sound Interface Devices");
 
-    root.add({"audio", "set"},
+    root.add({"sid1"},
+             "component", "Primary SID");
+    
+    root.add({"sid2"},
+             "component", "First optional SID");
+
+    root.add({"sid3"},
+             "component", "Second optional SID");
+
+    root.add({"sid4"},
+             "component", "Third optional SID");
+    
+    root.add({"sid", "config"},
+             "command", "Displays the current configuration",
+             &RetroShell::exec <Token::sid, Token::config>);
+
+    root.add({"sid", "sid1", "sid2", "sid3", "sid4"}, {"", "set"},
              "command", "Configures the component");
 
-    root.add({"audio", "set", "sampling"},
+    root.add({"sid", "set", "enigne"},
+             "key", "Selects the SID emulation backend",
+             &RetroShell::exec <Token::sid, Token::set, Token::engine>, 1);
+
+    root.add({"sid", "set", "revision"},
+             "key", "Selects the emulated chip model",
+             &RetroShell::exec <Token::sid, Token::set, Token::revision>, 1);
+
+    root.add({"sid", "set", "sampling"},
              "key", "Selects the sampling method",
-             &RetroShell::exec <Token::audio, Token::set, Token::sampling>, 1);
+             &RetroShell::exec <Token::sid, Token::set, Token::sampling>, 1);
 
-    root.add({"audio", "set", "filter"},
+    root.add({"sid", "set", "filter"},
              "key", "Configures the audio filter",
-             &RetroShell::exec <Token::audio, Token::set, Token::filter>, 1);
-    
-    root.add({"audio", "set", "volume"},
-             "key", "Sets the volume");
+             &RetroShell::exec <Token::sid, Token::set, Token::filter>, 1);
 
-    root.add({"audio", "set", "volume", "channel0"},
-             "key", "Sets the volume for audio channel 0",
-             &RetroShell::exec <Token::audio, Token::set, Token::volume>, 1, 0);
-    
-    root.add({"audio", "set", "volume", "channel1"},
-             "key", "Sets the volume for audio channel 1",
-             &RetroShell::exec <Token::audio, Token::set, Token::volume>, 1, 1);
-    
-    root.add({"audio", "set", "volume", "channel2"},
-             "key", "Sets the volume for audio channel 2",
-             &RetroShell::exec <Token::audio, Token::set, Token::volume>, 1, 2);
-    
-    root.add({"audio", "set", "volume", "channel3"},
-             "key", "Sets the volume for audio channel 3",
-             &RetroShell::exec <Token::audio, Token::set, Token::volume>, 1, 3);
-    
-    root.add({"audio", "set", "volume", "left"},
+    root.add({"sid", "set", "volume"},
+             "key", "Sets the master volume level");
+
+    root.add({"sid", "set", "volume", "left"},
              "key", "Sets the master volume for the left speaker",
-             &RetroShell::exec <Token::audio, Token::set, Token::volume>, 1, 4);
+             &RetroShell::exec <Token::sid, Token::set, Token::volume, Token::left>, 1);
     
-    root.add({"audio", "set", "volume", "right"},
+    root.add({"sid", "set", "volume", "right"},
              "key", "Sets the master volume for the right speaker",
-             &RetroShell::exec <Token::audio, Token::set, Token::volume>, 1, 5);
+             &RetroShell::exec <Token::sid, Token::set, Token::volume, Token::right>, 1);
 
-    root.add({"audio", "set", "pan"},
-             "key", "Sets the pan for one of the four audio channels");
+    root.add({"sid1", "sid2", "sid3", "sid4" }, {"", "set", "volume"},
+             "key", "Sets the volume");
     
-    root.add({"audio", "set", "pan", "channel0"},
-             "key", "Sets the pan for audio channel 0",
-             &RetroShell::exec <Token::audio, Token::set, Token::pan>, 1, 0);
+    root.add({"sid1", "sid2", "sid3", "sid4" }, {"", "set", "pan"},
+             "key", "Sets the pan",
+             &RetroShell::exec <Token::sid, Token::set, Token::pan>, 1);
     
-    root.add({"audio", "set", "pan", "channel1"},
-             "key", "Sets the pan for audio channel 1",
-             &RetroShell::exec <Token::audio, Token::set, Token::pan>, 1, 1);
-    
-    root.add({"audio", "set", "pan", "channel2"},
-             "key", "Sets the pan for audio channel 2",
-             &RetroShell::exec <Token::audio, Token::set, Token::pan>, 1, 2);
-    
-    root.add({"audio", "set", "pan", "channel3"},
-             "key", "Sets the pan for audio channel 3",
-             &RetroShell::exec <Token::audio, Token::set, Token::pan>, 1, 3);
-
-    root.add({"audio", "inspect"},
+    root.add({"sid1", "sid2", "sid3", "sid4" }, {"", "inspect"},
              "command", "Displays the internal state");
 
-    root.add({"audio", "inspect", "state"},
+    root.add({"sid1", "sid2", "sid3", "sid4" }, {"", "inspect", "state"},
              "category", "Displays the current state",
-             &RetroShell::exec <Token::audio, Token::inspect, Token::state>);
+             &RetroShell::exec <Token::sid, Token::inspect, Token::state>);
 
-    root.add({"audio", "inspect", "registers"},
+    root.add({"sid1", "sid2", "sid3", "sid4" }, {"", "inspect", "registers"},
              "category", "Displays the current register value",
-             &RetroShell::exec <Token::audio, Token::inspect, Token::registers>);
+             &RetroShell::exec <Token::sid, Token::inspect, Token::registers>);
     
     
     //
     // Paula
     //
+    
+    /*
     
     root.add({"paula"},
              "component", "Custom chip");

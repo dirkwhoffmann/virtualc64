@@ -406,64 +406,43 @@ SIDBridge::_dump(dump::Category category, std::ostream& os) const
         os << bol(config.filter) << std::endl;
         os << tab("Engine");
         os << SIDEngineEnum::key(config.engine) << std::endl;
-        os << tab("Sampling : %s\n");
+        os << tab("Sampling");
         os << SamplingMethodEnum::key(config.sampling) << std::endl;
-        os << tab("Volume 1\n");
+        os << tab("Volume 1");
         os << config.vol[0] << std::endl;
-        os << tab("Volume 2\n");
+        os << tab("Volume 2");
         os << config.vol[1] << std::endl;
-        os << tab("Volume 3\n");
+        os << tab("Volume 3");
         os << config.vol[2] << std::endl;
-        os << tab("Volume 4 \n");
+        os << tab("Volume 4");
         os << config.vol[3] << std::endl;
-        os << tab("Volume L\n");
+        os << tab("Volume L");
         os << config.volL << std::endl;
-        os << tab("Volume R\n");
+        os << tab("Volume R");
         os << config.volR << std::endl;
     }
-                                
-    _dump(0);
+     
+    if (category & dump::State) {
+
+        _dump(category, os, 0);
+        os << std::endl;
+        _dump(category, os, 1);
+        os << std::endl;
+        _dump(category, os, 2);
+        os << std::endl;
+        _dump(category, os, 3);
+    }
 }
 
 void
-SIDBridge::_dump(int nr) const
+SIDBridge::_dump(dump::Category category, std::ostream& os, isize nr) const
 {
-    // SIDInfo sidinfo;
-    // VoiceInfo voiceinfo[3];
-    SIDRevision residRev = resid[nr].getRevision();
-    SIDRevision fastsidRev = fastsid[nr].getRevision();
-    
-    msg("ReSID:\n");
-    msg("------\n");
-    msg("    Chip model : %s\n", SIDRevisionEnum::key(residRev));
-    msg(" Sampling rate : %f\n", resid[nr].getSampleRate());
-    msg(" CPU frequency : %d\n", resid[nr].getClockFrequency());
-    msg("Emulate filter : %s\n", resid[nr].getAudioFilter() ? "yes" : "no");
-    msg("\n");
-
-    /*
-    sidinfo = resid[nr].getInfo();
-    voiceinfo[0] = resid[nr].getVoiceInfo(0);
-    voiceinfo[1] = resid[nr].getVoiceInfo(1);
-    voiceinfo[2] = resid[nr].getVoiceInfo(2);
-    _dump(sidinfo, voiceinfo);
-    */
-    
-    msg("FastSID:\n");
-    msg("--------\n");
-    msg("    Chip model : %s\n", SIDRevisionEnum::key(fastsidRev));
-    msg(" Sampling rate : %f\n", fastsid[nr].getSampleRate());
-    msg(" CPU frequency : %d\n", fastsid[nr].getClockFrequency());
-    msg("Emulate filter : %s\n", fastsid[nr].getAudioFilter() ? "yes" : "no");
-    msg("\n");
-        
-    /*
-    sidinfo = fastsid[nr].getInfo();
-    voiceinfo[0] = fastsid[nr].getVoiceInfo(0);
-    voiceinfo[1] = fastsid[nr].getVoiceInfo(1);
-    voiceinfo[2] = fastsid[nr].getVoiceInfo(2);
-    _dump(sidinfo, voiceinfo);
-    */
+    switch (config.engine) {
+            
+        case SIDENGINE_FASTSID: fastsid[nr].dump(category, os); break;
+        case SIDENGINE_RESID:   resid[nr].dump(category, os); break;
+        default: assert(false);
+    }
 }
 
 void

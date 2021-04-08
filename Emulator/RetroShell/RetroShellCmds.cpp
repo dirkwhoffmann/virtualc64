@@ -290,68 +290,93 @@ RetroShell::exec <Token::monitor, Token::set, Token::saturation> (Arguments& arg
 {
     amiga.configure(OPT_SATURATION, util::parseNum(argv.front()));
 }
+*/
 
 //
-// Audio
+// SID
 //
 
 template <> void
-RetroShell::exec <Token::audio, Token::config> (Arguments& argv, long param)
+RetroShell::exec <Token::sid, Token::config> (Arguments& argv, long param)
 {
-    dump(amiga.paula.muxer, Dump::Config);
+    dump(c64.sid, dump::Config);
 }
 
 template <> void
-RetroShell::exec <Token::audio, Token::set, Token::sampling> (Arguments& argv, long param)
+RetroShell::exec <Token::sid, Token::set, Token::engine> (Arguments &argv, long param)
 {
-    amiga.configure(OPT_SAMPLING_METHOD, util::parseEnum <SamplingMethodEnum> (argv.front()));
+    auto value = util::parseEnum <SIDEngineEnum> (argv.front());
+    c64.configure(OPT_SID_ENGINE, value);
 }
 
 template <> void
-RetroShell::exec <Token::audio, Token::set, Token::filter> (Arguments& argv, long param)
+RetroShell::exec <Token::sid, Token::set, Token::revision> (Arguments &argv, long param)
 {
-    amiga.configure(OPT_FILTER_TYPE, util::parseEnum <FilterTypeEnum> (argv.front()));
+    auto value = util::parseEnum <SIDRevisionEnum> (argv.front());
+    c64.configure(OPT_SID_REVISION, value);
 }
 
 template <> void
-RetroShell::exec <Token::audio, Token::set, Token::volume> (Arguments& argv, long param)
+RetroShell::exec <Token::sid, Token::set, Token::sampling> (Arguments& argv, long param)
 {
-    switch (param) {
-            
-        case 0: amiga.configure(OPT_AUDVOL, 0, util::parseNum(argv.front())); break;
-        case 1: amiga.configure(OPT_AUDVOL, 1, util::parseNum(argv.front())); break;
-        case 2: amiga.configure(OPT_AUDVOL, 2, util::parseNum(argv.front())); break;
-        case 3: amiga.configure(OPT_AUDVOL, 3, util::parseNum(argv.front())); break;
-        case 4: amiga.configure(OPT_AUDVOLL, util::parseNum(argv.front())); break;
-        case 5: amiga.configure(OPT_AUDVOLR, util::parseNum(argv.front())); break;
-            
-        default:
-            assert(false);
-    }
+    auto value = util::parseEnum <SamplingMethodEnum> (argv.front());
+    c64.configure(OPT_SID_SAMPLING, value);
 }
 
 template <> void
-RetroShell::exec <Token::audio, Token::set, Token::pan> (Arguments& argv, long param)
+RetroShell::exec <Token::sid, Token::set, Token::filter> (Arguments& argv, long param)
 {
-    amiga.configure(OPT_AUDPAN, param, util::parseNum(argv.front()));
+    auto value = util::parseBool(argv.front());
+    c64.configure(OPT_SID_FILTER, value);
 }
 
 template <> void
-RetroShell::exec <Token::audio, Token::inspect, Token::state> (Arguments& argv, long param)
+RetroShell::exec <Token::sid, Token::set, Token::volume> (Arguments& argv, long param)
 {
-    dump(amiga.paula.muxer, Dump::State);
+    assert(param >= 0 && param <= 3);
+    
+    auto value = util::parseNum(argv.front());
+    c64.configure(OPT_AUDVOL, param, value);
 }
 
 template <> void
-RetroShell::exec <Token::audio, Token::inspect, Token::registers> (Arguments& argv, long param)
+RetroShell::exec <Token::sid, Token::set, Token::volume, Token::left> (Arguments& argv, long param)
 {
-    dump(amiga.paula.muxer, Dump::Registers);
+    auto value = util::parseNum(argv.front());
+    c64.configure(OPT_AUDVOLL, value);
+}
+
+template <> void
+RetroShell::exec <Token::sid, Token::set, Token::volume, Token::right> (Arguments& argv, long param)
+{
+    auto value = util::parseNum(argv.front());
+    c64.configure(OPT_AUDVOLR, value);
+}
+
+template <> void
+RetroShell::exec <Token::sid, Token::set, Token::pan> (Arguments& argv, long param)
+{
+    auto value = util::parseNum(argv.front());
+    c64.configure(OPT_AUDPAN, param, value);
+}
+
+template <> void
+RetroShell::exec <Token::sid, Token::inspect, Token::state> (Arguments& argv, long param)
+{
+    dump(c64.sid, dump::State);
+}
+
+template <> void
+RetroShell::exec <Token::sid, Token::inspect, Token::registers> (Arguments& argv, long param)
+{
+    dump(c64.sid, dump::Registers);
 }
 
 //
 // Paula
 //
 
+/*
 template <> void
 RetroShell::exec <Token::paula, Token::inspect, Token::state> (Arguments& argv, long param)
 {

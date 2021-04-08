@@ -22,7 +22,7 @@ enum class Token
     none,
     
     // Components
-    c64,audio, cia, controlport, cpu, drive, keyboard, memory, monitor, mouse,
+    c64, cia, controlport, cpu, drive, keyboard, memory, monitor, mouse, sid,
     vicii,
 
     // Commands
@@ -35,11 +35,11 @@ enum class Token
     
     // Keys
     accuracy, bankmap, brightness, chip,
-    contrast, defaultbb, defaultfs, device, esync, extrom, extstart, fast,
-    filter, graydotbug, joystick, keyset, mechanics, model, palette, pan, poll, pullup,
-    raminitpattern, revision, rom, sampling, saturation, sbcollisions, searchpath,
+    contrast, defaultbb, defaultfs, device, engine,
+    filter, graydotbug, joystick, keyset, left, model, palette, pan, poll,
+    raminitpattern, revision, right, rom, sampling, saturation, sbcollisions, searchpath,
     shakedetector, slow, slowramdelay, slowrammirror, speed, sscollisions, step, tod,
-    timerbbug, unmappingtype, velocity, volume, wom
+    timerbbug, unmappingtype, velocity, volume
 };
 
 struct TooFewArgumentsError : public util::ParseError {
