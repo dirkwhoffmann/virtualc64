@@ -568,27 +568,32 @@ extension MyController {
             refreshStatusBar()
             
         case .POWER_ON:
+            // track("POWER_ON")
             renderer.canvas.open(delay: 1.5)
             virtualKeyboard = nil
             toolbar.updateToolbar()
             inspector?.fullRefresh()
 
         case .POWER_OFF:
+            // track("POWER_OFF")
             toolbar.updateToolbar()
             inspector?.fullRefresh()
             
         case .RUN:
+            // track("RUN")
             needsSaving = true
             toolbar.updateToolbar()
             inspector?.fullRefresh()
             refreshStatusBar()
     
         case .PAUSE:
+            // track("PAUSE")
             toolbar.updateToolbar()
             inspector?.fullRefresh()
             refreshStatusBar()
 
         case .RESET:
+            // track("RESET")
             mydocument.deleteBootDiskID()
             mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
             inspector?.fullRefresh()
