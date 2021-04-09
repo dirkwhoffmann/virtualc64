@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "PortTypes.h"
+#include "ControlPortTypes.h"
 #include "C64Component.h"
 #include "Joystick.h"
 #include "Mouse.h"

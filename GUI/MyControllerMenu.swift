@@ -432,13 +432,12 @@ extension MyController: NSMenuItemValidation {
             return
         }
         
-        if !c64.isReady(&error) {
+        if c64.isReady(&error) {
+            c64.powerOn()
+            c64.run()
+        } else {
             VC64Error.init(error).warning("Unable to power up the emulator")
-            return
         }
-        
-        c64.powerOn()
-        c64.run()
     }
      
     //

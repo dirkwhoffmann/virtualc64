@@ -377,65 +377,23 @@ RetroShell::exec <Token::sid, Token::inspect, Token::registers> (Arguments& argv
     dump(c64.sid.getSID(value), dump::Registers);
 }
 
-//
-// Paula
-//
-
-/*
-template <> void
-RetroShell::exec <Token::paula, Token::inspect, Token::state> (Arguments& argv, long param)
-{
-    dump(amiga.paula, Dump::State);
-}
-
-template <> void
-RetroShell::exec <Token::paula, Token::inspect, Token::registers> (Arguments& argv, long param)
-{
-    dump(amiga.paula, Dump::Registers);
-}
-
-//
-// RTC
-//
-
-template <> void
-RetroShell::exec <Token::rtc, Token::config> (Arguments& argv, long param)
-{
-    dump(amiga.rtc, Dump::Config);
-}
-
-template <> void
-RetroShell::exec <Token::rtc, Token::inspect, Token::registers> (Arguments& argv, long param)
-{
-    dump(amiga.rtc, Dump::Registers);
-}
-
-template <> void
-RetroShell::exec <Token::rtc, Token::set, Token::revision> (Arguments &argv, long param)
-{
-    amiga.configure(OPT_RTC_MODEL, util::parseEnum <RTCRevisionEnum> (argv.front()));
-}
 
 //
 // Control port
 //
 
 template <> void
-RetroShell::exec <Token::controlport, Token::config> (Arguments& argv, long param)
-{
-    dump(param == 0 ? amiga.controlPort1 : amiga.controlPort2, Dump::Config);
-}
-
-template <> void
 RetroShell::exec <Token::controlport, Token::inspect> (Arguments& argv, long param)
 {
-    dump(param == 0 ? amiga.controlPort1 : amiga.controlPort2, Dump::State);
+    dump(param == 0 ? c64.port1 : c64.port2, dump::State);
 }
+
 
 //
 // Keyboard
 //
 
+/*
 template <> void
 RetroShell::exec <Token::keyboard, Token::config> (Arguments& argv, long param)
 {

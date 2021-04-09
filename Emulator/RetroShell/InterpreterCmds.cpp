@@ -318,53 +318,6 @@ Interpreter::registerInstructions()
     
     
     //
-    // Paula
-    //
-    
-    /*
-    
-    root.add({"paula"},
-             "component", "Custom chip");
-
-    root.add({"paula", "inspect"},
-             "command", "Displays the internal state");
-
-    root.add({"paula", "inspect", "state"},
-             "command", "Displays the current register value",
-             &RetroShell::exec <Token::paula, Token::inspect, Token::state>);
-
-    root.add({"paula", "inspect", "registers"},
-             "command", "Displays the current register value",
-             &RetroShell::exec <Token::paula, Token::inspect, Token::registers>);
-
-    
-    //
-    // RTC
-    //
-
-    root.add({"rtc"},
-             "component", "Real-time clock");
-
-    root.add({"rtc", "config"},
-             "command", "Displays the current configuration",
-             &RetroShell::exec <Token::rtc, Token::config>);
-
-    root.add({"rtc", "set"},
-             "command", "Configures the component");
-        
-    root.add({"rtc", "set", "revision"},
-             "key", "Selects the emulated chip model",
-             &RetroShell::exec <Token::rtc, Token::set, Token::revision>, 1);
-
-    root.add({"rtc", "inspect"},
-             "command", "Displays the internal state");
-
-    root.add({"rtc", "inspect", "registers"},
-             "command", "Displays the current register value",
-             &RetroShell::exec <Token::rtc, Token::inspect, Token::registers>);
-
-    
-    //
     // Control port
     //
     
@@ -373,10 +326,6 @@ Interpreter::registerInstructions()
     
     root.add({"controlport2"},
              "component", "Control port 2");
-
-    root.add({"controlport1", "controlport2"}, {"", "config"},
-             "command", "Displays the current configuration",
-             &RetroShell::exec <Token::controlport, Token::config>);
     
     root.add({"controlport1", "controlport2"}, {"", "inspect"},
              "command", "Displays the internal state",
@@ -387,6 +336,7 @@ Interpreter::registerInstructions()
     // Keyboard
     //
 
+    /*
     root.add({"keyboard"},
              "component", "Keyboard");
 

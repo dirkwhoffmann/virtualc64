@@ -75,16 +75,10 @@ Interpreter::autoComplete(const string& userInput)
     autoComplete(tokens);
 
     // Recreate the command string
-    for (const auto &it : tokens) {
-        result += (result == "" ? "" : " ") + it;
-    }
+    for (const auto &it : tokens) { result += (result == "" ? "" : " ") + it; }
 
     // Add a space if the command has been fully completed
-    printf("autoComplete: '%s'\n", result.c_str());
-    if (root.seek(tokens) != nullptr) {
-        printf("Adding space\n");
-        result += " ";
-    }
+    if (root.seek(tokens) != nullptr) { result += " "; }
     
     return result;
 }

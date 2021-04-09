@@ -290,6 +290,8 @@
 		5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardPrefs.swift; sourceTree = "<group>"; };
 		50031B33206FABA400A1969B /* OldSnapshotDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OldSnapshotDialog.xib; sourceTree = "<group>"; };
 		50031B39206FB0FC00A1969B /* SnapshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
+		500333EB26202527008445E4 /* ExpansionPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExpansionPortTypes.h; sourceTree = "<group>"; };
+		500333EC2620269D008445E4 /* JoystickTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JoystickTypes.h; sourceTree = "<group>"; };
 		5009CF3224C0B8EF00F674FF /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		500C7C43259FC09B00F5CC1F /* Error.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Error.h; sourceTree = "<group>"; };
 		500E34122615BF5E006A38DA /* IO.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IO.cpp; sourceTree = "<group>"; };
@@ -594,7 +596,7 @@
 		50B171051EE6AB840019E8D4 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyControllerTouchBar.swift; sourceTree = "<group>"; };
 		50B1A61525A2028B00201A2C /* MemoryTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemoryTypes.h; sourceTree = "<group>"; };
-		50B1A61625A203B100201A2C /* PortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PortTypes.h; sourceTree = "<group>"; };
+		50B1A61625A203B100201A2C /* ControlPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlPortTypes.h; sourceTree = "<group>"; };
 		50B1A61725A205D500201A2C /* DriveTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DriveTypes.h; sourceTree = "<group>"; };
 		50B1A61825A208D900201A2C /* MouseTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseTypes.h; sourceTree = "<group>"; };
 		50B1A61925A209A200201A2C /* CartridgeTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CartridgeTypes.h; sourceTree = "<group>"; };
@@ -1046,11 +1048,13 @@
 		504C42F924AF29AB00E69CAE /* Peripherals */ = {
 			isa = PBXGroup;
 			children = (
-				50B1A61625A203B100201A2C /* PortTypes.h */,
+				50B1A61625A203B100201A2C /* ControlPortTypes.h */,
 				504C434024AF29AC00E69CAE /* ControlPort.h */,
 				504C433E24AF29AC00E69CAE /* ControlPort.cpp */,
+				500333EB26202527008445E4 /* ExpansionPortTypes.h */,
 				504C434324AF29AC00E69CAE /* ExpansionPort.h */,
 				504C434524AF29AC00E69CAE /* ExpansionPort.cpp */,
+				500333EC2620269D008445E4 /* JoystickTypes.h */,
 				5085D89C25B848940043B15C /* Joystick.h */,
 				5085D89B25B848940043B15C /* Joystick.cpp */,
 				50B1A61825A208D900201A2C /* MouseTypes.h */,

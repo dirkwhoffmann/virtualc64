@@ -30,7 +30,7 @@ void
 *threadMain(void *thisC64) {
     
     assert(thisC64 != nullptr);
-    
+        
     // Inform the C64 that the thread is about to start
     C64 *c64 = (C64 *)thisC64;
     c64->threadWillStart();
@@ -614,11 +614,13 @@ C64::_powerOn()
 void
 C64::powerOff()
 {
-    assert(!isEmulatorThread());
-    assert(!isRunning());
-    
     debug(RUN_DEBUG, "powerOff()\n");
-            
+    assert(!isEmulatorThread());
+    
+    // Pause if needed
+    pause();
+    assert(!isRunning());
+                
     if (isPoweredOn()) {
            
         // Switch state
@@ -644,20 +646,21 @@ C64::_powerOff()
 void
 C64::run()
 {
+    debug(RUN_DEBUG, "run()\n");
+    assert(!isEmulatorThread());
+
+    // Power on if needed
+    powerOn();
     assert(isPoweredOn());
     
-    debug(RUN_DEBUG, "run()\n");
-            
     if (!isRunning() && isReady()) {
         
-        assert(p == nullptr);
-
         // Switch state
         state = EMULATOR_STATE_RUNNING;
 
         // Create the emulator thread
         pthread_create(&p, nullptr, threadMain, (void *)this);
-
+        
         // Inform the GUI
         msgQueue.put(MSG_RUN);
     }
@@ -671,6 +674,8 @@ C64::_run()
 void
 C64::pause()
 {
+    assert(!isEmulatorThread());
+    
     debug(RUN_DEBUG, "pause()\n");
 
     if (!isPaused()) {
@@ -680,13 +685,27 @@ C64::pause()
         
         // Wait until the emulator thread has terminated
         pthread_join(p, nullptr);
-                
-        // Update the recorded debug information
-        inspect();
         
-        // Inform the GUI
-        msgQueue.put(MSG_PAUSE);
+        // Assure that the thread is gone
+        assert(p == nullptr);
     }
+}
+
+void
+C64::_pause()
+{
+    /*
+    trace(RUN_DEBUG, "_pause()\n");
+    
+    // When we reach this line, the emulator thread is already gone
+    assert(p == (pthread_t)0);
+    
+    // Update the recorded debug information
+    inspect();
+    
+    // Inform the GUI
+    putMessage(MSG_PAUSE);
+    */
 }
 
 void
@@ -716,21 +735,6 @@ C64::inspect()
         case INSPECTION_TARGET_SID: sid.inspect(); break;
         default: break;
     }
-}
-
-void
-C64::_pause()
-{
-    trace(RUN_DEBUG, "_pause()\n");
-    
-    // When we reach this line, the emulator thread is already gone
-    assert(p == (pthread_t)0);
-    
-    // Update the recorded debug information
-    inspect();
-    
-    // Inform the GUI
-    putMessage(MSG_PAUSE);
 }
 
 void
@@ -848,10 +852,7 @@ void
 C64::runLoop()
 {
     trace(RUN_DEBUG, "runLoop()\n");
-    
-    // Leave pause mode
-    HardwareComponent::run();
-    
+        
     // Restart the synchronization timer
     oscillator.restart();
     
@@ -939,6 +940,12 @@ C64::runLoop()
     // Enter pause mode
     state = EMULATOR_STATE_PAUSED;
     HardwareComponent::pause();
+
+    // Update the recorded debug information
+    inspect();
+
+    // Inform the GUI
+    msgQueue.put(MSG_PAUSE);
 }
 
 void

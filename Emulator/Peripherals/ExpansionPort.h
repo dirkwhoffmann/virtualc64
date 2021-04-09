@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "PortTypes.h"
+#include "ExpansionPortTypes.h"
 #include "C64Component.h"
 #include "Cartridge.h"
 

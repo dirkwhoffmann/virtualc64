@@ -16,38 +16,6 @@
 // Enumerations
 //
 
-enum_long(CPDEVICE)
-{
-    CPDEVICE_NONE,
-    CPDEVICE_MOUSE,
-    CPDEVICE_JOYSTICK,
-    CPDEVICE_COUNT
-};
-typedef CPDEVICE ControlPortDevice;
-
-#ifdef __cplusplus
-struct ControlPortDeviceEnum : util::Reflection<ControlPortDeviceEnum, ControlPortDevice> {
-    
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < CPDEVICE_COUNT;
-    }
-    
-    static const char *prefix() { return "CPDEVICE"; }
-    static const char *key(ControlPortDevice value)
-    {
-        switch (value) {
-                
-            case CPDEVICE_NONE:      return "NONE";
-            case CPDEVICE_MOUSE:     return "MOUSE";
-            case CPDEVICE_JOYSTICK:  return "JOYSTICK";
-            case CPDEVICE_COUNT:     return "???";
-        }
-        return "???";
-    }
-};
-#endif
-
 enum_long(GAME_PAD_ACTION)
 {
     PULL_UP,       // Pull the joystick up
@@ -92,40 +60,6 @@ struct GamePadActionEnum : util::Reflection<GamePadActionEnum, GamePadAction> {
             case RELEASE_FIRE:   return "RELEASE_FIRE";
             case RELEASE_LEFT:   return "RELEASE_LEFT";
             case RELEASE_RIGHT:  return "RELEASE_RIGHT";
-        }
-        return "???";
-    }
-};
-#endif
-
-enum_long(CRTMODE)
-{
-    CRTMODE_16K,
-    CRTMODE_8K,
-    CRTMODE_ULTIMAX,
-    CRTMODE_OFF,
-    CRTMODE_COUNT
-};
-typedef CRTMODE CRTMode;
-
-#ifdef __cplusplus
-struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
-    
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < CRTMODE_COUNT;
-    }
-    
-    static const char *prefix() { return "CRTMODE"; }
-    static const char *key(CRTMode value)
-    {
-        switch (value) {
-                
-            case CRTMODE_16K:      return "16K";
-            case CRTMODE_8K:       return "8K";
-            case CRTMODE_ULTIMAX:  return "ULTIMAX";
-            case CRTMODE_OFF:      return "OFF";
-            case CRTMODE_COUNT:    return "???";
         }
         return "???";
     }

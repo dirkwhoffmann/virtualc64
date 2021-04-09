@@ -65,7 +65,6 @@ extension MyController: NSWindowDelegate {
         gamePadManager.shutDown()
         
         // Power off the emulator
-        c64.pause()
         c64.powerOff()
         
         // Ask the emulator to shutdown and to send the MSG_SHUTDOWN message

@@ -10,6 +10,7 @@
 #include "config.h"
 #include "ControlPort.h"
 #include "C64.h"
+#include "IO.h"
 
 ControlPort::ControlPort(C64 &ref, PortId id) : C64Component(ref), nr(id)
 {
@@ -25,6 +26,13 @@ ControlPort::ControlPort(C64 &ref, PortId id) : C64Component(ref), nr(id)
 void
 ControlPort::_dump(dump::Category category, std::ostream& os) const
 {
+    using namespace util;
+    
+    if (category & dump::State) {
+        
+        os << tab("Nr") << dec(nr) << std::endl;
+        os << tab("Device") << ControlPortDeviceEnum::key(device) << std::endl;
+    }
 }
 
 void
