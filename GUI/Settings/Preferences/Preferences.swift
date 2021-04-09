@@ -68,24 +68,22 @@ class Preferences {
     var autofire = ControlsDefaults.std.autofire {
         didSet {
             for c64 in myAppDelegate.proxies {
-                c64.port1.joystick.autofire = autofire
-                c64.port2.joystick.autofire = autofire
+                c64.configure(.AUTOFIRE, enable: autofire)
             }
         }
     }
     var autofireBullets = ControlsDefaults.std.autofireBullets {
         didSet {
             for c64 in myAppDelegate.proxies {
-                c64.port1.joystick.autofireBullets = autofireBullets
-                c64.port2.joystick.autofireBullets = autofireBullets
+                c64.configure(.AUTOFIRE_BULLETS, value: autofireBullets)
             }
         }
     }
     var autofireFrequency = ControlsDefaults.std.autofireFrequency {
         didSet {
+            let autofireDelay = Int(50.0 / autofireFrequency)
             for c64 in myAppDelegate.proxies {
-                c64.port1.joystick.autofireFrequency = autofireFrequency
-                c64.port2.joystick.autofireFrequency = autofireFrequency
+                c64.configure(.AUTOFIRE_DELAY, value: autofireDelay)
             }
         }
     }

@@ -222,6 +222,14 @@ C64::getConfigItem(Option option, long id) const
             const Drive &drive = id == DRIVE8 ? drive8 : drive9;
             return drive.getConfigItem(option);
         }
+        case OPT_AUTOFIRE:
+        case OPT_AUTOFIRE_BULLETS:
+        case OPT_AUTOFIRE_DELAY:
+        {
+            if (id == PORT_ONE) return port1.joystick.getConfigItem(option);
+            if (id == PORT_TWO) return port2.joystick.getConfigItem(option);
+            assert(false);
+        }
         default:
             assert(false);
             return 0;

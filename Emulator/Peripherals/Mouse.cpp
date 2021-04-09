@@ -10,6 +10,7 @@
 #include "config.h"
 #include "Mouse.h"
 #include "C64.h"
+#include "IO.h"
 
 Mouse::Mouse(C64 &ref, ControlPort& pref) : C64Component(ref), port(pref)
 {
@@ -34,10 +35,13 @@ void Mouse::_reset()
 void
 Mouse::_dump(dump::Category category, std::ostream& os) const
 {
-    msg("Mouse %lld:\n", port.nr);
-    msg("--------\n");
-    msg("   targetX : %lld\n", targetX);
-    msg("   targetY : %lld\n", targetY);
+    using namespace util;
+    
+    if (category & dump::State) {
+
+        os << tab("targetX") << dec(targetX) << std::endl;
+        os << tab("targetY") << dec(targetY) << std::endl;
+    }
 }
 
 void

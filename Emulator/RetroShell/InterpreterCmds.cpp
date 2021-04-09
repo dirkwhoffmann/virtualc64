@@ -336,20 +336,8 @@ Interpreter::registerInstructions()
     // Keyboard
     //
 
-    /*
     root.add({"keyboard"},
              "component", "Keyboard");
-
-    root.add({"keyboard", "config"},
-             "command", "Displays the current configuration",
-             &RetroShell::exec <Token::keyboard, Token::config>);
-    
-    root.add({"keyboard", "set"},
-             "command", "Configures the component");
-        
-    root.add({"keyboard", "set", "accuracy"},
-             "key", "Determines the emulation accuracy level",
-             &RetroShell::exec <Token::keyboard, Token::set, Token::accuracy>, 1);
 
     root.add({"keyboard", "inspect"},
              "command", "Displays the internal state",
@@ -360,6 +348,7 @@ Interpreter::registerInstructions()
     // Mouse
     //
 
+    /*
     root.add({"mouse"},
              "component", "Mouse");
 

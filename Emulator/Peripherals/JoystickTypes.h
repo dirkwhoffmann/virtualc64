@@ -65,3 +65,16 @@ struct GamePadActionEnum : util::Reflection<GamePadActionEnum, GamePadAction> {
     }
 };
 #endif
+
+
+//
+// Structures
+//
+
+typedef struct
+{
+    bool autofire;
+    isize autofireBullets;
+    isize autofireDelay;
+}
+JoystickConfig;

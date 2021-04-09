@@ -254,13 +254,6 @@ RetroShell::exec <Token::vicii, Token::inspect, Token::state> (Arguments& argv, 
     dump(c64.vic, dump::State);
 }
 
-/*
-template <> void
-RetroShell::exec <Token::vicii, Token::inspect, Token::registers> (Arguments& argv, long param)
-{
-    dump(c64.vic, dump::Registers);
-}
-*/
 
 //
 // Monitor
@@ -393,29 +386,18 @@ RetroShell::exec <Token::controlport, Token::inspect> (Arguments& argv, long par
 // Keyboard
 //
 
-/*
-template <> void
-RetroShell::exec <Token::keyboard, Token::config> (Arguments& argv, long param)
-{
-    dump(amiga.keyboard, Dump::Config);
-}
-
-template <> void
-RetroShell::exec <Token::keyboard, Token::set, Token::accuracy> (Arguments &argv, long param)
-{
-    amiga.configure(OPT_ACCURATE_KEYBOARD, util::parseBool(argv.front()));
-}
-
 template <> void
 RetroShell::exec <Token::keyboard, Token::inspect> (Arguments& argv, long param)
 {
-    dump(amiga.keyboard, Dump::State);
+    dump(c64.keyboard, dump::State);
 }
+
 
 //
 // Mouse
 //
 
+/*
 template <> void
 RetroShell::exec <Token::mouse, Token::config> (Arguments& argv, long param)
 {

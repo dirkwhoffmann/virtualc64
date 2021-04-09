@@ -13,9 +13,6 @@ extension PreferencesController {
         
         track()
         
-        let joystick1 = c64.port1.joystick!
-        let joystick2 = c64.port2.joystick!
-
         func refreshKey(map: Int, dir: GamePadAction, button: NSButton, txt: NSTextField) {
             
             var keyDesc = ""
@@ -58,12 +55,6 @@ extension PreferencesController {
         conDisconnectKeys.state = pref.disconnectJoyKeys ? .on : .off
         
         // Joystick buttons
-        assert(pref.autofire == joystick2.autofire)
-        assert(pref.autofireBullets == joystick2.autofireBullets)
-        assert(pref.autofireFrequency == joystick2.autofireFrequency)
-        assert(joystick1.autofire == joystick2.autofire)
-        assert(joystick1.autofireBullets == joystick2.autofireBullets)
-        assert(joystick1.autofireFrequency == joystick2.autofireFrequency)
         conAutofire.state = pref.autofire ? .on : .off
         conAutofireCease.state = pref.autofireBullets > 0 ? .on : .off
         conAutofireBullets.integerValue = Int(pref.autofireBullets.magnitude)

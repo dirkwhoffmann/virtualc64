@@ -10,6 +10,7 @@
 #include "config.h"
 #include "Keyboard.h"
 #include "C64.h"
+#include "IO.h"
 
 KeyAction::KeyAction(Action _type, u8 _nr, u64 _delay)
 : type(_type), nr(_nr), delay(_delay)
@@ -45,39 +46,43 @@ void
 Keyboard::_reset() 
 {
     RESET_SNAPSHOT_ITEMS
-
-	// Reset the keyboard matrix
+    
+    // Reset the keyboard matrix
     releaseAll();
 }
 
 void
 Keyboard::_dump(dump::Category category, std::ostream& os) const
 {
-	msg("Keyboard:\n");
-	msg("---------\n\n");
-	msg("Keyboard matrix: ");
-	for (int i = 0; i < 8; i++) {
-		msg("%d %d %d %d %d %d %d %d    %d %d %d %d %d %d %d %d\n                 ",
-            (kbMatrixRow[i] & 0x01) != 0,
-            (kbMatrixRow[i] & 0x02) != 0,
-            (kbMatrixRow[i] & 0x04) != 0,
-            (kbMatrixRow[i] & 0x08) != 0,
-            (kbMatrixRow[i] & 0x10) != 0,
-            (kbMatrixRow[i] & 0x20) != 0,
-            (kbMatrixRow[i] & 0x40) != 0,
-            (kbMatrixRow[i] & 0x80) != 0,
+    using namespace util;
+    
+    if (category & dump::State) {
+        
+        for (int i = 0; i < 8; i++) {
+            
+            os << dec((kbMatrixRow[i] >> 0) & 1) << " ";
+            os << dec((kbMatrixRow[i] >> 1) & 1) << " ";
+            os << dec((kbMatrixRow[i] >> 2) & 1) << " ";
+            os << dec((kbMatrixRow[i] >> 3) & 1) << " ";
+            os << dec((kbMatrixRow[i] >> 4) & 1) << " ";
+            os << dec((kbMatrixRow[i] >> 5) & 1) << " ";
+            os << dec((kbMatrixRow[i] >> 6) & 1) << " ";
+            os << dec((kbMatrixRow[i] >> 7) & 1) << "    ";
 
-            (kbMatrixCol[i] & 0x01) != 0,
-            (kbMatrixCol[i] & 0x02) != 0,
-            (kbMatrixCol[i] & 0x04) != 0,
-            (kbMatrixCol[i] & 0x08) != 0,
-            (kbMatrixCol[i] & 0x10) != 0,
-            (kbMatrixCol[i] & 0x20) != 0,
-            (kbMatrixCol[i] & 0x40) != 0,
-            (kbMatrixCol[i] & 0x80) != 0);
-	}
-	msg("\n");
-    msg("Shift lock: %s pressed\n", shiftLock ? "" : "not");
+            os << dec((kbMatrixCol[i] >> 0) & 1) << " ";
+            os << dec((kbMatrixCol[i] >> 1) & 1) << " ";
+            os << dec((kbMatrixCol[i] >> 2) & 1) << " ";
+            os << dec((kbMatrixCol[i] >> 3) & 1) << " ";
+            os << dec((kbMatrixCol[i] >> 4) & 1) << " ";
+            os << dec((kbMatrixCol[i] >> 5) & 1) << " ";
+            os << dec((kbMatrixCol[i] >> 6) & 1) << " ";
+            os << dec((kbMatrixCol[i] >> 7) & 1) << std::endl;
+
+            os << std::endl;
+            os << "Shift lock " << (shiftLock ? "pressed" : "not pressed");
+            os << std::endl;
+        }
+    }
 }
 
 u8

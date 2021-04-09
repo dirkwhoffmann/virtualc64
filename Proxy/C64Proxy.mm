@@ -1408,36 +1408,6 @@
     [self joystick]->trigger(event);
 }
 
-- (BOOL) autofire
-{
-    return [self joystick]->getAutofire();
-}
-
-- (void) setAutofire:(BOOL)value
-{
-    return [self joystick]->setAutofire(value);
-}
-
-- (NSInteger) autofireBullets
-{
-    return (NSInteger)[self joystick]->getAutofireBullets();
-}
-
-- (void) setAutofireBullets:(NSInteger)value
-{
-    [self joystick]->setAutofireBullets((int)value);
-}
-
-- (float) autofireFrequency
-{
-    return [self joystick]->getAutofireFrequency();
-}
-
-- (void) setAutofireFrequency:(float)value
-{
-    [self joystick]->setAutofireFrequency(value);
-}
-
 @end
 
 //
