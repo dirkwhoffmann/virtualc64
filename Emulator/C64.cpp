@@ -580,9 +580,8 @@ C64::setDebug(bool enable)
 void
 C64::powerOn()
 {
-    assert(!isEmulatorThread());
-    
     debug(RUN_DEBUG, "powerOn()\n");
+    assert(!isEmulatorThread());
         
     if (isPoweredOff() && isReady()) {
         
@@ -590,10 +589,7 @@ C64::powerOn()
         
         // Perform a reset
         reset();
-        
-        // Switch state
-        state = EMULATOR_STATE_PAUSED;
-        
+                
         // Power on all subcomponents
         HardwareComponent::powerOn();
         
@@ -608,7 +604,7 @@ C64::powerOn()
 void
 C64::_powerOn()
 {
-    trace(RUN_DEBUG, "_powerOn()\n");
+    state = EMULATOR_STATE_PAUSED;
 }
 
 void
@@ -622,10 +618,7 @@ C64::powerOff()
     assert(!isRunning());
                 
     if (isPoweredOn()) {
-           
-        // Switch state
-        state = EMULATOR_STATE_OFF;
-        
+                   
         // Power off all subcomponents
         HardwareComponent::powerOff();
         
@@ -640,7 +633,7 @@ C64::powerOff()
 void
 C64::_powerOff()
 {
-    trace(RUN_DEBUG, "_powerOff()\n");
+    state = EMULATOR_STATE_OFF;
 }
 
 void
@@ -655,8 +648,10 @@ C64::run()
     
     if (!isRunning() && isReady()) {
         
-        // Switch state
-        state = EMULATOR_STATE_RUNNING;
+        assert(p == nullptr);
+
+        // Launch all subcomponents
+        HardwareComponent::run();
 
         // Create the emulator thread
         pthread_create(&p, nullptr, threadMain, (void *)this);
@@ -666,6 +661,7 @@ C64::run()
 void
 C64::_run()
 {
+    state = EMULATOR_STATE_RUNNING;
 }
 
 void
