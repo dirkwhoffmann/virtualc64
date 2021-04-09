@@ -345,6 +345,40 @@ Interpreter::registerInstructions()
 
     
     //
+    // Joystick
+    //
+
+    root.add({"joystick1"},
+             "component", "Joystick 1");
+    
+    root.add({"joystick2"},
+             "component", "Joystick 2");
+    
+    root.add({"joystick1", "joystick2"}, {"", "config"},
+             "command", "Displays the current configuration",
+             &RetroShell::exec <Token::joystick, Token::config>);
+
+    root.add({"joystick1", "joystick2"}, {"", "inspect"},
+             "command", "Displays the internal state",
+             &RetroShell::exec <Token::joystick, Token::inspect>);
+    
+    root.add({"joystick1", "joystick2"}, {"", "set"},
+             "command", "Configures the component");
+
+    root.add({"joystick1", "joystick2"}, {"", "set", "autofire"},
+             "key", "Enables or disables auto fire mode",
+             &RetroShell::exec <Token::joystick, Token::set, Token::autofire>, 1);
+
+    root.add({"joystick1", "joystick2"}, {"", "set", "bullets"},
+             "key", "Sets the number of bullets per auto fire shot",
+             &RetroShell::exec <Token::joystick, Token::set, Token::bullets>, 1);
+
+    root.add({"joystick1", "joystick2"}, {"", "set", "delay"},
+             "key", "Sets the auto fire delay in frames",
+             &RetroShell::exec <Token::joystick, Token::set, Token::delay>, 1);
+
+    
+    //
     // Mouse
     //
 

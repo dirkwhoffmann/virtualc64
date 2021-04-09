@@ -105,7 +105,14 @@ void
 Joystick::_dump(dump::Category category, std::ostream& os) const
 {
     using namespace util;
-    
+
+    if (category & dump::Config) {
+        
+        os << tab("Auto fire") << bol(config.autofire) << std::endl;
+        os << tab("Auto fire bullets") << dec(config.autofireBullets) << std::endl;
+        os << tab("Auto fire delay") << dec(config.autofireDelay) << std::endl;
+    }
+
     if (category & dump::State) {
         
         os << tab("Button") << bol(button) << std::endl;

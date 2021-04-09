@@ -394,6 +394,56 @@ RetroShell::exec <Token::keyboard, Token::inspect> (Arguments& argv, long param)
 
 
 //
+// Joystick
+//
+
+template <> void
+RetroShell::exec <Token::joystick, Token::config> (Arguments& argv, long param)
+{
+    dump(param == 0 ? c64.port1.joystick : c64.port2.joystick, dump::Config);
+}
+
+template <> void
+RetroShell::exec <Token::joystick, Token::inspect> (Arguments& argv, long param)
+{
+    dump(param == 0 ? c64.port1.joystick : c64.port2.joystick, dump::State);
+}
+
+template <> void
+RetroShell::exec <Token::joystick, Token::set, Token::autofire> (Arguments& argv, long param)
+{
+    auto value = util::parseBool(argv.front());
+    if (param == 0) {
+        c64.port1.joystick.configure(OPT_AUTOFIRE, value);
+    } else {
+        c64.port2.joystick.configure(OPT_AUTOFIRE, value);
+    }
+}
+
+template <> void
+RetroShell::exec <Token::joystick, Token::set, Token::bullets> (Arguments& argv, long param)
+{
+    auto value = util::parseNum(argv.front());
+    if (param == 0) {
+        c64.port1.joystick.configure(OPT_AUTOFIRE_BULLETS, value);
+    } else {
+        c64.port2.joystick.configure(OPT_AUTOFIRE_BULLETS, value);
+    }
+}
+
+template <> void
+RetroShell::exec <Token::joystick, Token::set, Token::delay> (Arguments& argv, long param)
+{
+    auto value = util::parseNum(argv.front());
+    if (param == 0) {
+        c64.port1.joystick.configure(OPT_AUTOFIRE_DELAY, value);
+    } else {
+        c64.port2.joystick.configure(OPT_AUTOFIRE_DELAY, value);
+    }
+}
+
+
+//
 // Mouse
 //
 

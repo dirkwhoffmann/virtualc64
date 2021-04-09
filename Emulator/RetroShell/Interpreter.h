@@ -34,11 +34,12 @@ enum class Token
     checksums, devices, events, registers, state,
     
     // Keys
-    accuracy, bankmap, brightness, chip, contrast, defaultbb, defaultfs,
-    device, engine, filter, graydotbug, joystick, keyset, left, model, palette,
-    pan, poll, raminitpattern, revision, right, rom, sampling, saturation,
-    sbcollisions, searchpath, shakedetector, slow, slowramdelay, slowrammirror,
-    speed, sscollisions, step, tod, timerbbug, unmappingtype, velocity, volume
+    accuracy, autofire, bankmap, brightness, bullets, chip, contrast, defaultbb,
+    defaultfs, delay, device, engine, filter, graydotbug, joystick, keyset,
+    left, model, palette, pan, poll, raminitpattern, revision, right, rom,
+    sampling, saturation, sbcollisions, searchpath, shakedetector, slow,
+    slowramdelay, slowrammirror, speed, sscollisions, step, tod, timerbbug,
+    unmappingtype, velocity, volume
 };
 
 struct TooFewArgumentsError : public util::ParseError {
