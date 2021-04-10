@@ -1360,31 +1360,14 @@
     return (Mouse *)obj;
 }
 
-/*
-- (MouseModel)model
+- (BOOL)detectShake:(NSPoint)pos
 {
-    return [self mouse]->getModel();
+    return [self mouse]->detectShakeXY(pos.x, pos.y);
 }
-
-- (void)setModel:(MouseModel)model
-{
-    [self mouse]->setModel(model);
-}
-*/
 
 - (void)setXY:(NSPoint)pos
 {
-    [self mouse]->setXY((i64)pos.x, (i64)pos.y);
-}
-
-- (void)setLeftButton:(BOOL)pressed
-{
-    [self mouse]->setLeftButton(pressed);
-}
-
-- (void)setRightButton:(BOOL)pressed
-{
-    [self mouse]->setRightButton(pressed);
+    [self mouse]->setXY(pos.x, pos.y);
 }
 
 - (void) trigger:(GamePadAction)event
@@ -2135,13 +2118,6 @@
 {
     [self c64]->loadFromSnapshot((Snapshot *)proxy->obj);
 }
-
-/*
-- (C64Config)config
-{
-    return [self c64]->getConfig();
-}
-*/
 
 - (NSInteger)getConfig:(Option)opt
 {

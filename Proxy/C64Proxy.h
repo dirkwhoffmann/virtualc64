@@ -552,10 +552,8 @@
 
 @interface MouseProxy : HardwareComponentProxy { }
 
-// @property MouseModel model;
+- (BOOL)detectShake:(NSPoint)pos;
 - (void)setXY:(NSPoint)pos;
-- (void)setLeftButton:(BOOL)pressed __attribute__ ((deprecated));
-- (void)setRightButton:(BOOL)pressed __attribute__ ((deprecated));
 - (void) trigger:(GamePadAction)event;
 
 @end

@@ -124,29 +124,31 @@ Mouse::_dump(dump::Category category, std::ostream& os) const
     }
 }
 
-/*
-void
-Mouse::setModel(MouseModel model)
+bool
+Mouse::detectShakeXY(double x, double y)
 {
-    suspend();
-
-    config.model = model;
-    _reset();
-
-    resume();
+    if (config.shakeDetection && shakeDetector.isShakingAbs(x)) {
+        messageQueue.put(MSG_SHAKING);
+        return true;
+    }
+    return false;
 }
-*/
+
+bool
+Mouse::detectShakeDxDy(double dx, double dy)
+{
+    if (config.shakeDetection && shakeDetector.isShakingRel(dx)) {
+        messageQueue.put(MSG_SHAKING);
+        return true;
+    }
+    return false;
+}
 
 void
 Mouse::setXY(double x, double y)
 {
     debug(PRT_DEBUG, "setXY(%f,%f)\n", x, y);
-    
-    // Check for a shaking mouse
-    if (config.shakeDetection && shakeDetector.isShakingAbs(x)) {
-        messageQueue.put(MSG_SHAKING);
-    }
-    
+        
     targetX = x * scaleX;
     targetY = y * scaleX;
     port.device = CPDEVICE_MOUSE;

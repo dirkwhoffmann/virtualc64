@@ -152,8 +152,12 @@ private:
     //
     
 public:
-    
-    // Emulates a mouse movement event
+
+    // Runs the shake detector
+    bool detectShakeXY(double x, double y);
+    bool detectShakeDxDy(double dx, double dy);
+
+    // Emulates a mouse move
     void setXY(double x, double y);
     void setDxDy(double dx, double dy);
 

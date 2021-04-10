@@ -26,7 +26,7 @@ public extension MetalView {
     override func flagsChanged(with event: NSEvent) {
         
         // Check for a mouse controlling key combination
-        parent.metal.checkForMouseKeys(with: event)
+        if parent.metal.checkForMouseKeys(with: event) { return }
         
         // Save modifier flags (needed by the TouchBar)
         parent.modifierFlags = event.modifierFlags
@@ -147,7 +147,8 @@ public extension MetalView {
         mouseMoved(with: event)
     }
 
-    func checkForMouseKeys(with event: NSEvent) {
+    @discardableResult
+    func checkForMouseKeys(with event: NSEvent) -> Bool {
                 
         if !gotMouse && prefs.retainMouseWithKeys {
             
@@ -158,6 +159,7 @@ public extension MetalView {
                 
                 track()
                 retainMouse()
+                return true
                 
             default: break
             }
@@ -171,9 +173,11 @@ public extension MetalView {
                 
                 track()
                 releaseMouse()
+                return true
                 
             default: break
             }
         }
+        return false
     }
 }
