@@ -123,18 +123,20 @@ public extension MetalView {
         let dx = event.deltaX
         let dy = -event.deltaY
         
-        parent.mouseXY.x += dx
-        parent.mouseXY.y += dy
+        // parent.mouseXY.x += dx
+        // parent.mouseXY.y += dy
 
         // Make coordinate independent of window size
         let scaleX = (256.0 * 400.0) / frame.width
         let scaleY = (256.0 * 300.0) / frame.height
-        let newX = parent.mouseXY.x * scaleX
-        let newY = parent.mouseXY.y * scaleY
-
-        let newLocation = NSPoint.init(x: newX, y: newY)
+        let dxdy = NSPoint.init(x: dx * scaleX, y: dy * scaleY)
         
-        mouse?.processMouseEvents(xy: newLocation)
+        // let newX = parent.mouseXY.x * scaleX
+        // let newY = parent.mouseXY.y * scaleY
+
+        // let newLocation = NSPoint.init(x: newX, y: newY)
+        
+        mouse?.processMouseEvents(delta: dxdy)
     }
     
     override func mouseDragged(with event: NSEvent) {

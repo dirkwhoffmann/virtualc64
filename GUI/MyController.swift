@@ -97,7 +97,7 @@ class MyController: NSWindowController, MessageReceiver {
     var modifierFlags: NSEvent.ModifierFlags = .init(rawValue: 0)
     
     // Current mouse coordinate
-    var mouseXY = NSPoint(x: 0, y: 0)
+    // var mouseXY = NSPoint(x: 0, y: 0)
     
     // Indicates if mouse is currently hidden
     var hideMouse = false
@@ -365,7 +365,7 @@ extension MyController {
         track()
         
         // Reset mouse coordinates
-        mouseXY = NSPoint.zero
+        // mouseXY = NSPoint.zero
         hideMouse = false
         
         // Create keyboard controller

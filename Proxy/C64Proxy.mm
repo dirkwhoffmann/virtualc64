@@ -1360,14 +1360,24 @@
     return (Mouse *)obj;
 }
 
-- (BOOL)detectShake:(NSPoint)pos
+- (BOOL)detectShakeAbs:(NSPoint)pos
 {
     return [self mouse]->detectShakeXY(pos.x, pos.y);
 }
 
+- (BOOL)detectShakeRel:(NSPoint)pos
+{
+    return [self mouse]->detectShakeDxDy(pos.x, pos.y);
+}
+
 - (void)setXY:(NSPoint)pos
 {
-    [self mouse]->setXY(pos.x, pos.y);
+    [self mouse]->setXY((double)pos.x, (double)pos.y);
+}
+
+- (void)setDxDy:(NSPoint)pos
+{
+    [self mouse]->setDxDy((double)pos.x, (double)pos.y);
 }
 
 - (void) trigger:(GamePadAction)event

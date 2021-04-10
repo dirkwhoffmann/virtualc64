@@ -552,8 +552,10 @@
 
 @interface MouseProxy : HardwareComponentProxy { }
 
-- (BOOL)detectShake:(NSPoint)pos;
+- (BOOL)detectShakeAbs:(NSPoint)pos;
+- (BOOL)detectShakeRel:(NSPoint)pos;
 - (void)setXY:(NSPoint)pos;
+- (void)setDxDy:(NSPoint)pos;
 - (void) trigger:(GamePadAction)event;
 
 @end
