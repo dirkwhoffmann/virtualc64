@@ -89,18 +89,6 @@ class Preferences {
     }
     
     // Mouse
-    var mouseModel = ControlsDefaults.std.mouseModel {
-        didSet {
-            for c64 in myAppDelegate.proxies {
-                c64.configure(.MOUSE_MODEL, value: mouseModel.rawValue)
-            }
-        }
-    }
-    var mouseModelIntValue: Int {
-        get { return Int(mouseModel.rawValue) }
-        set { mouseModel = MouseModel(rawValue: newValue) ?? .C1350 }
-    }
-
     var retainMouseKeyComb = ControlsDefaults.std.retainMouseKeyComb
     var retainMouseWithKeys = ControlsDefaults.std.retainMouseWithKeys
     var retainMouseByClick = ControlsDefaults.std.retainMouseByClick
@@ -187,7 +175,6 @@ class Preferences {
         autofireFrequency = defaults.float(forKey: Keys.Con.autofireFrequency)
         
         // Mouse
-        mouseModelIntValue = defaults.integer(forKey: Keys.Con.mouseModel)
         retainMouseKeyComb = defaults.integer(forKey: Keys.Con.retainMouseKeyComb)
         retainMouseWithKeys = defaults.bool(forKey: Keys.Con.retainMouseWithKeys)
         retainMouseByClick = defaults.bool(forKey: Keys.Con.retainMouseByClick)
@@ -213,7 +200,6 @@ class Preferences {
         defaults.set(autofireFrequency, forKey: Keys.Con.autofireFrequency)
         
         // Mouse
-        defaults.set(mouseModelIntValue, forKey: Keys.Con.mouseModel)
         defaults.set(retainMouseKeyComb, forKey: Keys.Con.retainMouseKeyComb)
         defaults.set(retainMouseWithKeys, forKey: Keys.Con.retainMouseWithKeys)
         defaults.set(retainMouseByClick, forKey: Keys.Con.retainMouseByClick)
@@ -221,8 +207,6 @@ class Preferences {
         defaults.set(releaseMouseKeyComb, forKey: Keys.Con.releaseMouseKeyComb)
         defaults.set(releaseMouseWithKeys, forKey: Keys.Con.releaseMouseWithKeys)
         defaults.set(releaseMouseByShaking, forKey: Keys.Con.releaseMouseByShaking)
-
-        track("mouseModel = \(mouseModelIntValue)")
     }
     
     //

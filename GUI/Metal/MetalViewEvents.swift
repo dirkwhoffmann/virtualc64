@@ -81,25 +81,7 @@ public extension MetalView {
         insideTrackingArea = false
         releaseMouse()
     }
-    
-    /*
-    func scaledMouseCoordinate(with event: NSEvent) -> NSPoint {
-                
-        // Get coordinate relative to view
-        let locationInView = convert(event.locationInWindow, from: nil)
-        
-        // Scale into range 0..1
-        var x = (frame.width == 0) ? 0.0 : (locationInView.x / frame.width)
-        var y = (frame.height == 0) ? 0.0 : (locationInView.y / frame.height)
 
-        // Clamp
-        x = (x < 0.0) ? 0.0 : (x > 1.0) ? 1.0 : x
-        y = (y < 0.0) ? 0.0 : (y > 1.0) ? 1.0 : y
-        
-        return NSPoint.init(x: x, y: y)
-    }
-    */
-    
     override func mouseDown(with event: NSEvent) {
 
         if !gotMouse {

@@ -99,6 +99,9 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var perControlPort1: NSPopUpButton!
     @IBOutlet weak var perControlPort2: NSPopUpButton!
         
+    // Mouse
+    @IBOutlet weak var perMouseModel: NSPopUpButton!
+
     // Buttons
     @IBOutlet weak var perPowerButton: NSButton!
 

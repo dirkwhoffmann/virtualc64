@@ -28,6 +28,9 @@ extension ConfigurationController {
         perControlPort1.selectItem(withTag: config.gameDevice1)
         perControlPort2.selectItem(withTag: config.gameDevice2)
 
+        // Mouse
+        perMouseModel.selectItem(withTag: config.mouseModel)
+
         // Power button
         perPowerButton.isHidden = !bootable
     }
@@ -71,6 +74,12 @@ extension ConfigurationController {
         refresh()
     }
     
+    @IBAction func perMouseModelAction(_ sender: NSPopUpButton!) {
+        
+        config.mouseModel = sender.selectedTag()
+        refresh()
+    }
+
     @IBAction func perPresetAction(_ sender: NSPopUpButton!) {
     
         config.loadPeripheralsDefaults(PeripheralsDefaults.std)

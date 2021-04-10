@@ -178,12 +178,6 @@ C64::getConfigItem(Option option) const
             assert(cia1.getConfigItem(option) == cia2.getConfigItem(option));
             return cia1.getConfigItem(option);
 
-        case OPT_MOUSE_MODEL:
-        case OPT_SHAKE_DETECTION:
-        case OPT_MOUSE_VELOCITY:
-            assert(port1.mouse.getConfigItem(option) == port2.mouse.getConfigItem(option));
-            return port1.mouse.getConfigItem(option);
-
         case OPT_SID_REVISION:
         case OPT_SID_FILTER:
         case OPT_SID_ENGINE:
@@ -205,16 +199,17 @@ C64::getConfigItem(Option option) const
 i64
 C64::getConfigItem(Option option, long id) const
 {
+    const Drive &drive = id == DRIVE8 ? drive8 : drive9;
+    
     switch (option) {
             
         case OPT_SID_ENABLE:
         case OPT_SID_ADDRESS:
         case OPT_AUDPAN:
         case OPT_AUDVOL:
-        {
             assert(id >= 0 && id <= 3);
             return sid.getConfigItem(option, id);
-        }
+
         case OPT_DRIVE_TYPE:
         case OPT_DRIVE_CONNECT:
         case OPT_DRIVE_POWER_SWITCH:
@@ -223,19 +218,23 @@ C64::getConfigItem(Option option, long id) const
         case OPT_STEP_VOLUME:
         case OPT_INSERT_VOLUME:
         case OPT_EJECT_VOLUME:
-        {
             assert(id == DRIVE8 || id == DRIVE9);
-            const Drive &drive = id == DRIVE8 ? drive8 : drive9;
             return drive.getConfigItem(option);
-        }
+
+        case OPT_MOUSE_MODEL:
+        case OPT_SHAKE_DETECTION:
+        case OPT_MOUSE_VELOCITY:
+            if (id == PORT_ONE) return port1.mouse.getConfigItem(option);
+            if (id == PORT_TWO) return port2.mouse.getConfigItem(option);
+            assert(false);
+
         case OPT_AUTOFIRE:
         case OPT_AUTOFIRE_BULLETS:
         case OPT_AUTOFIRE_DELAY:
-        {
             if (id == PORT_ONE) return port1.joystick.getConfigItem(option);
             if (id == PORT_TWO) return port2.joystick.getConfigItem(option);
             assert(false);
-        }
+
         default:
             assert(false);
             return 0;

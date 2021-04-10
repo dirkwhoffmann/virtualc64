@@ -239,6 +239,11 @@ class Configuration {
         }
     }
     
+    var mouseModel: Int {
+        get { return c64.getConfig(.MOUSE_MODEL, id: 1) }
+        set { c64.configure(.MOUSE_MODEL, value: newValue) }
+    }
+
     //
     // Audio
     //
@@ -594,6 +599,8 @@ class Configuration {
         gameDevice1 = defaults.gameDevice1
         gameDevice2 = defaults.gameDevice2
         
+        mouseModel = defaults.mouseModel.rawValue
+
         c64.resume()
     }
     
@@ -613,6 +620,8 @@ class Configuration {
         gameDevice1 = defaults.integer(forKey: Keys.Per.gameDevice1)
         gameDevice2 = defaults.integer(forKey: Keys.Per.gameDevice2)
         
+        mouseModel = defaults.integer(forKey: Keys.Per.mouseModel)
+        
         c64.resume()
     }
     
@@ -631,6 +640,8 @@ class Configuration {
         
         defaults.set(gameDevice1, forKey: Keys.Per.gameDevice1)
         defaults.set(gameDevice2, forKey: Keys.Per.gameDevice2)
+        
+        defaults.set(mouseModel, forKey: Keys.Per.mouseModel)
     }
     
     //

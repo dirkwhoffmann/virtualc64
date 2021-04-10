@@ -62,11 +62,7 @@ extension PreferencesController {
         conAutofireCease.isEnabled = conAutofire.state == .on
         conAutofireCeaseText.textColor = conAutofire.state == .on ? .controlTextColor : .disabledControlTextColor
         conAutofireBullets.isEnabled = conAutofire.state == .on
-        conAutofireFrequency.isEnabled = conAutofire.state == .on
-        
-        // Mouse
-        conMouseModel.selectItem(withTag: pref.mouseModel.rawValue)
-        conMouseInfo.isHidden = pref.mouseModel == .C1350
+        conAutofireFrequency.isEnabled = conAutofire.state == .on        
     }
     
     func selectControlsTab() {
@@ -161,13 +157,7 @@ extension PreferencesController {
         pref.autofireFrequency = sender.floatValue
         refresh()
     }
-    
-    @IBAction func conMouseModelAction(_ sender: NSPopUpButton!) {
-        
-        pref.mouseModelIntValue = sender.selectedTag()
-        refresh()
-    }
-        
+            
     @IBAction func conRetainMouseKeyCombAction(_ sender: NSPopUpButton!) {
         
         pref.retainMouseKeyComb = sender.selectedTag()

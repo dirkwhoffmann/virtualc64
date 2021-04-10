@@ -275,7 +275,6 @@ extension Keys {
         static let autofireFrequency     = "VC64_CON_AutofireFrequency"
         
         // Mouse
-        static let mouseModel            = "VC64_CON_MouseModel"
         static let retainMouseKeyComb    = "VC64_CON_RetainMouseKeyComb"
         static let retainMouseWithKeys   = "VC64_CON_RetainMouseWithKeys"
         static let retainMouseByClick    = "VC64_CON_RetainMouseByClick"
@@ -298,7 +297,6 @@ struct ControlsDefaults {
     let autofireFrequency: Float
     
     // Mouse
-    let mouseModel: MouseModel
     let retainMouseKeyComb: Int
     let retainMouseWithKeys: Bool
     let retainMouseByClick: Bool
@@ -338,7 +336,6 @@ struct ControlsDefaults {
         autofireBullets: -3,
         autofireFrequency: 2.5,
         
-        mouseModel: .C1350,
         retainMouseKeyComb: 0,
         retainMouseWithKeys: true,
         retainMouseByClick: true,
@@ -363,7 +360,6 @@ extension UserDefaults {
             Keys.Con.autofireFrequency: defaults.autofireFrequency,
             
             // Mouse
-            Keys.Con.mouseModel: defaults.mouseModel.rawValue,
             Keys.Con.retainMouseKeyComb: defaults.retainMouseKeyComb,
             Keys.Con.retainMouseWithKeys: defaults.retainMouseWithKeys,
             Keys.Con.retainMouseByClick: defaults.retainMouseByClick,
@@ -390,7 +386,6 @@ extension UserDefaults {
                      Keys.Con.autofireBullets,
                      Keys.Con.autofireFrequency,
                      
-                     Keys.Con.mouseModel,
                      Keys.Con.retainMouseKeyComb,
                      Keys.Con.retainMouseWithKeys,
                      Keys.Con.retainMouseByClick,
@@ -783,6 +778,9 @@ extension Keys {
         // Ports
         static let gameDevice1      = "VC64_PER_ControlPort1"
         static let gameDevice2      = "VC64_PER_ControlPort2"
+        
+        // Mouse
+        static let mouseModel       = "VC64_PER_MouseModel"
     }
 }
 
@@ -796,6 +794,8 @@ struct PeripheralsDefaults {
     var gameDevice1: Int
     var gameDevice2: Int
     
+    let mouseModel: MouseModel
+
     //
     // Schemes
     //
@@ -807,7 +807,9 @@ struct PeripheralsDefaults {
         
         blankDiskFormat: .CBM,
         gameDevice1:     -1,
-        gameDevice2:     -1
+        gameDevice2:     -1,
+        
+        mouseModel:      .C1350
     )
 }
 
@@ -826,7 +828,10 @@ extension UserDefaults {
             Keys.Per.blankDiskFormat: defaults.blankDiskFormat.rawValue,
             
             Keys.Per.gameDevice1:     defaults.gameDevice1,
-            Keys.Per.gameDevice2:     defaults.gameDevice2
+            Keys.Per.gameDevice2:     defaults.gameDevice2,
+            
+            Keys.Per.mouseModel:      defaults.mouseModel.rawValue
+
         ]
         
         let userDefaults = UserDefaults.standard
@@ -845,7 +850,9 @@ extension UserDefaults {
                     Keys.Per.blankDiskFormat,
                     
                     Keys.Per.gameDevice1,
-                    Keys.Per.gameDevice2
+                    Keys.Per.gameDevice2,
+                    
+                    Keys.Per.mouseModel
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }

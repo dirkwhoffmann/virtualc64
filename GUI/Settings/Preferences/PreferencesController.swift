@@ -67,17 +67,14 @@ class PreferencesController: DialogController {
     @IBOutlet weak var conFire2button: NSButton!
     @IBOutlet weak var conDisconnectKeys: NSButton!
     
-    // Joystick buttons
+    // Joystick
     @IBOutlet weak var conAutofire: NSButton!
     @IBOutlet weak var conAutofireCease: NSButton!
     @IBOutlet weak var conAutofireCeaseText: NSTextField!
     @IBOutlet weak var conAutofireBullets: NSTextField!
     @IBOutlet weak var conAutofireFrequency: NSSlider!
     
-    // Mouse
-    @IBOutlet weak var conMouseModel: NSPopUpButton!
-    @IBOutlet weak var conMouseInfo: NSTextField!
-    
+    // Buttons
     @IBOutlet weak var conOkButton: NSButton!
     @IBOutlet weak var conPowerButton: NSButton!
     
