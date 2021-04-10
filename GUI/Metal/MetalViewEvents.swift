@@ -25,7 +25,10 @@ public extension MetalView {
     
     override func flagsChanged(with event: NSEvent) {
         
-        // Save modifier flags. They are needed in TouchBar code
+        // Check for a mouse controlling key combination
+        parent.metal.checkForMouseKeys(with: event)
+        
+        // Save modifier flags (needed by the TouchBar)
         parent.modifierFlags = event.modifierFlags
         
         parent.keyboard.flagsChanged(with: event)
@@ -142,5 +145,35 @@ public extension MetalView {
     override func rightMouseDragged(with event: NSEvent) {
         
         mouseMoved(with: event)
+    }
+
+    func checkForMouseKeys(with event: NSEvent) {
+                
+        if !gotMouse && prefs.retainMouseWithKeys {
+            
+            switch prefs.retainMouseKeyComb {
+              
+            case 0 where event.modifierFlags.contains([.option, .command]),
+                 1 where event.modifierFlags.contains([.option, .control]):
+                
+                track()
+                retainMouse()
+                
+            default: break
+            }
+
+        } else if gotMouse && prefs.releaseMouseWithKeys {
+            
+            switch prefs.releaseMouseKeyComb {
+                
+            case 0 where event.modifierFlags.contains([.option, .command]),
+                 1 where event.modifierFlags.contains([.option, .control]):
+                
+                track()
+                releaseMouse()
+                
+            default: break
+            }
+        }
     }
 }

@@ -76,9 +76,7 @@ class KeyboardController: NSObject {
         }
         
         // Ignore keys that are pressed in combination with the Command key
-        if event.modifierFlags.contains(NSEvent.ModifierFlags.command) {
-            return
-        }
+        if event.modifierFlags.contains(NSEvent.ModifierFlags.command) { return }
         
         keyDown(with: MacKey.init(event: event))
     }
@@ -132,7 +130,7 @@ class KeyboardController: NSObject {
         
         // track("\(macKey.keyCode)")
         
-        // Check if this key is used for joystick emulation
+        // Check if this key is used to emulate a game device
         if parent.gamePad1?.processKeyDownEvent(macKey: macKey) == true {
             if pref.disconnectJoyKeys { return }
         }
@@ -176,7 +174,7 @@ class KeyboardController: NSObject {
         
         // track("\(macKey.keyCode)")
 
-        // Check if this key is used for joystick emulation
+        // Check if this key is used to emulate a game device
         if parent.gamePad1?.processKeyUpEvent(macKey: macKey) == true {
             if pref.disconnectJoyKeys { return }
         }

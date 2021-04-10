@@ -287,11 +287,13 @@ extension Keys {
 
 struct ControlsDefaults {
     
-    // Joysticks
+    // Emulation keys
     let mouseKeyMap: [MacKey: Int]
     let joyKeyMap1: [MacKey: Int]
     let joyKeyMap2: [MacKey: Int]
     let disconnectJoyKeys: Bool
+    
+    // Joystick
     let autofire: Bool
     let autofireBullets: Int
     let autofireFrequency: Float
@@ -332,6 +334,7 @@ struct ControlsDefaults {
         joyKeyMap1: stdKeyMap1,
         joyKeyMap2: stdKeyMap2,
         disconnectJoyKeys: true,
+        
         autofire: false,
         autofireBullets: -3,
         autofireFrequency: 2.5,
@@ -371,6 +374,7 @@ extension UserDefaults {
         
         let userDefaults = UserDefaults.standard
         userDefaults.register(defaults: dictionary)
+        userDefaults.register(encodableItem: defaults.mouseKeyMap, forKey: Keys.Con.mouseKeyMap)
         userDefaults.register(encodableItem: defaults.joyKeyMap1, forKey: Keys.Con.joyKeyMap1)
         userDefaults.register(encodableItem: defaults.joyKeyMap2, forKey: Keys.Con.joyKeyMap2)
     }
@@ -379,9 +383,11 @@ extension UserDefaults {
         
         let defaults = UserDefaults.standard
         
-        let keys = [ Keys.Con.joyKeyMap1,
+        let keys = [ Keys.Con.mouseKeyMap,
+                     Keys.Con.joyKeyMap1,
                      Keys.Con.joyKeyMap2,
                      Keys.Con.disconnectJoyKeys,
+                     
                      Keys.Con.autofire,
                      Keys.Con.autofireBullets,
                      Keys.Con.autofireFrequency,

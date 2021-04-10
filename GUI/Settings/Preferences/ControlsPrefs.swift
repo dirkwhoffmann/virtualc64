@@ -38,14 +38,16 @@ extension PreferencesController {
             txt.stringValue = keyDesc
         }
         
-        // First joystick keyset
+        // Emulation keys
+        refreshKey(map: 0, dir: .PRESS_LEFT, button: conMouseLeftButton, txt: conMouseLeft)
+        refreshKey(map: 0, dir: .PRESS_RIGHT, button: conMouseRightButton, txt: conMouseRight)
+
         refreshKey(map: 1, dir: .PULL_UP, button: conUp1button, txt: conUp1)
         refreshKey(map: 1, dir: .PULL_DOWN, button: conDown1button, txt: conDown1)
         refreshKey(map: 1, dir: .PULL_LEFT, button: conLeft1button, txt: conLeft1)
         refreshKey(map: 1, dir: .PULL_RIGHT, button: conRight1button, txt: conRight1)
         refreshKey(map: 1, dir: .PRESS_FIRE, button: conFire1button, txt: conFire1)
         
-        // Second joystick keyset
         refreshKey(map: 2, dir: .PULL_UP, button: conUp2button, txt: conUp2)
         refreshKey(map: 2, dir: .PULL_DOWN, button: conDown2button, txt: conDown2)
         refreshKey(map: 2, dir: .PULL_LEFT, button: conLeft2button, txt: conLeft2)
@@ -54,7 +56,7 @@ extension PreferencesController {
         
         conDisconnectKeys.state = pref.disconnectJoyKeys ? .on : .off
         
-        // Joystick buttons
+        // Joysticks
         conAutofire.state = pref.autofire ? .on : .off
         conAutofireCease.state = pref.autofireBullets > 0 ? .on : .off
         conAutofireBullets.integerValue = Int(pref.autofireBullets.magnitude)
@@ -63,6 +65,17 @@ extension PreferencesController {
         conAutofireCeaseText.textColor = conAutofire.state == .on ? .controlTextColor : .disabledControlTextColor
         conAutofireBullets.isEnabled = conAutofire.state == .on
         conAutofireFrequency.isEnabled = conAutofire.state == .on        
+
+        // Mouse
+        conRetainMouseKeyComb.selectItem(withTag: pref.retainMouseKeyComb)
+        conRetainMouseKeyComb.isEnabled = pref.retainMouseWithKeys
+        conRetainMouseWithKeys.state = pref.retainMouseWithKeys ? .on : .off
+        conRetainMouseByClick.state = pref.retainMouseByClick ? .on : .off
+        conRetainMouseByEntering.state = pref.retainMouseByEntering ? .on : .off
+        conReleaseMouseKeyComb.selectItem(withTag: pref.releaseMouseKeyComb)
+        conReleaseMouseKeyComb.isEnabled = pref.releaseMouseWithKeys
+        conReleaseMouseWithKeys.state = pref.releaseMouseWithKeys ? .on : .off
+        conReleaseMouseByShaking.state = pref.releaseMouseByShaking ? .on : .off
     }
     
     func selectControlsTab() {
@@ -173,6 +186,10 @@ extension PreferencesController {
         case 2: pref.retainMouseByEntering = (sender.state == .on)
         default: fatalError()
         }
+        
+        track("retainMouseWithKeys = \(pref.retainMouseWithKeys)")
+        track("retainMouseByClick = \(pref.retainMouseByClick)")
+        track("retainMouseByEntering = \(pref.retainMouseByEntering)")
         
         refresh()
     }
