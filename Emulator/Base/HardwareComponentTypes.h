@@ -56,6 +56,11 @@ enum_long(OPT)
     OPT_CIA_REVISION,
     OPT_TIMER_B_BUG,
     
+    // Mouse
+    OPT_MOUSE_MODEL,
+    OPT_SHAKE_DETECTION,
+    OPT_MOUSE_VELOCITY,
+
     // Joystick
     OPT_AUTOFIRE,
     OPT_AUTOFIRE_BULLETS,
@@ -140,6 +145,10 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_CIA_REVISION:        return "CIA_REVISION";
             case OPT_TIMER_B_BUG:         return "TIMER_B_BUG";
                 
+            case OPT_MOUSE_MODEL:         return "MOUSE_MODEL";
+            case OPT_SHAKE_DETECTION:     return "SHAKE_DETECTION";
+            case OPT_MOUSE_VELOCITY:      return "MOUSE_VELOCITY";
+
             case OPT_AUTOFIRE:            return "AUTOFIRE";
             case OPT_AUTOFIRE_BULLETS:    return "AUTOFIRE_BULLETS";
             case OPT_AUTOFIRE_DELAY:      return "AUTOFIRE_DELAY";

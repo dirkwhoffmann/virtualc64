@@ -52,7 +52,7 @@ Mouse1350::execute(i64 targetX, i64 targetY)
     mouseX = targetX / dividerX;
     mouseY = targetY / dividerY;
  
-    // debug(PORT_DEBUG, "targetX = %lld targetY = %lld\n", targetX, targetY);
+    // debug(PRT_DEBUG, "targetX = %lld targetY = %lld\n", targetX, targetY);
     
     controlPort = 0xFF;
     

@@ -90,5 +90,7 @@ struct PortIdEnum : util::Reflection<PortIdEnum, PortId> {
 typedef struct
 {
     MouseModel model;
+    bool shakeDetection;
+    long velocity;
 }
 MouseConfig;

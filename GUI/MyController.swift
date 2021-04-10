@@ -716,6 +716,13 @@ extension MyController {
                 virtualKeyboard!.refresh()
             }
             
+        case .SHAKING:
+            track()
+            metal.lastShake = DispatchTime.init(uptimeNanoseconds: 0)
+            if pref.releaseMouseByShaking {
+                metal.releaseMouse()
+            }
+
         case .SNAPSHOT_TOO_OLD:
             VC64Error.init(.SNP_TOO_OLD).warning("Unable to restore snapshot")
                         

@@ -22,6 +22,10 @@ Mouse::Mouse(C64 &ref, ControlPort& pref) : C64Component(ref), port(pref)
     };
     
     config.model = MOUSE_C1350;
+    config.shakeDetection = true;
+    config.velocity = 100;
+
+    updateScalingFactors();
 }
 
 void Mouse::_reset()
@@ -32,18 +36,95 @@ void Mouse::_reset()
     targetY = 0;
 }
 
+i64
+Mouse::getConfigItem(Option option) const
+{
+    switch (option) {
+
+        case OPT_MOUSE_MODEL:      return config.model;
+        case OPT_SHAKE_DETECTION:  return config.shakeDetection;
+        case OPT_MOUSE_VELOCITY:   return config.velocity;
+
+        default:
+            assert(false);
+            return 0;
+    }
+}
+
+bool
+Mouse::setConfigItem(Option option, i64 value)
+{
+    return setConfigItem(option, port.nr, value);
+}
+
+bool
+Mouse::setConfigItem(Option option, long id, i64 value)
+{
+    if (port.nr != id) return false;
+    
+    switch (option) {
+            
+        case OPT_MOUSE_MODEL:
+            
+            if (config.model == value) {
+                return false;
+            }
+            config.model = (MouseModel)value;
+            _reset();
+            return true;
+            
+        case OPT_SHAKE_DETECTION:
+            
+            if (config.shakeDetection == value) {
+                return false;
+            }
+            config.shakeDetection = value;
+            return true;
+            
+        case OPT_MOUSE_VELOCITY:
+                        
+            if (value < 0 || value > 255) {
+                throw ConfigArgError("0 ... 255");
+            }
+            if (config.velocity == value) {
+                return false;
+            }
+            config.velocity= value;
+            updateScalingFactors();
+            return true;
+
+        default:
+            return false;
+    }
+}
+
+void
+Mouse::updateScalingFactors()
+{
+    assert((unsigned long)config.velocity < 256);
+    scaleX = scaleY = (double)config.velocity / 100.0;
+}
+
 void
 Mouse::_dump(dump::Category category, std::ostream& os) const
 {
     using namespace util;
     
+    if (category & dump::Config) {
+
+        os << tab("Model") << MouseModelEnum::key(config.model) << std::endl;
+        os << tab("Shake detection") << bol(config.shakeDetection) << std::endl;
+        os << tab("Velocity") << config.velocity << std::endl;
+    }
+
     if (category & dump::State) {
 
-        os << tab("targetX") << dec(targetX) << std::endl;
-        os << tab("targetY") << dec(targetY) << std::endl;
+        os << tab("targetX") << targetX << std::endl;
+        os << tab("targetY") << targetY << std::endl;
     }
 }
 
+/*
 void
 Mouse::setModel(MouseModel model)
 {
@@ -54,19 +135,43 @@ Mouse::setModel(MouseModel model)
 
     resume();
 }
+*/
 
 void
-Mouse::setXY(i64 x, i64 y)
+Mouse::setXY(double x, double y)
 {
-    targetX = x;
-    targetY = y;
+    debug(PRT_DEBUG, "setXY(%f,%f)\n", x, y);
+    
+    // Check for a shaking mouse
+    if (config.shakeDetection && shakeDetector.isShakingAbs(x)) {
+        messageQueue.put(MSG_SHAKING);
+    }
+    
+    targetX = x * scaleX;
+    targetY = y * scaleX;
+    port.device = CPDEVICE_MOUSE;
+}
+
+void
+Mouse::setDxDy(double dx, double dy)
+{
+    debug(PRT_DEBUG, "setDxDy(%f,%f)\n", dx, dy);
+
+    // Check for a shaking mouse
+    if (config.shakeDetection && shakeDetector.isShakingRel(dx)) {
+        messageQueue.put(MSG_SHAKING);
+    }
+
+    targetX += dx * scaleX;
+    targetY += dy * scaleY;
+    
     port.device = CPDEVICE_MOUSE;
 }
 
 void
 Mouse::setLeftButton(bool value)
 {
-    debug(PORT_DEBUG, "setLeftButton(%d)\n", value);
+    debug(PRT_DEBUG, "setLeftButton(%d)\n", value);
     
     switch(config.model) {
             
@@ -83,7 +188,7 @@ Mouse::setLeftButton(bool value)
 void
 Mouse::setRightButton(bool value)
 {
-    debug(PORT_DEBUG, "setRightButton(%d)\n", value);
+    debug(PRT_DEBUG, "setRightButton(%d)\n", value);
 
     switch(config.model) {
             
@@ -102,7 +207,7 @@ Mouse::trigger(GamePadAction event)
 {
     assert_enum(GamePadAction, event);
 
-    debug(PORT_DEBUG, "trigger(%lld)\n", event);
+    debug(PRT_DEBUG, "trigger(%lld)\n", event);
     
     switch (event) {
 
@@ -119,20 +224,20 @@ Mouse::trigger(GamePadAction event)
 void
 Mouse::risingStrobe()
 {
-    mouseNeos.risingStrobe(targetX, targetY);
+    mouseNeos.risingStrobe((i64)targetX, (i64)targetY);
 }
 
 void
 Mouse::fallingStrobe()
 {
-    mouseNeos.fallingStrobe(targetX, targetY);
+    mouseNeos.fallingStrobe((i64)targetX, (i64)targetY);
 }
 
 void
 Mouse::updatePotX()
 {
     if (config.model == MOUSE_C1351) {
-        mouse1351.executeX(targetX);
+        mouse1351.executeX((i64)targetX);
     }
 }
 
@@ -140,7 +245,7 @@ void
 Mouse::updatePotY()
 {
     if (config.model == MOUSE_C1351) {
-        mouse1351.executeY(targetY);
+        mouse1351.executeY((i64)targetY);
     }
 }
 
@@ -180,7 +285,7 @@ void
 Mouse::updateControlPort()
 {
     if (config.model == MOUSE_NEOS) {
-        mouseNeos.updateControlPort(targetX, targetY);
+        mouseNeos.updateControlPort((i64)targetX, (i64)targetY);
     }
 }
 
@@ -205,7 +310,7 @@ Mouse::execute()
     switch(config.model) {
             
         case MOUSE_C1350:
-            mouse1350.execute(targetX, targetY);
+            mouse1350.execute((i64)targetX, (i64)targetY);
             break;
         case MOUSE_C1351:
             // Coordinates are updated in readPotX() and readPotY()
@@ -216,4 +321,58 @@ Mouse::execute()
         default:
             assert(false);
     }
+}
+
+bool
+ShakeDetector::isShakingAbs(double newx)
+{
+    return isShakingRel(newx - x);
+}
+
+bool
+ShakeDetector::isShakingRel(double dx) {
+    
+    // Accumulate the travelled distance
+    x += dx;
+    dxsum += abs(dx);
+    
+    // Check for a direction reversal
+    if (dx * dxsign < 0) {
+    
+        u64 dt = util::Time::now().asNanoseconds() - lastTurn;
+        dxsign = -dxsign;
+
+        // A direction reversal is considered part of a shake, if the
+        // previous reversal happened a short while ago.
+        if (dt < 400 * 1000 * 1000) {
+  
+            // Eliminate jitter by demanding that the mouse has travelled
+            // a long enough distance.
+            if (dxsum > 400) {
+                
+                dxturns += 1;
+                dxsum = 0;
+                
+                // Report a shake if the threshold has been reached.
+                if (dxturns > 3) {
+                    
+                    // printf("Mouse shake detected\n");
+                    lastShake = util::Time::now().asNanoseconds();
+                    dxturns = 0;
+                    return true;
+                }
+            }
+            
+        } else {
+            
+            // Time out. The user is definitely not shaking the mouse.
+            // Let's reset the recorded movement histoy.
+            dxturns = 0;
+            dxsum = 0;
+        }
+        
+        lastTurn = util::Time::now().asNanoseconds();
+    }
+    
+    return false;
 }

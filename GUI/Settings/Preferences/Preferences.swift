@@ -92,8 +92,7 @@ class Preferences {
     var mouseModel = ControlsDefaults.std.mouseModel {
         didSet {
             for c64 in myAppDelegate.proxies {
-                c64.port1.mouse.model = mouseModel
-                c64.port2.mouse.model = mouseModel
+                c64.configure(.MOUSE_MODEL, value: mouseModel.rawValue)
             }
         }
     }
@@ -101,6 +100,14 @@ class Preferences {
         get { return Int(mouseModel.rawValue) }
         set { mouseModel = MouseModel(rawValue: newValue) ?? .C1350 }
     }
+
+    var retainMouseKeyComb = ControlsDefaults.std.retainMouseKeyComb
+    var retainMouseWithKeys = ControlsDefaults.std.retainMouseWithKeys
+    var retainMouseByClick = ControlsDefaults.std.retainMouseByClick
+    var retainMouseByEntering = ControlsDefaults.std.retainMouseByEntering
+    var releaseMouseKeyComb = ControlsDefaults.std.retainMouseKeyComb
+    var releaseMouseWithKeys = ControlsDefaults.std.releaseMouseWithKeys
+    var releaseMouseByShaking = ControlsDefaults.std.releaseMouseByShaking
 
     //
     // Keyboard
@@ -181,6 +188,13 @@ class Preferences {
         
         // Mouse
         mouseModelIntValue = defaults.integer(forKey: Keys.Con.mouseModel)
+        retainMouseKeyComb = defaults.integer(forKey: Keys.Con.retainMouseKeyComb)
+        retainMouseWithKeys = defaults.bool(forKey: Keys.Con.retainMouseWithKeys)
+        retainMouseByClick = defaults.bool(forKey: Keys.Con.retainMouseByClick)
+        retainMouseByEntering = defaults.bool(forKey: Keys.Con.retainMouseByEntering)
+        releaseMouseKeyComb = defaults.integer(forKey: Keys.Con.releaseMouseKeyComb)
+        releaseMouseWithKeys = defaults.bool(forKey: Keys.Con.releaseMouseWithKeys)
+        releaseMouseByShaking = defaults.bool(forKey: Keys.Con.releaseMouseByShaking)
     }
     
     func saveControlsUserDefaults() {
@@ -200,7 +214,14 @@ class Preferences {
         
         // Mouse
         defaults.set(mouseModelIntValue, forKey: Keys.Con.mouseModel)
-        
+        defaults.set(retainMouseKeyComb, forKey: Keys.Con.retainMouseKeyComb)
+        defaults.set(retainMouseWithKeys, forKey: Keys.Con.retainMouseWithKeys)
+        defaults.set(retainMouseByClick, forKey: Keys.Con.retainMouseByClick)
+        defaults.set(retainMouseByEntering, forKey: Keys.Con.retainMouseByEntering)
+        defaults.set(releaseMouseKeyComb, forKey: Keys.Con.releaseMouseKeyComb)
+        defaults.set(releaseMouseWithKeys, forKey: Keys.Con.releaseMouseWithKeys)
+        defaults.set(releaseMouseByShaking, forKey: Keys.Con.releaseMouseByShaking)
+
         track("mouseModel = \(mouseModelIntValue)")
     }
     

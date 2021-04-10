@@ -65,10 +65,8 @@ extension PreferencesController {
         conAutofireFrequency.isEnabled = conAutofire.state == .on
         
         // Mouse
-        let model = c64.port1.mouse.model
-        assert(model == c64.port2.mouse.model)
-        conMouseModel.selectItem(withTag: model.rawValue)
-        conMouseInfo.isHidden = model == .C1350
+        conMouseModel.selectItem(withTag: pref.mouseModel.rawValue)
+        conMouseInfo.isHidden = pref.mouseModel == .C1350
     }
     
     func selectControlsTab() {
@@ -170,6 +168,43 @@ extension PreferencesController {
         refresh()
     }
         
+    @IBAction func conRetainMouseKeyCombAction(_ sender: NSPopUpButton!) {
+        
+        pref.retainMouseKeyComb = sender.selectedTag()
+        refresh()
+    }
+    
+    @IBAction func conRetainMouseAction(_ sender: NSButton!) {
+        
+        switch sender.tag {
+            
+        case 0: pref.retainMouseWithKeys   = (sender.state == .on)
+        case 1: pref.retainMouseByClick    = (sender.state == .on)
+        case 2: pref.retainMouseByEntering = (sender.state == .on)
+        default: fatalError()
+        }
+        
+        refresh()
+    }
+    
+    @IBAction func conReleaseMouseKeyCombAction(_ sender: NSPopUpButton!) {
+        
+        pref.releaseMouseKeyComb = sender.selectedTag()
+        refresh()
+    }
+    
+    @IBAction func conReleaseMouseAction(_ sender: NSButton!) {
+        
+        switch sender.tag {
+            
+        case 0: pref.releaseMouseWithKeys  = (sender.state == .on)
+        case 1: pref.releaseMouseByShaking = (sender.state == .on)
+        default: fatalError()
+        }
+        
+        refresh()
+    }
+    
     //
     // Action methods (Misc)
     //

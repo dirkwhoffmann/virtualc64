@@ -552,7 +552,7 @@
 
 @interface MouseProxy : HardwareComponentProxy { }
 
-@property MouseModel model;
+// @property MouseModel model;
 - (void)setXY:(NSPoint)pos;
 - (void)setLeftButton:(BOOL)pressed __attribute__ ((deprecated));
 - (void)setRightButton:(BOOL)pressed __attribute__ ((deprecated));

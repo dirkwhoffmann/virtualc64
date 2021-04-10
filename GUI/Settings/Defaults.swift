@@ -264,18 +264,25 @@ extension Keys {
     struct Con {
         
         // Emulation keys
-        static let mouseKeyMap       = "VC64_CON_MouseKeyMap"
-        static let joyKeyMap1        = "VC64_CON_JoyKeyMap1"
-        static let joyKeyMap2        = "VC64_CON_JoyKeyMap2"
-        static let disconnectJoyKeys = "VC64_CON_DisconnectKeys"
+        static let mouseKeyMap           = "VC64_CON_MouseKeyMap"
+        static let joyKeyMap1            = "VC64_CON_JoyKeyMap1"
+        static let joyKeyMap2            = "VC64_CON_JoyKeyMap2"
+        static let disconnectJoyKeys     = "VC64_CON_DisconnectKeys"
         
         // Joysticks
-        static let autofire          = "VC64_CON_Autofire"
-        static let autofireBullets   = "VC64_CON_AutofireBullets"
-        static let autofireFrequency = "VC64_CON_AutofireFrequency"
+        static let autofire              = "VC64_CON_Autofire"
+        static let autofireBullets       = "VC64_CON_AutofireBullets"
+        static let autofireFrequency     = "VC64_CON_AutofireFrequency"
         
         // Mouse
-        static let mouseModel        = "VC64_CON_MouseModel"
+        static let mouseModel            = "VC64_CON_MouseModel"
+        static let retainMouseKeyComb    = "VC64_CON_RetainMouseKeyComb"
+        static let retainMouseWithKeys   = "VC64_CON_RetainMouseWithKeys"
+        static let retainMouseByClick    = "VC64_CON_RetainMouseByClick"
+        static let retainMouseByEntering = "VC64_CON_RetainMouseByEntering"
+        static let releaseMouseKeyComb   = "VC64_CON_ReleaseMouseKeyComb"
+        static let releaseMouseWithKeys  = "VC64_CON_ReleaseMouseWithKeys"
+        static let releaseMouseByShaking = "VC64_CON_ReleaseMouseByShaking"
     }
 }
 
@@ -292,6 +299,13 @@ struct ControlsDefaults {
     
     // Mouse
     let mouseModel: MouseModel
+    let retainMouseKeyComb: Int
+    let retainMouseWithKeys: Bool
+    let retainMouseByClick: Bool
+    let retainMouseByEntering: Bool
+    let releaseMouseKeyComb: Int
+    let releaseMouseWithKeys: Bool
+    let releaseMouseByShaking: Bool
     
     //
     // Schemes
@@ -324,7 +338,14 @@ struct ControlsDefaults {
         autofireBullets: -3,
         autofireFrequency: 2.5,
         
-        mouseModel: .C1350
+        mouseModel: .C1350,
+        retainMouseKeyComb: 0,
+        retainMouseWithKeys: true,
+        retainMouseByClick: true,
+        retainMouseByEntering: false,
+        releaseMouseKeyComb: 0,
+        releaseMouseWithKeys: true,
+        releaseMouseByShaking: true
     )
 }
 
@@ -342,7 +363,14 @@ extension UserDefaults {
             Keys.Con.autofireFrequency: defaults.autofireFrequency,
             
             // Mouse
-            Keys.Con.mouseModel: defaults.mouseModel.rawValue
+            Keys.Con.mouseModel: defaults.mouseModel.rawValue,
+            Keys.Con.retainMouseKeyComb: defaults.retainMouseKeyComb,
+            Keys.Con.retainMouseWithKeys: defaults.retainMouseWithKeys,
+            Keys.Con.retainMouseByClick: defaults.retainMouseByClick,
+            Keys.Con.retainMouseByEntering: defaults.retainMouseByEntering,
+            Keys.Con.releaseMouseKeyComb: defaults.releaseMouseKeyComb,
+            Keys.Con.releaseMouseWithKeys: defaults.releaseMouseWithKeys,
+            Keys.Con.releaseMouseByShaking: defaults.releaseMouseByShaking
         ]
         
         let userDefaults = UserDefaults.standard
@@ -362,7 +390,14 @@ extension UserDefaults {
                      Keys.Con.autofireBullets,
                      Keys.Con.autofireFrequency,
                      
-                     Keys.Con.mouseModel ]
+                     Keys.Con.mouseModel,
+                     Keys.Con.retainMouseKeyComb,
+                     Keys.Con.retainMouseWithKeys,
+                     Keys.Con.retainMouseByClick,
+                     Keys.Con.retainMouseByEntering,
+                     Keys.Con.releaseMouseKeyComb,
+                     Keys.Con.releaseMouseWithKeys,
+                     Keys.Con.releaseMouseByShaking ]
         
         for key in keys { defaults.removeObject(forKey: key) }
     }

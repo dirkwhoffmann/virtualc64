@@ -12,9 +12,35 @@
 #include "MouseTypes.h"
 #include "JoystickTypes.h"
 #include "C64Component.h"
+#include "Chrono.h"
 #include "Mouse1350.h"
 #include "Mouse1351.h"
 #include "NeosMouse.h"
+
+class ShakeDetector {
+    
+    // Horizontal position
+    double x = 0.0;
+    
+    // Moved distance
+    double dxsum = 0.0;
+
+    // Direction (1 or -1)
+    double dxsign = 1.0;
+    
+    // Number of turns
+    isize dxturns = 0;
+    
+    // Time stamps
+    u64 lastTurn = 0;
+    util::Time lastShake;
+    
+public:
+    
+    // Feed in new coordinates and checks for a shake
+    bool isShakingAbs(double x);
+    bool isShakingRel(double dx);
+};
 
 class Mouse : public C64Component {
     
@@ -24,13 +50,13 @@ class Mouse : public C64Component {
     // Current configuration
     MouseConfig config;
 
-    
     //
     // Sub components
     //
-    
-private:
-    
+
+    // Shake detector
+    class ShakeDetector shakeDetector;
+
     // A Commdore 1350 (digital) mouse
     Mouse1350 mouse1350 = Mouse1350(c64);
     
@@ -45,9 +71,13 @@ private:
      * Instead, these variables are set. In execute(), mouseX and mouseY are
      * shifted smoothly towards the target positions.
      */
-    i64 targetX;
-    i64 targetY;
+    double targetX = 0.0;
+    double targetY = 0.0;
   
+    // Scaling factors applied to the raw mouse coordinates in setXY()
+    double scaleX = 1.0;
+    double scaleY = 1.0;
+
     
     //
     // Initializing
@@ -64,26 +94,37 @@ private:
 
     
     //
+    // Configuring
+    //
+    
+public:
+    
+    const MouseConfig &getConfig() const { return config; }
+
+    i64 getConfigItem(Option option) const;
+    bool setConfigItem(Option option, i64 value) override;
+    bool setConfigItem(Option option, long id, i64 value) override;
+    
+private:
+    
+    void updateScalingFactors();
+    
+    
+    //
     // Analyzing
     //
     
 private:
     
     void _dump(dump::Category category, std::ostream& os) const override;
-    
-    
-    //
-    // Configuring
-    //
-    
+
+    /*
 public:
     
-    MouseConfig getConfig() const { return config; }
-    
-    MouseModel getModel() { return config.model; }
-    void setModel(MouseModel model);
+    [[deprecated]] MouseModel getModel() { return config.model; }
+    [[deprecated]] void setModel(MouseModel model);
+    */
 
-    
     //
     // Serializing
     //
@@ -93,6 +134,7 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
+        worker << config.model;
     }
     
     template <class T>
@@ -112,7 +154,8 @@ private:
 public:
     
     // Emulates a mouse movement event
-    void setXY(i64 x, i64 y);
+    void setXY(double x, double y);
+    void setDxDy(double dx, double dy);
 
     // Emulates a mouse button event
     void setLeftButton(bool value);

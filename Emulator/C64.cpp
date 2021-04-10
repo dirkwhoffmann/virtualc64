@@ -178,6 +178,12 @@ C64::getConfigItem(Option option) const
             assert(cia1.getConfigItem(option) == cia2.getConfigItem(option));
             return cia1.getConfigItem(option);
 
+        case OPT_MOUSE_MODEL:
+        case OPT_SHAKE_DETECTION:
+        case OPT_MOUSE_VELOCITY:
+            assert(port1.mouse.getConfigItem(option) == port2.mouse.getConfigItem(option));
+            return port1.mouse.getConfigItem(option);
+
         case OPT_SID_REVISION:
         case OPT_SID_FILTER:
         case OPT_SID_ENGINE:

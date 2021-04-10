@@ -1360,6 +1360,7 @@
     return (Mouse *)obj;
 }
 
+/*
 - (MouseModel)model
 {
     return [self mouse]->getModel();
@@ -1369,6 +1370,7 @@
 {
     [self mouse]->setModel(model);
 }
+*/
 
 - (void)setXY:(NSPoint)pos
 {
