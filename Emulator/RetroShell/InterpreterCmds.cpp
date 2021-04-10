@@ -348,32 +348,29 @@ Interpreter::registerInstructions()
     // Joystick
     //
 
-    root.add({"joystick1"},
-             "component", "Joystick 1");
-    
-    root.add({"joystick2"},
-             "component", "Joystick 2");
-    
-    root.add({"joystick1", "joystick2"}, {"", "config"},
+    root.add({"joystick"},
+             "component", "Joystick");
+        
+    root.add({"joystick", "config"},
              "command", "Displays the current configuration",
              &RetroShell::exec <Token::joystick, Token::config>);
 
-    root.add({"joystick1", "joystick2"}, {"", "inspect"},
+    root.add({"joystick", "inspect"},
              "command", "Displays the internal state",
              &RetroShell::exec <Token::joystick, Token::inspect>);
     
-    root.add({"joystick1", "joystick2"}, {"", "set"},
+    root.add({"joystick", "set"},
              "command", "Configures the component");
 
-    root.add({"joystick1", "joystick2"}, {"", "set", "autofire"},
+    root.add({"joystick", "set", "autofire"},
              "key", "Enables or disables auto fire mode",
              &RetroShell::exec <Token::joystick, Token::set, Token::autofire>, 1);
 
-    root.add({"joystick1", "joystick2"}, {"", "set", "bullets"},
+    root.add({"joystick", "set", "bullets"},
              "key", "Sets the number of bullets per auto fire shot",
              &RetroShell::exec <Token::joystick, Token::set, Token::bullets>, 1);
 
-    root.add({"joystick1", "joystick2"}, {"", "set", "delay"},
+    root.add({"joystick", "set", "delay"},
              "key", "Sets the auto fire delay in frames",
              &RetroShell::exec <Token::joystick, Token::set, Token::delay>, 1);
 
@@ -382,38 +379,38 @@ Interpreter::registerInstructions()
     // Mouse
     //
 
-    /*
     root.add({"mouse"},
-             "component", "Mouse");
-
+             "component", "mouse");
+        
     root.add({"mouse", "config"},
              "command", "Displays the current configuration",
              &RetroShell::exec <Token::mouse, Token::config>);
-    
-    root.add({"mouse", "set"},
-             "command", "Configures the component");
-        
-    root.add({"mouse", "set", "pullup"},
-             "key", "Enables or disables the emulation of pull-up resistors",
-             &RetroShell::exec <Token::mouse, Token::set, Token::pullup>, 1);
-
-    root.add({"mouse", "set", "shakedetector"},
-             "key", "Enables or disables the shake detector",
-             &RetroShell::exec <Token::mouse, Token::set, Token::shakedetector>, 1);
-
-    root.add({"mouse", "set", "velocity"},
-             "key", "Sets the horizontal and vertical mouse velocity",
-             &RetroShell::exec <Token::mouse, Token::set, Token::velocity>, 1);
 
     root.add({"mouse", "inspect"},
              "command", "Displays the internal state",
              &RetroShell::exec <Token::mouse, Token::inspect>);
     
+    root.add({"mouse", "set"},
+             "command", "Configures the component");
+
+    root.add({"mouse", "set", "model"},
+             "key", "Selects the mouse model",
+             &RetroShell::exec <Token::mouse, Token::set, Token::model>, 1);
+
+    root.add({"mouse", "set", "velocity"},
+             "key", "Sets the horizontal and vertical mouse velocity",
+             &RetroShell::exec <Token::mouse, Token::set, Token::velocity>, 1);
+
+    root.add({"mouse", "set", "shakedetector"},
+             "key", "Enables or disables the shake detector",
+             &RetroShell::exec <Token::mouse, Token::set, Token::shakedetector>, 1);
+
     
     //
     // Serial port
     //
     
+    /*
     root.add({"serial"},
              "component", "Serial port");
 

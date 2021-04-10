@@ -400,46 +400,38 @@ RetroShell::exec <Token::keyboard, Token::inspect> (Arguments& argv, long param)
 template <> void
 RetroShell::exec <Token::joystick, Token::config> (Arguments& argv, long param)
 {
-    dump(param == 0 ? c64.port1.joystick : c64.port2.joystick, dump::Config);
+    dump(c64.port1.joystick, dump::Config);
+    *this << '\n';
+    dump(c64.port2.joystick, dump::Config);
 }
 
 template <> void
 RetroShell::exec <Token::joystick, Token::inspect> (Arguments& argv, long param)
 {
-    dump(param == 0 ? c64.port1.joystick : c64.port2.joystick, dump::State);
+    dump(c64.port1.joystick, dump::State);
+    *this << '\n';
+    dump(c64.port2.joystick, dump::State);
 }
 
 template <> void
 RetroShell::exec <Token::joystick, Token::set, Token::autofire> (Arguments& argv, long param)
 {
     auto value = util::parseBool(argv.front());
-    if (param == 0) {
-        c64.port1.joystick.configure(OPT_AUTOFIRE, value);
-    } else {
-        c64.port2.joystick.configure(OPT_AUTOFIRE, value);
-    }
+    c64.configure(OPT_AUTOFIRE, value);
 }
 
 template <> void
 RetroShell::exec <Token::joystick, Token::set, Token::bullets> (Arguments& argv, long param)
 {
     auto value = util::parseNum(argv.front());
-    if (param == 0) {
-        c64.port1.joystick.configure(OPT_AUTOFIRE_BULLETS, value);
-    } else {
-        c64.port2.joystick.configure(OPT_AUTOFIRE_BULLETS, value);
-    }
+    c64.configure(OPT_AUTOFIRE_BULLETS, value);
 }
 
 template <> void
 RetroShell::exec <Token::joystick, Token::set, Token::delay> (Arguments& argv, long param)
 {
     auto value = util::parseNum(argv.front());
-    if (param == 0) {
-        c64.port1.joystick.configure(OPT_AUTOFIRE_DELAY, value);
-    } else {
-        c64.port2.joystick.configure(OPT_AUTOFIRE_DELAY, value);
-    }
+    c64.configure(OPT_AUTOFIRE_DELAY, value);
 }
 
 
@@ -447,44 +439,49 @@ RetroShell::exec <Token::joystick, Token::set, Token::delay> (Arguments& argv, l
 // Mouse
 //
 
-/*
 template <> void
 RetroShell::exec <Token::mouse, Token::config> (Arguments& argv, long param)
 {
-    dump(amiga.controlPort1.mouse, Dump::Config);
-}
-
-template <> void
-RetroShell::exec <Token::mouse, Token::set, Token::pullup> (Arguments &argv, long param)
-{
-    amiga.configure(OPT_PULLUP_RESISTORS, PORT_1, util::parseBool(argv.front()));
-    amiga.configure(OPT_PULLUP_RESISTORS, PORT_2, util::parseBool(argv.front()));
-}
-
-template <> void
-RetroShell::exec <Token::mouse, Token::set, Token::shakedetector> (Arguments &argv, long param)
-{
-    amiga.configure(OPT_SHAKE_DETECTION, PORT_1, util::parseBool(argv.front()));
-    amiga.configure(OPT_SHAKE_DETECTION, PORT_2, util::parseBool(argv.front()));
-}
-
-template <> void
-RetroShell::exec <Token::mouse, Token::set, Token::velocity> (Arguments &argv, long param)
-{
-    amiga.configure(OPT_MOUSE_VELOCITY, PORT_1, util::parseNum(argv.front()));
-    amiga.configure(OPT_MOUSE_VELOCITY, PORT_2, util::parseNum(argv.front()));
+    dump(c64.port1.mouse, dump::Config);
+    *this << '\n';
+    dump(c64.port2.mouse, dump::Config);
 }
 
 template <> void
 RetroShell::exec <Token::mouse, Token::inspect> (Arguments& argv, long param)
 {
-    dump(amiga.keyboard, Dump::State);
+    dump(c64.port1.mouse, dump::State);
+    *this << '\n';
+    dump(c64.port2.mouse, dump::State);
 }
+
+template <> void
+RetroShell::exec <Token::mouse, Token::set, Token::model> (Arguments &argv, long param)
+{
+    auto value = util::parseEnum <MouseModelEnum> (argv.front());
+    c64.configure(OPT_MOUSE_MODEL, value);
+}
+
+template <> void
+RetroShell::exec <Token::mouse, Token::set, Token::velocity> (Arguments &argv, long param)
+{
+    auto value = util::parseNum(argv.front());
+    c64.configure(OPT_MOUSE_VELOCITY, value);
+}
+
+template <> void
+RetroShell::exec <Token::mouse, Token::set, Token::shakedetector> (Arguments &argv, long param)
+{
+    auto value = util::parseBool(argv.front());
+    c64.configure(OPT_SHAKE_DETECTION, value);
+}
+
 
 //
 // Serial port
 //
 
+/*
 template <> void
 RetroShell::exec <Token::serial, Token::config> (Arguments& argv, long param)
 {
@@ -494,7 +491,8 @@ RetroShell::exec <Token::serial, Token::config> (Arguments& argv, long param)
 template <> void
 RetroShell::exec <Token::serial, Token::set, Token::device> (Arguments &argv, long param)
 {
-    amiga.configure(OPT_SERIAL_DEVICE, util::parseEnum <SerialPortDeviceEnum> (argv.front()));
+    auto value = util::parseEnum <SerialPortDeviceEnum> (argv.front());
+    amiga.configure(OPT_SERIAL_DEVICE, value);
 }
 
 template <> void

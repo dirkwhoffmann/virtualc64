@@ -109,19 +109,21 @@ void
 Mouse::_dump(dump::Category category, std::ostream& os) const
 {
     using namespace util;
-    
-    if (category & dump::Config) {
 
+    if (category & dump::Config) {
+        
+        os << tab("Mouse nr") << dec(port.nr) << std::endl;
         os << tab("Model") << MouseModelEnum::key(config.model) << std::endl;
         os << tab("Shake detection") << bol(config.shakeDetection) << std::endl;
         os << tab("Velocity") << config.velocity << std::endl;
     }
 
     if (category & dump::State) {
-
+        
+        os << tab("Mouse nr") << dec(port.nr) << std::endl;
         os << tab("targetX") << targetX << std::endl;
         os << tab("targetY") << targetY << std::endl;
-    }
+    }    
 }
 
 bool

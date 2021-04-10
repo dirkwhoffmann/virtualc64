@@ -365,7 +365,6 @@ extension MyController {
         track()
         
         // Reset mouse coordinates
-        // mouseXY = NSPoint.zero
         hideMouse = false
         
         // Create keyboard controller

@@ -108,6 +108,7 @@ Joystick::_dump(dump::Category category, std::ostream& os) const
 
     if (category & dump::Config) {
         
+        os << tab("Joystick nr") << dec(port.nr) << std::endl;
         os << tab("Auto fire") << bol(config.autofire) << std::endl;
         os << tab("Auto fire bullets") << dec(config.autofireBullets) << std::endl;
         os << tab("Auto fire delay") << dec(config.autofireDelay) << std::endl;
@@ -115,6 +116,7 @@ Joystick::_dump(dump::Category category, std::ostream& os) const
 
     if (category & dump::State) {
         
+        os << tab("Joystick nr") << dec(port.nr) << std::endl;
         os << tab("Button") << bol(button) << std::endl;
         os << tab("X axis") << dec(axisX) << std::endl;
         os << tab("Y axis") << dec(axisY) << std::endl;
