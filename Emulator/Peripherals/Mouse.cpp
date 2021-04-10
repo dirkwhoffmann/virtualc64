@@ -151,6 +151,7 @@ Mouse::setXY(double x, double y)
         
     targetX = x * scaleX;
     targetY = y * scaleX;
+    
     port.device = CPDEVICE_MOUSE;
 }
 
@@ -158,11 +159,6 @@ void
 Mouse::setDxDy(double dx, double dy)
 {
     debug(PRT_DEBUG, "setDxDy(%f,%f)\n", dx, dy);
-
-    // Check for a shaking mouse
-    if (config.shakeDetection && shakeDetector.isShakingRel(dx)) {
-        messageQueue.put(MSG_SHAKING);
-    }
 
     targetX += dx * scaleX;
     targetY += dy * scaleY;
@@ -336,7 +332,7 @@ ShakeDetector::isShakingRel(double dx) {
     
     // Accumulate the travelled distance
     x += dx;
-    dxsum += abs(dx);
+    dxsum += std::abs(dx);
     
     // Check for a direction reversal
     if (dx * dxsign < 0) {

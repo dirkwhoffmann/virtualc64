@@ -157,11 +157,11 @@ public:
     bool detectShakeXY(double x, double y);
     bool detectShakeDxDy(double dx, double dy);
 
-    // Emulates a mouse move
+    // Emulates a mouse movement
     void setXY(double x, double y);
     void setDxDy(double dx, double dy);
 
-    // Emulates a mouse button event
+    // Presses or releases a mouse button
     void setLeftButton(bool value);
     void setRightButton(bool value);
     
