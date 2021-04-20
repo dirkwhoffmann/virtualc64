@@ -23,33 +23,6 @@
 
 VICII::VICII(C64 &ref) : C64Component(ref)
 {
-    // Silicon
-    config.grayDotBug = true;
-    
-    // Colors
-    config.palette = PALETTE_COLOR;
-    config.brightness = 50;
-    config.contrast = 100;
-    config.saturation = 50;
-    
-    // Debugger
-    config.cutLayers = 0xFF;
-    config.cutOpacity = 0xFF;
-    config.dmaOpacity = 0x80;
-    config.dmaDebug = false;
-    config.dmaChannel[MEMACCESS_R] = true;
-    config.dmaChannel[MEMACCESS_I] = true;
-    config.dmaChannel[MEMACCESS_C] = true;
-    config.dmaChannel[MEMACCESS_G] = true;
-    config.dmaChannel[MEMACCESS_P] = true;
-    config.dmaChannel[MEMACCESS_S] = true;
-    setDmaDebugColor(MEMACCESS_R, RgbColor(1.0, 0.0, 0.0));
-    setDmaDebugColor(MEMACCESS_I, RgbColor(1.0, 0.8, 0.0));
-    setDmaDebugColor(MEMACCESS_C, RgbColor(1.0, 1.0, 0.0));
-    setDmaDebugColor(MEMACCESS_G, RgbColor(0.0, 1.0, 1.0));
-    setDmaDebugColor(MEMACCESS_P, RgbColor(0.0, 1.0, 0.0));
-    setDmaDebugColor(MEMACCESS_S, RgbColor(0.0, 0.5, 1.0));
-    
     // Assign reference clock to all time delayed variables
     baLine.setClock(&cpu.cycle);
     gAccessResult.setClock(&cpu.cycle);
@@ -60,16 +33,6 @@ VICII::VICII(C64 &ref) : C64Component(ref)
     for (usize i = 0; i < noiseSize; i++) {
         noise[i] = rand() % 2 ? 0xFF000000 : 0xFFFFFFFF;
     }
-}
-
-void
-VICII::_initialize()
-{
-    setRevision(VICII_PAL_8565);
-    
-    config.hideSprites = false;
-    config.checkSBCollisions = true;
-    config.checkSSCollisions = true;
 }
 
 void 
@@ -144,6 +107,40 @@ VICII::resetDmaTexture(int nr)
     for (int i = 0; i < TEX_HEIGHT * TEX_WIDTH; i++) {
         p[i] = 0xFF000000;
     }
+}
+
+void
+VICII::resetConfig()
+{
+    setConfigItem(OPT_VIC_REVISION, VICII_PAL_8565);
+    setConfigItem(OPT_GRAY_DOT_BUG, true);
+    setConfigItem(OPT_GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
+
+    setConfigItem(OPT_PALETTE, PALETTE_COLOR);
+    setConfigItem(OPT_BRIGHTNESS, 50);
+    setConfigItem(OPT_CONTRAST, 100);
+    setConfigItem(OPT_SATURATION, 50);
+
+    setConfigItem(OPT_HIDE_SPRITES, false);
+    setConfigItem(OPT_DMA_DEBUG, false);
+    setConfigItem(OPT_DMA_CHANNEL_R, true);
+    setConfigItem(OPT_DMA_CHANNEL_I, true);
+    setConfigItem(OPT_DMA_CHANNEL_C, true);
+    setConfigItem(OPT_DMA_CHANNEL_G, true);
+    setConfigItem(OPT_DMA_CHANNEL_P, true);
+    setConfigItem(OPT_DMA_CHANNEL_S, true);
+    setConfigItem(OPT_DMA_COLOR_R, GpuColor(0xFF, 0x00, 0x00).rawValue);
+    setConfigItem(OPT_DMA_COLOR_I, GpuColor(0xFF, 0xC0, 0x00).rawValue);
+    setConfigItem(OPT_DMA_COLOR_C, GpuColor(0xFF, 0xFF, 0x00).rawValue);
+    setConfigItem(OPT_DMA_COLOR_G, GpuColor(0x00, 0xFF, 0xFF).rawValue);
+    setConfigItem(OPT_DMA_COLOR_P, GpuColor(0x00, 0xFF, 0x00).rawValue);
+    setConfigItem(OPT_DMA_COLOR_S, GpuColor(0x00, 0x80, 0xFF).rawValue);
+    setConfigItem(OPT_DMA_DISPLAY_MODE, DMA_DISPLAY_MODE_FG_LAYER);
+    setConfigItem(OPT_DMA_OPACITY, 128);
+    setConfigItem(OPT_CUT_LAYERS, 0xFF);
+    setConfigItem(OPT_CUT_OPACITY, 0xFF);
+    setConfigItem(OPT_SB_COLLISIONS, true);
+    setConfigItem(OPT_SS_COLLISIONS, true);
 }
 
 i64

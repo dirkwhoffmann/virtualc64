@@ -100,6 +100,7 @@ private:
 public:
     
     const MouseConfig &getConfig() const { return config; }
+    void resetConfig() override;
 
     i64 getConfigItem(Option option) const;
     bool setConfigItem(Option option, i64 value) override;

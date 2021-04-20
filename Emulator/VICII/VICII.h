@@ -559,7 +559,6 @@ public:
 
 private:
     
-    void _initialize() override;
     void _reset() override;
 
     void resetEmuTexture(int nr);
@@ -575,7 +574,8 @@ private:
 public:
     
     VICIIConfig getConfig() const { return config; }
-    
+    void resetConfig() override;
+
     i64 getConfigItem(Option option) const;
     bool setConfigItem(Option option, i64 value) override;
     

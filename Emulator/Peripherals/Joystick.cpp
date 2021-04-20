@@ -14,9 +14,6 @@
 
 Joystick::Joystick(C64& ref, ControlPort& pref) : C64Component(ref), port(pref)
 {
-    config.autofire = false;
-    config.autofireBullets = -3;
-    config.autofireDelay = 125;
 };
 
 const char *
@@ -34,6 +31,14 @@ Joystick::_reset()
     button = false;
     axisX = 0;
     axisY = 0;
+}
+
+void
+Joystick::resetConfig()
+{
+    setConfigItem(OPT_AUTOFIRE, false);
+    setConfigItem(OPT_AUTOFIRE_BULLETS, -3);
+    setConfigItem(OPT_AUTOFIRE_DELAY, 125);
 }
 
 i64

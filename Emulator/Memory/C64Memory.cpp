@@ -116,6 +116,13 @@ C64Memory::_reset()
     }
 }
 
+void
+C64Memory::resetConfig()
+{
+    setConfigItem(OPT_RAM_PATTERN, RAM_PATTERN_C64);
+    setConfigItem(OPT_DEBUGCART, false);
+}
+
 i64
 C64Memory::getConfigItem(Option option) const
 {

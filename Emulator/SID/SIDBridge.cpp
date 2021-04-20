@@ -28,14 +28,7 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
         &fastsid[2],
         &fastsid[3]
     };
-    
-    config.engine = SIDENGINE_RESID;
-    config.enabled = 1;
-    config.address[0] = 0xD400;
-    config.address[1] = 0xD420;
-    config.address[2] = 0xD440;
-    config.address[3] = 0xD460;
-    
+        
     for (int i = 0; i < 4; i++) {
         resid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
         fastsid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
@@ -48,6 +41,23 @@ SIDBridge::_reset()
     RESET_SNAPSHOT_ITEMS
     
     clearRingbuffer();
+}
+
+void
+SIDBridge::resetConfig()
+{
+    setConfigItem(OPT_SID_REVISION, MOS_8580);
+    setConfigItem(OPT_SID_FILTER, true);
+    setConfigItem(OPT_SID_ENGINE, SIDENGINE_RESID);
+    setConfigItem(OPT_SID_SAMPLING, SAMPLING_INTERPOLATE);
+    setConfigItem(OPT_AUDVOLL, 50);
+    setConfigItem(OPT_AUDVOLR, 50);
+
+    for (isize i = 0; i < 4; i++) {
+        setConfigItem(OPT_SID_ENABLE, i, i == 0);
+        setConfigItem(OPT_SID_ADDRESS, i, 0xD400 + (i * 0x20));
+        setConfigItem(OPT_AUDVOL, i, 400);
+    }
 }
 
 i64

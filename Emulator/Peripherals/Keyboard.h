@@ -14,10 +14,9 @@
 #include <queue>
 
 struct KeyAction {
-    
+        
+    // Action type
     enum class Action { press, release, releaseAll };
-    
-    // Action type (true = press, false = release)
     Action type;
 
     // Key identifier (0 .. 65)

@@ -393,13 +393,9 @@ RetroShell::dump(HardwareComponent &component, dump::Category category)
 {
     std::stringstream ss; string line;
     
-    printf("Suspending...\n");
     c64.suspend();
-    printf("Suspended\n");
     component.dump(category, ss);
-    printf("Resuming...\n");
     c64.resume();
-    printf("Resumed\n");
     
     while(std::getline(ss, line)) *this << line << '\n';
 }

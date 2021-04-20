@@ -391,7 +391,7 @@ typedef struct
     isize contrast;
     isize saturation;
 
-    // Debugging
+    // Debugger
     bool hideSprites;
     bool dmaDebug;
     bool dmaChannel[6];

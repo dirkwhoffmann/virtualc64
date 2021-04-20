@@ -90,7 +90,7 @@ public:
      * did not exist when they were constructed.
      */
     void initialize();
-    virtual void _initialize() { };
+    virtual void _initialize() { resetConfig(); }
     
     /* Resets the component and its subcomponent. It is mandatory for each
      * component to implement this function.
@@ -103,6 +103,9 @@ public:
     // Configuring
     //
     
+    // Initializes all configuration items with their default values
+    virtual void resetConfig() { };
+
     /* Configures the component and it's subcomponents. This function
      * distributes a configuration request to all subcomponents by calling
      * setConfigItem(). The function returns true iff the current configuration
@@ -118,7 +121,7 @@ public:
      */
     virtual bool setConfigItem(Option option, i64 value) throws { return false; }
     virtual bool setConfigItem(Option option, long id, i64 value) throws { return false; }
-        
+            
 
     //
     // Analyzing

@@ -91,22 +91,14 @@ private:
 
     
     //
-    // Configuring
+    // Analyzing
     //
-    
+
 public:
     
     // Returns the result of the most recent call to inspect()
     TODInfo getInfo() { return HardwareComponent::getInfo(info); }
-    
-    // Sets the frequency of the driving clock
-    void setHz(u8 value) { assert(value == 5 || value == 6); hz = value; }
 
-    
-    //
-    // Analyzing
-    //
-    
 private:
     
     void _inspect() override;
@@ -147,55 +139,58 @@ private:
     //
     // Accessing
     //
-
+    
+    // Sets the frequency of the driving clock
+    void setHz(u8 value) { assert(value == 5 || value == 6); hz = value; }
+    
     // Returns the hours digits of the time of day clock
-     u8 getTodHours() const { return (frozen ? latch.hour : tod.hour) & 0x9F; }
-
-     // Returns the minutes digits of the time of day clock
-     u8 getTodMinutes() const { return (frozen ? latch.min : tod.min) & 0x7F; }
-
-     // Returns the seconds digits of the time of day clock
-     u8 getTodSeconds() const { return (frozen ? latch.sec : tod.sec) & 0x7F; }
-
-     // Returns the tenth-of-a-second digits of the time of day clock
-     u8 getTodTenth() const { return (frozen ? latch.tenth : tod.tenth) & 0x0F; }
-
-     // Returns the hours digits of the alarm time
-     u8 getAlarmHours() const { return alarm.hour & 0x9F; }
-
-     // Returns the minutes digits of the alarm time
-     u8 getAlarmMinutes() const { return alarm.min & 0x7F; }
-
-     // Returns the seconds digits of the alarm time
-     u8 getAlarmSeconds() const { return alarm.sec & 0x7F; }
-
-     // Returns the tenth-of-a-second digits of the alarm time
-     u8 getAlarmTenth() const { return alarm.tenth & 0x0F; }
-     
-     // Sets the hours digits of the time of day clock
-     void setTodHours(u8 value) { tod.hour = value & 0x9F; checkIrq(); }
-     
-     // Sets the minutes digits of the time of day clock
-     void setTodMinutes(u8 value) { tod.min = value & 0x7F; checkIrq(); }
-     
-     // Sets the seconds digits of the time of day clock
-     void setTodSeconds(u8 value) { tod.sec = value & 0x7F; checkIrq(); }
-     
-     // Sets the tenth-of-a-second digits of the time of day clock
-     void setTodTenth(u8 value) { tod.tenth = value & 0x0F; checkIrq(); }
-     
-     // Sets the hours digits of the alarm time
-     void setAlarmHours(u8 value) { alarm.hour = value & 0x9F; checkIrq(); }
-     
-     // Sets the minutes digits of the alarm time
-     void setAlarmMinutes(u8 value) { alarm.min = value & 0x7F; checkIrq(); }
-     
-     // Sets the seconds digits of the alarm time
-     void setAlarmSeconds(u8 value) { alarm.sec = value & 0x7F; checkIrq(); }
-     
-     // Sets the tenth-of-a-second digits of the time of day clock
-     void setAlarmTenth(u8 value) { alarm.tenth = value & 0x0F; checkIrq(); }
-
+    u8 getTodHours() const { return (frozen ? latch.hour : tod.hour) & 0x9F; }
+    
+    // Returns the minutes digits of the time of day clock
+    u8 getTodMinutes() const { return (frozen ? latch.min : tod.min) & 0x7F; }
+    
+    // Returns the seconds digits of the time of day clock
+    u8 getTodSeconds() const { return (frozen ? latch.sec : tod.sec) & 0x7F; }
+    
+    // Returns the tenth-of-a-second digits of the time of day clock
+    u8 getTodTenth() const { return (frozen ? latch.tenth : tod.tenth) & 0x0F; }
+    
+    // Returns the hours digits of the alarm time
+    u8 getAlarmHours() const { return alarm.hour & 0x9F; }
+    
+    // Returns the minutes digits of the alarm time
+    u8 getAlarmMinutes() const { return alarm.min & 0x7F; }
+    
+    // Returns the seconds digits of the alarm time
+    u8 getAlarmSeconds() const { return alarm.sec & 0x7F; }
+    
+    // Returns the tenth-of-a-second digits of the alarm time
+    u8 getAlarmTenth() const { return alarm.tenth & 0x0F; }
+    
+    // Sets the hours digits of the time of day clock
+    void setTodHours(u8 value) { tod.hour = value & 0x9F; checkIrq(); }
+    
+    // Sets the minutes digits of the time of day clock
+    void setTodMinutes(u8 value) { tod.min = value & 0x7F; checkIrq(); }
+    
+    // Sets the seconds digits of the time of day clock
+    void setTodSeconds(u8 value) { tod.sec = value & 0x7F; checkIrq(); }
+    
+    // Sets the tenth-of-a-second digits of the time of day clock
+    void setTodTenth(u8 value) { tod.tenth = value & 0x0F; checkIrq(); }
+    
+    // Sets the hours digits of the alarm time
+    void setAlarmHours(u8 value) { alarm.hour = value & 0x9F; checkIrq(); }
+    
+    // Sets the minutes digits of the alarm time
+    void setAlarmMinutes(u8 value) { alarm.min = value & 0x7F; checkIrq(); }
+    
+    // Sets the seconds digits of the alarm time
+    void setAlarmSeconds(u8 value) { alarm.sec = value & 0x7F; checkIrq(); }
+    
+    // Sets the tenth-of-a-second digits of the time of day clock
+    void setAlarmTenth(u8 value) { alarm.tenth = value & 0x0F; checkIrq(); }
+    
     
     //
     // Emulating

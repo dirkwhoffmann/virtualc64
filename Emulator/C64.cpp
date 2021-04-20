@@ -76,7 +76,7 @@ C64::C64()
     };
     
     // Set the initial configuration
-    config.cycleLimit = INT64_MAX;
+    config.cycleLimit = INT64_MAX; // TODO: MOVE TO getDefaultConfig()
     
     // Set up the initial state
     initialize();
@@ -124,6 +124,12 @@ C64::_reset()
     runLoopCtrl = 0;
 
     rasterCycle = 1;
+}
+
+void
+C64::resetConfig()
+{
+    setConfigItem(OPT_CYCLE_LIMIT, INT64_MAX);
 }
 
 InspectionTarget

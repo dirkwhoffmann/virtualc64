@@ -24,18 +24,6 @@ Drive::Drive(DriveID id, C64 &ref) : C64Component(ref), deviceNr(id)
         &via2,
         &disk
     };
-    
-    config.connected = false;
-    config.switchedOn = true;
-    config.type = DRIVE_VC1541II;
-    config.pan = 0;
-    config.powerVolume = 50;
-    config.stepVolume = 50;
-    config.insertVolume = 50;
-    config.ejectVolume = 50;
-    
-    insertionStatus = DISK_FULLY_EJECTED;
-    disk.clearDisk();
 }
 
 const char *
@@ -46,12 +34,34 @@ Drive::getDescription() const
 }
 
 void
+Drive::_initialize()
+{
+    resetConfig();
+    
+    insertionStatus = DISK_FULLY_EJECTED;
+    disk.clearDisk();
+}
+
+void
 Drive::_reset()
 {
     RESET_SNAPSHOT_ITEMS
 
     cpu.reg.pc = 0xEAA0;
     halftrack = 41;
+}
+
+void
+Drive::resetConfig()
+{
+    setConfigItem(OPT_DRIVE_CONNECT, deviceNr, deviceNr == DRIVE8);
+    setConfigItem(OPT_DRIVE_POWER_SWITCH, deviceNr, true);
+    setConfigItem(OPT_DRIVE_TYPE, deviceNr, DRIVE_VC1541II);
+    setConfigItem(OPT_DRIVE_PAN, deviceNr, 0);
+    setConfigItem(OPT_POWER_VOLUME, deviceNr, 50);
+    setConfigItem(OPT_STEP_VOLUME, deviceNr, 50);
+    setConfigItem(OPT_INSERT_VOLUME, deviceNr, 50);
+    setConfigItem(OPT_EJECT_VOLUME, deviceNr, 50);
 }
 
 i64

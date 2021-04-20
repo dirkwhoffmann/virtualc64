@@ -125,16 +125,7 @@ extension MyController {
 struct Keys {
     
     struct Gen {
-        
-        // Drives
-        static let driveEjectUnasked      = "VC64_GEN_EjectUnasked"
-        static let driveSounds            = "VC64_GEN_DriveSounds"
-        static let driveSoundPan          = "VC64_GEN_DriveSoundPan"
-        static let driveInsertSound       = "VC64_GEN_DriveInsertSound"
-        static let driveEjectSound        = "VC64_GEN_DriveEjectSound"
-        static let driveHeadSound         = "VC64_GEN_DriveHeadSound"
-        static let driveConnectSound      = "VC64_GEN_DriveConnectSound"
-        
+                
         // Snapshots and screenshots
         static let autoSnapshots          = "VC64_GEN_AutoSnapshots"
         static let autoSnapshotInterval   = "VC64_GEN_ScreenshotInterval"
@@ -144,15 +135,14 @@ struct Keys {
         // Fullscreen
         static let keepAspectRatio        = "VC64_GEN_FullscreenKeepAspectRatio"
         static let exitOnEsc              = "VC64_GEN_FullscreenExitOnEsc"
-        
-        // User dialogs
-        static let closeWithoutAsking     = "VC64_GEN_CloseWithoutAsking"
-        
+                
         // Warp mode
         static let warpMode               = "VC64_GEN_WarpMode"
         
         // Miscellaneous
+        static let driveEjectUnasked      = "VC64_GEN_EjectUnasked"
         static let pauseInBackground      = "VC64_GEN_PauseInBackground"
+        static let closeWithoutAsking     = "VC64_GEN_CloseWithoutAsking"
     }
 }
 
@@ -229,15 +219,7 @@ extension UserDefaults {
         
         let defaults = UserDefaults.standard
         
-        let keys = [ Keys.Gen.driveEjectUnasked,
-                     Keys.Gen.driveSounds,
-                     Keys.Gen.driveSoundPan,
-                     Keys.Gen.driveInsertSound,
-                     Keys.Gen.driveEjectSound,
-                     Keys.Gen.driveHeadSound,
-                     Keys.Gen.driveConnectSound,
-                     
-                     Keys.Gen.autoSnapshots,
+        let keys = [ Keys.Gen.autoSnapshots,
                      Keys.Gen.autoSnapshotInterval,
                      Keys.Gen.screenshotSource,
                      Keys.Gen.screenshotTarget,
@@ -247,6 +229,7 @@ extension UserDefaults {
                      
                      Keys.Gen.warpMode,
                      
+                     Keys.Gen.driveEjectUnasked,
                      Keys.Gen.pauseInBackground,
                      Keys.Gen.closeWithoutAsking
         ]

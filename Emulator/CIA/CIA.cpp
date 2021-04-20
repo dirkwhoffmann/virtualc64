@@ -14,10 +14,7 @@
 
 CIA::CIA(C64 &ref) : C64Component(ref)
 {    
-    subComponents = std::vector<HardwareComponent *> { &tod };
-    
-    config.revision = MOS_6526;
-    config.timerBBug = true;
+    subComponents = std::vector<HardwareComponent *> { &tod };    
 }
 
 void
@@ -30,6 +27,13 @@ CIA::_reset()
 	
 	latchA = 0xFFFF;
 	latchB = 0xFFFF;
+}
+
+void
+CIA::resetConfig()
+{
+    setConfigItem(OPT_CIA_REVISION, MOS_6526);
+    setConfigItem(OPT_TIMER_B_BUG, true);
 }
 
 i64

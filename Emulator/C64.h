@@ -221,14 +221,12 @@ private:
 
 public:
     
-    // Returns the currently set configuration
     C64Config getConfig() const { return config; }
-    
-    // Gets a single configuration item
+    void resetConfig() override;
+
     i64 getConfigItem(Option option) const;
     i64 getConfigItem(Option option, long id) const;
     
-    // Sets a single configuration item
     bool configure(Option option, i64 value) throws;
     bool configure(Option option, long id, i64 value) throws;
 

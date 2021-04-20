@@ -11,6 +11,7 @@
 #include "Mouse.h"
 #include "C64.h"
 #include "IO.h"
+#include <cmath>
 
 Mouse::Mouse(C64 &ref, ControlPort& pref) : C64Component(ref), port(pref)
 {
@@ -20,12 +21,14 @@ Mouse::Mouse(C64 &ref, ControlPort& pref) : C64Component(ref), port(pref)
         &mouse1351,
         &mouseNeos
     };
-    
+
+    /*
     config.model = MOUSE_C1350;
     config.shakeDetection = true;
     config.velocity = 100;
 
     updateScalingFactors();
+    */
 }
 
 void Mouse::_reset()
@@ -34,6 +37,14 @@ void Mouse::_reset()
 
     targetX = 0;
     targetY = 0;
+}
+
+void
+Mouse::resetConfig()
+{
+    setConfigItem(OPT_MOUSE_MODEL, MOUSE_C1350);
+    setConfigItem(OPT_SHAKE_DETECTION, true);
+    setConfigItem(OPT_MOUSE_VELOCITY, 100);
 }
 
 i64
@@ -334,7 +345,7 @@ ShakeDetector::isShakingRel(double dx) {
     
     // Accumulate the travelled distance
     x += dx;
-    dxsum += std::abs(dx);
+    dxsum += abs(dx);
     
     // Check for a direction reversal
     if (dx * dxsign < 0) {

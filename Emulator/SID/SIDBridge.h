@@ -142,7 +142,8 @@ private:
 public:
     
     SIDConfig getConfig() const { return config; }
-    
+    void resetConfig() override;
+
     i64 getConfigItem(Option option) const;
     i64 getConfigItem(Option option, long id) const;
 
