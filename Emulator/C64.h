@@ -208,6 +208,9 @@ public:
     const char *getDescription() const override { return "C64"; }
     void prefix() const override;
 
+    // Prepares the emulator for regression testing
+    void initialize(C64Model model);
+
     void reset();
 
 private:

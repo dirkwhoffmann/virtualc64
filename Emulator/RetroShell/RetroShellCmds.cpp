@@ -102,6 +102,13 @@ RetroShell::exec <Token::c64, Token::reset> (Arguments &argv, long param)
     c64.reset();
 }
 
+template <> void
+RetroShell::exec <Token::c64, Token::init> (Arguments &argv, long param)
+{
+    auto model = util::parseEnum <C64ModelEnum> (argv.front());
+    c64.initialize(model);
+}
+
 
 //
 // Memory

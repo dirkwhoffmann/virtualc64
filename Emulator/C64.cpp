@@ -74,12 +74,9 @@ C64::C64()
         &datasette,
         &oscillator
     };
-    
-    // Set the initial configuration
-    config.cycleLimit = INT64_MAX; // TODO: MOVE TO getDefaultConfig()
-    
+
     // Set up the initial state
-    initialize();
+    HardwareComponent::initialize();
     _reset();
 }
 
@@ -92,6 +89,21 @@ void
 C64::prefix() const
 {
     fprintf(stderr, "[%lld] (%3d,%3d) %04X ", frame, rasterLine, rasterCycle, cpu.getPC0());
+}
+
+void
+C64::initialize(C64Model model)
+{
+    assert_enum(C64Model, model);
+    
+    // Power off the emulator
+    powerOff();
+
+    // Put all components into their initial state
+    HardwareComponent::initialize();
+    
+    // Apply the selected configuration scheme
+    configure(model);
 }
 
 void
@@ -583,9 +595,7 @@ C64::updateVicFunctionTable()
 void
 C64::setWarp(bool enable)
 {
-    // suspend();
     HardwareComponent::setWarp(enable);
-    // resume();
 }
 
 void
@@ -600,11 +610,13 @@ void
 C64::powerOn()
 {
     debug(RUN_DEBUG, "powerOn()\n");
+    
+    // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
-        
+
     if (isPoweredOff() && isReady()) {
         
-        assert(p == nullptr);
+        assert(p == (pthread_t)0);
         
         // Perform a reset
         reset();
@@ -630,17 +642,18 @@ void
 C64::powerOff()
 {
     debug(RUN_DEBUG, "powerOff()\n");
+
+    // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
-    
-    // Pause if needed
-    pause();
-    assert(!isRunning());
-                
-    if (isPoweredOn()) {
-                   
+
+    if (!isPoweredOff()) {
+
+        // Pause if needed
+        pause(); assert(!isRunning());
+        
         // Power off all subcomponents
         HardwareComponent::powerOff();
-        
+
         // Update the recorded debug information
         inspect();
         
@@ -659,15 +672,16 @@ void
 C64::run()
 {
     debug(RUN_DEBUG, "run()\n");
+    
+    // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
 
-    // Power on if needed
-    powerOn();
-    assert(isPoweredOn());
-    
     if (!isRunning() && isReady()) {
         
-        assert(p == nullptr);
+        assert(p == (pthread_t)0);
+
+        // Power on if needed
+        powerOn(); assert(isPoweredOn());
 
         // Launch all subcomponents
         HardwareComponent::run();
@@ -686,11 +700,12 @@ C64::_run()
 void
 C64::pause()
 {
-    assert(!isEmulatorThread());
-    
     debug(RUN_DEBUG, "pause()\n");
 
-    if (!isPaused()) {
+    // Never call this function inside the emulator thread
+    assert(!isEmulatorThread());
+    
+    if (isRunning()) {
                 
         // Ask the emulator thread to terminate
         signalStop();

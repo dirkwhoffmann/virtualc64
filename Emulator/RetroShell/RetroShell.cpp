@@ -140,6 +140,7 @@ RetroShell::pressUp()
     
     if (ipos > 0) ipos--;
     if (ipos < (isize)input.size()) lastLine() = prompt + input[ipos];
+    pressEnd();
     tabPressed = false;
 }
 
