@@ -10,6 +10,7 @@
 #include "config.h"
 #include "Keyboard.h"
 #include "C64.h"
+#include "C64Key.h"
 #include "IO.h"
 
 KeyAction::KeyAction(Action _type, u8 _nr, u64 _delay)
@@ -291,21 +292,13 @@ Keyboard::restoreIsPressed() const
 void
 Keyboard::toggle(long nr)
 {
-    if (isPressed(nr)) {
-        release(nr);
-    } else {
-        press(nr);
-    }
+    isPressed(nr) ? release(nr) : press(nr);
 }
 
 void
 Keyboard::toggle(u8 row, u8 col)
 {
-    if (isPressed(row, col)) {
-        releaseRowCol(row, col);
-    } else {
-        pressRowCol(row,col);
-    }
+    isPressed(row, col) ? releaseRowCol(row, col) : pressRowCol(row,col);
 }
 
 void
@@ -339,16 +332,6 @@ Keyboard::scheduleKeyReleaseAll(i64 delay)
 }
 
 void
-Keyboard::addDelay(i64 delay)
-{
-    if (actions.empty()) {
-        this->delay = delay;
-    } else {
-        actions.back().delay += delay;
-    }
-}
-
-void
 Keyboard::abortAutoTyping()
 {
     if (!actions.empty()) {
@@ -365,8 +348,8 @@ Keyboard::_scheduleKeyAction(KeyAction::Action type, long nr, i64 delay)
 {
     debug(KBD_DEBUG, "Recording %d %ld %lld\n", type, nr, delay);
 
-    addDelay(delay);
-    actions.push(KeyAction(type, nr, 0));
+    if (actions.empty()) this->delay = delay;
+    actions.push(KeyAction(type, nr, delay));
 }
 
 void
@@ -374,82 +357,52 @@ Keyboard::_scheduleKeyAction(KeyAction::Action type, u8 row, u8 col, i64 delay)
 {
     debug(KBD_DEBUG, "Recording %d %d %d %lld\n", type, row, col, delay);
     
-    addDelay(delay);
-    actions.push(KeyAction(type, row, col, 0));
+    _scheduleKeyAction(type, C64Key(row,col).nr, delay);
 }
 
 void
 Keyboard::vsyncHandler()
 {
-    // Only proceed if the timer fires
-    if (delay--) return;
-
-    // Process all pending auto-typing events
-    synchronized {
+    // Only take action when the timer fires
+    if (delay == 0) {
         
-        // printf("delay = %d empty: %d count: %d\n", delay, actions.empty(), actions.size());
-        
-        while (!actions.empty()) {
+        // Process all pending auto-typing events
+        synchronized {
                         
-            KeyAction action = actions.front();
-            actions.pop();
-
-            /*
-            trace(KBD_DEBUG, "%d: key (%d,%d) next: %lld\n",
-                  action.type, action.row, action.col, action.delay);
-            */
-            
-            switch (action.type) {
-                    
-                case KeyAction::Action::press:
-                    
-                    debug(KBD_DEBUG, "Pressing (%d,%d)\n", action.row, action.col);
-                    _press(action.nr);
-                    break;
-                    
-                case KeyAction::Action::release:
-
-                    debug(KBD_DEBUG, "Releasing (%d,%d)\n", action.row, action.col);
-                    _release(action.nr);
-                    break;
-
-                case KeyAction::Action::releaseAll:
-                    
-                    debug(KBD_DEBUG, "Releasing all\n");
-                    _releaseAll();
-                    break;
+            while (delay == 0 && !actions.empty()) {
+                
+                KeyAction &action = actions.front();
+                actions.pop();
+                
+                // trace(KBD_DEBUG, "%d: key (%d,%d) next: %lld\n",
+                //       action.type, action.row, action.col, action.delay);
+                
+                // Process event
+                switch (action.type) {
+                        
+                    case KeyAction::Action::press:
+                        
+                        debug(KBD_DEBUG, "Pressing %d\n", action.nr);
+                        _press(action.nr);
+                        break;
+                        
+                    case KeyAction::Action::release:
+                        
+                        debug(KBD_DEBUG, "Releasing %d\n", action.nr);
+                        _release(action.nr);
+                        break;
+                        
+                    case KeyAction::Action::releaseAll:
+                        
+                        debug(KBD_DEBUG, "Releasing all\n");
+                        _releaseAll();
+                        break;
+                }
+                
+                // Schedule next event
+                delay = actions.empty() ? INT64_MAX : actions.front().delay;
             }
-                    
-            delay = action.delay;
-            
-            if (delay) break;
         }
-        delay--;
     }
+    delay--;
 }
-
-/*
-const u8
-Keyboard::rowcol[66][2] = {
-    
-    // First physical row
-    {7, 1}, {7, 0}, {7, 3}, {1, 0}, {1, 3}, {2, 0}, {2, 3}, {3, 0},
-    {3, 3}, {4, 0}, {4, 3}, {5, 0}, {5, 3}, {6, 0}, {6, 3}, {0, 0},
-    {0, 4},
-    
-    // Second physical row
-    {7, 2}, {7, 6}, {1, 1}, {1, 6}, {2, 1}, {2, 6}, {3, 1}, {3, 6},
-    {4, 1}, {4, 6}, {5, 1}, {5, 6}, {6, 1}, {6, 6}, {9, 9}, {0, 5},
-    
-    // Third physical row
-    {7, 7}, {9, 9}, {1, 2}, {1, 5}, {2, 2}, {2, 5}, {3, 2}, {3, 5},
-    {4, 2}, {4, 5}, {5, 2}, {5, 5}, {6, 2}, {6, 5}, {0, 1}, {0, 6},
-    
-    // Fourth physical row
-    {7, 5}, {1, 7}, {1, 4}, {2, 7}, {2, 4}, {3, 7}, {3, 4}, {4, 7},
-    {4, 4}, {5, 7}, {5, 4}, {6, 7}, {6, 4}, {0, 7}, {0, 2}, {0, 3},
-    
-    // Fifth physical row
-    {7, 4}
-};
-*/

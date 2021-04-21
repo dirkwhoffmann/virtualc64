@@ -74,7 +74,7 @@ class Keyboard : public C64Component {
     std::queue<KeyAction> actions;
     
     // Delay counter until the next key action is processed
-    i64 delay = 0;
+    i64 delay = INT64_MAX;
     
     
     //
@@ -216,9 +216,6 @@ public:
 
 private:
     
-    // Inserts a delay after the last pending action
-    void addDelay(i64 delay);
-
     // Deletes all pending actions and clears the keyboard matrix
     void abortAutoTyping();
     
