@@ -43,18 +43,9 @@ RetroShell::exec <Token::easteregg> (Arguments& argv, long param)
 template <> void
 RetroShell::exec <Token::source> (Arguments &argv, long param)
 {
-    string filename = argv.front();
-    
-    std::ifstream stream(filename);
-    if (!stream.is_open()) throw ConfigFileReadError(filename);
-    
-    try {
-        exec(stream);
-    } catch (util::Exception &e) {
-        retroShell << "Error in line " << (isize)e.data << '\n';
-        retroShell << e.what() << '\n';
-    }
+    execScript(argv.front());
 }
+
 
 //
 // C64

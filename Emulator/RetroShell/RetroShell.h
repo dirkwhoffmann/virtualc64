@@ -45,6 +45,16 @@ class RetroShell : public C64Component {
     
     bool isDirty = false;
     
+    //
+    // Script processing
+    //
+    
+    // The name of the currently executed script ("" if none)
+    string scriptName;
+    
+    // The number of the script line to execute next (first line = 1)
+    isize scriptLine = 0;
+    
     
     //
     // Initializing
@@ -144,20 +154,25 @@ private:
 public:
     
     // Executes a user command
-    bool exec(const string &command, bool verbose = false);
+    void exec(const string &command) throws;
     
     // Executes a user script
-    void exec(std::istream &stream) throws;
+    void execScript(const string &name) throws;
     
+    // Continues a previously interrupted script
+    void continueScript() throws;
+    
+    // Prints a textual description of an error in the console
+    void describe(const std::exception &exception);
+    void describe(const struct VC64Error &error);
+
     
     //
     // Command handlers
     //
     
 public:
-    
-    // void handler(const string& command) throws;
-    
+        
     template <Token t1>
     void exec(Arguments& argv, long param) throws;
     template <Token t1, Token t2>

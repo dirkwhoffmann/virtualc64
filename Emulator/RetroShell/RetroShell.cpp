@@ -249,7 +249,7 @@ RetroShell::pressReturn()
     ipos = (isize)input.size() - 1;
     
     // Execute the command
-    exec(command);
+    try { exec(command); } catch (...) { };
     printPrompt();
     tabPressed = false;
 }
@@ -288,104 +288,149 @@ RetroShell::text()
     return all.c_str();
 }
 
-bool
-RetroShell::exec(const string &command, bool verbose)
+void
+RetroShell::exec(const string &command)
 {
-    bool success = false;
-    
-    // Print the command string if requested
-    if (verbose) *this << command << '\n';
-        
-    printf("Command: %s\n", command.c_str());
+    printf("exec(%s)\n", command.c_str());
  
+    // Skip empty lines
+    if (command == "") return;
+
+    // Skip comments
+    if (command.substr(0,1) == "#") return;
+
+    // Call the interpreter
     try {
         
-        // Hand the command over to the intepreter
         interpreter.exec(command);
-        success = true;
-               
-    } catch (TooFewArgumentsError &err) {
-        *this << err.what() << ": Too few arguments";
-        *this << '\n';
-        
-    } catch (TooManyArgumentsError &err) {
-        *this << err.what() << ": Too many arguments";
-        *this << '\n';
-            
-    } catch (util::EnumParseError &err) {
-        *this << err.token << " is not a valid key" << '\n';
-        *this << "Expected: " << err.expected << '\n';
-        
-    } catch (util::ParseNumError &err) {
-        *this << err.token << " is not a number" << '\n';
-
-    } catch (util::ParseBoolError &err) {
-        *this << err.token << " must be true or false" << '\n';
-
-    } catch (util::ParseError &err) {
-        *this << err.what() << ": Syntax error";
-        *this << '\n';
-        
-    } catch (ConfigUnsupportedError &err) {
-        *this << "This option is not yet supported.";
-        *this << '\n';
-        
-    } catch (ConfigLockedError &err) {
-        *this << "This option is locked because the emulator is powered on.";
-        *this << '\n';
-        
-    } catch (ConfigArgError &err) {
-        *this << "Error: Invalid argument. Expected: " << err.what();
-        *this << '\n';
-        
-    } catch (ConfigFileNotFoundError &err) {
-        *this << err.what() << " not found";
-        *this << '\n';
-        success = true; // Don't break the execution
-        
-    } catch (ConfigFileReadError &err) {
-        *this << "Error: Unable to read file " << err.what();
-        *this << '\n';
-        
-    } catch (VC64Error &err) {
-        
-        switch (err.data) {
-                
-            case ERROR_FILE_NOT_FOUND:
-                *this << err.description << " not found" << '\n';
-                success = true; // Don't break the execution
-                break;
-                
-            default:
-                *this << "Command failed with error code " << (isize)err.data;
-                *this << " (" << err.what() << ")" << '\n';
-        }
-    }
     
-    return success;
+    } catch (std::exception &err) {
+        
+        describe(err);
+        throw err;
+    }
 }
 
 void
-RetroShell::exec(std::istream &stream)
+RetroShell::execScript(const string &name)
 {
-    isize line = 0;
-    string command;
+    // Start the script from the beginning
+    scriptName = name;
+    scriptLine = 1;
+    
+    // Execute the script
+    try {
+        continueScript();
         
+    /*
+    } catch (ScriptInterruption &e) {
+        return;
+    */
+    } catch (std::exception &e) {
+        *this << "Aborted in line " << scriptLine << '\n';
+    }
+}
+
+void
+RetroShell::continueScript()
+{
+    // Open stream
+    std::ifstream stream(scriptName);
+    if (!stream.is_open()) throw ConfigFileReadError(scriptName);
+
+    isize line = 1;
+    string command;
+    
     while(std::getline(stream, command)) {
 
-        line++;
+        // Skip the line if it has been processed before
+        if (line < scriptLine) continue;
+        scriptLine = line;
+        
+        // Print the command
+        *this << command << '\n';
         printf("Line %zd: %s\n", line, command.c_str());
-
-        // Skip empty lines
-        if (command == "") continue;
-
-        // Skip comments
-        if (command.substr(0,1) == "#") continue;
         
         // Execute the command
-        if (!exec(command, true)) {
-            throw util::Exception(command, line);
-        }
+        exec(command);
+        
+        line++;
+    }
+}
+
+void
+RetroShell::describe(const std::exception &e)
+{
+    if (auto err = dynamic_cast<const TooFewArgumentsError *>(&e)) {
+        
+        *this << err->what() << ": Too few arguments";
+        *this << '\n';
+        
+    } else if (auto err = dynamic_cast<const TooManyArgumentsError *>(&e)) {
+        
+        *this << err->what() << ": Too many arguments";
+        *this << '\n';
+    
+    } else if (auto err = dynamic_cast<const util::EnumParseError *>(&e)) {
+        
+        *this << err->token << " is not a valid key" << '\n';
+        *this << "Expected: " << err->expected << '\n';
+
+    } else if (auto err = dynamic_cast<const util::ParseNumError *>(&e)) {
+        
+        *this << err->token << " is not a number";
+        *this << '\n';
+
+    } else if (auto err = dynamic_cast<const util::ParseBoolError *>(&e)) {
+
+        *this << err->token << " must be true or false";
+        *this << '\n';
+
+    } else if (auto err = dynamic_cast<const util::ParseError *>(&e)) {
+
+        *this << err->what() << ": Syntax error";
+        *this << '\n';
+
+    } else if (auto err = dynamic_cast<const ConfigUnsupportedError *>(&e)) {
+
+        *this << "This option is not yet supported.";
+        *this << '\n';
+
+    } else if (auto err = dynamic_cast<const ConfigLockedError *>(&e)) {
+
+        *this << "This option is locked because the Amiga is powered on.";
+        *this << '\n';
+
+    } else if (auto err = dynamic_cast<const ConfigArgError *>(&e)) {
+
+        *this << "Error: Invalid argument. Expected: " << err->what();
+        *this << '\n';
+
+    } else if (auto err = dynamic_cast<const ConfigFileNotFoundError *>(&e)) {
+
+        *this << err->what() << ": File not found";
+        *this << '\n';
+
+    } else if (auto err = dynamic_cast<const ConfigFileReadError *>(&e)) {
+
+        *this << "Error: Unable to read file " << err->what();
+        *this << '\n';
+    
+    } else if (auto err = dynamic_cast<const VC64Error *>(&e)) {
+
+        describe(*err);
+    }
+}
+
+void
+RetroShell::describe(const struct VC64Error &err)
+{
+    switch ((ErrorCode)err.data) {
+            
+        default:
+            
+            *this << "Command failed with error code " << (isize)err.data;
+            *this << " (" << err.what() << ")" << '\n';
     }
 }
 

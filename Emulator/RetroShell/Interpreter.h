@@ -50,6 +50,10 @@ struct TooManyArgumentsError : public util::ParseError {
     using ParseError::ParseError;
 };
 
+struct ScriptInterruption: util::Exception {
+
+};
+
 class Interpreter: C64Component
 {
     // The registered instruction set
