@@ -141,6 +141,49 @@ RetroShell::exec <Token::memory, Token::inspect> (Arguments& argv, long param)
 
 
 //
+// Drive
+//
+
+template <> void
+RetroShell::exec <Token::drive, Token::config> (Arguments& argv, long param)
+{
+    auto &drive = param ? c64.drive9 : c64.drive8;
+    dump(drive, dump::Config);
+}
+
+template <> void
+RetroShell::exec <Token::drive, Token::connect> (Arguments& argv, long param)
+{
+    auto id = param ? DRIVE9 : DRIVE8;
+    c64.configure(OPT_DRIVE_CONNECT, id, true);
+}
+
+template <> void
+RetroShell::exec <Token::drive, Token::disconnect> (Arguments& argv, long param)
+{
+    auto id = param ? DRIVE9 : DRIVE8;
+    c64.configure(OPT_DRIVE_CONNECT, id, false);
+}
+
+template <> void
+RetroShell::exec <Token::drive, Token::eject> (Arguments& argv, long param)
+{
+    auto &drive = param ? c64.drive9 : c64.drive8;
+    drive.ejectDisk();
+}
+
+template <> void
+RetroShell::exec <Token::drive, Token::insert> (Arguments& argv, long param)
+{
+    auto path = argv.front();
+    if (!util::fileExists(path)) throw ConfigFileNotFoundError(path);
+
+    auto &drive = param ? c64.drive9 : c64.drive8;
+    assert(false); // TODO
+}
+
+
+//
 // CPU
 //
 

@@ -114,6 +114,37 @@ Interpreter::registerInstructions()
 
     
     //
+    // Drive
+    //
+    
+    root.add({"drive8"},
+             "component", "Floppy drive 8");
+
+    root.add({"drive9"},
+             "component", "Floppy drive 9");
+
+    root.add({"drive8", "drive9"}, {"", "config"},
+             "command", "Displays the current configuration",
+             &RetroShell::exec <Token::drive, Token::config>);
+
+    root.add({"drive8", "drive9"}, {"", "connect"},
+             "command", "Connects the drive",
+             &RetroShell::exec <Token::drive, Token::connect>);
+
+    root.add({"drive8", "drive9"}, {"", "disconnect"},
+             "command", "Disconnects the drive",
+             &RetroShell::exec <Token::drive, Token::disconnect>);
+
+    root.add({"drive8", "drive9"}, {"", "eject"},
+             "command", "Ejects a floppy disk",
+             &RetroShell::exec <Token::drive, Token::eject>);
+
+    root.add({"drive8", "drive9"}, {"", "insert"},
+             "command", "Inserts a floppy disk",
+             &RetroShell::exec <Token::drive, Token::insert>, 1);
+
+    
+    //
     // CPU
     //
     
