@@ -192,6 +192,7 @@
 		50A9A088250DE90900723D32 /* PageFox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A9A086250DE90900723D32 /* PageFox.cpp */; };
 		50AA3EC12616F62500C96EDB /* MemUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA3EC02616F62500C96EDB /* MemUtils.cpp */; };
 		50ACF4DB256EB43B003B5690 /* Oscillator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACF4D9256EB43B003B5690 /* Oscillator.cpp */; };
+		50AEEE7326305625001DED20 /* C64Key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AEEE7126305625001DED20 /* C64Key.cpp */; };
 		50B165AE25B06A03009B576D /* TextureToolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B165AD25B06A03009B576D /* TextureToolbox.swift */; };
 		50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */; };
 		50B1A61D25A2368D00201A2C /* DeviceDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1A61C25A2368D00201A2C /* DeviceDatabase.swift */; };
@@ -591,6 +592,8 @@
 		50AA3EC2261718D700C96EDB /* RingBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RingBuffer.h; sourceTree = "<group>"; };
 		50ACF4D9256EB43B003B5690 /* Oscillator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Oscillator.cpp; sourceTree = "<group>"; };
 		50ACF4DA256EB43B003B5690 /* Oscillator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Oscillator.h; sourceTree = "<group>"; };
+		50AEEE7126305625001DED20 /* C64Key.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = C64Key.cpp; sourceTree = "<group>"; };
+		50AEEE7226305625001DED20 /* C64Key.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Key.h; sourceTree = "<group>"; };
 		50AFE0D32616E93A00D71E75 /* HardwareComponentTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HardwareComponentTypes.h; sourceTree = "<group>"; };
 		50B165AD25B06A03009B576D /* TextureToolbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureToolbox.swift; sourceTree = "<group>"; };
 		50B171051EE6AB840019E8D4 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -1066,6 +1069,8 @@
 				504C42FF24AF29AB00E69CAE /* Mouse1351.cpp */,
 				504C42FB24AF29AB00E69CAE /* NeosMouse.h */,
 				504C42FD24AF29AB00E69CAE /* NeosMouse.cpp */,
+				50AEEE7226305625001DED20 /* C64Key.h */,
+				50AEEE7126305625001DED20 /* C64Key.cpp */,
 				504C434224AF29AC00E69CAE /* Keyboard.h */,
 				504C434424AF29AC00E69CAE /* Keyboard.cpp */,
 			);
@@ -1627,6 +1632,7 @@
 				505184E024F23CB6002C6124 /* Storage.swift in Sources */,
 				504C43A824AF29AC00E69CAE /* DriveMemory.cpp in Sources */,
 				50F062E3258DE564009A6B21 /* TypeExtensions.swift in Sources */,
+				50AEEE7326305625001DED20 /* C64Key.cpp in Sources */,
 				5002FA8321C2655800DA4BBC /* KeyboardPrefs.swift in Sources */,
 				507887CC20B1858B00941F7E /* MemTableView.swift in Sources */,
 				504C439A24AF29AC00E69CAE /* dac.cc in Sources */,
