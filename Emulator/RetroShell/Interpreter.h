@@ -38,8 +38,8 @@ enum class Token
     defaultfs, delay, device, engine, filter, graydotbug, joystick, keyset,
     left, model, palette, pan, poll, raminitpattern, revision, right, rom,
     sampling, saturation, sbcollisions, searchpath, shakedetector, slow,
-    slowramdelay, slowrammirror, speed, sscollisions, step, tod, timerbbug,
-    unmappingtype, velocity, volume
+    slowramdelay, slowrammirror, speed, sscollisions, step, tod, timeout,
+    timerbbug, unmappingtype, velocity, volume
 };
 
 struct TooFewArgumentsError : public util::ParseError {

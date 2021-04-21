@@ -64,6 +64,11 @@ Interpreter::registerInstructions()
              "command", "Starts the emulator thread",
              &RetroShell::exec <Token::c64, Token::run>);
 
+    root.add({"c64", "run", "timeout"},
+             "command", "Runs a regression test",
+             &RetroShell::exec <Token::c64, Token::run, Token::timeout>, 1);
+    root.seek("c64")->seek("run")->seek("timeout")->hidden = true;
+
     root.add({"c64", "pause"},
              "command", "Halts the emulator thread",
              &RetroShell::exec <Token::c64, Token::pause>);
@@ -77,7 +82,7 @@ Interpreter::registerInstructions()
              &RetroShell::exec <Token::c64, Token::inspect>);
 
     root.add({"c64", "init"},
-             "command", "Reset the emulator to factory settings",
+             "command", "Initializes the emulator with factory settings",
              &RetroShell::exec <Token::c64, Token::init>, 1);
 
     
