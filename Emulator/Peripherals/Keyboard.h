@@ -10,6 +10,7 @@
 #pragma once
 
 #include "C64Component.h"
+#include "C64Key.h"
 
 #include <queue>
 
@@ -19,48 +20,18 @@ struct KeyAction {
     enum class Action { press, release, releaseAll };
     Action type;
 
-    // Key identifier (0 .. 65)
-    u8 nr;
+    // The key the action is performed on
+    C64Key key;
     
-    // Keyboard matrix location
-    u8 row, col;
-
     // Delay until the next action is performed, measures in frames
     i64 delay;
 
     // Constructors
-    KeyAction(Action _type, u8 _nr, u64 _delay);
-    KeyAction(Action _type, u8 _row, u8 _col, u64 _delay);
+    KeyAction(Action a, C64Key k, u64 d) : type(a), key(k), delay(d) { };
 };
 
 class Keyboard : public C64Component {
-    
-    friend struct KeyAction;
-    
-    // Maping from key numbers to keyboard matrix positions
-    static constexpr u8 rowcol[66][2] =
-    {
-        // First physical row
-        {7, 1}, {7, 0}, {7, 3}, {1, 0}, {1, 3}, {2, 0}, {2, 3}, {3, 0},
-        {3, 3}, {4, 0}, {4, 3}, {5, 0}, {5, 3}, {6, 0}, {6, 3}, {0, 0},
-        {0, 4},
         
-        // Second physical row
-        {7, 2}, {7, 6}, {1, 1}, {1, 6}, {2, 1}, {2, 6}, {3, 1}, {3, 6},
-        {4, 1}, {4, 6}, {5, 1}, {5, 6}, {6, 1}, {6, 6}, {9, 9}, {0, 5},
-        
-        // Third physical row
-        {7, 7}, {9, 9}, {1, 2}, {1, 5}, {2, 2}, {2, 5}, {3, 2}, {3, 5},
-        {4, 2}, {4, 5}, {5, 2}, {5, 5}, {6, 2}, {6, 5}, {0, 1}, {0, 6},
-        
-        // Fourth physical row
-        {7, 5}, {1, 7}, {1, 4}, {2, 7}, {2, 4}, {3, 7}, {3, 4}, {4, 7},
-        {4, 4}, {5, 7}, {5, 4}, {6, 7}, {6, 4}, {0, 7}, {0, 2}, {0, 3},
-        
-        // Fifth physical row
-        {7, 4}
-    };
-    
 	// The C64 keyboard matrix indexed by row
     u8 kbMatrixRow[8] = { };
 
@@ -133,35 +104,38 @@ private:
 public:
     
     // Checks whether a certain key is being pressed
-    bool isPressed(long nr) const;
-    bool isPressed(u8 row, u8 col) const;
-    bool commodoreIsPressed() const { return isPressed(7,5); }
-    bool ctrlIsPressed() const { return isPressed(7,2); }
-    bool runstopIsPressed() const { return isPressed(7,7); }
-    bool leftShiftIsPressed() const { return isPressed(1,7); }
-    bool rightShiftIsPressed() const { return isPressed(6,4); }
+    // bool isPressed(long nr) const;
+    // bool isPressed(u8 row, u8 col) const;
+    bool isPressed(C64Key key) const;
+    bool commodoreIsPressed() const { return isPressed(C64Key::commodore); }
+    bool ctrlIsPressed() const { return isPressed(C64Key::control); }
+    bool runstopIsPressed() const { return isPressed(C64Key::runStop); }
+    bool leftShiftIsPressed() const { return isPressed(C64Key::shift); }
+    bool rightShiftIsPressed() const { return isPressed(C64Key::rightShift); }
     bool shiftLockIsPressed() const { return shiftLock; }
     bool restoreIsPressed() const;
     
 	// Presses a key
-    void press(long nr);
-	void pressRowCol(u8 row, u8 col);
-    void pressCommodore() { pressRowCol(7,5); }
-    void pressCtrl() { pressRowCol(7,2); }
-	void pressRunstop() { pressRowCol(7,7); }
-    void pressLeftShift() { pressRowCol(1,7); }
-    void pressRightShift() { pressRowCol(6,4); }
+    // void press(long nr);
+	// void pressRowCol(u8 row, u8 col);
+    void press(C64Key key);
+    void pressCommodore() { press(C64Key::commodore); }
+    void pressCtrl() { press(C64Key::control); }
+	void pressRunstop() { press(C64Key::runStop); }
+    void pressLeftShift() { press(C64Key::shift); }
+    void pressRightShift() { press(C64Key::rightShift); }
     void pressShiftLock() { shiftLock = true; }
     void pressRestore();
 
 	// Releases a pressed key
-    void release(long nr);
-	void releaseRowCol(u8 row, u8 col);
-	void releaseCommodore() { releaseRowCol(7,5); }
-    void releaseCtrl() { releaseRowCol(7,2); }
-	void releaseRunstop() { releaseRowCol(7,7); }
-    void releaseLeftShift() { releaseRowCol(1,7); }
-    void releaseRightShift() { releaseRowCol(6,4); }
+    // void release(long nr);
+	// void releaseRowCol(u8 row, u8 col);
+    void release(C64Key key);
+	void releaseCommodore() { release(C64Key::commodore); }
+    void releaseCtrl() { release(C64Key::control); }
+	void releaseRunstop() { release(C64Key::runStop); }
+    void releaseLeftShift() { release(C64Key::shift); }
+    void releaseRightShift() { release(C64Key::rightShift); }
     void releaseShiftLock() { shiftLock = false; }
     void releaseRestore();
     
@@ -169,23 +143,26 @@ public:
     void releaseAll();
     
     // Presses a released key and vice versa
-    void toggle(long nr);
-    void toggle(u8 row, u8 col);
-    void toggleLeftShift() { toggle(1,7); }
-    void toggleRightShift() { toggle(6,4); }
+    // void toggle(long nr);
+    // void toggle(u8 row, u8 col);
+    void toggle(C64Key key);
+    void toggleCommodore() { toggle(C64Key::commodore); }
+    void toggleCtrl() { toggle(C64Key::control); }
+    void toggleRunstop() { toggle(C64Key::runStop); }
+    void toggleLeftShift() { toggle(C64Key::shift); }
+    void toggleRightShift() { toggle(C64Key::rightShift); }
     void toggleShiftLock() { shiftLock = !shiftLock; }
-    void toggleCommodore() { toggle(7,5); }
-    void toggleCtrl() { toggle(7,2); }
-    void toggleRunstop() { toggle(7,7); }
     
 private:
     
-    void _press(long nr);
-    void _pressRowCol(u8 row, u8 col);
+    // void _press(long nr);
+    // void _pressRowCol(u8 row, u8 col);
+    void _press(C64Key key);
     void _pressRestore();
     
-    void _release(long nr);
-    void _releaseRowCol(u8 row, u8 col);
+    // void _release(long nr);
+    // void _releaseRowCol(u8 row, u8 col);
+    void _release(C64Key key);
     void _releaseRestore();
 
     void _releaseAll();
@@ -208,10 +185,12 @@ public:
     
 public:
     
-    void scheduleKeyPress(long nr, i64 delay);
-    void scheduleKeyPress(u8 row, u8 col, i64 delay);
-    void scheduleKeyRelease(long nr, i64 delay);
-    void scheduleKeyRelease(u8 row, u8 col, i64 delay);
+    void scheduleKeyPress(C64Key key, i64 delay);
+    void scheduleKeyPress(char c, i64 delay);
+
+    void scheduleKeyRelease(C64Key key, i64 delay);
+    void scheduleKeyRelease(char c, i64 delay);
+    
     void scheduleKeyReleaseAll(i64 delay);
 
 private:
@@ -220,8 +199,9 @@ private:
     void abortAutoTyping();
     
     // Workhorses for scheduleKeyPress and scheduleKeyRelease
-    void _scheduleKeyAction(KeyAction::Action type, long nr, i64 delay);
-    void _scheduleKeyAction(KeyAction::Action type, u8 row, u8 col, i64 delay);
+    // void _scheduleKeyAction(KeyAction::Action type, long nr, i64 delay);
+    // void _scheduleKeyAction(KeyAction::Action type, u8 row, u8 col, i64 delay);
+    void _scheduleKeyAction(KeyAction::Action type, C64Key key, i64 delay);
 
     
     //

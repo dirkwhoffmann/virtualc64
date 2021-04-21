@@ -10,6 +10,7 @@
 #import "config.h"
 #import "C64Proxy.h"
 #import "C64.h"
+#import "C64Key.h"
 #import "VirtualC64-Swift.h"
 
 //
@@ -530,7 +531,7 @@
 
 - (BOOL)keyIsPressedAtRow:(NSInteger)row col:(NSInteger)col
 {
-    return [self kb]->isPressed(row, col);
+    return [self kb]->isPressed(C64Key(row, col));
 }
 
 - (BOOL)controlIsPressed
@@ -565,7 +566,7 @@
 
 - (void)pressKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
-    [self kb]->pressRowCol(row, col);
+    [self kb]->press(C64Key(row, col));
 }
 
 - (void)pressShiftLock
@@ -580,7 +581,7 @@
 
 - (void)releaseKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
-    [self kb]->releaseRowCol(row, col);
+    [self kb]->release(C64Key(row, col));
 }
 
 - (void)releaseShiftLock
@@ -600,7 +601,7 @@
 
 - (void)toggleKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
-    [self kb]->toggle(row, col);
+    [self kb]->toggle(C64Key(row, col));
 }
 
 - (void)toggleShiftLock
@@ -610,22 +611,22 @@
 
 - (void)scheduleKeyPress:(NSInteger)nr delay:(NSInteger)delay
 {
-    [self kb]->scheduleKeyPress(nr, delay);
+    [self kb]->scheduleKeyPress(C64Key(nr), delay);
 }
 
 - (void)scheduleKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay
 {
-    [self kb]->scheduleKeyPress(row, col, delay);
+    [self kb]->scheduleKeyPress(C64Key(row, col), delay);
 }
 
 - (void)scheduleKeyRelease:(NSInteger)nr delay:(NSInteger)delay
 {
-    [self kb]->scheduleKeyRelease(nr, delay);
+    [self kb]->scheduleKeyRelease(C64Key(nr), delay);
 }
 
 - (void)scheduleKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay
 {
-    [self kb]->scheduleKeyRelease(row, col, delay);
+    [self kb]->scheduleKeyRelease(C64Key(row, col), delay);
 }
 
 - (void)scheduleKeyReleaseAll:(NSInteger)delay

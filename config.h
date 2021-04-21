@@ -75,7 +75,7 @@ static const int FILE_DEBUG      = 0; // Media files (D64,T64,...)
 static const int JOY_DEBUG       = 0; // Joystick
 static const int DRV_DEBUG       = 0; // Floppy drive
 static const int TAP_DEBUG       = 0; // Datasette
-static const int KBD_DEBUG       = 1; // Keyboard
+static const int KBD_DEBUG       = 0; // Keyboard
 static const int PRT_DEBUG       = 0; // Control ports and connected devices
 static const int EXP_DEBUG       = 0; // Expansion port
 

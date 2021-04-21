@@ -122,5 +122,5 @@ struct C64Key {
     // Translating
     //
     
-    std::vector<C64Key> translate(char c);
+    static std::vector<C64Key> translate(char c);
 };
