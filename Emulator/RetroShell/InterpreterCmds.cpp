@@ -143,6 +143,10 @@ Interpreter::registerInstructions()
              "command", "Inserts a floppy disk",
              &RetroShell::exec <Token::drive, Token::insert>, 1);
 
+    root.add({"drive8", "drive9"}, {"", "inspect"},
+             "command", "Displays the component state",
+             &RetroShell::exec <Token::drive, Token::inspect>);
+
     
     //
     // CPU
@@ -382,6 +386,10 @@ Interpreter::registerInstructions()
     root.add({"keyboard", "inspect"},
              "command", "Displays the internal state",
              &RetroShell::exec <Token::keyboard, Token::inspect>);
+
+    root.add({"keyboard", "type"},
+             "command", "Types a command",
+             &RetroShell::exec <Token::keyboard, Token::type>, 1);
 
     
     //

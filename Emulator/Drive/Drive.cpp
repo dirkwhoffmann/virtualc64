@@ -252,11 +252,13 @@ Drive::_dump(dump::Category category, std::ostream& os) const
     }
     
     if (category & dump::State) {
-        
+         
+        os << tab("Has disk");
+        os << bol(hasDisk()) << std::endl;
         os << tab("Bit ready timer");
-        os << bitReadyTimer << std::endl;
+        os << dec(bitReadyTimer) << std::endl;
         os << tab("Head position");
-        os << halftrack << "::" << offset << std::endl;
+        os << dec(halftrack) << "::" << dec(offset) << std::endl;
         os << tab("SYNC");
         os << bol(sync) << std::endl;
         os << tab("Read mode");
@@ -505,6 +507,19 @@ Drive::setModifiedDisk(bool value)
 {
     disk.setModified(value);
     c64.putMessage(value ? MSG_DISK_UNSAVED : MSG_DISK_SAVED, deviceNr);
+}
+
+void
+Drive::insertDisk(const string &path)
+{
+    ErrorCode ec;
+    AnyCollection *file = nullptr;
+    
+    if (!file) file = AnyFile::make <PRGFile> (path, &ec);
+        
+    if (file) {
+        insertDisk(*file);
+    }
 }
 
 void

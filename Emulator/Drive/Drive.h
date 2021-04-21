@@ -346,6 +346,7 @@ public:
      * the currently inserted disk halfway out before it is removed completely,
      * and pushing the new disk halfway in before it is inserted completely.
      */
+    void insertDisk(const string &path);
     void insertDisk(Disk *otherDisk);
     void insertNewDisk(DOSType fstype);
     void insertNewDisk(DOSType fstype, PETName<16> name);

@@ -179,7 +179,14 @@ RetroShell::exec <Token::drive, Token::insert> (Arguments& argv, long param)
     if (!util::fileExists(path)) throw ConfigFileNotFoundError(path);
 
     auto &drive = param ? c64.drive9 : c64.drive8;
-    assert(false); // TODO
+    drive.insertDisk(path);
+}
+
+template <> void
+RetroShell::exec <Token::drive, Token::inspect> (Arguments& argv, long param)
+{
+    auto &drive = param ? c64.drive9 : c64.drive8;
+    dump(drive, dump::State);
 }
 
 
@@ -443,6 +450,14 @@ RetroShell::exec <Token::keyboard, Token::inspect> (Arguments& argv, long param)
     dump(c64.keyboard, dump::State);
 }
 
+template <> void
+RetroShell::exec <Token::keyboard, Token::type> (Arguments& argv, long param)
+{
+    auto command = argv.front();
+    printf("Typing command: %s\n", command.c_str());
+
+    // TODO
+}
 
 //
 // Joystick
