@@ -29,15 +29,20 @@ Interpreter::split(const string& userInput)
     
     for (usize i = 0; i < userInput.size(); i++) {
 
+        char c = userInput[i];
+        
         // Check for escape mode
-        if (userInput[i] == '\\') { esc = true; continue; }
+        if (c == '\\') { esc = true; continue; }
             
         // Switch between string mode and non-string mode if '"' is detected
-        if (userInput[i] == '"' && !esc) { str = !str; continue; }
+        if (c == '"' && !esc) { str = !str; continue; }
+        
+        // Check for special characters in escape mode
+        if (esc && c == 'n') c = '\n';
         
         // Process character
-        if (userInput[i] != ' ' || str) {
-            token += userInput[i];
+        if (c != ' ' || str) {
+            token += c;
         } else {
             if (!token.empty()) result.push_back(token);
             token = "";
