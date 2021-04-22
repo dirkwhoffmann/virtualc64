@@ -104,8 +104,6 @@ private:
 public:
     
     // Checks whether a certain key is being pressed
-    // bool isPressed(long nr) const;
-    // bool isPressed(u8 row, u8 col) const;
     bool isPressed(C64Key key) const;
     bool commodoreIsPressed() const { return isPressed(C64Key::commodore); }
     bool ctrlIsPressed() const { return isPressed(C64Key::control); }
@@ -116,8 +114,6 @@ public:
     bool restoreIsPressed() const;
     
 	// Presses a key
-    // void press(long nr);
-	// void pressRowCol(u8 row, u8 col);
     void press(C64Key key);
     void pressCommodore() { press(C64Key::commodore); }
     void pressCtrl() { press(C64Key::control); }
@@ -128,8 +124,6 @@ public:
     void pressRestore();
 
 	// Releases a pressed key
-    // void release(long nr);
-	// void releaseRowCol(u8 row, u8 col);
     void release(C64Key key);
 	void releaseCommodore() { release(C64Key::commodore); }
     void releaseCtrl() { release(C64Key::control); }
@@ -143,8 +137,6 @@ public:
     void releaseAll();
     
     // Presses a released key and vice versa
-    // void toggle(long nr);
-    // void toggle(u8 row, u8 col);
     void toggle(C64Key key);
     void toggleCommodore() { toggle(C64Key::commodore); }
     void toggleCtrl() { toggle(C64Key::control); }
@@ -155,13 +147,9 @@ public:
     
 private:
     
-    // void _press(long nr);
-    // void _pressRowCol(u8 row, u8 col);
     void _press(C64Key key);
     void _pressRestore();
     
-    // void _release(long nr);
-    // void _releaseRowCol(u8 row, u8 col);
     void _release(C64Key key);
     void _releaseRestore();
 
@@ -184,6 +172,8 @@ public:
     //
     
 public:
+    
+    void autoType(const string &text);
     
     void scheduleKeyPress(C64Key key, i64 delay);
     void scheduleKeyPress(char c, i64 delay);

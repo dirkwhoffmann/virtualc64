@@ -231,6 +231,16 @@ Keyboard::toggle(C64Key key)
 }
 
 void
+Keyboard::autoType(const string &text)
+{    
+    for (char const &c: text) {
+                
+        scheduleKeyPress(c, 1);
+        scheduleKeyRelease(c, 1);
+    }
+}
+
+void
 Keyboard::scheduleKeyPress(C64Key key, i64 delay)
 {
     synchronized { _scheduleKeyAction(KeyAction::Action::press, key, delay); }

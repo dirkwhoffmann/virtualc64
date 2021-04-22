@@ -24,12 +24,16 @@ Interpreter::split(const string& userInput)
     Arguments result;
 
     string token;
-    bool str = false;
+    bool str = false; // String mode
+    bool esc = false; // Escape mode
     
     for (usize i = 0; i < userInput.size(); i++) {
 
+        // Check for escape mode
+        if (userInput[i] == '\\') { esc = true; continue; }
+            
         // Switch between string mode and non-string mode if '"' is detected
-        if (userInput[i] == '"') { str = !str; continue; }
+        if (userInput[i] == '"' && !esc) { str = !str; continue; }
         
         // Process character
         if (userInput[i] != ' ' || str) {
@@ -38,6 +42,7 @@ Interpreter::split(const string& userInput)
             if (!token.empty()) result.push_back(token);
             token = "";
         }
+        esc = false;
     }
     if (!token.empty()) result.push_back(token);
     

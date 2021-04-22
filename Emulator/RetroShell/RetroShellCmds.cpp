@@ -453,10 +453,7 @@ RetroShell::exec <Token::keyboard, Token::inspect> (Arguments& argv, long param)
 template <> void
 RetroShell::exec <Token::keyboard, Token::type> (Arguments& argv, long param)
 {
-    auto command = argv.front();
-    printf("Typing command: %s\n", command.c_str());
-
-    // TODO
+    keyboard.autoType(argv.front());
 }
 
 //
