@@ -2103,6 +2103,11 @@
     [self c64]->resume();
 }
 
+- (void)continueScript
+{
+    [self c64]->retroShell.continueScript();
+}
+
 - (void)requestAutoSnapshot
 {
     [self c64]->requestAutoSnapshot();

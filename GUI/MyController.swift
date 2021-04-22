@@ -592,10 +592,12 @@ extension MyController {
             refreshStatusBar()
 
         case .RESET:
-            // track("RESET")
             mydocument.deleteBootDiskID()
             mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
             inspector?.fullRefresh()
+
+        case .CYCLE_LIMIT:
+            renderer.console.continueScript()
 
         case .SHUTDOWN:
             shutDown()

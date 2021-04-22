@@ -31,6 +31,7 @@ enum_long(MSG)
     MSG_RUN,
     MSG_PAUSE,
     MSG_RESET,
+    MSG_CYCLE_LIMIT,
     MSG_SHUTDOWN,
     MSG_WARP_ON,
     MSG_WARP_OFF,

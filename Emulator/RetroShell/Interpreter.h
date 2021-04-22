@@ -28,7 +28,7 @@ enum class Token
     // Commands
     about, audiate, autosync, clear, config, connect, disconnect, dsksync,
     easteregg, eject, close, init, insert, inspect, list, load, lock, on, off,
-    pause, power, reset, run, set, source, type,
+    pause, power, reset, run, set, source, type, wait,
     
     // Categories
     checksums, devices, events, registers, state,
@@ -51,7 +51,7 @@ struct TooManyArgumentsError : public util::ParseError {
 };
 
 struct ScriptInterruption: util::Exception {
-
+    using Exception::Exception;
 };
 
 class Interpreter: C64Component

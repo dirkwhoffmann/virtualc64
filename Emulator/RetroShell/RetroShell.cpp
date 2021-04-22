@@ -307,7 +307,7 @@ RetroShell::exec(const string &command)
     } catch (std::exception &err) {
         
         describe(err);
-        throw err;
+        throw;
     }
 }
 
@@ -316,35 +316,37 @@ RetroShell::execScript(const string &name)
 {
     // Start the script from the beginning
     scriptName = name;
-    scriptLine = 1;
+    scriptLine = 0;
     
     // Execute the script
-    try {
-        continueScript();
-        
+    continueScript();
     /*
     } catch (ScriptInterruption &e) {
-        return;
-    */
+        *this << "execScript: Interrupted in line " << scriptLine << '\n';
     } catch (std::exception &e) {
         *this << "Aborted in line " << scriptLine << '\n';
     }
+    */
 }
 
 void
 RetroShell::continueScript()
 {
+    printf("Continue script: %s %zd\n", scriptName.c_str(), scriptLine);
+    
     // Open stream
     std::ifstream stream(scriptName);
     if (!stream.is_open()) throw ConfigFileReadError(scriptName);
 
-    isize line = 1;
+    printf("Script is open\n");
+
+    isize line = 0;
     string command;
     
     while(std::getline(stream, command)) {
 
         // Skip the line if it has been processed before
-        if (line < scriptLine) continue;
+        if (++line <= scriptLine) continue;
         scriptLine = line;
         
         // Print the command
@@ -352,9 +354,17 @@ RetroShell::continueScript()
         printf("Line %zd: %s\n", line, command.c_str());
         
         // Execute the command
-        exec(command);
-        
-        line++;
+        try {
+            exec(command);
+        } catch (ScriptInterruption &e) {
+            printf("Interrupted in line %zd\n", scriptLine);
+            *this << "Interrupted in line " << scriptLine << '\n';
+            break;
+        } catch (std::exception &e) {
+            printf("Aborted in line %zd\n", scriptLine);
+            *this << "Aborted in line " << scriptLine << '\n';
+            break;
+        }
     }
 }
 

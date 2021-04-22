@@ -43,7 +43,23 @@ RetroShell::exec <Token::easteregg> (Arguments& argv, long param)
 template <> void
 RetroShell::exec <Token::source> (Arguments &argv, long param)
 {
-    execScript(argv.front());
+    auto path = argv.front();
+    if (!util::fileExists(path)) throw ConfigFileNotFoundError(path);
+
+    execScript(path);
+}
+
+template <> void
+RetroShell::exec <Token::wait> (Arguments &argv, long param)
+{
+    auto seconds = util::parseNum(argv.front());
+
+    Cycle limit = cpu.cycle + seconds * vic.getFrequency();
+    c64.configure(OPT_CYCLE_LIMIT, limit);
+    *this << "Setting cycle limit to " << (isize)limit << '\n';
+    printf("Setting cycle limit to %lld\n", limit);
+    
+    throw ScriptInterruption(scriptName, scriptLine);
 }
 
 

@@ -37,7 +37,10 @@ Interpreter::registerInstructions()
              "command", "Processes a command script",
              &RetroShell::exec <Token::source>, 1);
     
-    
+    root.add({"wait"},
+             "command", "Pauses the execution of a command script",
+             &RetroShell::exec <Token::wait>, 2);
+
     //
     // C64
     //

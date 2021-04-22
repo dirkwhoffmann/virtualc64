@@ -140,4 +140,10 @@ class Console: Layer {
     func keyUp(with event: NSEvent) {
         
     }
+    
+    func continueScript() {
+        
+        c64.continueScript()
+        isDirty = true
+    }
 }
