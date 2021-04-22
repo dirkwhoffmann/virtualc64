@@ -456,6 +456,19 @@ RetroShell::exec <Token::keyboard, Token::type> (Arguments& argv, long param)
     keyboard.autoType(argv.front());
 }
 
+template <> void
+RetroShell::exec <Token::keyboard, Token::type, Token::load> (Arguments& argv, long param)
+{
+    keyboard.autoType("load \"*\",8,1\n");
+}
+
+template <> void
+RetroShell::exec <Token::keyboard, Token::type, Token::run> (Arguments& argv, long param)
+{
+    keyboard.autoType("run\n");
+}
+
+
 //
 // Joystick
 //

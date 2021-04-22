@@ -391,6 +391,14 @@ Interpreter::registerInstructions()
              "command", "Types a command",
              &RetroShell::exec <Token::keyboard, Token::type>, 1);
 
+    root.add({"keyboard", "type", "load"},
+             "command", "Types LOAD \"*\",8,1",
+             &RetroShell::exec <Token::keyboard, Token::type, Token::load>);
+
+    root.add({"keyboard", "type", "run"},
+             "command", "Types RUN",
+             &RetroShell::exec <Token::keyboard, Token::type, Token::run>);
+
     
     //
     // Joystick
