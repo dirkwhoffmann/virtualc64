@@ -314,19 +314,14 @@ RetroShell::exec(const string &command)
 void
 RetroShell::execScript(const string &name)
 {
+    printf("execScript(%s)\n", name.c_str());
+    
     // Start the script from the beginning
     scriptName = name;
     scriptLine = 0;
     
     // Execute the script
     continueScript();
-    /*
-    } catch (ScriptInterruption &e) {
-        *this << "execScript: Interrupted in line " << scriptLine << '\n';
-    } catch (std::exception &e) {
-        *this << "Aborted in line " << scriptLine << '\n';
-    }
-    */
 }
 
 void

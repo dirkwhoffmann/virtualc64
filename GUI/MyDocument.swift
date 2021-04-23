@@ -79,6 +79,7 @@ class MyDocument: NSDocument {
         switch url.pathExtension.uppercased() {
             
         case "VC64": return .V64
+        case "INI":  return .SCRIPT
         case "CRT":  return .CRT
         case "D64":  return .D64
         case "T64":  return .T64
@@ -93,7 +94,7 @@ class MyDocument: NSDocument {
     func createAttachment(from url: URL) throws {
         
         let types: [FileType] =
-            [ .V64, .CRT, .T64, .P00, .PRG, .FOLDER, .D64, .G64, .TAP ]
+            [ .V64, .SCRIPT, .CRT, .T64, .P00, .PRG, .FOLDER, .D64, .G64, .TAP ]
         
         try createAttachment(from: url, allowedTypes: types)
     }
@@ -161,6 +162,9 @@ class MyDocument: NSDocument {
         case .V64:
             try result = Proxy.make(buffer: buffer, length: length) as SnapshotProxy
             
+        case .SCRIPT:
+            try? result = Proxy.make(buffer: buffer, length: length) as ScriptProxy
+
         case .CRT:
             try result = Proxy.make(buffer: buffer, length: length) as CRTFileProxy
             
@@ -228,6 +232,12 @@ class MyDocument: NSDocument {
         // If the attachment is a snapshot, flash it and return
         if let proxy = attachment as? SnapshotProxy {
             c64.flash(proxy)
+            return true
+        }
+
+        // If the attachment is a script, execute it
+        if let proxy = attachment as? ScriptProxy {
+            parent.renderer.console.runScript(script: proxy)
             return true
         }
 

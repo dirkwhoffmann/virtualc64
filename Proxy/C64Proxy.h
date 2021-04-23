@@ -59,6 +59,7 @@
 @class PRGFileProxy;
 @class RetroShellProxy;
 @class RomFileProxy;
+@class ScriptProxy;
 @class SIDProxy;
 @class SnapshotProxy;
 @class T64FileProxy;
@@ -665,6 +666,19 @@
 
 @property (readonly, strong) NSImage *previewImage;
 @property (readonly) time_t timeStamp;
+
+@end
+
+//
+// Script proxy
+//
+
+@interface ScriptProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> { }
+
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
+ 
+- (void)execute:(C64Proxy *)proxy;
 
 @end
 

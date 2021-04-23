@@ -141,6 +141,13 @@ class Console: Layer {
         
     }
     
+    func runScript(script: ScriptProxy) {
+        
+        open()
+        script.execute(c64)
+        isDirty = true
+    }
+    
     func continueScript() {
         
         c64.continueScript()

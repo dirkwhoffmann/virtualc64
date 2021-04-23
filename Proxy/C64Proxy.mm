@@ -12,6 +12,7 @@
 #import "C64.h"
 #import "C64Key.h"
 #import "VirtualC64-Swift.h"
+#import "Script.h"
 
 //
 // Base Proxy
@@ -1543,7 +1544,7 @@
 @end
 
 //
-// Snapshot
+// Snapshot proxy
 //
 
 @implementation SnapshotProxy
@@ -1609,6 +1610,41 @@
 - (time_t)timeStamp
 {
     return [self snapshot]->timeStamp();
+}
+
+@end
+
+//
+// Script proxy
+//
+
+@implementation ScriptProxy
+
+- (Script *)script
+{
+    return (Script *)obj;
+}
+
++ (instancetype)make:(Script *)file
+{
+    return file ? [[self alloc] initWith:file] : nil;
+}
+
++ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
+{
+    return [self make: AnyFile::make <Script> ([path fileSystemRepresentation], err)];
+}
+
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
+{
+    return [self make: AnyFile::make <Script> ((const u8 *)buf, len, err)];
+}
+
+- (void)execute:(C64Proxy *)proxy
+{
+    C64 *c64 = (C64 *)proxy->obj;
+    
+    [self script]->execute(*c64);
 }
 
 @end
