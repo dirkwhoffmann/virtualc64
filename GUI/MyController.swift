@@ -597,8 +597,13 @@ extension MyController {
             inspector?.fullRefresh()
 
         case .CYCLE_LIMIT:
-            renderer.console.continueScript()
+            c64.continueScript()
 
+        case .SCRIPT_PAUSE,
+             .SCRIPT_CONTINUE,
+             .SCRIPT_DONE:
+            renderer.console.isDirty = true
+            
         case .SHUTDOWN:
             shutDown()
 

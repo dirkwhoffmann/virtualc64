@@ -147,10 +147,4 @@ class Console: Layer {
         script.execute(c64)
         isDirty = true
     }
-    
-    func continueScript() {
-        
-        c64.continueScript()
-        isDirty = true
-    }
 }

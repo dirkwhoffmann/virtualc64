@@ -11,6 +11,9 @@
 
 #include "C64Component.h"
 #include "Interpreter.h"
+#include "IO.h"
+#include <sstream>
+#include <iostream>
 
 class RetroShell : public C64Component {
 
@@ -49,10 +52,10 @@ class RetroShell : public C64Component {
     // Script processing
     //
     
-    // The name of the currently executed script ("" if none)
-    string scriptName;
+    // The currently processed script
+    std::stringstream script;
     
-    // The number of the script line to execute next (first line = 1)
+    // The script line counter (first line = 1)
     isize scriptLine = 0;
     
     
@@ -157,8 +160,9 @@ public:
     void exec(const string &command) throws;
     
     // Executes a user script
-    void execScript(const string &name) throws;
-    
+    void execScript(std::ifstream &fs) throws;
+    void execScript(const string &contents) throws;
+
     // Continues a previously interrupted script
     void continueScript() throws;
     

@@ -34,6 +34,6 @@ Script::isCompatibleStream(std::istream &stream)
 void
 Script::execute(class C64 &c64)
 {
-    // string s((char *)data, size);
-    try { c64.retroShell.execScript(path); } catch (util::Exception &e) { }
+    string s((char *)data, size);
+    try { c64.retroShell.execScript(s); } catch (util::Exception &e) { }
 }

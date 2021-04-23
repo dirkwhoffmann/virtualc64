@@ -32,6 +32,9 @@ enum_long(MSG)
     MSG_PAUSE,
     MSG_RESET,
     MSG_CYCLE_LIMIT,
+    MSG_SCRIPT_PAUSE,
+    MSG_SCRIPT_CONTINUE,
+    MSG_SCRIPT_DONE,
     MSG_SHUTDOWN,
     MSG_WARP_ON,
     MSG_WARP_OFF,
@@ -135,6 +138,10 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_RUN:                  return "RUN";
             case MSG_PAUSE:                return "PAUSE";
             case MSG_RESET:                return "RESET";
+            case MSG_CYCLE_LIMIT:          return "CYCLE_LIMIT";
+            case MSG_SCRIPT_PAUSE:         return "SCRIPT_PAUSE";
+            case MSG_SCRIPT_CONTINUE:      return "SCRIPT_CONTINUE";
+            case MSG_SCRIPT_DONE:          return "SCRIPT_DONE";
             case MSG_SHUTDOWN:             return "SHUTDOWN";
             case MSG_WARP_ON:              return "WARP_ON";
             case MSG_WARP_OFF:             return "WARP_OFF";

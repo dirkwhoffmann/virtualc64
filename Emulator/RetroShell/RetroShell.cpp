@@ -312,55 +312,60 @@ RetroShell::exec(const string &command)
 }
 
 void
-RetroShell::execScript(const string &name)
+RetroShell::execScript(std::ifstream &fs)
 {
-    printf("execScript(%s)\n", name.c_str());
-    
-    // Start the script from the beginning
-    scriptName = name;
-    scriptLine = 0;
-    
-    // Execute the script
+    script.clear();
+    script << fs.rdbuf();
+    scriptLine = 1;
+    continueScript();
+}
+
+void
+RetroShell::execScript(const string &contents)
+{
+    script.clear();
+    script << contents;
+    scriptLine = 1;
     continueScript();
 }
 
 void
 RetroShell::continueScript()
 {
-    printf("Continue script: %s %zd\n", scriptName.c_str(), scriptLine);
+    printf("continueScript()\n");
+    messageQueue.put(MSG_SCRIPT_CONTINUE, scriptLine);
     
-    // Open stream
-    std::ifstream stream(scriptName);
-    if (!stream.is_open()) throw ConfigFileReadError(scriptName);
-
-    printf("Script is open\n");
-
-    isize line = 0;
     string command;
-    
-    while(std::getline(stream, command)) {
-
-        // Skip the line if it has been processed before
-        if (++line <= scriptLine) continue;
-        scriptLine = line;
-        
+    while(std::getline(script, command)) {
+                
         // Print the command
         *this << command << '\n';
-        printf("Line %zd: %s\n", line, command.c_str());
+        printf("Line %zd: %s\n", scriptLine, command.c_str());
         
         // Execute the command
         try {
             exec(command);
+            
         } catch (ScriptInterruption &e) {
+            
             printf("Interrupted in line %zd\n", scriptLine);
-            *this << "Interrupted in line " << scriptLine << '\n';
-            break;
+            messageQueue.put(MSG_SCRIPT_PAUSE, scriptLine);
+            return;
+        
         } catch (std::exception &e) {
+            
             printf("Aborted in line %zd\n", scriptLine);
             *this << "Aborted in line " << scriptLine << '\n';
-            break;
+            messageQueue.put(MSG_SCRIPT_PAUSE, scriptLine);
+            return;
         }
+
+        scriptLine++;
     }
+    
+    printPrompt();
+    printf("MSG_SCRIPT_DONE\n");
+    messageQueue.put(MSG_SCRIPT_DONE, scriptLine);
 }
 
 void
