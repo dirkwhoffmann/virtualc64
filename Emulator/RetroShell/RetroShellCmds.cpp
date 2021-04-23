@@ -62,6 +62,41 @@ RetroShell::exec <Token::wait> (Arguments &argv, long param)
     throw ScriptInterruption(scriptName, scriptLine);
 }
 
+template <> void
+RetroShell::exec <Token::screenshot> (Arguments &argv, long param)
+{
+    std::ofstream file;
+    std::vector<string> vec(argv.begin(), argv.end());
+
+    auto path = vec[0];
+    auto x1 = util::parseNum(vec[1]);
+    auto y1 = util::parseNum(vec[2]);
+    auto x2 = util::parseNum(vec[3]);
+    auto y2 = util::parseNum(vec[4]);
+    
+    // Assemble the target file names
+    string rawFile = "/tmp/" + path + ".raw";
+    string tiffFile = "/tmp/" + path + ".tiff";
+
+    // Open an output stream
+    file.open(rawFile.c_str());
+    
+    // Dump texture
+    vic.dumpTexture(file, x1, y1, x2, y2);
+    file.close();
+    
+    // Convert raw data into a TIFF file
+    string cmd = "/usr/local/bin/raw2tiff";
+    cmd += " -p rgb -b 3";
+    cmd += " -w " + std::to_string(x2 - x1);
+    cmd += " -l " + std::to_string(y2 - y1);
+    cmd += " " + rawFile + " " + tiffFile;
+    
+    msg("Executing %s\n", cmd.c_str());
+    system(cmd.c_str());
+    exit(0);
+}
+
 
 //
 // C64

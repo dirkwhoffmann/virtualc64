@@ -28,7 +28,7 @@ enum class Token
     // Commands
     about, audiate, autosync, clear, config, connect, disconnect, dsksync,
     easteregg, eject, close, init, insert, inspect, list, load, lock, on, off,
-    pause, power, reset, run, set, source, type, wait,
+    pause, power, reset, run, screenshot, set, source, type, wait,
     
     // Categories
     checksums, devices, events, registers, state,

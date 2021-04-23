@@ -41,6 +41,11 @@ Interpreter::registerInstructions()
              "command", "Pauses the execution of a command script",
              &RetroShell::exec <Token::wait>, 2);
 
+    root.add({"screenshot"},
+             "command", "Exits the emulator after taking a screenshot",
+             &RetroShell::exec <Token::screenshot>, 5);
+
+    
     //
     // C64
     //

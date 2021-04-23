@@ -599,7 +599,12 @@ private:
     
     void _inspect() override;
     void _dump(dump::Category category, std::ostream& os) const override;
+
+public:
     
+    void dumpTexture(std::ostream& os) const;
+    void dumpTexture(std::ostream& os, isize x1, isize y1, isize x2, isize y2) const;
+
     
     //
     // Serializing

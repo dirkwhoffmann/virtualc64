@@ -559,6 +559,36 @@ VICII::_dump(dump::Category category, std::ostream& os) const
     }
 }
 
+void
+VICII::dumpTexture(std::ostream& os) const
+{
+    isize x1 = FIRST_VISIBLE_PIXEL;
+    isize y1 = FIRST_VISIBLE_LINE;
+    isize x2 = x1 + VISIBLE_PIXELS;
+    isize y2 = TEX_HEIGHT;
+    
+    dumpTexture(os, x1, y1, x2, y2);
+}
+
+void
+VICII::dumpTexture(std::ostream& os, isize x1, isize y1, isize x2, isize y2) const
+{
+    msg("dumpTexture(%zd,%zd,%zd,%zd)\n", x1, y1, x2, y2);
+    
+    auto buffer = (u32 *)stableEmuTexture();
+
+    for (isize y = y1; y < y2; y++) {
+        
+        for (isize x = x1; x < x2; x++) {
+            
+            char *cptr = (char *)(buffer + y * TEX_WIDTH + x);
+            os.write(cptr + 0, 1);
+            os.write(cptr + 1, 1);
+            os.write(cptr + 2, 1);
+        }
+    }
+}
+
 SpriteInfo
 VICII::getSpriteInfo(int nr)
 {
