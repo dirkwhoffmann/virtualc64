@@ -55,7 +55,7 @@ template <> void
 RetroShell::exec <Token::wait> (Arguments &argv, long param)
 {
     auto seconds = util::parseNum(argv.front());
-
+    
     Cycle limit = cpu.cycle + seconds * vic.getFrequency();
     c64.retroShell.wakeUp = limit;
     

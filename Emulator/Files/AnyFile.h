@@ -110,7 +110,9 @@ public:
         
         std::ifstream stream(path);
         if (!stream.is_open()) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
-        return make <T> (stream);
+        auto file = make <T> (stream);
+        file->path = path;
+        return file;
     }
 
     template <class T> static T *make(const string &path, ErrorCode *err)
