@@ -46,7 +46,12 @@ class RetroShell : public C64Component {
     // Indicates if TAB was the most recently pressed key
     bool tabPressed = false;
     
+    // DEPRECATED
     bool isDirty = false;
+    
+    // Wake up cycle for interrupted scripts
+    Cycle wakeUp = INT64_MAX;
+    
     
     //
     // Script processing
@@ -189,4 +194,13 @@ public:
 private:
     
     void dump(HardwareComponent &component, dump::Category category);
+    
+    
+    //
+    // Performing periodic events
+    //
+    
+public:
+    
+    void vsyncHandler();
 };

@@ -1142,6 +1142,7 @@ C64::endFrame()
     keyboard.vsyncHandler();
     drive8.vsyncHandler();
     drive9.vsyncHandler();
+    retroShell.vsyncHandler();
     
     // Check if the run loop is requested to stop
     if (stopFlag) { stopFlag = false; signalStop(); }

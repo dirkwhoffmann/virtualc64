@@ -319,6 +319,8 @@ RetroShell::exec(const string &command)
 void
 RetroShell::execScript(std::ifstream &fs)
 {
+    printf("execScript(ifstream)\n");
+    
     script.clear();
     script << fs.rdbuf();
     scriptLine = 1;
@@ -329,9 +331,12 @@ RetroShell::execScript(std::ifstream &fs)
 void
 RetroShell::execScript(const string &contents)
 {
+    printf("execScript(string)\n");
+
     script.clear();
     script << contents;
     scriptLine = 1;
+    printPrompt();
     continueScript();
 }
 
@@ -339,7 +344,6 @@ void
 RetroShell::continueScript()
 {
     printf("continueScript()\n");
-    messageQueue.put(MSG_SCRIPT_CONTINUE, scriptLine);
     
     string command;
     while(std::getline(script, command)) {
@@ -364,7 +368,7 @@ RetroShell::continueScript()
             
             printf("Aborted in line %zd\n", scriptLine);
             *this << "Aborted in line " << scriptLine << '\n';
-            messageQueue.put(MSG_SCRIPT_PAUSE, scriptLine);
+            messageQueue.put(MSG_SCRIPT_ABORT, scriptLine);
             printPrompt();
             return;
         }
@@ -463,4 +467,15 @@ RetroShell::dump(HardwareComponent &component, dump::Category category)
     c64.resume();
     
     while(std::getline(ss, line)) *this << line << '\n';
+}
+
+void
+RetroShell::vsyncHandler()
+{
+    if (cpu.cycle >= (u64)wakeUp) {
+        
+        // Ask the external thread (GUI) to continue the script
+        messageQueue.put(MSG_SCRIPT_WAKEUP);
+        wakeUp = INT64_MAX;
+    }
 }

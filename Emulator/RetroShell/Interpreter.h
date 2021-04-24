@@ -26,20 +26,22 @@ enum class Token
     mouse, resid, sid, vicii,
 
     // Commands
-    about, audiate, autosync, clear, config, connect, disconnect, dsksync,
-    easteregg, eject, close, init, insert, inspect, list, load, lock, on, off,
-    pause, power, reset, run, screenshot, set, source, type, wait,
+    about, audiate, autosync, clear, close, config, connect, debugcrt,
+    disconnect, dsksync, easteregg, eject, flash, init, insert, inspect, list,
+    load, lock, on, off, pause, power, reset, run, screenshot, set, source,
+    take, type, wait,
     
     // Categories
     checksums, devices, events, registers, state,
     
     // Keys
-    accuracy, autofire, bankmap, brightness, bullets, chip, contrast, defaultbb,
-    defaultfs, delay, device, engine, filter, graydotbug, joystick, keyset,
-    left, model, palette, pan, poll, raminitpattern, revision, right, rom,
-    sampling, saturation, sbcollisions, searchpath, shakedetector, slow,
-    slowramdelay, slowrammirror, speed, sscollisions, step, tod, timeout,
-    timerbbug, unmappingtype, velocity, volume
+    accuracy, autofire, bankmap, brightness, bullets, chip, contrast, cutout,
+    defaultbb, defaultfs, delay, device, engine, filename, filter, frame,
+    graydotbug, joystick, keyset, left, model, palette, pan, poll,
+    raminitpattern, revision, right, rom, sampling, saturation, sbcollisions,
+    searchpath, shakedetector, slow, slowramdelay, slowrammirror, speed,
+    sscollisions, step, tod, timeout, timerbbug, unmappingtype, velocity,
+    volume
 };
 
 struct TooFewArgumentsError : public util::ParseError {

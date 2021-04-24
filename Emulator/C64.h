@@ -44,6 +44,7 @@
 #include "CIA.h"
 #include "CPU.h"
 #include "Oscillator.h"
+#include "RegressionTester.h"
 #include "RetroShell.h"
 
 // Cartridges
@@ -92,12 +93,14 @@ public:
     // Keyboard
     Keyboard keyboard = Keyboard(*this);
     
-    // Ports
+    // Control ports
     ControlPort port1 = ControlPort(*this, PORT_ONE);
     ControlPort port2 = ControlPort(*this, PORT_TWO);
+    
+    // Expansion port (cartridge port)
     ExpansionPort expansionport = ExpansionPort(*this);
     
-    // Bus connecting the VC1541 floppy drives
+    // IEC bus (connects the VC1541 floppy drives)
     IEC iec = IEC(*this);
     
     // Floppy drives
@@ -110,11 +113,12 @@ public:
     // Command console
     RetroShell retroShell = RetroShell(*this);
     
-    /* Communication channel to the GUI. The GUI registers a listener and a
-     * callback function to retrieve messages.
-     */
+    // Communication channel to the GUI
     MsgQueue msgQueue = MsgQueue(*this);
 
+    // Regression test manager
+    RegressionTester regressionTester;
+    
     
     //
     // Frame, rasterline, and rasterline cycle information

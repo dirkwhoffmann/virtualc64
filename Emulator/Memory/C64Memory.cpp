@@ -571,12 +571,8 @@ C64Memory::pokeIO(u16 addr, u8 value)
             
             sid.poke(addr, value);
 
-            // Check the exit register (option -debugcart)
-            if (addr == 0xD7FF && config.debugcart) {
-                msg("DEBUGCART: Terminating with exit code %x\n", value);
-                exit(value);
-            }
-
+            // Check the error register (debugcart feature)
+            if (addr == 0xD7FF) c64.regressionTester.debugcart(value);
             return;
             
         case 0x8: // Color RAM

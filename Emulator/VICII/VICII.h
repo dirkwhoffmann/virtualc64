@@ -541,11 +541,22 @@ private:
     
     
     //
-    // DMA debugger
+    // Debugging
     //
     
     // Lookup table for DMA debugging colors
     u32 debugColor[6][4];
+
+public:
+    
+    // Filename used by dumpTexture()
+    string dumpTexturePath = "texture";
+    
+    // Pixel area used by dumpTexture()
+    isize x1 = 104;
+    isize y1 = 16;
+    isize x2 = 488;
+    isize y2 = 290;
 
     
     //
@@ -602,6 +613,7 @@ private:
 
 public:
     
+    void dumpTexture() const;
     void dumpTexture(std::ostream& os) const;
     void dumpTexture(std::ostream& os, isize x1, isize y1, isize x2, isize y2) const;
 

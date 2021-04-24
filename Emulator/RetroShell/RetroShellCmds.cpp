@@ -57,9 +57,47 @@ RetroShell::exec <Token::wait> (Arguments &argv, long param)
     auto seconds = util::parseNum(argv.front());
 
     Cycle limit = cpu.cycle + seconds * vic.getFrequency();
-    c64.configure(OPT_CYCLE_LIMIT, limit);
+    c64.retroShell.wakeUp = limit;
     
     throw ScriptInterruption("");
+}
+
+template <> void
+RetroShell::exec <Token::debugcrt> (Arguments &argv, long param)
+{
+    c64.configure(OPT_DEBUGCART, true);
+}
+
+//
+// Screenshots (regression testing)
+//
+
+template <> void
+RetroShell::exec <Token::screenshot, Token::set, Token::filename> (Arguments &argv, long param)
+{
+    c64.regressionTester.dumpTexturePath = argv.front();
+}
+
+template <> void
+RetroShell::exec <Token::screenshot, Token::set, Token::cutout> (Arguments &argv, long param)
+{
+    std::vector<string> vec(argv.begin(), argv.end());
+    
+    isize x1 = util::parseNum(vec[0]);
+    isize y1 = util::parseNum(vec[1]);
+    isize x2 = util::parseNum(vec[2]);
+    isize y2 = util::parseNum(vec[3]);
+
+    c64.regressionTester.x1 = x1;
+    c64.regressionTester.y1 = y1;
+    c64.regressionTester.x2 = x2;
+    c64.regressionTester.y2 = y2;
+}
+    
+template <> void
+RetroShell::exec <Token::screenshot, Token::take> (Arguments &argv, long param)
+{
+    c64.regressionTester.dumpTexture(c64, argv.front());
 }
 
 template <> void
@@ -94,7 +132,7 @@ RetroShell::exec <Token::screenshot> (Arguments &argv, long param)
     
     msg("Executing %s\n", cmd.c_str());
     system(cmd.c_str());
-    // exit(0);
+    exit(0);
 }
 
 
@@ -173,15 +211,26 @@ RetroShell::exec <Token::memory, Token::config> (Arguments& argv, long param)
 }
 
 template <> void
+RetroShell::exec <Token::memory, Token::set, Token::raminitpattern> (Arguments& argv, long param)
+{
+    c64.configure(OPT_RAM_PATTERN, util::parseEnum <RamPatternEnum> (argv.front()));
+}
+
+template <> void
 RetroShell::exec <Token::memory, Token::load> (Arguments& argv, long param)
 {
     c64.loadRom(argv.front());
 }
 
 template <> void
-RetroShell::exec <Token::memory, Token::set, Token::raminitpattern> (Arguments& argv, long param)
+RetroShell::exec <Token::memory, Token::flash> (Arguments& argv, long param)
 {
-    c64.configure(OPT_RAM_PATTERN, util::parseEnum <RamPatternEnum> (argv.front()));
+    auto path = argv.front();
+    if (!util::fileExists(path)) throw ConfigFileNotFoundError(path);
+
+    PRGFile *file = AnyFile::make <PRGFile> (argv.front());
+    c64.flash(file, 0);
+    delete file;
 }
 
 template <> void

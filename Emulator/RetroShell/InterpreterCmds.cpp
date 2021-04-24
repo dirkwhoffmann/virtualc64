@@ -41,9 +41,33 @@ Interpreter::registerInstructions()
              "command", "Pauses the execution of a command script",
              &RetroShell::exec <Token::wait>, 2);
 
+    root.add({"debugcart"},
+             "command", "Enables the debug cartridge feature",
+             &RetroShell::exec <Token::debugcrt>);
+
+    
+    //
+    // Regression testing
+    //
+    
     root.add({"screenshot"},
-             "command", "Exits the emulator after taking a screenshot",
-             &RetroShell::exec <Token::screenshot>, 5);
+             "component", "Manages regression tests");
+    root.seek("screenshot")->hidden = true;
+    
+    root.add({"screenshot", "set"},
+             "command", "Configures the regression test");
+        
+    root.add({"screenshot", "set", "filename"},
+             "key", "Assigns the screen shot filename",
+             &RetroShell::exec <Token::screenshot, Token::set, Token::filename>, 1);
+
+    root.add({"screenshot", "set", "cutout"},
+             "key", "Adjusts the texture cutout",
+             &RetroShell::exec <Token::screenshot, Token::set, Token::cutout>, 4);
+
+    root.add({"screenshot", "take"},
+             "key", "Takes a screenshot and exits the emulator",
+             &RetroShell::exec <Token::screenshot, Token::take>, 1);
 
     
     //
@@ -115,6 +139,10 @@ Interpreter::registerInstructions()
     root.add({"memory", "load"},
              "command", "Installs a Rom image",
              &RetroShell::exec <Token::memory, Token::load>, 1);
+
+    root.add({"memory", "flash"},
+             "command", "Flashes a file into memory",
+             &RetroShell::exec <Token::memory, Token::flash>, 1);
 
     root.add({"memory", "inspect"},
              "command", "Displays the component state",

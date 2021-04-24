@@ -560,6 +560,38 @@ VICII::_dump(dump::Category category, std::ostream& os) const
 }
 
 void
+VICII::dumpTexture() const
+{
+    /* This function is used for automatic regression testing. It generates a
+     * TIFF image of the current emulator texture in the /tmp directory and
+     * exits the application. The regression testing script will pick up the
+     * texture and compare it against a previously recorded reference image.
+     */
+    std::ofstream file;
+        
+    // Assemble the target file names
+    string rawFile = "/tmp/" + dumpTexturePath + ".raw";
+    string tiffFile = "/tmp/" + dumpTexturePath + ".tiff";
+
+    // Open an output stream
+    file.open(rawFile.c_str());
+    
+    // Dump texture
+    dumpTexture(file, x1, y1, x2, y2);
+    file.close();
+    
+    // Convert raw data into a TIFF file
+    string cmd = "/usr/local/bin/raw2tiff";
+    cmd += " -p rgb -b 3";
+    cmd += " -w " + std::to_string(x2 - x1);
+    cmd += " -l " + std::to_string(y2 - y1);
+    cmd += " " + rawFile + " " + tiffFile;
+    
+    // msg("Executing %s\n", cmd.c_str());
+    system(cmd.c_str());
+}
+
+void
 VICII::dumpTexture(std::ostream& os) const
 {
     isize x1 = FIRST_VISIBLE_PIXEL;
