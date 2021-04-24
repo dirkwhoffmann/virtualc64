@@ -41,17 +41,25 @@ Interpreter::registerInstructions()
              "command", "Pauses the execution of a command script",
              &RetroShell::exec <Token::wait>, 2);
 
-    root.add({"debugcart"},
-             "command", "Enables the debug cartridge feature",
-             &RetroShell::exec <Token::debugcrt>);
-
     
     //
     // Regression testing
     //
-    
+
+    root.add({"regression"},
+             "component", "");
+    root.seek("regression")->hidden = true;
+
+    root.add({"regression", "setup"},
+             "command", "Initializes the test environment",
+             &RetroShell::exec <Token::regression, Token::setup>, 1);
+
+    root.add({"regression", "run"},
+             "command", "Launches a regression test",
+             &RetroShell::exec <Token::regression, Token::run>, 1);
+
     root.add({"screenshot"},
-             "component", "Manages regression tests");
+             "component", "");
     root.seek("screenshot")->hidden = true;
     
     root.add({"screenshot", "set"},
@@ -65,9 +73,9 @@ Interpreter::registerInstructions()
              "key", "Adjusts the texture cutout",
              &RetroShell::exec <Token::screenshot, Token::set, Token::cutout>, 4);
 
-    root.add({"screenshot", "take"},
-             "key", "Takes a screenshot and exits the emulator",
-             &RetroShell::exec <Token::screenshot, Token::take>, 1);
+    root.add({"screenshot", "save"},
+             "key", "Saves a screenshot and exits the emulator",
+             &RetroShell::exec <Token::screenshot, Token::save>, 1);
 
     
     //

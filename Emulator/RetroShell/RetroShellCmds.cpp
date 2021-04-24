@@ -62,15 +62,39 @@ RetroShell::exec <Token::wait> (Arguments &argv, long param)
     throw ScriptInterruption("");
 }
 
-template <> void
-RetroShell::exec <Token::debugcrt> (Arguments &argv, long param)
-{
-    c64.configure(OPT_DEBUGCART, true);
-}
 
 //
 // Screenshots (regression testing)
 //
+
+template <> void
+RetroShell::exec <Token::regression, Token::setup> (Arguments &argv, long param)
+{
+    auto model = util::parseEnum <C64ModelEnum> (argv.front());
+
+    // Revert to factory settings
+    c64.initialize(model);
+    
+    // Launch the emulator
+    c64.run();
+    
+    // Pause the script to give the C64 some time to boot
+    c64.retroShell.wakeUp = cpu.cycle + 3 * vic.getFrequency();
+    throw ScriptInterruption("");
+}
+
+template <> void
+RetroShell::exec <Token::regression, Token::run> (Arguments &argv, long param)
+{
+    auto path = argv.front();
+    if (!util::fileExists(path)) throw ConfigFileNotFoundError(path);
+
+    PRGFile *file = AnyFile::make <PRGFile> (path);
+    c64.flash(file, 0);
+    delete file;
+    
+    keyboard.autoType("run\n");
+}
 
 template <> void
 RetroShell::exec <Token::screenshot, Token::set, Token::filename> (Arguments &argv, long param)
@@ -95,7 +119,7 @@ RetroShell::exec <Token::screenshot, Token::set, Token::cutout> (Arguments &argv
 }
     
 template <> void
-RetroShell::exec <Token::screenshot, Token::take> (Arguments &argv, long param)
+RetroShell::exec <Token::screenshot, Token::save> (Arguments &argv, long param)
 {
     c64.regressionTester.dumpTexture(c64, argv.front());
 }

@@ -101,8 +101,6 @@ RetroShell::tab(isize hpos)
 void
 RetroShell::printPrompt()
 {
-    printf("printPrompt()\n");
-    
     // Only proceed if the prompt hasn't been printed already
     if (lastLine() == prompt) return;
     
@@ -296,8 +294,6 @@ RetroShell::text()
 void
 RetroShell::exec(const string &command)
 {
-    printf("exec(%s)\n", command.c_str());
- 
     // Skip empty lines
     if (command == "") return;
 
@@ -319,9 +315,10 @@ RetroShell::exec(const string &command)
 void
 RetroShell::execScript(std::ifstream &fs)
 {
-    printf("execScript(ifstream)\n");
+    msg("execScript(ifstream)\n");
     
     script.clear();
+    msg("script = %s\n", script.str().c_str());
     script << fs.rdbuf();
     scriptLine = 1;
     printPrompt();
@@ -351,7 +348,6 @@ RetroShell::continueScript()
         // Print the command
         printPrompt();
         *this << command << '\n';
-        printf("Line %zd: %s\n", scriptLine, command.c_str());
         
         // Execute the command
         try {
@@ -359,14 +355,12 @@ RetroShell::continueScript()
             
         } catch (ScriptInterruption &e) {
             
-            printf("Interrupted in line %zd\n", scriptLine);
             messageQueue.put(MSG_SCRIPT_PAUSE, scriptLine);
             printPrompt();
             return;
         
         } catch (std::exception &e) {
             
-            printf("Aborted in line %zd\n", scriptLine);
             *this << "Aborted in line " << scriptLine << '\n';
             messageQueue.put(MSG_SCRIPT_ABORT, scriptLine);
             printPrompt();
@@ -377,7 +371,6 @@ RetroShell::continueScript()
     }
     
     printPrompt();
-    printf("MSG_SCRIPT_DONE\n");
     messageQueue.put(MSG_SCRIPT_DONE, scriptLine);
 }
 

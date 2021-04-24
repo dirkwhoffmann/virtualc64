@@ -26,10 +26,10 @@ enum class Token
     mouse, resid, sid, vicii,
 
     // Commands
-    about, audiate, autosync, clear, close, config, connect, debugcrt,
-    disconnect, dsksync, easteregg, eject, flash, init, insert, inspect, list,
-    load, lock, on, off, pause, power, reset, run, screenshot, set, source,
-    take, type, wait,
+    about, audiate, autosync, clear, close, config, connect, disconnect,
+    dsksync, easteregg, eject, flash, init, insert, inspect, list, load, lock,
+    on, off, pause, power, regression, reset, run, save, screenshot, set,
+    setup, source, type, wait,
     
     // Categories
     checksums, devices, events, registers, state,
