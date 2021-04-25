@@ -22,14 +22,14 @@ enum class Token
     none,
     
     // Components
-    c64, cia, controlport, cpu, drive, fastsid, keyboard, memory, monitor,
-    mouse, resid, sid, vicii,
+    c64, cia, controlport, cpu, drive, expansion, fastsid, keyboard, memory,
+    monitor, mouse, resid, sid, vicii,
 
     // Commands
-    about, audiate, autosync, clear, close, config, connect, disconnect,
+    about, attach, audiate, autosync, clear, close, config, connect, disconnect,
     dsksync, easteregg, eject, flash, init, insert, inspect, list, load, lock,
-    on, off, pause, power, regression, reset, run, save, screenshot, set,
-    setup, source, type, wait,
+    on, off, pause, power, press, regression, release, reset, run, save,
+    screenshot, set, setup, source, type, wait,
     
     // Categories
     checksums, devices, events, registers, state,

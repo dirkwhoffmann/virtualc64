@@ -25,6 +25,8 @@
 void
 Ocean::pokeIO1(u16 addr, u8 value)
 {
+    msg("Ocean: pokeIO1(%x,%x)\n", addr, value);
+    
     if (addr == 0xDE00) {
         bankIn(value & 0x3F);
     }

@@ -140,6 +140,7 @@ public:
     bool getCartridgeAttached() const { return cartridge != nullptr; }
 
     // Attaches a cartridge to the expansion port
+    void attachCartridge(const string &path, bool reset = true) throws;
     bool attachCartridge(CRTFile *c, bool reset = true);
     void attachCartridge(Cartridge *c);
     void attachGeoRamCartridge(usize capacity);

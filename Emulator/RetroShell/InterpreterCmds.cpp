@@ -418,8 +418,24 @@ Interpreter::registerInstructions()
     root.add({"controlport1", "controlport2"}, {"", "inspect"},
              "command", "Displays the internal state",
              &RetroShell::exec <Token::controlport, Token::inspect>);
-    
 
+    
+    //
+    // Expansion port
+    //
+    
+    root.add({"expansion"},
+             "component", "Expansion port");
+    
+    root.add({"expansion", "inspect"},
+             "command", "Displays the internal state",
+             &RetroShell::exec <Token::expansion, Token::inspect>);
+
+    root.add({"expansion", "attach"},
+             "command", "Attaches a cartridge",
+             &RetroShell::exec <Token::expansion, Token::attach>, 1);
+
+    
     //
     // Keyboard
     //
@@ -442,6 +458,14 @@ Interpreter::registerInstructions()
     root.add({"keyboard", "type", "run"},
              "command", "Types RUN",
              &RetroShell::exec <Token::keyboard, Token::type, Token::run>);
+
+    root.add({"keyboard", "press"},
+             "command", "Presses a key",
+             &RetroShell::exec <Token::keyboard, Token::press>, 1);
+
+    root.add({"keyboard", "release"},
+             "command", "Presses a key",
+             &RetroShell::exec <Token::keyboard, Token::release>, 1);
 
     
     //

@@ -72,3 +72,8 @@ RegressionTester::dumpTexture(const C64 &c64, std::ostream& os) const
     }
 }
 
+void
+RegressionTester::debugcart(u8 value)
+{
+    retValue = value;
+}

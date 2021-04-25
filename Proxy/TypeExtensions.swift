@@ -152,7 +152,7 @@ extension CartridgeType {
         case .EASYFLASH_XBANK: return "EasyFlash (XBank)"
         case .CAPTURE: return "Capture"
         case .ACTION_REPLAY3: return "Action Replay 3"
-        case .RETRO_REPLAY: return "Metro Replay"
+        case .RETRO_REPLAY: return "Retro Replay"
         case .MMC64: return "MMC 64"
         case .MMC_REPLAY: return "MMC Replay"
         case .IDE64: return "IDE 64"

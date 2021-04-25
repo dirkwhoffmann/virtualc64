@@ -64,7 +64,7 @@ RetroShell::exec <Token::wait> (Arguments &argv, long param)
 
 
 //
-// Screenshots (regression testing)
+// Rgression testing
 //
 
 template <> void
@@ -565,6 +565,26 @@ RetroShell::exec <Token::controlport, Token::inspect> (Arguments& argv, long par
 
 
 //
+// Expansion port
+//
+
+template <> void
+RetroShell::exec <Token::expansion, Token::inspect> (Arguments& argv, long param)
+{
+    dump(expansionport, dump::State);
+}
+
+template <> void
+RetroShell::exec <Token::expansion, Token::attach> (Arguments& argv, long param)
+{
+    auto path = argv.front();
+    if (!util::fileExists(path)) throw ConfigFileNotFoundError(path);
+
+    expansionport.attachCartridge(path);
+}
+
+
+//
 // Keyboard
 //
 
@@ -590,6 +610,22 @@ template <> void
 RetroShell::exec <Token::keyboard, Token::type, Token::run> (Arguments& argv, long param)
 {
     keyboard.autoType("run\n");
+}
+
+template <> void
+RetroShell::exec <Token::keyboard, Token::press> (Arguments& argv, long param)
+{
+    isize key = util::parseNum(argv.front());
+
+    keyboard.press(C64Key(key));
+}
+
+template <> void
+RetroShell::exec <Token::keyboard, Token::release> (Arguments& argv, long param)
+{
+    isize key = util::parseNum(argv.front());
+
+    keyboard.release(C64Key(key));
 }
 
 

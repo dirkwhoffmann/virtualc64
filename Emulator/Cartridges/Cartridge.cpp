@@ -208,20 +208,26 @@ Cartridge::resetWithoutDeletingRam()
 void
 Cartridge::_dump(dump::Category category, std::ostream& os) const
 {
-    msg("\n");
-    msg("Cartridge\n");
-    msg("---------\n");
+    using namespace util;
     
-    msg("        Cartridge type: %lld\n", getCartridgeType());
-    msg(" Game line in CRT file: %d\n", gameLineInCrtFile);
-    msg("Exrom line in CRT file: %d\n", exromLineInCrtFile);
-    msg(" Number of Rom packets: %d\n", numPackets);
-    
-    for (unsigned i = 0; i < numPackets; i++) {
-        msg("              Chip %3d: %d KB starting at $%04X\n",
-            i, packet[i]->size / 1024, packet[i]->loadAddress);
+    if (category & dump::State) {
+        
+        os << tab("Cartridge type");
+        os << getCartridgeType() << std::endl;
+        os << tab("Game line in CRT");
+        os << bol(gameLineInCrtFile) << std::endl;
+        os << tab("Exrom line in CRT");
+        os << bol(exromLineInCrtFile) << std::endl;
+        os << tab("Number of packets");
+        os << bol(exromLineInCrtFile) << dec(numPackets) << std::endl;
+        
+        for (isize i = 0; i < numPackets; i++) {
+            
+            os << dec(i) << ": ";
+            os << dec(packet[i]->size / 1024) << " KB starting at ";
+            os << hex(packet[i]->loadAddress) << std::endl;
+        }
     }
-    msg("\n");
 }
 
 isize

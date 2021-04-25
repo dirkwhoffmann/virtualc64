@@ -76,16 +76,21 @@ ExpansionPort::_save(u8 *buffer)
 void
 ExpansionPort::_dump(dump::Category category, std::ostream& os) const
 {
-    msg("Expansion port\n");
-    msg("--------------\n");
+    using namespace util;
     
-    msg(" Game line:  %d\n", gameLine);
-    msg("Exrom line:  %d\n", exromLine);
+    if (category & dump::State) {
+        
+        os << tab("Game line");
+        os << bol(gameLine) << std::endl;
+        os << tab("Exrom line");
+        os << bol(exromLine) << std::endl;
+        os << tab("Cartridge");
+        os << bol(cartridge != nullptr, "attached", "none") << std::endl;
 
-    if (cartridge == nullptr) {
-        msg("No cartridge attached\n");
-    } else {
-        cartridge->dump();
+        if (cartridge) {
+            os << std::endl;
+            cartridge->dump(category, os);
+        }
     }
 }
 
@@ -244,6 +249,13 @@ ExpansionPort::attachGeoRamCartridge(usize kb)
     Cartridge *geoRAM = Cartridge::makeWithType(c64, CRT_GEO_RAM);
     geoRAM->setRamCapacity(kb * 1024);
     attachCartridge(geoRAM);
+}
+
+void
+ExpansionPort::attachCartridge(const string &path, bool reset)
+{
+    auto file = AnyFile::make <CRTFile> (path);
+    attachCartridge(file, reset);
 }
 
 bool

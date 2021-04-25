@@ -58,5 +58,5 @@ public:
 public:
     
     // Emulates the debugcart feature (used by VICE tests)
-    void debugcart(u8 value) { retValue = value; }
+    void debugcart(u8 value);
 };
