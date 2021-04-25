@@ -15,7 +15,7 @@ Ocean::Ocean(C64 &ref) : Cartridge(ref)
 };
 
 void
-Ocean::bankIn(unsigned nr)
+Ocean::bankIn(isize nr)
 {
     // The same 8KB page is banked into both ROML and ROMH
     bankInROML(nr, 0x2000, 0);

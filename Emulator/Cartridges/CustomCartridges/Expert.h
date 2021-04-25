@@ -71,7 +71,7 @@ private:
     // Handling ROM packets
     //
     
-    void loadChip(unsigned nr, const CRTFile &crt) override;
+    void loadChip(isize nr, const CRTFile &crt) override;
 
     
     //

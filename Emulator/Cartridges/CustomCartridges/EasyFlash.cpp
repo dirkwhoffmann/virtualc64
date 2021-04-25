@@ -62,7 +62,7 @@ EasyFlash::_dump(dump::Category category, std::ostream& os) const
 }
 
 void
-EasyFlash::loadChip(unsigned nr, const CRTFile &crt)
+EasyFlash::loadChip(isize nr, const CRTFile &crt)
 {
     u16 chipSize = crt.chipSize(nr);
     u16 chipAddr = crt.chipAddr(nr);
@@ -70,7 +70,7 @@ EasyFlash::loadChip(unsigned nr, const CRTFile &crt)
     u8 *chipData = crt.chipData(nr);
     
     if(chipSize != 0x2000) {
-        warn("Package %d has chip size %04X. Expected 0x2000.\n", nr, chipSize);
+        warn("Package %zd has chip size %04X. Expected 0x2000.\n", nr, chipSize);
         return;
     }
 
@@ -88,7 +88,7 @@ EasyFlash::loadChip(unsigned nr, const CRTFile &crt)
         
     } else {
         
-        warn("Package %d has an invalid load address (%04X).", nr, chipAddr);
+        warn("Package %zd has an invalid load address (%04X).", nr, chipAddr);
         return;
     }
 }

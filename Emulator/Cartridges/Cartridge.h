@@ -225,19 +225,19 @@ public:
     //
     
     // Reads in a chip packet from a CRT file
-    virtual void loadChip(unsigned nr, const CRTFile &c);
+    virtual void loadChip(isize nr, const CRTFile &c);
     
     // Banks in a rom chip into the ROML or the ROMH space
-    void bankInROML(unsigned nr, u16 size, u16 offset);
-    void bankInROMH(unsigned nr, u16 size, u16 offset);
+    void bankInROML(isize nr, u16 size, u16 offset);
+    void bankInROMH(isize nr, u16 size, u16 offset);
     
     /* Banks in a rom chip. This function calls bankInROML or bankInROMH with
      * the default parameters for this chip as provided in the CRT file.
      */
-    virtual void bankIn(unsigned nr);
+    virtual void bankIn(isize nr);
     
     //  Banks out a chip (RAM will be visible again)
-    void bankOut(unsigned nr);
+    void bankOut(isize nr);
 
     
     //

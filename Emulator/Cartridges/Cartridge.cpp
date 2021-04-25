@@ -442,7 +442,7 @@ Cartridge::eraseRAM(u8 value)
 }
 
 void
-Cartridge::loadChip(unsigned nr, const CRTFile &crt)
+Cartridge::loadChip(isize nr, const CRTFile &crt)
 {
     assert(nr < MAX_PACKETS);
     
@@ -452,11 +452,11 @@ Cartridge::loadChip(unsigned nr, const CRTFile &crt)
     
     // Perform some consistency checks
     if (start < 0x8000) {
-        warn("Ignoring chip %d: Start address too low (%04X)\n", nr, start);
+        warn("Ignoring chip %zd: Start address too low (%04X)\n", nr, start);
         return;
     }
     if (0x10000 - start < size) {
-        warn("Ignoring chip %d: Invalid size (start: %04X size: %04X)/n", nr, start, size);
+        warn("Ignoring chip %zd: Invalid size (start: %04X size: %04X)/n", nr, start, size);
         return;
     }
     
@@ -467,30 +467,30 @@ Cartridge::loadChip(unsigned nr, const CRTFile &crt)
     
     // Create new chip packet
     switch (type) {
-        
+            
         case 0: // ROM
-        packet[nr] = new CartridgeRom(c64, size, start, crt.chipData(nr));
-        break;
-        
+            packet[nr] = new CartridgeRom(c64, size, start, crt.chipData(nr));
+            break;
+            
         case 1: // RAM
-        warn("Ignoring chip %d, because it has type RAM.\n", nr);
-        return;
-        
+            warn("Ignoring chip %zd, because it has type RAM.\n", nr);
+            return;
+            
         case 2: // Flash ROM
-        warn("Chip %d is a Flash Rom. Creating a Rom instead.\n", nr);
-        packet[nr] = new CartridgeRom(c64, size, start, crt.chipData(nr));
-        break;
-        
+            warn("Chip %zd is a Flash Rom. Creating a Rom instead.\n", nr);
+            packet[nr] = new CartridgeRom(c64, size, start, crt.chipData(nr));
+            break;
+            
         default:
-        warn("Ignoring chip %d, because it has unknown type %d.\n", nr, type);
-        return;
+            warn("Ignoring chip %zd, because it has unknown type %d.\n", nr, type);
+            return;
     }
     
     numPackets++;
 }
 
 void
-Cartridge::bankInROML(unsigned nr, u16 size, u16 offset)
+Cartridge::bankInROML(isize nr, u16 size, u16 offset)
 {
     chipL = nr;
     mappedBytesL = size;
@@ -498,7 +498,7 @@ Cartridge::bankInROML(unsigned nr, u16 size, u16 offset)
 }
 
 void
-Cartridge::bankInROMH(unsigned nr, u16 size, u16 offset)
+Cartridge::bankInROMH(isize nr, u16 size, u16 offset)
 {
     chipH = nr;
     mappedBytesH = size;
@@ -506,10 +506,8 @@ Cartridge::bankInROMH(unsigned nr, u16 size, u16 offset)
 }
 
 void
-Cartridge::bankIn(unsigned nr)
-{
-    msg("bankIn(%d)\n", nr);
-    
+Cartridge::bankIn(isize nr)
+{    
     assert(nr < MAX_PACKETS);
     
     if (packet[nr] == nullptr)
@@ -535,12 +533,12 @@ Cartridge::bankIn(unsigned nr)
         
     } else {
 
-        warn("Cannot map chip %d. Invalid start address.\n", nr);
+        warn("Cannot map chip %zd. Invalid start address.\n", nr);
     }
 }
 
 void
-Cartridge::bankOut(unsigned nr)
+Cartridge::bankOut(isize nr)
 {
     assert(nr < MAX_PACKETS);
 

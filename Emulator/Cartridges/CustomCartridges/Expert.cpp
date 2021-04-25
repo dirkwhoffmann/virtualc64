@@ -45,7 +45,7 @@ Expert::_dump(dump::Category category, std::ostream& os) const
 }
 
 void
-Expert::loadChip(unsigned nr, const CRTFile &crt)
+Expert::loadChip(isize nr, const CRTFile &crt)
 {
     u16 chipSize = crt.chipSize(nr);
     u16 chipAddr = crt.chipAddr(nr);

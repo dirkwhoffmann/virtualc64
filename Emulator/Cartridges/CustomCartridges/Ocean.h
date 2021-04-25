@@ -25,7 +25,7 @@ public:
     
 public:
     
-    void bankIn(unsigned nr) override;
+    void bankIn(isize nr) override;
 
     u8 peekIO1(u16 addr) override;
     u8 peekIO2(u16 addr) override;
