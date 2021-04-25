@@ -15,11 +15,12 @@ class Ocean : public Cartridge {
     
 public:
     
-    Ocean(C64 &ref) : Cartridge(ref) { };
+    Ocean(C64 &ref);
     const char *getDescription() const override { return "Ocean"; }
     CartridgeType getCartridgeType() const override { return CRT_OCEAN; }
 
-    
+    // bool getGameLineInCrtFile() const override;
+
     //
     // Accessing cartridge memory
     //

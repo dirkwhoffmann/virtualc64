@@ -216,8 +216,8 @@ protected:
 public:
     
     // Returns the initial value of the Game or the Exrom line
-    bool getGameLineInCrtFile() { return gameLineInCrtFile; }
-    bool getExromLineInCrtFile() { return exromLineInCrtFile; }
+    virtual bool getGameLineInCrtFile() const { return gameLineInCrtFile; }
+    virtual bool getExromLineInCrtFile() const { return exromLineInCrtFile; }
         
     
     //

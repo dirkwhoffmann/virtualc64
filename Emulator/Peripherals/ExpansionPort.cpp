@@ -274,7 +274,7 @@ ExpansionPort::attachCartridge(CRTFile *file, bool reset)
     if (!(cartridge = Cartridge::makeWithCRTFile(c64, *file))) {
         return false;
     }
-    
+        
     // Attach cartridge
     suspend();
     attachCartridge(cartridge);

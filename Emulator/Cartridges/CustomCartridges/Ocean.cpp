@@ -22,6 +22,20 @@
  *  number (ranging from 0-63). Bit 8 in this selection word is always set."
  */
 
+Ocean::Ocean(C64 &ref) : Cartridge(ref)
+{
+    msg("Ocean::Ocean\n");
+};
+
+/*
+bool
+Ocean::getGameLineInCrtFile() const
+{
+    msg("Ocean::getGameLineInCrtFile()\n");
+    return 1;
+}
+*/
+
 void
 Ocean::pokeIO1(u16 addr, u8 value)
 {

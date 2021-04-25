@@ -219,11 +219,11 @@ Cartridge::_dump(dump::Category category, std::ostream& os) const
         os << tab("Exrom line in CRT");
         os << bol(exromLineInCrtFile) << std::endl;
         os << tab("Number of packets");
-        os << bol(exromLineInCrtFile) << dec(numPackets) << std::endl;
+        os << dec(numPackets) << std::endl;
         
         for (isize i = 0; i < numPackets; i++) {
             
-            os << dec(i) << ": ";
+            os << tab("Packet " + std::to_string(i));
             os << dec(packet[i]->size / 1024) << " KB starting at ";
             os << hex(packet[i]->loadAddress) << std::endl;
         }
