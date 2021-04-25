@@ -14,13 +14,21 @@
 void
 ProcessorPort::_dump(dump::Category category, std::ostream& os) const
 {
-    msg("Processor port:\n");
-    msg("---------------\n\n");
-    msg("port:           %02X\n", port);
-    msg("direction:      %02X\n", direction);
-    msg("Bit 3 discharge cycle: %llu\n", dischargeCycleBit3);
-    msg("Bit 6 discharge cycle: %llu\n", dischargeCycleBit6);
-    msg("Bit 7 discharge cycle: %llu\n", dischargeCycleBit7);
+    using namespace util;
+    
+    if (category & dump::State) {
+        
+        os << tab("Port");
+        os << hex(port) << std::endl;
+        os << tab("Direction");
+        os << hex(direction) << std::endl;
+        os << tab("Bit 3 discharge cycle");
+        os << hex(dischargeCycleBit3) << std::endl;
+        os << tab("Bit 6 discharge cycle");
+        os << hex(dischargeCycleBit6) << std::endl;
+        os << tab("Bit 7 discharge cycle");
+        os << hex(dischargeCycleBit7) << std::endl;
+    }
 }
             
 u8

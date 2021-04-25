@@ -34,14 +34,20 @@ Expert::_reset()
 void
 Expert::_dump(dump::Category category, std::ostream& os) const
 {
-    msg("             active: %d\n", active);
-    msg("             switch: %d ", getSwitch());
-    if (switchInPrgPosition()) msg("(PRG)\n");
-    if (switchInOffPosition()) msg("(OFF)\n");
-    if (switchInOnPosition()) msg("(ON)\n");
-    msg("         NMI vector: %04X\n", LO_HI(peekRAM(0x1FFA), peekRAM(0x1FFB)));
-    msg("         IRQ vector: %04X\n", LO_HI(peekRAM(0x1FFE), peekRAM(0x1FFF)));
-    msg("       Reset vector: %04X\n", LO_HI(peekRAM(0x1FFC), peekRAM(0x1FFD)));
+    using namespace util;
+    
+    if (category & dump::State) {
+    
+        u16 nmi = LO_HI(peekRAM(0x1FFA), peekRAM(0x1FFB));
+        u16 irq = LO_HI(peekRAM(0x1FFE), peekRAM(0x1FFF));
+        u16 rst = LO_HI(peekRAM(0x1FFC), peekRAM(0x1FFD));
+        
+        os << tab("active") << bol(active) << std::endl;
+        os << tab("switch") << dec(getSwitch()) << std::endl;
+        os << tab("NMI vector") << hex(nmi) << std::endl;
+        os << tab("IRQ vector") << hex(irq) << std::endl;
+        os << tab("Reset vector") << hex(rst) << std::endl;
+    }
 }
 
 void

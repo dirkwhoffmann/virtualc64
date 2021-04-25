@@ -9,6 +9,7 @@
 
 #include "config.h"
 #include "FlashRom.h"
+#include "IO.h"
 
 const char *
 FlashRom::getStateAsString(FlashState state)
@@ -70,14 +71,19 @@ FlashRom::_reset()
 void
 FlashRom::_dump(dump::Category category, std::ostream& os) const
 {
-    msg("FlashRom\n");
-    msg("--------\n\n");
+    using namespace util;
     
-    msg("     state: %ld\n", (long)state);
-    msg(" baseState: %ld\n", (long)baseState);
-    msg("numSectors: %zu\n", numSectors);
-    msg("sectorSize: %zu\n", sectorSize);
-    msg("       rom: %p\n\n", rom);
+    if (category & dump::State) {
+        
+        os << tab("state");
+        os << dec(state) << std::endl;
+        os << tab("baseState");
+        os << dec(baseState) << std::endl;
+        os << tab("numSectors");
+        os << dec(numSectors) << std::endl;
+        os << tab("sectorSize");
+        os << dec(sectorSize) << std::endl;
+    }
 }
 
 isize

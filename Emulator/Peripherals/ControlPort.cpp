@@ -30,8 +30,10 @@ ControlPort::_dump(dump::Category category, std::ostream& os) const
     
     if (category & dump::State) {
         
-        os << tab("Nr") << dec(nr) << std::endl;
-        os << tab("Device") << ControlPortDeviceEnum::key(device) << std::endl;
+        os << tab("Nr");
+        os << dec(nr) << std::endl;
+        os << tab("Device");
+        os << ControlPortDeviceEnum::key(device) << std::endl;
     }
 }
 

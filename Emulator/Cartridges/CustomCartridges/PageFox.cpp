@@ -25,15 +25,15 @@ PageFox::_reset()
 void
 PageFox::_dump(dump::Category category, std::ostream& os) const
 {
-    Cartridge::_dump(category, os);
+    using namespace util;
     
-    msg("PageFox\n");
-    msg("-------\n\n");
+    if (category & dump::State) {
     
-    msg("  bankSelect() : %x\n", bankSelect());
-    msg("  chipSelect() : %x\n", chipSelect());
-    msg("        bank() : %x\n", bank());
-    msg("     disable() : %x\n", disabled());    
+        os << tab("bankSelect()") << hex(bankSelect()) << std::endl;
+        os << tab("chipSelect()") << hex(chipSelect()) << std::endl;
+        os << tab("bank()") << hex(bank()) << std::endl;
+        os << tab("disable()") << hex(disabled()) << std::endl;
+    }
 }
 
 void

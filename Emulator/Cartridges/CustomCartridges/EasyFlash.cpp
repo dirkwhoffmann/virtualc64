@@ -45,20 +45,18 @@ EasyFlash::_reset()
 void
 EasyFlash::_dump(dump::Category category, std::ostream& os) const
 {
+    using namespace util;
+
     Cartridge::_dump(category, os);
     
-    msg("EasyFlash\n");
-    msg("---------\n\n");
-
-    msg("bank = %d\n", bank);
-    for (unsigned i = 0; i < 256; i++) {
-        msg("%02X ", peekRAM(i));
-        if (i % 16 == 15) msg("\n");
+    if (category & dump::State) {
+        
+        os << tab("EasyFlash bank");
+        os << dec(bank);
     }
-    msg("\n");
-    
-    // flashRomL.dump();
-    // flashRomH.dump();
+
+    flashRomL.dump(category, os);
+    flashRomH.dump(category, os);
 }
 
 void

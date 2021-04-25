@@ -10,6 +10,7 @@
 #include "config.h"
 #include "TOD.h"
 #include "CIA.h"
+#include "IO.h"
 
 TOD::TOD(C64 &ref, CIA &ciaref) : C64Component(ref), cia(ciaref)
 {
@@ -45,15 +46,25 @@ TOD::_reset()
 void
 TOD::_dump(dump::Category category, std::ostream& os) const
 {
-	msg("            Time of day : %02X:%02X:%02X:%02X\n",
-        tod.hour, tod.min, tod.sec, tod.tenth);
-	msg("                  Alarm : %02X:%02X:%02X:%02X\n",
-        alarm.hour, alarm.min, alarm.sec, alarm.tenth);
-	msg("                  Latch : %02X:%02X:%02X:%02X\n",
-        latch.hour, latch.min, latch.sec, latch.tenth);
-	msg("                 Frozen : %s\n", frozen ? "yes" : "no");
-	msg("                Stopped : %s\n", stopped ? "yes" : "no");
-	msg("\n");
+    using namespace util;
+    
+    if (category & dump::State) {
+        
+        os << tab("Time of Day");
+        os << hex(tod.hour)   << ":" << hex(tod.min)     << ":";
+        os << hex(tod.sec)    << ":" << hex(tod.tenth)   << std::endl;
+        
+        os << tab("Alarm");
+        os << hex(alarm.hour) << ":" << hex(alarm.min)   << ":";
+        os << hex(alarm.sec)  << ":" << hex(alarm.tenth) << std::endl;
+
+        os << tab("Latch");
+        os << hex(latch.hour) << ":" << hex(latch.min)   << ":";
+        os << hex(latch.sec)  << ":" << hex(latch.tenth) << std::endl;
+
+        os << tab("Frozen") << bol(frozen) << std::endl;
+        os << tab("Stopped") << bol(stopped) << std::endl;
+    }
 }
 
 void

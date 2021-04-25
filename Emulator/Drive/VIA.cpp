@@ -10,6 +10,7 @@
 #include "config.h"
 #include "VIA.h"
 #include "C64.h"
+#include "IO.h"
 
 //
 // VIA 6522 (Commons)
@@ -34,30 +35,44 @@ void VIA6522::_reset()
 void
 VIA6522::_dump(dump::Category category, std::ostream& os) const
 {
-    const char *latchingA = inputLatchingEnabledA() ? "enabled" : "disabled";
-    const char *latchingB = inputLatchingEnabledB() ? "enabled" : "disabled";
+    using namespace util;
+
     u16 t1Latch = LO_HI(t1_latch_lo, t1_latch_hi);
     u16 t2Latch = LO_HI(t2_latch_lo, 0);
-
-	msg("VIA:\n");
-	msg("----\n\n");
-	msg("             Input register (IRA) : %02X\n", ira);
-	msg("             Input register (IRB) : %02X\n", irb);
-	msg("            Output register (ORA) : %02X\n", ora);
-	msg("            Output register (ORB) : %02X\n", orb);
-	msg("   Data direction register (DDRA) : %02X\n", ddra);
-	msg("   Data direction register (DDRB) : %02X\n", ddrb);
-    msg("Peripheral control register (PCR) : %02X\n", pcr);
-    msg("         Auxiliary register (ACR) : %02X\n", acr);
-    msg("  Interrupt enable register (IER) : %02X\n", ier);
-    msg("    Interrupt flag register (IFR) : %02X\n", ifr);
-    msg("              Shift register (SR) : %02X\n", sr);
-    msg("                 Input latching A : %s\n", latchingA);
-	msg("                 Input latching B : %s\n", latchingB);
-	msg("                          Timer 1 : %d (latched: %d)\n", t1, t1Latch);
-	msg("                          Timer 2 : %d (latched: %d)\n", t2, t2Latch);
-	msg("                        IO memory : ");
-	msg("\n");
+    
+    if (category & dump::State) {
+        
+        os << tab("Input reg (IRA)");
+        os << hex(ira) << std::endl;
+        os << tab("Input reg (IRB)");
+        os << hex(irb) << std::endl;
+        os << tab("Output reg (IRA)");
+        os << hex(ora) << std::endl;
+        os << tab("Output reg (IRB)");
+        os << hex(orb) << std::endl;
+        os << tab("Data dir reg (DDRA)");
+        os << hex(ddra) << std::endl;
+        os << tab("Data dir reg (DDRB)");
+        os << hex(ddrb) << std::endl;
+        os << tab("Peripheral control reg (PCR)");
+        os << hex(pcr) << std::endl;
+        os << tab("Auxiliary reg (ACR)");
+        os << hex(acr) << std::endl;
+        os << tab("Interrupt enable reg (IER)");
+        os << hex(ier) << std::endl;
+        os << tab("Interrupt flag reg (IFR)");
+        os << hex(ifr) << std::endl;
+        os << tab("Shift reg (SR)");
+        os << hex(sr) << std::endl;
+        os << tab("Input latching A");
+        os << bol(inputLatchingEnabledA()) << std::endl;
+        os << tab("Input latching B");
+        os << bol(inputLatchingEnabledB()) << std::endl;
+        os << tab("Timer 1");
+        os << dec(t1) << " (latched: " << t1Latch << ")" << std::endl;
+        os << tab("Timer 2");
+        os << dec(t2) << " (latched: " << t2Latch << ")" << std::endl;
+    }
 }
 
 bool

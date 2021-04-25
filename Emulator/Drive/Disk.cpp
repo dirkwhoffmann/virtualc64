@@ -193,14 +193,19 @@ Disk::_reset()
 void
 Disk::_dump(dump::Category category, std::ostream& os) const
 {
-    msg("Floppy disk\n");
-    msg("-----------\n\n");
+    using namespace util;
     
-    for (Halftrack ht = 1; ht <= highestHalftrack; ht++) {
-        u16 length = lengthOfHalftrack(ht);
-        msg("Halftrack %2d: %d Bits (%d Bytes)\n", ht, length, length / 8);
+    if (category & dump::State) {
+        
+        for (Halftrack ht = 1; ht <= highestHalftrack; ht++) {
+            
+            u16 length = lengthOfHalftrack(ht);
+            
+            os << tab("Halftrack " + std::to_string(ht));
+            os << dec(length) << " Bits (" << dec(length / 8) << " Bytes)";
+            os << std::endl;
+        }
     }
-    msg("\n");
 }
 
 void
