@@ -508,6 +508,8 @@ Cartridge::bankInROMH(unsigned nr, u16 size, u16 offset)
 void
 Cartridge::bankIn(unsigned nr)
 {
+    msg("bankIn(%d)\n", nr);
+    
     assert(nr < MAX_PACKETS);
     
     if (packet[nr] == nullptr)

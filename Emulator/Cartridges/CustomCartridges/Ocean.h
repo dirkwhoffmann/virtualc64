@@ -19,13 +19,15 @@ public:
     const char *getDescription() const override { return "Ocean"; }
     CartridgeType getCartridgeType() const override { return CRT_OCEAN; }
 
-    // bool getGameLineInCrtFile() const override;
-
     //
     // Accessing cartridge memory
     //
     
 public:
     
+    void bankIn(unsigned nr) override;
+
+    u8 peekIO1(u16 addr) override;
+    u8 peekIO2(u16 addr) override;
     void pokeIO1(u16 addr, u8 value) override;
 };

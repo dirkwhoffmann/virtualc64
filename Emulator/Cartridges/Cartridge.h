@@ -234,7 +234,7 @@ public:
     /* Banks in a rom chip. This function calls bankInROML or bankInROMH with
      * the default parameters for this chip as provided in the CRT file.
      */
-    void bankIn(unsigned nr);
+    virtual void bankIn(unsigned nr);
     
     //  Banks out a chip (RAM will be visible again)
     void bankOut(unsigned nr);
