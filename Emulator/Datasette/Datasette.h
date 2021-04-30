@@ -138,6 +138,17 @@ private:
 
 
     //
+    // Analyzing
+    //
+    
+    // Returns the duration from the tape start and the specified position
+    util::Time tapeDuration(isize pos);
+
+    // Returns the duration of the entire tape
+    util::Time tapeDuration() { return tapeDuration(size); }
+    
+    
+    //
     // Handling tapes
     //
     
@@ -155,12 +166,6 @@ public:
     // Returns the tape type (TAP format, 0 or 1).
     u8 getType() const { return type; }
 
-    // Returns the tape length in cycles.
-    u64 getDurationInCycles() const { return durationInCycles; }
-    
-    // Returns the tape length in seconds.
-    u32 getDurationInSeconds() const { return (u32)(durationInCycles / (u64)PAL_CLOCK_FREQUENCY); }
-
     
     //
     // Operating the read/write head
@@ -169,10 +174,7 @@ public:
     // Puts the read/write head at the beginning of the tape
     void rewind() { head = headInSeconds = headInCycles = 0; }
 
-    /* Advances the read/write head one pulse. This methods updates head,
-     * headInCycles, and headInSeconds. If silent is set to false, a
-     * MSG_VC1530_PROGRESS message is sent.
-     */
+    // Advances the read/write head one pulse
     void advanceHead(bool silent = false);
     
     // Returns the head position
@@ -183,10 +185,7 @@ public:
 
     // Returns the head position in seconds
     isize getHeadInSeconds() const { return headInSeconds; }
-    
-    // Sets the current head position in cycles.
-    void setHeadInCycles(i64 value);
-    
+        
     
     //
     // Running the device

@@ -34,9 +34,10 @@ Datasette::alloc(isize capacity)
 
 void
 Datasette::dealloc()
-{    
+{
     if (pulses) {
         delete[] pulses;
+        pulses = nullptr;
         size = 0;
     }
 }
@@ -58,7 +59,7 @@ Datasette::_size()
     applyToResetItems(counter);
     
     counter << size;
-    counter.count += size;
+    for (isize i = 0; i < size; i++) counter << pulses[i].cycles;
 
     return counter.count;
 }
@@ -100,15 +101,16 @@ Datasette::didSaveToBuffer(u8 *buffer)
     return (isize)(writer.ptr - buffer);
 }
 
-void
-Datasette::setHeadInCycles(i64 value)
+util::Time
+Datasette::tapeDuration(isize pos)
 {
-    printf("Fast forwarding to cycle %lld (duration %lld)\n", value, durationInCycles);
-
-    rewind();
-    while (headInCycles <= value && head < size) advanceHead(true);
-
-    printf("Head is %zd (max %zd)\n", head, size);
+    util::Time result;
+    
+    for (isize i = 0; i < pos && i < size; i++) {
+        result += pulses[i].time();
+    }
+    
+    return result;
 }
 
 bool
@@ -203,36 +205,6 @@ Datasette::advanceHead(bool silent)
     // Update headInSeconds
     headInSeconds = newHeadInSeconds;
 }
-
-/*
-int
-Datasette::pulseLength(int *skip) const
-{
-    assert(head < size);
-
-    if (pulses[head] != 0) {
-        // Pulse lengths between 1 * 8 and 255 * 8
-        if (skip) *skip = 1;
-        return 8 * pulses[head];
-    }
-    
-    if (type == 0) {
-        // Pulse lengths greater than 8 * 255 (TAP V0 files)
-        if (skip) *skip = 1;
-        return 8 * 256;
-    } else {
-        // Pulse lengths greater than 8 * 255 (TAP V1 files)
-        if (skip) *skip = 4;
-        if (head + 3 < size) {
-            return  LO_LO_HI_HI(pulses[head+1], pulses[head+2], pulses[head+3], 0);
-        } else {
-            warn("TAP file ended unexpectedly (%zd, %ld)\n", size, head + 3);
-            assert(false);
-            return 8 * 256;
-        }
-    }
-}
-*/
 
 void
 Datasette::pressPlay()
