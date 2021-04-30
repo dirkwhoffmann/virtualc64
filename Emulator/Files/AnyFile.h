@@ -173,6 +173,9 @@ public:
     // Returns the media type of this file
     virtual FileType type() const { return FILETYPE_UNKNOWN; }
      
+    // Returns a data byte
+    u8 getData(isize nr) { return (data && (usize)nr < size) ? data[nr] : 0; }
+    
     // Returns a fingerprint (hash value) for this file
     u64 fnv() const;
     

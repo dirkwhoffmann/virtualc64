@@ -11,18 +11,32 @@
 #include "Datasette.h"
 #include "C64.h"
 
+util::Time
+Pulse::time() const
+{
+    return util::Time(cycles * 1000000000 / PAL_CLOCK_FREQUENCY);
+}
+
 Datasette::~Datasette()
 {
     dealloc();
 }
 
 void
-Datasette::dealloc()
+Datasette::alloc(isize capacity)
 {
-    assert((data == nullptr) == (size == 0));
+    dealloc();
     
-    if (data) {
-        delete[] data;
+    if (capacity) {
+        pulses = new (std::nothrow) Pulse[capacity];
+    }
+}
+
+void
+Datasette::dealloc()
+{    
+    if (pulses) {
+        delete[] pulses;
         size = 0;
     }
 }
@@ -64,10 +78,10 @@ Datasette::didLoadFromBuffer(const u8 *buffer)
     if (size > 0x8FFFF) { size = 0; }
 
     // Allocate new memory
-    if (size) data = new (std::nothrow) u8[size];
+    alloc(size);
 
     // Load pulses from buffer
-    for (isize i = 0; i < size; i++) reader << data[i];
+    for (isize i = 0; i < size; i++) reader << pulses[i].cycles;
 
     return (isize)(reader.ptr - buffer);
 }
@@ -81,7 +95,7 @@ Datasette::didSaveToBuffer(u8 *buffer)
     writer << size;
     
     // Save pulses to buffer
-    for (isize i = 0; i < size; i++) writer << data[i];
+    for (isize i = 0; i < size; i++) writer << pulses[i].cycles;
         
     return (isize)(writer.ptr - buffer);
 }
@@ -98,18 +112,42 @@ Datasette::setHeadInCycles(i64 value)
 }
 
 bool
-Datasette::insertTape(TAPFile *a)
+Datasette::insertTape(TAPFile *file)
 {
     suspend();
-    
-    size = a->getDataSize();
-    type = a->version();
-    
-    trace(TAP_DEBUG, "Inserting tape (size = %zd, type = %d)...\n", size, type);
-    
-    // Copy data
-    data = (u8 *)malloc(size);
-    memcpy(data, a->getData(), size);
+
+    debug(TAP_DEBUG, "Inserting tape...\n");
+
+    // Allocate pulse buffer
+    alloc(file->size);
+
+    // Read pulses
+    size = 0;
+    if (file->version() == 0) {
+
+        // TAP type 0 (standard pulse format)
+        for (isize i = 0x14; (usize)i < file->size; i++, size++) {
+            
+            u8 byte = file->getData(i);
+            pulses[size].cycles = 8 * (byte ? byte : 256);
+        }
+
+    } else {
+
+        // TAP type 1 (extended pulse format)
+        for (isize i = 0x14; (usize)i < file->size; i++, size++) {
+            
+            u8 byte = file->getData(i);
+            if (byte) {
+                pulses[size].cycles = 8 * byte;
+            } else {
+                pulses[size].cycles = LO_LO_HI_HI(file->getData(i + 1),
+                                                  file->getData(i + 2),
+                                                  file->getData(i + 3), 0);
+                i += 3;
+            }
+        }
+    }
 
     // Determine tape length (by fast forwarding)
     rewind();
@@ -136,9 +174,9 @@ Datasette::ejectTape()
     
     pressStop();
     
-    assert(data);
-    free(data);
-    data = nullptr;
+    assert(pulses);
+    free(pulses);
+    pulses = nullptr;
     size = 0;
     type = 0;
     durationInCycles = 0;
@@ -154,10 +192,8 @@ Datasette::advanceHead(bool silent)
     assert(head < size);
     
     // Update head and headInCycles
-    int length, skip;
-    length = pulseLength(&skip);
-    head += skip;
-    headInCycles += length;
+    headInCycles += pulses[head].cycles;
+    head++;
     
     // Send message if the tapeCounter (in seconds) changes
     u32 newHeadInSeconds = (u32)(headInCycles / c64.frequency);
@@ -168,15 +204,16 @@ Datasette::advanceHead(bool silent)
     headInSeconds = newHeadInSeconds;
 }
 
+/*
 int
 Datasette::pulseLength(int *skip) const
 {
     assert(head < size);
 
-    if (data[head] != 0) {
+    if (pulses[head] != 0) {
         // Pulse lengths between 1 * 8 and 255 * 8
         if (skip) *skip = 1;
-        return 8 * data[head];
+        return 8 * pulses[head];
     }
     
     if (type == 0) {
@@ -187,7 +224,7 @@ Datasette::pulseLength(int *skip) const
         // Pulse lengths greater than 8 * 255 (TAP V1 files)
         if (skip) *skip = 4;
         if (head + 3 < size) {
-            return  LO_LO_HI_HI(data[head+1], data[head+2], data[head+3], 0);
+            return  LO_LO_HI_HI(pulses[head+1], pulses[head+2], pulses[head+3], 0);
         } else {
             warn("TAP file ended unexpectedly (%zd, %ld)\n", size, head + 3);
             assert(false);
@@ -195,6 +232,7 @@ Datasette::pulseLength(int *skip) const
         }
     }
 }
+*/
 
 void
 Datasette::pressPlay()
@@ -206,7 +244,7 @@ Datasette::pressPlay()
     playKey = true;
 
     // Schedule first pulse
-    usize length = pulseLength();
+    usize length = pulses[head].cycles; //  pulseLength();
     nextRisingEdge = length / 2;
     nextFallingEdge = length;
     advanceHead();
@@ -238,7 +276,7 @@ Datasette::_execute()
         if (head < size) {
 
             // Schedule the next pulse
-            usize length = pulseLength();
+            isize length = pulses[head].cycles; //  pulseLength();
             nextRisingEdge = length / 2;
             nextFallingEdge = length;
             advanceHead();

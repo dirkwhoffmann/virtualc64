@@ -11,6 +11,21 @@
 
 #include "C64Component.h"
 #include "Constants.h"
+#include "Chrono.h"
+
+class Pulse {
+    
+public:
+    
+    i32 cycles;
+
+public:
+        
+    Pulse() : cycles(0) { };
+    Pulse(i32 value) : cycles(value) { };
+    
+    util::Time time() const;
+};
 
 class Datasette : public C64Component {
     
@@ -19,7 +34,7 @@ class Datasette : public C64Component {
     //
     
     // Pulse buffer
-    u8 *data = nullptr;
+    Pulse *pulses = nullptr;
     
     // Number of stored pulses
     isize size = 0;
@@ -75,6 +90,7 @@ public:
     Datasette(C64 &ref) : C64Component(ref) { };
     ~Datasette();
     
+    void alloc(isize capacity);
     void dealloc();
 
     const char *getDescription() const override { return "Datasette"; }
@@ -171,10 +187,6 @@ public:
     // Sets the current head position in cycles.
     void setHeadInCycles(i64 value);
     
-    // Returns the pulse length at the current head position
-    int pulseLength(int *skip) const;
-    int pulseLength() const { return pulseLength(nullptr); }
-
     
     //
     // Running the device

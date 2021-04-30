@@ -45,13 +45,7 @@ public:
     // Returns the TAP version (0 = original layout, 1 = updated layout)
     TAPVersion version() const { return (TAPVersion)data[0x000C]; }
     
-    // Returns the beginning of the data area
-    u8 *getData() const { return data + 0x14; }
-    
-    // Returns the size of the data area in bytes
-    usize getDataSize() const { return size - 0x14; }
-    
-    
+
     //
     // Repairing
     //
