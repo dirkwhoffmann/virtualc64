@@ -745,7 +745,7 @@ FSDevice::importVolume(const u8 *src, usize size, ErrorCode *err)
     debug(FS_DEBUG, "Importing file system (%zu bytes)...\n", size);
 
     // Only proceed if the buffer size matches
-    if (blocks.size() * 256 != size) {
+    if (blocks.size() * 256 > size) {
         warn("BUFFER SIZE MISMATCH (%lu %lu)\n", blocks.size(), blocks.size() * 256);
         if (err) *err = ERROR_FS_WRONG_CAPACITY;
         return false;

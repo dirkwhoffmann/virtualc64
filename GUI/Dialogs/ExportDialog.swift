@@ -197,7 +197,7 @@ class ExportDialog: DialogController {
         volume = FSDeviceProxy.make(withDisk: disk, error: &err)
         
         // Try to decode the disk with the D64 decoder (DEPRECATED)
-        d64 = D64FileProxy.make(withFileSystem: volume, error: &err)
+        // d64 = D64FileProxy.make(withFileSystem: volume, error: &err)
 
         // REMOVE ASAP
         track("Exporter: Volume:")
@@ -378,7 +378,7 @@ class ExportDialog: DialogController {
         } else {
             
             let wp = drive!.hasWriteProtectedDisk()
-            diskIcon.image = d64!.icon(protected: wp)
+            diskIcon.image = d64?.icon(protected: wp)
         }
     }
     
@@ -437,14 +437,17 @@ class ExportDialog: DialogController {
         var text = ""
         let color = NSColor.secondaryLabelColor
 
-        let num = volume!.numFiles
-        let free = volume!.numUsedBlocks
-        
-        let files = num == 1 ? "file" : "files"
-        text = "\(num) \(files), \(free) blocks used"
-        
-        fileInfo.stringValue = text
-        fileInfo.textColor = color
+        if volume != nil {
+            
+            let num = volume!.numFiles
+            let free = volume!.numUsedBlocks
+            
+            let files = num == 1 ? "file" : "files"
+            text = "\(num) \(files), \(free) blocks used"
+            
+            fileInfo.stringValue = text
+            fileInfo.textColor = color
+        }
     }
     
     func updateBlockInfo() {
