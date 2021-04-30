@@ -625,10 +625,9 @@ class ExportDialog: DialogController {
         
         setBlock(sender.integerValue)
     }
-        
+
     @IBAction func corruptedBlockStepperAction(_ sender: NSStepper!) {
     
-        track("New value: \(sender.integerValue)")
         setCorruptedBlock(sender.integerValue)
     }
 

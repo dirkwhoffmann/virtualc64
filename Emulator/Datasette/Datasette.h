@@ -18,11 +18,11 @@ class Datasette : public C64Component {
     // Tape
     //
     
-    // Data buffer (contains the raw data of the TAP archive)
+    // Pulse buffer
     u8 *data = nullptr;
     
-    // Size of the attached data buffer
-    u64 size = 0;
+    // Number of stored pulses
+    isize size = 0;
     
     /* Data format (as specified in the TAP type).
      *
@@ -45,13 +45,13 @@ class Datasette : public C64Component {
     //
     
     // The position of the read/write head inside the data buffer (0 ... size)
-    u64 head = 0;
+    isize head = 0;
     
     // Head position measured in cycles
-    u64 headInCycles = 0;
+    i64 headInCycles = 0;
     
     // Head position, measured in seconds
-    u32 headInSeconds = 0;
+    isize headInSeconds = 0;
     
     // Next scheduled rising edge on data line
     i64 nextRisingEdge = 0;
@@ -74,6 +74,9 @@ public:
  
     Datasette(C64 &ref) : C64Component(ref) { };
     ~Datasette();
+    
+    void dealloc();
+
     const char *getDescription() const override { return "Datasette"; }
     
 private:
@@ -111,10 +114,12 @@ private:
         << motor;
     }
     
-    isize _size() override { COMPUTE_SNAPSHOT_SIZE }
+    isize _size() override;
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-    
+    isize didLoadFromBuffer(const u8 *buffer) override;
+    isize didSaveToBuffer(u8 *buffer) override;
+
 
     //
     // Handling tapes
@@ -155,16 +160,16 @@ public:
     void advanceHead(bool silent = false);
     
     // Returns the head position
-    u64 getHead() const { return head; }
+    isize getHead() const { return head; }
 
     // Returns the head position in CPU cycles
-    u64 getHeadInCycles() const { return headInCycles; }
+    i64 getHeadInCycles() const { return headInCycles; }
 
     // Returns the head position in seconds
-    u32 getHeadInSeconds() const { return headInSeconds; }
+    isize getHeadInSeconds() const { return headInSeconds; }
     
     // Sets the current head position in cycles.
-    void setHeadInCycles(u64 value);
+    void setHeadInCycles(i64 value);
     
     // Returns the pulse length at the current head position
     int pulseLength(int *skip) const;

@@ -13,7 +13,18 @@
 
 Datasette::~Datasette()
 {
-    if (data) delete[] data;
+    dealloc();
+}
+
+void
+Datasette::dealloc()
+{
+    assert((data == nullptr) == (size == 0));
+    
+    if (data) {
+        delete[] data;
+        size = 0;
+    }
 }
 
 void
@@ -24,15 +35,66 @@ Datasette::_reset()
     rewind();
 }
 
+isize
+Datasette::_size()
+{
+    util::SerCounter counter;
+    
+    applyToPersistentItems(counter);
+    applyToResetItems(counter);
+    
+    counter << size;
+    counter.count += size;
+
+    return counter.count;
+}
+
+isize
+Datasette::didLoadFromBuffer(const u8 *buffer)
+{
+    util::SerReader reader(buffer);
+
+    // Free previously allocated memory
+    dealloc();
+
+    // Load size
+    reader << size;
+
+    // Make sure that corrupted values do not cause any damage
+    if (size > 0x8FFFF) { size = 0; }
+
+    // Allocate new memory
+    if (size) data = new (std::nothrow) u8[size];
+
+    // Load pulses from buffer
+    for (isize i = 0; i < size; i++) reader << data[i];
+
+    return (isize)(reader.ptr - buffer);
+}
+
+isize
+Datasette::didSaveToBuffer(u8 *buffer)
+{
+    util::SerWriter writer(buffer);
+
+    // Save size
+    writer << size;
+    
+    // Save pulses to buffer
+    for (isize i = 0; i < size; i++) writer << data[i];
+        
+    return (isize)(writer.ptr - buffer);
+}
+
 void
-Datasette::setHeadInCycles(u64 value)
+Datasette::setHeadInCycles(i64 value)
 {
     printf("Fast forwarding to cycle %lld (duration %lld)\n", value, durationInCycles);
 
     rewind();
     while (headInCycles <= value && head < size) advanceHead(true);
 
-    printf("Head is %llu (max %llu)\n", head, size);
+    printf("Head is %zd (max %zd)\n", head, size);
 }
 
 bool
@@ -43,7 +105,7 @@ Datasette::insertTape(TAPFile *a)
     size = a->getDataSize();
     type = a->version();
     
-    trace(TAP_DEBUG, "Inserting tape (size = %llu, type = %d)...\n", size, type);
+    trace(TAP_DEBUG, "Inserting tape (size = %zd, type = %d)...\n", size, type);
     
     // Copy data
     data = (u8 *)malloc(size);
@@ -127,7 +189,7 @@ Datasette::pulseLength(int *skip) const
         if (head + 3 < size) {
             return  LO_LO_HI_HI(data[head+1], data[head+2], data[head+3], 0);
         } else {
-            warn("TAP file ended unexpectedly (%llu, %llu)\n", size, head + 3);
+            warn("TAP file ended unexpectedly (%zd, %ld)\n", size, head + 3);
             assert(false);
             return 8 * 256;
         }
