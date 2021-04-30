@@ -169,13 +169,17 @@ extension AnyFileProxy {
             return NSImage.init(named: "NSFolder")!
 
         case .D64, .G64, .T64, .PRG, .P00:
-            
-            let name = "disk2" + (protected ? "_protected" : "")
-            return NSImage.init(named: name)!
+            return AnyFileProxy.diskIcon(protected: protected)
             
         default:
             fatalError()
         }
+    }
+    
+    static func diskIcon(protected: Bool = false) -> NSImage {
+
+        let name = "disk2" + (protected ? "_protected" : "")
+        return NSImage.init(named: name)!
     }
 }
 

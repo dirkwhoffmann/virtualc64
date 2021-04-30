@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,6 +17,7 @@
                 <outlet property="cylinderStepper" destination="pqH-2P-moz" id="YVf-HE-9P3"/>
                 <outlet property="cylinderText" destination="Zme-du-auv" id="l06-2e-q93"/>
                 <outlet property="disclosureButton" destination="vgA-eF-JVm" id="zIL-jP-s5S"/>
+                <outlet property="disclosureText" destination="eor-y0-qWh" id="Yu9-wp-dHw"/>
                 <outlet property="diskIcon" destination="gO7-Tx-iGM" id="CY6-Hp-MNw"/>
                 <outlet property="exportButton" destination="byJ-4E-JOd" id="6hS-Ev-lgd"/>
                 <outlet property="fileInfo" destination="SAY-XU-D2H" id="QCm-2f-poq"/>
@@ -155,7 +156,7 @@ Gw
                         </connections>
                     </button>
                     <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k7e-RB-lW9">
-                        <rect key="frame" x="21" y="96" width="566" height="189"/>
+                        <rect key="frame" x="20" y="96" width="566" height="189"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <clipView key="contentView" id="oAM-JA-m2M">
                             <rect key="frame" x="1" y="1" width="564" height="187"/>

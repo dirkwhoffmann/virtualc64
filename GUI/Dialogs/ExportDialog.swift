@@ -16,6 +16,7 @@ class ExportDialog: DialogController {
     @IBOutlet weak var fileInfo: NSTextField!
 
     @IBOutlet weak var disclosureButton: NSButton!
+    @IBOutlet weak var disclosureText: NSTextField!
     @IBOutlet weak var previewScrollView: NSScrollView!
     @IBOutlet weak var previewTable: NSTableView!
     @IBOutlet weak var cylinderText: NSTextField!
@@ -52,7 +53,6 @@ class ExportDialog: DialogController {
     var driveID: DriveID?
     var drive: DriveProxy? { return driveID == nil ? nil : c64.drive(driveID!) }
     var disk: DiskProxy?
-    var d64: D64FileProxy?
     var volume: FSDeviceProxy?
 
     var errorReport: FSErrorReport?
@@ -196,9 +196,6 @@ class ExportDialog: DialogController {
         var err = ErrorCode.OK
         volume = FSDeviceProxy.make(withDisk: disk, error: &err)
         
-        // Try to decode the disk with the D64 decoder (DEPRECATED)
-        // d64 = D64FileProxy.make(withFileSystem: volume, error: &err)
-
         // REMOVE ASAP
         track("Exporter: Volume:")
         volume?.printDirectory()
@@ -242,7 +239,7 @@ class ExportDialog: DialogController {
                     
         // Enable compatible file formats in the format selector popup
         formatPopup.autoenablesItems = false
-        formatPopup.item(at: 0)!.isEnabled = d64 != nil    // D64
+        formatPopup.item(at: 0)!.isEnabled = volume != nil  // D64
         formatPopup.item(at: 1)!.isEnabled = volume != nil  // T64
         formatPopup.item(at: 2)!.isEnabled = volume != nil  // PRG
         formatPopup.item(at: 3)!.isEnabled = volume != nil  // P00
@@ -311,7 +308,9 @@ class ExportDialog: DialogController {
 
         // Update the disclosure button state
         disclosureButton.state = shrinked ? .off : .on
-        
+        disclosureButton.isHidden = volume == nil
+        disclosureText.isHidden = volume == nil
+
         // Hide some elements if the window is shrinked
         let items: [NSView] = [
             previewScrollView,
@@ -360,8 +359,6 @@ class ExportDialog: DialogController {
         
         } else {
             corruptionText.stringValue = ""
-            // corruptionText.textColor = .textColor
-            // corruptionText.textColor = .secondaryLabelColor
             corruptionStepper.isHidden = true
         }
         
@@ -371,23 +368,16 @@ class ExportDialog: DialogController {
     
     func updateDiskIcon() {
         
-        if driveID == nil {
-            
-            diskIcon.image = d64?.icon(protected: false)
-            
-        } else {
-            
-            let wp = drive!.hasWriteProtectedDisk()
-            diskIcon.image = d64?.icon(protected: wp)
-        }
+        let wp = drive!.hasWriteProtectedDisk()
+        diskIcon.image = AnyFileProxy.diskIcon(protected: wp)
     }
     
     func updateTitleText() {
         
-        var text = "This disk contains an unrecognized GCR stream"
-        var color = NSColor.warningColor
+        var text = "This disk cannot be exported"
+        var color = NSColor.textColor
         
-        if d64 != nil {
+        if volume != nil {
             text = "Commodore 64 Floppy Disk"
             color = NSColor.textColor
         }
@@ -398,7 +388,7 @@ class ExportDialog: DialogController {
 
     func updateTrackAndSectorInfo() {
         
-        var text = "This disk contains un unknown track and sector format"
+        var text = "Unknown track and sector format"
         var color = NSColor.warningColor
         
         if volume != nil {
@@ -444,10 +434,10 @@ class ExportDialog: DialogController {
             
             let files = num == 1 ? "file" : "files"
             text = "\(num) \(files), \(free) blocks used"
-            
-            fileInfo.stringValue = text
-            fileInfo.textColor = color
         }
+        
+        fileInfo.stringValue = text
+        fileInfo.textColor = color
     }
     
     func updateBlockInfo() {
