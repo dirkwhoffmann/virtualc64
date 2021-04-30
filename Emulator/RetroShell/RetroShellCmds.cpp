@@ -621,11 +621,23 @@ RetroShell::exec <Token::keyboard, Token::press> (Arguments& argv, long param)
 }
 
 template <> void
+RetroShell::exec <Token::keyboard, Token::press, Token::shiftlock> (Arguments& argv, long param)
+{
+    keyboard.pressShiftLock();
+}
+
+template <> void
 RetroShell::exec <Token::keyboard, Token::release> (Arguments& argv, long param)
 {
     isize key = util::parseNum(argv.front());
 
     keyboard.release(C64Key(key));
+}
+
+template <> void
+RetroShell::exec <Token::keyboard, Token::release, Token::shiftlock> (Arguments& argv, long param)
+{
+    keyboard.releaseShiftLock();
 }
 
 

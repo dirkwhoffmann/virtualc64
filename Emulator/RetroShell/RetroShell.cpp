@@ -413,7 +413,7 @@ RetroShell::describe(const std::exception &e)
 
     } else if (auto err = dynamic_cast<const ConfigLockedError *>(&e)) {
 
-        *this << "This option is locked because the Amiga is powered on.";
+        *this << "This option is locked because the C64 is powered on.";
         *this << '\n';
 
     } else if (auto err = dynamic_cast<const ConfigArgError *>(&e)) {

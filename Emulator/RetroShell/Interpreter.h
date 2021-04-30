@@ -39,9 +39,9 @@ enum class Token
     defaultbb, defaultfs, delay, device, engine, filename, filter, frame,
     graydotbug, joystick, keyset, left, model, palette, pan, poll,
     raminitpattern, revision, right, rom, sampling, saturation, sbcollisions,
-    searchpath, shakedetector, slow, slowramdelay, slowrammirror, speed,
-    sscollisions, step, tod, timeout, timerbbug, unmappingtype, velocity,
-    volume
+    searchpath, shakedetector, shiftlock, slow, slowramdelay, slowrammirror,
+    speed, sscollisions, step, tod, timeout, timerbbug, unmappingtype,
+    velocity, volume
 };
 
 struct TooFewArgumentsError : public util::ParseError {

@@ -21,7 +21,7 @@ RegressionTester::dumpTexture(const C64 &c64) const
 }
 
 void
-RegressionTester::dumpTexture(const class C64 &c64, const string &filename) const
+RegressionTester::dumpTexture(const C64 &c64, const string &filename) const
 {
     /* This function is used for automatic regression testing. It generates a
      * TIFF image of the current emulator texture in the /tmp directory and

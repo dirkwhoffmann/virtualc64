@@ -65,7 +65,7 @@ extension GuardTableView: NSTableViewDataSource {
         case "break":
             return last ? "" : "\u{26D4}" /* ⛔ */
         case "addr":
-            return last ? "Add..." : (addrCache[row] ?? "?")
+            return last ? "Add..." : addrCache[row]!
         case "delete":
             return last ? "" : "\u{1F5D1}" // "🗑"
 

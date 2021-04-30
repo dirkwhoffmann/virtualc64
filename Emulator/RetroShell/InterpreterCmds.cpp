@@ -463,9 +463,17 @@ Interpreter::registerInstructions()
              "command", "Presses a key",
              &RetroShell::exec <Token::keyboard, Token::press>, 1);
 
+    root.add({"keyboard", "press", "shiftlock"},
+             "command", "Presses the shift lock key",
+             &RetroShell::exec <Token::keyboard, Token::press, Token::shiftlock>);
+
     root.add({"keyboard", "release"},
              "command", "Presses a key",
              &RetroShell::exec <Token::keyboard, Token::release>, 1);
+
+    root.add({"keyboard", "release", "shiftlock"},
+             "command", "Releases the shift lock key",
+             &RetroShell::exec <Token::keyboard, Token::release, Token::shiftlock>);
 
     
     //
