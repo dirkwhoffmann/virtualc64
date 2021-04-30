@@ -151,11 +151,6 @@ Datasette::insertTape(TAPFile *file)
         }
     }
 
-    // Determine tape length (by fast forwarding)
-    rewind();
-    while (head < size) advanceHead(true /* Don't send progress messages */);
-
-    durationInCycles = headInCycles;
     rewind();
     
     c64.putMessage(MSG_VC1530_TAPE);
@@ -193,17 +188,14 @@ Datasette::advanceHead(bool silent)
 {
     assert(head < size);
     
-    // Update head and headInCycles
-    headInCycles += pulses[head].cycles;
     head++;
     
     // Send message if the tapeCounter (in seconds) changes
+    /*
     u32 newHeadInSeconds = (u32)(headInCycles / c64.frequency);
     if (newHeadInSeconds != headInSeconds && !silent)
         c64.putMessage(MSG_VC1530_PROGRESS);
-    
-    // Update headInSeconds
-    headInSeconds = newHeadInSeconds;
+    */
 }
 
 void

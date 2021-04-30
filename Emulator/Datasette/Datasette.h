@@ -61,13 +61,7 @@ class Datasette : public C64Component {
     
     // The position of the read/write head inside the data buffer (0 ... size)
     isize head = 0;
-    
-    // Head position measured in cycles
-    i64 headInCycles = 0;
-    
-    // Head position, measured in seconds
-    isize headInSeconds = 0;
-    
+        
     // Next scheduled rising edge on data line
     i64 nextRisingEdge = 0;
     
@@ -122,8 +116,6 @@ private:
         worker
         
         << head
-        << headInCycles
-        << headInSeconds
         << nextRisingEdge
         << nextFallingEdge
         << playKey
@@ -172,7 +164,7 @@ public:
     //
 
     // Puts the read/write head at the beginning of the tape
-    void rewind() { head = headInSeconds = headInCycles = 0; }
+    void rewind() { head = 0; }
 
     // Advances the read/write head one pulse
     void advanceHead(bool silent = false);
@@ -180,12 +172,6 @@ public:
     // Returns the head position
     isize getHead() const { return head; }
 
-    // Returns the head position in CPU cycles
-    i64 getHeadInCycles() const { return headInCycles; }
-
-    // Returns the head position in seconds
-    isize getHeadInSeconds() const { return headInSeconds; }
-        
     
     //
     // Running the device
