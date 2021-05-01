@@ -195,6 +195,26 @@ Interpreter::registerInstructions()
     //
     // CPU
     //
+
+    root.add({"datasette"},
+             "component", "Commodore 1530 tape drive");
+    
+    root.add({"datasette", "inspect"},
+             "command", "Displays the component state",
+             &RetroShell::exec <Token::datasette, Token::inspect>);
+
+    root.add({"datasette", "rewind"},
+             "command", "Rewinds the tape",
+             &RetroShell::exec <Token::datasette, Token::rewind>);
+
+    root.add({"datasette", "rewind", "to"},
+             "command", "Rewinds the tape to a specific position",
+             &RetroShell::exec <Token::datasette, Token::rewind, Token::to>, 1);
+
+    
+    //
+    // CPU
+    //
     
     root.add({"cpu"},
              "component", "Motorola 68k CPU");

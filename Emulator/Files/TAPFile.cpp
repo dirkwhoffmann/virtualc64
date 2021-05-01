@@ -35,6 +35,23 @@ TAPFile::getName() const
 }
 
 isize
+TAPFile::headerSize() const
+{
+    /* According to the specs, the first pulse byte is supposed to be found at
+     * position 0x14. However, some TAP files that are found in the wild don't
+     * seem to comply to this scheme. Hence, we take a slightly approach. The
+     * function starts scanning at position 0x14 and returns the position of
+     * the first non-zero byte.
+     */
+    /*
+    for (isize i = 0x14; i < (isize)size; i++) {
+        if (data[i]) return i;
+    }
+    */
+    return 0x14;
+}
+
+isize
 TAPFile::numPulses()
 {
     isize result;
@@ -48,7 +65,8 @@ TAPFile::numPulses()
 void
 TAPFile::seek(isize nr)
 {
-    fp = 0x14;
+    fp = headerSize();
+    printf("seek(%zd): fp = %zd\n", nr, fp);
     for (isize i = 0; i < nr; i++) read();
 }
 
@@ -73,6 +91,7 @@ TAPFile::read()
             
         } else {
             
+            printf("TAP1 with a zero pulse byte\n");
             // TAP1 with a zero pulse byte
             result = LO_LO_HI_HI(fp + 1 < (isize)size ? data[fp + 1] : 0,
                                  fp + 2 < (isize)size ? data[fp + 2] : 0,
@@ -95,5 +114,7 @@ TAPFile::repair()
     
     if (length + header != size) {
         warn("TAP: Expected %lu bytes, found %lu\n", length + header, size);
+    } else {
+        debug(TAP_DEBUG, "TAP file has been scanned with no errros\n");
     }
 }

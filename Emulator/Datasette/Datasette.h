@@ -96,6 +96,15 @@ private:
     
     
     //
+    // Analyzing
+    //
+    
+private:
+    
+    void _dump(dump::Category category, std::ostream& os) const override;
+
+    
+    //
     // Serializing
     //
     
@@ -165,7 +174,7 @@ public:
 public:
     
     // Puts the read/write head at the beginning of the tape
-    void rewind();
+    void rewind(isize seconds = 0);
 
     // Advances the read/write head one pulse
     void advanceHead();

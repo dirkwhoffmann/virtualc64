@@ -48,6 +48,9 @@ public:
     // Returns the TAP version (0 = standard layout, 1 = extended layout)
     TAPVersion version() const { return (TAPVersion)data[0x000C]; }
     
+    // Returns the position of the first pulse byte
+    isize headerSize() const;
+    
     // Returns the number of stored pulses
     isize numPulses();
 

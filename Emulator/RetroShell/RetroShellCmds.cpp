@@ -315,6 +315,30 @@ RetroShell::exec <Token::drive, Token::inspect> (Arguments& argv, long param)
 
 
 //
+// Datasette
+//
+
+template <> void
+RetroShell::exec <Token::datasette, Token::inspect> (Arguments& argv, long param)
+{
+    dump(c64.datasette, dump::State);
+}
+
+template <> void
+RetroShell::exec <Token::datasette, Token::rewind> (Arguments& argv, long param)
+{
+    datasette.rewind();
+}
+
+template <> void
+RetroShell::exec <Token::datasette, Token::rewind, Token::to> (Arguments& argv, long param)
+{
+    auto value = util::parseNum(argv.front());
+    datasette.rewind(value);
+}
+
+
+//
 // CPU
 //
 

@@ -22,25 +22,25 @@ enum class Token
     none,
     
     // Components
-    c64, cia, controlport, cpu, drive, expansion, fastsid, keyboard, memory,
-    monitor, mouse, resid, sid, vicii,
+    c64, cia, controlport, cpu, datasette, drive, expansion, fastsid, keyboard,
+    memory, monitor, mouse, resid, sid, vicii,
 
     // Commands
     about, attach, audiate, autosync, clear, close, config, connect, disconnect,
     dsksync, easteregg, eject, flash, init, insert, inspect, list, load, lock,
-    on, off, pause, power, press, regression, release, reset, run, save,
+    on, off, pause, power, press, regression, release, reset, rewind, run, save,
     screenshot, set, setup, source, type, wait,
     
     // Categories
     checksums, devices, events, registers, state,
     
     // Keys
-    accuracy, autofire, bankmap, brightness, bullets, chip, contrast, cutout,
-    defaultbb, defaultfs, delay, device, engine, filename, filter, frame,
-    graydotbug, joystick, keyset, left, model, palette, pan, poll,
+    accuracy, autofire, bankmap, brightness, bullets, chip, contrast, counter,
+    cutout, defaultbb, defaultfs, delay, device, engine, filename, filter,
+    frame, graydotbug, joystick, keyset, left, model, palette, pan, poll,
     raminitpattern, revision, right, rom, sampling, saturation, sbcollisions,
     searchpath, shakedetector, shiftlock, slow, slowramdelay, slowrammirror,
-    speed, sscollisions, step, tod, timeout, timerbbug, unmappingtype,
+    speed, sscollisions, step, to, tod, timeout, timerbbug, unmappingtype,
     velocity, volume
 };
 

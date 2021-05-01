@@ -49,6 +49,33 @@ Datasette::_reset()
     RESET_SNAPSHOT_ITEMS
 }
 
+void
+Datasette::_dump(dump::Category category, std::ostream& os) const
+{
+    using namespace util;
+
+    if (category & dump::State) {
+        
+        os << tab("TAP type");
+        os << dec(type) << std::endl;
+        os << tab("Pulse count");
+        os << dec(size) << std::endl;
+
+        os << std::endl;
+
+        os << tab("Head position");
+        os << dec(head) << std::endl;
+        os << tab("Play key");
+        os << bol(playKey, "pressed", "released") << std::endl;
+        os << tab("Motor");
+        os << bol(motor, "on", "off") << std::endl;
+        os << tab("nextRisingEdge");
+        os << dec(nextRisingEdge) << std::endl;
+        os << tab("nextFallingEdge");
+        os << dec(nextFallingEdge) << std::endl;
+    }
+}
+
 isize
 Datasette::_size()
 {
@@ -160,12 +187,18 @@ Datasette::ejectTape()
 }
 
 void
-Datasette::rewind()
+Datasette::rewind(isize seconds)
 {
     i64 old = (i64)counter.asSeconds();
 
+    // Start at the beginning
     counter = util::Time(0);
     head = 0;
+    
+    // Fast forward to the requested position
+    while (counter.asMilliseconds() < 1000 * seconds && head + 1 < size) {
+        advanceHead();
+    }
     
     // Inform the GUI
     if (old != (i64)counter.asSeconds()) {
