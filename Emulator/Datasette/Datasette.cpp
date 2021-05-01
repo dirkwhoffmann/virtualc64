@@ -12,9 +12,9 @@
 #include "C64.h"
 
 util::Time
-Pulse::time() const
+Pulse::delay() const
 {
-    return util::Time(cycles * 1000000000 / PAL_CLOCK_FREQUENCY);
+    return util::Time((i64)cycles * 1000000000 / PAL_CLOCK_FREQUENCY);
 }
 
 Datasette::~Datasette()
@@ -29,6 +29,7 @@ Datasette::alloc(isize capacity)
     
     if (capacity) {
         pulses = new (std::nothrow) Pulse[capacity];
+        size = capacity;
     }
 }
 
@@ -46,8 +47,6 @@ void
 Datasette::_reset()
 {
     RESET_SNAPSHOT_ITEMS
-    
-    rewind();
 }
 
 isize
@@ -75,10 +74,10 @@ Datasette::didLoadFromBuffer(const u8 *buffer)
     // Load size
     reader << size;
 
-    // Make sure that corrupted values do not cause any damage
+    // Make sure a corrupted value won't steal all memory
     if (size > 0x8FFFF) { size = 0; }
 
-    // Allocate new memory
+    // Create a new pulse buffer
     alloc(size);
 
     // Load pulses from buffer
@@ -107,13 +106,13 @@ Datasette::tapeDuration(isize pos)
     util::Time result;
     
     for (isize i = 0; i < pos && i < size; i++) {
-        result += pulses[i].time();
+        result += pulses[i].delay();
     }
     
     return result;
 }
 
-bool
+void
 Datasette::insertTape(TAPFile *file)
 {
     suspend();
@@ -121,105 +120,127 @@ Datasette::insertTape(TAPFile *file)
     debug(TAP_DEBUG, "Inserting tape...\n");
 
     // Allocate pulse buffer
-    alloc(file->size);
-
+    isize numPulses = file->numPulses();
+    alloc(numPulses);
+    debug(true, "Tape contains %zd pulsed\n", numPulses);
+    
     // Read pulses
-    size = 0;
-    if (file->version() == 0) {
+    file->seek(0);
+    for (isize i = 0; i < numPulses; i++) {
 
-        // TAP type 0 (standard pulse format)
-        for (isize i = 0x14; (usize)i < file->size; i++, size++) {
-            
-            u8 byte = file->getData(i);
-            pulses[size].cycles = 8 * (byte ? byte : 256);
-        }
-
-    } else {
-
-        // TAP type 1 (extended pulse format)
-        for (isize i = 0x14; (usize)i < file->size; i++, size++) {
-            
-            u8 byte = file->getData(i);
-            if (byte) {
-                pulses[size].cycles = 8 * byte;
-            } else {
-                pulses[size].cycles = LO_LO_HI_HI(file->getData(i + 1),
-                                                  file->getData(i + 2),
-                                                  file->getData(i + 3), 0);
-                i += 3;
-            }
-        }
+        pulses[i].cycles = (i32)file->read();
+        assert(pulses[i].cycles != -1);
     }
 
+    // Rewind the tape
     rewind();
     
-    c64.putMessage(MSG_VC1530_TAPE);
-    resume();
+    // Inform the GUI
+    c64.putMessage(MSG_VC1530_TAPE, 1);
     
-    return true;
+    resume();
 }
 
 void
 Datasette::ejectTape()
 {
+    // Only proceed if a tape is present
+    if (!hasTape()) return;
+
     suspend();
     
-    trace(TAP_DEBUG, "Ejecting tape\n");
-
-    if (!hasTape())
-        return;
+    debug(TAP_DEBUG, "Ejecting tape\n");
     
     pressStop();
+    rewind();
+    dealloc();
     
-    assert(pulses);
-    free(pulses);
-    pulses = nullptr;
-    size = 0;
-    type = 0;
-    durationInCycles = 0;
-    head = -1;
-
-    c64.putMessage(MSG_VC1530_NO_TAPE);
+    c64.putMessage(MSG_VC1530_TAPE, 0);
     resume();
 }
 
 void
-Datasette::advanceHead(bool silent)
+Datasette::rewind()
+{
+    i64 old = (i64)counter.asSeconds();
+
+    counter = util::Time(0);
+    head = 0;
+    
+    // Inform the GUI
+    if (old != (i64)counter.asSeconds()) {
+        messageQueue.put(MSG_VC1530_COUNTER, (i64)counter.asSeconds());
+    }
+}
+
+void
+Datasette::advanceHead()
 {
     assert(head < size);
     
+    i64 old = (i64)counter.asSeconds();
+        
+    counter += pulses[head].delay();
     head++;
     
-    // Send message if the tapeCounter (in seconds) changes
-    /*
-    u32 newHeadInSeconds = (u32)(headInCycles / c64.frequency);
-    if (newHeadInSeconds != headInSeconds && !silent)
-        c64.putMessage(MSG_VC1530_PROGRESS);
-    */
+    // Inform the GUI
+    if (old != (i64)counter.asSeconds()) {
+        messageQueue.put(MSG_VC1530_COUNTER, (i64)counter.asSeconds());
+    }
 }
 
 void
 Datasette::pressPlay()
 {
-    if (!hasTape())
-        return;
+    debug(TAP_DEBUG, "pressPlay\n");
+
+    // Only proceed if a tape is present
+    if (!hasTape()) return;
     
-    trace(TAP_DEBUG, "pressPlay\n");
     playKey = true;
 
-    // Schedule first pulse
-    usize length = pulses[head].cycles; //  pulseLength();
-    nextRisingEdge = length / 2;
-    nextFallingEdge = length;
+    // Schedule the first pulse
+    schedulePulse(head);
     advanceHead();
+    
+    messageQueue.put(MSG_VC1530_PLAY, 1);
 }
 
 void
 Datasette::pressStop()
 {
-    trace(TAP_DEBUG, "pressStop\n");
-    motor = false;
+    debug(TAP_DEBUG, "pressStop\n");
+    
     playKey = false;
+    motor = false;
+
+    messageQueue.put(MSG_VC1530_PLAY, 0);
+}
+
+void
+Datasette::setMotor(bool value)
+{
+    if (motor != value) {
+
+        motor = value;
+        
+        /* When the motor is switched on or off, a MSG_VC1530_MOTOR message is
+         * sent to the GUI. However, if we sent the message immediately, we
+         * would risk to flood the message queue, because some C64 switch the
+         * motor state insanely often. To cope with this situation, we set a
+         * counter and let the vsync handler send the message once the counter
+         * has timed out.
+         */
+        msgMotorDelay = 10;
+    }
+}
+
+void
+Datasette::vsyncHandler()
+{
+    if (--msgMotorDelay == 0) {
+        messageQueue.put(MSG_VC1530_MOTOR, motor);
+    }
 }
 
 void
@@ -240,9 +261,7 @@ Datasette::_execute()
         if (head < size) {
 
             // Schedule the next pulse
-            isize length = pulses[head].cycles; //  pulseLength();
-            nextRisingEdge = length / 2;
-            nextFallingEdge = length;
+            schedulePulse(head);
             advanceHead();
             
         } else {
@@ -251,4 +270,14 @@ Datasette::_execute()
             pressStop();
         }
     }
+}
+
+void
+Datasette::schedulePulse(isize nr)
+{
+    assert(nr < size);
+    
+    // The VC1530 uses square waves with a 50% duty cycle
+    nextRisingEdge = pulses[nr].cycles / 2;
+    nextFallingEdge = pulses[nr].cycles;
 }

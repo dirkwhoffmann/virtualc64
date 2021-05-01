@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,6 +23,7 @@
                 <outlet property="redLED9" destination="iKN-RM-vsV" id="cac-3p-tQd"/>
                 <outlet property="spinning8" destination="2203" id="ons-cN-UFy"/>
                 <outlet property="spinning9" destination="xzf-hU-AKK" id="C8r-MJ-Kde"/>
+                <outlet property="tapeCounter" destination="HdD-JF-2Va" id="Dps-K3-bdI"/>
                 <outlet property="tapeIcon" destination="NlM-JA-g9p" id="N4F-vG-K0f"/>
                 <outlet property="tapeProgress" destination="H1X-Kk-fcE" id="HyE-RP-1yJ"/>
                 <outlet property="toolbar" destination="1845" id="vCR-nf-AUd"/>
@@ -37,7 +38,7 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="preferred" titlebarAppearsTransparent="YES" toolbarStyle="expanded" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="800" height="640"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1095"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1536" height="935"/>
             <value key="minSize" type="size" width="402" height="323"/>
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="640"/>
@@ -85,7 +86,7 @@
                         </buttonCell>
                     </button>
                     <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NlM-JA-g9p">
-                        <rect key="frame" x="252" y="3" width="20" height="20"/>
+                        <rect key="frame" x="293" y="3" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="tapeTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="Rze-Qf-HUV">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -101,7 +102,7 @@
                         </buttonCell>
                     </button>
                     <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="H1X-Kk-fcE">
-                        <rect key="frame" x="280" y="5" width="16" height="16"/>
+                        <rect key="frame" x="321" y="5" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </progressIndicator>
                     <button toolTip="Connect / Disconnect drive" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="FWS-Ng-oe6">
@@ -194,7 +195,7 @@
                         </textFieldCell>
                     </textField>
                     <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2003">
-                        <rect key="frame" x="304" y="3" width="20" height="20"/>
+                        <rect key="frame" x="345" y="3" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="crtTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="2004">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -208,6 +209,15 @@
                             <font key="font" metaFont="label" size="9"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HdD-JF-2Va">
+                        <rect key="frame" x="253" y="6" width="36" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="00:00" id="hjK-ID-3do">
+                            <font key="font" metaFont="message" size="11"/>
+                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                 </subviews>
@@ -269,7 +279,7 @@
                             </connections>
                         </segmentedControl>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="51492251-19AF-4930-A929-E11EB48D15C3" label="Port 1" paletteLabel="Port 1" tag="10" image="devNoneTemplate" sizingBehavior="auto" id="kR6-IR-lNs">
+                    <toolbarItem implicitItemIdentifier="51492251-19AF-4930-A929-E11EB48D15C3" label="Port 1" paletteLabel="Port 1" tag="10" image="devNoneTemplate" title="None" sizingBehavior="auto" id="kR6-IR-lNs">
                         <nil key="toolTip"/>
                         <popUpButton key="view" tag="10" id="L2b-nG-yBo" userLabel="Port 1">
                             <rect key="frame" x="0.0" y="14" width="41" height="20"/>
@@ -297,7 +307,7 @@
                             </connections>
                         </popUpButton>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="C269144D-4809-4126-B5DC-8A410DC46169" label="Port 2" paletteLabel="Port 2" tag="11" image="devNoneTemplate" sizingBehavior="auto" id="Klt-YL-0mv" userLabel="Port 2">
+                    <toolbarItem implicitItemIdentifier="C269144D-4809-4126-B5DC-8A410DC46169" label="Port 2" paletteLabel="Port 2" tag="11" image="devNoneTemplate" title="None" sizingBehavior="auto" id="Klt-YL-0mv" userLabel="Port 2">
                         <nil key="toolTip"/>
                         <popUpButton key="view" tag="11" id="4MP-rV-xX2" userLabel="Port 2">
                             <rect key="frame" x="0.0" y="14" width="41" height="20"/>

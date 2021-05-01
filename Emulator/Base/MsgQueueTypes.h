@@ -86,8 +86,9 @@ enum_long(MSG)
 
     // Peripherals (Datasette)
     MSG_VC1530_TAPE,
-    MSG_VC1530_NO_TAPE,
-    MSG_VC1530_PROGRESS,
+    MSG_VC1530_PLAY,
+    MSG_VC1530_MOTOR,
+    MSG_VC1530_COUNTER,
 
     // Peripherals (Expansion port)
     MSG_CRT_UNSUPPORTED,
@@ -188,8 +189,9 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_FILE_FLASHED:         return "FILE_FLASHED";
                 
             case MSG_VC1530_TAPE:          return "VC1530_TAPE";
-            case MSG_VC1530_NO_TAPE:       return "VC1530_NO_TAPE";
-            case MSG_VC1530_PROGRESS:      return "VC1530_PROGRESS";
+            case MSG_VC1530_PLAY:          return "VC1530_PLAY";
+            case MSG_VC1530_MOTOR:         return "VC1530_MOTOR";
+            case MSG_VC1530_COUNTER:       return "VC1530_COUNTER";
                 
             case MSG_CRT_UNSUPPORTED:      return "CRT_UNSUPPORTED";
             case MSG_CRT_ATTACHED:         return "CRT_ATTACHED";

@@ -1323,6 +1323,11 @@
     return [self datasette]->getPlayKey();
 }
 
+- (NSInteger) counter
+{
+    return [self datasette]->getCounter();
+}
+
 - (void)pressPlay
 {
     [self datasette]->pressPlay();
@@ -1338,9 +1343,9 @@
     [self datasette]->rewind();
 }
 
-- (BOOL)insertTape:(TAPFileProxy *)proxy
+- (void)insertTape:(TAPFileProxy *)proxy
 {
-    return [self datasette]->insertTape((TAPFile *)proxy->obj);
+    [self datasette]->insertTape((TAPFile *)proxy->obj);
 }
 
 - (void)ejectTape

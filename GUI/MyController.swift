@@ -177,6 +177,7 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var debugIcon: NSButton!
     @IBOutlet weak var muteIcon: NSButton!
     @IBOutlet weak var tapeIcon: NSButton!
+    @IBOutlet weak var tapeCounter: NSTextField!
     @IBOutlet weak var tapeProgress: NSProgressIndicator!
     @IBOutlet weak var crtIcon: NSButton!
     @IBOutlet weak var clockSpeed: NSTextField!
@@ -702,11 +703,18 @@ extension MyController {
             refreshStatusBar()
 
         case .VC1530_TAPE:
-            mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
+            if msg.data == 1 {
+                mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
+            }
             refreshStatusBar()
 
-        case .VC1530_NO_TAPE,
-             .VC1530_PROGRESS:
+        case .VC1530_PLAY:
+            refreshStatusBar()
+
+        case .VC1530_MOTOR:
+            refreshStatusBar()
+
+        case .VC1530_COUNTER:
             refreshStatusBar()
 
         case .CRT_UNSUPPORTED:

@@ -13,6 +13,9 @@
 
 class TAPFile : public AnyFile {
  
+    // File pointer (used by read() and seek())
+    isize fp = -1;
+    
 public:
 
     //
@@ -39,11 +42,20 @@ public:
     
     
     //
-    // Retrieving tape information
+    // Reading
     //
     
-    // Returns the TAP version (0 = original layout, 1 = updated layout)
+    // Returns the TAP version (0 = standard layout, 1 = extended layout)
     TAPVersion version() const { return (TAPVersion)data[0x000C]; }
+    
+    // Returns the number of stored pulses
+    isize numPulses();
+
+    // Sets the file pointer to a specific pulse
+    void seek(isize nr);
+    
+    // Reads the next pulse and advances the file pointer
+    isize read();
     
 
     //

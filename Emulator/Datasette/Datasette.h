@@ -24,7 +24,7 @@ public:
     Pulse() : cycles(0) { };
     Pulse(i32 value) : cycles(value) { };
     
-    util::Time time() const;
+    util::Time delay() const;
 };
 
 class Datasette : public C64Component {
@@ -32,48 +32,49 @@ class Datasette : public C64Component {
     //
     // Tape
     //
-    
-    // Pulse buffer
-    Pulse *pulses = nullptr;
-    
-    // Number of stored pulses
-    isize size = 0;
-    
-    /* Data format (as specified in the TAP type).
+
+    /* Data format (as specified in the TAP file)
      *
-     * In TAP format 0, data byte 0 signals a long pulse without stating its
-     * length precisely.
+     *   - In TAP format 0, data byte 0 signals a long pulse without stating
+     *     its length precisely.
      *
-     * In TAP format 1, each 0 is followed by three bytes stating the precise
-     * length in LO_LO_HI_00 format.
+     *   - In TAP format 1, each 0 is followed by three bytes stating the
+     *     precise length in LO_LO_HI_00 format.
      */
     u8 type = 0;
+
+    // The pulse buffer
+    Pulse *pulses = nullptr;
     
-    /* Tape length in cycles. The value is set when insertTape() is called. It
-     * is computed by iterating over all pulses in the data buffer.
-     */
-    u64 durationInCycles = 0;
-    
-    
+    // Number of pulses stored in the pulse buffer
+    isize size = 0;
+            
+
     //
     // Tape drive
     //
     
-    // The position of the read/write head inside the data buffer (0 ... size)
+    // The position of the read/write head inside the pulse buffer (0 ... size)
     isize head = 0;
-        
+
+    // The tape counter (time between start and the current head position)
+    util::Time counter;
+    
+    // State of the play key
+    bool playKey = false;
+    
+    // State of the drive motor
+    bool motor = false;
+
     // Next scheduled rising edge on data line
     i64 nextRisingEdge = 0;
     
     // Next scheduled falling edge on data line
     i64 nextFallingEdge = 0;
     
-    // Indicates whether the play key is pressed
-    bool playKey = false;
-    
-    // Indicates whether the motor is switched on
-    bool motor = false;
-    
+    // Frame counter for controlling the amout of messages sent to the GUI
+    isize msgMotorDelay = 0;
+
     
     //
     // Initializing
@@ -105,9 +106,7 @@ private:
     {
         worker
         
-        << size
-        << type
-        << durationInCycles;
+        << type;
     }
     
     template <class T>
@@ -116,10 +115,12 @@ private:
         worker
         
         << head
+        << counter.ticks
+        << playKey
+        << motor
         << nextRisingEdge
         << nextFallingEdge
-        << playKey
-        << motor;
+        << msgMotorDelay;
     }
     
     isize _size() override;
@@ -128,17 +129,6 @@ private:
     isize didLoadFromBuffer(const u8 *buffer) override;
     isize didSaveToBuffer(u8 *buffer) override;
 
-
-    //
-    // Analyzing
-    //
-    
-    // Returns the duration from the tape start and the specified position
-    util::Time tapeDuration(isize pos);
-
-    // Returns the duration of the entire tape
-    util::Time tapeDuration() { return tapeDuration(size); }
-    
     
     //
     // Handling tapes
@@ -148,49 +138,68 @@ public:
     
     // Returns true if a tape is inserted
     bool hasTape() const { return size != 0; }
-    
-    //Inserts a TAP archive as a virtual tape
-    bool insertTape(TAPFile *a);
 
-    // Ejects the virtual tape (if any)
+    // Returns the duration from the tape start and the specified position
+    util::Time tapeDuration(isize pos);
+
+    // Returns the duration of the entire tape
+    util::Time tapeDuration() { return tapeDuration(size); }
+
+    // Returns the current tape counter in (truncated) seconds
+    isize getCounter() { return (isize)counter.asSeconds(); }
+
+    //Inserts a TAP archive as a virtual tape
+    void insertTape(TAPFile *a);
+
+    // Ejects the tape (if any)
     void ejectTape();
 
-    // Returns the tape type (TAP format, 0 or 1).
+    // Returns the tape type (TAP format, 0 or 1)
     u8 getType() const { return type; }
-
+        
     
     //
     // Operating the read/write head
     //
 
+public:
+    
     // Puts the read/write head at the beginning of the tape
-    void rewind() { head = 0; }
+    void rewind();
 
     // Advances the read/write head one pulse
-    void advanceHead(bool silent = false);
+    void advanceHead();
     
-    // Returns the head position
-    isize getHead() const { return head; }
-
     
     //
     // Running the device
     //
     
+public:
+    
     // Returns true if the play key is pressed
     bool getPlayKey() const { return playKey; }
 
-    // Press play on tape
+    // Presses the play key
     void pressPlay(); 
 
-    // Press stop key
+    // Presses the stop key
     void pressStop();
 
     // Returns true if the datasette motor is switched on
     bool getMotor() const { return motor; }
 
     // Switches the motor on or off
-    void setMotor(bool value) { motor = value; }
+    void setMotor(bool value);
+
+    
+    //
+    // Performing periodic events
+    //
+    
+public:
+    
+    void vsyncHandler();
 
     // Emulates the datasette
     void execute() { if (playKey && motor) _execute(); }
@@ -199,4 +208,7 @@ private:
 
     // Internal execution function
     void _execute();
+    
+    // Schedules a pulse
+    void schedulePulse(isize nr);
 };

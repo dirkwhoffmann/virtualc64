@@ -539,12 +539,13 @@
 @property (readonly) NSInteger type;
 @property (readonly) BOOL motor;
 @property (readonly) BOOL playKey;
+@property (readonly) NSInteger counter;
 
 - (void)pressPlay;
 - (void)pressStop;
 - (void)rewind;
 - (void)ejectTape;
-- (BOOL)insertTape:(TAPFileProxy *)tape;
+- (void)insertTape:(TAPFileProxy *)tape;
 
 @end
 

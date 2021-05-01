@@ -296,11 +296,11 @@ class MyDocument: NSDocument {
     func mountAttachmentAsTape() -> Bool {
         
         track()
+        
         if let tape = attachment as? TAPFileProxy {
-            
-            return parent.c64.datasette.insertTape(tape)
+            parent.c64.datasette.insertTape(tape)
         }
-        return false
+        return true
     }
         
     @discardableResult

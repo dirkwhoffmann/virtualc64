@@ -51,7 +51,10 @@ extension MyController {
         // Floppy drives
         refreshStatusBarDriveItems(drive: .DRIVE8)
         refreshStatusBarDriveItems(drive: .DRIVE9)
-                
+            
+        // Datasette
+        refreshStatusBarDatasette()
+        
         // Warp mode
         refreshStatusBarWarpIcon()
         
@@ -70,6 +73,7 @@ extension MyController {
             muteIcon: warp || muted,
             
             tapeIcon: c64.datasette.hasTape,
+            tapeCounter: c64.datasette.hasTape,
             tapeProgress: c64.datasette.motor,
             
             crtIcon: hasCrt,
@@ -169,6 +173,20 @@ extension MyController {
         }
     }
 
+    func refreshStatusBarDatasette() {
+        
+        if c64.datasette.motor && c64.datasette.playKey {
+            tapeProgress.startAnimation(self)
+        } else {
+            tapeProgress.stopAnimation(self)
+        }
+        
+        let counter = c64.datasette.counter
+        let min = counter / 60
+        let sec = counter % 60
+        tapeCounter.stringValue = String.init(format: "%02d:%02d", min, sec)
+    }
+    
     func refreshStatusBarWarpIcon() {
         
         warpIcon.image = hourglass

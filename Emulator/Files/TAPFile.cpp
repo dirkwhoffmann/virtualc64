@@ -34,6 +34,59 @@ TAPFile::getName() const
     return PETName<16>(data + 8);
 }
 
+isize
+TAPFile::numPulses()
+{
+    isize result;
+
+    seek(0);
+    for (result = 0; read() != -1; result++) { }
+    
+    return result;
+}
+
+void
+TAPFile::seek(isize nr)
+{
+    fp = 0x14;
+    for (isize i = 0; i < nr; i++) read();
+}
+
+isize
+TAPFile::read()
+{
+    isize result = -1;
+    
+    if (fp != -1) {
+
+        if (data[fp]) {
+            
+            // TAP0 and TAP1 with a non-zero pulse byte
+            result = 8 * data[fp];
+            fp += 1;
+
+        } else if (version() == 0) {
+
+            // TAP0 with a zero pulse byte
+            result = 8 * 256;
+            fp += 1;
+            
+        } else {
+            
+            // TAP1 with a zero pulse byte
+            result = LO_LO_HI_HI(fp + 1 < (isize)size ? data[fp + 1] : 0,
+                                 fp + 2 < (isize)size ? data[fp + 2] : 0,
+                                 fp + 3 < (isize)size ? data[fp + 3] : 0, 0);
+            fp += 4;
+        }
+        
+        // Check for EOF
+        if (fp >= (isize)size) fp = -1;
+    }
+    
+    return result;
+}
+
 void
 TAPFile::repair()
 {
