@@ -57,7 +57,7 @@ class Console: Layer {
             if let text = c64.retroShell.getText() {
                 
                 let cursorColor = NSColor.init(r: 255, g: 255, b: 255, a: 128)
-                let monoFont = NSFont.monospacedSystemFont(ofSize: 14, weight: .medium)
+                let monoFont = NSFont.monospaced(ofSize: 14, weight: .medium)
                 let cpos = c64.retroShell.cposRel
                 
                 let attr = [
