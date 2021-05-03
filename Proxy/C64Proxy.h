@@ -304,6 +304,7 @@
 
 @interface VICProxy : HardwareComponentProxy { }
 
+- (VICIIConfig)getConfig;
 - (BOOL)isPAL;
 - (void *)stableEmuTexture;
 - (NSColor *)color:(NSInteger)nr;

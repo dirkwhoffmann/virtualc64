@@ -764,6 +764,12 @@ extension MyController {
         case .CLOSE_CONSOLE:
             renderer.console.close(delay: 0.25)
             
+        case .DMA_DEBUG_ON:
+            renderer.zoomTextureOut()
+
+        case .DMA_DEBUG_OFF:
+            renderer.zoomTextureIn()
+
         default:
             track("Unknown message: \(msg)")
             assert(false)

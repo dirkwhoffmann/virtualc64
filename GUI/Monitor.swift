@@ -60,24 +60,37 @@ class Monitor: DialogController {
     
     func refresh() {
                 
-        // Bus debugger
-        busDebug.state = config.dmaDebug ? .on : .off
-        busChannelR.state = config.dmaChannelR ? .on : .off
-        busChannelI.state = config.dmaChannelI ? .on : .off
-        busChannelC.state = config.dmaChannelC ? .on : .off
-        busChannelG.state = config.dmaChannelG ? .on : .off
-        busChannelP.state = config.dmaChannelP ? .on : .off
-        busChannelS.state = config.dmaChannelS ? .on : .off
-        busColorR.color = config.dmaColorR
-        busColorI.color = config.dmaColorI
-        busColorC.color = config.dmaColorC
-        busColorG.color = config.dmaColorG
-        busColorP.color = config.dmaColorP
-        busColorS.color = config.dmaColorS
-        busOpacity.integerValue = config.dmaOpacity
-        busDisplayMode.selectItem(withTag: config.dmaDisplayMode)
+        let cnf = c64.vic.getConfig()
         
-        // Stencils
+        // Bus debugger
+        /*
+        let vicinfo = c64.vic.getInfo()
+        vicinfo.
+        let bus = c64.getConfig(.DMA_DEBUG_ENABLE) != 0
+        let opacity = c64.getConfig(.DMA_DEBUG_OPACITY)
+        let mode = c64.getConfig(.DMA_DEBUG_MODE)
+        */
+                
+        busDebug.state = cnf.dmaDebug ? .on : .off
+        busChannelR.state = cnf.dmaChannel.0 ? .on : .off
+        busChannelI.state = cnf.dmaChannel.1 ? .on : .off
+        busChannelC.state = cnf.dmaChannel.2 ? .on : .off
+        busChannelG.state = cnf.dmaChannel.3 ? .on : .off
+        busChannelP.state = cnf.dmaChannel.4 ? .on : .off
+        busChannelS.state = cnf.dmaChannel.5 ? .on : .off
+        
+        // Colors
+        busColorR.setColor(cnf.dmaColor.0)
+        busColorI.setColor(cnf.dmaColor.1)
+        busColorC.setColor(cnf.dmaColor.2)
+        busColorG.setColor(cnf.dmaColor.3)
+        busColorP.setColor(cnf.dmaColor.4)
+        busColorS.setColor(cnf.dmaColor.5)
+
+        busOpacity.integerValue = Int(cnf.dmaOpacity)
+        busDisplayMode.selectItem(withTag: cnf.dmaDisplayMode.rawValue)
+        
+        // Layer debugger
         let layers = config.vicCutLayers
         cutForeground.state = (layers & 0x800) != 0 ? .on : .off
         cutForeground.state = (layers & 0x400) != 0 ? .on : .off
@@ -116,59 +129,39 @@ class Monitor: DialogController {
 
         track()
         
-        if sender.state == .on {
-            config.dmaDebug = true
-            parent.renderer.zoomTextureOut()
-        } else {
-            config.dmaDebug = false
-            parent.renderer.zoomTextureIn()
-        }
+        c64.configure(.DMA_DEBUG_ENABLE, enable: sender.state == .on)
         refresh()
     }
 
     @IBAction func busColorAction(_ sender: NSColorWell!) {
         
-        track()
-                
-        switch MemAccess.init(rawValue: sender.tag)! {
-        case .R: config.dmaColorR = sender.color
-        case .I: config.dmaColorI = sender.color
-        case .C: config.dmaColorC = sender.color
-        case .G: config.dmaColorG = sender.color
-        case .P: config.dmaColorP = sender.color
-        case .S: config.dmaColorS = sender.color
-        default: fatalError()
-        }
+        let r = Int(sender.color.redComponent * 255)
+        let g = Int(sender.color.greenComponent * 255)
+        let b = Int(sender.color.blueComponent * 255)
+        let bgr = (b << 16) | (g << 8) | (r << 0)
+        
+        c64.configure(.DMA_DEBUG_COLOR, id: sender.tag, value: bgr)
         refresh()
     }
 
     @IBAction func busChannelAction(_ sender: NSButton!) {
         
         track()
-        
-        switch MemAccess.init(rawValue: sender.tag)! {
-        case .R: config.dmaChannelR = sender.state == .on
-        case .I: config.dmaChannelI = sender.state == .on
-        case .C: config.dmaChannelC = sender.state == .on
-        case .G: config.dmaChannelG = sender.state == .on
-        case .P: config.dmaChannelP = sender.state == .on
-        case .S: config.dmaChannelS = sender.state == .on
-        default: fatalError()
-        }
+        c64.configure(.DMA_DEBUG_ENABLE, id: sender.tag, enable: sender.state == .on)
         refresh()
     }
 
     @IBAction func busDisplayModeAction(_ sender: NSPopUpButton!) {
         
         track()
-        config.dmaDisplayMode = sender.selectedTag()
+        c64.configure(.DMA_DEBUG_MODE, value: sender.selectedTag())
         refresh()
     }
     
     @IBAction func busOpacityAction(_ sender: NSSlider!) {
         
         track()
-        config.dmaOpacity = sender.integerValue
+        c64.configure(.DMA_DEBUG_OPACITY, value: sender.integerValue)
         refresh()
     }
     

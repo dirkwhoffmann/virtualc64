@@ -29,16 +29,18 @@ VICII::visualizeDma(u8 offset, u8 data, MemAccess type)
 {
     int *p = dmaTexturePtr + bufferoffset + offset;
     
-    p[3] = debugColor[type][data & 0b11]; data >>= 2;
-    p[2] = debugColor[type][data & 0b11]; data >>= 2;
-    p[1] = debugColor[type][data & 0b11]; data >>= 2;
-    p[0] = debugColor[type][data & 0b11];
+    if (config.dmaChannel[type]) {
+        
+        p[3] = debugColor[type][data & 0b11]; data >>= 2;
+        p[2] = debugColor[type][data & 0b11]; data >>= 2;
+        p[1] = debugColor[type][data & 0b11]; data >>= 2;
+        p[0] = debugColor[type][data & 0b11];
+    }
 }
 
 void
 VICII::computeOverlay()
 {
-    // double bgWeight, fgWeight;
     double weight = config.dmaOpacity / 255.0;
 
     switch (config.dmaDisplayMode) {

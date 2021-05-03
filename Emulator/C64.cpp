@@ -170,25 +170,13 @@ C64::getConfigItem(Option option) const
         case OPT_GRAY_DOT_BUG:
         case OPT_GLUE_LOGIC:
         case OPT_HIDE_SPRITES:
-        case OPT_DMA_DEBUG:
-        case OPT_DMA_CHANNEL_R:
-        case OPT_DMA_CHANNEL_I:
-        case OPT_DMA_CHANNEL_C:
-        case OPT_DMA_CHANNEL_G:
-        case OPT_DMA_CHANNEL_P:
-        case OPT_DMA_CHANNEL_S:
-        case OPT_DMA_COLOR_R:
-        case OPT_DMA_COLOR_I:
-        case OPT_DMA_COLOR_C:
-        case OPT_DMA_COLOR_G:
-        case OPT_DMA_COLOR_P:
-        case OPT_DMA_COLOR_S:
-        case OPT_DMA_DISPLAY_MODE:
-        case OPT_DMA_OPACITY:
         case OPT_CUT_LAYERS:
         case OPT_CUT_OPACITY:
         case OPT_SS_COLLISIONS:
         case OPT_SB_COLLISIONS:
+        case OPT_DMA_DEBUG_ENABLE:
+        case OPT_DMA_DEBUG_MODE:
+        case OPT_DMA_DEBUG_OPACITY:
             return vic.getConfigItem(option);
                         
         case OPT_CIA_REVISION:
@@ -221,6 +209,10 @@ C64::getConfigItem(Option option, long id) const
     
     switch (option) {
             
+        case OPT_DMA_DEBUG_ENABLE:
+        case OPT_DMA_DEBUG_COLOR:
+            return vic.getConfigItem(option, id);
+
         case OPT_SID_ENABLE:
         case OPT_SID_ADDRESS:
         case OPT_AUDPAN:

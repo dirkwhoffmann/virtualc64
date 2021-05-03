@@ -361,6 +361,11 @@
     return (VICII *)obj;
 }
 
+- (VICIIConfig)getConfig
+{
+    return [self vicii]->getConfig();
+}
+
 - (BOOL)isPAL
 {
     return [self vicii]->isPAL();

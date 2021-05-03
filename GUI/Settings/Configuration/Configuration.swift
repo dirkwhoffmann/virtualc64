@@ -43,6 +43,7 @@ class Configuration {
         set { c64.configure(.HIDE_SPRITES, enable: newValue) }
     }
     
+    /*
     var dmaDebug: Bool {
         get { return c64.getConfig(.DMA_DEBUG) != 0 }
         set { c64.configure(.DMA_DEBUG, enable: newValue) }
@@ -117,6 +118,7 @@ class Configuration {
         get { return c64.getConfig(.DMA_OPACITY) }
         set { c64.configure(.DMA_OPACITY, value: newValue) }
     }
+    */
     
     var vicCutLayers: Int {
         get { return c64.getConfig(.CUT_LAYERS) }

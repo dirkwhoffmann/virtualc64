@@ -112,6 +112,10 @@ enum_long(MSG)
     // Console
     MSG_CLOSE_CONSOLE,
     
+    // Debugging
+    MSG_DMA_DEBUG_ON,
+    MSG_DMA_DEBUG_OFF,
+    
     MSG_COUNT
 };
 typedef MSG MsgType;
@@ -209,6 +213,8 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_SNAPSHOT_RESTORED:    return "SNAPSHOT_RESTORED";
                 
             case MSG_CLOSE_CONSOLE:        return "CLOSE_CONSOLE";
+            case MSG_DMA_DEBUG_ON:         return "DMA_DEBUG_ON";
+            case MSG_DMA_DEBUG_OFF:        return "DMA_DEBUG_OFF";
                 
             case MSG_COUNT:                return "???";
         }

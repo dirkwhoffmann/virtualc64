@@ -122,21 +122,21 @@ VICII::resetConfig()
     setConfigItem(OPT_SATURATION, 50);
 
     setConfigItem(OPT_HIDE_SPRITES, false);
-    setConfigItem(OPT_DMA_DEBUG, false);
-    setConfigItem(OPT_DMA_CHANNEL_R, true);
-    setConfigItem(OPT_DMA_CHANNEL_I, true);
-    setConfigItem(OPT_DMA_CHANNEL_C, true);
-    setConfigItem(OPT_DMA_CHANNEL_G, true);
-    setConfigItem(OPT_DMA_CHANNEL_P, true);
-    setConfigItem(OPT_DMA_CHANNEL_S, true);
-    setConfigItem(OPT_DMA_COLOR_R, GpuColor(0xFF, 0x00, 0x00).rawValue);
-    setConfigItem(OPT_DMA_COLOR_I, GpuColor(0xFF, 0xC0, 0x00).rawValue);
-    setConfigItem(OPT_DMA_COLOR_C, GpuColor(0xFF, 0xFF, 0x00).rawValue);
-    setConfigItem(OPT_DMA_COLOR_G, GpuColor(0x00, 0xFF, 0xFF).rawValue);
-    setConfigItem(OPT_DMA_COLOR_P, GpuColor(0x00, 0xFF, 0x00).rawValue);
-    setConfigItem(OPT_DMA_COLOR_S, GpuColor(0x00, 0x80, 0xFF).rawValue);
-    setConfigItem(OPT_DMA_DISPLAY_MODE, DMA_DISPLAY_MODE_FG_LAYER);
-    setConfigItem(OPT_DMA_OPACITY, 128);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, false);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 0, true);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 1, true);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 2, true);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 3, true);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 4, true);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 5, true);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 0, GpuColor(0xFF, 0x00, 0x00).rawValue);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 1, GpuColor(0xFF, 0xC0, 0x00).rawValue);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 2, GpuColor(0xFF, 0xFF, 0x00).rawValue);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 3, GpuColor(0x00, 0xFF, 0xFF).rawValue);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 4, GpuColor(0x00, 0xFF, 0x00).rawValue);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 5, GpuColor(0x00, 0x80, 0xFF).rawValue);
+    setConfigItem(OPT_DMA_DEBUG_MODE, DMA_DISPLAY_MODE_FG_LAYER);
+    setConfigItem(OPT_DMA_DEBUG_OPACITY, 128);
     setConfigItem(OPT_CUT_LAYERS, 0xFF);
     setConfigItem(OPT_CUT_OPACITY, 0xFF);
     setConfigItem(OPT_SB_COLLISIONS, true);
@@ -148,34 +148,38 @@ VICII::getConfigItem(Option option) const
 {
     switch (option) {
             
-        case OPT_VIC_REVISION:     return config.revision;
-        case OPT_PALETTE:          return config.palette;
-        case OPT_BRIGHTNESS:       return config.brightness;
-        case OPT_CONTRAST:         return config.contrast;
-        case OPT_SATURATION:       return config.saturation;
-        case OPT_GRAY_DOT_BUG:     return config.grayDotBug;
-        case OPT_GLUE_LOGIC:       return config.glueLogic;
-        case OPT_DMA_DEBUG:        return config.dmaDebug;
-        case OPT_DMA_CHANNEL_R:    return config.dmaChannel[MEMACCESS_R];
-        case OPT_DMA_CHANNEL_I:    return config.dmaChannel[MEMACCESS_I];
-        case OPT_DMA_CHANNEL_C:    return config.dmaChannel[MEMACCESS_C];
-        case OPT_DMA_CHANNEL_G:    return config.dmaChannel[MEMACCESS_G];
-        case OPT_DMA_CHANNEL_P:    return config.dmaChannel[MEMACCESS_P];
-        case OPT_DMA_CHANNEL_S:    return config.dmaChannel[MEMACCESS_S];
-        case OPT_DMA_COLOR_R:      return config.dmaColor[MEMACCESS_R];
-        case OPT_DMA_COLOR_I:      return config.dmaColor[MEMACCESS_I];
-        case OPT_DMA_COLOR_C:      return config.dmaColor[MEMACCESS_C];
-        case OPT_DMA_COLOR_G:      return config.dmaColor[MEMACCESS_G];
-        case OPT_DMA_COLOR_P:      return config.dmaColor[MEMACCESS_P];
-        case OPT_DMA_COLOR_S:      return config.dmaColor[MEMACCESS_S];
-        case OPT_DMA_DISPLAY_MODE: return config.dmaDisplayMode;
-        case OPT_DMA_OPACITY:      return config.dmaOpacity;
-        case OPT_HIDE_SPRITES:     return config.hideSprites;
-        case OPT_CUT_LAYERS:       return config.cutLayers;
-        case OPT_CUT_OPACITY:      return config.cutOpacity;
-        case OPT_SS_COLLISIONS:    return config.checkSSCollisions;
-        case OPT_SB_COLLISIONS:    return config.checkSBCollisions;
+        case OPT_VIC_REVISION:      return config.revision;
+        case OPT_PALETTE:           return config.palette;
+        case OPT_BRIGHTNESS:        return config.brightness;
+        case OPT_CONTRAST:          return config.contrast;
+        case OPT_SATURATION:        return config.saturation;
+        case OPT_GRAY_DOT_BUG:      return config.grayDotBug;
+        case OPT_GLUE_LOGIC:        return config.glueLogic;
+        case OPT_DMA_DEBUG_ENABLE:  return config.dmaDebug;
+        case OPT_DMA_DEBUG_MODE:    return config.dmaDisplayMode;
+        case OPT_DMA_DEBUG_OPACITY: return config.dmaOpacity;
+        case OPT_HIDE_SPRITES:      return config.hideSprites;
+        case OPT_CUT_LAYERS:        return config.cutLayers;
+        case OPT_CUT_OPACITY:       return config.cutOpacity;
+        case OPT_SS_COLLISIONS:     return config.checkSSCollisions;
+        case OPT_SB_COLLISIONS:     return config.checkSBCollisions;
 
+        default:
+            assert(false);
+            return 0;
+    }
+}
+
+i64
+VICII::getConfigItem(Option option, long id) const
+{
+    assert(id >= 0 && id < MEMACCESS_COUNT);
+    
+    switch (option) {
+            
+        case OPT_DMA_DEBUG_ENABLE: return config.dmaChannel[id];
+        case OPT_DMA_DEBUG_COLOR: return config.dmaColor[id];
+            
         default:
             assert(false);
             return 0;
@@ -259,8 +263,8 @@ VICII::setConfigItem(Option option, i64 value)
             config.hideSprites = value;
             return true;
 
-        case OPT_DMA_DEBUG:
-            
+        case OPT_DMA_DEBUG_ENABLE:
+                     
             if (config.dmaDebug == value) {
                 return false;
             }
@@ -268,79 +272,26 @@ VICII::setConfigItem(Option option, i64 value)
             config.dmaDebug = value;
             resetDmaTextures();
             c64.updateVicFunctionTable();
+            messageQueue.put(value ? MSG_DMA_DEBUG_ON : MSG_DMA_DEBUG_OFF);
             resume();
             return true;
-            
-        case OPT_DMA_CHANNEL_R:
-            
-            config.dmaChannel[MEMACCESS_R] = value;
-            return true;
-            
-        case OPT_DMA_CHANNEL_I:
-            
-            config.dmaChannel[MEMACCESS_I] = value;
-            return true;
-            
-        case OPT_DMA_CHANNEL_C:
-            
-            config.dmaChannel[MEMACCESS_C] = value;
-            return true;
-            
-        case OPT_DMA_CHANNEL_G:
-            
-            config.dmaChannel[MEMACCESS_G] = value;
-            return true;
-            
-        case OPT_DMA_CHANNEL_P:
-            
-            config.dmaChannel[MEMACCESS_P] = value;
-            return true;
-            
-        case OPT_DMA_CHANNEL_S:
-            
-            config.dmaChannel[MEMACCESS_S] = value;
-            return true;
 
-        case OPT_DMA_COLOR_R:
+        case OPT_DMA_DEBUG_MODE:
             
-            setDmaDebugColor(MEMACCESS_R, GpuColor((u32)value));
-            config.dmaColor[MEMACCESS_R] = (u32)value;
-            return true;
-            
-        case OPT_DMA_COLOR_I:
-            
-            config.dmaColor[MEMACCESS_I] = (u32)value;
-            return true;
-
-        case OPT_DMA_COLOR_C:
-            
-            config.dmaColor[MEMACCESS_C] = (u32)value;
-            return true;
-
-        case OPT_DMA_COLOR_G:
-            
-            config.dmaColor[MEMACCESS_G] = (u32)value;
-            return true;
-
-        case OPT_DMA_COLOR_P:
-            
-            config.dmaColor[MEMACCESS_P] = (u32)value;
-            return true;
-
-        case OPT_DMA_COLOR_S:
-            
-            config.dmaColor[MEMACCESS_S] = (u32)value;
-            return true;
-            
-        case OPT_DMA_OPACITY:
-            
-            config.dmaOpacity = value;
-            return false; // 'false' to avoid a MSG_CONFIG being sent
-            
-        case OPT_DMA_DISPLAY_MODE:
+            if (!DmaDisplayModeEnum::isValid(value)) {
+                throw ConfigArgError(DmaDisplayModeEnum::keyList());
+            }
+            if (config.dmaDisplayMode == value) {
+                return false;
+            }
             
             config.dmaDisplayMode = (DmaDisplayMode)value;
             return true;
+
+        case OPT_DMA_DEBUG_OPACITY:
+            
+            config.dmaOpacity = value;
+            return false; // 'false' to avoid a MSG_CONFIG being sent
 
         case OPT_CUT_LAYERS:
             
@@ -370,6 +321,35 @@ VICII::setConfigItem(Option option, i64 value)
             if (config.glueLogic == value) return false;
             
             config.glueLogic = (GlueLogic)value;
+            return true;
+            
+        default:
+            return false;
+    }
+}
+
+bool
+VICII::setConfigItem(Option option, long id, i64 value)
+{
+    if (!MemAccessEnum::isValid(id)) { return false; }
+    MemAccess access = (MemAccess)id;
+    
+    switch (option) {
+            
+        case OPT_DMA_DEBUG_ENABLE:
+            
+            if (config.dmaChannel[access] == value) {
+                return false;
+            }
+            config.dmaChannel[access] = value;
+            return true;
+            
+        case OPT_DMA_DEBUG_COLOR:
+            
+            if (config.dmaColor[access] == value) {
+                return false;
+            }
+            setDmaDebugColor(access, GpuColor((u32)value));
             return true;
             
         default:

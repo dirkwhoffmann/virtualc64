@@ -7,6 +7,23 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+extension NSColorWell {
+    
+    func setColor(_ rgb: (Double, Double, Double) ) {
+        
+        color = NSColor.init(r: rgb.0, g: rgb.1, b: rgb.2)
+    }
+
+    func setColor(_ bgr: UInt32) {
+        
+        let r = Int((bgr >> 0) & 0xFF)
+        let g = Int((bgr >> 8) & 0xFF)
+        let b = Int((bgr >> 16) & 0xFF)
+
+        color = NSColor.init(r: r, g: g, b: b)
+    }
+}
+
 extension NSColor {
     
     static var warningColor: NSColor {

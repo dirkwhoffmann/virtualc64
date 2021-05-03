@@ -28,27 +28,20 @@ enum_long(OPT)
     OPT_CONTRAST,
     OPT_SATURATION,
     OPT_GRAY_DOT_BUG,
+    
+    // Sprite debugger
     OPT_HIDE_SPRITES,
-    OPT_DMA_DEBUG,
-    OPT_DMA_CHANNEL_R,
-    OPT_DMA_CHANNEL_I,
-    OPT_DMA_CHANNEL_C,
-    OPT_DMA_CHANNEL_G,
-    OPT_DMA_CHANNEL_P,
-    OPT_DMA_CHANNEL_S,
-    OPT_DMA_COLOR_R,
-    OPT_DMA_COLOR_I,
-    OPT_DMA_COLOR_C,
-    OPT_DMA_COLOR_G,
-    OPT_DMA_COLOR_P,
-    OPT_DMA_COLOR_S,
-    OPT_DMA_DISPLAY_MODE,
-    OPT_DMA_OPACITY,
     OPT_CUT_LAYERS,
     OPT_CUT_OPACITY,
     OPT_SS_COLLISIONS,
     OPT_SB_COLLISIONS,
 
+    // DMA Debugger
+    OPT_DMA_DEBUG_ENABLE,
+    OPT_DMA_DEBUG_MODE,
+    OPT_DMA_DEBUG_COLOR,
+    OPT_DMA_DEBUG_OPACITY,
+    
     // Logic board
     OPT_GLUE_LOGIC,
 
@@ -120,26 +113,16 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_SATURATION:          return "SATURATION";
             case OPT_GRAY_DOT_BUG:        return "GRAY_DOT_BUG";
             case OPT_HIDE_SPRITES:        return "HIDE_SPRITES";
-            case OPT_DMA_DEBUG:           return "DMA_DEBUG";
-            case OPT_DMA_CHANNEL_R:       return "DMA_CHANNEL_R";
-            case OPT_DMA_CHANNEL_I:       return "DMA_CHANNEL_I";
-            case OPT_DMA_CHANNEL_C:       return "DMA_CHANNEL_C";
-            case OPT_DMA_CHANNEL_G:       return "DMA_CHANNEL_G";
-            case OPT_DMA_CHANNEL_P:       return "DMA_CHANNEL_P";
-            case OPT_DMA_CHANNEL_S:       return "DMA_CHANNEL_S";
-            case OPT_DMA_COLOR_R:         return "DMA_COLOR_R";
-            case OPT_DMA_COLOR_I:         return "DMA_COLOR_I";
-            case OPT_DMA_COLOR_C:         return "DMA_COLOR_C";
-            case OPT_DMA_COLOR_G:         return "DMA_COLOR_G";
-            case OPT_DMA_COLOR_P:         return "DMA_COLOR_P";
-            case OPT_DMA_COLOR_S:         return "DMA_COLOR_S";
-            case OPT_DMA_DISPLAY_MODE:    return "DMA_DISPLAY_MODE";
-            case OPT_DMA_OPACITY:         return "DMA_OPACITY";
             case OPT_CUT_LAYERS:          return "CUT_LAYERS";
             case OPT_CUT_OPACITY:         return "CUT_OPACITY";
             case OPT_SS_COLLISIONS:       return "SS_COLLISIONS";
             case OPT_SB_COLLISIONS:       return "SB_COLLISIONS";
-                
+
+            case OPT_DMA_DEBUG_ENABLE:    return "DMA_DEBUG";
+            case OPT_DMA_DEBUG_MODE:      return "DMA_CHANNEL_R";
+            case OPT_DMA_DEBUG_COLOR:     return "DMA_CHANNEL_I";
+            case OPT_DMA_DEBUG_OPACITY:   return "DMA_CHANNEL_C";
+
             case OPT_GLUE_LOGIC:          return "GLUE_LOGIC";
                 
             case OPT_CIA_REVISION:        return "CIA_REVISION";
