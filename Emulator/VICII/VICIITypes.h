@@ -11,6 +11,10 @@
 
 #include "Aliases.h"
 #include "Reflection.h"
+#include "BusTypes.h"
+
+#include "DmaDebuggerTypes.h"
+
 
 //
 // Constants
@@ -253,76 +257,6 @@ struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
     }
 
     static std::map <string, long> pairs() { return Reflection::pairs(0x70); }
-};
-#endif
-
-enum_long(MEMACCESS)
-{
-    MEMACCESS_R,     // Memory Refresh
-    MEMACCESS_I,     // Idle read
-    MEMACCESS_C,     // Character access
-    MEMACCESS_G,     // Graphics access
-    MEMACCESS_P,     // Sprite pointer access
-    MEMACCESS_S,     // Sprite data access
-    MEMACCESS_COUNT
-};
-typedef MEMACCESS MemAccess;
-
-#ifdef __cplusplus
-struct MemAccessEnum : util::Reflection<MemAccessEnum, MemAccess> {
-    
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < MEMACCESS_COUNT;
-    }
-    
-    static const char *prefix() { return "MEMACCESS"; }
-    static const char *key(MemAccess value)
-    {
-        switch (value) {
-                
-            case MEMACCESS_R:      return "R";
-            case MEMACCESS_I:      return "I";
-            case MEMACCESS_C:      return "C";
-            case MEMACCESS_G:      return "G";
-            case MEMACCESS_P:      return "P";
-            case MEMACCESS_S:      return "S";
-            case MEMACCESS_COUNT:  return "???";
-        }
-        return "???";
-    }
-};
-#endif
-
-enum_long(DMA_DISPLAY_MODE)
-{
-    DMA_DISPLAY_MODE_FG_LAYER,
-    DMA_DISPLAY_MODE_BG_LAYER,
-    DMA_DISPLAY_MODE_ODD_EVEN_LAYERS,
-    DMA_DISPLAY_MODE_COUNT
-};
-typedef DMA_DISPLAY_MODE DmaDisplayMode;
-
-#ifdef __cplusplus
-struct DmaDisplayModeEnum : util::Reflection<DmaDisplayModeEnum, DmaDisplayMode> {
-    
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < DMA_DISPLAY_MODE_COUNT;
-    }
-    
-    static const char *prefix() { return "DMA_DISPLAY_MODE"; }
-    static const char *key(DmaDisplayMode value)
-    {
-        switch (value) {
-                
-            case DMA_DISPLAY_MODE_FG_LAYER:         return "FG_LAYER";
-            case DMA_DISPLAY_MODE_BG_LAYER:         return "BG_LAYER";
-            case DMA_DISPLAY_MODE_ODD_EVEN_LAYERS:  return "ODD_EVEN_LAYERS";
-            case DMA_DISPLAY_MODE_COUNT:            return "???";
-        }
-        return "???";
-    }
 };
 #endif
 

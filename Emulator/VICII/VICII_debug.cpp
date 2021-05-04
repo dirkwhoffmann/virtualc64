@@ -24,6 +24,7 @@ VICII::getScreenGeometry(void) const
     }
 }
 
+/*
 void
 VICII::visualizeDma(u8 offset, u8 data, MemAccess type)
 {
@@ -105,3 +106,4 @@ VICII::computeOverlay()
             
     }
 }
+*/

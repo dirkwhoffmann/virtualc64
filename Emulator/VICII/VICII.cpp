@@ -21,8 +21,10 @@
 #define SPR6 0x40
 #define SPR7 0x80
 
-VICII::VICII(C64 &ref) : C64Component(ref)
+VICII::VICII(C64 &ref) : C64Component(ref), dmaDebugger(ref)
 {
+    subComponents = std::vector<HardwareComponent *> { &dmaDebugger };
+
     // Assign reference clock to all time delayed variables
     baLine.setClock(&cpu.cycle);
     gAccessResult.setClock(&cpu.cycle);
@@ -1110,10 +1112,8 @@ VICII::beginFrame()
 void
 VICII::endFrame()
 {
-    // Run the DMA debugger (if enabled)
-    if (config.dmaDebug) {
-        computeOverlay();
-    }
+    // Run the DMA debugger if enabled
+    if (config.dmaDebug) dmaDebugger.computeOverlay(emuTexture, dmaTexture);
 
     // Switch texture buffers
     if (emuTexture == emuTexture1) {

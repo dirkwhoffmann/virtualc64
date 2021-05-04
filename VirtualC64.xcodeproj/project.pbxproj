@@ -243,6 +243,7 @@
 		50D5F88824F556270062EF13 /* DiskErrors.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D5F88724F556270062EF13 /* DiskErrors.xib */; };
 		50D5F88A24F5573D0062EF13 /* DiskErrorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D5F88924F5573D0062EF13 /* DiskErrorController.swift */; };
 		50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8421720A82CF500EB859A /* MetalViewEvents.swift */; };
+		50DBB3D12641101E006F45E6 /* DmaDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB3CF2641101E006F45E6 /* DmaDebugger.cpp */; };
 		50DBB44B2025CE5700489271 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB44A2025CE5700489271 /* Utils.swift */; };
 		50DD82A02614D47E00B84EB3 /* Chrono.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DD829E2614D47E00B84EB3 /* Chrono.cpp */; };
 		50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8E2008E615008A8761 /* Shaders.swift */; };
@@ -661,6 +662,10 @@
 		50D5F88924F5573D0062EF13 /* DiskErrorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskErrorController.swift; sourceTree = "<group>"; };
 		50D8421720A82CF500EB859A /* MetalViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalViewEvents.swift; sourceTree = "<group>"; };
 		50DAABD824F0108A005D426F /* VICIITypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VICIITypes.h; sourceTree = "<group>"; };
+		50DBB3CF2641101E006F45E6 /* DmaDebugger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DmaDebugger.cpp; sourceTree = "<group>"; };
+		50DBB3D02641101E006F45E6 /* DmaDebugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DmaDebugger.h; sourceTree = "<group>"; };
+		50DBB3D22641107E006F45E6 /* DmaDebuggerTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DmaDebuggerTypes.h; sourceTree = "<group>"; };
+		50DBB3D3264115B4006F45E6 /* BusTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BusTypes.h; sourceTree = "<group>"; };
 		50DBB44A2025CE5700489271 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		50DD829E2614D47E00B84EB3 /* Chrono.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Chrono.cpp; sourceTree = "<group>"; };
 		50DD829F2614D47E00B84EB3 /* Chrono.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Chrono.h; sourceTree = "<group>"; };
@@ -1088,6 +1093,7 @@
 		504C430424AF29AB00E69CAE /* VICII */ = {
 			isa = PBXGroup;
 			children = (
+				50DBB3D3264115B4006F45E6 /* BusTypes.h */,
 				50DAABD824F0108A005D426F /* VICIITypes.h */,
 				504C430C24AF29AC00E69CAE /* VICII.h */,
 				504C430724AF29AC00E69CAE /* VICII.cpp */,
@@ -1098,6 +1104,9 @@
 				504C430A24AF29AC00E69CAE /* VICII_cycles_pal.cpp */,
 				504C430D24AF29AC00E69CAE /* VICII_cycles_ntsc.cpp */,
 				504C430924AF29AC00E69CAE /* VICII_debug.cpp */,
+				50DBB3D22641107E006F45E6 /* DmaDebuggerTypes.h */,
+				50DBB3D02641101E006F45E6 /* DmaDebugger.h */,
+				50DBB3CF2641101E006F45E6 /* DmaDebugger.cpp */,
 			);
 			path = VICII;
 			sourceTree = "<group>";
@@ -1747,6 +1756,7 @@
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				504C438224AF29AC00E69CAE /* C64Object.cpp in Sources */,
 				504C437224AF29AC00E69CAE /* FlashRom.cpp in Sources */,
+				50DBB3D12641101E006F45E6 /* DmaDebugger.cpp in Sources */,
 				504C43A024AF29AC00E69CAE /* FastVoice.cpp in Sources */,
 				50BE4B7224E81266008F39C9 /* CIARegisters.cpp in Sources */,
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,

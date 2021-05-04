@@ -809,7 +809,8 @@ VICII::sAccess1()
             dataBusPhi2 = memAccess(spritePtr[sprite] | mc[sprite]);
             
             if (type == PAL_DEBUG_CYCLE || type == NTSC_DEBUG_CYCLE) {
-                visualizeDma(4, dataBusPhi2, MEMACCESS_S);
+                dmaDebugger.visualizeDma(dmaTexturePtr + bufferoffset + 4,
+                                         dataBusPhi2, MEMACCESS_S);
             }
         }
         
@@ -834,7 +835,8 @@ VICII::sAccess2()
         mc[sprite] = (mc[sprite] + 1) & 0x3F;
         
         if (type == PAL_DEBUG_CYCLE || type == NTSC_DEBUG_CYCLE) {
-            visualizeDma(0, dataBusPhi1, MEMACCESS_S);
+            dmaDebugger.visualizeDma(dmaTexturePtr + bufferoffset,
+                                     dataBusPhi1, MEMACCESS_S);
         }
 
     
@@ -858,7 +860,8 @@ VICII::sAccess3()
         mc[sprite] = (mc[sprite] + 1) & 0x3F;
 
         if (type == PAL_DEBUG_CYCLE || type == NTSC_DEBUG_CYCLE) {
-            visualizeDma(4, dataBusPhi2, MEMACCESS_S);
+            dmaDebugger.visualizeDma(dmaTexturePtr + bufferoffset + 4,
+                                     dataBusPhi2, MEMACCESS_S);
         }
     }
     
@@ -871,7 +874,8 @@ VICII::rAccess()
     dataBusPhi1 = memAccess(0x3F00 | refreshCounter--);
     
     if (type == PAL_DEBUG_CYCLE || type == NTSC_DEBUG_CYCLE) {
-        visualizeDma(0, dataBusPhi1, MEMACCESS_R);
+        dmaDebugger.visualizeDma(dmaTexturePtr + bufferoffset,
+                                 dataBusPhi1, MEMACCESS_R);
     }
 }
 
@@ -881,7 +885,8 @@ VICII::iAccess()
     dataBusPhi1 = memAccess(0x3FFF);
     
     if (type == PAL_DEBUG_CYCLE || type == NTSC_DEBUG_CYCLE) {
-        visualizeDma(0, dataBusPhi1, MEMACCESS_I);
+        dmaDebugger.visualizeDma(dmaTexturePtr + bufferoffset,
+                                 dataBusPhi1, MEMACCESS_I);
     }
 }
 
@@ -899,7 +904,8 @@ VICII::cAccess()
         colorLine[vmli] = mem.colorRam[vc] & 0x0F;
         
         if (type == PAL_DEBUG_CYCLE || type == NTSC_DEBUG_CYCLE) {
-            visualizeDma(4, dataBusPhi2, MEMACCESS_C);
+            dmaDebugger.visualizeDma(dmaTexturePtr + bufferoffset + 4,
+                                     dataBusPhi2, MEMACCESS_C);
         }
     }
     
@@ -980,7 +986,8 @@ VICII::gAccess()
     }
     
     if (type == PAL_DEBUG_CYCLE || type == NTSC_DEBUG_CYCLE) {
-        visualizeDma(0, dataBusPhi1, MEMACCESS_G);
+        dmaDebugger.visualizeDma(dmaTexturePtr + bufferoffset,
+                                 dataBusPhi1, MEMACCESS_G);
     }
 }
 
@@ -1055,7 +1062,8 @@ VICII::pAccess(unsigned sprite)
     spritePtr[sprite] = dataBusPhi1 << 6;
     
     if (type == PAL_DEBUG_CYCLE || type == NTSC_DEBUG_CYCLE) {
-        visualizeDma(0, dataBusPhi1, MEMACCESS_P);
+        dmaDebugger.visualizeDma(dmaTexturePtr + bufferoffset,
+                                 dataBusPhi1, MEMACCESS_P);
     }
 }
 

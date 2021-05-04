@@ -13,12 +13,14 @@
 #include "C64Component.h"
 #include "Colors.h"
 #include "Constants.h"
+#include "DmaDebugger.h"
 #include "MemoryTypes.h"
 #include "TimeDelayed.h"
 
 class VICII : public C64Component {
 
     friend class C64Memory;
+    friend class DmaDebugger;
     
     // Current configuration
     VICIIConfig config;
@@ -27,6 +29,8 @@ class VICII : public C64Component {
     VICIIInfo info;
     SpriteInfo spriteInfo[8];
     
+    // Sub components
+    DmaDebugger dmaDebugger;
 
     //
     // I/O space (CPU accessible)
@@ -1351,8 +1355,8 @@ public:
     void clearDmaDebuggerTexture();
     
     // Visualizes a memory access by drawing into the DMA debuger texture
-    void visualizeDma(u8 offset, u8 data, MemAccess type);
+    // void visualizeDma(u8 offset, u8 data, MemAccess type);
     
     // Superimposes the debug output onto the current rasterline
-    void computeOverlay();
+    // void computeOverlay();
 };
