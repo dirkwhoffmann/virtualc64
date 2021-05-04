@@ -311,6 +311,76 @@ Interpreter::registerInstructions()
 
     
     //
+    // DMA Debugger
+    //
+
+    root.add({"dmadebugger"},
+             "component", "DMA Debugger");
+
+    root.add({"dmadebugger", "open"},
+             "command", "Opens the DMA debugger",
+             &RetroShell::exec <Token::dmadebugger, Token::open>);
+
+    root.add({"dmadebugger", "close"},
+             "command", "Closes the DMA debugger",
+             &RetroShell::exec <Token::dmadebugger, Token::close>);
+
+    root.add({"dmadebugger", "show"},
+             "command", "Enables the debugger for a certain DMA channel");
+
+    root.add({"dmadebugger", "show", "raccesses"},
+             "command", "Visualizes refresh cycles",
+             &RetroShell::exec <Token::dmadebugger, Token::show, Token::raccesses>);
+
+    root.add({"dmadebugger", "show", "iaccesses"},
+             "command", "Visualizes idle accesses",
+             &RetroShell::exec <Token::dmadebugger, Token::show, Token::iaccesses>);
+
+    root.add({"dmadebugger", "show", "caccesses"},
+             "command", "Visualizes character accesses",
+             &RetroShell::exec <Token::dmadebugger, Token::show, Token::caccesses>);
+
+    root.add({"dmadebugger", "show", "gaccesses"},
+             "command", "Visualizes graphics accesses",
+             &RetroShell::exec <Token::dmadebugger, Token::show, Token::gaccesses>);
+
+    root.add({"dmadebugger", "show", "paccesses"},
+             "command", "Visualizes sprite pointer accesses",
+             &RetroShell::exec <Token::dmadebugger, Token::show, Token::paccesses>);
+
+    root.add({"dmadebugger", "show", "saccesses"},
+             "command", "Visualizes sprite accesses",
+             &RetroShell::exec <Token::dmadebugger, Token::show, Token::saccesses>);
+
+    root.add({"dmadebugger", "hide"},
+             "command", "Disables the debugger for a certain DMA channel");
+
+    root.add({"dmadebugger", "hide", "raccesses"},
+             "command", "Hides refresh cycles",
+             &RetroShell::exec <Token::dmadebugger, Token::hide, Token::raccesses>);
+
+    root.add({"dmadebugger", "hide", "iaccesses"},
+             "command", "Hides idle accesses",
+             &RetroShell::exec <Token::dmadebugger, Token::hide, Token::iaccesses>);
+
+    root.add({"dmadebugger", "hide", "caccesses"},
+             "command", "Hides character accesses",
+             &RetroShell::exec <Token::dmadebugger, Token::hide, Token::caccesses>);
+
+    root.add({"dmadebugger", "hide", "gaccesses"},
+             "command", "Hides graphics accesses",
+             &RetroShell::exec <Token::dmadebugger, Token::hide, Token::gaccesses>);
+
+    root.add({"dmadebugger", "hide", "paccesses"},
+             "command", "Hides sprite pointer accesses",
+             &RetroShell::exec <Token::dmadebugger, Token::hide, Token::paccesses>);
+
+    root.add({"dmadebugger", "hide", "saccesses"},
+             "command", "Hides sprite accesses",
+             &RetroShell::exec <Token::dmadebugger, Token::hide, Token::saccesses>);
+
+    
+    //
     // Monitor
     //
 

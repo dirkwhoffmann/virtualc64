@@ -462,6 +462,95 @@ RetroShell::exec <Token::vicii, Token::inspect, Token::state> (Arguments& argv, 
 
 
 //
+// DMA Debugger
+//
+
+template <> void
+RetroShell::exec <Token::dmadebugger, Token::open> (Arguments& argv, long param)
+{
+    c64.configure(OPT_DMA_DEBUG_ENABLE, true);
+}
+
+template <> void
+RetroShell::exec <Token::dmadebugger, Token::close> (Arguments& argv, long param)
+{
+    c64.configure(OPT_DMA_DEBUG_ENABLE, false);
+}
+
+template <> void
+RetroShell::exec <Token::dmadebugger, Token::show, Token::raccesses> (Arguments& argv, long param)
+{
+    c64.configure(OPT_DMA_DEBUG_ENABLE, 0, true);
+}
+
+template <> void
+RetroShell::exec <Token::dmadebugger, Token::show, Token::iaccesses> (Arguments& argv, long param)
+{
+    c64.configure(OPT_DMA_DEBUG_ENABLE, 1, true);
+}
+
+template <> void
+RetroShell::exec <Token::dmadebugger, Token::show, Token::caccesses> (Arguments& argv, long param)
+{
+    c64.configure(OPT_DMA_DEBUG_ENABLE, 2, true);
+}
+
+template <> void
+RetroShell::exec <Token::dmadebugger, Token::show, Token::gaccesses> (Arguments& argv, long param)
+{
+    c64.configure(OPT_DMA_DEBUG_ENABLE, 3, true);
+}
+
+template <> void
+RetroShell::exec <Token::dmadebugger, Token::show, Token::paccesses> (Arguments& argv, long param)
+{
+    c64.configure(OPT_DMA_DEBUG_ENABLE, 4, true);
+}
+
+template <> void
+RetroShell::exec <Token::dmadebugger, Token::show, Token::saccesses> (Arguments& argv, long param)
+{
+    c64.configure(OPT_DMA_DEBUG_ENABLE, 5, true);
+}
+
+template <> void
+RetroShell::exec <Token::dmadebugger, Token::hide, Token::raccesses> (Arguments& argv, long param)
+{
+    c64.configure(OPT_DMA_DEBUG_ENABLE, 0, false);
+}
+
+template <> void
+RetroShell::exec <Token::dmadebugger, Token::hide, Token::iaccesses> (Arguments& argv, long param)
+{
+    c64.configure(OPT_DMA_DEBUG_ENABLE, 1, false);
+}
+
+template <> void
+RetroShell::exec <Token::dmadebugger, Token::hide, Token::caccesses> (Arguments& argv, long param)
+{
+    c64.configure(OPT_DMA_DEBUG_ENABLE, 2, false);
+}
+
+template <> void
+RetroShell::exec <Token::dmadebugger, Token::hide, Token::gaccesses> (Arguments& argv, long param)
+{
+    c64.configure(OPT_DMA_DEBUG_ENABLE, 3, false);
+}
+
+template <> void
+RetroShell::exec <Token::dmadebugger, Token::hide, Token::paccesses> (Arguments& argv, long param)
+{
+    c64.configure(OPT_DMA_DEBUG_ENABLE, 4, false);
+}
+
+template <> void
+RetroShell::exec <Token::dmadebugger, Token::hide, Token::saccesses> (Arguments& argv, long param)
+{
+    c64.configure(OPT_DMA_DEBUG_ENABLE, 5, false);
+}
+
+
+//
 // Monitor
 //
 

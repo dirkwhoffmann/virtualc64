@@ -27,18 +27,19 @@ enum class Token
 
     // Commands
     about, attach, audiate, autosync, clear, close, config, connect, disconnect,
-    dsksync, easteregg, eject, flash, init, insert, inspect, list, load, lock,
-    on, off, pause, power, press, regression, release, reset, rewind, run, save,
-    screenshot, set, setup, source, type, wait,
+    dmadebugger, dsksync, easteregg, eject, flash, hide, init, insert, inspect,
+    list, load, lock, off, on, open, pause, power, press, regression, release,
+    reset, rewind, run, save, screenshot, set, setup, show, source, type, wait,
     
     // Categories
     checksums, devices, events, registers, state,
     
     // Keys
-    accuracy, autofire, bankmap, brightness, bullets, chip, contrast, counter,
-    cutout, defaultbb, defaultfs, delay, device, engine, filename, filter,
-    frame, graydotbug, joystick, keyset, left, model, palette, pan, poll,
-    raminitpattern, revision, right, rom, sampling, saturation, sbcollisions,
+    accuracy, autofire, bankmap, brightness, bullets, caccesses, chip, contrast,
+    counter, cutout, defaultbb, defaultfs, delay, device, engine, filename,
+    filter, frame, gaccesses, graydotbug, iaccesses, idle, joystick, keyset,
+    left, model, paccesses, palette, pan, poll, raccesses, raminitpattern,
+    revision, right, rom, saccesses, sampling, saturation, sbcollisions,
     searchpath, shakedetector, shiftlock, slow, slowramdelay, slowrammirror,
     speed, sscollisions, step, to, tod, timeout, timerbbug, unmappingtype,
     velocity, volume
