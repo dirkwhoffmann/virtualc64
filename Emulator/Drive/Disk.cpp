@@ -104,6 +104,13 @@ Disk::isValidHalftrackSectorPair(Halftrack ht, Sector s)
 }
 
 Disk *
+Disk::make(C64 &ref, const string &path)
+{
+    auto fs = FSDevice::makeWithPath(path);
+    return makeWithFileSystem(ref, *fs);
+}
+
+Disk *
 Disk::make(C64 &ref, DOSType type, PETName<16> name)
 {
     assert_enum(DOSType, type);
@@ -147,6 +154,19 @@ Disk::makeWithG64(C64 &ref, G64File *g64)
     Disk *disk = new Disk(ref);
 
     disk->encodeG64(g64);
+    return disk;
+}
+
+Disk *
+Disk::makeWithD64(C64 &ref, D64File *d64)
+{
+    ErrorCode err;
+    FSDevice *fs = FSDevice::makeWithD64(*d64, &err);
+    assert(fs);
+    
+    Disk *disk = makeWithFileSystem(ref, *fs);
+    delete fs;
+    
     return disk;
 }
 

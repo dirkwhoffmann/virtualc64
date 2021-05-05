@@ -182,6 +182,10 @@ Interpreter::registerInstructions()
              "command", "Inserts a floppy disk",
              &RetroShell::exec <Token::drive, Token::insert>, 1);
 
+    root.add({"drive8", "drive9"}, {"", "newdisk"},
+             "command", "Inserts a new blank disk",
+             &RetroShell::exec <Token::drive, Token::insert, Token::newdisk>, 1);
+
     root.add({"drive8", "drive9"}, {"", "inspect"},
              "command", "Displays the component state",
              &RetroShell::exec <Token::drive, Token::inspect>);

@@ -11,6 +11,9 @@
 #include "FSDevice.h"
 #include "Disk.h"
 #include "IO.h"
+#include "PRGFile.h"
+#include "P00File.h"
+#include "T64File.h"
 
 #include <set>
 
@@ -137,6 +140,35 @@ FSDevice::makeWithCollection(AnyCollection &collection, ErrorCode *err)
 {
     *err = ERROR_OK;
     try { return makeWithCollection(collection); }
+    catch (VC64Error &exception) { *err = exception.data; }
+    return nullptr;
+}
+
+FSDevice *
+FSDevice::makeWithPath(const std::string &path)
+{
+    ErrorCode ec;
+        
+    if (auto file = AnyFile::make <D64File> (path, &ec)) {
+        return makeWithD64(*file);
+    }
+    if (auto file = AnyFile::make <T64File> (path, &ec)) {
+        return makeWithCollection(*file);
+    }
+    if (auto file = AnyFile::make <PRGFile> (path, &ec)) {
+        return makeWithCollection(*file);
+    }
+    if (auto file = AnyFile::make <P00File> (path, &ec)) {
+        return makeWithCollection(*file);
+    }
+    throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+ }
+
+FSDevice *
+FSDevice::makeWithPath(const std::string &path, ErrorCode *err)
+{
+    *err = ERROR_OK;
+    try { return makeWithPath(path); }
     catch (VC64Error &exception) { *err = exception.data; }
     return nullptr;
 }

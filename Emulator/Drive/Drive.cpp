@@ -512,14 +512,21 @@ Drive::setModifiedDisk(bool value)
 void
 Drive::insertDisk(const string &path)
 {
+    auto disk = Disk::make(c64, path);
+    
+    if (disk) {
+        insertDisk(disk);
+    }
+    /*
     ErrorCode ec;
     AnyCollection *file = nullptr;
-    
+ 
     if (!file) file = AnyFile::make <PRGFile> (path, &ec);
-        
+
     if (file) {
         insertDisk(*file);
     }
+    */
 }
 
 void
