@@ -22,7 +22,6 @@ C64Memory::C64Memory(C64 &ref) : C64Component(ref)
     memset(rom, 0, sizeof(rom));
 
     config.ramPattern = RAM_PATTERN_C64;
-    config.debugcart = false;
 
     /* Memory bank map
      *
@@ -120,7 +119,6 @@ void
 C64Memory::resetConfig()
 {
     setConfigItem(OPT_RAM_PATTERN, RAM_PATTERN_C64);
-    setConfigItem(OPT_DEBUGCART, false);
 }
 
 i64
@@ -129,7 +127,6 @@ C64Memory::getConfigItem(Option option) const
     switch (option) {
             
         case OPT_RAM_PATTERN:  return config.ramPattern;
-        case OPT_DEBUGCART:    return config.debugcart;
             
         default:
             assert(false);
@@ -151,17 +148,7 @@ C64Memory::setConfigItem(Option option, i64 value)
             
             config.ramPattern = (RamPattern)value;
             return true;
-            
-        case OPT_DEBUGCART:
-            
-            if (config.debugcart == value) {
-                return false;
-            }
-            
-            config.debugcart = value;
-            if (value) msg("Debug cart enabled\n");
-            return true;
-            
+                        
         default:
             return false;
     }
@@ -196,8 +183,6 @@ C64Memory::_dump(dump::Category category, std::ostream& os) const
     
         os << tab("Ram pattern");
         os << RamPatternEnum::key(config.ramPattern) << std::endl;
-        os << tab("debugcart");
-        os << bol(config.debugcart) << std::endl;
     }
     
     if (category & dump::State) {

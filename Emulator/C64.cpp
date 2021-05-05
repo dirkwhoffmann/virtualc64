@@ -195,7 +195,6 @@ C64::getConfigItem(Option option) const
             return sid.getConfigItem(option);
 
         case OPT_RAM_PATTERN:
-        case OPT_DEBUGCART:
             return mem.getConfigItem(option);
 
         default:

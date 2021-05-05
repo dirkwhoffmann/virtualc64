@@ -442,7 +442,7 @@ Interpreter::registerInstructions()
              &RetroShell::exec <Token::sid, Token::set, Token::filter>, 1);
 
     root.add({"sid", "set", "volume"},
-             "command", "Sets the volume");
+             "key", "Sets the volume");
 
     root.add({"sid", "set", "volume", "channel0"},
              "key", "Sets the volume for the first SID",

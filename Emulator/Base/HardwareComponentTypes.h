@@ -85,10 +85,7 @@ enum_long(OPT)
     OPT_STEP_VOLUME,
     OPT_INSERT_VOLUME,
     OPT_EJECT_VOLUME,
-    
-    // Debugging
-    OPT_DEBUGCART,
-    
+        
     OPT_COUNT
 };
 typedef OPT Option;
@@ -159,8 +156,6 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_INSERT_VOLUME:       return "INSERT_VOLUME";
             case OPT_EJECT_VOLUME:        return "EJECT_VOLUME";
                 
-            case OPT_DEBUGCART:           return "DEBUGCART";
-
             case OPT_COUNT:               return "???";
         }
         return "???";
