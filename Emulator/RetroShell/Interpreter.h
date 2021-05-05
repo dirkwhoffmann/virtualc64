@@ -37,7 +37,8 @@ enum class Token
     // Keys
     accuracy, autofire, bankmap, brightness, bullets, caccesses, chip, contrast,
     counter, cutout, defaultbb, defaultfs, delay, device, engine, filename,
-    filter, frame, gaccesses, graydotbug, iaccesses, idle, joystick, keyset,
+    filter, frame, gaccesses, gluelogic, graydotbug, iaccesses, idle, joystick,
+    keyset,
     left, model, paccesses, palette, pan, poll, raccesses, raminitpattern,
     revision, right, rom, saccesses, sampling, saturation, sbcollisions,
     searchpath, shakedetector, shiftlock, slow, slowramdelay, slowrammirror,

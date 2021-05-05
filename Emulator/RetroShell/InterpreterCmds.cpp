@@ -294,6 +294,10 @@ Interpreter::registerInstructions()
              "key", "Enables or disables the gray dot bug",
              &RetroShell::exec <Token::vicii, Token::set, Token::graydotbug>, 1);
 
+    root.add({"vicii", "set", "gluelogic"},
+             "key", "Configures the logic board",
+             &RetroShell::exec <Token::vicii, Token::set, Token::gluelogic>, 1);
+
     root.add({"vicii", "set", "sscollisions"},
              "key", "Enables or disables sprite-sprite collision detection",
              &RetroShell::exec <Token::vicii, Token::set, Token::sscollisions>, 1);

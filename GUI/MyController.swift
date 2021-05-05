@@ -95,10 +95,7 @@ class MyController: NSWindowController, MessageReceiver {
     // The flags are utilized, e.g., to alter behaviour when a key on the
     // TouchBar is pressed.
     var modifierFlags: NSEvent.ModifierFlags = .init(rawValue: 0)
-    
-    // Current mouse coordinate
-    // var mouseXY = NSPoint(x: 0, y: 0)
-    
+        
     // Indicates if mouse is currently hidden
     var hideMouse = false
         

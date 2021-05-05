@@ -30,14 +30,17 @@ extension MyController: NSWindowDelegate {
     }
     
     public func windowDidResignMain(_ notification: Notification) {
-        
-        track()
-        
-        // Stop emulator if it is configured to pause in background
+                
+        // Stop the emulator if it is supposed to pause in background
         if c64 != nil {
             pauseInBackgroundSavedState = c64.running
             if pref.pauseInBackground { c64.pause() }
-        }
+        }        
+    }
+    
+    func windowDidResize(_ notification: Notification) {
+    
+        renderer?.console.resize()
     }
     
     public func windowWillClose(_ notification: Notification) {
@@ -148,7 +151,7 @@ extension MyController: NSWindowDelegate {
     }
     
     public func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
-        
+                
         return fixSize(window: sender, size: frameSize)
     }
     

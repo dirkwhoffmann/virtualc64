@@ -444,6 +444,7 @@ SIDBridge::_dump(dump::Category category, std::ostream& os, isize nr) const
     }
 }
 
+/*
 void
 SIDBridge::_dump(SIDInfo &info, VoiceInfo (&vinfo)[3]) const
 {
@@ -475,6 +476,7 @@ SIDBridge::_dump(SIDInfo &info, VoiceInfo (&vinfo)[3]) const
         msg("            Release rate: %d\n", vinfo[i].releaseRate);
     }
 }
+*/
 
 void
 SIDBridge::_setWarp(bool enable)

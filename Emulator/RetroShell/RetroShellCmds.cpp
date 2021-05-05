@@ -443,6 +443,12 @@ RetroShell::exec <Token::vicii, Token::set, Token::graydotbug> (Arguments &argv,
 }
 
 template <> void
+RetroShell::exec <Token::vicii, Token::set, Token::gluelogic> (Arguments &argv, long param)
+{
+    c64.configure(OPT_GLUE_LOGIC, util::parseBool(argv.front()));
+}
+
+template <> void
 RetroShell::exec <Token::vicii, Token::set, Token::sscollisions> (Arguments &argv, long param)
 {
     c64.configure(OPT_SS_COLLISIONS, util::parseBool(argv.front()));

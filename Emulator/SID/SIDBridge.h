@@ -176,7 +176,7 @@ private:
     void _dump(dump::Category category, std::ostream& os) const override;
     void _dump(dump::Category category, std::ostream& os, isize nr) const;
 
-    void _dump(SIDInfo &info, VoiceInfo (&vinfo)[3]) const;
+    // void _dump(SIDInfo &info, VoiceInfo (&vinfo)[3]) const;
 
     
     //

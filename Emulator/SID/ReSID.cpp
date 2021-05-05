@@ -112,7 +112,7 @@ ReSID::_dump(dump::Category category, std::ostream& os) const
     
     reSID::SID::State state = sid->read_state();
     u8 *reg = (u8 *)state.sid_register;
-    u8 ft = info.filterType;
+    u8 ft = reg[0x18] & 0x70;
     string fts =
     ft == FASTSID_LOW_PASS ? "LOW_PASS" :
     ft == FASTSID_HIGH_PASS ? "HIGH_PASS" :

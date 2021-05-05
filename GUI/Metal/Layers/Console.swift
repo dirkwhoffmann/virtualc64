@@ -101,6 +101,8 @@ class Console: Layer {
     
     func resize() {
                 
+        track()
+        
         let size = controller.metal.frame.size
         let origin = controller.metal.frame.origin
         let newSize = NSSize.init(width: size.width, height: size.height)
