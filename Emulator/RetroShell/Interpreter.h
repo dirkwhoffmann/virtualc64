@@ -38,11 +38,10 @@ enum class Token
     accuracy, autofire, bankmap, brightness, bullets, caccesses, chip, contrast,
     counter, cutout, defaultbb, defaultfs, delay, device, engine, filename,
     filter, frame, gaccesses, gluelogic, graydotbug, iaccesses, idle, joystick,
-    keyset,
-    left, model, paccesses, palette, pan, poll, raccesses, raminitpattern,
-    revision, right, rom, saccesses, sampling, saturation, sbcollisions,
-    searchpath, shakedetector, shiftlock, slow, slowramdelay, slowrammirror,
-    speed, sscollisions, step, to, tod, timeout, timerbbug, unmappingtype,
+    keyset, left, model, paccesses, palette, pan, poll, raccesses,
+    raminitpattern, revision, right, rom, saccesses, sampling, saturation,
+    sbcollisions, searchpath, shakedetector, shiftlock, slow, slowramdelay,
+    slowrammirror, speed, sscollisions, step, to, tod, timerbbug, unmappingtype,
     velocity, volume
 };
 

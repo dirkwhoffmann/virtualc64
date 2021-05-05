@@ -589,9 +589,6 @@ extension MyController {
             mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
             inspector?.fullRefresh()
 
-        case .CYCLE_LIMIT:
-            break
-
         case .SCRIPT_DONE,
              .SCRIPT_PAUSE,
              .SCRIPT_ABORT:

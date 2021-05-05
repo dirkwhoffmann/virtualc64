@@ -195,16 +195,6 @@ RetroShell::exec <Token::c64, Token::run> (Arguments &argv, long param)
 }
 
 template <> void
-RetroShell::exec <Token::c64, Token::run, Token::timeout> (Arguments &argv, long param)
-{
-    auto seconds = util::parseNum(argv.front());
-    Cycle cycles = seconds * vic.getFrequency();
-    
-    c64.configure(OPT_CYCLE_LIMIT, cycles);
-    c64.run();
-}
-
-template <> void
 RetroShell::exec <Token::c64, Token::pause> (Arguments &argv, long param)
 {
     c64.pause();

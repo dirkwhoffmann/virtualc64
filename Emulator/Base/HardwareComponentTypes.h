@@ -18,9 +18,6 @@
 
 enum_long(OPT)
 {
-    // C64
-    OPT_CYCLE_LIMIT,
-    
     // VICII
     OPT_VIC_REVISION,
     OPT_PALETTE,
@@ -102,7 +99,6 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
     static const char *key(Option value)
     {
         switch (value) {
-            case OPT_CYCLE_LIMIT:         return "CYCLE_LIMIT";
             case OPT_VIC_REVISION:        return "VIC_REVISION";
             case OPT_PALETTE:             return "PALETTE";
             case OPT_BRIGHTNESS:          return "BRIGHTNESS";

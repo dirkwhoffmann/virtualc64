@@ -141,7 +141,6 @@ C64::_reset()
 void
 C64::resetConfig()
 {
-    setConfigItem(OPT_CYCLE_LIMIT, INT64_MAX);
 }
 
 InspectionTarget
@@ -385,13 +384,6 @@ C64::setConfigItem(Option option, i64 value)
             return true;
         }
             
-        case OPT_CYCLE_LIMIT:
-        {
-            if (config.cycleLimit == value) return false;
-            
-            config.cycleLimit = value;
-            return true;
-        }
         default:
             return false;
     }
@@ -998,16 +990,6 @@ void
 C64::executeOneFrame()
 {
     do { executeOneLine(); } while (rasterLine != 0 && runLoopCtrl == 0);
-
-    // Check if the cycle limit has been reached
-    if ((Cycle)cpu.cycle > config.cycleLimit) {
-     
-        msg("Cycle limit reached\n");
-        putMessage(MSG_CYCLE_LIMIT);
-        config.cycleLimit = INT64_MAX;
-
-        // runLoopCtrl |= ACTION_FLAG_CYCLE_LIMIT;
-    }
 }
 
 void
