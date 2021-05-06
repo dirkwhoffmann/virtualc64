@@ -21,7 +21,7 @@ class MyToolbar: NSToolbar {
 
     override func validateVisibleItems() {
                            
-        // Disable the keyboard button of the virtual keyboard is open
+        // Disable the keyboard button if the virtual keyboard is open
         let visible = parent.virtualKeyboard?.window?.isVisible ?? false
         let view = keyboardButton.view as? NSButton
         view?.isEnabled = !visible

@@ -161,6 +161,7 @@ FSDevice::makeWithPath(const std::string &path)
     if (auto file = AnyFile::make <P00File> (path, &ec)) {
         return makeWithCollection(*file);
     }
+    
     throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
  }
 

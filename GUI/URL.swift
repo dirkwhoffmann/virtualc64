@@ -46,7 +46,7 @@ extension URL {
                                          isDirectory: &isDirectory)
         
         if !folderExists || !isDirectory.boolValue {
-            
+
             try fm.createDirectory(at: folder,
                                    withIntermediateDirectories: true,
                                    attributes: nil)

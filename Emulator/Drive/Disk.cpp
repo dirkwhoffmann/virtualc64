@@ -106,8 +106,17 @@ Disk::isValidHalftrackSectorPair(Halftrack ht, Sector s)
 Disk *
 Disk::make(C64 &ref, const string &path)
 {
-    auto fs = FSDevice::makeWithPath(path);
-    return makeWithFileSystem(ref, *fs);
+    ErrorCode ec;
+
+    if (auto g64 = AnyFile::make <G64File> (path, &ec)) {
+        return makeWithG64(ref, g64);
+    }
+
+    if (auto fs = FSDevice::makeWithPath(path, &ec)) {
+        return makeWithFileSystem(ref, *fs);
+    }
+    
+    throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
 }
 
 Disk *
