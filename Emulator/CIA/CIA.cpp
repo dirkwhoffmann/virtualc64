@@ -29,11 +29,24 @@ CIA::_reset()
 	latchB = 0xFFFF;
 }
 
+CIAConfig
+CIA::getDefaultConfig()
+{
+    CIAConfig defaults;
+
+    defaults.revision = MOS_6526;
+    defaults.timerBBug = true;
+    
+    return defaults;
+}
+
 void
 CIA::resetConfig()
 {
-    setConfigItem(OPT_CIA_REVISION, MOS_6526);
-    setConfigItem(OPT_TIMER_B_BUG, true);
+    CIAConfig defaults = getDefaultConfig();
+    
+    setConfigItem(OPT_CIA_REVISION, defaults.revision);
+    setConfigItem(OPT_TIMER_B_BUG, defaults.timerBBug);
 }
 
 i64

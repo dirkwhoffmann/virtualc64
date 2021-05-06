@@ -248,6 +248,7 @@ protected:
     
 public:
     
+    static CIAConfig getDefaultConfig();
     CIAConfig getConfig() const { return config; }
     void resetConfig() override;
 
