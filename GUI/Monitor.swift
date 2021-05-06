@@ -60,7 +60,8 @@ class Monitor: DialogController {
     
     func refresh() {
                 
-        let cnf = c64.vic.getConfig()
+        // let cnf = c64.vic.getConfig()
+        let dma = c64.dmaDebugger.getConfig()
         
         // Bus debugger
         /*
@@ -71,24 +72,24 @@ class Monitor: DialogController {
         let mode = c64.getConfig(.DMA_DEBUG_MODE)
         */
                 
-        busDebug.state = cnf.dmaDebug ? .on : .off
-        busChannelR.state = cnf.dmaChannel.0 ? .on : .off
-        busChannelI.state = cnf.dmaChannel.1 ? .on : .off
-        busChannelC.state = cnf.dmaChannel.2 ? .on : .off
-        busChannelG.state = cnf.dmaChannel.3 ? .on : .off
-        busChannelP.state = cnf.dmaChannel.4 ? .on : .off
-        busChannelS.state = cnf.dmaChannel.5 ? .on : .off
+        busDebug.state = dma.dmaDebug ? .on : .off
+        busChannelR.state = dma.dmaChannel.0 ? .on : .off
+        busChannelI.state = dma.dmaChannel.1 ? .on : .off
+        busChannelC.state = dma.dmaChannel.2 ? .on : .off
+        busChannelG.state = dma.dmaChannel.3 ? .on : .off
+        busChannelP.state = dma.dmaChannel.4 ? .on : .off
+        busChannelS.state = dma.dmaChannel.5 ? .on : .off
         
         // Colors
-        busColorR.setColor(cnf.dmaColor.0)
-        busColorI.setColor(cnf.dmaColor.1)
-        busColorC.setColor(cnf.dmaColor.2)
-        busColorG.setColor(cnf.dmaColor.3)
-        busColorP.setColor(cnf.dmaColor.4)
-        busColorS.setColor(cnf.dmaColor.5)
+        busColorR.setColor(dma.dmaColor.0)
+        busColorI.setColor(dma.dmaColor.1)
+        busColorC.setColor(dma.dmaColor.2)
+        busColorG.setColor(dma.dmaColor.3)
+        busColorP.setColor(dma.dmaColor.4)
+        busColorS.setColor(dma.dmaColor.5)
 
-        busOpacity.integerValue = Int(cnf.dmaOpacity)
-        busDisplayMode.selectItem(withTag: cnf.dmaDisplayMode.rawValue)
+        busOpacity.integerValue = Int(dma.dmaOpacity)
+        busDisplayMode.selectItem(withTag: dma.dmaDisplayMode.rawValue)
         
         // Layer debugger
         let layers = config.vicCutLayers

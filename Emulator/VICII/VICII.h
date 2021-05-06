@@ -29,9 +29,12 @@ class VICII : public C64Component {
     VICIIInfo info;
     SpriteInfo spriteInfo[8];
     
+public:
+    
     // Sub components
     DmaDebugger dmaDebugger;
 
+    
     //
     // I/O space (CPU accessible)
     //
@@ -593,15 +596,15 @@ public:
     void resetConfig() override;
 
     i64 getConfigItem(Option option) const;
-    i64 getConfigItem(Option option, long id) const;
+    // i64 getConfigItem(Option option, long id) const;
     bool setConfigItem(Option option, i64 value) override;
-    bool setConfigItem(Option option, long id, i64 value) override;
+    // bool setConfigItem(Option option, long id, i64 value) override;
 
     VICIIRevision getRevision() const { return config.revision; }    
     void setRevision(VICIIRevision revision);
     
-    void setDmaDebugColor(MemAccess type, GpuColor color);
-    void setDmaDebugColor(MemAccess type, RgbColor color);
+    // void setDmaDebugColor(MemAccess type, GpuColor color);
+    // void setDmaDebugColor(MemAccess type, RgbColor color);
     
 
     //
@@ -619,6 +622,9 @@ private:
     void _dump(dump::Category category, std::ostream& os) const override;
 
 public:
+    
+    // Returns true if the DMA debugger is switched on
+    bool dmaDebug() const { return dmaDebugger.config.dmaDebug; }
     
     void dumpTexture() const;
     void dumpTexture(std::ostream& os) const;

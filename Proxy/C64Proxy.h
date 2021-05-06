@@ -44,6 +44,7 @@
 @class D64FileProxy;
 @class DatasetteProxy;
 @class DiskProxy;
+@class DmaDebuggerProxy;
 @class DriveProxy;
 @class ExpansionPortProxy;
 @class FSDeviceProxy;
@@ -98,6 +99,7 @@
     ControlPortProxy *port2;
     CPUProxy *cpu;
     DatasetteProxy *datasette;
+    DmaDebuggerProxy *dmaDebugger;
     DriveProxy *drive8;
     DriveProxy *drive9;
     ExpansionPortProxy *expansionport;
@@ -118,6 +120,7 @@
 @property (readonly, strong) ControlPortProxy *port2;
 @property (readonly, strong) CPUProxy *cpu;
 @property (readonly, strong) DatasetteProxy *datasette;
+@property (readonly, strong) DmaDebuggerProxy *dmaDebugger;
 @property (readonly, strong) DriveProxy *drive8;
 @property (readonly, strong) DriveProxy *drive9;
 @property (readonly, strong) ExpansionPortProxy *expansionport;
@@ -313,6 +316,18 @@
 - (SpriteInfo)getSpriteInfo:(NSInteger)sprite;
 
 - (u32 *)noise;
+
+@end
+
+
+//
+// DmaDebugger proxy
+//
+
+
+@interface DmaDebuggerProxy : HardwareComponentProxy { }
+
+- (DmaDebuggerConfig)getConfig;
 
 @end
 

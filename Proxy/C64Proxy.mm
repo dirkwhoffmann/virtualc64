@@ -414,6 +414,24 @@
 @end
 
 //
+// Dma Debugger
+//
+
+@implementation DmaDebuggerProxy
+
+- (DmaDebugger *)debugger
+{
+    return (DmaDebugger *)obj;
+}
+
+- (DmaDebuggerConfig)getConfig
+{
+    return [self debugger]->getConfig();
+}
+
+@end
+
+//
 // SID
 //
 
@@ -1968,6 +1986,7 @@
 @synthesize cia2;
 @synthesize cpu;
 @synthesize datasette;
+@synthesize dmaDebugger;
 @synthesize drive8;
 @synthesize drive9;
 @synthesize expansionport;
@@ -1995,6 +2014,7 @@
     cia2 = [[CIAProxy alloc] initWith:&c64->cia2];
     cpu = [[CPUProxy alloc] initWith:&c64->cpu];
     datasette = [[DatasetteProxy alloc] initWith:&c64->datasette];
+    dmaDebugger = [[DmaDebuggerProxy alloc] initWith:&c64->vic.dmaDebugger];
     drive8 = [[DriveProxy alloc] initWithVC1541:&c64->drive8];
     drive9 = [[DriveProxy alloc] initWithVC1541:&c64->drive9];
     expansionport = [[ExpansionPortProxy alloc] initWith:&c64->expansionport];

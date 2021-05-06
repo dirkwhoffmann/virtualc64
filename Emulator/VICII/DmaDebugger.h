@@ -15,8 +15,10 @@
 
 class DmaDebugger : public C64Component {
 
+    friend class VICII;
+    
     // Current configuration
-    DmaDebuggerConfig config;
+    DmaDebuggerConfig config = getDefaultConfig();
     
     // Color lookup table. There are 6 colors with different shades
     u32 debugColor[6][4];
@@ -42,6 +44,7 @@ private:
     
 public:
     
+    static DmaDebuggerConfig getDefaultConfig();
     DmaDebuggerConfig getConfig() const { return config; }
     void resetConfig() override;
 

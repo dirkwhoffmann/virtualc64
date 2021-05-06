@@ -15,24 +15,50 @@ DmaDebugger::DmaDebugger(C64 &ref) : C64Component(ref)
 {
 }
 
+DmaDebuggerConfig
+DmaDebugger::getDefaultConfig()
+{
+    DmaDebuggerConfig config;
+    
+    config.dmaDebug = false;
+    config.dmaChannel[0] = true;
+    config.dmaChannel[1] = true;
+    config.dmaChannel[2] = true;
+    config.dmaChannel[3] = true;
+    config.dmaChannel[4] = true;
+    config.dmaChannel[5] = true;
+    config.dmaColor[0] = GpuColor(0xFF, 0x00, 0x00).rawValue;
+    config.dmaColor[1] = GpuColor(0xFF, 0xC0, 0x00).rawValue;
+    config.dmaColor[2] = GpuColor(0xFF, 0xFF, 0x00).rawValue;
+    config.dmaColor[3] = GpuColor(0x00, 0xFF, 0xFF).rawValue;
+    config.dmaColor[4] = GpuColor(0x00, 0xFF, 0x00).rawValue;
+    config.dmaColor[5] = GpuColor(0x00, 0x80, 0xFF).rawValue;
+    config.dmaDisplayMode = DMA_DISPLAY_MODE_FG_LAYER;
+    config.dmaOpacity = 0x80;
+
+    return config;
+}
+    
 void
 DmaDebugger::resetConfig()
 {
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, false);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 0, true);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 1, true);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 2, true);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 3, true);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 4, true);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 5, true);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 0, GpuColor(0xFF, 0x00, 0x00).rawValue);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 1, GpuColor(0xFF, 0xC0, 0x00).rawValue);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 2, GpuColor(0xFF, 0xFF, 0x00).rawValue);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 3, GpuColor(0x00, 0xFF, 0xFF).rawValue);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 4, GpuColor(0x00, 0xFF, 0x00).rawValue);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 5, GpuColor(0x00, 0x80, 0xFF).rawValue);
-    setConfigItem(OPT_DMA_DEBUG_MODE, DMA_DISPLAY_MODE_FG_LAYER);
-    setConfigItem(OPT_DMA_DEBUG_OPACITY, 128);
+    DmaDebuggerConfig defaults = getDefaultConfig();
+    
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, defaults.dmaDebug);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 0, defaults.dmaChannel[0]);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 1, defaults.dmaChannel[1]);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 2, defaults.dmaChannel[2]);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 3, defaults.dmaChannel[3]);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 4, defaults.dmaChannel[4]);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 5, defaults.dmaChannel[5]);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 0, defaults.dmaColor[0]);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 1, defaults.dmaColor[1]);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 2, defaults.dmaColor[2]);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 3, defaults.dmaColor[3]);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 4, defaults.dmaColor[4]);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 5, defaults.dmaColor[5]);
+    setConfigItem(OPT_DMA_DEBUG_MODE, defaults.dmaDisplayMode);
+    setConfigItem(OPT_DMA_DEBUG_OPACITY, defaults.dmaOpacity);
 }
 
 i64
@@ -119,17 +145,21 @@ DmaDebugger::setConfigItem(Option option, long id, i64 value)
             
         case OPT_DMA_DEBUG_ENABLE:
             
+            /*
             if (config.dmaChannel[access] == value) {
                 return false;
             }
+            */
             config.dmaChannel[access] = value;
             return true;
             
         case OPT_DMA_DEBUG_COLOR:
             
+            /*
             if (config.dmaColor[access] == value) {
                 return false;
             }
+            */
             setDmaDebugColor(access, GpuColor((u32)value));
             return true;
             

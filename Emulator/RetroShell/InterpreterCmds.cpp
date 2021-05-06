@@ -320,6 +320,10 @@ Interpreter::registerInstructions()
     root.add({"dmadebugger"},
              "component", "DMA Debugger");
 
+    root.add({"dmadebugger", "config"},
+             "command", "Displays the current configuration",
+             &RetroShell::exec <Token::dmadebugger, Token::config>);
+
     root.add({"dmadebugger", "open"},
              "command", "Opens the DMA debugger",
              &RetroShell::exec <Token::dmadebugger, Token::open>);
@@ -382,6 +386,12 @@ Interpreter::registerInstructions()
              "command", "Hides sprite accesses",
              &RetroShell::exec <Token::dmadebugger, Token::hide, Token::saccesses>);
 
+    /*
+    root.add({"dmadebugger", "inspect"},
+             "command", "Displays the internal state",
+             &RetroShell::exec <Token::dmadebugger, Token::inspect>);
+    */
+    
     
     //
     // Monitor

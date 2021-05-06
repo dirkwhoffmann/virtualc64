@@ -211,7 +211,7 @@ C64::getConfigItem(Option option, long id) const
             
         case OPT_DMA_DEBUG_ENABLE:
         case OPT_DMA_DEBUG_COLOR:
-            return vic.getConfigItem(option, id);
+            return vic.dmaDebugger.getConfigItem(option, id);
 
         case OPT_SID_ENABLE:
         case OPT_SID_ADDRESS:
@@ -395,7 +395,7 @@ C64::setConfigItem(Option option, i64 value)
 void
 C64::updateVicFunctionTable()
 {
-    bool dmaDebug = vic.getConfig().dmaDebug;
+    bool dmaDebug = vic.dmaDebug();
     
     trace(VIC_DEBUG, "updateVicFunctionTable (dmaDebug: %d)\n", dmaDebug);
     

@@ -471,6 +471,12 @@ RetroShell::exec <Token::vicii, Token::inspect, Token::state> (Arguments& argv, 
 //
 
 template <> void
+RetroShell::exec <Token::dmadebugger, Token::config> (Arguments& argv, long param)
+{
+    dump(c64.vic.dmaDebugger, dump::Config);
+}
+
+template <> void
 RetroShell::exec <Token::dmadebugger, Token::open> (Arguments& argv, long param)
 {
     c64.configure(OPT_DMA_DEBUG_ENABLE, true);
@@ -553,6 +559,14 @@ RetroShell::exec <Token::dmadebugger, Token::hide, Token::saccesses> (Arguments&
 {
     c64.configure(OPT_DMA_DEBUG_ENABLE, 5, false);
 }
+
+/*
+template <> void
+RetroShell::exec <Token::dmadebugger, Token::inspect> (Arguments& argv, long param)
+{
+    dump(c64.vic.dmaDebugger, dump::State);
+}
+*/
 
 
 //
