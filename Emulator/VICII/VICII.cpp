@@ -22,7 +22,7 @@
 #define SPR7 0x80
 
 VICII::VICII(C64 &ref) : C64Component(ref), dmaDebugger(ref)
-{
+{    
     subComponents = std::vector<HardwareComponent *> { &dmaDebugger };
 
     // Assign reference clock to all time delayed variables
@@ -111,38 +111,80 @@ VICII::resetDmaTexture(int nr)
     }
 }
 
+VICIIConfig
+VICII::getDefaultConfig()
+{
+    VICIIConfig config;
+    
+    config.revision = VICII_PAL_8565;
+    config.grayDotBug = true;
+    config.glueLogic = GLUE_LOGIC_DISCRETE;
+
+    config.palette = PALETTE_COLOR;
+    config.brightness = 50;
+    config.contrast = 100;
+    config.saturation = 50;
+    
+    config.hideSprites = false;
+    config.dmaDebug = false;
+    config.dmaChannel[0] = true;
+    config.dmaChannel[1] = true;
+    config.dmaChannel[2] = true;
+    config.dmaChannel[3] = true;
+    config.dmaChannel[4] = true;
+    config.dmaChannel[5] = true;
+    config.dmaColor[0] = GpuColor(0xFF, 0x00, 0x00).rawValue;
+    config.dmaColor[1] = GpuColor(0xFF, 0xC0, 0x00).rawValue;
+    config.dmaColor[2] = GpuColor(0xFF, 0xFF, 0x00).rawValue;
+    config.dmaColor[3] = GpuColor(0x00, 0xFF, 0xFF).rawValue;
+    config.dmaColor[4] = GpuColor(0x00, 0xFF, 0x00).rawValue;
+    config.dmaColor[5] = GpuColor(0x00, 0x80, 0xFF).rawValue;
+    config.dmaDisplayMode = DMA_DISPLAY_MODE_FG_LAYER;
+    config.dmaOpacity = 0x80;
+    config.cutLayers = 0xFF;
+    config.cutOpacity = 0xFF;
+    
+    config.checkSSCollisions = true;
+    config.checkSBCollisions = true;
+    
+    return config;
+}
+
 void
 VICII::resetConfig()
 {
-    setConfigItem(OPT_VIC_REVISION, VICII_PAL_8565);
-    setConfigItem(OPT_GRAY_DOT_BUG, true);
-    setConfigItem(OPT_GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
+    VICIIConfig config = getDefaultConfig();
+    
+    setConfigItem(OPT_VIC_REVISION, config.revision);
+    setConfigItem(OPT_GRAY_DOT_BUG, config.grayDotBug);
+    setConfigItem(OPT_GLUE_LOGIC, config.glueLogic);
 
-    setConfigItem(OPT_PALETTE, PALETTE_COLOR);
-    setConfigItem(OPT_BRIGHTNESS, 50);
-    setConfigItem(OPT_CONTRAST, 100);
-    setConfigItem(OPT_SATURATION, 50);
+    setConfigItem(OPT_PALETTE, config.palette);
+    setConfigItem(OPT_BRIGHTNESS, config.brightness);
+    setConfigItem(OPT_CONTRAST, config.contrast);
+    setConfigItem(OPT_SATURATION, config.saturation);
 
-    setConfigItem(OPT_HIDE_SPRITES, false);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, false);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 0, true);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 1, true);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 2, true);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 3, true);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 4, true);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 5, true);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 0, GpuColor(0xFF, 0x00, 0x00).rawValue);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 1, GpuColor(0xFF, 0xC0, 0x00).rawValue);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 2, GpuColor(0xFF, 0xFF, 0x00).rawValue);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 3, GpuColor(0x00, 0xFF, 0xFF).rawValue);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 4, GpuColor(0x00, 0xFF, 0x00).rawValue);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 5, GpuColor(0x00, 0x80, 0xFF).rawValue);
-    setConfigItem(OPT_DMA_DEBUG_MODE, DMA_DISPLAY_MODE_FG_LAYER);
-    setConfigItem(OPT_DMA_DEBUG_OPACITY, 128);
-    setConfigItem(OPT_CUT_LAYERS, 0xFF);
-    setConfigItem(OPT_CUT_OPACITY, 0xFF);
-    setConfigItem(OPT_SB_COLLISIONS, true);
-    setConfigItem(OPT_SS_COLLISIONS, true);
+    setConfigItem(OPT_HIDE_SPRITES, config.hideSprites);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, config.dmaDebug);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 0, config.dmaChannel[0]);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 1, config.dmaChannel[1]);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 2, config.dmaChannel[2]);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 3, config.dmaChannel[3]);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 4, config.dmaChannel[4]);
+    setConfigItem(OPT_DMA_DEBUG_ENABLE, 5, config.dmaChannel[5]);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 0, config.dmaColor[0]);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 1, config.dmaColor[1]);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 2, config.dmaColor[2]);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 3, config.dmaColor[3]);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 4, config.dmaColor[4]);
+    setConfigItem(OPT_DMA_DEBUG_COLOR, 5, config.dmaColor[5]);
+    setConfigItem(OPT_DMA_DEBUG_MODE, config.dmaDisplayMode);
+    setConfigItem(OPT_DMA_DEBUG_OPACITY, config.dmaOpacity);
+    setConfigItem(OPT_CUT_LAYERS, config.cutLayers);
+    setConfigItem(OPT_CUT_OPACITY, config.cutOpacity);
+    
+    setConfigItem(OPT_SB_COLLISIONS, config.checkSSCollisions);
+    setConfigItem(OPT_SS_COLLISIONS, config.checkSBCollisions);
 }
 
 i64
@@ -198,7 +240,7 @@ VICII::setConfigItem(Option option, i64 value)
             if (!VICIIRevisionEnum::isValid(value)) {
                 throw ConfigArgError(VICIIRevisionEnum::keyList());
             }
-            if (config.revision == value) return false;
+            // if (config.revision == value) return false;
             
             suspend();
             config.revision = (VICIIRevision)value;
@@ -211,7 +253,7 @@ VICII::setConfigItem(Option option, i64 value)
             if (!PaletteEnum::isValid(value)) {
                 throw ConfigArgError(PaletteEnum::keyList());
             }
-            if (config.palette == value) return false;
+            // if (config.palette == value) return false;
             
             suspend();
             config.palette = (Palette)value;
@@ -224,9 +266,11 @@ VICII::setConfigItem(Option option, i64 value)
             if (config.brightness < 0 || config.brightness > 100) {
                 throw ConfigArgError("Expected 0...100");
             }
+            /*
             if (config.brightness == value) {
                 return false;
             }
+            */
             config.brightness = value;
             updatePalette();
             return true;
@@ -236,9 +280,11 @@ VICII::setConfigItem(Option option, i64 value)
             if (config.contrast < 0 || config.contrast > 100) {
                 throw ConfigArgError("Expected 0...100");
             }
+            /*
             if (config.contrast == value) {
                 return false;
             }
+            */
             config.contrast = value;
             updatePalette();
             return true;
@@ -248,9 +294,11 @@ VICII::setConfigItem(Option option, i64 value)
             if (config.saturation < 0 || config.saturation > 100) {
                 throw ConfigArgError("Expected 0...100");
             }
+            /*
             if (config.saturation == value) {
                 return false;
             }
+            */
             config.saturation = value;
             updatePalette();
             return true;
@@ -267,9 +315,11 @@ VICII::setConfigItem(Option option, i64 value)
 
         case OPT_DMA_DEBUG_ENABLE:
                      
+            /*
             if (config.dmaDebug == value) {
                 return false;
             }
+            */
             suspend();
             config.dmaDebug = value;
             resetDmaTextures();
@@ -283,10 +333,11 @@ VICII::setConfigItem(Option option, i64 value)
             if (!DmaDisplayModeEnum::isValid(value)) {
                 throw ConfigArgError(DmaDisplayModeEnum::keyList());
             }
+            /*
             if (config.dmaDisplayMode == value) {
                 return false;
             }
-            
+            */
             config.dmaDisplayMode = (DmaDisplayMode)value;
             return true;
 
@@ -320,7 +371,7 @@ VICII::setConfigItem(Option option, i64 value)
             if (!GlueLogicEnum::isValid(value)) {
                 throw ConfigArgError(GlueLogicEnum::keyList());
             }
-            if (config.glueLogic == value) return false;
+            // if (config.glueLogic == value) return false;
             
             config.glueLogic = (GlueLogic)value;
             return true;
@@ -340,17 +391,21 @@ VICII::setConfigItem(Option option, long id, i64 value)
             
         case OPT_DMA_DEBUG_ENABLE:
             
+            /*
             if (config.dmaChannel[access] == value) {
                 return false;
             }
+            */
             config.dmaChannel[access] = value;
             return true;
             
         case OPT_DMA_DEBUG_COLOR:
             
+            /*
             if (config.dmaColor[access] == value) {
                 return false;
             }
+            */
             setDmaDebugColor(access, GpuColor((u32)value));
             return true;
             

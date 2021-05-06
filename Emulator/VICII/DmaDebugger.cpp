@@ -73,9 +73,11 @@ DmaDebugger::setConfigItem(Option option, i64 value)
             
         case OPT_DMA_DEBUG_ENABLE:
                      
+            /*
             if (config.dmaDebug == value) {
                 return false;
             }
+            */
             suspend();
             config.dmaDebug = value;
             vic.resetDmaTextures();
@@ -89,10 +91,11 @@ DmaDebugger::setConfigItem(Option option, i64 value)
             if (!DmaDisplayModeEnum::isValid(value)) {
                 throw ConfigArgError(DmaDisplayModeEnum::keyList());
             }
+            /*
             if (config.dmaDisplayMode == value) {
                 return false;
             }
-            
+            */
             config.dmaDisplayMode = (DmaDisplayMode)value;
             return true;
 

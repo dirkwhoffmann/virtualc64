@@ -144,7 +144,7 @@ C64Memory::setConfigItem(Option option, i64 value)
             if (!RamPatternEnum::isValid(value)) {
                 throw ConfigArgError(RamPatternEnum::keyList());
             }
-            if (config.ramPattern == value) return false;
+            // if (config.ramPattern == value) return false;
             
             config.ramPattern = (RamPattern)value;
             return true;

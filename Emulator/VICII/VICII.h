@@ -23,8 +23,8 @@ class VICII : public C64Component {
     friend class DmaDebugger;
     
     // Current configuration
-    VICIIConfig config;
-    
+    VICIIConfig config = getDefaultConfig();
+        
     // Result of the latest inspection
     VICIIInfo info;
     SpriteInfo spriteInfo[8];
@@ -588,6 +588,7 @@ private:
     
 public:
     
+    static VICIIConfig getDefaultConfig();
     VICIIConfig getConfig() const { return config; }
     void resetConfig() override;
 

@@ -136,7 +136,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
             if (!SIDRevisionEnum::isValid(value)) {
                 throw ConfigArgError(SIDRevisionEnum::keyList());
             }
-            if (config.revision == value) return false;
+            // if (config.revision == value) return false;
             
             suspend();
             config.revision = (SIDRevision)value;
@@ -150,10 +150,11 @@ SIDBridge::setConfigItem(Option option, i64 value)
             
         case OPT_SID_FILTER:
             
+            /*
             if (config.filter == value) {
                 return false;
             }
-
+            */
             suspend();
             config.filter = value;
             for (int i = 0; i < 4; i++) {
@@ -169,7 +170,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
             if (!SIDEngineEnum::isValid(value)) {
                 throw ConfigArgError(SIDEngineEnum::keyList());
             }
-            if (config.engine == value) return false;
+            // if (config.engine == value) return false;
 
             suspend();
             config.engine = (SIDEngine)value;
@@ -182,7 +183,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
             if (!SamplingMethodEnum::isValid(value)) {
                 throw ConfigArgError(SamplingMethodEnum::keyList());
             }
-            if (config.sampling == value)  return false;
+            // if (config.sampling == value) return false;
 
             suspend();
             config.sampling = (SamplingMethod)value;
@@ -198,7 +199,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
             
             config.volL = std::clamp((int)value, 0, 100);
             volL.set(pow((double)config.volL / 50, 1.4));
-
+            
             if (wasMuted != isMuted()) {
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
             }

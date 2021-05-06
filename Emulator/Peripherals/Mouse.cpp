@@ -77,18 +77,22 @@ Mouse::setConfigItem(Option option, long id, i64 value)
             
         case OPT_MOUSE_MODEL:
             
+            /*
             if (config.model == value) {
                 return false;
             }
+            */
             config.model = (MouseModel)value;
             _reset();
             return true;
             
         case OPT_SHAKE_DETECTION:
             
+            /*
             if (config.shakeDetection == value) {
                 return false;
             }
+            */
             config.shakeDetection = value;
             return true;
             
@@ -97,9 +101,11 @@ Mouse::setConfigItem(Option option, long id, i64 value)
             if (value < 0 || value > 255) {
                 throw ConfigArgError("0 ... 255");
             }
+            /*
             if (config.velocity == value) {
                 return false;
             }
+            */
             config.velocity= value;
             updateScalingFactors();
             return true;
