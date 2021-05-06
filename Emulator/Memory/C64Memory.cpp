@@ -115,10 +115,22 @@ C64Memory::_reset()
     }
 }
 
+MemConfig
+C64Memory::getDefaultConfig()
+{
+    MemConfig defaults;
+    
+    defaults.ramPattern = RAM_PATTERN_C64;
+    
+    return defaults;
+}
+
 void
 C64Memory::resetConfig()
 {
-    setConfigItem(OPT_RAM_PATTERN, RAM_PATTERN_C64);
+    MemConfig defaults = getDefaultConfig();
+    
+    setConfigItem(OPT_RAM_PATTERN, defaults.ramPattern);
 }
 
 i64

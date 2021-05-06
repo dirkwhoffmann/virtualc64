@@ -61,7 +61,7 @@
 class CIA : public C64Component {
         
     // Current configuration
-    CIAConfig config;
+    CIAConfig config = getDefaultConfig();
     
     // Result of the latest inspection
     CIAInfo info;

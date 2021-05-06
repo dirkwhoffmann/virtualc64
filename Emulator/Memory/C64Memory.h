@@ -15,7 +15,7 @@
 class C64Memory : public C64Component {
 
     // Current configuration
-    MemConfig config;
+    MemConfig config = getDefaultConfig();
     
     // Result of the latest inspection
     MemInfo info;
@@ -79,6 +79,7 @@ private:
     
 public:
     
+    static MemConfig getDefaultConfig();
     MemConfig getConfig() const { return config; }
     void resetConfig() override;
 

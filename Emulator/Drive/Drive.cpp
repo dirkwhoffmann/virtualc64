@@ -55,22 +55,44 @@ Drive::_reset()
     halftrack = 41;
 }
 
+DriveConfig
+Drive::getDefaultConfig()
+{
+    DriveConfig defaults;
+    
+    defaults.type = DRIVE_VC1541II;
+    defaults.connected = false;
+    defaults.switchedOn = true;
+    defaults.ejectDelay = 30;
+    defaults.swapDelay = 30;
+    defaults.insertDelay = 30;
+    defaults.pan = 0;
+    defaults.powerVolume = 50;
+    defaults.stepVolume = 50;
+    defaults.insertVolume = 50;
+    defaults.ejectVolume = 50;
+        
+    return defaults;
+}
+
 void
 Drive::resetConfig()
 {
-    setConfigItem(OPT_DRIVE_CONNECT, deviceNr, deviceNr == DRIVE8);
-    setConfigItem(OPT_DRIVE_POWER_SWITCH, deviceNr, true);
-    setConfigItem(OPT_DRIVE_TYPE, deviceNr, DRIVE_VC1541II);
-
-    setConfigItem(OPT_DISK_EJECT_DELAY, deviceNr, 30);
-    setConfigItem(OPT_DISK_SWAP_DELAY, deviceNr, 30);
-    setConfigItem(OPT_DISK_INSERT_DELAY, deviceNr, 30);
+    DriveConfig defaults = getDefaultConfig();
     
-    setConfigItem(OPT_DRIVE_PAN, deviceNr, 0);
-    setConfigItem(OPT_POWER_VOLUME, deviceNr, 50);
-    setConfigItem(OPT_STEP_VOLUME, deviceNr, 50);
-    setConfigItem(OPT_INSERT_VOLUME, deviceNr, 50);
-    setConfigItem(OPT_EJECT_VOLUME, deviceNr, 50);
+    setConfigItem(OPT_DRIVE_CONNECT, deviceNr, deviceNr == DRIVE8);
+    setConfigItem(OPT_DRIVE_POWER_SWITCH, deviceNr, defaults.switchedOn);
+    setConfigItem(OPT_DRIVE_TYPE, deviceNr, defaults.type);
+
+    setConfigItem(OPT_DISK_EJECT_DELAY, deviceNr, defaults.ejectDelay);
+    setConfigItem(OPT_DISK_SWAP_DELAY, deviceNr, defaults.swapDelay);
+    setConfigItem(OPT_DISK_INSERT_DELAY, deviceNr, defaults.insertDelay);
+    
+    setConfigItem(OPT_DRIVE_PAN, deviceNr, defaults.pan);
+    setConfigItem(OPT_POWER_VOLUME, deviceNr, defaults.powerVolume);
+    setConfigItem(OPT_STEP_VOLUME, deviceNr, defaults.stepVolume);
+    setConfigItem(OPT_INSERT_VOLUME, deviceNr, defaults.insertVolume);
+    setConfigItem(OPT_EJECT_VOLUME, deviceNr, defaults.ejectVolume);
 }
 
 i64

@@ -66,9 +66,6 @@
  */
 class C64 : public HardwareComponent {
         
-    // Current configuration
-    C64Config config;
-
     // The currently set inspection target (only evaluated in debug mode)
     InspectionTarget inspectionTarget;
 
@@ -228,9 +225,6 @@ private:
 
 public:
     
-    C64Config getConfig() const { return config; }
-    void resetConfig() override;
-
     i64 getConfigItem(Option option) const;
     i64 getConfigItem(Option option, long id) const;
     

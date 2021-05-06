@@ -50,7 +50,7 @@ class Drive : public C64Component {
     DriveID deviceNr;
 
     // Current configuration
-    DriveConfig config;
+    DriveConfig config = getDefaultConfig();
 
     
     //
@@ -217,6 +217,7 @@ private:
     
 public:
         
+    static DriveConfig getDefaultConfig();
     DriveConfig getConfig() const { return config; }
     void resetConfig() override;
 

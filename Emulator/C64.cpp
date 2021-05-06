@@ -138,11 +138,6 @@ C64::_reset()
     rasterCycle = 1;
 }
 
-void
-C64::resetConfig()
-{
-}
-
 InspectionTarget
 C64::getInspectionTarget() const
 {
@@ -746,12 +741,7 @@ void
 C64::_dump(dump::Category category, std::ostream& os) const
 {
     using namespace util;
-    
-    if (category & dump::Config) {
-    
-        os << tab("Cycle limit") << config.cycleLimit << std::endl;
-    }
-    
+        
     if (category & dump::State) {
                 
         os << tab("Machine type") << bol(vic.isPAL(), "PAL", "NTSC") << std::endl;
@@ -931,13 +921,7 @@ C64::runLoop()
                 clearActionFlags(ACTION_FLAG_CPU_JAMMED);
                 break;
             }
-            
-            // Has the cycle limit been reached?
-            if (runLoopCtrl & ACTION_FLAG_CYCLE_LIMIT) {
-                msg("Cycle limit reached (> %lld).", config.cycleLimit);
-                exit(1);
-            }
-            
+                        
             assert(runLoopCtrl == 0);
         }
     }

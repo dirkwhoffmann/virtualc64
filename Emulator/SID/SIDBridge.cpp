@@ -43,20 +43,48 @@ SIDBridge::_reset()
     clearRingbuffer();
 }
 
+SIDConfig
+SIDBridge::getDefaultConfig()
+{
+    SIDConfig defaults;
+    
+    defaults.revision = MOS_8580;
+    defaults.enabled = 1;
+    defaults.address[0] = 0xD400;
+    defaults.address[1] = 0xD420;
+    defaults.address[2] = 0xD440;
+    defaults.address[3] = 0xD460;
+    defaults.filter = true;
+    defaults.engine = SIDENGINE_RESID;
+    defaults.sampling = SAMPLING_INTERPOLATE;
+    defaults.volL = 50;
+    defaults.volR = 50;
+    
+    for (isize i = 0; i < 4; i++) {
+        defaults.vol[i] = 400;
+        defaults.pan[i] = 0;
+    }
+    
+    return defaults;
+}
+
 void
 SIDBridge::resetConfig()
 {
-    setConfigItem(OPT_SID_REVISION, MOS_8580);
-    setConfigItem(OPT_SID_FILTER, true);
-    setConfigItem(OPT_SID_ENGINE, SIDENGINE_RESID);
-    setConfigItem(OPT_SID_SAMPLING, SAMPLING_INTERPOLATE);
-    setConfigItem(OPT_AUDVOLL, 50);
-    setConfigItem(OPT_AUDVOLR, 50);
+    SIDConfig defaults = getDefaultConfig();
+    
+    setConfigItem(OPT_SID_REVISION, defaults.revision);
+    setConfigItem(OPT_SID_FILTER, defaults.filter);
+    setConfigItem(OPT_SID_ENGINE, defaults.engine);
+    setConfigItem(OPT_SID_SAMPLING, defaults.sampling);
+    setConfigItem(OPT_AUDVOLL, defaults.volL);
+    setConfigItem(OPT_AUDVOLR, defaults.volR);
 
     for (isize i = 0; i < 4; i++) {
-        setConfigItem(OPT_SID_ENABLE, i, i == 0);
-        setConfigItem(OPT_SID_ADDRESS, i, 0xD400 + (i * 0x20));
-        setConfigItem(OPT_AUDVOL, i, 400);
+        setConfigItem(OPT_SID_ENABLE, i, GET_BIT(defaults.enabled, i));
+        setConfigItem(OPT_SID_ADDRESS, i, defaults.address[i]);
+        setConfigItem(OPT_AUDVOL, i, defaults.vol[i]);
+        setConfigItem(OPT_AUDPAN, i, defaults.pan[i]);
     }
 }
 

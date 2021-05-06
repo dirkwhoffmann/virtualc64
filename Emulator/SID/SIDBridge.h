@@ -45,7 +45,7 @@ class SIDBridge : public C64Component {
     friend C64Memory;
 
     // Current configuration
-    SIDConfig config;
+    SIDConfig config = getDefaultConfig();
     
     
     //
@@ -141,6 +141,7 @@ private:
     
 public:
     
+    static SIDConfig getDefaultConfig();
     SIDConfig getConfig() const { return config; }
     void resetConfig() override;
 

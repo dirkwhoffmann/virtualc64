@@ -158,17 +158,6 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
 
 
 //
-// Structures
-//
-
-typedef struct
-{
-    Cycle cycleLimit;
-}
-C64Config;
-
-
-//
 // Private data types
 //
 
@@ -181,7 +170,6 @@ enum_long(ACTION_FLAG)
     ACTION_FLAG_BREAKPOINT    = 0b000010000,
     ACTION_FLAG_WATCHPOINT    = 0b000100000,
     ACTION_FLAG_AUTO_SNAPSHOT = 0b001000000,
-    ACTION_FLAG_USER_SNAPSHOT = 0b010000000,
-    ACTION_FLAG_CYCLE_LIMIT   = 0b100000000,
+    ACTION_FLAG_USER_SNAPSHOT = 0b010000000
 };
 typedef ACTION_FLAG ActionFlag;
