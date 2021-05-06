@@ -36,6 +36,8 @@ Drive::getDescription() const
 void
 Drive::_initialize()
 {
+    printf("Drive::_initialize\n");
+    
     resetConfig();
     
     insertionStatus = DISK_FULLY_EJECTED;
@@ -45,6 +47,8 @@ Drive::_initialize()
 void
 Drive::_reset()
 {
+    printf("Drive::_reset\n");
+    
     RESET_SNAPSHOT_ITEMS
 
     cpu.reg.pc = 0xEAA0;
@@ -138,16 +142,18 @@ Drive::setConfigItem(Option option, long id, i64 value)
             if (!DriveTypeEnum::isValid(value)) {
                 throw ConfigArgError(DriveTypeEnum::keyList());
             }
-            if (config.type == value) return false;
+            // if (config.type == value) return false;
             
             config.type = (DriveType)value;
             return true;
         }
         case OPT_DRIVE_CONNECT:
         {
+            /*
             if (config.connected == value) {
                 return false;
             }
+            */
             if (value && !c64.hasRom(ROM_TYPE_VC1541)) {
                 warn("Can't connect drive (ROM missing).\n");
                 return false;
@@ -166,10 +172,6 @@ Drive::setConfigItem(Option option, long id, i64 value)
         }
         case OPT_DRIVE_POWER_SWITCH:
         {
-            if (config.switchedOn == value) {
-                return false;
-            }
-            
             suspend();
             config.switchedOn = value;
             bool wasActive = active;
@@ -185,33 +187,21 @@ Drive::setConfigItem(Option option, long id, i64 value)
         }
         case OPT_DISK_EJECT_DELAY:
         {
-            if (config.ejectDelay == value) {
-                return false;
-            }
             config.ejectDelay = value;
             return true;
         }
         case OPT_DISK_SWAP_DELAY:
         {
-            if (config.swapDelay == value) {
-                return false;
-            }
             config.swapDelay = value;
             return true;
         }
         case OPT_DISK_INSERT_DELAY:
         {
-            if (config.insertDelay == value) {
-                return false;
-            }
             config.insertDelay = value;
             return true;
         }
         case OPT_DRIVE_PAN:
         {
-            if (config.pan == value) {
-                return false;
-            }
             config.pan = value;
             return true;
         }
@@ -219,9 +209,6 @@ Drive::setConfigItem(Option option, long id, i64 value)
         {
             value = std::clamp(value, 0LL, 100LL);
 
-            if (config.powerVolume == value) {
-                return false;
-            }
             config.powerVolume = value;
             return true;
         }
@@ -229,9 +216,6 @@ Drive::setConfigItem(Option option, long id, i64 value)
         {
             value = std::clamp(value, 0LL, 100LL);
 
-            if (config.stepVolume == value) {
-                return false;
-            }
             config.stepVolume = value;
             return true;
         }
@@ -239,9 +223,6 @@ Drive::setConfigItem(Option option, long id, i64 value)
         {
             value = std::clamp(value, 0LL, 100LL);
             
-            if (config.ejectVolume == value) {
-                return false;
-            }
             config.ejectVolume = value;
             printf("New eject volume: %d\n", config.ejectVolume);
             return true;
@@ -250,9 +231,6 @@ Drive::setConfigItem(Option option, long id, i64 value)
         {
             value = std::clamp(value, 0LL, 100LL);
             
-            if (config.insertVolume == value) {
-                return false;
-            }
             config.insertVolume = value;
             return true;
         }
