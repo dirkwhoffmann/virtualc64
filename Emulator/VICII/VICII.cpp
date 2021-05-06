@@ -126,23 +126,6 @@ VICII::getDefaultConfig()
     defaults.saturation = 50;
     
     defaults.hideSprites = false;
-    /*
-    defaults.dmaDebug = false;
-    defaults.dmaChannel[0] = true;
-    defaults.dmaChannel[1] = true;
-    defaults.dmaChannel[2] = true;
-    defaults.dmaChannel[3] = true;
-    defaults.dmaChannel[4] = true;
-    defaults.dmaChannel[5] = true;
-    defaults.dmaColor[0] = GpuColor(0xFF, 0x00, 0x00).rawValue;
-    defaults.dmaColor[1] = GpuColor(0xFF, 0xC0, 0x00).rawValue;
-    defaults.dmaColor[2] = GpuColor(0xFF, 0xFF, 0x00).rawValue;
-    defaults.dmaColor[3] = GpuColor(0x00, 0xFF, 0xFF).rawValue;
-    defaults.dmaColor[4] = GpuColor(0x00, 0xFF, 0x00).rawValue;
-    defaults.dmaColor[5] = GpuColor(0x00, 0x80, 0xFF).rawValue;
-    defaults.dmaDisplayMode = DMA_DISPLAY_MODE_FG_LAYER;
-    defaults.dmaOpacity = 0x80;
-    */
     defaults.cutLayers = 0xFF;
     defaults.cutOpacity = 0xFF;
     
@@ -167,23 +150,6 @@ VICII::resetConfig()
     setConfigItem(OPT_SATURATION, defaults.saturation);
 
     setConfigItem(OPT_HIDE_SPRITES, defaults.hideSprites);
-    /*
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, defaults.dmaDebug);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 0, defaults.dmaChannel[0]);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 1, defaults.dmaChannel[1]);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 2, defaults.dmaChannel[2]);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 3, defaults.dmaChannel[3]);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 4, defaults.dmaChannel[4]);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 5, defaults.dmaChannel[5]);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 0, defaults.dmaColor[0]);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 1, defaults.dmaColor[1]);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 2, defaults.dmaColor[2]);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 3, defaults.dmaColor[3]);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 4, defaults.dmaColor[4]);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 5, defaults.dmaColor[5]);
-    setConfigItem(OPT_DMA_DEBUG_MODE, defaults.dmaDisplayMode);
-    setConfigItem(OPT_DMA_DEBUG_OPACITY, defaults.dmaOpacity);
-    */
     setConfigItem(OPT_CUT_LAYERS, defaults.cutLayers);
     setConfigItem(OPT_CUT_OPACITY, defaults.cutOpacity);
     
@@ -203,11 +169,6 @@ VICII::getConfigItem(Option option) const
         case OPT_SATURATION:        return config.saturation;
         case OPT_GRAY_DOT_BUG:      return config.grayDotBug;
         case OPT_GLUE_LOGIC:        return config.glueLogic;
-            /*
-        case OPT_DMA_DEBUG_ENABLE:  return config.dmaDebug;
-        case OPT_DMA_DEBUG_MODE:    return config.dmaDisplayMode;
-        case OPT_DMA_DEBUG_OPACITY: return config.dmaOpacity;
-             */
         case OPT_HIDE_SPRITES:      return config.hideSprites;
         case OPT_CUT_LAYERS:        return config.cutLayers;
         case OPT_CUT_OPACITY:       return config.cutOpacity;
@@ -220,24 +181,6 @@ VICII::getConfigItem(Option option) const
     }
 }
 
-/*
-i64
-VICII::getConfigItem(Option option, long id) const
-{
-    assert(id >= 0 && id < MEMACCESS_COUNT);
-    
-    switch (option) {
-            
-        case OPT_DMA_DEBUG_ENABLE: return config.dmaChannel[id];
-        case OPT_DMA_DEBUG_COLOR: return config.dmaColor[id];
-            
-        default:
-            assert(false);
-            return 0;
-    }
-}
-*/
-
 bool
 VICII::setConfigItem(Option option, i64 value)
 {
@@ -248,7 +191,6 @@ VICII::setConfigItem(Option option, i64 value)
             if (!VICIIRevisionEnum::isValid(value)) {
                 throw ConfigArgError(VICIIRevisionEnum::keyList());
             }
-            // if (config.revision == value) return false;
             
             suspend();
             config.revision = (VICIIRevision)value;
@@ -261,7 +203,6 @@ VICII::setConfigItem(Option option, i64 value)
             if (!PaletteEnum::isValid(value)) {
                 throw ConfigArgError(PaletteEnum::keyList());
             }
-            // if (config.palette == value) return false;
             
             suspend();
             config.palette = (Palette)value;
@@ -274,11 +215,7 @@ VICII::setConfigItem(Option option, i64 value)
             if (config.brightness < 0 || config.brightness > 100) {
                 throw ConfigArgError("Expected 0...100");
             }
-            /*
-            if (config.brightness == value) {
-                return false;
-            }
-            */
+
             config.brightness = value;
             updatePalette();
             return true;
@@ -288,11 +225,7 @@ VICII::setConfigItem(Option option, i64 value)
             if (config.contrast < 0 || config.contrast > 100) {
                 throw ConfigArgError("Expected 0...100");
             }
-            /*
-            if (config.contrast == value) {
-                return false;
-            }
-            */
+
             config.contrast = value;
             updatePalette();
             return true;
@@ -302,11 +235,7 @@ VICII::setConfigItem(Option option, i64 value)
             if (config.saturation < 0 || config.saturation > 100) {
                 throw ConfigArgError("Expected 0...100");
             }
-            /*
-            if (config.saturation == value) {
-                return false;
-            }
-            */
+
             config.saturation = value;
             updatePalette();
             return true;
@@ -320,31 +249,6 @@ VICII::setConfigItem(Option option, i64 value)
             
             config.hideSprites = value;
             return true;
-
-        /*
-        case OPT_DMA_DEBUG_ENABLE:
-                     
-            suspend();
-            config.dmaDebug = value;
-            resetDmaTextures();
-            c64.updateVicFunctionTable();
-            messageQueue.put(value ? MSG_DMA_DEBUG_ON : MSG_DMA_DEBUG_OFF);
-            resume();
-            return true;
-
-        case OPT_DMA_DEBUG_MODE:
-            
-            if (!DmaDisplayModeEnum::isValid(value)) {
-                throw ConfigArgError(DmaDisplayModeEnum::keyList());
-            }
-            config.dmaDisplayMode = (DmaDisplayMode)value;
-            return true;
-
-        case OPT_DMA_DEBUG_OPACITY:
-            
-            config.dmaOpacity = value;
-            return false; // 'false' to avoid a MSG_CONFIG being sent
-        */
 
         case OPT_CUT_LAYERS:
             
@@ -371,7 +275,6 @@ VICII::setConfigItem(Option option, i64 value)
             if (!GlueLogicEnum::isValid(value)) {
                 throw ConfigArgError(GlueLogicEnum::keyList());
             }
-            // if (config.glueLogic == value) return false;
             
             config.glueLogic = (GlueLogic)value;
             return true;
@@ -380,31 +283,6 @@ VICII::setConfigItem(Option option, i64 value)
             return false;
     }
 }
-
-/*
-bool
-VICII::setConfigItem(Option option, long id, i64 value)
-{
-    if (!MemAccessEnum::isValid(id)) { return false; }
-    MemAccess access = (MemAccess)id;
-    
-    switch (option) {
-            
-        case OPT_DMA_DEBUG_ENABLE:
-            
-            config.dmaChannel[access] = value;
-            return true;
-            
-        case OPT_DMA_DEBUG_COLOR:
-            
-            setDmaDebugColor(access, GpuColor((u32)value));
-            return true;
-            
-        default:
-            return false;
-    }
-}
-*/
 
 void
 VICII::setRevision(VICIIRevision revision)
@@ -422,28 +300,6 @@ VICII::setRevision(VICIIRevision revision)
     
     c64.putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
 }
-
-/*
-void
-VICII::setDmaDebugColor(MemAccess type, GpuColor color)
-{
-    assert_enum(MemAccess, type);
-    
-    config.dmaColor[type] = color.rawValue;
-        
-    // Update the color lookup table
-    debugColor[type][0] = color.shade(0.3).rawValue;
-    debugColor[type][1] = color.shade(0.1).rawValue;
-    debugColor[type][2] = color.tint(0.1).rawValue;
-    debugColor[type][3] = color.tint(0.3).rawValue;
-}
-
-void
-VICII::setDmaDebugColor(MemAccess type, RgbColor color)
-{
-    setDmaDebugColor(type, GpuColor(color));
-}
-*/
 
 void
 VICII::_inspect()

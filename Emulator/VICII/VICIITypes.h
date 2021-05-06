@@ -327,13 +327,6 @@ typedef struct
 
     // Debugger
     bool hideSprites;
-    /*
-    bool dmaDebug;
-    bool dmaChannel[6];
-    u32 dmaColor[6];
-    DmaDisplayMode dmaDisplayMode;
-    u8 dmaOpacity;
-    */
     u16 cutLayers;
     u8 cutOpacity;
     

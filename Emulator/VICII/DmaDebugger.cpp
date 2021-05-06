@@ -99,11 +99,6 @@ DmaDebugger::setConfigItem(Option option, i64 value)
             
         case OPT_DMA_DEBUG_ENABLE:
                      
-            /*
-            if (config.dmaDebug == value) {
-                return false;
-            }
-            */
             suspend();
             config.dmaDebug = value;
             vic.resetDmaTextures();
@@ -117,11 +112,6 @@ DmaDebugger::setConfigItem(Option option, i64 value)
             if (!DmaDisplayModeEnum::isValid(value)) {
                 throw ConfigArgError(DmaDisplayModeEnum::keyList());
             }
-            /*
-            if (config.dmaDisplayMode == value) {
-                return false;
-            }
-            */
             config.dmaDisplayMode = (DmaDisplayMode)value;
             return true;
 
@@ -145,21 +135,11 @@ DmaDebugger::setConfigItem(Option option, long id, i64 value)
             
         case OPT_DMA_DEBUG_ENABLE:
             
-            /*
-            if (config.dmaChannel[access] == value) {
-                return false;
-            }
-            */
             config.dmaChannel[access] = value;
             return true;
             
         case OPT_DMA_DEBUG_COLOR:
             
-            /*
-            if (config.dmaColor[access] == value) {
-                return false;
-            }
-            */
             setDmaDebugColor(access, GpuColor((u32)value));
             return true;
             
