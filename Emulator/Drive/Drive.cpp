@@ -57,6 +57,11 @@ Drive::resetConfig()
     setConfigItem(OPT_DRIVE_CONNECT, deviceNr, deviceNr == DRIVE8);
     setConfigItem(OPT_DRIVE_POWER_SWITCH, deviceNr, true);
     setConfigItem(OPT_DRIVE_TYPE, deviceNr, DRIVE_VC1541II);
+
+    setConfigItem(OPT_DISK_EJECT_DELAY, deviceNr, 30);
+    setConfigItem(OPT_DISK_SWAP_DELAY, deviceNr, 30);
+    setConfigItem(OPT_DISK_INSERT_DELAY, deviceNr, 30);
+    
     setConfigItem(OPT_DRIVE_PAN, deviceNr, 0);
     setConfigItem(OPT_POWER_VOLUME, deviceNr, 50);
     setConfigItem(OPT_STEP_VOLUME, deviceNr, 50);
@@ -72,6 +77,9 @@ Drive::getConfigItem(Option option) const
         case OPT_DRIVE_TYPE:          return (i64)config.type;
         case OPT_DRIVE_CONNECT:       return (i64)config.connected;
         case OPT_DRIVE_POWER_SWITCH:  return (i64)config.switchedOn;
+        case OPT_DISK_EJECT_DELAY:    return (i64)config.ejectDelay;
+        case OPT_DISK_SWAP_DELAY:     return (i64)config.swapDelay;
+        case OPT_DISK_INSERT_DELAY:   return (i64)config.insertDelay;
         case OPT_DRIVE_PAN:           return (i64)config.pan;
         case OPT_POWER_VOLUME:        return (i64)config.powerVolume;
         case OPT_STEP_VOLUME:         return (i64)config.stepVolume;
@@ -100,6 +108,9 @@ Drive::setConfigItem(Option option, i64 value)
             durationOfOneCpuCycle = duration;
             return true;
         }
+        case OPT_DISK_EJECT_DELAY:
+        case OPT_DISK_SWAP_DELAY:
+        case OPT_DISK_INSERT_DELAY:
         case OPT_POWER_VOLUME:
         case OPT_STEP_VOLUME:
         case OPT_INSERT_VOLUME:
@@ -170,6 +181,30 @@ Drive::setConfigItem(Option option, long id, i64 value)
                 messageQueue.put(active ? MSG_DRIVE_ACTIVE : MSG_DRIVE_INACTIVE,
                                  config.pan << 24 | config.powerVolume << 16 | deviceNr);
             }
+            return true;
+        }
+        case OPT_DISK_EJECT_DELAY:
+        {
+            if (config.ejectDelay == value) {
+                return false;
+            }
+            config.ejectDelay = value;
+            return true;
+        }
+        case OPT_DISK_SWAP_DELAY:
+        {
+            if (config.swapDelay == value) {
+                return false;
+            }
+            config.swapDelay = value;
+            return true;
+        }
+        case OPT_DISK_INSERT_DELAY:
+        {
+            if (config.insertDelay == value) {
+                return false;
+            }
+            config.insertDelay = value;
             return true;
         }
         case OPT_DRIVE_PAN:
@@ -517,16 +552,6 @@ Drive::insertDisk(const string &path)
     if (disk) {
         insertDisk(disk);
     }
-    /*
-    ErrorCode ec;
-    AnyCollection *file = nullptr;
- 
-    if (!file) file = AnyFile::make <PRGFile> (path, &ec);
-
-    if (file) {
-        insertDisk(*file);
-    }
-    */
 }
 
 void
@@ -616,7 +641,7 @@ Drive::vsyncHandler()
             disk.clearDisk();
             
             // Schedule the next transition
-            diskChangeCounter = 17;
+            diskChangeCounter = config.ejectDelay;
             return;
         }
         case DISK_PARTIALLY_EJECTED:
@@ -631,7 +656,7 @@ Drive::vsyncHandler()
                            config.pan << 24 | config.ejectVolume << 16 | halftrack << 8 | deviceNr);
             
             // Schedule the next transition
-            diskChangeCounter = 17;
+            diskChangeCounter = config.swapDelay;
             return;
         }
         case DISK_FULLY_EJECTED:
@@ -645,7 +670,7 @@ Drive::vsyncHandler()
             insertionStatus = DISK_PARTIALLY_INSERTED;
             
             // Schedule the next transition
-            diskChangeCounter = 17;
+            diskChangeCounter = config.insertDelay;
             return;
         }
         case DISK_PARTIALLY_INSERTED:

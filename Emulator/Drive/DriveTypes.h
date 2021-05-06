@@ -98,6 +98,11 @@ typedef struct
     bool connected;
     bool switchedOn;
     
+    // Disk handling delays
+    isize ejectDelay;
+    isize swapDelay;
+    isize insertDelay;
+    
     // Drive sounds
     i16 pan;
     u8 powerVolume;

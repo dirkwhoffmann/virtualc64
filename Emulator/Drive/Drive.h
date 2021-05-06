@@ -248,6 +248,13 @@ private:
         << durationOfOneCpuCycle
         << config.type
         << config.connected
+        << config.ejectDelay
+        << config.swapDelay
+        << config.insertDelay
+        << config.powerVolume
+        << config.stepVolume
+        << config.insertVolume
+        << config.ejectVolume
         << insertionStatus;
     }
     
