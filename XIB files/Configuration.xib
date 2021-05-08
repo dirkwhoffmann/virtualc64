@@ -816,7 +816,8 @@ Gw
                                                         </menuItem>
                                                         <menuItem title="CCS" tag="1" id="7pi-IG-xC5"/>
                                                         <menuItem title="Zeroes" tag="2" id="o0I-PZ-jLt"/>
-                                                        <menuItem title="Random" tag="3" id="Mwr-Ay-cZk"/>
+                                                        <menuItem title="Ones" tag="3" id="X9N-l4-UX8"/>
+                                                        <menuItem title="Random" tag="4" id="Mwr-Ay-cZk"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>

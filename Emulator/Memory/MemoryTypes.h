@@ -67,6 +67,7 @@ enum_long(RAM_PATTERN)
     RAM_PATTERN_VICE,
     RAM_PATTERN_CCS,
     RAM_PATTERN_ZEROES,
+    RAM_PATTERN_ONES,
     RAM_PATTERN_RANDOM,
     RAM_PATTERN_COUNT
 };
@@ -88,6 +89,7 @@ struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
             case RAM_PATTERN_VICE:   return "VICE";
             case RAM_PATTERN_CCS:    return "CCS";
             case RAM_PATTERN_ZEROES: return "ZEROES";
+            case RAM_PATTERN_ONES:   return "ONES";
             case RAM_PATTERN_RANDOM: return "RANDOM";
             case RAM_PATTERN_COUNT:  return "???";
         }

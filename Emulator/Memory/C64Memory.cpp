@@ -220,9 +220,9 @@ C64Memory::eraseWithPattern(RamPattern pattern)
      * real machines and it make all four tests from the VICE test suite pass
      * (cyberloadtest.prg, darkstarbbstest.prg, platoontest.prg, and
      * typicaltet.prg). The CCS scheme is the one that is used by CCS 3.9. Note
-     * that the darkstarbbstest fails with this pattern. The other two patterns
-     * won't be found in the wild. They allow the user to initialize the RAM
-     * with zeroes or random values, respectively.
+     * that the darkstarbbstest fails with this pattern. The remainung patterns
+     * can't be found in the wild. They allow the user to initialize the RAM
+     * with all zeroes, all ones, or random values, respectively.
      */
     
     switch (pattern) {
@@ -253,7 +253,14 @@ C64Memory::eraseWithPattern(RamPattern pattern)
                 ram[i] = 0;
             
             break;
+
+        case RAM_PATTERN_ONES:
         
+            for (isize i = 0; i < isizeof(ram); i++)
+                ram[i] = 0xFF;
+            
+            break;
+
         case RAM_PATTERN_RANDOM:
         {
             std::random_device rd;
