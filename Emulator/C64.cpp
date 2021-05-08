@@ -298,7 +298,7 @@ C64::configure(C64Model model)
             configure(OPT_SID_REVISION, MOS_6581);
             configure(OPT_SID_FILTER,   true);
             configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-            configure(OPT_RAM_PATTERN,  RAM_PATTERN_C64);
+            configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;
             
         case C64_MODEL_PAL_II:
@@ -309,7 +309,7 @@ C64::configure(C64Model model)
             configure(OPT_SID_REVISION, MOS_8580);
             configure(OPT_SID_FILTER,   true);
             configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
-            configure(OPT_RAM_PATTERN,  RAM_PATTERN_C64C);
+            configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;
 
         case C64_MODEL_PAL_OLD:
@@ -320,7 +320,7 @@ C64::configure(C64Model model)
             configure(OPT_SID_REVISION, MOS_6581);
             configure(OPT_SID_FILTER,   true);
             configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-            configure(OPT_RAM_PATTERN,  RAM_PATTERN_C64);
+            configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;
 
         case C64_MODEL_NTSC:
@@ -331,7 +331,7 @@ C64::configure(C64Model model)
             configure(OPT_SID_REVISION, MOS_6581);
             configure(OPT_SID_FILTER,   true);
             configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-            configure(OPT_RAM_PATTERN,  RAM_PATTERN_C64);
+            configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;
 
         case C64_MODEL_NTSC_II:
@@ -342,7 +342,7 @@ C64::configure(C64Model model)
             configure(OPT_SID_REVISION, MOS_8580);
             configure(OPT_SID_FILTER,   true);
             configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
-            configure(OPT_RAM_PATTERN,  RAM_PATTERN_C64C);
+            configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;
 
         case C64_MODEL_NTSC_OLD:
@@ -353,7 +353,7 @@ C64::configure(C64Model model)
             configure(OPT_SID_REVISION, MOS_6581);
             configure(OPT_SID_FILTER,   true);
             configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-            configure(OPT_RAM_PATTERN,  RAM_PATTERN_C64);
+            configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;
 
         default:

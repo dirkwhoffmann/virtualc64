@@ -12,6 +12,8 @@
 #include "C64.h"
 #include "IO.h"
 
+#include <random>
+
 #define CHECK_WATCHPOINT(x) \
 if (checkWatchpoints && cpu.debugger.watchpointMatches(x)) { \
     c64.signalWatchpoint(); \
@@ -21,7 +23,7 @@ C64Memory::C64Memory(C64 &ref) : C64Component(ref)
 {    		
     memset(rom, 0, sizeof(rom));
 
-    config.ramPattern = RAM_PATTERN_C64;
+    // config.ramPattern = RAM_PATTERN_C64;
 
     /* Memory bank map
      *
@@ -120,7 +122,7 @@ C64Memory::getDefaultConfig()
 {
     MemConfig defaults;
     
-    defaults.ramPattern = RAM_PATTERN_C64;
+    defaults.ramPattern = RAM_PATTERN_VICE;
     
     return defaults;
 }
@@ -211,31 +213,62 @@ C64Memory::_dump(dump::Category category, std::ostream& os) const
 void
 C64Memory::eraseWithPattern(RamPattern pattern)
 {
-    assert_enum(RamPattern, pattern);
-    
-    /* Note: The RAM init patter is not unique across C64 models (for details,
-     * see the README file in the VICE test suite C64/raminitpattern). To keep
-     * things simple, I've picked two common patterns, one for the C64 and one
-     * for the C64C. The first one matches the RAM init pattern used by CCS 3.9.
-     * The second one has been chosen to make all four tests from the VICE test
-     * suite pass (cyberloadtest.prg, darkstarbbstest.prg, platoontest.prg, and
-     * typicaltet.prg). Note that the darkstarbbstest fails when the CCS pattern
-     * is used.
+    /* Note: The RAM init pattern is not unique across C64 models (for details,
+     * see the README file in the VICE test suite C64/raminitpattern). By
+     * default, VirtualC64 utilizes the same patters as VICE. This pattern has
+     * been selected, because it is pretty close to what can be seen on most
+     * real machines and it make all four tests from the VICE test suite pass
+     * (cyberloadtest.prg, darkstarbbstest.prg, platoontest.prg, and
+     * typicaltet.prg). The CCS scheme is the one that is used by CCS 3.9. Note
+     * that the darkstarbbstest fails with this pattern. The other two patterns
+     * won't be found in the wild. They allow the user to initialize the RAM
+     * with zeroes or random values, respectively.
      */
     
-    if (pattern == RAM_PATTERN_C64) {
+    switch (pattern) {
+            
+        case RAM_PATTERN_VICE:
         
-        // (64 x $FF) (64 x $00)  ...
-        for (unsigned i = 0; i < sizeof(ram); i++)
-            ram[i] = (i & 0x40) ? 0x00 : 0xFF;
+            // $00 $00 $FF $FF $FF $FF $00 $00 ...
+            for (isize i = 0; i < isizeof(ram); i++)
+                ram[i] = (i & 0x6) == 0x2 || (i & 0x6) == 0x4 ? 0xFF : 0x00;
+
+            // In addition, the 2nd and 3rd 16K bank are inverted
+            for (isize i = 0; i < isizeof(ram); i++)
+                ram[i] ^= (i & 0x4000) ? 0xFF : 0x00;
+            
+            break;
         
-    } else {
+        case RAM_PATTERN_CCS:
         
-        // $00 $00 $FF $FF $FF $FF $00 $00 ...
-        for (unsigned i = 0; i < sizeof(ram); i++)
-            ram[i] = (i & 0x6) == 0x2 || (i & 0x6) == 0x4 ? 0xFF : 0x00;
+            // (64 x $FF) (64 x $00) ...
+            for (isize i = 0; i < isizeof(ram); i++)
+                ram[i] = (i & 0x40) ? 0x00 : 0xFF;
+            
+            break;
+        
+        case RAM_PATTERN_ZEROES:
+        
+            for (isize i = 0; i < isizeof(ram); i++)
+                ram[i] = 0;
+            
+            break;
+        
+        case RAM_PATTERN_RANDOM:
+        {
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_int_distribution<> distrib(0, 0xFF);
+         
+            for (isize i = 0; i < isizeof(ram); i++)
+                ram[i] = distrib(gen);
+        
+            break;
+        }
+        default:
+            assert(false);
     }
-    
+        
     // Make the screen look nice on startup
     memset(&ram[0x400], 0x01, 40*25);
 }

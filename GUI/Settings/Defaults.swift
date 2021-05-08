@@ -583,7 +583,7 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .DISCRETE,
-        ramPattern:    .C64
+        ramPattern:    .VICE
     )
     
     static let C64_II_PAL = HardwareDefaults.init(
@@ -604,7 +604,7 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .IC,
-        ramPattern:    .C64C
+        ramPattern:    .VICE
     )
     
     static let C64_OLD_PAL = HardwareDefaults.init(
@@ -625,7 +625,7 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .DISCRETE,
-        ramPattern:    .C64
+        ramPattern:    .VICE
     )
 
     static let C64_NTSC = HardwareDefaults.init(
@@ -646,7 +646,7 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .DISCRETE,
-        ramPattern:    .C64
+        ramPattern:    .VICE
     )
     
     static let C64_II_NTSC = HardwareDefaults.init(
@@ -667,7 +667,7 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .IC,
-        ramPattern:    .C64C
+        ramPattern:    .VICE
     )
     
     static let C64_OLD_NTSC = HardwareDefaults.init(
@@ -688,7 +688,7 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .DISCRETE,
-        ramPattern:    .C64
+        ramPattern:    .VICE
     )
 }
 

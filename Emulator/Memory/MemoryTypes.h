@@ -64,8 +64,10 @@ struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
 
 enum_long(RAM_PATTERN)
 {
-    RAM_PATTERN_C64,
-    RAM_PATTERN_C64C,
+    RAM_PATTERN_VICE,
+    RAM_PATTERN_CCS,
+    RAM_PATTERN_ZEROES,
+    RAM_PATTERN_RANDOM,
     RAM_PATTERN_COUNT
 };
 typedef RAM_PATTERN RamPattern;
@@ -83,8 +85,10 @@ struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
     {
         switch (value) {
                 
-            case RAM_PATTERN_C64:    return "C64";
-            case RAM_PATTERN_C64C:   return "C64C";
+            case RAM_PATTERN_VICE:   return "VICE";
+            case RAM_PATTERN_CCS:    return "CCS";
+            case RAM_PATTERN_ZEROES: return "ZEROES";
+            case RAM_PATTERN_RANDOM: return "RANDOM";
             case RAM_PATTERN_COUNT:  return "???";
         }
         return "???";
