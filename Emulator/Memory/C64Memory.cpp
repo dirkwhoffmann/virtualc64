@@ -213,12 +213,27 @@ C64Memory::eraseWithPattern(RamPattern pattern)
 {
     assert_enum(RamPattern, pattern);
     
+    /* Note: The RAM init patter is not unique across C64 models (for details,
+     * see the README file in the VICE test suite C64/raminitpattern). To keep
+     * things simple, I've picked two common patterns, one for the C64 and one
+     * for the C64C. The first one matches the RAM init pattern used by CCS 3.9.
+     * The second one has been chosen to make all four tests from the VICE test
+     * suite pass (cyberloadtest.prg, darkstarbbstest.prg, platoontest.prg, and
+     * typicaltet.prg). Note that the darkstarbbstest fails when the CCS pattern
+     * is used.
+     */
+    
     if (pattern == RAM_PATTERN_C64) {
+        
+        // (64 x $FF) (64 x $00)  ...
         for (unsigned i = 0; i < sizeof(ram); i++)
-            ram[i] = (i & 0x40) ? 0xFF : 0x00;
+            ram[i] = (i & 0x40) ? 0x00 : 0xFF;
+        
     } else {
+        
+        // $00 $00 $FF $FF $FF $FF $00 $00 ...
         for (unsigned i = 0; i < sizeof(ram); i++)
-            ram[i] = (i & 0x80) ? 0x00 : 0xFF;
+            ram[i] = (i & 0x6) == 0x2 || (i & 0x6) == 0x4 ? 0xFF : 0x00;
     }
     
     // Make the screen look nice on startup
