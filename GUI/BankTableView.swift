@@ -24,7 +24,6 @@ class BankTableView: NSTableView, NSTableViewDelegate {
         delegate = self
         dataSource = self
         target = self
-        action = #selector(clickAction(_:))
     }
     
     func cache() {
@@ -41,10 +40,10 @@ class BankTableView: NSTableView, NSTableViewDelegate {
         cache()
         reloadData()
     }
+    
+    @IBAction func tableViewSelectionDidChange(_ notification: Notification) {
 
-    @IBAction func clickAction(_ sender: NSTableView!) {
-
-        inspector.jumpTo(bank: sender.clickedRow)
+        inspector.jumpTo(bank: selectedRow)
     }
 }
 

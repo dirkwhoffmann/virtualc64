@@ -60,18 +60,9 @@ class Monitor: DialogController {
     
     func refresh() {
                 
-        // let cnf = c64.vic.getConfig()
         let dma = c64.dmaDebugger.getConfig()
         
-        // Bus debugger
-        /*
-        let vicinfo = c64.vic.getInfo()
-        vicinfo.
-        let bus = c64.getConfig(.DMA_DEBUG_ENABLE) != 0
-        let opacity = c64.getConfig(.DMA_DEBUG_OPACITY)
-        let mode = c64.getConfig(.DMA_DEBUG_MODE)
-        */
-                
+        // DMA debugger
         busDebug.state = dma.dmaDebug ? .on : .off
         busChannelR.state = dma.dmaChannel.0 ? .on : .off
         busChannelI.state = dma.dmaChannel.1 ? .on : .off
