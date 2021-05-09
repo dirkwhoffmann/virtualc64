@@ -138,7 +138,6 @@ Interpreter::exec(Arguments &argv, bool verbose)
         
     // Error out if no command handler is present
     if (current->action == nullptr && !argv.empty()) {
-        printf("NO COMMAND HANDLER FOUND\n");
         throw util::ParseError(token);
     }
     if (current->action == nullptr && argv.empty()) {

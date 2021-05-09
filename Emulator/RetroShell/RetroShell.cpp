@@ -339,8 +339,6 @@ RetroShell::execScript(const string &contents)
 void
 RetroShell::continueScript()
 {
-    printf("continueScript()\n");
-    
     string command;
     while(std::getline(script, command)) {
                 

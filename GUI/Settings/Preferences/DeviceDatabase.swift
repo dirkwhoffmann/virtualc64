@@ -30,24 +30,27 @@ class DeviceDatabase {
         known =
             ["4":
                 ["1": [:]],                     // aJoy Retro Adapter
+             "13":
+                ["0": ["L": "1", "R": "3", "H": "4"]], // Nimbus+
              "121":
-                ["17": [:]],                    // iNNEXT Retro (SNES)
+                ["17": ["R": "1"]],             // iNNEXT Retro (SNES)
              "1035":
                 ["25907": [:]],                 // Competition Pro SL-6602
              "1118":
-                ["2835": ["H": "1", "R": "1"]], // XBox Carbon Black
+                ["2835": ["H": "1"],            // XBox Carbon Black
+                 "746": ["H": "3"]],            // XBox One Wired Controller
              "1133":
                 ["49250": [:]],                 // Logitech Mouse
              "1155":
                 ["36869": [:]],                 // RetroFun! Joystick Adapter
              "1356":
-                ["616": ["R": "1"],             // Sony DualShock 3
-                 "1476": ["R": "1"],            // Sony DualShock 4
-                 "2508": ["R": "1"]],           // Sony Dualshock 4 (2nd Gen)
+                ["616": [:],                    // Sony DualShock 3
+                 "1476": [:],                   // Sony DualShock 4
+                 "2508": [:]],                  // Sony Dualshock 4 (2nd Gen)
              "1848":
                 ["8727": [:]],                  // Competition Pro SL-650212
              "3853":
-                ["193": [:]],                   // HORIPAD for Nintendo Switch
+                ["193": ["R": "1"]],            // HORIPAD for Nintendo Switch
              "7257":
                 ["36": [:]]                     // The C64 Joystick
             ]
@@ -58,7 +61,7 @@ class DeviceDatabase {
             custom = obj
         }
         
-        track("\(custom)")
+        // track("\(custom)")
     }
     
     func save() {

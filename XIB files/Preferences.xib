@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -91,7 +91,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="646" height="526"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1095"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1120"/>
             <value key="minSize" type="size" width="646" height="526"/>
             <value key="maxSize" type="size" width="646" height="526"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
@@ -1058,13 +1058,15 @@ DQ
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vWO-Sg-uQK">
                                             <rect key="frame" x="457" y="116" width="128" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Standard" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="49p-dM-W8y" id="DgS-IS-NQi">
+                                            <popUpButtonCell key="cell" type="push" title="A2 + A5" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="49p-dM-W8y" id="DgS-IS-NQi">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="Dee-Sp-Pw4">
                                                     <items>
-                                                        <menuItem title="Standard" state="on" id="49p-dM-W8y"/>
-                                                        <menuItem title="Switched" tag="1" id="4DO-QQ-2c4"/>
+                                                        <menuItem title="A2 + A5" state="on" id="49p-dM-W8y"/>
+                                                        <menuItem title="A2 + A3" tag="1" id="4DO-QQ-2c4"/>
+                                                        <menuItem title="A3 + A4" tag="2" id="QXg-nt-v2s"/>
+                                                        <menuItem title="A3 + A4 rev" tag="3" id="AvW-xv-HJ0"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
@@ -1075,13 +1077,13 @@ DQ
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DEd-H4-9Gs">
                                             <rect key="frame" x="18" y="116" width="128" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Standard" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="l0n-xE-FZe" id="F7b-NF-HZI">
+                                            <popUpButtonCell key="cell" type="push" title="A0 + A1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="l0n-xE-FZe" id="F7b-NF-HZI">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="9Gb-vz-nY5">
                                                     <items>
-                                                        <menuItem title="Standard" state="on" id="l0n-xE-FZe"/>
-                                                        <menuItem title="Switched" tag="1" id="1Cv-3q-zvG"/>
+                                                        <menuItem title="A0 + A1" state="on" id="l0n-xE-FZe"/>
+                                                        <menuItem title="A0 + A1 rev" tag="1" id="1Cv-3q-zvG"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
@@ -1092,13 +1094,16 @@ DQ
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jq2-R5-tnZ">
                                             <rect key="frame" x="19" y="179" width="128" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Standard" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="PTy-mg-eMa" id="9sX-mE-5c4">
+                                            <popUpButtonCell key="cell" type="push" title="H0 - H7" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="PTy-mg-eMa" id="9sX-mE-5c4">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="tKo-5N-ZAb">
                                                     <items>
-                                                        <menuItem title="Standard" state="on" id="PTy-mg-eMa"/>
-                                                        <menuItem title="Rotated" tag="1" id="kuv-NV-eiY"/>
+                                                        <menuItem title="H0 - H7" state="on" id="PTy-mg-eMa"/>
+                                                        <menuItem title="H1 - H8" tag="1" id="kuv-NV-eiY"/>
+                                                        <menuItem title="B4 - B7" tag="2" id="IKy-H5-m8G"/>
+                                                        <menuItem title="B11 - B14" tag="3" id="5TR-FN-fj9"/>
+                                                        <menuItem title="U90 - U93" tag="4" id="bga-9A-w4D"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
