@@ -181,12 +181,19 @@ private:
     // Operation modes
     //
     
+    /* Indicates if the emulator should be executed in warp mode. To speed up
+     * emulation (e.g., during disk accesses), the virtual hardware may be put
+     * into warp mode. In this mode, the emulation thread is no longer paused
+     * to match the target frequency and runs as fast as possible.
+     */
+    bool warp = false;
+
     /* Indicates whether C64 is running in ultimax mode. Ultimax mode can be
      * enabled by external cartridges by pulling game line low and keeping
      * exrom line high. In ultimax mode, most of the C64's RAM and ROM is
      * invisible.
      */
-    bool ultimax;
+    bool ultimax = false;
     
     
     //
@@ -281,7 +288,6 @@ private:
         << frame
         << rasterLine
         << rasterCycle
-        << warpMode
         << ultimax;
     }
     
@@ -308,7 +314,7 @@ public:
     void shutdown();
     
     void setWarp(bool enable);
-    bool inWarpMode() const { return warpMode; }
+    bool inWarpMode() const { return warp; }
 
     void setDebug(bool enable);
     bool inDebugMode() const { return debugMode; }

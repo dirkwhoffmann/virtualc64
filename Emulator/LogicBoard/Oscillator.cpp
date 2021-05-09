@@ -43,10 +43,7 @@ void
 Oscillator::synchronize()
 {
     syncCounter++;
-    
-    // Only proceed if we are not running in warp mode
-    if (warpMode) return;
-    
+        
     auto now          = util::Time::now();
     auto elapsedCyles = cpu.cycle - clockBase;
     auto elapsedNanos = util::Time((i64)(elapsedCyles * 1000 * 1000000 / vic.getFrequency()));

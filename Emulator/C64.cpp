@@ -578,7 +578,11 @@ C64::updateVicFunctionTable()
 void
 C64::setWarp(bool enable)
 {
-    HardwareComponent::setWarp(enable);
+    if (warp != enable) {
+
+        warp = enable;
+        HardwareComponent::setWarp(enable);
+    }
 }
 
 void
@@ -753,6 +757,8 @@ C64::_dump(dump::Category category, std::ostream& os) const
         os << tab("Current rasterline") << rasterLine << std::endl;
         os << tab("Current rasterline cycle") << dec(rasterCycle) << std::endl;
         os << tab("Ultimax mode") << bol(getUltimax()) << std::endl;
+        os << tab("Warp mode") << bol(warp) << std::endl;
+        os << tab("Debug mode") << bol(debugMode) << std::endl;
     }
 }
 
@@ -1111,7 +1117,7 @@ C64::endFrame()
     if (stopFlag) { stopFlag = false; signalStop(); }
     
     // Count some sheep (zzzzzz) ...
-    oscillator.synchronize();
+    if (!warp) oscillator.synchronize();
 }
 
 void

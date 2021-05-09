@@ -196,10 +196,6 @@ HardwareComponent::dump() const
 void
 HardwareComponent::setWarp(bool enable)
 {
-    if (warpMode == enable) return;
-        
-    warpMode = enable;
-
      // Enable or disable warp mode for all subcomponents
      for (HardwareComponent *c : subComponents) {
          c->setWarp(enable);

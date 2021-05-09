@@ -46,9 +46,7 @@ Drive::_initialize()
 
 void
 Drive::_reset()
-{
-    printf("Drive::_reset\n");
-    
+{    
     RESET_SNAPSHOT_ITEMS
 
     cpu.reg.pc = 0xEAA0;

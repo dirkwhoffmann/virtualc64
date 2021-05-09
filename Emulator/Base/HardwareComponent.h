@@ -52,14 +52,7 @@ public:
     std::vector<HardwareComponent *> subComponents;
     
 protected:
-    
-    /* Indicates if the emulator should be executed in warp mode. To speed up
-     * emulation (e.g., during disk accesses), the virtual hardware may be put
-     * into warp mode. In this mode, the emulation thread is no longer paused
-     * to match the target frequency and runs as fast as possible.
-     */
-    bool warpMode = false;
-    
+        
     /* Indicates if the emulator should be executed in debug mode. Debug mode
      * is enabled when the GUI debugger is opend and disabled when the GUI
      * debugger is closed. In debug mode, several time-consuming tasks are

@@ -575,7 +575,7 @@ SIDBridge::getSID(isize nr)
 void
 SIDBridge::rampUp()
 {
-    if (warpMode) return;
+    if (c64.inWarpMode()) return;
     
     volL.fadeIn(30000);
     volR.fadeIn(30000);

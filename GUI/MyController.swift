@@ -147,7 +147,7 @@ class MyController: NSWindowController, MessageReceiver {
         case .on: warp = true
         }
         
-        if warp != c64.warp { c64.warp = warp }
+        c64.warp = warp
     }
     
     //
@@ -587,6 +587,7 @@ extension MyController {
         case .RESET:
             mydocument.deleteBootDiskID()
             mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
+            updateWarp()
             inspector?.fullRefresh()
 
         case .SCRIPT_DONE,
