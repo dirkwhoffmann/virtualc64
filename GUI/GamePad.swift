@@ -318,11 +318,16 @@ class GamePad {
         
         var v = (Double) (val - min) / (Double) (max - min)
         v = v * 2.0 - 1.0
-        if v < -0.45 { return -2 }
-        if v < -0.1 { return nil }  // Dead zone
-        if v <= 0.1 { return 0 }
-        if v <= 0.45 { return nil } // Dead zone
-        return 2
+
+        if v < 0 {
+            if v < -0.45 { return -2 }
+            if v > -0.35 { return 0 }
+        } else {
+            if v > 0.65 { return 2 }
+            if v < 0.35 { return 0 }
+        }
+        
+        return nil // Dead zone
     }
     
     func mapHAxis(value: IOHIDValue, element: IOHIDElement) -> [GamePadAction]? {
