@@ -37,7 +37,8 @@ enum Category : usize {
     Events    = 0b00001000,
     Checksums = 0b00010000,
     Dma       = 0b00100000,
-    BankMap   = 0b01000000
+    BankMap   = 0b01000000,
+    Disk      = 0b10000000
 };
 
 }

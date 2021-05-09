@@ -1235,14 +1235,14 @@
     [self drive]->setModifiedDisk(b);
 }
 
-- (void)insertG64:(G64FileProxy *)proxy
+- (void)insertG64:(G64FileProxy *)proxy protected:(BOOL)wp
 {
-    [self drive]->insertG64((G64File *)proxy->obj);
+    [self drive]->insertG64((G64File *)proxy->obj, wp);
 }
 
-- (void)insertFileSystem:(FSDeviceProxy *)proxy
+- (void)insertFileSystem:(FSDeviceProxy *)proxy protected:(BOOL)wp;
 {
-    [self drive]->insertFileSystem((FSDevice *)proxy->obj);
+    [self drive]->insertFileSystem((FSDevice *)proxy->obj, wp);
 }
 
 /*

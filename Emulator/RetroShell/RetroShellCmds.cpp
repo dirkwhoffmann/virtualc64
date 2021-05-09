@@ -293,7 +293,7 @@ RetroShell::exec <Token::drive, Token::insert> (Arguments& argv, long param)
     if (!util::fileExists(path)) throw ConfigFileNotFoundError(path);
 
     auto &drive = param ? c64.drive9 : c64.drive8;
-    drive.insertDisk(path);
+    drive.insertDisk(path, false);
 }
 
 template <> void
@@ -306,10 +306,17 @@ RetroShell::exec <Token::drive, Token::insert, Token::newdisk> (Arguments& argv,
 }
 
 template <> void
-RetroShell::exec <Token::drive, Token::inspect> (Arguments& argv, long param)
+RetroShell::exec <Token::drive, Token::inspect, Token::state> (Arguments& argv, long param)
 {
     auto &drive = param ? c64.drive9 : c64.drive8;
     dump(drive, dump::State);
+}
+
+template <> void
+RetroShell::exec <Token::drive, Token::inspect, Token::disk> (Arguments& argv, long param)
+{
+    auto &drive = param ? c64.drive9 : c64.drive8;
+    dump(drive, dump::Disk);
 }
 
 

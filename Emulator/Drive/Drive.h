@@ -73,6 +73,9 @@ public:
     // A disk waiting to be inserted
     class Disk *diskToInsert = nullptr;
 
+    // The write protection status of the disk to insert
+    bool diskToInsertWP = false;
+    
     // State change delay counter (checked in the vsync handler)
     i64 diskChangeCounter = -1;
     
@@ -354,13 +357,13 @@ public:
      * the currently inserted disk halfway out before it is removed completely,
      * and pushing the new disk halfway in before it is inserted completely.
      */
-    void insertDisk(const string &path);
-    void insertDisk(Disk *otherDisk);
+    void insertDisk(const string &path, bool wp);
+    void insertDisk(Disk *otherDisk, bool wp);
     void insertNewDisk(DOSType fstype);
     void insertNewDisk(DOSType fstype, PETName<16> name);
-    void insertFileSystem(class FSDevice *device);
-    void insertG64(G64File *g64);
-    void insertDisk(AnyCollection &archive);
+    void insertFileSystem(class FSDevice *device, bool wp);
+    void insertG64(G64File *g64, bool wp);
+    void insertDisk(AnyCollection &archive, bool wp);
     void ejectDisk();
 
 

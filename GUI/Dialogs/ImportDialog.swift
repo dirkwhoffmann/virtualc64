@@ -314,8 +314,7 @@ class ImportDialog: DialogController {
         if volume != nil {
             
             track("Inserting Volume")
-            drive.insertFileSystem(volume)
-            drive.setWriteProtection(writeProtect)
+            drive.insertFileSystem(volume, protected: writeProtect)
         
         } else if tap != nil {
             
@@ -335,7 +334,7 @@ class ImportDialog: DialogController {
         } else if g64 != nil {
             
             track("Inserting G64")
-            drive.insertG64(g64)
+            drive.insertG64(g64, protected: writeProtect)
 
         } else {
             

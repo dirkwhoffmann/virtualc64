@@ -493,8 +493,8 @@
 - (BOOL)hasModifiedDisk;
 - (void)setModifiedDisk:(BOOL)b;
 - (void)insertNewDisk:(DOSType)fstype;
-- (void)insertG64:(G64FileProxy *)disk;
-- (void)insertFileSystem:(FSDeviceProxy *)proxy;
+- (void)insertG64:(G64FileProxy *)disk protected:(BOOL)wp;
+- (void)insertFileSystem:(FSDeviceProxy *)proxy protected:(BOOL)wp;
 - (void)ejectDisk;
 - (BOOL)writeProtected;
 - (void)setWriteProtection:(BOOL)b;

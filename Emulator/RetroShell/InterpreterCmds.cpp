@@ -187,8 +187,15 @@ Interpreter::registerInstructions()
              &RetroShell::exec <Token::drive, Token::insert, Token::newdisk>, 1);
 
     root.add({"drive8", "drive9"}, {"", "inspect"},
-             "command", "Displays the component state",
-             &RetroShell::exec <Token::drive, Token::inspect>);
+             "command", "Displays the component state");
+
+    root.add({"drive8", "drive9"}, {"", "inspect", "state"},
+             "command", "Displays the drive state",
+             &RetroShell::exec <Token::drive, Token::inspect, Token::state>);
+
+    root.add({"drive8", "drive9"}, {"", "inspect", "disk"},
+             "command", "Displays the disk state",
+             &RetroShell::exec <Token::drive, Token::inspect, Token::disk>);
 
     
     //

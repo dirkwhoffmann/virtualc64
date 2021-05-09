@@ -297,6 +297,15 @@ Drive::_dump(dump::Category category, std::ostream& os) const
         os << tab("Read mode");
         os << bol(readMode()) << std::endl;
     }
+    
+    if (category & dump::Disk) {
+        
+        if (hasDisk()) {
+            disk.dump(dump::State, os);
+        } else {
+            os << "No disk";
+        }
+    }
 }
 
 void
@@ -543,17 +552,17 @@ Drive::setModifiedDisk(bool value)
 }
 
 void
-Drive::insertDisk(const string &path)
+Drive::insertDisk(const string &path, bool wp)
 {
     auto disk = Disk::make(c64, path);
     
     if (disk) {
-        insertDisk(disk);
+        insertDisk(disk, wp);
     }
 }
 
 void
-Drive::insertDisk(Disk *otherDisk)
+Drive::insertDisk(Disk *otherDisk, bool wp)
 {
     debug(DSKCHG_DEBUG, "insertDisk(otherDisk %p)\n", otherDisk);
 
@@ -563,6 +572,7 @@ Drive::insertDisk(Disk *otherDisk)
         
         // Initiate the disk change procedure
         diskToInsert = otherDisk;
+        diskToInsertWP = wp;
         diskChangeCounter = 1;
     }
     
@@ -580,28 +590,28 @@ void
 Drive::insertNewDisk(DOSType fsType, PETName<16> name)
 {
     Disk *newDisk = Disk::make(c64, fsType, name);
-    insertDisk(newDisk);
+    insertDisk(newDisk, false);
 }
 
 void
-Drive::insertFileSystem(FSDevice *device)
+Drive::insertFileSystem(FSDevice *device, bool wp)
 {
     debug(DSKCHG_DEBUG, "insertFileSystem(%p)\n", device);
-    insertDisk(Disk::makeWithFileSystem(c64, *device));
+    insertDisk(Disk::makeWithFileSystem(c64, *device), wp);
 }
 
 void
-Drive::insertG64(G64File *g64)
+Drive::insertG64(G64File *g64, bool wp)
 {
     debug(DSKCHG_DEBUG, "insertG64(%p)\n", g64);
-    insertDisk(Disk::makeWithG64(c64, g64));
+    insertDisk(Disk::makeWithG64(c64, g64), wp);
 }
 
 void
-Drive::insertDisk(AnyCollection &collection)
+Drive::insertDisk(AnyCollection &collection, bool wp)
 {
     debug(DSKCHG_DEBUG, "insertDisk(collection)\n");
-    insertDisk(Disk::makeWithCollection(c64, collection));
+    insertDisk(Disk::makeWithCollection(c64, collection), wp);
 }
 
 void 
@@ -685,6 +695,9 @@ Drive::vsyncHandler()
             disk.load(buffer);
             delete[] buffer;
             diskToInsert = nullptr;
+            
+            // Enable or disable the write protection
+            disk.setWriteProtection(diskToInsertWP);
 
             // Inform listeners
             c64.putMessage(MSG_DISK_INSERT,

@@ -225,7 +225,11 @@ Disk::_dump(dump::Category category, std::ostream& os) const
     using namespace util;
     
     if (category & dump::State) {
-        
+
+        os << tab("Write protected") << bol(writeProtected) << std::endl;
+        os << tab("Modified") << bol(modified) << std::endl;
+
+        /*
         for (Halftrack ht = 1; ht <= highestHalftrack; ht++) {
             
             u16 length = lengthOfHalftrack(ht);
@@ -234,6 +238,7 @@ Disk::_dump(dump::Category category, std::ostream& os) const
             os << dec(length) << " Bits (" << dec(length / 8) << " Bytes)";
             os << std::endl;
         }
+        */
     }
 }
 

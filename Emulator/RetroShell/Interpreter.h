@@ -32,7 +32,7 @@ enum class Token
     reset, rewind, run, save, screenshot, set, setup, show, source, type, wait,
     
     // Categories
-    checksums, devices, events, registers, state,
+    checksums, devices, events, registers, state, disk,
     
     // Keys
     accuracy, autofire, bankmap, brightness, bullets, caccesses, chip,
