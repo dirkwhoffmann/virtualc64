@@ -323,7 +323,7 @@ class GamePad {
             if v < -0.45 { return -2 }
             if v > -0.35 { return 0 }
         } else {
-            if v > 0.65 { return 2 }
+            if v > 0.45 { return 2 }
             if v < 0.35 { return 0 }
         }
         
