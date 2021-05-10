@@ -29,6 +29,7 @@
 // Uncomment to override a configuration setting
 // EMPTY LIST SO FAR
 
+
 //
 // Debug settings
 //
@@ -52,16 +53,22 @@ static const int MEM_DEBUG       = 0; // RAM, ROM
 
 // CIAs
 static const int CIA_DEBUG       = 0; // Complex Interface Adapter
+static const int CIAREG_DEBUG    = 0; // CIA registers
 static const int CIA_ON_STEROIDS = 0; // Keep the CIAs awake all the time
 
-// Custom chips
-static const int VIA_DEBUG       = 0; // Versatile Interface Adapter
-static const int VIC_DEBUG       = 0; // Video Interface Controller
+// VICII
+static const int VIC_DEBUG       = 0; // Video Interface Controller II
+static const int VICREG_DEBUG    = 0; // VICII registers
+static const int RASTERIRQ_DEBUG = 0; // Raster interrupt
+
+// SID
 static const int SID_DEBUG       = 0; // Sound Interface Device
-static const int SID_EXEC        = 0; // Sound Interface Device (execution)
-static const int IEC_DEBUG       = 0; // IEC bus
+static const int SID_EXEC        = 0; // Sound Interface Device (Execution)
+static const int SIDREG_DEBUG    = 0; // Sound Interface Device (Registers)
 
 // Drive
+static const int VIA_DEBUG       = 0; // Versatile Interface Adapter
+static const int IEC_DEBUG       = 0; // IEC bus
 static const int DSK_DEBUG       = 0; // Disk controller execution
 static const int DSKCHG_DEBUG    = 0; // Disk changing procedure
 static const int GCR_DEBUG       = 0; // Disk encoding / decoding
@@ -74,7 +81,7 @@ static const int FILE_DEBUG      = 0; // Media files (D64,T64,...)
 // Peripherals
 static const int JOY_DEBUG       = 0; // Joystick
 static const int DRV_DEBUG       = 0; // Floppy drive
-static const int TAP_DEBUG       = 1; // Datasette
+static const int TAP_DEBUG       = 0; // Datasette
 static const int KBD_DEBUG       = 0; // Keyboard
 static const int PRT_DEBUG       = 0; // Control ports and connected devices
 static const int EXP_DEBUG       = 0; // Expansion port
@@ -102,7 +109,5 @@ static const int releaseBuild = 0;
 
 
 // IDEAS:
-// Update IEC bus inside CIA and VIA. Use delay flags if neccessary
-// Use a simpler implementation for the raster irq trigger. Edge sensitive
-// matching value. Call CA1 action in VIA class only if the pin value really
-// has changed.
+// Update IEC bus inside CIA and VIA. Use delay flags if neccessary.
+// Call CA1 action in VIA class only if the pin value really has changed.

@@ -293,6 +293,8 @@ VICII::peek(u16 addr)
     }
     
     dataBusPhi2 = result;
+
+    trace(VICREG_DEBUG, "peek(%x) = %x\n", addr, result);
     return result;
 }
 
@@ -446,8 +448,9 @@ VICII::spypeek(u16 addr) const
 void
 VICII::poke(u16 addr, u8 value)
 {
+    trace(VICREG_DEBUG, "poke(%x, %x)\n", addr, value);
     assert(addr < 0x40);
- 
+     
     dataBusPhi2 = value;
     
     switch(addr) {
@@ -498,11 +501,14 @@ VICII::poke(u16 addr, u8 value)
             }
             upperComparisonVal = upperComparisonValue();
             lowerComparisonVal = lowerComparisonValue();
+            
+            rasterIrqLine = (rasterIrqLine & 0x00FF) | ((value & 0x80) << 1);
             break;
             
         case 0x12: // RASTER_COUNTER
             
-            rasterIrqLine = value;
+            rasterIrqLine = (rasterIrqLine & 0xFF00) | value;
+            checkForRasterIrq();
             return;
             
         case 0x13: // Lightpen X

@@ -341,7 +341,7 @@ VICII::_inspect()
         info.screenMemoryAddr = VM13VM12VM11VM10() << 6;
         info.charMemoryAddr = (CB13CB12CB11() << 10) % 0x4000;
         
-        info.irqRasterline = rasterInterruptLine();
+        info.irqRasterline = rasterIrqLine;
         info.imr = imr;
         info.irr = irr;
         
@@ -669,6 +669,25 @@ u8
 VICII::rastercycle() const
 {
     return c64.rasterCycle;
+}
+
+void
+VICII::checkForRasterIrq()
+{
+    // Determine the comparison value
+    u32 counter = isLastCycleInRasterline(c64.rasterCycle) ? yCounter + 1 : yCounter;
+    
+    // Check if the interrupt line matches
+    bool match = rasterIrqLine == counter;
+
+    // A positive edge triggers a raster interrupt
+    if (match && !rasterlineMatchesIrqLine) {
+        
+        trace(RASTERIRQ_DEBUG, "Triggering raster interrupt\n");
+        triggerIrq(1);
+    }
+    
+    rasterlineMatchesIrqLine = match;
 }
 
 

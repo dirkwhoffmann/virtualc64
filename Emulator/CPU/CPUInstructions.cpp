@@ -536,6 +536,7 @@ CPU<M>::executeOneCycle()
             
             READ_FROM(0xFFFF)
             setPCH(reg.d);
+            trace(IRQ_DEBUG, "Jumping to IRQ vector $%04x\n", reg.pc);
             DONE
             
         //
@@ -573,7 +574,8 @@ CPU<M>::executeOneCycle()
 
             READ_FROM(0xFFFB)
             setPCH(reg.d);
-            
+            trace(IRQ_DEBUG, "Jumping to NMI vector $%04x\n", reg.pc);
+
             if (isC64CPU()) {
                 expansionport.nmiDidTrigger();
             }

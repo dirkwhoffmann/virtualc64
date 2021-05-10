@@ -47,13 +47,9 @@ VICII::cycle1()
     // Phi1.3 Fetch
     PAL  { sFinalize(2); pAccess <mode> (3); }
     NTSC { sAccess2 <mode,3> (); }
-    
-    // Phi2.1 Rasterline interrupt (edge triggered)
-    bool edgeOnYCounter = (c64.rasterLine != 0);
-    bool edgeOnIrqCond  = (yCounter == rasterInterruptLine() && !yCounterEqualsIrqRasterline);
-    if (edgeOnYCounter && edgeOnIrqCond)
-        triggerIrq(1);
-    yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
+        
+    // Phi2.1 Rasterline interrupt
+    checkForRasterIrq();
     
     // Phi2.4 BA logic
     PAL  { BA_LINE(spriteDmaOnOff & (SPR3 | SPR4)); }
@@ -74,8 +70,10 @@ VICII::cycle2()
     NTSC { sAccess3 <mode,3> (); }
 
     // Check for yCounter overflows
-    if (yCounterOverflow())
+    if (yCounterOverflow()) {
         yCounter = 0;
+        checkForRasterIrq();
+    }
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -86,13 +84,7 @@ VICII::cycle2()
     // Phi1.3 Fetch
     PAL  { sAccess2 <mode,3> (); }
     NTSC { sFinalize(3); pAccess <mode> (4); }
-        
-    // Phi2.1 Rasterline interrupt (edge triggered)
-    bool edgeOnYCounter = (yCounter == 0);
-    bool edgeOnIrqCond  = (yCounter == rasterInterruptLine() && !yCounterEqualsIrqRasterline);
-    if (edgeOnYCounter && edgeOnIrqCond)
-        triggerIrq(1);
-    
+            
     // Phi2.4 BA logic
     PAL  { BA_LINE(spriteDmaOnOff & (SPR3 | SPR4 | SPR5)); }
     NTSC { BA_LINE(spriteDmaOnOff & (SPR4 | SPR5)); }
@@ -726,8 +718,7 @@ VICII::cycle63()
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
-    PAL  { yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine()); }
-    
+
     // Phi1.2 Draw sprites (invisible area)
     DRAW_IDLE
 
@@ -752,7 +743,6 @@ VICII::cycle64()
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
-    yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
     
     // Phi1.2 Draw sprites (invisible area)
     DRAW_IDLE
@@ -776,7 +766,6 @@ VICII::cycle65()
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
-    yCounterEqualsIrqRasterline = (yCounter == rasterInterruptLine());
     
     // Phi1.2 Draw sprites (invisible area)
     DRAW_IDLE

@@ -694,7 +694,9 @@ SIDBridge::readPotY() const
 
 void 
 SIDBridge::poke(u16 addr, u8 value)
-{    
+{
+    trace(SIDREG_DEBUG, "poke(%x,%x)\n", addr, value);
+    
     // Get SID up to date
     executeUntil(cpu.cycle);
  

@@ -51,8 +51,8 @@ private:
         VICIIRegisters delayed;
     } reg;
     
-    // Raster interrupt line ($D012)
-    u8 rasterIrqLine;
+    // Raster interrupt line ($D011:8 + $D012)
+    u16 rasterIrqLine;
     
     // Latched lightpen coordinates ($D013 and $D014)
     u8 latchedLPX;
@@ -285,6 +285,16 @@ private:
     
     
     //
+    // Raster interrupt logic
+    //
+    
+    /* Indicates whether the current raster line matches the IRQ line. A
+     * positive edge on this value triggers a raster interrupt.
+     */
+    bool rasterlineMatchesIrqLine;
+    
+    
+    //
     // Housekeeping information
     //
     
@@ -294,14 +304,7 @@ private:
      * cycle 61 (fourth right border column).
      */
     bool isVisibleColumn;
-    
-    /* Set to true in cycle 1, cycle 63 (65) iff yCounter matches D012. This
-     * variable is needed to determine if a rasterline interrupt should be
-     * triggered in cycle 1 or 2.
-     * DEPRECATED: Will be replaced by rasterlineMatchesIrqLine
-     */
-    bool yCounterEqualsIrqRasterline;
-    
+        
     // True if the current rasterline belongs to the VBLANK area
     bool vblank;
     
@@ -686,8 +689,8 @@ private:
         << rightComparisonVal
         << upperComparisonVal
         << lowerComparisonVal
+        << rasterlineMatchesIrqLine
         << isVisibleColumn
-        << yCounterEqualsIrqRasterline
         << vblank
         << badLine
         << DENwasSetInRasterline30
@@ -918,7 +921,12 @@ private:
      */
     bool yCounterOverflow() const { return rasterline() == (isPAL() ? 0 : 238); }
 
+    /* Matches the yCounter with the raster interrupt line and stores the
+     * result. If a positive edge is detected, a raster interrupt is triggered.
+     */
+    void checkForRasterIrq();
 
+    
     //
     // Handling the border flip flops
     //
@@ -977,12 +985,7 @@ public:
 		
     // Returns the current value of the DEN (Display ENabled) bit
     bool DENbit() const { return GET_BIT(reg.current.ctrl1, 4); }
-    
-    // Returns the number of the next interrupt rasterline
-    u16 rasterInterruptLine() const {
-        return ((reg.current.ctrl1 & 0x80) << 1) | rasterIrqLine;
-    }
-    
+        
     // Returns the masked CB13 bit
     u8 CB13() const { return memSelect & 0x08; }
 
@@ -1217,7 +1220,7 @@ public:
     #define DRAW55 if (!vblank) draw55(); DRAW_SPRITES;
     #define DRAW59 if (!vblank) draw(); DRAW_SPRITES59;
     #define DRAW_IDLE DRAW_SPRITES;
-        
+            
     #define END_CYCLE \
     dataBusPhi2 = 0xFF; \
     xCounter += 8; \
