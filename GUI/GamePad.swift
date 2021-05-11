@@ -391,9 +391,9 @@ class GamePad {
                 
                 switch usage {
                 case 12: events = intValue != 0 ? [.PULL_UP] : [.RELEASE_Y]
-                case 13: events = intValue != 0 ? [.PULL_RIGHT] : [.RELEASE_X]
-                case 14: events = intValue != 0 ? [.PULL_DOWN] : [.RELEASE_Y]
-                case 15: events = intValue != 0 ? [.PULL_LEFT] : [.RELEASE_X]
+                case 13: events = intValue != 0 ? [.PULL_DOWN] : [.RELEASE_Y]
+                case 14: events = intValue != 0 ? [.PULL_LEFT] : [.RELEASE_X]
+                case 15: events = intValue != 0 ? [.PULL_RIGHT] : [.RELEASE_X]
                 default: events = intValue != 0 ? [.PRESS_FIRE] : [.RELEASE_FIRE]
                 }
             
