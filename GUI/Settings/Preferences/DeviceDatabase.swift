@@ -33,7 +33,8 @@ class DeviceDatabase {
              "13":
                 ["0": ["L": "1", "R": "3", "H": "4"]], // Nimbus+
              "121":
-                ["17": ["R": "1"]],             // iNNEXT Retro (SNES)
+                ["17": ["R": "1"],              // iNNEXT Retro (SNES)
+                 "6354": [:]],                  // Mayflash Magic-NS 1.2
              "1035":
                 ["25907": [:]],                 // Competition Pro SL-6602
              "1118":
