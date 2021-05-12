@@ -693,10 +693,8 @@ CIA1::updatePA()
     PA &= port2.getControlPort();
     
     // An edge on PA4 triggers the NeosMouse on port 2
-    if (FALLING_EDGE_BIT(oldPA, PA, 4))
-        port2.mouse.fallingStrobe();
-    if (RISING_EDGE_BIT(oldPA, PA, 4))
-        port2.mouse.risingStrobe();
+    if (FALLING_EDGE_BIT(oldPA, PA, 4)) port2.mouse.fallingStrobe();
+    if (RISING_EDGE_BIT(oldPA, PA, 4)) port2.mouse.risingStrobe();
 }
 
 //                    -------
@@ -729,19 +727,17 @@ CIA1::updatePB()
     
     PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
  
-    // Get lines which are driven actively low by port 1
+    // Get lines which are driven actively low by port 2
     u8 columnMask = ~PRA & DDRA & port2.getControlPort();
     
     // Pull lines low that are connected by a pressed key
-    PB &= keyboard.getRowValues(columnMask);
-    
+    PB &= keyboard.getRowValues(columnMask, PRB & DDRB);
+        
     // Check if timer A underflow shows up on PB6
-    if (GET_BIT(PB67TimerMode, 6))
-        REPLACE_BIT(PB, 6, PB67TimerOut & (1 << 6));
+    if (GET_BIT(PB67TimerMode, 6)) REPLACE_BIT(PB, 6, PB67TimerOut & (1 << 6));
     
     // Check if timer B underflow shows up on PB7
-    if (GET_BIT(PB67TimerMode, 7))
-        REPLACE_BIT(PB, 7, PB67TimerOut & (1 << 7));
+    if (GET_BIT(PB67TimerMode, 7)) REPLACE_BIT(PB, 7, PB67TimerOut & (1 << 7));
     
     // The control port can always bring the port lines low
     PB &= port1.getControlPort();
@@ -750,10 +746,8 @@ CIA1::updatePB()
     vic.setLP(GET_BIT(PB, 4) != 0);
     
     // An edge on PB4 triggers the NeosMouse on port 1
-    if (FALLING_EDGE_BIT(oldPB, PB, 4))
-        port1.mouse.fallingStrobe();
-    if (RISING_EDGE_BIT(oldPB, PB, 4))
-        port1.mouse.risingStrobe();
+    if (FALLING_EDGE_BIT(oldPB, PB, 4)) port1.mouse.fallingStrobe();
+    if (RISING_EDGE_BIT(oldPB, PB, 4)) port1.mouse.risingStrobe();
 }
 
 

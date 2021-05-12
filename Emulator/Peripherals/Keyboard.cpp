@@ -57,24 +57,6 @@ Keyboard::_dump(dump::Category category, std::ostream& os) const
 }
 
 u8
-Keyboard::getRowValues(u8 columnMask)
-{
-	u8 result = 0xff;
-		
-	for (unsigned i = 0; i < 8; i++) {
-		if (GET_BIT(columnMask, i)) {
-			result &= kbMatrixRow[i];
-		}
-	}
-    
-    // Check for shift lock
-    if (shiftLock && GET_BIT(columnMask, 6))
-        CLR_BIT(result, 4);
-	
-	return result;
-}
-
-u8
 Keyboard::getColumnValues(u8 rowMask)
 {
     u8 result = 0xff;
@@ -86,10 +68,79 @@ Keyboard::getColumnValues(u8 rowMask)
     }
     
     // Check for shift lock
-    if (shiftLock && GET_BIT(rowMask, 4))
-        CLR_BIT(result, 6);
+    if (shiftLock && GET_BIT(rowMask, 7)) {
+        CLR_BIT(result, 1);
+    }
     
     return result;
+}
+
+u8
+Keyboard::getRowValues(u8 columnMask)
+{
+    u8 result = 0xff;
+        
+    for (unsigned i = 0; i < 8; i++) {
+        if (GET_BIT(columnMask, i)) {
+            result &= kbMatrixRow[i];
+        }
+    }
+    
+    // Check for shift lock
+    if (shiftLock && GET_BIT(columnMask, 1)) {
+        CLR_BIT(result, 7);
+    }
+    
+    return result;
+}
+
+u8
+Keyboard::getRowValues(u8 columnMask, u8 thresholdMask)
+{
+    /* This function implements the special behaviour of the keyboard matrix
+     * as described in the README file of VICE test ciaports.prg. It covers the
+     * case that both CIA ports are driven as output.
+     *
+     * "Port A outputs (active) low, Port B outputs high. [...] Port B will be
+     *  driven low (and then read back 0) only if the resistance of the physical
+     *  connection created over the keyboard matrix is low enough to allow the
+     *  required current. this is (again) usually not the case when pressing
+     *  single keys, instead -depending on the keyboard- pressing two or more
+     *  keys of the same column is required."
+     *
+     * This feature has an interesing side effect. It can be exploited to
+     * detect if the shift-lock key is held down.
+     *
+     * "A special case is the shift-lock key, which will also work and which
+     *  you can seperate from the normal left shift key in this configuration."
+     */
+    
+    // Check if we can fallback to the (faster) standard routine
+    if (thresholdMask == 0) return getRowValues(columnMask);
+    
+	u8 result = 0xff;
+    u8 count[8] = { };
+    
+    // Count the number of pressed keys per column
+	for (isize i = 0; i < 8; i++) {
+		if (GET_BIT(columnMask, i)) {
+            for (isize j = 0; j < 8; j++) {
+                if (GET_BIT(kbMatrixRow[i], j) == 0) count[j]++;
+            }
+		}
+	}
+
+    // Only detect those keys with a high enough column count
+    for (isize j = 0; j < 8; j++) {
+        if (count[j] >= (GET_BIT(thresholdMask, j) ? 2 : 1)) CLR_BIT(result, j);
+    }
+    
+    // Check for shift lock
+    if (shiftLock && GET_BIT(columnMask, 1)) {
+        CLR_BIT(result, 7);
+    }
+    
+	return result;
 }
 
 void
@@ -145,8 +196,14 @@ Keyboard::_press(C64Key key)
     assert(key.row < 8);
     assert(key.col < 8);
     
-    kbMatrixRow[key.row] &= ~(1 << key.col);
-    kbMatrixCol[key.col] &= ~(1 << key.row);
+    if (GET_BIT(kbMatrixRow[key.row], key.col)) {
+        CLR_BIT(kbMatrixRow[key.row], key.col);
+        kbMatrixRowCnt[key.row]++;
+    }
+    if (GET_BIT(kbMatrixCol[key.col], key.row)) {
+        CLR_BIT(kbMatrixCol[key.col], key.row);
+        kbMatrixColCnt[key.col]++;
+    }
 }
 
 void
@@ -175,8 +232,14 @@ Keyboard::_release(C64Key key)
     // Only release right shift key if shift lock is not pressed
     if (key.row == 6 && key.col == 4 && shiftLock) return;
     
-    kbMatrixRow[key.row] |= (1 << key.col);
-    kbMatrixCol[key.col] |= (1 << key.row);
+    if (GET_BIT(kbMatrixRow[key.row], key.col) == 0) {
+        SET_BIT(kbMatrixRow[key.row], key.col);
+        kbMatrixRowCnt[key.row]--;
+    }
+    if (GET_BIT(kbMatrixCol[key.col], key.row) == 0) {
+        SET_BIT(kbMatrixCol[key.col], key.row);
+        kbMatrixColCnt[key.col]--;
+    }
 }
 
 void
@@ -192,8 +255,11 @@ Keyboard::_releaseAll()
 {
     debug(KBD_DEBUG, "_releaseAll()\n");
     
-    for (unsigned i = 0; i < 8; i++) {
-        kbMatrixRow[i] = kbMatrixCol[i] = 0xFF;
+    for (isize i = 0; i < 8; i++) {
+        
+        kbMatrixRow[i] = 0xFF; kbMatrixRowCnt[i] = 0;
+        kbMatrixCol[i] = 0xFF; kbMatrixColCnt[i] = 0;
+        
     }
     _releaseRestore();
 }

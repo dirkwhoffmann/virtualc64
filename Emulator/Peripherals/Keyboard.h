@@ -32,12 +32,14 @@ struct KeyAction {
 
 class Keyboard : public C64Component {
         
-	// The C64 keyboard matrix indexed by row
+	// The keyboard matrix (indexed by row or by column)
     u8 kbMatrixRow[8] = { };
-
-    // The C64 keyboard matrix indexed by column
     u8 kbMatrixCol[8] = { };
 
+    // The number of pressed keys in a certain row or column
+    u8 kbMatrixRowCnt[8] = { };
+    u8 kbMatrixColCnt[8] = { };
+    
     // Indicates if the shift lock is currently pressed
     bool shiftLock = false;
         
@@ -89,6 +91,8 @@ private:
         
         << kbMatrixRow
         << kbMatrixCol
+        << kbMatrixRowCnt
+        << kbMatrixColCnt
         << shiftLock;
     }
     
@@ -108,7 +112,7 @@ public:
     bool commodoreIsPressed() const { return isPressed(C64Key::commodore); }
     bool ctrlIsPressed() const { return isPressed(C64Key::control); }
     bool runstopIsPressed() const { return isPressed(C64Key::runStop); }
-    bool leftShiftIsPressed() const { return isPressed(C64Key::shift); }
+    bool leftShiftIsPressed() const { return isPressed(C64Key::leftShift); }
     bool rightShiftIsPressed() const { return isPressed(C64Key::rightShift); }
     bool shiftLockIsPressed() const { return shiftLock; }
     bool restoreIsPressed() const;
@@ -118,7 +122,7 @@ public:
     void pressCommodore() { press(C64Key::commodore); }
     void pressCtrl() { press(C64Key::control); }
 	void pressRunstop() { press(C64Key::runStop); }
-    void pressLeftShift() { press(C64Key::shift); }
+    void pressLeftShift() { press(C64Key::leftShift); }
     void pressRightShift() { press(C64Key::rightShift); }
     void pressShiftLock() { shiftLock = true; }
     void pressRestore();
@@ -128,7 +132,7 @@ public:
 	void releaseCommodore() { release(C64Key::commodore); }
     void releaseCtrl() { release(C64Key::control); }
 	void releaseRunstop() { release(C64Key::runStop); }
-    void releaseLeftShift() { release(C64Key::shift); }
+    void releaseLeftShift() { release(C64Key::leftShift); }
     void releaseRightShift() { release(C64Key::rightShift); }
     void releaseShiftLock() { shiftLock = false; }
     void releaseRestore();
@@ -141,7 +145,7 @@ public:
     void toggleCommodore() { toggle(C64Key::commodore); }
     void toggleCtrl() { toggle(C64Key::control); }
     void toggleRunstop() { toggle(C64Key::runStop); }
-    void toggleLeftShift() { toggle(C64Key::shift); }
+    void toggleLeftShift() { toggle(C64Key::leftShift); }
     void toggleRightShift() { toggle(C64Key::rightShift); }
     void toggleShiftLock() { shiftLock = !shiftLock; }
     
@@ -162,9 +166,10 @@ private:
     
 public:
     
-	// Reads a row or a column from the keyboard matrix
-	u8 getRowValues(u8 columnMask);
+	// Reads a column or row from the keyboard matrix
     u8 getColumnValues(u8 rowMask);
+    u8 getRowValues(u8 columnMask);
+	u8 getRowValues(u8 columnMask, u8 thresholdMask);
     
     
     //
@@ -189,8 +194,6 @@ private:
     void abortAutoTyping();
     
     // Workhorses for scheduleKeyPress and scheduleKeyRelease
-    // void _scheduleKeyAction(KeyAction::Action type, long nr, i64 delay);
-    // void _scheduleKeyAction(KeyAction::Action type, u8 row, u8 col, i64 delay);
     void _scheduleKeyAction(KeyAction::Action type, C64Key key, i64 delay);
 
     

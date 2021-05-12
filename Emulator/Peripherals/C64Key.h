@@ -44,7 +44,7 @@ struct C64Key {
     static const C64Key Z;
     static const C64Key S;
     static const C64Key E;
-    static const C64Key shift;
+    static const C64Key leftShift;
     
     // Third row in key matrix
     static const C64Key digit5;
