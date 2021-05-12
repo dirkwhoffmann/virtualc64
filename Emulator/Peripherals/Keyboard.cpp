@@ -67,7 +67,7 @@ Keyboard::getColumnValues(u8 rowMask)
         }
     }
     
-    // Check for shift lock
+    // Check for shift-lock
     if (shiftLock && GET_BIT(rowMask, 7)) {
         CLR_BIT(result, 1);
     }
@@ -86,7 +86,7 @@ Keyboard::getRowValues(u8 columnMask)
         }
     }
     
-    // Check for shift lock
+    // Check for shift-lock
     if (shiftLock && GET_BIT(columnMask, 1)) {
         CLR_BIT(result, 7);
     }
@@ -135,7 +135,7 @@ Keyboard::getRowValues(u8 columnMask, u8 thresholdMask)
         if (count[j] >= (GET_BIT(thresholdMask, j) ? 2 : 1)) CLR_BIT(result, j);
     }
     
-    // Check for shift lock
+    // Check for shift-lock
     if (shiftLock && GET_BIT(columnMask, 1)) {
         CLR_BIT(result, 7);
     }
