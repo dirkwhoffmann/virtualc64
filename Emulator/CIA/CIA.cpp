@@ -568,8 +568,22 @@ CIA::executeOneCycle()
 void
 CIA::incrementTOD()
 {
+    // Only proceed if TOD should increment
+    if (tod.stopped || cpu.cycle < (u64)nextTodTrigger) return;
+    
     wakeUp();
     tod.increment();
+    nextTodTrigger += incrementInterval();
+}
+
+Cycle
+CIA::incrementInterval()
+{
+    if (vic.isPAL()) {
+        return (CRA & 0x80) ? PAL_CLOCK_FREQUENCY / 10 : PAL_CLOCK_FREQUENCY * 6/50;
+    } else {
+        return (CRA & 0x80) ? NTSC_CLOCK_FREQUENCY * 5/60 : NTSC_CLOCK_FREQUENCY / 10;
+    }
 }
 
 void
@@ -871,6 +885,4 @@ CIA2::pokeDDRA(u8 value)
     
     // PA0 (VA14) and PA1 (VA15) determine the memory bank seen by VICII
     vic.switchBank(0xDD02);
-
 }
-

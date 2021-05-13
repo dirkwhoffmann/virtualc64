@@ -63,14 +63,6 @@ private:
     void applyToPersistentItems(T& worker)
     {
     }
-
-    /*
-    template <class T>
-    void applyToHardResetItems(T& worker)
-    {
-        worker & clockBase;
-    }
-    */
     
     template <class T>
     void applyToResetItems(T& worker)

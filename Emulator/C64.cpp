@@ -1074,6 +1074,9 @@ C64::beginRasterLine()
 void
 C64::endRasterLine()
 {
+    cia1.incrementTOD();
+    cia2.incrementTOD();
+
     vic.endRasterline();
     rasterCycle = 1;
     rasterLine++;
@@ -1095,9 +1098,11 @@ C64::endFrame()
     
     vic.endFrame();
     
-    // Increment time of day clocks every tenth of a second
+    // Pulse the time of day clocks
+    /*
     cia1.incrementTOD();
     cia2.incrementTOD();
+    */
     
     // Execute remaining SID cycles
     sid.executeUntil(cpu.cycle);

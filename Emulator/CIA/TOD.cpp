@@ -40,7 +40,6 @@ TOD::_reset()
     
     tod.hour = 1;
     stopped = true;
-    hz = 60;
 }
 
 void
@@ -70,12 +69,8 @@ TOD::_dump(dump::Category category, std::ostream& os) const
 void
 TOD::increment()
 {
-    if (stopped)
-        return;
-    
-    if (++frequencyCounter % hz != 0)
-        return;
-    
+    assert(!stopped);
+        
     // 1/10 seconds
     if (tod.tenth != 0x09) {
         tod.tenth = incBCD(tod.tenth);

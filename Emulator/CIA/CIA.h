@@ -110,7 +110,7 @@ protected:
     // Interrupt control register
 	u8 icr;
 
-    // ICR bits that need to deleted when CIAAckIcr1 hits
+    // ICR bits to be deleted when CIAAckIcr1 hits
     u8 icrAck;
 
     // Interrupt mask register
@@ -199,7 +199,14 @@ private:
 
     
     //
-    // Speeding up emulation (sleep logic)
+    // TOD control
+    //
+    
+    Cycle nextTodTrigger;
+    
+    
+    //
+    // Sleep logic
     //
     
     /* Idle counter. When the CIA's state does not change during execution,
@@ -315,6 +322,7 @@ private:
         << serCounter
         << CNT
         << INT
+        << nextTodTrigger
         << tiredness
         << idleCycles
         << sleeping
@@ -435,7 +443,12 @@ public:
 	// Increments the TOD clock by one tenth of a second
 	void incrementTOD();
 
- 
+private:
+    
+    // Returns the number of CPU cycles between two TOD increments
+    Cycle incrementInterval();
+    
+    
     //
     // Speeding up (sleep logic)
     //

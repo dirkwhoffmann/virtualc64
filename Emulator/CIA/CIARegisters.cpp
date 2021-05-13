@@ -288,6 +288,7 @@ CIA::poke(u16 addr, u8 value)
             } else {
                 tod.setTodTenth(value);
                 tod.cont();
+                nextTodTrigger = cpu.cycle + incrementInterval();
             }
             return;
             
@@ -432,7 +433,7 @@ CIA::poke(u16 addr, u8 value)
             // 0------- : TOD speed = 60 Hz
             // 1------- : TOD speed = 50 Hz
             // TODO: We need to react on a change of this bit
-            tod.setHz((value & 0x80) ? 5 /* 50 Hz */ : 6 /* 60 Hz */);
+            // tod.setHz((value & 0x80) ? 5 /* 50 Hz */ : 6 /* 60 Hz */);
             
             updatePB(); // Because PB67timerMode and PB6TimerOut may have changed
             CRA = value;

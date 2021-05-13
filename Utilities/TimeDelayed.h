@@ -116,6 +116,6 @@ public:
     // Reads a value from the pipeline with a custom delay
     T readWithDelay(u8 delay) const {
         assert(delay <= this->capacity);
-        return pipeline[MAX(0, timeStamp - *clock + delay)];
+        return pipeline[std::max(0, timeStamp - *clock + delay)];
     }
 };
