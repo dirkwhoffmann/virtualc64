@@ -386,9 +386,7 @@ Cartridge::poke(u16 addr, u8 value)
     }
         
     // Write to RAM if we don't run in Ultimax mode
-    if (!c64.getUltimax()) {
-        mem.ram[addr] = value;
-    }
+    if (!c64.getUltimax()) mem.ram[addr] = value;
 }
 
 usize

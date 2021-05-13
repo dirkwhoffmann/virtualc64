@@ -390,6 +390,19 @@ VICII::_dump(dump::Category category, std::ostream& os) const
         os << tab("Glue logic");
         os << GlueLogicEnum::key(config.glueLogic) << std::endl;
     }
+
+    if (category & dump::Registers) {
+        
+        string addr[8] = {
+            "$D000 - $D007", "$D008 - $D00F", "$D010 - $D017", "$D018 - $D01F",
+            "$D020 - $D027", "$D028 - $D02F", "$D030 - $D037", "$D038 - $D03F" };
+        
+        for (isize i = 0; i < 6; i++) {
+            os << tab(addr[i]);
+            for (isize j = 0; j < 8; j++) os << hex(spypeek(8 * i + j)) << " ";
+            os << std::endl;
+        }
+    }
     
     if (category & dump::State) {
         

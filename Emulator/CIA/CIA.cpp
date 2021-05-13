@@ -735,7 +735,7 @@ CIA1::updatePB()
     // The control port can always bring the port lines low
     PB &= port1.getControlPort();
     
-    // PB4 is connected to the VICII (LP pin).
+    // PB4 is connected to the VICII (LP pin)
     vic.setLP(GET_BIT(PB, 4) != 0);
     
     // An edge on PB4 triggers the NeosMouse on port 1

@@ -315,6 +315,10 @@ Interpreter::registerInstructions()
     root.add({"vicii", "inspect"},
              "command", "Displays the internal state");
 
+    root.add({"vicii", "inspect", "registers"},
+             "category", "Displays the register contents",
+             &RetroShell::exec <Token::vicii, Token::inspect, Token::registers>);
+
     root.add({"vicii", "inspect", "state"},
              "category", "Displays the current state",
              &RetroShell::exec <Token::vicii, Token::inspect, Token::state>);

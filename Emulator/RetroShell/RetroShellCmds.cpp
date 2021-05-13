@@ -467,6 +467,12 @@ RetroShell::exec <Token::vicii, Token::set, Token::sbcollisions> (Arguments &arg
 }
 
 template <> void
+RetroShell::exec <Token::vicii, Token::inspect, Token::registers> (Arguments& argv, long param)
+{
+    dump(c64.vic, dump::Registers);
+}
+
+template <> void
 RetroShell::exec <Token::vicii, Token::inspect, Token::state> (Arguments& argv, long param)
 {
     dump(c64.vic, dump::State);
