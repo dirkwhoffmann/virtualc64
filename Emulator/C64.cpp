@@ -180,6 +180,9 @@ C64::getConfigItem(Option option) const
             assert(cia1.getConfigItem(option) == cia2.getConfigItem(option));
             return cia1.getConfigItem(option);
 
+        case OPT_POWER_GRID:
+            return oscillator.getConfigItem(option);
+            
         case OPT_SID_REVISION:
         case OPT_SID_FILTER:
         case OPT_SID_ENGINE:
@@ -297,6 +300,7 @@ C64::configure(C64Model model)
             configure(OPT_TIMER_B_BUG,  true);
             configure(OPT_SID_REVISION, MOS_6581);
             configure(OPT_SID_FILTER,   true);
+            configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
             configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
             configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;
@@ -308,6 +312,7 @@ C64::configure(C64Model model)
             configure(OPT_TIMER_B_BUG,  false);
             configure(OPT_SID_REVISION, MOS_8580);
             configure(OPT_SID_FILTER,   true);
+            configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
             configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
             configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;
@@ -319,6 +324,7 @@ C64::configure(C64Model model)
             configure(OPT_TIMER_B_BUG,  true);
             configure(OPT_SID_REVISION, MOS_6581);
             configure(OPT_SID_FILTER,   true);
+            configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
             configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
             configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;
@@ -330,6 +336,7 @@ C64::configure(C64Model model)
             configure(OPT_TIMER_B_BUG,  false);
             configure(OPT_SID_REVISION, MOS_6581);
             configure(OPT_SID_FILTER,   true);
+            configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
             configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
             configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;
@@ -341,6 +348,7 @@ C64::configure(C64Model model)
             configure(OPT_TIMER_B_BUG,  true);
             configure(OPT_SID_REVISION, MOS_8580);
             configure(OPT_SID_FILTER,   true);
+            configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
             configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
             configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;
@@ -352,6 +360,7 @@ C64::configure(C64Model model)
             configure(OPT_TIMER_B_BUG,  false);
             configure(OPT_SID_REVISION, MOS_6581);
             configure(OPT_SID_FILTER,   true);
+            configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
             configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
             configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;

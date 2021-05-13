@@ -164,7 +164,12 @@ class Configuration {
         get { return c64.getConfig(.GLUE_LOGIC) }
         set { c64.configure(.GLUE_LOGIC, value: newValue) }
     }
-    
+
+    var powerGrid: Int {
+        get { return c64.getConfig(.POWER_GRID) }
+        set { c64.configure(.POWER_GRID, value: newValue) }
+    }
+
     var ramPattern: Int {
         get { return c64.getConfig(.RAM_PATTERN) }
         set { c64.configure(.RAM_PATTERN, value: newValue) }
@@ -526,6 +531,8 @@ class Configuration {
         sidAddress3 = defaults.sidAddress3
         
         glueLogic = defaults.glueLogic.rawValue
+        powerGrid = defaults.powerGrid.rawValue
+        
         ramPattern = defaults.ramPattern.rawValue
         
         c64.resume()
@@ -553,6 +560,8 @@ class Configuration {
         sidAddress3 = defaults.integer(forKey: Keys.Hwd.sidAddress3)
         
         glueLogic = defaults.integer(forKey: Keys.Hwd.glueLogic)
+        powerGrid = defaults.integer(forKey: Keys.Hwd.powerGrid)
+        
         ramPattern = defaults.integer(forKey: Keys.Hwd.ramPattern)
         
         c64.resume()
@@ -580,6 +589,8 @@ class Configuration {
         defaults.set(sidAddress3, forKey: Keys.Hwd.sidAddress3)
         
         defaults.set(glueLogic, forKey: Keys.Hwd.glueLogic)
+        defaults.set(powerGrid, forKey: Keys.Hwd.powerGrid)
+
         defaults.set(ramPattern, forKey: Keys.Hwd.ramPattern)
     }
     

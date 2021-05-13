@@ -32,6 +32,56 @@ Oscillator::_reset()
     RESET_SNAPSHOT_ITEMS
 }
 
+OscillatorConfig
+Oscillator::getDefaultConfig()
+{
+    OscillatorConfig defaults;
+
+    defaults.powerGrid = GRID_STABLE_50HZ;
+    
+    return defaults;
+}
+
+void
+Oscillator::resetConfig()
+{
+    OscillatorConfig defaults = getDefaultConfig();
+    
+    setConfigItem(OPT_POWER_GRID, defaults.powerGrid);
+}
+
+i64
+Oscillator::getConfigItem(Option option) const
+{
+    switch (option) {
+            
+        case OPT_POWER_GRID:  return config.powerGrid;
+        
+        default:
+            assert(false);
+            return 0;
+    }
+}
+
+bool
+Oscillator::setConfigItem(Option option, i64 value)
+{
+    switch (option) {
+            
+        case OPT_POWER_GRID:
+            
+            if (!PowerGridEnum::isValid(value)) {
+                throw ConfigArgError(PowerGridEnum::keyList());
+            }
+            
+            config.powerGrid = (PowerGrid)value;
+            return true;
+
+        default:
+            return false;
+    }
+}
+
 void
 Oscillator::restart()
 {
@@ -89,4 +139,44 @@ Oscillator::synchronize()
         loadClock.restart();
         nonstopClock.restart();
     }
+}
+
+Cycle
+Oscillator::todTickDelay(u8 cra)
+{
+    Cycle delay, jitter;
+    i64 frequency = vic.isPAL() ? PAL_CLOCK_FREQUENCY : NTSC_CLOCK_FREQUENCY;
+    
+    switch (config.powerGrid) {
+
+        case GRID_STABLE_50HZ:
+            
+            delay = (cra & 0x80) ? frequency / 10 : frequency * 6/50;
+            jitter = 0;
+            break;
+            
+        case GRID_UNSTABLE_50HZ:
+            
+            delay = (cra & 0x80) ? frequency / 10 : frequency * 6/50;
+            jitter = (rand() % 1000) - 500;
+            break;
+
+        case GRID_STABLE_60HZ:
+            
+            delay = (cra & 0x80) ? frequency * 5/60 : frequency / 10;
+            jitter = 0;
+            break;
+            
+        case GRID_UNSTABLE_60HZ:
+            
+            delay = (cra & 0x80) ? frequency * 5/60 : frequency / 10;
+            jitter = (rand() % 1000) - 500;
+            break;
+
+        default:
+            assert(false);
+            return 0;
+    }
+
+    return delay + jitter;
 }

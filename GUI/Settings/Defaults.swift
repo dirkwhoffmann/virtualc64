@@ -535,8 +535,11 @@ extension Keys {
         static let sidAddress2    = "VC64_HW_SidAddress2"
         static let sidAddress3    = "VC64_HW_SidAddress3"
         
-        // Logic board and RAM
+        // Logic board and power supply
         static let glueLogic      = "VC64_HW_GlueLogic"
+        static let powerGrid      = "VC64_HW_PowerGrid"
+        
+        // RAM
         static let ramPattern     = "VC64_HW_RamPattern"
     }
 }
@@ -559,6 +562,8 @@ struct HardwareDefaults {
     let sidAddress3: Int
     
     var glueLogic: GlueLogic
+    var powerGrid: PowerGrid
+    
     var ramPattern: RamPattern
     
     //
@@ -583,6 +588,8 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .DISCRETE,
+        powerGrid:     .STABLE_50HZ,
+        
         ramPattern:    .VICE
     )
     
@@ -604,6 +611,8 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .IC,
+        powerGrid:     .STABLE_50HZ,
+
         ramPattern:    .VICE
     )
     
@@ -625,6 +634,8 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .DISCRETE,
+        powerGrid:     .STABLE_50HZ,
+
         ramPattern:    .VICE
     )
 
@@ -646,6 +657,8 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .DISCRETE,
+        powerGrid:     .STABLE_60HZ,
+
         ramPattern:    .VICE
     )
     
@@ -667,6 +680,8 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .IC,
+        powerGrid:     .STABLE_60HZ,
+
         ramPattern:    .VICE
     )
     
@@ -688,6 +703,8 @@ struct HardwareDefaults {
         sidAddress3:   0xD460,
         
         glueLogic:     .DISCRETE,
+        powerGrid:     .STABLE_60HZ,
+
         ramPattern:    .VICE
     )
 }
@@ -714,6 +731,8 @@ extension UserDefaults {
             Keys.Hwd.sidAddress3:   defaults.sidAddress3,
 
             Keys.Hwd.glueLogic:     defaults.glueLogic.rawValue,
+            Keys.Hwd.powerGrid:     defaults.powerGrid.rawValue,
+
             Keys.Hwd.ramPattern:    defaults.ramPattern.rawValue
         ]
         
@@ -740,6 +759,8 @@ extension UserDefaults {
                     Keys.Hwd.sidAddress3,
                     
                     Keys.Hwd.glueLogic,
+                    Keys.Hwd.powerGrid,
+                    
                     Keys.Hwd.ramPattern
         ]
 

@@ -446,7 +446,7 @@ public:
 private:
     
     // Returns the number of CPU cycles between two TOD increments
-    Cycle incrementInterval();
+    // [[deprecated]] Cycle incrementInterval();
     
     
     //

@@ -573,9 +573,10 @@ CIA::incrementTOD()
     
     wakeUp();
     tod.increment();
-    nextTodTrigger += incrementInterval();
+    nextTodTrigger += oscillator.todTickDelay(CRA);
 }
 
+/*
 Cycle
 CIA::incrementInterval()
 {
@@ -585,6 +586,7 @@ CIA::incrementInterval()
         return (CRA & 0x80) ? NTSC_CLOCK_FREQUENCY * 5/60 : NTSC_CLOCK_FREQUENCY / 10;
     }
 }
+*/
 
 void
 CIA::sleep()

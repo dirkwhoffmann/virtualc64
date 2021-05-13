@@ -9,10 +9,14 @@
 
 #pragma once
 
+#include "OscillatorTypes.h"
 #include "C64Component.h"
 #include "Chrono.h"
 
 class Oscillator : public C64Component {
+    
+    // Current configuration
+    OscillatorConfig config = getDefaultConfig();
     
     /* The heart of this class is method sychronize() which puts the thread to
      * sleep for a certain interval. In order to calculate the delay, the
@@ -54,6 +58,20 @@ private:
     
     
     //
+    // Configuring
+    //
+    
+public:
+    
+    static OscillatorConfig getDefaultConfig();
+    OscillatorConfig getConfig() const { return config; }
+    void resetConfig() override;
+
+    i64 getConfigItem(Option option) const;
+    bool setConfigItem(Option option, i64 value) override;
+    
+    
+    //
     // Serializing
     //
     
@@ -85,4 +103,7 @@ public:
 
     // Puts the emulator thread to rest
     void synchronize();
+    
+    // Returns the number of CPU cycles between two TOD increments
+    Cycle todTickDelay(u8 cra);
 };

@@ -550,6 +550,7 @@
 		50763276202989D300575110 /* DialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogController.swift; sourceTree = "<group>"; };
 		50769B8924BB1B87006FE743 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		507887CB20B1858B00941F7E /* MemTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemTableView.swift; sourceTree = "<group>"; };
+		5078BEA5264D064600EDA161 /* OscillatorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OscillatorTypes.h; sourceTree = "<group>"; };
 		507A499B24C8D64700DBF984 /* InstrTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrTableView.swift; sourceTree = "<group>"; };
 		507A499D24C8D65700DBF984 /* TraceTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraceTableView.swift; sourceTree = "<group>"; };
 		507A499F24C8D66A00DBF984 /* GuardTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardTableView.swift; sourceTree = "<group>"; };
@@ -1380,6 +1381,7 @@
 		50ACF4DC256EB451003B5690 /* LogicBoard */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEA5264D064600EDA161 /* OscillatorTypes.h */,
 				50ACF4DA256EB43B003B5690 /* Oscillator.h */,
 				50ACF4D9256EB43B003B5690 /* Oscillator.cpp */,
 			);

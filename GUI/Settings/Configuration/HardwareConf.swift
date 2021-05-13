@@ -24,9 +24,7 @@ extension ConfigurationController {
     }
     
     func refreshHardwareTab() {
-                        
-        track()
-        
+                                
         // VIC
         hwVicModelPopup.selectItem(withTag: config.vicRevision)
         
@@ -65,8 +63,9 @@ extension ConfigurationController {
         hwSidAddress2.selectItem(withTag: config.sidAddress2)
         hwSidAddress3.selectItem(withTag: config.sidAddress3)
         
-        // Logic board
+        // Logic board and power supply
         hwGlueLogicPopup.selectItem(withTag: config.glueLogic)
+        hwPowerGridPopup.selectItem(withTag: config.powerGrid)
 
         // Startup
         hwRamPatternPopup.selectItem(withTag: config.ramPattern)
@@ -136,7 +135,13 @@ extension ConfigurationController {
         config.glueLogic = sender.selectedTag()
         refresh()
     }
-    
+
+    @IBAction func hwPowerGridAction(_ sender: NSPopUpButton!) {
+        
+        config.powerGrid = sender.selectedTag()
+        refresh()
+    }
+
     @IBAction func hwRamPatternAction(_ sender: NSPopUpButton!) {
         
         track()

@@ -72,8 +72,9 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var hwSidAddress2: NSPopUpButton!
     @IBOutlet weak var hwSidAddress3: NSPopUpButton!
 
-    // Board logic
+    // Board logic and power supply
     @IBOutlet weak var hwGlueLogicPopup: NSPopUpButton!
+    @IBOutlet weak var hwPowerGridPopup: NSPopUpButton!
 
     // Startup
     @IBOutlet weak var hwRamPatternPopup: NSPopUpButton!

@@ -11,8 +11,10 @@
 #import <MetalKit/MetalKit.h>
 
 #include "Constants.h"
+#include "C64Types.h"
 #include "CartridgeTypes.h"
 #include "CIATypes.h"
+#include "ControlPortTypes.h"
 #include "CPUTypes.h"
 #include "DiskTypes.h"
 #include "DriveTypes.h"
@@ -25,10 +27,10 @@
 #include "MemoryTypes.h"
 #include "MouseTypes.h"
 #include "MsgQueueTypes.h"
-#include "ControlPortTypes.h"
+#include "OscillatorTypes.h"
 #include "SIDTypes.h"
 #include "VICIITypes.h"
-#include "C64Types.h"
+
 
 //
 // Forward declarations

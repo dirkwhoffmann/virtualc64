@@ -288,7 +288,7 @@ CIA::poke(u16 addr, u8 value)
             } else {
                 tod.setTodTenth(value);
                 tod.cont();
-                nextTodTrigger = cpu.cycle + incrementInterval();
+                nextTodTrigger = cpu.cycle + oscillator.todTickDelay(CRA);
             }
             return;
             

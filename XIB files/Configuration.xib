@@ -43,6 +43,7 @@
                 <outlet property="hwGlueLogicPopup" destination="eOu-BN-YUt" id="H5c-VY-ROb"/>
                 <outlet property="hwOkButton" destination="cMh-0b-Yb2" id="Baw-Q8-cGK"/>
                 <outlet property="hwPowerButton" destination="x83-RD-ne8" id="foW-6H-dGt"/>
+                <outlet property="hwPowerGridPopup" destination="9jp-61-fOe" id="WsX-n2-ex9"/>
                 <outlet property="hwRamPatternPopup" destination="N53-b0-EtR" id="fpe-DG-QfY"/>
                 <outlet property="hwSidAddress1" destination="QZI-xd-gvh" id="LM8-gf-inx"/>
                 <outlet property="hwSidAddress2" destination="9dS-se-rbm" id="0SW-3S-f4Y"/>
@@ -786,7 +787,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1EU-Eg-YfI">
-                                            <rect key="frame" x="75" y="260" width="31" height="16"/>
+                                            <rect key="frame" x="75" y="259" width="31" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Rev:" id="S47-Va-4f9">
                                                 <font key="font" metaFont="system"/>
@@ -795,7 +796,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wUX-tz-YMe">
-                                            <rect key="frame" x="75" y="170" width="31" height="16"/>
+                                            <rect key="frame" x="75" y="171" width="31" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Rev:" id="gTA-jQ-Kxb">
                                                 <font key="font" metaFont="system"/>
@@ -804,7 +805,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N53-b0-EtR" userLabel="System">
-                                            <rect key="frame" x="423" y="255" width="171" height="26"/>
+                                            <rect key="frame" x="423" y="164" width="171" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="VICE" bezelStyle="rounded" imagePosition="right" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="c0k-4E-Bw7" id="9X3-bD-eLr" userLabel="System">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -826,7 +827,7 @@ Gw
                                             </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Btb-1b-eir">
-                                            <rect key="frame" x="321" y="288" width="114" height="17"/>
+                                            <rect key="frame" x="321" y="196" width="114" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Power up" id="8ha-9E-SGy">
                                                 <font key="font" metaFont="systemBold"/>
@@ -835,9 +836,48 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eTJ-R8-P9k">
-                                            <rect key="frame" x="337" y="261" width="83" height="16"/>
+                                            <rect key="frame" x="337" y="171" width="83" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Ram Pattern:" id="Hgf-XR-gqy">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9jp-61-fOe" userLabel="System">
+                                            <rect key="frame" x="423" y="253" width="171" height="26"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <popUpButtonCell key="cell" type="push" title="50Hz stable" bezelStyle="rounded" imagePosition="right" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="idX-ZJ-iBZ" id="AEO-UJ-qwq" userLabel="System">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="menu"/>
+                                                <menu key="menu" id="PHd-05-zqc">
+                                                    <items>
+                                                        <menuItem title="50Hz stable" state="on" id="idX-ZJ-iBZ">
+                                                            <attributedString key="attributedTitle"/>
+                                                        </menuItem>
+                                                        <menuItem title="50Hz unstable" tag="1" id="OOX-bV-8IF"/>
+                                                        <menuItem title="60Hz stable" tag="2" id="HCA-Im-zfF"/>
+                                                        <menuItem title="60Hz unstable" tag="3" id="Ifk-hi-BpH"/>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="hwPowerGridAction:" target="-2" id="7RK-DS-U3g"/>
+                                            </connections>
+                                        </popUpButton>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KO0-uW-h6k">
+                                            <rect key="frame" x="321" y="288" width="114" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Power Supply" id="cO5-gm-uNm">
+                                                <font key="font" metaFont="systemBold"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Ty-P7-Rsa">
+                                            <rect key="frame" x="348" y="260" width="72" height="16"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Frequency:" id="All-re-67j">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

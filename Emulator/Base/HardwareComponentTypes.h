@@ -39,6 +39,9 @@ enum_long(OPT)
     OPT_DMA_DEBUG_COLOR,
     OPT_DMA_DEBUG_OPACITY,
     
+    // Oscillator
+    OPT_POWER_GRID,
+    
     // Logic board
     OPT_GLUE_LOGIC,
 
@@ -118,6 +121,8 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_DMA_DEBUG_MODE:      return "DMA_CHANNEL_R";
             case OPT_DMA_DEBUG_COLOR:     return "DMA_CHANNEL_I";
             case OPT_DMA_DEBUG_OPACITY:   return "DMA_CHANNEL_C";
+
+            case OPT_POWER_GRID:          return "POWER_GRID";
 
             case OPT_GLUE_LOGIC:          return "GLUE_LOGIC";
                 
