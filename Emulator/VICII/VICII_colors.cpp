@@ -167,8 +167,8 @@ VICII::getColor(unsigned nr, Palette palette)
     // Compute Y, U, and V
     double ang = angle[nr];
     y = luma[nr];
-    u = isnan(ang) ? 0 : cos(ang) * saturation;
-    v = isnan(ang) ? 0 : sin(ang) * saturation;
+    u = std::isnan(ang) ? 0 : cos(ang) * saturation;
+    v = std::isnan(ang) ? 0 : sin(ang) * saturation;
     
     // Apply brightness and contrast
     y *= contrast;

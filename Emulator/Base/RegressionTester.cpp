@@ -48,8 +48,9 @@ RegressionTester::dumpTexture(const C64 &c64, const string &filename) const
     cmd += " -l " + std::to_string(y2 - y1);
     cmd += " " + rawFile + " " + tiffFile;
     
-    // msg("Executing %s\n", cmd.c_str());
-    system(cmd.c_str());
+    if (system(cmd.c_str()) == -1) {
+        warn("Error executing %s\n", cmd.c_str());
+    }
     
     // Exit the emulator
     exit(retValue);

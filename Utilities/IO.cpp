@@ -10,6 +10,8 @@
 #include "IO.h"
 #include <vector>
 #include <fstream>
+#include <algorithm>
+#include <assert.h>
 
 namespace util {
 

@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include <algorithm>
+
 template <class T, int capacity> class TimeDelayed {
     
     /* Value pipeline (history buffer)
@@ -116,6 +118,6 @@ public:
     // Reads a value from the pipeline with a custom delay
     T readWithDelay(u8 delay) const {
         assert(delay <= this->capacity);
-        return pipeline[std::max(0, timeStamp - *clock + delay)];
+        return pipeline[std::max(0LL, timeStamp - *clock + delay)];
     }
 };

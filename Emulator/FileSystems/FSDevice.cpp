@@ -15,6 +15,7 @@
 #include "P00File.h"
 #include "T64File.h"
 
+#include <limits.h>
 #include <set>
 
 FSDevice *

@@ -11,6 +11,8 @@
 #include "C64.h"
 #include "IO.h"
 
+#include <stdarg.h>
+
 const Disk::TrackDefaults Disk::trackDefaults[43] = {
     
     { 0, 0, 0, 0, 0, 0 }, // Padding
@@ -810,7 +812,6 @@ Disk::encode(FSDevice &fs, bool alignTracks)
     };
     */
     
-    usize encodedBits;
     unsigned numTracks = fs.getNumTracks();
 
     trace(GCR_DEBUG, "Encoding disk with %d tracks\n", numTracks);
@@ -832,9 +833,7 @@ Disk::encode(FSDevice &fs, bool alignTracks)
         } else {
             start = 0;
         }
-        encodedBits = encodeTrack(fs, t, tailGap[zone], start);
-        trace(GCR_DEBUG, "Encoded %zu bits (%lu bytes) for track %d.\n",
-              encodedBits, encodedBits / 8, t);
+        encodeTrack(fs, t, tailGap[zone], start);
     }
 
     // Do some consistency checking

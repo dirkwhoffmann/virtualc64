@@ -10,6 +10,7 @@
 #pragma once
 
 #include "C64Object.h"
+#include "MemUtils.h"
 
 template <int len> class PETName : C64Object {
         

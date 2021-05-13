@@ -16,6 +16,8 @@
 #include "Volume.h"
 #include "envelope.h"
 
+#include <string.h>
+
 namespace util {
 
 //
