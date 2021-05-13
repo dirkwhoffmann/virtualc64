@@ -161,6 +161,25 @@
 		50763277202989D300575110 /* DialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* DialogController.swift */; };
 		50769B8A24BB1B87006FE743 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50769B8924BB1B87006FE743 /* Configuration.swift */; };
 		507887CC20B1858B00941F7E /* MemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507887CB20B1858B00941F7E /* MemTableView.swift */; };
+		5078BEA9264D6F9E00EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BEA8264D6F9E00EDA161 /* Makefile */; };
+		5078BEAB264D70AC00EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BEAA264D70AC00EDA161 /* Makefile */; };
+		5078BEAD264D72C000EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BEAC264D72C000EDA161 /* Makefile */; };
+		5078BEAF264D731600EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BEAE264D731600EDA161 /* Makefile */; };
+		5078BEB1264D733100EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BEB0264D733100EDA161 /* Makefile */; };
+		5078BEB3264D734600EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BEB2264D734600EDA161 /* Makefile */; };
+		5078BEB5264D735D00EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BEB4264D735D00EDA161 /* Makefile */; };
+		5078BEB7264D738000EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BEB6264D738000EDA161 /* Makefile */; };
+		5078BEB9264D73D500EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BEB8264D73D500EDA161 /* Makefile */; };
+		5078BEBB264D73F600EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BEBA264D73F600EDA161 /* Makefile */; };
+		5078BEBD264D740E00EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BEBC264D740E00EDA161 /* Makefile */; };
+		5078BEBF264D742500EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BEBE264D742500EDA161 /* Makefile */; };
+		5078BEC1264D743E00EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BEC0264D743E00EDA161 /* Makefile */; };
+		5078BEC3264D745400EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BEC2264D745400EDA161 /* Makefile */; };
+		5078BEC5264D746C00EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BEC4264D746C00EDA161 /* Makefile */; };
+		5078BEC7264D748000EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BEC6264D748000EDA161 /* Makefile */; };
+		5078BEC9264D74AB00EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BEC8264D74AB00EDA161 /* Makefile */; };
+		5078BECB264D74C800EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BECA264D74C800EDA161 /* Makefile */; };
+		5078BECD264D74DF00EDA161 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 5078BECC264D74DF00EDA161 /* Makefile */; };
 		507A499C24C8D64700DBF984 /* InstrTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A499B24C8D64700DBF984 /* InstrTableView.swift */; };
 		507A499E24C8D65700DBF984 /* TraceTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A499D24C8D65700DBF984 /* TraceTableView.swift */; };
 		507A49A024C8D66A00DBF984 /* GuardTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A499F24C8D66A00DBF984 /* GuardTableView.swift */; };
@@ -551,6 +570,25 @@
 		50769B8924BB1B87006FE743 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		507887CB20B1858B00941F7E /* MemTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemTableView.swift; sourceTree = "<group>"; };
 		5078BEA5264D064600EDA161 /* OscillatorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OscillatorTypes.h; sourceTree = "<group>"; };
+		5078BEA8264D6F9E00EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BEAA264D70AC00EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BEAC264D72C000EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BEAE264D731600EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BEB0264D733100EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BEB2264D734600EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BEB4264D735D00EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BEB6264D738000EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BEB8264D73D500EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BEBA264D73F600EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BEBC264D740E00EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BEBE264D742500EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BEC0264D743E00EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BEC2264D745400EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BEC4264D746C00EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BEC6264D748000EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BEC8264D74AB00EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BECA264D74C800EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5078BECC264D74DF00EDA161 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		507A499B24C8D64700DBF984 /* InstrTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrTableView.swift; sourceTree = "<group>"; };
 		507A499D24C8D65700DBF984 /* TraceTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraceTableView.swift; sourceTree = "<group>"; };
 		507A499F24C8D66A00DBF984 /* GuardTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuardTableView.swift; sourceTree = "<group>"; };
@@ -818,6 +856,7 @@
 		500FAA62261376980062488E /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEA8264D6F9E00EDA161 /* Makefile */,
 				500FAA63261376C50062488E /* Types.h */,
 				500FAA64261377050062488E /* Macros.h */,
 				50E806BE25A1C2B800F08732 /* Reflection.h */,
@@ -859,6 +898,7 @@
 		5036E0AD261AEF000048E66A /* RetroShell */ = {
 			isa = PBXGroup;
 			children = (
+				5078BECC264D74DF00EDA161 /* Makefile */,
 				5036E0AE261AEF000048E66A /* RetroShell.h */,
 				5036E0B3261AEF000048E66A /* RetroShell.cpp */,
 				5036E0B6261AEF000048E66A /* RetroShellCmds.cpp */,
@@ -900,6 +940,7 @@
 		504C428D24AF29AB00E69CAE /* Emulator */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEAA264D70AC00EDA161 /* Makefile */,
 				504C430324AF29AB00E69CAE /* C64PublicTypes.h */,
 				504268AC24F0F76F006BB841 /* C64Types.h */,
 				504C42F624AF29AB00E69CAE /* C64.h */,
@@ -925,6 +966,7 @@
 		504C428E24AF29AB00E69CAE /* Cartridges */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEC4264D746C00EDA161 /* Makefile */,
 				50B1A61925A209A200201A2C /* CartridgeTypes.h */,
 				504C42C424AF29AB00E69CAE /* Cartridge.h */,
 				504C42C024AF29AB00E69CAE /* Cartridge.cpp */,
@@ -940,6 +982,7 @@
 		504C428F24AF29AB00E69CAE /* CustomCartridges */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEC6264D748000EDA161 /* Makefile */,
 				504C42B524AF29AB00E69CAE /* CustomCartridges.h */,
 				504C42A324AF29AB00E69CAE /* ActionReplay.h */,
 				504C42AD24AF29AB00E69CAE /* ActionReplay.cpp */,
@@ -1002,6 +1045,7 @@
 		504C42C624AF29AB00E69CAE /* Files */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEC8264D74AB00EDA161 /* Makefile */,
 				50B1A61A25A20A8900201A2C /* FileTypes.h */,
 				5026118D259CACB60066E754 /* PETName.h */,
 				504C42CE24AF29AB00E69CAE /* AnyFile.h */,
@@ -1037,6 +1081,7 @@
 		504C42E024AF29AB00E69CAE /* Memory */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEBC264D740E00EDA161 /* Makefile */,
 				50B1A61525A2028B00201A2C /* MemoryTypes.h */,
 				504C42E424AF29AB00E69CAE /* C64Memory.h */,
 				504C42E124AF29AB00E69CAE /* C64Memory.cpp */,
@@ -1049,6 +1094,7 @@
 		504C42E524AF29AB00E69CAE /* CPU */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEB0264D733100EDA161 /* Makefile */,
 				5052A7BF25A0703D00E62EDD /* CPUTypes.h */,
 				504C42E824AF29AB00E69CAE /* CPU.h */,
 				504C42E924AF29AB00E69CAE /* CPU.cpp */,
@@ -1065,6 +1111,7 @@
 		504C42F924AF29AB00E69CAE /* Peripherals */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEC2264D745400EDA161 /* Makefile */,
 				50B1A61625A203B100201A2C /* ControlPortTypes.h */,
 				504C434024AF29AC00E69CAE /* ControlPort.h */,
 				504C433E24AF29AC00E69CAE /* ControlPort.cpp */,
@@ -1094,6 +1141,7 @@
 		504C430424AF29AB00E69CAE /* VICII */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEB4264D735D00EDA161 /* Makefile */,
 				50DBB3D3264115B4006F45E6 /* BusTypes.h */,
 				50DAABD824F0108A005D426F /* VICIITypes.h */,
 				504C430C24AF29AC00E69CAE /* VICII.h */,
@@ -1115,6 +1163,7 @@
 		504C430E24AF29AC00E69CAE /* Datasette */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEC0264D743E00EDA161 /* Makefile */,
 				504C431024AF29AC00E69CAE /* Datasette.h */,
 				504C430F24AF29AC00E69CAE /* Datasette.cpp */,
 			);
@@ -1124,6 +1173,7 @@
 		504C431124AF29AC00E69CAE /* SID */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEB6264D738000EDA161 /* Makefile */,
 				50E806C125A1F1C500F08732 /* SIDTypes.h */,
 				50C9318D2589E41D00D8BB94 /* Volume.h */,
 				504C433224AF29AC00E69CAE /* SIDBridge.h */,
@@ -1141,6 +1191,7 @@
 		504C431324AF29AC00E69CAE /* resid */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEB8264D73D500EDA161 /* Makefile */,
 				504C431424AF29AC00E69CAE /* siddefs.h */,
 				504C431524AF29AC00E69CAE /* dac.h */,
 				504C431624AF29AC00E69CAE /* extfilt.h */,
@@ -1176,6 +1227,7 @@
 		504C433424AF29AC00E69CAE /* fastsid */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEBA264D73F600EDA161 /* Makefile */,
 				504C433724AF29AC00E69CAE /* FastSID.h */,
 				504C433524AF29AC00E69CAE /* FastSID.cpp */,
 				504C433924AF29AC00E69CAE /* FastVoice.h */,
@@ -1188,6 +1240,7 @@
 		504C434724AF29AC00E69CAE /* Drive */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEBE264D742500EDA161 /* Makefile */,
 				50B1A61725A205D500201A2C /* DriveTypes.h */,
 				504C434C24AF29AC00E69CAE /* Drive.h */,
 				504C434D24AF29AC00E69CAE /* Drive.cpp */,
@@ -1205,6 +1258,7 @@
 		504C435224AF29AC00E69CAE /* CIA */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEB2264D734600EDA161 /* Makefile */,
 				50E806BF25A1C93B00F08732 /* CIATypes.h */,
 				504C435324AF29AC00E69CAE /* CIA.h */,
 				504C435824AF29AC00E69CAE /* CIA.cpp */,
@@ -1327,6 +1381,7 @@
 		5080501C2587A177004FE1F5 /* FileSystems */ = {
 			isa = PBXGroup;
 			children = (
+				5078BECA264D74C800EDA161 /* Makefile */,
 				50B1A61B25A20DFB00201A2C /* FSTypes.h */,
 				5080501A2587A16D004FE1F5 /* FSDescriptors.h */,
 				508050192587A16D004FE1F5 /* FSDescriptors.cpp */,
@@ -1354,6 +1409,7 @@
 		50A2D7AF24AF945200671F38 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEAC264D72C000EDA161 /* Makefile */,
 				50A2D7B024AF94B400671F38 /* Aliases.h */,
 				50A2D7AE24AF944500671F38 /* Constants.h */,
 				50549B44257D1A6C006FE39C /* Constants.cpp */,
@@ -1381,6 +1437,7 @@
 		50ACF4DC256EB451003B5690 /* LogicBoard */ = {
 			isa = PBXGroup;
 			children = (
+				5078BEAE264D731600EDA161 /* Makefile */,
 				5078BEA5264D064600EDA161 /* OscillatorTypes.h */,
 				50ACF4DA256EB43B003B5690 /* Oscillator.h */,
 				50ACF4D9256EB43B003B5690 /* Oscillator.cpp */,
@@ -1589,12 +1646,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5078BEBF264D742500EDA161 /* Makefile in Sources */,
 				504C438A24AF29AC00E69CAE /* Mouse1350.cpp in Sources */,
 				504C436824AF29AC00E69CAE /* ActionReplay.cpp in Sources */,
 				50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */,
 				50D3091E24C5CE1A00B92563 /* MyControllerStatusBar.swift in Sources */,
+				5078BEC9264D74AB00EDA161 /* Makefile in Sources */,
 				504C436624AF29AC00E69CAE /* Kcs.cpp in Sources */,
 				5036E0BA261AEF000048E66A /* RetroShell.cpp in Sources */,
+				5078BEAF264D731600EDA161 /* Makefile in Sources */,
 				504C438724AF29AC00E69CAE /* C64.cpp in Sources */,
 				504C43A424AF29AC00E69CAE /* Keyboard.cpp in Sources */,
 				504C439924AF29AC00E69CAE /* filter.cc in Sources */,
@@ -1623,6 +1683,7 @@
 				504C437124AF29AC00E69CAE /* CartridgeRom.cpp in Sources */,
 				50763277202989D300575110 /* DialogController.swift in Sources */,
 				5018BFAB24B4843200551848 /* Primitives.swift in Sources */,
+				5078BEC7264D748000EDA161 /* Makefile in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
 				50AA3EC12616F62500C96EDB /* MemUtils.cpp in Sources */,
 				504C437624AF29AC00E69CAE /* P00File.cpp in Sources */,
@@ -1630,6 +1691,7 @@
 				5036E0BC261AEF000048E66A /* RetroShellCmds.cpp in Sources */,
 				504C435F24AF29AC00E69CAE /* SuperGames.cpp in Sources */,
 				50BE4B5C24E7F857008F39C9 /* Data.swift in Sources */,
+				5078BEBB264D73F600EDA161 /* Makefile in Sources */,
 				50BE4B6424E7F941008F39C9 /* NSControl.swift in Sources */,
 				50520F8B25108FC400C7D47F /* Folder.cpp in Sources */,
 				507A499C24C8D64700DBF984 /* InstrTableView.swift in Sources */,
@@ -1638,6 +1700,7 @@
 				5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */,
 				5002FA7B21C2650600DA4BBC /* HardwareConf.swift in Sources */,
 				50A22A252618723200C9FB1E /* Canvas.swift in Sources */,
+				5078BEBD264D740E00EDA161 /* Makefile in Sources */,
 				504C435B24AF29AC00E69CAE /* StarDos.cpp in Sources */,
 				5055D5B42615886E005D3DA6 /* Error.cpp in Sources */,
 				5002FA8121C2654B00DA4BBC /* ControlsPrefs.swift in Sources */,
@@ -1657,6 +1720,7 @@
 				50AEEE7326305625001DED20 /* C64Key.cpp in Sources */,
 				5002FA8321C2655800DA4BBC /* KeyboardPrefs.swift in Sources */,
 				507887CC20B1858B00941F7E /* MemTableView.swift in Sources */,
+				5078BEB9264D73D500EDA161 /* Makefile in Sources */,
 				504C439A24AF29AC00E69CAE /* dac.cc in Sources */,
 				50A22A202618720100C9FB1E /* SplashScreen.swift in Sources */,
 				504C439024AF29AC00E69CAE /* VICII_cycles_pal.cpp in Sources */,
@@ -1670,6 +1734,7 @@
 				50A077FE258A1ADF005ACF5B /* FSBlock.cpp in Sources */,
 				5080501B2587A16D004FE1F5 /* FSDescriptors.cpp in Sources */,
 				50AE193C2633E9B0005A5898 /* RegressionTester.cpp in Sources */,
+				5078BEC3264D745400EDA161 /* Makefile in Sources */,
 				504C439C24AF29AC00E69CAE /* wave.cc in Sources */,
 				50FE5B382039B3C5006CE7C7 /* C64Key.swift in Sources */,
 				5038CA9720B6C2BE000D9193 /* SIDPanel.swift in Sources */,
@@ -1678,6 +1743,7 @@
 				504C437524AF29AC00E69CAE /* PRGFile.cpp in Sources */,
 				504C43A524AF29AC00E69CAE /* ExpansionPort.cpp in Sources */,
 				504C436524AF29AC00E69CAE /* Funplay.cpp in Sources */,
+				5078BEB5264D735D00EDA161 /* Makefile in Sources */,
 				504C437B24AF29AC00E69CAE /* D64File.cpp in Sources */,
 				5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */,
 				507A499E24C8D65700DBF984 /* TraceTableView.swift in Sources */,
@@ -1754,6 +1820,7 @@
 				504C43A224AF29AC00E69CAE /* ControlPort.cpp in Sources */,
 				507A49A224C8D71400DBF984 /* BankTableView.swift in Sources */,
 				504C437424AF29AC00E69CAE /* T64File.cpp in Sources */,
+				5078BEB3264D734600EDA161 /* Makefile in Sources */,
 				50CCE179259DFD7800481E7F /* DevicesPrefs.swift in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				504C438224AF29AC00E69CAE /* C64Object.cpp in Sources */,
@@ -1762,6 +1829,7 @@
 				504C43A024AF29AC00E69CAE /* FastVoice.cpp in Sources */,
 				50BE4B7224E81266008F39C9 /* CIARegisters.cpp in Sources */,
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,
+				5078BEB7264D738000EDA161 /* Makefile in Sources */,
 				504C439324AF29AC00E69CAE /* Datasette.cpp in Sources */,
 				504C437024AF29AC00E69CAE /* Cartridge.cpp in Sources */,
 				50A077F8258A18B9005ACF5B /* FSDevice.cpp in Sources */,
@@ -1769,16 +1837,22 @@
 				50A22A2A2618725200C9FB1E /* Console.swift in Sources */,
 				5031D59C200B81D20088C802 /* Animation.swift in Sources */,
 				50D5F88424F4FE9C0062EF13 /* SectorTableView.swift in Sources */,
+				5078BEA9264D6F9E00EDA161 /* Makefile in Sources */,
+				5078BECD264D74DF00EDA161 /* Makefile in Sources */,
 				50B165AE25B06A03009B576D /* TextureToolbox.swift in Sources */,
 				506B13C224C1C40600814BB0 /* PreferencesController.swift in Sources */,
+				5078BECB264D74C800EDA161 /* Makefile in Sources */,
 				50300AEE258B2C5400D261E3 /* FSDirEntry.cpp in Sources */,
 				507A49A024C8D66A00DBF984 /* GuardTableView.swift in Sources */,
+				5078BEB1264D733100EDA161 /* Makefile in Sources */,
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
 				5036E0B7261AEF000048E66A /* Interpreter.cpp in Sources */,
 				504C439D24AF29AC00E69CAE /* version.cc in Sources */,
 				504C436324AF29AC00E69CAE /* Kingsoft.cpp in Sources */,
 				50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */,
+				5078BEAB264D70AC00EDA161 /* Makefile in Sources */,
 				507CFDB02013E765007FED87 /* MyControllerCartridges.swift in Sources */,
+				5078BEC1264D743E00EDA161 /* Makefile in Sources */,
 				507E7AA024FB881500AB433C /* ScreenshotDialog.swift in Sources */,
 				50F420CA250BA3460043DE56 /* Colors.cpp in Sources */,
 				50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */,
@@ -1792,6 +1866,7 @@
 				5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */,
 				50EAFFEA24B2600D00024CD2 /* MyToolbar.swift in Sources */,
 				504C438E24AF29AC00E69CAE /* VICII_colors.cpp in Sources */,
+				5078BEAD264D72C000EDA161 /* Makefile in Sources */,
 				5018BFB124B48DC400551848 /* Renderer.swift in Sources */,
 				504C436124AF29AC00E69CAE /* SimonsBasic.cpp in Sources */,
 				50D5F88224F4F2E90062EF13 /* DiskPanel.swift in Sources */,
@@ -1802,6 +1877,7 @@
 				50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */,
 				50D3092424C7152700B92563 /* Inspector.swift in Sources */,
 				50549B45257D1A6C006FE39C /* Constants.cpp in Sources */,
+				5078BEC5264D746C00EDA161 /* Makefile in Sources */,
 				504C438C24AF29AC00E69CAE /* VICII_draw.cpp in Sources */,
 				50653EFC1EF8F347008AA1F2 /* KeyboardController.swift in Sources */,
 				50BE4B6C24E7FB9E008F39C9 /* CGImage.swift in Sources */,
