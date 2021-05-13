@@ -1083,8 +1083,8 @@ C64::beginRasterLine()
 void
 C64::endRasterLine()
 {
-    cia1.incrementTOD();
-    cia2.incrementTOD();
+    cia1.tod.increment();
+    cia2.tod.increment();
 
     vic.endRasterline();
     rasterCycle = 1;

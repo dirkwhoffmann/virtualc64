@@ -566,29 +566,6 @@ CIA::executeOneCycle()
 }
 
 void
-CIA::incrementTOD()
-{
-    // Only proceed if TOD should increment
-    if (tod.stopped || cpu.cycle < (u64)nextTodTrigger) return;
-    
-    wakeUp();
-    tod.increment();
-    nextTodTrigger += oscillator.todTickDelay(CRA);
-}
-
-/*
-Cycle
-CIA::incrementInterval()
-{
-    if (vic.isPAL()) {
-        return (CRA & 0x80) ? PAL_CLOCK_FREQUENCY / 10 : PAL_CLOCK_FREQUENCY * 6/50;
-    } else {
-        return (CRA & 0x80) ? NTSC_CLOCK_FREQUENCY * 5/60 : NTSC_CLOCK_FREQUENCY / 10;
-    }
-}
-*/
-
-void
 CIA::sleep()
 {
     // Don't call this method on a sleeping CIA

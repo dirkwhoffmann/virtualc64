@@ -60,6 +60,8 @@
 
 class CIA : public C64Component {
         
+    friend class TOD;
+    
     // Current configuration
     CIAConfig config = getDefaultConfig();
     
@@ -202,7 +204,7 @@ private:
     // TOD control
     //
     
-    Cycle nextTodTrigger;
+    // Cycle nextTodTrigger;
     
     
     //
@@ -322,7 +324,6 @@ private:
         << serCounter
         << CNT
         << INT
-        << nextTodTrigger
         << tiredness
         << idleCycles
         << sleeping
@@ -439,15 +440,7 @@ public:
     
 	// Executes the CIA for one cycle
 	void executeOneCycle();
-    
-	// Increments the TOD clock by one tenth of a second
-	void incrementTOD();
-
-private:
-    
-    // Returns the number of CPU cycles between two TOD increments
-    // [[deprecated]] Cycle incrementInterval();
-    
+        
     
     //
     // Speeding up (sleep logic)

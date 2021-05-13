@@ -10,7 +10,9 @@
 #include "config.h"
 #include "TOD.h"
 #include "CIA.h"
+#include "CPU.h"
 #include "IO.h"
+#include "Oscillator.h"
 
 TOD::TOD(C64 &ref, CIA &ciaref) : C64Component(ref), cia(ciaref)
 {
@@ -69,6 +71,11 @@ TOD::_dump(dump::Category category, std::ostream& os) const
 void
 TOD::increment()
 {
+    // Check if a tenth of a second has passed
+    if (stopped || cpu.cycle < (u64)nextTodTrigger) return;
+    
+    cia.wakeUp();
+    
     assert(!stopped);
         
     // 1/10 seconds
@@ -111,8 +118,15 @@ TOD::increment()
         }
     }
 
-    checkIrq(); 
-    return;
+    checkIrq();
+    nextTodTrigger += oscillator.todTickDelay(cia.CRA);
+}
+
+void
+TOD::cont()
+{
+    stopped = false;
+    nextTodTrigger = cpu.cycle + oscillator.todTickDelay(cia.CRA);
 }
 
 void

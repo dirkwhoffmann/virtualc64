@@ -62,20 +62,11 @@ private:
      * checkIrq() for edge detection.
      */
     bool matching;
-    
-    /* Indicates if TOD is driven by a 50 Hz or 60 Hz signal. Valid values are
-     * 5 (50 Hz mode) or 6 (60 Hz mode).
-     */
-    // u8 hz;
-    
-    /* Frequency counter. This counter is driven by the A/C power frequency and
-     * determines when TOD should increment. This variable is incremented in
-     * function increment() which is called in endFrame(). Hence, the variable
-     * is a 50 Hz signal in PAL mode and a 60 Hz signal in NTSC mode.
-     */
-    // u64 frequencyCounter;
-    
-    
+
+    // Cycle where the tenth of a second counter needs to be incremented
+    Cycle nextTodTrigger;
+
+        
     //
     // Initializing
     //
@@ -126,9 +117,8 @@ private:
         << alarm.value
         << frozen
         << stopped
-        << matching;
-        // << hz
-        // << frequencyCounter;
+        << matching
+        << nextTodTrigger;
     }
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }
@@ -139,10 +129,7 @@ private:
     //
     // Accessing
     //
-    
-    // Sets the frequency of the driving clock
-    // void setHz(u8 value) { assert(value == 5 || value == 6); hz = value; }
-    
+        
     // Returns the hours digits of the time of day clock
     u8 getTodHours() const { return (frozen ? latch.hour : tod.hour) & 0x9F; }
     
@@ -196,6 +183,11 @@ private:
     // Emulating
     //
     
+public:
+    
+    // Increments the TOD clock if necessary (called after each rasterline)
+    void increment();
+
 private:
     
     // Freezes the time of day clock
@@ -205,14 +197,10 @@ private:
     void defreeze() { frozen = false; }
     
     // Stops the time of day clock
-    // void stop() { frequencyCounter = 0; stopped = true; }
     void stop() { stopped = true; }
 
     // Starts the time of day clock
-    void cont() { stopped = false; }
-
-	// Increments the TOD clock by one tenth of a second
-	void increment();
+    void cont();
 
     // Updates variable 'matching'. A positive edge triggers an interrupt.
     void checkIrq();
