@@ -12,12 +12,12 @@
 #include "Types.h"
 #include <dirent.h>
 #include <fcntl.h>
+#include <iomanip>
 #include <istream>
+#include <ostream>
 #include <sys/stat.h>
 #include <unistd.h>
-
-#include <ostream>
-#include <iomanip>
+#include <vector>
 
 namespace util {
 
