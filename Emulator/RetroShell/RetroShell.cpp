@@ -404,12 +404,12 @@ RetroShell::describe(const std::exception &e)
         *this << err->what() << ": Syntax error";
         *this << '\n';
 
-    } else if (auto err = dynamic_cast<const ConfigUnsupportedError *>(&e)) {
+    } else if (dynamic_cast<const ConfigUnsupportedError *>(&e)) {
 
         *this << "This option is not yet supported.";
         *this << '\n';
 
-    } else if (auto err = dynamic_cast<const ConfigLockedError *>(&e)) {
+    } else if (dynamic_cast<const ConfigLockedError *>(&e)) {
 
         *this << "This option is locked because the C64 is powered on.";
         *this << '\n';

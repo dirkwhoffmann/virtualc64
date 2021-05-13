@@ -155,7 +155,10 @@ RetroShell::exec <Token::screenshot> (Arguments &argv, long param)
     cmd += " " + rawFile + " " + tiffFile;
     
     msg("Executing %s\n", cmd.c_str());
-    system(cmd.c_str());
+
+    if (system(cmd.c_str()) == -1) {
+        warn("Error executing %s\n", cmd.c_str());
+    }
     exit(0);
 }
 
