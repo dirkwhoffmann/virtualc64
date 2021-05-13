@@ -326,7 +326,7 @@ Cartridge::peekRomL(u16 addr)
     assert(addr <= 0x1FFF);
     assert(chipL >= 0 && chipL < numPackets);
     
-    return packet[chipL]->peek(addr + offsetL);
+    return packet[chipL] ? packet[chipL]->peek(addr + offsetL) : 0;
 }
 
 u8
@@ -335,7 +335,7 @@ Cartridge::peekRomH(u16 addr)
     assert(addr <= 0x1FFF);
     assert(chipH >= 0 && chipH < numPackets);
     
-    return packet[chipH]->peek(addr + offsetH);
+    return packet[chipH] ? packet[chipH]->peek(addr + offsetH) : 0;
 }
 
 u8
@@ -359,7 +359,7 @@ Cartridge::spypeekRomL(u16 addr) const
     assert(addr <= 0x1FFF);
     assert(chipL >= 0 && chipL < numPackets);
     
-    return packet[chipL]->spypeek(addr + offsetL);
+    return packet[chipL] ? packet[chipL]->spypeek(addr + offsetL) : 0;
 }
 
 u8
@@ -368,7 +368,7 @@ Cartridge::spypeekRomH(u16 addr) const
     assert(addr <= 0x1FFF);
     assert(chipH >= 0 && chipH < numPackets);
     
-    return packet[chipH]->spypeek(addr + offsetH);
+    return packet[chipH] ? packet[chipH]->spypeek(addr + offsetH) : 0;
 }
 
 void

@@ -223,7 +223,9 @@ ExpansionPort::attachCartridge(Cartridge *c)
 {
     assert(c);
     assert(c->isSupported());
-               
+    
+    suspend();
+    
     // Remove old cartridge (if any) and assign new one
     detachCartridge();
     cartridge = std::unique_ptr<Cartridge>(c);
@@ -236,6 +238,8 @@ ExpansionPort::attachCartridge(Cartridge *c)
     if (cartridge->hasSwitch()) c64.putMessage(MSG_CART_SWITCH);
     
     debug(EXP_DEBUG, "Cartridge attached to expansion port");
+    
+    resume();
 }
 
 void
@@ -296,10 +300,10 @@ ExpansionPort::attachIsepicCartridge()
 void
 ExpansionPort::detachCartridge()
 {
+    suspend();
+
     if (cartridge) {
-        
-        suspend();
-        
+                
         cartridge = nullptr;
         crtType = CRT_NONE;
         
@@ -307,9 +311,9 @@ ExpansionPort::detachCartridge()
         
         debug(EXP_DEBUG, "Cartridge detached from expansion port");
         c64.putMessage(MSG_CRT_DETACHED);
-       
-        resume();
     }
+    
+    resume();
 }
 
 void
