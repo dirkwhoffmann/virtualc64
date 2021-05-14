@@ -273,9 +273,6 @@ C64Memory::eraseWithPattern(RamPattern pattern)
         default:
             assert(false);
     }
-        
-    // Make the screen look nice on startup
-    // memset(&ram[0x400], 0x01, 40*25);
 }
 
 void 

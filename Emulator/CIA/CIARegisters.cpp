@@ -24,13 +24,15 @@ CIA::peek(u16 addr)
         case 0x00: // CIA_DATA_PORT_A
         {
             updatePA();
-            return PA;
+            result = PA;
+            break;
         }
 
         case 0x01: // CIA_DATA_PORT_B
         {
             updatePB();
-            return PB;
+            result = PB;
+            break;
         }
         case 0x02: // CIA_DATA_DIRECTION_A
 
