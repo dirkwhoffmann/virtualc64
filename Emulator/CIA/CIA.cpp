@@ -21,15 +21,18 @@ void
 CIA::_reset()
 {
     RESET_SNAPSHOT_ITEMS
-
-	CNT = true;
-	INT = 1;
-	    
+    
+    CNT = true;
+    INT = 1;
+    
     counterA = 0xFFFF;
     counterB = 0xFFFF;
-
-	latchA = 0xFFFF;
-	latchB = 0xFFFF;
+    
+    latchA = 0xFFFF;
+    latchB = 0xFFFF;
+    
+    updatePA();
+    updatePB();
 }
 
 CIAConfig

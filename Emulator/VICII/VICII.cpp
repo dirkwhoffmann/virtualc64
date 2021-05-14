@@ -857,10 +857,10 @@ VICII::lightpenY() const
 void
 VICII::setLP(bool value)
 {
-    // A negative transition on LP triggers a lightpen event.
-    if (FALLING_EDGE(lpLine, value)) {
-        delay |= VICLpTransition;
-    }
+    if (value == lpLine) return;
+        
+    // A negative transition on LP triggers a lightpen event
+    if (FALLING_EDGE(lpLine, value)) delay |= VICLpTransition;
     
     lpLine = value;
 }
@@ -872,13 +872,11 @@ VICII::checkForLightpenIrq()
 
     // An interrupt is suppressed if ...
     
-    // ... a previous interrupt has occurred in the current frame.
-    if (lpIrqHasOccurred)
-        return;
+    // ... a previous interrupt has occurred in the current frame
+    if (lpIrqHasOccurred) return;
 
-    // ... we are in the last PAL rasterline and not in cycle 1.
-    if (yCounter == 311 && vicCycle != 1)
-        return;
+    // ... we are in the last PAL rasterline and not in cycle 1
+    if (yCounter == 311 && vicCycle != 1) return;
     
     // Latch coordinates
     latchedLPX = lightpenX() / 2;

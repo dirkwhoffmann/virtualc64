@@ -85,6 +85,7 @@ static const int TAP_DEBUG       = 0; // Datasette
 static const int KBD_DEBUG       = 0; // Keyboard
 static const int PRT_DEBUG       = 0; // Control ports and connected devices
 static const int EXP_DEBUG       = 0; // Expansion port
+static const int LIP_DEBUG       = 0; // Light pen
 
 
 //
