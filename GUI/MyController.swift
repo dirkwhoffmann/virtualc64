@@ -561,7 +561,7 @@ extension MyController {
             
         case .POWER_ON:
             // track("POWER_ON")
-            renderer.canvas.open(delay: 1.5)
+            renderer.canvas.open(delay: 2)
             virtualKeyboard = nil
             toolbar.updateToolbar()
             inspector?.fullRefresh()

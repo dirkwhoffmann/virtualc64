@@ -79,7 +79,7 @@ class Canvas: Layer {
         /* We start with a negative alpha value to give it some time until
          * it becomes greater than 0. During this time, the splash screen will
          * be fully visible. */
-        alpha.set(-1.0)
+        alpha.set(-1.5)
     }
     
     func buildVertexBuffers() {
