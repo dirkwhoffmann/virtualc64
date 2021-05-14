@@ -24,7 +24,10 @@ CIA::_reset()
 
 	CNT = true;
 	INT = 1;
-	
+	    
+    counterA = 0xFFFF;
+    counterB = 0xFFFF;
+
 	latchA = 0xFFFF;
 	latchB = 0xFFFF;
 }
@@ -747,15 +750,6 @@ CIA1::updatePB()
 //
 // CIA 2
 //
-
-void
-CIA2::_reset()
-{
-    CIA::_reset();
-
-    counterA = 0xFFFF;
-    counterB = 0xFFFF;
-}
 
 void 
 CIA2::pullDownInterruptLine()

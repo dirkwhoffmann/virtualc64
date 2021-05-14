@@ -387,11 +387,13 @@ private:
     
 protected:
     
-    // Action method for poking the PA register
+    // Action method for poking the port registers
     virtual void pokePA(u8 value) { PRA = value; updatePA(); }
+    virtual void pokePB(u8 value) { PRB = value; updatePB(); }
 
-    // Action method for poking the DDRA register
+    // Action method for poking the port direction registers
     virtual void pokeDDRA(u8 value) { DDRA = value; updatePA(); }
+    virtual void pokeDDRB(u8 value) { DDRB = value; updatePB(); }
 
     
     //
@@ -512,9 +514,7 @@ public:
     const char *getDescription() const override { return "CIA2"; }
 
 private:
-    
-    void _reset() override;
-    
+        
     void pullDownInterruptLine() override;
     void releaseInterruptLine() override;
     

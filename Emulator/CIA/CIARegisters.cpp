@@ -216,27 +216,21 @@ CIA::poke(u16 addr, u8 value)
         case 0x00: // CIA_DATA_PORT_A
             
             pokePA(value);
-            // PRA = value;
-            // updatePA();
             return;
             
         case 0x01: // CIA_DATA_PORT_B
             
-            PRB = value;
-            updatePB();
+            pokePB(value);
             return;
             
         case 0x02: // CIA_DATA_DIRECTION_A
             
             pokeDDRA(value);
-            // DDRA = value;
-            // updatePA();
             return;
             
         case 0x03: // CIA_DATA_DIRECTION_B
             
-            DDRB = value;
-            updatePB();
+            pokeDDRB(value);
             return;
             
         case 0x04: // CIA_TIMER_A_LOW
