@@ -53,13 +53,18 @@ public:
 
     // Overwrites all pipeline entries with a reset value
     void reset(T value) {
-        for (unsigned i = 0; i < capacity; i++) pipeline[i] = value;
+        for (isize i = 0; i < capacity; i++) pipeline[i] = value;
         timeStamp = 0;
     }
     
     // Zeroes out all pipeline entries
     void clear() { reset((T)0); }
     
+    // Checks if the pipeline is zeroed out
+    bool isClear() {
+        for (isize i = 0; i < capacity; i++) if (pipeline[i]) return false;
+        return true;
+    }
     
     //
     // Serializing
@@ -91,7 +96,7 @@ public:
         
         // Shift pipeline
         i64 diff = referenceTime - timeStamp;
-        for (int i = capacity - 1; i >= 0; i--) {
+        for (isize i = capacity - 1; i >= 0; i--) {
             assert((i - diff <= 0) || (i - diff <= capacity));
             pipeline[i] = (i - diff > 0) ? pipeline[i - diff] : pipeline[0];
         }

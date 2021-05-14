@@ -40,12 +40,12 @@ CPU<M>::_reset()
     RESET_SNAPSHOT_ITEMS
     
     setB(1);
+    setI(1);
 	rdyLine = true;
 	next = fetch;
     
-    // This should not be necessary. Delete it.
-    levelDetector.clear();
-    edgeDetector.clear();
+    assert(levelDetector.isClear());
+    assert(edgeDetector.isClear());
 }
 
 template <typename M> void

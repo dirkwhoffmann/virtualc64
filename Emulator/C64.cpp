@@ -124,17 +124,11 @@ void
 C64::_reset()
 {
     RESET_SNAPSHOT_ITEMS
-            
-    // Initialize processor port
-    mem.poke(0x0000, 0x2F);
-    mem.poke(0x0001, 0x1F);
-    
-    // Initialize program counter (MOVE TO CPU)
+                
+    // Initialize the program counter
     cpu.reg.pc = mem.resetVector();
     
-    // Clear all runloop flags
     runLoopCtrl = 0;
-
     rasterCycle = 1;
 }
 

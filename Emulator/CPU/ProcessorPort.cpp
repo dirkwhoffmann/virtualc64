@@ -12,6 +12,16 @@
 #include "C64.h"
 
 void
+ProcessorPort::_reset()
+{
+    RESET_SNAPSHOT_ITEMS
+    
+    port = 0xFF;
+    
+    mem.updatePeekPokeLookupTables();
+};
+
+void
 ProcessorPort::_dump(dump::Category category, std::ostream& os) const
 {
     using namespace util;
