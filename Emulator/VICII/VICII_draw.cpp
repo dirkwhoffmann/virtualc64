@@ -93,11 +93,13 @@ VICII::drawCanvas()
          *  current background color is displayed (this area is normally covered
          *  by the border)." [C.B.]
          */
+        /*
         SET_BACKGROUND_PIXEL(0, col[0]);
         for (unsigned pixel = 1; pixel < 8; pixel++) {
             SET_BACKGROUND_PIXEL(pixel, col[0]);
         }
         return;
+        */
     }
     
     /* "The graphics data sequencer is capable of 8 different graphics modes
@@ -145,8 +147,8 @@ VICII::drawCanvas()
 
     drawCanvasPixel(6, mode, d016, xscroll == 6, oldMode != mode);
     
-    // Before the last pixel is drawn, a change is D016 is fully detected.
-    // If the multicolor bit get set, the mc flip flop is also reset.
+    // Before the last pixel is drawn, a change in D016 is fully detected.
+    // If the multicolor bit gets set, the mc flip flop is also reset.
     if (d016 != newD016) {
         if (RISING_EDGE(d016 & 0x10, newD016 & 0x10))
             sr.mcFlop = false;
@@ -155,7 +157,6 @@ VICII::drawCanvas()
  
     drawCanvasPixel(7, mode, d016, xscroll == 7, false);
 }
-
 
 void
 VICII::drawCanvasPixel(u8 pixel,
@@ -171,7 +172,7 @@ VICII::drawCanvasPixel(u8 pixel,
      *  g-access. With XSCROLL from register $d016 the reloading can be delayed
      *  by 0-7 pixels, thus shifting the display up to 7 pixels to the right."
      */
-    if (loadShiftReg && sr.canLoad) {
+    if (loadShiftReg && !flipflops.delayed.vertical && sr.canLoad) {
         
         u32 result = gAccessResult.delayed();
      
@@ -219,7 +220,12 @@ VICII::drawCanvasPixel(u8 pixel,
     
     // Draw pixel
     assert(sr.colorbits < 4);
-    if (multicolorDisplayMode) {
+
+    if (flipflops.delayed.vertical) {
+        
+        SET_BACKGROUND_PIXEL(pixel, col[0]);
+        
+    } else if (multicolorDisplayMode) {
         
         // Set multi-color pixel
         if (sr.colorbits & 0x02) {

@@ -301,8 +301,8 @@ Keyboard::autoType(const string &text)
 {    
     for (char const &c: text) {
                 
-        scheduleKeyPress(c, 1);
-        scheduleKeyRelease(c, 1);
+        scheduleKeyPress(c, 2);
+        scheduleKeyRelease(c, 2);
     }
 }
 
