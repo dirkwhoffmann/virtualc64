@@ -23,8 +23,6 @@ C64Memory::C64Memory(C64 &ref) : C64Component(ref)
 {    		
     memset(rom, 0, sizeof(rom));
 
-    // config.ramPattern = RAM_PATTERN_C64;
-
     /* Memory bank map
      *
      * If x == (EXROM, GAME, CHAREN, HIRAM, LORAM) then
@@ -277,7 +275,7 @@ C64Memory::eraseWithPattern(RamPattern pattern)
     }
         
     // Make the screen look nice on startup
-    memset(&ram[0x400], 0x01, 40*25);
+    // memset(&ram[0x400], 0x01, 40*25);
 }
 
 void 

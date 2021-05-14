@@ -102,6 +102,7 @@ private:
 public:
     
     u8 peek(u16 addr) override;
+    u8 spypeek(u16 addr) const override;
     void poke(u16 addr, u8 value) override;
     void pokeRomL(u16 addr, u8 value) override;
     void pokeRomH(u16 addr, u8 value) override;

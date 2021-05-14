@@ -110,6 +110,25 @@ EasyFlash::peek(u16 addr)
     }
 }
 
+u8
+EasyFlash::spypeek(u16 addr) const
+{
+    u8 result;
+    
+    if (isROMLaddr(addr)) {
+        result = flashRomL.spypeek(bank, addr & 0x1FFF);
+        return result;
+        
+    } else if (isROMHaddr(addr)) {
+        result = flashRomH.spypeek(bank, addr & 0x1FFF);
+        return result;
+        
+    } else {
+        assert(false);
+        return 0;
+    }
+}
+
 void
 EasyFlash::poke(u16 addr, u8 value)
 {

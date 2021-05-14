@@ -52,6 +52,7 @@ VICII::_reset()
     expansionFF = 0xFF;
     
     // Preset some video parameters to show a blank blue sreen on power up
+    /*
     memSelect = 0x10;
     reg.delayed.ctrl1 = 0x10;
     reg.current.ctrl1 = 0x10;
@@ -59,8 +60,9 @@ VICII::_reset()
     reg.current.colors[COLREG_BORDER] = VICII_LIGHT_BLUE;
     reg.delayed.colors[COLREG_BG0] = VICII_BLUE;
     reg.current.colors[COLREG_BG0] = VICII_BLUE;
+    */
     
-    // Reset the drame flipflops
+    // Reset the frame flipflops
     leftComparisonVal = leftComparisonValue();
     rightComparisonVal = rightComparisonValue();
     upperComparisonVal = upperComparisonValue();
