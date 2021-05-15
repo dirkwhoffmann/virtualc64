@@ -191,11 +191,9 @@ VICII::drawCanvasPixel(u8 pixel,
     }
         
     // Determine the render mode and the drawing mode for this pixel
-    bool multicolorDisplayMode =
-    (mode & 0x10) && ((mode & 0x20) || (sr.latchedColor & 0x8));
-    
-    bool generateMulticolorPixel =
-    (d016 & 0x10) && ((mode & 0x20) || (sr.latchedColor & 0x8));
+    u8 mcBit = sr.latchedColor & 0x8;
+    bool multicolorDisplayMode = (mode & 0x10) && ((mode & 0x20) || mcBit);
+    bool generateMulticolorPixel = (d016 & 0x10) && ((mode & 0x20) || mcBit);
     
     // Determine the colorbits
     if (generateMulticolorPixel) {
@@ -212,43 +210,73 @@ VICII::drawCanvasPixel(u8 pixel,
     // Draw pixel
     assert(sr.colorbits < 4);
 
-    /*
-    if (flipflops.delayed.vertical) {
-        
-        SET_BACKGROUND_PIXEL(pixel, col[0]);
-        
-    } else if (multicolorDisplayMode) {
-        
-        // Set multi-color pixel
-        if (sr.colorbits & 0x02) {
-            SET_FOREGROUND_PIXEL(pixel, col[sr.colorbits]);
-        } else {
-            SET_BACKGROUND_PIXEL(pixel, col[sr.colorbits]);
-        }
-        
-    } else {
-        
-        // Set single-color pixel
-        if (sr.colorbits) {
-            SET_FOREGROUND_PIXEL(pixel, col[sr.colorbits]);
-        } else {
-            SET_BACKGROUND_PIXEL(pixel, col[sr.colorbits]);
-        }
-    }
-    */
-        
     // Determine pixel depth
     bool foreground = multicolorDisplayMode ? (sr.colorbits & 0x02) : sr.colorbits;
 
-    // Get color
+    // Lookup how the color should be synthesized
+    
+    
     u8 color;
+    ColorSource source;
+    
     if (flipflops.delayed.vertical) {
+        source = colSrc[0];
         color = col[0];
     } else  {
+        source = colSrc[sr.colorbits];
         color = col[sr.colorbits];
     }
     
-    // Draw pixel
+    // Synthesize color
+    assert(((mode | mcBit) >> 1 | sr.colorbits) < 64);
+    ColorSource src = colSrcTable[(mode | mcBit) >> 1 | sr.colorbits];
+    assert(src == source);
+    
+    u8 c;
+    switch (source) {
+            
+        case COLSRC_D021:
+            c = reg.delayed.colors[COLREG_BG0];
+            break;
+            
+        case COLSRC_D022:
+            c = reg.delayed.colors[COLREG_BG1];
+            break;
+            
+        case COLSRC_D023:
+            c = reg.delayed.colors[COLREG_BG2];
+            break;
+
+        case COLSRC_CHAR_LO:
+            c = LO_NIBBLE(sr.latchedCharacter);
+            break;
+
+        case COLSRC_CHAR_HI:
+            c = HI_NIBBLE(sr.latchedCharacter);
+            break;
+
+        case COLSRC_COLRAM3:
+            c = sr.latchedColor & 0x07;
+            break;
+            
+        case COLSRC_COLRAM4:
+            c = sr.latchedColor;
+            break;
+            
+        case COLSRC_INDEXED:
+            c = reg.delayed.colors[COLREG_BG0 + (sr.latchedCharacter >> 6)];
+            break;
+            
+        case COLSRC_ZERO:
+            c = 0;
+            break;
+            
+        default:
+            assert(false);
+            break;
+    }
+    assert(color == c);
+    
     if (foreground) {
         SET_FOREGROUND_PIXEL(pixel, color);
     } else {
@@ -459,6 +487,12 @@ VICII::loadColors(u8 mode)
             
             col[0] = reg.delayed.colors[COLREG_BG0];
             col[1] = color;
+            col[2] = reg.delayed.colors[COLREG_BG0];
+            col[3] = color;
+            colSrc[0] = COLSRC_D021;
+            colSrc[1] = COLSRC_COLRAM4;
+            colSrc[2] = COLSRC_D021;
+            colSrc[3] = COLSRC_COLRAM4;
             break;
             
         case DISPLAY_MODE_MULTICOLOR_TEXT:
@@ -469,12 +503,21 @@ VICII::loadColors(u8 mode)
                 col[1] = reg.delayed.colors[COLREG_BG1];
                 col[2] = reg.delayed.colors[COLREG_BG2];
                 col[3] = color & 0x07;
+                colSrc[0] = COLSRC_D021;
+                colSrc[1] = COLSRC_D022;
+                colSrc[2] = COLSRC_D023;
+                colSrc[3] = COLSRC_COLRAM3;
 
             } else {
                 
                 col[0] = reg.delayed.colors[COLREG_BG0];
                 col[1] = color;
-
+                col[2] = reg.delayed.colors[COLREG_BG0];
+                col[3] = color;
+                colSrc[0] = COLSRC_D021;
+                colSrc[1] = COLSRC_COLRAM4;
+                colSrc[2] = COLSRC_D021;
+                colSrc[3] = COLSRC_COLRAM4;
             }
             break;
             
@@ -482,6 +525,12 @@ VICII::loadColors(u8 mode)
             
             col[0] = character & 0xF;
             col[1] = character >> 4;
+            col[2] = character & 0xF;
+            col[3] = character >> 4;
+            colSrc[0] = COLSRC_CHAR_LO;
+            colSrc[1] = COLSRC_CHAR_HI;
+            colSrc[2] = COLSRC_CHAR_LO;
+            colSrc[3] = COLSRC_CHAR_HI;
             break;
             
         case DISPLAY_MODE_MULTICOLOR_BITMAP:
@@ -490,12 +539,22 @@ VICII::loadColors(u8 mode)
             col[1] = character >> 4;
             col[2] = character & 0x0F;
             col[3] = color;
+            colSrc[0] = COLSRC_D021;
+            colSrc[1] = COLSRC_CHAR_HI;
+            colSrc[2] = COLSRC_CHAR_LO;
+            colSrc[3] = COLSRC_COLRAM4;
             break;
             
         case DISPLAY_MODE_EXTENDED_BG_COLOR:
             
             col[0] = reg.delayed.colors[COLREG_BG0 + (character >> 6)];
             col[1] = color;
+            col[2] = reg.delayed.colors[COLREG_BG0 + (character >> 6)];
+            col[3] = color;
+            colSrc[0] = COLSRC_INDEXED;
+            colSrc[1] = COLSRC_COLRAM4;
+            colSrc[2] = COLSRC_INDEXED;
+            colSrc[3] = COLSRC_COLRAM4;
             break;
             
         case DISPLAY_MODE_INVALID_TEXT:
@@ -506,6 +565,10 @@ VICII::loadColors(u8 mode)
             col[1] = 0;
             col[2] = 0;
             col[3] = 0;
+            colSrc[0] = COLSRC_ZERO;
+            colSrc[1] = COLSRC_ZERO;
+            colSrc[2] = COLSRC_ZERO;
+            colSrc[3] = COLSRC_ZERO;
             break;
             
         default:

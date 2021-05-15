@@ -544,6 +544,12 @@ private:
      */
     u8 col[4];
     
+    // Temporary (REMOVE ASAP)
+    ColorSource colSrc[4];
+    
+    // The color source lookup table
+    static const ColorSource colSrcTable[64];
+    
     
     //
     // Debugging

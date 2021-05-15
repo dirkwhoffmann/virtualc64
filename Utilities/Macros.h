@@ -24,6 +24,10 @@
 // Accessing bits and bytes
 //
 
+// Returns the low nibble or the high nibble of a 8 bit value
+#define LO_NIBBLE(x) (u8)((x) & 0xF)
+#define HI_NIBBLE(x) (u8)(((x) >> 4) & 0xF)
+
 // Returns the low byte or the high byte of a 16 bit value
 #define LO_BYTE(x) (u8)((x) & 0xFF)
 #define HI_BYTE(x) (u8)((x) >> 8)
