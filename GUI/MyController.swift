@@ -537,16 +537,12 @@ extension MyController {
         var halftrack: Int { return (msg.data >> 8) & 0xFF; }
         var vol: Int { return (msg.data >> 16) & 0xFF; }
         var pan: Int { return (msg.data >> 24) & 0xFF; }
+
+        // Only proceed if the proxy object is still alive
+        if c64 == nil { return }
         
         // track("msg: \(msg)")
-        
-        // TODO: REPLACE BY COMPUTED VARIABLE
-        func drive8() -> Bool {
-            precondition(msg.data == 8 || msg.data == 9)
-            return msg.data == 8
-        }
-        // var driveID: DriveID { return msg.data == 8 ? .DRIVE8 : .DRIVE9 }
-
+                
         switch msg.type {
     
         case .REGISTER:
