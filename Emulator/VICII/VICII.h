@@ -532,21 +532,7 @@ private:
      * the currently drawn 8 pixel chunk.
      */
     short bufferoffset;
-    
-    /* Color storage filled by loadColors()
-     *
-     *     [0] : color for '0'  pixels in single color mode
-     *                  or '00' pixels in multicolor mode
-     *     [1] : color for '1'  pixels in single color mode
-     *                  or '01' pixels in multicolor mode
-     *     [2] : color for '10' pixels in multicolor mode
-     *     [3] : color for '11' pixels in multicolor mode
-     */
-    u8 col[4];
-    
-    // Temporary (REMOVE ASAP)
-    ColorSource colSrc[4];
-    
+        
     // The color source lookup table
     static const ColorSource colSrcTable[64];
     
@@ -1274,13 +1260,11 @@ private:
      *          mode : display mode for this pixel
      *          d016 : current value of register D016
      *  loadShiftReg : forces the shift register to be reloaded
-     *  updateColors : forces the four selectable colors to be reloaded
      */
     void drawCanvasPixel(u8 pixel,
                          u8 mode,
                          u8 d016,
-                         bool loadShiftReg,
-                         bool updateColors);
+                         bool loadShiftReg);
     
     // Draws 8 sprite pixels (see draw())
     void drawSprites();
@@ -1295,15 +1279,7 @@ private:
                          u8 enableBits,
                          u8 freezeBits);
     
-    
-    //
-    // Mid level drawing (semantic pixel rendering)
-    //
-    
-    // Determines pixel colors accordig to the provided display mode
-    void loadColors(u8 mode);
-    
-    
+        
     //
     // Low level drawing (pixel buffer access)
     //

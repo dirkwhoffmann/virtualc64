@@ -113,7 +113,7 @@ VICII::drawCanvas()
     xscroll = d016 & 0x07;
     mode = (d011 & 0x60) | (d016 & 0x10); // -xxx ----
 
-    drawCanvasPixel(0, mode, d016, xscroll == 0, true);
+    drawCanvasPixel(0, mode, d016, xscroll == 0);
     
     // After the first pixel, color register changes show up
     reg.delayed.colors[COLREG_BG0] = reg.current.colors[COLREG_BG0];
@@ -121,9 +121,9 @@ VICII::drawCanvas()
     reg.delayed.colors[COLREG_BG2] = reg.current.colors[COLREG_BG2];
     reg.delayed.colors[COLREG_BG3] = reg.current.colors[COLREG_BG3];
 
-    drawCanvasPixel(1, mode, d016, xscroll == 1, true);
-    drawCanvasPixel(2, mode, d016, xscroll == 2, false);
-    drawCanvasPixel(3, mode, d016, xscroll == 3, false);
+    drawCanvasPixel(1, mode, d016, xscroll == 1);
+    drawCanvasPixel(2, mode, d016, xscroll == 2);
+    drawCanvasPixel(3, mode, d016, xscroll == 3);
 
     // After pixel 4, a change in D016 affects the display mode.
     newD016 = reg.current.ctrl2;
@@ -135,8 +135,8 @@ VICII::drawCanvas()
     oldMode = mode;
     mode = (d011 & 0x60) | (newD016 & 0x10);
     
-    drawCanvasPixel(4, mode, d016, xscroll == 4, oldMode != mode);
-    drawCanvasPixel(5, mode, d016, xscroll == 5, false);
+    drawCanvasPixel(4, mode, d016, xscroll == 4);
+    drawCanvasPixel(5, mode, d016, xscroll == 5);
     
     // In older VICIIs, the zero bits of D011 show up here.
     if (is656x()) {
@@ -145,7 +145,7 @@ VICII::drawCanvas()
         mode = (d011 & 0x60) | (newD016 & 0x10);
     }
 
-    drawCanvasPixel(6, mode, d016, xscroll == 6, oldMode != mode);
+    drawCanvasPixel(6, mode, d016, xscroll == 6);
     
     // Before the last pixel is drawn, a change in D016 is fully detected.
     // If the multicolor bit gets set, the mc flip flop is also reset.
@@ -155,15 +155,14 @@ VICII::drawCanvas()
         d016 = newD016;
     }
  
-    drawCanvasPixel(7, mode, d016, xscroll == 7, false);
+    drawCanvasPixel(7, mode, d016, xscroll == 7);
 }
 
 void
 VICII::drawCanvasPixel(u8 pixel,
                        u8 mode,
                        u8 d016,
-                       bool loadShiftReg,
-                       bool updateColors)
+                       bool loadShiftReg)
 {
     assert(pixel < 8);
     
@@ -184,10 +183,7 @@ VICII::drawCanvasPixel(u8 pixel,
         sr.latchedColor = BYTE1(result);
         
         // Reset the multicolor synchronization flipflop
-        sr.mcFlop = true;
-        
-        // Make sure that colors get updated
-        updateColors = true;
+        sr.mcFlop = true;        
     }
         
     // Determine the render mode and the drawing mode for this pixel
@@ -203,80 +199,62 @@ VICII::drawCanvasPixel(u8 pixel,
     } else {
         sr.colorbits = (sr.data >> 7) << multicolorDisplayMode;
     }
-    
-    // Load colors
-    if (updateColors) loadColors(mode);
-    
+        
     // Draw pixel
     assert(sr.colorbits < 4);
 
-    // Determine pixel depth
-    bool foreground = multicolorDisplayMode ? (sr.colorbits & 0x02) : sr.colorbits;
-
     // Lookup how the color should be synthesized
-    
+    assert(((mode | mcBit) >> 1 | sr.colorbits) < 64);
+    ColorSource source = colSrcTable[(mode | mcBit) >> 1 | sr.colorbits];
     
     u8 color;
-    ColorSource source;
-    
-    if (flipflops.delayed.vertical) {
-        source = colSrc[0];
-        color = col[0];
-    } else  {
-        source = colSrc[sr.colorbits];
-        color = col[sr.colorbits];
-    }
-    
-    // Synthesize color
-    assert(((mode | mcBit) >> 1 | sr.colorbits) < 64);
-    ColorSource src = colSrcTable[(mode | mcBit) >> 1 | sr.colorbits];
-    assert(src == source);
-    
-    u8 c;
     switch (source) {
             
         case COLSRC_D021:
-            c = reg.delayed.colors[COLREG_BG0];
+            color = reg.delayed.colors[COLREG_BG0];
             break;
             
         case COLSRC_D022:
-            c = reg.delayed.colors[COLREG_BG1];
+            color = reg.delayed.colors[COLREG_BG1];
             break;
             
         case COLSRC_D023:
-            c = reg.delayed.colors[COLREG_BG2];
+            color = reg.delayed.colors[COLREG_BG2];
             break;
 
         case COLSRC_CHAR_LO:
-            c = LO_NIBBLE(sr.latchedCharacter);
+            color = LO_NIBBLE(sr.latchedCharacter);
             break;
 
         case COLSRC_CHAR_HI:
-            c = HI_NIBBLE(sr.latchedCharacter);
+            color = HI_NIBBLE(sr.latchedCharacter);
             break;
 
         case COLSRC_COLRAM3:
-            c = sr.latchedColor & 0x07;
+            color = sr.latchedColor & 0x07;
             break;
             
         case COLSRC_COLRAM4:
-            c = sr.latchedColor;
+            color = sr.latchedColor;
             break;
             
         case COLSRC_INDEXED:
-            c = reg.delayed.colors[COLREG_BG0 + (sr.latchedCharacter >> 6)];
+            color = reg.delayed.colors[COLREG_BG0 + (sr.latchedCharacter >> 6)];
             break;
             
         case COLSRC_ZERO:
-            c = 0;
+            color = 0;
             break;
             
         default:
             assert(false);
             break;
     }
-    assert(color == c);
     
+    // Determine pixel depth
+    bool foreground = multicolorDisplayMode ? (sr.colorbits & 0x2) : sr.colorbits;
+
+    // Set pixel
     if (foreground) {
         SET_FOREGROUND_PIXEL(pixel, color);
     } else {
@@ -472,109 +450,6 @@ VICII::drawSpritePixel(unsigned pixel,
                     break;
             }
         }
-    }
-}
-
-void
-VICII::loadColors(u8 mode)
-{
-    u8 character = sr.latchedCharacter;
-    u8 color = sr.latchedColor;
-    
-    switch ((DisplayMode)mode) {
-            
-        case DISPLAY_MODE_STANDARD_TEXT:
-            
-            col[0] = reg.delayed.colors[COLREG_BG0];
-            col[1] = color;
-            col[2] = reg.delayed.colors[COLREG_BG0];
-            col[3] = color;
-            colSrc[0] = COLSRC_D021;
-            colSrc[1] = COLSRC_COLRAM4;
-            colSrc[2] = COLSRC_D021;
-            colSrc[3] = COLSRC_COLRAM4;
-            break;
-            
-        case DISPLAY_MODE_MULTICOLOR_TEXT:
-            
-            if (color & 0x8 /* MC flag */) {
-                
-                col[0] = reg.delayed.colors[COLREG_BG0];
-                col[1] = reg.delayed.colors[COLREG_BG1];
-                col[2] = reg.delayed.colors[COLREG_BG2];
-                col[3] = color & 0x07;
-                colSrc[0] = COLSRC_D021;
-                colSrc[1] = COLSRC_D022;
-                colSrc[2] = COLSRC_D023;
-                colSrc[3] = COLSRC_COLRAM3;
-
-            } else {
-                
-                col[0] = reg.delayed.colors[COLREG_BG0];
-                col[1] = color;
-                col[2] = reg.delayed.colors[COLREG_BG0];
-                col[3] = color;
-                colSrc[0] = COLSRC_D021;
-                colSrc[1] = COLSRC_COLRAM4;
-                colSrc[2] = COLSRC_D021;
-                colSrc[3] = COLSRC_COLRAM4;
-            }
-            break;
-            
-        case DISPLAY_MODE_STANDARD_BITMAP:
-            
-            col[0] = character & 0xF;
-            col[1] = character >> 4;
-            col[2] = character & 0xF;
-            col[3] = character >> 4;
-            colSrc[0] = COLSRC_CHAR_LO;
-            colSrc[1] = COLSRC_CHAR_HI;
-            colSrc[2] = COLSRC_CHAR_LO;
-            colSrc[3] = COLSRC_CHAR_HI;
-            break;
-            
-        case DISPLAY_MODE_MULTICOLOR_BITMAP:
-            
-            col[0] = reg.delayed.colors[COLREG_BG0];
-            col[1] = character >> 4;
-            col[2] = character & 0x0F;
-            col[3] = color;
-            colSrc[0] = COLSRC_D021;
-            colSrc[1] = COLSRC_CHAR_HI;
-            colSrc[2] = COLSRC_CHAR_LO;
-            colSrc[3] = COLSRC_COLRAM4;
-            break;
-            
-        case DISPLAY_MODE_EXTENDED_BG_COLOR:
-            
-            col[0] = reg.delayed.colors[COLREG_BG0 + (character >> 6)];
-            col[1] = color;
-            col[2] = reg.delayed.colors[COLREG_BG0 + (character >> 6)];
-            col[3] = color;
-            colSrc[0] = COLSRC_INDEXED;
-            colSrc[1] = COLSRC_COLRAM4;
-            colSrc[2] = COLSRC_INDEXED;
-            colSrc[3] = COLSRC_COLRAM4;
-            break;
-            
-        case DISPLAY_MODE_INVALID_TEXT:
-        case DISPLAY_MODE_INV_STANDARD_BITMAP:
-        case DISPLAY_MODE_INV_MULTICOL_BITMAP:
-            
-            col[0] = 0;
-            col[1] = 0;
-            col[2] = 0;
-            col[3] = 0;
-            colSrc[0] = COLSRC_ZERO;
-            colSrc[1] = COLSRC_ZERO;
-            colSrc[2] = COLSRC_ZERO;
-            colSrc[3] = COLSRC_ZERO;
-            break;
-            
-        default:
-            
-            assert(false);
-            break;
     }
 }
 
