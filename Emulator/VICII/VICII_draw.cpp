@@ -183,7 +183,7 @@ VICII::drawCanvasPixel(u8 pixel,
         sr.latchedColor = BYTE1(result);
         
         // Reset the multicolor synchronization flipflop
-        sr.mcFlop = true;        
+        sr.mcFlop = true;
     }
         
     // Determine the render mode and the drawing mode for this pixel
@@ -242,12 +242,8 @@ VICII::drawCanvasPixel(u8 pixel,
             color = reg.delayed.colors[COLREG_BG0 + (sr.latchedCharacter >> 6)];
             break;
             
-        case COLSRC_ZERO:
-            color = 0;
-            break;
-            
         default:
-            assert(false);
+            color = 0;
             break;
     }
     
