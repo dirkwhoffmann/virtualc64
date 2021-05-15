@@ -17,13 +17,16 @@ class MsgQueue : public C64Component {
         
     // Ring buffer storing all pending messages
     util::RingBuffer<Message, 64> queue;
-            
-    // List of registered listeners
-    std::vector<std::pair <const void *, Callback *> > listeners;
+                
+    // The registered listener
+    const void *listener = nullptr;
+    
+    // The registered callback function
+    Callback *callback = nullptr;
 
     
     //
-    // Initializing
+    // Constructing
     //
     
     using C64Component::C64Component;
@@ -35,7 +38,7 @@ class MsgQueue : public C64Component {
     
 public:
         
-    const char *getDescription() const override { return "MessageQueue"; }
+    const char *getDescription() const override { return "MsgQueue"; }
 
 private:
     
@@ -53,16 +56,8 @@ private:
 public:
     
     // Registers a listener together with it's callback function
-    void addListener(const void *listener, Callback *func);
-        
-    // Returns the next pending message, or nullptr if the queue is empty
-    Message get();
-    
-    // Writes a message into the queue and propagates it to all listeners
+    void setListener(const void *listener, Callback *func);
+            
+    // Sends a message
     void put(MsgType type, long data = 0);
-    
-private:
-    
-    // Used by 'put' to propagates a single message to all registered listeners
-    void propagate(const Message &msg) const;
 };

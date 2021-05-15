@@ -11,64 +11,33 @@
 #include "MsgQueue.h"
 
 void
-MsgQueue::addListener(const void *listener, Callback *func)
+MsgQueue::setListener(const void *listener, Callback *callback)
 {
-    synchronized {
-        listeners.push_back(std::pair <const void *, Callback *> (listener, func));
-    }
-    
-    // Distribute all pending messages
-    Message msg;
-    while ((msg = get()).type != MSG_NONE) {
-        propagate(msg);
-    }
-
-    put(MSG_REGISTER);
-}
-
-Message
-MsgQueue::get()
-{
-    Message result;
-    
     synchronized {
         
-        if (queue.isEmpty()) {
-            result = { MSG_NONE, 0 };
-        } else {
-            result = queue.read();
+        this->listener = listener;
+        this->callback = callback;
+        
+        // Send all pending messages
+        while (!queue.isEmpty()) {
+            Message &msg = queue.read();
+            callback(listener, msg.type, msg.data);
         }
+        put(MSG_REGISTER);
     }
-    
-    return result;
 }
- 
+
 void
 MsgQueue::put(MsgType type, long data)
 {
     synchronized {
-                        
-        debug (QUEUE_DEBUG, "%s [%ld]\n", MsgTypeEnum::key(type), data);
         
-        // Delete the oldest message if the queue overflows
-        if (queue.isFull()) {
-            queue.read();
-            debug(QUEUE_DEBUG, "Lost message\n");
-        }
-    
-        // Write data
-        Message msg = { type, data };
-        queue.write(msg);
+        debug(QUEUE_DEBUG, "%s [%ld]\n", MsgTypeEnum::key(type), data);
         
-        // Serve registered callbacks
-        propagate(msg);
-    }
-}
-
-void
-MsgQueue::propagate(const Message &msg) const
-{
-    for (auto i = listeners.begin(); i != listeners.end(); i++) {
-        i->second(i->first, msg.type, msg.data);
+        // Send the message immediately if a lister has been registered
+        if (listener) { callback(listener, type, data); return; }
+        
+        // Otherwise, store it in the ring buffer
+        Message msg = { type, data }; queue.write(msg);
     }
 }

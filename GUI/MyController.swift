@@ -436,7 +436,7 @@ extension MyController {
         // Convert 'self' to a void pointer
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
         
-        c64.addListener(myself) { (ptr, type, data) in
+        c64.setListener(myself) { (ptr, type, data) in
             
             // Convert void pointer back to 'self'
             let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()

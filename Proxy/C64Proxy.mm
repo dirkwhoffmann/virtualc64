@@ -2275,14 +2275,9 @@
     [self c64]->configure(model);
 }
 
-- (Message)message
+- (void)setListener:(const void *)sender function:(Callback *)func
 {
-    return [self c64]->getMessage();
-}
-
-- (void)addListener:(const void *)sender function:(Callback *)func
-{
-    [self c64]->addListener(sender, func);
+    [self c64]->msgQueue.setListener(sender, func);
 }
 
 - (void)stopAndGo

@@ -357,20 +357,9 @@ public:
     //
     
 public:
-    
-    // Registers a listener callback function
-    void addListener(const void *sender, void(*func)(const void *, long, long) ) {
-        msgQueue.addListener(sender, func);
-    }
         
-    // Gets a notification message from message queue
-    Message getMessage() { return msgQueue.get(); }
-    
     // Feeds a notification message into message queue
     void putMessage(MsgType msg, u64 data = 0) { msgQueue.put(msg, data); }
-    
-    
- 
     
     /* The thread enter function. This (private) method is invoked when the
      * emulator thread launches. It has to be declared public to make it

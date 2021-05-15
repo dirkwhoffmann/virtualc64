@@ -182,8 +182,8 @@
 - (BOOL)configure:(Option)opt drive:(DriveID)id enable:(BOOL)val;
 - (void)configure:(C64Model)value;
 
-- (Message)message;
-- (void)addListener:(const void *)sender function:(Callback *)func;
+// - (Message)message;
+- (void)setListener:(const void *)sender function:(Callback *)func;
 
 - (void)stopAndGo;
 - (void)stepInto;
