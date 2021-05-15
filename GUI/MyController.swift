@@ -541,7 +541,7 @@ extension MyController {
         // Only proceed if the proxy object is still alive
         if c64 == nil { return }
         
-        // track("msg: \(msg)")
+        // track("msg: \(msg) \(Thread.current.isMainThread)")
                 
         switch msg.type {
     

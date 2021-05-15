@@ -71,12 +71,15 @@ extension MyController: NSWindowDelegate {
         c64.powerOff()
         
         // Ask the emulator to shutdown and to send the MSG_SHUTDOWN message
-        c64.shutdown()
+        // c64.shutdown()
+        
+        shutDown()
     }
     
     func shutDown() {
         
-        track("Shutting down the emulator")
+        // track("Shutting down the emulator (\(Thread.current.isMainThread))")
+        
         c64.kill()
         c64 = nil
     }
