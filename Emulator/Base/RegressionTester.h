@@ -10,11 +10,12 @@
 #pragma once
 
 #include "C64Object.h"
+#include "C64Types.h"
 
 class RegressionTester : public C64Object {
-
+   
 public:
-        
+    
     // Filename of the test image
     string dumpTexturePath = "texture";
     
@@ -23,9 +24,9 @@ public:
     isize y1 = 16;
     isize x2 = 488;
     isize y2 = 290;
-
-private:
     
+private:
+
     // When the emulator exits, this value is returned to the test script
     u8 retValue = 0;
 
@@ -40,10 +41,13 @@ private:
     
     
     //
-    // Taking screenshots
+    // Running a regression test
     //
 
 public:
+
+    // Resets everything to factory settings
+    void prepare(class C64 &c64, C64Model model);
     
     // Creates the test image and exits the emulator
     void dumpTexture(const class C64 &c64) const;

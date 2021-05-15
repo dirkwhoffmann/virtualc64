@@ -581,8 +581,8 @@ C64::updateVicFunctionTable()
 void
 C64::setWarp(bool enable)
 {
-    if (warp != enable) {
-
+    if (warp != enable && !warpLock) {
+        
         warp = enable;
         HardwareComponent::setWarp(enable);
     }

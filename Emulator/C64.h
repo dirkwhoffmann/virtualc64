@@ -187,7 +187,13 @@ private:
      * to match the target frequency and runs as fast as possible.
      */
     bool warp = false;
-
+    
+    /* Indicates if the current warp mode is locked. By default, this variable
+     * false. It is set to true by the regression tester to prevent the GUI
+     * from disabling warp mode during an ongoing regression test.
+     */
+    bool warpLock = false;
+    
     /* Indicates whether C64 is running in ultimax mode. Ultimax mode can be
      * enabled by external cartridges by pulling game line low and keeping
      * exrom line high. In ultimax mode, most of the C64's RAM and ROM is
@@ -315,6 +321,8 @@ public:
     
     void setWarp(bool enable);
     bool inWarpMode() const { return warp; }
+    void lockWarpMode() { warpLock = true; }
+    void unlockWarpMode() { warpLock = false; }
 
     void setDebug(bool enable);
     bool inDebugMode() const { return debugMode; }

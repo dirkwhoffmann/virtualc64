@@ -72,14 +72,7 @@ RetroShell::exec <Token::regression, Token::setup> (Arguments &argv, long param)
 {
     auto model = util::parseEnum <C64ModelEnum> (argv.front());
 
-    // Revert to factory settings
-    c64.initialize(model);
-    
-    // Run as fast as possible
-    c64.setWarp(true);
-    
-    // Launch the emulator
-    c64.run();
+    c64.regressionTester.prepare(c64, model);
     
     // Pause the script to give the C64 some time to boot
     c64.retroShell.wakeUp = cpu.cycle + 3 * vic.getFrequency();

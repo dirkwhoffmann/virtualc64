@@ -15,6 +15,22 @@
 #include <fstream>
 
 void
+RegressionTester::prepare(C64 &c64, C64Model model)
+{
+    // Revert to factory settings
+    c64.initialize(model);
+    
+    // Run as fast as possible
+    c64.setWarp(true);
+    
+    // Prevent the GUI from disabling warp mode
+    c64.lockWarpMode();
+    
+    // Launch the emulator
+    c64.run();
+}
+
+void
 RegressionTester::dumpTexture(const C64 &c64) const
 {
     dumpTexture(c64, dumpTexturePath);
