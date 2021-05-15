@@ -75,6 +75,9 @@ RetroShell::exec <Token::regression, Token::setup> (Arguments &argv, long param)
     // Revert to factory settings
     c64.initialize(model);
     
+    // Run as fast as possible
+    c64.setWarp(true);
+    
     // Launch the emulator
     c64.run();
     

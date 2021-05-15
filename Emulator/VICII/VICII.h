@@ -208,12 +208,7 @@ private:
          * multi-color bits are remembered.
          */
         u8 colorbits;
-        
-        /* Remaining bits to be pumped out. Makes sure no more than 8 pixels
-         * are outputted.
-         */
-        int remainingBits;
-        
+
     } sr;
     
     /* Sprite data sequencer (11): The VICII chip has a 24 bit (3 byte) shift
@@ -675,7 +670,6 @@ private:
         << sr.latchedCharacter
         << sr.latchedColor
         << sr.colorbits
-        << sr.remainingBits
         >> spriteSr
         << spriteSrActive
         << spriteSpriteCollision

@@ -188,17 +188,8 @@ VICII::drawCanvasPixel(u8 pixel,
         
         // Make sure that colors get updated
         updateColors = true;
+    }
         
-        sr.remainingBits = 8;
-    }
-    
-    // Clear any outstanding multicolor bit that shouldn't actually be drawn
-    // TODO: VICE doesn't use a counter for this, but doesn't have the same issue,
-    // figure out what magic they are doing
-    if (!sr.remainingBits) {
-        sr.colorbits = 0;
-    }
-    
     // Determine the render mode and the drawing mode for this pixel
     bool multicolorDisplayMode =
     (mode & 0x10) && ((mode & 0x20) || (sr.latchedColor & 0x8));
@@ -247,7 +238,6 @@ VICII::drawCanvasPixel(u8 pixel,
     // Shift register and toggle multicolor flipflop
     sr.data <<= 1;
     sr.mcFlop = !sr.mcFlop;
-    sr.remainingBits -= 1;
 }
 
 void
