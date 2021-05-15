@@ -50,9 +50,9 @@ public:
     void prepare(class C64 &c64, C64Model model);
     
     // Creates the test image and exits the emulator
-    void dumpTexture(const class C64 &c64) const;
-    void dumpTexture(const class C64 &c64, const string &filename) const;
-    void dumpTexture(const class C64 &c64, std::ostream& os) const;
+    void dumpTexture(class C64 &c64) const;
+    void dumpTexture(class C64 &c64, const string &filename) const;
+    void dumpTexture(class C64 &c64, std::ostream& os) const;
 
     
     //

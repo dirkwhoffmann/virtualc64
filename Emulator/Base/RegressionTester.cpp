@@ -31,13 +31,13 @@ RegressionTester::prepare(C64 &c64, C64Model model)
 }
 
 void
-RegressionTester::dumpTexture(const C64 &c64) const
+RegressionTester::dumpTexture(C64 &c64) const
 {
     dumpTexture(c64, dumpTexturePath);
 }
 
 void
-RegressionTester::dumpTexture(const C64 &c64, const string &filename) const
+RegressionTester::dumpTexture(C64 &c64, const string &filename) const
 {
     /* This function is used for automatic regression testing. It generates a
      * TIFF image of the current emulator texture in the /tmp directory and
@@ -73,8 +73,10 @@ RegressionTester::dumpTexture(const C64 &c64, const string &filename) const
 }
 
 void
-RegressionTester::dumpTexture(const C64 &c64, std::ostream& os) const
+RegressionTester::dumpTexture(C64 &c64, std::ostream& os) const
 {
+    c64.suspend();
+    
     auto buffer = (u32 *) c64.vic.stableEmuTexture();
 
     for (isize y = y1; y < y2; y++) {
@@ -87,6 +89,8 @@ RegressionTester::dumpTexture(const C64 &c64, std::ostream& os) const
             os.write(cptr + 2, 1);
         }
     }
+    
+    c64.resume();
 }
 
 void

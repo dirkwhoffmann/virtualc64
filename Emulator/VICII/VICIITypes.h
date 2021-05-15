@@ -191,7 +191,7 @@ struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry>
     
     static bool isValid(long value)
     {
-        return (unsigned long)value < SCREEN_GEOMETRY_COUNT;
+        return value >= 1 && value < SCREEN_GEOMETRY_COUNT;
     }
 
     static const char *prefix() { return "SCREEN_GEOMETRY"; }
@@ -257,6 +257,48 @@ struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
     }
 
     static std::map <string, long> pairs() { return Reflection::pairs(0x70); }
+};
+#endif
+
+enum_long(COLSRC)
+{
+    COLSRC_D021,     // Color comes from background color register
+    COLSRC_D022,     // Color comes from first extended color register
+    COLSRC_D023,     // Color comes from second extended color register
+    COLSRC_CHAR_LO,  // Color comes from the low byte of the fetched character
+    COLSRC_CHAR_HI,  // Color comes from the high byte of the fetched character
+    COLSRC_COLRAM3,  // Color comes from the color RAM (lower three 3 bits)
+    COLSRC_COLRAM4,  // Color comes from the color RAM (all 4 bits)
+    COLSRC_INDEXED,  // Color comes from a color register
+    COLSRC_ZERO      // Invalid display modes
+};
+typedef COLSRC ColorSource;
+
+#ifdef __cplusplus
+struct ColorSourceEnum : util::Reflection<ColorSourceEnum, ColorSource> {
+    
+    static bool isValid(long value)
+    {
+        return (unsigned long)value <= COLSRC_ZERO;
+    }
+
+    static const char *prefix() { return "COLSRC"; }
+    static const char *key(Palette value)
+    {
+        switch (value) {
+                
+            case COLSRC_D021:     return "D021";
+            case COLSRC_D022:     return "D022";
+            case COLSRC_D023:     return "D023";
+            case COLSRC_CHAR_LO:  return "CHAR_LO";
+            case COLSRC_CHAR_HI:  return "CHAR_HI";
+            case COLSRC_COLRAM3:  return "COLRAM3";
+            case COLSRC_COLRAM4:  return "COLRAM4";
+            case COLSRC_INDEXED:  return "INDEXED";
+            case COLSRC_ZERO:     return "ZERO";
+        }
+        return "???";
+    }
 };
 #endif
 

@@ -212,6 +212,7 @@ VICII::drawCanvasPixel(u8 pixel,
     // Draw pixel
     assert(sr.colorbits < 4);
 
+    /*
     if (flipflops.delayed.vertical) {
         
         SET_BACKGROUND_PIXEL(pixel, col[0]);
@@ -233,6 +234,25 @@ VICII::drawCanvasPixel(u8 pixel,
         } else {
             SET_BACKGROUND_PIXEL(pixel, col[sr.colorbits]);
         }
+    }
+    */
+        
+    // Determine pixel depth
+    bool foreground = multicolorDisplayMode ? (sr.colorbits & 0x02) : sr.colorbits;
+
+    // Get color
+    u8 color;
+    if (flipflops.delayed.vertical) {
+        color = col[0];
+    } else  {
+        color = col[sr.colorbits];
+    }
+    
+    // Draw pixel
+    if (foreground) {
+        SET_FOREGROUND_PIXEL(pixel, color);
+    } else {
+        SET_BACKGROUND_PIXEL(pixel, color);
     }
     
     // Shift register and toggle multicolor flipflop
