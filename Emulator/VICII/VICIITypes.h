@@ -30,13 +30,20 @@
 #define SPR6 0x40
 #define SPR7 0x80
 
-// Depth of different drawing layers
+// Depth of different drawing layers (DEPRECATED)
 #define BORDER_LAYER_DEPTH         0x10 // In front of everything
 #define SPRITE_LAYER_FG_DEPTH      0x20 // Behind border
 #define FOREGROUND_LAYER_DEPTH     0x30 // Behind sprite 1 layer
 #define SPRITE_LAYER_BG_DEPTH      0x40 // Behind foreground
 #define BACKGROUD_LAYER_DEPTH      0x50 // Behind sprite 2 layer
-#define BEHIND_BACKGROUND_DEPTH    0x60 // Behind background
+// #define BEHIND_BACKGROUND_DEPTH    0x60 // Behind background
+
+// Depth of different drawing layers (xxx----- --------)
+#define DEPTH_BORDER         0x2000 // In front of everything
+#define DEPTH_SPRITE_FG      0x4000 // Behind border
+#define DEPTH_FOREGROUND     0x6000 // Behind sprite 1 layer
+#define DEPTH_SPRITE_BG      0x8000 // Behind foreground
+#define DEPTH_BACKGROUND     0xA000 // Behind sprite 2 layer
 
 // Event flags
 #define VICUpdateIrqLine    (1ULL << 0) // Sets or releases the IRQ line

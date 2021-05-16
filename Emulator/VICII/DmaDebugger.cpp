@@ -193,7 +193,7 @@ DmaDebugger::setDmaDebugColor(MemAccess type, RgbColor color)
 void
 DmaDebugger::visualizeDma(isize offset, u8 data, MemAccess type)
 {
-    visualizeDma(vic.getDmaTexPtr(c64.rasterLine) + offset, data, type);
+    visualizeDma((u32 *)vic.emuTexturePtr + offset, data, type);
 }
 
 void

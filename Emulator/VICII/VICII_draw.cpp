@@ -469,9 +469,7 @@ VICII::setSpritePixel(unsigned sprite, unsigned pixel, u8 color)
          * Test program: VICII/spritePriorities
          */
         if (!(pixelSource[index] & 0xFF)) {
-            if (isVisibleColumn) {
-                pBuffer[index] = color;
-            }
+            if (isVisibleColumn) COLORIZE(index, color);
             zBuffer[index] = depth;
         }
     }
@@ -479,18 +477,8 @@ VICII::setSpritePixel(unsigned sprite, unsigned pixel, u8 color)
 }
 
 void
-VICII::colorize(u32 *buffer)
-{
-    for (isize i = FIRST_VISIBLE_PIXEL; i <= LAST_VISIBLE_PIXEL; i++) {
-        buffer[i] = rgbaTable[pBuffer[i] & 0xF];
-    }
-}
-
-void
 VICII::cutLayers()
 {
-    u32 *ptr = getEmuTexPtr(c64.rasterLine);
-    
     for (int i = 0; i < TEX_WIDTH; i++) {
         
         bool cut;
@@ -517,9 +505,9 @@ VICII::cutLayers()
         
         if (cut) {
             
-            u8 r = ptr[i] & 0xFF;
-            u8 g = (ptr[i] >> 8) & 0xFF;
-            u8 b = (ptr[i] >> 16) & 0xFF;
+            u8 r = emuTexturePtr[i] & 0xFF;
+            u8 g = (emuTexturePtr[i] >> 8) & 0xFF;
+            u8 b = (emuTexturePtr[i] >> 16) & 0xFF;
 
             double scale = config.cutOpacity / 255.0;
             u8 bg = (rasterline() / 4) % 2 == (i / 4) % 2 ? 0x22 : 0x44;
@@ -527,7 +515,7 @@ VICII::cutLayers()
             u8 newg = (u8)(g * (1 - scale) + bg * scale);
             u8 newb = (u8)(b * (1 - scale) + bg * scale);
             
-            ptr[i] = 0xFF000000 | newb << 16 | newg << 8 | newr;
+            emuTexturePtr[i] = 0xFF000000 | newb << 16 | newg << 8 | newr;
         }
     }
 }

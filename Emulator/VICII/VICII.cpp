@@ -1150,6 +1150,10 @@ VICII::beginRasterline(u16 line)
 {
     verticalFrameFFsetCond = false;
 
+    // Adjust the texture pointers
+    emuTexturePtr = emuTexture + line * TEX_WIDTH;
+    dmaTexturePtr = dmaTexture + line * TEX_WIDTH;
+
     // Determine if we're inside the VBLANK area
     vblank = isVBlankLine(line);
  
@@ -1169,9 +1173,6 @@ VICII::beginRasterline(u16 line)
 void 
 VICII::endRasterline()
 {
-    // Synthesize RGBA values
-    colorize(getEmuTexPtr(c64.rasterLine));
-    
     // Set vertical flipflop if condition was hit
     // TODO: Do we need to do this here? It is handled in cycle 1 as well.
     if (verticalFrameFFsetCond) {
@@ -1182,5 +1183,5 @@ VICII::endRasterline()
     if (config.cutLayers) cutLayers();
 
     // Prepare buffers for the next line
-    for (unsigned i = 0; i < TEX_WIDTH; i++) { zBuffer[i] = pixelSource[i] = 0; }        
+    for (unsigned i = 0; i < TEX_WIDTH; i++) { zBuffer[i] = pixelSource[i] = 0; }
 }
