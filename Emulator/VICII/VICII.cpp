@@ -99,8 +99,8 @@ VICII::_reset(bool hard)
         lowerComparisonVal = lowerComparisonValue();
         
         // Reset the screen buffer pointers
-        emuTexture = emuTexturePtr = emuTexture1;
-        dmaTexture = dmaTexturePtr = dmaTexture1;
+        emuTexture = emuTexture1;
+        dmaTexture = dmaTexture1;
     }
 }
 
@@ -1090,16 +1090,16 @@ VICII::endFrame()
     if (emuTexture == emuTexture1) {
         
         assert(dmaTexture == dmaTexture1);
-        emuTexture = emuTexturePtr = emuTexture2;
-        dmaTexture = dmaTexturePtr = dmaTexture2;
+        emuTexture = emuTexture2;
+        dmaTexture = dmaTexture2;
         if (debug) { resetEmuTexture(2); resetDmaTexture(2); }
 
     } else {
         
         assert(emuTexture == emuTexture2);
         assert(dmaTexture == dmaTexture2);
-        emuTexture = emuTexturePtr = emuTexture1;
-        dmaTexture = dmaTexturePtr = dmaTexture1;
+        emuTexture = emuTexture1;
+        dmaTexture = dmaTexture1;
         if (debug) { resetEmuTexture(1); resetDmaTexture(1); }
     }
 }
@@ -1169,8 +1169,11 @@ VICII::beginRasterline(u16 line)
 void 
 VICII::endRasterline()
 {
+    // Synthesize RGBA values
+    colorize(getEmuTexPtr(c64.rasterLine));
+    
     // Set vertical flipflop if condition was hit
-    // Do we need to do this here? It is handled in cycle 1 as well.
+    // TODO: Do we need to do this here? It is handled in cycle 1 as well.
     if (verticalFrameFFsetCond) {
         setVerticalFrameFF(true);
     }
@@ -1178,10 +1181,6 @@ VICII::endRasterline()
     // Cut out layers if requested
     if (config.cutLayers) cutLayers();
 
-    // Prepare buffers ready for the next line
-    for (unsigned i = 0; i < TEX_WIDTH; i++) { zBuffer[i] = pixelSource[i] = 0; }
-        
-    // Advance texture pointers
-    emuTexturePtr = emuTexture + (c64.rasterLine * TEX_WIDTH);
-    dmaTexturePtr = dmaTexture + (c64.rasterLine * TEX_WIDTH);
+    // Prepare buffers for the next line
+    for (unsigned i = 0; i < TEX_WIDTH; i++) { zBuffer[i] = pixelSource[i] = 0; }        
 }

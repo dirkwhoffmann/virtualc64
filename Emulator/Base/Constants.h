@@ -53,6 +53,7 @@ static const long HBLANK_PIXELS_RIGHT_NTSC = 32;
 // Derived values
 static const long FIRST_VISIBLE_PIXEL      = 104;  // 104
 static const long VISIBLE_PIXELS           = 384;  //       32 + 320 + 32
+static const long LAST_VISIBLE_PIXEL       = 487;  // 104 + 32 + 320 + 31
 static const long PAL_PIXELS               = 504;  // 104 + 32 + 320 + 32 + 16
 static const long NTSC_PIXELS              = 520;  // 104 + 32 + 320 + 32 + 32
 

@@ -191,7 +191,13 @@ DmaDebugger::setDmaDebugColor(MemAccess type, RgbColor color)
 }
 
 void
-DmaDebugger::visualizeDma(int *p, u8 data, MemAccess type)
+DmaDebugger::visualizeDma(isize offset, u8 data, MemAccess type)
+{
+    visualizeDma(vic.getDmaTexPtr(c64.rasterLine) + offset, data, type);
+}
+
+void
+DmaDebugger::visualizeDma(u32 *p, u8 data, MemAccess type)
 {
     if (config.dmaChannel[type]) {
         

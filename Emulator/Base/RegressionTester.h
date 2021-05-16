@@ -20,11 +20,17 @@ public:
     string dumpTexturePath = "texture";
     
     // Texture cutout
+    /*
     isize x1 = 104;
     isize y1 = 16;
     isize x2 = 488;
     isize y2 = 290;
-    
+    */
+    isize x1 = 104;
+    isize y1 = 17;
+    isize x2 = 488;
+    isize y2 = 291;
+
 private:
 
     // When the emulator exits, this value is returned to the test script

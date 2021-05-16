@@ -500,16 +500,23 @@ private:
      */
     int *emuTexture;
     int *dmaTexture;
-
-    /* Pointer to the beginning of the current rasterline inside the current
-     * working textures. These pointers are used by all rendering methods to
-     * write pixels. It always points to the beginning of a rasterline, either
-     * the first or the second texture buffer. They are reset at the beginning
-     * of each frame and incremented at the beginning of each rasterline.
+    
+    /* Array holding the synthesized pixels of the current rasterline. The
+     * array is filled while VICII walks through a rasterline. The following
+     * format is utilized:
+     *
+     *    15 14 13 12 11 10 09 08 07 06 05 04 03 02 01 00
+     *    zz zz zz zz ss ss ss ss ss ss ss ss cc cc cc cc
+     *
+     *    zz : Depth information (z buffer)
+     *    ss : Pixel source
+     *    cc : Color index
+     *
+     * At the end of each rasterline, the array elements are translated to
+     * RGB values and written into the texture.
      */
-    int *emuTexturePtr;
-    int *dmaTexturePtr;
-
+    u16 pBuffer[TEX_WIDTH];
+    
     /* VICII utilizes a depth buffer to determine pixel priority. The render
      * routines only write a color value, if it is closer to the view point.
      * The depth of the closest pixel is kept in this buffer. The lower the
@@ -785,10 +792,10 @@ public:
     // Accessing the screen buffer and display properties
     //
     
-    // Returns the currently stable textures
+    // Returns pointers to the stable textures
     void *stableEmuTexture() const;
     void *stableDmaTexture() const;
-    
+
     // Returns a pointer to randon noise
     u32 *getNoise() const;
     
@@ -803,7 +810,11 @@ private:
      */
     void updatePalette();
 
-    
+    // Returns pointers into the working textures
+    u32 *getEmuTexPtr(isize line) { return (u32 *)(emuTexture + line * TEX_WIDTH); }
+    u32 *getDmaTexPtr(isize line) { return (u32 *)(dmaTexture + line * TEX_WIDTH); }
+
+
     //
     // Accessing memory (VIC_memory.cpp)
     //
@@ -1286,38 +1297,39 @@ private:
     //
     // Low level drawing (pixel buffer access)
     //
-    
-    // Writes a single color value into the screenbuffer
-    #define COLORIZE(index,color) \
-        assert(index < TEX_WIDTH); \
-        emuTexturePtr[index] = rgbaTable[color];
-    
+        
     /* Sets a single frame pixel. The upper bit in pixelSource is cleared to
      * prevent sprite/foreground collision detection in border area.
      */
     #define SET_FRAME_PIXEL(pixel,color) { \
         int index = bufferoffset + pixel; \
-        COLORIZE(index, color); \
+        pBuffer[index] = color; \
         zBuffer[index] = BORDER_LAYER_DEPTH; \
         pixelSource[index] &= (~0x100); }
     
     // Sets a single foreground pixel
     #define SET_FOREGROUND_PIXEL(pixel,color) { \
         int index = bufferoffset + pixel; \
-        COLORIZE(index,color) \
+        pBuffer[index] = color; \
         zBuffer[index] = FOREGROUND_LAYER_DEPTH; \
         pixelSource[index] = 0x100; }
 
     // Sets a single background pixel
     #define SET_BACKGROUND_PIXEL(pixel,color) { \
         int index = bufferoffset + pixel; \
-        COLORIZE(index,color) \
+        pBuffer[index] = color; \
         zBuffer[index] = BACKGROUD_LAYER_DEPTH; \
         pixelSource[index] = 0x00; }
     
     // Draw a single sprite pixel
     void setSpritePixel(unsigned sprite, unsigned pixel, u8 color);
         
+    /* Colorizes a rasterline. This function implements the last stage in the
+     * graphics pipelile. It translates the recorded color register indices
+     * into a line of RGBA values in GPU format.
+     */
+    void colorize(u32 *buffer);
+
     
 	//
 	// Debugging
@@ -1336,11 +1348,5 @@ public:
     void cutLayers();
     
     // Initializes the DMA debugger textures
-    void clearDmaDebuggerTexture();
-    
-    // Visualizes a memory access by drawing into the DMA debuger texture
-    // void visualizeDma(u8 offset, u8 data, MemAccess type);
-    
-    // Superimposes the debug output onto the current rasterline
-    // void computeOverlay();
+    void clearDmaDebuggerTexture();    
 };
