@@ -77,25 +77,31 @@ void
 VICII::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)
-    
-    // Reset counters
-    yCounter = (u32)getRasterlinesPerFrame();
-        
-    // Reset the memory source lookup table
-    setUltimax(false);
+     
+    if (hard) {
 
-    // Reset the sprite logic
-    expansionFF = 0xFF;
+        // See README of VICE test VICII/spritemcbase
+        for (isize i = 0; i < 8; i++) mcbase[i] = is656x() ? 0x3F : 0x00;
         
-    // Reset the frame flipflops
-    leftComparisonVal = leftComparisonValue();
-    rightComparisonVal = rightComparisonValue();
-    upperComparisonVal = upperComparisonValue();
-    lowerComparisonVal = lowerComparisonValue();
+        // Reset counters
+        yCounter = (u32)getRasterlinesPerFrame();
         
-    // Reset the screen buffer pointers
-    emuTexture = emuTexturePtr = emuTexture1;
-    dmaTexture = dmaTexturePtr = dmaTexture1;
+        // Reset the memory source lookup table
+        setUltimax(false);
+        
+        // Reset the sprite logic
+        expansionFF = 0xFF;
+        
+        // Reset the frame flipflops
+        leftComparisonVal = leftComparisonValue();
+        rightComparisonVal = rightComparisonValue();
+        upperComparisonVal = upperComparisonValue();
+        lowerComparisonVal = lowerComparisonValue();
+        
+        // Reset the screen buffer pointers
+        emuTexture = emuTexturePtr = emuTexture1;
+        dmaTexture = dmaTexturePtr = dmaTexture1;
+    }
 }
 
 void
