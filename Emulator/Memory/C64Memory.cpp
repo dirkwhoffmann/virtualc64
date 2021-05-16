@@ -105,13 +105,16 @@ C64Memory::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)
     
-    // Erase RAM
-    eraseWithPattern(config.ramPattern);
+    if (hard) {
         
-    // Initialize color RAM with random numbers
-    srand(1000);
-    for (unsigned i = 0; i < sizeof(colorRam); i++) {
-        colorRam[i] = (rand() & 0xFF);
+        // Erase RAM
+        eraseWithPattern(config.ramPattern);
+        
+        // Initialize color RAM with random numbers
+        srand(1000);
+        for (unsigned i = 0; i < sizeof(colorRam); i++) {
+            colorRam[i] = (rand() & 0xFF);
+        }
     }
 }
 

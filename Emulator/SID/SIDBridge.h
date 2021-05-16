@@ -212,9 +212,12 @@ private:
     template <class T>
     void applyToResetItems(T& worker, bool hard = true)
     {
-        worker
-        
-        << cycles;
+        if (hard) {
+            
+            worker
+            
+            << cycles;
+        }
     }
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }

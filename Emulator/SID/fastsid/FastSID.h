@@ -171,12 +171,18 @@ private:
     template <class T>
     void applyToResetItems(T& worker, bool hard = true)
     {
+        if (hard) {
+            
+            worker
+            
+            << executedCycles
+            << computedSamples;
+        }
+        
         worker
         
         << sidreg
         << speed1
-        << executedCycles
-        << computedSamples
         << latchedDataBus;
     }
     

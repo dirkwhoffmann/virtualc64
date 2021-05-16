@@ -12,10 +12,7 @@
 #include "Cartridge.h"
 
 class StructuredBasic : public Cartridge {
-    
-    // Write protection latch
-    // bool protect = false;
-    
+        
 public:
     
     StructuredBasic(C64 &ref) : Cartridge(ref) { };
@@ -37,11 +34,6 @@ private:
     template <class T>
     void applyToResetItems(T& worker, bool hard = true)
     {
-        /*
-        worker
-        
-        & protect;
-        */
     }
     
     usize __size() { COMPUTE_SNAPSHOT_SIZE }

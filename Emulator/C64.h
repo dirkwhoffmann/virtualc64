@@ -291,12 +291,15 @@ private:
     template <class T>
     void applyToResetItems(T& worker, bool hard = true)
     {
-        worker
-        
-        << frame
-        << rasterLine
-        << rasterCycle
-        << ultimax;
+        if (hard) {
+            
+            worker
+            
+            << frame
+            << rasterLine
+            << rasterCycle
+            << ultimax;
+        }
     }
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }

@@ -239,9 +239,13 @@ private:
     template <class T>
     void applyToResetItems(T& worker, bool hard = true)
     {
+        if (hard) {
+            
+            worker << cycle;
+        }
+        
         worker
         
-        << cycle
         << next
         << reg.a
         << reg.x
