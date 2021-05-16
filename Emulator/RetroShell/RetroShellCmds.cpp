@@ -202,7 +202,7 @@ RetroShell::exec <Token::c64, Token::pause> (Arguments &argv, long param)
 template <> void
 RetroShell::exec <Token::c64, Token::reset> (Arguments &argv, long param)
 {
-    c64.reset();
+    c64.hardReset();
 }
 
 template <> void

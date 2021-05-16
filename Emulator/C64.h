@@ -225,11 +225,13 @@ public:
     // Prepares the emulator for regression testing
     void initialize(C64Model model);
 
-    void reset();
+    void reset(bool hard);
+    void hardReset() { reset(true); }
+    void softReset() { reset(false); }
 
 private:
     
-    void _reset() override;
+    void _reset(bool hard) override;
 
     
     //
@@ -287,7 +289,7 @@ private:
     }
     
     template <class T>
-    void applyToResetItems(T& worker)
+    void applyToResetItems(T& worker, bool hard = true)
     {
         worker
         

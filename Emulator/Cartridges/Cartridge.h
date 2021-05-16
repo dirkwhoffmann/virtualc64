@@ -147,7 +147,7 @@ public:
 protected:
     
     void dealloc();
-    void _reset() override;
+    void _reset(bool hard) override;
     void resetWithoutDeletingRam();
         
     
@@ -189,7 +189,7 @@ private:
     }
     
     template <class T>
-    void applyToResetItems(T& worker)
+    void applyToResetItems(T& worker, bool hard = true)
     {
         worker
         

@@ -74,9 +74,9 @@ VICII::VICII(C64 &ref) : C64Component(ref), dmaDebugger(ref)
 }
 
 void 
-VICII::_reset()
+VICII::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
     
     // Reset counters
     yCounter = (u32)getRasterlinesPerFrame();

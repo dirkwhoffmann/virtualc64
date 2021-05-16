@@ -17,12 +17,12 @@ ExpansionPort::~ExpansionPort()
 }
 
 void
-ExpansionPort::_reset()
+ExpansionPort::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
 
     if (cartridge) {
-        cartridge->reset();
+        cartridge->reset(hard);
         cartridge->resetCartConfig();
     } else {
         setCartridgeMode(CRTMODE_OFF);
@@ -232,7 +232,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
     crtType = c->getCartridgeType();
     
     // Reset cartridge to update exrom and game line on the expansion port
-    cartridge->reset();
+    cartridge->reset(true);
     
     c64.putMessage(MSG_CRT_ATTACHED);
     if (cartridge->hasSwitch()) c64.putMessage(MSG_CART_SWITCH);
@@ -282,7 +282,7 @@ ExpansionPort::attachCartridge(CRTFile *file, bool reset)
     // Attach cartridge
     suspend();
     attachCartridge(cartridge);
-    if (reset) c64.reset();
+    if (reset) c64.hardReset();
     resume();
     
     return true;
@@ -321,7 +321,7 @@ ExpansionPort::detachCartridgeAndReset()
 {
     suspend();
     detachCartridge();
-    c64.reset();
+    c64.hardReset();
     resume();
 }
 

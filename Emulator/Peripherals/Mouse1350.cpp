@@ -14,9 +14,9 @@
 #include <cmath>
 
 void
-Mouse1350::_reset()
+Mouse1350::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
     
     leftButton = false;
     rightButton = false;

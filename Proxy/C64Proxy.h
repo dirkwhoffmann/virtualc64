@@ -150,7 +150,8 @@
 - (void)powerOn;
 - (void)powerOff;
 - (void)inspect;
-- (void)reset;
+- (void)hardReset;
+- (void)softReset;
 - (void)shutdown;
 
 @property (readonly) BOOL poweredOn;

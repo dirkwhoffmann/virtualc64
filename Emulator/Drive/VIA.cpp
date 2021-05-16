@@ -20,9 +20,9 @@ VIA6522::VIA6522(C64 &ref, Drive &drvref) : C64Component(ref), drive(drvref)
 {
 }
 	
-void VIA6522::_reset()
+void VIA6522::_reset(bool hard)
 {    
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
 
     t1 = 0x01AA;
     t2 = 0x01AA;

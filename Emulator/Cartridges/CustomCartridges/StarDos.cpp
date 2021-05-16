@@ -12,10 +12,10 @@
 #include <algorithm>
 
 void
-StarDos::_reset()
+StarDos::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
-    Cartridge::_reset();    
+    RESET_SNAPSHOT_ITEMS(hard)
+    Cartridge::_reset(hard);
 }
 
 void

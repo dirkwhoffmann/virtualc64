@@ -11,9 +11,9 @@
 #include "C64.h"
 
 void
-Zaxxon::_reset()
+Zaxxon::_reset(bool hard)
 {
-    Cartridge::_reset();
+    Cartridge::_reset(hard);
     
     // Make sure peekRomL() is called for the whole 8KB ROML range.
     mappedBytesL = 0x2000;

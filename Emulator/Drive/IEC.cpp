@@ -12,9 +12,9 @@
 #include "C64.h"
 
 void 
-IEC::_reset()
+IEC::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
     
     atnLine = 1;
     clockLine = 1;

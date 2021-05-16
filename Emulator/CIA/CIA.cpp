@@ -18,9 +18,9 @@ CIA::CIA(C64 &ref) : C64Component(ref)
 }
 
 void
-CIA::_reset()
+CIA::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
     
     CNT = true;
     INT = 1;

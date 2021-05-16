@@ -35,7 +35,7 @@ public:
 
 private:
     
-    void _reset() override { };
+    void _reset(bool hard) override { };
 
     
     //

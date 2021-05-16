@@ -14,9 +14,9 @@
 #include <algorithm>
 
 void
-Mouse1351::_reset()
+Mouse1351::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
 
     leftButton = false;
     rightButton = false;

@@ -19,7 +19,7 @@ public:
     const char *getDescription() const override { return "Comal80"; }
     CartridgeType getCartridgeType() const override { return CRT_COMAL80; }
     
-    void _reset() override;
+    void _reset(bool hard) override;
 
     u8 peekIO1(u16 addr) override { return control; }
     u8 spypeekIO1(u16 addr) const override { return control; }

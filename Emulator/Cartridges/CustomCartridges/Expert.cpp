@@ -26,9 +26,9 @@ Expert::Expert(C64 &ref) : Cartridge(ref)
 }
 
 void
-Expert::_reset()
+Expert::_reset(bool hard)
 {
-    Cartridge::_reset();
+    Cartridge::_reset(hard);
 }
 
 void

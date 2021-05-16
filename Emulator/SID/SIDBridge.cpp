@@ -36,9 +36,9 @@ SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
 }
 
 void
-SIDBridge::_reset()
+SIDBridge::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
     
     clearRingbuffer();
 }
@@ -273,8 +273,8 @@ SIDBridge::setConfigItem(Option option, long id, i64 value)
             clearSampleBuffer(id);
             
             for (int i = 0; i < 4; i++) {
-                resid[i].reset();
-                fastsid[i].reset();
+                resid[i].reset(true);
+                fastsid[i].reset(true);
             }
             resume();
             return true;

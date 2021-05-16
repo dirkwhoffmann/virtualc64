@@ -179,15 +179,15 @@ Cartridge::resetCartConfig() {
 }
 
 void
-Cartridge::_reset()
+Cartridge::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
     
     // Reset external RAM
     if (externalRam && !battery) memset(externalRam, 0xFF, ramCapacity);
  
     // Reset all chip packets
-    for (unsigned i = 0; i < numPackets; i++) packet[i]->_reset();
+    for (unsigned i = 0; i < numPackets; i++) packet[i]->_reset(hard);
         
     // Bank in visibile chips (chips with low numbers show up first)
     for (int i = MAX_PACKETS - 1; i >= 0; i--) bankIn(i);
@@ -200,8 +200,9 @@ Cartridge::resetWithoutDeletingRam()
     
     trace(RUN_DEBUG, "Resetting virtual C64 (preserving RAM)\n");
     
+    // TODO: REPLACE THE FOLLOWING BY c64.softReset()
     memcpy(ram, mem.ram, 0x10000);
-    c64.reset();
+    c64.hardReset();
     memcpy(mem.ram, ram, 0x10000);
 }
 

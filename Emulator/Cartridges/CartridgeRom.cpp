@@ -31,9 +31,9 @@ CartridgeRom::~CartridgeRom()
 }
 
 void
-CartridgeRom::_reset()
+CartridgeRom::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
 }
 
 isize

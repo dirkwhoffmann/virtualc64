@@ -35,9 +35,9 @@ template<> bool CPU<C64Memory>::isDriveCPU() const { return false; }
 template<> bool CPU<DriveMemory>::isDriveCPU() const { return true; }
 
 template <typename M> void
-CPU<M>::_reset()
+CPU<M>::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
     
     setB(1);
     setI(1);
@@ -222,7 +222,7 @@ template         CPU<C64Memory>::CPU(C64& ref, C64Memory& memref);
 template CPUInfo CPU<C64Memory>::getInfo();
 template void    CPU<C64Memory>::_dump(dump::Category category, std::ostream& os) const;
 template void    CPU<C64Memory>::_setDebug(bool enable);
-template void    CPU<C64Memory>::_reset();
+template void    CPU<C64Memory>::_reset(bool hard);
 template void    CPU<C64Memory>::_inspect();
 template u8      CPU<C64Memory>::getP() const;
 template u8      CPU<C64Memory>::getPWithClearedB() const;
@@ -238,7 +238,7 @@ template         CPU<DriveMemory>::CPU(C64& ref, DriveMemory& memref);
 template CPUInfo CPU<DriveMemory>::getInfo();
 template void    CPU<DriveMemory>::_dump(dump::Category category, std::ostream& os) const;
 template void    CPU<DriveMemory>::_setDebug(bool enable);
-template void    CPU<DriveMemory>::_reset();
+template void    CPU<DriveMemory>::_reset(bool hard);
 template void    CPU<DriveMemory>::_inspect();
 template u8      CPU<DriveMemory>::getP() const;
 template u8      CPU<DriveMemory>::getPWithClearedB() const;

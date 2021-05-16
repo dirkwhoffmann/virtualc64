@@ -216,9 +216,9 @@ Disk::Disk(C64 &ref) : C64Component(ref)
 }
 
 void
-Disk::_reset()
+Disk::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
 }
 
 void

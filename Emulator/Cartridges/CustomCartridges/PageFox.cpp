@@ -17,7 +17,7 @@ PageFox::PageFox(C64 &ref) : Cartridge(ref)
 }
 
 void
-PageFox::_reset()
+PageFox::_reset(bool hard)
 {
     eraseRAM(0);
 }

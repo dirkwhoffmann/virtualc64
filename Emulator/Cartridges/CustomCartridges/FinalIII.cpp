@@ -17,10 +17,10 @@ FinalIII::resetCartConfig()
 }
 
 void
-FinalIII::_reset()
+FinalIII::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
-    Cartridge::_reset();
+    RESET_SNAPSHOT_ITEMS(hard)
+    Cartridge::_reset(hard);
     
     qD = true;
     bankIn(0);

@@ -12,9 +12,9 @@
 #include "C64.h"
 
 void
-ProcessorPort::_reset()
+ProcessorPort::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
     
     port = 0xFF;
     

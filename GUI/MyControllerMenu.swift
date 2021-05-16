@@ -418,9 +418,15 @@ extension MyController: NSMenuItemValidation {
         track()
 
         renderer.rotateLeft()
-        c64.reset()
+        c64.hardReset()
         c64.powerOn()
         c64.run()
+    }
+
+    @IBAction func softResetAction(_ sender: Any!) {
+
+        track()
+        c64.softReset()
     }
 
     @IBAction func powerAction(_ sender: Any!) {
@@ -549,10 +555,12 @@ extension MyController: NSMenuItemValidation {
     @IBAction func formatDiskAction(_ sender: Any!) {
         keyboard.type("OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1")
     }
+    /*
     @IBAction func softResetAction(_ sender: Any!) {
         keyboard.type("SYS 64738")
     }
-
+    */
+    
     //
     // Action methods (Drive menu)
     //

@@ -47,7 +47,7 @@ public:
 
 private:
     
-    void _reset() override { RESET_SNAPSHOT_ITEMS };
+    void _reset(bool hard) override { RESET_SNAPSHOT_ITEMS(hard) };
     
 
     //
@@ -71,7 +71,7 @@ private:
     }
     
     template <class T>
-    void applyToResetItems(T& worker)
+    void applyToResetItems(T& worker, bool hard = true)
     {
     }
     

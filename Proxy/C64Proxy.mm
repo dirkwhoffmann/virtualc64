@@ -2119,9 +2119,14 @@
     [self c64]->inspect();
 }
 
-- (void)reset
+- (void)hardReset
 {
-    [self c64]->reset();
+    [self c64]->hardReset();
+}
+
+- (void)softReset
+{
+    [self c64]->softReset();
 }
 
 - (void)shutdown

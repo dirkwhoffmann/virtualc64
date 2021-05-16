@@ -78,7 +78,7 @@ public:
 
 private:
     
-    void _reset() override;
+    void _reset(bool hard) override;
 
     
     //
@@ -108,7 +108,7 @@ private:
     }
     
     template <class T>
-    void applyToResetItems(T& worker)
+    void applyToResetItems(T& worker, bool hard = true)
     {
         worker
         

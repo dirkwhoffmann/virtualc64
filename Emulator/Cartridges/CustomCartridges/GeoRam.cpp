@@ -11,9 +11,9 @@
 #include "C64.h"
 
 void
-GeoRAM::_reset()
+GeoRAM::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
 
     if (!getBattery()) {
         trace(CRT_DEBUG, "Erasing GeoRAM\n");

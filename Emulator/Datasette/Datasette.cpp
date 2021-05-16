@@ -44,9 +44,9 @@ Datasette::dealloc()
 }
 
 void
-Datasette::_reset()
+Datasette::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
 }
 
 void

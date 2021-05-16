@@ -101,9 +101,9 @@ C64Memory::C64Memory(C64 &ref) : C64Component(ref)
 }
 
 void
-C64Memory::_reset()
+C64Memory::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
     
     // Erase RAM
     eraseWithPattern(config.ramPattern);

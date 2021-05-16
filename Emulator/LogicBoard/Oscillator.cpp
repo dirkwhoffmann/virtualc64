@@ -27,9 +27,9 @@ Oscillator::getDescription() const
 }
 
 void
-Oscillator::_reset()
+Oscillator::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
 }
 
 OscillatorConfig

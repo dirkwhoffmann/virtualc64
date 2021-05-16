@@ -14,9 +14,9 @@
 #include "IO.h"
 
 void 
-Keyboard::_reset() 
+Keyboard::_reset(bool hard) 
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
     
     // Reset the keyboard matrix
     releaseAll();

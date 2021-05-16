@@ -89,8 +89,8 @@ public:
     /* Resets the component and its subcomponent. It is mandatory for each
      * component to implement this function.
      */
-    void reset();
-    virtual void _reset() = 0;
+    void reset(bool hard);
+    virtual void _reset(bool hard) = 0;
     
     
     //
@@ -285,9 +285,9 @@ applyToPersistentItems(counter); \
 applyToResetItems(counter); \
 return counter.count;
     
-#define RESET_SNAPSHOT_ITEMS \
+#define RESET_SNAPSHOT_ITEMS(hard) \
 util::SerResetter resetter; \
-applyToResetItems(resetter);
+applyToResetItems(resetter, hard);
     
     // trace(SNP_DEBUG, "Resetted\n");
     

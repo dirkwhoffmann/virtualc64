@@ -18,9 +18,9 @@ DriveMemory::DriveMemory(C64 &ref, Drive &dref) : C64Component(ref), drive(dref)
 }
 
 void 
-DriveMemory::_reset()
+DriveMemory::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
 
     // Initialize RAM with powerup pattern (pattern from Hoxs64)
     for (unsigned i = 0; i < sizeof(ram); i++) {

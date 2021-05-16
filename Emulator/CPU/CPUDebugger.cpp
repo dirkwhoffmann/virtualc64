@@ -200,9 +200,9 @@ CPUDebugger::_powerOn()
 }
 
 void
-CPUDebugger::_reset()
+CPUDebugger::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
     
     breakpoints.setNeedsCheck(breakpoints.elements() != 0);
     watchpoints.setNeedsCheck(watchpoints.elements() != 0);

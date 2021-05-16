@@ -567,7 +567,7 @@ public:
 
 private:
     
-    void _reset() override;
+    void _reset(bool hard) override;
 
     void resetEmuTexture(int nr);
     void resetEmuTextures() { resetEmuTexture(1); resetEmuTexture(2); }
@@ -635,7 +635,7 @@ private:
     }
     
     template <class T>
-    void applyToResetItems(T& worker)
+    void applyToResetItems(T& worker, bool hard = true)
     {
         worker
         

@@ -11,10 +11,10 @@
 #include "C64.h"
 
 void
-Epyx::_reset()
+Epyx::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
-    Cartridge::_reset();
+    RESET_SNAPSHOT_ITEMS(hard)
+    Cartridge::_reset(hard);
     
     dischargeCapacitor();
 }

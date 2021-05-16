@@ -45,9 +45,9 @@ Drive::_initialize()
 }
 
 void
-Drive::_reset()
+Drive::_reset(bool hard)
 {    
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
 
     cpu.reg.pc = 0xEAA0;
     halftrack = 41;
@@ -183,7 +183,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
             config.connected = value;
             bool wasActive = active;
             active = config.connected && config.switchedOn;
-            reset();
+            reset(true);
             resume();
             messageQueue.put(value ? MSG_DRIVE_CONNECT : MSG_DRIVE_DISCONNECT, deviceNr);
             if (wasActive != active)
@@ -196,7 +196,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
             config.switchedOn = value;
             bool wasActive = active;
             active = config.connected && config.switchedOn;
-            reset();
+            reset(true);
             resume();
             messageQueue.put(value ? MSG_DRIVE_POWER_ON : MSG_DRIVE_POWER_OFF, deviceNr);
             if (wasActive != active) {

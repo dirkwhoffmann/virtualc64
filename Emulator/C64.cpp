@@ -77,7 +77,7 @@ C64::C64()
 
     // Set up the initial state
     HardwareComponent::initialize();
-    _reset();
+    _reset(true);
 }
 
 C64::~C64()
@@ -107,12 +107,12 @@ C64::initialize(C64Model model)
 }
 
 void
-C64::reset()
+C64::reset(bool hard)
 {
     suspend();
     
     // Execute the standard reset routine
-    HardwareComponent::reset();
+    HardwareComponent::reset(hard);
     
     // Inform the GUI
     putMessage(MSG_RESET);
@@ -121,9 +121,9 @@ C64::reset()
 }
 
 void
-C64::_reset()
+C64::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
                 
     // Initialize the program counter
     cpu.reg.pc = mem.resetVector();
@@ -609,7 +609,7 @@ C64::powerOn()
         assert(p == (pthread_t)0);
         
         // Perform a reset
-        reset();
+        hardReset();
                 
         // Power on all subcomponents
         HardwareComponent::powerOn();

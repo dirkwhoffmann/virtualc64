@@ -25,13 +25,13 @@ HardwareComponent::initialize()
 }
 
 void
-HardwareComponent::reset()
+HardwareComponent::reset(bool hard)
 {
     // Reset all subcomponents
-    for (HardwareComponent *c : subComponents) c->reset();
+    for (HardwareComponent *c : subComponents) c->reset(hard);
 
     // Reset this component
-    _reset();
+    _reset(hard);
 }
 
 bool

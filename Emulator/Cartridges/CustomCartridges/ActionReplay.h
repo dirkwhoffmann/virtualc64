@@ -67,7 +67,7 @@ public:
     const char *getDescription() const override { return "ActionReplay"; }
     CartridgeType getCartridgeType() const override { return CRT_ACTION_REPLAY; }
 
-    void _reset() override;
+    void _reset(bool hard) override;
     void resetCartConfig() override;
 
     

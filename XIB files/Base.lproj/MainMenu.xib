@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
@@ -220,11 +220,12 @@
                                     <action selector="paste:" target="-1" id="275"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="qq8-Qm-VmD"/>
-                            <menuItem title="Debug" id="414">
-                                <menu key="submenu" title="Debug" id="415">
+                            <menuItem isSeparatorItem="YES" id="rh0-lG-FJ7"/>
+                            <menuItem title="Reset" id="rL5-uj-zUT">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Reset" id="rdH-7k-lzO">
                                     <items>
-                                        <menuItem title="Reset Emulator" id="434">
+                                        <menuItem title="Hard" id="434">
                                             <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>
@@ -233,6 +234,19 @@ CA
                                                 <action selector="resetAction:" target="-1" id="506"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Soft" id="iuq-Lf-hht">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="softResetAction:" target="-1" id="5sT-Nu-Tp6"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="qq8-Qm-VmD"/>
+                            <menuItem title="Debug" id="414">
+                                <menu key="submenu" title="Debug" id="415">
+                                    <items>
                                         <menuItem isSeparatorItem="YES" id="433">
                                             <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </menuItem>
@@ -522,12 +536,6 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="formatDiskAction:" target="-1" id="IvR-x1-Puy"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Soft Reset" id="gGM-0D-O3J">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="softResetAction:" target="-1" id="XvM-YJ-QXM"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="QAf-kY-aho"/>

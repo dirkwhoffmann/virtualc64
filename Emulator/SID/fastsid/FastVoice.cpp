@@ -53,9 +53,9 @@ static u32 exptable[6] =
 };
 
 void
-FastVoice::_reset()
+FastVoice::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
     
     updateWaveTablePtr(); 
     lsfr = NSEED;

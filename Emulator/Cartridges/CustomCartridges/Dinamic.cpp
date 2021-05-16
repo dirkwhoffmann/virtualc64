@@ -11,9 +11,9 @@
 #include "C64.h"
 
 void
-Dinamic::_reset()
+Dinamic::_reset(bool hard)
 {
-    Cartridge::_reset();
+    Cartridge::_reset(hard);
 }
 
 u8

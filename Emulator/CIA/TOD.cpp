@@ -36,9 +36,9 @@ TOD::_inspect()
 }
 
 void
-TOD::_reset() 
+TOD::_reset(bool hard) 
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
     
     tod.hour = 1;
     stopped = true;

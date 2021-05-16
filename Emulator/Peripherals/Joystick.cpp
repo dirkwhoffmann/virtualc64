@@ -23,9 +23,9 @@ Joystick::getDescription() const
 }
 
 void
-Joystick::_reset()
+Joystick::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
     
     // Discard any active joystick movements
     button = false;

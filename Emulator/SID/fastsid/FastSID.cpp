@@ -140,9 +140,9 @@ FastSID::initFilter(int sampleRate)
 }
 
 void
-FastSID::_reset()
+FastSID::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS
+    RESET_SNAPSHOT_ITEMS(hard)
 
     init(sampleRate, cpuFrequency);
 }

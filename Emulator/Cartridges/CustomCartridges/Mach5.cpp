@@ -11,9 +11,9 @@
 #include "C64.h"
 
 void
-Mach5::_reset()
+Mach5::_reset(bool hard)
 {
-    Cartridge::_reset();
+    Cartridge::_reset(hard);
 }
 
 u8

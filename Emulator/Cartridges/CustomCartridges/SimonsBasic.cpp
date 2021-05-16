@@ -11,7 +11,7 @@
 #include "C64.h"
 
 void
-SimonsBasic::_reset()
+SimonsBasic::_reset(bool hard)
 {
     bankIn(0);
     bankIn(1);
