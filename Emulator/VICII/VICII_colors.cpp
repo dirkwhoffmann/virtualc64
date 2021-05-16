@@ -116,8 +116,8 @@ VICII::getColor(unsigned nr, Palette palette)
             luma = luma_pepto;
             break;
         default:
-            luma = nullptr;
             assert(false);
+            return 0;
     }
     
     // Angles in the color plane

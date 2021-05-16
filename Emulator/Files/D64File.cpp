@@ -66,6 +66,7 @@ D64File::makeWithFileSystem(FSDevice &volume)
 
         default:
             assert(false);
+            return nullptr;
     }
 
     ErrorCode err;

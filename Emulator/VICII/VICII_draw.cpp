@@ -80,7 +80,7 @@ VICII::drawBorder55()
 void
 VICII::drawCanvas()
 {
-    u8 d011, d016, newD016, mode, oldMode, xscroll;
+    u8 d011, d016, newD016, mode, xscroll;
     
     /* "The sequencer outputs the graphics data in every raster line in the area
      *  of the display column as long as the vertical border flip-flop is reset
@@ -132,7 +132,6 @@ VICII::drawCanvas()
     if (is656x()) {
         d011 |= reg.current.ctrl1;
     }
-    oldMode = mode;
     mode = (d011 & 0x60) | (newD016 & 0x10);
     
     drawCanvasPixel(4, mode, d016, xscroll == 4);
@@ -141,7 +140,6 @@ VICII::drawCanvas()
     // In older VICIIs, the zero bits of D011 show up here.
     if (is656x()) {
         d011 = reg.current.ctrl1;
-        oldMode = mode;
         mode = (d011 & 0x60) | (newD016 & 0x10);
     }
 

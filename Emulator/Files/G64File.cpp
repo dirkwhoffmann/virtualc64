@@ -63,7 +63,6 @@ G64File::makeWithDisk(Disk &disk)
     u8 *buffer = new u8[length];
     
     // Write header, number of tracks, and track length
-    pos = 0;
     strcpy((char *)buffer, "GCR-1541");
     buffer[9]  = 84;                       // 0x54 (Number of tracks)
     buffer[10] = LO_BYTE(maxBytesOnTrack); // 0xF8

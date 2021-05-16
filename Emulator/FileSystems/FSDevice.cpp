@@ -495,7 +495,6 @@ FSDevice::fileSize(FSDirEntry *entry) const
                 
         if (next) {
             size += 254;
-            b = next;
         } else {
             // The number of remaining bytes can be derived from the sector link
             size += b->data[1] ? b->data[1] - 1 : 0;

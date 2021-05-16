@@ -296,29 +296,6 @@
     return [self mem]->spypeekColor(addr);
 }
 
-/*
-- (void)poke:(u16)addr value:(u8)value target:(MemoryType)target
-{
-    [self mem]->suspend();
-    [self mem]->poke(addr, value, target);
-    [self mem]->resume();
-}
-
-- (void)poke:(u16)addr value:(u8)value
-{
-    [self mem]->suspend();
-    [self mem]->poke(addr, value);
-    [self mem]->resume();
-}
-
-- (void)pokeIO:(u16)addr value:(u8)value
-{
-    [self mem]->suspend();
-    [self mem]->pokeIO(addr, value);
-    [self mem]->resume();
-}
-*/
-
 - (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src
 {
     const char *str = [self mem]->memdump(addr, num, hex, src);
@@ -1154,7 +1131,7 @@
 @synthesize via1, via2, disk;
 
 - (instancetype)initWithVC1541:(Drive *)drive
-{
+{    
     if ([self initWith:drive]) {
         via1 = [[VIAProxy alloc] initWith:&drive->via1];
         via2 = [[VIAProxy alloc] initWith:&drive->via2];

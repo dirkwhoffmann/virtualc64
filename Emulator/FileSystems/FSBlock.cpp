@@ -230,13 +230,13 @@ FSBlock::check(u32 byte, u8 *expected, bool strict) const
 unsigned
 FSBlock::check(bool strict) const
 {
-    ErrorCode err;
     unsigned count = 0;
     u8 expected;
     
     for (u32 i = 0; i < 256; i++) {
         
-        if ((err = check(i, &expected, strict)) != ERROR_OK) {
+        ErrorCode err = check(i, &expected, strict);
+        if (err != ERROR_OK) {
             count++;
             debug(FS_DEBUG, "Block %d [%d.%d]: %s\n",
                   nr, i / 4, i % 4, ErrorCodeEnum::key(err));

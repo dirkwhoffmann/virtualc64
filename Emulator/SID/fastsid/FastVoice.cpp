@@ -196,7 +196,7 @@ FastVoice::updateInternals(bool gateBitFlipped)
             break;
             
         case FASTSID_PULSE:
-            offset = testBit() ? 0 : pulseWidth();
+            // offset = testBit() ? 0 : pulseWidth();
             waveTableOffset = 0;
             ringmod = false;
             break;
