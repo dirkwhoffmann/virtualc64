@@ -1267,7 +1267,8 @@ private:
     
     // Draws 8 canvas pixels (see draw())
     void drawCanvas();
-    
+    void drawCanvasExact();
+
     /* Draws a single canvas pixel
      *
      *         pixel : pixel number (0 ... 7)

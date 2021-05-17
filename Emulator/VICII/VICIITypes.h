@@ -473,6 +473,7 @@ SpriteInfo;
 #ifdef __cplusplus
 struct VICIIRegisters
 {
+    // Registers
     u16 sprX[8];     // D000, D002, ..., D00E, upper bits from D010
     u8  sprY[8];     // D001, D003, ..., D00F
     u8  ctrl1;       // D011
@@ -483,6 +484,9 @@ struct VICIIRegisters
     u8  sprMC;       // D01C
     u8  sprExpandX;  // D01D
     u8  colors[15];  // D020 - D02E
+    
+    // Derived values
+    DisplayMode mode;
     
     template <class W>
     void operator<<(W& worker)
@@ -498,7 +502,8 @@ struct VICIIRegisters
         << sprPriority
         << sprMC
         << sprExpandX
-        << colors;
+        << colors
+        << mode;
     }
 };
 

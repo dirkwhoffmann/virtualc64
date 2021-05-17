@@ -490,6 +490,7 @@ VICII::poke(u16 addr, u8 value)
         case 0x11: // Control register 1
             
             reg.current.ctrl1 = value;
+            reg.current.mode = ((value & 0x60) | (reg.current.ctrl2 & 0x10)) >> 4;
             
             // Check the DEN bit. If it gets set somehwere in line 30, a bad
             // line conditions occurs.
@@ -524,6 +525,7 @@ VICII::poke(u16 addr, u8 value)
         case 0x16: // CONTROL_REGISTER_2
             
             reg.current.ctrl2 = value;
+            reg.current.mode = ((reg.current.ctrl1 & 0x60) | (value & 0x10)) >> 4;
             leftComparisonVal = leftComparisonValue();
             rightComparisonVal = rightComparisonValue();
             break;

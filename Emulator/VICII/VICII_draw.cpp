@@ -80,42 +80,44 @@ VICII::drawBorder55()
 void
 VICII::drawCanvas()
 {
+    u8 d011, d016, mode, xscroll;
+    
+    // Check if we need to take the slow path
+    if (delay & VICUpdateRegisters) { drawCanvasExact(); return; }
+    
+    stats.fastPath++;
+    
+    // TODO: REMOVE THIS AFTER TESTING
+    assert(reg.delayed.ctrl1 == reg.current.ctrl1);
+    assert(reg.delayed.ctrl2 == reg.current.ctrl2);
+    assert(reg.delayed.colors[COLREG_BG0] == reg.current.colors[COLREG_BG0]);
+    assert(reg.delayed.colors[COLREG_BG1] == reg.current.colors[COLREG_BG1]);
+    assert(reg.delayed.colors[COLREG_BG2] == reg.current.colors[COLREG_BG2]);
+    assert(reg.delayed.colors[COLREG_BG3] == reg.current.colors[COLREG_BG3]);
+        
+    d011 = reg.delayed.ctrl1;
+    d016 = reg.delayed.ctrl2;
+    xscroll = d016 & 0x07;
+    mode = (d011 & 0x60) | (d016 & 0x10); // -xxx ----
+    assert((mode >> 4) == reg.delayed.mode);
+    
+    drawCanvasPixel(0, mode, d016, xscroll == 0);
+    drawCanvasPixel(1, mode, d016, xscroll == 1);
+    drawCanvasPixel(2, mode, d016, xscroll == 2);
+    drawCanvasPixel(3, mode, d016, xscroll == 3);
+    drawCanvasPixel(4, mode, d016, xscroll == 4);
+    drawCanvasPixel(5, mode, d016, xscroll == 5);
+    drawCanvasPixel(6, mode, d016, xscroll == 6);
+    drawCanvasPixel(7, mode, d016, xscroll == 7);
+}
+
+void
+VICII::drawCanvasExact()
+{
     u8 d011, d016, newD016, mode, xscroll;
     
-    // Check if we can take the fast path (VICII registers are stable)
-    if (reg.delayed.ctrl1 != reg.current.ctrl1 ||
-        reg.delayed.ctrl1 != reg.current.ctrl1 ||
-        reg.delayed.colors[COLREG_BG0] != reg.current.colors[COLREG_BG0] ||
-        reg.delayed.colors[COLREG_BG1] != reg.current.colors[COLREG_BG1] ||
-        reg.delayed.colors[COLREG_BG2] != reg.current.colors[COLREG_BG2] ||
-        reg.delayed.colors[COLREG_BG3] != reg.current.colors[COLREG_BG3])
-    {
-        assert((delay & VICUpdateRegisters) != 0);
-        stats.slowPath++;
-    } else {
-        stats.fastPath++;
-    }
+    stats.slowPath++;
 
-    /* "The sequencer outputs the graphics data in every raster line in the area
-     *  of the display column as long as the vertical border flip-flop is reset
-     *  (see section 3.9.)." [C.B.]
-     */
-    
-    if (flipflops.delayed.vertical) {
-        
-        /* "Outside of the display column and if the flip-flop is set, the last
-         *  current background color is displayed (this area is normally covered
-         *  by the border)." [C.B.]
-         */
-        /*
-        SET_BACKGROUND_PIXEL(0, col[0]);
-        for (unsigned pixel = 1; pixel < 8; pixel++) {
-            SET_BACKGROUND_PIXEL(pixel, col[0]);
-        }
-        return;
-        */
-    }
-    
     /* "The graphics data sequencer is capable of 8 different graphics modes
      *  that are selected by the bits ECM, BMM and MCM (Extended Color Mode,
      *  Bit Map Mode and Multi Color Mode) in the registers $d011 and
@@ -126,6 +128,7 @@ VICII::drawCanvas()
     d016 = reg.delayed.ctrl2;
     xscroll = d016 & 0x07;
     mode = (d011 & 0x60) | (d016 & 0x10); // -xxx ----
+    assert((mode >> 4) == reg.delayed.mode);
 
     drawCanvasPixel(0, mode, d016, xscroll == 0);
     
