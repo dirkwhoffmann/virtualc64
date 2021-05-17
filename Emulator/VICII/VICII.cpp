@@ -80,6 +80,8 @@ VICII::_reset(bool hard)
      
     if (hard) {
 
+        clearStats();
+        
         // See README of VICE test VICII/spritemcbase
         for (isize i = 0; i < 8; i++) mcbase[i] = is656x() ? 0x3F : 0x00;
         
@@ -490,6 +492,13 @@ VICII::_dump(dump::Category category, std::ostream& os) const
         os << tab("expansionFF");
         os << hex(expansionFF) << std::endl;
     }
+}
+
+void
+VICII::clearStats()
+{
+    stats.fastPath = 0;
+    stats.slowPath = 0;
 }
 
 void
@@ -1102,6 +1111,16 @@ VICII::endFrame()
         dmaTexture = dmaTexture1;
         if (debug) { resetEmuTexture(1); resetDmaTexture(1); }
     }
+    
+    // Clear statistics
+    /*
+    if (stats.fastPath || stats.slowPath) {
+        printf("fastPath: %ld slowPath: %ld (%f)\n",
+               stats.fastPath, stats.slowPath,
+               (double)stats.fastPath / (double)(stats.fastPath + stats.slowPath));
+    }
+    */
+    clearStats();
 }
 
 void

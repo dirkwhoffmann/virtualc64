@@ -541,15 +541,6 @@ VICII::poke(u16 addr, u8 value)
             
         case 0x18: // Memory address pointers
             
-            // Inform the GUI if the second bit changes. It switches between
-            // upper case or lower case mode.
-            /*
-            if ((value & 0x02) != (memSelect & 0x02)) {
-                memSelect = value;
-                vc64.putMessage(MSG_CHARSET);
-                return;
-            }
-            */
             memSelect = value;
             return;
     
@@ -558,24 +549,12 @@ VICII::poke(u16 addr, u8 value)
             // Bits are cleared by writing '1'
             irr &= (~value) & 0x0F;
             delay |= VICUpdateIrqLine;
-            /*
-            if (!(irr & imr)) {
-                releaseDelayedIRQ();
-            }
-            */
             return;
             
         case 0x1A: // Interrupt Mask Register (IMR)
             
             imr = value & 0x0F;
             delay |= VICUpdateIrqLine;
-            /*
-            if (irr & imr) {
-                triggerDelayedIRQ(1);
-            } else {
-                releaseDelayedIRQ();
-            }
-            */
             return;
             
         case 0x1B: // Sprite priority
@@ -615,10 +594,9 @@ VICII::poke(u16 addr, u8 value)
             
             reg.current.colors[addr - 0x20] = value & 0xF;
             
-            // Emulate the gray dot bug if requested
-            if (config.grayDotBug) {
-                reg.delayed.colors[addr - 0x20] = 0xF;
-            }
+            // Emulate the gray dot bug
+            if (config.grayDotBug) reg.delayed.colors[addr - 0x20] = 0xF;
+
             break;
     }
     

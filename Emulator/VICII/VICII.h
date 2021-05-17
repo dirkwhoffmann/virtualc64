@@ -29,6 +29,9 @@ class VICII : public C64Component {
     VICIIInfo info;
     SpriteInfo spriteInfo[8];
     
+    // Statistics
+    VICIIStats stats;
+    
 public:
     
     // Sub components
@@ -462,7 +465,7 @@ private:
      * See processDelayedActions()
      */
     u64 delay;
-    
+        
     
 	//
 	// Screen buffers and colors
@@ -606,6 +609,14 @@ private:
     void _inspect() override;
     void _dump(dump::Category category, std::ostream& os) const override;
 
+public:
+    
+    VICIIStats getStats() { return stats; }
+    
+private:
+    
+    void clearStats();
+    
 public:
     
     // Returns true if the DMA debugger is switched on

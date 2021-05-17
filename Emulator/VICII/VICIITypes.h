@@ -387,6 +387,14 @@ VICIIConfig;
 
 typedef struct
 {
+    // Graphics synthesizer (speed optimizations)
+    isize fastPath;
+    isize slowPath;
+}
+VICIIStats;
+
+typedef struct
+{
     bool vertical;
     bool main;
 }

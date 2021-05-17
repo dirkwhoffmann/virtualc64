@@ -175,6 +175,7 @@
 		508081EC2511206D0084B060 /* StructuredBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508081EA2511206D0084B060 /* StructuredBasic.cpp */; };
 		5081AB631EF29E6400D6F616 /* MacAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5081AB621EF29E6400D6F616 /* MacAudio.swift */; };
 		5085D89D25B848940043B15C /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5085D89B25B848940043B15C /* Joystick.cpp */; };
+		50891C012652380A0004AC1B /* VICII_sprites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50891C002652380A0004AC1B /* VICII_sprites.cpp */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50995F2824DBCDE400F40713 /* CPUDebugger.cpp */; };
 		50A077F8258A18B9005ACF5B /* FSDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077F6258A18B9005ACF5B /* FSDevice.cpp */; };
@@ -588,6 +589,7 @@
 		5081AB621EF29E6400D6F616 /* MacAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MacAudio.swift; sourceTree = "<group>"; };
 		5085D89B25B848940043B15C /* Joystick.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Joystick.cpp; sourceTree = "<group>"; };
 		5085D89C25B848940043B15C /* Joystick.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Joystick.h; sourceTree = "<group>"; };
+		50891C002652380A0004AC1B /* VICII_sprites.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_sprites.cpp; sourceTree = "<group>"; };
 		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
 		5093D6A824B19E9200BDF924 /* Serialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Serialization.h; sourceTree = "<group>"; };
 		50995F2824DBCDE400F40713 /* CPUDebugger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPUDebugger.cpp; sourceTree = "<group>"; };
@@ -1128,6 +1130,7 @@
 				504C430C24AF29AC00E69CAE /* VICII.h */,
 				504C430724AF29AC00E69CAE /* VICII.cpp */,
 				504C430524AF29AB00E69CAE /* VICII_draw.cpp */,
+				50891C002652380A0004AC1B /* VICII_sprites.cpp */,
 				504C430824AF29AC00E69CAE /* VICII_colors.cpp */,
 				504C430B24AF29AC00E69CAE /* VICII_memory.cpp */,
 				50D20B742508F6D70088E8F2 /* VICII_cycles.cpp */,
@@ -1733,6 +1736,7 @@
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,
 				504C43AB24AF29AC00E69CAE /* CIA.cpp in Sources */,
 				504C436024AF29AC00E69CAE /* Mach5.cpp in Sources */,
+				50891C012652380A0004AC1B /* VICII_sprites.cpp in Sources */,
 				50DF719425021FCA00953E2E /* Keycap.swift in Sources */,
 				504C43A724AF29AC00E69CAE /* VIA.cpp in Sources */,
 				503C1DD324FCD1BF00D91141 /* SnapshotDialog.swift in Sources */,
