@@ -199,13 +199,13 @@ private:
          * current character value (which was once read during a gAccess) is
          * latched. This value is used until the shift register loads again.
          */
-        u8 latchedCharacter;
+        u8 latchedChr;
         
         /* Latched color info. Whenever the shift register is loaded, the
          * current color value (which was once read during a gAccess) is
          * latched. This value is used until the shift register loads again.
          */
-        u8 latchedColor;
+        u8 latchedCol;
         
         /* Color bits. Every second pixel (as synchronized with mcFlop), the
          * multi-color bits are remembered.
@@ -535,10 +535,7 @@ private:
      * the currently drawn 8 pixel chunk.
      */
     short bufferoffset;
-        
-    // The color source lookup table
-    static const ColorSource colSrcTable[64];
-    
+            
     
     //
     // Debugging
@@ -672,8 +669,8 @@ private:
             << sr.data
             << sr.canLoad
             << sr.mcFlop
-            << sr.latchedCharacter
-            << sr.latchedColor
+            << sr.latchedChr
+            << sr.latchedCol
             << sr.colorbits
             >> spriteSr
             << spriteSrActive
@@ -1251,17 +1248,8 @@ private:
     void drawCanvas();
     void drawCanvasExact();
 
-    /* Draws a single canvas pixel
-     *
-     *         pixel : pixel number (0 ... 7)
-     *          mode : display mode for this pixel
-     *          d016 : current value of register D016
-     *  loadShiftReg : forces the shift register to be reloaded
-     */
-    void drawCanvasPixel(u8 pixel,
-                         u8 mode,
-                         u8 d016,
-                         bool loadShiftReg);
+    // Draws a single canvas pixel
+    void drawCanvasPixel(u8 pixel, u8 mode, u8 d016);
     
     // Reloads the sequencer shift register with the gAccess result
     void loadShiftRegister();
