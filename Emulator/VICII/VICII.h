@@ -1097,14 +1097,14 @@ private:
     /* Loads a sprite shift register. The shift register is loaded with the
      * three data bytes fetched in the previous sAccesses.
      */
-    void loadShiftRegister(unsigned nr) {
+    void loadSpriteShiftRegister(unsigned nr) {
         spriteSr[nr].data = LO_LO_HI(spriteSr[nr].chunk3,
                                      spriteSr[nr].chunk2,
                                      spriteSr[nr].chunk1);
     }
     
     /* Updates the sprite shift registers. Checks if a sprite has completed
-     * it's last DMA fetch and calls loadShiftRegister() accordingly.
+     * it's last DMA fetch and calls loadSpriteShiftRegister() accordingly.
      */
     void updateSpriteShiftRegisters();
     
@@ -1281,6 +1281,9 @@ private:
                          u8 d016,
                          bool loadShiftReg);
     
+    // Reloads the sequencer shift register with the gAccess result
+    void loadShiftRegister();
+    
     // Draws 8 sprite pixels (see draw())
     void drawSprites();
     
@@ -1308,21 +1311,21 @@ private:
      * prevent sprite/foreground collision detection in border area.
      */
     #define SET_FRAME_PIXEL(pixel,color) { \
-        int index = bufferoffset + pixel; \
+        isize index = bufferoffset + pixel; \
         COLORIZE(index, color); \
         zBuffer[index] = BORDER_LAYER_DEPTH; \
         pixelSource[index] &= (~0x100); }
     
     // Sets a single foreground pixel
     #define SET_FOREGROUND_PIXEL(pixel,color) { \
-        int index = bufferoffset + pixel; \
+        isize index = bufferoffset + pixel; \
         COLORIZE(index,color) \
         zBuffer[index] = FOREGROUND_LAYER_DEPTH; \
         pixelSource[index] = 0x100; }
 
     // Sets a single background pixel
     #define SET_BACKGROUND_PIXEL(pixel,color) { \
-        int index = bufferoffset + pixel; \
+        isize index = bufferoffset + pixel; \
         COLORIZE(index,color) \
         zBuffer[index] = BACKGROUD_LAYER_DEPTH; \
         pixelSource[index] = 0x00; }

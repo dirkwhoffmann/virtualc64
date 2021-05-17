@@ -526,6 +526,7 @@ VICII::poke(u16 addr, u8 value)
             
             reg.current.ctrl2 = value;
             reg.current.mode = ((reg.current.ctrl1 & 0x60) | (value & 0x10)) >> 4;
+            reg.current.xscroll = value & 0x07;
             leftComparisonVal = leftComparisonValue();
             rightComparisonVal = rightComparisonValue();
             break;

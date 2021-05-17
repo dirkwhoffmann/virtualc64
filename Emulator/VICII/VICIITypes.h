@@ -219,14 +219,14 @@ struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry>
 
 enum_long(DISPLAY_MODE)
 {
-    DISPLAY_MODE_STANDARD_TEXT       = 0x00,
-    DISPLAY_MODE_MULTICOLOR_TEXT     = 0x10,
-    DISPLAY_MODE_STANDARD_BITMAP     = 0x20,
-    DISPLAY_MODE_MULTICOLOR_BITMAP   = 0x30,
-    DISPLAY_MODE_EXTENDED_BG_COLOR   = 0x40,
-    DISPLAY_MODE_INVALID_TEXT        = 0x50,
-    DISPLAY_MODE_INV_STANDARD_BITMAP = 0x60,
-    DISPLAY_MODE_INV_MULTICOL_BITMAP = 0x70
+    DISPLAY_MODE_STANDARD_TEXT,
+    DISPLAY_MODE_MULTICOLOR_TEXT,
+    DISPLAY_MODE_STANDARD_BITMAP,
+    DISPLAY_MODE_MULTICOLOR_BITMAP,
+    DISPLAY_MODE_EXTENDED_BG_COLOR,
+    DISPLAY_MODE_INVALID_TEXT,
+    DISPLAY_MODE_INV_STANDARD_BITMAP,
+    DISPLAY_MODE_INV_MULTICOL_BITMAP
 };
 typedef DISPLAY_MODE DisplayMode;
 
@@ -235,15 +235,7 @@ struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
     
     static bool isValid(long value)
     {
-        return
-        (value == DISPLAY_MODE_STANDARD_TEXT) ||
-        (value == DISPLAY_MODE_MULTICOLOR_TEXT) ||
-        (value == DISPLAY_MODE_STANDARD_BITMAP) ||
-        (value == DISPLAY_MODE_MULTICOLOR_BITMAP) ||
-        (value == DISPLAY_MODE_EXTENDED_BG_COLOR) ||
-        (value == DISPLAY_MODE_INVALID_TEXT) ||
-        (value == DISPLAY_MODE_INV_STANDARD_BITMAP) ||
-        (value == DISPLAY_MODE_INV_MULTICOL_BITMAP);
+        return (unsigned long)value <= DISPLAY_MODE_INV_MULTICOL_BITMAP;
     }
 
     static const char *prefix() { return "DISPLAY_MODE"; }
@@ -262,8 +254,6 @@ struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
         }
         return "???";
     }
-
-    static std::map <string, long> pairs() { return Reflection::pairs(0x70); }
 };
 #endif
 
@@ -486,7 +476,9 @@ struct VICIIRegisters
     u8  colors[15];  // D020 - D02E
     
     // Derived values
+    u8 xscroll;
     DisplayMode mode;
+    
     
     template <class W>
     void operator<<(W& worker)
@@ -503,6 +495,7 @@ struct VICIIRegisters
         << sprMC
         << sprExpandX
         << colors
+        << xscroll
         << mode;
     }
 };

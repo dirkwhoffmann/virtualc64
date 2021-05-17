@@ -363,7 +363,7 @@ VICII::_inspect()
         info.vblank = vblank;
         info.screenGeometry = getScreenGeometry();
         info.frameFF = flipflops.current;
-        info.displayMode = (DisplayMode)((ctrl1 & 0x60) | (ctrl2 & 0x10));
+        info.displayMode = reg.current.mode;
         info.borderColor = reg.current.colors[COLREG_BORDER];
         info.bgColor0 = reg.current.colors[COLREG_BG0];
         info.bgColor1 = reg.current.colors[COLREG_BG1];
@@ -441,28 +441,31 @@ VICII::_dump(dump::Category category, std::ostream& os) const
     
     if (category & dump::State) {
         
+        /*
         u8 ctrl1 = reg.current.ctrl1;
         u8 ctrl2 = reg.current.ctrl2;
         int yscroll = ctrl1 & 0x07;
         int xscroll = ctrl2 & 0x07;
-        DisplayMode mode = (DisplayMode)((ctrl1 & 0x60) | (ctrl2 & 0x10));
         u16 screenMem = VM13VM12VM11VM10() << 6;
         u16 charMem = (CB13CB12CB11() << 10) % 0x4000;
+        */
         
         os << tab("Bank address");
         os << hex(bankAddr) << std::endl;
         os << tab("Screen memory");
-        os << hex(screenMem) << std::endl;
+        os << hex(u16(VM13VM12VM11VM10() << 6)) << std::endl;
         os << tab("Character memory");
-        os << hex(charMem) << std::endl;
-        os << tab("X/Y raster scroll");
-        os << xscroll << " / " << yscroll << std::endl;
+        os << hex(u16((CB13CB12CB11() << 10) % 0x4000)) << std::endl;
+        os << tab("X scroll");
+        os << dec(reg.current.ctrl2 & 0x07) << std::endl;
+        os << tab("Y scroll");
+        os << dec(reg.current.ctrl1 & 0x07) << std::endl;
         os << tab("Control reg 1");
         os << hex(reg.current.ctrl1) << std::endl;
         os << tab("Control reg 2");
         os << hex(reg.current.ctrl2) << std::endl;
         os << tab("Display mode");
-        os << DisplayModeEnum::key(mode) << std::endl;
+        os << DisplayModeEnum::key(reg.current.mode) << std::endl;
         os << tab("badLine");
         os << bol(badLine) << std::endl;
         os << tab("DENwasSetIn30");
@@ -1061,7 +1064,7 @@ VICII::updateSpriteShiftRegisters() {
     if (isSecondDMAcycle) {
         for (unsigned sprite = 0; sprite < 8; sprite++) {
             if (GET_BIT(isSecondDMAcycle, sprite)) {
-                loadShiftRegister(sprite);
+                loadSpriteShiftRegister(sprite);
             }
         }
     }

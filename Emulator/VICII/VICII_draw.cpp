@@ -80,8 +80,6 @@ VICII::drawBorder55()
 void
 VICII::drawCanvas()
 {
-    u8 d011, d016, mode, xscroll;
-    
     // Check if we need to take the slow path
     if (delay & VICUpdateRegisters) { drawCanvasExact(); return; }
     
@@ -90,25 +88,131 @@ VICII::drawCanvas()
     // TODO: REMOVE THIS AFTER TESTING
     assert(reg.delayed.ctrl1 == reg.current.ctrl1);
     assert(reg.delayed.ctrl2 == reg.current.ctrl2);
+    assert(reg.delayed.mode == reg.current.mode);
+    assert(reg.delayed.xscroll == reg.current.xscroll);
     assert(reg.delayed.colors[COLREG_BG0] == reg.current.colors[COLREG_BG0]);
     assert(reg.delayed.colors[COLREG_BG1] == reg.current.colors[COLREG_BG1]);
     assert(reg.delayed.colors[COLREG_BG2] == reg.current.colors[COLREG_BG2]);
     assert(reg.delayed.colors[COLREG_BG3] == reg.current.colors[COLREG_BG3]);
         
-    d011 = reg.delayed.ctrl1;
-    d016 = reg.delayed.ctrl2;
-    xscroll = d016 & 0x07;
-    mode = (d011 & 0x60) | (d016 & 0x10); // -xxx ----
-    assert((mode >> 4) == reg.delayed.mode);
+    u8 xscroll = reg.delayed.xscroll;
     
-    drawCanvasPixel(0, mode, d016, xscroll == 0);
-    drawCanvasPixel(1, mode, d016, xscroll == 1);
-    drawCanvasPixel(2, mode, d016, xscroll == 2);
-    drawCanvasPixel(3, mode, d016, xscroll == 3);
-    drawCanvasPixel(4, mode, d016, xscroll == 4);
-    drawCanvasPixel(5, mode, d016, xscroll == 5);
-    drawCanvasPixel(6, mode, d016, xscroll == 6);
-    drawCanvasPixel(7, mode, d016, xscroll == 7);
+    switch (reg.delayed.mode) {
+    
+        case DISPLAY_MODE_STANDARD_TEXT:
+
+            for (isize i = 0; i < 8; i++) {
+                
+                if (i == xscroll) loadShiftRegister();
+                sr.colorbits = (sr.data >> 7);
+                
+                if (sr.colorbits) {
+                    SET_FOREGROUND_PIXEL(i, sr.latchedColor);
+                } else {
+                    SET_BACKGROUND_PIXEL(i, reg.delayed.colors[COLREG_BG0]);
+                }
+                
+                sr.data <<= 1;
+                sr.mcFlop = !sr.mcFlop;
+            }
+            return;
+            
+        case DISPLAY_MODE_MULTICOLOR_TEXT:
+            
+            for (isize i = 0; i < 8; i++) {
+                
+                if (i == xscroll) loadShiftRegister();
+                bool mc = sr.latchedColor & 0x8;
+                
+                if (mc) {
+                    
+                    if (sr.mcFlop) sr.colorbits = sr.data >> 6;
+                    
+                    switch (sr.colorbits) {
+                        case 0: SET_BACKGROUND_PIXEL(i, reg.delayed.colors[COLREG_BG0]); break;
+                        case 1: SET_BACKGROUND_PIXEL(i, reg.delayed.colors[COLREG_BG1]); break;
+                        case 2: SET_FOREGROUND_PIXEL(i, reg.delayed.colors[COLREG_BG2]); break;
+                        case 3: SET_FOREGROUND_PIXEL(i, sr.latchedColor & 0x07); break;
+                    }
+                    
+                } else {
+                    
+                    sr.colorbits = (sr.data >> 7);
+                    
+                    if (sr.colorbits) {
+                        SET_FOREGROUND_PIXEL(i, sr.latchedColor);
+                    } else {
+                        SET_BACKGROUND_PIXEL(i, reg.delayed.colors[COLREG_BG0]);
+                    }
+                }
+                
+                sr.data <<= 1;
+                sr.mcFlop = !sr.mcFlop;
+            }
+            return;
+
+        case DISPLAY_MODE_STANDARD_BITMAP:
+            
+            for (isize i = 0; i < 8; i++) {
+                
+                if (i == xscroll) loadShiftRegister();
+                sr.colorbits = (sr.data >> 7);
+                
+                if (sr.colorbits) {
+                    SET_FOREGROUND_PIXEL(i, HI_NIBBLE(sr.latchedCharacter));
+                } else {
+                    SET_BACKGROUND_PIXEL(i, LO_NIBBLE(sr.latchedCharacter));
+                }
+
+                sr.data <<= 1;
+                sr.mcFlop = !sr.mcFlop;
+            }
+            return;
+
+        case DISPLAY_MODE_MULTICOLOR_BITMAP:
+            
+            for (isize i = 0; i < 8; i++) {
+                
+                if (i == xscroll) loadShiftRegister();
+                if (sr.mcFlop) sr.colorbits = sr.data >> 6;
+                
+                switch (sr.colorbits) {
+                    case 0: SET_BACKGROUND_PIXEL(i, reg.delayed.colors[COLREG_BG0]); break;
+                    case 1: SET_BACKGROUND_PIXEL(i, HI_NIBBLE(sr.latchedCharacter)); break;
+                    case 2: SET_FOREGROUND_PIXEL(i, LO_NIBBLE(sr.latchedCharacter)); break;
+                    case 3: SET_FOREGROUND_PIXEL(i, sr.latchedColor); break;
+                }
+                    
+                sr.data <<= 1;
+                sr.mcFlop = !sr.mcFlop;
+            }
+            return;
+
+        case DISPLAY_MODE_EXTENDED_BG_COLOR:
+            
+            for (isize i = 0; i < 8; i++) {
+                
+                if (i == xscroll) loadShiftRegister();
+                sr.colorbits = (sr.data >> 7);
+                
+                if (sr.colorbits) {
+                    SET_FOREGROUND_PIXEL(i, sr.latchedColor);
+                } else {
+                    isize regnr = COLREG_BG0 + (sr.latchedCharacter >> 6);
+                    SET_BACKGROUND_PIXEL(i, reg.delayed.colors[regnr]);
+                }
+
+                sr.data <<= 1;
+                sr.mcFlop = !sr.mcFlop;
+            }
+            return;
+
+        default:
+
+            // Invalid color modes (no speedup necessary)
+            drawCanvasExact();
+            break;
+    }
 }
 
 void
@@ -129,6 +233,7 @@ VICII::drawCanvasExact()
     xscroll = d016 & 0x07;
     mode = (d011 & 0x60) | (d016 & 0x10); // -xxx ----
     assert((mode >> 4) == reg.delayed.mode);
+    assert(xscroll == reg.delayed.xscroll);
 
     drawCanvasPixel(0, mode, d016, xscroll == 0);
     
@@ -275,6 +380,20 @@ VICII::drawCanvasPixel(u8 pixel,
     // Shift register and toggle multicolor flipflop
     sr.data <<= 1;
     sr.mcFlop = !sr.mcFlop;
+}
+
+void
+VICII::loadShiftRegister()
+{
+    if (!flipflops.delayed.vertical && sr.canLoad) {
+
+        u32 gAccess = gAccessResult.delayed();
+
+        sr.data = BYTE0(gAccess);
+        sr.latchedCharacter = BYTE2(gAccess);
+        sr.latchedColor = BYTE1(gAccess);
+        sr.mcFlop = true;
+    }
 }
 
 void
