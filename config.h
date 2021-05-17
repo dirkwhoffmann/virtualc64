@@ -60,6 +60,7 @@ static const int CIA_ON_STEROIDS = 0; // Keep the CIAs awake all the time
 static const int VIC_DEBUG       = 0; // Video Interface Controller II
 static const int VICREG_DEBUG    = 0; // VICII registers
 static const int RASTERIRQ_DEBUG = 0; // Raster interrupt
+static const int VIC_SAFE_MODE   = 1; // Disable performance optimizations
 
 // SID
 static const int SID_DEBUG       = 0; // Sound Interface Device

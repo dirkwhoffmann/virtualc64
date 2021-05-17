@@ -12,27 +12,6 @@
 #include "C64.h"
 
 void
-VICII::draw()
-{
-    drawCanvas();
-    drawBorder();
-}
-
-void
-VICII::draw17()
-{
-    drawCanvas();
-    drawBorder17();
-}
-
-void
-VICII::draw55()
-{
-    drawCanvas();
-    drawBorder55();
-}
-
-void
 VICII::drawBorder()
 {
     if (flipflops.delayed.main) {
@@ -80,21 +59,12 @@ VICII::drawBorder55()
 void
 VICII::drawCanvas()
 {
-    // Check if we need to take the slow path
-    if (delay & VICUpdateRegisters) { drawCanvasExact(); return; }
-    
-    stats.fastPath++;
-    
-    // TODO: REMOVE THIS AFTER TESTING
-    assert(reg.delayed.ctrl1 == reg.current.ctrl1);
-    assert(reg.delayed.ctrl2 == reg.current.ctrl2);
-    assert(reg.delayed.mode == reg.current.mode);
-    assert(reg.delayed.xscroll == reg.current.xscroll);
-    assert(reg.delayed.colors[COLREG_BG0] == reg.current.colors[COLREG_BG0]);
-    assert(reg.delayed.colors[COLREG_BG1] == reg.current.colors[COLREG_BG1]);
-    assert(reg.delayed.colors[COLREG_BG2] == reg.current.colors[COLREG_BG2]);
-    assert(reg.delayed.colors[COLREG_BG3] == reg.current.colors[COLREG_BG3]);
-        
+    // Take the slow path if necessary
+    if ((delay & VICUpdateRegisters) || VIC_SAFE_MODE == 1) {
+        drawCanvasExact(); return;
+    }
+    if (!releaseBuild) stats.fastPath++;
+            
     u8 xscroll = reg.delayed.xscroll;
     
     switch (reg.delayed.mode) {
@@ -107,9 +77,9 @@ VICII::drawCanvas()
                 sr.colorbits = (sr.data >> 7);
                 
                 if (sr.colorbits) {
-                    SET_FOREGROUND_PIXEL(i, sr.latchedColor);
+                    SET_FG_PIXEL(i, sr.latchedColor);
                 } else {
-                    SET_BACKGROUND_PIXEL(i, reg.delayed.colors[COLREG_BG0]);
+                    SET_BG_PIXEL(i, reg.delayed.colors[COLREG_BG0]);
                 }
                 
                 sr.data <<= 1;
@@ -129,10 +99,10 @@ VICII::drawCanvas()
                     if (sr.mcFlop) sr.colorbits = sr.data >> 6;
                     
                     switch (sr.colorbits) {
-                        case 0: SET_BACKGROUND_PIXEL(i, reg.delayed.colors[COLREG_BG0]); break;
-                        case 1: SET_BACKGROUND_PIXEL(i, reg.delayed.colors[COLREG_BG1]); break;
-                        case 2: SET_FOREGROUND_PIXEL(i, reg.delayed.colors[COLREG_BG2]); break;
-                        case 3: SET_FOREGROUND_PIXEL(i, sr.latchedColor & 0x07); break;
+                        case 0: SET_BG_PIXEL(i, reg.delayed.colors[COLREG_BG0]); break;
+                        case 1: SET_BG_PIXEL(i, reg.delayed.colors[COLREG_BG1]); break;
+                        case 2: SET_FG_PIXEL(i, reg.delayed.colors[COLREG_BG2]); break;
+                        case 3: SET_FG_PIXEL(i, sr.latchedColor & 0x07); break;
                     }
                     
                 } else {
@@ -140,9 +110,9 @@ VICII::drawCanvas()
                     sr.colorbits = (sr.data >> 7);
                     
                     if (sr.colorbits) {
-                        SET_FOREGROUND_PIXEL(i, sr.latchedColor);
+                        SET_FG_PIXEL(i, sr.latchedColor);
                     } else {
-                        SET_BACKGROUND_PIXEL(i, reg.delayed.colors[COLREG_BG0]);
+                        SET_BG_PIXEL(i, reg.delayed.colors[COLREG_BG0]);
                     }
                 }
                 
@@ -159,9 +129,9 @@ VICII::drawCanvas()
                 sr.colorbits = (sr.data >> 7);
                 
                 if (sr.colorbits) {
-                    SET_FOREGROUND_PIXEL(i, HI_NIBBLE(sr.latchedCharacter));
+                    SET_FG_PIXEL(i, HI_NIBBLE(sr.latchedCharacter));
                 } else {
-                    SET_BACKGROUND_PIXEL(i, LO_NIBBLE(sr.latchedCharacter));
+                    SET_BG_PIXEL(i, LO_NIBBLE(sr.latchedCharacter));
                 }
 
                 sr.data <<= 1;
@@ -177,10 +147,10 @@ VICII::drawCanvas()
                 if (sr.mcFlop) sr.colorbits = sr.data >> 6;
                 
                 switch (sr.colorbits) {
-                    case 0: SET_BACKGROUND_PIXEL(i, reg.delayed.colors[COLREG_BG0]); break;
-                    case 1: SET_BACKGROUND_PIXEL(i, HI_NIBBLE(sr.latchedCharacter)); break;
-                    case 2: SET_FOREGROUND_PIXEL(i, LO_NIBBLE(sr.latchedCharacter)); break;
-                    case 3: SET_FOREGROUND_PIXEL(i, sr.latchedColor); break;
+                    case 0: SET_BG_PIXEL(i, reg.delayed.colors[COLREG_BG0]); break;
+                    case 1: SET_BG_PIXEL(i, HI_NIBBLE(sr.latchedCharacter)); break;
+                    case 2: SET_FG_PIXEL(i, LO_NIBBLE(sr.latchedCharacter)); break;
+                    case 3: SET_FG_PIXEL(i, sr.latchedColor); break;
                 }
                     
                 sr.data <<= 1;
@@ -196,10 +166,10 @@ VICII::drawCanvas()
                 sr.colorbits = (sr.data >> 7);
                 
                 if (sr.colorbits) {
-                    SET_FOREGROUND_PIXEL(i, sr.latchedColor);
+                    SET_FG_PIXEL(i, sr.latchedColor);
                 } else {
                     isize regnr = COLREG_BG0 + (sr.latchedCharacter >> 6);
-                    SET_BACKGROUND_PIXEL(i, reg.delayed.colors[regnr]);
+                    SET_BG_PIXEL(i, reg.delayed.colors[regnr]);
                 }
 
                 sr.data <<= 1;
@@ -220,7 +190,7 @@ VICII::drawCanvasExact()
 {
     u8 d011, d016, newD016, mode, xscroll;
     
-    stats.slowPath++;
+    if (!releaseBuild) stats.slowPath++;
 
     /* "The graphics data sequencer is capable of 8 different graphics modes
      *  that are selected by the bits ECM, BMM and MCM (Extended Color Mode,
@@ -286,8 +256,8 @@ VICII::drawCanvasPixel(u8 pixel,
 {
     assert(pixel < 8);
     
-    /* "The heart of the sequencer is an 8 bit shift register that is shifted by
-     *  1 bit every pixel and reloaded with new graphics data after every
+    /* "The heart of the sequencer is an 8 bit shift register that is shifted
+     *  by 1 bit every pixel and reloaded with new graphics data after every
      *  g-access. With XSCROLL from register $d016 the reloading can be delayed
      *  by 0-7 pixels, thus shifting the display up to 7 pixels to the right."
      */
@@ -320,61 +290,103 @@ VICII::drawCanvasPixel(u8 pixel,
         sr.colorbits = (sr.data >> 7) << multicolorDisplayMode;
     }
         
-    // Draw pixel
-    assert(sr.colorbits < 4);
-
-    // Lookup how the color should be synthesized
+    // Synthesize color
+    u8 color;
+    switch ((mode | mcBit) >> 1 | sr.colorbits) {
+            
+            // DISPLAY_MODE_STANDARD_TEXT
+        case 0x00: case 0x04: color = reg.delayed.colors[COLREG_BG0]; break;
+        case 0x01: case 0x05: color = sr.latchedColor; break;
+        case 0x02: case 0x06: color = reg.delayed.colors[COLREG_BG0];  break;
+        case 0x03: case 0x07: color = sr.latchedColor; break;
+            
+            // DISPLAY_MODE_MULTICOLOR_TEXT (MC = 0)
+        case 0x08: color = reg.delayed.colors[COLREG_BG0]; break;
+        case 0x09: color = sr.latchedColor; break;
+        case 0x0A: color = reg.delayed.colors[COLREG_BG0]; break;
+        case 0x0B: color = sr.latchedColor; break;
+            
+            // DISPLAY_MODE_MULTICOLOR_TEXT (MC = 1)
+        case 0x0C: color = reg.delayed.colors[COLREG_BG0]; break;
+        case 0x0D: color = reg.delayed.colors[COLREG_BG1]; break;
+        case 0x0E: color = reg.delayed.colors[COLREG_BG2]; break;
+        case 0x0F: color = sr.latchedColor & 0x07; break;
+            
+            // DISPLAY_MODE_STANDARD_BITMAP
+        case 0x10: case 0x14: color = LO_NIBBLE(sr.latchedCharacter); break;
+        case 0x11: case 0x15: color = HI_NIBBLE(sr.latchedCharacter); break;
+        case 0x12: case 0x16: color = LO_NIBBLE(sr.latchedCharacter); break;
+        case 0x13: case 0x17: color = HI_NIBBLE(sr.latchedCharacter); break;
+            
+            // DISPLAY_MODE_MULTICOLOR_BITMAP
+        case 0x18: case 0x1C: color = reg.delayed.colors[COLREG_BG0]; break;
+        case 0x19: case 0x1D: color = HI_NIBBLE(sr.latchedCharacter); break;
+        case 0x1A: case 0x1E: color = LO_NIBBLE(sr.latchedCharacter); break;
+        case 0x1B: case 0x1F: color = sr.latchedColor; break;
+            
+            // DISPLAY_MODE_EXTENDED_BG_COLOR
+        case 0x20: case 0x24: color = reg.delayed.colors[COLREG_BG0 + (sr.latchedCharacter >> 6)]; break;
+        case 0x21: case 0x25: color = sr.latchedColor; break;
+        case 0x22: case 0x26: color = reg.delayed.colors[COLREG_BG0 + (sr.latchedCharacter >> 6)]; break;
+        case 0x23: case 0x27: color = sr.latchedColor; break;
+            
+            // INVALID VIDEO MODES
+        default: color = 0;
+    }
+    
+    // Lookup how the color should be synthesized (DEPRECATED)
     assert(((mode | mcBit) >> 1 | sr.colorbits) < 64);
     ColorSource source = colSrcTable[(mode | mcBit) >> 1 | sr.colorbits];
     
-    u8 color;
+    u8 oldColor;
     switch (source) {
             
         case COLSRC_D021:
-            color = reg.delayed.colors[COLREG_BG0];
+            oldColor = reg.delayed.colors[COLREG_BG0];
             break;
             
         case COLSRC_D022:
-            color = reg.delayed.colors[COLREG_BG1];
+            oldColor = reg.delayed.colors[COLREG_BG1];
             break;
             
         case COLSRC_D023:
-            color = reg.delayed.colors[COLREG_BG2];
+            oldColor = reg.delayed.colors[COLREG_BG2];
             break;
 
         case COLSRC_CHAR_LO:
-            color = LO_NIBBLE(sr.latchedCharacter);
+            oldColor = LO_NIBBLE(sr.latchedCharacter);
             break;
 
         case COLSRC_CHAR_HI:
-            color = HI_NIBBLE(sr.latchedCharacter);
+            oldColor = HI_NIBBLE(sr.latchedCharacter);
             break;
 
         case COLSRC_COLRAM3:
-            color = sr.latchedColor & 0x07;
+            oldColor = sr.latchedColor & 0x07;
             break;
             
         case COLSRC_COLRAM4:
-            color = sr.latchedColor;
+            oldColor = sr.latchedColor;
             break;
             
         case COLSRC_INDEXED:
-            color = reg.delayed.colors[COLREG_BG0 + (sr.latchedCharacter >> 6)];
+            oldColor = reg.delayed.colors[COLREG_BG0 + (sr.latchedCharacter >> 6)];
             break;
             
         default:
-            color = 0;
+            oldColor = 0;
             break;
     }
+    assert(color == oldColor);
     
     // Determine pixel depth
     bool foreground = multicolorDisplayMode ? (sr.colorbits & 0x2) : sr.colorbits;
 
     // Set pixel
     if (foreground) {
-        SET_FOREGROUND_PIXEL(pixel, color);
+        SET_FG_PIXEL(pixel, color);
     } else {
-        SET_BACKGROUND_PIXEL(pixel, color);
+        SET_BG_PIXEL(pixel, color);
     }
     
     // Shift register and toggle multicolor flipflop

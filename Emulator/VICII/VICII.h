@@ -1214,11 +1214,10 @@ public:
 	
     #define DRAW_SPRITES if (spriteDisplay || isSecondDMAcycle) drawSprites();
     #define DRAW_SPRITES59 if (spriteDisplayDelayed || spriteDisplay || isSecondDMAcycle) drawSprites();
-
-    #define DRAW if (!vblank) draw(); DRAW_SPRITES;
-    #define DRAW17 if (!vblank) draw17(); DRAW_SPRITES;
-    #define DRAW55 if (!vblank) draw55(); DRAW_SPRITES;
-    #define DRAW59 if (!vblank) draw(); DRAW_SPRITES59;
+    #define DRAW if (!vblank) { drawCanvas(); drawBorder(); } DRAW_SPRITES;
+    #define DRAW17 if (!vblank) { drawCanvas(); drawBorder17(); } DRAW_SPRITES;
+    #define DRAW55 if (!vblank) { drawCanvas(); drawBorder55(); } DRAW_SPRITES;
+    #define DRAW59 if (!vblank) { drawCanvas(); drawBorder(); } DRAW_SPRITES59;
     #define DRAW_IDLE DRAW_SPRITES;
             
     #define END_CYCLE \
@@ -1238,34 +1237,17 @@ public:
     // 
     
 private:
-    
-    /* Draws 8 pixels. This is the main entry point to the VICII code and
-     * invoked in each drawing cycle. An exception are cycle 17 and cycle 55
-     * which are handled seperately for speedup reasons.
-     */
-    void draw();
-    
-    // Special draw routine for cycle 17
-    void draw17();
-    
-    // Special draw routine for cycle 55
-    void draw55();
         
-    
-    //
-    // Internal drawing routines (called by draw(), draw17(), and drae55())
-    //
-    
     // Draws 8 border pixels. Invoked inside draw().
     void drawBorder();
     
-    // Draws the border pixels in cycle 17 (see draw17())
+    // Draws the border pixels in cycle 17
     void drawBorder17();
     
-    // Draws the border pixels in cycle 55 (see draw55())
+    // Draws the border pixels in cycle 55
     void drawBorder55();
     
-    // Draws 8 canvas pixels (see draw())
+    // Draws 8 canvas pixels
     void drawCanvas();
     void drawCanvasExact();
 
@@ -1283,6 +1265,12 @@ private:
     
     // Reloads the sequencer shift register with the gAccess result
     void loadShiftRegister();
+    
+    //
+    // Drawing routines (VIC_sprites.cpp)
+    //
+    
+private:
     
     // Draws 8 sprite pixels (see draw())
     void drawSprites();
@@ -1317,14 +1305,14 @@ private:
         pixelSource[index] &= (~0x100); }
     
     // Sets a single foreground pixel
-    #define SET_FOREGROUND_PIXEL(pixel,color) { \
+    #define SET_FG_PIXEL(pixel,color) { \
         isize index = bufferoffset + pixel; \
         COLORIZE(index,color) \
         zBuffer[index] = FOREGROUND_LAYER_DEPTH; \
         pixelSource[index] = 0x100; }
 
     // Sets a single background pixel
-    #define SET_BACKGROUND_PIXEL(pixel,color) { \
+    #define SET_BG_PIXEL(pixel,color) { \
         isize index = bufferoffset + pixel; \
         COLORIZE(index,color) \
         zBuffer[index] = BACKGROUD_LAYER_DEPTH; \
