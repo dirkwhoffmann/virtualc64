@@ -520,20 +520,11 @@ private:
      * routines only write a color value, if it is closer to the view point.
      * The depth of the closest pixel is kept in this buffer. The lower the
      * value, the closer it is to the viewer.
+     * The depth values have been chosen in a way that preserves the source
+     * of the drawn pixel (border pixel, sprite pixel, etc.).
      */
     u8 zBuffer[TEX_WIDTH];
-    
-    /* Indicates the source of a drawn pixel. Whenever a foreground pixel or
-     * sprite pixel is drawn, a distinct bit in the pixelSource array is set.
-     * The information is needed to detect sprite-sprite and sprite-background
-     * collisions.
-     *
-     *     Bit      8 |  7 |  6 |  5 |  4 |  3 |  2 |  1 |  0
-     *     --------------------------------------------------
-     *     Format: FG | S7 | S6 | S5 | S4 | S3 | S2 | S1 | S0
-     */
-    u16 pixelSource[TEX_WIDTH];
-    
+        
     /* Offset into to pixelBuffer. This variable points to the first pixel of
      * the currently drawn 8 pixel chunk.
      */
@@ -1284,33 +1275,27 @@ private:
     
     // Writes a single color value into the screenbuffer
     #define COLORIZE(index,color) \
-        assert(index < TEX_WIDTH); \
         emuTexturePtr[index] = rgbaTable[color];
     
-    /* Sets a single frame pixel. The upper bit in pixelSource is cleared to
-     * prevent sprite/foreground collision detection in border area.
-     */
+    // Sets a single frame pixel
     #define SET_FRAME_PIXEL(pixel,color) { \
         isize index = bufferoffset + pixel; \
         COLORIZE(index, color); \
-        zBuffer[index] = BORDER_LAYER_DEPTH; \
-        pixelSource[index] &= (~0x100); }
+        zBuffer[index] = BORDER_LAYER_DEPTH; }
     
     // Sets a single foreground pixel
     #define SET_FG_PIXEL(pixel,color) { \
         isize index = bufferoffset + pixel; \
         COLORIZE(index,color) \
-        zBuffer[index] = FOREGROUND_LAYER_DEPTH; \
-        pixelSource[index] = 0x100; }
+        zBuffer[index] = FOREGROUND_LAYER_DEPTH; }
 
     // Sets a single background pixel
     #define SET_BG_PIXEL(pixel,color) { \
         isize index = bufferoffset + pixel; \
         COLORIZE(index,color) \
-        zBuffer[index] = BACKGROUD_LAYER_DEPTH; \
-        pixelSource[index] = 0x00; }
+        zBuffer[index] = BACKGROUD_LAYER_DEPTH; }
     
-    // Draw a single sprite pixel
+    // Sets a single sprite pixel
     void setSpritePixel(unsigned sprite, unsigned pixel, u8 color);
         
     
