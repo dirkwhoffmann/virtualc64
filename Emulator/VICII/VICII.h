@@ -368,7 +368,7 @@ private:
     u8 cleared_bits_in_d017;
     
     // Collision bits
-    u8 collision[8];
+    // u8 collision;
     
     
 	//
@@ -695,7 +695,7 @@ private:
             << spriteDmaOnOff
             << expansionFF
             << cleared_bits_in_d017
-            << collision
+            // << collision
             << lpLine
             << lpIrqHasOccurred
             << ultimax
@@ -1296,7 +1296,15 @@ private:
         zBuffer[index] = BACKGROUD_LAYER_DEPTH; }
     
     // Sets a single sprite pixel
-    void setSpritePixel(unsigned sprite, unsigned pixel, u8 color);
+    #define SET_SPRITE_PIXEL(sprite,pixel,color) { \
+        isize index = bufferoffset + pixel; \
+        if (u8 depth = spriteDepth(sprite); depth <= zBuffer[index]) { \
+            if (isVisibleColumn) COLORIZE(index, color); \
+            zBuffer[index] = depth; \
+        } }
+    
+    // Sets a single sprite pixel
+    [[deprecated]] void setSpritePixel(unsigned sprite, unsigned pixel, u8 color);
         
     
 	//

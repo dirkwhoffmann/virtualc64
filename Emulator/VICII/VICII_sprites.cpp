@@ -16,12 +16,14 @@ VICII::drawSprites()
     u8 firstDMA = isFirstDMAcycle;
     u8 secondDMA = isSecondDMAcycle;
     
+    /*
     bool foreground[8];
     for (isize i = 0; i < 8; i++) {
         foreground[i] = zBuffer[bufferoffset + i] == FOREGROUND_LAYER_DEPTH;
         collision[i] = 0;
     }
-        
+    */
+    
     // Pixel 0
     drawSpritePixel(0, spriteDisplayDelayed, secondDMA);
     
@@ -84,40 +86,6 @@ VICII::drawSprites()
     
     // Pixel 7
     drawSpritePixel(7, spriteDisplay, firstDMA);
-    
-    // Check for collisions
-    for (unsigned i = 0; i < 8; i++) {
-                
-        u16 newPixelSource = collision[i] | (foreground[i] ? 0x100 : 0);
-        
-        // Check if two or more bits are set in pixelSource
-        if (newPixelSource & (newPixelSource - 1)) {
-            
-            // Is it a sprite/sprite collision?
-            if ((newPixelSource & 0xFF) & ((newPixelSource & 0xFF) - 1)) {
-                
-                if (config.checkSSCollisions) {
-                    
-                    // Trigger an IRQ if this is the first detected collision
-                    if (!spriteSpriteCollision) triggerIrq(4);
-                    
-                    spriteSpriteCollision |= (newPixelSource & 0xFF);
-                }
-            }
-            
-            // Is it a sprite/background collision?
-            if (newPixelSource & 0x100) {
-                
-                if (config.checkSBCollisions) {
-                    
-                    // Trigger an IRQ if this is the first detected collision
-                    if (!spriteBackgroundColllision) triggerIrq(2);
-                    
-                    spriteBackgroundColllision |= (newPixelSource & 0xFF);
-                }
-            }
-        }
-    }
 }
 
 void
@@ -127,6 +95,9 @@ VICII::drawSpritePixel(unsigned pixel,
 {
     // Quick exit condition
     if (!enableBits && !spriteSrActive) return;
+    
+    bool foreground = zBuffer[bufferoffset +  pixel] == FOREGROUND_LAYER_DEPTH;
+    u8 collision = 0;
     
     // Iterate over all sprites
     for (unsigned sprite = 0; sprite < 8; sprite++) {
@@ -185,21 +156,49 @@ VICII::drawSpritePixel(unsigned pixel,
         }
         
         // Draw pixel
-        if (active && !config.hideSprites) {
+        if (active && spriteSr[sprite].colBits && !config.hideSprites) {
             
-            switch (spriteSr[sprite].colBits) {
-                    
-                case 0x01:
-                    setSpritePixel(sprite, pixel, reg.delayed.colors[COLREG_SPR_EX1]);
-                    break;
-                    
-                case 0x02:
-                    setSpritePixel(sprite, pixel, reg.delayed.colors[COLREG_SPR0 + sprite]);
-                    break;
-                    
-                case 0x03:
-                    setSpritePixel(sprite, pixel, reg.delayed.colors[COLREG_SPR_EX2]);
-                    break;
+            // Only draw the pixel if no other sprite pixel has been drawn yet
+            if (!collision) {
+                
+                u8 color =
+                spriteSr[sprite].colBits == 1 ? reg.delayed.colors[COLREG_SPR_EX1] :
+                spriteSr[sprite].colBits == 2 ? reg.delayed.colors[COLREG_SPR0 + sprite] :
+                reg.delayed.colors[COLREG_SPR_EX2];
+                
+                SET_SPRITE_PIXEL(sprite, pixel, color);
+            }
+            collision |= (1 << sprite);
+        }
+    }
+
+    // Check for collisions
+    u16 newPixelSource = collision | (foreground ? 0x100 : 0);
+    
+    // Check if two or more bits are set in pixelSource
+    if (newPixelSource & (newPixelSource - 1)) {
+        
+        // Is it a sprite/sprite collision?
+        if ((newPixelSource & 0xFF) & ((newPixelSource & 0xFF) - 1)) {
+            
+            if (config.checkSSCollisions) {
+                
+                // Trigger an IRQ if this is the first detected collision
+                if (!spriteSpriteCollision) triggerIrq(4);
+                
+                spriteSpriteCollision |= (newPixelSource & 0xFF);
+            }
+        }
+        
+        // Is it a sprite/background collision?
+        if (newPixelSource & 0x100) {
+            
+            if (config.checkSBCollisions) {
+                
+                // Trigger an IRQ if this is the first detected collision
+                if (!spriteBackgroundColllision) triggerIrq(2);
+                
+                spriteBackgroundColllision |= (newPixelSource & 0xFF);
             }
         }
     }
@@ -213,15 +212,10 @@ VICII::drawSpritePixel(unsigned pixel,
 void
 VICII::setSpritePixel(unsigned sprite, unsigned pixel, u8 color)
 {
-    u8 depth = spriteDepth(sprite);
-    u8 source = (1 << sprite);
+    // u8 depth = spriteDepth(sprite);
     int index = bufferoffset + pixel;
-    
-    if (depth <= zBuffer[index]) {
-        if (!collision[pixel]) {
-            if (isVisibleColumn) COLORIZE(index, color);
-            zBuffer[index] = depth;
-        }
+    if (u8 depth = spriteDepth(sprite); depth <= zBuffer[index]) {
+        if (isVisibleColumn) COLORIZE(index, color);
+        zBuffer[index] = depth;
     }
-    collision[pixel] |= source;
 }
