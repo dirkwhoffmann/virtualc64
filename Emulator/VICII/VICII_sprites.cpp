@@ -13,18 +13,34 @@
 void
 VICII::drawSprites()
 {
+    // Take the slow path if necessary
+    if (isFirstDMAcycle || isSecondDMAcycle || (delay & VICUpdateRegisters) || VIC_SAFE_MODE == 1) {
+        drawSpritesExact(); return;
+    }
+    if (!releaseBuild) stats.spriteFastPath++;
+    
+    drawSpritePixel(0, spriteDisplayDelayed, 0);
+    drawSpritePixel(1, spriteDisplayDelayed, 0);
+    drawSpritePixel(2, spriteDisplayDelayed, 0);
+    drawSpritePixel(3, spriteDisplayDelayed, 0);
+    drawSpritePixel(4, spriteDisplay, 0);
+    drawSpritePixel(5, spriteDisplay, 0);
+    drawSpritePixel(6, spriteDisplay, 0);
+    drawSpritePixel(7, spriteDisplay, 0);
+}
+
+void
+VICII::drawSpritesExact()
+{
+    if (!releaseBuild) stats.canvasSlowPath++;
+    
     u8 firstDMA = isFirstDMAcycle;
     u8 secondDMA = isSecondDMAcycle;
-    
-    /*
-    bool foreground[8];
-    for (isize i = 0; i < 8; i++) {
-        foreground[i] = zBuffer[bufferoffset + i] == FOREGROUND_LAYER_DEPTH;
-        collision[i] = 0;
-    }
-    */
-    
+        
+    //
     // Pixel 0
+    //
+    
     drawSpritePixel(0, spriteDisplayDelayed, secondDMA);
     
     // After the first pixel, color register changes show up
@@ -34,7 +50,10 @@ VICII::drawSprites()
         reg.delayed.colors[COLREG_SPR0 + i] = reg.current.colors[COLREG_SPR0 + i];
     }
     
-    // Pixel 1, Pixel 2, Pixel 3
+    //
+    // Pixel 1, 2, 3
+    //
+
     drawSpritePixel(1, spriteDisplayDelayed, secondDMA);
     
     // Stop shift register on the second DMA cycle
@@ -43,10 +62,13 @@ VICII::drawSprites()
     drawSpritePixel(2, spriteDisplayDelayed, secondDMA);
     drawSpritePixel(3, spriteDisplayDelayed, firstDMA | secondDMA);
     
-    // If a shift register is loaded, the new data appears here.
+    // If a shift register is loaded, the new data appears here
     updateSpriteShiftRegisters();
 
-    // Pixel 4, Pixel 5
+    //
+    // Pixel 4, 5
+    //
+
     drawSpritePixel(4, spriteDisplay, firstDMA | secondDMA);
     drawSpritePixel(5, spriteDisplay, firstDMA | secondDMA);
     
@@ -71,7 +93,10 @@ VICII::drawSprites()
         }
     }
     
+    //
     // Pixel 6
+    //
+
     drawSpritePixel(6, spriteDisplay, firstDMA | secondDMA);
     
     // Update multicolor bits if an old VICII is emulated
@@ -89,9 +114,7 @@ VICII::drawSprites()
 }
 
 void
-VICII::drawSpritePixel(unsigned pixel,
-                     u8 enableBits,
-                     u8 freezeBits)
+VICII::drawSpritePixel(unsigned pixel, u8 enableBits, u8 freezeBits)
 {
     // Quick exit condition
     if (!enableBits && !spriteSrActive) return;
@@ -108,8 +131,9 @@ VICII::drawSpritePixel(unsigned pixel,
         bool xExp = GET_BIT(reg.delayed.sprExpandX, sprite);
         bool active = GET_BIT(spriteSrActive, sprite);
         
-        // If a sprite is enabled, activate it's shift register if the
-        // horizontal trigger condition holds.
+        /* If a sprite is enabled, activate the shift register if the
+         * horizontal trigger condition holds.
+         */
         if (enable) {
             if (!active && xCounter + pixel == reg.delayed.sprX[sprite] && !freeze) {
                 

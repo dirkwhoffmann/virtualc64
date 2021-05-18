@@ -371,8 +371,10 @@ VICIIConfig;
 typedef struct
 {
     // Graphics synthesizer (speed optimizations)
-    isize fastPath;
-    isize slowPath;
+    isize canvasFastPath;
+    isize canvasSlowPath;
+    isize spriteFastPath;
+    isize spriteSlowPath;
 }
 VICIIStats;
 

@@ -464,8 +464,10 @@ VICII::_dump(dump::Category category, std::ostream& os) const
 void
 VICII::clearStats()
 {
-    stats.fastPath = 0;
-    stats.slowPath = 0;
+    stats.canvasFastPath = 0;
+    stats.canvasSlowPath = 0;
+    stats.spriteFastPath = 0;
+    stats.spriteSlowPath = 0;
 }
 
 void

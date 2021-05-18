@@ -1257,6 +1257,7 @@ private:
     
     // Draws 8 sprite pixels (see draw())
     void drawSprites();
+    void drawSpritesExact();
     
     /* Draws a single sprite pixel for all sprites
      *
