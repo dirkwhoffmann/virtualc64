@@ -16,6 +16,12 @@ VICII::drawSprites()
     u8 firstDMA = isFirstDMAcycle;
     u8 secondDMA = isSecondDMAcycle;
     
+    bool foreground[8];
+    for (isize i = 0; i < 8; i++) {
+        foreground[i] = zBuffer[bufferoffset + i] == FOREGROUND_LAYER_DEPTH;
+        collision[i] = 0;
+    }
+        
     // Pixel 0
     drawSpritePixel(0, spriteDisplayDelayed, secondDMA);
     
@@ -84,6 +90,9 @@ VICII::drawSprites()
         
         int index = bufferoffset + i;
         
+        u16 newPixelSource = collision[i] | (foreground[i] ? 0x100 : 0);
+        assert(newPixelSource == pixelSource[index]);
+        
         // Check if two or more bits are set in pixelSource
         if (pixelSource[index] & (pixelSource[index] - 1)) {
             
@@ -91,9 +100,8 @@ VICII::drawSprites()
             if ((pixelSource[index] & 0xFF) & ((pixelSource[index] & 0xFF) - 1)) {
                 
                 // Trigger an IRQ if this is the first detected collision
-                if (!spriteSpriteCollision) {
-                    triggerIrq(4);
-                }
+                if (!spriteSpriteCollision) triggerIrq(4);
+
                 spriteSpriteCollision |= (pixelSource[index] & 0xFF);
             }
             
@@ -101,9 +109,8 @@ VICII::drawSprites()
             if ((pixelSource[index] & 0x100) && config.checkSBCollisions) {
                 
                 // Trigger an IRQ if this is the first detected collision
-                if (!spriteBackgroundColllision) {
-                    triggerIrq(2);
-                }
+                if (!spriteBackgroundColllision) triggerIrq(2);
+
                 spriteBackgroundColllision |= (pixelSource[index] & 0xFF);
             }
         }
@@ -116,9 +123,7 @@ VICII::drawSpritePixel(unsigned pixel,
                      u8 freezeBits)
 {
     // Quick exit condition
-    if (!enableBits && !spriteSrActive) {
-        return;
-    }
+    if (!enableBits && !spriteSrActive) return;
     
     // Iterate over all sprites
     for (unsigned sprite = 0; sprite < 8; sprite++) {
@@ -216,10 +221,15 @@ VICII::setSpritePixel(unsigned sprite, unsigned pixel, u8 color)
          *  case 10/11 background bits show in front of whole sprite 0."
          * Test program: VICII/spritePriorities
          */
+        if (((pixelSource[index] & 0xFF) == 0) != ((zBuffer[index] & 0xF) == 0)) {
+            printf("pixelSource[%d] = %x z: %x\n", index, pixelSource[index], zBuffer[index]);
+        }
+        assert((pixelSource[index] & 0xFF) == collision[pixel]);
         if (!(pixelSource[index] & 0xFF)) {
             if (isVisibleColumn) COLORIZE(index, color);
             zBuffer[index] = depth;
         }
     }
     pixelSource[index] |= source;
+    collision[pixel] |= source;
 }

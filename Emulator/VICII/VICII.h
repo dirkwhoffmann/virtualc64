@@ -367,6 +367,9 @@ private:
      */
     u8 cleared_bits_in_d017;
     
+    // Collision bits
+    u8 collision[8];
+    
     
 	//
 	// Lightpen
@@ -701,6 +704,7 @@ private:
             << spriteDmaOnOff
             << expansionFF
             << cleared_bits_in_d017
+            << collision
             << lpLine
             << lpIrqHasOccurred
             << ultimax

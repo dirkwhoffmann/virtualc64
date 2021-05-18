@@ -384,7 +384,8 @@ VICII::cutLayers()
                 break;
                 
             default:
-                cut = pixelSource[i] & config.cutLayers & 0xFF;
+                cut = GET_BIT(config.cutLayers, zBuffer[i] & 0xF);
+                // cut = zBuffer[i] & config.cutLayers & 0xFF;
                 if (!(config.cutLayers & 0x100)) cut = false;
                 break;
         }
