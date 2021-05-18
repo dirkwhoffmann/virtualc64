@@ -172,50 +172,28 @@ VICII::drawSpritePixel(unsigned pixel,
         }
     }
 
-    // Check for collisions
-    u16 newPixelSource = collision | (foreground ? 0x100 : 0);
-    
-    // Check if two or more bits are set in pixelSource
-    if (newPixelSource & (newPixelSource - 1)) {
-        
-        // Is it a sprite/sprite collision?
-        if ((newPixelSource & 0xFF) & ((newPixelSource & 0xFF) - 1)) {
+    //
+    // Collision checking
+    //
             
-            if (config.checkSSCollisions) {
-                
-                // Trigger an IRQ if this is the first detected collision
-                if (!spriteSpriteCollision) triggerIrq(4);
-                
-                spriteSpriteCollision |= (newPixelSource & 0xFF);
-            }
+    if (collision) {
+        
+        // Check for sprite-sprite collisions (at least 2 bits must be set)
+        if ((collision & (collision - 1)) && config.checkSSCollisions) {
+            
+            // Trigger an IRQ if this is the first detected collision
+            if (!spriteSpriteCollision) triggerIrq(4);
+            
+            spriteSpriteCollision |= collision;
         }
         
-        // Is it a sprite/background collision?
-        if (newPixelSource & 0x100) {
+        // Check for sprite-background collisions
+        if (foreground && config.checkSBCollisions) {
             
-            if (config.checkSBCollisions) {
-                
-                // Trigger an IRQ if this is the first detected collision
-                if (!spriteBackgroundColllision) triggerIrq(2);
-                
-                spriteBackgroundColllision |= (newPixelSource & 0xFF);
-            }
+            // Trigger an IRQ if this is the first detected collision
+            if (!spriteBackgroundColllision) triggerIrq(2);
+            
+            spriteBackgroundColllision |= collision;
         }
-    }
-}
-
-
-//
-// Low level drawing (pixel buffer access)
-//
-
-void
-VICII::setSpritePixel(unsigned sprite, unsigned pixel, u8 color)
-{
-    // u8 depth = spriteDepth(sprite);
-    int index = bufferoffset + pixel;
-    if (u8 depth = spriteDepth(sprite); depth <= zBuffer[index]) {
-        if (isVisibleColumn) COLORIZE(index, color);
-        zBuffer[index] = depth;
     }
 }

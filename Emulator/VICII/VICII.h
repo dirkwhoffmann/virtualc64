@@ -1302,10 +1302,7 @@ private:
             if (isVisibleColumn) COLORIZE(index, color); \
             zBuffer[index] = depth; \
         } }
-    
-    // Sets a single sprite pixel
-    [[deprecated]] void setSpritePixel(unsigned sprite, unsigned pixel, u8 color);
-        
+            
     
 	//
 	// Debugging
