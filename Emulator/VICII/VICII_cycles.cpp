@@ -42,7 +42,7 @@ VICII::cycle1()
     }
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_IDLE
+    DRAW_SPRITES
 
     // Phi1.3 Fetch
     PAL  { sFinalize(2); pAccess <mode> (3); }
@@ -79,7 +79,7 @@ VICII::cycle2()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_IDLE
+    DRAW_SPRITES
 
     // Phi1.3 Fetch
     PAL  { sAccess2 <mode,3> (); }
@@ -103,7 +103,7 @@ VICII::cycle3()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_IDLE
+    DRAW_SPRITES
 
     // Phi1.3 Fetch
     PAL  { sFinalize(3); pAccess <mode> (4); }
@@ -127,7 +127,7 @@ VICII::cycle4()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_IDLE
+    DRAW_SPRITES
 
     // Phi1.3 Fetch
     PAL  { sAccess2 <mode,4> (); }
@@ -151,7 +151,7 @@ VICII::cycle5()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_IDLE
+    DRAW_SPRITES
 
     // Phi1.3 Fetch
     PAL  { sFinalize(4); pAccess <mode> (5); }
@@ -175,7 +175,7 @@ VICII::cycle6()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_IDLE
+    DRAW_SPRITES
 
     // Phi1.3 Fetch
     PAL  { sAccess2 <mode,5> (); }
@@ -199,7 +199,7 @@ VICII::cycle7()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_IDLE
+    DRAW_SPRITES
 
     // Phi1.3 Fetch
     PAL  { sFinalize(5); pAccess <mode> (6); }
@@ -223,7 +223,7 @@ VICII::cycle8()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_IDLE
+    DRAW_SPRITES
 
     // Phi1.3 Fetch
     PAL  { sAccess2 <mode,6> (); }
@@ -247,7 +247,7 @@ VICII::cycle9()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_IDLE
+    DRAW_SPRITES
 
     // Phi1.3 Fetch
     PAL  { sFinalize(6); pAccess <mode> (7); }
@@ -271,7 +271,7 @@ VICII::cycle10()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_IDLE
+    DRAW_SPRITES
 
     // Phi1.3 Fetch
     PAL  { sAccess2 <mode,7> (); }
@@ -294,7 +294,7 @@ VICII::cycle11()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_IDLE
+    DRAW_SPRITES
 
     // Phi1.3 Fetch (first out of five DRAM refreshs)
     PAL  { sFinalize(7); }
@@ -313,7 +313,7 @@ VICII::cycle12()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_IDLE
+    DRAW_SPRITES
 
     // Phi1.3 Fetch (second out of five DRAM refreshs)
     rAccess <mode> ();
@@ -340,7 +340,7 @@ VICII::cycle13() // X Coordinate -3 - 4 (?)
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_IDLE
+    DRAW_SPRITES
 
     // Phi1.3 Fetch (third out of five DRAM refreshs)
     rAccess <mode> ();
@@ -360,6 +360,7 @@ VICII::cycle14() // SpriteX: 0 - 7 (?)
     // Phi1.2 Draw the first visible column
     isVisibleColumn = true;
     DRAW
+    DRAW_SPRITES
     
     // Phi1.3 Fetch (forth out of five DRAM refreshs)
     rAccess <mode> ();
@@ -390,6 +391,7 @@ VICII::cycle15() // SpriteX: 8 - 15 (?)
     
     // Phi1.2 Draw
     DRAW
+    DRAW_SPRITES
     
     // Phi1.3 Fetch (last DRAM refresh)
     rAccess <mode> ();
@@ -412,7 +414,8 @@ VICII::cycle16() // SpriteX: 16 - 23 (?)
     
     // Phi1.2 Draw
     DRAW
-  
+    DRAW_SPRITES
+    
     // Phi1.3 Fetch
     gAccess <mode> ();
     
@@ -437,6 +440,7 @@ VICII::cycle17() // SpriteX: 24 - 31 (?)
     
     // Phi1.2 Draw
     DRAW
+    DRAW_SPRITES
     
     // Phi1.3 Fetch
     gAccess <mode> ();
@@ -460,7 +464,8 @@ VICII::cycle18() // SpriteX: 32 - 39
     // Phi1.2 Draw
     sr.canLoad = true; // Entering canvas area
     DRAW17
-  
+    DRAW_SPRITES
+    
     // Phi1.3 Fetch
     gAccess <mode> ();
     
@@ -481,6 +486,7 @@ VICII::cycle19to54()
     
     // Phi1.2 Draw
     DRAW
+    DRAW_SPRITES
     
     // Phi1.3 Fetch
     gAccess <mode> ();
@@ -502,7 +508,8 @@ VICII::cycle55()
     
     // Phi1.2 Draw
     DRAW
-  
+    DRAW_SPRITES
+    
     // Phi1.3 Fetch
     gAccess <mode> ();
     
@@ -525,6 +532,7 @@ VICII::cycle56()
     
     // Phi1.2 Draw
     DRAW55
+    DRAW_SPRITES
     
     // Phi1.3 Fetch
     iAccess <mode> ();
@@ -548,6 +556,8 @@ VICII::cycle57()
     
     // Phi1.2 Draw (border starts here)
     DRAW
+    DRAW_SPRITES
+    
     sr.canLoad = false; // Leaving canvas area
     
     // Phi1.3 Fetch
@@ -568,6 +578,7 @@ VICII::cycle58()
     
     // Phi1.2 Draw
     DRAW
+    DRAW_SPRITES
     
     // Phi1.3 Fetch
     PAL  { pAccess <mode> (0); }
@@ -613,6 +624,7 @@ VICII::cycle59()
     
     // Phi1.2 Draw
     DRAW59
+    DRAW_SPRITES59
     
     // Phi1.3 Fetch
     PAL  { sAccess2 <mode,0> (); }
@@ -642,6 +654,7 @@ VICII::cycle60()
     
     // Phi1.2 Draw
     DRAW
+    DRAW_SPRITES
     
     // Phi1.3 Fetch
     PAL  { sFinalize(0); pAccess <mode> (1); }
@@ -668,6 +681,7 @@ VICII::cycle61()
     
     // Phi1.2 Draw the last visible column
     DRAW
+    DRAW_SPRITES
     
     // Phi1.3 Fetch
     PAL  { sAccess2 <mode,1> (); }
@@ -694,7 +708,7 @@ VICII::cycle62()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_IDLE
+    DRAW_SPRITES
 
     // Phi1.3 Fetch
     PAL  { sFinalize(1); pAccess <mode> (2); }
@@ -720,7 +734,7 @@ VICII::cycle63()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_IDLE
+    DRAW_SPRITES
 
     // Phi1.3 Fetch
     PAL  { sAccess2 <mode,2> (); }
@@ -745,7 +759,7 @@ VICII::cycle64()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_IDLE
+    DRAW_SPRITES
 
     // Phi1.3 Fetch
     sAccess2 <mode,2> ();
@@ -768,7 +782,7 @@ VICII::cycle65()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    DRAW_IDLE
+    DRAW_SPRITES
 
     // Phi1.3 Fetch
     sFinalize(2);

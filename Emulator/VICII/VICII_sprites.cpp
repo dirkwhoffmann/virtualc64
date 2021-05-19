@@ -13,7 +13,7 @@
 void
 VICII::drawSprites()
 {
-    if (VIC_SAFE_MODE || isFirstDMAcycle || isSecondDMAcycle || (delay & VICUpdateRegisters)) {
+    if (VIC_SAFE_MODE == 1 || isFirstDMAcycle || isSecondDMAcycle || (delay & VICUpdateRegisters)) {
         drawSpritesSlowPath();
     } else {
         drawSpritesFastPath();
@@ -22,9 +22,7 @@ VICII::drawSprites()
 
 void
 VICII::drawSpritesFastPath()
-{
-    assert(spriteDisplay == spriteDisplayDelayed);
-    
+{    
     if (VIC_STATS) stats.spriteFastPath++;
     
     // Prepare for collision detection
@@ -39,17 +37,7 @@ VICII::drawSpritesFastPath()
         
         drawSpriteNr(i, enable, active);
     }
-    /*
-    drawSpritePixel(0, spriteDisplay, 0);
-    drawSpritePixel(1, spriteDisplay, 0);
-    drawSpritePixel(2, spriteDisplay, 0);
-    drawSpritePixel(3, spriteDisplay, 0);
-    drawSpritePixel(4, spriteDisplay, 0);
-    drawSpritePixel(5, spriteDisplay, 0);
-    drawSpritePixel(6, spriteDisplay, 0);
-    drawSpritePixel(7, spriteDisplay, 0);
-    */
-    
+ 
     // Perform collision checks
     checkCollisions();
 }
@@ -147,17 +135,16 @@ VICII::drawSpritesSlowPath()
 void
 VICII::drawSpriteNr(isize nr, bool enable, bool active)
 {
+    bool mCol = GET_BIT(reg.delayed.sprMC, nr);
+    bool xExp = GET_BIT(reg.delayed.sprExpandX, nr);
+
     for (isize pixel = 0; pixel < 8; pixel++) {
-        
-        bool freeze = false;
-        bool mCol = GET_BIT(reg.delayed.sprMC, nr);
-        bool xExp = GET_BIT(reg.delayed.sprExpandX, nr);
-        
+                
         /* If a sprite is enabled, activate the shift register if the
          * horizontal trigger condition holds.
          */
         if (enable) {
-            if (!active && xCounter + pixel == reg.delayed.sprX[nr] && !freeze) {
+            if (!active && xCounter + pixel == reg.delayed.sprX[nr]) {
                 
                 SET_BIT(spriteSrActive, nr);
                 active = true;
@@ -168,40 +155,36 @@ VICII::drawSpriteNr(isize nr, bool enable, bool active)
         
         if (active) {
             
-            // Run shift register
-            if (!freeze) {
+            // Only proceed if the expansion flipflop is set
+            if (spriteSr[nr].expFlop) {
                 
-                // Only proceed if the expansion flipflop is set
-                if (spriteSr[nr].expFlop) {
+                // Extract color bits from the shift register
+                if (mCol) {
                     
-                    // Extract color bits from the shift register
-                    if (mCol) {
-                        
-                        // In multi-color mode, get 2 bits every second pixel
-                        if (spriteSr[nr].mcFlop) {
-                            spriteSr[nr].colBits = (spriteSr[nr].data >> 22) & 0x03;
-                        }
-                        spriteSr[nr].mcFlop = !spriteSr[nr].mcFlop;
-                        
-                    } else {
-                        
-                        // In single-color mode, get a new bit for each pixel
-                        spriteSr[nr].colBits = (spriteSr[nr].data >> 22) & 0x02;
+                    // In multi-color mode, get 2 bits every second pixel
+                    if (spriteSr[nr].mcFlop) {
+                        spriteSr[nr].colBits = (spriteSr[nr].data >> 22) & 0x03;
                     }
+                    spriteSr[nr].mcFlop = !spriteSr[nr].mcFlop;
                     
-                    // Perform the shift operation
-                    spriteSr[nr].data <<= 1;
+                } else {
                     
-                    // Inactivate shift register if everything is pumped out
-                    if (!spriteSr[nr].data && !spriteSr[nr].colBits) {
-                        active = false;
-                        CLR_BIT(spriteSrActive, nr);
-                    }
+                    // In single-color mode, get a new bit for each pixel
+                    spriteSr[nr].colBits = (spriteSr[nr].data >> 22) & 0x02;
                 }
                 
-                // Toggle expansion flipflop for horizontally stretched sprites
-                spriteSr[nr].expFlop = !spriteSr[nr].expFlop || !xExp;
+                // Perform the shift operation
+                spriteSr[nr].data <<= 1;
+                
+                // Inactivate shift register if everything is pumped out
+                if (!spriteSr[nr].data && !spriteSr[nr].colBits) {
+                    active = false;
+                    CLR_BIT(spriteSrActive, nr);
+                }
             }
+            
+            // Toggle expansion flipflop for horizontally stretched sprites
+            spriteSr[nr].expFlop = !spriteSr[nr].expFlop || !xExp;
             
             // Draw pixel
             if (spriteSr[nr].colBits && !config.hideSprites) {

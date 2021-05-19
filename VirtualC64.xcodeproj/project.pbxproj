@@ -103,9 +103,7 @@
 		504C438D24AF29AC00E69CAE /* VICII.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430724AF29AC00E69CAE /* VICII.cpp */; };
 		504C438E24AF29AC00E69CAE /* VICII_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430824AF29AC00E69CAE /* VICII_colors.cpp */; };
 		504C438F24AF29AC00E69CAE /* VICII_debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430924AF29AC00E69CAE /* VICII_debug.cpp */; };
-		504C439024AF29AC00E69CAE /* VICII_cycles_pal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430A24AF29AC00E69CAE /* VICII_cycles_pal.cpp */; };
 		504C439124AF29AC00E69CAE /* VICII_memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430B24AF29AC00E69CAE /* VICII_memory.cpp */; };
-		504C439224AF29AC00E69CAE /* VICII_cycles_ntsc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430D24AF29AC00E69CAE /* VICII_cycles_ntsc.cpp */; };
 		504C439324AF29AC00E69CAE /* Datasette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430F24AF29AC00E69CAE /* Datasette.cpp */; };
 		504C439424AF29AC00E69CAE /* SIDBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C431224AF29AC00E69CAE /* SIDBridge.cpp */; };
 		504C439524AF29AC00E69CAE /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431724AF29AC00E69CAE /* envelope.cc */; };
@@ -449,10 +447,8 @@
 		504C430724AF29AC00E69CAE /* VICII.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII.cpp; sourceTree = "<group>"; };
 		504C430824AF29AC00E69CAE /* VICII_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_colors.cpp; sourceTree = "<group>"; };
 		504C430924AF29AC00E69CAE /* VICII_debug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_debug.cpp; sourceTree = "<group>"; };
-		504C430A24AF29AC00E69CAE /* VICII_cycles_pal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_cycles_pal.cpp; sourceTree = "<group>"; };
 		504C430B24AF29AC00E69CAE /* VICII_memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_memory.cpp; sourceTree = "<group>"; };
 		504C430C24AF29AC00E69CAE /* VICII.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VICII.h; sourceTree = "<group>"; };
-		504C430D24AF29AC00E69CAE /* VICII_cycles_ntsc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_cycles_ntsc.cpp; sourceTree = "<group>"; };
 		504C430F24AF29AC00E69CAE /* Datasette.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Datasette.cpp; sourceTree = "<group>"; };
 		504C431024AF29AC00E69CAE /* Datasette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Datasette.h; sourceTree = "<group>"; };
 		504C431224AF29AC00E69CAE /* SIDBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SIDBridge.cpp; sourceTree = "<group>"; };
@@ -1134,8 +1130,6 @@
 				504C430824AF29AC00E69CAE /* VICII_colors.cpp */,
 				504C430B24AF29AC00E69CAE /* VICII_memory.cpp */,
 				50D20B742508F6D70088E8F2 /* VICII_cycles.cpp */,
-				504C430A24AF29AC00E69CAE /* VICII_cycles_pal.cpp */,
-				504C430D24AF29AC00E69CAE /* VICII_cycles_ntsc.cpp */,
 				504C430924AF29AC00E69CAE /* VICII_debug.cpp */,
 				50DBB3D22641107E006F45E6 /* DmaDebuggerTypes.h */,
 				50DBB3D02641101E006F45E6 /* DmaDebugger.h */,
@@ -1700,7 +1694,6 @@
 				507887CC20B1858B00941F7E /* MemTableView.swift in Sources */,
 				504C439A24AF29AC00E69CAE /* dac.cc in Sources */,
 				50A22A202618720100C9FB1E /* SplashScreen.swift in Sources */,
-				504C439024AF29AC00E69CAE /* VICII_cycles_pal.cpp in Sources */,
 				5018AF66202EDD2000B4C886 /* Defaults.swift in Sources */,
 				50D20B752508F6D70088E8F2 /* VICII_cycles.cpp in Sources */,
 				504C436A24AF29AC00E69CAE /* FreezeFrame.cpp in Sources */,
@@ -1725,7 +1718,6 @@
 				50BE4B6A24E7FB6C008F39C9 /* NSImage.swift in Sources */,
 				504C438B24AF29AC00E69CAE /* Mouse1351.cpp in Sources */,
 				506D3DCE20223E5E009742CF /* MyAppDelegate.swift in Sources */,
-				504C439224AF29AC00E69CAE /* VICII_cycles_ntsc.cpp in Sources */,
 				504C437A24AF29AC00E69CAE /* AnyFile.cpp in Sources */,
 				50D5F88A24F5573D0062EF13 /* DiskErrorController.swift in Sources */,
 				50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */,

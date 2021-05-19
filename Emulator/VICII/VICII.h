@@ -1205,11 +1205,10 @@ public:
 	
     #define DRAW_SPRITES if (spriteDisplay || isSecondDMAcycle) drawSprites();
     #define DRAW_SPRITES59 if (spriteDisplayDelayed || spriteDisplay || isSecondDMAcycle) drawSpritesSlowPath();
-    #define DRAW if (!vblank) { drawCanvas(); drawBorder(); } DRAW_SPRITES;
-    #define DRAW17 if (!vblank) { drawCanvas(); drawBorder17(); } DRAW_SPRITES;
-    #define DRAW55 if (!vblank) { drawCanvas(); drawBorder55(); } DRAW_SPRITES;
-    #define DRAW59 if (!vblank) { drawCanvas(); drawBorder(); } DRAW_SPRITES59;
-    #define DRAW_IDLE DRAW_SPRITES;
+    #define DRAW if (!vblank) { drawCanvas(); drawBorder(); };
+    #define DRAW17 if (!vblank) { drawCanvas(); drawBorder17(); };
+    #define DRAW55 if (!vblank) { drawCanvas(); drawBorder55(); };
+    #define DRAW59 if (!vblank) { drawCanvas(); drawBorder(); };
             
     #define END_CYCLE \
     dataBusPhi2 = 0xFF; \
@@ -1240,7 +1239,8 @@ private:
     
     // Draws 8 canvas pixels
     void drawCanvas();
-    void drawCanvasExact();
+    void drawCanvasFastPath();
+    void drawCanvasSlowPath();
 
     // Draws a single canvas pixel
     void drawCanvasPixel(u8 pixel, u8 mode, u8 d016);
@@ -1310,8 +1310,6 @@ private:
             if (isVisibleColumn) COLORIZE(index, color); \
             zBuffer[index] = depth | (zBuffer[index] & 0x10); \
         } }
-
-    // zBuffer[index] = depth | (zBuffer[index] & 0x10); \
 
     
 	//

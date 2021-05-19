@@ -59,15 +59,16 @@ VICII::drawBorder55()
 void
 VICII::drawCanvas()
 {
-    // Take the slow path if necessary
     if ((delay & VICUpdateRegisters) || VIC_SAFE_MODE == 1) {
-        
-        if (VIC_STATS) stats.canvasSlowPath++;
-        drawCanvasExact();
-        return;
+        drawCanvasSlowPath();
+    } else {
+        drawCanvasFastPath();
     }
-    
-    // Take the fast path
+}
+
+void
+VICII::drawCanvasFastPath()
+{
     if (VIC_STATS) stats.canvasFastPath++;
             
     u8 xscroll = reg.delayed.xscroll;
@@ -185,14 +186,16 @@ VICII::drawCanvas()
         default:
 
             // Invalid color modes (no speedup necessary)
-            drawCanvasExact();
+            drawCanvasSlowPath();
             break;
     }
 }
 
 void
-VICII::drawCanvasExact()
+VICII::drawCanvasSlowPath()
 {
+    if (VIC_STATS) stats.canvasSlowPath++;
+
     /* "The graphics data sequencer is capable of 8 different graphics modes
      *  that are selected by the bits ECM, BMM and MCM (Extended Color Mode,
      *  Bit Map Mode and Multi Color Mode) in the registers $d011 and
