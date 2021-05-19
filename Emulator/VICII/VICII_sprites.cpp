@@ -129,7 +129,6 @@ VICII::drawSpritePixel(unsigned pixel, u8 enableBits, u8 freezeBits)
     }
     if (VIC_STATS) stats.quickExitMiss++;
     
-    bool foreground = zBuffer[bufferoffset + pixel] == DEPTH_FG;
     u8 collision = 0;
     
     // Iterate over all sprites
@@ -221,9 +220,8 @@ VICII::drawSpritePixel(unsigned pixel, u8 enableBits, u8 freezeBits)
             spriteSpriteCollision |= collision;
         }
         
-        // Check for sprite-background collisions
-        assert(foreground == ((zBuffer[bufferoffset + pixel] & 0x10) != 0));
-        if (foreground && config.checkSBCollisions) {
+        // Check for sprite-background collisions (z buffer bit 4 must be set)
+        if ((zBuffer[bufferoffset + pixel] & 0x10) && config.checkSBCollisions) {
             
             // Trigger an IRQ if this is the first detected collision
             if (!spriteBackgroundColllision) triggerIrq(2);

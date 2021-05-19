@@ -51,23 +51,6 @@
 #define DEPTH_SPRITE_BG     0b10000000 // Behind foreground
 #define DEPTH_BG            0b10100000 // Behind sprite 2 layer
 
-
-// Depth of different drawing layers (DEPRECATED)
-/*
-#define DEPTH_BORDER         0x10 // In front of everything
-#define DEPTH_SPRITE_FG      0x20 // Behind border
-#define DEPTH_FG             0x30 // Behind sprite 1 layer
-#define DEPTH_SPRITE_BG      0x40 // Behind foreground
-#define DEPTH_BG             0x50 // Behind sprite 2 layer
-*/
-/*
-#define DEPTH_BORDER         0x20 // In front of everything
-#define DEPTH_SPRITE_FG      0x40 // Behind border
-#define DEPTH_FG             0x70 // Behind sprite 1 layer
-#define DEPTH_SPRITE_BG      0x80 // Behind foreground
-#define DEPTH_BG             0xA0 // Behind sprite 2 layer
-*/
-
 // Event flags
 #define VICUpdateIrqLine    (1ULL << 0) // Sets or releases the IRQ line
 #define VICLpTransition     (1ULL << 1) // Triggers a lightpen event
