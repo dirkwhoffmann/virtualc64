@@ -30,6 +30,16 @@ VICII::drawSpritesFastPath()
     // Prepare for collision detection
     for (isize i = 0; i < 8; i++) collision[i] = 0;
     
+    for (isize i = 0; i < 8; i++) {
+    
+        bool enable = GET_BIT(spriteDisplay, i);
+        bool active = GET_BIT(spriteSrActive, i);
+        
+        if (!enable && !active) continue;
+        
+        drawSpriteNr(i, enable, active);
+    }
+    /*
     drawSpritePixel(0, spriteDisplay, 0);
     drawSpritePixel(1, spriteDisplay, 0);
     drawSpritePixel(2, spriteDisplay, 0);
@@ -38,6 +48,7 @@ VICII::drawSpritesFastPath()
     drawSpritePixel(5, spriteDisplay, 0);
     drawSpritePixel(6, spriteDisplay, 0);
     drawSpritePixel(7, spriteDisplay, 0);
+    */
     
     // Perform collision checks
     checkCollisions();
@@ -137,17 +148,83 @@ void
 VICII::drawSpriteNr(isize nr, bool enable, bool active)
 {
     for (isize pixel = 0; pixel < 8; pixel++) {
-        assert(false);
-        // TODO
+        
+        bool freeze = false;
+        bool mCol = GET_BIT(reg.delayed.sprMC, nr);
+        bool xExp = GET_BIT(reg.delayed.sprExpandX, nr);
+        
+        /* If a sprite is enabled, activate the shift register if the
+         * horizontal trigger condition holds.
+         */
+        if (enable) {
+            if (!active && xCounter + pixel == reg.delayed.sprX[nr] && !freeze) {
+                
+                SET_BIT(spriteSrActive, nr);
+                active = true;
+                spriteSr[nr].expFlop = true;
+                spriteSr[nr].mcFlop = true;
+            }
+        }
+        
+        if (active) {
+            
+            // Run shift register
+            if (!freeze) {
+                
+                // Only proceed if the expansion flipflop is set
+                if (spriteSr[nr].expFlop) {
+                    
+                    // Extract color bits from the shift register
+                    if (mCol) {
+                        
+                        // In multi-color mode, get 2 bits every second pixel
+                        if (spriteSr[nr].mcFlop) {
+                            spriteSr[nr].colBits = (spriteSr[nr].data >> 22) & 0x03;
+                        }
+                        spriteSr[nr].mcFlop = !spriteSr[nr].mcFlop;
+                        
+                    } else {
+                        
+                        // In single-color mode, get a new bit for each pixel
+                        spriteSr[nr].colBits = (spriteSr[nr].data >> 22) & 0x02;
+                    }
+                    
+                    // Perform the shift operation
+                    spriteSr[nr].data <<= 1;
+                    
+                    // Inactivate shift register if everything is pumped out
+                    if (!spriteSr[nr].data && !spriteSr[nr].colBits) {
+                        active = false;
+                        CLR_BIT(spriteSrActive, nr);
+                    }
+                }
+                
+                // Toggle expansion flipflop for horizontally stretched sprites
+                spriteSr[nr].expFlop = !spriteSr[nr].expFlop || !xExp;
+            }
+            
+            // Draw pixel
+            if (spriteSr[nr].colBits && !config.hideSprites) {
+                
+                // Only draw the pixel if no other sprite pixel has been drawn yet
+                if (!collision[pixel]) {
+                    
+                    u8 color =
+                    spriteSr[nr].colBits == 1 ? reg.delayed.colors[COLREG_SPR_EX1] :
+                    spriteSr[nr].colBits == 2 ? reg.delayed.colors[COLREG_SPR0 + nr] :
+                    reg.delayed.colors[COLREG_SPR_EX2];
+                    
+                    SET_SPRITE_PIXEL(nr, pixel, color);
+                }
+                collision[pixel] |= (1 << nr);
+            }
+        }
     }
 }
 
 void
 VICII::drawSpritePixel(unsigned pixel, u8 enableBits, u8 freezeBits)
 {
-    // Quick exit condition
-    // if (!enableBits && !spriteSrActive) return;
-        
     // Iterate over all sprites
     for (unsigned sprite = 0; sprite < 8; sprite++) {
         
