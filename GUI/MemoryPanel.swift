@@ -140,7 +140,7 @@ extension Inspector {
         
         track()
         layoutIsDirty = true
-        refreshMemory()
+        refreshMemory(full: true)
     }
     
     func jumpTo(addr: Int) {
