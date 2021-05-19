@@ -13,27 +13,27 @@
 void
 VICII::drawSprites()
 {
+    if (VIC_SAFE_MODE || isFirstDMAcycle || isSecondDMAcycle || (delay & VICUpdateRegisters)) {
+        drawSpritesSlowPath();
+    } else {
+        drawSpritesFastPath();
+    }
+}
+
+void
+VICII::drawSpritesFastPath()
+{
+    assert(spriteDisplay == spriteDisplayDelayed);
+    
+    if (VIC_STATS) stats.spriteFastPath++;
+    
     // Prepare for collision detection
     for (isize i = 0; i < 8; i++) collision[i] = 0;
     
-    // Take the slow path if necessary
-    if (!VIC_SAFE_MODE) {
-        
-        if (isFirstDMAcycle || isSecondDMAcycle || (delay & VICUpdateRegisters)) {
-            
-            if (VIC_STATS) stats.canvasSlowPath++;
-            drawSpritesExact();
-            return;
-        }
-    }
-    
-    // Take the fast path
-    if (VIC_STATS) stats.spriteFastPath++;
-    
-    drawSpritePixel(0, spriteDisplayDelayed, 0);
-    drawSpritePixel(1, spriteDisplayDelayed, 0);
-    drawSpritePixel(2, spriteDisplayDelayed, 0);
-    drawSpritePixel(3, spriteDisplayDelayed, 0);
+    drawSpritePixel(0, spriteDisplay, 0);
+    drawSpritePixel(1, spriteDisplay, 0);
+    drawSpritePixel(2, spriteDisplay, 0);
+    drawSpritePixel(3, spriteDisplay, 0);
     drawSpritePixel(4, spriteDisplay, 0);
     drawSpritePixel(5, spriteDisplay, 0);
     drawSpritePixel(6, spriteDisplay, 0);
@@ -44,8 +44,13 @@ VICII::drawSprites()
 }
 
 void
-VICII::drawSpritesExact()
+VICII::drawSpritesSlowPath()
 {
+    if (VIC_STATS) stats.canvasSlowPath++;
+    
+    // Prepare for collision detection
+    for (isize i = 0; i < 8; i++) collision[i] = 0;
+
     u8 firstDMA = isFirstDMAcycle;
     u8 secondDMA = isSecondDMAcycle;
         
@@ -129,19 +134,35 @@ VICII::drawSpritesExact()
 }
 
 void
+VICII::drawSpriteNr(isize nr, bool enable, bool active)
+{
+    for (isize pixel = 0; pixel < 8; pixel++) {
+        assert(false);
+        // TODO
+    }
+}
+
+void
 VICII::drawSpritePixel(unsigned pixel, u8 enableBits, u8 freezeBits)
 {
     // Quick exit condition
-    if (!enableBits && !spriteSrActive) return;
+    // if (!enableBits && !spriteSrActive) return;
         
     // Iterate over all sprites
     for (unsigned sprite = 0; sprite < 8; sprite++) {
         
         bool enable = GET_BIT(enableBits, sprite);
+        bool active = GET_BIT(spriteSrActive, sprite);
+    
+        if (!enable && !active) {
+            stats.quickExitHit++;
+            continue;
+        }
+        stats.quickExitMiss++;
+        
         bool freeze = GET_BIT(freezeBits, sprite);
         bool mCol = GET_BIT(reg.delayed.sprMC, sprite);
         bool xExp = GET_BIT(reg.delayed.sprExpandX, sprite);
-        bool active = GET_BIT(spriteSrActive, sprite);
         
         /* If a sprite is enabled, activate the shift register if the
          * horizontal trigger condition holds.
@@ -156,55 +177,58 @@ VICII::drawSpritePixel(unsigned pixel, u8 enableBits, u8 freezeBits)
             }
         }
         
-        // Run shift register if it is activated
-        if (active && !freeze) {
+        if (active) {
             
-            // Only proceed if the expansion flipflop is set
-            if (spriteSr[sprite].expFlop) {
+            // Run shift register
+            if (!freeze) {
                 
-                // Extract color bits from the shift register
-                if (mCol) {
+                // Only proceed if the expansion flipflop is set
+                if (spriteSr[sprite].expFlop) {
                     
-                    // In multi-color mode, get 2 bits every second pixel
-                    if (spriteSr[sprite].mcFlop) {
-                        spriteSr[sprite].colBits = (spriteSr[sprite].data >> 22) & 0x03;
+                    // Extract color bits from the shift register
+                    if (mCol) {
+                        
+                        // In multi-color mode, get 2 bits every second pixel
+                        if (spriteSr[sprite].mcFlop) {
+                            spriteSr[sprite].colBits = (spriteSr[sprite].data >> 22) & 0x03;
+                        }
+                        spriteSr[sprite].mcFlop = !spriteSr[sprite].mcFlop;
+                        
+                    } else {
+                        
+                        // In single-color mode, get a new bit for each pixel
+                        spriteSr[sprite].colBits = (spriteSr[sprite].data >> 22) & 0x02;
                     }
-                    spriteSr[sprite].mcFlop = !spriteSr[sprite].mcFlop;
                     
-                } else {
+                    // Perform the shift operation
+                    spriteSr[sprite].data <<= 1;
                     
-                    // In single-color mode, get a new bit for each pixel
-                    spriteSr[sprite].colBits = (spriteSr[sprite].data >> 22) & 0x02;
+                    // Inactivate shift register if everything is pumped out
+                    if (!spriteSr[sprite].data && !spriteSr[sprite].colBits) {
+                        active = false;
+                        CLR_BIT(spriteSrActive, sprite);
+                    }
                 }
                 
-                // Perform the shift operation
-                spriteSr[sprite].data <<= 1;
+                // Toggle expansion flipflop for horizontally stretched sprites
+                spriteSr[sprite].expFlop = !spriteSr[sprite].expFlop || !xExp;
+            }
+            
+            // Draw pixel
+            if (spriteSr[sprite].colBits && !config.hideSprites) {
                 
-                // Inactivate shift register if everything is pumped out
-                if (!spriteSr[sprite].data && !spriteSr[sprite].colBits) {
-                    active = false;
-                    CLR_BIT(spriteSrActive, sprite);
+                // Only draw the pixel if no other sprite pixel has been drawn yet
+                if (!collision[pixel]) {
+                    
+                    u8 color =
+                    spriteSr[sprite].colBits == 1 ? reg.delayed.colors[COLREG_SPR_EX1] :
+                    spriteSr[sprite].colBits == 2 ? reg.delayed.colors[COLREG_SPR0 + sprite] :
+                    reg.delayed.colors[COLREG_SPR_EX2];
+                    
+                    SET_SPRITE_PIXEL(sprite, pixel, color);
                 }
+                collision[pixel] |= (1 << sprite);
             }
-            
-            // Toggle expansion flipflop for horizontally stretched sprites
-            spriteSr[sprite].expFlop = !spriteSr[sprite].expFlop || !xExp;
-        }
-        
-        // Draw pixel
-        if (active && spriteSr[sprite].colBits && !config.hideSprites) {
-            
-            // Only draw the pixel if no other sprite pixel has been drawn yet
-            if (!collision[pixel]) {
-                
-                u8 color =
-                spriteSr[sprite].colBits == 1 ? reg.delayed.colors[COLREG_SPR_EX1] :
-                spriteSr[sprite].colBits == 2 ? reg.delayed.colors[COLREG_SPR0 + sprite] :
-                reg.delayed.colors[COLREG_SPR_EX2];
-                
-                SET_SPRITE_PIXEL(sprite, pixel, color);
-            }
-            collision[pixel] |= (1 << sprite);
         }
     }
 }

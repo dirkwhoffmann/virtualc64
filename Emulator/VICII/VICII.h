@@ -1204,7 +1204,7 @@ public:
     void cycle65ntsc();
 	
     #define DRAW_SPRITES if (spriteDisplay || isSecondDMAcycle) drawSprites();
-    #define DRAW_SPRITES59 if (spriteDisplayDelayed || spriteDisplay || isSecondDMAcycle) drawSprites();
+    #define DRAW_SPRITES59 if (spriteDisplayDelayed || spriteDisplay || isSecondDMAcycle) drawSpritesSlowPath();
     #define DRAW if (!vblank) { drawCanvas(); drawBorder(); } DRAW_SPRITES;
     #define DRAW17 if (!vblank) { drawCanvas(); drawBorder17(); } DRAW_SPRITES;
     #define DRAW55 if (!vblank) { drawCanvas(); drawBorder55(); } DRAW_SPRITES;
@@ -1256,19 +1256,23 @@ private:
     
     // Draws 8 sprite pixels (see draw())
     void drawSprites();
-    void drawSpritesExact();
+    void drawSpritesFastPath();
+    void drawSpritesSlowPath();
     
-    /* Draws a single sprite pixel for all sprites
+    /* Draws all sprite pixels for a single sprite. This function is used when
+     * the fast path is taken.
+     */
+    void drawSpriteNr(isize nr, bool enable, bool active);
+
+    /* Draws a single sprite pixel for all sprites. This function is used when
+     * the slow path is taken.
      *
      *         pixel : pixel number (0 ... 7)
      *    enableBits : the spriteDisplay bits
      *    freezeBits : forces the sprites shift register to freeze temporarily
      */
-    void drawSpritePixel(unsigned pixel,
-                         u8 enableBits,
-                         u8 freezeBits);
-    
-        
+    void drawSpritePixel(unsigned pixel, u8 enableBits, u8 freezeBits);
+         
     // Performs collision detection
     void checkCollisions();
     
