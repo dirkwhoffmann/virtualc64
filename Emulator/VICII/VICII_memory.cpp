@@ -14,8 +14,7 @@
 void
 VICII::setUltimax(bool value) {
     
-    // For details, see:
-    // VICII memory mapping (http://www.harries.dk/files/C64MemoryMaps.pdf)
+    // Details: http://www.harries.dk/files/C64MemoryMaps.pdf
     
     ultimax = value;
     
@@ -63,13 +62,15 @@ void
 VICII::switchBank(u16 addr) {
 
     if (config.glueLogic == GLUE_LOGIC_DISCRETE) {
-         
-         updateBankAddr(); // Switch immediately
-         return;
+        
+        // Models with discrete glue logic switch banks immediately
+        updateBankAddr();
+        return;
      }
  
-    // Switch table for custom IC glue logic and PA / DDRA register changes
-    // The tables have been derived from VICE test case fetchsplit.prg
+    /* Switch table for custom IC glue logic and PA / DDRA register changes
+     * The tables have been derived from VICE test case fetchsplit.prg
+     */
     u8 switchTablePA[4][4] = {
         { 0, 1, 2, 3 }, // From bank 0
         { 0, 1, 3, 3 }, // From bank 1

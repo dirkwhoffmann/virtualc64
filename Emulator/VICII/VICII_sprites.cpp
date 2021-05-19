@@ -136,7 +136,7 @@ VICII::drawSpriteNr(isize nr, bool enable, bool active)
 void
 VICII::drawSpritesSlowPath()
 {
-    if (VIC_STATS) stats.canvasSlowPath++;
+    if (VIC_STATS) stats.spriteSlowPath++;
     
     // Prepare for collision detection
     for (isize i = 0; i < 8; i++) collision[i] = 0;
@@ -226,6 +226,8 @@ VICII::drawSpritesSlowPath()
 void
 VICII::drawSpritePixel(unsigned pixel, u8 enableBits, u8 freezeBits)
 {
+    if (!enableBits && !spriteSrActive) return;
+    
     // Iterate over all sprites
     for (unsigned sprite = 0; sprite < 8; sprite++) {
         
@@ -233,10 +235,10 @@ VICII::drawSpritePixel(unsigned pixel, u8 enableBits, u8 freezeBits)
         bool active = GET_BIT(spriteSrActive, sprite);
     
         if (!enable && !active) {
-            stats.quickExitHit++;
+            if (VIC_STATS) stats.quickExitHit++;
             continue;
         }
-        stats.quickExitMiss++;
+        if (VIC_STATS) stats.quickExitMiss++;
         
         bool freeze = GET_BIT(freezeBits, sprite);
         bool mCol = GET_BIT(reg.delayed.sprMC, sprite);
