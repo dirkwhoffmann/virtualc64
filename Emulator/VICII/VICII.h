@@ -368,7 +368,7 @@ private:
     u8 cleared_bits_in_d017;
     
     // Collision bits
-    // u8 collision;
+    u8 collision[8];
     
     
 	//
@@ -1269,6 +1269,10 @@ private:
                          u8 freezeBits);
     
         
+    // Performs collision detection
+    void checkCollisions();
+    
+    
     //
     // Low level drawing (pixel buffer access)
     //

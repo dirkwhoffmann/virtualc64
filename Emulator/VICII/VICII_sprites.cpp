@@ -13,6 +13,9 @@
 void
 VICII::drawSprites()
 {
+    // Prepare for collision detection
+    for (isize i = 0; i < 8; i++) collision[i] = 0;
+    
     // Take the slow path if necessary
     if (!VIC_SAFE_MODE) {
         
@@ -35,6 +38,9 @@ VICII::drawSprites()
     drawSpritePixel(5, spriteDisplay, 0);
     drawSpritePixel(6, spriteDisplay, 0);
     drawSpritePixel(7, spriteDisplay, 0);
+    
+    // Perform collision checks
+    checkCollisions();
 }
 
 void
@@ -117,20 +123,17 @@ VICII::drawSpritesExact()
     
     // Pixel 7
     drawSpritePixel(7, spriteDisplay, firstDMA);
+    
+    // Perform collision checks
+    checkCollisions();
 }
 
 void
 VICII::drawSpritePixel(unsigned pixel, u8 enableBits, u8 freezeBits)
 {
     // Quick exit condition
-    if (!enableBits && !spriteSrActive) {
-        if (VIC_STATS) stats.quickExitHit++;
-        return;
-    }
-    if (VIC_STATS) stats.quickExitMiss++;
-    
-    u8 collision = 0;
-    
+    if (!enableBits && !spriteSrActive) return;
+        
     // Iterate over all sprites
     for (unsigned sprite = 0; sprite < 8; sprite++) {
         
@@ -192,7 +195,7 @@ VICII::drawSpritePixel(unsigned pixel, u8 enableBits, u8 freezeBits)
         if (active && spriteSr[sprite].colBits && !config.hideSprites) {
             
             // Only draw the pixel if no other sprite pixel has been drawn yet
-            if (!collision) {
+            if (!collision[pixel]) {
                 
                 u8 color =
                 spriteSr[sprite].colBits == 1 ? reg.delayed.colors[COLREG_SPR_EX1] :
@@ -201,32 +204,36 @@ VICII::drawSpritePixel(unsigned pixel, u8 enableBits, u8 freezeBits)
                 
                 SET_SPRITE_PIXEL(sprite, pixel, color);
             }
-            collision |= (1 << sprite);
+            collision[pixel] |= (1 << sprite);
         }
     }
+}
 
-    //
-    // Collision checking
-    //
-            
-    if (collision) {
+void
+VICII::checkCollisions()
+{
+    // Only proceed if there was any collision at all
+    for (isize i = 0; i < 8; i++) {
         
-        // Check for sprite-sprite collisions (at least 2 bits must be set)
-        if ((collision & (collision - 1)) && config.checkSSCollisions) {
+        if (collision[i]) {
             
-            // Trigger an IRQ if this is the first detected collision
-            if (!spriteSpriteCollision) triggerIrq(4);
+            // Check for sprite-sprite collisions (at least 2 bits must be set)
+            if ((collision[i] & (collision[i] - 1)) && config.checkSSCollisions) {
+                
+                // Trigger an IRQ if this is the first detected collision
+                if (!spriteSpriteCollision) triggerIrq(4);
+                
+                spriteSpriteCollision |= collision[i];
+            }
             
-            spriteSpriteCollision |= collision;
-        }
-        
-        // Check for sprite-background collisions (z buffer bit 4 must be set)
-        if ((zBuffer[bufferoffset + pixel] & 0x10) && config.checkSBCollisions) {
-            
-            // Trigger an IRQ if this is the first detected collision
-            if (!spriteBackgroundColllision) triggerIrq(2);
-            
-            spriteBackgroundColllision |= collision;
+            // Check for sprite-background collisions (z buffer bit 4 must be set)
+            if ((zBuffer[bufferoffset + i] & 0x10) && config.checkSBCollisions) {
+                
+                // Trigger an IRQ if this is the first detected collision
+                if (!spriteBackgroundColllision) triggerIrq(2);
+                
+                spriteBackgroundColllision |= collision[i];
+            }
         }
     }
 }
