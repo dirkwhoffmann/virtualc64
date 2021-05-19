@@ -464,10 +464,29 @@ VICII::_dump(dump::Category category, std::ostream& os) const
 void
 VICII::clearStats()
 {
-    stats.canvasFastPath = 0;
-    stats.canvasSlowPath = 0;
-    stats.spriteFastPath = 0;
-    stats.spriteSlowPath = 0;
+    if (VIC_STATS) {
+        
+        double canvasTotal = stats.canvasFastPath + stats.canvasSlowPath;
+        double spriteTotal = stats.spriteFastPath + stats.spriteSlowPath;
+        double exitTotal = stats.quickExitHit + stats.quickExitMiss;
+        
+        msg("Canvas: Fast path: %ld Slow path: %ld Ratio: %f\n",
+            stats.canvasFastPath,
+            stats.canvasSlowPath,
+            canvasTotal != 0 ? stats.canvasFastPath / canvasTotal : -1);
+
+        msg("Sprites: Fast path: %ld Slow path: %ld Ratio: %f\n",
+            stats.spriteFastPath,
+            stats.spriteSlowPath,
+            spriteTotal != 0 ? stats.spriteFastPath / spriteTotal : -1);
+
+        msg("Exits: Hit: %ld Miss: %ld Ratio: %f\n",
+            stats.quickExitHit,
+            stats.quickExitMiss,
+            exitTotal != 0 ? stats.quickExitHit / exitTotal : -1);
+
+        memset(&stats, 0, sizeof(stats));
+    }
 }
 
 void
@@ -942,8 +961,8 @@ VICII::spriteDepth(u8 nr) const
 {
     return
     GET_BIT(reg.delayed.sprPriority, nr) ?
-    (SPRITE_LAYER_BG_DEPTH | nr) :
-    (SPRITE_LAYER_FG_DEPTH | nr);
+    (DEPTH_SPRITE_BG | nr) :
+    (DEPTH_SPRITE_FG | nr);
 }
 
 u8
@@ -1082,13 +1101,6 @@ VICII::endFrame()
     }
     
     // Clear statistics
-    /*
-    if (stats.fastPath || stats.slowPath) {
-        printf("fastPath: %ld slowPath: %ld (%f)\n",
-               stats.fastPath, stats.slowPath,
-               (double)stats.fastPath / (double)(stats.fastPath + stats.slowPath));
-    }
-    */
     clearStats();
 }
 

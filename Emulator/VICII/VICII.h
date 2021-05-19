@@ -695,7 +695,6 @@ private:
             << spriteDmaOnOff
             << expansionFF
             << cleared_bits_in_d017
-            // << collision
             << lpLine
             << lpIrqHasOccurred
             << ultimax
@@ -1282,28 +1281,30 @@ private:
     #define SET_FRAME_PIXEL(pixel,color) { \
         isize index = bufferoffset + pixel; \
         COLORIZE(index, color); \
-        zBuffer[index] = BORDER_LAYER_DEPTH; }
+        zBuffer[index] = DEPTH_BORDER; }
     
     // Sets a single foreground pixel
     #define SET_FG_PIXEL(pixel,color) { \
         isize index = bufferoffset + pixel; \
         COLORIZE(index,color) \
-        zBuffer[index] = FOREGROUND_LAYER_DEPTH; }
+        zBuffer[index] = DEPTH_FG; }
 
     // Sets a single background pixel
     #define SET_BG_PIXEL(pixel,color) { \
         isize index = bufferoffset + pixel; \
         COLORIZE(index,color) \
-        zBuffer[index] = BACKGROUD_LAYER_DEPTH; }
+        zBuffer[index] = DEPTH_BG; }
     
     // Sets a single sprite pixel
     #define SET_SPRITE_PIXEL(sprite,pixel,color) { \
         isize index = bufferoffset + pixel; \
         if (u8 depth = spriteDepth(sprite); depth <= zBuffer[index]) { \
             if (isVisibleColumn) COLORIZE(index, color); \
-            zBuffer[index] = depth; \
+            zBuffer[index] = depth | (zBuffer[index] & 0x10); \
         } }
-            
+
+    // zBuffer[index] = depth | (zBuffer[index] & 0x10); \
+
     
 	//
 	// Debugging

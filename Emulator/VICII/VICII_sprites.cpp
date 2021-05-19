@@ -14,10 +14,18 @@ void
 VICII::drawSprites()
 {
     // Take the slow path if necessary
-    if (isFirstDMAcycle || isSecondDMAcycle || (delay & VICUpdateRegisters) || VIC_SAFE_MODE == 1) {
-        drawSpritesExact(); return;
+    if (!VIC_SAFE_MODE) {
+        
+        if (isFirstDMAcycle || isSecondDMAcycle || (delay & VICUpdateRegisters)) {
+            
+            if (VIC_STATS) stats.canvasSlowPath++;
+            drawSpritesExact();
+            return;
+        }
     }
-    if (!releaseBuild) stats.spriteFastPath++;
+    
+    // Take the fast path
+    if (VIC_STATS) stats.spriteFastPath++;
     
     drawSpritePixel(0, spriteDisplayDelayed, 0);
     drawSpritePixel(1, spriteDisplayDelayed, 0);
@@ -32,8 +40,6 @@ VICII::drawSprites()
 void
 VICII::drawSpritesExact()
 {
-    if (!releaseBuild) stats.canvasSlowPath++;
-    
     u8 firstDMA = isFirstDMAcycle;
     u8 secondDMA = isSecondDMAcycle;
         
@@ -117,9 +123,13 @@ void
 VICII::drawSpritePixel(unsigned pixel, u8 enableBits, u8 freezeBits)
 {
     // Quick exit condition
-    if (!enableBits && !spriteSrActive) return;
+    if (!enableBits && !spriteSrActive) {
+        if (VIC_STATS) stats.quickExitHit++;
+        return;
+    }
+    if (VIC_STATS) stats.quickExitMiss++;
     
-    bool foreground = zBuffer[bufferoffset +  pixel] == FOREGROUND_LAYER_DEPTH;
+    bool foreground = zBuffer[bufferoffset + pixel] == DEPTH_FG;
     u8 collision = 0;
     
     // Iterate over all sprites
@@ -212,6 +222,7 @@ VICII::drawSpritePixel(unsigned pixel, u8 enableBits, u8 freezeBits)
         }
         
         // Check for sprite-background collisions
+        assert(foreground == ((zBuffer[bufferoffset + pixel] & 0x10) != 0));
         if (foreground && config.checkSBCollisions) {
             
             // Trigger an IRQ if this is the first detected collision

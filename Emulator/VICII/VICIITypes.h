@@ -30,13 +30,43 @@
 #define SPR6 0x40
 #define SPR7 0x80
 
-// Depth of different drawing layers
-#define BORDER_LAYER_DEPTH         0x10 // In front of everything
-#define SPRITE_LAYER_FG_DEPTH      0x20 // Behind border
-#define FOREGROUND_LAYER_DEPTH     0x30 // Behind sprite 1 layer
-#define SPRITE_LAYER_BG_DEPTH      0x40 // Behind foreground
-#define BACKGROUD_LAYER_DEPTH      0x50 // Behind sprite 2 layer
-// #define BEHIND_BACKGROUND_DEPTH    0x60 // Behind background
+/* Depths of different drawing layers
+ *
+ * Format: <src><src><src><col><spr><spr><spr><spr>
+ *
+ *         <src> : Indicates where the displayed pixel comes from
+ *         <col> : Indicator bit for sb-collision detection
+ *         <spr> : Sprite number
+ *
+ * Examples:
+ *
+ *       001 0 0000 : Border pixel
+ *       011 1 0000 : Foreground pixel
+ *       010 0 0000 : Sprite 0 (without sb-collision)
+ *       010 1 0101 : Sprite 6 (with sb-collision)
+ */
+#define DEPTH_BORDER        0b00100000 // In front of everything
+#define DEPTH_SPRITE_FG     0b01000000 // Behind border
+#define DEPTH_FG            0b01110000 // Behind sprite 1 layer
+#define DEPTH_SPRITE_BG     0b10000000 // Behind foreground
+#define DEPTH_BG            0b10100000 // Behind sprite 2 layer
+
+
+// Depth of different drawing layers (DEPRECATED)
+/*
+#define DEPTH_BORDER         0x10 // In front of everything
+#define DEPTH_SPRITE_FG      0x20 // Behind border
+#define DEPTH_FG             0x30 // Behind sprite 1 layer
+#define DEPTH_SPRITE_BG      0x40 // Behind foreground
+#define DEPTH_BG             0x50 // Behind sprite 2 layer
+*/
+/*
+#define DEPTH_BORDER         0x20 // In front of everything
+#define DEPTH_SPRITE_FG      0x40 // Behind border
+#define DEPTH_FG             0x70 // Behind sprite 1 layer
+#define DEPTH_SPRITE_BG      0x80 // Behind foreground
+#define DEPTH_BG             0xA0 // Behind sprite 2 layer
+*/
 
 // Event flags
 #define VICUpdateIrqLine    (1ULL << 0) // Sets or releases the IRQ line
@@ -375,6 +405,8 @@ typedef struct
     isize canvasSlowPath;
     isize spriteFastPath;
     isize spriteSlowPath;
+    isize quickExitHit;
+    isize quickExitMiss;
 }
 VICIIStats;
 
