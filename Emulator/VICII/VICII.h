@@ -1262,7 +1262,7 @@ private:
     /* Draws all sprite pixels for a single sprite. This function is used when
      * the fast path is taken.
      */
-    void drawSpriteNr(isize nr, bool enable, bool active);
+    template <bool multicolor> void drawSpriteNr(isize nr, bool enable, bool active);
 
     /* Draws a single sprite pixel for all sprites. This function is used when
      * the slow path is taken.
