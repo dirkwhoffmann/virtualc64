@@ -1203,7 +1203,7 @@ public:
     void cycle64ntsc();
     void cycle65ntsc();
 	
-    #define DRAW_SPRITES if (spriteDisplay || isSecondDMAcycle) drawSprites();
+    #define DRAW_SPRITES if (spriteDisplay || isFirstDMAcycle || isSecondDMAcycle) drawSprites();
     #define DRAW_SPRITES59 if (spriteDisplayDelayed || spriteDisplay || isSecondDMAcycle) drawSpritesSlowPath();
     #define DRAW if (!vblank) { drawCanvas(); drawBorder(); };
     #define DRAW17 if (!vblank) { drawCanvas(); drawBorder17(); };
