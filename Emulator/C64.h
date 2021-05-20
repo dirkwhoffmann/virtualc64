@@ -164,12 +164,7 @@ private:
      * repeats or terminates depending on the provided flags.
      */
     u32 runLoopCtrl = 0;
-    
-    /* Stop request. This variable is used to signal a stop request coming from
-     * the GUI. The variable is checked after each frame.
-     */
-    bool stopFlag = false; 
-    
+        
     // The invocation counter for implementing suspend() / resume()
     isize suspendCounter = 0;
     
@@ -427,6 +422,9 @@ public:
      */
     void finishInstruction();
     
+    // Finishes the current frame
+    void finishFrame();
+    
 private:
     
     // Invoked before executing the first cycle of a rasterline
@@ -444,12 +442,6 @@ private:
     //
     
 public:
-    
-    /* Requests the emulator to stop at the end of the current frame. This
-     * function sets a flag which is evaluated at the end of each frame. It it
-     * is set, the run loop is signalled to stop via signalStop().
-     */
-    void requestStop() { stopFlag = true; }
     
     /* Pauses the emulation thread temporarily. Because the emulator is running
      * in a separate thread, the GUI has to pause the emulator before changing
@@ -477,7 +469,7 @@ public:
     void signalBreakpoint() { setActionFlags(ACTION_FLAG_BREAKPOINT); }
     void signalWatchpoint() { setActionFlags(ACTION_FLAG_WATCHPOINT); }
     void signalInspect() { setActionFlags(ACTION_FLAG_INSPECT); }
-    void signalJammed() { setActionFlags(ACTION_FLAG_CPU_JAMMED); }
+    void signalJammed() { setActionFlags(ACTION_FLAG_CPU_JAM); }
     void signalStop() { setActionFlags(ACTION_FLAG_STOP); }
     void signalExpPortNmi() { setActionFlags(ACTION_FLAG_EXTERNAL_NMI); }
 

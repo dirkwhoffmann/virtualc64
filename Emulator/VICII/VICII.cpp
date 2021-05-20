@@ -192,8 +192,7 @@ VICII::setConfigItem(Option option, i64 value)
             }
             
             suspend();
-            config.revision = (VICIIRevision)value;
-            setRevision(config.revision);
+            setRevision((VICIIRevision)value);
             resume();
             return true;
             
@@ -287,11 +286,15 @@ void
 VICII::setRevision(VICIIRevision revision)
 {
     assert_enum(VICIIRevision, revision);
+    assert(!isRunning());
     
-    debug(VIC_DEBUG, "setRevision(%ld)\n", (long)revision);
+    debug(VIC_DEBUG, "setRevision(%s)\n", VICIIRevisionEnum::key(revision));
+
+    // If the emulator is powered on, proceed to a safe spot
+    if (isPoweredOn()) c64.finishFrame();
     
     config.revision = revision;
-    
+    isFirstDMAcycle = isSecondDMAcycle = 0;
     updatePalette();
     resetEmuTextures();
     resetDmaTextures();

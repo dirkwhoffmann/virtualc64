@@ -924,10 +924,10 @@ C64::runLoop()
             }
             
             // Is the CPU jammed due the execution of an illegal instruction?
-            if (runLoopCtrl & ACTION_FLAG_CPU_JAMMED) {
+            if (runLoopCtrl & ACTION_FLAG_CPU_JAM) {
                 putMessage(MSG_CPU_JAMMED);
                 trace(RUN_DEBUG, "CPU_JAMMED\n");
-                clearActionFlags(ACTION_FLAG_CPU_JAMMED);
+                clearActionFlags(ACTION_FLAG_CPU_JAM);
                 break;
             }
                         
@@ -1065,6 +1065,12 @@ C64::finishInstruction()
 }
 
 void
+C64::finishFrame()
+{
+    while (rasterLine != 0 || rasterCycle > 1) executeOneCycle();
+}
+
+void
 C64::beginRasterLine()
 {
     // First cycle of rasterline
@@ -1095,18 +1101,8 @@ C64::endFrame()
 {
     frame++;
     
-    /*
-    if ((frame % 50) == 0) printf("Ping %p\n", this);
-    */
-    
     vic.endFrame();
-    
-    // Pulse the time of day clocks
-    /*
-    cia1.incrementTOD();
-    cia2.incrementTOD();
-    */
-    
+        
     // Execute remaining SID cycles
     sid.executeUntil(cpu.cycle);
     
@@ -1120,9 +1116,6 @@ C64::endFrame()
     drive9.vsyncHandler();
     datasette.vsyncHandler();
     retroShell.vsyncHandler();
-    
-    // Check if the run loop is requested to stop
-    if (stopFlag) { stopFlag = false; signalStop(); }
     
     // Count some sheep (zzzzzz) ...
     if (!warp) oscillator.synchronize();

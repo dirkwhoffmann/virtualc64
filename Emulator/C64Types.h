@@ -167,7 +167,7 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
 enum_long(ACTION_FLAG)
 {
     ACTION_FLAG_STOP          = 0b000000001,
-    ACTION_FLAG_CPU_JAMMED    = 0b000000010,
+    ACTION_FLAG_CPU_JAM       = 0b000000010,
     ACTION_FLAG_EXTERNAL_NMI  = 0b000000100,
     ACTION_FLAG_INSPECT       = 0b000001000,
     ACTION_FLAG_BREAKPOINT    = 0b000010000,
