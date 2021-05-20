@@ -33,6 +33,12 @@ void VIA6522::_reset(bool hard)
 }
 
 void
+VIA6522::prefix() const
+{
+    fprintf(stderr, "D[%lld] (%3d,%3d) %04X ", c64.frame, c64.rasterLine, c64.rasterCycle, drive.cpu.getPC0());
+}
+
+void
 VIA6522::_dump(dump::Category category, std::ostream& os) const
 {
     using namespace util;
@@ -197,6 +203,8 @@ VIA6522::executeTimer2()
 u8 
 VIA6522::peek(u16 addr)
 {
+    u8 result;
+    
 	assert (addr <= 0xF);
 		
     wakeUp();
@@ -204,86 +212,108 @@ VIA6522::peek(u16 addr)
 	switch(addr) {
             
         case 0x0: // ORB - Output register B
-            return peekORB();
+            result = peekORB();
+            break;
             
         case 0x1: // ORA - Output register A
-            return peekORA(true);
+            result = peekORA(true);
+            break;
             
         case 0x2: // DDRB - Data direction register B
-			return ddrb;
+			result = ddrb;
+            break;
 
         case 0x3: // DDRA - Data direction register A
-			return ddra;
+            result = ddra;
+            break;
 			
         case 0x4: // T1 low-order counter
             
-            // "8 BITS FROM T1 LOW-ORDER COUNTER TRANSFERRED TO MPU. IN ADDITION T1 INTERRUPT FLAG
-            //  IS RESET (BIT 6 IN INTERRUPT FLAG REGISTER)" [F. K.]
-            
+            /* "8 BITS FROM T1 LOW-ORDER COUNTER TRANSFERRED TO MPU. IN
+             *  ADDITION T1 INTERRUPT FLAG IS RESET (BIT 6 IN INTERRUPT FLAG
+             *  REGISTER)" [F. K.]
+             */
             clearInterruptFlag_T1();
-            return LO_BYTE(t1);
+            result = LO_BYTE(t1);
+            break;
 
         case 0x5: // T1 high-order counter
             
             // "8 BITS FROM T1 HIGH-ORDER COUNTER TRANSFERRED TO MPU2" [F. K.]
-            
-			return HI_BYTE(t1);
+
+            result = HI_BYTE(t1);
+            break;
           
 		case 0x6: // T1 low-order latch
             
             // "8 BITS FROM T1 LOW ORDER-LATCHES TRANSFERRED TO MPU. UNLIKE REG 4 OPERATION,
             //  THIS DOES NOT CAUSE RESET OF T1 INTERRUPT FLAG" [F. K.]
             
-			return t1_latch_lo;
+            result = t1_latch_lo;
+            break;
             
 		case 0x7: // T1 high-order latch
             
             // "8 BITS FROM T1 HIGH-ORDER LATCHES TRANSFERRED TO MPU
-			return t1_latch_hi;
+            result = t1_latch_hi;
+            break;
 
         case 0x8: // T2 low-order latch/counter
             
             // "8 BITS FROM T2 LOW-ORDER COUNTER TRANSFERRED TO MPU. T2 INTERRUPT FLAG IS RESET" [F. K.]
             
             clearInterruptFlag_T2();
-			return LO_BYTE(t2);
+            result = LO_BYTE(t2);
+            break;
 			
 		case 0x9: // T2 high-order counter COUNTER TRANSFERRED TO MPU" [F. K.]
             
             // "8 BITS FROM T2 HIGH-ORDER
-			return HI_BYTE(t2);
+            result = HI_BYTE(t2);
+            break;
             
         case 0xA: // Shift register
 
             clearInterruptFlag_SR();
-            return sr;
+            result = sr;
+            break;
 			
 		case 0xB: // Auxiliary control register
 
-            return acr;
+            result = acr;
+            break;
 		
         case 0xC: // Peripheral control register
 
-            return pcr;
+            result = pcr;
+            break;
             
         case 0xD: // IFR - Interrupt Flag Register
             
             assert((ifr & 0x80) == 0);
             assert((ier & 0x80) == 0);
-            return ifr | ((ifr & ier) ? 0x80 : 0x00);
+            result = ifr | ((ifr & ier) ? 0x80 : 0x00);
+            break;
             
         case 0xE: // Interrupt enable register
             
-            return ier | 0x80; // Bit 7 (set/clear bit) always shows up as 1
+            result = ier | 0x80; // Bit 7 (set/clear bit) always shows up as 1
+            break;
 
         case 0xF: // ORA - Output register A (no handshake)
-            return peekORA(false);
+            result = peekORA(false);
+            break;
             
         default:
             assert(false);
+            result = 0;
     }
 
-    return 0;
+    if (drive.cpu.getPC0() < 0xE000 && addr != 0) {
+        trace(VIA_DEBUG, "peek(%x) = %x\n", addr, result);
+    }
+
+    return result;
 }
 
 u8
@@ -294,30 +324,38 @@ VIA6522::peekORA(bool handshake)
     u8 CA2control = (pcr >> 1) & 0x07; // ----xxx-
     
     switch (CA2control) {
+            
         case 0: // Input mode: Interrupt on negative edge
             clearInterruptFlag_CA2();
             break;
+            
         case 1: // Input mode: Interrupt on negative edge, no register clearance
             break;
+            
         case 2: // Input mode: Interrupt on positive edge
             clearInterruptFlag_CA2();
             break;
+            
         case 3: // Input mode: Interrupt on positive edge, no register clearance
             break;
+            
         case 4: // Handshake output mode
                 // Set CA2 output low on a read or write of the Peripheral A Output
                 // Register. Reset CA2 high with an active transition on CAl.
             clearInterruptFlag_CA2();
             if (handshake) delay |= VIAClearCA2out1;
             break;
+            
         case 5: // Pulse output mode
                 // CA2 goes low for one cycle following a read or write of the
                 // Peripheral A Output Register.
             clearInterruptFlag_CA2();
             if (handshake) delay |= VIAClearCA2out1 | VIASetCA2out0;
             break;
+            
         case 6: // Manual output mode (keep line low)
             break;
+            
         case 7: // Manual output mode (keep line low)
             break;
     }
@@ -340,24 +378,32 @@ VIA6522::peekORB()
     u8 CB2control = (pcr >> 5) & 0x07; // xxx-----
     
     switch (CB2control) {
+            
         case 0: // Input mode: Interrupt on negative edge
             clearInterruptFlag_CB2();
             break;
+            
         case 1: // Input mode: Interrupt on negative edge, no register clearance
             break;
+            
         case 2: // Input mode: Interrupt on positive edge
             clearInterruptFlag_CB2();
             break;
+            
         case 3: // Input mode: Interrupt on positive edge, no register clearance
             break;
+            
         case 4: // Handshake output mode
                 // In contrast to CA2, CB2 is only affected on write accesses.
             break;
+            
         case 5: // Pulse output mode
                 // In contrast to CA2, CB2 is only affected on write accesses.
             break;
+            
         case 6: // Manual output mode (keep line low)
             break;
+            
         case 7: // Manual output mode (keep line low)
             break;
     }
@@ -384,6 +430,10 @@ VIA6522::spypeek(u16 addr) const
 
 void VIA6522::poke(u16 addr, u8 value)
 {
+    if (drive.cpu.getPC0() < 0xE000 && addr != 0) {
+        trace(VIA_DEBUG, "poke(%x, %x)\n", addr, value);
+    }
+
     assert (addr <= 0x0F);
     
     wakeUp();

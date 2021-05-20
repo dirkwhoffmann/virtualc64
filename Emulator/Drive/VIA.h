@@ -214,11 +214,13 @@ class VIA6522 : public C64Component {
 public:
         
 	VIA6522(C64 &ref, Drive &drvref);
-    
+    void prefix() const override;
+
 private:
     
 	void _reset(bool hard) override;
 
+    
     //
     // Analyzing
     //
