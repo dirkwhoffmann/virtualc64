@@ -13,7 +13,10 @@
 void
 VICII::drawSprites()
 {
-    if (isFirstDMAcycle || isSecondDMAcycle || (delay & VICUpdateRegisters) || VIC_SAFE_MODE == 1) {
+    assert(!isFirstDMAcycle);
+    assert(!isSecondDMAcycle);
+    
+    if ((delay & VICUpdateRegisters) || VIC_SAFE_MODE == 1) {
         drawSpritesSlowPath();
     } else {
         drawSpritesFastPath();

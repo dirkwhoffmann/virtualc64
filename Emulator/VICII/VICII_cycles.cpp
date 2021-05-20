@@ -42,11 +42,9 @@ VICII::cycle1()
     }
     
     // Phi1.2 Draw sprites (invisible area)
-    PAL  { assert(!isFirstDMAcycle); }
-    // PAL { assert(isSecondDMAcycle); }
-    NTSC { assert(isFirstDMAcycle); }
-    NTSC { assert(!isSecondDMAcycle); }
-    DRAW_SPRITES
+    drawSpritesSlowPath();
+    // PAL  { DRAW_SPRITES_DMA2 }
+    // NTSC { DRAW_SPRITES_DMA1 }
 
     // Phi1.3 Fetch
     PAL  { sFinalize(2); pAccess <mode> (3); }
@@ -87,9 +85,8 @@ VICII::cycle2()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    PAL  { assert(isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(isSecondDMAcycle);}
-    DRAW_SPRITES
+    PAL  { DRAW_SPRITES_DMA1 }
+    NTSC { DRAW_SPRITES_DMA2 }
 
     // Phi1.3 Fetch
     PAL  { sAccess2 <mode,3> (); }
@@ -113,9 +110,8 @@ VICII::cycle3()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    PAL  { assert(!isFirstDMAcycle); assert(isSecondDMAcycle); }
-    NTSC { assert(isFirstDMAcycle); assert(!isSecondDMAcycle);}
-    DRAW_SPRITES
+    PAL  { DRAW_SPRITES_DMA2 }
+    NTSC { DRAW_SPRITES_DMA1 }
 
     // Phi1.3 Fetch
     PAL  { sFinalize(3); pAccess <mode> (4); }
@@ -139,9 +135,8 @@ VICII::cycle4()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    PAL  { assert(isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(isSecondDMAcycle);}
-    DRAW_SPRITES
+    PAL  { DRAW_SPRITES_DMA1 }
+    NTSC { DRAW_SPRITES_DMA2 }
 
     // Phi1.3 Fetch
     PAL  { sAccess2 <mode,4> (); }
@@ -165,9 +160,8 @@ VICII::cycle5()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    PAL  { assert(!isFirstDMAcycle); assert(isSecondDMAcycle); }
-    NTSC { assert(isFirstDMAcycle); assert(!isSecondDMAcycle);}
-    DRAW_SPRITES
+    PAL  { DRAW_SPRITES_DMA2 }
+    NTSC { DRAW_SPRITES_DMA1 }
 
     // Phi1.3 Fetch
     PAL  { sFinalize(4); pAccess <mode> (5); }
@@ -191,9 +185,8 @@ VICII::cycle6()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    PAL  { assert(isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(isSecondDMAcycle);}
-    DRAW_SPRITES
+    PAL  { DRAW_SPRITES_DMA1 }
+    NTSC { DRAW_SPRITES_DMA2 }
 
     // Phi1.3 Fetch
     PAL  { sAccess2 <mode,5> (); }
@@ -217,9 +210,8 @@ VICII::cycle7()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    PAL  { assert(!isFirstDMAcycle); assert(isSecondDMAcycle); }
-    NTSC { assert(isFirstDMAcycle); assert(!isSecondDMAcycle);}
-    DRAW_SPRITES
+    PAL  { DRAW_SPRITES_DMA2 }
+    NTSC { DRAW_SPRITES_DMA1 }
 
     // Phi1.3 Fetch
     PAL  { sFinalize(5); pAccess <mode> (6); }
@@ -243,9 +235,8 @@ VICII::cycle8()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    PAL  { assert(isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(isSecondDMAcycle);}
-    DRAW_SPRITES
+    PAL  { DRAW_SPRITES_DMA1 }
+    NTSC { DRAW_SPRITES_DMA2 }
 
     // Phi1.3 Fetch
     PAL  { sAccess2 <mode,6> (); }
@@ -269,9 +260,8 @@ VICII::cycle9()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    PAL  { assert(!isFirstDMAcycle); assert(isSecondDMAcycle); }
-    NTSC { assert(isFirstDMAcycle); assert(!isSecondDMAcycle);}
-    DRAW_SPRITES
+    PAL  { DRAW_SPRITES_DMA2 }
+    NTSC { DRAW_SPRITES_DMA1 }
 
     // Phi1.3 Fetch
     PAL  { sFinalize(6); pAccess <mode> (7); }
@@ -295,9 +285,8 @@ VICII::cycle10()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    PAL  { assert(isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(isSecondDMAcycle);}
-    DRAW_SPRITES
+    PAL  { DRAW_SPRITES_DMA1 }
+    NTSC { DRAW_SPRITES_DMA2 }
 
     // Phi1.3 Fetch
     PAL  { sAccess2 <mode,7> (); }
@@ -320,9 +309,8 @@ VICII::cycle11()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    PAL  { assert(!isFirstDMAcycle); assert(isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle);}
-    DRAW_SPRITES
+    PAL  { DRAW_SPRITES_DMA2 }
+    NTSC { DRAW_SPRITES }
 
     // Phi1.3 Fetch (first out of five DRAM refreshs)
     PAL  { sFinalize(7); }
@@ -341,8 +329,6 @@ VICII::cycle12()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    PAL  { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle);}
     DRAW_SPRITES
 
     // Phi1.3 Fetch (second out of five DRAM refreshs)
@@ -370,8 +356,6 @@ VICII::cycle13() // X Coordinate -3 - 4 (?)
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    PAL  { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle);}
     DRAW_SPRITES
 
     // Phi1.3 Fetch (third out of five DRAM refreshs)
@@ -392,8 +376,6 @@ VICII::cycle14() // SpriteX: 0 - 7 (?)
     // Phi1.2 Draw the first visible column
     isVisibleColumn = true;
     DRAW
-    PAL  { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle);}
     DRAW_SPRITES
     
     // Phi1.3 Fetch (forth out of five DRAM refreshs)
@@ -425,8 +407,6 @@ VICII::cycle15() // SpriteX: 8 - 15 (?)
     
     // Phi1.2 Draw
     DRAW
-    PAL  { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle);}
     DRAW_SPRITES
     
     // Phi1.3 Fetch (last DRAM refresh)
@@ -450,8 +430,6 @@ VICII::cycle16() // SpriteX: 16 - 23 (?)
     
     // Phi1.2 Draw
     DRAW
-    PAL  { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle);}
     DRAW_SPRITES
     
     // Phi1.3 Fetch
@@ -478,8 +456,6 @@ VICII::cycle17() // SpriteX: 24 - 31 (?)
     
     // Phi1.2 Draw
     DRAW
-    PAL  { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle);}
     DRAW_SPRITES
     
     // Phi1.3 Fetch
@@ -504,8 +480,6 @@ VICII::cycle18() // SpriteX: 32 - 39
     // Phi1.2 Draw
     sr.canLoad = true; // Entering canvas area
     DRAW17
-    PAL  { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle);}
     DRAW_SPRITES
     
     // Phi1.3 Fetch
@@ -528,8 +502,6 @@ VICII::cycle19to54()
     
     // Phi1.2 Draw
     DRAW
-    PAL  { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle);}
     DRAW_SPRITES
     
     // Phi1.3 Fetch
@@ -552,8 +524,6 @@ VICII::cycle55()
     
     // Phi1.2 Draw
     DRAW
-    PAL  { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle);}
     DRAW_SPRITES
     
     // Phi1.3 Fetch
@@ -578,8 +548,6 @@ VICII::cycle56()
     
     // Phi1.2 Draw
     DRAW55
-    PAL  { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle);}
     DRAW_SPRITES
     
     // Phi1.3 Fetch
@@ -604,8 +572,6 @@ VICII::cycle57()
     
     // Phi1.2 Draw (border starts here)
     DRAW
-    PAL  { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle);}
     DRAW_SPRITES
     
     sr.canLoad = false; // Leaving canvas area
@@ -628,8 +594,6 @@ VICII::cycle58()
     
     // Phi1.2 Draw
     DRAW
-    PAL  { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle);}
     DRAW_SPRITES
     
     // Phi1.3 Fetch
@@ -706,9 +670,8 @@ VICII::cycle60()
     
     // Phi1.2 Draw
     DRAW
-    PAL  { assert(!isFirstDMAcycle); assert(isSecondDMAcycle); }
-    NTSC { assert(isFirstDMAcycle); assert(!isSecondDMAcycle);}
-    DRAW_SPRITES
+    PAL  { DRAW_SPRITES_DMA2 }
+    NTSC { DRAW_SPRITES_DMA1 }
     
     // Phi1.3 Fetch
     PAL  { sFinalize(0); pAccess <mode> (1); }
@@ -735,9 +698,8 @@ VICII::cycle61()
     
     // Phi1.2 Draw the last visible column
     DRAW
-    PAL  { assert(isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(isSecondDMAcycle);}
-    DRAW_SPRITES
+    PAL  { DRAW_SPRITES_DMA1 }
+    NTSC { DRAW_SPRITES_DMA2 }
     
     // Phi1.3 Fetch
     PAL  { sAccess2 <mode,1> (); }
@@ -762,9 +724,8 @@ VICII::cycle62()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    PAL  { assert(!isFirstDMAcycle); assert(isSecondDMAcycle); }
-    NTSC { assert(isFirstDMAcycle); assert(!isSecondDMAcycle);}
-    DRAW_SPRITES
+    PAL  { DRAW_SPRITES_DMA2 }
+    NTSC { DRAW_SPRITES_DMA1 }
 
     // Phi1.3 Fetch
     PAL  { sFinalize(1); pAccess <mode> (2); }
@@ -788,9 +749,8 @@ VICII::cycle63()
     checkVerticalFrameFF();
 
     // Phi1.2 Draw sprites (invisible area)
-    PAL  { assert(isFirstDMAcycle); assert(!isSecondDMAcycle); }
-    NTSC { assert(!isFirstDMAcycle); assert(isSecondDMAcycle);}
-    DRAW_SPRITES
+    PAL  { DRAW_SPRITES_DMA1 }
+    NTSC { DRAW_SPRITES_DMA2 }
 
     // Phi1.3 Fetch
     PAL  { sAccess2 <mode,2> (); }
@@ -815,8 +775,7 @@ VICII::cycle64()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    assert(isFirstDMAcycle); assert(!isSecondDMAcycle);
-    DRAW_SPRITES
+    DRAW_SPRITES_DMA1
 
     // Phi1.3 Fetch
     sAccess2 <mode,2> ();
@@ -839,8 +798,7 @@ VICII::cycle65()
     checkVerticalFrameFF();
     
     // Phi1.2 Draw sprites (invisible area)
-    assert(!isFirstDMAcycle); assert(isSecondDMAcycle);
-    DRAW_SPRITES
+    DRAW_SPRITES_DMA2
 
     // Phi1.3 Fetch
     sFinalize(2);

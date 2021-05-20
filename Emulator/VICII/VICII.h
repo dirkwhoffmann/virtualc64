@@ -1203,7 +1203,12 @@ public:
     void cycle64ntsc();
     void cycle65ntsc();
 	
-    #define DRAW_SPRITES if (spriteDisplay || isFirstDMAcycle || isSecondDMAcycle) drawSprites();
+    #define DRAW_SPRITES_DMA1 \
+        assert(isFirstDMAcycle); assert(!isSecondDMAcycle); drawSpritesSlowPath();
+    #define DRAW_SPRITES_DMA2 \
+        assert(!isFirstDMAcycle); assert(isSecondDMAcycle); drawSpritesSlowPath();
+    #define DRAW_SPRITES \
+        assert(!isFirstDMAcycle && !isSecondDMAcycle); if (spriteDisplay) drawSprites();
     #define DRAW_SPRITES59 if (spriteDisplayDelayed || spriteDisplay || isSecondDMAcycle) drawSpritesSlowPath();
     #define DRAW if (!vblank) { drawCanvas(); drawBorder(); };
     #define DRAW17 if (!vblank) { drawCanvas(); drawBorder17(); };

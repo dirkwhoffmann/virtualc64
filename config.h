@@ -15,7 +15,7 @@
 
 // Snapshot version number
 #define V_MAJOR 4
-#define V_MINOR 1
+#define V_MINOR 2
 #define V_SUBMINOR 0
 
 // Uncomment these settings in a release build
