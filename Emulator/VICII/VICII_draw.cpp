@@ -375,24 +375,28 @@ VICII::cutLayers()
         
         bool cut;
 
-        switch (zBuffer[i]) {
+        switch (zBuffer[i] & 0xE0) {
 
-            case DEPTH_BORDER:
+            case DEPTH_BORDER & 0xE0:
                 cut = config.cutLayers & 0x800;
                 break;
                                 
-            case DEPTH_FG:
+            case DEPTH_FG & 0xE0:
                 cut = config.cutLayers & 0x400;
                 break;
                 
-            case DEPTH_BG:
+            case DEPTH_BG & 0xE0:
                 cut = config.cutLayers & 0x200;
                 break;
                 
-            default:
+            case DEPTH_SPRITE_BG & 0xE0:
+            case DEPTH_SPRITE_FG & 0xE0:
                 cut = GET_BIT(config.cutLayers, zBuffer[i] & 0xF);
                 if (!(config.cutLayers & 0x100)) cut = false;
                 break;
+                
+            default:
+                cut = false;
         }
         
         if (cut) {
