@@ -13,7 +13,9 @@ extension MyController: NSMenuItemValidation {
 
         let powered = c64.poweredOn
         let running = c64.running
- 
+        var recording: Bool { return c64.recorder.recording }
+        var counter: Int { return c64.recorder.recordCounter }
+        
         var driveID: DriveID { return DriveID.init(rawValue: item.tag)! }
         var drive: DriveProxy { return c64.drive(driveID) }
         
@@ -36,11 +38,18 @@ extension MyController: NSMenuItemValidation {
         
         switch item.action {
             
-        // File menu
+        // Machine menu
         case #selector(MyController.importConfigAction(_:)),
              #selector(MyController.exportConfigAction(_:)),
              #selector(MyController.resetConfigAction(_:)):
             return !powered
+            
+        case #selector(MyController.captureScreenAction(_:)):
+            item.title = recording ? "Stop Recording" : "Record Screen"
+            return true
+
+        case #selector(MyController.exportVideoAction(_:)):
+            return counter > 0
             
         // Edit menu
         case #selector(MyController.stopAndGoAction(_:)):
@@ -371,6 +380,55 @@ extension MyController: NSMenuItemValidation {
         screenshotBrowser?.showSheet()
     }
         
+    @IBAction func captureScreenAction(_ sender: Any!) {
+        
+        track("Recording = \(c64.recorder.recording)")
+        
+        if c64.recorder.recording {
+            
+            c64.recorder.stopRecording()
+            return
+        }
+        
+        if !c64.recorder.hasFFmpeg {
+            showMissingFFmpegAlert()
+            return
+        }
+        
+        var rect: CGRect
+        if pref.captureSource == 0 {
+            rect = renderer.canvas.visible
+        } else {
+            rect = renderer.canvas.entire
+        }
+        
+        track("Cature source = \(pref.captureSource)")
+        track("(\(rect.minX),\(rect.minY)) - (\(rect.maxX),\(rect.maxY))")
+        
+        let success = c64.recorder.startRecording(rect,
+                                                  bitRate: pref.bitRate,
+                                                  aspectX: pref.aspectX,
+                                                  aspectY: pref.aspectY)
+        
+        if !success {
+            showFailedToLaunchFFmpegAlert()
+            return
+        }
+        
+    }
+    
+    @IBAction func exportVideoAction(_ sender: Any!) {
+        
+        track()
+        
+        /*
+        let name = NSNib.Name("ExportVideoDialog")
+        let exporter = ExportVideoDialog.make(parent: self, nibName: name)
+        
+        exporter?.showSheet()
+        */
+    }
+    
     //
     // Action methods (Edit menu)
     //

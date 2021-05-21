@@ -384,6 +384,12 @@ SIDBridge::getSampleRate() const
     double result = resid[0].getSampleRate();
     
     for (int i = 0; i < 4; i++) {
+        if (resid[i].getSampleRate() != result) {
+            printf("%f != %f\n", resid[i].getSampleRate(), result);
+        }
+        if (fastsid[i].getSampleRate() != result) {
+            printf("%f != %f\n", fastsid[i].getSampleRate(), result);
+        }
         assert(resid[i].getSampleRate() == result);
         assert(fastsid[i].getSampleRate() == result);
     }
@@ -965,6 +971,11 @@ SIDBridge::ignoreNextUnderOrOverflow()
 void
 SIDBridge::copyMono(float *target, isize n)
 {
+    if (recorder.isRecording()) {
+        for (isize i = 0; i < n; i++) target[i] = 0.0;
+        return;
+    }
+    
     stream.lock();
     
     // Check for a buffer underflow
@@ -979,6 +990,11 @@ SIDBridge::copyMono(float *target, isize n)
 void
 SIDBridge::copyStereo(float *target1, float *target2, isize n)
 {
+    if (recorder.isRecording()) {
+        for (isize i = 0; i < n; i++) target1[i] = target2[i] = 0.0;
+        return;
+    }
+
     stream.lock();
     
     // Check for a buffer underflow
@@ -993,6 +1009,11 @@ SIDBridge::copyStereo(float *target1, float *target2, isize n)
 void
 SIDBridge::copyInterleaved(float *target, isize n)
 {
+    if (recorder.isRecording()) {
+        for (isize i = 0; i < n; i++) target[i] = 0.0;
+        return;
+    }
+
     stream.lock();
     
     // Check for a buffer underflow

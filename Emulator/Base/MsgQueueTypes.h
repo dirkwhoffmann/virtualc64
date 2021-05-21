@@ -108,6 +108,10 @@ enum_long(MSG)
     MSG_USER_SNAPSHOT_TAKEN,
     MSG_SNAPSHOT_RESTORED,
     
+    // Screen recording
+    MSG_RECORDING_STARTED,
+    MSG_RECORDING_STOPPED,
+    
     // Console
     MSG_CLOSE_CONSOLE,
     

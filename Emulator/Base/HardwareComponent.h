@@ -289,22 +289,16 @@ return counter.count;
 util::SerResetter resetter; \
 applyToResetItems(resetter, hard);
     
-    // trace(SNP_DEBUG, "Resetted\n");
-    
 #define LOAD_SNAPSHOT_ITEMS \
 util::SerReader reader(buffer); \
 applyToPersistentItems(reader); \
 applyToResetItems(reader); \
 return reader.ptr - buffer;
     
-    // trace(SNP_DEBUG, "Recreated from %d bytes\n", reader.ptr - buffer);
-    
 #define SAVE_SNAPSHOT_ITEMS \
 util::SerWriter writer(buffer); \
 applyToPersistentItems(writer); \
 applyToResetItems(writer); \
 return writer.ptr - buffer;
-    
-    // trace(SNP_DEBUG, "Serialized to %d bytes\n", writer.ptr - buffer);
-    
+
 };

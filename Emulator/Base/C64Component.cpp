@@ -14,23 +14,24 @@
 C64Component::C64Component(C64& ref) :
 
 c64(ref),
-mem(ref.mem),
-cpu(ref.cpu),
-vic(ref.vic),
 cia1(ref.cia1),
 cia2(ref.cia2),
-sid(ref.sid),
-keyboard(ref.keyboard),
 port1(ref.port1),
 port2(ref.port2),
-expansionport(ref.expansionport),
-iec(ref.iec),
+cpu(ref.cpu),
+datasette(ref.datasette),
 drive8(ref.drive8),
 drive9(ref.drive9),
-datasette(ref.datasette),
+expansionport(ref.expansionport),
+iec(ref.iec),
+keyboard(ref.keyboard),
+mem(ref.mem),
 messageQueue(ref.msgQueue),
 oscillator(ref.oscillator),
-retroShell(ref.retroShell)
+recorder(ref.recorder),
+retroShell(ref.retroShell),
+sid(ref.sid),
+vic(ref.vic)
 {
 };
 

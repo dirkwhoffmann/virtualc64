@@ -33,6 +33,7 @@ class Mouse1351;
 class NeosMouse;
 class MsgQueue;
 class Oscillator;
+class Recorder;
 class RetroShell;
 
 // class File;
@@ -57,24 +58,25 @@ class C64Component : public HardwareComponent {
 protected:
 
     C64 &c64;
-    C64Memory &mem;
-    CPU<C64Memory> &cpu;
-    VICII &vic;
     CIA1 &cia1;
     CIA2 &cia2;
-    SIDBridge &sid;
-    Keyboard &keyboard;
     ControlPort &port1;
     ControlPort &port2;
-    ExpansionPort &expansionport;
-    IEC &iec;
+    CPU<C64Memory> &cpu;
+    Datasette &datasette;
     Drive &drive8;
     Drive &drive9;
-    Datasette &datasette;
+    ExpansionPort &expansionport;
+    IEC &iec;
+    Keyboard &keyboard;
+    C64Memory &mem;
     MsgQueue &messageQueue;
     Oscillator &oscillator;
+    Recorder &recorder;
     RetroShell &retroShell;
-    
+    SIDBridge &sid;
+    VICII &vic;
+
     Drive *drive[2] = { &drive8, &drive9 };
 
 public:

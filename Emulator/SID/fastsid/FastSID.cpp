@@ -54,7 +54,7 @@ FastSID::FastSID(C64 &ref, SIDBridge &bridgeref, int n) : C64Component(ref), bri
 }
 
 void
-FastSID::init(int sampleRate, int cycles_per_sec)
+FastSID::init(double sampleRate, int cycles_per_sec)
 {
     u32 i;
     
@@ -66,7 +66,7 @@ FastSID::init(int sampleRate, int cycles_per_sec)
         1, 4, 8, 12, 19, 28, 34, 40, 50, 125, 250, 400, 500, 1500, 2500, 4000
     };
     
-    speed1 = (cycles_per_sec << 8) / sampleRate;
+    speed1 = (cycles_per_sec << 8) / (u32)sampleRate;
     for (i = 0; i < 16; i++) {
         adrs[i] = 500 * 8 * speed1 / adrtable[i];
         sz[i] = 0x8888888 * i;
@@ -80,7 +80,7 @@ FastSID::init(int sampleRate, int cycles_per_sec)
 }
 
 void
-FastSID::initFilter(int sampleRate)
+FastSID::initFilter(double sampleRate)
 {
     u16 uk;
     float rk;
@@ -176,7 +176,7 @@ FastSID::_dump(dump::Category category, std::ostream& os) const
         os << tab("Model");
         os << SIDRevisionEnum::key(model) << std::endl;
         os << tab("Sampling rate");
-        os << dec(sampleRate) << std::endl;
+        os << sampleRate << std::endl;
         os << tab("CPU frequency");
         os << dec(cpuFrequency) << std::endl;
         os << tab("Emulate filter");
@@ -276,9 +276,9 @@ FastSID::setRevision(SIDRevision rev)
 void
 FastSID::setSampleRate(double rate)
 {
-    trace(SID_DEBUG, "Setting sample rate to %d\n", (u32)rate);
+    trace(SID_DEBUG, "Setting sample rate to %f\n", rate);
     
-    sampleRate = (u32)rate;
+    sampleRate = rate;
     
     // Recompute sample rate dependent data structures
     init(sampleRate, cpuFrequency);

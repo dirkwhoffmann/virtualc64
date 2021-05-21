@@ -40,6 +40,27 @@ class Preferences {
         set { screenshotTarget = NSBitmapImageRep.FileType(rawValue: UInt(newValue))! }
     }
     
+    // Screen captures
+    var captureSource = GeneralDefaults.std.captureSource
+    var bitRate = 512 {
+        didSet {
+            if bitRate < 64 { bitRate = 64 }
+            if bitRate > 16384 { bitRate = 16384 }
+        }
+    }
+    var aspectX = 768 {
+        didSet {
+            if aspectX < 1 { aspectX = 1 }
+            if aspectX > 999 { aspectX = 999 }
+        }
+    }
+    var aspectY = 702 {
+        didSet {
+            if aspectY < 1 { aspectY = 1 }
+            if aspectY > 999 { aspectY = 999 }
+        }
+    }
+    
     // Warp mode
     var warpMode = GeneralDefaults.std.warpMode {
         didSet { for c in myAppDelegate.controllers { c.updateWarp() } }
@@ -123,6 +144,12 @@ class Preferences {
         screenshotSource = defaults.integer(forKey: Keys.Gen.screenshotSource)
         screenshotTargetIntValue = defaults.integer(forKey: Keys.Gen.screenshotTarget)
         
+        // Captures
+        captureSource = defaults.integer(forKey: Keys.Gen.captureSource)
+        bitRate = defaults.integer(forKey: Keys.Gen.bitRate)
+        aspectX = defaults.integer(forKey: Keys.Gen.aspectX)
+        aspectY = defaults.integer(forKey: Keys.Gen.aspectY)
+
         // Warp mode
         warpModeIntValue = defaults.integer(forKey: Keys.Gen.warpMode)
         
@@ -145,6 +172,12 @@ class Preferences {
         defaults.set(snapshotInterval, forKey: Keys.Gen.autoSnapshotInterval)
         defaults.set(screenshotSource, forKey: Keys.Gen.screenshotSource)
         defaults.set(screenshotTargetIntValue, forKey: Keys.Gen.screenshotTarget)
+
+        // Captures
+        defaults.set(captureSource, forKey: Keys.Gen.captureSource)
+        defaults.set(bitRate, forKey: Keys.Gen.bitRate)
+        defaults.set(aspectX, forKey: Keys.Gen.aspectX)
+        defaults.set(aspectY, forKey: Keys.Gen.aspectY)
 
         // Warp mode
         defaults.set(warpModeIntValue, forKey: Keys.Gen.warpMode)

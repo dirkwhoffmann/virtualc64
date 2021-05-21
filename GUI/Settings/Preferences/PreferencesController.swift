@@ -29,6 +29,13 @@ class PreferencesController: DialogController {
     @IBOutlet weak var genScreenshotSourcePopup: NSPopUpButton!
     @IBOutlet weak var genScreenshotTargetPopup: NSPopUpButton!
         
+    // Screen captures
+    @IBOutlet weak var genFFmpegPath: NSTextField!
+    @IBOutlet weak var genCaptureSource: NSPopUpButton!
+    @IBOutlet weak var genAspectX: NSTextField!
+    @IBOutlet weak var genAspectY: NSTextField!
+    @IBOutlet weak var genBitRate: NSComboBox!
+    
     // Warp mode
     @IBOutlet weak var genWarpMode: NSPopUpButton!
 

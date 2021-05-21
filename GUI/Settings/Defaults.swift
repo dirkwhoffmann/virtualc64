@@ -132,6 +132,12 @@ struct Keys {
         static let screenshotSource       = "VC64_GEN_ScreenshotSource"
         static let screenshotTarget       = "VC64_GEN_ScreenshotTarget"
         
+        // Screen captures
+        static let captureSource          = "VC64_GEN_Source"
+        static let bitRate                = "VC64_GEN_BitRate"
+        static let aspectX                = "VC64_GEN_AspectX"
+        static let aspectY                = "VC64_GEN_AspectY"
+
         // Fullscreen
         static let keepAspectRatio        = "VC64_GEN_FullscreenKeepAspectRatio"
         static let exitOnEsc              = "VC64_GEN_FullscreenExitOnEsc"
@@ -153,6 +159,12 @@ struct GeneralDefaults {
     let autoSnapshotInterval: Int
     let screenshotSource: Int
     let screenshotTarget: NSBitmapImageRep.FileType
+    
+    // Captures
+    let captureSource: Int
+    let bitRate: Int
+    let aspectX: Int
+    let aspectY: Int
     
     // Fullscreen
     let keepAspectRatio: Bool
@@ -177,6 +189,11 @@ struct GeneralDefaults {
         screenshotSource: 0,
         screenshotTarget: .png,
         
+        captureSource: 0,
+        bitRate: 2048,
+        aspectX: 768,
+        aspectY: 702,
+        
         keepAspectRatio: false,
         exitOnEsc: true,
         
@@ -200,6 +217,11 @@ extension UserDefaults {
             Keys.Gen.screenshotSource: defaults.screenshotSource,
             Keys.Gen.screenshotTarget: Int(defaults.screenshotTarget.rawValue),
             
+            Keys.Gen.captureSource: defaults.captureSource,
+            Keys.Gen.bitRate: defaults.bitRate,
+            Keys.Gen.aspectX: defaults.aspectX,
+            Keys.Gen.aspectY: defaults.aspectY,
+
             Keys.Gen.keepAspectRatio: defaults.keepAspectRatio,
             Keys.Gen.exitOnEsc: defaults.exitOnEsc,
             
@@ -224,6 +246,11 @@ extension UserDefaults {
                      Keys.Gen.screenshotSource,
                      Keys.Gen.screenshotTarget,
                      
+                     Keys.Gen.captureSource,
+                     Keys.Gen.bitRate,
+                     Keys.Gen.aspectX,
+                     Keys.Gen.aspectY,
+
                      Keys.Gen.keepAspectRatio,
                      Keys.Gen.exitOnEsc,
                      

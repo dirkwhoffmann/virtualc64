@@ -44,6 +44,7 @@
 #include "CIA.h"
 #include "CPU.h"
 #include "Oscillator.h"
+#include "Recorder.h"
 #include "RegressionTester.h"
 #include "RetroShell.h"
 
@@ -109,6 +110,9 @@ public:
     
     // Command console
     RetroShell retroShell = RetroShell(*this);
+
+    // Screen recorder
+    Recorder recorder = Recorder(*this);
     
     // Communication channel to the GUI
     MsgQueue msgQueue = MsgQueue(*this);

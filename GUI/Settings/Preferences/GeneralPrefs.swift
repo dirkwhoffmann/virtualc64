@@ -24,6 +24,24 @@ extension PreferencesController {
         genScreenshotSourcePopup.selectItem(withTag: pref.screenshotSource)
         genScreenshotTargetPopup.selectItem(withTag: pref.screenshotTargetIntValue)
         
+        // Screen captures
+        let hasFFmpeg = c64.recorder.hasFFmpeg
+        genCaptureSource.selectItem(withTag: pref.captureSource)
+        genBitRate.stringValue = "\(pref.bitRate)"
+        genAspectX.integerValue = pref.aspectX
+        genAspectY.integerValue = pref.aspectY
+        genCaptureSource.isEnabled = hasFFmpeg
+        genBitRate.isEnabled = hasFFmpeg
+        genAspectX.isEnabled = hasFFmpeg
+        genAspectY.isEnabled = hasFFmpeg
+        if hasFFmpeg {
+            genFFmpegPath.textColor = .textColor
+            genFFmpegPath.stringValue = "/usr/local/bin/ffmpeg"
+        } else {
+            genFFmpegPath.textColor = .warningColor
+            genFFmpegPath.stringValue = "Requires /usr/local/bin/ffmpeg"
+        }
+
         // Drive
         genWarpMode.selectItem(withTag: pref.warpModeIntValue)
         
@@ -82,6 +100,43 @@ extension PreferencesController {
     @IBAction func genScreenshotTargetAction(_ sender: NSPopUpButton!) {
         
         pref.screenshotTargetIntValue = sender.selectedTag()
+        refresh()
+    }
+    
+    //
+    // Action methods (Screen captures)
+    //
+    
+    @IBAction func genCaptureSourceAction(_ sender: NSPopUpButton!) {
+        
+        track("tag = \(sender.selectedTag())")
+        pref.captureSource = sender.selectedTag()
+        refresh()
+    }
+
+    @IBAction func genBitRateAction(_ sender: NSComboBox!) {
+        
+        var input = sender.objectValueOfSelectedItem as? Int
+        if input == nil { input = sender.integerValue }
+        
+        if let bitrate = input {
+            track("bitrate = \(bitrate)")
+            pref.bitRate = bitrate
+        }
+        refresh()
+    }
+
+    @IBAction func genAspectXAction(_ sender: NSTextField!) {
+        
+        track("value = \(sender.integerValue)")
+        pref.aspectX = sender.integerValue
+        refresh()
+    }
+
+    @IBAction func genAspectYAction(_ sender: NSTextField!) {
+        
+        track("value = \(sender.integerValue)")
+        pref.aspectY = sender.integerValue
         refresh()
     }
     

@@ -747,6 +747,14 @@ extension MyController {
             refreshStatusBar()
             hideOrShowDriveMenus()
 
+        case .RECORDING_STARTED:
+            window?.backgroundColor = .recordingColor
+            refreshStatusBar()
+                
+        case .RECORDING_STOPPED:
+            window?.backgroundColor = .windowBackgroundColor
+            refreshStatusBar()
+
         case .CLOSE_CONSOLE:
             renderer.console.close(delay: 0.25)
             

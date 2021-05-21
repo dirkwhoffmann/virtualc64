@@ -69,7 +69,7 @@ private:
     u32 cpuFrequency = PAL_CLOCK_FREQUENCY;
     
     // Sample rate (44.1 kHz per default)
-    u32 sampleRate = 44100;
+    double sampleRate = 44100.0;
         
     // Stores for how many cycles FastSID was executed so far
     u64 executedCycles;
@@ -113,8 +113,8 @@ public:
 
 private:
     
-    void init(int sampleRate, int cycles_per_sec);
-    void initFilter(int sampleRate);
+    void init(double sampleRate, int cycles_per_sec);
+    void initFilter(double sampleRate);
 
     void _reset(bool hard) override;
 

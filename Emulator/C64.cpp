@@ -1116,6 +1116,7 @@ C64::endFrame()
     drive9.vsyncHandler();
     datasette.vsyncHandler();
     retroShell.vsyncHandler();
+    recorder.vsyncHandler();
     
     // Count some sheep (zzzzzz) ...
     if (!warp) oscillator.synchronize();

@@ -89,6 +89,9 @@ static const int PRT_DEBUG       = 0; // Control ports and connected devices
 static const int EXP_DEBUG       = 0; // Expansion port
 static const int LIP_DEBUG       = 0; // Light pen
 
+// Other components
+static const int REC_DEBUG       = 0; // Screen recorder
+
 
 //
 // Forced error conditions

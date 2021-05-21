@@ -60,6 +60,7 @@
 @class MyController;
 @class P00FileProxy;
 @class PRGFileProxy;
+@class RecorderProxy;
 @class RetroShellProxy;
 @class RomFileProxy;
 @class ScriptProxy;
@@ -111,6 +112,7 @@
     KeyboardProxy *keyboard;
     MemoryProxy *mem;
     MouseProxy *mouse;
+    RecorderProxy *recorder;
     RetroShellProxy *retroShell;
     SIDProxy *sid;
     VICProxy *vic;
@@ -131,6 +133,7 @@
 @property (readonly, strong) IECProxy *iec;
 @property (readonly, strong) KeyboardProxy *keyboard;
 @property (readonly, strong) MemoryProxy *mem;
+@property (readonly, strong) RecorderProxy *recorder;
 @property (readonly, strong) RetroShellProxy *retroShell;
 @property (readonly, strong) SIDProxy *sid;
 @property (readonly, strong) VICProxy *vic;
@@ -590,6 +593,26 @@
 @interface JoystickProxy : HardwareComponentProxy { }
 
 - (void) trigger:(GamePadAction)event;
+
+@end
+
+
+//
+// Recorder proxy
+//
+
+@interface RecorderProxy : Proxy { }
+
+@property (readonly) BOOL hasFFmpeg;
+@property (readonly) BOOL recording;
+@property (readonly) NSInteger recordCounter;
+
+- (BOOL)startRecording:(NSRect)rect
+               bitRate:(NSInteger)rate
+               aspectX:(NSInteger)aspectX
+               aspectY:(NSInteger)aspectY;
+- (void)stopRecording;
+- (BOOL)exportAs:(NSString *)path;
 
 @end
 

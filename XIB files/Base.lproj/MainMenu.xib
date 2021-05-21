@@ -186,6 +186,21 @@
                                     <action selector="browseScreenshotsAction:" target="-1" id="2lN-BD-hwW"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="3dU-dT-mgz">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Capture Screen" id="MND-gi-b3h">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="captureScreenAction:" target="-1" id="CS6-Je-gau"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Export Video..." id="Ioi-Oq-Zhb">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="exportVideoAction:" target="-1" id="1VS-4R-cgP"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>

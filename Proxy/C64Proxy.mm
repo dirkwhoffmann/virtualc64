@@ -1413,6 +1413,61 @@
 @end
 
 //
+// Recorder
+//
+
+@implementation RecorderProxy
+
+- (Recorder *)recorder
+{
+    return (Recorder *)obj;
+}
+
+- (BOOL)hasFFmpeg
+{
+    return [self recorder]->hasFFmpeg();
+}
+
+- (BOOL)recording
+{
+    return [self recorder]->isRecording();
+}
+
+- (NSInteger)recordCounter
+{
+    return [self recorder]->getRecordCounter();
+}
+
+- (BOOL)startRecording:(NSRect)rect
+               bitRate:(NSInteger)rate
+               aspectX:(NSInteger)aspectX
+               aspectY:(NSInteger)aspectY
+{
+    int x1 = (int)rect.origin.x;
+    int y1 = (int)rect.origin.y;
+    int x2 = x1 + (int)rect.size.width;
+    int y2 = y1 + (int)rect.size.height;
+    
+    return [self recorder]->startRecording(x1, y1, x2, y2,
+                                           rate,
+                                           aspectX,
+                                           aspectY);
+}
+
+- (void)stopRecording
+{
+    [self recorder]->stopRecording();
+}
+
+- (BOOL)exportAs:(NSString *)path
+{
+    return [self recorder]->exportAs(string([path fileSystemRepresentation]));
+}
+
+@end
+
+
+//
 // RetroShell proxy
 //
 
@@ -1972,6 +2027,7 @@
 @synthesize mem;
 @synthesize port1;
 @synthesize port2;
+@synthesize recorder;
 @synthesize retroShell;
 @synthesize sid;
 @synthesize vic;
@@ -2000,6 +2056,7 @@
     mem = [[MemoryProxy alloc] initWith:&c64->mem];
     port1 = [[ControlPortProxy alloc] initWith:&c64->port1];
     port2 = [[ControlPortProxy alloc] initWith:&c64->port2];
+    recorder = [[RecorderProxy alloc] initWith:&c64->recorder];
     retroShell = [[RetroShellProxy alloc] initWith:&c64->retroShell];
     sid = [[SIDProxy alloc] initWith:&c64->sid];
     vic = [[VICProxy alloc] initWith:&c64->vic];
