@@ -313,6 +313,9 @@
 
 @interface VICProxy : HardwareComponentProxy { }
 
+@property (readonly) NSInteger hPixels;
+@property (readonly) NSInteger vPixels;
+
 - (VICIIConfig)getConfig;
 - (BOOL)isPAL;
 - (void *)stableEmuTexture;

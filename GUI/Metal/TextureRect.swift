@@ -23,7 +23,10 @@ extension Canvas {
     // Returns the used texture area (including HBLANK and VBLANK)
     var entire: CGRect {
         
-        return CGRect.init(x: 0, y: 0, width: TEX_WIDTH, height: TEX_HEIGHT)
+        let w = c64.vic.hPixels
+        let h = c64.vic.vPixels
+        
+        return CGRect.init(x: 0, y: 0, width: w, height: h)
     }
     
     var entireNormalized: CGRect {

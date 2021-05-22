@@ -1334,5 +1334,5 @@ public:
     void cutLayers();
     
     // Initializes the DMA debugger textures
-    void clearDmaDebuggerTexture();
+    // void clearDmaDebuggerTexture();
 };

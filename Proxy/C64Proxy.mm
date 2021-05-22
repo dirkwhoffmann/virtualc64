@@ -338,6 +338,16 @@
     return (VICII *)obj;
 }
 
+- (NSInteger)hPixels
+{
+    return [self vicii]->getCyclesPerLine() * 8;
+}
+
+- (NSInteger)vPixels
+{
+    return [self vicii]->getRasterlinesPerFrame();
+}
+
 - (VICIIConfig)getConfig
 {
     return [self vicii]->getConfig();

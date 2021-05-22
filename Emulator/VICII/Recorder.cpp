@@ -213,7 +213,6 @@ Recorder::exportAs(const string &path)
     // Assemble the command line arguments for the video encoder
     //
     
-    // char cmd[512]; char *ptr = cmd;
     string cmd;
     
     // Path to the FFmpeg executable
