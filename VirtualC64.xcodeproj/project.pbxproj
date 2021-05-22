@@ -176,6 +176,8 @@
 		5085D89D25B848940043B15C /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5085D89B25B848940043B15C /* Joystick.cpp */; };
 		50891C012652380A0004AC1B /* VICII_sprites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50891C002652380A0004AC1B /* VICII_sprites.cpp */; };
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
+		5098C57B2658CF9800E05EFC /* ExportVideoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5098C57A2658CF9800E05EFC /* ExportVideoDialog.swift */; };
+		5098C57D2658D4DC00E05EFC /* ExportVideoDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5098C57C2658D4DC00E05EFC /* ExportVideoDialog.xib */; };
 		50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50995F2824DBCDE400F40713 /* CPUDebugger.cpp */; };
 		50A077F8258A18B9005ACF5B /* FSDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077F6258A18B9005ACF5B /* FSDevice.cpp */; };
 		50A077FE258A1ADF005ACF5B /* FSBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077FC258A1ADF005ACF5B /* FSBlock.cpp */; };
@@ -591,6 +593,8 @@
 		50891C002652380A0004AC1B /* VICII_sprites.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_sprites.cpp; sourceTree = "<group>"; };
 		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
 		5093D6A824B19E9200BDF924 /* Serialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Serialization.h; sourceTree = "<group>"; };
+		5098C57A2658CF9800E05EFC /* ExportVideoDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportVideoDialog.swift; sourceTree = "<group>"; };
+		5098C57C2658D4DC00E05EFC /* ExportVideoDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportVideoDialog.xib; sourceTree = "<group>"; };
 		50995F2824DBCDE400F40713 /* CPUDebugger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPUDebugger.cpp; sourceTree = "<group>"; };
 		50995F2924DBCDE400F40713 /* CPUDebugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUDebugger.h; sourceTree = "<group>"; };
 		50A077F6258A18B9005ACF5B /* FSDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDevice.cpp; sourceTree = "<group>"; };
@@ -827,6 +831,7 @@
 				50763276202989D300575110 /* DialogController.swift */,
 				50B485FA24F9911600844133 /* ImportDialog.swift */,
 				5080501725873EC9004FE1F5 /* ExportDialog.swift */,
+				5098C57A2658CF9800E05EFC /* ExportVideoDialog.swift */,
 				503C1DD224FCD1BF00D91141 /* SnapshotDialog.swift */,
 				50031B39206FB0FC00A1969B /* SnapshotController.swift */,
 				50B485FE24FA1D4100844133 /* iCarousel.h */,
@@ -1483,6 +1488,7 @@
 				50031B33206FABA400A1969B /* OldSnapshotDialog.xib */,
 				50B485F824F96E9400844133 /* ImportDialog.xib */,
 				50F062E0258DD0A3009A6B21 /* ExportDialog.xib */,
+				5098C57C2658D4DC00E05EFC /* ExportVideoDialog.xib */,
 				503C1DD024FC10F400D91141 /* SnapshotDialog.xib */,
 				507E7A9D24FB864E00AB433C /* ScreenshotDialog.xib */,
 			);
@@ -1574,6 +1580,7 @@
 				50A0B48D24C1CAEB00FF0B0B /* Preferences.xib in Resources */,
 				50D3092624C71AD300B92563 /* Monitor.xib in Resources */,
 				501E2C1225B2DDED00B9C9C0 /* AppIcon.icns in Resources */,
+				5098C57D2658D4DC00E05EFC /* ExportVideoDialog.xib in Resources */,
 				50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */,
 				50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */,
 				501E428020D975AD000BB48D /* IconVirtualC64.icns in Resources */,
@@ -1631,6 +1638,7 @@
 			files = (
 				504C438A24AF29AC00E69CAE /* Mouse1350.cpp in Sources */,
 				504C436824AF29AC00E69CAE /* ActionReplay.cpp in Sources */,
+				5098C57B2658CF9800E05EFC /* ExportVideoDialog.swift in Sources */,
 				50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */,
 				50D3091E24C5CE1A00B92563 /* MyControllerStatusBar.swift in Sources */,
 				504C436624AF29AC00E69CAE /* Kcs.cpp in Sources */,

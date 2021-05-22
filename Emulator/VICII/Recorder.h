@@ -140,15 +140,7 @@ public:
 
     // Exports the recorded video
     bool exportAs(const string &path);
-    
-private:
-    
-    // Starts the screen recorder
-    bool prepare(int x1, int y1, int x2, int y2,
-                        long bitRate,
-                        long aspectX,
-                        long aspectY);
-
+        
     
     //
     // Recording a video stream
@@ -163,5 +155,7 @@ private:
     
     void prepare();
     void record();
+    void recordVideo();
+    void recordAudio();
     void finalize();
 };

@@ -421,12 +421,10 @@ extension MyController: NSMenuItemValidation {
         
         track()
         
-        /*
         let name = NSNib.Name("ExportVideoDialog")
         let exporter = ExportVideoDialog.make(parent: self, nibName: name)
         
         exporter?.showSheet()
-        */
     }
     
     //
