@@ -754,6 +754,7 @@ extension MyController {
         case .RECORDING_STOPPED:
             window?.backgroundColor = .windowBackgroundColor
             refreshStatusBar()
+            exportVideoAction(self)
 
         case .CLOSE_CONSOLE:
             renderer.console.close(delay: 0.25)

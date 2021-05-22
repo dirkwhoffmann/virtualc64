@@ -195,7 +195,7 @@
                                     <action selector="captureScreenAction:" target="-1" id="CS6-Je-gau"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Export Video..." id="Ioi-Oq-Zhb">
+                            <menuItem title="Export Video..." hidden="YES" id="Ioi-Oq-Zhb">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="exportVideoAction:" target="-1" id="1VS-4R-cgP"/>

@@ -401,10 +401,7 @@ extension MyController: NSMenuItemValidation {
         } else {
             rect = renderer.canvas.entire
         }
-        
-        track("Cature source = \(pref.captureSource)")
-        track("(\(rect.minX),\(rect.minY)) - (\(rect.maxX),\(rect.maxY))")
-        
+                
         let success = c64.recorder.startRecording(rect,
                                                   bitRate: pref.bitRate,
                                                   aspectX: pref.aspectX,
@@ -412,7 +409,6 @@ extension MyController: NSMenuItemValidation {
         
         if !success {
             showFailedToLaunchFFmpegAlert()
-            return
         }
         
     }
