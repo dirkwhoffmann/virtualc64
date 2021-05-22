@@ -34,7 +34,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s4X-T1-P9E">
-                        <rect key="frame" x="143" y="156" width="261" height="16"/>
+                        <rect key="frame" x="149" y="156" width="255" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Merging streams..." id="iU8-TT-aId">
                             <font key="font" usesAppearanceFont="YES"/>
@@ -106,7 +106,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZLz-JK-bea">
-                        <rect key="frame" x="170" y="22" width="75" height="16"/>
+                        <rect key="frame" x="176" y="22" width="75" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Powered by" id="0Qy-mN-xlF">
                             <font key="font" metaFont="system"/>
@@ -115,12 +115,12 @@
                         </textFieldCell>
                     </textField>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l7t-6A-J2H">
-                        <rect key="frame" x="240" y="21" width="66" height="17"/>
+                        <rect key="frame" x="246" y="21" width="66" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ffmpegLogoTemplate" id="Bu6-60-ngM"/>
                     </imageView>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qqo-xi-teR">
-                        <rect key="frame" x="145" y="13" width="23" height="33"/>
+                        <rect key="frame" x="151" y="13" width="23" height="33"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="FFmpegIcon" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="mz3-Rl-0yt">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -128,14 +128,14 @@
                         </buttonCell>
                     </button>
                     <box fixedFrame="YES" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="UCJ-iH-wJq">
-                        <rect key="frame" x="17" y="58" width="122" height="116"/>
+                        <rect key="frame" x="17" y="58" width="116" height="116"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="DrN-tN-9zM">
-                            <rect key="frame" x="3" y="3" width="116" height="110"/>
+                            <rect key="frame" x="3" y="3" width="110" height="110"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <imageView hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dVw-zY-6nY" customClass="DragDropImageView" customModule="VirtualC64" customModuleProvider="target">
-                                    <rect key="frame" x="17" y="21" width="72" height="72"/>
+                                    <rect key="frame" x="19" y="19" width="72" height="72"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" imageScaling="proportionallyDown" image="mp4" id="R0C-fy-TZA"/>
                                 </imageView>
@@ -175,7 +175,7 @@ DQ
                         </connections>
                     </button>
                     <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="LQ4-gN-aVO">
-                        <rect key="frame" x="144" y="148" width="282" height="5"/>
+                        <rect key="frame" x="151" y="148" width="275" height="5"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </box>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Nk-mL-hYW">
