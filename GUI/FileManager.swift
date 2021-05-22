@@ -26,4 +26,18 @@ extension FileManager {
         
         return result
     }
+    
+    @discardableResult
+    static func copy(from source: URL, to dest: URL) -> Bool {
+        
+        do {
+            if FileManager.default.fileExists(atPath: dest.path) {
+                try FileManager.default.removeItem(at: dest)
+            }
+            try FileManager.default.copyItem(at: source, to: dest)
+        } catch {
+            return false
+        }
+        return true
+    }
 }

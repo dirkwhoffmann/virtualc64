@@ -1438,6 +1438,11 @@
     return [self recorder]->getRecordCounter();
 }
 
+- (double)duration
+{
+    return [self recorder]->getDuration().asSeconds();
+}
+
 - (BOOL)startRecording:(NSRect)rect
                bitRate:(NSInteger)rate
                aspectX:(NSInteger)aspectX

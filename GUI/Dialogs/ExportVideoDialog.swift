@@ -11,53 +11,72 @@ class ExportVideoDialog: DialogController {
 
     @IBOutlet weak var text: NSTextField!
     @IBOutlet weak var subtext: NSTextField!
+    @IBOutlet weak var duration: NSTextField!
+    @IBOutlet weak var size: NSTextField!
     @IBOutlet weak var progress: NSProgressIndicator!
-    @IBOutlet weak var button: NSButton!
+    @IBOutlet weak var cancelButton: NSButton!
+    @IBOutlet weak var exportButton: NSButton!
+    @IBOutlet weak var icon: NSImageView!
 
     var panel: NSSavePanel!
+
+    let path = "/tmp/virtualc64.mp4"
 
     override func showSheet(completionHandler handler: (() -> Void)? = nil) {
             
         track()
-                
+        super.showSheet()
+
+        duration.stringValue = ""
+        size.stringValue = ""
+        progress.startAnimation(self)
+            
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            self.text.isHidden = false
+            self.subtext.isHidden = false
+        }
+
+        if c64.recorder.export(as: path) {
+            
+            text.stringValue = "The video has been ecoded successfully"
+            subtext.stringValue = "Select Save or copy via drag & drop"
+            icon.isHidden = false
+            exportButton.isHidden = false
+            size.stringValue = URL.init(fileURLWithPath: path).fileSizeString
+            duration.stringValue = String(format: "%.1f sec", c64.recorder.duration)
+            
+        } else {
+            
+            subtext.stringValue = "The video could not be ecoded"
+            subtext.stringValue = "No output generated"
+        }
+        
+        cancelButton.isHidden = false
+        progress.stopAnimation(self)
+        progress.isHidden = true
+    }
+    
+    @IBAction func exportAction(_ sender: NSButton!) {
+
+        track()
+        
         // Create save panel
         panel = NSSavePanel()
-        panel.prompt = "Export"
-        panel.title = "Export"
         panel.allowedFileTypes = ["mp4"]
         
-        /*
         // Run panel as sheet
-        if let win = parent.window {
+        if let win = window {
+            track()
             panel.beginSheetModal(for: win, completionHandler: { result in
                 if result == .OK {
+                    track()
                     if let url = self.panel.url {
                         track("url = \(url)")
-                        self.export(to: url)
+                        let source = URL.init(fileURLWithPath: self.path)
+                        FileManager.copy(from: source, to: url)
                     }
                 }
             })
         }
-        */
-        export(to: URL.init(string: "/tmp/movie.mp4")!)
-    }
-    
-    func export(to url: URL) {
-
-        track("url = \(url)")
-
-        super.showSheet()
-
-        text.stringValue = "Exporting video to"
-        subtext.stringValue = url.path
-        button.isHidden = true
-        progress.startAnimation(self)
-                
-        c64.recorder.export(as: url.path)
-
-        text.stringValue = "Video exported to"
-        progress.stopAnimation(self)
-        progress.isHidden = true
-        button.isHidden = false
     }
 }

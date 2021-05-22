@@ -499,8 +499,6 @@ class ExportDialog: DialogController {
         savePanel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK {
                 if let url = self.savePanel.url {
-                    // let suffix = url.pathExtension == "" ? firstAllowed : ""
-                    // self.exportToFile(url: url.appendingPathExtension(suffix))
                     self.exportToFile(url: url)
                 }
             }

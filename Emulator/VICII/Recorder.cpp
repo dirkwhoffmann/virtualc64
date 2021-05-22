@@ -48,6 +48,12 @@ Recorder::_dump(dump::Category category, std::ostream& os) const
     os << tab("Recording") << bol(isRecording()) << std::endl;
 }
     
+util::Time
+Recorder::getDuration()
+{
+    return (isRecording() ? util::Time::now() : recStop) - recStart;
+}
+
 bool
 Recorder::startRecording(int x1, int y1, int x2, int y2,
                          long bitRate,
@@ -278,6 +284,7 @@ Recorder::prepare()
 
     // Switch state and inform the GUI
     state = State::record;
+    recStart = util::Time::now();
     messageQueue.put(MSG_RECORDING_STARTED);
 }
 
@@ -350,5 +357,6 @@ Recorder::finalize()
     
     // Switch state and inform the GUI
     state = State::wait;
+    recStop = util::Time::now();
     messageQueue.put(MSG_RECORDING_STOPPED);
 }

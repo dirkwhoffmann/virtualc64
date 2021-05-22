@@ -10,6 +10,7 @@
 #pragma once
 
 #include "C64Component.h"
+#include "Chrono.h"
 
 class Recorder : public C64Component {
 
@@ -58,16 +59,27 @@ class Recorder : public C64Component {
     State state = State::wait;
 
     // Number of records that have been made
-    long recordCounter = 0;
+    isize recordCounter = 0;
     
     
     //
     // Recording parameters
     //
     
+    // Bit rate
+    isize bitRate = 0;
+    
+    // Aspect ratio
+    isize aspectX = 0;
+    isize aspectY = 0;
+    
     // The texture cutout that is going to be recorded
-    struct { int x1; int y1; int x2; int y2; } cutout;
+    struct { isize x1; isize y1; isize x2; isize y2; } cutout;
             
+    // Time stamps
+    util::Time recStart;
+    util::Time recStop;
+
     
     //
     // Initializing
@@ -127,7 +139,10 @@ public:
     bool isRecording() const { return state != State::wait; }
     
     // Returns the record counter
-    long getRecordCounter() const { return recordCounter; }
+    isize getRecordCounter() const { return recordCounter; }
+    
+    // Returns the duration of the last recording
+    util::Time getDuration();
     
     // Starts the screen recorder
     bool startRecording(int x1, int y1, int x2, int y2,

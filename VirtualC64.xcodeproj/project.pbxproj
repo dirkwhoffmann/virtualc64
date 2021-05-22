@@ -834,11 +834,11 @@
 				50B485FA24F9911600844133 /* ImportDialog.swift */,
 				5080501725873EC9004FE1F5 /* ExportDialog.swift */,
 				5098C57A2658CF9800E05EFC /* ExportVideoDialog.swift */,
+				5098C57E2658E1F400E05EFC /* DragAndDropImageView.swift */,
 				503C1DD224FCD1BF00D91141 /* SnapshotDialog.swift */,
 				50031B39206FB0FC00A1969B /* SnapshotController.swift */,
 				50B485FE24FA1D4100844133 /* iCarousel.h */,
 				50B485FC24FA1D3200844133 /* iCarousel.m */,
-				5098C57E2658E1F400E05EFC /* DragAndDropImageView.swift */,
 			);
 			path = Dialogs;
 			sourceTree = "<group>";

@@ -76,9 +76,11 @@ extension DragDropImageView: NSFilePromiseProviderDelegate {
                 try FileManager.default.removeItem(at: url)
             }
             try FileManager.default.copyItem(at: source, to: url)
+            completionHandler(nil)
             
         } catch let error {
             print("Failed to copy \(source) to \(url): \(error)")
+            completionHandler(error)
         }
     }
 }

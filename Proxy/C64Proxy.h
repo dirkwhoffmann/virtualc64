@@ -606,6 +606,7 @@
 @property (readonly) BOOL hasFFmpeg;
 @property (readonly) BOOL recording;
 @property (readonly) NSInteger recordCounter;
+@property (readonly) double duration;
 
 - (BOOL)startRecording:(NSRect)rect
                bitRate:(NSInteger)rate
