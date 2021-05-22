@@ -84,6 +84,11 @@ DQ
                         <rect key="frame" x="232" y="60" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </progressIndicator>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dVw-zY-6nY" customClass="DragDropImageView" customModule="VirtualC64" customModuleProvider="target">
+                        <rect key="frame" x="216" y="149" width="48" height="48"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="mp4" id="R0C-fy-TZA"/>
+                    </imageView>
                 </subviews>
             </view>
             <connections>
@@ -95,5 +100,6 @@ DQ
     <resources>
         <image name="FFmpegIcon" width="480" height="480"/>
         <image name="ffmpegLogoTemplate" width="1829" height="595"/>
+        <image name="mp4" width="256" height="256"/>
     </resources>
 </document>

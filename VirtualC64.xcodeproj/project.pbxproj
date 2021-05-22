@@ -178,6 +178,7 @@
 		5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5092A5B0200BC4B70037754D /* DragAndDrop.swift */; };
 		5098C57B2658CF9800E05EFC /* ExportVideoDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5098C57A2658CF9800E05EFC /* ExportVideoDialog.swift */; };
 		5098C57D2658D4DC00E05EFC /* ExportVideoDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5098C57C2658D4DC00E05EFC /* ExportVideoDialog.xib */; };
+		5098C57F2658E1F400E05EFC /* DragAndDropImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5098C57E2658E1F400E05EFC /* DragAndDropImageView.swift */; };
 		50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50995F2824DBCDE400F40713 /* CPUDebugger.cpp */; };
 		50A077F8258A18B9005ACF5B /* FSDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077F6258A18B9005ACF5B /* FSDevice.cpp */; };
 		50A077FE258A1ADF005ACF5B /* FSBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077FC258A1ADF005ACF5B /* FSBlock.cpp */; };
@@ -595,6 +596,7 @@
 		5093D6A824B19E9200BDF924 /* Serialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Serialization.h; sourceTree = "<group>"; };
 		5098C57A2658CF9800E05EFC /* ExportVideoDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportVideoDialog.swift; sourceTree = "<group>"; };
 		5098C57C2658D4DC00E05EFC /* ExportVideoDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportVideoDialog.xib; sourceTree = "<group>"; };
+		5098C57E2658E1F400E05EFC /* DragAndDropImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDropImageView.swift; sourceTree = "<group>"; };
 		50995F2824DBCDE400F40713 /* CPUDebugger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPUDebugger.cpp; sourceTree = "<group>"; };
 		50995F2924DBCDE400F40713 /* CPUDebugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUDebugger.h; sourceTree = "<group>"; };
 		50A077F6258A18B9005ACF5B /* FSDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDevice.cpp; sourceTree = "<group>"; };
@@ -836,6 +838,7 @@
 				50031B39206FB0FC00A1969B /* SnapshotController.swift */,
 				50B485FE24FA1D4100844133 /* iCarousel.h */,
 				50B485FC24FA1D3200844133 /* iCarousel.m */,
+				5098C57E2658E1F400E05EFC /* DragAndDropImageView.swift */,
 			);
 			path = Dialogs;
 			sourceTree = "<group>";
@@ -1805,6 +1808,7 @@
 				50CCE179259DFD7800481E7F /* DevicesPrefs.swift in Sources */,
 				5092A5B1200BC4B70037754D /* DragAndDrop.swift in Sources */,
 				504C438224AF29AC00E69CAE /* C64Object.cpp in Sources */,
+				5098C57F2658E1F400E05EFC /* DragAndDropImageView.swift in Sources */,
 				504C437224AF29AC00E69CAE /* FlashRom.cpp in Sources */,
 				50DBB3D12641101E006F45E6 /* DmaDebugger.cpp in Sources */,
 				504C43A024AF29AC00E69CAE /* FastVoice.cpp in Sources */,

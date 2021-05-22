@@ -26,6 +26,7 @@ class ExportVideoDialog: DialogController {
         panel.title = "Export"
         panel.allowedFileTypes = ["mp4"]
         
+        /*
         // Run panel as sheet
         if let win = parent.window {
             panel.beginSheetModal(for: win, completionHandler: { result in
@@ -37,6 +38,8 @@ class ExportVideoDialog: DialogController {
                 }
             })
         }
+        */
+        export(to: URL.init(string: "/tmp/movie.mp4")!)
     }
     
     func export(to url: URL) {

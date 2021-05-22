@@ -48,9 +48,11 @@ extension MyController: NSMenuItemValidation {
             item.title = recording ? "Stop Recording" : "Record Screen"
             return true
 
+            /*
         case #selector(MyController.exportVideoAction(_:)):
             return counter > 0
-            
+            */
+        
         // Edit menu
         case #selector(MyController.stopAndGoAction(_:)):
             item.title = running ? "Pause" : "Continue"

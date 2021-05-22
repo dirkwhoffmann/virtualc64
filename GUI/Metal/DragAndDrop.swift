@@ -106,6 +106,8 @@ public extension MetalView {
         case .compatibleFileURL:
             
             if let url = NSURL.init(from: pasteBoard) as URL? {
+                
+                track("url = \(url)")
                 do {
                     try document.createAttachment(from: url)
                     return document.mountAttachment()
