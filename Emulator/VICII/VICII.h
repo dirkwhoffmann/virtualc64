@@ -567,6 +567,7 @@ private:
     void resetEmuTextures() { resetEmuTexture(1); resetEmuTexture(2); }
     void resetDmaTexture(int nr);
     void resetDmaTextures() { resetDmaTexture(1); resetDmaTexture(2); }
+    void resetTexture(u32 *p);
 
     
     //

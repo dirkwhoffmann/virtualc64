@@ -118,7 +118,7 @@ Recorder::startRecording(int x1, int y1, int x2, int y2,
         // Aspect ratio
         cmd1 += " -bsf:v ";
         cmd1 += "\"h264_metadata=sample_aspect_ratio=";
-        cmd1 += std::to_string(aspectX) + "/" + std::to_string(2*aspectY) + "\"";
+        cmd1 += std::to_string(aspectX) + "/" + std::to_string(aspectY) + "\"";
         
         // Output file
         cmd1 += " -y " + videoStreamPath();
@@ -306,7 +306,7 @@ Recorder::recordVideo()
     
     isize width = sizeof(u32) * (cutout.x2 - cutout.x1);
     isize height = cutout.y2 - cutout.y1;
-    isize offset = cutout.y1 * TEX_WIDTH + cutout.x1 + FIRST_VISIBLE_PIXEL * 4;
+    isize offset = cutout.y1 * TEX_WIDTH + cutout.x1;
 
     u8 *data = new u8[width * height];
     u8 *src = (u8 *)(texture + offset);

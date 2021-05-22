@@ -73,9 +73,26 @@ VICII::_reset(bool hard)
 void
 VICII::resetEmuTexture(int nr)
 {
-    assert(nr == 1 || nr == 2);
-    int *p = nr == 1 ? emuTexture1 : emuTexture2;
+    if (nr == 1) { resetTexture((u32 *)emuTexture1); return; }
+    if (nr == 2) { resetTexture((u32 *)emuTexture2); return; }
+    
+    assert(false);
+}
 
+void
+VICII::resetDmaTexture(int nr)
+{
+    assert(nr == 1 || nr == 2);
+    int *p = nr == 1 ? dmaTexture1 : dmaTexture2;
+
+    for (int i = 0; i < TEX_HEIGHT * TEX_WIDTH; i++) {
+        p[i] = 0xFF000000;
+    }
+}
+
+void
+VICII::resetTexture(u32 *p)
+{
     // Determine the HBLANK / VBLANK area
     long width = isPAL() ? PAL_PIXELS : NTSC_PIXELS;
     long height = getRasterlinesPerFrame();
@@ -87,26 +104,15 @@ VICII::resetEmuTexture(int nr)
 
             if (y < height && x < width) {
                 
-                // Draw a checkerboard pattern inside the used texture area
-                p[pos] = (y / 4) % 2 == (x / 8) % 2 ? 0xFF222222 : 0xFF444444;
+                // Draw black pixels inside the used area
+                p[pos] = 0xFF000000;
 
             } else {
-                
-                // Draw black pixels outside the used texture area
-                p[pos] = 0xFF000000;
+
+                // Draw a checkerboard pattern outside the used area
+                p[pos] = (y / 4) % 2 == (x / 8) % 2 ? 0xFF222222 : 0xFF444444;
             }
         }
-    }
-}
-
-void
-VICII::resetDmaTexture(int nr)
-{
-    assert(nr == 1 || nr == 2);
-    int *p = nr == 1 ? dmaTexture1 : dmaTexture2;
-
-    for (int i = 0; i < TEX_HEIGHT * TEX_WIDTH; i++) {
-        p[i] = 0xFF000000;
     }
 }
 

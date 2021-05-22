@@ -69,7 +69,7 @@ extension DragDropImageView: NSFilePromiseProviderDelegate {
         
         track("\(url)")
 
-        let source = URL.init(fileURLWithPath: "/tmp/movie.mp4")
+        let source = URL.init(fileURLWithPath: "/tmp/virtualc64.mp4")
         
         do {
             if FileManager.default.fileExists(atPath: url.path) {
