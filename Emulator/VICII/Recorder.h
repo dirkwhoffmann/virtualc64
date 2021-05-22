@@ -29,11 +29,6 @@ class Recorder : public C64Component {
     static string videoStreamPath() { return "/tmp/video.mp4"; }
     static string audioStreamPath() { return "/tmp/audio.mp4"; }
 
-    // Audio sample frequency in the output stream
-    static const int frameRate = 50;
-    static const int sampleRate = 44100;
-    static const int samplesPerFrame = sampleRate / frameRate;
-
     // Log level passed to FFmpef
     static const string loglevel() { return REC_DEBUG ? "verbose" : "warning"; }
     
@@ -65,14 +60,22 @@ class Recorder : public C64Component {
     //
     // Recording parameters
     //
-        
+      
+    // Frame rate, Bit rate, Sample rate
+    isize frameRate = 0;
+    isize bitRate = 0;
+    isize sampleRate = 0;
+
+    // Sound samples per frame (882 for PAL, 735 for NTSC)
+    isize samplesPerFrame = 0;
+    
     // The texture cutout that is going to be recorded
     struct { isize x1; isize y1; isize x2; isize y2; } cutout;
             
     // Time stamps
     util::Time recStart;
     util::Time recStop;
-
+    
     
     //
     // Initializing
@@ -121,7 +124,20 @@ private:
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
 
+    
+    //
+    // Querying recording parameters
+    //
 
+public:
+    
+    isize getRecordCounter() const { return recordCounter; }
+    util::Time getDuration() const;
+    isize getFrameRate() const { return frameRate; }
+    isize getBitRate() const { return bitRate; }
+    isize getSampleRate() const { return sampleRate; }
+
+    
     //
     // Starting and stopping a video stream
     //
@@ -130,13 +146,7 @@ public:
         
     // Checks whether the screen is currently recorded
     bool isRecording() const { return state != State::wait; }
-    
-    // Returns the record counter
-    isize getRecordCounter() const { return recordCounter; }
-    
-    // Returns the duration of the last recording
-    util::Time getDuration();
-    
+        
     // Starts the screen recorder
     bool startRecording(int x1, int y1, int x2, int y2,
                         long bitRate,

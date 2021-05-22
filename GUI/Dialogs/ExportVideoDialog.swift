@@ -10,9 +10,11 @@
 class ExportVideoDialog: DialogController {
 
     @IBOutlet weak var text: NSTextField!
-    @IBOutlet weak var subtext: NSTextField!
     @IBOutlet weak var duration: NSTextField!
-    @IBOutlet weak var size: NSTextField!
+    @IBOutlet weak var sizeOnDisk: NSTextField!
+    @IBOutlet weak var frameRate: NSTextField!
+    @IBOutlet weak var bitRate: NSTextField!
+    @IBOutlet weak var sampleRate: NSTextField!
     @IBOutlet weak var progress: NSProgressIndicator!
     @IBOutlet weak var cancelButton: NSButton!
     @IBOutlet weak var exportButton: NSButton!
@@ -28,27 +30,31 @@ class ExportVideoDialog: DialogController {
         super.showSheet()
 
         duration.stringValue = ""
-        size.stringValue = ""
+        sizeOnDisk.stringValue = ""
+        frameRate.stringValue = ""
+        bitRate.stringValue = ""
+        sampleRate.stringValue = ""
         progress.startAnimation(self)
             
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             self.text.isHidden = false
-            self.subtext.isHidden = false
         }
 
         if c64.recorder.export(as: path) {
-            
-            text.stringValue = "The video has been ecoded successfully"
-            subtext.stringValue = "Select Save or copy via drag & drop"
+                        
+            text.stringValue = "MPEG-4 Video Stream"
             icon.isHidden = false
             exportButton.isHidden = false
-            size.stringValue = URL.init(fileURLWithPath: path).fileSizeString
+            sizeOnDisk.stringValue = URL.init(fileURLWithPath: path).fileSizeString
             duration.stringValue = String(format: "%.1f sec", c64.recorder.duration)
-            
+            frameRate.stringValue = "\(c64.recorder.frameRate) Hz"
+            bitRate.stringValue = "\(c64.recorder.bitRate) kHz"
+            sampleRate.stringValue = "\(c64.recorder.sampleRate) Hz"
+
         } else {
             
-            subtext.stringValue = "The video could not be ecoded"
-            subtext.stringValue = "No output generated"
+            text.stringValue = "Encoding error"
+            text.textColor = .warningColor
         }
         
         cancelButton.isHidden = false

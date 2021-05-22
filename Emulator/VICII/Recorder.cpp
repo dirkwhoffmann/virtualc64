@@ -49,7 +49,7 @@ Recorder::_dump(dump::Category category, std::ostream& os) const
 }
     
 util::Time
-Recorder::getDuration()
+Recorder::getDuration() const
 {
     return (isRecording() ? util::Time::now() : recStop) - recStart;
 }
@@ -67,6 +67,24 @@ Recorder::startRecording(int x1, int y1, int x2, int y2,
         
         if (isRecording()) return false;
         
+        // Remember the cutot (and make sure the screen dimensions are even)
+        if ((x2 - x1) % 2) x2--;
+        if ((y2 - y1) % 2) y2--;
+        cutout.x1 = x1;
+        cutout.x2 = x2;
+        cutout.y1 = y1;
+        cutout.y2 = y2;
+        debug(REC_DEBUG, "Recorded area: (%d,%d) - (%d,%d)\n", x1, y1, x2, y2);
+
+        // Remember the Bit rate
+        this->bitRate = bitRate;
+
+        // Determine the frame rate
+        frameRate = vic.isPAL() ? 50 : 60;
+
+        // Determine the sample rate
+        sampleRate = 44100;
+        
         // Create pipes
         debug(REC_DEBUG, "Creating pipes...\n");
         
@@ -77,16 +95,7 @@ Recorder::startRecording(int x1, int y1, int x2, int y2,
         
         debug(REC_DEBUG, "Pipes created\n");
         dump();
-        
-        // Make sure the screen dimensions are even
-        if ((x2 - x1) % 2) x2--;
-        if ((y2 - y1) % 2) y2--;
-        cutout.x1 = x1;
-        cutout.x2 = x2;
-        cutout.y1 = y1;
-        cutout.y2 = y2;
-        debug(REC_DEBUG, "Recorded area: (%d,%d) - (%d,%d)\n", x1, y1, x2, y2);
-        
+                
         //
         // Assemble the command line arguments for the video encoder
         //
@@ -268,13 +277,28 @@ Recorder::prepare()
 {
     printf("Prepare\n");
     
-    /* The PAL C64 frame rate is 50.125 Hz, derived from a system clock
-     * frequency of 0.985248 MHz. Because we record a 50 Hz video stream, we
-     * need to scale the sample frequency by (50.125 / 50) to make SID produce
-     * the correct number of sound samples per frame (882 samples for a 44100 Hz
-     * stream).
+    /* Adjust the sampling rate while the recorder is running.
+     *
+     * Background: Both the PAL and NTSC versions of the C64 diverge from the
+     * exact PAL and NTSC frame rates. The PAL C64 frame rate is 50.125 Hz,
+     * derived from a system clock frequency of 0.985248 MHz whereas the NTSC
+     * frame rate is 59.826 Hz, derived from a clock frequency of 1.023 MHz.
+     * Because we record a 50 Hz video stream for PAL machines and a 60 Hz
+     * stream for NTSC machines, we need to scale the sample frequency to make
+     * SID produce the correct number of sound samples per frame (882 for PAL
+     * and 735 for NTSC).
+     * Important: Due to scaling, we won't be able to make SID produce the exact
+     * number of required samples in each and every frame. It is important to
+     * apply a scaling factor that never makes SID produce less than the
+     * required amout which would result in a buffer underflow.
      */
-    sid.setSampleRate(sampleRate * 50.125 / 50.0);
+    if (vic.isPAL()) {
+        sid.setSampleRate(sampleRate * 50.125 / 50.0);
+        samplesPerFrame = 882;
+    } else {
+        sid.setSampleRate(sampleRate * 59.827 / 60.0);
+        samplesPerFrame = 735;
+    }
     
     // Start with a nearly empty buffer
     sid.stream.lock();
@@ -323,10 +347,14 @@ Recorder::recordVideo()
 void
 Recorder::recordAudio()
 {
-    // printf("Samples: %zd\n", sid.stream.count());
-    assert(sid.stream.count() >= 882);
+    debug(true, "Samples: %zd\n", sid.stream.count());
     
-    for (isize i = 0; i < 882; i++) {
+    if (sid.stream.count() != samplesPerFrame) {
+        debug(true, "Samples: %zd\n", sid.stream.count());
+        // assert(sid.stream.count() >= samplesPerFrame);
+    }
+    
+    for (isize i = 0; i < samplesPerFrame; i++) {
     
         // Feed the audio pipe
         SamplePair pair = sid.stream.read();

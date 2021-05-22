@@ -8,14 +8,16 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ExportVideoDialog" customModule="VirtualC64" customModuleProvider="target">
             <connections>
+                <outlet property="bitRate" destination="M46-8C-bJl" id="dLj-qg-KKB"/>
                 <outlet property="button" destination="wpc-Jr-qzA" id="UgS-St-hFc"/>
                 <outlet property="cancelButton" destination="zGf-cK-YR2" id="vhL-jA-30P"/>
                 <outlet property="duration" destination="6iW-xu-ZZj" id="N7S-W5-Ut3"/>
                 <outlet property="exportButton" destination="wpc-Jr-qzA" id="1Nd-zl-Wl9"/>
+                <outlet property="frameRate" destination="5kS-eC-xED" id="b6G-db-Pqr"/>
                 <outlet property="icon" destination="dVw-zY-6nY" id="kZh-sS-iG0"/>
                 <outlet property="progress" destination="3Xz-Qh-VDr" id="pog-OF-vTg"/>
-                <outlet property="size" destination="g5g-fI-kOO" id="rxH-yX-Ee3"/>
-                <outlet property="subtext" destination="Sop-zq-4zp" id="D6a-ab-yZR"/>
+                <outlet property="sampleRate" destination="eQa-xr-wbz" id="104-2Y-OtK"/>
+                <outlet property="sizeOnDisk" destination="g5g-fI-kOO" id="rxH-yX-Ee3"/>
                 <outlet property="text" destination="s4X-T1-P9E" id="4w2-PI-zOZ"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gF3-R3-CjS"/>
             </connections>
@@ -25,41 +27,41 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="446" height="185"/>
+            <rect key="contentRect" x="196" y="240" width="446" height="192"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1536" height="935"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="446" height="185"/>
+                <rect key="frame" x="0.0" y="0.0" width="446" height="192"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s4X-T1-P9E">
-                        <rect key="frame" x="143" y="149" width="261" height="16"/>
+                        <rect key="frame" x="143" y="156" width="261" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Merging the video with the audio stream" id="iU8-TT-aId">
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Merging streams..." id="iU8-TT-aId">
                             <font key="font" usesAppearanceFont="YES"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sop-zq-4zp">
-                        <rect key="frame" x="143" y="133" width="261" height="14"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cEF-iZ-6Y2">
+                        <rect key="frame" x="188" y="112" width="78" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="left" title="Please wait..." id="RSR-Ko-iWc">
+                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="right" title="Size on Disk:" id="hGa-jX-Zlx">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cEF-iZ-6Y2">
-                        <rect key="frame" x="153" y="81" width="78" height="14"/>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wIy-7M-BOq">
+                        <rect key="frame" x="186" y="95" width="78" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="right" title="Size:" id="hGa-jX-Zlx">
+                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="right" title="Frame  Rate:" id="may-wI-QJ0">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vXV-rp-p6Z">
-                        <rect key="frame" x="153" y="100" width="78" height="14"/>
+                        <rect key="frame" x="186" y="129" width="78" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="right" title="Duration:" id="qK0-GI-rtF">
                             <font key="font" metaFont="smallSystem"/>
@@ -68,25 +70,43 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6iW-xu-ZZj">
-                        <rect key="frame" x="237" y="100" width="163" height="14"/>
+                        <rect key="frame" x="269" y="129" width="141" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="left" id="wOd-7K-uXW">
+                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="left" title="Ipsum lorem" id="wOd-7K-uXW">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g5g-fI-kOO">
-                        <rect key="frame" x="237" y="81" width="163" height="14"/>
+                        <rect key="frame" x="269" y="112" width="141" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="left" id="J8H-wt-gql">
+                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="left" title="Ipsum lorem" id="J8H-wt-gql">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5kS-eC-xED">
+                        <rect key="frame" x="269" y="95" width="141" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="left" title="Ipsum lorem" id="1Rc-Yd-hFM">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M46-8C-bJl">
+                        <rect key="frame" x="269" y="78" width="141" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="left" title="Ipsum lorem" id="paW-Kf-hFD">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZLz-JK-bea">
-                        <rect key="frame" x="173" y="22" width="75" height="16"/>
+                        <rect key="frame" x="170" y="22" width="75" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Powered by" id="0Qy-mN-xlF">
                             <font key="font" metaFont="system"/>
@@ -95,12 +115,12 @@
                         </textFieldCell>
                     </textField>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l7t-6A-J2H">
-                        <rect key="frame" x="243" y="21" width="66" height="17"/>
+                        <rect key="frame" x="240" y="21" width="66" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ffmpegLogoTemplate" id="Bu6-60-ngM"/>
                     </imageView>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qqo-xi-teR">
-                        <rect key="frame" x="146" y="13" width="23" height="33"/>
+                        <rect key="frame" x="145" y="13" width="23" height="33"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="FFmpegIcon" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="mz3-Rl-0yt">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -108,14 +128,14 @@
                         </buttonCell>
                     </button>
                     <box fixedFrame="YES" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="UCJ-iH-wJq">
-                        <rect key="frame" x="17" y="55" width="112" height="112"/>
+                        <rect key="frame" x="17" y="58" width="122" height="116"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="DrN-tN-9zM">
-                            <rect key="frame" x="3" y="3" width="106" height="106"/>
+                            <rect key="frame" x="3" y="3" width="116" height="110"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <imageView hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dVw-zY-6nY" customClass="DragDropImageView" customModule="VirtualC64" customModuleProvider="target">
-                                    <rect key="frame" x="17" y="17" width="72" height="72"/>
+                                    <rect key="frame" x="17" y="21" width="72" height="72"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" imageScaling="proportionallyDown" image="mp4" id="R0C-fy-TZA"/>
                                 </imageView>
@@ -137,7 +157,7 @@ Gw
                         </connections>
                     </button>
                     <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="3Xz-Qh-VDr">
-                        <rect key="frame" x="410" y="149" width="16" height="16"/>
+                        <rect key="frame" x="410" y="156" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </progressIndicator>
                     <button hidden="YES" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wpc-Jr-qzA">
@@ -154,12 +174,43 @@ DQ
                             <action selector="exportAction:" target="-2" id="9QP-jc-e54"/>
                         </connections>
                     </button>
+                    <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="LQ4-gN-aVO">
+                        <rect key="frame" x="144" y="148" width="282" height="5"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </box>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Nk-mL-hYW">
+                        <rect key="frame" x="186" y="78" width="78" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="right" title="Bit Rate:" id="HVs-Bn-Smt">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I77-8j-hRp">
+                        <rect key="frame" x="186" y="61" width="78" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="right" title="Sample Rate:" id="ybY-5H-R3d">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eQa-xr-wbz">
+                        <rect key="frame" x="269" y="61" width="141" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="left" title="Ipsum lorem" id="d7L-GG-UqG">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="q0d-PB-bxS"/>
             </connections>
-            <point key="canvasLocation" x="107" y="67.5"/>
+            <point key="canvasLocation" x="107" y="71"/>
         </window>
     </objects>
     <resources>

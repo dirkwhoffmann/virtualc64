@@ -1453,6 +1453,21 @@
     return [self recorder]->getDuration().asSeconds();
 }
 
+- (NSInteger)frameRate
+{
+    return [self recorder]->getFrameRate();
+}
+
+- (NSInteger)bitRate
+{
+    return [self recorder]->getBitRate();
+}
+
+- (NSInteger)sampleRate
+{
+    return [self recorder]->getSampleRate();
+}
+
 - (BOOL)startRecording:(NSRect)rect
                bitRate:(NSInteger)rate
                aspectX:(NSInteger)aspectX

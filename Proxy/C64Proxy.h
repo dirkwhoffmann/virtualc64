@@ -610,6 +610,9 @@
 @property (readonly) BOOL recording;
 @property (readonly) NSInteger recordCounter;
 @property (readonly) double duration;
+@property (readonly) NSInteger frameRate;
+@property (readonly) NSInteger bitRate;
+@property (readonly) NSInteger sampleRate;
 
 - (BOOL)startRecording:(NSRect)rect
                bitRate:(NSInteger)rate
