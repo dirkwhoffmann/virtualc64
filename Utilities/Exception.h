@@ -21,8 +21,8 @@ struct Exception : public std::exception {
     
     Exception(const string &s, i64 d) : description(s), data(d) { }
     Exception(const string &s) : description(s), data(0) { }
-    Exception(i64 d) : description(""), data(d) { }
-    // Exception() : description(""), data(0) { }
+    Exception(i64 d) : data(d) { }
+    Exception() : data(0) { }
 
     const char *what() const throw() override { return description.c_str(); }
 };

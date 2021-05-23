@@ -29,11 +29,11 @@ struct VC64Error : public util::Exception
 // ConfigError
 //
 
-struct ConfigError : public std::exception
+struct ConfigError : public util::Exception
 {
     string description;
     
-    ConfigError(const string &s) : description(s) { }
+    using Exception::Exception;
     
     const char *what() const throw() override;    
 };

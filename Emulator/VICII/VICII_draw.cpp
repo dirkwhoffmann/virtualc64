@@ -371,6 +371,12 @@ VICII::loadShiftRegister()
 void
 VICII::cutLayers()
 {
+    // Check master switch
+    if (!(config.cutLayers & 0x1000)) return;
+    
+    // Only proceed if at least one channel is enabled
+    if (!(config.cutLayers & 0x0F00)) return;
+    
     for (int i = 0; i < TEX_WIDTH; i++) {
         
         bool cut;

@@ -14,11 +14,11 @@
 
 namespace util {
 
-struct ParseError : public std::exception {
+struct ParseError : public util::Exception {
 
     string token;
     string expected;
-    
+        
     ParseError(const string &t) : token(t) { }
     ParseError(const string &t, const string &e) : token(t), expected(e) { }
 
@@ -40,7 +40,7 @@ struct EnumParseError : public ParseError {
 bool parseBool(string& token) throws;
 long parseNum(string& token) throws;
 
-template <typename Enum> long parseEnum(const string& key)
+template <typename Enum> long parseEnum(const string& key) throws
 {
     string upperKey;
     for (auto c : key) { upperKey += toupper(c); }

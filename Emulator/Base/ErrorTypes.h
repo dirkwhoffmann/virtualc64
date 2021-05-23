@@ -35,7 +35,6 @@ enum_long(ERROR_CODE)
     ERROR_ROM_MEGA65_MISMATCH,
     
     // Snapshots
-    // ERROR_SNP_UNSUPPORTED,
     ERROR_SNP_TOO_OLD,
     ERROR_SNP_TOO_NEW,
 

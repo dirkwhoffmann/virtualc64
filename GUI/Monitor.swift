@@ -84,7 +84,8 @@ class Monitor: DialogController {
         
         // Layer debugger
         let layers = config.vicCutLayers
-        cutForeground.state = (layers & 0x800) != 0 ? .on : .off
+        cutEnable.state = (layers & 0x1000) != 0 ? .on : .off
+        cutBackground.state = (layers & 0x800) != 0 ? .on : .off
         cutForeground.state = (layers & 0x400) != 0 ? .on : .off
         cutBackground.state = (layers & 0x200) != 0 ? .on : .off
         cutSprites.state = (layers & 0x100) != 0 ? .on : .off
@@ -191,30 +192,33 @@ class Monitor: DialogController {
         config.vicCutLayers = config.vicCutLayers & ~mask
     }
 
+    @IBAction func cutEnableAction(_ sender: NSButton!) {
+
+        track()
+        sender.state == .on ? addLayer(0x1000) : removeLayer(0x1000)
+        refresh()
+    }
+    
     @IBAction func cutBorderAction(_ sender: NSButton!) {
     
-        track()
         sender.state == .on ? addLayer(0x800) : removeLayer(0x800)
         refresh()
     }
 
     @IBAction func cutForegroundAction(_ sender: NSButton!) {
     
-        track()
         sender.state == .on ? addLayer(0x400) : removeLayer(0x400)
         refresh()
     }
 
     @IBAction func cutBackgroundAction(_ sender: NSButton!) {
     
-        track()
         sender.state == .on ? addLayer(0x200) : removeLayer(0x200)
         refresh()
     }
 
     @IBAction func cutSpritesAction(_ sender: NSButton!) {
     
-        track()
         sender.state == .on ? addLayer(0x100) : removeLayer(0x100)
         refresh()
     }
@@ -222,7 +226,6 @@ class Monitor: DialogController {
     @IBAction func cutSingleSpriteAction(_ sender: NSButton!) {
     
         let sprite = sender.tag
-        track()
         sender.state == .on ? addLayer(1 << sprite) : removeLayer(1 << sprite)
         refresh()
     }

@@ -1189,7 +1189,7 @@ VICII::endRasterline()
     }
     
     // Cut out layers if requested
-    if (config.cutLayers) cutLayers();
+    cutLayers();
 
     // Prepare buffers for the next line
     for (unsigned i = 0; i < TEX_WIDTH; i++) { zBuffer[i] = 0; }
