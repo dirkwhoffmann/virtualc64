@@ -614,10 +614,6 @@ public:
     // Returns true if the DMA debugger is switched on
     bool dmaDebug() const { return dmaDebugger.config.dmaDebug; }
     
-    void dumpTexture() const;
-    void dumpTexture(std::ostream& os) const;
-    void dumpTexture(std::ostream& os, isize x1, isize y1, isize x2, isize y2) const;
-
     
     //
     // Serializing

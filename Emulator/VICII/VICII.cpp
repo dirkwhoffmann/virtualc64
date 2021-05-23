@@ -505,69 +505,6 @@ VICII::clearStats()
     }
 }
 
-void
-VICII::dumpTexture() const
-{
-    /* This function is used for automatic regression testing. It generates a
-     * TIFF image of the current emulator texture in the /tmp directory and
-     * exits the application. The regression testing script will pick up the
-     * texture and compare it against a previously recorded reference image.
-     */
-    std::ofstream file;
-        
-    // Assemble the target file names
-    string rawFile = "/tmp/" + dumpTexturePath + ".raw";
-    string tiffFile = "/tmp/" + dumpTexturePath + ".tiff";
-
-    // Open an output stream
-    file.open(rawFile.c_str());
-    
-    // Dump texture
-    dumpTexture(file, x1, y1, x2, y2);
-    file.close();
-    
-    // Convert raw data into a TIFF file
-    string cmd = "/usr/local/bin/raw2tiff";
-    cmd += " -p rgb -b 3";
-    cmd += " -w " + std::to_string(x2 - x1);
-    cmd += " -l " + std::to_string(y2 - y1);
-    cmd += " " + rawFile + " " + tiffFile;
-    
-    if (system(cmd.c_str()) == -1) {
-        warn("Error executing %s\n", cmd.c_str());
-    }
-}
-
-void
-VICII::dumpTexture(std::ostream& os) const
-{
-    isize x1 = FIRST_VISIBLE_PIXEL;
-    isize y1 = FIRST_VISIBLE_LINE;
-    isize x2 = x1 + VISIBLE_PIXELS;
-    isize y2 = TEX_HEIGHT;
-    
-    dumpTexture(os, x1, y1, x2, y2);
-}
-
-void
-VICII::dumpTexture(std::ostream& os, isize x1, isize y1, isize x2, isize y2) const
-{
-    msg("dumpTexture(%zd,%zd,%zd,%zd)\n", x1, y1, x2, y2);
-    
-    auto buffer = (u32 *)stableEmuTexture();
-
-    for (isize y = y1; y < y2; y++) {
-        
-        for (isize x = x1; x < x2; x++) {
-            
-            char *cptr = (char *)(buffer + y * TEX_WIDTH + x);
-            os.write(cptr + 0, 1);
-            os.write(cptr + 1, 1);
-            os.write(cptr + 2, 1);
-        }
-    }
-}
-
 SpriteInfo
 VICII::getSpriteInfo(int nr)
 {

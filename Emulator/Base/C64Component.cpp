@@ -29,6 +29,7 @@ mem(ref.mem),
 messageQueue(ref.msgQueue),
 oscillator(ref.oscillator),
 recorder(ref.recorder),
+regressionTester(ref.regressionTester),
 retroShell(ref.retroShell),
 sid(ref.sid),
 vic(ref.vic)

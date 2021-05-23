@@ -34,6 +34,7 @@ class NeosMouse;
 class MsgQueue;
 class Oscillator;
 class Recorder;
+class RegressionTester;
 class RetroShell;
 
 // class File;
@@ -73,6 +74,7 @@ protected:
     MsgQueue &messageQueue;
     Oscillator &oscillator;
     Recorder &recorder;
+    RegressionTester &regressionTester;
     RetroShell &retroShell;
     SIDBridge &sid;
     VICII &vic;

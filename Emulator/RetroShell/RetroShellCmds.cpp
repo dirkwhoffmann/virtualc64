@@ -123,7 +123,7 @@ RetroShell::exec <Token::screenshot, Token::save> (Arguments &argv, long param)
 template <> void
 RetroShell::exec <Token::screenshot> (Arguments &argv, long param)
 {
-    std::ofstream file;
+    // std::ofstream file;
     std::vector<string> vec(argv.begin(), argv.end());
 
     auto path = vec[0];
@@ -131,17 +131,22 @@ RetroShell::exec <Token::screenshot> (Arguments &argv, long param)
     auto y1 = util::parseNum(vec[2]);
     auto x2 = util::parseNum(vec[3]);
     auto y2 = util::parseNum(vec[4]);
-    
+
     // Assemble the target file names
     string rawFile = "/tmp/" + path + ".raw";
     string tiffFile = "/tmp/" + path + ".tiff";
 
     // Open an output stream
-    file.open(rawFile.c_str());
+    // file.open(rawFile.c_str());
     
     // Dump texture
-    vic.dumpTexture(file, x1, y1, x2, y2);
-    file.close();
+    regressionTester.x1 = x1;
+    regressionTester.y1 = y1;
+    regressionTester.x2 = x2;
+    regressionTester.y2 = y2;
+    regressionTester.dumpTexture(c64, rawFile);
+    // dumpTexture(file, x1, y1, x2, y2);
+    // file.close();
     
     // Convert raw data into a TIFF file
     string cmd = "/usr/local/bin/raw2tiff";
