@@ -77,17 +77,14 @@ CIA::setConfigItem(Option option, i64 value)
         case OPT_CIA_REVISION:
             
             if (!CIARevisionEnum::isValid(value)) {
-                throw ConfigArgError(CIARevisionEnum::keyList());
+                throw VC64Error(ERROR_OPT_INV_ARG, CIARevisionEnum::keyList());
             }
-            // if (config.revision == value) return false;
             
             config.revision = (CIARevision)value;
             return true;
             
         case OPT_TIMER_B_BUG:
             
-            // if (config.timerBBug == value) return false;
-
             config.timerBBug = value;
             return true;
             

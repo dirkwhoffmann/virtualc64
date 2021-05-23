@@ -162,9 +162,8 @@ SIDBridge::setConfigItem(Option option, i64 value)
         case OPT_SID_REVISION:
             
             if (!SIDRevisionEnum::isValid(value)) {
-                throw ConfigArgError(SIDRevisionEnum::keyList());
+                throw VC64Error(ERROR_OPT_INV_ARG, SIDRevisionEnum::keyList());
             }
-            // if (config.revision == value) return false;
             
             suspend();
             config.revision = (SIDRevision)value;
@@ -178,11 +177,6 @@ SIDBridge::setConfigItem(Option option, i64 value)
             
         case OPT_SID_FILTER:
             
-            /*
-            if (config.filter == value) {
-                return false;
-            }
-            */
             suspend();
             config.filter = value;
             for (int i = 0; i < 4; i++) {
@@ -196,9 +190,8 @@ SIDBridge::setConfigItem(Option option, i64 value)
         case OPT_SID_ENGINE:
             
             if (!SIDEngineEnum::isValid(value)) {
-                throw ConfigArgError(SIDEngineEnum::keyList());
+                throw VC64Error(ERROR_OPT_INV_ARG, SIDEngineEnum::keyList());
             }
-            // if (config.engine == value) return false;
 
             suspend();
             config.engine = (SIDEngine)value;
@@ -209,9 +202,8 @@ SIDBridge::setConfigItem(Option option, i64 value)
         case OPT_SID_SAMPLING:
             
             if (!SamplingMethodEnum::isValid(value)) {
-                throw ConfigArgError(SamplingMethodEnum::keyList());
+                throw VC64Error(ERROR_OPT_INV_ARG, SamplingMethodEnum::keyList());
             }
-            // if (config.sampling == value) return false;
 
             suspend();
             config.sampling = (SamplingMethod)value;

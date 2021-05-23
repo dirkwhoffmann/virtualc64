@@ -2289,7 +2289,7 @@
 {
     try {
         return [self c64]->configure(opt, val);
-    } catch (ConfigError &exception) {
+    } catch (VC64Error &exception) {
         return false;
     }
 }
@@ -2298,7 +2298,7 @@
 {
     try {
         return [self c64]->configure(opt, val ? 1 : 0);
-    } catch (ConfigError &exception) {
+    } catch (VC64Error &exception) {
         return false;
     }
 }
@@ -2307,7 +2307,7 @@
 {
     try {
         return [self c64]->configure(opt, id, val);
-    } catch (ConfigError &exception) {
+    } catch (VC64Error &exception) {
         return false;
     }
 }
@@ -2316,7 +2316,7 @@
 {
     try {
         return [self c64]->configure(opt, id, val ? 1 : 0);
-    } catch (ConfigError &exception) {
+    } catch (VC64Error &exception) {
         return false;
     }
 }
@@ -2325,7 +2325,7 @@
 {
     try {
         return [self c64]->configure(opt, (long)id, val);
-    } catch (ConfigError &exception) {
+    } catch (VC64Error &exception) {
         return false;
     }
 }
@@ -2334,7 +2334,7 @@
 {
     try {
         return [self c64]->configure(opt, (long)id, val ? 1 : 0);
-    } catch (ConfigError &exception) {
+    } catch (VC64Error &exception) {
         return false;
     }
 }

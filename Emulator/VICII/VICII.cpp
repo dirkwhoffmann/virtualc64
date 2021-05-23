@@ -194,7 +194,7 @@ VICII::setConfigItem(Option option, i64 value)
         case OPT_VIC_REVISION:
             
             if (!VICIIRevisionEnum::isValid(value)) {
-                throw ConfigArgError(VICIIRevisionEnum::keyList());
+                throw VC64Error(ERROR_OPT_INV_ARG, VICIIRevisionEnum::keyList());
             }
             
             suspend();
@@ -205,7 +205,7 @@ VICII::setConfigItem(Option option, i64 value)
         case OPT_PALETTE:
             
             if (!PaletteEnum::isValid(value)) {
-                throw ConfigArgError(PaletteEnum::keyList());
+                throw VC64Error(ERROR_OPT_INV_ARG, PaletteEnum::keyList());
             }
             
             suspend();
@@ -217,7 +217,7 @@ VICII::setConfigItem(Option option, i64 value)
         case OPT_BRIGHTNESS:
             
             if (config.brightness < 0 || config.brightness > 100) {
-                throw ConfigArgError("Expected 0...100");
+                throw VC64Error(ERROR_OPT_INV_ARG, "Expected 0...100");
             }
 
             config.brightness = value;
@@ -227,7 +227,7 @@ VICII::setConfigItem(Option option, i64 value)
         case OPT_CONTRAST:
 
             if (config.contrast < 0 || config.contrast > 100) {
-                throw ConfigArgError("Expected 0...100");
+                throw VC64Error(ERROR_OPT_INV_ARG, "Expected 0...100");
             }
 
             config.contrast = value;
@@ -237,7 +237,7 @@ VICII::setConfigItem(Option option, i64 value)
         case OPT_SATURATION:
         
             if (config.saturation < 0 || config.saturation > 100) {
-                throw ConfigArgError("Expected 0...100");
+                throw VC64Error(ERROR_OPT_INV_ARG, "Expected 0...100");
             }
 
             config.saturation = value;
@@ -277,7 +277,7 @@ VICII::setConfigItem(Option option, i64 value)
         case OPT_GLUE_LOGIC:
             
             if (!GlueLogicEnum::isValid(value)) {
-                throw ConfigArgError(GlueLogicEnum::keyList());
+                throw VC64Error(ERROR_OPT_INV_ARG, GlueLogicEnum::keyList());
             }
             
             config.glueLogic = (GlueLogic)value;

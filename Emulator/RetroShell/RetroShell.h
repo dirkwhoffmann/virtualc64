@@ -173,7 +173,7 @@ public:
     
     // Prints a textual description of an error in the console
     void describe(const std::exception &exception);
-    void describe(const struct VC64Error &error);
+    // void describe(const struct VC64Error &error);
 
     
     //

@@ -45,7 +45,7 @@ RetroShell::exec <Token::source> (Arguments &argv, long param)
 {
     auto stream = std::ifstream(argv.front());
     if (!stream.is_open()) {
-        throw ConfigFileNotFoundError(argv.front());
+        throw VC64Error(ERROR_FILE_NOT_FOUND, argv.front());
     }
 
     execScript(stream);
@@ -83,7 +83,7 @@ template <> void
 RetroShell::exec <Token::regression, Token::run> (Arguments &argv, long param)
 {
     auto path = argv.front();
-    if (!util::fileExists(path)) throw ConfigFileNotFoundError(path);
+    if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
 
     PRGFile *file = AnyFile::make <PRGFile> (path);
     c64.flash(file, 0);
@@ -239,7 +239,7 @@ template <> void
 RetroShell::exec <Token::memory, Token::flash> (Arguments& argv, long param)
 {
     auto path = argv.front();
-    if (!util::fileExists(path)) throw ConfigFileNotFoundError(path);
+    if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
 
     PRGFile *file = AnyFile::make <PRGFile> (argv.front());
     c64.flash(file, 0);
@@ -289,7 +289,7 @@ template <> void
 RetroShell::exec <Token::drive, Token::insert> (Arguments& argv, long param)
 {
     auto path = argv.front();
-    if (!util::fileExists(path)) throw ConfigFileNotFoundError(path);
+    if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
 
     auto &drive = param ? c64.drive9 : c64.drive8;
     drive.insertDisk(path, false);
@@ -684,7 +684,7 @@ template <> void
 RetroShell::exec <Token::sid, Token::inspect, Token::state> (Arguments& argv, long param)
 {
     auto value = util::parseNum(argv.front());
-    if (value < 0 || value > 3) throw ConfigArgError("0, 1, 2, or 3");
+    if (value < 0 || value > 3) throw VC64Error(ERROR_OPT_INV_ARG, "0, 1, 2, or 3");
     dump(c64.sid.getSID(value), dump::State);
 }
 
@@ -692,7 +692,7 @@ template <> void
 RetroShell::exec <Token::sid, Token::inspect, Token::registers> (Arguments& argv, long param)
 {
     auto value = util::parseNum(argv.front());
-    if (value < 0 || value > 3) throw ConfigArgError("0, 1, 2, or 3");
+    if (value < 0 || value > 3) throw VC64Error(ERROR_OPT_INV_ARG, "0, 1, 2, or 3");
     dump(c64.sid.getSID(value), dump::Registers);
 }
 
@@ -722,7 +722,7 @@ template <> void
 RetroShell::exec <Token::expansion, Token::attach> (Arguments& argv, long param)
 {
     auto path = argv.front();
-    if (!util::fileExists(path)) throw ConfigFileNotFoundError(path);
+    if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
 
     expansionport.attachCartridge(path);
 }

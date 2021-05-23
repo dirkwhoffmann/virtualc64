@@ -191,9 +191,7 @@ RetroShell::pressTab()
         // TAB was pressed twice
         string currentInput = lastLine();
         isize cposMinOld = cposMin;
-        
-        // *this << '\n';
-        
+                
         // Print the instructions for this command
         interpreter.help(lastLine().substr(cposMin));
         
@@ -404,46 +402,9 @@ RetroShell::describe(const std::exception &e)
         *this << err->what() << ": Syntax error";
         *this << '\n';
 
-    } else if (dynamic_cast<const ConfigUnsupportedError *>(&e)) {
-
-        *this << "This option is not yet supported.";
-        *this << '\n';
-
-    } else if (dynamic_cast<const ConfigLockedError *>(&e)) {
-
-        *this << "This option is locked because the C64 is powered on.";
-        *this << '\n';
-
-    } else if (auto err = dynamic_cast<const ConfigArgError *>(&e)) {
-
-        *this << "Error: Invalid argument. Expected: " << err->what();
-        *this << '\n';
-
-    } else if (auto err = dynamic_cast<const ConfigFileNotFoundError *>(&e)) {
-
-        *this << err->what() << ": File not found";
-        *this << '\n';
-
-    } else if (auto err = dynamic_cast<const ConfigFileReadError *>(&e)) {
-
-        *this << "Error: Unable to read file " << err->what();
-        *this << '\n';
-    
     } else if (auto err = dynamic_cast<const VC64Error *>(&e)) {
 
-        describe(*err);
-    }
-}
-
-void
-RetroShell::describe(const struct VC64Error &err)
-{
-    switch ((ErrorCode)err.data) {
-            
-        default:
-            
-            *this << "Command failed with error code " << (isize)err.data;
-            *this << " (" << err.what() << ")" << '\n';
+        *this << "Error: " << err->describe();
     }
 }
 

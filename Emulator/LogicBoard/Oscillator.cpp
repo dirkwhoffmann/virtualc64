@@ -71,7 +71,7 @@ Oscillator::setConfigItem(Option option, i64 value)
         case OPT_POWER_GRID:
             
             if (!PowerGridEnum::isValid(value)) {
-                throw ConfigArgError(PowerGridEnum::keyList());
+                throw VC64Error(ERROR_OPT_INV_ARG, PowerGridEnum::keyList());
             }
             
             config.powerGrid = (PowerGrid)value;

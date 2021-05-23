@@ -16,8 +16,25 @@ VC64Error::what() const throw()
     return ErrorCodeEnum::key(data);
 }
 
-const char *
-ConfigError::what() const throw()
+string
+VC64Error::describe() const
 {
-    return  description.c_str();
+    switch ((ErrorCode)data) {
+            
+        case ERROR_OPT_INV_ARG:
+            return "Invalid argument. Expected " + description;
+            
+        case ERROR_FILE_NOT_FOUND:
+            return "File " + description + " not found";
+            
+        case ERROR_FILE_CANT_READ:
+            return "Failed read file " + description;
+
+        case ERROR_FILE_CANT_WRITE:
+            return "Failed write file " + description;
+
+        default:
+            return "Command failed with error code "
+            + std::to_string(data) + " (" + ErrorCodeEnum::key(data) + ")";
+    }
 }
