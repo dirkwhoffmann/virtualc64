@@ -296,8 +296,15 @@ VICII::setRevision(VICIIRevision revision)
     
     debug(VIC_DEBUG, "setRevision(%s)\n", VICIIRevisionEnum::key(revision));
 
-    // If the emulator is powered on, proceed to a safe spot
-    if (isPoweredOn()) c64.finishFrame();
+    /* If the VICII revision is changed while the emulator is powered on, some
+     * precautions must be taken. First, we interrupt a running screen capture.
+     * After that, we move the emulator to a safe spot by finishing the current
+     * frame.
+     */
+    if (isPoweredOn()) {
+        recorder.stopRecording();
+        c64.finishFrame();
+    }
     
     config.revision = revision;
     isFirstDMAcycle = isSecondDMAcycle = 0;

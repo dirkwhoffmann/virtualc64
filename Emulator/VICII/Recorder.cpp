@@ -347,11 +347,10 @@ Recorder::recordVideo()
 void
 Recorder::recordAudio()
 {
-    debug(true, "Samples: %zd\n", sid.stream.count());
-    
     if (sid.stream.count() != samplesPerFrame) {
-        debug(true, "Samples: %zd\n", sid.stream.count());
-        // assert(sid.stream.count() >= samplesPerFrame);
+        
+        trace(REC_DEBUG, "Samples: %zd\n", sid.stream.count());
+        assert(sid.stream.count() >= samplesPerFrame);
     }
     
     for (isize i = 0; i < samplesPerFrame; i++) {

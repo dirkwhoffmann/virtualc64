@@ -214,7 +214,11 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_USER_SNAPSHOT_TAKEN:  return "USER_SNAPSHOT_TAKEN";
             case MSG_SNAPSHOT_RESTORED:    return "SNAPSHOT_RESTORED";
                 
+            case MSG_RECORDING_STARTED:    return "MSG_RECORDING_STARTED";
+            case MSG_RECORDING_STOPPED:    return "MSG_RECORDING_STOPPED";
+                
             case MSG_CLOSE_CONSOLE:        return "CLOSE_CONSOLE";
+                
             case MSG_DMA_DEBUG_ON:         return "DMA_DEBUG_ON";
             case MSG_DMA_DEBUG_OFF:        return "DMA_DEBUG_OFF";
                 

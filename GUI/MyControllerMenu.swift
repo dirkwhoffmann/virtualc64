@@ -387,6 +387,7 @@ extension MyController: NSMenuItemValidation {
         if c64.recorder.recording {
             
             c64.recorder.stopRecording()
+            exportVideoAction(self)
             return
         }
         

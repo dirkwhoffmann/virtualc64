@@ -18,7 +18,6 @@ enum_long(ERROR_CODE)
 
     // Configuration
     ERROR_OPT_INV_ARG,
-    ERROR_OPT_RECORDING,
     
     // Memory
     ERROR_OUT_OF_MEMORY,
