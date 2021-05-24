@@ -73,8 +73,8 @@ VICII::_reset(bool hard)
 void
 VICII::resetEmuTexture(int nr)
 {
-    if (nr == 1) { resetTexture((u32 *)emuTexture1); return; }
-    if (nr == 2) { resetTexture((u32 *)emuTexture2); return; }
+    if (nr == 1) { resetTexture(emuTexture1); return; }
+    if (nr == 2) { resetTexture(emuTexture2); return; }
     
     assert(false);
 }
@@ -83,7 +83,7 @@ void
 VICII::resetDmaTexture(int nr)
 {
     assert(nr == 1 || nr == 2);
-    int *p = nr == 1 ? dmaTexture1 : dmaTexture2;
+    u32 *p = nr == 1 ? dmaTexture1 : dmaTexture2;
 
     for (int i = 0; i < TEX_HEIGHT * TEX_WIDTH; i++) {
         p[i] = 0xFF000000;
@@ -131,8 +131,6 @@ VICII::getDefaultConfig()
     defaults.saturation = 50;
     
     defaults.hideSprites = false;
-    defaults.cutLayers = 0xFF;
-    defaults.cutOpacity = 0xFF;
     
     defaults.checkSSCollisions = true;
     defaults.checkSBCollisions = true;
@@ -155,8 +153,6 @@ VICII::resetConfig()
     setConfigItem(OPT_SATURATION, defaults.saturation);
 
     setConfigItem(OPT_HIDE_SPRITES, defaults.hideSprites);
-    setConfigItem(OPT_CUT_LAYERS, defaults.cutLayers);
-    setConfigItem(OPT_CUT_OPACITY, defaults.cutOpacity);
     
     setConfigItem(OPT_SB_COLLISIONS, defaults.checkSSCollisions);
     setConfigItem(OPT_SS_COLLISIONS, defaults.checkSBCollisions);
@@ -175,8 +171,6 @@ VICII::getConfigItem(Option option) const
         case OPT_GRAY_DOT_BUG:      return config.grayDotBug;
         case OPT_GLUE_LOGIC:        return config.glueLogic;
         case OPT_HIDE_SPRITES:      return config.hideSprites;
-        case OPT_CUT_LAYERS:        return config.cutLayers;
-        case OPT_CUT_OPACITY:       return config.cutOpacity;
         case OPT_SS_COLLISIONS:     return config.checkSSCollisions;
         case OPT_SB_COLLISIONS:     return config.checkSBCollisions;
 
@@ -253,16 +247,6 @@ VICII::setConfigItem(Option option, i64 value)
             
             config.hideSprites = value;
             return true;
-
-        case OPT_CUT_LAYERS:
-            
-            config.cutLayers = value;
-            return true;
-            
-        case OPT_CUT_OPACITY:
-            
-            config.cutOpacity = value;
-            return false; // False to avoid MSG_CONFIG being sent to the GUI
             
         case OPT_SS_COLLISIONS:
             
@@ -637,13 +621,13 @@ VICII::isVBlankLine(unsigned rasterline) const
     }
 }
 
-void *
+u32 *
 VICII::stableEmuTexture() const
 {
     return emuTexture == emuTexture1 ? emuTexture2 : emuTexture1;
 }
 
-void *
+u32 *
 VICII::stableDmaTexture() const
 {
     return dmaTexture == dmaTexture1 ? dmaTexture2 : dmaTexture1;
@@ -1133,7 +1117,7 @@ VICII::endRasterline()
     }
     
     // Cut out layers if requested
-    cutLayers();
+    dmaDebugger.cutLayers();
 
     // Prepare buffers for the next line
     for (unsigned i = 0; i < TEX_WIDTH; i++) { zBuffer[i] = 0; }

@@ -83,7 +83,7 @@ private:
 
     
     //
-    // Running the debugger
+    // Visualizing DMA
     //
     
 public:
@@ -93,6 +93,15 @@ public:
     void visualizeDma(u32 *ptr, u8 data, MemAccess type);
     
     // Superimposes the debug output onto the current rasterline
-    void computeOverlay(int *emuTexture, int *dmaTexture);
+    void computeOverlay(u32 *emuTexture, u32 *dmaTexture);
 
+    
+    //
+    // Cutting layers
+    //
+    
+public:
+    
+    // Cuts out certain graphics layers
+    void cutLayers();
 };

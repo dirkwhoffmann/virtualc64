@@ -370,10 +370,8 @@ typedef struct
     isize contrast;
     isize saturation;
 
-    // Debugger
+    // Sprites
     bool hideSprites;
-    u16 cutLayers;
-    u8 cutOpacity;
     
     // Cheating
     bool checkSSCollisions;

@@ -18,25 +18,28 @@ DmaDebugger::DmaDebugger(C64 &ref) : C64Component(ref)
 DmaDebuggerConfig
 DmaDebugger::getDefaultConfig()
 {
-    DmaDebuggerConfig config;
+    DmaDebuggerConfig defaults;
     
-    config.dmaDebug = false;
-    config.dmaChannel[0] = true;
-    config.dmaChannel[1] = true;
-    config.dmaChannel[2] = true;
-    config.dmaChannel[3] = true;
-    config.dmaChannel[4] = true;
-    config.dmaChannel[5] = true;
-    config.dmaColor[0] = GpuColor(0xFF, 0x00, 0x00).rawValue;
-    config.dmaColor[1] = GpuColor(0xFF, 0xC0, 0x00).rawValue;
-    config.dmaColor[2] = GpuColor(0xFF, 0xFF, 0x00).rawValue;
-    config.dmaColor[3] = GpuColor(0x00, 0xFF, 0xFF).rawValue;
-    config.dmaColor[4] = GpuColor(0x00, 0xFF, 0x00).rawValue;
-    config.dmaColor[5] = GpuColor(0x00, 0x80, 0xFF).rawValue;
-    config.dmaDisplayMode = DMA_DISPLAY_MODE_FG_LAYER;
-    config.dmaOpacity = 0x80;
+    defaults.dmaDebug = false;
+    defaults.dmaChannel[0] = true;
+    defaults.dmaChannel[1] = true;
+    defaults.dmaChannel[2] = true;
+    defaults.dmaChannel[3] = true;
+    defaults.dmaChannel[4] = true;
+    defaults.dmaChannel[5] = true;
+    defaults.dmaColor[0] = GpuColor(0xFF, 0x00, 0x00).abgr;
+    defaults.dmaColor[1] = GpuColor(0xFF, 0xC0, 0x00).abgr;
+    defaults.dmaColor[2] = GpuColor(0xFF, 0xFF, 0x00).abgr;
+    defaults.dmaColor[3] = GpuColor(0x00, 0xFF, 0xFF).abgr;
+    defaults.dmaColor[4] = GpuColor(0x00, 0xFF, 0x00).abgr;
+    defaults.dmaColor[5] = GpuColor(0x00, 0x80, 0xFF).abgr;
+    defaults.dmaDisplayMode = DMA_DISPLAY_MODE_FG_LAYER;
+    defaults.dmaOpacity = 0x80;
+    
+    defaults.cutLayers = 0xFF;
+    defaults.cutOpacity = 0xFF;
 
-    return config;
+    return defaults;
 }
     
 void
@@ -59,6 +62,9 @@ DmaDebugger::resetConfig()
     setConfigItem(OPT_DMA_DEBUG_COLOR, 5, defaults.dmaColor[5]);
     setConfigItem(OPT_DMA_DEBUG_MODE, defaults.dmaDisplayMode);
     setConfigItem(OPT_DMA_DEBUG_OPACITY, defaults.dmaOpacity);
+    
+    setConfigItem(OPT_CUT_LAYERS, defaults.cutLayers);
+    setConfigItem(OPT_CUT_OPACITY, defaults.cutOpacity);
 }
 
 i64
@@ -69,6 +75,9 @@ DmaDebugger::getConfigItem(Option option) const
         case OPT_DMA_DEBUG_ENABLE:  return config.dmaDebug;
         case OPT_DMA_DEBUG_MODE:    return config.dmaDisplayMode;
         case OPT_DMA_DEBUG_OPACITY: return config.dmaOpacity;
+
+        case OPT_CUT_LAYERS:        return config.cutLayers;
+        case OPT_CUT_OPACITY:       return config.cutOpacity;
 
         default:
             assert(false);
@@ -121,6 +130,16 @@ DmaDebugger::setConfigItem(Option option, i64 value)
             config.dmaOpacity = value;
             return false; // 'false' to avoid a MSG_CONFIG being sent
             
+        case OPT_CUT_LAYERS:
+            
+            config.cutLayers = value;
+            return true;
+            
+        case OPT_CUT_OPACITY:
+            
+            config.cutOpacity = value;
+            return false; // 'false' to avoid a MSG_CONFIG being sent
+
         default:
             return false;
     }
@@ -177,12 +196,12 @@ DmaDebugger::setDmaDebugColor(MemAccess type, GpuColor color)
 {
     assert_enum(MemAccess, type);
     
-    config.dmaColor[type] = color.rawValue;
+    config.dmaColor[type] = color.abgr;
         
-    debugColor[type][0] = color.shade(0.3).rawValue;
-    debugColor[type][1] = color.shade(0.1).rawValue;
-    debugColor[type][2] = color.tint(0.1).rawValue;
-    debugColor[type][3] = color.tint(0.3).rawValue;
+    debugColor[type][0] = color.shade(0.3).abgr;
+    debugColor[type][1] = color.shade(0.1).abgr;
+    debugColor[type][2] = color.tint(0.1).abgr;
+    debugColor[type][3] = color.tint(0.3).abgr;
 }
 
 void
@@ -194,7 +213,7 @@ DmaDebugger::setDmaDebugColor(MemAccess type, RgbColor color)
 void
 DmaDebugger::visualizeDma(isize offset, u8 data, MemAccess type)
 {
-    visualizeDma((u32 *)vic.emuTexturePtr + offset, data, type);
+    visualizeDma((u32 *)vic.dmaTexturePtr + offset, data, type);
 }
 
 void
@@ -210,46 +229,46 @@ DmaDebugger::visualizeDma(u32 *p, u8 data, MemAccess type)
 }
 
 void
-DmaDebugger::computeOverlay(int *emuTexture, int *dmaTexture)
+DmaDebugger::computeOverlay(u32 *emuTexture, u32 *dmaTexture)
 {
     double weight = config.dmaOpacity / 255.0;
-
+    
     switch (config.dmaDisplayMode) {
 
         case DMA_DISPLAY_MODE_FG_LAYER:
-            
-            for (int y = 0; y < TEX_HEIGHT; y++) {
+                        
+            for (isize y = 0; y < TEX_HEIGHT; y++) {
                 
-                int *emu = emuTexture + (y * TEX_WIDTH);
-                int *dma = dmaTexture + (y * TEX_WIDTH);
+                u32 *emu = emuTexture + (y * TEX_WIDTH);
+                u32 *dma = dmaTexture + (y * TEX_WIDTH);
                 
-                for (int x = 0; x < TEX_WIDTH; x++) {
+                for (isize x = 0; x < TEX_WIDTH; x++) {
                     
                     if ((dma[x] & 0xFFFFFF) == 0) continue;
-
+                    
                     GpuColor emuColor = emu[x];
                     GpuColor dmaColor = dma[x];
                     GpuColor mixColor = emuColor.mix(dmaColor, weight);
-                    emu[x] = mixColor.rawValue;
+                    emu[x] = mixColor.abgr;
                 }
             }
             break;
 
         case DMA_DISPLAY_MODE_BG_LAYER:
             
-            for (int y = 0; y < TEX_HEIGHT; y++) {
+            for (isize y = 0; y < TEX_HEIGHT; y++) {
                 
-                int *emu = emuTexture + (y * TEX_WIDTH);
-                int *dma = dmaTexture + (y * TEX_WIDTH);
+                u32 *emu = emuTexture + (y * TEX_WIDTH);
+                u32 *dma = dmaTexture + (y * TEX_WIDTH);
                 
-                for (int x = 0; x < TEX_WIDTH; x++) {
+                for (isize x = 0; x < TEX_WIDTH; x++) {
                     
                     if ((dma[x] & 0xFFFFFF) != 0) {
                         emu[x] = dma[x];
                     } else {
                         GpuColor emuColor = emu[x];
                         GpuColor mixColor = emuColor.shade(weight);
-                        emu[x] = mixColor.rawValue;
+                        emu[x] = mixColor.abgr;
                     }
                 }
             }
@@ -257,22 +276,78 @@ DmaDebugger::computeOverlay(int *emuTexture, int *dmaTexture)
 
         case DMA_DISPLAY_MODE_ODD_EVEN_LAYERS:
             
-            for (int y = 0; y < TEX_HEIGHT; y++) {
-                
-                int *emu = emuTexture + (y * TEX_WIDTH);
-                int *dma = dmaTexture + (y * TEX_WIDTH);
-                
-                for (int x = 0; x < TEX_WIDTH; x++) {
+            for (isize y = 0; y < TEX_HEIGHT; y++) {
+                          
+                u32 *emu = emuTexture + (y * TEX_WIDTH);
+                u32 *dma = dmaTexture + (y * TEX_WIDTH);
+
+                for (isize x = 0; x < TEX_WIDTH; x++) {
                     
                     GpuColor emuColor = emu[x];
                     GpuColor dmaColor = dma[x];
                     GpuColor mixColor = dmaColor.mix(emuColor, weight);
-                    emu[x] = mixColor.rawValue;
+                    emu[x] = mixColor.abgr;
                 }
             }
             break;
             
         default: assert(false);
+    }
+}
+
+void
+DmaDebugger::cutLayers()
+{
+    // Check master switch
+    if (!(config.cutLayers & 0x1000)) return;
+    
+    // Only proceed if at least one channel is enabled
+    if (!(config.cutLayers & 0x0F00)) return;
+    
+    u32 *emuTexturePtr = vic.emuTexturePtr;
+    u8 *zBuffer = vic.zBuffer;
+    
+    for (isize i = 0; i < TEX_WIDTH; i++) {
+        
+        bool cut;
+
+        switch (zBuffer[i] & 0xE0) {
+
+            case DEPTH_BORDER & 0xE0:
+                cut = config.cutLayers & 0x800;
+                break;
+                                
+            case DEPTH_FG & 0xE0:
+                cut = config.cutLayers & 0x400;
+                break;
+                
+            case DEPTH_BG & 0xE0:
+                cut = config.cutLayers & 0x200;
+                break;
+                
+            case DEPTH_SPRITE_BG & 0xE0:
+            case DEPTH_SPRITE_FG & 0xE0:
+                cut = GET_BIT(config.cutLayers, zBuffer[i] & 0xF);
+                if (!(config.cutLayers & 0x100)) cut = false;
+                break;
+                
+            default:
+                cut = false;
+        }
+        
+        if (cut) {
             
+            u8 r = emuTexturePtr[i] & 0xFF;
+            u8 g = (emuTexturePtr[i] >> 8) & 0xFF;
+            u8 b = (emuTexturePtr[i] >> 16) & 0xFF;
+
+            double scale = config.cutOpacity / 255.0;
+            u8 bg = (vic.rasterline() / 4) % 2 == (i / 4) % 2 ? 0x22 : 0x44;
+            u8 newr = (u8)(r * (1 - scale) + bg * scale);
+            u8 newg = (u8)(g * (1 - scale) + bg * scale);
+            u8 newb = (u8)(b * (1 - scale) + bg * scale);
+            
+            emuTexturePtr[i] = 0xFF000000 | newb << 16 | newg << 8 | newr;
+        }
     }
 }

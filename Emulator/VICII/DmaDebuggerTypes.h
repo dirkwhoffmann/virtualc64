@@ -56,19 +56,15 @@ struct DmaDisplayModeEnum : util::Reflection<DmaDisplayModeEnum, DmaDisplayMode>
 
 typedef struct
 {
-    // Global enable switch
+    // DMA debugger
     bool dmaDebug;
-
-    // Individual enable switch for each DMA channel
     bool dmaChannel[6];
-    
-    // Color palette (in 0BGR format)
     u32 dmaColor[6];
-    
-    // Display mode
     DmaDisplayMode dmaDisplayMode;
-    
-    // Opacity
     u8 dmaOpacity;
+    
+    // Cutter
+    u16 cutLayers;
+    u8 cutOpacity;
 }
 DmaDebuggerConfig;

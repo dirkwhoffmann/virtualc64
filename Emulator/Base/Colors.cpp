@@ -12,9 +12,9 @@
 
 RgbColor::RgbColor(const GpuColor &c)
 {
-    r = (c.rawValue & 0xFF) / 255.0;
-    g = ((c.rawValue >> 8) & 0xFF) / 255.0;
-    b = ((c.rawValue >> 16) & 0xFF) / 255.0;
+    r = (c.abgr & 0xFF) / 255.0;
+    g = ((c.abgr >> 8) & 0xFF) / 255.0;
+    b = ((c.abgr >> 16) & 0xFF) / 255.0;
 }
 
 RgbColor::RgbColor(const YuvColor &c)
@@ -98,13 +98,13 @@ GpuColor::GpuColor(const RgbColor &c)
     u8 g = (u8)(c.g * 255);
     u8 b = (u8)(c.b * 255);
 
-    rawValue = (a << 24) | (b << 16) | (g << 8) | r;
+    abgr = (a << 24) | (b << 16) | (g << 8) | r;
 }
 
 GpuColor::GpuColor(u8 r, u8 g, u8 b)
 {
     u8 a = 255;
-    rawValue = (a << 24) | (b << 16) | (g << 8) | r;
+    abgr = (a << 24) | (b << 16) | (g << 8) | r;
 }
 
 const GpuColor GpuColor::black(RgbColor::black);

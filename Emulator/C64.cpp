@@ -154,8 +154,6 @@ C64::getConfigItem(Option option) const
         case OPT_GRAY_DOT_BUG:
         case OPT_GLUE_LOGIC:
         case OPT_HIDE_SPRITES:
-        case OPT_CUT_LAYERS:
-        case OPT_CUT_OPACITY:
         case OPT_SS_COLLISIONS:
         case OPT_SB_COLLISIONS:
 
@@ -163,12 +161,15 @@ C64::getConfigItem(Option option) const
         case OPT_BRIGHTNESS:
         case OPT_CONTRAST:
         case OPT_SATURATION:
+            return vic.getConfigItem(option);
 
         case OPT_DMA_DEBUG_ENABLE:
         case OPT_DMA_DEBUG_MODE:
         case OPT_DMA_DEBUG_OPACITY:
-            return vic.getConfigItem(option);
-                        
+        case OPT_CUT_LAYERS:
+        case OPT_CUT_OPACITY:
+            return vic.dmaDebugger.getConfigItem(option);
+            
         case OPT_CIA_REVISION:
         case OPT_TIMER_B_BUG:
             assert(cia1.getConfigItem(option) == cia2.getConfigItem(option));
