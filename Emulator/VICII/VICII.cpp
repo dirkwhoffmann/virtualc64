@@ -1111,10 +1111,7 @@ void
 VICII::endRasterline()
 {
     // Set vertical flipflop if condition was hit
-    // TODO: Do we need to do this here? It is handled in cycle 1 as well.
-    if (verticalFrameFFsetCond) {
-        setVerticalFrameFF(true);
-    }
+    if (verticalFrameFFsetCond) setVerticalFrameFF(true);
     
     // Cut out layers if requested
     dmaDebugger.cutLayers();

@@ -11,7 +11,9 @@
 
 #include <algorithm>
 
-template <class T, int capacity> class TimeDelayed {
+template <class T, isize delay> class TimeDelayed {
+    
+    static const isize capacity = delay + 1;
     
     /* Value pipeline (history buffer)
      *
@@ -22,11 +24,8 @@ template <class T, int capacity> class TimeDelayed {
         
     // Remembers the time of the most recent call to write()
     i64 timeStamp = 0;
-    
-    // Number of cycles to elapse until a written value shows up
-    u8 delay = 0;
-    
-    // Pointer to reference clock
+        
+    // Pointer to the reference clock
     i64 *clock = nullptr;
 
     
@@ -36,17 +35,14 @@ template <class T, int capacity> class TimeDelayed {
     
 public:
     
-    TimeDelayed(u8 delay, u64 *clock) {
-
-        assert(delay < capacity);
+    TimeDelayed(u64 *clock) {
         
         timeStamp = 0;
-        this->delay = delay;
         this->clock = (i64 *)clock;
         clear();
     }
     
-    TimeDelayed(u8 delay) : TimeDelayed(delay, nullptr) { };
+    TimeDelayed() : TimeDelayed(nullptr) { };
           
     // Sets the reference clock (either the C64 clock or a drive clock)
     void setClock(u64 *clock) { this->clock = (i64 *)clock; }
@@ -121,8 +117,8 @@ public:
     }
     
     // Reads a value from the pipeline with a custom delay
-    T readWithDelay(u8 delay) const {
-        assert(delay <= this->capacity);
-        return pipeline[std::max(0LL, timeStamp - *clock + delay)];
+    T readWithDelay(u8 d) const {
+        assert(d <= this->capacity);
+        return pipeline[std::max(0LL, timeStamp - *clock + d)];
     }
 };
