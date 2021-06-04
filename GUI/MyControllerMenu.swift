@@ -14,7 +14,6 @@ extension MyController: NSMenuItemValidation {
         let powered = c64.poweredOn
         let running = c64.running
         var recording: Bool { return c64.recorder.recording }
-        var counter: Int { return c64.recorder.recordCounter }
         
         var driveID: DriveID { return DriveID.init(rawValue: item.tag)! }
         var drive: DriveProxy { return c64.drive(driveID) }
@@ -47,9 +46,6 @@ extension MyController: NSMenuItemValidation {
         case #selector(MyController.captureScreenAction(_:)):
             item.title = recording ? "Stop Recording" : "Record Screen"
             return true
-
-        case #selector(MyController.exportVideoAction(_:)):
-            return counter > 0
         
         // Edit menu
         case #selector(MyController.stopAndGoAction(_:)):
@@ -407,11 +403,9 @@ extension MyController: NSMenuItemValidation {
                                                   bitRate: pref.bitRate,
                                                   aspectX: pref.aspectX,
                                                   aspectY: pref.aspectY)
-        
         if !success {
             showFailedToLaunchFFmpegAlert()
         }
-        
     }
     
     @IBAction func exportVideoAction(_ sender: Any!) {

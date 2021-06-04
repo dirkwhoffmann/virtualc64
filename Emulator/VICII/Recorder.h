@@ -50,6 +50,7 @@ class Recorder : public C64Component {
     // Recording status
     //
     
+    // The current recorder state
     enum class State { wait, prepare, record, finalize };
     State state = State::wait;
 
@@ -83,7 +84,8 @@ class Recorder : public C64Component {
     
 public:
     
-    Recorder(C64& ref);
+    using C64Component::C64Component;
+    // Recorder(C64& ref);
     
     const char *getDescription() const override { return "Recorder"; }
 
@@ -139,7 +141,7 @@ public:
 
     
     //
-    // Starting and stopping a video stream
+    // Starting and stopping a video capture
     //
     
 public:

@@ -14,9 +14,11 @@
 #include "SIDBridge.h"
 #include "VICII.h"
 
+/*
 Recorder::Recorder(C64& ref) : C64Component(ref)
 {
 }
+*/
 
 bool
 Recorder::hasFFmpeg() const
@@ -67,22 +69,20 @@ Recorder::startRecording(int x1, int y1, int x2, int y2,
         
         if (isRecording()) return false;
         
-        // Remember the cutot (and make sure the screen dimensions are even)
+        // Make sure the screen dimensions are even
         if ((x2 - x1) % 2) x2--;
         if ((y2 - y1) % 2) y2--;
+
+        // Remember the cutout
         cutout.x1 = x1;
         cutout.x2 = x2;
         cutout.y1 = y1;
         cutout.y2 = y2;
         debug(REC_DEBUG, "Recorded area: (%d,%d) - (%d,%d)\n", x1, y1, x2, y2);
 
-        // Remember the Bit rate
+        // Set the bit rate, frame rate, and sample rate
         this->bitRate = bitRate;
-
-        // Determine the frame rate
         frameRate = vic.isPAL() ? 50 : 60;
-
-        // Determine the sample rate
         sampleRate = 44100;
         
         // Create pipes

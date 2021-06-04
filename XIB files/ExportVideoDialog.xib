@@ -9,7 +9,6 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ExportVideoDialog" customModule="VirtualC64" customModuleProvider="target">
             <connections>
                 <outlet property="bitRate" destination="M46-8C-bJl" id="dLj-qg-KKB"/>
-                <outlet property="button" destination="wpc-Jr-qzA" id="UgS-St-hFc"/>
                 <outlet property="cancelButton" destination="zGf-cK-YR2" id="vhL-jA-30P"/>
                 <outlet property="duration" destination="6iW-xu-ZZj" id="N7S-W5-Ut3"/>
                 <outlet property="exportButton" destination="wpc-Jr-qzA" id="1Nd-zl-Wl9"/>
@@ -28,7 +27,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="446" height="192"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1536" height="935"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1095"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="446" height="192"/>
                 <autoresizingMask key="autoresizingMask"/>
