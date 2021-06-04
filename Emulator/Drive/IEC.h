@@ -49,9 +49,9 @@ public:
     
 private:
     
-	// Watchdog timer to determine if there is traffic on the bus
-	u32 busActivity = 0;
-
+    // Bus idle time measured in frames
+    i64 idle = 0;
+    
     // Indicates whether data is being transferred from or to a drive
     bool transferring = false;
 
@@ -110,7 +110,7 @@ private:
         << ciaAtn
         << ciaClock
         << ciaData
-        << busActivity;
+        << idle;
     }
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }

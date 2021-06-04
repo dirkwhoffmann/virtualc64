@@ -44,8 +44,8 @@ IEC::_dump(dump::Category category, std::ostream& os) const
         os << hex(drive8.via1.getDDRB()) << std::endl;
         os << tab("VIA1::DDRB (Drive9)");
         os << hex(drive9.via1.getDDRB()) << std::endl;
-        os << tab("Bus activity");
-        os << dec(busActivity) << std::endl;
+        os << tab("Idle");
+        os << dec(idle) << " frames" << std::endl;
     }
 }
 
@@ -102,7 +102,7 @@ bool IEC::_updateIecLines()
 void
 IEC::updateIecLines()
 {
-    bool wasIdle = !busActivity;
+    bool wasIdle = idle;
 
 	// Update bus lines
 	bool signalsChanged = _updateIecLines();
@@ -117,9 +117,9 @@ IEC::updateIecLines()
         
         // dumpTrace();
         
-        // Reset watchdog timer
-        busActivity = 30;
-
+        // Reset the idle counter
+        idle = 0;
+        
         // Update the transfer status if the bus was idle
         if (wasIdle) updateTransferStatus();
 	}
@@ -160,16 +160,16 @@ IEC::updateIecLinesDriveSide()
 void
 IEC::execute()
 {
-	if (busActivity > 0) {
-        if (--busActivity == 0) updateTransferStatus();
-	}
+    if (++idle == 32) {
+        updateTransferStatus();
+    }
 }
 
 void
 IEC::updateTransferStatus()
 {
     bool rotating = drive8.isRotating() || drive9.isRotating();
-    bool newValue = rotating && busActivity > 0;
+    bool newValue = rotating && idle < 32;
     
     if (transferring != newValue) {
         transferring = newValue;
