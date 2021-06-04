@@ -80,6 +80,7 @@ enum_long(OPT)
     OPT_DRIVE_TYPE,
     OPT_DRIVE_CONNECT,
     OPT_DRIVE_POWER_SWITCH,
+    OPT_AUTO_HIBERNATE,
     OPT_DISK_EJECT_DELAY,
     OPT_DISK_SWAP_DELAY,
     OPT_DISK_INSERT_DELAY,
@@ -154,6 +155,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_DRIVE_TYPE:          return "DRIVE_TYPE";
             case OPT_DRIVE_CONNECT:       return "DRIVE_CONNECT";
             case OPT_DRIVE_POWER_SWITCH:  return "DRIVE_POWER_SWITCH";
+            case OPT_AUTO_HIBERNATE:      return "AUTO_HIBERNATE";
             case OPT_DISK_EJECT_DELAY:    return "DISK_EJECT_DELAY";
             case OPT_DISK_SWAP_DELAY:     return "DISK_SWAP_DELAY";
             case OPT_DISK_INSERT_DELAY:   return "DISK_INSERT_DELAY";

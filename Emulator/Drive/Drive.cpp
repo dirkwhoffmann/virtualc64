@@ -61,6 +61,7 @@ Drive::getDefaultConfig()
     defaults.type = DRIVE_VC1541II;
     defaults.connected = false;
     defaults.switchedOn = true;
+    defaults.autoHibernate = true;
     defaults.ejectDelay = 30;
     defaults.swapDelay = 30;
     defaults.insertDelay = 30;
@@ -80,6 +81,7 @@ Drive::resetConfig()
     
     setConfigItem(OPT_DRIVE_CONNECT, deviceNr, deviceNr == DRIVE8);
     setConfigItem(OPT_DRIVE_POWER_SWITCH, deviceNr, defaults.switchedOn);
+    setConfigItem(OPT_AUTO_HIBERNATE, deviceNr, defaults.autoHibernate);
     setConfigItem(OPT_DRIVE_TYPE, deviceNr, defaults.type);
 
     setConfigItem(OPT_DISK_EJECT_DELAY, deviceNr, defaults.ejectDelay);
@@ -101,6 +103,7 @@ Drive::getConfigItem(Option option) const
         case OPT_DRIVE_TYPE:          return (i64)config.type;
         case OPT_DRIVE_CONNECT:       return (i64)config.connected;
         case OPT_DRIVE_POWER_SWITCH:  return (i64)config.switchedOn;
+        case OPT_AUTO_HIBERNATE:      return (i64)config.autoHibernate;
         case OPT_DISK_EJECT_DELAY:    return (i64)config.ejectDelay;
         case OPT_DISK_SWAP_DELAY:     return (i64)config.swapDelay;
         case OPT_DISK_INSERT_DELAY:   return (i64)config.insertDelay;
@@ -203,6 +206,10 @@ Drive::setConfigItem(Option option, long id, i64 value)
                                  config.pan << 24 | config.powerVolume << 16 | deviceNr);
             }
             return true;
+        }
+        case OPT_AUTO_HIBERNATE:
+        {
+            config.autoHibernate = value;
         }
         case OPT_DISK_EJECT_DELAY:
         {
@@ -637,11 +644,9 @@ Drive::ejectDisk()
 void
 Drive::vsyncHandler()
 {
-    bool wasIdle = isIdle();
-    
-    // Increase the idle counter if the drive can sleep
-    if (!spinning && diskChangeCounter < 0) idleCounter++;
-    if (!wasIdle && isIdle()) { printf("Drive %lld goes idle\n", deviceNr); }
+    // Increase the idle counter if conditions match
+    if (!spinning && diskChangeCounter < 0 && config.autoHibernate) idleCounter++;
+    if (idleCounter == 128) debug(true, "Entering hibernate mode\n");
     
     // Only proceed if a disk change state transition is to be performed
     if (--diskChangeCounter) return;

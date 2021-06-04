@@ -98,6 +98,9 @@ typedef struct
     bool connected;
     bool switchedOn;
     
+    // Power saving
+    bool autoHibernate;
+    
     // Disk handling delays
     isize ejectDelay;
     isize swapDelay;
