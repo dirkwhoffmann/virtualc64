@@ -46,12 +46,12 @@ public:
     bool ciaAtn;
     bool ciaClock;
     bool ciaData;
-    
-private:
-    
+        
     // Bus idle time measured in frames
     i64 idle = 0;
     
+private:
+
     // Indicates whether data is being transferred from or to a drive
     bool transferring = false;
 

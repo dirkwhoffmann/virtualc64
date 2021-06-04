@@ -111,12 +111,14 @@ IEC::updateIecLines()
         
         cia2.updatePA();
         
+        // Wake up drives
+        drive8.wakeUp();
+        drive9.wakeUp();
+        
         // ATN signal is connected to CA1 pin of VIA 1
         drive8.via1.CA1action(!atnLine);
         drive9.via1.CA1action(!atnLine);
-        
-        // dumpTrace();
-        
+                
         // Reset the idle counter
         idle = 0;
         
@@ -162,7 +164,7 @@ IEC::execute()
 {
     if (++idle == 32) {
         updateTransferStatus();
-    }
+    }    
 }
 
 void

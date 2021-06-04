@@ -887,6 +887,7 @@ VIA1::updatePB()
 {
     VIA6522::updatePB();
     iec.setNeedsUpdateDriveSide();
+    idleCounter = 0;
 }
 
 //

@@ -487,9 +487,12 @@ Drive::setRedLED(bool b)
 {
     if (!redLED && b) {
         redLED = true;
+        wakeUp();
         c64.putMessage(MSG_DRIVE_LED_ON, deviceNr);
+        
     } else if (redLED && !b) {
         redLED = false;
+        wakeUp();
         c64.putMessage(MSG_DRIVE_LED_OFF, deviceNr);
     }
 }
@@ -570,6 +573,7 @@ Drive::insertDisk(Disk *otherDisk, bool wp)
     if (!diskToInsert) {
         
         // Initiate the disk change procedure
+        wakeUp();
         diskToInsert = otherDisk;
         diskToInsertWP = wp;
         diskChangeCounter = 1;
@@ -623,6 +627,7 @@ Drive::ejectDisk()
     if (insertionStatus == DISK_FULLY_INSERTED && !diskToInsert) {
         
         // Initiate the disk change procedure
+        wakeUp();
         diskChangeCounter = 1;
     }
     
@@ -632,6 +637,12 @@ Drive::ejectDisk()
 void
 Drive::vsyncHandler()
 {
+    bool wasIdle = isIdle();
+    
+    // Increase the idle counter if the drive can sleep
+    if (!spinning && diskChangeCounter < 0) idleCounter++;
+    if (!wasIdle && isIdle()) { printf("Drive %lld goes idle\n", deviceNr); }
+    
     // Only proceed if a disk change state transition is to be performed
     if (--diskChangeCounter) return;
     

@@ -87,6 +87,7 @@ public:
 private:
     
     // Indicates whether the drive is active (connected and switched on)
+    // DEPRECATED
     bool active = false;
     
     // Indicates whether the disk is rotating
@@ -97,7 +98,10 @@ private:
     
     // Indicates if or how a disk is inserted
     InsertionStatus insertionStatus = DISK_FULLY_EJECTED;
-        
+    
+    // Idle counter
+    i64 idleCounter = 0;
+    
     
     //
     // Clocking logic
@@ -269,6 +273,7 @@ private:
         
         << spinning
         << redLED
+        << idleCounter
         << elapsedTime
         << nextClock
         << nextCarry
@@ -317,6 +322,12 @@ public:
 
     // Turns the drive engine on or off
     void setRotating(bool b);
+    
+    // Wakes up the drive (clears the idle state)
+    void wakeUp() { idleCounter = 0; }
+    
+    // Checks whether the drive has been idle for a while
+    bool isIdle() { return idleCounter >= 128; }
     
     
     //
