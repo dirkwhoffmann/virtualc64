@@ -135,6 +135,7 @@ Drive::setConfigItem(Option option, i64 value)
             durationOfOneCpuCycle = duration;
             return true;
         }
+        case OPT_AUTO_HIBERNATE:
         case OPT_DISK_EJECT_DELAY:
         case OPT_DISK_SWAP_DELAY:
         case OPT_DISK_INSERT_DELAY:
@@ -209,6 +210,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
         }
         case OPT_AUTO_HIBERNATE:
         {
+            debug(true, "Hibernate = %lld\n", value); 
             config.autoHibernate = value;
         }
         case OPT_DISK_EJECT_DELAY:

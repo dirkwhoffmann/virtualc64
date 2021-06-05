@@ -809,6 +809,9 @@ extension Keys {
         static let drive9Connect    = "VC64_PER_Drive9Connect"
         static let drive9Model      = "VC64_PER_Drive9Type"
         
+        // Power saving
+        static let driveHibernate   = "VC64_PER_DriveHibernate"
+        
         // Disks
         static let blankDiskFormat  = "VC64_PER_BlankDiskFormat"
 
@@ -825,6 +828,7 @@ struct PeripheralsDefaults {
     
     var driveConnect: [Bool]
     var driveModel: [DriveType]
+    var driveHibernate: Bool
     
     let blankDiskFormat: DOSType
 
@@ -841,7 +845,7 @@ struct PeripheralsDefaults {
         
         driveConnect:    [true, false],
         driveModel:      [.VC1541II, .VC1541II],
-        
+        driveHibernate:  true,
         blankDiskFormat: .CBM,
         gameDevice1:     -1,
         gameDevice2:     -1,
@@ -861,6 +865,7 @@ extension UserDefaults {
             Keys.Per.drive8Model:     defaults.driveModel[0].rawValue,
             Keys.Per.drive9Connect:   defaults.driveConnect[1],
             Keys.Per.drive9Model:     defaults.driveModel[1].rawValue,
+            Keys.Per.driveHibernate:  defaults.driveHibernate,
             
             Keys.Per.blankDiskFormat: defaults.blankDiskFormat.rawValue,
             
@@ -883,6 +888,7 @@ extension UserDefaults {
                     Keys.Per.drive8Model,
                     Keys.Per.drive9Connect,
                     Keys.Per.drive9Model,
+                    Keys.Per.driveHibernate,
                     
                     Keys.Per.blankDiskFormat,
                     

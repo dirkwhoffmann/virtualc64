@@ -208,7 +208,12 @@ class Configuration {
         get { return c64.getConfig(.DRIVE_POWER_SWITCH, drive: .DRIVE9) != 0 }
         set { c64.configure(.DRIVE_POWER_SWITCH, drive: .DRIVE9, enable: newValue )}
     }
-    
+
+    var driveHibernate: Bool {
+        get { return c64.getConfig(.AUTO_HIBERNATE, drive: .DRIVE8) != 0 }
+        set { c64.configure(.AUTO_HIBERNATE, enable: newValue )}
+    }
+
     var blankDiskFormat = PeripheralsDefaults.std.blankDiskFormat
     var blankDiskFormatIntValue: Int {
         get { return Int(blankDiskFormat.rawValue) }
@@ -606,6 +611,7 @@ class Configuration {
         drive8Type = defaults.driveModel[0].rawValue
         drive9Connected = defaults.driveConnect[1]
         drive9Type = defaults.driveModel[1].rawValue
+        driveHibernate = defaults.driveHibernate
         
         blankDiskFormat = defaults.blankDiskFormat
         
@@ -627,6 +633,7 @@ class Configuration {
         drive8Type = defaults.integer(forKey: Keys.Per.drive8Model)
         drive9Connected = defaults.bool(forKey: Keys.Per.drive9Connect)
         drive9Type = defaults.integer(forKey: Keys.Per.drive9Model)
+        driveHibernate = defaults.bool(forKey: Keys.Per.driveHibernate)
         
         blankDiskFormatIntValue = defaults.integer(forKey: Keys.Per.blankDiskFormat)
         
@@ -648,6 +655,8 @@ class Configuration {
         defaults.set(drive8Type, forKey: Keys.Per.drive8Model)
         defaults.set(drive9Connected, forKey: Keys.Per.drive9Connect)
         defaults.set(drive9Type, forKey: Keys.Per.drive9Model)
+        
+        defaults.set(driveHibernate, forKey: Keys.Per.driveHibernate)
         
         defaults.set(blankDiskFormatIntValue, forKey: Keys.Per.blankDiskFormat)
         

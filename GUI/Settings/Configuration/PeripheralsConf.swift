@@ -18,6 +18,7 @@ extension ConfigurationController {
         perDrive9Connect.state = config.drive9Connected ? .on : .off
         perDrive8Type.selectItem(withTag: config.drive8Type)
         perDrive9Type.selectItem(withTag: config.drive9Type)
+        perDriveHibernate.state = config.driveHibernate ? .on : .off
         
         // Disk
         perBlankDiskFormat.selectItem(withTag: config.blankDiskFormatIntValue)
@@ -54,7 +55,14 @@ extension ConfigurationController {
         }
         refresh()
     }
+
+    @IBAction func perDriveHibernateAction(_ sender: NSButton!) {
         
+        track()
+        config.driveHibernate = sender.state == .on
+        refresh()
+    }
+
     @IBAction func perBlankDiskFormatAction(_ sender: NSPopUpButton!) {
         
         let tag = sender.selectedTag()
