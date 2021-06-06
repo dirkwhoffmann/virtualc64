@@ -51,8 +51,6 @@ Drive::_reset(bool hard)
 
     cpu.reg.pc = 0xEAA0;
     halftrack = 41;
-    
-    needsEmulation = config.connected && config.switchedOn;
 }
 
 DriveConfig
@@ -174,8 +172,6 @@ Drive::setConfigItem(Option option, long id, i64 value)
         }
         case OPT_DRIVE_CONNECT:
         {
-            debug(true, "OPT_DRIVE_CONNECT %lld\n", value);
-            
             if (value && !c64.hasRom(ROM_TYPE_VC1541)) {
                 warn("Can't connect drive (ROM missing).\n");
                 return false;
@@ -189,8 +185,11 @@ Drive::setConfigItem(Option option, long id, i64 value)
         }
         case OPT_DRIVE_POWER_SWITCH:
         {
-            debug(true, "OPT_DRIVE_POWER_SWITCH %lld\n", value);
-
+            if (value && !isPoweredOn()) {
+                warn("Can't switch drive on (not connected).\n");
+                // throw VCError(ERROR_DRV_NOT_CONNECTED);
+                return false;
+            }
             suspend();
             config.switchedOn = value;
             reset(true);
@@ -510,12 +509,9 @@ void
 Drive::wakeUp()
 {
     if (isIdle()) {
-        assert(config.switchedOn);
-        assert(config.connected);
-        c64.putMessage(MSG_DRIVE_POWER_SAVE_OFF, deviceNr);
-        needsEmulation = true;
+        c64.putMessage(MSG_DRIVE_POWER_SAVE_OFF);
+        idleCounter = 0;
     }
-    idleCounter = 0;
 }
 
 void
@@ -648,41 +644,26 @@ Drive::ejectDisk()
 void
 Drive::vsyncHandler()
 {
-    // Only proceed if the drive is connected and switched on
-    if (!config.connected || !config.switchedOn) return;
-
-    // Check if a disk change state transition is in progress
-    if (diskChangeCounter) {
-        
-        // Perform the disk change when the counter reaches zero
-        if (--diskChangeCounter == 0) updateDiskState();
-
-        idleCounter = 0;
-        return;
-    }
-        
     // Increase the idle counter if conditions match
     if (!spinning && diskChangeCounter < 0 && config.autoHibernate) {
         
         idleCounter++;
         
-        // Enter power-safe mode if the idle counter has reached the threshold
+        // Inform the GUI if the drive will enter power-safe mode
         if (idleCounter == powerSafeThreshold) {
-            needsEmulation = false;
             messageQueue.put(MSG_DRIVE_POWER_SAVE_ON, deviceNr);
         }
     }
-}
-
-void
-Drive::updateDiskState()
-{
+    
+    // Only proceed if a disk change state transition is to be performed
+    if (--diskChangeCounter) return;
+    
     switch (insertionStatus) {
             
         case DISK_FULLY_INSERTED:
         {
             trace(DSKCHG_DEBUG, "FULLY_INSERTED -> PARTIALLY_EJECTED\n");
-            
+
             // Pull the disk half out (blocks the light barrier)
             insertionStatus = DISK_PARTIALLY_EJECTED;
             
@@ -696,7 +677,7 @@ Drive::updateDiskState()
         case DISK_PARTIALLY_EJECTED:
         {
             trace(DSKCHG_DEBUG, "PARTIALLY_EJECTED -> FULLY_EJECTED\n");
-            
+
             // Take the disk out (unblocks the light barrier)
             insertionStatus = DISK_FULLY_EJECTED;
             
@@ -711,7 +692,7 @@ Drive::updateDiskState()
         case DISK_FULLY_EJECTED:
         {
             trace(DSKCHG_DEBUG, "FULLY_EJECTED -> PARTIALLY_INSERTED\n");
-            
+
             // Only proceed if a new disk is waiting for insertion
             if (!diskToInsert) return;
             
@@ -725,10 +706,10 @@ Drive::updateDiskState()
         case DISK_PARTIALLY_INSERTED:
         {
             trace(DSKCHG_DEBUG, "PARTIALLY_INSERTED -> FULLY_INSERTED\n");
-            
+
             // Fully insert the disk (unblocks the light barrier)
             insertionStatus = DISK_FULLY_INSERTED;
-            
+
             // Copy the disk contents
             usize size = diskToInsert->size();
             u8 *buffer = new u8[size];
@@ -739,7 +720,7 @@ Drive::updateDiskState()
             
             // Enable or disable the write protection
             disk.setWriteProtection(diskToInsertWP);
-            
+
             // Inform listeners
             c64.putMessage(MSG_DISK_INSERT,
                            config.pan << 24 | config.insertVolume << 16 | halftrack << 8 | deviceNr);
