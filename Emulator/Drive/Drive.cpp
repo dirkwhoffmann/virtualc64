@@ -82,8 +82,8 @@ Drive::resetConfig()
     DriveConfig defaults = getDefaultConfig();
     
     setConfigItem(OPT_DRIVE_CONNECT, deviceNr, deviceNr == DRIVE8);
-    setConfigItem(OPT_DRIVE_POWER_SWITCH, deviceNr, defaults.switchedOn);
-    setConfigItem(OPT_AUTO_HIBERNATE, deviceNr, defaults.autoHibernate);
+    setConfigItem(OPT_DRV_POWER_SWITCH, deviceNr, defaults.switchedOn);
+    setConfigItem(OPT_DRV_POWER_SAVE, deviceNr, defaults.autoHibernate);
     setConfigItem(OPT_DRIVE_TYPE, deviceNr, defaults.type);
 
     setConfigItem(OPT_DISK_EJECT_DELAY, deviceNr, defaults.ejectDelay);
@@ -104,8 +104,8 @@ Drive::getConfigItem(Option option) const
             
         case OPT_DRIVE_TYPE:          return (i64)config.type;
         case OPT_DRIVE_CONNECT:       return (i64)config.connected;
-        case OPT_DRIVE_POWER_SWITCH:  return (i64)config.switchedOn;
-        case OPT_AUTO_HIBERNATE:      return (i64)config.autoHibernate;
+        case OPT_DRV_POWER_SWITCH:  return (i64)config.switchedOn;
+        case OPT_DRV_POWER_SAVE:      return (i64)config.autoHibernate;
         case OPT_DISK_EJECT_DELAY:    return (i64)config.ejectDelay;
         case OPT_DISK_SWAP_DELAY:     return (i64)config.swapDelay;
         case OPT_DISK_INSERT_DELAY:   return (i64)config.insertDelay;
@@ -137,7 +137,7 @@ Drive::setConfigItem(Option option, i64 value)
             durationOfOneCpuCycle = duration;
             return true;
         }
-        case OPT_AUTO_HIBERNATE:
+        case OPT_DRV_POWER_SAVE:
         case OPT_DISK_EJECT_DELAY:
         case OPT_DISK_SWAP_DELAY:
         case OPT_DISK_INSERT_DELAY:
@@ -185,7 +185,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
             messageQueue.put(value ? MSG_DRIVE_CONNECT : MSG_DRIVE_DISCONNECT, deviceNr);
             return true;
         }
-        case OPT_DRIVE_POWER_SWITCH:
+        case OPT_DRV_POWER_SWITCH:
         {
             if (value && !isPoweredOn()) {
                 warn("Can't switch drive on (not connected).\n");
@@ -199,7 +199,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
             messageQueue.put(value ? MSG_DRIVE_POWER_ON : MSG_DRIVE_POWER_OFF, deviceNr);
             return true;
         }
-        case OPT_AUTO_HIBERNATE:
+        case OPT_DRV_POWER_SAVE:
         {
             debug(true, "Hibernate = %lld\n", value);
             config.autoHibernate = value;

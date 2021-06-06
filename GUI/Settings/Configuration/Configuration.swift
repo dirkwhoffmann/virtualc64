@@ -200,18 +200,18 @@ class Configuration {
     }
     
     var drive8PowerSwitch: Bool {
-        get { return c64.getConfig(.DRIVE_POWER_SWITCH, drive: .DRIVE8) != 0 }
-        set { c64.configure(.DRIVE_POWER_SWITCH, drive: .DRIVE8, enable: newValue )}
+        get { return c64.getConfig(.DRV_POWER_SWITCH, drive: .DRIVE8) != 0 }
+        set { c64.configure(.DRV_POWER_SWITCH, drive: .DRIVE8, enable: newValue )}
     }
     
     var drive9PowerSwitch: Bool {
-        get { return c64.getConfig(.DRIVE_POWER_SWITCH, drive: .DRIVE9) != 0 }
-        set { c64.configure(.DRIVE_POWER_SWITCH, drive: .DRIVE9, enable: newValue )}
+        get { return c64.getConfig(.DRV_POWER_SWITCH, drive: .DRIVE9) != 0 }
+        set { c64.configure(.DRV_POWER_SWITCH, drive: .DRIVE9, enable: newValue )}
     }
 
     var driveHibernate: Bool {
-        get { return c64.getConfig(.AUTO_HIBERNATE, drive: .DRIVE8) != 0 }
-        set { c64.configure(.AUTO_HIBERNATE, enable: newValue )}
+        get { return c64.getConfig(.DRV_POWER_SAVE, drive: .DRIVE8) != 0 }
+        set { c64.configure(.DRV_POWER_SAVE, enable: newValue )}
     }
 
     var blankDiskFormat = PeripheralsDefaults.std.blankDiskFormat

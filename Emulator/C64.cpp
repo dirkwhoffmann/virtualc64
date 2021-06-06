@@ -215,8 +215,8 @@ C64::getConfigItem(Option option, long id) const
 
         case OPT_DRIVE_TYPE:
         case OPT_DRIVE_CONNECT:
-        case OPT_DRIVE_POWER_SWITCH:
-        case OPT_AUTO_HIBERNATE:
+        case OPT_DRV_POWER_SWITCH:
+        case OPT_DRV_POWER_SAVE:
         case OPT_DISK_EJECT_DELAY:
         case OPT_DISK_SWAP_DELAY:
         case OPT_DISK_INSERT_DELAY:

@@ -1189,7 +1189,7 @@
 
 - (BOOL)isSwitchedOn
 {
-    return [self drive]->getConfigItem(OPT_DRIVE_POWER_SWITCH) != 0;
+    return [self drive]->getConfigItem(OPT_DRV_POWER_SWITCH) != 0;
 }
 
 - (BOOL)readMode
