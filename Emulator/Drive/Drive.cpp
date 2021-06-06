@@ -90,11 +90,11 @@ Drive::resetConfig()
     setConfigItem(OPT_DRV_SWAP_DELAY, deviceNr, defaults.swapDelay);
     setConfigItem(OPT_DRV_INSERT_DELAY, deviceNr, defaults.insertDelay);
     
-    setConfigItem(OPT_DRIVE_PAN, deviceNr, defaults.pan);
-    setConfigItem(OPT_POWER_VOLUME, deviceNr, defaults.powerVolume);
-    setConfigItem(OPT_STEP_VOLUME, deviceNr, defaults.stepVolume);
-    setConfigItem(OPT_INSERT_VOLUME, deviceNr, defaults.insertVolume);
-    setConfigItem(OPT_EJECT_VOLUME, deviceNr, defaults.ejectVolume);
+    setConfigItem(OPT_DRV_PAN, deviceNr, defaults.pan);
+    setConfigItem(OPT_DRV_POWER_VOL, deviceNr, defaults.powerVolume);
+    setConfigItem(OPT_DRV_STEP_VOL, deviceNr, defaults.stepVolume);
+    setConfigItem(OPT_DRV_INSERT_VOL, deviceNr, defaults.insertVolume);
+    setConfigItem(OPT_DRV_EJECT_VOL, deviceNr, defaults.ejectVolume);
 }
 
 i64
@@ -109,11 +109,11 @@ Drive::getConfigItem(Option option) const
         case OPT_DRV_EJECT_DELAY:    return (i64)config.ejectDelay;
         case OPT_DRV_SWAP_DELAY:     return (i64)config.swapDelay;
         case OPT_DRV_INSERT_DELAY:   return (i64)config.insertDelay;
-        case OPT_DRIVE_PAN:           return (i64)config.pan;
-        case OPT_POWER_VOLUME:        return (i64)config.powerVolume;
-        case OPT_STEP_VOLUME:         return (i64)config.stepVolume;
-        case OPT_INSERT_VOLUME:       return (i64)config.insertVolume;
-        case OPT_EJECT_VOLUME:        return (i64)config.ejectVolume;
+        case OPT_DRV_PAN:           return (i64)config.pan;
+        case OPT_DRV_POWER_VOL:        return (i64)config.powerVolume;
+        case OPT_DRV_STEP_VOL:         return (i64)config.stepVolume;
+        case OPT_DRV_INSERT_VOL:       return (i64)config.insertVolume;
+        case OPT_DRV_EJECT_VOL:        return (i64)config.ejectVolume;
             
         default:
             assert(false);
@@ -141,11 +141,11 @@ Drive::setConfigItem(Option option, i64 value)
         case OPT_DRV_EJECT_DELAY:
         case OPT_DRV_SWAP_DELAY:
         case OPT_DRV_INSERT_DELAY:
-        case OPT_POWER_VOLUME:
-        case OPT_STEP_VOLUME:
-        case OPT_INSERT_VOLUME:
-        case OPT_EJECT_VOLUME:
-        case OPT_DRIVE_PAN:
+        case OPT_DRV_POWER_VOL:
+        case OPT_DRV_STEP_VOL:
+        case OPT_DRV_INSERT_VOL:
+        case OPT_DRV_EJECT_VOL:
+        case OPT_DRV_PAN:
         {
             bool result1 = setConfigItem(option, DRIVE8, value);
             bool result2 = setConfigItem(option, DRIVE9, value);
@@ -219,26 +219,26 @@ Drive::setConfigItem(Option option, long id, i64 value)
             config.insertDelay = value;
             return true;
         }
-        case OPT_DRIVE_PAN:
+        case OPT_DRV_PAN:
         {
             config.pan = value;
             return true;
         }
-        case OPT_POWER_VOLUME:
+        case OPT_DRV_POWER_VOL:
         {
             value = std::clamp(value, 0LL, 100LL);
 
             config.powerVolume = value;
             return true;
         }
-        case OPT_STEP_VOLUME:
+        case OPT_DRV_STEP_VOL:
         {
             value = std::clamp(value, 0LL, 100LL);
 
             config.stepVolume = value;
             return true;
         }
-        case OPT_EJECT_VOLUME:
+        case OPT_DRV_EJECT_VOL:
         {
             value = std::clamp(value, 0LL, 100LL);
             
@@ -246,7 +246,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
             printf("New eject volume: %d\n", config.ejectVolume);
             return true;
         }
-        case OPT_INSERT_VOLUME:
+        case OPT_DRV_INSERT_VOL:
         {
             value = std::clamp(value, 0LL, 100LL);
             

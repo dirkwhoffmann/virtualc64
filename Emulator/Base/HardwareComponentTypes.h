@@ -84,11 +84,11 @@ enum_long(OPT)
     OPT_DRV_EJECT_DELAY,
     OPT_DRV_SWAP_DELAY,
     OPT_DRV_INSERT_DELAY,
-    OPT_DRIVE_PAN,
-    OPT_POWER_VOLUME,
-    OPT_STEP_VOLUME,
-    OPT_INSERT_VOLUME,
-    OPT_EJECT_VOLUME,
+    OPT_DRV_PAN,
+    OPT_DRV_POWER_VOL,
+    OPT_DRV_STEP_VOL,
+    OPT_DRV_INSERT_VOL,
+    OPT_DRV_EJECT_VOL,
         
     OPT_COUNT
 };
@@ -159,11 +159,11 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_DRV_EJECT_DELAY:     return "DRV_EJECT_DELAY";
             case OPT_DRV_SWAP_DELAY:      return "DRV_SWAP_DELAY";
             case OPT_DRV_INSERT_DELAY:    return "DRV_INSERT_DELAY";
-            case OPT_DRIVE_PAN:           return "DRIVE_PAN";
-            case OPT_POWER_VOLUME:        return "POWER_VOLUME";
-            case OPT_STEP_VOLUME:         return "STEP_VOLUME";
-            case OPT_INSERT_VOLUME:       return "INSERT_VOLUME";
-            case OPT_EJECT_VOLUME:        return "EJECT_VOLUME";
+            case OPT_DRV_PAN:             return "DRV_PAN";
+            case OPT_DRV_POWER_VOL:       return "DRV_POWER_VOL";
+            case OPT_DRV_STEP_VOL:        return "DRV_STEP_VOL";
+            case OPT_DRV_INSERT_VOL:      return "DRV_INSERT_VOL";
+            case OPT_DRV_EJECT_VOL:       return "DRV_EJECT_VOL";
                 
             case OPT_COUNT:               return "???";
         }

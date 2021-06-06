@@ -333,24 +333,24 @@ class Configuration {
         set { c64.configure(.AUDVOLR, value: newValue) }
     }
     var stepVolume: Int {
-        get { return c64.getConfig(.STEP_VOLUME, drive: .DRIVE8) }
-        set { c64.configure(.STEP_VOLUME, value: newValue) }
+        get { return c64.getConfig(.DRV_STEP_VOL, drive: .DRIVE8) }
+        set { c64.configure(.DRV_STEP_VOL, value: newValue) }
     }
     var insertVolume: Int {
-        get { return c64.getConfig(.INSERT_VOLUME, drive: .DRIVE8) }
-        set { c64.configure(.INSERT_VOLUME, value: newValue) }
+        get { return c64.getConfig(.DRV_INSERT_VOL, drive: .DRIVE8) }
+        set { c64.configure(.DRV_INSERT_VOL, value: newValue) }
     }
     var ejectVolume: Int {
-        get { return c64.getConfig(.EJECT_VOLUME, drive: .DRIVE8) }
-        set { c64.configure(.EJECT_VOLUME, value: newValue) }
+        get { return c64.getConfig(.DRV_EJECT_VOL, drive: .DRIVE8) }
+        set { c64.configure(.DRV_EJECT_VOL, value: newValue) }
     }
     var drive8Pan: Int {
-        get { return c64.getConfig(.DRIVE_PAN, drive: .DRIVE8) }
-        set { c64.configure(.DRIVE_PAN, drive: .DRIVE8, value: newValue) }
+        get { return c64.getConfig(.DRV_PAN, drive: .DRIVE8) }
+        set { c64.configure(.DRV_PAN, drive: .DRIVE8, value: newValue) }
     }
     var drive9Pan: Int {
-        get { return c64.getConfig(.DRIVE_PAN, drive: .DRIVE9) }
-        set { c64.configure(.DRIVE_PAN, drive: .DRIVE9, value: newValue) }
+        get { return c64.getConfig(.DRV_PAN, drive: .DRIVE9) }
+        set { c64.configure(.DRV_PAN, drive: .DRIVE9, value: newValue) }
     }
 
     //
