@@ -31,7 +31,7 @@ HardwareComponent::reset(bool hard)
     for (HardwareComponent *c : subComponents) c->reset(hard);
 
     // Reset this component
-    _reset(hard);
+    _reset(hard);    
 }
 
 bool

@@ -85,7 +85,7 @@ public:
     bool diskToInsertWP = false;
     
     // State change delay counter (checked in the vsync handler)
-    i64 diskChangeCounter = -1;
+    i64 diskChangeCounter = 0;
     
     
     //
@@ -102,10 +102,7 @@ private:
     
     // Indicates if or how a disk is inserted
     InsertionStatus insertionStatus = DISK_FULLY_EJECTED;
-    
-    // Idle counter
-    i64 idleCounter = 0;
-    
+        
     
     //
     // Clocking logic
@@ -205,6 +202,17 @@ public:
      * has been processed.
      */
     bool byteReady = false;
+    
+    
+    //
+    // Speed logic (power-save)
+    //
+    
+    // Idle counter
+    i64 idleCounter = 0;
+
+    // Indicates whether execute() should be called inside the run loop
+    bool needsEmulation = false; 
     
     
     //
@@ -449,4 +457,9 @@ public:
 
     // Performs periodic actions
     void vsyncHandler();
+    
+private:
+    
+    // Execute the disk state transition for a single frame
+    void executeStateTransition();    
 };

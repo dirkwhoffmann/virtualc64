@@ -51,6 +51,8 @@ Drive::_reset(bool hard)
 
     cpu.reg.pc = 0xEAA0;
     halftrack = 41;
+    
+    needsEmulation = config.connected && config.switchedOn;
 }
 
 DriveConfig
@@ -509,8 +511,10 @@ void
 Drive::wakeUp()
 {
     if (isIdle()) {
-        c64.putMessage(MSG_DRIVE_POWER_SAVE_OFF);
+        debug(DRVPS_DEBUG, "Exiting power-safe mode\n");
+        c64.putMessage(MSG_DRIVE_POWER_SAVE_OFF, deviceNr);
         idleCounter = 0;
+        needsEmulation = true;
     }
 }
 
@@ -644,20 +648,33 @@ Drive::ejectDisk()
 void
 Drive::vsyncHandler()
 {
-    // Increase the idle counter if conditions match
-    if (!spinning && diskChangeCounter < 0 && config.autoHibernate) {
+    // Only proceed if the drive is connected and switched on
+    if (!config.connected || !config.switchedOn) return;
+
+    // Emulate an ongoing disk state transition
+    if (diskChangeCounter) {
         
-        idleCounter++;
+        wakeUp();
         
-        // Inform the GUI if the drive will enter power-safe mode
-        if (idleCounter == powerSafeThreshold) {
+        if (--diskChangeCounter == 0) {
+            executeStateTransition();
+        }
+        return;
+    }
+        
+    // Check if we sould enter power-safe mode
+    if (!spinning && config.autoHibernate) {
+        if (++idleCounter == powerSafeThreshold) {
+            needsEmulation = false;
+            debug(DRVPS_DEBUG, "Entering power-safe mode\n");
             messageQueue.put(MSG_DRIVE_POWER_SAVE_ON, deviceNr);
         }
     }
-    
-    // Only proceed if a disk change state transition is to be performed
-    if (--diskChangeCounter) return;
-    
+}
+
+void
+Drive::executeStateTransition()
+{
     switch (insertionStatus) {
             
         case DISK_FULLY_INSERTED:

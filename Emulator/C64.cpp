@@ -1053,7 +1053,8 @@ C64::_executeOneCycle()
     
     // Second clock phase (o2 high)
     cpu.executeOneCycle();
-    if (!drive8.isIdle() && drive8.isPoweredOn()) drive8.execute(durationOfOneCycle);
+    // if (!drive8.isIdle() && drive8.isPoweredOn()) drive8.execute(durationOfOneCycle);
+    if (drive8.needsEmulation) drive8.execute(durationOfOneCycle);
     if (!drive9.isIdle() && drive9.isPoweredOn()) drive9.execute(durationOfOneCycle);
     datasette.execute();
     
