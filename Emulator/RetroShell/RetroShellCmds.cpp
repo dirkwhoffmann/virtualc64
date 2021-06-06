@@ -273,14 +273,14 @@ template <> void
 RetroShell::exec <Token::drive, Token::connect> (Arguments& argv, long param)
 {
     auto id = param ? DRIVE9 : DRIVE8;
-    c64.configure(OPT_DRIVE_CONNECT, id, true);
+    c64.configure(OPT_DRV_CONNECT, id, true);
 }
 
 template <> void
 RetroShell::exec <Token::drive, Token::disconnect> (Arguments& argv, long param)
 {
     auto id = param ? DRIVE9 : DRIVE8;
-    c64.configure(OPT_DRIVE_CONNECT, id, false);
+    c64.configure(OPT_DRV_CONNECT, id, false);
 }
 
 template <> void

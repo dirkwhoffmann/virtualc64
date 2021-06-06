@@ -81,14 +81,14 @@ Drive::resetConfig()
 {
     DriveConfig defaults = getDefaultConfig();
     
-    setConfigItem(OPT_DRIVE_CONNECT, deviceNr, deviceNr == DRIVE8);
+    setConfigItem(OPT_DRV_CONNECT, deviceNr, deviceNr == DRIVE8);
     setConfigItem(OPT_DRV_POWER_SWITCH, deviceNr, defaults.switchedOn);
     setConfigItem(OPT_DRV_POWER_SAVE, deviceNr, defaults.autoHibernate);
-    setConfigItem(OPT_DRIVE_TYPE, deviceNr, defaults.type);
+    setConfigItem(OPT_DRV_TYPE, deviceNr, defaults.type);
 
-    setConfigItem(OPT_DISK_EJECT_DELAY, deviceNr, defaults.ejectDelay);
-    setConfigItem(OPT_DISK_SWAP_DELAY, deviceNr, defaults.swapDelay);
-    setConfigItem(OPT_DISK_INSERT_DELAY, deviceNr, defaults.insertDelay);
+    setConfigItem(OPT_DRV_EJECT_DELAY, deviceNr, defaults.ejectDelay);
+    setConfigItem(OPT_DRV_SWAP_DELAY, deviceNr, defaults.swapDelay);
+    setConfigItem(OPT_DRV_INSERT_DELAY, deviceNr, defaults.insertDelay);
     
     setConfigItem(OPT_DRIVE_PAN, deviceNr, defaults.pan);
     setConfigItem(OPT_POWER_VOLUME, deviceNr, defaults.powerVolume);
@@ -102,13 +102,13 @@ Drive::getConfigItem(Option option) const
 {
     switch (option) {
             
-        case OPT_DRIVE_TYPE:          return (i64)config.type;
-        case OPT_DRIVE_CONNECT:       return (i64)config.connected;
+        case OPT_DRV_TYPE:          return (i64)config.type;
+        case OPT_DRV_CONNECT:       return (i64)config.connected;
         case OPT_DRV_POWER_SWITCH:  return (i64)config.switchedOn;
         case OPT_DRV_POWER_SAVE:      return (i64)config.autoHibernate;
-        case OPT_DISK_EJECT_DELAY:    return (i64)config.ejectDelay;
-        case OPT_DISK_SWAP_DELAY:     return (i64)config.swapDelay;
-        case OPT_DISK_INSERT_DELAY:   return (i64)config.insertDelay;
+        case OPT_DRV_EJECT_DELAY:    return (i64)config.ejectDelay;
+        case OPT_DRV_SWAP_DELAY:     return (i64)config.swapDelay;
+        case OPT_DRV_INSERT_DELAY:   return (i64)config.insertDelay;
         case OPT_DRIVE_PAN:           return (i64)config.pan;
         case OPT_POWER_VOLUME:        return (i64)config.powerVolume;
         case OPT_STEP_VOLUME:         return (i64)config.stepVolume;
@@ -138,9 +138,9 @@ Drive::setConfigItem(Option option, i64 value)
             return true;
         }
         case OPT_DRV_POWER_SAVE:
-        case OPT_DISK_EJECT_DELAY:
-        case OPT_DISK_SWAP_DELAY:
-        case OPT_DISK_INSERT_DELAY:
+        case OPT_DRV_EJECT_DELAY:
+        case OPT_DRV_SWAP_DELAY:
+        case OPT_DRV_INSERT_DELAY:
         case OPT_POWER_VOLUME:
         case OPT_STEP_VOLUME:
         case OPT_INSERT_VOLUME:
@@ -163,7 +163,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
     
     switch (option) {
             
-        case OPT_DRIVE_TYPE:
+        case OPT_DRV_TYPE:
         {
             if (!DriveTypeEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INV_ARG, DriveTypeEnum::keyList());
@@ -172,7 +172,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
             config.type = (DriveType)value;
             return true;
         }
-        case OPT_DRIVE_CONNECT:
+        case OPT_DRV_CONNECT:
         {
             if (value && !c64.hasRom(ROM_TYPE_VC1541)) {
                 warn("Can't connect drive (ROM missing).\n");
@@ -204,17 +204,17 @@ Drive::setConfigItem(Option option, long id, i64 value)
             debug(true, "Hibernate = %lld\n", value);
             config.autoHibernate = value;
         }
-        case OPT_DISK_EJECT_DELAY:
+        case OPT_DRV_EJECT_DELAY:
         {
             config.ejectDelay = value;
             return true;
         }
-        case OPT_DISK_SWAP_DELAY:
+        case OPT_DRV_SWAP_DELAY:
         {
             config.swapDelay = value;
             return true;
         }
-        case OPT_DISK_INSERT_DELAY:
+        case OPT_DRV_INSERT_DELAY:
         {
             config.insertDelay = value;
             return true;

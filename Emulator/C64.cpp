@@ -213,13 +213,13 @@ C64::getConfigItem(Option option, long id) const
             assert(id >= 0 && id <= 3);
             return sid.getConfigItem(option, id);
 
-        case OPT_DRIVE_TYPE:
-        case OPT_DRIVE_CONNECT:
+        case OPT_DRV_TYPE:
+        case OPT_DRV_CONNECT:
         case OPT_DRV_POWER_SWITCH:
         case OPT_DRV_POWER_SAVE:
-        case OPT_DISK_EJECT_DELAY:
-        case OPT_DISK_SWAP_DELAY:
-        case OPT_DISK_INSERT_DELAY:
+        case OPT_DRV_EJECT_DELAY:
+        case OPT_DRV_SWAP_DELAY:
+        case OPT_DRV_INSERT_DELAY:
         case OPT_DRIVE_PAN:
         case OPT_POWER_VOLUME:
         case OPT_STEP_VOLUME:

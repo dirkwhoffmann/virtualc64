@@ -1184,7 +1184,7 @@
 
 - (BOOL)isConnected
 {
-    return [self drive]->getConfigItem(OPT_DRIVE_CONNECT) != 0;
+    return [self drive]->getConfigItem(OPT_DRV_CONNECT) != 0;
 }
 
 - (BOOL)isSwitchedOn

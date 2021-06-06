@@ -77,13 +77,13 @@ enum_long(OPT)
     OPT_RAM_PATTERN,
     
     // Drive
-    OPT_DRIVE_TYPE,
-    OPT_DRIVE_CONNECT,
+    OPT_DRV_TYPE,
+    OPT_DRV_CONNECT,
     OPT_DRV_POWER_SWITCH,
     OPT_DRV_POWER_SAVE,
-    OPT_DISK_EJECT_DELAY,
-    OPT_DISK_SWAP_DELAY,
-    OPT_DISK_INSERT_DELAY,
+    OPT_DRV_EJECT_DELAY,
+    OPT_DRV_SWAP_DELAY,
+    OPT_DRV_INSERT_DELAY,
     OPT_DRIVE_PAN,
     OPT_POWER_VOLUME,
     OPT_STEP_VOLUME,
@@ -152,13 +152,13 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
                 
             case OPT_RAM_PATTERN:         return "RAM_PATTERN";
                 
-            case OPT_DRIVE_TYPE:          return "DRIVE_TYPE";
-            case OPT_DRIVE_CONNECT:       return "DRIVE_CONNECT";
-            case OPT_DRV_POWER_SWITCH:  return "DRIVE_POWER_SWITCH";
-            case OPT_DRV_POWER_SAVE:      return "AUTO_HIBERNATE";
-            case OPT_DISK_EJECT_DELAY:    return "DISK_EJECT_DELAY";
-            case OPT_DISK_SWAP_DELAY:     return "DISK_SWAP_DELAY";
-            case OPT_DISK_INSERT_DELAY:   return "DISK_INSERT_DELAY";
+            case OPT_DRV_TYPE:            return "DRV_TYPE";
+            case OPT_DRV_CONNECT:         return "DRV_CONNECT";
+            case OPT_DRV_POWER_SWITCH:    return "DRV_POWER_SWITCH";
+            case OPT_DRV_POWER_SAVE:      return "DRV_POWER_SAVE";
+            case OPT_DRV_EJECT_DELAY:     return "DRV_EJECT_DELAY";
+            case OPT_DRV_SWAP_DELAY:      return "DRV_SWAP_DELAY";
+            case OPT_DRV_INSERT_DELAY:    return "DRV_INSERT_DELAY";
             case OPT_DRIVE_PAN:           return "DRIVE_PAN";
             case OPT_POWER_VOLUME:        return "POWER_VOLUME";
             case OPT_STEP_VOLUME:         return "STEP_VOLUME";
