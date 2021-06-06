@@ -72,7 +72,6 @@ static const int SIDREG_DEBUG    = 0; // Sound Interface Device (Registers)
 static const int VIA_DEBUG       = 0; // Versatile Interface Adapter
 static const int IEC_DEBUG       = 0; // IEC bus
 static const int DSK_DEBUG       = 0; // Disk controller execution
-static const int DRVPS_DEBUG     = 0; // Drive power-safe mode
 static const int DSKCHG_DEBUG    = 0; // Disk changing procedure
 static const int GCR_DEBUG       = 0; // Disk encoding / decoding
 static const int FS_DEBUG        = 0; // File System Classes

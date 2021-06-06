@@ -510,7 +510,6 @@ void
 Drive::wakeUp()
 {
     if (isIdle()) {
-        debug(DRVPS_DEBUG, "Exiting power-safe mode\n");
         c64.putMessage(MSG_DRIVE_POWER_SAVE_OFF, deviceNr);
         idleCounter = 0;
         needsEmulation = true;
@@ -665,7 +664,6 @@ Drive::vsyncHandler()
     if (!spinning && config.powerSave) {
         if (++idleCounter == powerSafeThreshold) {
             needsEmulation = false;
-            debug(DRVPS_DEBUG, "Entering power-safe mode\n");
             messageQueue.put(MSG_DRIVE_POWER_SAVE_ON, deviceNr);
         }
     }
