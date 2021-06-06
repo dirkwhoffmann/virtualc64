@@ -99,7 +99,7 @@ typedef struct
     bool switchedOn;
     
     // Power saving
-    bool autoHibernate;
+    bool powerSave;
     
     // Disk handling delays
     isize ejectDelay;

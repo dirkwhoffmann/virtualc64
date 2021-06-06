@@ -633,7 +633,7 @@ class Configuration {
         drive8Type = defaults.integer(forKey: Keys.Per.drive8Model)
         drive9Connected = defaults.bool(forKey: Keys.Per.drive9Connect)
         drive9Type = defaults.integer(forKey: Keys.Per.drive9Model)
-        driveHibernate = defaults.bool(forKey: Keys.Per.driveHibernate)
+        driveHibernate = defaults.bool(forKey: Keys.Per.drivePowerSave)
         
         blankDiskFormatIntValue = defaults.integer(forKey: Keys.Per.blankDiskFormat)
         
@@ -656,7 +656,7 @@ class Configuration {
         defaults.set(drive9Connected, forKey: Keys.Per.drive9Connect)
         defaults.set(drive9Type, forKey: Keys.Per.drive9Model)
         
-        defaults.set(driveHibernate, forKey: Keys.Per.driveHibernate)
+        defaults.set(driveHibernate, forKey: Keys.Per.drivePowerSave)
         
         defaults.set(blankDiskFormatIntValue, forKey: Keys.Per.blankDiskFormat)
         

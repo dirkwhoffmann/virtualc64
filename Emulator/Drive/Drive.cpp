@@ -63,7 +63,7 @@ Drive::getDefaultConfig()
     defaults.type = DRIVE_VC1541II;
     defaults.connected = false;
     defaults.switchedOn = true;
-    defaults.autoHibernate = true;
+    defaults.powerSave = true;
     defaults.ejectDelay = 30;
     defaults.swapDelay = 30;
     defaults.insertDelay = 30;
@@ -83,7 +83,7 @@ Drive::resetConfig()
     
     setConfigItem(OPT_DRV_CONNECT, deviceNr, deviceNr == DRIVE8);
     setConfigItem(OPT_DRV_POWER_SWITCH, deviceNr, defaults.switchedOn);
-    setConfigItem(OPT_DRV_POWER_SAVE, deviceNr, defaults.autoHibernate);
+    setConfigItem(OPT_DRV_POWER_SAVE, deviceNr, defaults.powerSave);
     setConfigItem(OPT_DRV_TYPE, deviceNr, defaults.type);
 
     setConfigItem(OPT_DRV_EJECT_DELAY, deviceNr, defaults.ejectDelay);
@@ -105,7 +105,7 @@ Drive::getConfigItem(Option option) const
         case OPT_DRV_TYPE:          return (i64)config.type;
         case OPT_DRV_CONNECT:       return (i64)config.connected;
         case OPT_DRV_POWER_SWITCH:  return (i64)config.switchedOn;
-        case OPT_DRV_POWER_SAVE:      return (i64)config.autoHibernate;
+        case OPT_DRV_POWER_SAVE:      return (i64)config.powerSave;
         case OPT_DRV_EJECT_DELAY:    return (i64)config.ejectDelay;
         case OPT_DRV_SWAP_DELAY:     return (i64)config.swapDelay;
         case OPT_DRV_INSERT_DELAY:   return (i64)config.insertDelay;
@@ -201,8 +201,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
         }
         case OPT_DRV_POWER_SAVE:
         {
-            debug(true, "Hibernate = %lld\n", value);
-            config.autoHibernate = value;
+            config.powerSave = value;
         }
         case OPT_DRV_EJECT_DELAY:
         {
@@ -663,7 +662,7 @@ Drive::vsyncHandler()
     }
         
     // Check if we sould enter power-safe mode
-    if (!spinning && config.autoHibernate) {
+    if (!spinning && config.powerSave) {
         if (++idleCounter == powerSafeThreshold) {
             needsEmulation = false;
             debug(DRVPS_DEBUG, "Entering power-safe mode\n");

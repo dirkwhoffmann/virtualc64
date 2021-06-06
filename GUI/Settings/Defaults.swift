@@ -810,7 +810,7 @@ extension Keys {
         static let drive9Model      = "VC64_PER_Drive9Type"
         
         // Power saving
-        static let driveHibernate   = "VC64_PER_DriveHibernate"
+        static let drivePowerSave   = "VC64_PER_DrivePowerSave"
         
         // Disks
         static let blankDiskFormat  = "VC64_PER_BlankDiskFormat"
@@ -865,7 +865,7 @@ extension UserDefaults {
             Keys.Per.drive8Model:     defaults.driveModel[0].rawValue,
             Keys.Per.drive9Connect:   defaults.driveConnect[1],
             Keys.Per.drive9Model:     defaults.driveModel[1].rawValue,
-            Keys.Per.driveHibernate:  defaults.driveHibernate,
+            Keys.Per.drivePowerSave:  defaults.driveHibernate,
             
             Keys.Per.blankDiskFormat: defaults.blankDiskFormat.rawValue,
             
@@ -888,7 +888,7 @@ extension UserDefaults {
                     Keys.Per.drive8Model,
                     Keys.Per.drive9Connect,
                     Keys.Per.drive9Model,
-                    Keys.Per.driveHibernate,
+                    Keys.Per.drivePowerSave,
                     
                     Keys.Per.blankDiskFormat,
                     
