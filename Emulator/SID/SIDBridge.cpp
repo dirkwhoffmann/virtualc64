@@ -275,7 +275,7 @@ SIDBridge::setConfigItem(Option option, long id, i64 value)
 
             assert(id >= 0 && id <= 3);
 
-            if (id == 0) {
+            if (id == 0 && value != 0xD400) {
                 warn("SID 0 can't be remapped\n");
                 return false;
             }

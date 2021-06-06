@@ -1200,6 +1200,9 @@ public:
     void cycle64ntsc();
     void cycle65ntsc();
 	
+#define NOHEADLESS if (true)
+//     #define NOHEADLESS if (!c64.inWarpMode() || (c64.frame % 8) == 0)
+
     #define DRAW_SPRITES_DMA1 \
         assert(isFirstDMAcycle); assert(!isSecondDMAcycle); drawSpritesSlowPath();
     #define DRAW_SPRITES_DMA2 \
@@ -1207,7 +1210,7 @@ public:
     #define DRAW_SPRITES \
         assert(!isFirstDMAcycle && !isSecondDMAcycle); if (spriteDisplay) drawSprites();
     #define DRAW_SPRITES59 if (spriteDisplayDelayed || spriteDisplay || isSecondDMAcycle) drawSpritesSlowPath();
-    #define DRAW if (!vblank) { drawCanvas(); drawBorder(); };
+    #define DRAW NOHEADLESS { if (!vblank) { drawCanvas(); drawBorder(); }; }
     #define DRAW17 if (!vblank) { drawCanvas(); drawBorder17(); };
     #define DRAW55 if (!vblank) { drawCanvas(); drawBorder55(); };
     #define DRAW59 if (!vblank) { drawCanvas(); drawBorder(); };

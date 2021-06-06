@@ -36,7 +36,7 @@ class Drive : public C64Component {
      * the run loop. As a effect, the current drive state is frozen until the
      * drive is woken up.
      */
-    const i64 powerSafeThreshold = 100;
+    const i64 powerSafeThreshold = 128;
     
     /* Time between two carry pulses of UE7 in 1/10 nano seconds. The VC1541
      * drive is clocked by 16 Mhz. The base frequency is divided by N where N
@@ -103,10 +103,7 @@ private:
     // Indicates if or how a disk is inserted
     InsertionStatus insertionStatus = DISK_FULLY_EJECTED;
     
-    // Idle counter
-    i64 idleCounter = 0;
-    
-    
+        
     //
     // Clocking logic
     //
@@ -208,6 +205,21 @@ public:
     
     
     //
+    // Speedup logic
+    //
+    
+    // Idle counter
+    i64 idleCounter = 0;
+
+    /* This variable is tested inside the run loop of the C64. If it is set to
+     * true, the drive's execution function is called. Otherwise, the call is
+     * skipped to increase emulation speed. The variable is false if the drive
+     * is either powered off or in power-safe mode.
+     */
+    bool needsEmulation = false;
+    
+    
+    //
     // Initializing
     //
     
@@ -277,7 +289,6 @@ private:
         
         << spinning
         << redLED
-        << idleCounter
         << elapsedTime
         << nextClock
         << nextCarry
@@ -291,7 +302,9 @@ private:
         << readShiftreg
         << writeShiftreg
         << sync
-        << byteReady;
+        << byteReady
+        << idleCounter
+        << needsEmulation;
     }
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }
@@ -324,11 +337,19 @@ public:
     // Turns the drive engine on or off
     void setRotating(bool b);
     
-    // Wakes up the drive (clears the idle state)
+    
+    //
+    // Handling the speedup-logic
+    //
+    
+    // Exits power-save mode
     void wakeUp();
     
-    // Checks whether the drive has been idle for a while
+    // Checks whether the drive has entered power-save mode
     bool isIdle() { return idleCounter >= powerSafeThreshold; }
+    
+    // Updates variable 'needsEmulation' (see above)
+    // void updateNeedsEmulation() { needsEmulation = isPoweredOn() && !isIdle(); }
     
     
     //
@@ -449,4 +470,9 @@ public:
 
     // Performs periodic actions
     void vsyncHandler();
+    
+private:
+    
+    // Executes the disk state transition procedure for one frame
+    void updateDiskState();
 };
