@@ -172,45 +172,34 @@ Drive::setConfigItem(Option option, long id, i64 value)
         }
         case OPT_DRIVE_CONNECT:
         {
-            /*
-            if (config.connected == value) {
-                return false;
-            }
-            */
             if (value && !c64.hasRom(ROM_TYPE_VC1541)) {
                 warn("Can't connect drive (ROM missing).\n");
                 return false;
             }
-            
             suspend();
             config.connected = value;
-            bool wasActive = active;
-            active = config.connected && config.switchedOn;
             reset(true);
             resume();
             messageQueue.put(value ? MSG_DRIVE_CONNECT : MSG_DRIVE_DISCONNECT, deviceNr);
-            if (wasActive != active)
-                messageQueue.put(active ? MSG_DRIVE_ACTIVE : MSG_DRIVE_INACTIVE, deviceNr);
             return true;
         }
         case OPT_DRIVE_POWER_SWITCH:
         {
+            if (value && !isPoweredOn()) {
+                warn("Can't switch drive on (not connected).\n");
+                // throw VCError(ERROR_DRV_NOT_CONNECTED);
+                return false;
+            }
             suspend();
             config.switchedOn = value;
-            bool wasActive = active;
-            active = config.connected && config.switchedOn;
             reset(true);
             resume();
             messageQueue.put(value ? MSG_DRIVE_POWER_ON : MSG_DRIVE_POWER_OFF, deviceNr);
-            if (wasActive != active) {
-                messageQueue.put(active ? MSG_DRIVE_ACTIVE : MSG_DRIVE_INACTIVE,
-                                 config.pan << 24 | config.powerVolume << 16 | deviceNr);
-            }
             return true;
         }
         case OPT_AUTO_HIBERNATE:
         {
-            debug(true, "Hibernate = %lld\n", value); 
+            debug(true, "Hibernate = %lld\n", value);
             config.autoHibernate = value;
         }
         case OPT_DISK_EJECT_DELAY:
@@ -517,6 +506,15 @@ Drive::setRotating(bool b)
 }
 
 void
+Drive::wakeUp()
+{
+    if (isIdle()) {
+        c64.putMessage(MSG_DRIVE_POWER_SAVE_OFF);
+        idleCounter = 0;
+    }
+}
+
+void
 Drive::moveHeadUp()
 {
     if (halftrack < 84) {
@@ -647,8 +645,15 @@ void
 Drive::vsyncHandler()
 {
     // Increase the idle counter if conditions match
-    if (!spinning && diskChangeCounter < 0 && config.autoHibernate) idleCounter++;
-    if (idleCounter == 128) debug(true, "Entering hibernate mode\n");
+    if (!spinning && diskChangeCounter < 0 && config.autoHibernate) {
+        
+        idleCounter++;
+        
+        // Inform the GUI if the drive will enter power-safe mode
+        if (idleCounter == powerSafeThreshold) {
+            messageQueue.put(MSG_DRIVE_POWER_SAVE_ON, deviceNr);
+        }
+    }
     
     // Only proceed if a disk change state transition is to be performed
     if (--diskChangeCounter) return;

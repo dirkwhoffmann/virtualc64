@@ -67,8 +67,8 @@ enum_long(MSG)
     MSG_DRIVE_DISCONNECT,
     MSG_DRIVE_POWER_ON,
     MSG_DRIVE_POWER_OFF,
-    MSG_DRIVE_ACTIVE,
-    MSG_DRIVE_INACTIVE,
+    MSG_DRIVE_POWER_SAVE_ON,
+    MSG_DRIVE_POWER_SAVE_OFF,
     MSG_DRIVE_READ,
     MSG_DRIVE_WRITE,
     MSG_DRIVE_LED_ON,
@@ -178,8 +178,8 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_DRIVE_DISCONNECT:     return "DRIVE_DISCONNECT";
             case MSG_DRIVE_POWER_ON:       return "DRIVE_POWER_ON";
             case MSG_DRIVE_POWER_OFF:      return "DRIVE_POWER_OFF";
-            case MSG_DRIVE_ACTIVE:         return "DRIVE_ACTIVE";
-            case MSG_DRIVE_INACTIVE:       return "DRIVE_INACTIVE";
+            case MSG_DRIVE_POWER_SAVE_ON:  return "DRIVE_POWER_SAVE_ON";
+            case MSG_DRIVE_POWER_SAVE_OFF: return "DRIVE_POWER_SAVE_OFF";
             case MSG_DRIVE_READ:           return "DRIVE_READ";
             case MSG_DRIVE_WRITE:          return "DRIVE_WRITE";
             case MSG_DRIVE_LED_ON:         return "DRIVE_LED_ON";

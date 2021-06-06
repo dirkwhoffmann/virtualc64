@@ -675,18 +675,20 @@ extension MyController {
             
         case .DRIVE_CONNECT,
              .DRIVE_DISCONNECT,
-             .DRIVE_POWER_ON,
              .DRIVE_POWER_OFF:
+            hideOrShowDriveMenus()
             refreshStatusBar()
-                        
-        case .DRIVE_ACTIVE:
+
+        case .DRIVE_POWER_ON:
             macAudio.playPowerSound(volume: vol, pan: pan)
             hideOrShowDriveMenus()
             refreshStatusBar()
             
-        case .DRIVE_INACTIVE:
-            hideOrShowDriveMenus()
-            refreshStatusBar()
+        case .DRIVE_POWER_SAVE_ON:
+            track("Drive \(driveNr): Entering power-safe mode")
+
+        case .DRIVE_POWER_SAVE_OFF:
+            track("Drive \(driveNr): Exiting power-safe mode")
 
         case .VC1530_TAPE:
             if msg.data == 1 {

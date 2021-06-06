@@ -30,6 +30,14 @@ class Drive : public C64Component {
     // Constants
     //
 
+    /* Power-safe threshold measured in frames. If the drive was inactive for
+     * the specified number of frames, it is put into power-safe mode (if this
+     * option is enabled). In this mode, executing the drive is skipped inside
+     * the run loop. As a effect, the current drive state is frozen until the
+     * drive is woken up.
+     */
+    const i64 powerSafeThreshold = 100;
+    
     /* Time between two carry pulses of UE7 in 1/10 nano seconds. The VC1541
      * drive is clocked by 16 Mhz. The base frequency is divided by N where N
      * ranges from 13 (density bits = 11) to 16 (density bits = 00). On the
@@ -85,11 +93,7 @@ public:
     //
     
 private:
-    
-    // Indicates whether the drive is active (connected and switched on)
-    // DEPRECATED
-    bool active = false;
-    
+        
     // Indicates whether the disk is rotating
     bool spinning = false;
     
@@ -304,9 +308,6 @@ private:
     //
 
 public:
-
-    // Checks whether the drive is active (connected and switched on)
-    bool isActive() const { return active; }
     
     // Returns the device number
     DriveID getDeviceNr() const { return deviceNr; }
@@ -324,10 +325,10 @@ public:
     void setRotating(bool b);
     
     // Wakes up the drive (clears the idle state)
-    void wakeUp() { idleCounter = 0; }
+    void wakeUp();
     
     // Checks whether the drive has been idle for a while
-    bool isIdle() { return idleCounter >= 128; }
+    bool isIdle() { return idleCounter >= powerSafeThreshold; }
     
     
     //
