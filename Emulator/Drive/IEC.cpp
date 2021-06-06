@@ -90,10 +90,13 @@ bool IEC::_updateIecLines()
      *    bool ub1 = !ud3;
      *    dataLine &= ub1;
      * }
-    */
+     */
+    /*
     dataLine &= !drive8.isPoweredOn() || (atnLine ^ device1Atn);
     dataLine &= !drive9.isPoweredOn() || (atnLine ^ device2Atn);
-
+    */
+    if (drive8.connectedAndOn()) dataLine &= (atnLine ^ device1Atn);
+    if (drive9.connectedAndOn()) dataLine &= (atnLine ^ device2Atn);
     return (oldAtnLine != atnLine ||
             oldClockLine != clockLine ||
             oldDataLine != dataLine);

@@ -338,6 +338,9 @@ public:
     // Checks whether the drive has been idle for a while
     bool isIdle() { return idleCounter >= powerSafeThreshold; }
     
+    // Checks whether the drive is connected and switched on
+    bool connectedAndOn() { return config.connected && config.switchedOn; }
+    
     
     //
     // Handling disks
