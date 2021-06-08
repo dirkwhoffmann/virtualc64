@@ -18,7 +18,6 @@ extension ConfigurationController {
         perDrive9Connect.state = config.drive9Connected ? .on : .off
         perDrive8Type.selectItem(withTag: config.drive8Type)
         perDrive9Type.selectItem(withTag: config.drive9Type)
-        perDriveHibernate.state = config.driveHibernate ? .on : .off
         
         // Disk
         perBlankDiskFormat.selectItem(withTag: config.blankDiskFormatIntValue)
@@ -53,13 +52,6 @@ extension ConfigurationController {
         case 9: config.drive9Connected = sender.state == .on
         default: fatalError()
         }
-        refresh()
-    }
-
-    @IBAction func perDriveHibernateAction(_ sender: NSButton!) {
-        
-        track()
-        config.driveHibernate = sender.state == .on
         refresh()
     }
 

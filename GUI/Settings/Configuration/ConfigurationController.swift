@@ -92,7 +92,6 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var perDrive8Connect: NSButton!
     @IBOutlet weak var perDrive9Type: NSPopUpButton!
     @IBOutlet weak var perDrive9Connect: NSButton!
-    @IBOutlet weak var perDriveHibernate: NSButton!
 
     // Disks
     @IBOutlet weak var perBlankDiskFormat: NSPopUpButton!
