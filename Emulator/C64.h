@@ -144,13 +144,7 @@ public:
     
     // Duration of a CPU cycle in 1/10 nano seconds
     u64 durationOfOneCycle;
-    
-    /* The VICII function table. Each entry in this table is a pointer to a
-     * VICII method executed in a certain rasterline cycle. vicfunc[0] is a
-     * stub. It is never called, because the first cycle is numbered 1.
-     */
-    void (VICII::*vicfunc[66])(void);
-    
+        
     
     //
     // Emulator thread
@@ -248,9 +242,6 @@ public:
     // Configures the C64 to match a specific C64 model
     void configure(C64Model model);
         
-    // Updates the VICII function table according to the selected model
-    void updateVicFunctionTable();
-
 private:
 
     bool setConfigItem(Option option, i64 value) override;

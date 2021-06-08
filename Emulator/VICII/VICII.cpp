@@ -303,7 +303,7 @@ VICII::setRevision(VICIIRevision revision)
     updatePalette();
     resetEmuTextures();
     resetDmaTextures();
-    c64.updateVicFunctionTable();
+    vic.updateVicFunctionTable();
     
     c64.putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
 }

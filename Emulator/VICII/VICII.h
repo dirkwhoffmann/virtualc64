@@ -36,6 +36,12 @@ public:
     
     // Sub components
     DmaDebugger dmaDebugger;
+    
+    /* The VICII function table. Each entry in this table is a pointer to a
+     * VICII method executed in a certain rasterline cycle. vicfunc[0] is a
+     * stub. It is never called, because the first cycle is numbered 1.
+     */
+    void (VICII::*vicfunc[66])(void);
 
     
     //
@@ -558,6 +564,8 @@ public:
 	
     VICII(C64 &ref);
     const char *getDescription() const override { return "VICII"; }
+
+    void updateVicFunctionTable();
 
 private:
     
