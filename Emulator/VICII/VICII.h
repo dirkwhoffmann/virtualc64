@@ -857,16 +857,16 @@ private:
     bool isCharRomAddr(u16 addr) const;
 
     // Performs a DRAM refresh (r-access)
-    template <VICIIMode type> void rAccess();
+    template <u16 flags> void rAccess();
     
     // Performs an idle access (i-access)
-    template <VICIIMode type> void iAccess();
+    template <u16 flags> void iAccess();
     
     // Performs a character access (c-access)
-    template <VICIIMode type> void cAccess();
+    template <u16 flags> void cAccess();
     
     // Performs a graphics access (g-access)
-    template <VICIIMode type> void gAccess();
+    template <u16 flags> void gAccess();
 
     // Computes the g-access fetch address for different VICII models
     u16 gAccessAddr85x();
@@ -878,12 +878,12 @@ private:
     u16 gAccessAddr(bool bmm, bool ecm);
     
     // Performs a sprite pointer access (p-access)
-    template <VICIIMode type> void pAccess(unsigned sprite);
+    template <u16 flags> void pAccess(unsigned sprite);
     
     // Performs one of the three sprite data accesses
-    template <VICIIMode type, int sprite> void sAccess1();
-    template <VICIIMode type, int sprite> void sAccess2();
-    template <VICIIMode type, int sprite> void sAccess3();
+    template <u16 flags, int sprite> void sAccess1();
+    template <u16 flags, int sprite> void sAccess2();
+    template <u16 flags, int sprite> void sAccess3();
     
     /* Finalizes the sprite data access. This method is invoked one cycle after
      * the second and third sprite DMA has occurred.
@@ -1137,36 +1137,36 @@ public:
     void processDelayedActions();
     
 	// Emulates a specific rasterline cycle
-    template <VICIIMode type> void cycle1();
-    template <VICIIMode type> void cycle2();
-    template <VICIIMode type> void cycle3();
-    template <VICIIMode type> void cycle4();
-    template <VICIIMode type> void cycle5();
-    template <VICIIMode type> void cycle6();
-    template <VICIIMode type> void cycle7();
-    template <VICIIMode type> void cycle8();
-    template <VICIIMode type> void cycle9();
-    template <VICIIMode type> void cycle10();
-    template <VICIIMode type> void cycle11();
-    template <VICIIMode type> void cycle12();
-    template <VICIIMode type> void cycle13();
-    template <VICIIMode type> void cycle14();
-    template <VICIIMode type> void cycle15();
-    template <VICIIMode type> void cycle16();
-    template <VICIIMode type> void cycle17();
-    template <VICIIMode type> void cycle18();
-    template <VICIIMode type> void cycle19to54();
-    template <VICIIMode type> void cycle55();
-    template <VICIIMode type> void cycle56();
-    template <VICIIMode type> void cycle57();
-    template <VICIIMode type> void cycle58();
-    template <VICIIMode type> void cycle59();
-    template <VICIIMode type> void cycle60();
-    template <VICIIMode type> void cycle61();
-    template <VICIIMode type> void cycle62();
-    template <VICIIMode type> void cycle63();
-    template <VICIIMode type> void cycle64();
-    template <VICIIMode type> void cycle65();
+    template <u16 flags> void cycle1();
+    template <u16 flags> void cycle2();
+    template <u16 flags> void cycle3();
+    template <u16 flags> void cycle4();
+    template <u16 flags> void cycle5();
+    template <u16 flags> void cycle6();
+    template <u16 flags> void cycle7();
+    template <u16 flags> void cycle8();
+    template <u16 flags> void cycle9();
+    template <u16 flags> void cycle10();
+    template <u16 flags> void cycle11();
+    template <u16 flags> void cycle12();
+    template <u16 flags> void cycle13();
+    template <u16 flags> void cycle14();
+    template <u16 flags> void cycle15();
+    template <u16 flags> void cycle16();
+    template <u16 flags> void cycle17();
+    template <u16 flags> void cycle18();
+    template <u16 flags> void cycle19to54();
+    template <u16 flags> void cycle55();
+    template <u16 flags> void cycle56();
+    template <u16 flags> void cycle57();
+    template <u16 flags> void cycle58();
+    template <u16 flags> void cycle59();
+    template <u16 flags> void cycle60();
+    template <u16 flags> void cycle61();
+    template <u16 flags> void cycle62();
+    template <u16 flags> void cycle63();
+    template <u16 flags> void cycle64();
+    template <u16 flags> void cycle65();
 
     // DEPRECATED
     void cycle1pal();   void cycle1ntsc();

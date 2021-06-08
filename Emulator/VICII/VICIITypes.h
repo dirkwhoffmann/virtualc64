@@ -30,6 +30,12 @@
 #define SPR6 0x40
 #define SPR7 0x80
 
+// Cycle flags
+static const u16 PAL_CYCLE      = 0b0001;
+static const u16 NTSC_CYCLE     = 0b0010;
+static const u16 DEBUG_CYCLE    = 0b0100;
+static const u16 HEADLESS_CYCLE = 0b1000;
+
 /* Depths of different drawing layers
  *
  * Format: <src><src><src><col><spr><spr><spr><spr>
@@ -305,13 +311,15 @@ struct ColorSourceEnum : util::Reflection<ColorSourceEnum, ColorSource> {
 };
 #endif
 
+/*
 enum VICIIMode
 {
     PAL_CYCLE         = 0x0,
-    PAL_DEBUG_CYCLE   = 0x1,
+    PAL_CYCLE | DEBUG_CYCLE   = 0x1,
     NTSC_CYCLE        = 0x2,
-    NTSC_DEBUG_CYCLE  = 0x3
+    NTSC_CYCLE | DEBUG_CYCLE  = 0x3
 };
+*/
 
 enum VICIIColors
 {
