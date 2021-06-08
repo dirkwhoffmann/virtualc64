@@ -41,7 +41,9 @@ public:
      * VICII method executed in a certain rasterline cycle. vicfunc[0] is a
      * stub. It is never called, because the first cycle is numbered 1.
      */
-    void (VICII::*vicfunc[66])(void);
+    typedef void (VICII::*ViciiFunc)(void);
+    // void (VICII::*vicfunc[66])(void);
+    ViciiFunc vicfunc[66];
 
     
     //
@@ -577,6 +579,7 @@ private:
     void resetDmaTextures() { resetDmaTexture(1); resetDmaTexture(2); }
     void resetTexture(u32 *p);
 
+    template <u16 flags> ViciiFunc getViciiFunc(isize cycle);
     
     //
     // Configuring

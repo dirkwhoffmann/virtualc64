@@ -17,32 +17,10 @@ VICII::updateVicFunctionTable()
     
     trace(VIC_DEBUG, "updateVicFunctionTable (dmaDebug: %d)\n", dmaDebug());
     
-    // Assign model independent execution functions
     vicfunc[0] = nullptr;
-    if (dmaDebug()) {
-        vicfunc[12] = &VICII::cycle12<PAL_CYCLE | DEBUG_CYCLE>;
-        vicfunc[13] = &VICII::cycle13<PAL_CYCLE | DEBUG_CYCLE>;
-        vicfunc[14] = &VICII::cycle14<PAL_CYCLE | DEBUG_CYCLE>;
-        vicfunc[15] = &VICII::cycle15<PAL_CYCLE | DEBUG_CYCLE>;
-        vicfunc[16] = &VICII::cycle16<PAL_CYCLE | DEBUG_CYCLE>;
-        vicfunc[17] = &VICII::cycle17<PAL_CYCLE | DEBUG_CYCLE>;
-        vicfunc[18] = &VICII::cycle18<PAL_CYCLE | DEBUG_CYCLE>;
-        for (unsigned cycle = 19; cycle <= 54; cycle++)
-            vicfunc[cycle] = &VICII::cycle19to54<PAL_CYCLE | DEBUG_CYCLE>;
-        vicfunc[56] = &VICII::cycle56<PAL_CYCLE | DEBUG_CYCLE>;
-    } else {
-        vicfunc[12] = &VICII::cycle12<PAL_CYCLE>;
-        vicfunc[13] = &VICII::cycle13<PAL_CYCLE>;
-        vicfunc[14] = &VICII::cycle14<PAL_CYCLE>;
-        vicfunc[15] = &VICII::cycle15<PAL_CYCLE>;
-        vicfunc[16] = &VICII::cycle16<PAL_CYCLE>;
-        vicfunc[17] = &VICII::cycle17<PAL_CYCLE>;
-        vicfunc[18] = &VICII::cycle18<PAL_CYCLE>;
-        for (unsigned cycle = 19; cycle <= 54; cycle++)
-            vicfunc[cycle] = &VICII::cycle19to54<PAL_CYCLE>;
-        vicfunc[56] = &VICII::cycle56<PAL_CYCLE>;
-    }
-    
+    vicfunc[64] = nullptr;
+    vicfunc[65] = nullptr;
+
     // Assign model specific execution functions
     switch (getRevision()) {
             
@@ -51,148 +29,93 @@ VICII::updateVicFunctionTable()
         case VICII_PAL_8565:
             
             if (dmaDebug()) {
-                vicfunc[1] = &VICII::cycle1<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[2] = &VICII::cycle2<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[3] = &VICII::cycle3<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[4] = &VICII::cycle4<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[5] = &VICII::cycle5<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[6] = &VICII::cycle6<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[7] = &VICII::cycle7<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[8] = &VICII::cycle8<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[9] = &VICII::cycle9<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[10] = &VICII::cycle10<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[11] = &VICII::cycle11<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[55] = &VICII::cycle55<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[57] = &VICII::cycle57<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[58] = &VICII::cycle58<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[59] = &VICII::cycle59<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[60] = &VICII::cycle60<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[61] = &VICII::cycle61<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[62] = &VICII::cycle62<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[63] = &VICII::cycle63<PAL_CYCLE | DEBUG_CYCLE>;
+                for (isize i = 1; i <= 63; i++) {
+                    vicfunc[i] = getViciiFunc <PAL_CYCLE | DEBUG_CYCLE> (i);
+                }
             } else {
-                vicfunc[1] = &VICII::cycle1<PAL_CYCLE>;
-                vicfunc[2] = &VICII::cycle2<PAL_CYCLE>;
-                vicfunc[3] = &VICII::cycle3<PAL_CYCLE>;
-                vicfunc[4] = &VICII::cycle4<PAL_CYCLE>;
-                vicfunc[5] = &VICII::cycle5<PAL_CYCLE>;
-                vicfunc[6] = &VICII::cycle6<PAL_CYCLE>;
-                vicfunc[7] = &VICII::cycle7<PAL_CYCLE>;
-                vicfunc[8] = &VICII::cycle8<PAL_CYCLE>;
-                vicfunc[9] = &VICII::cycle9<PAL_CYCLE>;
-                vicfunc[10] = &VICII::cycle10<PAL_CYCLE>;
-                vicfunc[11] = &VICII::cycle11<PAL_CYCLE>;
-                vicfunc[55] = &VICII::cycle55<PAL_CYCLE>;
-                vicfunc[57] = &VICII::cycle57<PAL_CYCLE>;
-                vicfunc[58] = &VICII::cycle58<PAL_CYCLE>;
-                vicfunc[59] = &VICII::cycle59<PAL_CYCLE>;
-                vicfunc[60] = &VICII::cycle60<PAL_CYCLE>;
-                vicfunc[61] = &VICII::cycle61<PAL_CYCLE>;
-                vicfunc[62] = &VICII::cycle62<PAL_CYCLE>;
-                vicfunc[63] = &VICII::cycle63<PAL_CYCLE>;
+                for (isize i = 1; i <= 63; i++) {
+                    vicfunc[i] = getViciiFunc <PAL_CYCLE> (i);
+                }
             }
-            vicfunc[64] = nullptr;
-            vicfunc[65] = nullptr;
             break;
-            
+                        
         case VICII_NTSC_6567_R56A:
             
             if (dmaDebug()) {
-                vicfunc[1] = &VICII::cycle1<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[2] = &VICII::cycle2<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[3] = &VICII::cycle3<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[4] = &VICII::cycle4<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[5] = &VICII::cycle5<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[6] = &VICII::cycle6<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[7] = &VICII::cycle7<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[8] = &VICII::cycle8<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[9] = &VICII::cycle9<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[10] = &VICII::cycle10<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[11] = &VICII::cycle11<PAL_CYCLE | DEBUG_CYCLE>;
-                vicfunc[55] = &VICII::cycle55<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[57] = &VICII::cycle57<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[58] = &VICII::cycle58<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[59] = &VICII::cycle59<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[60] = &VICII::cycle60<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[61] = &VICII::cycle61<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[62] = &VICII::cycle62<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[63] = &VICII::cycle63<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[64] = &VICII::cycle64<NTSC_CYCLE | DEBUG_CYCLE>;
+                for (isize i = 1; i <= 11; i++) {
+                    vicfunc[i] = getViciiFunc <PAL_CYCLE | DEBUG_CYCLE> (i);
+                }
+                for (isize i = 12; i <= 64; i++) {
+                    vicfunc[i] = getViciiFunc <NTSC_CYCLE | DEBUG_CYCLE> (i);
+                }
             } else {
-                vicfunc[1] = &VICII::cycle1<PAL_CYCLE>;
-                vicfunc[2] = &VICII::cycle2<PAL_CYCLE>;
-                vicfunc[3] = &VICII::cycle3<PAL_CYCLE>;
-                vicfunc[4] = &VICII::cycle4<PAL_CYCLE>;
-                vicfunc[5] = &VICII::cycle5<PAL_CYCLE>;
-                vicfunc[6] = &VICII::cycle6<PAL_CYCLE>;
-                vicfunc[7] = &VICII::cycle7<PAL_CYCLE>;
-                vicfunc[8] = &VICII::cycle8<PAL_CYCLE>;
-                vicfunc[9] = &VICII::cycle9<PAL_CYCLE>;
-                vicfunc[10] = &VICII::cycle10<PAL_CYCLE>;
-                vicfunc[11] = &VICII::cycle11<PAL_CYCLE>;
-                vicfunc[55] = &VICII::cycle55<NTSC_CYCLE>;
-                vicfunc[57] = &VICII::cycle57<NTSC_CYCLE>;
-                vicfunc[58] = &VICII::cycle58<NTSC_CYCLE>;
-                vicfunc[59] = &VICII::cycle59<NTSC_CYCLE>;
-                vicfunc[60] = &VICII::cycle60<NTSC_CYCLE>;
-                vicfunc[61] = &VICII::cycle61<NTSC_CYCLE>;
-                vicfunc[62] = &VICII::cycle62<NTSC_CYCLE>;
-                vicfunc[63] = &VICII::cycle63<NTSC_CYCLE>;
-                vicfunc[64] = &VICII::cycle64<NTSC_CYCLE>;
+                for (isize i = 1; i <= 11; i++) {
+                    vicfunc[i] = getViciiFunc <PAL_CYCLE> (i);
+                }
+                for (isize i = 12; i <= 64; i++) {
+                    vicfunc[i] = getViciiFunc <NTSC_CYCLE> (i);
+                }
             }
-            vicfunc[65] = nullptr;
             break;
-            
+
         case VICII_NTSC_6567:
         case VICII_NTSC_8562:
             
             if (dmaDebug()) {
-                vicfunc[1] = &VICII::cycle1<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[2] = &VICII::cycle2<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[3] = &VICII::cycle3<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[4] = &VICII::cycle4<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[5] = &VICII::cycle5<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[6] = &VICII::cycle6<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[7] = &VICII::cycle7<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[8] = &VICII::cycle8<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[9] = &VICII::cycle9<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[10] = &VICII::cycle10<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[11] = &VICII::cycle11<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[55] = &VICII::cycle55<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[57] = &VICII::cycle57<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[58] = &VICII::cycle58<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[59] = &VICII::cycle59<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[60] = &VICII::cycle60<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[61] = &VICII::cycle61<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[62] = &VICII::cycle62<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[63] = &VICII::cycle63<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[64] = &VICII::cycle64<NTSC_CYCLE | DEBUG_CYCLE>;
-                vicfunc[65] = &VICII::cycle65<NTSC_CYCLE | DEBUG_CYCLE>;
+                for (isize i = 1; i <= 65; i++) {
+                    vicfunc[i] = getViciiFunc <NTSC_CYCLE | DEBUG_CYCLE> (i);
+                }
             } else {
-                vicfunc[1] = &VICII::cycle1<NTSC_CYCLE>;
-                vicfunc[2] = &VICII::cycle2<NTSC_CYCLE>;
-                vicfunc[3] = &VICII::cycle3<NTSC_CYCLE>;
-                vicfunc[4] = &VICII::cycle4<NTSC_CYCLE>;
-                vicfunc[5] = &VICII::cycle5<NTSC_CYCLE>;
-                vicfunc[6] = &VICII::cycle6<NTSC_CYCLE>;
-                vicfunc[7] = &VICII::cycle7<NTSC_CYCLE>;
-                vicfunc[8] = &VICII::cycle8<NTSC_CYCLE>;
-                vicfunc[9] = &VICII::cycle9<NTSC_CYCLE>;
-                vicfunc[10] = &VICII::cycle10<NTSC_CYCLE>;
-                vicfunc[11] = &VICII::cycle11<NTSC_CYCLE>;
-                vicfunc[55] = &VICII::cycle55<NTSC_CYCLE>;
-                vicfunc[57] = &VICII::cycle57<NTSC_CYCLE>;
-                vicfunc[58] = &VICII::cycle58<NTSC_CYCLE>;
-                vicfunc[59] = &VICII::cycle59<NTSC_CYCLE>;
-                vicfunc[60] = &VICII::cycle60<NTSC_CYCLE>;
-                vicfunc[61] = &VICII::cycle61<NTSC_CYCLE>;
-                vicfunc[62] = &VICII::cycle62<NTSC_CYCLE>;
-                vicfunc[63] = &VICII::cycle63<NTSC_CYCLE>;
-                vicfunc[64] = &VICII::cycle64<NTSC_CYCLE>;
-                vicfunc[65] = &VICII::cycle65<NTSC_CYCLE>;
+                for (isize i = 1; i <= 65; i++) {
+                    vicfunc[i] = getViciiFunc <NTSC_CYCLE> (i);
+                }
             }
             break;
             
         default:
             assert(false);
-    }}
+    }
+}
+
+template <u16 flags> VICII::ViciiFunc
+VICII::getViciiFunc(isize cycle)
+{
+    assert(cycle >= 1 && cycle <= 65);
+    
+    switch (cycle) {
+            
+        case 1: return &VICII::cycle1 <flags>;
+        case 2: return &VICII::cycle2 <flags>;
+        case 3: return &VICII::cycle3 <flags>;
+        case 4: return &VICII::cycle4 <flags>;
+        case 5: return &VICII::cycle5 <flags>;
+        case 6: return &VICII::cycle6 <flags>;
+        case 7: return &VICII::cycle7 <flags>;
+        case 8: return &VICII::cycle8 <flags>;
+        case 9: return &VICII::cycle9 <flags>;
+        case 10: return &VICII::cycle10 <flags>;
+        case 11: return &VICII::cycle11 <flags>;
+        case 12: return &VICII::cycle12 <flags>;
+        case 13: return &VICII::cycle13 <flags>;
+        case 14: return &VICII::cycle14 <flags>;
+        case 15: return &VICII::cycle15 <flags>;
+        case 16: return &VICII::cycle16 <flags>;
+        case 17: return &VICII::cycle17 <flags>;
+        case 18: return &VICII::cycle18 <flags>;
+
+        case 55: return &VICII::cycle55 <flags>;
+        case 56: return &VICII::cycle56 <flags>;
+        case 57: return &VICII::cycle57 <flags>;
+        case 58: return &VICII::cycle58 <flags>;
+        case 59: return &VICII::cycle59 <flags>;
+        case 60: return &VICII::cycle60 <flags>;
+        case 61: return &VICII::cycle61 <flags>;
+        case 62: return &VICII::cycle62 <flags>;
+        case 63: return &VICII::cycle63 <flags>;
+        case 64: return &VICII::cycle64 <flags>;
+        case 65: return &VICII::cycle65 <flags>;
+
+        default: return &VICII::cycle19to54<flags>;
+    }
+}
+

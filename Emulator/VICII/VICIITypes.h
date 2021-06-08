@@ -15,7 +15,6 @@
 
 #include "DmaDebuggerTypes.h"
 
-
 //
 // Constants
 //
