@@ -61,9 +61,9 @@ Drive::getDefaultConfig()
     DriveConfig defaults;
     
     defaults.type = DRIVE_VC1541II;
+    defaults.powerSave = true;
     defaults.connected = false;
     defaults.switchedOn = true;
-    defaults.powerSave = true;
     defaults.ejectDelay = 30;
     defaults.swapDelay = 30;
     defaults.insertDelay = 30;
@@ -266,6 +266,8 @@ Drive::_dump(dump::Category category, std::ostream& os) const
     
         os << tab("Drive type");
         os << DriveTypeEnum::key(config.type) << std::endl;
+        os << tab("Power save mode");
+        os << bol(config.powerSave, "when idle", "never") << std::endl;
         os << tab("Connected");
         os << bol(config.connected) << std::endl;
         os << tab("Power switch");

@@ -14,6 +14,7 @@
 		5002FA8121C2654B00DA4BBC /* ControlsPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002FA8021C2654B00DA4BBC /* ControlsPrefs.swift */; };
 		5002FA8321C2655800DA4BBC /* KeyboardPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */; };
 		50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50031B39206FB0FC00A1969B /* SnapshotController.swift */; };
+		50033829266E47B400D5456E /* CompatibilityConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50033828266E47B400D5456E /* CompatibilityConf.swift */; };
 		5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5009CF3224C0B8EF00F674FF /* Preferences.swift */; };
 		500E34142615BF5E006A38DA /* IO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34122615BF5E006A38DA /* IO.cpp */; };
 		500E34172615C40D006A38DA /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34152615C40D006A38DA /* Parser.cpp */; };
@@ -296,6 +297,7 @@
 		50031B39206FB0FC00A1969B /* SnapshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
 		500333EB26202527008445E4 /* ExpansionPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExpansionPortTypes.h; sourceTree = "<group>"; };
 		500333EC2620269D008445E4 /* JoystickTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JoystickTypes.h; sourceTree = "<group>"; };
+		50033828266E47B400D5456E /* CompatibilityConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilityConf.swift; sourceTree = "<group>"; };
 		5009CF3224C0B8EF00F674FF /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		500C7C43259FC09B00F5CC1F /* Error.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Error.h; sourceTree = "<group>"; };
 		500E34122615BF5E006A38DA /* IO.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IO.cpp; sourceTree = "<group>"; };
@@ -1344,6 +1346,7 @@
 				506D54CB2032255A0026D8B4 /* RomDropView.swift */,
 				5002FA7A21C2650600DA4BBC /* HardwareConf.swift */,
 				505F8FE82582435E0066ACE4 /* PeripheralsConf.swift */,
+				50033828266E47B400D5456E /* CompatibilityConf.swift */,
 				505F8FE62580BD780066ACE4 /* AudioConf.swift */,
 				5002FA7C21C2651B00DA4BBC /* VideoConf.swift */,
 			);
@@ -1788,6 +1791,7 @@
 				504C436424AF29AC00E69CAE /* Expert.cpp in Sources */,
 				5015F36620B546A30024B4AA /* WaveformView.swift in Sources */,
 				504C436724AF29AC00E69CAE /* MagicDesk.cpp in Sources */,
+				50033829266E47B400D5456E /* CompatibilityConf.swift in Sources */,
 				50B485FD24FA1D3200844133 /* iCarousel.m in Sources */,
 				50BE4B7024E7FC21008F39C9 /* MTLDevice.swift in Sources */,
 				5055D5B726158ABC005D3DA6 /* Checksum.cpp in Sources */,

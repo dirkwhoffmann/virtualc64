@@ -25,6 +25,7 @@ enum_long(OPT)
     OPT_CONTRAST,
     OPT_SATURATION,
     OPT_GRAY_DOT_BUG,
+    OPT_VIC_POWER_SAVE,
     
     // Sprite debugger
     OPT_HIDE_SPRITES,
@@ -64,15 +65,14 @@ enum_long(OPT)
     OPT_SID_ADDRESS,
     OPT_SID_REVISION,
     OPT_SID_FILTER,
+    OPT_SID_POWER_SAVE,
+    OPT_SID_ENGINE,
+    OPT_SID_SAMPLING,
     OPT_AUDPAN,
     OPT_AUDVOL,
     OPT_AUDVOLL,
     OPT_AUDVOLR,
-    
-    // Sound synthesis
-    OPT_SID_ENGINE,
-    OPT_SID_SAMPLING,
-    
+        
     // Memory
     OPT_RAM_PATTERN,
     
@@ -112,6 +112,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_CONTRAST:            return "CONTRAST";
             case OPT_SATURATION:          return "SATURATION";
             case OPT_GRAY_DOT_BUG:        return "GRAY_DOT_BUG";
+            case OPT_VIC_POWER_SAVE:      return "VIC_POWER_SAVE";
             case OPT_HIDE_SPRITES:        return "HIDE_SPRITES";
             case OPT_CUT_LAYERS:          return "CUT_LAYERS";
             case OPT_CUT_OPACITY:         return "CUT_OPACITY";
@@ -142,14 +143,14 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_SID_ADDRESS:         return "SID_ADDRESS";
             case OPT_SID_REVISION:        return "SID_REVISION";
             case OPT_SID_FILTER:          return "SID_FILTER";
+            case OPT_SID_POWER_SAVE:      return "SID_POWER_SAVE";
+            case OPT_SID_ENGINE:          return "SID_ENGINE";
+            case OPT_SID_SAMPLING:        return "SID_SAMPLING";
             case OPT_AUDPAN:              return "AUDPAN";
             case OPT_AUDVOL:              return "AUDVOL";
             case OPT_AUDVOLL:             return "AUDVOLL";
             case OPT_AUDVOLR:             return "AUDVOLR";
-                
-            case OPT_SID_ENGINE:          return "SID_ENGINE";
-            case OPT_SID_SAMPLING:        return "SID_SAMPLING";
-                
+                                
             case OPT_RAM_PATTERN:         return "RAM_PATTERN";
                 
             case OPT_DRV_TYPE:            return "DRV_TYPE";

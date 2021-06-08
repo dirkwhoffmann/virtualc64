@@ -243,6 +243,18 @@ class Preferences {
     }
     
     //
+    // Devices
+    //
+        
+    func loadDevicesUserDefaults() {
+        
+    }
+    
+    func saveDevicesUserDefaults() {
+        
+    }
+
+    //
     // Keyboard
     //
     

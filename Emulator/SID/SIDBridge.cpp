@@ -49,6 +49,7 @@ SIDBridge::getDefaultConfig()
     SIDConfig defaults;
     
     defaults.revision = MOS_8580;
+    defaults.powerSave = true;
     defaults.enabled = 1;
     defaults.address[0] = 0xD400;
     defaults.address[1] = 0xD420;
@@ -95,6 +96,9 @@ SIDBridge::getConfigItem(Option option) const
             
         case OPT_SID_REVISION:
             return config.revision;
+            
+        case OPT_SID_POWER_SAVE:
+            return config.powerSave;
             
         case OPT_SID_FILTER:
             return config.filter;
@@ -158,6 +162,13 @@ SIDBridge::setConfigItem(Option option, i64 value)
             
             return true;
         }
+         
+        case OPT_SID_POWER_SAVE:
+            
+            suspend();
+            config.powerSave = value;
+            resume();
+            return true;
             
         case OPT_SID_REVISION:
             
@@ -431,6 +442,8 @@ SIDBridge::_dump(dump::Category category, std::ostream& os) const
         
         os << tab("Chip revision");
         os << SIDRevisionEnum::key(config.revision) << std::endl;
+        os << tab("Power save mode");
+        os << bol(config.powerSave, "during warp", "never") << std::endl;
         os << tab("Enable mask");
         os << dec(config.enabled) << std::endl;
         os << tab("1st extra SID");

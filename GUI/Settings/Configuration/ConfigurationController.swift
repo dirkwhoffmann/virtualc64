@@ -108,6 +108,22 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var perPowerButton: NSButton!
 
     //
+    // Compatibility
+    //
+    
+    // Power saving
+    @IBOutlet weak var comDrivePowerSave: NSButton!
+    @IBOutlet weak var comViciiPowerSave: NSButton!
+    @IBOutlet weak var comSidPowerSave: NSButton!
+
+    // Collision detection
+    @IBOutlet weak var comSsCollisions: NSButton!
+    @IBOutlet weak var comSbCollisions: NSButton!
+
+    // Buttons
+    @IBOutlet weak var comPowerButton: NSButton!
+
+    //
     // Audio preferences
     //
     
@@ -215,13 +231,14 @@ class ConfigurationController: DialogController {
     }
     
     func refresh() {
-        
+                
         if let id = prefTabView.selectedTabViewItem?.identifier as? String {
             
             switch id {
             case "Roms": refreshRomTab()
             case "Hardware": refreshHardwareTab()
             case "Peripherals": refreshPeripheralsTab()
+            case "Compatibility": refreshCompatibilityTab()
             case "Audio": refreshAudioTab()
             case "Video": refreshVideoTab()
             default: break

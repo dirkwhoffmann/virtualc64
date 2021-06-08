@@ -48,8 +48,6 @@ class Monitor: DialogController {
     
     // Sprites
     @IBOutlet weak var hideSprites: NSButton!
-    @IBOutlet weak var ssCollision: NSButton!
-    @IBOutlet weak var sbCollision: NSButton!
 
     override func awakeFromNib() {
         
@@ -110,8 +108,6 @@ class Monitor: DialogController {
         
         // Sprites
         hideSprites.state = config.vicHideSprites ? .on : .off
-        ssCollision.state = config.vicSSCollisions ? .on : .off
-        sbCollision.state = config.vicSBCollisions ? .on : .off
     }
         
     //
@@ -162,20 +158,6 @@ class Monitor: DialogController {
         
         track()
         config.vicHideSprites = sender.state == .on
-        refresh()
-    }
-
-    @IBAction func ssCollisionsAction(_ sender: NSButton!) {
-        
-        track()
-        config.vicSSCollisions = sender.state == .on
-        refresh()
-    }
-
-    @IBAction func sbCollisionsAction(_ sender: NSButton!) {
-        
-        track()
-        config.vicSBCollisions = sender.state == .on
         refresh()
     }
     

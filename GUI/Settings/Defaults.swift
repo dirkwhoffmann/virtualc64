@@ -60,11 +60,13 @@ extension UserDefaults {
         
         registerGeneralUserDefaults()
         registerControlsUserDefaults()
+        registerDevicesUserDefaults()
         registerKeyboardUserDefaults()
         
         registerRomUserDefaults()
         registerHardwareUserDefaults()
         registerPeripheralsUserDefaults()
+        registerCompatibilityUserDefaults()
         registerAudioUserDefaults()
         registerVideoUserDefaults()
     }
@@ -80,11 +82,13 @@ extension MyController {
         
         pref.loadGeneralUserDefaults()
         pref.loadControlsUserDefaults()
+        pref.loadDevicesUserDefaults()
         pref.loadKeyboardUserDefaults()
         
         config.loadRomUserDefaults()
         config.loadHardwareUserDefaults()
         config.loadPeripheralsUserDefaults()
+        config.loadCompatibilityUserDefaults()
         config.loadAudioUserDefaults()
         config.loadVideoUserDefaults()
         
@@ -424,6 +428,14 @@ extension Keys {
 
         static let schemes            = "VC64_DEV_Schemes"
     }
+}
+
+extension UserDefaults {
+    
+    static func registerDevicesUserDefaults() {
+
+    }
+
 }
 
 //
@@ -899,6 +911,104 @@ extension UserDefaults {
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }
+    }
+}
+
+//
+// User defaults (Compatibility)
+//
+
+extension Keys {
+    
+    struct Com {
+        
+        // Energy saving
+        static let drivePowerSave = "VAMIGA_COM_DrivePowerSave"
+        static let viciiPowerSave = "VAMIGA_COM_ViciiPowerSave"
+        static let sidPowerSave = "VAMIGA_COM_SidPowerSave"
+        
+        // Collision checking
+        static let ssCollisions = "VAMIGA_COM_SprSprCollisions"
+        static let sbCollisions = "VAMIGA_COM_SprBgCollisions"
+    }
+}
+
+struct CompatibilityDefaults {
+    
+    let drivePowerSave: Bool
+    let viciiPowerSave: Bool
+    let sidPowerSave: Bool
+
+    let ssCollisions: Bool
+    let sbCollisions: Bool
+
+    //
+    // Schemes
+    //
+    
+    static let std = CompatibilityDefaults(
+        
+        drivePowerSave: true,
+        viciiPowerSave: true,
+        sidPowerSave: true,
+        
+        ssCollisions: true,
+        sbCollisions: true
+    )
+    
+    static let accurate = CompatibilityDefaults(
+        
+        drivePowerSave: false,
+        viciiPowerSave: false,
+        sidPowerSave: false,
+        
+        ssCollisions: true,
+        sbCollisions: true
+    )
+    
+    static let accelerated = CompatibilityDefaults(
+        
+        drivePowerSave: true,
+        viciiPowerSave: true,
+        sidPowerSave: true,
+        
+        ssCollisions: false,
+        sbCollisions: false
+    )
+}
+
+extension UserDefaults {
+
+    static func registerCompatibilityUserDefaults() {
+
+        let defaults = CompatibilityDefaults.std
+        let dictionary: [String: Any] = [
+
+            Keys.Com.drivePowerSave: defaults.drivePowerSave,
+            Keys.Com.viciiPowerSave: defaults.viciiPowerSave,
+            Keys.Com.sidPowerSave: defaults.sidPowerSave,
+
+            Keys.Com.ssCollisions: defaults.ssCollisions,
+            Keys.Com.sbCollisions: defaults.sbCollisions
+        ]
+
+        let userDefaults = UserDefaults.standard
+        userDefaults.register(defaults: dictionary)
+    }
+
+    static func resetCompatibilityUserDefaults() {
+
+        let userDefaults = UserDefaults.standard
+
+        let keys = [ Keys.Com.drivePowerSave,
+                     Keys.Com.viciiPowerSave,
+                     Keys.Com.sidPowerSave,
+                     
+                     Keys.Com.ssCollisions,
+                     Keys.Com.sbCollisions
+        ]
+
+        for key in keys { userDefaults.removeObject(forKey: key) }
     }
 }
 

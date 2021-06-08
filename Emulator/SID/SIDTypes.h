@@ -120,6 +120,7 @@ typedef struct
 {
     // Hardware settings
     SIDRevision revision;
+    bool powerSave;
     u8 enabled;
     u16 address[4];
     bool filter;

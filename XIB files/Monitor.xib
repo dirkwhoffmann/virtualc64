@@ -38,8 +38,6 @@
                 <outlet property="cutSprite7" destination="lWA-47-gaL" id="bXI-jH-HkQ"/>
                 <outlet property="cutSprites" destination="qPb-Iq-Cx8" id="vxp-zn-j8f"/>
                 <outlet property="hideSprites" destination="m32-iU-eGV" id="GJu-fn-Giz"/>
-                <outlet property="sbCollision" destination="qq9-Mc-de6" id="9Aj-Ns-90S"/>
-                <outlet property="ssCollision" destination="CtT-1a-4cg" id="aqf-IM-0rj"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="Psk-RA-Owv"/>
             </connections>
         </customObject>
@@ -48,14 +46,14 @@
         <window title="Monitor" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="602" height="468"/>
+            <rect key="contentRect" x="196" y="240" width="602" height="418"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1536" height="935"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="602" height="468"/>
+                <rect key="frame" x="0.0" y="0.0" width="602" height="418"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box fixedFrame="YES" title="Bus" translatesAutoresizingMaskIntoConstraints="NO" id="ka1-cX-7gc">
-                        <rect key="frame" x="17" y="147" width="280" height="301"/>
+                        <rect key="frame" x="17" y="97" width="280" height="301"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="IOt-oi-MVe">
                             <rect key="frame" x="3" y="3" width="274" height="283"/>
@@ -216,7 +214,7 @@
                         </view>
                     </box>
                     <box fixedFrame="YES" title="Stencils" translatesAutoresizingMaskIntoConstraints="NO" id="5at-GI-DGR">
-                        <rect key="frame" x="305" y="147" width="280" height="301"/>
+                        <rect key="frame" x="305" y="97" width="280" height="301"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="UsX-0c-dLU">
                             <rect key="frame" x="3" y="3" width="274" height="283"/>
@@ -377,36 +375,14 @@
                         </view>
                     </box>
                     <box fixedFrame="YES" title="Sprites" translatesAutoresizingMaskIntoConstraints="NO" id="U8Z-mv-c15">
-                        <rect key="frame" x="17" y="16" width="280" height="127"/>
+                        <rect key="frame" x="17" y="16" width="280" height="77"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView" id="tSL-lH-542">
-                            <rect key="frame" x="3" y="3" width="274" height="109"/>
+                            <rect key="frame" x="3" y="3" width="274" height="59"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qq9-Mc-de6">
-                                    <rect key="frame" x="18" y="17" width="239" height="18"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Detect sprite-background collisions" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="uid-Lo-rol">
-                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="system"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="sbCollisionsAction:" target="-2" id="MH3-E9-Shc"/>
-                                    </connections>
-                                </button>
-                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CtT-1a-4cg">
-                                    <rect key="frame" x="18" y="45" width="201" height="18"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    <buttonCell key="cell" type="check" title="Detect sprite-sprite collisions" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="E7N-AT-DMY">
-                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="system"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <action selector="ssCollisionsAction:" target="-2" id="35l-r8-CTb"/>
-                                    </connections>
-                                </button>
                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m32-iU-eGV">
-                                    <rect key="frame" x="18" y="73" width="95" height="18"/>
+                                    <rect key="frame" x="18" y="23" width="95" height="18"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <buttonCell key="cell" type="check" title="Hide sprites" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="kG3-4Y-8OC">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -424,7 +400,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="C5l-tr-0f9"/>
             </connections>
-            <point key="canvasLocation" x="193" y="246"/>
+            <point key="canvasLocation" x="193" y="221"/>
         </window>
         <button verticalHuggingPriority="750" id="T1a-rf-wnL">
             <rect key="frame" x="0.0" y="0.0" width="140" height="18"/>

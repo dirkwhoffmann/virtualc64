@@ -151,6 +151,7 @@ C64::getConfigItem(Option option) const
     switch (option) {
             
         case OPT_VIC_REVISION:
+        case OPT_VIC_POWER_SAVE:
         case OPT_GRAY_DOT_BUG:
         case OPT_GLUE_LOGIC:
         case OPT_HIDE_SPRITES:
@@ -179,6 +180,7 @@ C64::getConfigItem(Option option) const
             return oscillator.getConfigItem(option);
             
         case OPT_SID_REVISION:
+        case OPT_SID_POWER_SAVE:
         case OPT_SID_FILTER:
         case OPT_SID_ENGINE:
         case OPT_SID_SAMPLING:
@@ -214,9 +216,9 @@ C64::getConfigItem(Option option, long id) const
             return sid.getConfigItem(option, id);
 
         case OPT_DRV_TYPE:
+        case OPT_DRV_POWER_SAVE:
         case OPT_DRV_CONNECT:
         case OPT_DRV_POWER_SWITCH:
-        case OPT_DRV_POWER_SAVE:
         case OPT_DRV_EJECT_DELAY:
         case OPT_DRV_SWAP_DELAY:
         case OPT_DRV_INSERT_DELAY:

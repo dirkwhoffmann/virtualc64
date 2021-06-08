@@ -38,6 +38,12 @@
                 <outlet property="charSubsubtitle" destination="pJq-X4-x2y" id="dnt-HT-phH"/>
                 <outlet property="charSubtitle" destination="Pea-uJ-4G8" id="raO-PO-Cfy"/>
                 <outlet property="charTitle" destination="m0b-3R-CyB" id="sy5-3M-2iP"/>
+                <outlet property="comDrivePowerSave" destination="r7b-YR-bii" id="a19-hq-nxo"/>
+                <outlet property="comPowerButton" destination="MaC-Tv-e4H" id="r0L-EC-VjG"/>
+                <outlet property="comSbCollisions" destination="bnG-rw-e1M" id="HG9-2I-s0C"/>
+                <outlet property="comSidPowerSave" destination="xx0-43-RDp" id="xyp-xA-a8H"/>
+                <outlet property="comSsCollisions" destination="qgS-di-RAL" id="dez-ar-RTx"/>
+                <outlet property="comViciiPowerSave" destination="WZL-K6-LDf" id="cqp-gt-dO7"/>
                 <outlet property="hwCiaModelPopup" destination="MVI-Fh-OO6" id="coA-3a-xgT"/>
                 <outlet property="hwCiaTimerBBug" destination="4rD-qd-qGj" id="6Nf-wz-IRb"/>
                 <outlet property="hwGlueLogicPopup" destination="eOu-BN-YUt" id="H5c-VY-ROb"/>
@@ -1217,6 +1223,194 @@ Gw
                                                 <action selector="perDriveHibernateAction:" target="-2" id="0Rl-Xj-lSc"/>
                                             </connections>
                                         </button>
+                                    </subviews>
+                                </view>
+                            </tabViewItem>
+                            <tabViewItem label="Compatibility" identifier="Compatibility" id="vMQ-2m-gAx" userLabel="Compatibility">
+                                <view key="view" id="zGW-6j-MnU">
+                                    <rect key="frame" x="10" y="33" width="600" height="424"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wi9-PE-Z2B">
+                                            <rect key="frame" x="515" y="10" width="82" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="cK0-Hc-PNu">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                                <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="okAction:" target="-2" id="3kT-CX-9q1"/>
+                                            </connections>
+                                        </button>
+                                        <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="R8f-Cu-2b9">
+                                            <rect key="frame" x="9" y="56" width="582" height="5"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        </box>
+                                        <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wLv-q7-KYa" userLabel="System">
+                                            <rect key="frame" x="6" y="14" width="128" height="26"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <popUpButtonCell key="cell" type="push" title="Revert to..." bezelStyle="rounded" imagePosition="right" alignment="left" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="5t8-2o-gI0" userLabel="System">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="menu"/>
+                                                <menu key="menu" title="Restore" id="Vwj-gN-3xu">
+                                                    <items>
+                                                        <menuItem title="Revert to..." hidden="YES" id="pYQ-YE-dyO">
+                                                            <attributedString key="attributedTitle"/>
+                                                        </menuItem>
+                                                        <menuItem title="Standard settings" id="koO-th-3bw">
+                                                            <attributedString key="attributedTitle"/>
+                                                        </menuItem>
+                                                        <menuItem title="High Accuracy settings" tag="1" id="585-UW-gnv">
+                                                            <attributedString key="attributedTitle"/>
+                                                        </menuItem>
+                                                        <menuItem title="High Performance settings" tag="2" id="DEa-F0-qQc">
+                                                            <attributedString key="attributedTitle"/>
+                                                        </menuItem>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="comPresetAction:" target="-2" id="OtB-TE-25o"/>
+                                            </connections>
+                                        </popUpButton>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xUf-7n-zRg">
+                                            <rect key="frame" x="140" y="10" width="128" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Use as Default" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nUL-A6-TDl">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                                <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="comDefaultsAction:" target="-2" id="iSe-ko-k3H"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MaC-Tv-e4H">
+                                            <rect key="frame" x="437" y="10" width="78" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                            <buttonCell key="cell" type="push" title="Power" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jjV-KN-7ZV">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                                <connections>
+                                                    <action selector="powerAction:" target="-2" id="WbJ-Jc-xUz"/>
+                                                </connections>
+                                            </buttonCell>
+                                        </button>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0dC-4b-gcc">
+                                            <rect key="frame" x="7" y="390" width="114" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Power saving" id="ViR-lG-nzB">
+                                                <font key="font" metaFont="systemBold"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qnY-Rc-kUU">
+                                            <rect key="frame" x="7" y="162" width="114" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Sprites" id="QhC-cs-oyb">
+                                                <font key="font" metaFont="systemBold"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r7b-YR-bii">
+                                            <rect key="frame" x="78" y="361" width="238" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Put drives to sleep when not in use" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ENc-Xp-SX3">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="comDrivePowerSaveAction:" target="-2" id="r8L-gM-OwA"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qgS-di-RAL">
+                                            <rect key="frame" x="78" y="137" width="208" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Detect Sprite-Sprite collisions" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="5QX-T5-tXj">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="comSsCollisionsAction:" target="-2" id="qgk-fZ-ldm"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bnG-rw-e1M">
+                                            <rect key="frame" x="78" y="110" width="245" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Detect Sprite-Background collisions" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="NJp-nu-9Jd">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="comSbCollisionsAction:" target="-2" id="exI-gv-cre"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WZL-K6-LDf">
+                                            <rect key="frame" x="79" y="297" width="284" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Run with reduced frame rate in warp mode" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="YgZ-jT-3Uo">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="comViciiPowerSaveAction:" target="-2" id="XtN-Yq-b2I"/>
+                                            </connections>
+                                        </button>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CCh-5S-q44">
+                                            <rect key="frame" x="99" y="322" width="493" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" selectable="YES" title="Disable this option in combination with Fast Loaders or programs that run directly in the memory of the floppy drive. " id="Ovz-Fg-Q5B">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vG2-A5-LN9">
+                                            <rect key="frame" x="99" y="258" width="493" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" selectable="YES" title="Disable this option in combination with programs that rely on exact collision register values while warp mode is active." id="ACJ-iD-7Os">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xx0-43-RDp">
+                                            <rect key="frame" x="79" y="233" width="315" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Do not synthesize sound samples in warp mode" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Bxr-vl-hDe">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="comSidPowerSaveAction:" target="-2" id="RyE-Hr-uEe"/>
+                                            </connections>
+                                        </button>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rQR-Mu-cl8">
+                                            <rect key="frame" x="99" y="194" width="493" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" selectable="YES" title="Disable this option to avoid the unlikely, but possible case of corrupted sound being played after leaving warp mode." id="VXi-Jt-1NA">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rUI-EK-nKo">
+                                            <rect key="frame" x="21" y="333" width="48" height="48"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="energy" id="jDO-jh-MyF"/>
+                                        </imageView>
+                                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gj7-QL-kZq">
+                                            <rect key="frame" x="17" y="111" width="50" height="43"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="sprite" id="akK-kK-bg0"/>
+                                        </imageView>
                                     </subviews>
                                 </view>
                             </tabViewItem>
@@ -2615,6 +2809,7 @@ Gw
         <image name="devKeyset2Template" width="20" height="20"/>
         <image name="devMouseTemplate" width="20" height="20"/>
         <image name="devNoneTemplate" width="20" height="20"/>
+        <image name="energy" width="128" height="128"/>
         <image name="keyset1Template" width="24" height="24"/>
         <image name="keyset2Template" width="24" height="24"/>
         <image name="lockIcon" width="121" height="171"/>
@@ -2624,5 +2819,6 @@ Gw
         <image name="pref_sid" width="514" height="514"/>
         <image name="pref_vicii_pal" width="514" height="516"/>
         <image name="rom_missing" width="129" height="157"/>
+        <image name="sprite" width="1005" height="665"/>
     </resources>
 </document>

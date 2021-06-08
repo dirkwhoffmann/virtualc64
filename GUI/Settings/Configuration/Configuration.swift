@@ -42,84 +42,7 @@ class Configuration {
         get { return c64.getConfig(.HIDE_SPRITES) != 0 }
         set { c64.configure(.HIDE_SPRITES, enable: newValue) }
     }
-    
-    /*
-    var dmaDebug: Bool {
-        get { return c64.getConfig(.DMA_DEBUG) != 0 }
-        set { c64.configure(.DMA_DEBUG, enable: newValue) }
-    }
-    
-    var dmaChannelR: Bool {
-        get { return c64.getConfig(.DMA_CHANNEL_R) != 0 }
-        set { c64.configure(.DMA_CHANNEL_R, enable: newValue) }
-    }
-    
-    var dmaChannelI: Bool {
-        get { return c64.getConfig(.DMA_CHANNEL_I) != 0 }
-        set { c64.configure(.DMA_CHANNEL_I, enable: newValue) }
-    }
-    
-    var dmaChannelC: Bool {
-        get { return c64.getConfig(.DMA_CHANNEL_C) != 0 }
-        set { c64.configure(.DMA_CHANNEL_C, enable: newValue) }
-    }
-    
-    var dmaChannelG: Bool {
-        get { return c64.getConfig(.DMA_CHANNEL_G) != 0 }
-        set { c64.configure(.DMA_CHANNEL_G, enable: newValue) }
-    }
-    
-    var dmaChannelP: Bool {
-        get { return c64.getConfig(.DMA_CHANNEL_P) != 0 }
-        set { c64.configure(.DMA_CHANNEL_P, enable: newValue) }
-    }
-    
-    var dmaChannelS: Bool {
-        get { return c64.getConfig(.DMA_CHANNEL_S) != 0 }
-        set { c64.configure(.DMA_CHANNEL_S, enable: newValue) }
-    }
-    
-    var dmaColorR: NSColor {
-        get { return NSColor.init(abgr: UInt32(c64.getConfig(.DMA_COLOR_R))) }
-        set { c64.configure(.DMA_COLOR_R, value: newValue.gpuColor) }
-    }
-    
-    var dmaColorI: NSColor {
-        get { return NSColor.init(abgr: UInt32(c64.getConfig(.DMA_COLOR_I))) }
-        set { c64.configure(.DMA_COLOR_I, value: newValue.gpuColor) }
-    }
-    
-    var dmaColorC: NSColor {
-        get { return NSColor.init(abgr: UInt32(c64.getConfig(.DMA_COLOR_C))) }
-        set { c64.configure(.DMA_COLOR_C, value: newValue.gpuColor) }
-    }
-    
-    var dmaColorG: NSColor {
-        get { return NSColor.init(abgr: UInt32(c64.getConfig(.DMA_COLOR_G))) }
-        set { c64.configure(.DMA_COLOR_G, value: newValue.gpuColor) }
-    }
-    
-    var dmaColorP: NSColor {
-        get { return NSColor.init(abgr: UInt32(c64.getConfig(.DMA_COLOR_P))) }
-        set { c64.configure(.DMA_COLOR_P, value: newValue.gpuColor) }
-    }
-    
-    var dmaColorS: NSColor {
-        get { return NSColor.init(abgr: UInt32(c64.getConfig(.DMA_COLOR_S))) }
-        set { c64.configure(.DMA_COLOR_S, value: newValue.gpuColor) }
-    }
-    
-    var dmaDisplayMode: Int {
-        get { return c64.getConfig(.DMA_DISPLAY_MODE) }
-        set { c64.configure(.DMA_DISPLAY_MODE, value: newValue) }
-    }
-    
-    var dmaOpacity: Int {
-        get { return c64.getConfig(.DMA_OPACITY) }
-        set { c64.configure(.DMA_OPACITY, value: newValue) }
-    }
-    */
-    
+        
     var vicCutLayers: Int {
         get { return c64.getConfig(.CUT_LAYERS) }
         set { c64.configure(.CUT_LAYERS, value: newValue) }
@@ -129,17 +52,7 @@ class Configuration {
         get { return c64.getConfig(.CUT_OPACITY) }
         set { c64.configure(.CUT_OPACITY, value: newValue) }
     }
-    
-    var vicSSCollisions: Bool {
-        get { return c64.getConfig(.SS_COLLISIONS) != 0 }
-        set { c64.configure(.SS_COLLISIONS, enable: newValue) }
-    }
-    
-    var vicSBCollisions: Bool {
-        get { return c64.getConfig(.SB_COLLISIONS) != 0 }
-        set { c64.configure(.SB_COLLISIONS, enable: newValue) }
-    }
-    
+        
     var ciaRevision: Int {
         get { return c64.getConfig(.CIA_REVISION) }
         set { c64.configure(.CIA_REVISION, value: newValue) }
@@ -235,6 +148,7 @@ class Configuration {
             parent.toolbar.validateVisibleItems()
         }
     }
+    
     var gameDevice2 = PeripheralsDefaults.std.gameDevice2 {
         didSet {
             
@@ -256,6 +170,35 @@ class Configuration {
         set { c64.configure(.MOUSE_MODEL, value: newValue) }
     }
 
+    //
+    // Compatibility
+    //
+
+    var drivePowerSave: Bool {
+        get { return c64.getConfig(.DRV_POWER_SAVE, id: 8) != 0 }
+        set { c64.configure(.DRV_POWER_SAVE, enable: newValue) }
+    }
+
+    var viciiPowerSave: Bool {
+        get { return c64.getConfig(.VIC_POWER_SAVE) != 0 }
+        set { c64.configure(.VIC_POWER_SAVE, enable: newValue) }
+    }
+
+    var sidPowerSave: Bool {
+        get { return c64.getConfig(.SID_POWER_SAVE) != 0 }
+        set { c64.configure(.SID_POWER_SAVE, enable: newValue) }
+    }
+
+    var ssCollisions: Bool {
+        get { return c64.getConfig(.SS_COLLISIONS) != 0 }
+        set { c64.configure(.SS_COLLISIONS, enable: newValue) }
+    }
+
+    var sbCollisions: Bool {
+        get { return c64.getConfig(.SB_COLLISIONS) != 0 }
+        set { c64.configure(.SB_COLLISIONS, enable: newValue) }
+    }
+        
     //
     // Audio
     //
@@ -646,9 +589,7 @@ class Configuration {
     }
     
     func savePeripheralsUserDefaults() {
-        
-        track()
-        
+                
         let defaults = UserDefaults.standard
         
         defaults.set(drive8Connected, forKey: Keys.Per.drive8Connect)
@@ -664,6 +605,44 @@ class Configuration {
         defaults.set(gameDevice2, forKey: Keys.Per.gameDevice2)
         
         defaults.set(mouseModel, forKey: Keys.Per.mouseModel)
+    }
+    
+    //
+    // Compatibility
+    //
+    
+    func loadCompatibilityDefaults(_ defaults: CompatibilityDefaults) {
+                 
+        drivePowerSave = defaults.drivePowerSave
+        viciiPowerSave = defaults.viciiPowerSave
+        sidPowerSave = defaults.sidPowerSave
+        
+        ssCollisions = defaults.ssCollisions
+        sbCollisions = defaults.sbCollisions
+     }
+    
+    func loadCompatibilityUserDefaults() {
+        
+        let defaults = UserDefaults.standard
+
+        drivePowerSave = defaults.bool(forKey: Keys.Com.drivePowerSave)
+        viciiPowerSave = defaults.bool(forKey: Keys.Com.viciiPowerSave)
+        sidPowerSave = defaults.bool(forKey: Keys.Com.sidPowerSave)
+        
+        ssCollisions = defaults.bool(forKey: Keys.Com.ssCollisions)
+        sbCollisions = defaults.bool(forKey: Keys.Com.sbCollisions)
+     }
+    
+    func saveCompatibilityUserDefaults() {
+                
+        let defaults = UserDefaults.standard
+        
+        defaults.set(drivePowerSave, forKey: Keys.Com.drivePowerSave)
+        defaults.set(viciiPowerSave, forKey: Keys.Com.viciiPowerSave)
+        defaults.set(sidPowerSave, forKey: Keys.Com.sidPowerSave)
+
+        defaults.set(ssCollisions, forKey: Keys.Com.ssCollisions)
+        defaults.set(sbCollisions, forKey: Keys.Com.sbCollisions)
     }
     
     //

@@ -122,6 +122,7 @@ VICII::getDefaultConfig()
     VICIIConfig defaults;
     
     defaults.revision = VICII_PAL_8565;
+    defaults.powerSave = true;
     defaults.grayDotBug = true;
     defaults.glueLogic = GLUE_LOGIC_DISCRETE;
 
@@ -144,6 +145,7 @@ VICII::resetConfig()
     VICIIConfig defaults = getDefaultConfig();
     
     setConfigItem(OPT_VIC_REVISION, defaults.revision);
+    setConfigItem(OPT_VIC_POWER_SAVE, defaults.powerSave);
     setConfigItem(OPT_GRAY_DOT_BUG, defaults.grayDotBug);
     setConfigItem(OPT_GLUE_LOGIC, defaults.glueLogic);
 
@@ -164,6 +166,7 @@ VICII::getConfigItem(Option option) const
     switch (option) {
             
         case OPT_VIC_REVISION:      return config.revision;
+        case OPT_VIC_POWER_SAVE:    return config.powerSave;
         case OPT_PALETTE:           return config.palette;
         case OPT_BRIGHTNESS:        return config.brightness;
         case OPT_CONTRAST:          return config.contrast;
@@ -194,6 +197,11 @@ VICII::setConfigItem(Option option, i64 value)
             suspend();
             setRevision((VICIIRevision)value);
             resume();
+            return true;
+
+        case OPT_VIC_POWER_SAVE:
+            
+            config.powerSave = value;
             return true;
             
         case OPT_PALETTE:
@@ -376,6 +384,8 @@ VICII::_dump(dump::Category category, std::ostream& os) const
 
         os << tab("Chip model");
         os << VICIIRevisionEnum::key(config.revision) << std::endl;
+        os << tab("Power save mode");
+        os << bol(config.powerSave, "during warp", "never") << std::endl;
         os << tab("Gray dot bug");
         os << bol(config.grayDotBug) << std::endl;
         os << tab("PAL");
@@ -388,6 +398,10 @@ VICII::_dump(dump::Category category, std::ostream& os) const
         os << bol(is856x()) << std::endl;
         os << tab("Glue logic");
         os << GlueLogicEnum::key(config.glueLogic) << std::endl;
+        os << tab("Check SS collisions");
+        os << bol(config.checkSSCollisions) << std::endl;
+        os << tab("Check SB collisions");
+        os << bol(config.checkSBCollisions) << std::endl;
     }
 
     if (category & dump::Registers) {
