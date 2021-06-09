@@ -42,7 +42,7 @@ VICII::cycle1()
     }
     
     // Phi1.2 Draw sprites (invisible area)
-    drawSpritesSlowPath();
+    if (!headless) drawSpritesSlowPath();
 
     // Phi1.3 Fetch
     PAL  { sFinalize(2); pAccess <flags> (3); }
@@ -640,7 +640,8 @@ VICII::cycle59()
     DRAW59
     PAL  { assert(isFirstDMAcycle); assert(!isSecondDMAcycle); }
     NTSC { assert(!isFirstDMAcycle); assert(!isSecondDMAcycle);}
-    if (spriteDisplayDelayed || spriteDisplay || isSecondDMAcycle) drawSpritesSlowPath();
+    DRAW_SPRITES59
+    // if (spriteDisplayDelayed || spriteDisplay || isSecondDMAcycle) drawSpritesSlowPath();
     
     // Phi1.3 Fetch
     PAL  { sAccess2 <flags,0> (); }

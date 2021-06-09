@@ -1024,14 +1024,25 @@ VICII::beginFrame()
      *  and is irrelevant." [C.B.]
      */
     vcBase = 0;
+    
+    // Clear statistics
+    clearStats();
+    
+    // Check if this frame should be executed in headless mode
+    headless = c64.inWarpMode() && config.powerSave && (c64.frame % 8) != 0;
 }
 
 void
 VICII::endFrame()
 {
-    bool debug = dmaDebugger.config.dmaDebug;
-        
+    // Only proceed if the current frame hasn't been executed in headless mode
+    if (headless) {
+        trace(true, "HEADLESS\n");
+        return;
+    }
+    
     // Run the DMA debugger if enabled
+    bool debug = dmaDebugger.config.dmaDebug;
     if (debug) dmaDebugger.computeOverlay(emuTexture, dmaTexture);
 
     // Switch texture buffers
@@ -1050,9 +1061,6 @@ VICII::endFrame()
         dmaTexture = dmaTexture1;
         if (debug) { resetEmuTexture(1); resetDmaTexture(1); }
     }
-    
-    // Clear statistics
-    clearStats();
 }
 
 void

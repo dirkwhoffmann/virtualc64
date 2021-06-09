@@ -45,6 +45,9 @@ public:
     // void (VICII::*vicfunc[66])(void);
     ViciiFunc vicfunc[66];
 
+    // Indicates if VICII is run in headless mode (skipping pixel synthesis)
+    bool headless = false;
+    
     
     //
     // I/O space (CPU accessible)
@@ -651,6 +654,7 @@ private:
             
             worker
             
+            << headless
             >> reg.current
             >> reg.delayed
             << rasterIrqLine
@@ -1211,20 +1215,26 @@ public:
     void cycle64ntsc();
     void cycle65ntsc();
 	
-#define NOHEADLESS if (true)
-//     #define NOHEADLESS if (!c64.inWarpMode() || (c64.frame % 8) == 0)
-
     #define DRAW_SPRITES_DMA1 \
-        assert(isFirstDMAcycle); assert(!isSecondDMAcycle); drawSpritesSlowPath();
+        assert(isFirstDMAcycle); assert(!isSecondDMAcycle); \
+        if (!headless) { drawSpritesSlowPath(); }
+
     #define DRAW_SPRITES_DMA2 \
-        assert(!isFirstDMAcycle); assert(isSecondDMAcycle); drawSpritesSlowPath();
+        assert(!isFirstDMAcycle); assert(isSecondDMAcycle); \
+        if (!headless) { drawSpritesSlowPath(); }
+
     #define DRAW_SPRITES \
-        assert(!isFirstDMAcycle && !isSecondDMAcycle); if (spriteDisplay) drawSprites();
-    #define DRAW_SPRITES59 if (spriteDisplayDelayed || spriteDisplay || isSecondDMAcycle) drawSpritesSlowPath();
-    #define DRAW NOHEADLESS { if (!vblank) { drawCanvas(); drawBorder(); }; }
-    #define DRAW17 if (!vblank) { drawCanvas(); drawBorder17(); };
-    #define DRAW55 if (!vblank) { drawCanvas(); drawBorder55(); };
-    #define DRAW59 if (!vblank) { drawCanvas(); drawBorder(); };
+        assert(!isFirstDMAcycle && !isSecondDMAcycle); \
+        if (spriteDisplay && !headless) { drawSprites(); }
+    
+    #define DRAW_SPRITES59 \
+        if ((spriteDisplayDelayed || spriteDisplay || isSecondDMAcycle) && !headless) \
+            { drawSpritesSlowPath(); }
+    
+    #define DRAW   if (!vblank && !headless) { drawCanvas(); drawBorder(); };
+    #define DRAW17 if (!vblank && !headless) { drawCanvas(); drawBorder17(); };
+    #define DRAW55 if (!vblank && !headless) { drawCanvas(); drawBorder55(); };
+    #define DRAW59 if (!vblank && !headless) { drawCanvas(); drawBorder(); };
             
     #define END_CYCLE \
     dataBusPhi2 = 0xFF; \
