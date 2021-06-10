@@ -726,6 +726,11 @@ SIDBridge::executeUntil(Cycle targetCycle)
 {
     assert(targetCycle >= cycles);
     
+    if (volL.current == 0 && volR.current == 0 && config.powerSave) {
+        cycles = targetCycle;
+        return;
+    }
+    
     isize missingCycles  = targetCycle - cycles;
     isize consumedCycles = executeCycles(missingCycles);
 
@@ -747,13 +752,7 @@ SIDBridge::executeCycles(isize numCycles)
         numCycles = 1;
         debug(SID_EXEC, "Running SIDs for an extra cycle\n");
     }
-
-    // Check for a buffer underflow
-    if (signalUnderflow) {
-        signalUnderflow = false;
-        handleBufferUnderflow();
-    }
-
+    
     switch (config.engine) {
             
         case SIDENGINE_FASTSID:

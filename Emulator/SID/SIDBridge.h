@@ -103,7 +103,7 @@ public:
     u64 bufferOverflows;
     
     // Set to true to signal a buffer exception
-    bool signalUnderflow = false;
+    // bool signalUnderflow = false;
 
     
     //

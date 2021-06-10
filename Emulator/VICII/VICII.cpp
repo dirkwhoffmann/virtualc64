@@ -1036,10 +1036,7 @@ void
 VICII::endFrame()
 {
     // Only proceed if the current frame hasn't been executed in headless mode
-    if (headless) {
-        trace(true, "HEADLESS\n");
-        return;
-    }
+    if (headless) return;
     
     // Run the DMA debugger if enabled
     bool debug = dmaDebugger.config.dmaDebug;
