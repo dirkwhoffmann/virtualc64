@@ -44,11 +44,6 @@
     return (HardwareComponent *)obj;
 }
 
--(void)dump
-{
-    [self hwc]->dump();
-}
-
 @end
 
 //
@@ -1087,11 +1082,6 @@
     return [self fs]->exportDirectory([path fileSystemRepresentation], err);
 }
 
-- (void) dump
-{
-    [self fs]->dump();
-}
-
 - (void) info
 {
     [self fs]->info();
@@ -1175,11 +1165,6 @@
 - (DriveConfig)getConfig
 {
     return [self drive]->getConfig();
-}
-
-- (void)dump
-{
-    [self drive]->dump();
 }
 
 - (BOOL)isConnected

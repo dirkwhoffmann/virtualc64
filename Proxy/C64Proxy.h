@@ -81,13 +81,11 @@
     // Reference to the wrapped C++ object
     @public void *obj;
 }
-
 @end
 
-@interface HardwareComponentProxy : Proxy { }
-
-- (void)dump;
-
+@interface HardwareComponentProxy : Proxy {
+    
+}
 @end
 
 //
