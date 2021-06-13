@@ -202,6 +202,8 @@ Drive::setConfigItem(Option option, long id, i64 value)
         case OPT_DRV_POWER_SAVE:
         {
             config.powerSave = value;
+            wakeUp();
+            return true;
         }
         case OPT_DRV_EJECT_DELAY:
         {
