@@ -288,6 +288,10 @@ Drive::_dump(dump::Category category, std::ostream& os) const
     
     if (category & dump::State) {
          
+        os << tab("Idle");
+        os << bol(isIdle()) << std::endl;
+        os << tab("Motor");
+        os << bol(isRotating(), "on", "off") << std::endl;
         os << tab("Has disk");
         os << bol(hasDisk()) << std::endl;
         os << tab("Bit ready timer");

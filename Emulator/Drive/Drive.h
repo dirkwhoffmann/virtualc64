@@ -336,7 +336,7 @@ public:
     void wakeUp();
     
     // Checks whether the drive has been idle for a while
-    bool isIdle() { return idleCounter >= powerSafeThreshold; }
+    bool isIdle() const { return idleCounter >= powerSafeThreshold; }
     
     // Checks whether the drive is connected and switched on
     bool connectedAndOn() { return config.connected && config.switchedOn; }
