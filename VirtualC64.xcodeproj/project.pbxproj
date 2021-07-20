@@ -300,6 +300,9 @@
 		500333EC2620269D008445E4 /* JoystickTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JoystickTypes.h; sourceTree = "<group>"; };
 		50033828266E47B400D5456E /* CompatibilityConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilityConf.swift; sourceTree = "<group>"; };
 		5003382A266F7F3C00D5456E /* VICII_table.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_table.cpp; sourceTree = "<group>"; };
+		5007E1E026A70006000E7344 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5007E1E226A70030000E7344 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5007E1E426A70042000E7344 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		5009CF3224C0B8EF00F674FF /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		500C7C43259FC09B00F5CC1F /* Error.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Error.h; sourceTree = "<group>"; };
 		500E34122615BF5E006A38DA /* IO.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IO.cpp; sourceTree = "<group>"; };
@@ -843,6 +846,46 @@
 			path = Dialogs;
 			sourceTree = "<group>";
 		};
+		5007E1DD26A6FFDC000E7344 /* Joystick */ = {
+			isa = PBXGroup;
+			children = (
+				5007E1E026A70006000E7344 /* Makefile */,
+				500333EC2620269D008445E4 /* JoystickTypes.h */,
+				5085D89C25B848940043B15C /* Joystick.h */,
+				5085D89B25B848940043B15C /* Joystick.cpp */,
+			);
+			path = Joystick;
+			sourceTree = "<group>";
+		};
+		5007E1DE26A6FFE7000E7344 /* Mouse */ = {
+			isa = PBXGroup;
+			children = (
+				5007E1E226A70030000E7344 /* Makefile */,
+				50B1A61825A208D900201A2C /* MouseTypes.h */,
+				504C430124AF29AB00E69CAE /* Mouse.h */,
+				504C42FC24AF29AB00E69CAE /* Mouse.cpp */,
+				504C42FA24AF29AB00E69CAE /* Mouse1350.h */,
+				504C42FE24AF29AB00E69CAE /* Mouse1350.cpp */,
+				504C430224AF29AB00E69CAE /* Mouse1351.h */,
+				504C42FF24AF29AB00E69CAE /* Mouse1351.cpp */,
+				504C42FB24AF29AB00E69CAE /* NeosMouse.h */,
+				504C42FD24AF29AB00E69CAE /* NeosMouse.cpp */,
+			);
+			path = Mouse;
+			sourceTree = "<group>";
+		};
+		5007E1DF26A6FFF4000E7344 /* Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				5007E1E426A70042000E7344 /* Makefile */,
+				50AEEE7226305625001DED20 /* C64Key.h */,
+				50AEEE7126305625001DED20 /* C64Key.cpp */,
+				504C434224AF29AC00E69CAE /* Keyboard.h */,
+				504C434424AF29AC00E69CAE /* Keyboard.cpp */,
+			);
+			path = Keyboard;
+			sourceTree = "<group>";
+		};
 		500FAA62261376980062488E /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -942,8 +985,6 @@
 				504C430424AF29AB00E69CAE /* VICII */,
 				504C431124AF29AC00E69CAE /* SID */,
 				504C42E024AF29AB00E69CAE /* Memory */,
-				504C434724AF29AC00E69CAE /* Drive */,
-				504C430E24AF29AC00E69CAE /* Datasette */,
 				504C42F924AF29AB00E69CAE /* Peripherals */,
 				504C428E24AF29AB00E69CAE /* Cartridges */,
 				504C42C624AF29AB00E69CAE /* Files */,
@@ -1102,28 +1143,11 @@
 			isa = PBXGroup;
 			children = (
 				5078BEC2264D745400EDA161 /* Makefile */,
-				50B1A61625A203B100201A2C /* ControlPortTypes.h */,
-				504C434024AF29AC00E69CAE /* ControlPort.h */,
-				504C433E24AF29AC00E69CAE /* ControlPort.cpp */,
-				500333EB26202527008445E4 /* ExpansionPortTypes.h */,
-				504C434324AF29AC00E69CAE /* ExpansionPort.h */,
-				504C434524AF29AC00E69CAE /* ExpansionPort.cpp */,
-				500333EC2620269D008445E4 /* JoystickTypes.h */,
-				5085D89C25B848940043B15C /* Joystick.h */,
-				5085D89B25B848940043B15C /* Joystick.cpp */,
-				50B1A61825A208D900201A2C /* MouseTypes.h */,
-				504C430124AF29AB00E69CAE /* Mouse.h */,
-				504C42FC24AF29AB00E69CAE /* Mouse.cpp */,
-				504C42FA24AF29AB00E69CAE /* Mouse1350.h */,
-				504C42FE24AF29AB00E69CAE /* Mouse1350.cpp */,
-				504C430224AF29AB00E69CAE /* Mouse1351.h */,
-				504C42FF24AF29AB00E69CAE /* Mouse1351.cpp */,
-				504C42FB24AF29AB00E69CAE /* NeosMouse.h */,
-				504C42FD24AF29AB00E69CAE /* NeosMouse.cpp */,
-				50AEEE7226305625001DED20 /* C64Key.h */,
-				50AEEE7126305625001DED20 /* C64Key.cpp */,
-				504C434224AF29AC00E69CAE /* Keyboard.h */,
-				504C434424AF29AC00E69CAE /* Keyboard.cpp */,
+				504C434724AF29AC00E69CAE /* Drive */,
+				504C430E24AF29AC00E69CAE /* Datasette */,
+				5007E1DD26A6FFDC000E7344 /* Joystick */,
+				5007E1DE26A6FFE7000E7344 /* Mouse */,
+				5007E1DF26A6FFF4000E7344 /* Keyboard */,
 			);
 			path = Peripherals;
 			sourceTree = "<group>";
@@ -1434,6 +1458,12 @@
 				5078BEA5264D064600EDA161 /* OscillatorTypes.h */,
 				50ACF4DA256EB43B003B5690 /* Oscillator.h */,
 				50ACF4D9256EB43B003B5690 /* Oscillator.cpp */,
+				50B1A61625A203B100201A2C /* ControlPortTypes.h */,
+				504C434024AF29AC00E69CAE /* ControlPort.h */,
+				504C433E24AF29AC00E69CAE /* ControlPort.cpp */,
+				500333EB26202527008445E4 /* ExpansionPortTypes.h */,
+				504C434324AF29AC00E69CAE /* ExpansionPort.h */,
+				504C434524AF29AC00E69CAE /* ExpansionPort.cpp */,
 			);
 			path = LogicBoard;
 			sourceTree = "<group>";
