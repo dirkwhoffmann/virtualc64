@@ -16,6 +16,7 @@
 		50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50031B39206FB0FC00A1969B /* SnapshotController.swift */; };
 		50033829266E47B400D5456E /* CompatibilityConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50033828266E47B400D5456E /* CompatibilityConf.swift */; };
 		5003382B266F7F3C00D5456E /* VICII_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5003382A266F7F3C00D5456E /* VICII_table.cpp */; };
+		5007E1E826A70170000E7344 /* ParallelCable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5007E1E626A70170000E7344 /* ParallelCable.cpp */; };
 		5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5009CF3224C0B8EF00F674FF /* Preferences.swift */; };
 		500E34142615BF5E006A38DA /* IO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34122615BF5E006A38DA /* IO.cpp */; };
 		500E34172615C40D006A38DA /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34152615C40D006A38DA /* Parser.cpp */; };
@@ -303,6 +304,8 @@
 		5007E1E026A70006000E7344 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		5007E1E226A70030000E7344 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		5007E1E426A70042000E7344 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		5007E1E626A70170000E7344 /* ParallelCable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ParallelCable.cpp; sourceTree = "<group>"; };
+		5007E1E726A70170000E7344 /* ParallelCable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParallelCable.h; sourceTree = "<group>"; };
 		5009CF3224C0B8EF00F674FF /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		500C7C43259FC09B00F5CC1F /* Error.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Error.h; sourceTree = "<group>"; };
 		500E34122615BF5E006A38DA /* IO.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IO.cpp; sourceTree = "<group>"; };
@@ -1262,8 +1265,8 @@
 				504C434D24AF29AC00E69CAE /* Drive.cpp */,
 				504C434924AF29AC00E69CAE /* VIA.h */,
 				504C434A24AF29AC00E69CAE /* VIA.cpp */,
-				504C434624AF29AC00E69CAE /* IEC.h */,
-				504C433C24AF29AC00E69CAE /* IEC.cpp */,
+				5007E1E726A70170000E7344 /* ParallelCable.h */,
+				5007E1E626A70170000E7344 /* ParallelCable.cpp */,
 				504268AD24F12705006BB841 /* DiskTypes.h */,
 				504C434E24AF29AC00E69CAE /* Disk.h */,
 				504C434824AF29AC00E69CAE /* Disk.cpp */,
@@ -1464,6 +1467,8 @@
 				500333EB26202527008445E4 /* ExpansionPortTypes.h */,
 				504C434324AF29AC00E69CAE /* ExpansionPort.h */,
 				504C434524AF29AC00E69CAE /* ExpansionPort.cpp */,
+				504C434624AF29AC00E69CAE /* IEC.h */,
+				504C433C24AF29AC00E69CAE /* IEC.cpp */,
 			);
 			path = LogicBoard;
 			sourceTree = "<group>";
@@ -1716,6 +1721,7 @@
 				5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */,
 				50BE4B6E24E7FBE1008F39C9 /* Datatypes.swift in Sources */,
 				5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */,
+				5007E1E826A70170000E7344 /* ParallelCable.cpp in Sources */,
 				5002FA7B21C2650600DA4BBC /* HardwareConf.swift in Sources */,
 				50A22A252618723200C9FB1E /* Canvas.swift in Sources */,
 				504C435B24AF29AC00E69CAE /* StarDos.cpp in Sources */,
