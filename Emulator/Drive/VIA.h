@@ -91,7 +91,7 @@ class VIA6522 : public C64Component {
      */
     u8 pb;
     
-    /* Peripheral A control lines: "The Peripheral B control lines act as
+    /* Peripheral B control lines: "The Peripheral B control lines act as
      * interrupt inputs or as handshake outputs. As with CA1 and CA2, each line
      * controls an interrupt flag with a corresponding interrupt enable bit. In
      * addition, these lines act as a serial port under control of the Shift
