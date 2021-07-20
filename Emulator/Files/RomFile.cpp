@@ -246,7 +246,8 @@ RomFile::identifier(u64 fnv)
         case 0x7E0A124C3F192818: return KERNAL_DATEL_V32;
         case 0x211EAC45AB03A2CA: return KERNAL_EXOS_V3;
         case 0xF2A39FF166D338AE: return KERNAL_TURBO_TAPE;
-            
+        case 0x6E6190177D93D2BB: return KERNAL_SPEEDDOS_27;
+
         case 0x44BBA0EAC5898597: return VC1541_II_1987;
         case 0xA1D36980A17C8756: return VC1541_II_NEWTRONIC;
         case 0x361A1EC48F04F5A4: return VC1541_OLD_WHITE;
@@ -254,6 +255,7 @@ RomFile::identifier(u64 fnv)
         case 0x47CBA55F16FB3E09: return VC1541_II_RELOC_PATCH;
         case 0x8B2A523E29BED889: return VC1541_II_JIFFY;
         case 0xF7F4D931219DBB5D: return VC1541_II_JIFFY_V600;
+        case 0x92ADEBA1BCCD8D31: return VC1541_SPEEDDOS_27;
             
         default: return ROM_UNKNOWN;
     }
@@ -308,10 +310,12 @@ RomFile::isPatchedRom(RomIdentifier rev)
         case KERNAL_DATEL_V32:
         case KERNAL_EXOS_V3:
         case KERNAL_TURBO_TAPE:
+        case KERNAL_SPEEDDOS_27:
             
         case VC1541_II_RELOC_PATCH:
         case VC1541_II_JIFFY:
         case VC1541_II_JIFFY_V600:
+        case VC1541_SPEEDDOS_27:
             return true;
             
         default:
@@ -356,7 +360,8 @@ RomFile::title(RomIdentifier rev)
         case KERNAL_TURBO_ROM:
         case KERNAL_DATEL_V32:
         case KERNAL_EXOS_V3:
-        case KERNAL_TURBO_TAPE:       return "Patched Kernal Rom";
+        case KERNAL_TURBO_TAPE:
+        case KERNAL_SPEEDDOS_27:      return "Patched Kernal Rom";
             
         case VC1541_II_1987:        
         case VC1541_II_NEWTRONIC:
@@ -364,7 +369,8 @@ RomFile::title(RomIdentifier rev)
         case VC1541_1541C:            return "Floppy Drive Firmware";
         case VC1541_II_RELOC_PATCH:
         case VC1541_II_JIFFY:
-        case VC1541_II_JIFFY_V600:    return "Patched Drive Firmware";
+        case VC1541_II_JIFFY_V600:
+        case VC1541_SPEEDDOS_27:      return "Patched Drive Firmware";
             
         default:                      return "";
     }
@@ -406,6 +412,7 @@ RomFile::subTitle(RomIdentifier rev)
         case KERNAL_DATEL_V32:        return "Datel Rom";
         case KERNAL_EXOS_V3:          return "Exos Rom";
         case KERNAL_TURBO_TAPE:       return "Turbo Tape";
+        case KERNAL_SPEEDDOS_27:      return "SpeedDOS Clone 2.7 (TRIAD)";
             
         case VC1541_II_1987:          return "VC1541-II (1987)";
         case VC1541_II_NEWTRONIC:     return "VC1541-II (Newtronic motor)";
@@ -414,7 +421,8 @@ RomFile::subTitle(RomIdentifier rev)
         case VC1541_II_RELOC_PATCH:   return "Relocation Patch";
         case VC1541_II_JIFFY:         return "JiffyDOS Patch";
         case VC1541_II_JIFFY_V600:    return "JiffyDOS Patch";
-            
+        case VC1541_SPEEDDOS_27:      return "SpeedDOS Clone 2.7 (TRIAD)";
+
         default:                      return "";
     }
 }
