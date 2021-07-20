@@ -90,6 +90,9 @@ enum_long(OPT)
     OPT_DRV_INSERT_VOL,
     OPT_DRV_EJECT_VOL,
         
+    // Parallel cable
+    OPT_PAR_CABLE_TYPE,
+    
     OPT_COUNT
 };
 typedef OPT Option;
@@ -165,6 +168,8 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_DRV_STEP_VOL:        return "DRV_STEP_VOL";
             case OPT_DRV_INSERT_VOL:      return "DRV_INSERT_VOL";
             case OPT_DRV_EJECT_VOL:       return "DRV_EJECT_VOL";
+                
+            case OPT_PAR_CABLE_TYPE:      return "OPT_PAR_CABLE_TYPE";
                 
             case OPT_COUNT:               return "???";
         }

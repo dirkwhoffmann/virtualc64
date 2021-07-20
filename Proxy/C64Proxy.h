@@ -28,6 +28,7 @@
 #include "MouseTypes.h"
 #include "MsgQueueTypes.h"
 #include "OscillatorTypes.h"
+#include "ParCableTypes.h"
 #include "SIDTypes.h"
 #include "VICIITypes.h"
 
@@ -59,6 +60,7 @@
 @class MouseProxy;
 @class MyController;
 @class P00FileProxy;
+@class ParCableProxy;
 @class PRGFileProxy;
 @class RecorderProxy;
 @class RetroShellProxy;
@@ -110,6 +112,7 @@
     KeyboardProxy *keyboard;
     MemoryProxy *mem;
     MouseProxy *mouse;
+    ParCableProxy *parCable;
     RecorderProxy *recorder;
     RetroShellProxy *retroShell;
     SIDProxy *sid;
@@ -131,6 +134,7 @@
 @property (readonly, strong) IECProxy *iec;
 @property (readonly, strong) KeyboardProxy *keyboard;
 @property (readonly, strong) MemoryProxy *mem;
+@property (readonly, strong) ParCableProxy *parCable;
 @property (readonly, strong) RecorderProxy *recorder;
 @property (readonly, strong) RetroShellProxy *retroShell;
 @property (readonly, strong) SIDProxy *sid;
@@ -524,6 +528,15 @@
 //
 
 @interface VIAProxy : HardwareComponentProxy { }
+
+@end
+
+
+//
+// ParCable proxy
+//
+
+@interface ParCableProxy : HardwareComponentProxy { }
 
 @end
 

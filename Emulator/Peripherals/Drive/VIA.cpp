@@ -19,11 +19,11 @@
 VIA6522::VIA6522(C64 &ref, Drive &drvref) : C64Component(ref), drive(drvref)
 {
 }
-	
+
 void VIA6522::_reset(bool hard)
 {    
     RESET_SNAPSHOT_ITEMS(hard)
-
+    
     t1 = 0x01AA;
     t2 = 0x01AA;
     t1_latch_hi = 0x01;
@@ -42,7 +42,7 @@ void
 VIA6522::_dump(dump::Category category, std::ostream& os) const
 {
     using namespace util;
-
+    
     u16 t1Latch = LO_HI(t1_latch_lo, t1_latch_hi);
     u16 t2Latch = LO_HI(t2_latch_lo, 0);
     
@@ -121,7 +121,7 @@ VIA6522::execute()
         if (delay & VIASetCB2out1) { cb2 = true; }
         if (delay & VIAClearCB2out1) { cb2 = false; }
     }
-        
+    
     // Move trigger event flags left and feed in new bits
     delay = ((delay << 1) & VIAClearBits) | feed;
     
@@ -141,7 +141,7 @@ VIA6522::executeTimer1()
 {
     // Reload counter
     if (delay & VIAReloadA2) {
-         t1 = HI_LO(t1_latch_hi, t1_latch_lo);
+        t1 = HI_LO(t1_latch_hi, t1_latch_lo);
     }
     
     // Decrement counter
@@ -157,7 +157,7 @@ VIA6522::executeTimer1()
         
         // Check if an interrupt should be triggered
         if (!(feed & VIAPostOneShotA0)) {
-
+            
             // Set interrupt flag
             setInterruptFlag_T1();
             
@@ -182,7 +182,7 @@ VIA6522::executeTimer2()
     
     // Check for timer underflow
     if (t2 == 0 && (delay & VIACountB0)) {
-
+        
         // Check if an interrupt should be triggered
         if (!(delay & VIAPostOneShotB0)) {
             
@@ -205,11 +205,11 @@ VIA6522::peek(u16 addr)
 {
     u8 result;
     
-	assert (addr <= 0xF);
-		
+    assert (addr <= 0xF);
+    
     wakeUp();
     
-	switch(addr) {
+    switch(addr) {
             
         case 0x0: // ORB - Output register B
             result = peekORB();
@@ -220,13 +220,13 @@ VIA6522::peek(u16 addr)
             break;
             
         case 0x2: // DDRB - Data direction register B
-			result = ddrb;
+            result = ddrb;
             break;
-
+            
         case 0x3: // DDRA - Data direction register A
             result = ddra;
             break;
-			
+            
         case 0x4: // T1 low-order counter
             
             /* "8 BITS FROM T1 LOW-ORDER COUNTER TRANSFERRED TO MPU. IN
@@ -236,15 +236,15 @@ VIA6522::peek(u16 addr)
             clearInterruptFlag_T1();
             result = LO_BYTE(t1);
             break;
-
+            
         case 0x5: // T1 high-order counter
             
             // "8 BITS FROM T1 HIGH-ORDER COUNTER TRANSFERRED TO MPU2" [F. K.]
-
+            
             result = HI_BYTE(t1);
             break;
-          
-		case 0x6: // T1 low-order latch
+            
+        case 0x6: // T1 low-order latch
             
             // "8 BITS FROM T1 LOW ORDER-LATCHES TRANSFERRED TO MPU. UNLIKE REG 4 OPERATION,
             //  THIS DOES NOT CAUSE RESET OF T1 INTERRUPT FLAG" [F. K.]
@@ -252,12 +252,12 @@ VIA6522::peek(u16 addr)
             result = t1_latch_lo;
             break;
             
-		case 0x7: // T1 high-order latch
+        case 0x7: // T1 high-order latch
             
             // "8 BITS FROM T1 HIGH-ORDER LATCHES TRANSFERRED TO MPU
             result = t1_latch_hi;
             break;
-
+            
         case 0x8: // T2 low-order latch/counter
             
             // "8 BITS FROM T2 LOW-ORDER COUNTER TRANSFERRED TO MPU. T2 INTERRUPT FLAG IS RESET" [F. K.]
@@ -265,26 +265,26 @@ VIA6522::peek(u16 addr)
             clearInterruptFlag_T2();
             result = LO_BYTE(t2);
             break;
-			
-		case 0x9: // T2 high-order counter COUNTER TRANSFERRED TO MPU" [F. K.]
+            
+        case 0x9: // T2 high-order counter COUNTER TRANSFERRED TO MPU" [F. K.]
             
             // "8 BITS FROM T2 HIGH-ORDER
             result = HI_BYTE(t2);
             break;
             
         case 0xA: // Shift register
-
+            
             clearInterruptFlag_SR();
             result = sr;
             break;
-			
-		case 0xB: // Auxiliary control register
-
+            
+        case 0xB: // Auxiliary control register
+            
             result = acr;
             break;
-		
+            
         case 0xC: // Peripheral control register
-
+            
             result = pcr;
             break;
             
@@ -299,7 +299,7 @@ VIA6522::peek(u16 addr)
             
             result = ier | 0x80; // Bit 7 (set/clear bit) always shows up as 1
             break;
-
+            
         case 0xF: // ORA - Output register A (no handshake)
             result = peekORA(false);
             break;
@@ -308,11 +308,11 @@ VIA6522::peek(u16 addr)
             assert(false);
             result = 0;
     }
-
+    
     if (drive.cpu.getPC0() < 0xE000 && addr != 0) {
         trace(VIA_DEBUG, "peek(%x) = %x\n", addr, result);
     }
-
+    
     return result;
 }
 
@@ -320,7 +320,7 @@ u8
 VIA6522::peekORA(bool handshake)
 {
     clearInterruptFlag_CA1();
-
+    
     u8 CA2control = (pcr >> 1) & 0x07; // ----xxx-
     
     switch (CA2control) {
@@ -340,15 +340,15 @@ VIA6522::peekORA(bool handshake)
             break;
             
         case 4: // Handshake output mode
-                // Set CA2 output low on a read or write of the Peripheral A Output
-                // Register. Reset CA2 high with an active transition on CAl.
+            // Set CA2 output low on a read or write of the Peripheral A Output
+            // Register. Reset CA2 high with an active transition on CAl.
             clearInterruptFlag_CA2();
             if (handshake) delay |= VIAClearCA2out1;
             break;
             
         case 5: // Pulse output mode
-                // CA2 goes low for one cycle following a read or write of the
-                // Peripheral A Output Register.
+            // CA2 goes low for one cycle following a read or write of the
+            // Peripheral A Output Register.
             clearInterruptFlag_CA2();
             if (handshake) delay |= VIAClearCA2out1 | VIASetCA2out0;
             break;
@@ -394,11 +394,11 @@ VIA6522::peekORB()
             break;
             
         case 4: // Handshake output mode
-                // In contrast to CA2, CB2 is only affected on write accesses.
+            // In contrast to CA2, CB2 is only affected on write accesses.
             break;
             
         case 5: // Pulse output mode
-                // In contrast to CA2, CB2 is only affected on write accesses.
+            // In contrast to CA2, CB2 is only affected on write accesses.
             break;
             
         case 6: // Manual output mode (keep line low)
@@ -407,7 +407,7 @@ VIA6522::peekORB()
         case 7: // Manual output mode (keep line low)
             break;
     }
-
+    
     // Update processor port
     updatePB();
     
@@ -433,7 +433,7 @@ void VIA6522::poke(u16 addr, u8 value)
     if (drive.cpu.getPC0() < 0xE000 && addr != 0) {
         trace(VIA_DEBUG, "poke(%x, %x)\n", addr, value);
     }
-
+    
     assert (addr <= 0x0F);
     
     wakeUp();
@@ -444,7 +444,7 @@ void VIA6522::poke(u16 addr, u8 value)
             
             pokeORB(value);
             return;
-
+            
         case 0x1: // ORA - Output register A
             
             pokeORA(value, true);
@@ -641,7 +641,7 @@ void
 VIA6522::pokeORB(u8 value)
 {
     clearInterruptFlag_CB1();
-        
+    
     // Take care of side effects
     switch ((pcr >> 5) & 0x07) {
         case 0: // Input mode: Interrupt on negative edge
@@ -751,9 +751,9 @@ VIA6522::setCA1(bool value)
 {
     if (ca1 == value)
         return;
- 
+    
     ca1 = value;
-
+    
     // VIA2 sets the V flag on a negative transition
     if (!value && isVia2()) drive.cpu.setV(1);
     
@@ -906,7 +906,7 @@ VIA2::portBexternal() const
 {
     bool sync     = drive.getSync();
     bool barrier  = drive.getLightBarrier();
-
+    
     return (sync ? 0x80 : 0x00) | (barrier ? 0x00 : 0x10) | 0x6F;
 }
 
@@ -938,20 +938,20 @@ VIA2::updatePB()
     
     // Bits 1 and 0
     /*
-    if ((pb & 0x03) != (oldPb & 0x03)) {
-        
-        // A  decrease (00-11-10-01-00...) moves the head down
-        // An increase (00-01-10-11-00...) moves the head up
-        
-        if ((pb & 0x03) == ((oldPb + 1) & 0x03)) {
-            drive->moveHeadUp();
-        } else if ((pb & 0x03) == ((oldPb - 1) & 0x03)) {
-            drive->moveHeadDown();
-        } else {
-            warn("Unexpected stepper motor control sequence\n");
-        }
-    }
-    */
+     if ((pb & 0x03) != (oldPb & 0x03)) {
+     
+     // A  decrease (00-11-10-01-00...) moves the head down
+     // An increase (00-01-10-11-00...) moves the head up
+     
+     if ((pb & 0x03) == ((oldPb + 1) & 0x03)) {
+     drive->moveHeadUp();
+     } else if ((pb & 0x03) == ((oldPb - 1) & 0x03)) {
+     drive->moveHeadDown();
+     } else {
+     warn("Unexpected stepper motor control sequence\n");
+     }
+     }
+     */
     
     if (newPb & 0x04) { // We only move the head if the motor is on
         

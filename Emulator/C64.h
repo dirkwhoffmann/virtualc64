@@ -54,6 +54,7 @@
 
 // Peripherals
 #include "Drive.h"
+#include "ParCable.h"
 #include "Datasette.h"
 #include "Mouse.h"
 
@@ -104,6 +105,9 @@ public:
     // Floppy drives
     Drive drive8 = Drive(DRIVE8, *this);
     Drive drive9 = Drive(DRIVE9, *this);
+    
+    // Parallel cable
+    ParCable parCable = ParCable(*this);
     
     // Datasette
     Datasette datasette = Datasette(*this);

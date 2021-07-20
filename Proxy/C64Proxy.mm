@@ -1217,13 +1217,6 @@
     [self drive]->insertFileSystem((FSDevice *)proxy->obj, wp);
 }
 
-/*
-- (void)insertCollection:(AnyCollectionProxy *)proxy
-{
-    [self drive]->insertDisk((AnyCollection *)proxy->obj);
-}
-*/
-
 - (void) insertNewDisk:(DOSType)fsType
 {
     [self drive]->insertNewDisk(fsType);
@@ -1282,6 +1275,20 @@
 - (BOOL)isRotating
 {
     return [self drive]->isRotating();
+}
+
+@end
+
+
+//
+// ParCable
+//
+
+@implementation ParCableProxy
+
+- (ParCable *)cable
+{
+    return (ParCable *)obj;
 }
 
 @end
@@ -2040,6 +2047,7 @@
 @synthesize iec;
 @synthesize keyboard;
 @synthesize mem;
+@synthesize parCable;
 @synthesize port1;
 @synthesize port2;
 @synthesize recorder;
@@ -2069,6 +2077,7 @@
     iec = [[IECProxy alloc] initWith:&c64->iec];
     keyboard = [[KeyboardProxy alloc] initWith:&c64->keyboard];
     mem = [[MemoryProxy alloc] initWith:&c64->mem];
+    parCable = [[ParCableProxy alloc] initWith:&c64->parCable];
     port1 = [[ControlPortProxy alloc] initWith:&c64->port1];
     port2 = [[ControlPortProxy alloc] initWith:&c64->port2];
     recorder = [[RecorderProxy alloc] initWith:&c64->recorder];

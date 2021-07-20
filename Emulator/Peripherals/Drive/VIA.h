@@ -52,10 +52,10 @@
 #define VIAClearBits ~((1ULL << 29) | VIACountA0 | VIACountB0 | VIAReloadA0 | VIAReloadB0 | VIAPostOneShotA0 | VIAPostOneShotB0 | VIAInterrupt0 | VIASetCA1out0 | VIAClearCA1out0 | VIASetCA2out0 | VIAClearCA2out0 | VIASetCB2out0 | VIAClearCB2out0 | VIAPB7out0 | VIAClrInterrupt0)
 
 class VIA6522 : public C64Component {
-	
+    
     friend class Drive;
     
-    protected:
+protected:
     
     // Owner of this VIA
     Drive &drive;
@@ -113,7 +113,7 @@ class VIA6522 : public C64Component {
      */
     u8 ddra;
     u8 ddrb;
-
+    
     /* Output registers: "Each peripheral pin is also controlled by a bit in
      * the Output Register (ORA, ORB) and an Input Register (IRA, IRB). When
      * the pin is programmed to act as an output, the voltage on the pin is
@@ -125,7 +125,7 @@ class VIA6522 : public C64Component {
      */
     u8 ora;
     u8 orb;
-
+    
     /* Input registers: "Reading a peripheral port causes the contents of the
      * Input Register (IRA, IRB) to be transferred onto the Data Bus. With
      * input latching disabled, IRA will always reflect the data on the PA pins.
@@ -135,13 +135,13 @@ class VIA6522 : public C64Component {
      */
     u8 ira;
     u8 irb;
-
+    
     
     //
     // Timers
     //
     
-	/* VIA timer 1: "Interval Timer T1 consists of two 8-bit latches and a
+    /* VIA timer 1: "Interval Timer T1 consists of two 8-bit latches and a
      * 16-bit counter. The latches store data which is to be loaded into the
      * counter. After loading, the counter decrements at 02 clock rate. Upon
      * reaching zero, an interrupt flag is set, and IRQ goes low if the T1
@@ -154,8 +154,8 @@ class VIA6522 : public C64Component {
     u16 t1;          // T1C
     u8 t1_latch_lo;  // T1L_L
     u8 t1_latch_hi;  // T1L_H
-
-	/* VIA timer 2: "Timer 2 operates as an interval timer (in the 'one-shot'
+    
+    /* VIA timer 2: "Timer 2 operates as an interval timer (in the 'one-shot'
      * mode only), or as a counter for counting negative pulses on the PB6
      * peripheral pin. A single control bit in the Auxiliary Control Register
      * selects between these two modes. This timer is comprised of a
@@ -165,16 +165,16 @@ class VIA6522 : public C64Component {
      */
     u16 t2;          // T1C
     u8 t2_latch_lo;  // T2L_L
-	        
+    
     // Peripheral control register
     u8 pcr;
-
+    
     // Auxiliary register
     u8 acr;
-
+    
     // Interrupt enable register
     u8 ier;
-
+    
     // Interrupt flag register
     u8 ifr;
     
@@ -212,14 +212,14 @@ class VIA6522 : public C64Component {
     //
     
 public:
-        
-	VIA6522(C64 &ref, Drive &drvref);
+    
+    VIA6522(C64 &ref, Drive &drvref);
     void prefix() const override;
-
+    
 private:
     
-	void _reset(bool hard) override;
-
+    void _reset(bool hard) override;
+    
     
     //
     // Analyzing
@@ -279,7 +279,7 @@ private:
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
-
+    
     
 public:
     
@@ -289,31 +289,31 @@ public:
     // Getters for the data directon registers
     u8 getDDRA() const { return ddra; }
     u8 getDDRB() const { return ddrb; }
-
+    
     // Getters for peripheral ports
     u8 getPA() const { return pa; }
     u8 getPB() const { return pb; }
-
+    
     // Getter for the peripheral control pins
     bool getCA2() const { return ca2; }
     bool getCB2() const { return cb2; }
-
+    
     // Emulates the virtual VIA for one cycle
-    void execute(); 
-
+    void execute();
+    
 private:
     
     // Emulates a timer for one cycle
     void executeTimer1();
     void executeTimer2();
-	
+    
 public:
     
-	/* Special peek function for the I/O memory range. The peek function only
+    /* Special peek function for the I/O memory range. The peek function only
      * handles those registers that are treated similarly by both VIA chips.
      */
-	virtual u8 peek(u16 addr);
-	
+    virtual u8 peek(u16 addr);
+    
 private:
     
     /* Special peek function for output register A. Variable handshake is
@@ -321,7 +321,7 @@ private:
      * or address 0xF (no handshake).
      */
     u8 peekORA(bool handshake);
-
+    
     // Special peek function for output register B
     u8 peekORB();
     
@@ -330,11 +330,11 @@ public:
     // Same as peek, but without side effects
     u8 spypeek(u16 addr) const;
     
-	/* Special poke function for the I/O memory range. The poke function only
+    /* Special poke function for the I/O memory range. The poke function only
      * handles those registers that are treated similarly by both VIA chips.
      */
     void poke(u16 addr, u8 value);
-
+    
 private:
     
     /* Special poke function for output register A. Variable handshake is
@@ -345,18 +345,18 @@ private:
     
     // Special poke function for output register B
     void pokeORB(u8 value);
-
+    
     // Special poke function for the PCR register
     void pokePCR(u8 value);
     
     
     //
     // Internal Configuration
-    // 
-
+    //
+    
     // Returns true iff timer 1 is in free-run mode (continous interrupts)
     bool freeRun() const { return (acr & 0x40) != 0; }
-
+    
     // Returns true iff timer 2 counts pulses on pin PB6
     bool countPulses() const { return (acr & 0x20) != 0; }
     
@@ -366,34 +366,34 @@ private:
     // Checks if input latching is enabled
     bool inputLatchingEnabledA() const { return (GET_BIT(acr,0)); }
     bool inputLatchingEnabledB() const { return (GET_BIT(acr,1)); }
-
+    
     
     //
     // Peripheral Control Register (PCR)
     //
-
+    
     // Reads the control bits from the peripheral control register
     u8 ca1Control() const { return pcr & 0x01; }
     u8 ca2Control() const { return (pcr >> 1) & 0x07; }
     u8 cb1Control() const { return (pcr >> 4) & 0x01; }
     u8 cb2Control() const { return (pcr >> 5) & 0x07; }
-
+    
     
     //
     // Ports
     //
-
+    
 protected:
     
     // Bit values driving port A from inside the chip
     u8 portAinternal() const;
-
+    
     // Bit values driving port A from outside the chip
     virtual u8 portAexternal() const = 0;
-
+    
     // Updates variable pa with bit values visible at port A
     virtual void updatePA();
-
+    
     // Bit values driving port B from inside the chip
     u8 portBinternal() const;
     
@@ -403,7 +403,7 @@ protected:
     // Updates variable pa with bit values visible at port B
     virtual void updatePB();
     
- 
+    
     //
     // Peripheral control lines
     //
@@ -422,18 +422,18 @@ private:
     //
     // Interrupt handling
     //
-
+    
 public:
     
     // Pulls down or releases the IRQ line
     virtual void pullDownIrqLine() = 0;
     virtual void releaseIrqLine() = 0;
-
+    
     /* Releases the IRQ line if IFR and IER have no matching bits. This method
      * is invoked whenever a bit in the IFR or IER is is cleared.
      */
     void releaseIrqLineIfNeeded() { if ((ifr & ier) == 0) delay |= VIAClrInterrupt0; }
-
+    
     /* |    7    |    6    |    5    |    4    |    3    |    2    |    1    |    0    |
      * ---------------------------------------------------------------------------------
      * |   IRQ   | Timer 1 | Timer 2 |   CB1   |   CB2   |Shift Reg|   CA1   |   CA2   |
@@ -459,7 +459,7 @@ public:
     /* Sets the Timer 1 interrupt flag. If the bit was 0, an interrupt is
      * triggered if enabled.
      */
-     void setInterruptFlag_T1() {
+    void setInterruptFlag_T1() {
         if (!GET_BIT(ifr, 6) && GET_BIT(ier, 6)) delay |= VIAInterrupt0;
         SET_BIT(ifr, 6);
     }
@@ -467,7 +467,7 @@ public:
      * a side effect.
      */
     void clearInterruptFlag_T1() { CLR_BIT(ifr, 6); releaseIrqLineIfNeeded(); }
-
+    
     /* Sets the Timer 2 interrupt flag. If the bit was 0, an interrupt is
      * triggered if enabled.
      */
@@ -478,22 +478,22 @@ public:
     
     // Clears the Timer 2 interrupt flag
     void clearInterruptFlag_T2() { CLR_BIT(ifr, 5); releaseIrqLineIfNeeded(); }
-
+    
     // Clears the CB1 interrupt flag
     void clearInterruptFlag_CB1() { CLR_BIT(ifr, 4); releaseIrqLineIfNeeded(); }
-
+    
     // Clears the CB2 interrupt flag
     void clearInterruptFlag_CB2() { CLR_BIT(ifr, 3); releaseIrqLineIfNeeded(); }
-
+    
     // Clears the Shift Register interrupt flag
     void clearInterruptFlag_SR() { CLR_BIT(ifr, 2); releaseIrqLineIfNeeded(); }
     
     // Clears the CB1 interrupt flag
     void clearInterruptFlag_CA1() { CLR_BIT(ifr, 1); releaseIrqLineIfNeeded(); }
-
+    
     // Clears the CA2 interrupt flag
     void clearInterruptFlag_CA2() { CLR_BIT(ifr, 0); releaseIrqLineIfNeeded(); }
-
+    
     
     //
     // Speeding up emulation
@@ -511,9 +511,9 @@ public:
  * the VC1541 CPU and the IEC bus.
  */
 class VIA1 : public VIA6522 {
-	
+    
 public:
-
+    
     VIA1(C64 &ref, Drive &drvref) : VIA6522(ref, drvref) { }
     ~VIA1() { }
     const char *getDescription() const override { return "VIA1"; }
@@ -529,13 +529,13 @@ public:
  * the VC1541 CPU and the drive logic.
  */
 class VIA2 : public VIA6522 {
-	
+    
 public:
-
+    
     VIA2(C64 &ref, Drive &drvref) : VIA6522(ref, drvref) { }
     ~VIA2() { }
     const char *getDescription() const override { return "VIA2"; }
-
+    
     u8 portAexternal() const override;
     u8 portBexternal() const override;
     void updatePB() override;

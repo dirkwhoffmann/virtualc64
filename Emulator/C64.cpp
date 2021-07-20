@@ -71,6 +71,7 @@ C64::C64()
         &iec,
         &drive8,
         &drive9,
+        &parCable,
         &datasette,
         &oscillator
     };
@@ -191,6 +192,9 @@ C64::getConfigItem(Option option) const
         case OPT_RAM_PATTERN:
             return mem.getConfigItem(option);
 
+        case OPT_PAR_CABLE_TYPE:
+            return parCable.getConfigItem(option);
+            
         default:
             assert(false);
             return 0;
