@@ -105,15 +105,15 @@ Drive::getConfigItem(Option option) const
         case OPT_DRV_TYPE:          return (i64)config.type;
         case OPT_DRV_CONNECT:       return (i64)config.connected;
         case OPT_DRV_POWER_SWITCH:  return (i64)config.switchedOn;
-        case OPT_DRV_POWER_SAVE:      return (i64)config.powerSave;
-        case OPT_DRV_EJECT_DELAY:    return (i64)config.ejectDelay;
-        case OPT_DRV_SWAP_DELAY:     return (i64)config.swapDelay;
-        case OPT_DRV_INSERT_DELAY:   return (i64)config.insertDelay;
+        case OPT_DRV_POWER_SAVE:    return (i64)config.powerSave;
+        case OPT_DRV_EJECT_DELAY:   return (i64)config.ejectDelay;
+        case OPT_DRV_SWAP_DELAY:    return (i64)config.swapDelay;
+        case OPT_DRV_INSERT_DELAY:  return (i64)config.insertDelay;
         case OPT_DRV_PAN:           return (i64)config.pan;
-        case OPT_DRV_POWER_VOL:        return (i64)config.powerVolume;
-        case OPT_DRV_STEP_VOL:         return (i64)config.stepVolume;
-        case OPT_DRV_INSERT_VOL:       return (i64)config.insertVolume;
-        case OPT_DRV_EJECT_VOL:        return (i64)config.ejectVolume;
+        case OPT_DRV_POWER_VOL:     return (i64)config.powerVolume;
+        case OPT_DRV_STEP_VOL:      return (i64)config.stepVolume;
+        case OPT_DRV_INSERT_VOL:    return (i64)config.insertVolume;
+        case OPT_DRV_EJECT_VOL:     return (i64)config.ejectVolume;
             
         default:
             assert(false);

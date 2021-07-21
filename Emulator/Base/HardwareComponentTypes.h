@@ -92,6 +92,7 @@ enum_long(OPT)
         
     // Parallel cable
     OPT_PAR_CABLE_TYPE,
+    OPT_PAR_CABLE_CONNECT,
     
     OPT_COUNT
 };

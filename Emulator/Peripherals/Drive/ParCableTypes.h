@@ -52,5 +52,7 @@ struct ParCableTypeEnum : util::Reflection<ParCableTypeEnum, ParCableType> {
 typedef struct
 {
     ParCableType type;
+    bool connect8;
+    bool connect9;
 }
 ParCableConfig;

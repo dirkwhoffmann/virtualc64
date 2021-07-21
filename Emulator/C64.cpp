@@ -231,8 +231,10 @@ C64::getConfigItem(Option option, long id) const
         case OPT_DRV_STEP_VOL:
         case OPT_DRV_INSERT_VOL:
         case OPT_DRV_EJECT_VOL:
-            assert(id == DRIVE8 || id == DRIVE9);
             return drive.getConfigItem(option);
+
+        case OPT_PAR_CABLE_CONNECT:
+            return parCable.getConfigItem(option, id);
 
         case OPT_MOUSE_MODEL:
         case OPT_SHAKE_DETECTION:
