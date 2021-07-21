@@ -97,4 +97,10 @@ public:
     // Sends a handshake signal
     void driveHandshake();
     void c64Handshake();
+    
+private:
+    
+    // Collects port values
+    u8 getCIA();
+    u8 getVIA(DriveID id);
 };

@@ -125,25 +125,10 @@ ParCable::_dump(dump::Category category, std::ostream& os) const
 u8
 ParCable::getValue()
 {
-    // Values from the C64 side
-    u8 ciaprb = cia2.portBinternal();
-    u8 ciaddr = cia2.getDDRB();
-    u8 cia    = (ciaprb & ciaddr) | (0xFF & ~ciaddr);
+    u8 result = getCIA();
     
-    // Values from drive 8
-    u8 viapra8 = config.connect8 ? drive8.via1.portAinternal() : 0xFF;
-    u8 viaddr8 = config.connect8 ? drive8.via1.getDDRA() : 0xFF;
-    u8 via8    = (viapra8 & viaddr8) | (0xFF & ~viaddr8);
-    
-    // Values from drive 9
-    u8 viapra9 = config.connect9 ? drive9.via1.portAinternal() : 0xFF;
-    u8 viaddr9 = config.connect9 ? drive9.via1.getDDRA() : 0xFF;
-    u8 via9    = (viapra9 & viaddr9) | (0xFF & ~viaddr9);
-    
-    u8 result = cia & via8 & via9;
-    
-    debug(PAR_DEBUG, "CPU: %x [%x] VIA8: %x [%x] VIA9: %x [%x] -> %x\n",
-          ciaprb, ciaddr, viapra8, viaddr8, viapra9, viaddr9, result);
+    if (config.connect8) result &= getVIA(DRIVE8);
+    if (config.connect9) result &= getVIA(DRIVE9);
 
     return result;
 }
@@ -151,7 +136,15 @@ ParCable::getValue()
 u8
 ParCable::getValue(DriveID id)
 {
-    return getValue();
+    if (id == DRIVE8 && !config.connect8) return getVIA(id);
+    if (id == DRIVE9 && !config.connect9) return getVIA(id);
+
+    u8 result = getCIA();
+    
+    if (config.connect8) result &= getVIA(DRIVE8);
+    if (config.connect9) result &= getVIA(DRIVE9);
+
+    return result;
 }
 
 void
@@ -166,4 +159,34 @@ ParCable::c64Handshake()
 {
     trace(PAR_DEBUG, "c64Handshake()\n");
     drive8.via1.setInterruptFlag_CB1();
+}
+
+u8
+ParCable::getCIA()
+{
+    u8 ciaprb = cia2.portBinternal();
+    u8 ciaddr = cia2.getDDRB();
+
+    return (ciaprb & ciaddr) | (0xFF & ~ciaddr);
+}
+
+u8
+ParCable::getVIA(DriveID id)
+{
+    assert(id == DRIVE8 || id == DRIVE9);
+    
+    if (id == DRIVE8) {
+        
+        u8 viapra = drive8.via1.portAinternal();
+        u8 viaddr = drive8.via1.getDDRA();
+        
+        return (viapra & viaddr) | (0xFF & ~viaddr);
+
+    } else {
+        
+        u8 viapra = drive9.via1.portAinternal();
+        u8 viaddr = drive9.via1.getDDRA();
+        
+        return (viapra & viaddr) | (0xFF & ~viaddr);
+    }
 }
