@@ -165,6 +165,21 @@ class Configuration {
         set { c64.configure(.MOUSE_MODEL, value: newValue) }
     }
 
+    var parCableType: Int {
+        get { return c64.getConfig(.PAR_CABLE_TYPE) }
+        set { c64.configure(.PAR_CABLE_TYPE, value: newValue) }
+    }
+
+    var drive8ParCable: Bool {
+        get { return c64.getConfig(.PAR_CABLE_CONNECT, drive: .DRIVE8) != 0 }
+        set { c64.configure(.PAR_CABLE_CONNECT, drive: .DRIVE8, enable: newValue )}
+    }
+
+    var drive9ParCable: Bool {
+        get { return c64.getConfig(.PAR_CABLE_CONNECT, drive: .DRIVE9) != 0 }
+        set { c64.configure(.PAR_CABLE_CONNECT, drive: .DRIVE9, enable: newValue )}
+    }
+    
     //
     // Compatibility
     //
@@ -556,6 +571,10 @@ class Configuration {
         gameDevice2 = defaults.gameDevice2
         
         mouseModel = defaults.mouseModel.rawValue
+        
+        parCableType = defaults.parCableType.rawValue
+        drive8ParCable = defaults.drive8ParCable
+        drive9ParCable = defaults.drive9ParCable
 
         c64.resume()
     }
@@ -578,6 +597,10 @@ class Configuration {
         
         mouseModel = defaults.integer(forKey: Keys.Per.mouseModel)
         
+        parCableType = defaults.integer(forKey: Keys.Per.parCableType)
+        drive8ParCable = defaults.bool(forKey: Keys.Per.drive8ParCable)
+        drive9ParCable = defaults.bool(forKey: Keys.Per.drive9ParCable)
+
         c64.resume()
     }
     
@@ -596,6 +619,10 @@ class Configuration {
         defaults.set(gameDevice2, forKey: Keys.Per.gameDevice2)
         
         defaults.set(mouseModel, forKey: Keys.Per.mouseModel)
+
+        defaults.set(parCableType, forKey: Keys.Per.parCableType)
+        defaults.set(drive8ParCable, forKey: Keys.Per.drive8ParCable)
+        defaults.set(drive9ParCable, forKey: Keys.Per.drive9ParCable)
     }
     
     //

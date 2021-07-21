@@ -653,153 +653,24 @@ Interpreter::registerInstructions()
 
     
     //
-    // Serial port
+    // Parallel cable
     //
     
-    /*
-    root.add({"serial"},
-             "component", "Serial port");
+    root.add({"parcable"},
+             "component", "Parallel drive cable");
 
-    root.add({"serial", "config"},
+    root.add({"parcable", "config"},
              "command", "Displays the current configuration",
-             &RetroShell::exec <Token::serial, Token::config>);
+             &RetroShell::exec <Token::parcable, Token::config>);
 
-    root.add({"serial", "set"},
+    root.add({"parcable", "set"},
              "command", "Configures the component");
         
-    root.add({"serial", "set", "device"},
+    root.add({"parcable", "set", "type"},
              "key", "",
-             &RetroShell::exec <Token::serial, Token::set, Token::device>, 1);
+             &RetroShell::exec <Token::parcable, Token::set, Token::type>, 1);
 
-    root.add({"serial", "inspect"},
+    root.add({"parcable", "inspect"},
              "command", "Displays the internal state",
-             &RetroShell::exec <Token::serial, Token::inspect>);
-
-    
-    //
-    // Disk controller
-    //
-    
-    root.add({"diskcontroller"},
-             "component", "Disk Controller");
-
-    root.add({"diskcontroller", "config"},
-             "command", "Displays the current configuration",
-             &RetroShell::exec <Token::dc, Token::config>);
-
-    root.add({"diskcontroller", "set"},
-             "command", "Configures the component");
-        
-    root.add({"diskcontroller", "set", "speed"},
-             "key", "Configures the drive speed",
-             &RetroShell::exec <Token::dc, Token::speed>, 1);
-
-    root.add({"diskcontroller", "dsksync"},
-             "command", "Secures the DSKSYNC register");
-
-    root.add({"diskcontroller", "dsksync", "auto"},
-             "key", "Always receive a SYNC signal",
-             &RetroShell::exec <Token::dc, Token::dsksync, Token::autosync>, 1);
-
-    root.add({"diskcontroller", "dsksync", "lock"},
-             "key", "Prevents writes to DSKSYNC",
-             &RetroShell::exec <Token::dc, Token::dsksync, Token::lock>, 1);
-        
-    root.add({"diskcontroller", "inspect"},
-             "command", "Displays the internal state",
-             &RetroShell::exec <Token::dc, Token::inspect>);
-
-
-    //
-    // Df0, Df1, Df2, Df3
-    //
-    
-    root.add({"df0"},
-             "component", "Floppy drive 0");
-
-    root.add({"df1"},
-             "component", "Floppy drive 1");
-
-    root.add({"df2"},
-             "component", "Floppy drive 2");
-
-    root.add({"df3"},
-             "component", "Floppy drive 3");
-
-    root.add({"dfn"},
-             "component", "All connected drives");
-
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "config"},
-             "command", "Displays the current configuration",
-             &RetroShell::exec <Token::dfn, Token::config>);
-
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "connect"},
-             "command", "Connects the drive",
-             &RetroShell::exec <Token::dfn, Token::connect>);
-    root.seek("df0")->remove("connect");
-
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "disconnect"},
-             "command", "Disconnects the drive",
-             &RetroShell::exec <Token::dfn, Token::disconnect>);
-    root.seek("df0")->remove("disconnect");
-
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "eject"},
-             "command", "Ejects a floppy disk",
-             &RetroShell::exec <Token::dfn, Token::eject>);
-
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "insert"},
-             "command", "Inserts a floppy disk",
-             &RetroShell::exec <Token::dfn, Token::insert>, 1);
-
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "set"},
-             "command", "Configures the component");
-    
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "set", "model"},
-             "key", "Selects the drive model",
-             &RetroShell::exec <Token::dfn, Token::set, Token::model>, 1);
-    
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "set", "mechanics"},
-             "key", "Enables or disables the emulation of mechanical delays",
-             &RetroShell::exec <Token::dfn, Token::set, Token::mechanics>, 1);
-    
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "set", "searchpath"},
-             "key", "Sets the search path for media files",
-             &RetroShell::exec <Token::dfn, Token::set, Token::searchpath>, 1);
-    
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "set", "defaultfs"},
-             "key", "Determines the default file system type for blank disks",
-             &RetroShell::exec <Token::dfn, Token::set, Token::defaultfs>, 1);
-    
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "set", "defaultbb"},
-             "key", "Determines the default boot block type for blank disks",
-             &RetroShell::exec <Token::dfn, Token::set, Token::defaultbb>, 1);
-    
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "set", "pan"},
-             "key", "Sets the pan for drive sounds",
-             &RetroShell::exec <Token::dfn, Token::set, Token::pan>, 1);
-    
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "audiate"},
-             "command", "Sets the volume of drive sounds",
-             &RetroShell::exec <Token::dfn, Token::set, Token::mechanics>);
-    
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "audiate", "insert"},
-             "command", "Makes disk insertions audible",
-             &RetroShell::exec <Token::dfn, Token::audiate, Token::insert>, 1);
-    
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "audiate", "eject"},
-             "command", "Makes disk ejections audible",
-             &RetroShell::exec <Token::dfn, Token::audiate, Token::eject>, 1);
-    
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "audiate", "step"},
-             "command", "Makes disk ejections audible",
-             &RetroShell::exec <Token::dfn, Token::audiate, Token::step>, 1);
-    
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "audiate", "poll"},
-             "command", "Makes polling clicks audible",
-             &RetroShell::exec <Token::dfn, Token::audiate, Token::poll>, 1);
-    
-    root.add({"df0", "df1", "df2", "df3", "dfn"}, {"", "inspect"},
-             "command", "Displays the internal state",
-             &RetroShell::exec <Token::dfn, Token::inspect>);
-     */
+             &RetroShell::exec <Token::parcable, Token::inspect>);
 }

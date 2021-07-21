@@ -833,6 +833,11 @@ extension Keys {
         
         // Mouse
         static let mouseModel       = "VC64_PER_MouseModel"
+        
+        // Parallel cable
+        static let parCableType     = "VC64_PER_ParCableType"
+        static let drive8ParCable   = "VC64_PER_Drive8ParCable"
+        static let drive9ParCable   = "VC64_PER_Drive9ParCable"
     }
 }
 
@@ -848,6 +853,10 @@ struct PeripheralsDefaults {
     var gameDevice2: Int
     
     let mouseModel: MouseModel
+    
+    let parCableType: ParCableType
+    let drive8ParCable: Bool
+    let drive9ParCable: Bool
 
     //
     // Schemes
@@ -862,7 +871,11 @@ struct PeripheralsDefaults {
         gameDevice1:     -1,
         gameDevice2:     -1,
         
-        mouseModel:      .C1350
+        mouseModel:      .C1350,
+        
+        parCableType:    .NONE,
+        drive8ParCable:  true,
+        drive9ParCable:  true
     )
 }
 
@@ -884,8 +897,11 @@ extension UserDefaults {
             Keys.Per.gameDevice1:     defaults.gameDevice1,
             Keys.Per.gameDevice2:     defaults.gameDevice2,
             
-            Keys.Per.mouseModel:      defaults.mouseModel.rawValue
-
+            Keys.Per.mouseModel:      defaults.mouseModel.rawValue,
+            
+            Keys.Per.parCableType:    defaults.parCableType.rawValue,
+            Keys.Per.drive8ParCable:  defaults.drive8ParCable,
+            Keys.Per.drive9ParCable:  defaults.drive9ParCable
         ]
         
         let userDefaults = UserDefaults.standard
@@ -907,7 +923,11 @@ extension UserDefaults {
                     Keys.Per.gameDevice1,
                     Keys.Per.gameDevice2,
                     
-                    Keys.Per.mouseModel
+                    Keys.Per.mouseModel,
+                    
+                    Keys.Per.parCableType,
+                    Keys.Per.drive8ParCable,
+                    Keys.Per.drive9ParCable
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }

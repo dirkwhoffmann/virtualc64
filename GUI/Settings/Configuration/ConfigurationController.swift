@@ -103,6 +103,11 @@ class ConfigurationController: DialogController {
     // Mouse
     @IBOutlet weak var perMouseModel: NSPopUpButton!
 
+    // Parallel cable
+    @IBOutlet weak var perParCableType: NSPopUpButton!
+    @IBOutlet weak var perDrive8ParCable: NSButton!
+    @IBOutlet weak var perDrive9ParCable: NSButton!
+
     // Buttons
     @IBOutlet weak var perPowerButton: NSButton!
 

@@ -115,15 +115,25 @@ ParCable::_dump(dump::Category category, std::ostream& os) const
 
         os << tab("Type");
         os << ParCableTypeEnum::key(config.type) << std::endl;
+        os << tab("Connected to drive 8");
+        os << bol(config.connect8) << std::endl;
+        os << tab("Connected to drive 9");
+        os << bol(config.connect9) << std::endl;
     }
 
     if (category & dump::State) {
         
+        os << tab("Value on C64 side");
+        os << hex(getValue()) << std::endl;
+        os << tab("Value on Drive 8 side");
+        os << hex(getValue(DRIVE8)) << std::endl;
+        os << tab("Value on Drive 9 side");
+        os << hex(getValue(DRIVE9)) << std::endl;
     }
 }
 
 u8
-ParCable::getValue()
+ParCable::getValue() const
 {
     u8 result = getCIA();
     
@@ -134,7 +144,7 @@ ParCable::getValue()
 }
 
 u8
-ParCable::getValue(DriveID id)
+ParCable::getValue(DriveID id) const
 {
     if (id == DRIVE8 && !config.connect8) return getVIA(id);
     if (id == DRIVE9 && !config.connect9) return getVIA(id);
@@ -162,7 +172,7 @@ ParCable::c64Handshake()
 }
 
 u8
-ParCable::getCIA()
+ParCable::getCIA() const
 {
     u8 ciaprb = cia2.portBinternal();
     u8 ciaddr = cia2.getDDRB();
@@ -171,7 +181,7 @@ ParCable::getCIA()
 }
 
 u8
-ParCable::getVIA(DriveID id)
+ParCable::getVIA(DriveID id) const
 {
     assert(id == DRIVE8 || id == DRIVE9);
     

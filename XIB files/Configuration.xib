@@ -70,10 +70,13 @@
                 <outlet property="perControlPort1" destination="b6D-Q1-nEc" id="zjf-rI-nwW"/>
                 <outlet property="perControlPort2" destination="fSD-jP-oYR" id="C3r-1N-gIj"/>
                 <outlet property="perDrive8Connect" destination="HQg-wa-r7J" id="5Ic-jP-N7q"/>
+                <outlet property="perDrive8ParCable" destination="00q-hR-VlI" id="cDo-B7-vOi"/>
                 <outlet property="perDrive8Type" destination="79P-Fp-S8o" id="oCn-Pb-ylL"/>
                 <outlet property="perDrive9Connect" destination="g5y-Rl-Rzu" id="JBA-Cg-pgx"/>
+                <outlet property="perDrive9ParCable" destination="uaK-mv-EEi" id="rfr-2u-7qX"/>
                 <outlet property="perDrive9Type" destination="MGa-JQ-gnG" id="TdR-gw-V03"/>
                 <outlet property="perMouseModel" destination="Idw-Y9-NPG" id="lfo-2M-vMM"/>
+                <outlet property="perParCableType" destination="7F1-cx-LV1" id="GO7-ij-9iC"/>
                 <outlet property="perPowerButton" destination="NdD-36-auq" id="iwJ-Pz-V1l"/>
                 <outlet property="prefTabView" destination="baz-eW-A74" id="fgy-dU-alU"/>
                 <outlet property="romInstallButton" destination="UjG-e3-b19" id="c56-L7-acn"/>
@@ -1066,7 +1069,7 @@ Gw
                                             </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bnQ-pH-sMz">
-                                            <rect key="frame" x="347" y="319" width="59" height="18"/>
+                                            <rect key="frame" x="351" y="319" width="59" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Port 2:" id="8L4-Fe-5hS">
                                                 <font key="font" metaFont="system"/>
@@ -1075,7 +1078,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xlY-0Z-30n">
-                                            <rect key="frame" x="347" y="348" width="59" height="18"/>
+                                            <rect key="frame" x="351" y="348" width="59" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Port 1:" id="dNh-ug-8Z4">
                                                 <font key="font" metaFont="system"/>
@@ -1222,9 +1225,12 @@ Gw
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
+                                            <connections>
+                                                <action selector="perCableTypeAction:" target="-2" id="qse-ki-p3B"/>
+                                            </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fUB-eZ-Kx2">
-                                            <rect key="frame" x="350" y="252" width="56" height="17"/>
+                                            <rect key="frame" x="354" y="252" width="56" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Model:" id="qrL-R8-MEg">
                                                 <font key="font" metaFont="system"/>
@@ -1233,7 +1239,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d3e-dO-mUF">
-                                            <rect key="frame" x="311" y="174" width="95" height="17"/>
+                                            <rect key="frame" x="315" y="174" width="95" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Parallel cable:" id="GfS-JQ-aWH">
                                                 <font key="font" metaFont="system"/>
@@ -1241,21 +1247,27 @@ Gw
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="00q-hR-VlI">
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="00q-hR-VlI">
                                             <rect key="frame" x="416" y="146" width="140" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Connect to Drive 8" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="xbi-go-3Dw">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="perCableConnectAction:" target="-2" id="g4D-Dk-bA1"/>
+                                            </connections>
                                         </button>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uaK-mv-EEi">
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="uaK-mv-EEi">
                                             <rect key="frame" x="416" y="121" width="140" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Connect to Drive 9" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="YqN-UU-WZf">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="perCableConnectAction:" target="-2" id="1TL-Yl-nAU"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                 </view>

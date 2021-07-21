@@ -18,6 +18,7 @@
 
 enum_long(PAR_CABLE_TYPE)
 {
+    PAR_CABLE_NONE,
     PAR_CABLE_STANDARD,
     PAR_CABLE_DOLPHIN
 };
@@ -36,6 +37,7 @@ struct ParCableTypeEnum : util::Reflection<ParCableTypeEnum, ParCableType> {
     {
         switch (value) {
                 
+            case PAR_CABLE_NONE:     return "PAR_CABLE_NONE";
             case PAR_CABLE_STANDARD: return "PAR_CABLE_STANDARD";
             case PAR_CABLE_DOLPHIN:  return "PAR_CABLE_DOLPHIN";
         }

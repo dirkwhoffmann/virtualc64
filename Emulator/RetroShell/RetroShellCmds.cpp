@@ -577,14 +577,6 @@ RetroShell::exec <Token::dmadebugger, Token::hide, Token::saccesses> (Arguments&
     c64.configure(OPT_DMA_DEBUG_ENABLE, 5, false);
 }
 
-/*
-template <> void
-RetroShell::exec <Token::dmadebugger, Token::inspect> (Arguments& argv, long param)
-{
-    dump(c64.vic.dmaDebugger, dump::State);
-}
-*/
-
 
 //
 // Monitor
@@ -871,4 +863,28 @@ RetroShell::exec <Token::mouse, Token::set, Token::shakedetector> (Arguments &ar
 {
     auto value = util::parseBool(argv.front());
     c64.configure(OPT_SHAKE_DETECTION, value);
+}
+
+
+//
+// Parallel cable (drive accelerator)
+//
+
+template <> void
+RetroShell::exec <Token::parcable, Token::config> (Arguments& argv, long param)
+{
+    dump(c64.parCable, dump::Config);
+}
+
+template <> void
+RetroShell::exec <Token::parcable, Token::inspect> (Arguments& argv, long param)
+{
+    dump(c64.parCable, dump::State);
+}
+
+template <> void
+RetroShell::exec <Token::parcable, Token::set, Token::type> (Arguments &argv, long param)
+{
+    auto value = util::parseEnum <ParCableTypeEnum> (argv.front());
+    c64.configure(OPT_PAR_CABLE_TYPE, value);
 }

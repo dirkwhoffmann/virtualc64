@@ -75,7 +75,7 @@ static const int DSK_DEBUG       = 0; // Disk controller execution
 static const int DSKCHG_DEBUG    = 0; // Disk changing procedure
 static const int GCR_DEBUG       = 0; // Disk encoding / decoding
 static const int FS_DEBUG        = 0; // File System Classes
-static const int PAR_DEBUG       = 1; // Parallel cable
+static const int PAR_DEBUG       = 0; // Parallel cable
 
 // Media
 static const int CRT_DEBUG       = 0; // Cartridges

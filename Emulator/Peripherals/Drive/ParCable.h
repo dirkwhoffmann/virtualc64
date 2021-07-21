@@ -89,10 +89,10 @@ private:
 public:
     
     // Returns the cable value as seen from the C64 side
-    u8 getValue();
+    u8 getValue() const;
     
     // Returns the cable value as seen from the drive side
-    u8 getValue(DriveID id);
+    u8 getValue(DriveID id) const;
     
     // Sends a handshake signal
     void driveHandshake();
@@ -101,6 +101,6 @@ public:
 private:
     
     // Collects port values
-    u8 getCIA();
-    u8 getVIA(DriveID id);
+    u8 getCIA() const;
+    u8 getVIA(DriveID id) const;
 };

@@ -23,7 +23,7 @@ enum class Token
     
     // Components
     c64, cia, controlport, cpu, datasette, drive, expansion, fastsid, keyboard,
-    memory, monitor, mouse, resid, sid, vicii,
+    memory, monitor, mouse, parcable, resid, sid, vicii,
 
     // Commands
     about, attach, audiate, autosync, clear, close, config, connect, disconnect,

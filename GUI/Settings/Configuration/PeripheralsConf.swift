@@ -31,6 +31,14 @@ extension ConfigurationController {
         // Mouse
         perMouseModel.selectItem(withTag: config.mouseModel)
 
+        // Parallel cable
+        let hasCable = config.parCableType != PAR_CABLE_TYPE.NONE.rawValue
+        perParCableType.selectItem(withTag: config.parCableType)
+        perDrive8ParCable.state = config.drive8ParCable ? .on : .off
+        perDrive9ParCable.state = config.drive9ParCable ? .on : .off
+        perDrive8ParCable.isEnabled = hasCable
+        perDrive9ParCable.isEnabled = hasCable
+
         // Power button
         perPowerButton.isHidden = !bootable
     }
@@ -80,6 +88,22 @@ extension ConfigurationController {
         refresh()
     }
 
+    @IBAction func perCableTypeAction(_ sender: NSPopUpButton!) {
+        
+        config.parCableType = sender.selectedTag()
+        refresh()
+    }
+
+    @IBAction func perCableConnectAction(_ sender: NSButton!) {
+        
+        switch sender.tag {
+        case 8: config.drive8ParCable = sender.state == .on
+        case 9: config.drive9ParCable = sender.state == .on
+        default: fatalError()
+        }
+        refresh()
+    }
+    
     @IBAction func perPresetAction(_ sender: NSPopUpButton!) {
     
         config.loadPeripheralsDefaults(PeripheralsDefaults.std)
