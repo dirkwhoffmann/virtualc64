@@ -61,6 +61,7 @@
 class CIA : public C64Component {
         
     friend class TOD;
+    friend class ParCable;
     
     // Current configuration
     CIAConfig config = getDefaultConfig();
@@ -386,10 +387,14 @@ private:
     virtual u8 portBexternal() const = 0;
     
 protected:
-    
+
+    // Action method for peeking the port registers
+    virtual u8 peekPA() { updatePA(); return PA; }
+    virtual u8 peekPB() { updatePB(); return PB; }
+
     // Action method for poking the port registers
-    virtual void pokePA(u8 value) { PRA = value; updatePA(); }
-    virtual void pokePB(u8 value) { PRB = value; updatePB(); }
+    virtual void pokePRA(u8 value) { PRA = value; updatePA(); }
+    virtual void pokePRB(u8 value) { PRB = value; updatePB(); }
 
     // Action method for poking the port direction registers
     virtual void pokeDDRA(u8 value) { DDRA = value; updatePA(); }
@@ -406,6 +411,9 @@ public:
     void triggerRisingEdgeOnFlagPin();
     void triggerFallingEdgeOnFlagPin();
     
+    // Emulates a pulse on the PC pin
+    virtual void pulsePC() { };
+
     
     //
     // Handling interrupts
@@ -506,6 +514,8 @@ private:
 
 class CIA2 : public CIA {
 
+    friend class ParCable;
+    
 public:
 
     CIA2(C64 &ref) : CIA(ref) { };
@@ -530,6 +540,8 @@ private:
     u8 portBinternal() const override;
     u8 portBexternal() const override;
     void updatePB() override;
-    void pokePA(u8 value) override;
+    void pokePRA(u8 value) override;
+    void pokePRB(u8 value) override;
     void pokeDDRA(u8 value) override;
+    void pulsePC() override;
 };

@@ -10,6 +10,7 @@
 #pragma once
 
 #include "ParCableTypes.h"
+#include "DriveTypes.h"
 #include "C64Component.h"
 
 class ParCable : public C64Component {
@@ -77,4 +78,21 @@ private:
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }    
+
+    
+    //
+    // Using
+    //
+    
+public:
+    
+    // Returns the cable value as seen from the C64 side
+    u8 getValue();
+    
+    // Returns the cable value as seen from the drive side
+    u8 getValue(DriveID id);
+    
+    // Sends a handshake signal
+    void driveHandshake();
+    void c64Handshake();
 };

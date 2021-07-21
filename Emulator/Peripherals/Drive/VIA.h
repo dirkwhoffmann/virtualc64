@@ -54,6 +54,7 @@
 class VIA6522 : public C64Component {
     
     friend class Drive;
+    friend class ParCable;
     
 protected:
     
@@ -215,6 +216,7 @@ public:
     
     VIA6522(C64 &ref, Drive &drvref);
     void prefix() const override;
+    virtual bool isVia1() const = 0;
     
 private:
     
@@ -456,30 +458,25 @@ public:
      *                             if CA2 is not selected as "INDEPENDENT".
      */
     
-    /* Sets the Timer 1 interrupt flag. If the bit was 0, an interrupt is
-     * triggered if enabled.
-     */
+    // Sets or clears the Timer 1 interrupt flag
     void setInterruptFlag_T1() {
         if (!GET_BIT(ifr, 6) && GET_BIT(ier, 6)) delay |= VIAInterrupt0;
         SET_BIT(ifr, 6);
     }
-    /* Clears the Timer 1 interrupt flag. The interrupt line may be cleared as
-     * a side effect.
-     */
     void clearInterruptFlag_T1() { CLR_BIT(ifr, 6); releaseIrqLineIfNeeded(); }
     
-    /* Sets the Timer 2 interrupt flag. If the bit was 0, an interrupt is
-     * triggered if enabled.
-     */
+    // Sets or clears the Timer 2 interrupt flag
     void setInterruptFlag_T2() {
         if (!GET_BIT(ifr, 5) && GET_BIT(ier, 5)) delay |= VIAInterrupt0;
         SET_BIT(ifr, 5);
     }
-    
-    // Clears the Timer 2 interrupt flag
     void clearInterruptFlag_T2() { CLR_BIT(ifr, 5); releaseIrqLineIfNeeded(); }
     
-    // Clears the CB1 interrupt flag
+    // Sets or clears the CB1 interrupt flag
+    void setInterruptFlag_CB1() {
+        if (!GET_BIT(ifr, 4) && GET_BIT(ier, 4)) delay |= VIAInterrupt0;
+        SET_BIT(ifr, 4);
+    }
     void clearInterruptFlag_CB1() { CLR_BIT(ifr, 4); releaseIrqLineIfNeeded(); }
     
     // Clears the CB2 interrupt flag
@@ -517,6 +514,7 @@ public:
     VIA1(C64 &ref, Drive &drvref) : VIA6522(ref, drvref) { }
     ~VIA1() { }
     const char *getDescription() const override { return "VIA1"; }
+    bool isVia1() const override { return true; }
     
     u8 portAexternal() const override;
     u8 portBexternal() const override;
@@ -535,7 +533,8 @@ public:
     VIA2(C64 &ref, Drive &drvref) : VIA6522(ref, drvref) { }
     ~VIA2() { }
     const char *getDescription() const override { return "VIA2"; }
-    
+    bool isVia1() const override { return false; }
+
     u8 portAexternal() const override;
     u8 portBexternal() const override;
     void updatePB() override;

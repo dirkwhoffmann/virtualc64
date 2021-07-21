@@ -23,15 +23,14 @@ CIA::peek(u16 addr)
             
         case 0x00: // CIA_DATA_PORT_A
         {
-            updatePA();
-            result = PA;
+            result = peekPA();
             break;
         }
 
         case 0x01: // CIA_DATA_PORT_B
         {
-            updatePB();
-            result = PB;
+            result = peekPB();
+            pulsePC();
             break;
         }
         case 0x02: // CIA_DATA_DIRECTION_A
@@ -217,12 +216,13 @@ CIA::poke(u16 addr, u8 value)
         
         case 0x00: // CIA_DATA_PORT_A
             
-            pokePA(value);
+            pokePRA(value);
             return;
             
         case 0x01: // CIA_DATA_PORT_B
             
-            pokePB(value);
+            pokePRB(value);
+            pulsePC();
             return;
             
         case 0x02: // CIA_DATA_DIRECTION_A

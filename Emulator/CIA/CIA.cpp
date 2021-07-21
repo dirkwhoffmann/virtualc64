@@ -839,16 +839,25 @@ CIA2::portBexternal() const
 void
 CIA2::updatePB()
 {
-    PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
+    // Read the value from the parallel cable
+    PB = parCable.getValue();
+    
+    // PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
 }
 
 void
-CIA2::pokePA(u8 value)
+CIA2::pokePRA(u8 value)
 {
-    CIA::pokePA(value);
+    CIA::pokePRA(value);
     
     // PA0 (VA14) and PA1 (VA15) determine the memory bank seen by VICII
     vic.switchBank(0xDD00);
+}
+
+void
+CIA2::pokePRB(u8 value)
+{
+    CIA::pokePRB(value);    
 }
 
 void
@@ -858,4 +867,10 @@ CIA2::pokeDDRA(u8 value)
     
     // PA0 (VA14) and PA1 (VA15) determine the memory bank seen by VICII
     vic.switchBank(0xDD02);
+}
+
+void
+CIA2::pulsePC()
+{
+    parCable.c64Handshake();
 }

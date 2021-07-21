@@ -33,6 +33,7 @@ class Mouse1351;
 class NeosMouse;
 class MsgQueue;
 class Oscillator;
+class ParCable;
 class Recorder;
 class RegressionTester;
 class RetroShell;
@@ -73,6 +74,7 @@ protected:
     C64Memory &mem;
     MsgQueue &messageQueue;
     Oscillator &oscillator;
+    ParCable &parCable;
     Recorder &recorder;
     RegressionTester &regressionTester;
     RetroShell &retroShell;

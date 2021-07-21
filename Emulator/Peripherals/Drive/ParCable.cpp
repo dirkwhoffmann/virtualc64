@@ -9,6 +9,7 @@
 
 #include "config.h"
 #include "ParCable.h"
+#include "C64.h"
 #include "IO.h"
 
 ParCable::ParCable(C64& ref) : C64Component(ref)
@@ -79,4 +80,51 @@ ParCable::_dump(dump::Category category, std::ostream& os) const
     if (category & dump::State) {
         
     }
+}
+
+u8
+ParCable::getValue()
+{
+    /*
+    u8 result = drvValue & c64Value;
+    
+    printf("Drive side: %x C64 side: %x Cable: %x\n", drvValue, c64Value, result);
+    return result;
+    */
+    
+    // Values from the C64 side
+    u8 ciaprb = cia2.portBinternal();
+    u8 ciaddr = cia2.getDDRB();
+    
+    // Values from the drive side
+    u8 viapra = drive8.via1.portAinternal();
+    u8 viaddr = drive8.via1.getDDRA();
+    
+    u8 cia = ((ciaprb & ciaddr) | (0xFF & ~ciaddr));
+    u8 via = ((viapra & viaddr) | (0xFF & ~viaddr));
+    
+    u8 result = cia & via;
+    
+    printf("Drive: %x [%x] C64: %x [%x] -> %x\n", ciaprb, ciaddr, viapra, viaddr, result);
+    return result;
+}
+
+u8
+ParCable::getValue(DriveID id)
+{
+    return getValue();
+}
+
+void
+ParCable::driveHandshake()
+{
+    trace(PAR_DEBUG, "driveHandshake()\n");
+    cia2.triggerFallingEdgeOnFlagPin();
+}
+
+void
+ParCable::c64Handshake()
+{
+    trace(PAR_DEBUG, "c64Handshake()\n");
+    drive8.via1.setInterruptFlag_CB1();
 }

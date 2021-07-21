@@ -367,6 +367,14 @@ VIA6522::peekORA(bool handshake)
     if (!inputLatchingEnabledA()) {
         ira = pa;
     }
+    
+    // Take care of a parallel cable (if attached)
+    if (isVia1()) {
+        if (handshake && ca2Control() == 5) {
+            parCable.driveHandshake();
+        }
+    }
+
     return ira;
 }
 
@@ -429,11 +437,7 @@ VIA6522::spypeek(u16 addr) const
 }
 
 void VIA6522::poke(u16 addr, u8 value)
-{
-    if (drive.cpu.getPC0() < 0xE000 && addr != 0) {
-        trace(VIA_DEBUG, "poke(%x, %x)\n", addr, value);
-    }
-    
+{    
     assert (addr <= 0x0F);
     
     wakeUp();
@@ -635,6 +639,13 @@ VIA6522::pokeORA(u8 value, bool handshake)
     
     ora = value;
     updatePA();
+    
+    // Take care of a parallel cable (if attached)
+    if (isVia1()) {
+        if (handshake && ca2Control() == 5) {
+            parCable.driveHandshake();
+        }
+    }
 }
 
 void
@@ -723,7 +734,11 @@ VIA6522::portAinternal() const
 void
 VIA6522::updatePA()
 {
-    pa = (portAinternal() & ddra) | (portAexternal() & ~ddra);
+    if (isVia1()) {
+        pa = parCable.getValue(drive.getDeviceNr());
+    } else {
+        pa = (portAinternal() & ddra) | (portAexternal() & ~ddra);
+    }
 }
 
 u8
