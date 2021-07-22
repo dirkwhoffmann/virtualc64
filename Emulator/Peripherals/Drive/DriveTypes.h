@@ -51,6 +51,42 @@ struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
 };
 #endif
 
+enum_long(DRVMEM_TYPE)
+{
+    DRVMEM_NONE,
+    DRVMEM_RAM,
+    DRVMEM_ROM,
+    DRVMEM_VIA1,
+    DRVMEM_VIA2,
+    DRVMEM_PIA
+};
+typedef DRVMEM_TYPE DrvMemType;
+
+#ifdef __cplusplus
+struct DrvMemTypeEnum : util::Reflection<DrvMemTypeEnum, DrvMemType> {
+    
+    static bool isValid(long value)
+    {
+        return (unsigned long)value <= DRVMEM_PIA;
+    }
+    
+    static const char *prefix() { return "DRVMEM"; }
+    static const char *key(DrvMemType value)
+    {
+        switch (value) {
+                
+            case DRVMEM_NONE:  return "DRVMEM_NONE";
+            case DRVMEM_RAM:   return "DRVMEM_RAM";
+            case DRVMEM_ROM:   return "DRVMEM_ROM";
+            case DRVMEM_VIA1:  return "DRVMEM_VIA1";
+            case DRVMEM_VIA2:  return "DRVMEM_VIA2";
+            case DRVMEM_PIA:   return "DRVMEM_PIA";
+        }
+        return "???";
+    }
+};
+#endif
+
 enum_long(DISK_INSERTION_STATUS)
 {
     DISK_FULLY_EJECTED,

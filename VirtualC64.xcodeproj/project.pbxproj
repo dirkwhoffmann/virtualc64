@@ -1120,8 +1120,6 @@
 				50B1A61525A2028B00201A2C /* MemoryTypes.h */,
 				504C42E424AF29AB00E69CAE /* C64Memory.h */,
 				504C42E124AF29AB00E69CAE /* C64Memory.cpp */,
-				504C434F24AF29AC00E69CAE /* DriveMemory.h */,
-				504C434B24AF29AC00E69CAE /* DriveMemory.cpp */,
 			);
 			path = Memory;
 			sourceTree = "<group>";
@@ -1264,6 +1262,8 @@
 				50B1A61725A205D500201A2C /* DriveTypes.h */,
 				504C434C24AF29AC00E69CAE /* Drive.h */,
 				504C434D24AF29AC00E69CAE /* Drive.cpp */,
+				504C434F24AF29AC00E69CAE /* DriveMemory.h */,
+				504C434B24AF29AC00E69CAE /* DriveMemory.cpp */,
 				504C434924AF29AC00E69CAE /* VIA.h */,
 				504C434A24AF29AC00E69CAE /* VIA.cpp */,
 				5007E1E926A7029A000E7344 /* ParCableTypes.h */,

@@ -16,8 +16,6 @@
 // Enumerations
 //
 
-// Memory source identifiers. The identifiers are used inside the peek and poke
-// lookup tables to indicate the source and target of a peek or poke operation.
 enum_long(M_TYPE)
 {
     M_RAM = 1,
