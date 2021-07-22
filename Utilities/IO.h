@@ -49,18 +49,15 @@ string appendPath(const string &path, const string &path2);
 
 // Returns the size of a file in bytes
 isize getSizeOfFile(const string &path);
-isize getSizeOfFile(const char *path);
 
 // Checks if a file exists
 bool fileExists(const string &path);
 
 // Checks if a path points to a directory
 bool isDirectory(const string &path);
-bool isDirectory(const char *path);
 
 // Returns the number of files in a directory
 isize numDirectoryItems(const string &path);
-isize numDirectoryItems(const char *path);
 
 // Returns a list of files in a directory
 std::vector<string> files(const string &path, const string &suffix = "");
