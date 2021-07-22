@@ -1110,7 +1110,7 @@ C64::romTitle(RomType type) const
         case ROM_TYPE_VC1541:
         {
             RomIdentifier rev = romIdentifier(ROM_TYPE_VC1541);
-            return rev == ROM_UNKNOWN ? "Unknown Kernal Rom" : RomFile::title(rev);
+            return rev == ROM_UNKNOWN ? "Unknown Drive Firmware" : RomFile::title(rev);
         }
         default: assert(false);
     }
