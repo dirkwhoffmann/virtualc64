@@ -70,7 +70,8 @@ RomFile::isRomStream(RomType type, std::istream &is)
         if (signatures[i].size != size) continue;
 
         // Only proceed if the matches bytes matche
-        if (!util::matchingStreamHeader(is, signatures[i].magic, 3)) continue;
+        if (!util::matchingStreamHeader(is, signatures[i].magic, 3, signatures[i].offset))
+            continue;
 
         return true;
     }

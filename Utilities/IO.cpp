@@ -157,29 +157,29 @@ getSizeOfFile(const string &path)
     return (isize)fileProperties.st_size;
 }
 
-bool matchingStreamHeader(std::istream &stream, const u8 *header, isize len)
+bool matchingStreamHeader(std::istream &is, const u8 *header, isize len, isize offset)
 {
-    stream.seekg(0, std::ios::beg);
+    is.seekg(offset, std::ios::beg);
     
     for (isize i = 0; i < len; i++) {
-        int c = stream.get();
+        int c = is.get();
         if (c != (int)header[i]) {
-            stream.seekg(0, std::ios::beg);
+            is.seekg(0, std::ios::beg);
             return false;
         }
     }
-    stream.seekg(0, std::ios::beg);
+    is.seekg(0, std::ios::beg);
     return true;
 }
 
 bool
-matchingBufferHeader(const u8 *buffer, const u8 *header, isize len)
+matchingBufferHeader(const u8 *buffer, const u8 *header, isize len, isize offset)
 {
     assert(buffer != nullptr);
     assert(header != nullptr);
     
     for (isize i = 0; i < len; i++) {
-        if (header[i] != buffer[i])
+        if (buffer[offset + i] != header[i])
             return false;
     }
 
