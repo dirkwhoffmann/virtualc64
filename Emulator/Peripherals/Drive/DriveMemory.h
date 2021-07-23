@@ -67,9 +67,7 @@ private:
         worker
         
         << mem
-        << usage
-        << ram
-        << rom;
+        << usage;
     }
     
     template <class T>

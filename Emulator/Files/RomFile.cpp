@@ -217,6 +217,7 @@ RomFile::identifier(u64 fnv)
         case 0xB4027D6D9D61378A: return VC1541_64ER_V3;
         case 0xC50EAFCBA50C4B63: return VC1541_SPEEDDOS_PLUS;
         case 0x92ADEBA1BCCD8D31: return VC1541_SPEEDDOS_27;
+        case 0x75B0949C6B586FB7: return VC1541_DOLPHIN_2;
             
         default: return ROM_UNKNOWN;
     }
@@ -281,6 +282,7 @@ RomFile::isPatchedRom(RomIdentifier rev)
         case VC1541_64ER_V3:
         case VC1541_SPEEDDOS_PLUS:
         case VC1541_SPEEDDOS_27:
+        case VC1541_DOLPHIN_2:
             return true;
             
         default:
@@ -339,7 +341,8 @@ RomFile::title(RomIdentifier rev)
         case VC1541_II_JIFFY_V600:
         case VC1541_64ER_V3:
         case VC1541_SPEEDDOS_PLUS:
-        case VC1541_SPEEDDOS_27:      return "Patched Drive Firmware";
+        case VC1541_SPEEDDOS_27:
+        case VC1541_DOLPHIN_2:        return "Patched Drive Firmware";
             
         default:                      return "";
     }
@@ -395,7 +398,8 @@ RomFile::subTitle(RomIdentifier rev)
         case VC1541_64ER_V3:          return "64'er DOS V3";
         case VC1541_SPEEDDOS_PLUS:    return "SpeedDOS Plus";
         case VC1541_SPEEDDOS_27:      return "SpeedDOS Plus 2.7 (TRIAD)";
-
+        case VC1541_DOLPHIN_2:        return "DolphinDOS 2";
+            
         default:                      return "";
     }
 }

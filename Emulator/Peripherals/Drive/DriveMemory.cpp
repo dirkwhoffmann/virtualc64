@@ -102,9 +102,15 @@ DriveMemory::loadRom(const u8 *buf, isize size, u16 addr)
     assert(buf);
     assert(addr + size <= 0x10000);
 
+    // Delete old ROM (if any)
+    deleteRom();
+
+    // Install new ROM
     for (isize i = 0; i < size; i++) {
         mem[addr + i] = buf[i];
     }
+    
+    // Update bank map
     for (isize i = 0; i < size; i += 1024) {
         usage[(addr + i) >> 10] = DRVMEM_ROM;
     }
