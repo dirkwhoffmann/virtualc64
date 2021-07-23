@@ -429,9 +429,26 @@ VIA6522::peekORB()
 u8
 VIA6522::spypeek(u16 addr) const
 {
-    assert (addr <= 0xF);
-    
-    // spypeek is not supported by this component, yet.
+    switch(addr) {
+            
+        case 0x0: return irb;
+        case 0x1: return ira;
+        case 0x2: return ddrb;
+        case 0x3: return ddra;
+        case 0x4: return LO_BYTE(t1);
+        case 0x5: return HI_BYTE(t1);
+        case 0x6: return t1_latch_lo;
+        case 0x7: return t1_latch_hi;
+        case 0x8: return LO_BYTE(t2);
+        case 0x9: return HI_BYTE(t2);
+        case 0xA: return sr;
+        case 0xB: return acr;
+        case 0xC: return pcr;
+        case 0xD: return ifr | ((ifr & ier) ? 0x80 : 0x00);
+        case 0xE: return ier | 0x80;
+        case 0xF: return ira;
+    }
+
     assert(false);
     return 0;
 }

@@ -62,6 +62,13 @@ DriveMemory::_dump(dump::Category category, std::ostream& os) const
                 oldsrc = newsrc; oldi = i;
             }
         }
+        
+        // REMOVE ASAP
+        for (isize addr = 0; addr < 65536; addr++) {
+            u8 value1 = spypeek(addr);
+            u8 value2 = oldspypeek(addr);
+            assert(value1 == value2);
+        }
     }
     
     if (category & dump::State) {
@@ -182,6 +189,45 @@ DriveMemory::oldPeek(u16 addr)
 
 u8
 DriveMemory::spypeek(u16 addr) const
+{
+    u8 result;
+    
+    switch (usage[addr >> 10]) {
+            
+        case DRVMEM_NONE:
+            result = addr >> 8 & 0x1F;
+            break;
+            
+        case DRVMEM_RAM:
+            result = mem[addr & 0x07FF];
+            break;
+            
+        case DRVMEM_EXP:
+            result = mem[addr];
+            break;
+            
+        case DRVMEM_ROM:
+            result = mem[addr];
+            break;
+            
+        case DRVMEM_VIA1:
+            result = drive.via1.spypeek(addr & 0xF);
+            break;
+            
+        case DRVMEM_VIA2:
+            result = drive.via2.spypeek(addr & 0xF);
+            break;
+            
+        default:
+            assert(false);
+            return 0;
+    }
+
+    return result;
+}
+
+u8
+DriveMemory::oldspypeek(u16 addr) const
 {
     if (addr >= 0x8000) {
         return rom[addr & 0x3FFF];
