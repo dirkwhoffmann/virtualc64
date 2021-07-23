@@ -294,7 +294,7 @@ dec::operator()(std::ostream &os) const
 std::ostream &
 hex::operator()(std::ostream &os) const
 {
-    os << std::hex << "0x" << std::setw(2) << std::setfill('0') << value;
+    os << std::hex << "0x" << std::setw(digits) << std::setfill('0') << value;
     return os;
 };
 

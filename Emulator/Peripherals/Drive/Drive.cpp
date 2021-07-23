@@ -284,6 +284,8 @@ Drive::_dump(dump::Category category, std::ostream& os) const
         os << dec(config.insertVolume) << std::endl;
         os << tab("Eject volume");
         os << dec(config.ejectVolume) << std::endl;
+        
+        mem.HardwareComponent::_dump(dump::BankMap, os);
     }
     
     if (category & dump::State) {
@@ -302,6 +304,11 @@ Drive::_dump(dump::Category category, std::ostream& os) const
         os << bol(sync) << std::endl;
         os << tab("Read mode");
         os << bol(readMode()) << std::endl;
+    }
+    
+    if (category & dump::BankMap) {
+
+        mem.dump(dump::BankMap, os);
     }
     
     if (category & dump::Disk) {

@@ -53,12 +53,13 @@ struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
 
 enum_long(DRVMEM_TYPE)
 {
-    DRVMEM_NONE,
-    DRVMEM_RAM,
-    DRVMEM_ROM,
-    DRVMEM_VIA1,
-    DRVMEM_VIA2,
-    DRVMEM_PIA
+    DRVMEM_NONE,  // Unmapped
+    DRVMEM_RAM,   // Build-in RAM
+    DRVMEM_EXP,   // Expansion RAM
+    DRVMEM_ROM,   // Firmware
+    DRVMEM_VIA1,  // Versatile Interface Adapter 1
+    DRVMEM_VIA2,  // Versatile Interface Adapter 2
+    DRVMEM_PIA    // Peripheral Interface Adapter (not supported, yet)
 };
 typedef DRVMEM_TYPE DrvMemType;
 

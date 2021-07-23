@@ -14,7 +14,18 @@
 
 DriveMemory::DriveMemory(C64 &ref, Drive &dref) : C64Component(ref), drive(dref)
 {
-    memset(rom, 0, sizeof(rom));
+    for (isize bank = 0; bank < 32; bank += 8) {
+
+        usage[bank + 0] = DRVMEM_RAM;
+        usage[bank + 1] = DRVMEM_RAM;
+        usage[bank + 6] = DRVMEM_VIA1;
+        usage[bank + 7] = DRVMEM_VIA2;
+    }
+
+    for (isize bank = 32; bank < 64; bank++) {
+
+        usage[bank] = DRVMEM_ROM;
+    }
 }
 
 void 
@@ -23,6 +34,9 @@ DriveMemory::_reset(bool hard)
     RESET_SNAPSHOT_ITEMS(hard)
 
     // Initialize RAM with powerup pattern (pattern from Hoxs64)
+    for (unsigned i = 0; i < 0x0800; i++) {
+        mem[i] = (i & 64) ? 0xFF : 0x00;
+    }
     for (unsigned i = 0; i < sizeof(ram); i++) {
         ram[i] = (i & 64) ? 0xFF : 0x00;
     }
@@ -33,6 +47,23 @@ DriveMemory::_dump(dump::Category category, std::ostream& os) const
 {
     using namespace util;
     
+    if (category & dump::BankMap) {
+        
+        DrvMemType oldsrc = usage[0];
+        isize oldi = 0;
+
+        for (isize i = 0; i <= 64; i++) {
+            DrvMemType newsrc = i < 64 ? usage[i] : (DrvMemType)-1;
+            if (oldsrc != newsrc) {
+                os << "        ";
+                os << util::hex((u16)(oldi << 10)) << " - ";
+                os << util::hex((u16)((i << 10) - 1)) << " : ";
+                os << DrvMemTypeEnum::key(oldsrc) << std::endl;
+                oldsrc = newsrc; oldi = i;
+            }
+        }
+    }
+    
     if (category & dump::State) {
         
         os << tab("Drive ROM");
@@ -40,8 +71,90 @@ DriveMemory::_dump(dump::Category category, std::ostream& os) const
     }
 }
 
-u8 
+void
+DriveMemory::loadRom(const u8 *buf, isize size, u16 addr)
+{
+    debug(true, "Flashing Drive Firmware to %x (%x)\n", addr, (u16)size);
+    
+    assert(buf);
+    assert(addr + size <= 0x10000);
+
+    for (isize i = 0; i < size; i++) {
+        mem[addr + i] = buf[i];
+    }
+}
+
+void
+DriveMemory::loadRom(const u8 *buf, isize size)
+{
+    // 16KB Roms are mapped to 0x8000 and 0xC000
+    if (size == 0x4000) {
+        loadRom(buf, size, 0x8000);
+        loadRom(buf, size, 0xC000);
+    }
+    
+    // 24KB Roms are mapped to 0xA000
+    if (size == 0x6000) {
+        loadRom(buf, size, 0xA000);
+    }
+
+    // 32KB Roms are mapped to 0x8000
+    if (size == 0x8000) {
+        loadRom(buf, size, 0x8000);
+    }
+}
+
+u8
 DriveMemory::peek(u16 addr)
+{
+    u8 result;
+    
+    switch (usage[addr >> 10]) {
+            
+        case DRVMEM_NONE:
+            result = addr >> 8 & 0x1F;
+            break;
+            
+        case DRVMEM_RAM:
+            result = mem[addr & 0x07FF];
+            break;
+            
+        case DRVMEM_EXP:
+            result = mem[addr];
+            break;
+            
+        case DRVMEM_ROM:
+            result = mem[addr];
+            break;
+
+        case DRVMEM_VIA1:
+            result = drive.via1.peek(addr & 0xF);
+            break;
+            
+        case DRVMEM_VIA2:
+            result = drive.via2.peek(addr & 0xF);
+            break;
+            
+        default:
+            assert(false);
+            return 0;
+    }
+    
+    if (usage[addr >> 10] != DRVMEM_VIA1 && usage[addr >> 10] != DRVMEM_VIA2) {
+        
+        u8 old = oldPeek(addr);
+        if (old != result) {
+            printf("old: %x new: %x addr: %x\n", old, result, addr);
+        }
+        assert(old == result);
+    }
+    
+    return oldPeek(addr);
+//     return result;
+}
+
+u8 
+DriveMemory::oldPeek(u16 addr)
 {
     if (addr >= 0x8000) {
         
@@ -85,6 +198,28 @@ DriveMemory::spypeek(u16 addr) const
 void 
 DriveMemory::poke(u16 addr, u8 value)
 {
+    switch (usage[addr >> 10]) {
+                        
+        case DRVMEM_RAM:
+            mem[addr & 0x07FF] = value;
+            break;
+            
+        case DRVMEM_EXP:
+            mem[addr] = value;
+            break;
+            
+        case DRVMEM_VIA1:
+            drive.via1.poke(addr & 0xF, value);
+            break;
+            
+        case DRVMEM_VIA2:
+            drive.via2.poke(addr & 0xF, value);
+            break;
+            
+        default:
+            break;
+    }
+    
     if (addr >= 0x8000) { // ROM
         return;
     }

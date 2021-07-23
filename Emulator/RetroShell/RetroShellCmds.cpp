@@ -317,6 +317,13 @@ RetroShell::exec <Token::drive, Token::inspect, Token::state> (Arguments& argv, 
 }
 
 template <> void
+RetroShell::exec <Token::drive, Token::inspect, Token::bankmap> (Arguments& argv, long param)
+{
+    auto &drive = param ? c64.drive9 : c64.drive8;
+    dump(drive, dump::BankMap);
+}
+
+template <> void
 RetroShell::exec <Token::drive, Token::inspect, Token::disk> (Arguments& argv, long param)
 {
     auto &drive = param ? c64.drive9 : c64.drive8;

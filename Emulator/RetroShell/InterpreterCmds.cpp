@@ -193,6 +193,10 @@ Interpreter::registerInstructions()
              "command", "Displays the drive state",
              &RetroShell::exec <Token::drive, Token::inspect, Token::state>);
 
+    root.add({"drive8", "drive9"}, {"", "inspect", "bankmap"},
+             "command", "Displays the memory layout",
+             &RetroShell::exec <Token::drive, Token::inspect, Token::bankmap>);
+
     root.add({"drive8", "drive9"}, {"", "inspect", "disk"},
              "command", "Displays the disk state",
              &RetroShell::exec <Token::drive, Token::inspect, Token::disk>);

@@ -1322,6 +1322,8 @@ C64::loadRom(RomFile *file)
             
             file->flash(drive8.mem.rom);
             file->flash(drive9.mem.rom);
+            drive8.mem.loadRom(file->data, file->size);
+            drive9.mem.loadRom(file->data, file->size);
             debug(MEM_DEBUG, "VC1541 Rom flashed\n");
             break;
             

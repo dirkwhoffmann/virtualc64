@@ -10,6 +10,7 @@
 #pragma once
 
 #include "C64Component.h"
+#include "DriveTypes.h"
 
 class DriveMemory : public C64Component {
     
@@ -23,6 +24,12 @@ public:
     // RAM (2 KB) and ROM (16 KB)
     u8 ram[0x0800];
     u8 rom[0x4000];
+    
+    // Memory (Ram, Rom, or unused)
+    u8 mem[0x10000];
+    
+    // Memory usage table (one entry for each KB)
+    DrvMemType usage[64] = {};
     
     
     //
@@ -59,6 +66,8 @@ private:
     {
         worker
         
+        << mem
+        << usage
         << ram
         << rom;
     }
@@ -74,13 +83,24 @@ private:
     
     
     //
-    // Accessing RAM
+    // Installing Roms
+    //
+    
+public:
+    
+    void loadRom(const u8 *buf, isize size, u16 addr);
+    void loadRom(const u8 *buf, isize size);
+
+    
+    //
+    // Accessing memory
     //
     
 public:
     
     // Reads a value from memory
     u8 peek(u16 addr);
+    u8 oldPeek(u16 addr);
     u8 peekZP(u8 addr) { return ram[addr]; }
     u8 peekStack(u8 sp) { return ram[0x100 + sp]; }
     
@@ -95,6 +115,6 @@ public:
 
     // Writes a value into memory
     void poke(u16 addr, u8 value);
-    void pokeZP(u8 addr, u8 value) { ram[addr] = value; }
-    void pokeStack(u8 sp, u8 value) { ram[0x100 + sp] = value; }
+    void pokeZP(u8 addr, u8 value) { ram[addr] = mem[addr] = value; }
+    void pokeStack(u8 sp, u8 value) { ram[0x100 + sp] = mem[0x100 + sp] = value; }
 };
