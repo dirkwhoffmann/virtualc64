@@ -61,14 +61,7 @@ DriveMemory::_dump(dump::Category category, std::ostream& os) const
                 os << DrvMemTypeEnum::key(oldsrc) << std::endl;
                 oldsrc = newsrc; oldi = i;
             }
-        }
-        
-        // REMOVE ASAP
-        for (isize addr = 0; addr < 65536; addr++) {
-            u8 value1 = spypeek(addr);
-            u8 value2 = oldspypeek(addr);
-            assert(value1 == value2);
-        }
+        }        
     }
     
     if (category & dump::State) {
@@ -78,11 +71,37 @@ DriveMemory::_dump(dump::Category category, std::ostream& os) const
     }
 }
 
+u16
+DriveMemory::romAddr()
+{
+    for (isize i = 0; i < 64; i++) {
+        if (usage[i] == DRVMEM_ROM) return (u16)(i * 1024);
+    }
+    return 0;
+}
+
+u16
+DriveMemory::romSize()
+{
+    u16 result = 0;
+    
+    for (isize i = 0; i < 64; i++) {
+        if (usage[i] == DRVMEM_ROM) result += 1024;
+    }
+    return result;
+}
+
+void
+DriveMemory::deleteRom()
+{
+    for (isize i = 0; i < 64; i++) {
+        if (usage[i] == DRVMEM_ROM) usage[i] = DRVMEM_NONE;
+    }
+}
+
 void
 DriveMemory::loadRom(const u8 *buf, isize size, u16 addr)
 {
-    debug(true, "Flashing Drive Firmware to %x (%x)\n", addr, (u16)size);
-    
     assert(buf);
     assert(addr + size <= 0x10000);
 
@@ -147,44 +166,7 @@ DriveMemory::peek(u16 addr)
             return 0;
     }
     
-    if (usage[addr >> 10] != DRVMEM_VIA1 && usage[addr >> 10] != DRVMEM_VIA2) {
-        
-        u8 old = oldPeek(addr);
-        if (old != result) {
-            printf("old: %x new: %x addr: %x\n", old, result, addr);
-        }
-        assert(old == result);
-    }
-    
-    return oldPeek(addr);
-//     return result;
-}
-
-u8 
-DriveMemory::oldPeek(u16 addr)
-{
-    if (addr >= 0x8000) {
-        
-        // 0xC000 - 0xFFFF : ROM
-        // 0x8000 - 0xBFFF : ROM (repeated)
-        //return mem[addr | 0xC000];
-        return rom[addr & 0x3FFF];
-        
-    } else {
-        
-        // Map to range 0x0000 - 0x1FFF
-        addr &= 0x1FFF;
-        
-        // 0x0000 - 0x07FF : RAM
-        // 0x0800 - 0x17FF : unmapped
-        // 0x1800 - 0x1BFF : VIA 1 (repeats every 16 bytes)
-        // 0x1C00 - 0x1FFF : VIA 2 (repeats every 16 bytes)
-        return
-        (addr < 0x0800) ? ram[addr] :
-        (addr < 0x1800) ? addr >> 8 :
-        (addr < 0x1C00) ? drive.via1.peek(addr & 0xF) :
-        drive.via2.peek(addr & 0xF);
-    }
+    return result;
 }
 
 u8
@@ -224,21 +206,6 @@ DriveMemory::spypeek(u16 addr) const
     }
 
     return result;
-}
-
-u8
-DriveMemory::oldspypeek(u16 addr) const
-{
-    if (addr >= 0x8000) {
-        return rom[addr & 0x3FFF];
-    } else {
-        addr &= 0x1FFF;
-        return
-        (addr < 0x0800) ? ram[addr] :
-        (addr < 0x1800) ? addr >> 8 :
-        (addr < 0x1C00) ? drive.via1.spypeek(addr & 0xF) :
-        drive.via2.spypeek(addr & 0xF);
-    }
 }
 
 void 

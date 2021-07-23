@@ -83,11 +83,16 @@ private:
     
     
     //
-    // Installing Roms
+    // Working with Roms
     //
     
 public:
     
+    u16 romAddr();
+    u16 romSize();
+    bool hasRom() { return romSize() != 0; }
+    
+    void deleteRom();
     void loadRom(const u8 *buf, isize size, u16 addr);
     void loadRom(const u8 *buf, isize size);
 
@@ -100,7 +105,6 @@ public:
     
     // Reads a value from memory
     u8 peek(u16 addr);
-    u8 oldPeek(u16 addr);
     u8 peekZP(u8 addr) { return ram[addr]; }
     u8 peekStack(u8 sp) { return ram[0x100 + sp]; }
     
@@ -112,7 +116,6 @@ public:
     
     // Reads a value from memory without side effects
     u8 spypeek(u16 addr) const;
-    u8 oldspypeek(u16 addr) const;
 
     // Writes a value into memory
     void poke(u16 addr, u8 value);
