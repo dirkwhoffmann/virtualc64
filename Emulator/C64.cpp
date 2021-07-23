@@ -1397,9 +1397,7 @@ C64::saveRom(RomType type, const string &path)
         case ROM_TYPE_VC1541:
         {
             if (hasRom(ROM_TYPE_VC1541)) {
-                RomFile *file = RomFile::make <RomFile> (drive8.mem.rom, 0x4000);
-                file->writeToFile(path);
-                delete file;
+                drive8.mem.saveRom(path);
             }
             break;
         }

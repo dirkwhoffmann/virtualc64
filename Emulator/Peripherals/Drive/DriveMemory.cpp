@@ -21,11 +21,6 @@ DriveMemory::DriveMemory(C64 &ref, Drive &dref) : C64Component(ref), drive(dref)
         usage[bank + 6] = DRVMEM_VIA1;
         usage[bank + 7] = DRVMEM_VIA2;
     }
-
-    for (isize bank = 32; bank < 64; bank++) {
-
-        usage[bank] = DRVMEM_ROM;
-    }
 }
 
 void 
@@ -61,7 +56,7 @@ DriveMemory::_dump(dump::Category category, std::ostream& os) const
                 os << DrvMemTypeEnum::key(oldsrc) << std::endl;
                 oldsrc = newsrc; oldi = i;
             }
-        }        
+        }
     }
     
     if (category & dump::State) {
@@ -95,7 +90,9 @@ void
 DriveMemory::deleteRom()
 {
     for (isize i = 0; i < 64; i++) {
-        if (usage[i] == DRVMEM_ROM) usage[i] = DRVMEM_NONE;
+        if (usage[i] == DRVMEM_ROM || usage[i] == DRVMEM_ROM_C000) {
+            usage[i] = DRVMEM_NONE;
+        }
     }
 }
 
@@ -108,15 +105,18 @@ DriveMemory::loadRom(const u8 *buf, isize size, u16 addr)
     for (isize i = 0; i < size; i++) {
         mem[addr + i] = buf[i];
     }
+    for (isize i = 0; i < size; i += 1024) {
+        usage[(addr + i) >> 10] = DRVMEM_ROM;
+    }
 }
 
 void
 DriveMemory::loadRom(const u8 *buf, isize size)
 {
-    // 16KB Roms are mapped to 0x8000 and 0xC000
+    // 16KB Roms are mapped to 0xC000 with a mirror at 0x8000
     if (size == 0x4000) {
-        loadRom(buf, size, 0x8000);
         loadRom(buf, size, 0xC000);
+        for (isize i = 32; i < 48; i++) usage[i] = DRVMEM_ROM_C000;
     }
     
     // 24KB Roms are mapped to 0xA000
@@ -128,6 +128,19 @@ DriveMemory::loadRom(const u8 *buf, isize size)
     if (size == 0x8000) {
         loadRom(buf, size, 0x8000);
     }
+}
+
+void
+DriveMemory::saveRom(const string &path)
+{
+    u16 addr = romAddr();
+    u16 size = romSize();
+            
+    debug(true, "Saving Rom at %x (%x bytes)\n", addr, size);
+    
+    RomFile *file = RomFile::make <RomFile> (mem + addr, size);
+    file->writeToFile(path);
+    delete file;
 }
 
 u8
@@ -151,6 +164,10 @@ DriveMemory::peek(u16 addr)
             
         case DRVMEM_ROM:
             result = mem[addr];
+            break;
+
+        case DRVMEM_ROM_C000:
+            result = mem[addr | 0xC000];
             break;
 
         case DRVMEM_VIA1:
@@ -192,6 +209,10 @@ DriveMemory::spypeek(u16 addr) const
             result = mem[addr];
             break;
             
+        case DRVMEM_ROM_C000:
+            result = mem[addr | 0xC000];
+            break;
+
         case DRVMEM_VIA1:
             result = drive.via1.spypeek(addr & 0xF);
             break;

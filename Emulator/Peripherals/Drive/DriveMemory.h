@@ -95,6 +95,7 @@ public:
     void deleteRom();
     void loadRom(const u8 *buf, isize size, u16 addr);
     void loadRom(const u8 *buf, isize size);
+    void saveRom(const string &path) throws;
 
     
     //

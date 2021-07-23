@@ -53,13 +53,14 @@ struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
 
 enum_long(DRVMEM_TYPE)
 {
-    DRVMEM_NONE,  // Unmapped
-    DRVMEM_RAM,   // Build-in RAM
-    DRVMEM_EXP,   // Expansion RAM
-    DRVMEM_ROM,   // Firmware
-    DRVMEM_VIA1,  // Versatile Interface Adapter 1
-    DRVMEM_VIA2,  // Versatile Interface Adapter 2
-    DRVMEM_PIA    // Peripheral Interface Adapter (not supported, yet)
+    DRVMEM_NONE,      // Unmapped
+    DRVMEM_RAM,
+    DRVMEM_EXP,       // Expansion RAM
+    DRVMEM_ROM,
+    DRVMEM_ROM_C000,  // ROM mirror
+    DRVMEM_VIA1,
+    DRVMEM_VIA2,
+    DRVMEM_PIA        // Peripheral Interface Adapter (not supported, yet)
 };
 typedef DRVMEM_TYPE DrvMemType;
 
@@ -76,12 +77,13 @@ struct DrvMemTypeEnum : util::Reflection<DrvMemTypeEnum, DrvMemType> {
     {
         switch (value) {
                 
-            case DRVMEM_NONE:  return "DRVMEM_NONE";
-            case DRVMEM_RAM:   return "DRVMEM_RAM";
-            case DRVMEM_ROM:   return "DRVMEM_ROM";
-            case DRVMEM_VIA1:  return "DRVMEM_VIA1";
-            case DRVMEM_VIA2:  return "DRVMEM_VIA2";
-            case DRVMEM_PIA:   return "DRVMEM_PIA";
+            case DRVMEM_NONE:       return "DRVMEM_NONE";
+            case DRVMEM_RAM:        return "DRVMEM_RAM";
+            case DRVMEM_ROM:        return "DRVMEM_ROM";
+            case DRVMEM_ROM_C000:   return "DRVMEM_ROM_C000";
+            case DRVMEM_VIA1:       return "DRVMEM_VIA1";
+            case DRVMEM_VIA2:       return "DRVMEM_VIA2";
+            case DRVMEM_PIA:        return "DRVMEM_PIA";
         }
         return "???";
     }
