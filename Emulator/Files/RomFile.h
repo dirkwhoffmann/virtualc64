@@ -12,22 +12,17 @@
 #include "AnyFile.h"
 #include "C64Types.h"
 
+struct RomSignature { RomType type; isize size; isize offset; u8 magic[3]; };
+
 class RomFile : public AnyFile {
     
 private:
 
     // Accepted header signatures
-    static const usize basicRomSignatureCnt  = 3;
-    static const usize charRomSignatureCnt   = 10;
-    static const usize kernalRomSignatureCnt = 4;
-    static const usize vc1541RomSignatureCnt = 4;
-
-    static const u8 magicBasicRomBytes[basicRomSignatureCnt][3];
-    static const u8 magicCharRomBytes[charRomSignatureCnt][4];
-    static const u8 magicKernalRomBytes[kernalRomSignatureCnt][3];
-    static const u8 magicVC1541RomBytes[vc1541RomSignatureCnt][3];
-
+    static const RomSignature signatures[];
+    
     // Rom type (Basic, Character, Kernal, or VC1541)
+    // TODO: Replace FileType by RomType
     FileType romType = FILETYPE_UNKNOWN;
         
 public:

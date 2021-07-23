@@ -12,42 +12,32 @@
 #include "C64.h"
 #include "IO.h"
 
-const u8 RomFile::magicBasicRomBytes[basicRomSignatureCnt][3] = {
+const RomSignature RomFile::signatures[] = {
+   
+    { ROM_TYPE_BASIC,  0x2000, 0x0000, { 0x94, 0xE3, 0x7B } }, // Commodore
+    { ROM_TYPE_BASIC,  0x2000, 0x0000, { 0x63, 0xA6, 0xC1 } }, // MEGA65
+    { ROM_TYPE_BASIC,  0x2000, 0x0000, { 0x94, 0xE3, 0xB7 } }, // MEGA65
+    
+    { ROM_TYPE_CHAR,   0x1000, 0x0000, { 0x3C, 0x66, 0x6E } }, // Commodore
+    { ROM_TYPE_CHAR,   0x1000, 0x0000, { 0x00, 0x3C, 0x66 } }, // Atari800
+    { ROM_TYPE_CHAR,   0x1000, 0x0000, { 0x70, 0x88, 0x08 } }, // MSX
+    { ROM_TYPE_CHAR,   0x1000, 0x0000, { 0x00, 0x3C, 0x4A } }, // Speccy
+    { ROM_TYPE_CHAR,   0x1000, 0x0000, { 0x7C, 0xC6, 0xDE } }, // Amstrad, Amiga
+    { ROM_TYPE_CHAR,   0x1000, 0x0000, { 0x38, 0x44, 0x5C } }, // Speccy
 
-    { 0x94, 0xE3, 0x7B },       // Commodore ROM
-    { 0x63, 0xA6, 0xC1 },       // MEGA65 project
-    { 0x94, 0xE3, 0xB7 }        // MEGA65 project
+    { ROM_TYPE_KERNAL, 0x2000, 0x0000, { 0x85, 0x56, 0x20 } }, // Commodore
+    { ROM_TYPE_KERNAL, 0x2000, 0x0000, { 0xA9, 0x93, 0x20 } }, // MEGA65
+    { ROM_TYPE_KERNAL, 0x2000, 0x0000, { 0x20, 0x2E, 0xBA } }, // MEGA65
+    { ROM_TYPE_KERNAL, 0x2000, 0x0000, { 0x20, 0x02, 0xBE } }, // MEGA65
 
-};
-
-const u8 RomFile::magicCharRomBytes[charRomSignatureCnt][4] = {
-
-    { 0x3C, 0x66, 0x6E, 0x6E }, // Commodore ROM
-    { 0x00, 0x3C, 0x66, 0x6E }, // chargen-atari800      (1130C1CE287876DD)
-    { 0x70, 0x88, 0x08, 0x68 }, // chargen-msx           (975546A5B6168FFD)
-    { 0x00, 0x3C, 0x4A, 0x56 }, // chargen-speccy        (7C74107C9365F735)
-    { 0x7C, 0xC6, 0xDE, 0xDE }, // chargen-amstradcpc    (AFFE8B0EE2176CBD)
-    { 0x7C, 0xC6, 0xDE, 0xDE }, // Amiga 500 Topaz       (D14C5BE4FEE17705)
-    { 0x7C, 0xC6, 0xDE, 0xDE }, // Amiga 500 Topaz V2    (A2C6A6E2C0477981)
-    { 0x7C, 0xC6, 0xDE, 0xD6 }, // Amiga 1200 Topaz      (3BF55C821EE80365)
-    { 0x7C, 0xC6, 0xDE, 0xD6 }, // Amiga 1200 Topaz V2   (19F0DD3F3F9C4FE9)
-    { 0x38, 0x44, 0x5C, 0x54 }, // Teletext              (E527AD3E0DDE930D)
-};
-
-const u8 RomFile::magicKernalRomBytes[kernalRomSignatureCnt][3] = {
-
-    { 0x85, 0x56, 0x20 },       // Commodore ROM
-    { 0xA9, 0x93, 0x20 },       // MEGA65 project
-    { 0x20, 0x2E, 0xBA },       // MEGA65 project
-    { 0x20, 0x02, 0xBE }        // MEGA65 project
-};
-
-const u8 RomFile::magicVC1541RomBytes[vc1541RomSignatureCnt][3] = {
-
-    { 0x97, 0xAA, 0xAA },       // Commodore ROM
-    { 0x97, 0xE0, 0x43 },       // Commodore ROM
-    { 0x97, 0x46, 0xAD },       // Commodore ROM
-    { 0x97, 0xDB, 0x43 }        // Commodore ROM
+    { ROM_TYPE_VC1541, 0x4000, 0x0000, { 0x97, 0xAA, 0xAA } }, // Commodore
+    { ROM_TYPE_VC1541, 0x4000, 0x0000, { 0x97, 0xE0, 0x43 } }, // Commodore
+    { ROM_TYPE_VC1541, 0x4000, 0x0000, { 0x97, 0x46, 0xAD } }, // Commodore
+    { ROM_TYPE_VC1541, 0x4000, 0x0000, { 0x97, 0xDB, 0x43 } }, // Commodore
+    { ROM_TYPE_VC1541, 0x6000, 0x0000, { 0x4C, 0x4B, 0xA3 } }, // Dolphin
+    { ROM_TYPE_VC1541, 0x8000, 0x2000, { 0x4C, 0x4B, 0xA3 } }, // Dolphin
+    
+    { ROM_TYPE_COUNT,  0x0000, 0x0000, { 0x00, 0x00, 0x00 } }
 };
 
 bool
@@ -67,82 +57,49 @@ RomFile::isCompatibleStream(std::istream &stream)
 }
 
 bool
-RomFile::isRomStream(RomType type, std::istream &stream)
+RomFile::isRomStream(RomType type, std::istream &is)
 {
-    switch (type) {
-        case ROM_TYPE_BASIC:   return isBasicRomStream(stream);
-        case ROM_TYPE_CHAR:    return isCharRomStream(stream);
-        case ROM_TYPE_KERNAL:  return isKernalRomStream(stream);
-        case ROM_TYPE_VC1541:  return isVC1541RomStream(stream);
-
-        default:
-            assert(false);
-            return false;
-    }
-}
-
-bool
-RomFile::isBasicRomStream(std::istream &stream)
-{
-    if (util::streamLength(stream) != 0x2000) return false;
-
-    for (usize i = 0; i < basicRomSignatureCnt; i++) {
+    isize size = util::streamLength(is);
+    
+    for (isize i = 0; signatures[i].type != ROM_TYPE_COUNT; i++) {
+            
+        // Only proceed if the file type matches
+        if (signatures[i].type != type) continue;
         
-        if (util::matchingStreamHeader(stream,
-                                       magicBasicRomBytes[i],
-                                       sizeof(magicBasicRomBytes[i]))) {
-            return true;
-        }
+        // Only proceed if the file size matches
+        if (signatures[i].size != size) continue;
+
+        // Only proceed if the matches bytes matche
+        if (!util::matchingStreamHeader(is, signatures[i].magic, 3)) continue;
+
+        return true;
     }
+        
     return false;
 }
 
 bool
-RomFile::isCharRomStream(std::istream &stream)
+RomFile::isBasicRomStream(std::istream &is)
 {
-    if (util::streamLength(stream) != 0x1000) return false;
-
-    for (usize i = 0; i < basicRomSignatureCnt; i++) {
-        
-        if (util::matchingStreamHeader(stream,
-                                       magicCharRomBytes[i],
-                                       sizeof(magicCharRomBytes[i]))) {
-            return true;
-        }
-    }
-    return false;
+    return isRomStream(ROM_TYPE_BASIC, is);
 }
 
 bool
-RomFile::isKernalRomStream(std::istream &stream)
+RomFile::isCharRomStream(std::istream &is)
 {
-    if (util::streamLength(stream) != 0x2000) return false;
-
-    for (usize i = 0; i < kernalRomSignatureCnt; i++) {
-        
-        if (util::matchingStreamHeader(stream,
-                                       magicKernalRomBytes[i],
-                                       sizeof(magicKernalRomBytes[i]))) {
-            return true;
-        }
-    }
-    return false;
+    return isRomStream(ROM_TYPE_CHAR, is);
 }
 
 bool
-RomFile::isVC1541RomStream(std::istream &stream)
+RomFile::isKernalRomStream(std::istream &is)
 {
-    if (util::streamLength(stream) != 0x4000) return false;
+    return isRomStream(ROM_TYPE_KERNAL, is);
+}
 
-    for (usize i = 0; i < vc1541RomSignatureCnt; i++) {
-        
-        if (util::matchingStreamHeader(stream,
-                                       magicVC1541RomBytes[i],
-                                       sizeof(magicVC1541RomBytes[i]))) {
-            return true;
-        }
-    }
-    return false;
+bool
+RomFile::isVC1541RomStream(std::istream &is)
+{
+    return isRomStream(ROM_TYPE_VC1541, is);
 }
 
 bool

@@ -61,10 +61,10 @@ AnyFile::readFromStream(std::istream &stream)
     data = new u8[fsize]();
     size = fsize;
 
-    // Fix known inconsistencies
+    // Read data
     stream.read((char *)data, size);
     
-    // Repair the file (if applicable)
+    // Fix known inconsistencies
     repair();
     
     return size;
