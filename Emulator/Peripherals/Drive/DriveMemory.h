@@ -21,9 +21,12 @@ private:
     
 public:
     
+    // RAM (the first 2KB are built-in, everything else is expansion Ram)
+    u8 ram[0xA000];
+    
     // RAM (2 KB) and ROM (16 KB)
-    [[deprecated]] u8 ram[0x0800];
-    [[deprecated]] u8 rom[0x4000];
+    // [[deprecated]] u8 ram[0x0800];
+    // [[deprecated]] u8 rom[0x4000];
     
     // Memory (Ram, Rom, or unused)
     u8 mem[0x10000];
@@ -66,6 +69,7 @@ private:
     {
         worker
         
+        << ram
         << mem
         << usage;
     }
@@ -115,8 +119,8 @@ public:
     
     // Reads a value from memory
     u8 peek(u16 addr);
-    u8 peekZP(u8 addr) { return mem[addr]; }
-    u8 peekStack(u8 sp) { return mem[0x100 + sp]; }
+    u8 peekZP(u8 addr) { return ram[addr]; }
+    u8 peekStack(u8 sp) { return ram[0x100 + sp]; }
     
     // Emulates an idle read access
     void peekIdle(u16 addr) { }
@@ -129,6 +133,6 @@ public:
 
     // Writes a value into memory
     void poke(u16 addr, u8 value);
-    void pokeZP(u8 addr, u8 value) { mem[addr] = value; }
-    void pokeStack(u8 sp, u8 value) { mem[0x100 + sp] = value; }
+    void pokeZP(u8 addr, u8 value) { ram[addr] = value; }
+    void pokeStack(u8 sp, u8 value) { ram[0x100 + sp] = value; }
 };

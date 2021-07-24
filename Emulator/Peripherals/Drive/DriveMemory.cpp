@@ -30,6 +30,10 @@ DriveMemory::_reset(bool hard)
     RESET_SNAPSHOT_ITEMS(hard)
 
     // Initialize RAM with powerup pattern (pattern from Hoxs64)
+    for (unsigned i = 0; i < sizeof(ram); i++) {
+        mem[i] = (i & 64) ? 0xFF : 0x00;
+    }
+
     for (unsigned i = 0; i < 0x0800; i++) {
         mem[i] = (i & 64) ? 0xFF : 0x00;
     }
@@ -179,11 +183,11 @@ DriveMemory::peek(u16 addr)
             break;
             
         case DRVMEM_RAM:
-            result = mem[addr & 0x07FF];
+            result = ram[addr & 0x07FF];
             break;
             
         case DRVMEM_EXP:
-            result = mem[addr];
+            result = ram[addr];
             break;
             
         case DRVMEM_ROM:
@@ -222,11 +226,11 @@ DriveMemory::spypeek(u16 addr) const
             break;
             
         case DRVMEM_RAM:
-            result = mem[addr & 0x07FF];
+            result = ram[addr & 0x07FF];
             break;
             
         case DRVMEM_EXP:
-            result = mem[addr];
+            result = ram[addr];
             break;
             
         case DRVMEM_ROM:
@@ -259,11 +263,11 @@ DriveMemory::poke(u16 addr, u8 value)
     switch (usage[addr >> 10]) {
                         
         case DRVMEM_RAM:
-            mem[addr & 0x07FF] = value;
+            ram[addr & 0x07FF] = value;
             break;
             
         case DRVMEM_EXP:
-            mem[addr] = value;
+            ram[addr] = value;
             break;
             
         case DRVMEM_VIA1:
