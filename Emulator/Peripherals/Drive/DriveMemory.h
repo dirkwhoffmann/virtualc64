@@ -22,8 +22,8 @@ private:
 public:
     
     // RAM (2 KB) and ROM (16 KB)
-    u8 ram[0x0800];
-    u8 rom[0x4000];
+    [[deprecated]] u8 ram[0x0800];
+    [[deprecated]] u8 rom[0x4000];
     
     // Memory (Ram, Rom, or unused)
     u8 mem[0x10000];
@@ -86,11 +86,22 @@ private:
     
 public:
     
-    u16 romAddr();
-    u16 romSize();
-    bool hasRom() { return romSize() != 0; }
-    
+    // Returns the size and start address of the Rom
+    u16 romAddr() const;
+    u16 romSize() const;
+
+    // Indicates if a Rom is installed
+    bool hasRom() const { return romSize() != 0; }
+
+    // Computes a Rom checksum
+    u32 romCRC32() const;
+    u64 romFNV64() const;
+
+    // Removes the currently installed Rom
     void deleteRom();
+    
+    // Loads or saves a Rom
+    void loadRom(const RomFile *file);
     void loadRom(const u8 *buf, isize size, u16 addr);
     void loadRom(const u8 *buf, isize size);
     void saveRom(const string &path) throws;
@@ -104,8 +115,8 @@ public:
     
     // Reads a value from memory
     u8 peek(u16 addr);
-    u8 peekZP(u8 addr) { return ram[addr]; }
-    u8 peekStack(u8 sp) { return ram[0x100 + sp]; }
+    u8 peekZP(u8 addr) { return mem[addr]; }
+    u8 peekStack(u8 sp) { return mem[0x100 + sp]; }
     
     // Emulates an idle read access
     void peekIdle(u16 addr) { }
@@ -118,6 +129,6 @@ public:
 
     // Writes a value into memory
     void poke(u16 addr, u8 value);
-    void pokeZP(u8 addr, u8 value) { ram[addr] = mem[addr] = value; }
-    void pokeStack(u8 sp, u8 value) { ram[0x100 + sp] = mem[0x100 + sp] = value; }
+    void pokeZP(u8 addr, u8 value) { mem[addr] = value; }
+    void pokeStack(u8 sp, u8 value) { mem[0x100 + sp] = value; }
 };

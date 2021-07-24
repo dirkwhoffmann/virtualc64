@@ -10,6 +10,7 @@
 #include "config.h"
 #include "DriveMemory.h"
 #include "C64.h"
+#include "Checksum.h"
 #include "IO.h"
 
 DriveMemory::DriveMemory(C64 &ref, Drive &dref) : C64Component(ref), drive(dref)
@@ -31,9 +32,6 @@ DriveMemory::_reset(bool hard)
     // Initialize RAM with powerup pattern (pattern from Hoxs64)
     for (unsigned i = 0; i < 0x0800; i++) {
         mem[i] = (i & 64) ? 0xFF : 0x00;
-    }
-    for (unsigned i = 0; i < sizeof(ram); i++) {
-        ram[i] = (i & 64) ? 0xFF : 0x00;
     }
 }
 
@@ -67,7 +65,7 @@ DriveMemory::_dump(dump::Category category, std::ostream& os) const
 }
 
 u16
-DriveMemory::romAddr()
+DriveMemory::romAddr() const
 {
     for (isize i = 0; i < 64; i++) {
         if (usage[i] == DRVMEM_ROM) return (u16)(i * 1024);
@@ -76,7 +74,7 @@ DriveMemory::romAddr()
 }
 
 u16
-DriveMemory::romSize()
+DriveMemory::romSize() const
 {
     u16 result = 0;
     
@@ -84,6 +82,18 @@ DriveMemory::romSize()
         if (usage[i] == DRVMEM_ROM) result += 1024;
     }
     return result;
+}
+
+u32
+DriveMemory::romCRC32() const
+{
+    return hasRom() ? util::crc32(mem + romAddr(), romSize()) : 0;
+}
+
+u64
+DriveMemory::romFNV64() const
+{
+    return hasRom() ? util::fnv_1a_64(mem + romAddr(), romSize()) : 0;
 }
 
 void
@@ -97,9 +107,17 @@ DriveMemory::deleteRom()
 }
 
 void
+DriveMemory::loadRom(const RomFile *file)
+{
+    assert(file != nullptr);
+    
+    loadRom(file->data, file->size);
+}
+
+void
 DriveMemory::loadRom(const u8 *buf, isize size, u16 addr)
 {
-    assert(buf);
+    assert(buf != nullptr);
     assert(addr + size <= 0x10000);
 
     // Delete old ROM (if any)
@@ -258,27 +276,5 @@ DriveMemory::poke(u16 addr, u8 value)
             
         default:
             break;
-    }
-    
-    if (addr >= 0x8000) { // ROM
-        return;
-    }
-    
-    // Map to range 0x0000 - 0x1FFF
-    addr &= 0x1FFF;
-    
-    if (addr < 0x0800) { // RAM
-        ram[addr] = value;
-        return;
-    }
-    
-    if (addr >= 0x1C00) { // VIA 2
-        drive.via2.poke(addr & 0xF, value);
-        return;
-    }
-    
-    if (addr >= 0x1800) { // VIA 1
-        drive.via1.poke(addr & 0xF, value);
-        return;
     }
 }

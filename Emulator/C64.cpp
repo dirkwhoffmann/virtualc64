@@ -1046,7 +1046,7 @@ C64::romCRC32(RomType type) const
         case ROM_TYPE_KERNAL:
             return hasRom(ROM_TYPE_KERNAL) ? util::crc32(mem.rom + 0xE000, 0x2000) : 0;
         case ROM_TYPE_VC1541:
-            return hasRom(ROM_TYPE_VC1541) ? util::crc32(drive8.mem.rom, 0x4000) : 0;
+            return drive8.mem.romCRC32();
         default:
             assert(false);
             return 0;
@@ -1065,7 +1065,7 @@ C64::romFNV64(RomType type) const
         case ROM_TYPE_KERNAL:
             return hasRom(ROM_TYPE_KERNAL) ? util::fnv_1a_64(mem.rom + 0xE000, 0x2000) : 0;
         case ROM_TYPE_VC1541:
-            return hasRom(ROM_TYPE_VC1541) ? util::fnv_1a_64(drive8.mem.rom, 0x4000) : 0;
+            return drive8.mem.romFNV64();
         default:
             assert(false);
             return 0;
@@ -1215,9 +1215,8 @@ C64::hasRom(RomType type) const
         }
         case ROM_TYPE_VC1541:
         {
-            assert(drive8.mem.rom[0] == drive9.mem.rom[0]);
-            assert(drive8.mem.rom[1] == drive9.mem.rom[1]);
-            return (drive8.mem.rom[0] | drive8.mem.rom[1]) != 0x00;
+            assert(drive8.mem.hasRom() == drive9.mem.hasRom());
+            return drive8.mem.hasRom();
         }
         default: assert(false);
     }
@@ -1320,8 +1319,6 @@ C64::loadRom(RomFile *file)
             
         case FILETYPE_VC1541_ROM:
             
-            file->flash(drive8.mem.rom);
-            file->flash(drive9.mem.rom);
             drive8.mem.loadRom(file->data, file->size);
             drive9.mem.loadRom(file->data, file->size);
             debug(MEM_DEBUG, "VC1541 Rom flashed\n");
@@ -1354,8 +1351,8 @@ C64::deleteRom(RomType type)
         }
         case ROM_TYPE_VC1541:
         {
-            memset(drive8.mem.rom, 0, 0x4000);
-            memset(drive9.mem.rom, 0, 0x4000);
+            drive8.mem.deleteRom();
+            drive9.mem.deleteRom();
             break;
         }
         default: assert(false);
@@ -1437,8 +1434,8 @@ C64::flash(AnyFile *file)
             break;
             
         case FILETYPE_VC1541_ROM:
-            file->flash(drive8.mem.rom);
-            file->flash(drive9.mem.rom);
+            drive8.mem.loadRom((RomFile *)file);
+            drive9.mem.loadRom((RomFile *)file);
             break;
             
         case FILETYPE_V64:

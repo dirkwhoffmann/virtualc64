@@ -159,6 +159,8 @@ getSizeOfFile(const string &path)
 
 bool matchingStreamHeader(std::istream &is, const u8 *header, isize len, isize offset)
 {
+    assert(header != nullptr);
+    
     is.seekg(offset, std::ios::beg);
     
     for (isize i = 0; i < len; i++) {
