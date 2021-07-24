@@ -78,6 +78,7 @@ struct DrvMemTypeEnum : util::Reflection<DrvMemTypeEnum, DrvMemType> {
                 
             case DRVMEM_NONE:       return "DRVMEM_NONE";
             case DRVMEM_RAM:        return "DRVMEM_RAM";
+            case DRVMEM_EXP:        return "DRVMEM_EXP";
             case DRVMEM_ROM:        return "DRVMEM_ROM";
             case DRVMEM_VIA1:       return "DRVMEM_VIA1";
             case DRVMEM_VIA2:       return "DRVMEM_VIA2";

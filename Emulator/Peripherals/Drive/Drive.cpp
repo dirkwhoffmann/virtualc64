@@ -65,7 +65,7 @@ Drive::getDefaultConfig()
     defaults.connected = false;
     defaults.switchedOn = true;
     defaults.ram6000 = false;
-    defaults.ram8000 = false;
+    defaults.ram8000 = true;
     defaults.ejectDelay = 30;
     defaults.swapDelay = 30;
     defaults.insertDelay = 30;
