@@ -57,7 +57,6 @@ enum_long(DRVMEM_TYPE)
     DRVMEM_RAM,
     DRVMEM_EXP,       // Expansion RAM
     DRVMEM_ROM,
-    DRVMEM_ROM_C000,  // ROM mirror
     DRVMEM_VIA1,
     DRVMEM_VIA2,
     DRVMEM_PIA        // Peripheral Interface Adapter (not supported, yet)
@@ -80,7 +79,6 @@ struct DrvMemTypeEnum : util::Reflection<DrvMemTypeEnum, DrvMemType> {
             case DRVMEM_NONE:       return "DRVMEM_NONE";
             case DRVMEM_RAM:        return "DRVMEM_RAM";
             case DRVMEM_ROM:        return "DRVMEM_ROM";
-            case DRVMEM_ROM_C000:   return "DRVMEM_ROM_C000";
             case DRVMEM_VIA1:       return "DRVMEM_VIA1";
             case DRVMEM_VIA2:       return "DRVMEM_VIA2";
             case DRVMEM_PIA:        return "DRVMEM_PIA";

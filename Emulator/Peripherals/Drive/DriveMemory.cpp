@@ -15,13 +15,7 @@
 
 DriveMemory::DriveMemory(C64 &ref, Drive &dref) : C64Component(ref), drive(dref)
 {
-    for (isize bank = 0; bank < 32; bank += 8) {
-
-        usage[bank + 0] = DRVMEM_RAM;
-        usage[bank + 1] = DRVMEM_RAM;
-        usage[bank + 6] = DRVMEM_VIA1;
-        usage[bank + 7] = DRVMEM_VIA2;
-    }
+    updateBankMap();
 }
 
 void 
@@ -29,13 +23,9 @@ DriveMemory::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)
 
-    // Initialize RAM with powerup pattern (pattern from Hoxs64)
+    // Initialize RAM with the power-up pattern (pattern from Hoxs64)
     for (unsigned i = 0; i < sizeof(ram); i++) {
-        mem[i] = (i & 64) ? 0xFF : 0x00;
-    }
-
-    for (unsigned i = 0; i < 0x0800; i++) {
-        mem[i] = (i & 64) ? 0xFF : 0x00;
+        ram[i] = (i & 64) ? 0xFF : 0x00;
     }
 }
 
@@ -69,94 +59,110 @@ DriveMemory::_dump(dump::Category category, std::ostream& os) const
 }
 
 u16
-DriveMemory::romAddr() const
+DriveMemory::romSize() const
 {
-    for (isize i = 0; i < 64; i++) {
-        if (usage[i] == DRVMEM_ROM) return (u16)(i * 1024);
-    }
+    // Check for a 16KB Rom (by checking for a mirrored byte)
+    if (rom[0x0000] != 0 && rom[0x0000] == rom[0x4000]) return 0x4000;
+
+    // Check for a 24KB Rom
+    if (rom[0x0000] == 0 && rom[0x2000] != 0) return 0x6000;
+
+    // Check for a 32KB Rom
+    if (rom[0x0000] != 0 && rom[0x0000] != rom[0x4000]) return 0x8000;
+
+    // No Rom installed
     return 0;
 }
 
 u16
-DriveMemory::romSize() const
+DriveMemory::romAddr() const
 {
-    u16 result = 0;
-    
-    for (isize i = 0; i < 64; i++) {
-        if (usage[i] == DRVMEM_ROM) result += 1024;
-    }
-    return result;
+    // Check for a 16KB Rom (by checking for a mirrored byte)
+    if (rom[0x0000] != 0 && rom[0x0000] == rom[0x4000]) return 0xC000;
+
+    // Check for a 24KB Rom
+    if (rom[0x0000] == 0 && rom[0x2000] != 0) return 0xA000;
+
+    // Check for a 32KB Rom
+    if (rom[0x0000] != 0 && rom[0x0000] != rom[0x4000]) return 0x8000;
+
+    // No Rom installed
+    return 0;
 }
 
 u32
 DriveMemory::romCRC32() const
 {
-    return hasRom() ? util::crc32(mem + romAddr(), romSize()) : 0;
+    isize size = romSize();
+    isize offset = romAddr() & 0x7FFF;
+    
+    return size ? util::crc32(rom + offset, size) : 0;
 }
 
 u64
 DriveMemory::romFNV64() const
 {
-    return hasRom() ? util::fnv_1a_64(mem + romAddr(), romSize()) : 0;
+    isize size = romSize();
+    isize offset = romAddr() & 0x7FFF;
+    
+    return size ? util::fnv_1a_64(rom + offset, size) : 0;
 }
 
 void
 DriveMemory::deleteRom()
 {
-    for (isize i = 0; i < 64; i++) {
-        if (usage[i] == DRVMEM_ROM || usage[i] == DRVMEM_ROM_C000) {
-            usage[i] = DRVMEM_NONE;
-        }
-    }
+    memset(rom, 0, sizeof(rom));
+    updateBankMap();
 }
 
 void
 DriveMemory::loadRom(const RomFile *file)
 {
     assert(file != nullptr);
-    
     loadRom(file->data, file->size);
-}
-
-void
-DriveMemory::loadRom(const u8 *buf, isize size, u16 addr)
-{
-    assert(buf != nullptr);
-    assert(addr + size <= 0x10000);
-
-    // Delete old ROM (if any)
-    deleteRom();
-
-    // Install new ROM
-    for (isize i = 0; i < size; i++) {
-        mem[addr + i] = buf[i];
-    }
-    
-    // Update bank map
-    for (isize i = 0; i < size; i += 1024) {
-        usage[(addr + i) >> 10] = DRVMEM_ROM;
-    }
 }
 
 void
 DriveMemory::loadRom(const u8 *buf, isize size)
 {
-    // 16KB Roms are mapped to 0xC000 with a mirror at 0x8000
-    if (size == 0x4000) {
-        loadRom(buf, size, 0xC000);
-        for (isize i = 32; i < 48; i++) usage[i] = DRVMEM_ROM_C000;
+    deleteRom();
+
+    switch (size) {
+            
+        case 0x4000: // 16KB Roms are mapped to 0xC000 with a mirror at 0x8000
+            
+            for (isize i = 0; i < size; i++) rom[0x4000 + i] = buf[i];
+            for (isize i = 0; i < size; i++) rom[0x0000 + i] = buf[i];
+            break;
+
+        case 0x6000: // 24KB Roms are mapped to 0xA000
+
+            for (isize i = 0; i < size; i++) rom[0x2000 + i] = buf[i];
+            break;
+
+        case 0x8000: // 32KB Roms are mapped to 0x8000
+
+            for (isize i = 0; i < size; i++) rom[0x0000 + i] = buf[i];
+            break;
     }
     
-    // 24KB Roms are mapped to 0xA000
-    if (size == 0x6000) {
-        loadRom(buf, size, 0xA000);
-    }
+    updateBankMap();
+}
 
-    // 32KB Roms are mapped to 0x8000
-    if (size == 0x8000) {
-        loadRom(buf, size, 0x8000);
+/*
+void
+DriveMemory::loadRom(const u8 *buf, isize size, u16 addr)
+{
+    assert(buf != nullptr);
+    assert(addr >= 0x8000 && addr + size <= 0x10000);
+
+    addr &= 0x7FFF;
+    
+    for (isize i = 0; i < size; i++) {
+        rom[addr + i] = buf[i];
     }
 }
+*/
 
 void
 DriveMemory::saveRom(const string &path)
@@ -166,7 +172,7 @@ DriveMemory::saveRom(const string &path)
             
     debug(true, "Saving Rom at %x (%x bytes)\n", addr, size);
     
-    RomFile *file = RomFile::make <RomFile> (mem + addr, size);
+    RomFile *file = RomFile::make <RomFile> (rom + (addr & 0x7FFF), size);
     file->writeToFile(path);
     delete file;
 }
@@ -191,11 +197,7 @@ DriveMemory::peek(u16 addr)
             break;
             
         case DRVMEM_ROM:
-            result = mem[addr];
-            break;
-
-        case DRVMEM_ROM_C000:
-            result = mem[addr | 0xC000];
+            result = rom[addr & 0x7FFF];
             break;
 
         case DRVMEM_VIA1:
@@ -234,11 +236,7 @@ DriveMemory::spypeek(u16 addr) const
             break;
             
         case DRVMEM_ROM:
-            result = mem[addr];
-            break;
-            
-        case DRVMEM_ROM_C000:
-            result = mem[addr | 0xC000];
+            result = rom[addr & 0x7FFF];
             break;
 
         case DRVMEM_VIA1:
@@ -279,6 +277,43 @@ DriveMemory::poke(u16 addr, u8 value)
             break;
             
         default:
+            break;
+    }
+}
+
+void
+DriveMemory::updateBankMap()
+{
+    // Start from scratch
+    for (isize i = 0; i < 64; i++) usage[i] = DRVMEM_NONE;
+    
+    // Add built-in RAM and IO chips
+    for (isize bank = 0; bank < 32; bank += 8) {
+        usage[bank + 0] = DRVMEM_RAM;
+        usage[bank + 1] = DRVMEM_RAM;
+        usage[bank + 6] = DRVMEM_VIA1;
+        usage[bank + 7] = DRVMEM_VIA2;
+    }
+    
+    // Add expansion RAM
+    // TODO
+
+    // Add ROMs
+    switch (romSize()) {
+            
+        case 0x4000: // 16KB (ROM is mirrored)
+            
+            for (isize i = 32; i < 64; i++) usage[i] = DRVMEM_ROM;
+            break;
+            
+        case 0x6000: // 24KB
+            
+            for (isize i = 40; i < 64; i++) usage[i] = DRVMEM_ROM;
+            break;
+            
+        case 0x8000: // 32KB
+            
+            for (isize i = 32; i < 64; i++) usage[i] = DRVMEM_ROM;
             break;
     }
 }

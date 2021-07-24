@@ -21,18 +21,26 @@ private:
     
 public:
     
-    // RAM (the first 2KB are built-in, everything else is expansion Ram)
+    /* RAM:
+     *
+     *          VC1541 : 2KB at $0000 - $07FF
+     *   Dolphin DOS 2 : 2KB at $0000 - $07FF, 8KB at $8000 - $9FFF
+     *   Dolphin DOS 3 : 2KB at $0000 - $07FF, 8KB at $6000 - $7FFF
+     *
+     * ROM:
+     *
+     *          VC1541 : 16KB at $C000 - $FFFF, Mirror at $8000
+     *   Dolphin DOS 2 : 24KB at $A000 - $FFFF
+     *   Dolphin DOS 3 : 32KB at $A000 - $FFFF (???)
+     */
     u8 ram[0xA000];
-    
-    // RAM (2 KB) and ROM (16 KB)
-    // [[deprecated]] u8 ram[0x0800];
-    // [[deprecated]] u8 rom[0x4000];
-    
-    // Memory (Ram, Rom, or unused)
-    u8 mem[0x10000];
+    u8 rom[0x8000] = {};
+        
+    // Memory (Ram, Rom, or unused) DEPRECATED
+    // [[deprecated]] u8 mem[0x10000];
     
     // Memory usage table (one entry for each KB)
-    DrvMemType usage[64] = {};
+    DrvMemType usage[64];
     
     
     //
@@ -70,7 +78,7 @@ private:
         worker
         
         << ram
-        << mem
+        << rom
         << usage;
     }
     
@@ -91,8 +99,8 @@ private:
 public:
     
     // Returns the size and start address of the Rom
-    u16 romAddr() const;
     u16 romSize() const;
+    u16 romAddr() const;
 
     // Indicates if a Rom is installed
     bool hasRom() const { return romSize() != 0; }
@@ -104,10 +112,12 @@ public:
     // Removes the currently installed Rom
     void deleteRom();
     
-    // Loads or saves a Rom
+    // Loads a Rom
     void loadRom(const RomFile *file);
-    void loadRom(const u8 *buf, isize size, u16 addr);
     void loadRom(const u8 *buf, isize size);
+    // void loadRom(const u8 *buf, isize size, u16 addr);
+    
+    // Saves the currently installed Rom
     void saveRom(const string &path) throws;
 
     
@@ -116,7 +126,7 @@ public:
     //
     
 public:
-    
+        
     // Reads a value from memory
     u8 peek(u16 addr);
     u8 peekZP(u8 addr) { return ram[addr]; }
@@ -135,4 +145,9 @@ public:
     void poke(u16 addr, u8 value);
     void pokeZP(u8 addr, u8 value) { ram[addr] = value; }
     void pokeStack(u8 sp, u8 value) { ram[0x100 + sp] = value; }
+    
+private:
+    
+    // Updates the bank map
+    void updateBankMap();
 };
