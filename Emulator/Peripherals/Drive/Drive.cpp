@@ -64,6 +64,8 @@ Drive::getDefaultConfig()
     defaults.powerSave = true;
     defaults.connected = false;
     defaults.switchedOn = true;
+    defaults.ram6000 = false;
+    defaults.ram8000 = false;
     defaults.ejectDelay = 30;
     defaults.swapDelay = 30;
     defaults.insertDelay = 30;
@@ -81,10 +83,13 @@ Drive::resetConfig()
 {
     DriveConfig defaults = getDefaultConfig();
     
+    setConfigItem(OPT_DRV_TYPE, deviceNr, defaults.type);
     setConfigItem(OPT_DRV_CONNECT, deviceNr, deviceNr == DRIVE8);
     setConfigItem(OPT_DRV_POWER_SWITCH, deviceNr, defaults.switchedOn);
     setConfigItem(OPT_DRV_POWER_SAVE, deviceNr, defaults.powerSave);
-    setConfigItem(OPT_DRV_TYPE, deviceNr, defaults.type);
+
+    setConfigItem(OPT_DRV_RAM6000, deviceNr, defaults.ram6000);
+    setConfigItem(OPT_DRV_RAM8000, deviceNr, defaults.ram8000);
 
     setConfigItem(OPT_DRV_EJECT_DELAY, deviceNr, defaults.ejectDelay);
     setConfigItem(OPT_DRV_SWAP_DELAY, deviceNr, defaults.swapDelay);
@@ -106,6 +111,8 @@ Drive::getConfigItem(Option option) const
         case OPT_DRV_CONNECT:       return (i64)config.connected;
         case OPT_DRV_POWER_SWITCH:  return (i64)config.switchedOn;
         case OPT_DRV_POWER_SAVE:    return (i64)config.powerSave;
+        case OPT_DRV_RAM6000:       return (i64)config.ram6000;
+        case OPT_DRV_RAM8000:       return (i64)config.ram8000;
         case OPT_DRV_EJECT_DELAY:   return (i64)config.ejectDelay;
         case OPT_DRV_SWAP_DELAY:    return (i64)config.swapDelay;
         case OPT_DRV_INSERT_DELAY:  return (i64)config.insertDelay;
@@ -203,6 +210,16 @@ Drive::setConfigItem(Option option, long id, i64 value)
         {
             config.powerSave = value;
             wakeUp();
+            return true;
+        }
+        case OPT_DRV_RAM6000:
+        {
+            config.ram6000 = value;
+            return true;
+        }
+        case OPT_DRV_RAM8000:
+        {
+            config.ram8000 = value;
             return true;
         }
         case OPT_DRV_EJECT_DELAY:

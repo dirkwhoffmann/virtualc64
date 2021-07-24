@@ -25,7 +25,7 @@
  */
  
 class Drive : public C64Component {
-    
+        
     //
     // Constants
     //
@@ -268,6 +268,8 @@ private:
         << durationOfOneCpuCycle
         << config.type
         << config.connected
+        << config.ram6000
+        << config.ram8000
         << config.ejectDelay
         << config.swapDelay
         << config.insertDelay

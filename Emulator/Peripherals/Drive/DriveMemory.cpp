@@ -149,21 +149,6 @@ DriveMemory::loadRom(const u8 *buf, isize size)
     updateBankMap();
 }
 
-/*
-void
-DriveMemory::loadRom(const u8 *buf, isize size, u16 addr)
-{
-    assert(buf != nullptr);
-    assert(addr >= 0x8000 && addr + size <= 0x10000);
-
-    addr &= 0x7FFF;
-    
-    for (isize i = 0; i < size; i++) {
-        rom[addr + i] = buf[i];
-    }
-}
-*/
-
 void
 DriveMemory::saveRom(const string &path)
 {
@@ -284,6 +269,8 @@ DriveMemory::poke(u16 addr, u8 value)
 void
 DriveMemory::updateBankMap()
 {
+    auto config = drive.getConfig();
+    
     // Start from scratch
     for (isize i = 0; i < 64; i++) usage[i] = DRVMEM_NONE;
     
@@ -295,9 +282,6 @@ DriveMemory::updateBankMap()
         usage[bank + 7] = DRVMEM_VIA2;
     }
     
-    // Add expansion RAM
-    // TODO
-
     // Add ROMs
     switch (romSize()) {
             
@@ -315,5 +299,13 @@ DriveMemory::updateBankMap()
             
             for (isize i = 32; i < 64; i++) usage[i] = DRVMEM_ROM;
             break;
+    }
+    
+    // Add expansion RAM
+    if (config.ram6000) {
+        for (isize i = 24; i < 32; i++) usage[i] = DRVMEM_EXP;
+    }
+    if (config.ram8000) {
+        for (isize i = 32; i < 40; i++) usage[i] = DRVMEM_EXP;
     }
 }

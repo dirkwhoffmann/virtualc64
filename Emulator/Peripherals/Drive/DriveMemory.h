@@ -115,7 +115,6 @@ public:
     // Loads a Rom
     void loadRom(const RomFile *file);
     void loadRom(const u8 *buf, isize size);
-    // void loadRom(const u8 *buf, isize size, u16 addr);
     
     // Saves the currently installed Rom
     void saveRom(const string &path) throws;
