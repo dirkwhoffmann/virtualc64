@@ -78,4 +78,5 @@ public:
     
     FileType type() const override { return romType; }
     isize readFromStream(std::istream &stream) override;
+    void repair() override;
 };

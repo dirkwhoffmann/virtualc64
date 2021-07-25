@@ -109,8 +109,8 @@ TAPFile::read()
 void
 TAPFile::repair()
 {
-    usize length = LO_LO_HI_HI(data[0x10], data[0x11], data[0x12], data[0x13]);
-    usize header = 0x14;
+    isize length = LO_LO_HI_HI(data[0x10], data[0x11], data[0x12], data[0x13]);
+    isize header = 0x14;
     
     if (length + header != size) {
         warn("TAP: Expected %lu bytes, found %lu\n", length + header, size);

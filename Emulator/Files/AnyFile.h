@@ -59,7 +59,7 @@ public:
     u8 *data = nullptr;
     
     // The size of this file in bytes
-    usize size = 0;
+    isize size = 0;
     
 
     //
@@ -159,7 +159,6 @@ public:
     AnyFile() { };
     AnyFile(usize capacity);
     virtual ~AnyFile();
-
     
     //
     // Accessing
@@ -174,7 +173,10 @@ public:
     virtual FileType type() const { return FILETYPE_UNKNOWN; }
      
     // Returns a data byte
-    u8 getData(isize nr) { return (data && (usize)nr < size) ? data[nr] : 0; }
+    u8 getData(isize nr) { return (data && nr < size) ? data[nr] : 0; }
+    
+    // Removes a certain number of bytes from the beginning of the file
+    void strip(isize count);
     
     // Returns a fingerprint (hash value) for this file
     u64 fnv() const;

@@ -34,6 +34,26 @@ AnyFile::getName() const
     return PETName<16>(path.substr(start, len));
 }
 
+void
+AnyFile::strip(isize count)
+{
+    assert(data != nullptr);
+    assert(count < size);
+    
+    printf("Stripping %zd bytes from %zd\n", count, size);
+    
+    isize newSize = size - count;
+    u8 *newData = new u8[newSize];
+    
+    memcpy(newData, data + count, newSize);
+    delete [] data;
+    
+    size = newSize;
+    data = newData;
+    
+    printf("New size = %zd\n", size); 
+}
+
 u64
 AnyFile::fnv() const
 {
@@ -79,7 +99,7 @@ AnyFile::readFromFile(const string  &path)
         throw VC64Error(ERROR_FILE_CANT_READ);
     }
     
-    usize result = readFromStream(stream);
+    isize result = readFromStream(stream);
     assert(result == size);
     
     this->path = string(path);
@@ -93,7 +113,7 @@ AnyFile::readFromBuffer(const u8 *buf, isize len)
 
     std::istringstream stream(std::string((const char *)buf, len));
     
-    usize result = readFromStream(stream);
+    isize result = readFromStream(stream);
     assert(result == size);
     
     return result;

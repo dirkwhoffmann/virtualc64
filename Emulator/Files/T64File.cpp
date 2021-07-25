@@ -193,7 +193,7 @@ T64File::readByte(isize nr, u64 pos) const
     u64 start = LO_LO_HI_HI(data[i], data[i+1], data[i+2], data[i+3]);
 
     // Locate the requested byte
-    u64 offset = start + pos - 2;
+    i64 offset = start + pos - 2;
     assert(offset < size);
     
     return data[offset];

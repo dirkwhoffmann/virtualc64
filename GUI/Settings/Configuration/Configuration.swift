@@ -597,7 +597,7 @@ class Configuration {
         drive9Connected = defaults.bool(forKey: Keys.Per.drive9Connect)
         drive9Type = defaults.integer(forKey: Keys.Per.drive9Model)
         drive9Ram = defaults.integer(forKey: Keys.Per.drive9Ram)
-        drive8ParCable = defaults.integer(forKey: Keys.Per.drive9ParCable)
+        drive9ParCable = defaults.integer(forKey: Keys.Per.drive9ParCable)
 
         blankDiskFormatIntValue = defaults.integer(forKey: Keys.Per.blankDiskFormat)
         

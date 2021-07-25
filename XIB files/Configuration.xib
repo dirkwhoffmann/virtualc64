@@ -1187,10 +1187,10 @@ Gw
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="7F1-cx-LV1">
                                             <rect key="frame" x="412" y="292" width="182" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="Z5k-Qu-gjU" id="kUG-ZU-Kp9">
+                                            <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="Z5k-Qu-gjU" id="kUG-ZU-Kp9">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
-                                                <menu key="menu" title="OtherViews" id="p0f-yM-g5n">
+                                                <menu key="menu" title="OtherViews" autoenablesItems="NO" id="p0f-yM-g5n">
                                                     <items>
                                                         <menuItem title="None" state="on" id="Z5k-Qu-gjU">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -1199,6 +1199,9 @@ Gw
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="DolphinDOS 2" tag="2" id="DDw-RL-PeB">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="DolphinDOS 3" tag="3" enabled="NO" id="5FU-ih-opp">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                     </items>
@@ -1238,12 +1241,12 @@ Gw
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="oxp-Ya-eAU">
                                             <rect key="frame" x="412" y="323" width="182" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Standard" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="kNz-7d-0FF" id="wUS-mF-LAZ">
+                                            <popUpButtonCell key="cell" type="push" title="Factory Defaults" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="kNz-7d-0FF" id="wUS-mF-LAZ">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="hr0-98-Mad">
                                                     <items>
-                                                        <menuItem title="Standard" state="on" id="kNz-7d-0FF"/>
+                                                        <menuItem title="Factory Defaults" state="on" id="kNz-7d-0FF"/>
                                                         <menuItem title="DolphinDOS 2" tag="1" id="XyY-2U-JUy"/>
                                                         <menuItem title="DolphinDOS 3" tag="2" id="CaD-jc-fv4"/>
                                                     </items>
@@ -1265,10 +1268,10 @@ Gw
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="7wr-sA-0lx">
                                             <rect key="frame" x="108" y="295" width="182" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="Npu-iA-dbb" id="EWH-rV-W7Z">
+                                            <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="Npu-iA-dbb" id="EWH-rV-W7Z">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
-                                                <menu key="menu" title="OtherViews" id="bne-EA-99P">
+                                                <menu key="menu" title="OtherViews" autoenablesItems="NO" id="bne-EA-99P">
                                                     <items>
                                                         <menuItem title="None" state="on" id="Npu-iA-dbb">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -1277,6 +1280,9 @@ Gw
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="DolphinDOS 2" tag="2" id="n2H-zh-o9X">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="DolphinDOS 3" tag="3" enabled="NO" id="Xaf-uT-CGy">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                     </items>
@@ -1298,12 +1304,12 @@ Gw
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="IWF-UI-eEy">
                                             <rect key="frame" x="108" y="326" width="182" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Standard" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="H5n-rG-pB1" id="hge-o2-L4x">
+                                            <popUpButtonCell key="cell" type="push" title="Factory Defaults" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="H5n-rG-pB1" id="hge-o2-L4x">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="hGC-hU-6Oh">
                                                     <items>
-                                                        <menuItem title="Standard" state="on" id="H5n-rG-pB1"/>
+                                                        <menuItem title="Factory Defaults" state="on" id="H5n-rG-pB1"/>
                                                         <menuItem title="DolphinDOS 2" tag="1" id="Iap-JQ-5Y4"/>
                                                         <menuItem title="DolphinDOS 3" tag="2" id="bDL-NO-QQN"/>
                                                     </items>

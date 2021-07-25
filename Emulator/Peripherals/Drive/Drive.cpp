@@ -196,6 +196,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
                 throw VC64Error(ERROR_OPT_INV_ARG, ParCableTypeEnum::keyList());
             }
             
+            printf("OPT_DRV_PARCABLE(%ld) %lld\n", id, value);
             suspend();
             config.parCable = (ParCableType)value;
             resume();

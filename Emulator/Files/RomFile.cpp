@@ -207,7 +207,14 @@ RomFile::identifier(u64 fnv)
         case 0x7202DEA530E1C172: return KERNAL_64ER_V3;
         case 0x7E3AEFF7886684A2: return KERNAL_SPEEDDOS_PLUS;
         case 0x6E6190177D93D2BB: return KERNAL_SPEEDDOS_27;
-
+        case 0xD135F409F4FA10F2: return KERNAL_DOLPHIN_10;
+        case 0x32CAF94AAA196DB6: return KERNAL_DOLPHIN_20_1;
+        case 0xAE3DEC803423CE60: return KERNAL_DOLPHIN_20_1_MA;
+        case 0x4D3C32F9415972C3: return KERNAL_DOLPHIN_20_2;
+        case 0xA5D930343EE32459: return KERNAL_DOLPHIN_20_3;
+        case 0x2EA010B7CC8EC61B: return KERNAL_DOLPHIN_20_SLVDR;
+        case 0x877E38DA5DAFEC30: return KERNAL_DOLPHIN_30;
+            
         case 0x44BBA0EAC5898597: return VC1541_II_1987;
         case 0xA1D36980A17C8756: return VC1541_II_NEWTRONIC;
         case 0x361A1EC48F04F5A4: return VC1541_OLD_WHITE;
@@ -218,8 +225,10 @@ RomFile::identifier(u64 fnv)
         case 0xB4027D6D9D61378A: return VC1541_64ER_V3;
         case 0xC50EAFCBA50C4B63: return VC1541_SPEEDDOS_PLUS;
         case 0x92ADEBA1BCCD8D31: return VC1541_SPEEDDOS_27;
-        case 0x75B0949C6B586FB7: return VC1541_DOLPHIN_2;
-            
+        case 0x28CD4E47A40C41CA: return VC1541_DOLPHIN_20;
+        case 0x1C1DDD64E02CAD32: return VC1541_DOLPHIN_20_SLVDR;
+        case 0x09D8FBAB61E59FF0: return VC1541_DOLPHIN_30;
+
         default: return ROM_UNKNOWN;
     }
 }
@@ -276,6 +285,13 @@ RomFile::isPatchedRom(RomIdentifier rev)
         case KERNAL_64ER_V3:
         case KERNAL_SPEEDDOS_PLUS:
         case KERNAL_SPEEDDOS_27:
+        case KERNAL_DOLPHIN_10:
+        case KERNAL_DOLPHIN_20_1:
+        case KERNAL_DOLPHIN_20_1_MA:
+        case KERNAL_DOLPHIN_20_2:
+        case KERNAL_DOLPHIN_20_3:
+        case KERNAL_DOLPHIN_20_SLVDR:
+        case KERNAL_DOLPHIN_30:
             
         case VC1541_II_RELOC_PATCH:
         case VC1541_II_JIFFY:
@@ -283,7 +299,9 @@ RomFile::isPatchedRom(RomIdentifier rev)
         case VC1541_64ER_V3:
         case VC1541_SPEEDDOS_PLUS:
         case VC1541_SPEEDDOS_27:
-        case VC1541_DOLPHIN_2:
+        case VC1541_DOLPHIN_20:
+        case VC1541_DOLPHIN_20_SLVDR:
+        case VC1541_DOLPHIN_30:
             return true;
             
         default:
@@ -331,7 +349,14 @@ RomFile::title(RomIdentifier rev)
         case KERNAL_TURBO_TAPE:
         case KERNAL_64ER_V3:
         case KERNAL_SPEEDDOS_PLUS:
-        case KERNAL_SPEEDDOS_27:      return "Patched Kernal Rom";
+        case KERNAL_SPEEDDOS_27:
+        case KERNAL_DOLPHIN_10:
+        case KERNAL_DOLPHIN_20_1:
+        case KERNAL_DOLPHIN_20_1_MA:
+        case KERNAL_DOLPHIN_20_2:
+        case KERNAL_DOLPHIN_20_3:
+        case KERNAL_DOLPHIN_20_SLVDR:
+        case KERNAL_DOLPHIN_30:       return "Patched Kernal Rom";
             
         case VC1541_II_1987:        
         case VC1541_II_NEWTRONIC:
@@ -343,7 +368,9 @@ RomFile::title(RomIdentifier rev)
         case VC1541_64ER_V3:
         case VC1541_SPEEDDOS_PLUS:
         case VC1541_SPEEDDOS_27:
-        case VC1541_DOLPHIN_2:        return "Patched Drive Firmware";
+        case VC1541_DOLPHIN_20:
+        case VC1541_DOLPHIN_20_SLVDR:
+        case VC1541_DOLPHIN_30:       return "Patched Drive Firmware";
             
         default:                      return "";
     }
@@ -388,6 +415,13 @@ RomFile::subTitle(RomIdentifier rev)
         case KERNAL_64ER_V3:          return "64'er DOS V3";
         case KERNAL_SPEEDDOS_PLUS:    return "SpeedDOS Plus";
         case KERNAL_SPEEDDOS_27:      return "SpeedDOS Plus 2.7 (TRIAD)";
+        case KERNAL_DOLPHIN_10:       return "Dolphin DOS 1.0";
+        case KERNAL_DOLPHIN_20_1:     return "Dolphin DOS 2.0 Rev 1";
+        case KERNAL_DOLPHIN_20_1_MA:  return "Dolphin DOS 2.0 Rev 1 (M.A.)";
+        case KERNAL_DOLPHIN_20_2:     return "Dolphin DOS 2.0 Rev 2";
+        case KERNAL_DOLPHIN_20_3:     return "Dolphin DOS 2.0 Rev 3";
+        case KERNAL_DOLPHIN_20_SLVDR: return "Dolphin DOS 2.0 (Silver Dream)";
+        case KERNAL_DOLPHIN_30:       return "Dolphin DOS 3.0";
             
         case VC1541_II_1987:          return "VC1541-II (1987)";
         case VC1541_II_NEWTRONIC:     return "VC1541-II (Newtronic motor)";
@@ -399,7 +433,9 @@ RomFile::subTitle(RomIdentifier rev)
         case VC1541_64ER_V3:          return "64'er DOS V3";
         case VC1541_SPEEDDOS_PLUS:    return "SpeedDOS Plus";
         case VC1541_SPEEDDOS_27:      return "SpeedDOS Plus 2.7 (TRIAD)";
-        case VC1541_DOLPHIN_2:        return "DolphinDOS 2";
+        case VC1541_DOLPHIN_20:       return "Dolphin DOS 2.0";
+        case VC1541_DOLPHIN_20_SLVDR: return "Dolphin DOS 2.0 (Silver Dream)";
+        case VC1541_DOLPHIN_30:       return "Dolphin DOS 3.0";
             
         default:                      return "";
     }
@@ -465,4 +501,20 @@ RomFile::readFromStream(std::istream &stream)
     FILETYPE_UNKNOWN;
     
     return AnyFile::readFromStream(stream);
+}
+
+void
+RomFile::repair()
+{
+    // Count the number of 0xFF bytes at the beginning of the file
+    isize pads = 0; for (; data[pads] == 0xFF; pads++);
+    
+    // Align to a 1KB grid
+    pads &= ~0x3FF;
+    
+    // Remove the padding bytes
+    if (pads) {
+        msg("Removing %zx padding bytes from Rom file\n", pads);
+        strip(pads & ~0x3FF);
+    }
 }

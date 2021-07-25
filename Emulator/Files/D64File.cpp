@@ -88,7 +88,7 @@ D64File::getName() const
 isize
 D64File::readFromStream(std::istream &stream)
 {
-    usize result = AnyFile::readFromStream(stream);
+    isize result = AnyFile::readFromStream(stream);
     assert(result == size);
     
     unsigned numSectors;
