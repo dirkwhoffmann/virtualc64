@@ -39,9 +39,7 @@ AnyFile::strip(isize count)
 {
     assert(data != nullptr);
     assert(count < size);
-    
-    printf("Stripping %zd bytes from %zd\n", count, size);
-    
+        
     isize newSize = size - count;
     u8 *newData = new u8[newSize];
     
@@ -50,8 +48,6 @@ AnyFile::strip(isize count)
     
     size = newSize;
     data = newData;
-    
-    printf("New size = %zd\n", size); 
 }
 
 u64
