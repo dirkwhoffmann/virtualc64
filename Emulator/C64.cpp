@@ -191,9 +191,6 @@ C64::getConfigItem(Option option) const
 
         case OPT_RAM_PATTERN:
             return mem.getConfigItem(option);
-
-        case OPT_PAR_CABLE_TYPE:
-            return parCable.getConfigItem(option);
             
         default:
             assert(false);
@@ -220,6 +217,8 @@ C64::getConfigItem(Option option, long id) const
             return sid.getConfigItem(option, id);
 
         case OPT_DRV_TYPE:
+        case OPT_DRV_RAM:
+        case OPT_DRV_PARCABLE:
         case OPT_DRV_POWER_SAVE:
         case OPT_DRV_CONNECT:
         case OPT_DRV_POWER_SWITCH:
@@ -232,9 +231,6 @@ C64::getConfigItem(Option option, long id) const
         case OPT_DRV_INSERT_VOL:
         case OPT_DRV_EJECT_VOL:
             return drive.getConfigItem(option);
-
-        case OPT_PAR_CABLE_CONNECT:
-            return parCable.getConfigItem(option, id);
 
         case OPT_MOUSE_MODEL:
         case OPT_SHAKE_DETECTION:

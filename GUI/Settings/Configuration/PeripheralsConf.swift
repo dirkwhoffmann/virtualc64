@@ -15,10 +15,14 @@ extension ConfigurationController {
                 
         // Drive
         perDrive8Connect.state = config.drive8Connected ? .on : .off
-        perDrive9Connect.state = config.drive9Connected ? .on : .off
         perDrive8Type.selectItem(withTag: config.drive8Type)
+        perDrive8Ram.selectItem(withTag: config.drive8Ram)
+        perDrive8Cable.selectItem(withTag: config.drive8ParCable)
+        perDrive9Connect.state = config.drive9Connected ? .on : .off
         perDrive9Type.selectItem(withTag: config.drive9Type)
-        
+        perDrive9Ram.selectItem(withTag: config.drive9Ram)
+        perDrive9Cable.selectItem(withTag: config.drive9ParCable)
+
         // Disk
         perBlankDiskFormat.selectItem(withTag: config.blankDiskFormatIntValue)
 
@@ -31,14 +35,6 @@ extension ConfigurationController {
         // Mouse
         perMouseModel.selectItem(withTag: config.mouseModel)
 
-        // Parallel cable
-        let hasCable = config.parCableType != PAR_CABLE_TYPE.NONE.rawValue
-        perParCableType.selectItem(withTag: config.parCableType)
-        perDrive8ParCable.state = config.drive8ParCable ? .on : .off
-        perDrive9ParCable.state = config.drive9ParCable ? .on : .off
-        perDrive8ParCable.isEnabled = hasCable
-        perDrive9ParCable.isEnabled = hasCable
-
         // Power button
         perPowerButton.isHidden = !bootable
     }
@@ -46,13 +42,33 @@ extension ConfigurationController {
     @IBAction func perDriveTypeAction(_ sender: NSPopUpButton!) {
         
         switch sender.tag {
-        case 8: config.drive8Type = sender.tag
-        case 9: config.drive9Type = sender.tag
+        case 8: config.drive8Type = sender.selectedTag()
+        case 9: config.drive9Type = sender.selectedTag()
         default: fatalError()
         }
         refresh()
     }
-    
+
+    @IBAction func perDriveRamAction(_ sender: NSPopUpButton!) {
+        
+        switch sender.tag {
+        case 8: config.drive8Ram = sender.selectedTag()
+        case 9: config.drive9Ram = sender.selectedTag()
+        default: fatalError()
+        }
+        refresh()
+    }
+
+    @IBAction func perDriveCableAction(_ sender: NSPopUpButton!) {
+        
+        switch sender.tag {
+        case 8: config.drive8ParCable = sender.selectedTag()
+        case 9: config.drive9ParCable = sender.selectedTag()
+        default: fatalError()
+        }
+        refresh()
+    }
+
     @IBAction func perDriveConnectAction(_ sender: NSButton!) {
         
         switch sender.tag {
@@ -71,9 +87,7 @@ extension ConfigurationController {
     }
 
     @IBAction func perControlPortAction(_ sender: NSPopUpButton!) {
-        
-        track("port: \(sender.tag) device: \(sender.selectedTag())")
-        
+                
         switch sender.tag {
         case 1: config.gameDevice1 = sender.selectedTag()
         case 2: config.gameDevice2 = sender.selectedTag()
@@ -85,22 +99,6 @@ extension ConfigurationController {
     @IBAction func perMouseModelAction(_ sender: NSPopUpButton!) {
         
         config.mouseModel = sender.selectedTag()
-        refresh()
-    }
-
-    @IBAction func perCableTypeAction(_ sender: NSPopUpButton!) {
-        
-        config.parCableType = sender.selectedTag()
-        refresh()
-    }
-
-    @IBAction func perCableConnectAction(_ sender: NSButton!) {
-        
-        switch sender.tag {
-        case 8: config.drive8ParCable = sender.state == .on
-        case 9: config.drive9ParCable = sender.state == .on
-        default: fatalError()
-        }
         refresh()
     }
     

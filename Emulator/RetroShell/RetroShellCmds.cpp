@@ -888,10 +888,3 @@ RetroShell::exec <Token::parcable, Token::inspect> (Arguments& argv, long param)
 {
     dump(c64.parCable, dump::State);
 }
-
-template <> void
-RetroShell::exec <Token::parcable, Token::set, Token::type> (Arguments &argv, long param)
-{
-    auto value = util::parseEnum <ParCableTypeEnum> (argv.front());
-    c64.configure(OPT_PAR_CABLE_TYPE, value);
-}

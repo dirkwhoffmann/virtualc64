@@ -78,11 +78,11 @@ enum_long(OPT)
     
     // Drive
     OPT_DRV_TYPE,
+    OPT_DRV_RAM,
+    OPT_DRV_PARCABLE,
     OPT_DRV_CONNECT,
     OPT_DRV_POWER_SWITCH,
     OPT_DRV_POWER_SAVE,
-    OPT_DRV_RAM6000,
-    OPT_DRV_RAM8000,
     OPT_DRV_EJECT_DELAY,
     OPT_DRV_SWAP_DELAY,
     OPT_DRV_INSERT_DELAY,
@@ -91,11 +91,7 @@ enum_long(OPT)
     OPT_DRV_STEP_VOL,
     OPT_DRV_INSERT_VOL,
     OPT_DRV_EJECT_VOL,
-        
-    // Parallel cable
-    OPT_PAR_CABLE_TYPE,
-    OPT_PAR_CABLE_CONNECT,
-    
+            
     OPT_COUNT
 };
 typedef OPT Option;
@@ -160,6 +156,8 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_RAM_PATTERN:         return "RAM_PATTERN";
                 
             case OPT_DRV_TYPE:            return "DRV_TYPE";
+            case OPT_DRV_RAM:             return "OPT_DRV_RAM";
+            case OPT_DRV_PARCABLE:        return "OPT_DRV_PARCABLE";
             case OPT_DRV_CONNECT:         return "DRV_CONNECT";
             case OPT_DRV_POWER_SWITCH:    return "DRV_POWER_SWITCH";
             case OPT_DRV_POWER_SAVE:      return "DRV_POWER_SAVE";
@@ -171,9 +169,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_DRV_STEP_VOL:        return "DRV_STEP_VOL";
             case OPT_DRV_INSERT_VOL:      return "DRV_INSERT_VOL";
             case OPT_DRV_EJECT_VOL:       return "DRV_EJECT_VOL";
-                
-            case OPT_PAR_CABLE_TYPE:      return "OPT_PAR_CABLE_TYPE";
-                
+                                
             case OPT_COUNT:               return "???";
         }
         return "???";

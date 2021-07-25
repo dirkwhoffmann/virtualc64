@@ -11,6 +11,7 @@
 
 #include "Aliases.h"
 #include "Reflection.h"
+#include "ParCableTypes.h"
 
 //
 // Enumerations
@@ -45,6 +46,36 @@ struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
                 
             case DRIVE_VC1541II:  return "VC1541II";
             case DRIVE_COUNT:     return "???";
+        }
+        return "???";
+    }
+};
+#endif
+
+enum_long(DRVRAM)
+{
+    DRVRAM_STANDARD,
+    DRVRAM_DOLPHIN2,
+    DRVRAM_DOLPHIN3
+};
+typedef DRVRAM DriveRam;
+
+#ifdef __cplusplus
+struct DriveRamEnum : util::Reflection<DriveRamEnum, DriveRam> {
+    
+    static bool isValid(long value)
+    {
+        return (unsigned long)value <= DRVRAM_DOLPHIN3;
+    }
+    
+    static const char *prefix() { return "DRVRAM"; }
+    static const char *key(DriveType value)
+    {
+        switch (value) {
+                
+            case DRVRAM_STANDARD:  return "DRVRAM_STANDARD";
+            case DRVRAM_DOLPHIN2:  return "DRVRAM_DOLPHIN2";
+            case DRVRAM_DOLPHIN3:  return "DRVRAM_DOLPHIN3";
         }
         return "???";
     }
@@ -130,16 +161,15 @@ struct InsertionStatusEnum : util::Reflection<InsertionStatusEnum, InsertionStat
 
 typedef struct
 {
+    // Hardware
     DriveType type;
+    DriveRam ram;
+    ParCableType parCable;
     bool powerSave;
 
     // State
     bool connected;
     bool switchedOn;
-
-    // Expansion RAM
-    bool ram6000;
-    bool ram8000;
     
     // Disk handling delays
     isize ejectDelay;

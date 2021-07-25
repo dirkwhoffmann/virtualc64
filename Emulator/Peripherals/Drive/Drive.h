@@ -244,6 +244,8 @@ public:
     bool setConfigItem(Option option, i64 value) override;
     bool setConfigItem(Option option, long id, i64 value) override;
 
+    bool hasParCable() { return config.parCable != PAR_CABLE_NONE; }
+    
     
     //
     // Analyzing
@@ -265,19 +267,22 @@ private:
     {
         worker
         
-        << durationOfOneCpuCycle
         << config.type
+        << config.ram
+        << config.parCable
+        << config.powerSave
         << config.connected
-        << config.ram6000
-        << config.ram8000
+        << config.switchedOn
         << config.ejectDelay
         << config.swapDelay
         << config.insertDelay
+        << config.pan
         << config.powerVolume
         << config.stepVolume
         << config.insertVolume
         << config.ejectVolume
-        << insertionStatus;
+        << insertionStatus
+        << durationOfOneCpuCycle;
     }
     
     template <class T>

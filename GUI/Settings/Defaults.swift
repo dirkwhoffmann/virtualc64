@@ -818,9 +818,13 @@ extension Keys {
         // Drive
         static let drive8Connect    = "VC64_PER_Drive8Connect"
         static let drive8Model      = "VC64_PER_Drive8Type"
+        static let drive8Ram        = "VC64_PER_Drive8Ram"
+        static let drive8ParCable   = "VC64_PER_Drive8ParCable"
         static let drive9Connect    = "VC64_PER_Drive9Connect"
         static let drive9Model      = "VC64_PER_Drive9Type"
-        
+        static let drive9Ram        = "VC64_PER_Drive9Ram"
+        static let drive9ParCable   = "VC64_PER_Drive9ParCable"
+
         // Power saving
         static let drivePowerSave   = "VC64_PER_DrivePowerSave"
         
@@ -833,11 +837,6 @@ extension Keys {
         
         // Mouse
         static let mouseModel       = "VC64_PER_MouseModel"
-        
-        // Parallel cable
-        static let parCableType     = "VC64_PER_ParCableType"
-        static let drive8ParCable   = "VC64_PER_Drive8ParCable"
-        static let drive9ParCable   = "VC64_PER_Drive9ParCable"
     }
 }
 
@@ -845,6 +844,8 @@ struct PeripheralsDefaults {
     
     var driveConnect: [Bool]
     var driveModel: [DriveType]
+    var driveRam: [DriveRam]
+    var parCable: [ParCableType]
     var driveHibernate: Bool
     
     let blankDiskFormat: DOSType
@@ -854,10 +855,6 @@ struct PeripheralsDefaults {
     
     let mouseModel: MouseModel
     
-    let parCableType: ParCableType
-    let drive8ParCable: Bool
-    let drive9ParCable: Bool
-
     //
     // Schemes
     //
@@ -866,16 +863,14 @@ struct PeripheralsDefaults {
         
         driveConnect:    [true, false],
         driveModel:      [.VC1541II, .VC1541II],
+        driveRam:        [.STANDARD, .STANDARD],
+        parCable:        [.NONE, .NONE],
         driveHibernate:  true,
         blankDiskFormat: .CBM,
         gameDevice1:     -1,
         gameDevice2:     -1,
         
-        mouseModel:      .C1350,
-        
-        parCableType:    .NONE,
-        drive8ParCable:  true,
-        drive9ParCable:  true
+        mouseModel:      .C1350
     )
 }
 
@@ -888,8 +883,12 @@ extension UserDefaults {
                         
             Keys.Per.drive8Connect:   defaults.driveConnect[0],
             Keys.Per.drive8Model:     defaults.driveModel[0].rawValue,
+            Keys.Per.drive8Ram:       defaults.driveRam[0].rawValue,
+            Keys.Per.drive8ParCable:  defaults.parCable[0].rawValue,
             Keys.Per.drive9Connect:   defaults.driveConnect[1],
             Keys.Per.drive9Model:     defaults.driveModel[1].rawValue,
+            Keys.Per.drive9Ram:       defaults.driveRam[1].rawValue,
+            Keys.Per.drive9ParCable:  defaults.parCable[1].rawValue,
             Keys.Per.drivePowerSave:  defaults.driveHibernate,
             
             Keys.Per.blankDiskFormat: defaults.blankDiskFormat.rawValue,
@@ -897,11 +896,7 @@ extension UserDefaults {
             Keys.Per.gameDevice1:     defaults.gameDevice1,
             Keys.Per.gameDevice2:     defaults.gameDevice2,
             
-            Keys.Per.mouseModel:      defaults.mouseModel.rawValue,
-            
-            Keys.Per.parCableType:    defaults.parCableType.rawValue,
-            Keys.Per.drive8ParCable:  defaults.drive8ParCable,
-            Keys.Per.drive9ParCable:  defaults.drive9ParCable
+            Keys.Per.mouseModel:      defaults.mouseModel.rawValue
         ]
         
         let userDefaults = UserDefaults.standard
@@ -914,8 +909,12 @@ extension UserDefaults {
         
         let keys = [Keys.Per.drive8Connect,
                     Keys.Per.drive8Model,
+                    Keys.Per.drive8Ram,
+                    Keys.Per.drive8ParCable,
                     Keys.Per.drive9Connect,
                     Keys.Per.drive9Model,
+                    Keys.Per.drive9Ram,
+                    Keys.Per.drive9ParCable,
                     Keys.Per.drivePowerSave,
                     
                     Keys.Per.blankDiskFormat,
@@ -923,11 +922,7 @@ extension UserDefaults {
                     Keys.Per.gameDevice1,
                     Keys.Per.gameDevice2,
                     
-                    Keys.Per.mouseModel,
-                    
-                    Keys.Per.parCableType,
-                    Keys.Per.drive8ParCable,
-                    Keys.Per.drive9ParCable
+                    Keys.Per.mouseModel
         ]
 
         for key in keys { defaults.removeObject(forKey: key) }

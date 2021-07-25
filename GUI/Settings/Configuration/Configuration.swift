@@ -101,7 +101,27 @@ class Configuration {
         get { return c64.getConfig(.DRV_TYPE, drive: .DRIVE9) }
         set { c64.configure(.DRV_TYPE, drive: .DRIVE9, value: newValue )}
     }
-    
+
+    var drive8Ram: Int {
+        get { return c64.getConfig(.DRV_RAM, drive: .DRIVE8) }
+        set { c64.configure(.DRV_RAM, drive: .DRIVE8, value: newValue )}
+    }
+
+    var drive9Ram: Int {
+        get { return c64.getConfig(.DRV_RAM, drive: .DRIVE9) }
+        set { c64.configure(.DRV_RAM, drive: .DRIVE9, value: newValue )}
+    }
+
+    var drive8ParCable: Int {
+        get { return c64.getConfig(.DRV_PARCABLE, drive: .DRIVE8) }
+        set { c64.configure(.DRV_PARCABLE, drive: .DRIVE8, value: newValue )}
+    }
+
+    var drive9ParCable: Int {
+        get { return c64.getConfig(.DRV_PARCABLE, drive: .DRIVE9) }
+        set { c64.configure(.DRV_PARCABLE, drive: .DRIVE9, value: newValue )}
+    }
+
     var drive8Connected: Bool {
         get { return c64.getConfig(.DRV_CONNECT, drive: .DRIVE8) != 0 }
         set { c64.configure(.DRV_CONNECT, drive: .DRIVE8, enable: newValue )}
@@ -163,21 +183,6 @@ class Configuration {
     var mouseModel: Int {
         get { return c64.getConfig(.MOUSE_MODEL, id: 1) }
         set { c64.configure(.MOUSE_MODEL, value: newValue) }
-    }
-
-    var parCableType: Int {
-        get { return c64.getConfig(.PAR_CABLE_TYPE) }
-        set { c64.configure(.PAR_CABLE_TYPE, value: newValue) }
-    }
-
-    var drive8ParCable: Bool {
-        get { return c64.getConfig(.PAR_CABLE_CONNECT, drive: .DRIVE8) != 0 }
-        set { c64.configure(.PAR_CABLE_CONNECT, drive: .DRIVE8, enable: newValue )}
-    }
-
-    var drive9ParCable: Bool {
-        get { return c64.getConfig(.PAR_CABLE_CONNECT, drive: .DRIVE9) != 0 }
-        set { c64.configure(.PAR_CABLE_CONNECT, drive: .DRIVE9, enable: newValue )}
     }
     
     //
@@ -562,9 +567,13 @@ class Configuration {
         
         drive8Connected = defaults.driveConnect[0]
         drive8Type = defaults.driveModel[0].rawValue
+        drive8Ram = defaults.driveRam[0].rawValue
+        drive8ParCable = defaults.parCable[0].rawValue
         drive9Connected = defaults.driveConnect[1]
         drive9Type = defaults.driveModel[1].rawValue
-        
+        drive9Ram = defaults.driveRam[1].rawValue
+        drive9ParCable = defaults.parCable[1].rawValue
+
         blankDiskFormat = defaults.blankDiskFormat
         
         gameDevice1 = defaults.gameDevice1
@@ -572,10 +581,6 @@ class Configuration {
         
         mouseModel = defaults.mouseModel.rawValue
         
-        parCableType = defaults.parCableType.rawValue
-        drive8ParCable = defaults.drive8ParCable
-        drive9ParCable = defaults.drive9ParCable
-
         c64.resume()
     }
     
@@ -587,9 +592,13 @@ class Configuration {
         
         drive8Connected = defaults.bool(forKey: Keys.Per.drive8Connect)
         drive8Type = defaults.integer(forKey: Keys.Per.drive8Model)
+        drive8Ram = defaults.integer(forKey: Keys.Per.drive8Ram)
+        drive8ParCable = defaults.integer(forKey: Keys.Per.drive8ParCable)
         drive9Connected = defaults.bool(forKey: Keys.Per.drive9Connect)
         drive9Type = defaults.integer(forKey: Keys.Per.drive9Model)
-        
+        drive9Ram = defaults.integer(forKey: Keys.Per.drive9Ram)
+        drive8ParCable = defaults.integer(forKey: Keys.Per.drive9ParCable)
+
         blankDiskFormatIntValue = defaults.integer(forKey: Keys.Per.blankDiskFormat)
         
         gameDevice1 = defaults.integer(forKey: Keys.Per.gameDevice1)
@@ -597,10 +606,6 @@ class Configuration {
         
         mouseModel = defaults.integer(forKey: Keys.Per.mouseModel)
         
-        parCableType = defaults.integer(forKey: Keys.Per.parCableType)
-        drive8ParCable = defaults.bool(forKey: Keys.Per.drive8ParCable)
-        drive9ParCable = defaults.bool(forKey: Keys.Per.drive9ParCable)
-
         c64.resume()
     }
     
@@ -610,19 +615,19 @@ class Configuration {
         
         defaults.set(drive8Connected, forKey: Keys.Per.drive8Connect)
         defaults.set(drive8Type, forKey: Keys.Per.drive8Model)
+        defaults.set(drive8Ram, forKey: Keys.Per.drive8Ram)
+        defaults.set(drive8ParCable, forKey: Keys.Per.drive8ParCable)
         defaults.set(drive9Connected, forKey: Keys.Per.drive9Connect)
         defaults.set(drive9Type, forKey: Keys.Per.drive9Model)
-                
+        defaults.set(drive9Ram, forKey: Keys.Per.drive9Ram)
+        defaults.set(drive9ParCable, forKey: Keys.Per.drive9ParCable)
+
         defaults.set(blankDiskFormatIntValue, forKey: Keys.Per.blankDiskFormat)
         
         defaults.set(gameDevice1, forKey: Keys.Per.gameDevice1)
         defaults.set(gameDevice2, forKey: Keys.Per.gameDevice2)
         
         defaults.set(mouseModel, forKey: Keys.Per.mouseModel)
-
-        defaults.set(parCableType, forKey: Keys.Per.parCableType)
-        defaults.set(drive8ParCable, forKey: Keys.Per.drive8ParCable)
-        defaults.set(drive9ParCable, forKey: Keys.Per.drive9ParCable)
     }
     
     //

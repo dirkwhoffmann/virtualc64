@@ -276,6 +276,7 @@ DriveMemory::updateBankMap()
     
     // Add built-in RAM and IO chips
     for (isize bank = 0; bank < 32; bank += 8) {
+        
         usage[bank + 0] = DRVMEM_RAM;
         usage[bank + 1] = DRVMEM_RAM;
         usage[bank + 6] = DRVMEM_VIA1;
@@ -286,26 +287,27 @@ DriveMemory::updateBankMap()
     switch (romSize()) {
             
         case 0x4000: // 16KB (ROM is mirrored)
-            
             for (isize i = 32; i < 64; i++) usage[i] = DRVMEM_ROM;
             break;
             
         case 0x6000: // 24KB
-            
             for (isize i = 40; i < 64; i++) usage[i] = DRVMEM_ROM;
             break;
             
         case 0x8000: // 32KB
-            
             for (isize i = 32; i < 64; i++) usage[i] = DRVMEM_ROM;
             break;
     }
     
     // Add expansion RAM
-    if (config.ram6000) {
-        for (isize i = 24; i < 32; i++) usage[i] = DRVMEM_EXP;
-    }
-    if (config.ram8000) {
-        for (isize i = 32; i < 40; i++) usage[i] = DRVMEM_EXP;
+    switch (config.ram) {
+            
+        case DRVRAM_DOLPHIN2: // $8000 - $9FFF
+            for (isize i = 32; i < 40; i++) usage[i] = DRVMEM_EXP;
+            break;
+
+        case DRVRAM_DOLPHIN3: // $6000 - $7FFF
+            for (isize i = 24; i < 32; i++) usage[i] = DRVMEM_EXP;
+            break;
     }
 }

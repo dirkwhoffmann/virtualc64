@@ -667,13 +667,6 @@ Interpreter::registerInstructions()
              "command", "Displays the current configuration",
              &RetroShell::exec <Token::parcable, Token::config>);
 
-    root.add({"parcable", "set"},
-             "command", "Configures the component");
-        
-    root.add({"parcable", "set", "type"},
-             "key", "",
-             &RetroShell::exec <Token::parcable, Token::set, Token::type>, 1);
-
     root.add({"parcable", "inspect"},
              "command", "Displays the internal state",
              &RetroShell::exec <Token::parcable, Token::inspect>);

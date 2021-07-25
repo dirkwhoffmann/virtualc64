@@ -144,9 +144,7 @@ public:
     void poke(u16 addr, u8 value);
     void pokeZP(u8 addr, u8 value) { ram[addr] = value; }
     void pokeStack(u8 sp, u8 value) { ram[0x100 + sp] = value; }
-    
-private:
-    
+        
     // Updates the bank map
     void updateBankMap();
 };

@@ -61,11 +61,11 @@ Drive::getDefaultConfig()
     DriveConfig defaults;
     
     defaults.type = DRIVE_VC1541II;
+    defaults.ram = DRVRAM_STANDARD;
+    defaults.parCable = PAR_CABLE_NONE;
     defaults.powerSave = true;
     defaults.connected = false;
     defaults.switchedOn = true;
-    defaults.ram6000 = false;
-    defaults.ram8000 = true;
     defaults.ejectDelay = 30;
     defaults.swapDelay = 30;
     defaults.insertDelay = 30;
@@ -84,12 +84,11 @@ Drive::resetConfig()
     DriveConfig defaults = getDefaultConfig();
     
     setConfigItem(OPT_DRV_TYPE, deviceNr, defaults.type);
+    setConfigItem(OPT_DRV_RAM, deviceNr, defaults.ram);
+    setConfigItem(OPT_DRV_PARCABLE, deviceNr, defaults.parCable);
     setConfigItem(OPT_DRV_CONNECT, deviceNr, deviceNr == DRIVE8);
     setConfigItem(OPT_DRV_POWER_SWITCH, deviceNr, defaults.switchedOn);
     setConfigItem(OPT_DRV_POWER_SAVE, deviceNr, defaults.powerSave);
-
-    setConfigItem(OPT_DRV_RAM6000, deviceNr, defaults.ram6000);
-    setConfigItem(OPT_DRV_RAM8000, deviceNr, defaults.ram8000);
 
     setConfigItem(OPT_DRV_EJECT_DELAY, deviceNr, defaults.ejectDelay);
     setConfigItem(OPT_DRV_SWAP_DELAY, deviceNr, defaults.swapDelay);
@@ -108,11 +107,11 @@ Drive::getConfigItem(Option option) const
     switch (option) {
             
         case OPT_DRV_TYPE:          return (i64)config.type;
+        case OPT_DRV_RAM:           return (i64)config.ram;
+        case OPT_DRV_PARCABLE:      return (i64)config.parCable;
         case OPT_DRV_CONNECT:       return (i64)config.connected;
         case OPT_DRV_POWER_SWITCH:  return (i64)config.switchedOn;
         case OPT_DRV_POWER_SAVE:    return (i64)config.powerSave;
-        case OPT_DRV_RAM6000:       return (i64)config.ram6000;
-        case OPT_DRV_RAM8000:       return (i64)config.ram8000;
         case OPT_DRV_EJECT_DELAY:   return (i64)config.ejectDelay;
         case OPT_DRV_SWAP_DELAY:    return (i64)config.swapDelay;
         case OPT_DRV_INSERT_DELAY:  return (i64)config.insertDelay;
@@ -179,6 +178,29 @@ Drive::setConfigItem(Option option, long id, i64 value)
             config.type = (DriveType)value;
             return true;
         }
+        case OPT_DRV_RAM:
+        {
+            if (!DriveRamEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INV_ARG, DriveRamEnum::keyList());
+            }
+            
+            suspend();
+            config.ram = (DriveRam)value;
+            mem.updateBankMap();
+            resume();
+            return true;
+        }
+        case OPT_DRV_PARCABLE:
+        {
+            if (!ParCableTypeEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INV_ARG, ParCableTypeEnum::keyList());
+            }
+            
+            suspend();
+            config.parCable = (ParCableType)value;
+            resume();
+            return true;
+        }
         case OPT_DRV_CONNECT:
         {
             if (value && !c64.hasRom(ROM_TYPE_VC1541)) {
@@ -210,16 +232,6 @@ Drive::setConfigItem(Option option, long id, i64 value)
         {
             config.powerSave = value;
             wakeUp();
-            return true;
-        }
-        case OPT_DRV_RAM6000:
-        {
-            config.ram6000 = value;
-            return true;
-        }
-        case OPT_DRV_RAM8000:
-        {
-            config.ram8000 = value;
             return true;
         }
         case OPT_DRV_EJECT_DELAY:
@@ -261,7 +273,6 @@ Drive::setConfigItem(Option option, long id, i64 value)
             value = std::clamp(value, 0LL, 100LL);
             
             config.ejectVolume = value;
-            printf("New eject volume: %d\n", config.ejectVolume);
             return true;
         }
         case OPT_DRV_INSERT_VOL:
@@ -285,6 +296,10 @@ Drive::_dump(dump::Category category, std::ostream& os) const
     
         os << tab("Drive type");
         os << DriveTypeEnum::key(config.type) << std::endl;
+        os << tab("Ram");
+        os << DriveRamEnum::key(config.ram) << std::endl;
+        os << tab("Parallel cable");
+        os << ParCableTypeEnum::key(config.parCable) << std::endl;
         os << tab("Power save mode");
         os << bol(config.powerSave, "when idle", "never") << std::endl;
         os << tab("Connected");
