@@ -212,7 +212,7 @@ RomFile::identifier(u64 fnv)
         case 0xAE3DEC803423CE60: return KERNAL_DOLPHIN_20_1_MA;
         case 0x4D3C32F9415972C3: return KERNAL_DOLPHIN_20_2;
         case 0xA5D930343EE32459: return KERNAL_DOLPHIN_20_3;
-        case 0x2EA010B7CC8EC61B: return KERNAL_DOLPHIN_20_SLVDR;
+        case 0x7D34E8277F74A321: return KERNAL_DOLPHIN_20_SLVDR;
         case 0x877E38DA5DAFEC30: return KERNAL_DOLPHIN_30;
             
         case 0x44BBA0EAC5898597: return VC1541_II_1987;
@@ -414,28 +414,28 @@ RomFile::subTitle(RomIdentifier rev)
         case KERNAL_TURBO_TAPE:       return "Turbo Tape";
         case KERNAL_64ER_V3:          return "64'er DOS V3";
         case KERNAL_SPEEDDOS_PLUS:    return "SpeedDOS Plus";
-        case KERNAL_SPEEDDOS_27:      return "SpeedDOS Plus 2.7 (TRIAD)";
-        case KERNAL_DOLPHIN_10:       return "Dolphin DOS 1.0";
-        case KERNAL_DOLPHIN_20_1:     return "Dolphin DOS 2.0 Rev 1";
-        case KERNAL_DOLPHIN_20_1_MA:  return "Dolphin DOS 2.0 Rev 1 (M.A.)";
-        case KERNAL_DOLPHIN_20_2:     return "Dolphin DOS 2.0 Rev 2";
-        case KERNAL_DOLPHIN_20_3:     return "Dolphin DOS 2.0 Rev 3";
-        case KERNAL_DOLPHIN_20_SLVDR: return "Dolphin DOS 2.0 (Silver Dream)";
-        case KERNAL_DOLPHIN_30:       return "Dolphin DOS 3.0";
+        case KERNAL_SPEEDDOS_27:      return "SpeedDOS Plus (TRIAD)";
+        case KERNAL_DOLPHIN_10:       return "Dolphin DOS";
+        case KERNAL_DOLPHIN_20_1:     return "Dolphin DOS";
+        case KERNAL_DOLPHIN_20_1_MA:  return "Dolphin DOS";
+        case KERNAL_DOLPHIN_20_2:     return "Dolphin DOS";
+        case KERNAL_DOLPHIN_20_3:     return "Dolphin DOS";
+        case KERNAL_DOLPHIN_20_SLVDR: return "Dolphin DOS";
+        case KERNAL_DOLPHIN_30:       return "Dolphin DOS";
             
         case VC1541_II_1987:          return "VC1541-II (1987)";
-        case VC1541_II_NEWTRONIC:     return "VC1541-II (Newtronic motor)";
-        case VC1541_OLD_WHITE:        return "VC1541 (white chassis)";
+        case VC1541_II_NEWTRONIC:     return "VC1541-II (Newtronic)";
+        case VC1541_OLD_WHITE:        return "VC1541 (White)";
         case VC1541_1541C:            return "VC1541C";
         case VC1541_II_RELOC_PATCH:   return "Relocation Patch";
         case VC1541_II_JIFFY:         return "JiffyDOS Patch";
         case VC1541_II_JIFFY_V600:    return "JiffyDOS Patch";
-        case VC1541_64ER_V3:          return "64'er DOS V3";
+        case VC1541_64ER_V3:          return "64'er DOS";
         case VC1541_SPEEDDOS_PLUS:    return "SpeedDOS Plus";
-        case VC1541_SPEEDDOS_27:      return "SpeedDOS Plus 2.7 (TRIAD)";
-        case VC1541_DOLPHIN_20:       return "Dolphin DOS 2.0";
-        case VC1541_DOLPHIN_20_SLVDR: return "Dolphin DOS 2.0 (Silver Dream)";
-        case VC1541_DOLPHIN_30:       return "Dolphin DOS 3.0";
+        case VC1541_SPEEDDOS_27:      return "SpeedDOS Plus";
+        case VC1541_DOLPHIN_20:       return "Dolphin DOS";
+        case VC1541_DOLPHIN_20_SLVDR: return "Dolphin DOS";
+        case VC1541_DOLPHIN_30:       return "Dolphin DOS";
             
         default:                      return "";
     }
@@ -477,6 +477,17 @@ RomFile::revision(RomIdentifier rev)
         case KERNAL_DATEL_V32:        return "V3.2+";
         case KERNAL_EXOS_V3:          return "V3";
         case KERNAL_TURBO_TAPE:       return "V0.1";
+        case KERNAL_64ER_V3:          return "V3";
+        case KERNAL_SPEEDDOS_PLUS:    return "";
+        case KERNAL_SPEEDDOS_27:      return "V2.7 (TRIAD)";
+        case KERNAL_DOLPHIN_10:       return "V1.0";
+        case KERNAL_DOLPHIN_20_1:     return "V2.0 Rev 1";
+        case KERNAL_DOLPHIN_20_1_MA:  return "V2.0 Rev 1 (M.A.)";
+        case KERNAL_DOLPHIN_20_2:     return "V2.0 Rev 2";
+        case KERNAL_DOLPHIN_20_3:     return "V2.0 Rev 3";
+        case KERNAL_DOLPHIN_20_SLVDR: return "V2.0 (SilverDream)";
+        case KERNAL_DOLPHIN_30:       return "V3.0";
+
             
         case VC1541_II_1987:          return "";
         case VC1541_II_NEWTRONIC:     return "";
@@ -485,7 +496,13 @@ RomFile::revision(RomIdentifier rev)
         case VC1541_II_RELOC_PATCH:   return "";
         case VC1541_II_JIFFY:         return "";
         case VC1541_II_JIFFY_V600:    return "V6.0";
-            
+        case VC1541_64ER_V3:          return "V3";
+        case VC1541_SPEEDDOS_PLUS:    return "";
+        case VC1541_SPEEDDOS_27:      return "V2.7 (TRIAD)";
+        case VC1541_DOLPHIN_20:       return "V2.0";
+        case VC1541_DOLPHIN_20_SLVDR: return "V2.0 (SilverDream)";
+        case VC1541_DOLPHIN_30:       return "V3.0";
+
         default:                      return "";
     }
 }

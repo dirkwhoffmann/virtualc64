@@ -260,7 +260,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="10b-BC-y6b">
-                                            <rect key="frame" x="10" y="328" width="164" height="18"/>
+                                            <rect key="frame" x="6" y="328" width="168" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" controlSize="small" selectable="YES" sendsActionOnEndEditing="YES" alignment="right" title="Hash: 1020304050607080" id="hcZ-7l-wZp">
                                                 <font key="font" metaFont="message" size="11"/>
@@ -327,7 +327,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DhW-S3-d80">
-                                            <rect key="frame" x="10" y="197" width="165" height="18"/>
+                                            <rect key="frame" x="6" y="197" width="169" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" controlSize="small" selectable="YES" sendsActionOnEndEditing="YES" alignment="right" title="Hash: 1020304050607080" id="R47-b2-Tim">
                                                 <font key="font" metaFont="message" size="11"/>
