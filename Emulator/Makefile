@@ -1,12 +1,12 @@
 SUBDIRS = \
-Base Cartridges CIA CPU Datasette Drive FileSystems Files LogicBoard Memory  \
+Utilities Base Cartridges CIA CPU Datasette Drive FileSystems Files LogicBoard Memory  \
 Peripherals RetroShell SID VICII
 
 MYCC = g++ -O2 -std=c++17 -Wfatal-errors -Wall
 MYFLAGS = \
 -I $(CURDIR)/.. \
--I $(CURDIR)/../Utilities \
 -I $(CURDIR) \
+-I $(CURDIR)/Utilities \
 -I $(CURDIR)/Base \
 -I $(CURDIR)/Cartridges \
 -I $(CURDIR)/Cartridges/CustomCartridges \
