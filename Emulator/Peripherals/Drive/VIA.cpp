@@ -370,6 +370,9 @@ VIA6522::peekORA(bool handshake)
     
     // Take care of a parallel cable (if attached)
     if (isVia1()) {
+        
+        // trace(true, "peekORA() = %x\n", ira);
+
         if (handshake && ca2Control() == 5) {
             parCable.driveHandshake();
         }
@@ -659,6 +662,8 @@ VIA6522::pokeORA(u8 value, bool handshake)
     
     // Take care of a parallel cable (if attached)
     if (isVia1()) {
+        
+        // trace(true, "pokeORA(%x, %d)\n", value, handshake);
         if (handshake && ca2Control() == 5) {
             parCable.driveHandshake();
         }
