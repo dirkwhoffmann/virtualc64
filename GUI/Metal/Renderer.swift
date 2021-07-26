@@ -211,5 +211,8 @@ class Renderer: NSObject, MTKViewDelegate {
             buffer.present(drawable)
             buffer.commit()
         }
+        
+        // Perform periodic events inside the controller
+        if frames % 5 == 0 { myController?.timerFunc() }
     }
 }

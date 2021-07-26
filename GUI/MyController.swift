@@ -73,10 +73,10 @@ class MyController: NSWindowController, MessageReceiver {
     var virtualKeyboard: VirtualKeyboardController?
     
     // Loop timer for scheduling periodic updates
-    var timer: Timer?
+    // var timer: Timer?
     
     // // Timer lock
-    var timerLock = NSLock()
+    // var timerLock = NSLock()
     
     // Snapshot timers
     var snapshotTimer: Timer?
@@ -455,12 +455,14 @@ extension MyController {
         speedometer = Speedometer()
         
         // Create timer and speedometer
+        /*
         assert(timer == nil)
         timer = Timer.scheduledTimer(timeInterval: 1.0/12, // 12 times a second
                                      target: self,
                                      selector: #selector(timerFunc),
                                      userInfo: nil,
                                      repeats: true)
+        */
     }
 
     //
@@ -469,7 +471,7 @@ extension MyController {
     
     @objc func timerFunc() {
 
-        timerLock.lock()
+        // timerLock.lock()
  
         animationCounter += 1
 
@@ -513,7 +515,7 @@ extension MyController {
             }
         }
         
-        timerLock.unlock()
+        // timerLock.unlock()
     }
     
     func updateSpeedometer() {
