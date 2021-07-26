@@ -37,7 +37,7 @@ const RomSignature RomFile::signatures[] = {
     { ROM_TYPE_VC1541, 0x6000, 0x0000, { 0x4C, 0x4B, 0xA3 } }, // Dolphin
     { ROM_TYPE_VC1541, 0x8000, 0x2000, { 0x4C, 0x4B, 0xA3 } }, // Dolphin
     
-    { ROM_TYPE_COUNT,  0x0000, 0x0000, { 0x00, 0x00, 0x00 } }
+    { 0,               0x0000, 0x0000, { 0x00, 0x00, 0x00 } }
 };
 
 bool
@@ -61,7 +61,7 @@ RomFile::isRomStream(RomType type, std::istream &is)
 {
     isize size = util::streamLength(is);
     
-    for (isize i = 0; signatures[i].type != ROM_TYPE_COUNT; i++) {
+    for (isize i = 0; signatures[i].size != 0; i++) {
             
         // Only proceed if the file type matches
         if (signatures[i].type != type) continue;

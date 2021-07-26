@@ -12,7 +12,6 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
-
 //
 // Enumerations
 //
@@ -24,8 +23,7 @@ enum_long(C64_MODEL)
     C64_MODEL_PAL_OLD,
     C64_MODEL_NTSC,
     C64_MODEL_NTSC_II,
-    C64_MODEL_NTSC_OLD,
-    C64_MODEL_COUNT
+    C64_MODEL_NTSC_OLD
 };
 typedef C64_MODEL C64Model;
 
@@ -34,7 +32,7 @@ struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value < C64_MODEL_COUNT;
+        return (unsigned long)value <= C64_MODEL_NTSC_OLD;
     }
 
     static const char *prefix() { return "C64_MODEL"; }
@@ -48,7 +46,6 @@ struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
             case C64_MODEL_NTSC:      return "NTSC";
             case C64_MODEL_NTSC_II:   return "NTSC_II";
             case C64_MODEL_NTSC_OLD:  return "NTSC_OLD";
-            case C64_MODEL_COUNT:     return "???";
         }
         return "???";
     }
@@ -60,8 +57,7 @@ enum_long(ROM_TYPE)
     ROM_TYPE_BASIC,
     ROM_TYPE_CHAR,
     ROM_TYPE_KERNAL,
-    ROM_TYPE_VC1541,
-    ROM_TYPE_COUNT
+    ROM_TYPE_VC1541
 };
 typedef ROM_TYPE RomType;
 
@@ -70,7 +66,7 @@ struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value < ROM_TYPE_COUNT;
+        return (unsigned long)value <= ROM_TYPE_VC1541;
     }
 
     static const char *prefix() { return "ROM_TYPE"; }
@@ -82,7 +78,6 @@ struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
             case ROM_TYPE_CHAR:    return "CHAR";
             case ROM_TYPE_KERNAL:  return "KERNAL";
             case ROM_TYPE_VC1541:  return "VC1541";
-            case ROM_TYPE_COUNT:   return "???";
         }
         return "???";
     }
@@ -93,8 +88,7 @@ enum_long(EMULATOR_STATE)
 {
     EMULATOR_STATE_OFF,
     EMULATOR_STATE_PAUSED,
-    EMULATOR_STATE_RUNNING,
-    EMULATOR_STATE_COUNT
+    EMULATOR_STATE_RUNNING
 };
 typedef EMULATOR_STATE EmulatorState;
 
@@ -103,7 +97,7 @@ struct EmulatorStateEnum : util::Reflection<EmulatorStateEnum, EmulatorState> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value < EMULATOR_STATE_COUNT;
+        return (unsigned long)value <= EMULATOR_STATE_RUNNING;
     }
 
     static const char *prefix() { return "EMULATOR_STATE"; }
@@ -114,7 +108,6 @@ struct EmulatorStateEnum : util::Reflection<EmulatorStateEnum, EmulatorState> {
             case EMULATOR_STATE_OFF:      return "OFF";
             case EMULATOR_STATE_PAUSED:   return "PAUSED";
             case EMULATOR_STATE_RUNNING:  return "RUNNING";
-            case EMULATOR_STATE_COUNT:    return "???";
         }
         return "???";
     }
@@ -128,8 +121,7 @@ enum_long(INSPECTION_TARGET)
     INSPECTION_TARGET_MEM,
     INSPECTION_TARGET_CIA,
     INSPECTION_TARGET_VIC,
-    INSPECTION_TARGET_SID,
-    INSPECTION_TARGET_COUNT
+    INSPECTION_TARGET_SID
 };
 typedef INSPECTION_TARGET InspectionTarget;
 
@@ -138,7 +130,7 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
     
     static bool isValid(long value)
     {
-        return (unsigned long)value < INSPECTION_TARGET_COUNT;
+        return (unsigned long)value <= INSPECTION_TARGET_SID;
     }
     
     static const char *prefix() { return "INSPECTION_TARGET"; }
@@ -152,7 +144,6 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
             case INSPECTION_TARGET_CIA:   return "CIA";
             case INSPECTION_TARGET_VIC:   return "VIC";
             case INSPECTION_TARGET_SID:   return "SID";
-            case INSPECTION_TARGET_COUNT: return "???";
         }
         return "???";
     }

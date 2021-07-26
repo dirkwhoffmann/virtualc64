@@ -455,7 +455,6 @@
 		504C42FF24AF29AB00E69CAE /* Mouse1351.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mouse1351.cpp; sourceTree = "<group>"; };
 		504C430124AF29AB00E69CAE /* Mouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse.h; sourceTree = "<group>"; };
 		504C430224AF29AB00E69CAE /* Mouse1351.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mouse1351.h; sourceTree = "<group>"; };
-		504C430324AF29AB00E69CAE /* C64PublicTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64PublicTypes.h; sourceTree = "<group>"; };
 		504C430524AF29AB00E69CAE /* VICII_draw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_draw.cpp; sourceTree = "<group>"; };
 		504C430724AF29AC00E69CAE /* VICII.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII.cpp; sourceTree = "<group>"; };
 		504C430824AF29AC00E69CAE /* VICII_colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_colors.cpp; sourceTree = "<group>"; };
@@ -977,7 +976,6 @@
 			isa = PBXGroup;
 			children = (
 				5078BEAA264D70AC00EDA161 /* Makefile */,
-				504C430324AF29AB00E69CAE /* C64PublicTypes.h */,
 				504268AC24F0F76F006BB841 /* C64Types.h */,
 				504C42F624AF29AB00E69CAE /* C64.h */,
 				504C42F724AF29AB00E69CAE /* C64.cpp */,
