@@ -215,10 +215,10 @@ RomFile::identifier(u64 fnv)
         case 0x7D34E8277F74A321: return KERNAL_DOLPHIN_20_SLVDR;
         case 0x877E38DA5DAFEC30: return KERNAL_DOLPHIN_30;
             
+        case 0x361A1EC48F04F5A4: return VC1541C_01;
+        case 0xB938E2DA07F4FE40: return VC1541C_02;
         case 0x44BBA0EAC5898597: return VC1541_II_1987;
         case 0xA1D36980A17C8756: return VC1541_II_NEWTRONIC;
-        case 0x361A1EC48F04F5A4: return VC1541_OLD_WHITE;
-        case 0xB938E2DA07F4FE40: return VC1541_1541C;
         case 0x47CBA55F16FB3E09: return VC1541_II_RELOC_PATCH;
         case 0x8B2A523E29BED889: return VC1541_II_JIFFY;
         case 0xF7F4D931219DBB5D: return VC1541_II_JIFFY_V600;
@@ -250,10 +250,10 @@ RomFile::isCommodoreRom(RomIdentifier rev)
         case KERNAL_DANISH_3RD:
         case KERNAL_SX64:
         case KERNAL_SX64_SCAND:
+        case VC1541C_01:
+        case VC1541C_02:
         case VC1541_II_1987:
         case VC1541_II_NEWTRONIC:
-        case VC1541_OLD_WHITE:
-        case VC1541_1541C:
             return true;
             
         default:
@@ -358,10 +358,10 @@ RomFile::title(RomIdentifier rev)
         case KERNAL_DOLPHIN_20_SLVDR:
         case KERNAL_DOLPHIN_30:       return "Patched Kernal Rom";
             
-        case VC1541_II_1987:        
-        case VC1541_II_NEWTRONIC:
-        case VC1541_OLD_WHITE:
-        case VC1541_1541C:            return "Floppy Drive Firmware";
+        case VC1541C_01:
+        case VC1541C_02:              return "VC1541C Firmware";
+        case VC1541_II_1987:
+        case VC1541_II_NEWTRONIC:     return "VC1541-II Firmware";
         case VC1541_II_RELOC_PATCH:
         case VC1541_II_JIFFY:
         case VC1541_II_JIFFY_V600:
@@ -423,10 +423,10 @@ RomFile::subTitle(RomIdentifier rev)
         case KERNAL_DOLPHIN_20_SLVDR: return "Dolphin DOS";
         case KERNAL_DOLPHIN_30:       return "Dolphin DOS";
             
-        case VC1541_II_1987:          return "VC1541-II (1987)";
-        case VC1541_II_NEWTRONIC:     return "VC1541-II (Newtronic)";
-        case VC1541_OLD_WHITE:        return "VC1541 (White)";
-        case VC1541_1541C:            return "VC1541C";
+        case VC1541C_01:              return "MOS 251968-01";
+        case VC1541C_02:              return "MOS 251968-02";
+        case VC1541_II_1987:          return "MOS 251968-03";
+        case VC1541_II_NEWTRONIC:     return "MOS 355640-01";
         case VC1541_II_RELOC_PATCH:   return "Relocation Patch";
         case VC1541_II_JIFFY:         return "JiffyDOS Patch";
         case VC1541_II_JIFFY_V600:    return "JiffyDOS Patch";
@@ -489,10 +489,10 @@ RomFile::revision(RomIdentifier rev)
         case KERNAL_DOLPHIN_30:       return "V3.0";
 
             
+        case VC1541C_01:              return "";
+        case VC1541C_02:              return "";
         case VC1541_II_1987:          return "";
         case VC1541_II_NEWTRONIC:     return "";
-        case VC1541_OLD_WHITE:        return "";
-        case VC1541_1541C:            return "";
         case VC1541_II_RELOC_PATCH:   return "";
         case VC1541_II_JIFFY:         return "";
         case VC1541_II_JIFFY_V600:    return "V6.0";
