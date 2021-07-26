@@ -22,8 +22,7 @@ private:
     static const RomSignature signatures[];
     
     // Rom type (Basic, Character, Kernal, or VC1541)
-    // TODO: Replace FileType by RomType
-    FileType romType = FILETYPE_UNKNOWN;
+    FileType romFileType = FILETYPE_UNKNOWN;
         
 public:
     
@@ -76,7 +75,7 @@ public:
     // Methods from AnyFile
     //
     
-    FileType type() const override { return romType; }
+    FileType type() const override { return romFileType; }
     isize readFromStream(std::istream &stream) override;
     void repair() override;
 };

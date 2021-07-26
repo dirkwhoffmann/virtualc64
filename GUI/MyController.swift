@@ -681,12 +681,10 @@ extension MyController {
             hideOrShowDriveMenus()
             refreshStatusBar()
             
-        case .DRIVE_POWER_SAVE_ON:
-            track("Drive \(driveNr): Entering power-safe mode")
-
-        case .DRIVE_POWER_SAVE_OFF:
-            track("Drive \(driveNr): Exiting power-safe mode")
-
+        case .DRIVE_POWER_SAVE_ON,
+             .DRIVE_POWER_SAVE_OFF:
+            break
+            
         case .VC1530_TAPE:
             if msg.data == 1 {
                 mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)

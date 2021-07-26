@@ -510,7 +510,7 @@ RomFile::revision(RomIdentifier rev)
 isize
 RomFile::readFromStream(std::istream &stream)
 {
-    romType =
+    romFileType =
     isBasicRomStream(stream) ? FILETYPE_BASIC_ROM :
     isCharRomStream(stream) ? FILETYPE_CHAR_ROM :
     isKernalRomStream(stream) ? FILETYPE_KERNAL_ROM :

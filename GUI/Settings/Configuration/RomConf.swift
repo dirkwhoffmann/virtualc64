@@ -41,7 +41,7 @@ extension ConfigurationController {
         let romMissing = NSImage.init(named: "rom_missing")
         let romOrig    = NSImage.init(named: "rom_original")
         let romMega    = NSImage.init(named: "rom_mega65")
-        let romPatched = NSImage.init(named: "rom_unknown")
+        let romPatched = NSImage.init(named: "rom_patched")
         let romUnknown = NSImage.init(named: "rom_unknown")
         
         // Lock controls if emulator is powered on
