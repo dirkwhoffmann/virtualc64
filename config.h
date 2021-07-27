@@ -70,6 +70,7 @@ static const int SIDREG_DEBUG    = 0; // Sound Interface Device (Registers)
 
 // Drive
 static const int VIA_DEBUG       = 0; // Versatile Interface Adapter
+static const int PIA_DEBUG       = 0; // Peripheral Interface Adapter
 static const int IEC_DEBUG       = 0; // IEC bus
 static const int DSK_DEBUG       = 0; // Disk controller execution
 static const int DSKCHG_DEBUG    = 0; // Disk changing procedure

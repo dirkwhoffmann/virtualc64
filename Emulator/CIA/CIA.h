@@ -352,6 +352,7 @@ public:
     // Writes a value into a CIA register
     void poke(u16 addr, u8 value);
     
+    
     //
     // Accessing the port registers
     //
