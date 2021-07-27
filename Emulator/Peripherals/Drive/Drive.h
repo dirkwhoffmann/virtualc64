@@ -15,6 +15,7 @@
 #include "Disk.h"
 #include "DriveMemory.h"
 #include "VIA.h"
+#include "PIA.h"
 
 /*
  * This implementation is based on the following two documents written
@@ -71,6 +72,8 @@ public:
     DriveCPU cpu = DriveCPU(c64, mem);
     VIA1 via1 = VIA1(c64, *this);
     VIA2 via2 = VIA2(c64, *this);
+    PiaDolphin pia = PiaDolphin(c64, *this);
+    
     Disk disk = Disk(c64);
     
 

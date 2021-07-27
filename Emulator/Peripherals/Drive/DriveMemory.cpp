@@ -192,6 +192,10 @@ DriveMemory::peek(u16 addr)
         case DRVMEM_VIA2:
             result = drive.via2.peek(addr & 0xF);
             break;
+
+        case DRVMEM_PIA:
+            result = drive.pia.peek(addr);
+            break;
             
         default:
             assert(false);
@@ -232,6 +236,10 @@ DriveMemory::spypeek(u16 addr) const
             result = drive.via2.spypeek(addr & 0xF);
             break;
             
+        case DRVMEM_PIA:
+            result = drive.pia.spypeek(addr);
+            break;
+
         default:
             assert(false);
             return 0;
@@ -261,6 +269,10 @@ DriveMemory::poke(u16 addr, u8 value)
             drive.via2.poke(addr & 0xF, value);
             break;
             
+        case DRVMEM_PIA:
+            drive.pia.poke(addr, value);
+            break;
+
         default:
             break;
     }
@@ -309,5 +321,11 @@ DriveMemory::updateBankMap()
         case DRVRAM_DOLPHIN3: // $6000 - $7FFF
             for (isize i = 24; i < 32; i++) usage[i] = DRVMEM_EXP;
             break;
+    }
+    
+    // Map the PIA (Dolphin DOS 3) $5000 - $5FFF
+    if (config.parCable == PAR_CABLE_DOLPHIN3) {
+        
+        for (isize i = 20; i < 24; i++) usage[i] = DRVMEM_PIA;
     }
 }

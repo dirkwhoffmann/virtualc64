@@ -135,7 +135,7 @@
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <tabView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="baz-eW-A74">
-                        <rect key="frame" x="2" y="-16" width="620" height="470"/>
+                        <rect key="frame" x="13" y="6" width="620" height="470"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
@@ -1201,7 +1201,7 @@ Gw
                                                         <menuItem title="DolphinDOS 2" tag="2" id="DDw-RL-PeB">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="DolphinDOS 3" tag="3" enabled="NO" id="5FU-ih-opp">
+                                                        <menuItem title="DolphinDOS 3" tag="3" id="5FU-ih-opp">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                     </items>
@@ -1282,7 +1282,7 @@ Gw
                                                         <menuItem title="DolphinDOS 2" tag="2" id="n2H-zh-o9X">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="DolphinDOS 3" tag="3" enabled="NO" id="Xaf-uT-CGy">
+                                                        <menuItem title="DolphinDOS 3" tag="3" id="Xaf-uT-CGy">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                     </items>

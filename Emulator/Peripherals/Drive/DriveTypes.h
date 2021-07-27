@@ -88,7 +88,7 @@ enum_long(DRVMEM_TYPE)
     DRVMEM_ROM,
     DRVMEM_VIA1,
     DRVMEM_VIA2,
-    DRVMEM_PIA        // Peripheral Interface Adapter (not supported, yet)
+    DRVMEM_PIA        // Peripheral Interface Adapter (Dolphin3)
 };
 typedef DRVMEM_TYPE DrvMemType;
 

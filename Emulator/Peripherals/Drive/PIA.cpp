@@ -21,6 +21,12 @@ PIA6821::PIA6821(C64 &ref, Drive &drvref) : C64Component(ref), drive(drvref)
 }
 
 void
+PIA6821::_reset(bool hard)
+{
+    RESET_SNAPSHOT_ITEMS(hard)
+}
+
+void
 PIA6821::setCA1External(bool value)
 {
     bool active = isActiveTransitionCA1(ca1, value);
@@ -331,4 +337,62 @@ PIA6821::updatePB()
 {
     pb = orb & ddrb;
     return pb;
+}
+
+//
+// DolphinDOS 3
+//
+
+void
+PiaDolphin::ca2HasChangedTo(bool value)
+{
+    trace(PIA_DEBUG, "ca2HasChangedTo(%d)\n", value);
+}
+
+void
+PiaDolphin::cb2HasChangedTo(bool value)
+{
+    trace(PIA_DEBUG, "cb2HasChangedTo(%d)\n", value);
+}
+
+void
+PiaDolphin::irqAHasOccurred() const
+{
+    trace(PIA_DEBUG, "irqAHasOccurred\n");
+}
+
+void
+PiaDolphin::irqBHasOccurred() const
+{
+    trace(PIA_DEBUG, "irqBHasOccurred\n");
+}
+
+u8
+PiaDolphin::updatePA()
+{
+    return PIA6821::updatePA();
+}
+
+u8
+PiaDolphin::updatePB()
+{
+    return PIA6821::updatePB();
+}
+
+u8
+PiaDolphin::peek(u16 addr)
+{
+    return PIA6821::peek(addr & 0b10, addr & 0b01);
+}
+
+u8
+PiaDolphin::spypeek(u16 addr) const
+{
+    return PIA6821::spypeek(addr & 0b10, addr & 0b01);
+}
+
+void
+PiaDolphin::poke(u16 addr, u8 value)
+{
+    PIA6821::poke(addr & 0b10, addr & 0b01, value);
 }

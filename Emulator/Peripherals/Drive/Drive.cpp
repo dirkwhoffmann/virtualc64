@@ -199,6 +199,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
             printf("OPT_DRV_PARCABLE(%ld) %lld\n", id, value);
             suspend();
             config.parCable = (ParCableType)value;
+            mem.updateBankMap();
             resume();
             return true;
         }

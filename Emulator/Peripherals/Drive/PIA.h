@@ -53,6 +53,10 @@ public:
     PIA6821(C64 &ref, Drive &drvref);
     const char *getDescription() const override { return "PIA"; }
     
+private:
+    
+    void _reset(bool hard) override;
+    
     
     //
     // Serializing
@@ -138,9 +142,37 @@ public:
     // Writes the data bus
     void poke(bool rs1, bool rs0, u8 value);
 
-private:
+protected:
 
     // Gets the port values up-to-date
     virtual u8 updatePA();
     virtual u8 updatePB();
+};
+
+//
+// PIA (DolphinDOS 3)
+//
+
+class PiaDolphin : public PIA6821 {
+    
+public:
+
+    using PIA6821::PIA6821;
+    
+    const char *getDescription() const override { return "PiaDolphin"; }
+    
+private:
+        
+    void ca2HasChangedTo(bool value) override;
+    void cb2HasChangedTo(bool value) override;
+    void irqAHasOccurred() const override;
+    void irqBHasOccurred() const override;
+    u8 updatePA() override;
+    u8 updatePB() override;
+    
+public:
+    
+    u8 peek(u16 addr);
+    u8 spypeek(u16 addr) const;
+    void poke(u16 addr, u8 value);
 };
