@@ -368,16 +368,6 @@ VIA6522::peekORA(bool handshake)
         ira = pa;
     }
     
-    // Take care of a parallel cable (if attached)
-    if (isVia1()) {
-        
-        // trace(true, "peekORA() = %x\n", ira);
-
-        if (handshake && ca2Control() == 5) {
-            parCable.driveHandshake();
-        }
-    }
-
     return ira;
 }
 
@@ -659,15 +649,6 @@ VIA6522::pokeORA(u8 value, bool handshake)
     
     ora = value;
     updatePA();
-    
-    // Take care of a parallel cable (if attached)
-    if (isVia1()) {
-        
-        // trace(true, "pokeORA(%x, %d)\n", value, handshake);
-        if (handshake && ca2Control() == 5) {
-            parCable.driveHandshake();
-        }
-    }
 }
 
 void
@@ -756,11 +737,7 @@ VIA6522::portAinternal() const
 void
 VIA6522::updatePA()
 {
-    if (isVia1()) {
-        pa = parCable.getValue(drive.getDeviceNr());
-    } else {
-        pa = (portAinternal() & ddra) | (portAexternal() & ~ddra);
-    }
+    pa = (portAinternal() & ddra) | (portAexternal() & ~ddra);
 }
 
 u8
@@ -893,6 +870,46 @@ VIA1::releaseIrqLine() {
 }
 
 u8
+VIA1::peekORA(bool handshake)
+{
+    u8 result = VIA6522::peekORA(handshake);
+
+    // Signal a handshake if a parallel cable is attached
+    switch (drive.getParCableType()) {
+            
+        case PAR_CABLE_SPEEDDOS:
+        case PAR_CABLE_DOLPHIN2:
+
+            if (handshake && ca2Control() == 5) parCable.driveHandshake();
+            break;
+            
+        default:
+            break;
+    }
+    
+    return result;
+}
+
+void
+VIA1::pokeORA(u8 value, bool handshake)
+{
+    VIA6522::pokeORA(value, handshake);
+    
+    // Signal a handshake if a parallel cable is attached
+    switch (drive.getParCableType()) {
+            
+        case PAR_CABLE_SPEEDDOS:
+        case PAR_CABLE_DOLPHIN2:
+
+            if (handshake && ca2Control() == 5) parCable.driveHandshake();
+            break;
+            
+        default:
+            break;
+    }
+}
+
+u8
 VIA1::portAexternal() const
 {
     return 0xFF;
@@ -917,6 +934,23 @@ VIA1::portBexternal() const
     if (drive.getDeviceNr() == DRIVE9) external |= 0x20;
     
     return external;
+}
+
+void
+VIA1::updatePA()
+{
+    switch (drive.getParCableType()) {
+            
+        case PAR_CABLE_SPEEDDOS:
+        case PAR_CABLE_DOLPHIN2:
+            
+            pa = parCable.getValue();
+            break;
+            
+        default:
+            VIA6522::updatePA();
+            break;
+    }
 }
 
 void

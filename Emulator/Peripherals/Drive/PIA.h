@@ -107,6 +107,13 @@ public:
     void setCB1External(bool value);
     void setCB2External(bool value);
 
+    void toggleCA1External() { setCA1External(!ca1); }
+    void toggleCA2External() { setCA1External(!ca2); }
+    void toggleCB1External() { setCA1External(!cb1); }
+    void toggleCB2External() { setCA1External(!cb2); }
+
+    void pulseCA1External() { toggleCA1External(); toggleCA1External(); }
+    
 private:
     
     void setCA2Internal(bool value);

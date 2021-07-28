@@ -316,13 +316,13 @@ public:
      */
     virtual u8 peek(u16 addr);
     
-private:
+protected:
     
     /* Special peek function for output register A. Variable handshake is
      * needed to distiguish if ORA is read via address 0x1 (handshake enabled)
      * or address 0xF (no handshake).
      */
-    u8 peekORA(bool handshake);
+    virtual u8 peekORA(bool handshake);
     
     // Special peek function for output register B
     u8 peekORB();
@@ -337,13 +337,13 @@ public:
      */
     void poke(u16 addr, u8 value);
     
-private:
+protected:
     
     /* Special poke function for output register A. Variable handshake is
      * needed to distiguish if ORA is written via address 0x1 (handshake
      * enabled) or address 0xF (no handshake).
      */
-    void pokeORA(u8 value, bool handshake);
+    virtual void pokeORA(u8 value, bool handshake);
     
     // Special poke function for output register B
     void pokeORB(u8 value);
@@ -373,6 +373,8 @@ private:
     //
     // Peripheral Control Register (PCR)
     //
+    
+protected:
     
     // Reads the control bits from the peripheral control register
     u8 ca1Control() const { return pcr & 0x01; }
@@ -516,8 +518,11 @@ public:
     const char *getDescription() const override { return "VIA1"; }
     bool isVia1() const override { return true; }
     
+    u8 peekORA(bool handshake) override;
+    void pokeORA(u8 value, bool handshake) override;
     u8 portAexternal() const override;
     u8 portBexternal() const override;
+    void updatePA() override;
     void updatePB() override;
     void pullDownIrqLine() override;
     void releaseIrqLine() override;

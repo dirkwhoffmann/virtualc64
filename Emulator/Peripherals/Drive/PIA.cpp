@@ -9,6 +9,7 @@
 
 #include "config.h"
 #include "PIA.h"
+#include "ParCable.h"
 #include "Drive.h"
 
 //
@@ -168,6 +169,9 @@ PIA6821::peek(bool rs1, bool rs0)
             
             result = updatePA();
             
+            // Clear interrupt bits
+            cra &= 0x3F;
+            
             switch (ca2Control()) {
                     
                 case 0b100: // "Read Strobe with CA1 Restore"
@@ -181,21 +185,29 @@ PIA6821::peek(bool rs1, bool rs0)
                     setCA2Internal(1);
                     break;
             }
+            trace(PIA_DEBUG, "peekPRB() = %x\n", result);
             break;
             
         case 0x0: case 0x1: // DDRA
             
             result = ddra;
+            trace(PIA_DEBUG, "peekDDRA() = %x\n", result);
             break;
             
         case 0x4: case 0x5: case 0x6: case 0x7: // CRA
             
             result = cra;
+            trace(PIA_DEBUG, "peekCRA() = %x\n", result);
             break;
             
         case 0x9: case 0xb: // PRB
             
             result = updatePB();
+            
+            // Clear interrupt bits
+            crb &= 0x3F;
+
+            trace(PIA_DEBUG, "peekPRB() = %x\n", result);
             break;
             
         case 0x8: case 0xa: // DDRB
@@ -206,6 +218,7 @@ PIA6821::peek(bool rs1, bool rs0)
         case 0xc: case 0xd: case 0xe: case 0xf: // CRB
             
             result = crb;
+            trace(PIA_DEBUG, "peekCRB() = %x\n", result);
             break;
             
         default:
@@ -214,7 +227,7 @@ PIA6821::peek(bool rs1, bool rs0)
             return 0;
     }
     
-    trace(PIA_DEBUG, "peek(%x) = %x\n", addr, result);
+    // trace(PIA_DEBUG, "peek(%x) = %x\n", addr, result);
     return result;
 }
 
@@ -237,16 +250,20 @@ PIA6821::poke(bool rs1, bool rs0, u8 value)
             
         case 0x2: case 0x3: // PRA
             
+            trace(PIA_DEBUG, "pokePRA(%x)\n", value);
             ora = value;
             break;
             
         case 0x0: case 0x1: // DDRA
             
+            if (value != 0) trace(PIA_DEBUG, "pokeDDRA(%x)\n", value);
             ddra = value;
             break;
             
         case 0x4: case 0x5: case 0x6: case 0x7: // CRA
         {
+            if (value != 0 && value != 4) trace(PIA_DEBUG, "pokeCRA(%x)\n", value);
+
             bool pendingIrq =
             (GET_BIT(cra, 7) && RISING_EDGE_BIT(cra, value, 0)) ||
             (GET_BIT(cra, 6) && RISING_EDGE_BIT(cra, value, 3));
@@ -271,6 +288,7 @@ PIA6821::poke(bool rs1, bool rs0, u8 value)
         }
         case 0x9: case 0xb: // PRB
             
+            trace(PIA_DEBUG, "pokePRB(%x)\n", value);
             orb = value;
             
             switch (cb2Control()) {
@@ -290,11 +308,14 @@ PIA6821::poke(bool rs1, bool rs0, u8 value)
             
         case 0x8: case 0xa: // DDRB
             
+            trace(PIA_DEBUG, "pokeDDRB(%x)\n", value);
             ddrb = value;
             break;
             
         case 0xc: case 0xd: case 0xe: case 0xf: // CRB
         {
+            trace(PIA_DEBUG, "pokeCRB(%x)\n", value);
+
             bool pendingIrq =
             (GET_BIT(crb, 7) && RISING_EDGE_BIT(crb, value, 0)) ||
             (GET_BIT(crb, 6) && RISING_EDGE_BIT(crb, value, 3));
@@ -321,8 +342,6 @@ PIA6821::poke(bool rs1, bool rs0, u8 value)
             assert(false);
             break;
     }
-    
-    trace(PIA_DEBUG, "poke(%x, %x)\n", addr, value);
 }
 
 u8
@@ -370,7 +389,20 @@ PiaDolphin::irqBHasOccurred() const
 u8
 PiaDolphin::updatePA()
 {
-    return PIA6821::updatePA();
+    switch (drive.getParCableType()) {
+            
+        case PAR_CABLE_DOLPHIN3:
+            
+            pa = parCable.getValue();
+            break;
+            
+        default:
+            
+            PIA6821::updatePA();
+            break;
+    }
+    
+    return pa;
 }
 
 u8

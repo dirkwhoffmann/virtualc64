@@ -248,7 +248,7 @@ public:
     bool setConfigItem(Option option, long id, i64 value) override;
 
     bool hasParCable() { return config.parCable != PAR_CABLE_NONE; }
-    
+    ParCableType getParCableType() const { return config.parCable; }
     
     //
     // Analyzing

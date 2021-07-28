@@ -35,12 +35,8 @@ ParCable::_dump(dump::Category category, std::ostream& os) const
 
     if (category & dump::State) {
         
-        os << tab("Value on C64 side");
+        os << tab("Cable value");
         os << hex(getValue()) << std::endl;
-        os << tab("Value on Drive 8 side");
-        os << hex(getValue(DRIVE8)) << std::endl;
-        os << tab("Value on Drive 9 side");
-        os << hex(getValue(DRIVE9)) << std::endl;
     }
 }
 
@@ -48,23 +44,23 @@ u8
 ParCable::getValue() const
 {
     u8 result = getCIA();
-        
-    if (drive8.hasParCable()) result &= getVIA(DRIVE8);
-    if (drive9.hasParCable()) result &= getVIA(DRIVE9);
-
-    return result;
-}
-
-u8
-ParCable::getValue(DriveID id) const
-{
-    if (id == DRIVE8 && !drive8.hasParCable()) return getVIA(id);
-    if (id == DRIVE9 && !drive9.hasParCable()) return getVIA(id);
-
-    u8 result = getCIA();
     
-    if (drive8.hasParCable()) result &= getVIA(DRIVE8);
-    if (drive9.hasParCable()) result &= getVIA(DRIVE9);
+    switch (drive8.getParCableType()) {
+            
+        case PAR_CABLE_SPEEDDOS:
+        case PAR_CABLE_DOLPHIN2:
+            
+            result &= getVIA(drive8);
+            break;
+            
+        case PAR_CABLE_DOLPHIN3:
+            
+            result &= getPIA(drive8);
+            break;
+
+        default:
+            break;
+    }
 
     return result;
 }
@@ -79,8 +75,31 @@ ParCable::driveHandshake()
 void
 ParCable::c64Handshake()
 {
-    trace(PAR_DEBUG, "c64Handshake()\n");
-    drive8.via1.setInterruptFlag_CB1();
+    c64Handshake(drive8);
+    // c64Handshake(drive9); // Uncomment ASAP
+}
+
+void
+ParCable::c64Handshake(Drive &drive)
+{
+    trace(PAR_DEBUG, "c64Handshake(%s)\n", drive.getDescription());
+    
+    switch (drive.getParCableType()) {
+            
+        case PAR_CABLE_SPEEDDOS:
+        case PAR_CABLE_DOLPHIN2:
+            
+            drive.via1.setInterruptFlag_CB1();
+            break;
+            
+        case PAR_CABLE_DOLPHIN3:
+            
+            drive.pia.pulseCA1External();
+            break;
+            
+        default:
+            break;
+    }
 }
 
 u8
@@ -93,22 +112,19 @@ ParCable::getCIA() const
 }
 
 u8
-ParCable::getVIA(DriveID id) const
+ParCable::getVIA(const Drive &drive) const
 {
-    assert(id == DRIVE8 || id == DRIVE9);
-    
-    if (id == DRIVE8) {
-        
-        u8 viapra = drive8.via1.portAinternal();
-        u8 viaddr = drive8.via1.getDDRA();
+        u8 viapra = drive.via1.portAinternal();
+        u8 viaddr = drive.via1.getDDRA();
         
         return (viapra & viaddr) | (0xFF & ~viaddr);
+}
 
-    } else {
-        
-        u8 viapra = drive9.via1.portAinternal();
-        u8 viaddr = drive9.via1.getDDRA();
-        
-        return (viapra & viaddr) | (0xFF & ~viaddr);
-    }
+u8
+ParCable::getPIA(const Drive &drive) const
+{
+    u8 viapra = drive.pia.ora;
+    u8 viaddr = drive.pia.ddra;
+    
+    return (viapra & viaddr) | (0xFF & ~viaddr);
 }
