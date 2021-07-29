@@ -61,7 +61,7 @@ Drive::getDefaultConfig()
     DriveConfig defaults;
     
     defaults.type = DRIVE_VC1541II;
-    defaults.ram = DRVRAM_STANDARD;
+    defaults.ram = DRVRAM_NONE;
     defaults.parCable = PAR_CABLE_NONE;
     defaults.powerSave = true;
     defaults.connected = false;

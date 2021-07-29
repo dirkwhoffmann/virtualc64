@@ -47,8 +47,7 @@ ParCable::getValue() const
     
     switch (drive8.getParCableType()) {
             
-        case PAR_CABLE_SPEEDDOS:
-        case PAR_CABLE_DOLPHIN2:
+        case PAR_CABLE_STANDARD:
             
             result &= getVIA(drive8);
             break;
@@ -86,8 +85,7 @@ ParCable::c64Handshake(Drive &drive)
     
     switch (drive.getParCableType()) {
             
-        case PAR_CABLE_SPEEDDOS:
-        case PAR_CABLE_DOLPHIN2:
+        case PAR_CABLE_STANDARD:
             
             drive.via1.setInterruptFlag_CB1();
             break;

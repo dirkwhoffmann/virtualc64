@@ -314,11 +314,11 @@ DriveMemory::updateBankMap()
     // Add expansion RAM
     switch (config.ram) {
             
-        case DRVRAM_DOLPHIN2: // $8000 - $9FFF
+        case DRVRAM_8000_9FFF:
             for (isize i = 32; i < 40; i++) usage[i] = DRVMEM_EXP;
             break;
 
-        case DRVRAM_DOLPHIN3: // $6000 - $7FFF
+        case DRVRAM_6000_7FFF:
             for (isize i = 24; i < 32; i++) usage[i] = DRVMEM_EXP;
             break;
     }

@@ -56,9 +56,9 @@ struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
 
 enum_long(DRVRAM)
 {
-    DRVRAM_STANDARD,
-    DRVRAM_DOLPHIN2,
-    DRVRAM_DOLPHIN3
+    DRVRAM_NONE,
+    DRVRAM_8000_9FFF,
+    DRVRAM_6000_7FFF
 };
 typedef DRVRAM DriveRam;
 
@@ -67,7 +67,7 @@ struct DriveRamEnum : util::Reflection<DriveRamEnum, DriveRam> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= DRVRAM_DOLPHIN3;
+        return (unsigned long)value <= DRVRAM_6000_7FFF;
     }
     
     static const char *prefix() { return "DRVRAM"; }
@@ -75,9 +75,9 @@ struct DriveRamEnum : util::Reflection<DriveRamEnum, DriveRam> {
     {
         switch (value) {
                 
-            case DRVRAM_STANDARD:  return "DRVRAM_STANDARD";
-            case DRVRAM_DOLPHIN2:  return "DRVRAM_DOLPHIN2";
-            case DRVRAM_DOLPHIN3:  return "DRVRAM_DOLPHIN3";
+            case DRVRAM_NONE:       return "DRVRAM_NONE";
+            case DRVRAM_8000_9FFF:  return "DRVRAM_8000_9FFF";
+            case DRVRAM_6000_7FFF:  return "DRVRAM_6000_7FFF";
         }
         return "???";
     }

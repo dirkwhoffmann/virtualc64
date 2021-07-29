@@ -863,7 +863,7 @@ struct PeripheralsDefaults {
         
         driveConnect:    [true, false],
         driveModel:      [.VC1541II, .VC1541II],
-        driveRam:        [.STANDARD, .STANDARD],
+        driveRam:        [._NONE, ._NONE],
         parCable:        [.NONE, .NONE],
         driveHibernate:  true,
         blankDiskFormat: .CBM,

@@ -1207,13 +1207,10 @@ Gw
                                                         <menuItem title="None" state="on" id="Z5k-Qu-gjU">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="SpeedDOS" tag="1" id="LGp-rc-p9E">
+                                                        <menuItem title="Standard" tag="1" id="LGp-rc-p9E">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="DolphinDOS 2" tag="2" id="DDw-RL-PeB">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                        <menuItem title="DolphinDOS 3" tag="3" id="5FU-ih-opp">
+                                                        <menuItem title="Dolphin DOS 3" tag="2" id="5FU-ih-opp">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                     </items>
@@ -1244,7 +1241,7 @@ Gw
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rWZ-pD-Dqi">
                                             <rect key="frame" x="292" y="329" width="118" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="RAM:" id="b74-KG-ez8">
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Extra RAM:" id="b74-KG-ez8">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1253,14 +1250,14 @@ Gw
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="oxp-Ya-eAU">
                                             <rect key="frame" x="412" y="323" width="182" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Factory Defaults" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="kNz-7d-0FF" id="wUS-mF-LAZ">
+                                            <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="kNz-7d-0FF" id="wUS-mF-LAZ">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="hr0-98-Mad">
                                                     <items>
-                                                        <menuItem title="Factory Defaults" state="on" id="kNz-7d-0FF"/>
-                                                        <menuItem title="DolphinDOS 2" tag="1" id="XyY-2U-JUy"/>
-                                                        <menuItem title="DolphinDOS 3" tag="2" id="CaD-jc-fv4"/>
+                                                        <menuItem title="None" state="on" id="kNz-7d-0FF"/>
+                                                        <menuItem title="$8000 - $9FFF" tag="1" id="XyY-2U-JUy"/>
+                                                        <menuItem title="$6000 - $7FFF" tag="2" id="CaD-jc-fv4"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
@@ -1288,13 +1285,10 @@ Gw
                                                         <menuItem title="None" state="on" id="Npu-iA-dbb">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="SpeedDOS" tag="1" id="0GS-4d-vSR">
+                                                        <menuItem title="Standard" tag="1" id="0GS-4d-vSR">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="DolphinDOS 2" tag="2" id="n2H-zh-o9X">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                        <menuItem title="DolphinDOS 3" tag="3" id="Xaf-uT-CGy">
+                                                        <menuItem title="Dolphin DOS 3" tag="2" id="Xaf-uT-CGy">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                     </items>
@@ -1307,7 +1301,7 @@ Gw
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aom-cd-GVD">
                                             <rect key="frame" x="-2" y="332" width="108" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="RAM:" id="9e5-FX-DNN">
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Extra RAM:" id="9e5-FX-DNN">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1316,14 +1310,14 @@ Gw
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="IWF-UI-eEy">
                                             <rect key="frame" x="108" y="326" width="182" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Factory Defaults" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="H5n-rG-pB1" id="hge-o2-L4x">
+                                            <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="H5n-rG-pB1" id="hge-o2-L4x">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="hGC-hU-6Oh">
                                                     <items>
-                                                        <menuItem title="Factory Defaults" state="on" id="H5n-rG-pB1"/>
-                                                        <menuItem title="DolphinDOS 2" tag="1" id="Iap-JQ-5Y4"/>
-                                                        <menuItem title="DolphinDOS 3" tag="2" id="bDL-NO-QQN"/>
+                                                        <menuItem title="None" state="on" id="H5n-rG-pB1"/>
+                                                        <menuItem title="$8000 - $9FFF " tag="1" id="Iap-JQ-5Y4"/>
+                                                        <menuItem title="$6000 - $7FFF" tag="2" id="bDL-NO-QQN"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>
