@@ -25,6 +25,13 @@ void
 PIA6821::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)
+    
+    /*
+    ca1 = true;
+    ca2 = true;
+    cb1 = true;
+    cb2 = true;
+    */
 }
 
 void
@@ -366,6 +373,10 @@ void
 PiaDolphin::ca2HasChangedTo(bool value)
 {
     trace(PIA_DEBUG, "ca2HasChangedTo(%d)\n", value);
+    
+    if (value) {
+        parCable.driveHandshake();
+    }
 }
 
 void

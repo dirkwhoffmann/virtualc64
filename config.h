@@ -70,13 +70,13 @@ static const int SIDREG_DEBUG    = 0; // Sound Interface Device (Registers)
 
 // Drive
 static const int VIA_DEBUG       = 0; // Versatile Interface Adapter
-static const int PIA_DEBUG       = 1; // Peripheral Interface Adapter
+static const int PIA_DEBUG       = 0; // Peripheral Interface Adapter
 static const int IEC_DEBUG       = 0; // IEC bus
 static const int DSK_DEBUG       = 0; // Disk controller execution
 static const int DSKCHG_DEBUG    = 0; // Disk changing procedure
 static const int GCR_DEBUG       = 0; // Disk encoding / decoding
 static const int FS_DEBUG        = 0; // File System Classes
-static const int PAR_DEBUG       = 1; // Parallel cable
+static const int PAR_DEBUG       = 0; // Parallel cable
 
 // Media
 static const int CRT_DEBUG       = 0; // Cartridges
