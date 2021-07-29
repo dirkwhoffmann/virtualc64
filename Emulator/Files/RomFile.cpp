@@ -228,6 +228,7 @@ RomFile::identifier(u64 fnv)
         case 0x28CD4E47A40C41CA: return VC1541_DOLPHIN_20;
         case 0x1C1DDD64E02CAD32: return VC1541_DOLPHIN_20_SLVDR;
         case 0x09D8FBAB61E59FF0: return VC1541_DOLPHIN_30;
+        case 0xF684F72388EE5364: return VC1541_DOLPHIN_30_SLVDR;
 
         default: return ROM_UNKNOWN;
     }
@@ -302,6 +303,7 @@ RomFile::isPatchedRom(RomIdentifier rev)
         case VC1541_DOLPHIN_20:
         case VC1541_DOLPHIN_20_SLVDR:
         case VC1541_DOLPHIN_30:
+        case VC1541_DOLPHIN_30_SLVDR:
             return true;
             
         default:
@@ -370,7 +372,8 @@ RomFile::title(RomIdentifier rev)
         case VC1541_SPEEDDOS_27:
         case VC1541_DOLPHIN_20:
         case VC1541_DOLPHIN_20_SLVDR:
-        case VC1541_DOLPHIN_30:       return "Patched Drive Firmware";
+        case VC1541_DOLPHIN_30:
+        case VC1541_DOLPHIN_30_SLVDR: return "Patched Drive Firmware";
             
         default:                      return "";
     }
@@ -436,7 +439,8 @@ RomFile::subTitle(RomIdentifier rev)
         case VC1541_DOLPHIN_20:       return "Dolphin DOS";
         case VC1541_DOLPHIN_20_SLVDR: return "Dolphin DOS";
         case VC1541_DOLPHIN_30:       return "Dolphin DOS";
-            
+        case VC1541_DOLPHIN_30_SLVDR: return "Dolphin DOS";
+
         default:                      return "";
     }
 }
@@ -502,6 +506,7 @@ RomFile::revision(RomIdentifier rev)
         case VC1541_DOLPHIN_20:       return "V2.0";
         case VC1541_DOLPHIN_20_SLVDR: return "V2.0 (SilverDream)";
         case VC1541_DOLPHIN_30:       return "V3.0";
+        case VC1541_DOLPHIN_30_SLVDR: return "V3.0 (SilverDream)";
 
         default:                      return "";
     }

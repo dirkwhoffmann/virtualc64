@@ -348,6 +348,7 @@ Drive::autoConfigure()
             break;
 
         case VC1541_DOLPHIN_30:
+        case VC1541_DOLPHIN_30_SLVDR:
 
             msg("autoConfig: Dolphin DOS 3\n");
             setConfigItem(OPT_DRV_TYPE, deviceNr, DRIVE_VC1541II);
