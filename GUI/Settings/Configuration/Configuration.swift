@@ -92,6 +92,26 @@ class Configuration {
     // Peripherals
     //
     
+    var drive8Connected: Bool {
+        get { return c64.getConfig(.DRV_CONNECT, drive: .DRIVE8) != 0 }
+        set { c64.configure(.DRV_CONNECT, drive: .DRIVE8, enable: newValue )}
+    }
+    
+    var drive9Connected: Bool {
+        get { return c64.getConfig(.DRV_CONNECT, drive: .DRIVE9) != 0 }
+        set { c64.configure(.DRV_CONNECT, drive: .DRIVE9, enable: newValue )}
+    }
+
+    var drive8AutoConf: Bool {
+        get { return c64.getConfig(.DRV_AUTO_CONFIG, drive: .DRIVE8) != 0 }
+        set { c64.configure(.DRV_AUTO_CONFIG, drive: .DRIVE8, enable: newValue )}
+    }
+    
+    var drive9AutoConf: Bool {
+        get { return c64.getConfig(.DRV_AUTO_CONFIG, drive: .DRIVE9) != 0}
+        set { c64.configure(.DRV_AUTO_CONFIG, drive: .DRIVE9, enable: newValue )}
+    }
+    
     var drive8Type: Int {
         get { return c64.getConfig(.DRV_TYPE, drive: .DRIVE8) }
         set { c64.configure(.DRV_TYPE, drive: .DRIVE8, value: newValue )}
@@ -120,16 +140,6 @@ class Configuration {
     var drive9ParCable: Int {
         get { return c64.getConfig(.DRV_PARCABLE, drive: .DRIVE9) }
         set { c64.configure(.DRV_PARCABLE, drive: .DRIVE9, value: newValue )}
-    }
-
-    var drive8Connected: Bool {
-        get { return c64.getConfig(.DRV_CONNECT, drive: .DRIVE8) != 0 }
-        set { c64.configure(.DRV_CONNECT, drive: .DRIVE8, enable: newValue )}
-    }
-    
-    var drive9Connected: Bool {
-        get { return c64.getConfig(.DRV_CONNECT, drive: .DRIVE9) != 0 }
-        set { c64.configure(.DRV_CONNECT, drive: .DRIVE9, enable: newValue )}
     }
     
     var drive8PowerSwitch: Bool {
@@ -566,10 +576,12 @@ class Configuration {
         c64.suspend()
         
         drive8Connected = defaults.driveConnect[0]
+        drive8AutoConf = defaults.driveAutoConf[0]
         drive8Type = defaults.driveModel[0].rawValue
         drive8Ram = defaults.driveRam[0].rawValue
         drive8ParCable = defaults.parCable[0].rawValue
         drive9Connected = defaults.driveConnect[1]
+        drive9AutoConf = defaults.driveAutoConf[1]
         drive9Type = defaults.driveModel[1].rawValue
         drive9Ram = defaults.driveRam[1].rawValue
         drive9ParCable = defaults.parCable[1].rawValue
@@ -591,10 +603,12 @@ class Configuration {
         c64.suspend()
         
         drive8Connected = defaults.bool(forKey: Keys.Per.drive8Connect)
+        drive8AutoConf = defaults.bool(forKey: Keys.Per.drive8AutoConf)
         drive8Type = defaults.integer(forKey: Keys.Per.drive8Model)
         drive8Ram = defaults.integer(forKey: Keys.Per.drive8Ram)
         drive8ParCable = defaults.integer(forKey: Keys.Per.drive8ParCable)
         drive9Connected = defaults.bool(forKey: Keys.Per.drive9Connect)
+        drive9AutoConf = defaults.bool(forKey: Keys.Per.drive9AutoConf)
         drive9Type = defaults.integer(forKey: Keys.Per.drive9Model)
         drive9Ram = defaults.integer(forKey: Keys.Per.drive9Ram)
         drive9ParCable = defaults.integer(forKey: Keys.Per.drive9ParCable)
@@ -614,10 +628,12 @@ class Configuration {
         let defaults = UserDefaults.standard
         
         defaults.set(drive8Connected, forKey: Keys.Per.drive8Connect)
+        defaults.set(drive8AutoConf, forKey: Keys.Per.drive8AutoConf)
         defaults.set(drive8Type, forKey: Keys.Per.drive8Model)
         defaults.set(drive8Ram, forKey: Keys.Per.drive8Ram)
         defaults.set(drive8ParCable, forKey: Keys.Per.drive8ParCable)
         defaults.set(drive9Connected, forKey: Keys.Per.drive9Connect)
+        defaults.set(drive9AutoConf, forKey: Keys.Per.drive9AutoConf)
         defaults.set(drive9Type, forKey: Keys.Per.drive9Model)
         defaults.set(drive9Ram, forKey: Keys.Per.drive9Ram)
         defaults.set(drive9ParCable, forKey: Keys.Per.drive9ParCable)

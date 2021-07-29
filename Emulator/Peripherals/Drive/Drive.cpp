@@ -36,8 +36,6 @@ Drive::getDescription() const
 void
 Drive::_initialize()
 {
-    printf("Drive::_initialize\n");
-    
     resetConfig();
     
     insertionStatus = DISK_FULLY_EJECTED;
@@ -60,6 +58,7 @@ Drive::getDefaultConfig()
 {
     DriveConfig defaults;
     
+    defaults.autoConfig = true;
     defaults.type = DRIVE_VC1541II;
     defaults.ram = DRVRAM_NONE;
     defaults.parCable = PAR_CABLE_NONE;
@@ -82,7 +81,9 @@ void
 Drive::resetConfig()
 {
     DriveConfig defaults = getDefaultConfig();
-    
+
+    setConfigItem(OPT_DRV_AUTO_CONFIG, deviceNr, defaults.autoConfig);
+
     setConfigItem(OPT_DRV_TYPE, deviceNr, defaults.type);
     setConfigItem(OPT_DRV_RAM, deviceNr, defaults.ram);
     setConfigItem(OPT_DRV_PARCABLE, deviceNr, defaults.parCable);
@@ -106,6 +107,7 @@ Drive::getConfigItem(Option option) const
 {
     switch (option) {
             
+        case OPT_DRV_AUTO_CONFIG:   return (i64)config.autoConfig;
         case OPT_DRV_TYPE:          return (i64)config.type;
         case OPT_DRV_RAM:           return (i64)config.ram;
         case OPT_DRV_PARCABLE:      return (i64)config.parCable;
@@ -143,6 +145,7 @@ Drive::setConfigItem(Option option, i64 value)
             durationOfOneCpuCycle = duration;
             return true;
         }
+        case OPT_DRV_AUTO_CONFIG:
         case OPT_DRV_POWER_SAVE:
         case OPT_DRV_EJECT_DELAY:
         case OPT_DRV_SWAP_DELAY:
@@ -168,7 +171,15 @@ Drive::setConfigItem(Option option, long id, i64 value)
     if (id != deviceNr) return false;
     
     switch (option) {
-            
+
+        case OPT_DRV_AUTO_CONFIG:
+        {
+            suspend();
+            if (!config.autoConfig && value) autoConfigure();
+            config.autoConfig = value;
+            resume();
+            return true;
+        }
         case OPT_DRV_TYPE:
         {
             if (!DriveTypeEnum::isValid(value)) {
@@ -290,12 +301,75 @@ Drive::setConfigItem(Option option, long id, i64 value)
 }
 
 void
+Drive::autoConfigure()
+{
+    msg("autoConfig()\n");
+    
+    switch (RomFile::identifier(mem.romFNV64())) {
+            
+        case VC1541C_01:
+        case VC1541C_02:
+            
+            msg("autoConfig: VC1541\n");
+            setConfigItem(OPT_DRV_PAN, deviceNr, DRIVE_VC1541C);
+            setConfigItem(OPT_DRV_RAM, deviceNr, DRVRAM_NONE);
+            setConfigItem(OPT_DRV_PARCABLE, deviceNr, PAR_CABLE_NONE);
+            break;
+            
+        case VC1541_II_1987:
+        case VC1541_II_NEWTRONIC:
+        case VC1541_II_RELOC_PATCH:
+        case VC1541_II_JIFFY:
+        case VC1541_II_JIFFY_V600:
+        case VC1541_64ER_V3:
+
+            msg("autoConfig: VC1541 II\n");
+            setConfigItem(OPT_DRV_PAN, deviceNr, DRIVE_VC1541II);
+            setConfigItem(OPT_DRV_RAM, deviceNr, DRVRAM_NONE);
+            setConfigItem(OPT_DRV_PARCABLE, deviceNr, PAR_CABLE_NONE);
+            break;
+
+        case VC1541_SPEEDDOS_PLUS:
+        case VC1541_SPEEDDOS_27:
+
+            msg("autoConfig: VC1541 SpeedDOS\n");
+            setConfigItem(OPT_DRV_PAN, deviceNr, DRIVE_VC1541II);
+            setConfigItem(OPT_DRV_RAM, deviceNr, DRVRAM_NONE);
+            setConfigItem(OPT_DRV_PARCABLE, deviceNr, PAR_CABLE_STANDARD);
+            break;
+
+        case VC1541_DOLPHIN_20:
+        case VC1541_DOLPHIN_20_SLVDR:
+
+            msg("autoConfig: Dolphin DOS\n");
+            setConfigItem(OPT_DRV_PAN, deviceNr, DRIVE_VC1541II);
+            setConfigItem(OPT_DRV_RAM, deviceNr, DRVRAM_8000_9FFF);
+            setConfigItem(OPT_DRV_PARCABLE, deviceNr, PAR_CABLE_STANDARD);
+            break;
+
+        case VC1541_DOLPHIN_30:
+
+            msg("autoConfig: Dolphin DOS 3\n");
+            setConfigItem(OPT_DRV_PAN, deviceNr, DRIVE_VC1541II);
+            setConfigItem(OPT_DRV_RAM, deviceNr, DRVRAM_6000_7FFF);
+            setConfigItem(OPT_DRV_PARCABLE, deviceNr, PAR_CABLE_DOLPHIN3);
+            break;
+            
+        default:
+            
+            msg("AutoConfig: Rom not recognized\n");
+    }
+}
+
+void
 Drive::_dump(dump::Category category, std::ostream& os) const
 {
     using namespace util;
     
     if (category & dump::Config) {
     
+        os << tab("Auto config");
+        os << bol(config.autoConfig) << std::endl;
         os << tab("Drive type");
         os << DriveTypeEnum::key(config.type) << std::endl;
         os << tab("Ram");
@@ -595,7 +669,7 @@ Drive::moveHeadDown()
         halftrack--;
         offset = (HeadPos)(position * disk.lengthOfHalftrack(halftrack));
         
-        trace(true, "Moving head down to halftrack %d (track %2.1f)\n",
+        trace(DRV_DEBUG, "Moving head down to halftrack %d (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
         trace(DRV_DEBUG, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
     }

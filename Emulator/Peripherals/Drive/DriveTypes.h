@@ -163,6 +163,9 @@ struct InsertionStatusEnum : util::Reflection<InsertionStatusEnum, InsertionStat
 
 typedef struct
 {
+    // General
+    bool autoConfig;
+    
     // Hardware
     DriveType type;
     DriveRam ram;

@@ -15,10 +15,12 @@ extension ConfigurationController {
                 
         // Drive
         perDrive8Connect.state = config.drive8Connected ? .on : .off
+        // perDrive8AutoConf.state = config.drive8AutoConf ? .on : .off
         perDrive8Type.selectItem(withTag: config.drive8Type)
         perDrive8Ram.selectItem(withTag: config.drive8Ram)
         perDrive8Cable.selectItem(withTag: config.drive8ParCable)
         perDrive9Connect.state = config.drive9Connected ? .on : .off
+        // perDrive9AutoConf.state = config.drive9AutoConf ? .on : .off
         perDrive9Type.selectItem(withTag: config.drive9Type)
         perDrive9Ram.selectItem(withTag: config.drive9Ram)
         perDrive9Cable.selectItem(withTag: config.drive9ParCable)

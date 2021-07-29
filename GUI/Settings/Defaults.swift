@@ -63,12 +63,12 @@ extension UserDefaults {
         registerDevicesUserDefaults()
         registerKeyboardUserDefaults()
         
-        registerRomUserDefaults()
         registerHardwareUserDefaults()
         registerPeripheralsUserDefaults()
         registerCompatibilityUserDefaults()
         registerAudioUserDefaults()
         registerVideoUserDefaults()
+        registerRomUserDefaults()
     }
 }
 
@@ -77,6 +77,11 @@ extension MyController {
     func loadUserDefaults() {
         
         track()
+
+        /* Order dependencies: Because loading the drive ROM might change the
+         * drive settings, loadPeripheralsUserDefaults() has to be called
+         * before loadRomUserDefaults().
+         */
         
         c64.suspend()
         
@@ -85,13 +90,13 @@ extension MyController {
         pref.loadDevicesUserDefaults()
         pref.loadKeyboardUserDefaults()
         
-        config.loadRomUserDefaults()
         config.loadHardwareUserDefaults()
         config.loadPeripheralsUserDefaults()
         config.loadCompatibilityUserDefaults()
         config.loadAudioUserDefaults()
         config.loadVideoUserDefaults()
-        
+        config.loadRomUserDefaults()
+
         c64.resume()
     }
     
@@ -817,10 +822,12 @@ extension Keys {
                 
         // Drive
         static let drive8Connect    = "VC64_PER_Drive8Connect"
+        static let drive8AutoConf   = "VC64_PER_Drive8AutoConf"
         static let drive8Model      = "VC64_PER_Drive8Type"
         static let drive8Ram        = "VC64_PER_Drive8Ram"
         static let drive8ParCable   = "VC64_PER_Drive8ParCable"
         static let drive9Connect    = "VC64_PER_Drive9Connect"
+        static let drive9AutoConf   = "VC64_PER_Drive9AutoConf"
         static let drive9Model      = "VC64_PER_Drive9Type"
         static let drive9Ram        = "VC64_PER_Drive9Ram"
         static let drive9ParCable   = "VC64_PER_Drive9ParCable"
@@ -843,6 +850,7 @@ extension Keys {
 struct PeripheralsDefaults {
     
     var driveConnect: [Bool]
+    var driveAutoConf: [Bool]
     var driveModel: [DriveType]
     var driveRam: [DriveRam]
     var parCable: [ParCableType]
@@ -862,6 +870,7 @@ struct PeripheralsDefaults {
     static let std = PeripheralsDefaults.init(
         
         driveConnect:    [true, false],
+        driveAutoConf:   [true, true],
         driveModel:      [.VC1541II, .VC1541II],
         driveRam:        [._NONE, ._NONE],
         parCable:        [.NONE, .NONE],
@@ -882,10 +891,12 @@ extension UserDefaults {
         let dictionary: [String: Any] = [
                         
             Keys.Per.drive8Connect:   defaults.driveConnect[0],
+            Keys.Per.drive8AutoConf:  defaults.driveAutoConf[0],
             Keys.Per.drive8Model:     defaults.driveModel[0].rawValue,
             Keys.Per.drive8Ram:       defaults.driveRam[0].rawValue,
             Keys.Per.drive8ParCable:  defaults.parCable[0].rawValue,
             Keys.Per.drive9Connect:   defaults.driveConnect[1],
+            Keys.Per.drive9AutoConf:  defaults.driveAutoConf[1],
             Keys.Per.drive9Model:     defaults.driveModel[1].rawValue,
             Keys.Per.drive9Ram:       defaults.driveRam[1].rawValue,
             Keys.Per.drive9ParCable:  defaults.parCable[1].rawValue,
@@ -908,10 +919,12 @@ extension UserDefaults {
         let defaults = UserDefaults.standard
         
         let keys = [Keys.Per.drive8Connect,
+                    Keys.Per.drive8AutoConf,
                     Keys.Per.drive8Model,
                     Keys.Per.drive8Ram,
                     Keys.Per.drive8ParCable,
                     Keys.Per.drive9Connect,
+                    Keys.Per.drive9AutoConf,
                     Keys.Per.drive9Model,
                     Keys.Per.drive9Ram,
                     Keys.Per.drive9ParCable,

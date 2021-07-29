@@ -146,6 +146,9 @@ DriveMemory::loadRom(const u8 *buf, isize size)
             break;
     }
     
+    // Update the current configuration in auto-update mode
+    if (drive.config.autoConfig) drive.autoConfigure();
+    
     updateBankMap();
 }
 

@@ -27,6 +27,7 @@
  
 class Drive : public C64Component {
         
+    friend class DriveMemory;
     friend class VIA1;
     friend class VIA2;
 
@@ -250,6 +251,9 @@ public:
     bool setConfigItem(Option option, i64 value) override;
     bool setConfigItem(Option option, long id, i64 value) override;
 
+    // Updates the current configuration according to the installed ROM
+    void autoConfigure();
+    
     bool hasParCable() { return config.parCable != PAR_CABLE_NONE; }
     ParCableType getParCableType() const { return config.parCable; }
     

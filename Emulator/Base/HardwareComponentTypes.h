@@ -77,6 +77,7 @@ enum_long(OPT)
     OPT_RAM_PATTERN,
     
     // Drive
+    OPT_DRV_AUTO_CONFIG,
     OPT_DRV_TYPE,
     OPT_DRV_RAM,
     OPT_DRV_PARCABLE,
@@ -155,6 +156,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
                                 
             case OPT_RAM_PATTERN:         return "RAM_PATTERN";
                 
+            case OPT_DRV_AUTO_CONFIG:     return "DRV_AUTO_CONFIG";
             case OPT_DRV_TYPE:            return "DRV_TYPE";
             case OPT_DRV_RAM:             return "OPT_DRV_RAM";
             case OPT_DRV_PARCABLE:        return "OPT_DRV_PARCABLE";

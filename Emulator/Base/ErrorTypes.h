@@ -18,6 +18,7 @@ enum_long(ERROR_CODE)
 
     // Configuration
     ERROR_OPT_INV_ARG,
+    ERROR_OPT_LOCKED,
     
     // Memory
     ERROR_OUT_OF_MEMORY,
@@ -77,6 +78,9 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
                 
             case ERROR_OK:                  return "OK";
                 
+            case ERROR_OPT_INV_ARG:         return "OPT_INV_ARG";
+            case ERROR_OPT_LOCKED:          return "OPT_LOCKED";
+
             case ERROR_OUT_OF_MEMORY:       return "OUT_OF_MEMORY";
                 
             case ERROR_FILE_NOT_FOUND:      return "FILE_NOT_FOUND";

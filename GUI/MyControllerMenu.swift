@@ -251,21 +251,26 @@ extension MyController: NSMenuItemValidation {
     }
     
     @IBAction func resetConfigAction(_ sender: Any!) {
-        
+               
         track()
-        
-        UserDefaults.resetRomUserDefaults()
+
         UserDefaults.resetHardwareUserDefaults()
         UserDefaults.resetPeripheralsUserDefaults()
         UserDefaults.resetAudioUserDefaults()
         UserDefaults.resetVideoUserDefaults()
-        
+        UserDefaults.resetRomUserDefaults()
+
+        /* Order dependencies: Because loading the drive ROM might change the
+         * drive settings, loadPeripheralsUserDefaults() has to be called
+         * before loadRomUserDefaults().
+         */
+
         c64.suspend()
-        config.loadRomUserDefaults()
         config.loadHardwareUserDefaults()
         config.loadPeripheralsUserDefaults()
         config.loadAudioUserDefaults()
         config.loadVideoUserDefaults()
+        config.loadRomUserDefaults()
         c64.resume()
     }
     

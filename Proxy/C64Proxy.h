@@ -491,7 +491,9 @@
 - (VIAProxy *)via:(NSInteger)num;
 
 @property (readonly) DriveID id;
+
 - (DriveConfig)getConfig;
+// - (void)autoConfigure;
 
 - (BOOL)isConnected;
 - (BOOL)isSwitchedOn;

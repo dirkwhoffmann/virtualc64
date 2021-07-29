@@ -1123,7 +1123,7 @@
 @end
 
 //
-// VC1541
+// Drive
 //
 
 @implementation DriveProxy
@@ -1150,6 +1150,18 @@
     return [self drive]->getDeviceNr();
 }
 
+- (DriveConfig)getConfig
+{
+    return [self drive]->getConfig();
+}
+
+/*
+- (void)autoConfigure
+{
+    [self drive]->autoConfigure();
+}
+*/
+
 - (VIAProxy *)via:(NSInteger)num {
 	switch (num) {
 		case 1:
@@ -1160,11 +1172,6 @@
 			assert(false);
 			return NULL;
 	}
-}
-
-- (DriveConfig)getConfig
-{
-    return [self drive]->getConfig();
 }
 
 - (BOOL)isConnected
