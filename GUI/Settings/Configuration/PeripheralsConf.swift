@@ -10,7 +10,10 @@
 extension ConfigurationController {
    
     func refreshPeripheralsTab() {
-                                
+
+        let enable8 = config.drive8Connected && !config.drive8AutoConf
+        let enable9 = config.drive9Connected && !config.drive9AutoConf
+            
         // Drive
         perDrive8Connect.state = config.drive8Connected ? .on : .off
         perDrive8AutoConf.state = config.drive8AutoConf ? .on : .off
@@ -18,9 +21,9 @@ extension ConfigurationController {
         perDrive8Ram.selectItem(withTag: config.drive8Ram)
         perDrive8Cable.selectItem(withTag: config.drive8ParCable)
         perDrive8AutoConf.isEnabled = config.drive8Connected
-        perDrive8Type.isEnabled = config.drive8Connected
-        perDrive8Ram.isEnabled = config.drive8Connected
-        perDrive8Cable.isEnabled = config.drive8Connected
+        perDrive8Type.isEnabled = enable8
+        perDrive8Ram.isEnabled = enable8
+        perDrive8Cable.isEnabled = enable8
 
         perDrive9Connect.state = config.drive9Connected ? .on : .off
         perDrive9AutoConf.state = config.drive9AutoConf ? .on : .off
@@ -28,9 +31,9 @@ extension ConfigurationController {
         perDrive9Ram.selectItem(withTag: config.drive9Ram)
         perDrive9Cable.selectItem(withTag: config.drive9ParCable)
         perDrive9AutoConf.isEnabled = config.drive9Connected
-        perDrive9Type.isEnabled = config.drive9Connected
-        perDrive9Ram.isEnabled = config.drive9Connected
-        perDrive9Cable.isEnabled = config.drive9Connected
+        perDrive9Type.isEnabled = enable9
+        perDrive9Ram.isEnabled = enable9
+        perDrive9Cable.isEnabled = enable9
 
         // Disk
         perBlankDiskFormat.selectItem(withTag: config.blankDiskFormatIntValue)

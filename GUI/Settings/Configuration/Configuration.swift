@@ -576,15 +576,15 @@ class Configuration {
         c64.suspend()
         
         drive8Connected = defaults.driveConnect[0]
-        drive8AutoConf = defaults.driveAutoConf[0]
         drive8Type = defaults.driveModel[0].rawValue
         drive8Ram = defaults.driveRam[0].rawValue
         drive8ParCable = defaults.parCable[0].rawValue
+        drive8AutoConf = defaults.driveAutoConf[0]
         drive9Connected = defaults.driveConnect[1]
-        drive9AutoConf = defaults.driveAutoConf[1]
         drive9Type = defaults.driveModel[1].rawValue
         drive9Ram = defaults.driveRam[1].rawValue
         drive9ParCable = defaults.parCable[1].rawValue
+        drive9AutoConf = defaults.driveAutoConf[1]
 
         blankDiskFormat = defaults.blankDiskFormat
         
@@ -603,15 +603,15 @@ class Configuration {
         c64.suspend()
         
         drive8Connected = defaults.bool(forKey: Keys.Per.drive8Connect)
-        drive8AutoConf = defaults.bool(forKey: Keys.Per.drive8AutoConf)
         drive8Type = defaults.integer(forKey: Keys.Per.drive8Model)
         drive8Ram = defaults.integer(forKey: Keys.Per.drive8Ram)
         drive8ParCable = defaults.integer(forKey: Keys.Per.drive8ParCable)
+        drive8AutoConf = defaults.bool(forKey: Keys.Per.drive8AutoConf)
         drive9Connected = defaults.bool(forKey: Keys.Per.drive9Connect)
-        drive9AutoConf = defaults.bool(forKey: Keys.Per.drive9AutoConf)
         drive9Type = defaults.integer(forKey: Keys.Per.drive9Model)
         drive9Ram = defaults.integer(forKey: Keys.Per.drive9Ram)
         drive9ParCable = defaults.integer(forKey: Keys.Per.drive9ParCable)
+        drive9AutoConf = defaults.bool(forKey: Keys.Per.drive9AutoConf)
 
         blankDiskFormatIntValue = defaults.integer(forKey: Keys.Per.blankDiskFormat)
         
@@ -628,15 +628,15 @@ class Configuration {
         let defaults = UserDefaults.standard
         
         defaults.set(drive8Connected, forKey: Keys.Per.drive8Connect)
-        defaults.set(drive8AutoConf, forKey: Keys.Per.drive8AutoConf)
         defaults.set(drive8Type, forKey: Keys.Per.drive8Model)
         defaults.set(drive8Ram, forKey: Keys.Per.drive8Ram)
         defaults.set(drive8ParCable, forKey: Keys.Per.drive8ParCable)
+        defaults.set(drive8AutoConf, forKey: Keys.Per.drive8AutoConf)
         defaults.set(drive9Connected, forKey: Keys.Per.drive9Connect)
-        defaults.set(drive9AutoConf, forKey: Keys.Per.drive9AutoConf)
         defaults.set(drive9Type, forKey: Keys.Per.drive9Model)
         defaults.set(drive9Ram, forKey: Keys.Per.drive9Ram)
         defaults.set(drive9ParCable, forKey: Keys.Per.drive9ParCable)
+        defaults.set(drive9AutoConf, forKey: Keys.Per.drive9AutoConf)
 
         defaults.set(blankDiskFormatIntValue, forKey: Keys.Per.blankDiskFormat)
         

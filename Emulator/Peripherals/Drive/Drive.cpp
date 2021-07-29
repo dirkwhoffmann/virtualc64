@@ -175,9 +175,8 @@ Drive::setConfigItem(Option option, long id, i64 value)
         case OPT_DRV_AUTO_CONFIG:
         {
             suspend();
-            printf("OPT_DRV_AUTO_CONFIG\n");
-            if (!config.autoConfig && value) autoConfigure();
             config.autoConfig = value;
+            if (value) autoConfigure();
             resume();
             return true;
         }

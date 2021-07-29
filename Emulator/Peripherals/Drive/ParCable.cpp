@@ -47,18 +47,15 @@ ParCable::getValue() const
     
     switch (drive8.getParCableType()) {
             
-        case PAR_CABLE_STANDARD:
+        case PAR_CABLE_STANDARD: result &= getVIA(drive8); break;
+        case PAR_CABLE_DOLPHIN3: result &= getPIA(drive8); break;
+        default: break;
+    }
+    switch (drive9.getParCableType()) {
             
-            result &= getVIA(drive8);
-            break;
-            
-        case PAR_CABLE_DOLPHIN3:
-            
-            result &= getPIA(drive8);
-            break;
-
-        default:
-            break;
+        case PAR_CABLE_STANDARD: result &= getVIA(drive9); break;
+        case PAR_CABLE_DOLPHIN3: result &= getPIA(drive9); break;
+        default: break;
     }
 
     return result;
@@ -75,7 +72,7 @@ void
 ParCable::c64Handshake()
 {
     c64Handshake(drive8);
-    // c64Handshake(drive9); // Uncomment ASAP
+    c64Handshake(drive9);
 }
 
 void
