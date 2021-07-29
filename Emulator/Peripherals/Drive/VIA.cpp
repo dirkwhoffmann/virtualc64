@@ -912,7 +912,14 @@ VIA1::pokeORA(u8 value, bool handshake)
 u8
 VIA1::portAexternal() const
 {
-    return 0xFF;
+    u8 result = 0xFF;
+    
+    // Emulate the VC1541C track sensor
+    if (drive.config.type == DRIVE_VC1541C) {
+        if (drive.halftrack != 1) CLR_BIT(result, 0);
+    }
+    
+    return result;
 }
 
 u8
@@ -950,7 +957,7 @@ VIA1::updatePA()
         default:
             VIA6522::updatePA();
             break;
-    }
+    }    
 }
 
 void

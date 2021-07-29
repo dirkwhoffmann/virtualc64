@@ -27,6 +27,9 @@
  
 class Drive : public C64Component {
         
+    friend class VIA1;
+    friend class VIA2;
+
     //
     // Constants
     //

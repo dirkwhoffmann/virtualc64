@@ -595,7 +595,7 @@ Drive::moveHeadDown()
         halftrack--;
         offset = (HeadPos)(position * disk.lengthOfHalftrack(halftrack));
         
-        trace(DRV_DEBUG, "Moving head down to halftrack %d (track %2.1f)\n",
+        trace(true, "Moving head down to halftrack %d (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
         trace(DRV_DEBUG, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
     }

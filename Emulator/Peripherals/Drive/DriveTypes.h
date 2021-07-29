@@ -26,7 +26,9 @@ typedef DRIVE_ID DriveID;
 
 enum_long(DRIVE_TYPE)
 {
-    DRIVE_VC1541II
+    DRIVE_VC1541,
+    DRIVE_VC1541C,
+    DRIVE_VC1541II,
 };
 typedef DRIVE_TYPE DriveType;
 
@@ -43,6 +45,8 @@ struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
     {
         switch (value) {
                 
+            case DRIVE_VC1541:    return "VC1541";
+            case DRIVE_VC1541C:   return "VC1541C";
             case DRIVE_VC1541II:  return "VC1541II";
         }
         return "???";
