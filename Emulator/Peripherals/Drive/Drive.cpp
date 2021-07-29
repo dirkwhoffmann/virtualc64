@@ -175,6 +175,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
         case OPT_DRV_AUTO_CONFIG:
         {
             suspend();
+            printf("OPT_DRV_AUTO_CONFIG\n");
             if (!config.autoConfig && value) autoConfigure();
             config.autoConfig = value;
             resume();
@@ -310,8 +311,8 @@ Drive::autoConfigure()
         case VC1541C_01:
         case VC1541C_02:
             
-            msg("autoConfig: VC1541\n");
-            setConfigItem(OPT_DRV_PAN, deviceNr, DRIVE_VC1541C);
+            msg("autoConfig: VC1541C\n");
+            setConfigItem(OPT_DRV_TYPE, deviceNr, DRIVE_VC1541C);
             setConfigItem(OPT_DRV_RAM, deviceNr, DRVRAM_NONE);
             setConfigItem(OPT_DRV_PARCABLE, deviceNr, PAR_CABLE_NONE);
             break;
@@ -324,7 +325,7 @@ Drive::autoConfigure()
         case VC1541_64ER_V3:
 
             msg("autoConfig: VC1541 II\n");
-            setConfigItem(OPT_DRV_PAN, deviceNr, DRIVE_VC1541II);
+            setConfigItem(OPT_DRV_TYPE, deviceNr, DRIVE_VC1541II);
             setConfigItem(OPT_DRV_RAM, deviceNr, DRVRAM_NONE);
             setConfigItem(OPT_DRV_PARCABLE, deviceNr, PAR_CABLE_NONE);
             break;
@@ -333,7 +334,7 @@ Drive::autoConfigure()
         case VC1541_SPEEDDOS_27:
 
             msg("autoConfig: VC1541 SpeedDOS\n");
-            setConfigItem(OPT_DRV_PAN, deviceNr, DRIVE_VC1541II);
+            setConfigItem(OPT_DRV_TYPE, deviceNr, DRIVE_VC1541II);
             setConfigItem(OPT_DRV_RAM, deviceNr, DRVRAM_NONE);
             setConfigItem(OPT_DRV_PARCABLE, deviceNr, PAR_CABLE_STANDARD);
             break;
@@ -342,7 +343,7 @@ Drive::autoConfigure()
         case VC1541_DOLPHIN_20_SLVDR:
 
             msg("autoConfig: Dolphin DOS\n");
-            setConfigItem(OPT_DRV_PAN, deviceNr, DRIVE_VC1541II);
+            setConfigItem(OPT_DRV_TYPE, deviceNr, DRIVE_VC1541II);
             setConfigItem(OPT_DRV_RAM, deviceNr, DRVRAM_8000_9FFF);
             setConfigItem(OPT_DRV_PARCABLE, deviceNr, PAR_CABLE_STANDARD);
             break;
@@ -350,7 +351,7 @@ Drive::autoConfigure()
         case VC1541_DOLPHIN_30:
 
             msg("autoConfig: Dolphin DOS 3\n");
-            setConfigItem(OPT_DRV_PAN, deviceNr, DRIVE_VC1541II);
+            setConfigItem(OPT_DRV_TYPE, deviceNr, DRIVE_VC1541II);
             setConfigItem(OPT_DRV_RAM, deviceNr, DRVRAM_6000_7FFF);
             setConfigItem(OPT_DRV_PARCABLE, deviceNr, PAR_CABLE_DOLPHIN3);
             break;

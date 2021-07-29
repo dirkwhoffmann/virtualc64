@@ -10,20 +10,27 @@
 extension ConfigurationController {
    
     func refreshPeripheralsTab() {
-                        
-        track()
-                
+                                
         // Drive
         perDrive8Connect.state = config.drive8Connected ? .on : .off
-        // perDrive8AutoConf.state = config.drive8AutoConf ? .on : .off
+        perDrive8AutoConf.state = config.drive8AutoConf ? .on : .off
         perDrive8Type.selectItem(withTag: config.drive8Type)
         perDrive8Ram.selectItem(withTag: config.drive8Ram)
         perDrive8Cable.selectItem(withTag: config.drive8ParCable)
+        perDrive8AutoConf.isEnabled = config.drive8Connected
+        perDrive8Type.isEnabled = config.drive8Connected
+        perDrive8Ram.isEnabled = config.drive8Connected
+        perDrive8Cable.isEnabled = config.drive8Connected
+
         perDrive9Connect.state = config.drive9Connected ? .on : .off
-        // perDrive9AutoConf.state = config.drive9AutoConf ? .on : .off
+        perDrive9AutoConf.state = config.drive9AutoConf ? .on : .off
         perDrive9Type.selectItem(withTag: config.drive9Type)
         perDrive9Ram.selectItem(withTag: config.drive9Ram)
         perDrive9Cable.selectItem(withTag: config.drive9ParCable)
+        perDrive9AutoConf.isEnabled = config.drive9Connected
+        perDrive9Type.isEnabled = config.drive9Connected
+        perDrive9Ram.isEnabled = config.drive9Connected
+        perDrive9Cable.isEnabled = config.drive9Connected
 
         // Disk
         perBlankDiskFormat.selectItem(withTag: config.blankDiskFormatIntValue)
@@ -41,6 +48,26 @@ extension ConfigurationController {
         perPowerButton.isHidden = !bootable
     }
     
+    @IBAction func perDriveConnectAction(_ sender: NSButton!) {
+        
+        switch sender.tag {
+        case 8: config.drive8Connected = sender.state == .on
+        case 9: config.drive9Connected = sender.state == .on
+        default: fatalError()
+        }
+        refresh()
+    }
+
+    @IBAction func perDriveAutoConfAction(_ sender: NSButton!) {
+        
+        switch sender.tag {
+        case 8: config.drive8AutoConf = sender.state == .on
+        case 9: config.drive9AutoConf = sender.state == .on
+        default: fatalError()
+        }
+        refresh()
+    }
+
     @IBAction func perDriveTypeAction(_ sender: NSPopUpButton!) {
         
         switch sender.tag {
@@ -66,16 +93,6 @@ extension ConfigurationController {
         switch sender.tag {
         case 8: config.drive8ParCable = sender.selectedTag()
         case 9: config.drive9ParCable = sender.selectedTag()
-        default: fatalError()
-        }
-        refresh()
-    }
-
-    @IBAction func perDriveConnectAction(_ sender: NSButton!) {
-        
-        switch sender.tag {
-        case 8: config.drive8Connected = sender.state == .on
-        case 9: config.drive9Connected = sender.state == .on
         default: fatalError()
         }
         refresh()

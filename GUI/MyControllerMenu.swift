@@ -260,17 +260,12 @@ extension MyController: NSMenuItemValidation {
         UserDefaults.resetVideoUserDefaults()
         UserDefaults.resetRomUserDefaults()
 
-        /* Order dependencies: Because loading the drive ROM might change the
-         * drive settings, loadPeripheralsUserDefaults() has to be called
-         * before loadRomUserDefaults().
-         */
-
         c64.suspend()
+        config.loadRomUserDefaults()
         config.loadHardwareUserDefaults()
         config.loadPeripheralsUserDefaults()
         config.loadAudioUserDefaults()
         config.loadVideoUserDefaults()
-        config.loadRomUserDefaults()
         c64.resume()
     }
     

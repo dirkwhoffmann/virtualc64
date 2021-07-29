@@ -77,11 +77,6 @@ extension MyController {
     func loadUserDefaults() {
         
         track()
-
-        /* Order dependencies: Because loading the drive ROM might change the
-         * drive settings, loadPeripheralsUserDefaults() has to be called
-         * before loadRomUserDefaults().
-         */
         
         c64.suspend()
         
@@ -90,12 +85,12 @@ extension MyController {
         pref.loadDevicesUserDefaults()
         pref.loadKeyboardUserDefaults()
         
+        config.loadRomUserDefaults()
         config.loadHardwareUserDefaults()
         config.loadPeripheralsUserDefaults()
         config.loadCompatibilityUserDefaults()
         config.loadAudioUserDefaults()
         config.loadVideoUserDefaults()
-        config.loadRomUserDefaults()
 
         c64.resume()
     }

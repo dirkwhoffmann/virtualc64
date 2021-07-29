@@ -216,11 +216,12 @@ C64::getConfigItem(Option option, long id) const
             assert(id >= 0 && id <= 3);
             return sid.getConfigItem(option, id);
 
+        case OPT_DRV_CONNECT:
+        case OPT_DRV_AUTO_CONFIG:
         case OPT_DRV_TYPE:
         case OPT_DRV_RAM:
         case OPT_DRV_PARCABLE:
         case OPT_DRV_POWER_SAVE:
-        case OPT_DRV_CONNECT:
         case OPT_DRV_POWER_SWITCH:
         case OPT_DRV_EJECT_DELAY:
         case OPT_DRV_SWAP_DELAY:
