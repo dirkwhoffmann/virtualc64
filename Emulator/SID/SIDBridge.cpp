@@ -40,6 +40,7 @@ SIDBridge::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)
     
+    if (hard) clearStats();
     clearRingbuffer();
 }
 
@@ -518,6 +519,19 @@ SIDBridge::_dump(SIDInfo &info, VoiceInfo (&vinfo)[3]) const
 }
 */
 
+SIDStats
+SIDBridge::getStats()
+{
+    stats.fillLevel = stream.fillLevel();
+    return stats;
+}
+
+void
+SIDBridge::clearStats()
+{
+    memset(&stats, 0, sizeof(stats));
+}
+
 void
 SIDBridge::_setWarp(bool enable)
 {
@@ -937,7 +951,7 @@ SIDBridge::handleBufferUnderflow()
     // Adjust the sample rate, if condition (1) holds
     if (elapsedTime.asSeconds() > 10.0) {
 
-        bufferUnderflows++;
+        stats.bufferUnderflows++;
         
         // Increase the sample rate based on what we've measured
         isize offPerSecond = (isize)(stream.count() / elapsedTime.asSeconds());
@@ -966,7 +980,7 @@ SIDBridge::handleBufferOverflow()
     // Adjust the sample rate, if condition (1) holds
     if (elapsedTime.asSeconds() > 10.0) {
         
-        bufferOverflows++;
+        stats.bufferOverflows++;
         
         // Decrease the sample rate based on what we've measured
         isize offPerSecond = (isize)(stream.count() / elapsedTime.asSeconds());

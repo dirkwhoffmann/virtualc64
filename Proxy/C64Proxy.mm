@@ -434,6 +434,11 @@
     return [self bridge]->getVoiceInfo((unsigned)nr, (unsigned)voice);
 }
 
+- (SIDStats)getStats
+{
+    return [self bridge]->getStats();
+}
+
 - (double)sampleRate
 {
     return [self bridge]->getSampleRate();
@@ -452,21 +457,6 @@
 - (void)ringbufferData:(NSInteger)offset left:(float *)l right:(float *)r
 {
     [self bridge]->ringbufferData(offset, l, r);
-}
-
-- (double)fillLevel
-{
-    return [self bridge]->stream.fillLevel();
-}
-
-- (NSInteger)bufferUnderflows
-{
-    return [self bridge]->bufferUnderflows;
-}
-
-- (NSInteger)bufferOverflows
-{
-    return [self bridge]->bufferOverflows;
 }
 
 - (void)copyMono:(float *)target size:(NSInteger)n
@@ -1154,13 +1144,6 @@
 {
     return [self drive]->getConfig();
 }
-
-/*
-- (void)autoConfigure
-{
-    [self drive]->autoConfigure();
-}
-*/
 
 - (VIAProxy *)via:(NSInteger)num {
 	switch (num) {

@@ -351,15 +351,13 @@
 
 - (SIDInfo)getInfo:(NSInteger)nr;
 - (VoiceInfo)getVoiceInfo:(NSInteger)nr voice:(NSInteger)voice;
+- (SIDStats) getStats;
 
 - (double)sampleRate;
 - (void)setSampleRate:(double)rate;
 
 - (NSInteger)ringbufferSize;
 - (void)ringbufferData:(NSInteger)offset left:(float *)l right:(float *)r;
-- (double)fillLevel;
-- (NSInteger)bufferUnderflows;
-- (NSInteger)bufferOverflows;
 
 - (void)copyMono:(float *)target size:(NSInteger)n;
 - (void)copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
@@ -493,7 +491,6 @@
 @property (readonly) DriveID id;
 
 - (DriveConfig)getConfig;
-// - (void)autoConfigure;
 
 - (BOOL)isConnected;
 - (BOOL)isSwitchedOn;

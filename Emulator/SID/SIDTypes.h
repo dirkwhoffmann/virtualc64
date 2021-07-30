@@ -141,6 +141,19 @@ SIDConfig;
 
 typedef struct
 {
+    // Current ring buffer fill level
+    double fillLevel;
+    
+    // Number of buffer underflows since power up
+    u64 bufferUnderflows;
+
+    // Number of buffer overflows since power up
+    u64 bufferOverflows;
+}
+SIDStats;
+
+typedef struct
+{
     u8 reg[7];
     u16 frequency;
     u16 pulseWidth;

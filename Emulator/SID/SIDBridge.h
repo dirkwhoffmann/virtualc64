@@ -47,6 +47,9 @@ class SIDBridge : public C64Component {
     // Current configuration
     SIDConfig config = getDefaultConfig();
     
+    // Statistics
+    SIDStats stats;
+
     
     //
     // Sub components
@@ -93,19 +96,8 @@ private:
     float pan[4] = { 0, 0, 0, 0 };
         
 public:
-    
-    // Number of buffer underflows since power up
-    // TODO: MOVE TO SIDStats
-    u64 bufferUnderflows;
+        
 
-    // Number of buffer overflows since power up
-    // TODO: MOVE TO SIDStats
-    u64 bufferOverflows;
-    
-    // Set to true to signal a buffer exception
-    // bool signalUnderflow = false;
-
-    
     //
     // Audio streams
     //
@@ -177,7 +169,13 @@ private:
     void _dump(dump::Category category, std::ostream& os) const override;
     void _dump(dump::Category category, std::ostream& os, isize nr) const;
 
-    // void _dump(SIDInfo &info, VoiceInfo (&vinfo)[3]) const;
+public:
+    
+    SIDStats getStats();
+    
+private:
+    
+    void clearStats();
 
     
     //
