@@ -726,9 +726,20 @@ SIDBridge::executeUntil(Cycle targetCycle)
 {
     assert(targetCycle >= cycles);
     
+    // Skip sample synthesis in power-safe mode
     if (volL.current == 0 && volR.current == 0 && config.powerSave) {
-        cycles = targetCycle;
-        return;
+        
+        /* https://sourceforge.net/p/vice-emu/bugs/1374/
+         *
+         * Due to a bug in reSID, pending register writes are dropped if we
+         * skip sample synthesis if SAMPLE_FAST and MOS8580 are selected both.
+         * As a workaround, we ignore the power-saving setting in this case.
+         */
+        if (config.revision != MOS_8580 || config.sampling != SAMPLING_FAST) {
+            
+            cycles = targetCycle;
+            return;
+        }
     }
     
     isize missingCycles  = targetCycle - cycles;
