@@ -85,9 +85,13 @@ public:
     virtual void threadPause() = 0;
     virtual void threadExecute() = 0;
     virtual void threadHalt() = 0;
+    virtual void threadWarpOff() = 0;
+    virtual void threadWarpOn() = 0;
 };
 
 class Thread : public C64Object {
+    
+    friend class C64;
     
     // The actual thread
     std::thread thread;
@@ -98,12 +102,14 @@ class Thread : public C64Object {
     // The selected timing synchronization mode
     volatile ThreadMode mode = ThreadMode::Periodic;
     
-    // The current thread state
+    // Thread state and change request
     volatile ThreadEmuState state = THREAD_OFF;
-    
-    // A request to change the thread state
     volatile ThreadEmuState newState = THREAD_OFF;
-    
+
+    // Warp mode state and change request
+    volatile bool warp = false;
+    volatile bool newWarp = false;
+
     // Variables needed to implement "pulsed" mode
     std::mutex condMutex;
     std::condition_variable cond;
@@ -168,6 +174,9 @@ public:
     void run();
     void pause();
 
+    void warpOn();
+    void warpOff();
+    
 private:
 
     void changeStateTo(ThreadEmuState requestedState);

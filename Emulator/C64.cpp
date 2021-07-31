@@ -11,11 +11,13 @@
 #include "C64.h"
 #include "Checksum.h"
 #include "IO.h"
+// #include "Thread.h"
 
 //
 // Emulator thread
 //
 
+/*
 void 
 threadTerminated(void* thisC64)
 {
@@ -47,6 +49,7 @@ void
     pthread_cleanup_pop(1);
     pthread_exit(nullptr);
 }
+*/
 
 
 //
@@ -389,7 +392,7 @@ C64::setConfigItem(Option option, i64 value)
             
             frequency = (u32)newFrequency;
             durationOfOneCycle = 10000000000 / newFrequency;
-            thread.setSyncDelay(1000000000 / newFrequency);
+            thread.setSyncDelay(1000000000 / 50);
             return true;
         }
             
@@ -401,10 +404,15 @@ C64::setConfigItem(Option option, i64 value)
 void
 C64::setWarp(bool enable)
 {
-    if (warp != enable && !warpLock) {
-        
+    // if (warp != enable && !warpLock) {
+    if (!warpLock) {
+
+        enable ? thread.warpOn() : thread.warpOff();
+
+        /*
         warp = enable;
         HardwareComponent::setWarp(enable);
+        */
     }
 }
 
@@ -427,29 +435,148 @@ void
 C64::threadPowerOff()
 {
     msg("threadPowerOff()\n");
+    
+    // Power off all subcomponents
+    HardwareComponent::powerOff();
+
+    // Update the recorded debug information
+    inspect();
+    
+    // Inform the GUI
+    msgQueue.put(MSG_POWER_OFF);
 }
 
 void
 C64::threadPowerOn()
 {
     msg("threadPowerOn()\n");
+    
+    // Perform a reset
+    hardReset();
+            
+    // Power on all subcomponents
+    HardwareComponent::powerOn();
+    
+    // Update the recorded debug information
+    inspect();
+
+    // Inform the GUI
+    msgQueue.put(MSG_POWER_ON);
 }
 
 void
 C64::threadRun()
 {
     msg("threadRun()\n");
+    
+    // Launch all subcomponents
+    HardwareComponent::run();
+
+    // Create the emulator thread
+    // pthread_create(&p, nullptr, threadMain, (void *)this);
+    
+    // Inform the GUI
+    msgQueue.put(MSG_RUN);
 }
 
 void
 C64::threadPause()
 {
     msg("threadPause()\n");
+    
+    // Finish the current instruction to reach a clean state
+    finishInstruction();
+    
+    // Enter pause mode
+    HardwareComponent::pause();
+    
+    // Update the recorded debug information
+    inspect();
+    
+    // Ask the emulator thread to terminate
+    // signalStop();
+    
+    // Wait until the emulator thread has terminated
+    // pthread_join(p, nullptr);
+    
+    // Assure the emulator is no longer running
+    // assert(state == EMULATOR_STATE_PAUSED);
+    // assert(p == (pthread_t)0);
+    
+    // Inform the GUI
+    msgQueue.put(MSG_PAUSE);
 }
 
 void
 C64::threadExecute()
 {
+    // Run the emulator
+    executeOneFrame();
+    
+    // Check if special action needs to be taken
+    if (runLoopCtrl) {
+        
+        // Are we requested to take a snapshot?
+        if (runLoopCtrl & ACTION_FLAG_AUTO_SNAPSHOT) {
+            trace(RUN_DEBUG, "RL_AUTO_SNAPSHOT\n");
+            autoSnapshot = Snapshot::makeWithC64(this);
+            putMessage(MSG_AUTO_SNAPSHOT_TAKEN);
+            clearActionFlags(ACTION_FLAG_AUTO_SNAPSHOT);
+        }
+        if (runLoopCtrl & ACTION_FLAG_USER_SNAPSHOT) {
+            trace(RUN_DEBUG, "RL_USER_SNAPSHOT\n");
+            userSnapshot = Snapshot::makeWithC64(this);
+            putMessage(MSG_USER_SNAPSHOT_TAKEN);
+            clearActionFlags(ACTION_FLAG_USER_SNAPSHOT);
+        }
+        
+        // Are we requested to update the debugger info structs?
+        if (runLoopCtrl & ACTION_FLAG_INSPECT) {
+            trace(RUN_DEBUG, "RL_INSPECT\n");
+            inspect();
+            clearActionFlags(ACTION_FLAG_INSPECT);
+        }
+        
+        // Did we reach a breakpoint?
+        if (runLoopCtrl & ACTION_FLAG_BREAKPOINT) {
+            putMessage(MSG_BREAKPOINT_REACHED);
+            trace(RUN_DEBUG, "BREAKPOINT_REACHED pc: %x\n", cpu.getPC0());
+            clearActionFlags(ACTION_FLAG_BREAKPOINT);
+            thread.newState = THREAD_PAUSED;
+        }
+        
+        // Did we reach a watchpoint?
+        if (runLoopCtrl & ACTION_FLAG_WATCHPOINT) {
+            putMessage(MSG_WATCHPOINT_REACHED);
+            trace(RUN_DEBUG, "WATCHPOINT_REACHED pc: %x\n", cpu.getPC0());
+            clearActionFlags(ACTION_FLAG_WATCHPOINT);
+            thread.newState = THREAD_PAUSED;
+        }
+        
+        // Are we requested to terminate the run loop?
+        if (runLoopCtrl & ACTION_FLAG_STOP) {
+            clearActionFlags(ACTION_FLAG_STOP);
+            trace(RUN_DEBUG, "STOP\n");
+            thread.newState = THREAD_PAUSED;
+        }
+        
+        // Are we requested to pull the NMI line down?
+        if (runLoopCtrl & ACTION_FLAG_EXTERNAL_NMI) {
+            cpu.pullDownNmiLine(INTSRC_EXP);
+            trace(RUN_DEBUG, "EXTERNAL_NMI\n");
+            clearActionFlags(ACTION_FLAG_EXTERNAL_NMI);
+        }
+        
+        // Is the CPU jammed due the execution of an illegal instruction?
+        if (runLoopCtrl & ACTION_FLAG_CPU_JAM) {
+            putMessage(MSG_CPU_JAMMED);
+            trace(RUN_DEBUG, "CPU_JAMMED\n");
+            clearActionFlags(ACTION_FLAG_CPU_JAM);
+            thread.newState = THREAD_PAUSED;
+        }
+                    
+        assert(runLoopCtrl == 0);
+    }
 }
 
 void
@@ -459,11 +586,26 @@ C64::threadHalt()
 }
 
 void
+C64::threadWarpOff()
+{
+    msg("threadWarpOff()\n");
+    HardwareComponent::setWarp(false);
+}
+
+void
+C64::threadWarpOn()
+{
+    msg("threadWarpOn()\n");
+    HardwareComponent::setWarp(true);
+}
+
+void
 C64::powerOn()
 {
     debug(RUN_DEBUG, "powerOn()\n");
     thread.powerOn();
-    
+
+    /*
     // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
 
@@ -483,6 +625,7 @@ C64::powerOn()
         // Inform the GUI
         msgQueue.put(MSG_POWER_ON);
     }
+    */
 }
 
 void
@@ -497,6 +640,7 @@ C64::powerOff()
     debug(RUN_DEBUG, "powerOff()\n");
     thread.powerOff();
 
+    /*
     // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
 
@@ -514,6 +658,7 @@ C64::powerOff()
         // Inform the GUI
         msgQueue.put(MSG_POWER_OFF);
     }
+    */
 }
 
 void
@@ -528,6 +673,7 @@ C64::run()
     debug(RUN_DEBUG, "run()\n");
     thread.run();
 
+    /*
     // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
 
@@ -544,6 +690,7 @@ C64::run()
         // Create the emulator thread
         pthread_create(&p, nullptr, threadMain, (void *)this);
     }
+    */
 }
 
 void
@@ -558,6 +705,7 @@ C64::pause()
     debug(RUN_DEBUG, "pause()\n");
     thread.pause();
 
+    /*
     // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
     
@@ -573,6 +721,7 @@ C64::pause()
         assert(state == EMULATOR_STATE_PAUSED);
         assert(p == (pthread_t)0);
     }
+    */
 }
 
 void
@@ -626,7 +775,7 @@ C64::_dump(dump::Category category, std::ostream& os) const
         os << tab("Current rasterline") << rasterLine << std::endl;
         os << tab("Current rasterline cycle") << dec(rasterCycle) << std::endl;
         os << tab("Ultimax mode") << bol(getUltimax()) << std::endl;
-        os << tab("Warp mode") << bol(warp) << std::endl;
+        os << tab("Warp mode") << bol(inWarpMode()) << std::endl;
         os << tab("Debug mode") << bol(debugMode) << std::endl;
     }
 }
@@ -703,6 +852,7 @@ C64::isReady(ErrorCode *err) const
     return true;
 }
 
+/*
 void
 C64::threadWillStart()
 {
@@ -717,9 +867,10 @@ C64::threadDidTerminate()
     // Trash the thread pointer
     p = (pthread_t)0;
 }
+*/
 
 void
-C64::runLoop()
+C64::oldRunLoop()
 {
     trace(RUN_DEBUG, "runLoop()\n");
         
@@ -985,7 +1136,7 @@ C64::endFrame()
     recorder.vsyncHandler();
     
     // Count some sheep (zzzzzz) ...
-    if (!warp) oscillator.synchronize();
+    // if (!warp) oscillator.synchronize();
 }
 
 void

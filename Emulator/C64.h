@@ -175,7 +175,7 @@ private:
     isize suspendCounter = 0;
     
     // The emulator thread
-    pthread_t p = (pthread_t)0;
+    // pthread_t p = (pthread_t)0;
     
 
     //
@@ -187,7 +187,7 @@ private:
      * into warp mode. In this mode, the emulation thread is no longer paused
      * to match the target frequency and runs as fast as possible.
      */
-    bool warp = false;
+    // bool warp = false;
     
     /* Indicates if the current warp mode is locked. By default, this variable
      * false. It is set to true by the regression tester to prevent the GUI
@@ -316,7 +316,9 @@ private:
     void threadPause() override;
     void threadExecute() override;
     void threadHalt() override;
-    
+    void threadWarpOff() override;
+    void threadWarpOn() override;
+
     
     //
     // Controlling
@@ -336,7 +338,7 @@ public:
     void shutdown();
     
     void setWarp(bool enable);
-    bool inWarpMode() const { return warp; }
+    bool inWarpMode() const { return thread.warp; }
     void lockWarpMode() { warpLock = true; }
     void unlockWarpMode() { warpLock = false; }
 
@@ -360,7 +362,7 @@ private:
 public:
     
     // Returns true if the currently executed thread is the emulator thread
-    bool isEmulatorThread() { return pthread_self() == p; }
+    // bool isEmulatorThread() { return pthread_self() == p; }
 
     /* Returns true if a call to powerOn() will be successful.
      * It returns false, e.g., if no Rom is installed.
@@ -381,13 +383,13 @@ public:
      * emulator thread launches. It has to be declared public to make it
      * accessible by the emulator thread.
      */
-    void threadWillStart();
+    // void threadWillStart();
     
     /* The thread exit function. This (private) method is invoked when the
      * emulator thread terminates. It has to be declared public to make it
      * accessible by the emulator thread.
      */
-    void threadDidTerminate();
+    // void threadDidTerminate();
         
     /* The C64 run loop.
      * This function is one of the most prominent ones. It implements the
@@ -395,7 +397,7 @@ public:
      * starts. If you want to understand how the emulator works, this function
      * should be your starting point.
      */
-    void runLoop();
+    void oldRunLoop();
     
     /* Runs or pauses the emulator.
      */

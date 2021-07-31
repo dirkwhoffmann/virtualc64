@@ -31,16 +31,21 @@ Thread::execute <ThreadMode::Periodic> ()
 {
     auto now = util::Time::now();
     
+    // Call the execution function
+    delegate.threadExecute();
+
+    // Only proceed if we're not running in warp mode
+    if (warp) return;
+        
     // Check if we're running too slow...
     if (now > targetTime) {
         
         // Check if we're completely out of sync...
-        if ((now - targetTime).asMilliseconds() > 2000) {
+        if ((now - targetTime).asMilliseconds() > 200) {
             
             std::cout << "The emulator is way too slow: ";
             std::cout << (now - targetTime).asSeconds() << std::endl;
             restartSyncTimer();
-            return;
         }
     }
     
@@ -48,20 +53,17 @@ Thread::execute <ThreadMode::Periodic> ()
     if (now < targetTime) {
         
         // Check if we're completely out of sync...
-        if ((targetTime - now).asMilliseconds() > 2000) {
+        if ((targetTime - now).asMilliseconds() > 200) {
             
             std::cout << "The emulator is way too fast: ";
             std::cout << (targetTime - now).asSeconds() << std::endl;
             restartSyncTimer();
-            return;
         }
     }
-    
-    // Call the execution function
-    delegate.threadExecute();
-    
+        
     // Sleep for a while
-    // std::cout << "Sleeping..." << targetTime.asMilliseconds() << std::endl;
+    // std::cout << "Sleeping... " << targetTime.asMilliseconds() << std::endl;
+    // std::cout << "Delay = " << delay.asNanoseconds() << std::endl;
     targetTime += delay;
     targetTime.sleepUntil();
 }
@@ -73,7 +75,7 @@ Thread::execute <ThreadMode::Pulsed> ()
     delegate.threadExecute();
     
     // Wait for the next pulse
-    waitForCondition();
+    if (!warp) waitForCondition();
 }
 
 void
@@ -85,8 +87,16 @@ Thread::main()
             
             switch (mode) {
                 case ThreadMode::Periodic: execute<ThreadMode::Periodic>(); break;
-                case ThreadMode::Pulsed: execute<ThreadMode::Pulsed> (); break;
+                case ThreadMode::Pulsed: execute<ThreadMode::Pulsed>(); break;
             }
+        }
+        
+        // Are we requested to enter or exit warp mode?
+        while (newWarp != warp) {
+            
+            newWarp ? delegate.threadWarpOn() : delegate.threadWarpOff();
+            warp = newWarp;
+            break;
         }
         
         // Are we requested to change state?
@@ -242,13 +252,24 @@ Thread::pause()
 }
 
 void
+Thread::warpOn()
+{
+    newWarp = true;
+    // while (warp != newWarp) { };
+}
+
+void
+Thread::warpOff()
+{
+    newWarp = false;
+    // while (warp != newWarp) { };
+}
+
+void
 Thread::changeStateTo(ThreadEmuState requestedState)
 {
     newState = requestedState;
-    
-    // Wait until the state has changed
-    // signalCondition();
-    while (state != requestedState) { };
+    while (state != newState) { };
 }
 
 void
