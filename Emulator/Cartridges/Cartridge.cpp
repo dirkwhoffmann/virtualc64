@@ -253,14 +253,10 @@ Cartridge::_load(const u8 *buffer)
 {
     dealloc();
     
-    printf("Cartridge::_load = %d\n", numPackets);
-
     util::SerReader reader(buffer);
     applyToPersistentItems(reader);
     applyToResetItems(reader);
-    
-    printf("Cartridge::_load2 = %d\n", numPackets);
-    
+        
     // Load ROM packets
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] == nullptr);
@@ -282,14 +278,10 @@ Cartridge::_load(const u8 *buffer)
 isize
 Cartridge::_save(u8 *buffer)
 {
-    printf("Cartridge::_save = %d\n", numPackets);
-
     util::SerWriter writer(buffer);
     applyToPersistentItems(writer);
     applyToResetItems(writer);
     
-    printf("Cartridge::_save2 = %d\n", numPackets);
-
     // Save ROM packets
     for (unsigned i = 0; i < numPackets; i++) {
         assert(packet[i] != nullptr);

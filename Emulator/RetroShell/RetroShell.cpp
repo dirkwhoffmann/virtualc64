@@ -325,8 +325,6 @@ RetroShell::execScript(std::ifstream &fs)
 void
 RetroShell::execScript(const string &contents)
 {
-    printf("execScript(string)\n");
-
     script.str("");
     script << contents;
     scriptLine = 1;

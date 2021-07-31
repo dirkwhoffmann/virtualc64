@@ -25,10 +25,10 @@ enum_long(THREAD_STATE)
     THREAD_RUNNING,
     THREAD_TERMINATED
 };
-typedef THREAD_STATE ThreadState;
+typedef THREAD_STATE ThreadEmuState;
 
 #ifdef __cplusplus
-struct ThreadStateEnum : util::Reflection<ThreadStateEnum, ThreadState> {
+struct ThreadStateEnum : util::Reflection<ThreadStateEnum, ThreadEmuState> {
     
     static bool isValid(long value)
     {
@@ -36,7 +36,7 @@ struct ThreadStateEnum : util::Reflection<ThreadStateEnum, ThreadState> {
     }
 
     static const char *prefix() { return "THREAD"; }
-    static const char *key(ThreadState value)
+    static const char *key(ThreadEmuState value)
     {
         switch (value) {
                 

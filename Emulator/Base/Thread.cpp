@@ -84,14 +84,9 @@ Thread::main()
         if (isRunning()) {
             
             switch (mode) {
-                case ThreadMode::Periodic: execute <ThreadMode::Periodic> (); break;
-                case ThreadMode::Pulsed: execute <ThreadMode::Pulsed> (); break;
+                case ThreadMode::Periodic: execute<ThreadMode::Periodic>(); break;
+                case ThreadMode::Pulsed: execute<ThreadMode::Pulsed> (); break;
             }
-
-        } else {
-
-            // Go idle...
-            waitForCondition();
         }
         
         // Are we requested to change state?
@@ -103,7 +98,15 @@ Thread::main()
                 state = newState;
                 break;
             }
-            
+
+            if (state == THREAD_OFF && newState == THREAD_RUNNING) {
+                
+                delegate.threadPowerOn();
+                delegate.threadRun();
+                state = newState;
+                break;
+            }
+
             if (state == THREAD_PAUSED && newState == THREAD_OFF) {
                 
                 delegate.threadPowerOff();
@@ -114,6 +117,14 @@ Thread::main()
             if (state == THREAD_PAUSED && newState == THREAD_RUNNING) {
                 
                 delegate.threadRun();
+                state = newState;
+                break;
+            }
+
+            if (state == THREAD_RUNNING && newState == THREAD_OFF) {
+                
+                delegate.threadPause();
+                delegate.threadPowerOff();
                 state = newState;
                 break;
             }
@@ -164,13 +175,12 @@ Thread::powerOn()
 
     // Never reenter this function
     assert(!entered); entered = true;
-        
+
     if (isPoweredOff() && delegate.readyToPowerOn()) {
         
         // Request a state change and wait until the new state has been reached
         changeStateTo(THREAD_PAUSED);
     }
-    
     entered = false;
 }
 
@@ -184,16 +194,12 @@ Thread::powerOff()
 
     // Never reenter this function
     assert(!entered); entered = true;
-
+    
     if (!isPoweredOff()) {
-        
-        // Pause if needed
-        pause(); assert(!isRunning());
-        
+                
         // Request a state change and wait until the new state has been reached
         changeStateTo(THREAD_OFF);
     }
-    
     entered = false;
 }
 
@@ -201,22 +207,18 @@ void
 Thread::run()
 {
     debug(RUN_DEBUG, "run()\n");
-    
+
     // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
 
     // Never reenter this function
     assert(!entered); entered = true;
-
+    
     if (!isRunning() && delegate.readyToPowerOn()) {
         
-        // Power on if needed
-        powerOn(); assert(isPoweredOn());
-
         // Request a state change and wait until the new state has been reached
         changeStateTo(THREAD_RUNNING);
     }
-
     entered = false;
 }
 
@@ -230,23 +232,22 @@ Thread::pause()
 
     // Never reenter this function
     assert(!entered); entered = true;
-
+    
     if (isRunning()) {
                 
         // Request a state change and wait until the new state has been reached
         changeStateTo(THREAD_PAUSED);
     }
-    
     entered = false;
 }
 
 void
-Thread::changeStateTo(ThreadState requestedState)
+Thread::changeStateTo(ThreadEmuState requestedState)
 {
     newState = requestedState;
     
     // Wait until the state has changed
-    signalCondition();
+    // signalCondition();
     while (state != requestedState) { };
 }
 

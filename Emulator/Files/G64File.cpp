@@ -86,7 +86,7 @@ G64File::makeWithDisk(Disk &disk)
             u16 numFillBytes = maxBytesOnTrack - numDataBytes;
 
             if (disk.lengthOfHalftrack(ht) % 8 != 0) {
-                printf("WARNING: Size of halftrack %d is not a multiple of 8\n", ht);
+                warn("Size of halftrack %d is not a multiple of 8\n", ht);
             }
             assert(pos == offset[ht]);
             buffer[pos++] = LO_BYTE(numDataBytes);

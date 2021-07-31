@@ -389,6 +389,7 @@ C64::setConfigItem(Option option, i64 value)
             
             frequency = (u32)newFrequency;
             durationOfOneCycle = 10000000000 / newFrequency;
+            thread.setSyncDelay(1000000000 / newFrequency);
             return true;
         }
             
@@ -415,10 +416,53 @@ C64::setDebug(bool enable)
     resume();
 }
 
+bool
+C64::readyToPowerOn()
+{
+    msg("readyToPowerOn()\n");
+    return isReady();
+}
+
+void
+C64::threadPowerOff()
+{
+    msg("threadPowerOff()\n");
+}
+
+void
+C64::threadPowerOn()
+{
+    msg("threadPowerOn()\n");
+}
+
+void
+C64::threadRun()
+{
+    msg("threadRun()\n");
+}
+
+void
+C64::threadPause()
+{
+    msg("threadPause()\n");
+}
+
+void
+C64::threadExecute()
+{
+}
+
+void
+C64::threadHalt()
+{
+    msg("threadHalt()\n");
+}
+
 void
 C64::powerOn()
 {
     debug(RUN_DEBUG, "powerOn()\n");
+    thread.powerOn();
     
     // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
@@ -451,6 +495,7 @@ void
 C64::powerOff()
 {
     debug(RUN_DEBUG, "powerOff()\n");
+    thread.powerOff();
 
     // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
@@ -481,7 +526,8 @@ void
 C64::run()
 {
     debug(RUN_DEBUG, "run()\n");
-    
+    thread.run();
+
     // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
 
@@ -510,6 +556,7 @@ void
 C64::pause()
 {
     debug(RUN_DEBUG, "pause()\n");
+    thread.pause();
 
     // Never call this function inside the emulator thread
     assert(!isEmulatorThread());

@@ -638,9 +638,7 @@ FSDevice::makeFile(PETName<16> name, FSDirEntry *dir, const u8 *buf, usize cnt)
 {
     // Determine the number of blocks needed for this file
     u32 numBlocks = (u32)((cnt + 253) / 254);
-    
-    printf("size = %zu (%02x %02x)\n", cnt, buf[0], buf[1]);
-    
+        
     // Allocate data blocks
     auto blockList = allocate(numBlocks);
     if (blockList.empty()) return false;

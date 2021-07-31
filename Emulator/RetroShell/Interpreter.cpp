@@ -51,12 +51,6 @@ Interpreter::split(const string& userInput)
     }
     if (!token.empty()) result.push_back(token);
     
-    /*
-    printf("Tokens:\n");
-    for (auto &it : result) {
-        printf("%s\n", it.c_str());
-    }
-    */
     return result;
 }
     
@@ -160,9 +154,7 @@ Interpreter::usage(Command& current)
 
 void
 Interpreter::help(const string& userInput)
-{
-    printf("help(%s)\n", userInput.c_str());
-    
+{    
     // Split the command string
     Arguments tokens = split(userInput);
         

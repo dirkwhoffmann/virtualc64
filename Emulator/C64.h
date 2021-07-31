@@ -11,8 +11,9 @@
 
 // General
 #include "C64Component.h"
-#include "Serialization.h"
 #include "MsgQueue.h"
+#include "Serialization.h"
+#include "Thread.h"
 
 // Data types and constants
 #include "C64Types.h"
@@ -66,11 +67,14 @@
  * Please note that most subcomponents have their own public API. E.g., to
  * query information from VICII, you need to invoke a method on c64.vicii.
  */
-class C64 : public HardwareComponent {
+class C64 : public HardwareComponent, ThreadDelegate {
         
     // The currently set inspection target (only evaluated in debug mode)
     InspectionTarget inspectionTarget;
 
+    // The thread manager
+    Thread thread = Thread(*this);
+    
     
     //
     // Sub components
@@ -299,6 +303,19 @@ private:
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+    
+    
+    //
+    // Methods from ThreadDelegate
+    //
+    
+    bool readyToPowerOn() override;
+    void threadPowerOff() override;
+    void threadPowerOn() override;
+    void threadRun() override;
+    void threadPause() override;
+    void threadExecute() override;
+    void threadHalt() override;
     
     
     //

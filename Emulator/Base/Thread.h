@@ -99,10 +99,10 @@ class Thread : public C64Object {
     volatile ThreadMode mode = ThreadMode::Periodic;
     
     // The current thread state
-    volatile ThreadState state = THREAD_OFF;
+    volatile ThreadEmuState state = THREAD_OFF;
     
     // A request to change the thread state
-    volatile ThreadState newState = THREAD_OFF;
+    volatile ThreadEmuState newState = THREAD_OFF;
     
     // Variables needed to implement "pulsed" mode
     std::mutex condMutex;
@@ -126,6 +126,8 @@ public:
     Thread(ThreadDelegate &d);
     ~Thread();
     
+    const char *getDescription() const override { return "Thread"; }
+
     // Returns true if this functions is called from within the emulator thread
     bool isEmulatorThread() { return std::this_thread::get_id() == thread.get_id(); }
 
@@ -167,8 +169,8 @@ public:
     void pause();
 
 private:
-    
-    void changeStateTo(ThreadState requestedState);
+
+    void changeStateTo(ThreadEmuState requestedState);
     
     void waitForCondition();
     void signalCondition();

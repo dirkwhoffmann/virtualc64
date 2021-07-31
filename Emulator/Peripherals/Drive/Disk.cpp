@@ -130,12 +130,10 @@ Disk::make(C64 &ref, DOSType type, PETName<16> name)
             
         case DOS_TYPE_NODOS:
         {
-            printf("FS_NODOS");
             return new Disk(ref);
         }
         case DOS_TYPE_CBM:
         {
-            printf("FS_CBM_DOS");
             FSDevice *fs = FSDevice::makeWithType(DISK_TYPE_SS_SD, DOS_TYPE_CBM);
             fs->setName(name);
             Disk *disk = makeWithFileSystem(ref, *fs);

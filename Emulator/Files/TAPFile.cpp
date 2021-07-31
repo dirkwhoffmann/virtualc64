@@ -66,7 +66,6 @@ void
 TAPFile::seek(isize nr)
 {
     fp = headerSize();
-    printf("seek(%zd): fp = %zd\n", nr, fp);
     for (isize i = 0; i < nr; i++) read();
 }
 
@@ -91,7 +90,7 @@ TAPFile::read()
             
         } else {
             
-            printf("TAP1 with a zero pulse byte\n");
+            warn("TAP1 with a zero pulse byte\n");
             // TAP1 with a zero pulse byte
             result = LO_LO_HI_HI(fp + 1 < (isize)size ? data[fp + 1] : 0,
                                  fp + 2 < (isize)size ? data[fp + 2] : 0,

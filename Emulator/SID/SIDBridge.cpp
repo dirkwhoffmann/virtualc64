@@ -389,10 +389,10 @@ SIDBridge::getSampleRate() const
     
     for (int i = 0; i < 4; i++) {
         if (resid[i].getSampleRate() != result) {
-            printf("%f != %f\n", resid[i].getSampleRate(), result);
+            warn("%f != %f\n", resid[i].getSampleRate(), result);
         }
         if (fastsid[i].getSampleRate() != result) {
-            printf("%f != %f\n", fastsid[i].getSampleRate(), result);
+            warn("%f != %f\n", fastsid[i].getSampleRate(), result);
         }
         assert(resid[i].getSampleRate() == result);
         assert(fastsid[i].getSampleRate() == result);

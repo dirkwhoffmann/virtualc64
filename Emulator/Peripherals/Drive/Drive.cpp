@@ -207,7 +207,6 @@ Drive::setConfigItem(Option option, long id, i64 value)
                 throw VC64Error(ERROR_OPT_INV_ARG, ParCableTypeEnum::keyList());
             }
             
-            printf("OPT_DRV_PARCABLE(%ld) %lld\n", id, value);
             suspend();
             config.parCable = (ParCableType)value;
             mem.updateBankMap();
@@ -303,14 +302,12 @@ Drive::setConfigItem(Option option, long id, i64 value)
 void
 Drive::autoConfigure()
 {
-    msg("autoConfig()\n");
-    
     switch (RomFile::identifier(mem.romFNV64())) {
             
         case VC1541C_01:
         case VC1541C_02:
             
-            msg("autoConfig: VC1541C\n");
+            debug(CNF_DEBUG, "autoConfigure: VC1541C\n");
             setConfigItem(OPT_DRV_TYPE, deviceNr, DRIVE_VC1541C);
             setConfigItem(OPT_DRV_RAM, deviceNr, DRVRAM_NONE);
             setConfigItem(OPT_DRV_PARCABLE, deviceNr, PAR_CABLE_NONE);
@@ -323,7 +320,7 @@ Drive::autoConfigure()
         case VC1541_II_JIFFY_V600:
         case VC1541_64ER_V3:
 
-            msg("autoConfig: VC1541 II\n");
+            debug(CNF_DEBUG, "autoConfigure: VC1541 II\n");
             setConfigItem(OPT_DRV_TYPE, deviceNr, DRIVE_VC1541II);
             setConfigItem(OPT_DRV_RAM, deviceNr, DRVRAM_NONE);
             setConfigItem(OPT_DRV_PARCABLE, deviceNr, PAR_CABLE_NONE);
@@ -332,7 +329,7 @@ Drive::autoConfigure()
         case VC1541_SPEEDDOS_PLUS:
         case VC1541_SPEEDDOS_27:
 
-            msg("autoConfig: VC1541 SpeedDOS\n");
+            debug(CNF_DEBUG, "autoConfigure: VC1541 SpeedDOS\n");
             setConfigItem(OPT_DRV_TYPE, deviceNr, DRIVE_VC1541II);
             setConfigItem(OPT_DRV_RAM, deviceNr, DRVRAM_NONE);
             setConfigItem(OPT_DRV_PARCABLE, deviceNr, PAR_CABLE_STANDARD);
@@ -341,7 +338,7 @@ Drive::autoConfigure()
         case VC1541_DOLPHIN_20:
         case VC1541_DOLPHIN_20_SLVDR:
 
-            msg("autoConfig: Dolphin DOS\n");
+            debug(CNF_DEBUG, "autoConfig: Dolphin DOS\n");
             setConfigItem(OPT_DRV_TYPE, deviceNr, DRIVE_VC1541II);
             setConfigItem(OPT_DRV_RAM, deviceNr, DRVRAM_8000_9FFF);
             setConfigItem(OPT_DRV_PARCABLE, deviceNr, PAR_CABLE_STANDARD);
@@ -350,7 +347,7 @@ Drive::autoConfigure()
         case VC1541_DOLPHIN_30:
         case VC1541_DOLPHIN_30_SLVDR:
 
-            msg("autoConfig: Dolphin DOS 3\n");
+            debug(CNF_DEBUG, "autoConfig: Dolphin DOS 3\n");
             setConfigItem(OPT_DRV_TYPE, deviceNr, DRIVE_VC1541II);
             setConfigItem(OPT_DRV_RAM, deviceNr, DRVRAM_6000_7FFF);
             setConfigItem(OPT_DRV_PARCABLE, deviceNr, PAR_CABLE_DOLPHIN3);
@@ -358,7 +355,7 @@ Drive::autoConfigure()
             
         default:
             
-            msg("AutoConfig: Rom not recognized\n");
+            debug( CNF_DEBUG, "AutoConfig: Rom not recognized\n");
     }
 }
 
