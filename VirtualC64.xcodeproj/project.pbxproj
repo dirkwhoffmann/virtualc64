@@ -54,6 +54,7 @@
 		503C1DD324FCD1BF00D91141 /* SnapshotDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503C1DD224FCD1BF00D91141 /* SnapshotDialog.swift */; };
 		503E199020C42C6D007E91F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 503E198F20C42C6D007E91F1 /* Assets.xcassets */; };
 		5044A03B2657A7A800C551C6 /* Recorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5044A0392657A7A800C551C6 /* Recorder.cpp */; };
+		50461BBE26B522450019CEDF /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50461BBC26B522450019CEDF /* Thread.cpp */; };
 		504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429124AF29AB00E69CAE /* Ocean.cpp */; };
 		504C435A24AF29AC00E69CAE /* WarpSpeed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429224AF29AB00E69CAE /* WarpSpeed.cpp */; };
 		504C435B24AF29AC00E69CAE /* StarDos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429324AF29AB00E69CAE /* StarDos.cpp */; };
@@ -359,6 +360,9 @@
 		504268AD24F12705006BB841 /* DiskTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskTypes.h; sourceTree = "<group>"; };
 		5044A0392657A7A800C551C6 /* Recorder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Recorder.cpp; sourceTree = "<group>"; };
 		5044A03A2657A7A800C551C6 /* Recorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Recorder.h; sourceTree = "<group>"; };
+		50461BBC26B522450019CEDF /* Thread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Thread.cpp; sourceTree = "<group>"; };
+		50461BBD26B522450019CEDF /* Thread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Thread.h; sourceTree = "<group>"; };
+		50461BBF26B522A50019CEDF /* ThreadTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThreadTypes.h; sourceTree = "<group>"; };
 		504C429024AF29AB00E69CAE /* Epyx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Epyx.h; sourceTree = "<group>"; };
 		504C429124AF29AB00E69CAE /* Ocean.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ocean.cpp; sourceTree = "<group>"; };
 		504C429224AF29AB00E69CAE /* WarpSpeed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WarpSpeed.cpp; sourceTree = "<group>"; };
@@ -1453,6 +1457,9 @@
 				50E806C025A1DE9200F08732 /* MsgQueueTypes.h */,
 				504C42F424AF29AB00E69CAE /* MsgQueue.h */,
 				504C42F124AF29AB00E69CAE /* MsgQueue.cpp */,
+				50461BBF26B522A50019CEDF /* ThreadTypes.h */,
+				50461BBD26B522450019CEDF /* Thread.h */,
+				50461BBC26B522450019CEDF /* Thread.cpp */,
 				50AE193B2633E9B0005A5898 /* RegressionTester.h */,
 				50AE193A2633E9B0005A5898 /* RegressionTester.cpp */,
 			);
@@ -1865,6 +1872,7 @@
 				50D5F88424F4FE9C0062EF13 /* SectorTableView.swift in Sources */,
 				50B165AE25B06A03009B576D /* TextureToolbox.swift in Sources */,
 				506B13C224C1C40600814BB0 /* PreferencesController.swift in Sources */,
+				50461BBE26B522450019CEDF /* Thread.cpp in Sources */,
 				50300AEE258B2C5400D261E3 /* FSDirEntry.cpp in Sources */,
 				507A49A024C8D66A00DBF984 /* GuardTableView.swift in Sources */,
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
