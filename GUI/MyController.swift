@@ -592,10 +592,12 @@ extension MyController {
             shutDown()
 
         case .MUTE_ON:
+            track("MUTE_ON")
             muted = true
             refreshStatusBar()
             
         case .MUTE_OFF:
+            track("MUTE_OFF")
             muted = false
             refreshStatusBar()
 

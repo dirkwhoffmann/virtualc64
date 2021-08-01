@@ -234,7 +234,7 @@ extension MyAppDelegate {
                 // Start playback
                 if !c.macAudio!.isRunning {
                     c.macAudio!.startPlayback()
-                    c.c64.sid.rampUpFromZero()
+                    if !c.c64.warp { c.c64.sid.rampUpFromZero() }
                 }
                 
                 // Update the visibility of all drive menus

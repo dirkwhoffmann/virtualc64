@@ -220,7 +220,8 @@ C64::getConfigItem(Option option, long id) const
 bool
 C64::configure(Option option, i64 value)
 {
-    trace(CNF_DEBUG, "configure(option: %lld, value: %lld\n", option, value);
+//    trace(CNF_DEBUG, "configure(option: %lld, value: %lld\n", option, value);
+    trace(true, "configure(option: %lld, value: %lld\n", option, value);
 
     // Propagate configuration request to all components
     bool changed = HardwareComponent::configure(option, value);
@@ -448,15 +449,21 @@ C64::threadHalt()
 void
 C64::threadWarpOff()
 {
-    // debug(RUN_DEBUG, "threadWarpOff()\n");
+    debug(WARP_DEBUG, "threadWarpOff()\n");
     HardwareComponent::setWarp(false);
+    
+    // Inform the GUI
+    msgQueue.put(MSG_WARP_OFF);
 }
 
 void
 C64::threadWarpOn()
 {
-    // debug(RUN_DEBUG, "threadWarpOn()\n");
+    debug(WARP_DEBUG, "threadWarpOn()\n");
     HardwareComponent::setWarp(true);
+
+    // Inform the GUI
+    msgQueue.put(MSG_WARP_ON);
 }
 
 void
@@ -589,17 +596,6 @@ C64::_dump(dump::Category category, std::ostream& os) const
 void
 C64::_setWarp(bool enable)
 {
-    if (enable) {
-        
-        // debug(RUN_DEBUG, "Warp on\n");
-        putMessage(MSG_WARP_ON);
-        
-    } else {
-
-        // debug(RUN_DEBUG, "Warp off\n");
-        oscillator.restart();
-        putMessage(MSG_WARP_OFF);
-    }
 }
 
 void

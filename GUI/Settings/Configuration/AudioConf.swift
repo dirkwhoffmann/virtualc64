@@ -44,63 +44,54 @@ extension ConfigurationController {
 
     @IBAction func audVol0Action(_ sender: NSSlider!) {
 
-        track()
         config.vol0 = sender.integerValue
         refresh()
     }
     
     @IBAction func audVol1Action(_ sender: NSSlider!) {
 
-        track()
         config.vol1 = sender.integerValue
         refresh()
     }
     
     @IBAction func audVol2Action(_ sender: NSSlider!) {
 
-        track()
         config.vol2 = sender.integerValue
         refresh()
     }
     
     @IBAction func audVol3Action(_ sender: NSSlider!) {
 
-        track()
         config.vol3 = sender.integerValue
         refresh()
     }
     
     @IBAction func audPan0Action(_ sender: NSSlider!) {
         
-        track()
         config.pan0 = sender.integerValue
         refresh()
     }
     
     @IBAction func audPan1Action(_ sender: NSSlider!) {
         
-        track()
         config.pan1 = sender.integerValue
         refresh()
     }
     
     @IBAction func audPan2Action(_ sender: NSSlider!) {
         
-        track()
         config.pan2 = sender.integerValue
         refresh()
     }
     
     @IBAction func audPan3Action(_ sender: NSSlider!) {
         
-        track()
         config.pan3 = sender.integerValue
         refresh()
     }
 
     @IBAction func audVolLAction(_ sender: NSSlider!) {
         
-        track()
         config.volL = sender.integerValue
         refresh()
     }
@@ -160,9 +151,7 @@ extension ConfigurationController {
     }
     
     @IBAction func audPresetAction(_ sender: NSPopUpButton!) {
-        
-        track()
-        
+                
         switch sender.selectedTag() {
         case 0: config.loadAudioDefaults(AudioDefaults.mono)
         case 1: config.loadAudioDefaults(AudioDefaults.stereo)
@@ -173,7 +162,6 @@ extension ConfigurationController {
     
     @IBAction func audDefaultsAction(_ sender: NSButton!) {
         
-        track()
         config.saveAudioUserDefaults()
     }
 }

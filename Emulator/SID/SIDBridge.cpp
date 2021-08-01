@@ -229,6 +229,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
             
         case OPT_AUDVOLL:
             
+            debug(true, "OPT_AUDVOLL: %lld\n", value);
             config.volL = std::clamp((int)value, 0, 100);
             volL.set(pow((double)config.volL / 50, 1.4));
             
@@ -471,7 +472,9 @@ SIDBridge::_dump(dump::Category category, std::ostream& os) const
         os << config.volL << std::endl;
         os << tab("Volume R");
         os << config.volR << std::endl;
-    }     
+        // os << tab("isMuted()");
+        // os << bol(isMuted()) << std::endl;
+    }
 }
 
 void
@@ -600,8 +603,6 @@ SIDBridge::getSID(isize nr)
 void
 SIDBridge::rampUp()
 {
-    if (c64.inWarpMode()) return;
-    
     volL.fadeIn(30000);
     volR.fadeIn(30000);
     
