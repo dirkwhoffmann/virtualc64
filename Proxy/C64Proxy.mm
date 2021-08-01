@@ -34,10 +34,10 @@
 @end
 
 //
-// HardwareComponent proxy
+// C64Component proxy
 //
 
-@implementation HardwareComponentProxy
+@implementation C64ComponentProxy
 
 -(C64Component *)hwc
 {

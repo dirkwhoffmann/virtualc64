@@ -85,7 +85,7 @@
 }
 @end
 
-@interface HardwareComponentProxy : Proxy {
+@interface C64ComponentProxy : Proxy {
     
 }
 @end
@@ -94,7 +94,7 @@
 // C64 proxy
 //
 
-@interface C64Proxy : HardwareComponentProxy {
+@interface C64Proxy : C64ComponentProxy {
         
     CIAProxy *cia1;
     CIAProxy *cia2;
@@ -251,7 +251,7 @@
 // CPU proxy
 //
 
-@interface CPUProxy : HardwareComponentProxy { }
+@interface CPUProxy : C64ComponentProxy { }
 
 - (CPUInfo)getInfo;
 - (NSInteger)loggedInstructions;
@@ -281,7 +281,7 @@
 // Memory proxy
 //
 
-@interface MemoryProxy : HardwareComponentProxy { }
+@interface MemoryProxy : C64ComponentProxy { }
 
 - (MemInfo)getInfo;
 
@@ -303,7 +303,7 @@
 // CIA proxy
 //
 
-@interface CIAProxy : HardwareComponentProxy { }
+@interface CIAProxy : C64ComponentProxy { }
 
 - (CIAInfo)getInfo;
 
@@ -315,7 +315,7 @@
 //
 
 
-@interface VICProxy : HardwareComponentProxy { }
+@interface VICProxy : C64ComponentProxy { }
 
 @property (readonly) NSInteger hPixels;
 @property (readonly) NSInteger vPixels;
@@ -338,7 +338,7 @@
 //
 
 
-@interface DmaDebuggerProxy : HardwareComponentProxy { }
+@interface DmaDebuggerProxy : C64ComponentProxy { }
 
 - (DmaDebuggerConfig)getConfig;
 
@@ -349,7 +349,7 @@
 // SID proxy
 //
 
-@interface SIDProxy : HardwareComponentProxy { }
+@interface SIDProxy : C64ComponentProxy { }
 
 - (SIDInfo)getInfo:(NSInteger)nr;
 - (VoiceInfo)getVoiceInfo:(NSInteger)nr voice:(NSInteger)voice;
@@ -376,7 +376,7 @@
 // Keyboard proxy
 //
 
-@interface KeyboardProxy : HardwareComponentProxy { }
+@interface KeyboardProxy : C64ComponentProxy { }
 
 - (BOOL)keyIsPressed:(NSInteger)nr;
 - (BOOL)keyIsPressedAtRow:(NSInteger)row col:(NSInteger)col;
@@ -411,7 +411,7 @@
 // ControlPort proxy
 //
 
-@interface ControlPortProxy : HardwareComponentProxy {
+@interface ControlPortProxy : C64ComponentProxy {
     
     JoystickProxy *joystick;
     MouseProxy *mouse;
@@ -427,7 +427,7 @@
 // ExpansionPort proxy
 //
 
-@interface ExpansionPortProxy : HardwareComponentProxy { }
+@interface ExpansionPortProxy : C64ComponentProxy { }
 
 - (BOOL)cartridgeAttached;
 - (CartridgeType)cartridgeType;
@@ -467,7 +467,7 @@
 // IEC bus proxy
 //
 
-@interface IECProxy : HardwareComponentProxy { }
+@interface IECProxy : C64ComponentProxy { }
 
 @property (readonly) BOOL transferring;
 
@@ -478,7 +478,7 @@
 // Drive proxy
 //
 
-@interface DriveProxy : HardwareComponentProxy {
+@interface DriveProxy : C64ComponentProxy {
     
     VIAProxy *via1;
     VIAProxy *via2;
@@ -528,7 +528,7 @@
 // VIA proxy
 //
 
-@interface VIAProxy : HardwareComponentProxy { }
+@interface VIAProxy : C64ComponentProxy { }
 
 @end
 
@@ -537,7 +537,7 @@
 // ParCable proxy
 //
 
-@interface ParCableProxy : HardwareComponentProxy { }
+@interface ParCableProxy : C64ComponentProxy { }
 
 @end
 
@@ -546,7 +546,7 @@
 // Disk proxy
 //
 
-@interface DiskProxy : HardwareComponentProxy { }
+@interface DiskProxy : C64ComponentProxy { }
     
 - (BOOL)writeProtected;
 - (void)setWriteProtected:(BOOL)b;
@@ -570,7 +570,7 @@
 // Datasette proxy
 //
 
-@interface DatasetteProxy : HardwareComponentProxy { }
+@interface DatasetteProxy : C64ComponentProxy { }
 
 @property (readonly) BOOL hasTape;
 @property (readonly) NSInteger type;
@@ -590,7 +590,7 @@
 // Mouse proxy
 //
 
-@interface MouseProxy : HardwareComponentProxy { }
+@interface MouseProxy : C64ComponentProxy { }
 
 - (BOOL)detectShakeAbs:(NSPoint)pos;
 - (BOOL)detectShakeRel:(NSPoint)pos;
@@ -605,7 +605,7 @@
 // Joystick proxy
 //
 
-@interface JoystickProxy : HardwareComponentProxy { }
+@interface JoystickProxy : C64ComponentProxy { }
 
 - (void) trigger:(GamePadAction)event;
 
