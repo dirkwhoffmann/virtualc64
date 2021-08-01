@@ -1044,10 +1044,10 @@ Gw
                                                         <menuItem title="No device" state="on" image="devNoneTemplate" tag="-1" id="EWU-Bu-oXA">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Joystick Keyset 1" image="keyset1Template" id="ziD-jl-SSW">
+                                                        <menuItem title="Joystick Keyset 1" image="devKeyset1Template" id="ziD-jl-SSW">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
-                                                        <menuItem title="Joystick Keyset 2" image="keyset2Template" tag="1" id="YfE-iu-J5c">
+                                                        <menuItem title="Joystick Keyset 2" image="devKeyset2Template" tag="1" id="YfE-iu-J5c">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem title="Mouse" image="devMouseTemplate" tag="2" id="hqu-vR-brj">
@@ -2967,8 +2967,6 @@ Gw
         <image name="devMouseTemplate" width="20" height="20"/>
         <image name="devNoneTemplate" width="20" height="20"/>
         <image name="energy" width="128" height="128"/>
-        <image name="keyset1Template" width="24" height="24"/>
-        <image name="keyset2Template" width="24" height="24"/>
         <image name="lockIcon" width="121" height="171"/>
         <image name="mega65" width="399" height="347"/>
         <image name="pref_cia" width="514" height="514"/>
