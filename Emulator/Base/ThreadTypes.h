@@ -18,32 +18,32 @@ enum class ThreadMode { Periodic, Pulsed };
 // Enumerations
 //
 
-enum_long(THREAD_STATE)
+enum_long(EXEC_STATE)
 {
-    THREAD_OFF,
-    THREAD_PAUSED,
-    THREAD_RUNNING,
-    THREAD_TERMINATED
+    EXEC_OFF,
+    EXEC_PAUSED,
+    EXEC_RUNNING,
+    EXEC_TERMINATED
 };
-typedef THREAD_STATE ThreadEmuState;
+typedef EXEC_STATE ExecutionState;
 
 #ifdef __cplusplus
-struct ThreadStateEnum : util::Reflection<ThreadStateEnum, ThreadEmuState> {
+struct ExecutionStateEnum : util::Reflection<ExecutionStateEnum, ExecutionState> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= THREAD_TERMINATED;
+        return (unsigned long)value <= EXEC_TERMINATED;
     }
 
-    static const char *prefix() { return "THREAD"; }
-    static const char *key(ThreadEmuState value)
+    static const char *prefix() { return "EXEC"; }
+    static const char *key(ExecutionState value)
     {
         switch (value) {
                 
-            case THREAD_OFF:         return "OFF";
-            case THREAD_PAUSED:      return "PAUSED";
-            case THREAD_RUNNING:     return "RUNNING";
-            case THREAD_TERMINATED:  return "TERMINATED";
+            case EXEC_OFF:         return "OFF";
+            case EXEC_PAUSED:      return "PAUSED";
+            case EXEC_RUNNING:     return "RUNNING";
+            case EXEC_TERMINATED:  return "TERMINATED";
         }
         return "???";
     }

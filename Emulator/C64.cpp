@@ -11,45 +11,6 @@
 #include "C64.h"
 #include "Checksum.h"
 #include "IO.h"
-// #include "Thread.h"
-
-//
-// Emulator thread
-//
-
-/*
-void 
-threadTerminated(void* thisC64)
-{
-    assert(thisC64 != nullptr);
-    
-    // Inform the C64 that the thread has been canceled
-    C64 *c64 = (C64 *)thisC64;
-    c64->threadDidTerminate();
-}
-
-void 
-*threadMain(void *thisC64) {
-    
-    assert(thisC64 != nullptr);
-        
-    // Inform the C64 that the thread is about to start
-    C64 *c64 = (C64 *)thisC64;
-    c64->threadWillStart();
-    
-    // Configure thread properties...
-    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, nullptr);
-    pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED, nullptr);
-    pthread_cleanup_push(threadTerminated, thisC64);
-    
-    // Enter the run loop
-    c64->runLoop();
-    
-    // Clean up and exit
-    pthread_cleanup_pop(1);
-    pthread_exit(nullptr);
-}
-*/
 
 
 //
@@ -542,7 +503,7 @@ C64::threadExecute()
             putMessage(MSG_BREAKPOINT_REACHED);
             trace(RUN_DEBUG, "BREAKPOINT_REACHED pc: %x\n", cpu.getPC0());
             clearActionFlags(ACTION_FLAG_BREAKPOINT);
-            thread.newState = THREAD_PAUSED;
+            thread.newState = EXEC_PAUSED;
         }
         
         // Did we reach a watchpoint?
@@ -550,14 +511,14 @@ C64::threadExecute()
             putMessage(MSG_WATCHPOINT_REACHED);
             trace(RUN_DEBUG, "WATCHPOINT_REACHED pc: %x\n", cpu.getPC0());
             clearActionFlags(ACTION_FLAG_WATCHPOINT);
-            thread.newState = THREAD_PAUSED;
+            thread.newState = EXEC_PAUSED;
         }
         
         // Are we requested to terminate the run loop?
         if (runLoopCtrl & ACTION_FLAG_STOP) {
             clearActionFlags(ACTION_FLAG_STOP);
             trace(RUN_DEBUG, "STOP\n");
-            thread.newState = THREAD_PAUSED;
+            thread.newState = EXEC_PAUSED;
         }
         
         // Are we requested to pull the NMI line down?
@@ -572,7 +533,7 @@ C64::threadExecute()
             putMessage(MSG_CPU_JAMMED);
             trace(RUN_DEBUG, "CPU_JAMMED\n");
             clearActionFlags(ACTION_FLAG_CPU_JAM);
-            thread.newState = THREAD_PAUSED;
+            thread.newState = EXEC_PAUSED;
         }
                     
         assert(runLoopCtrl == 0);

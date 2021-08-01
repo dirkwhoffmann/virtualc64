@@ -102,14 +102,14 @@ Thread::main()
         // Are we requested to change state?
         while (newState != state) {
             
-            if (state == THREAD_OFF && newState == THREAD_PAUSED) {
+            if (state == EXEC_OFF && newState == EXEC_PAUSED) {
                 
                 delegate.threadPowerOn();
                 state = newState;
                 break;
             }
 
-            if (state == THREAD_OFF && newState == THREAD_RUNNING) {
+            if (state == EXEC_OFF && newState == EXEC_RUNNING) {
                 
                 delegate.threadPowerOn();
                 delegate.threadRun();
@@ -117,21 +117,21 @@ Thread::main()
                 break;
             }
 
-            if (state == THREAD_PAUSED && newState == THREAD_OFF) {
+            if (state == EXEC_PAUSED && newState == EXEC_OFF) {
                 
                 delegate.threadPowerOff();
                 state = newState;
                 break;
             }
 
-            if (state == THREAD_PAUSED && newState == THREAD_RUNNING) {
+            if (state == EXEC_PAUSED && newState == EXEC_RUNNING) {
                 
                 delegate.threadRun();
                 state = newState;
                 break;
             }
 
-            if (state == THREAD_RUNNING && newState == THREAD_OFF) {
+            if (state == EXEC_RUNNING && newState == EXEC_OFF) {
                 
                 delegate.threadPause();
                 delegate.threadPowerOff();
@@ -139,14 +139,14 @@ Thread::main()
                 break;
             }
 
-            if (state == THREAD_RUNNING && newState == THREAD_PAUSED) {
+            if (state == EXEC_RUNNING && newState == EXEC_PAUSED) {
                 
                 delegate.threadPause();
                 state = newState;
                 break;
             }
             
-            if (newState == THREAD_TERMINATED) {
+            if (newState == EXEC_TERMINATED) {
                 
                 delegate.threadHalt();
                 state = newState;
@@ -172,11 +172,16 @@ Thread::setMode(ThreadMode newMode)
     if (mode == newMode) return;
     
     mode = newMode;
-    restartSyncTimer();
 }
 
 void
-Thread::powerOn()
+Thread::setWarpLock(bool value)
+{
+    warpLock = value;
+}
+
+void
+Thread::powerOn(bool blocking)
 {
     debug(RUN_DEBUG, "powerOn()\n");
 
@@ -189,13 +194,13 @@ Thread::powerOn()
     if (isPoweredOff() && delegate.readyToPowerOn()) {
         
         // Request a state change and wait until the new state has been reached
-        changeStateTo(THREAD_PAUSED);
+        changeStateTo(EXEC_PAUSED, blocking);
     }
     entered = false;
 }
 
 void
-Thread::powerOff()
+Thread::powerOff(bool blocking)
 {
     debug(RUN_DEBUG, "powerOff()\n");
 
@@ -208,13 +213,13 @@ Thread::powerOff()
     if (!isPoweredOff()) {
                 
         // Request a state change and wait until the new state has been reached
-        changeStateTo(THREAD_OFF);
+        changeStateTo(EXEC_OFF, blocking);
     }
     entered = false;
 }
 
 void
-Thread::run()
+Thread::run(bool blocking)
 {
     debug(RUN_DEBUG, "run()\n");
 
@@ -227,13 +232,13 @@ Thread::run()
     if (!isRunning() && delegate.readyToPowerOn()) {
         
         // Request a state change and wait until the new state has been reached
-        changeStateTo(THREAD_RUNNING);
+        changeStateTo(EXEC_RUNNING, blocking);
     }
     entered = false;
 }
 
 void
-Thread::pause()
+Thread::pause(bool blocking)
 {
     debug(RUN_DEBUG, "pause()\n");
 
@@ -246,30 +251,35 @@ Thread::pause()
     if (isRunning()) {
                 
         // Request a state change and wait until the new state has been reached
-        changeStateTo(THREAD_PAUSED);
+        changeStateTo(EXEC_PAUSED, blocking);
     }
     entered = false;
 }
 
 void
-Thread::warpOn()
+Thread::warpOn(bool blocking)
 {
-    newWarp = true;
-    // while (warp != newWarp) { };
+    if (!warpLock) changeWarpTo(true, blocking);
 }
 
 void
-Thread::warpOff()
+Thread::warpOff(bool blocking)
 {
-    newWarp = false;
-    // while (warp != newWarp) { };
+    if (!warpLock) changeWarpTo(false, blocking);
 }
 
 void
-Thread::changeStateTo(ThreadEmuState requestedState)
+Thread::changeStateTo(ExecutionState requestedState, bool blocking)
 {
     newState = requestedState;
-    while (state != newState) { };
+    if (blocking) while (state != newState) { };
+}
+
+void
+Thread::changeWarpTo(bool value, bool blocking)
+{
+    newWarp = value;
+    if (blocking) while (warp != newWarp) { };
 }
 
 void

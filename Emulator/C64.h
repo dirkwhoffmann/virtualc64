@@ -378,19 +378,7 @@ public:
         
     // Feeds a notification message into message queue
     void putMessage(MsgType msg, u64 data = 0) { msgQueue.put(msg, data); }
-    
-    /* The thread enter function. This (private) method is invoked when the
-     * emulator thread launches. It has to be declared public to make it
-     * accessible by the emulator thread.
-     */
-    // void threadWillStart();
-    
-    /* The thread exit function. This (private) method is invoked when the
-     * emulator thread terminates. It has to be declared public to make it
-     * accessible by the emulator thread.
-     */
-    // void threadDidTerminate();
-        
+            
     /* The C64 run loop.
      * This function is one of the most prominent ones. It implements the
      * outermost loop of the emulator and therefore the place where emulation
