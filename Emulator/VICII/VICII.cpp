@@ -21,7 +21,7 @@
 #define SPR6 0x40
 #define SPR7 0x80
 
-VICII::VICII(C64 &ref) : C64Component(ref), dmaDebugger(ref)
+VICII::VICII(C64 &ref) : SubComponent(ref), dmaDebugger(ref)
 {    
     subComponents = std::vector<HardwareComponent *> { &dmaDebugger };
 

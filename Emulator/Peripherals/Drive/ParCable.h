@@ -11,9 +11,9 @@
 
 #include "ParCableTypes.h"
 #include "DriveTypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 
-class ParCable : public C64Component {
+class ParCable : public SubComponent {
     
     //
     // Initializing

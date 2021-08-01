@@ -9,10 +9,10 @@
 
 #pragma once
 
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "DriveTypes.h"
 
-class DriveMemory : public C64Component {
+class DriveMemory : public SubComponent {
     
 private:
     

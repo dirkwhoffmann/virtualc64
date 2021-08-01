@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "C64Key.h"
 
 #include <queue>
@@ -30,7 +30,7 @@ struct KeyAction {
     KeyAction(Action a, C64Key k, u64 d) : type(a), key(k), delay(d) { };
 };
 
-class Keyboard : public C64Component {
+class Keyboard : public SubComponent {
         
 	// The keyboard matrix (indexed by row or by column)
     u8 kbMatrixRow[8] = { };
@@ -56,7 +56,7 @@ class Keyboard : public C64Component {
     
 public:
     
-    Keyboard(C64 &ref) : C64Component(ref) { }
+    Keyboard(C64 &ref) : SubComponent(ref) { }
     const char *getDescription() const override { return "Keyboard"; }
 
 private:

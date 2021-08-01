@@ -10,14 +10,14 @@
 #pragma once
 
 #include "VICIITypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "Colors.h"
 #include "Constants.h"
 #include "DmaDebugger.h"
 #include "MemoryTypes.h"
 #include "TimeDelayed.h"
 
-class VICII : public C64Component {
+class VICII : public SubComponent {
 
     friend class C64Memory;
     friend class DmaDebugger;
@@ -607,7 +607,7 @@ public:
     
 public:
     
-    VICIIInfo getInfo() { return C64Component::getInfo(info); }
+    VICIIInfo getInfo() { return SubComponent::getInfo(info); }
     SpriteInfo getSpriteInfo(int nr);
 
 private:

@@ -16,7 +16,7 @@
 // PIA (commons)
 //
 
-PIA6821::PIA6821(C64 &ref, Drive &drvref) : C64Component(ref), drive(drvref)
+PIA6821::PIA6821(C64 &ref, Drive &drvref) : SubComponent(ref), drive(drvref)
 {
     
 }

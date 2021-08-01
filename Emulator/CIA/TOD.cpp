@@ -14,7 +14,7 @@
 #include "IO.h"
 #include "Oscillator.h"
 
-TOD::TOD(C64 &ref, CIA &ciaref) : C64Component(ref), cia(ciaref)
+TOD::TOD(C64 &ref, CIA &ciaref) : SubComponent(ref), cia(ciaref)
 {
 }
 

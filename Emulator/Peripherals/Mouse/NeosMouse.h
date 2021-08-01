@@ -9,9 +9,9 @@
 
 #pragma once
 
-#include "C64Component.h"
+#include "SubComponent.h"
 
-class NeosMouse : public C64Component {
+class NeosMouse : public SubComponent {
     
     // Mouse position
     i64 mouseX;
@@ -53,7 +53,7 @@ class NeosMouse : public C64Component {
     
 public:
     
-    NeosMouse(C64 &ref) : C64Component(ref) { }
+    NeosMouse(C64 &ref) : SubComponent(ref) { }
     const char *getDescription() const override { return "NeosMouse"; }
 
 private:

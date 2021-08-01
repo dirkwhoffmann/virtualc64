@@ -9,9 +9,9 @@
 
 #pragma once
 
-#include "C64Component.h"
+#include "SubComponent.h"
 
-class CartridgeRom : public C64Component {
+class CartridgeRom : public SubComponent {
     
     friend class Cartridge;
     

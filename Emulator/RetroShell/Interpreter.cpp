@@ -12,7 +12,7 @@
 #include "RetroShell.h"
 #include <sstream>
 
-Interpreter::Interpreter(C64 &ref) : C64Component(ref)
+Interpreter::Interpreter(C64 &ref) : SubComponent(ref)
 {
     registerInstructions();
 };

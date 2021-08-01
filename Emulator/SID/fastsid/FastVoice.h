@@ -29,7 +29,7 @@
 #pragma once
 
 #include "SIDTypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 
 // Waveform types
 #define FASTSID_TRIANGLE 0x10
@@ -64,7 +64,7 @@
 #define NSEED 0x7ffff8
 
 
-class FastVoice : public C64Component {
+class FastVoice : public SubComponent {
     
     friend class FastSID;
     
@@ -171,9 +171,8 @@ class FastVoice : public C64Component {
     
 public:
  
-    using C64Component::C64Component;
+    using SubComponent::SubComponent;
     
-    // FastVoice() { };
     const char *getDescription() const override { return "FastVoice"; }
 
     static void initWaveTables();
@@ -190,8 +189,8 @@ private:
     
 public:
     
-    SIDInfo getInfo() { return C64Component::getInfo(info); }
-    VoiceInfo getVoiceInfo(unsigned nr) { return C64Component::getInfo(voiceInfo[nr]); }
+    SIDInfo getInfo() { return SubComponent::getInfo(info); }
+    VoiceInfo getVoiceInfo(unsigned nr) { return SubComponent::getInfo(voiceInfo[nr]); }
     
     
     //

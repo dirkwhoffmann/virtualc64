@@ -9,9 +9,9 @@
 
 #pragma once
 
-#include "C64Component.h"
+#include "SubComponent.h"
 
-class Mouse1350 : public C64Component {
+class Mouse1350 : public SubComponent {
     
 private:
     
@@ -41,7 +41,7 @@ private:
     
 public:
     
-    Mouse1350(C64 &ref) : C64Component(ref) { }
+    Mouse1350(C64 &ref) : SubComponent(ref) { }
     const char *getDescription() const override { return "Mouse1350"; }
     
 private:

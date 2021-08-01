@@ -13,7 +13,7 @@
 #include "IO.h"
 #include <cmath>
 
-Mouse::Mouse(C64 &ref, ControlPort& pref) : C64Component(ref), port(pref)
+Mouse::Mouse(C64 &ref, ControlPort& pref) : SubComponent(ref), port(pref)
 {
     subComponents = std::vector<HardwareComponent *> {
         

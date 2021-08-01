@@ -10,7 +10,7 @@
 #pragma once
 
 #include "DriveTypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "CPU.h"
 #include "Disk.h"
 #include "DriveMemory.h"
@@ -25,7 +25,7 @@
  * Schematics:  http://www.baltissen.org/images/1540.gif
  */
  
-class Drive : public C64Component {
+class Drive : public SubComponent {
         
     friend class DriveMemory;
     friend class VIA1;

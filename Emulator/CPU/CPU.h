@@ -10,7 +10,7 @@
 #pragma once
 
 #include "CPUTypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "CPUDebugger.h"
 #include "CPUInstructions.h"
 #include "ProcessorPort.h"
@@ -19,7 +19,7 @@
 class Memory;
 
 template <typename MEMTYPE>
-class CPU : public C64Component {
+class CPU : public SubComponent {
         
     friend class CPUDebugger;
     friend class Breakpoints;
@@ -218,7 +218,7 @@ public:
 public:
     
     // Returns the result of the latest inspection
-    CPUInfo getInfo() { return C64Component::getInfo(info); }
+    CPUInfo getInfo() { return SubComponent::getInfo(info); }
     
 private:
     

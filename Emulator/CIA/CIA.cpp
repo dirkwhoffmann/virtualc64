@@ -12,7 +12,7 @@
 #include "C64.h"
 #include "IO.h"
 
-CIA::CIA(C64 &ref) : C64Component(ref)
+CIA::CIA(C64 &ref) : SubComponent(ref)
 {    
     subComponents = std::vector<HardwareComponent *> { &tod };    
 }

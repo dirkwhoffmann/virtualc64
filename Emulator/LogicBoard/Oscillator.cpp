@@ -11,7 +11,7 @@
 #include "Oscillator.h"
 #include "C64.h"
 
-Oscillator::Oscillator(C64& ref) : C64Component(ref)
+Oscillator::Oscillator(C64& ref) : SubComponent(ref)
 {
 
 }

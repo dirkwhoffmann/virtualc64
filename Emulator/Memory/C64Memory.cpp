@@ -19,7 +19,7 @@ if (checkWatchpoints && cpu.debugger.watchpointMatches(x)) { \
     c64.signalWatchpoint(); \
 }
 
-C64Memory::C64Memory(C64 &ref) : C64Component(ref)
+C64Memory::C64Memory(C64 &ref) : SubComponent(ref)
 {    		
     memset(rom, 0, sizeof(rom));
 

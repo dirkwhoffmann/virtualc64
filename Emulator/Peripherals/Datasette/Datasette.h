@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "Constants.h"
 #include "Chrono.h"
 
@@ -27,7 +27,7 @@ public:
     util::Time delay() const;
 };
 
-class Datasette : public C64Component {
+class Datasette : public SubComponent {
     
     //
     // Tape
@@ -82,7 +82,7 @@ class Datasette : public C64Component {
     
 public:
  
-    Datasette(C64 &ref) : C64Component(ref) { };
+    Datasette(C64 &ref) : SubComponent(ref) { };
     ~Datasette();
     
     void alloc(isize capacity);

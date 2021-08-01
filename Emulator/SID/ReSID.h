@@ -10,7 +10,7 @@
 #pragma once
 
 #include "SIDTypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "SIDStreams.h"
 #include "resid/sid.h"
 
@@ -28,7 +28,7 @@
  *     - Vortex (LMan)
  */
 
-class ReSID : public C64Component {
+class ReSID : public SubComponent {
         
     // Reference to the SID bridge
     SIDBridge &bridge;
@@ -107,8 +107,8 @@ public:
     
 public:
     
-    SIDInfo getInfo() { return C64Component::getInfo(info); }
-    VoiceInfo getVoiceInfo(isize nr) { return C64Component::getInfo(voiceInfo[nr]); }
+    SIDInfo getInfo() { return SubComponent::getInfo(info); }
+    VoiceInfo getVoiceInfo(isize nr) { return SubComponent::getInfo(voiceInfo[nr]); }
     
 private:
     

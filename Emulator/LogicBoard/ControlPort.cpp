@@ -12,7 +12,7 @@
 #include "C64.h"
 #include "IO.h"
 
-ControlPort::ControlPort(C64 &ref, PortId id) : C64Component(ref), nr(id)
+ControlPort::ControlPort(C64 &ref, PortId id) : SubComponent(ref), nr(id)
 {
     assert_enum(PortId, id);
     

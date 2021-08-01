@@ -35,7 +35,7 @@
 
 #include <cmath>
 
-FastSID::FastSID(C64 &ref, SIDBridge &bridgeref, int n) : C64Component(ref), bridge(bridgeref), nr(n)
+FastSID::FastSID(C64 &ref, SIDBridge &bridgeref, int n) : SubComponent(ref), bridge(bridgeref), nr(n)
 {    
     subComponents = std::vector<HardwareComponent *> {
         

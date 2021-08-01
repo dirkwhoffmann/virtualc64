@@ -51,11 +51,10 @@ class CRTFile;
 class RomFile;
 class Snapshot;
 
-//
-// Base class for all C64 components
-//
-
-class C64Component : public HardwareComponent {
+/* This class extends the C64Component class with references to all components
+ * that are part of the C64 class.
+ */
+class SubComponent : public HardwareComponent {
 
 protected:
 
@@ -85,7 +84,7 @@ protected:
 
 public:
 
-    C64Component(C64& ref);
+    SubComponent(C64& ref);
 
     virtual bool isPoweredOff() const override;
     virtual bool isPoweredOn() const override;

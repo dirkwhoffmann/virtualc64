@@ -10,7 +10,7 @@
 #pragma once
 
 #include "CIATypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 
 inline u8 incBCD(u8 x)
 {
@@ -22,7 +22,7 @@ inline u8 incBCD(u8 x)
  * features an alarm mechanism. When the alarm time is reached, an interrupt
  * is triggered.
  */
-class TOD : public C64Component {
+class TOD : public SubComponent {
     
     friend class CIA;
     
@@ -88,7 +88,7 @@ private:
 public:
     
     // Returns the result of the most recent call to inspect()
-    TODInfo getInfo() { return C64Component::getInfo(info); }
+    TODInfo getInfo() { return SubComponent::getInfo(info); }
 
 private:
     

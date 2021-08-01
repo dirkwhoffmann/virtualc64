@@ -10,10 +10,10 @@
 #pragma once
 
 #include "OscillatorTypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "Chrono.h"
 
-class Oscillator : public C64Component {
+class Oscillator : public SubComponent {
     
     // Current configuration
     OscillatorConfig config = getDefaultConfig();

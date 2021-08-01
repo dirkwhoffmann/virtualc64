@@ -10,10 +10,10 @@
 #pragma once
 
 #include "MsgQueueTypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "RingBuffer.h"
 
-class MsgQueue : public C64Component {
+class MsgQueue : public SubComponent {
         
     // Ring buffer storing all pending messages
     util::RingBuffer<Message, 64> queue;
@@ -29,7 +29,7 @@ class MsgQueue : public C64Component {
     // Constructing
     //
     
-    using C64Component::C64Component;
+    using SubComponent::SubComponent;
     
     
     //

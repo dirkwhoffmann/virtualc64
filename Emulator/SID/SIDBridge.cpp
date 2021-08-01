@@ -15,7 +15,7 @@
 #include <algorithm>
 #include <cmath>
 
-SIDBridge::SIDBridge(C64 &ref) : C64Component(ref)
+SIDBridge::SIDBridge(C64 &ref) : SubComponent(ref)
 {        
     subComponents = std::vector<HardwareComponent *> {
         

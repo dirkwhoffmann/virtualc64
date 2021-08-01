@@ -12,7 +12,7 @@
 #include "C64.h"
 #include "IO.h"
 
-Joystick::Joystick(C64& ref, ControlPort& pref) : C64Component(ref), port(pref)
+Joystick::Joystick(C64& ref, ControlPort& pref) : SubComponent(ref), port(pref)
 {
 };
 

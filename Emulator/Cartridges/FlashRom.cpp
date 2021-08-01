@@ -36,7 +36,7 @@ FlashRom::getStateAsString(FlashState state)
     }
 }
 
-FlashRom::FlashRom(C64 &ref) : C64Component(ref)
+FlashRom::FlashRom(C64 &ref) : SubComponent(ref)
 {
     state = FLASH_READ;
     baseState = FLASH_READ;

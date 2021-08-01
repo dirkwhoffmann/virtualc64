@@ -11,7 +11,7 @@
 #include "DmaDebugger.h"
 #include "C64.h"
 
-DmaDebugger::DmaDebugger(C64 &ref) : C64Component(ref)
+DmaDebugger::DmaDebugger(C64 &ref) : SubComponent(ref)
 {
 }
 

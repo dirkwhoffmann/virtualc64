@@ -192,7 +192,7 @@ Disk::makeWithCollection(C64 &ref, AnyCollection &collection)
     return disk;
 }
 
-Disk::Disk(C64 &ref) : C64Component(ref)
+Disk::Disk(C64 &ref) : SubComponent(ref)
 {    
     /* Create the bit expansion table. Note that this table expects a Little
      * Endian architecture to work. If you compile the emulator on a Big Endian

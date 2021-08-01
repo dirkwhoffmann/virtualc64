@@ -10,7 +10,7 @@
 #pragma once
 
 // General
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "MsgQueue.h"
 #include "Serialization.h"
 #include "Thread.h"

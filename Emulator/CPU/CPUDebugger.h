@@ -10,7 +10,7 @@
 #pragma once
 
 #include "CPUTypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 
 // Base structure for a single breakpoint or watchpoint
 struct Guard {
@@ -136,7 +136,7 @@ public:
     void setNeedsCheck(bool value) override;
 };
 
-class CPUDebugger : public C64Component {
+class CPUDebugger : public SubComponent {
     
     friend class CPU<C64Memory>;
     
@@ -188,7 +188,7 @@ public:
     
 public:
     
-    CPUDebugger(C64 &ref) : C64Component(ref) { };
+    CPUDebugger(C64 &ref) : SubComponent(ref) { };
 
     const char *getDescription() const override { return "CPUDebugger"; }
 

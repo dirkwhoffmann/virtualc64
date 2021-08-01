@@ -13,7 +13,7 @@
 #include "Checksum.h"
 #include "IO.h"
 
-DriveMemory::DriveMemory(C64 &ref, Drive &dref) : C64Component(ref), drive(dref)
+DriveMemory::DriveMemory(C64 &ref, Drive &dref) : SubComponent(ref), drive(dref)
 {
     updateBankMap();
 }

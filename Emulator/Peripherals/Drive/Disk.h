@@ -11,10 +11,10 @@
 
 #include "DiskTypes.h"
 #include "FSTypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "PETName.h"
 
-class Disk : public C64Component {
+class Disk : public SubComponent {
     
 public:
     

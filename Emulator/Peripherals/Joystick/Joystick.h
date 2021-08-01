@@ -10,9 +10,9 @@
 #pragma once
 
 #include "JoystickTypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 
-class Joystick : public C64Component {
+class Joystick : public SubComponent {
     
     // Reference to the control port this device belongs to
     ControlPort &port;

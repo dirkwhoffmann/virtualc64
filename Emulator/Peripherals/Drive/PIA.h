@@ -9,9 +9,9 @@
 
 #pragma once
 
-#include "C64Component.h"
+#include "SubComponent.h"
 
-class PIA6821 : public C64Component {
+class PIA6821 : public SubComponent {
     
     friend class Drive;
     friend class ParCable;

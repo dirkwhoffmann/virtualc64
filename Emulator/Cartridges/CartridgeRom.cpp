@@ -10,7 +10,7 @@
 #include "config.h"
 #include "CartridgeRom.h"
 
-CartridgeRom::CartridgeRom(C64 &ref) : C64Component(ref)
+CartridgeRom::CartridgeRom(C64 &ref) : SubComponent(ref)
 {
 }
 

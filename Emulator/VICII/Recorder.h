@@ -9,10 +9,10 @@
 
 #pragma once
 
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "Chrono.h"
 
-class Recorder : public C64Component {
+class Recorder : public SubComponent {
 
     //
     // Constants
@@ -84,8 +84,7 @@ class Recorder : public C64Component {
     
 public:
     
-    using C64Component::C64Component;
-    // Recorder(C64& ref);
+    using SubComponent::SubComponent;
     
     const char *getDescription() const override { return "Recorder"; }
 

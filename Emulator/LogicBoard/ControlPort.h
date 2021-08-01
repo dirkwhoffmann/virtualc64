@@ -10,11 +10,11 @@
 #pragma once
 
 #include "ControlPortTypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "Joystick.h"
 #include "Mouse.h"
 
-class ControlPort : public C64Component {
+class ControlPort : public SubComponent {
 
     friend class Mouse;
     friend class Joystick;

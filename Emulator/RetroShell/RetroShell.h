@@ -9,13 +9,13 @@
 
 #pragma once
 
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "Interpreter.h"
 #include "IO.h"
 #include <sstream>
 #include <iostream>
 
-class RetroShell : public C64Component {
+class RetroShell : public SubComponent {
 
     // Interpreter for commands typed into the console window
     Interpreter interpreter;

@@ -12,7 +12,7 @@
 #include "C64.h"
 #include "IO.h"
 
-ParCable::ParCable(C64& ref) : C64Component(ref)
+ParCable::ParCable(C64& ref) : SubComponent(ref)
 {
 };
 

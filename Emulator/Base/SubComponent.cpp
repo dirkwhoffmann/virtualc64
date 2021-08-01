@@ -8,10 +8,10 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "C64.h"
 
-C64Component::C64Component(C64& ref) :
+SubComponent::SubComponent(C64& ref) :
 
 c64(ref),
 cia1(ref.cia1),
@@ -38,43 +38,43 @@ vic(ref.vic)
 };
 
 bool
-C64Component::isPoweredOff() const
+SubComponent::isPoweredOff() const
 {
     return c64.isPoweredOff();
 }
 
 bool
-C64Component::isPoweredOn() const
+SubComponent::isPoweredOn() const
 {
     return c64.isPoweredOn();
 }
 
 bool
-C64Component::isPaused() const
+SubComponent::isPaused() const
 {
     return c64.isPaused();
 }
 
 bool
-C64Component::isRunning() const
+SubComponent::isRunning() const
 {
     return c64.isRunning();
 }
 
 void
-C64Component::suspend()
+SubComponent::suspend()
 {
     c64.suspend();
 }
 
 void
-C64Component::resume()
+SubComponent::resume()
 {
     c64.resume();
 }
 
 void
-C64Component::prefix() const
+SubComponent::prefix() const
 {
     c64.prefix();
 }

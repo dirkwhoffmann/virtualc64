@@ -14,7 +14,7 @@
 
 #include <sstream>
 
-RetroShell::RetroShell(C64& ref) : C64Component(ref), interpreter(ref)
+RetroShell::RetroShell(C64& ref) : SubComponent(ref), interpreter(ref)
 {
     // Initialize the text storage
     storage.push_back("");

@@ -11,7 +11,7 @@
 
 #include "MouseTypes.h"
 #include "JoystickTypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "Chrono.h"
 #include "Mouse1350.h"
 #include "Mouse1351.h"
@@ -42,7 +42,7 @@ public:
     bool isShakingRel(double dx);
 };
 
-class Mouse : public C64Component {
+class Mouse : public SubComponent {
     
     // Reference to the control port this device belongs to
     ControlPort &port;

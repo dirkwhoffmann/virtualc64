@@ -10,9 +10,9 @@
 #pragma once
 
 #include "MemoryTypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 
-class C64Memory : public C64Component {
+class C64Memory : public SubComponent {
 
     // Current configuration
     MemConfig config = getDefaultConfig();
@@ -93,7 +93,7 @@ public:
     
 public:
     
-    MemInfo getInfo() { return C64Component::getInfo(info); }
+    MemInfo getInfo() { return SubComponent::getInfo(info); }
     
 private:
     

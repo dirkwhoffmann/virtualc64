@@ -140,7 +140,7 @@ Cartridge::makeWithCRTFile(C64 &c64, CRTFile &file)
     return cart;
 }
 
-Cartridge::Cartridge(C64 &ref) : C64Component(ref)
+Cartridge::Cartridge(C64 &ref) : SubComponent(ref)
 {
     trace(CRT_DEBUG, "Creating cartridge at address %p...\n", this);
     

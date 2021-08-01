@@ -13,7 +13,7 @@
 #include "IO.h"
 
 template <typename M>
-CPU<M>::CPU(C64& ref, M& memref) : C64Component(ref), mem(memref)
+CPU<M>::CPU(C64& ref, M& memref) : SubComponent(ref), mem(memref)
 {
     subComponents = std::vector<HardwareComponent *> {
         

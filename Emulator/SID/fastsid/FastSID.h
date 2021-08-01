@@ -28,12 +28,12 @@
 
 #pragma once
 
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "FastVoice.h"
 #include "SIDStreams.h"
 #include "Constants.h"
 
-class FastSID : public C64Component {
+class FastSID : public SubComponent {
         
     // Reference to the SID bridge
     SIDBridge &bridge;

@@ -10,10 +10,10 @@
 #pragma once
 
 #include "DmaDebuggerTypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "Colors.h"
 
-class DmaDebugger : public C64Component {
+class DmaDebugger : public SubComponent {
 
     friend class VICII;
     

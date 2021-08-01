@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "SIDTypes.h"
 #include "Constants.h"
 #include "Volume.h"
@@ -40,7 +40,7 @@
  *           -------------------------------------------------
  */
 
-class SIDBridge : public C64Component {
+class SIDBridge : public SubComponent {
 
     friend C64Memory;
 

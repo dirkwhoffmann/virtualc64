@@ -10,7 +10,7 @@
 #pragma once
 
 #include "ExpansionPortTypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "Cartridge.h"
 
 /*
@@ -29,7 +29,7 @@
  *  As well read the Commodore 64 Programmers Reference Guide pages 260-267.
  */
 
-class ExpansionPort : public C64Component {
+class ExpansionPort : public SubComponent {
     
     // Attached cartridge
     std::unique_ptr<Cartridge> cartridge;
@@ -48,7 +48,7 @@ class ExpansionPort : public C64Component {
     
 public:
     
-    ExpansionPort(C64 &ref) : C64Component(ref) { };
+    ExpansionPort(C64 &ref) : SubComponent(ref) { };
     ~ExpansionPort();
     const char *getDescription() const override { return "ExpansionPort"; }
 

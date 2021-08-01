@@ -10,11 +10,11 @@
 #pragma once
 
 #include "CartridgeTypes.h"
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "CartridgeRom.h"
 #include "CRTFile.h"
 
-class Cartridge : public C64Component {
+class Cartridge : public SubComponent {
     
     //
     // Constants

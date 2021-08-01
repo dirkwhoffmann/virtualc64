@@ -9,9 +9,9 @@
 
 #pragma once
 
-#include "C64Component.h"
+#include "SubComponent.h"
 
-class IEC : public C64Component {
+class IEC : public SubComponent {
 
 public:
     
@@ -62,7 +62,7 @@ private:
     
 public:
         
-    IEC(C64 &ref) : C64Component(ref) { };
+    IEC(C64 &ref) : SubComponent(ref) { };
     const char *getDescription() const override { return "IEC"; }
     
 private:

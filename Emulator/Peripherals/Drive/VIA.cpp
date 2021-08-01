@@ -16,7 +16,7 @@
 // VIA 6522 (Commons)
 //
 
-VIA6522::VIA6522(C64 &ref, Drive &drvref) : C64Component(ref), drive(drvref)
+VIA6522::VIA6522(C64 &ref, Drive &drvref) : SubComponent(ref), drive(drvref)
 {
 }
 

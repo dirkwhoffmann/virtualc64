@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "C64Component.h"
+#include "SubComponent.h"
 #include "CartridgeTypes.h"
 
 /* This class implements a Flash Rom module of type Am29F040B. Flash Roms
@@ -19,7 +19,7 @@
  *       29F040.pdf : Data sheet published by AMD
  *   flash040core.c : Part of the VICE emulator
  */
-class FlashRom : public C64Component {
+class FlashRom : public SubComponent {
             
     // Number of sectors in this Flash Rom
     static const usize numSectors = 8;
