@@ -32,8 +32,10 @@ Thread::execute <ThreadMode::Periodic> ()
     auto now = util::Time::now();
     
     // Call the execution function
+    loadClock.go();
     delegate.threadExecute();
-
+    loadClock.stop();
+    
     // Only proceed if we're not running in warp mode
     if (warp) return;
         
@@ -72,7 +74,9 @@ template <> void
 Thread::execute <ThreadMode::Pulsed> ()
 {
     // Call the execution function
+    loadClock.go();
     delegate.threadExecute();
+    loadClock.stop();
     
     // Wait for the next pulse
     if (!warp) waitForCondition();
@@ -83,10 +87,10 @@ Thread::main()
 {
     debug(RUN_DEBUG, "main()\n");
           
-    while (1) {
-                
+    while (++loops) {
+           
         if (isRunning()) {
-            
+                        
             switch (mode) {
                 case ThreadMode::Periodic: execute<ThreadMode::Periodic>(); break;
                 case ThreadMode::Pulsed: execute<ThreadMode::Pulsed>(); break;
@@ -158,6 +162,20 @@ Thread::main()
             // Invalid state transition
             assert(false);
             break;
+        }
+        
+        // Compute the CPU load once in a while
+        if (loops % 32 == 0) {
+            
+            auto used  = loadClock.getElapsedTime().asSeconds();
+            auto total = nonstopClock.getElapsedTime().asSeconds();
+            
+            cpuLoad = used / total;
+            
+            loadClock.restart();
+            nonstopClock.restart();
+            
+            // printf("CPU load = %f\n", cpuLoad);
         }
     }
 }

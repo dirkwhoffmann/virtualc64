@@ -26,20 +26,20 @@ class Oscillator : public SubComponent {
      */
     
     // C64 clock
-    Cycle clockBase = 0;
+    // Cycle clockBase = 0;
 
     // Counts the number of calls to 'synchronize'
-    isize syncCounter = 0;
+    // isize syncCounter = 0;
     
     // Kernel clock
-    util::Time timeBase;
+    // util::Time timeBase;
 
     // The current CPU load (%)
-    float cpuLoad = 0.0;
+    // float cpuLoad = 0.0;
     
     // Clocks for measuring the CPU load
-    util::Clock nonstopClock;
-    util::Clock loadClock;
+    // util::Clock nonstopClock;
+    // util::Clock loadClock;
 
     
     //
@@ -80,7 +80,6 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-
     }
     
     template <class T>
@@ -100,10 +99,10 @@ private:
 public:
     
     // Restarts the synchronization timer
-    void restart();
+    // void restart();
 
     // Puts the emulator thread to rest
-    void synchronize();
+    // oid synchronize();
     
     // Returns the number of CPU cycles between two TOD increments
     Cycle todTickDelay(u8 cra);

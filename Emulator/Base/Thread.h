@@ -130,6 +130,16 @@ class Thread : public C64Object {
     // Guard for securing non-reentrant functions (for debugging only)
     bool entered = false;
     
+    // Loop counter
+    isize loops = 0;
+
+    // The current CPU load (%)
+    double cpuLoad = 0.0;
+    
+    // Clocks for measuring the CPU load
+    util::Clock nonstopClock;
+    util::Clock loadClock;
+
     
     //
     // Initializing
@@ -165,6 +175,14 @@ public:
     void setSyncDelay(util::Time newDelay);
     void setMode(ThreadMode newMode);
     void setWarpLock(bool value);
+    
+    
+    //
+    // Analyzing
+    //
+    
+    // Returns the current CPU load
+    double getCpuLoad() { return cpuLoad; }
     
     
     //

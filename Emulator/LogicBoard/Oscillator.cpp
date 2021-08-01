@@ -82,13 +82,15 @@ Oscillator::setConfigItem(Option option, i64 value)
     }
 }
 
+/*
 void
 Oscillator::restart()
 {
     clockBase = cpu.cycle;
     timeBase = util::Time::now();
 }
-
+*/
+/*
 void
 Oscillator::synchronize()
 {
@@ -140,6 +142,7 @@ Oscillator::synchronize()
         nonstopClock.restart();
     }
 }
+*/
 
 Cycle
 Oscillator::todTickDelay(u8 cra)
