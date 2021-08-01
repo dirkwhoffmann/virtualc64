@@ -546,134 +546,27 @@ C64::threadWarpOn()
 }
 
 void
-C64::powerOn()
-{
-    debug(RUN_DEBUG, "powerOn()\n");
-    thread.powerOn();
-
-    /*
-    // Never call this function inside the emulator thread
-    assert(!isEmulatorThread());
-
-    if (isPoweredOff() && isReady()) {
-        
-        assert(p == (pthread_t)0);
-        
-        // Perform a reset
-        hardReset();
-                
-        // Power on all subcomponents
-        HardwareComponent::powerOn();
-        
-        // Update the recorded debug information
-        inspect();
-
-        // Inform the GUI
-        msgQueue.put(MSG_POWER_ON);
-    }
-    */
-}
-
-void
 C64::_powerOn()
 {
-    state = EMULATOR_STATE_PAUSED;
-}
-
-void
-C64::powerOff()
-{
-    debug(RUN_DEBUG, "powerOff()\n");
-    thread.powerOff();
-
-    /*
-    // Never call this function inside the emulator thread
-    assert(!isEmulatorThread());
-
-    if (!isPoweredOff()) {
-
-        // Pause if needed
-        pause(); assert(!isRunning());
-        
-        // Power off all subcomponents
-        HardwareComponent::powerOff();
-
-        // Update the recorded debug information
-        inspect();
-        
-        // Inform the GUI
-        msgQueue.put(MSG_POWER_OFF);
-    }
-    */
+    // state = EMULATOR_STATE_PAUSED;
 }
 
 void
 C64::_powerOff()
 {
-    state = EMULATOR_STATE_OFF;
-}
-
-void
-C64::run()
-{
-    debug(RUN_DEBUG, "run()\n");
-    thread.run();
-
-    /*
-    // Never call this function inside the emulator thread
-    assert(!isEmulatorThread());
-
-    if (!isRunning() && isReady()) {
-        
-        assert(p == (pthread_t)0);
-
-        // Power on if needed
-        powerOn(); assert(isPoweredOn());
-
-        // Launch all subcomponents
-        HardwareComponent::run();
-
-        // Create the emulator thread
-        pthread_create(&p, nullptr, threadMain, (void *)this);
-    }
-    */
+    // state = EMULATOR_STATE_OFF;
 }
 
 void
 C64::_run()
 {
-    state = EMULATOR_STATE_RUNNING;
-}
-
-void
-C64::pause()
-{
-    debug(RUN_DEBUG, "pause()\n");
-    thread.pause();
-
-    /*
-    // Never call this function inside the emulator thread
-    assert(!isEmulatorThread());
-    
-    if (isRunning()) {
-                
-        // Ask the emulator thread to terminate
-        signalStop();
-        
-        // Wait until the emulator thread has terminated
-        pthread_join(p, nullptr);
-        
-        // Assure the emulator is no longer running
-        assert(state == EMULATOR_STATE_PAUSED);
-        assert(p == (pthread_t)0);
-    }
-    */
+    // state = EMULATOR_STATE_RUNNING;
 }
 
 void
 C64::_pause()
 {
-    state = EMULATOR_STATE_PAUSED;
+    // state = EMULATOR_STATE_PAUSED;
 }
 
 void
@@ -800,22 +693,6 @@ C64::isReady(ErrorCode *err) const
 
 /*
 void
-C64::threadWillStart()
-{
-    trace(RUN_DEBUG, "Emulator thread started\n");
-}
-
-void
-C64::threadDidTerminate()
-{
-    trace(RUN_DEBUG, "Emulator thread terminated\n");
-    
-    // Trash the thread pointer
-    p = (pthread_t)0;
-}
-*/
-
-void
 C64::oldRunLoop()
 {
     trace(RUN_DEBUG, "runLoop()\n");
@@ -910,6 +787,7 @@ C64::oldRunLoop()
     // Inform the GUI
     msgQueue.put(MSG_PAUSE);
 }
+*/
 
 void
 C64::stopAndGo()

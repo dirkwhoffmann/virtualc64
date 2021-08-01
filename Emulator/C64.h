@@ -159,10 +159,7 @@ public:
     //
     
 private:
-    
-    // The current emulator state
-    EmulatorState state = EMULATOR_STATE_OFF;
-    
+        
     /* Run loop control. This variable is checked at the end of each runloop
      * iteration. Most of the time, the variable is 0 which causes the runloop
      * to repeat. A value greater than 0 means that one or more runloop control
@@ -173,27 +170,11 @@ private:
         
     // The invocation counter for implementing suspend() / resume()
     isize suspendCounter = 0;
-    
-    // The emulator thread
-    // pthread_t p = (pthread_t)0;
-    
+        
 
     //
     // Operation modes
     //
-    
-    /* Indicates if the emulator should be executed in warp mode. To speed up
-     * emulation (e.g., during disk accesses), the virtual hardware may be put
-     * into warp mode. In this mode, the emulation thread is no longer paused
-     * to match the target frequency and runs as fast as possible.
-     */
-    // bool warp = false;
-    
-    /* Indicates if the current warp mode is locked. By default, this variable
-     * false. It is set to true by the regression tester to prevent the GUI
-     * from disabling warp mode during an ongoing regression test.
-     */
-    // bool warpLock = false;
     
     /* Indicates whether C64 is running in ultimax mode. Ultimax mode can be
      * enabled by external cartridges by pulling game line low and keeping
@@ -326,15 +307,15 @@ private:
     
 public:
 
-    bool isPoweredOff() const override { return state == EMULATOR_STATE_OFF; }
-    bool isPoweredOn() const override { return state != EMULATOR_STATE_OFF; }
-    bool isPaused() const override { return state == EMULATOR_STATE_PAUSED; }
-    bool isRunning() const override { return state == EMULATOR_STATE_RUNNING; }
+    bool isPoweredOff() const override { return thread.isPoweredOff(); }
+    bool isPoweredOn() const override { return thread.isPoweredOn(); }
+    bool isPaused() const override { return thread.isPaused(); }
+    bool isRunning() const override { return thread.isRunning(); }
 
-    void powerOn();
-    void powerOff();
-    void run();
-    void pause();
+    void powerOn() { thread.powerOn(); }
+    void powerOff() { thread.powerOff(); }
+    void run() { thread.run(); }
+    void pause() { thread.pause(); }
     void shutdown();
     
     void setWarp(bool enable) { enable ? thread.warpOn() : thread.warpOff(); }
@@ -354,16 +335,8 @@ private:
     void _setWarp(bool enable) override;
     void _setDebug(bool enable) override;
 
-
-    //
-    // Working with the emulator thread
-    //
-
 public:
     
-    // Returns true if the currently executed thread is the emulator thread
-    // bool isEmulatorThread() { return pthread_self() == p; }
-
     /* Returns true if a call to powerOn() will be successful.
      * It returns false, e.g., if no Rom is installed.
      */
@@ -378,23 +351,13 @@ public:
         
     // Feeds a notification message into message queue
     void putMessage(MsgType msg, u64 data = 0) { msgQueue.put(msg, data); }
-            
-    /* The C64 run loop.
-     * This function is one of the most prominent ones. It implements the
-     * outermost loop of the emulator and therefore the place where emulation
-     * starts. If you want to understand how the emulator works, this function
-     * should be your starting point.
-     */
-    void oldRunLoop();
-    
-    /* Runs or pauses the emulator.
-     */
+                
+    // Runs or pauses the emulator
     void stopAndGo();
 
-    /* Executes a single instruction.
-     * This function is used for single-stepping through the code inside the
-     * debugger. It starts the execution thread and terminates it after the
-     * next instruction has been executed.
+    /* Executes a single instruction. This function is used for single-stepping
+     * through the code inside the debugger. It starts the execution thread and
+     * terminates it after the next instruction has been executed.
      */
     void stepInto();
     
@@ -561,7 +524,7 @@ public:
     bool flash(const FSDevice &fs, isize item);
     
     //
-    // Set and query ultimax mode
+    // Handling ultimax mode
     //
     
 public:
