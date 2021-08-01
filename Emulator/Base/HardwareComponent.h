@@ -183,35 +183,10 @@ public:
     
     
     //
-    // Controlling
+    // Controlling the state
     //
     
 public:
-    
-    /* State model. At any time, a component is in one of three states:
-     *
-     *        Off: The Amiga is turned off
-     *     Paused: The Amiga is turned on, but there is no emulator thread
-     *    Running: The Amiga is turned on and the emulator thread running
-     *
-     *          -----------------------------------------------
-     *         |                     run()                     |
-     *         |                                               V
-     *     ---------   powerOn()   ---------     run()     ---------
-     *    |   Off   |------------>| Paused  |------------>| Running |
-     *    |         |<------------|         |<------------|         |
-     *     ---------   powerOff()  ---------    pause()    ---------
-     *         ^                                               |
-     *         |                   powerOff()                  |
-     *          -----------------------------------------------
-     *
-     *     isPoweredOff()         isPaused()          isRunning()
-     * |-------------------||-------------------||-------------------|
-     *                      |----------------------------------------|
-     *                                     isPoweredOn()
-     *
-     * Additional component flags: warp (on / off), debug (on / off)
-     */
     
     virtual bool isPoweredOff() const = 0;
     virtual bool isPoweredOn() const = 0;
@@ -220,48 +195,14 @@ public:
     
 protected:
     
-    /* powerOn() powers the component on.
-     *
-     * current   | next      | action
-     * ------------------------------------------------------------------------
-     * off       | paused    | _powerOn() on each subcomponent
-     * paused    | paused    | none
-     * running   | running   | none
-     */
     void powerOn();
-    virtual void _powerOn() { }
-    
-    /* powerOff() powers the component off.
-     *
-     * current   | next      | action
-     * ------------------------------------------------------------------------
-     * off       | off       | none
-     * paused    | off       | _powerOff() on each subcomponent
-     * running   | off       | pause(), _powerOff() on each subcomponent
-     */
     void powerOff();
-    virtual void _powerOff() { }
-    
-    /* run() puts the component in 'running' state.
-     *
-     * current   | next      | action
-     * ------------------------------------------------------------------------
-     * off       | running   | powerOn(), _run() on each subcomponent
-     * paused    | running   | _run() on each subcomponent
-     * running   | running   | none
-     */
     void run();
-    virtual void _run() { }
-    
-    /* pause() puts the component in 'paused' state.
-     *
-     * current   | next      | action
-     * ------------------------------------------------------------------------
-     * off       | off       | none
-     * paused    | paused    | none
-     * running   | paused    | _pause() on each subcomponent
-     */
     void pause();
+
+    virtual void _powerOn() { }
+    virtual void _powerOff() { }
+    virtual void _run() { }
     virtual void _pause() { }
     
     // Switches warp mode on or off

@@ -272,7 +272,7 @@ public:
 
 public:
     
-    CIAInfo getInfo() { return HardwareComponent::getInfo(info); }
+    CIAInfo getInfo() { return C64Component::getInfo(info); }
     
 protected:
     

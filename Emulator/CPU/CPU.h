@@ -218,7 +218,7 @@ public:
 public:
     
     // Returns the result of the latest inspection
-    CPUInfo getInfo() { return HardwareComponent::getInfo(info); }
+    CPUInfo getInfo() { return C64Component::getInfo(info); }
     
 private:
     

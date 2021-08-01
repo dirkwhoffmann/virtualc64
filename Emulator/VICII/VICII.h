@@ -607,7 +607,7 @@ public:
     
 public:
     
-    VICIIInfo getInfo() { return HardwareComponent::getInfo(info); }
+    VICIIInfo getInfo() { return C64Component::getInfo(info); }
     SpriteInfo getSpriteInfo(int nr);
 
 private:

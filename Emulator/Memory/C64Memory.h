@@ -93,7 +93,7 @@ public:
     
 public:
     
-    MemInfo getInfo() { return HardwareComponent::getInfo(info); }
+    MemInfo getInfo() { return C64Component::getInfo(info); }
     
 private:
     

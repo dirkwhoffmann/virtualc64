@@ -12,8 +12,8 @@
 #include "Error.h"
 
 /* Base class for all C64 objects. This class contains a textual description
- * of the object and offers various functions for printing debug messages and
- * warnings.
+ * of the object and offers several functions for printing debug and warning
+ * messages.
  */
 class C64Object {
                              

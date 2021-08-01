@@ -190,8 +190,8 @@ private:
     
 public:
     
-    SIDInfo getInfo() { return HardwareComponent::getInfo(info); }
-    VoiceInfo getVoiceInfo(unsigned nr) { return HardwareComponent::getInfo(voiceInfo[nr]); }
+    SIDInfo getInfo() { return C64Component::getInfo(info); }
+    VoiceInfo getVoiceInfo(unsigned nr) { return C64Component::getInfo(voiceInfo[nr]); }
     
     
     //

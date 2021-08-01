@@ -88,7 +88,7 @@ private:
 public:
     
     // Returns the result of the most recent call to inspect()
-    TODInfo getInfo() { return HardwareComponent::getInfo(info); }
+    TODInfo getInfo() { return C64Component::getInfo(info); }
 
 private:
     
