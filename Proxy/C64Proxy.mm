@@ -2119,7 +2119,7 @@
 
 - (void)setWarp:(BOOL)enable;
 {
-    [self c64]->setWarp(enable);
+    enable ? [self c64]->warpOn() : [self c64]->warpOff();
 }
 
 - (BOOL)debugMode
@@ -2129,7 +2129,7 @@
 
 - (void)setDebugMode:(BOOL)enable
 {
-    [self c64]->setDebug(enable);
+    enable ? [self c64]->debugOn() : [self c64]->debugOff();
 }
 
 - (InspectionTarget)inspectionTarget

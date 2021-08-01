@@ -151,6 +151,36 @@ C64Component::pause()
 }
 
 void
+C64Component::warpOn()
+{
+    for (auto c : subComponents) { c->warpOn(); }
+    _warpOn();
+}
+
+void
+C64Component::warpOff()
+{
+    _warpOff();
+    for (auto c : subComponents) { c->warpOff(); }
+}
+
+void
+C64Component::debugOn()
+{
+    debugMode = true;
+    for (auto c : subComponents) { c->debugOn(); }
+    _debugOn();
+}
+
+void
+C64Component::debugOff()
+{
+    debugMode = false;
+    _debugOff();
+    for (auto c : subComponents) { c->debugOff(); }
+}
+
+void
 C64Component::inspect()
 {
     // Inspect all subcomponents
@@ -183,32 +213,4 @@ void
 C64Component::dump() const
 {
     dump((dump::Category)(-1));
-}
-
-void
-C64Component::setWarp(bool enable)
-{
-     // Enable or disable warp mode for all subcomponents
-     for (C64Component *c : subComponents) {
-         c->setWarp(enable);
-     }
-
-     // Enable warp mode for this component
-     _setWarp(enable);
-}
-
-void
-C64Component::setDebug(bool enable)
-{
-    if (debugMode == enable) return;
-    
-    debugMode = enable;
-
-     // Enable or disable debug mode for all subcomponents
-     for (C64Component *c : subComponents) {
-         c->setDebug(enable);
-     }
-
-     // Enable debug mode for this component
-     _setDebug(enable);
 }

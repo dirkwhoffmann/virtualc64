@@ -19,10 +19,10 @@
 #include <iomanip>
 
 /* This class defines the base functionality of all hardware components. It
- * comprises functions for initializing, configuring, and serializing the
- * emulator, as well as functions for powering up and down, running and
- * pausing. Furthermore, a 'synchronized' macro is provided to prevent mutual
- * execution of certain code components.
+ * comprises functions for initializing, configuring, and serializing, as well
+ * as functions for powering up and down, running and pausing. Furthermore,
+ * a 'synchronized' macro is provided to prevent mutual execution of certain
+ * code sections.
  */
 
 #define synchronized \
@@ -44,16 +44,12 @@ enum Category : usize {
 }
     
 class C64Component : public C64Object {
+        
+protected:
     
-    friend class C64;
-    
-public:
-
     // Sub components
     std::vector<C64Component *> subComponents;
-    
-protected:
-        
+            
     /* Indicates if the emulator should be executed in debug mode. Debug mode
      * is enabled when the GUI debugger is opend and disabled when the GUI
      * debugger is closed. In debug mode, several time-consuming tasks are
@@ -78,10 +74,9 @@ public:
     virtual ~C64Component();
     
     /* Initializes the component and it's subcomponents. The initialization
-     * procedure is initiated exactly once, in the constructor of the C64
-     * class. Some subcomponents implement the delegation method _initialize()
-     * to finalize their initialization, e.g., by setting up referecens that
-     * did not exist when they were constructed.
+     * procedure is initiated once, in the constructor of the C64 class. By
+     * default, a component enters it's initial configuration. Custom actions
+     * can be performed by implementing the _initialize() delegation function.
      */
     void initialize();
     virtual void _initialize() { resetConfig(); }
@@ -183,7 +178,7 @@ public:
     
     
     //
-    // Controlling the state
+    // Controlling the state (see Thread class for details)
     //
     
 public:
@@ -199,19 +194,19 @@ protected:
     void powerOff();
     void run();
     void pause();
-
+    void warpOn();
+    void warpOff();
+    void debugOn();
+    void debugOff();
+    
     virtual void _powerOn() { }
     virtual void _powerOff() { }
     virtual void _run() { }
     virtual void _pause() { }
-    
-    // Switches warp mode on or off
-    void setWarp(bool enable);
-    virtual void _setWarp(bool enable) { }
-    
-    // Switches debug mode on or off
-    void setDebug(bool enable);
-    virtual void _setDebug(bool enable) { }
+    virtual void _warpOn() { }
+    virtual void _warpOff() { }
+    virtual void _debugOn() { }
+    virtual void _debugOff() { }
 
     
     //

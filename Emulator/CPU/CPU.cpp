@@ -67,10 +67,16 @@ CPU<M>::_inspect()
 }
 
 template <typename M> void
-CPU<M>::_setDebug(bool enable)
+CPU<M>::_debugOn()
 {
     // We only allow the C64 CPU to run in debug mode
-    if (isC64CPU()) { debugMode = enable; }
+    if (isC64CPU()) { debugMode = true; }
+}
+
+template <typename M> void
+CPU<M>::_debugOff()
+{
+    debugMode = false;
 }
 
 template <typename M> void
@@ -221,7 +227,8 @@ CPU<M>::setRDY(bool value)
 template         CPU<C64Memory>::CPU(C64& ref, C64Memory& memref);
 template CPUInfo CPU<C64Memory>::getInfo();
 template void    CPU<C64Memory>::_dump(dump::Category category, std::ostream& os) const;
-template void    CPU<C64Memory>::_setDebug(bool enable);
+template void    CPU<C64Memory>::_debugOn();
+template void    CPU<C64Memory>::_debugOff();
 template void    CPU<C64Memory>::_reset(bool hard);
 template void    CPU<C64Memory>::_inspect();
 template u8      CPU<C64Memory>::getP() const;
@@ -237,7 +244,8 @@ template void    CPU<C64Memory>::setRDY(bool value);
 template         CPU<DriveMemory>::CPU(C64& ref, DriveMemory& memref);
 template CPUInfo CPU<DriveMemory>::getInfo();
 template void    CPU<DriveMemory>::_dump(dump::Category category, std::ostream& os) const;
-template void    CPU<DriveMemory>::_setDebug(bool enable);
+template void    CPU<DriveMemory>::_debugOn();
+template void    CPU<DriveMemory>::_debugOff();
 template void    CPU<DriveMemory>::_reset(bool hard);
 template void    CPU<DriveMemory>::_inspect();
 template u8      CPU<DriveMemory>::getP() const;

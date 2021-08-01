@@ -313,20 +313,21 @@ public:
     bool isPoweredOn() const override { return thread.isPoweredOn(); }
     bool isPaused() const override { return thread.isPaused(); }
     bool isRunning() const override { return thread.isRunning(); }
+    bool inWarpMode() const { return thread.warp; }
+    bool inDebugMode() const { return debugMode; }
 
     void powerOn() { thread.powerOn(); }
     void powerOff() { thread.powerOff(); }
     void run() { thread.run(); }
     void pause() { thread.pause(); }
     void halt() { thread.halt(); }
-    
-    void setWarp(bool enable) { enable ? thread.warpOn() : thread.warpOff(); }
-    bool inWarpMode() const { return thread.warp; }
+    void warpOn() { thread.warpOn(); }
+    void warpOff() { thread.warpOff(); }
+    void debugOn();
+    void debugOff();
+
     void lockWarpMode() { thread.setWarpLock(true); }
     void unlockWarpMode() { thread.setWarpLock(false); }
-
-    void setDebug(bool enable);
-    bool inDebugMode() const { return debugMode; }
     
 private:
 
@@ -334,8 +335,8 @@ private:
     void _powerOff() override;
     void _run() override;
     void _pause() override;
-    void _setWarp(bool enable) override;
-    void _setDebug(bool enable) override;
+    void _debugOn() override;
+    void _debugOff() override;
 
 public:
     

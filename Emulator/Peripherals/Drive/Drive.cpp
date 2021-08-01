@@ -36,7 +36,7 @@ Drive::getDescription() const
 void
 Drive::_initialize()
 {
-    resetConfig();
+    C64Component::_initialize();
     
     insertionStatus = DISK_FULLY_EJECTED;
     disk.clearDisk();

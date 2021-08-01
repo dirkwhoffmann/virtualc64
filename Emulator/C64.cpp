@@ -356,14 +356,6 @@ C64::setConfigItem(Option option, i64 value)
     }
 }
 
-void
-C64::setDebug(bool enable)
-{
-    suspend();
-    C64Component::setDebug(enable);
-    resume();
-}
-
 bool
 C64::readyToPowerOn()
 {
@@ -447,7 +439,7 @@ void
 C64::threadWarpOff()
 {
     debug(WARP_DEBUG, "threadWarpOff()\n");
-    C64Component::setWarp(false);
+    C64Component::warpOff();
     
     // Inform the GUI
     msgQueue.put(MSG_WARP_OFF);
@@ -457,7 +449,7 @@ void
 C64::threadWarpOn()
 {
     debug(WARP_DEBUG, "threadWarpOn()\n");
-    C64Component::setWarp(true);
+    C64Component::warpOn();
 
     // Inform the GUI
     msgQueue.put(MSG_WARP_ON);
@@ -536,6 +528,22 @@ C64::threadExecute()
 }
 
 void
+C64::debugOn()
+{
+    suspend();
+    C64Component::debugOn();
+    resume();
+}
+
+void
+C64::debugOff()
+{
+    suspend();
+    C64Component::debugOff();
+    resume();
+}
+
+void
 C64::_powerOn()
 {
 }
@@ -591,16 +599,15 @@ C64::_dump(dump::Category category, std::ostream& os) const
 }
 
 void
-C64::_setWarp(bool enable)
+C64::_debugOn()
 {
+    vic.updateVicFunctionTable();
 }
 
 void
-C64::_setDebug(bool enable)
+C64::_debugOff()
 {
-    suspend();
     vic.updateVicFunctionTable();
-    resume();
 }
 
 void

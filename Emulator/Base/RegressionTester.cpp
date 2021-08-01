@@ -24,7 +24,7 @@ RegressionTester::prepare(C64 &c64, C64Model model)
     x1 = 104; y1 = 17; x2 = 488; y2 = c64.vic.isPAL() ? 291 : 241;
     
     // Run as fast as possible
-    c64.setWarp(true);
+    c64.warpOn();
     
     // Prevent the GUI from disabling warp mode
     c64.lockWarpMode();
