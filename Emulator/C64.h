@@ -72,6 +72,8 @@ class C64 : public C64Component, ThreadDelegate {
     // The currently set inspection target (only evaluated in debug mode)
     InspectionTarget inspectionTarget;
 
+public:
+    
     // The thread manager
     Thread thread = Thread(*this);
     
@@ -91,7 +93,7 @@ public:
     SIDBridge sid = SIDBridge(*this);
 
     // Logic board
-    PowerSupply oscillator = PowerSupply(*this);
+    PowerSupply supply = PowerSupply(*this);
     
     // Keyboard
     Keyboard keyboard = Keyboard(*this);

@@ -177,7 +177,9 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var tapeCounter: NSTextField!
     @IBOutlet weak var tapeProgress: NSProgressIndicator!
     @IBOutlet weak var crtIcon: NSButton!
-    @IBOutlet weak var clockSpeed: NSTextField!
+    @IBOutlet weak var fpsInfo: NSTextField!
+    @IBOutlet weak var cpuInfo: NSTextField!
+    @IBOutlet weak var mhzInfo: NSTextField!
     @IBOutlet weak var clockSpeedBar: NSLevelIndicator!
     @IBOutlet weak var warpIcon: NSButton!
     
@@ -521,9 +523,14 @@ extension MyController {
     func updateSpeedometer() {
         
         speedometer.updateWith(cycle: c64.cpu.cycle(), frame: renderer.frames)
-        let mhz = speedometer.mhz
+        
         let fps = speedometer.fps
-        clockSpeed.stringValue = String(format: "%.2f MHz %.0f fps", mhz, fps)
+        let cpu = c64.cpuLoad
+        let mhz = speedometer.mhz
+
+        fpsInfo.stringValue = String(format: "%.0f FPS", fps)
+        cpuInfo.stringValue = String(format: "%d%% CPU", cpu)
+        mhzInfo.stringValue = String(format: "%.2f MHz", mhz)
         clockSpeedBar.doubleValue = 10 * mhz
     }
     

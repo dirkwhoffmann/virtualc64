@@ -8,16 +8,18 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MyController">
             <connections>
-                <outlet property="clockSpeed" destination="214" id="216"/>
                 <outlet property="clockSpeedBar" destination="212" id="215"/>
+                <outlet property="cpuInfo" destination="tD7-Kt-2R4" id="3c1-O6-Q9y"/>
                 <outlet property="crtIcon" destination="2003" id="CVl-nZ-xP2"/>
                 <outlet property="debugIcon" destination="6c9-VQ-Wmb" id="2dW-WG-eAT"/>
                 <outlet property="diskIcon8" destination="1045" id="wFy-Xz-5J7"/>
                 <outlet property="diskIcon9" destination="D1i-Ep-fTN" id="4H9-ek-oFn"/>
+                <outlet property="fpsInfo" destination="frr-Fa-ugy" id="nre-PW-ewb"/>
                 <outlet property="greenLED8" destination="1208" id="wdq-y9-MpT"/>
                 <outlet property="greenLED9" destination="FWS-Ng-oe6" id="A7p-ch-sbx"/>
                 <outlet property="haltIcon" destination="LJd-96-8ze" id="t1x-xJ-LfW"/>
                 <outlet property="metal" destination="DD4-5B-w9h" id="rGV-rL-MLo"/>
+                <outlet property="mhzInfo" destination="214" id="nnJ-4s-Uip"/>
                 <outlet property="muteIcon" destination="1v4-GY-YOm" id="Quj-qX-AH1"/>
                 <outlet property="redLED8" destination="1210" id="GLI-bf-y3R"/>
                 <outlet property="redLED9" destination="iKN-RM-vsV" id="cac-3p-tQd"/>
@@ -144,7 +146,7 @@
                         </connections>
                     </customView>
                     <button hidden="YES" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="LJd-96-8ze">
-                        <rect key="frame" x="484" y="3" width="20" height="20"/>
+                        <rect key="frame" x="414" y="3" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="haltTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="f5d-Lu-xCR">
                             <behavior key="behavior" lightByContents="YES"/>
@@ -155,7 +157,7 @@
                         </connections>
                     </button>
                     <button hidden="YES" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="6c9-VQ-Wmb">
-                        <rect key="frame" x="512" y="3" width="20" height="20"/>
+                        <rect key="frame" x="442" y="3" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="inspectTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="9FI-3x-DAh">
                             <behavior key="behavior" lightByContents="YES"/>
@@ -166,7 +168,7 @@
                         </connections>
                     </button>
                     <button hidden="YES" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="1v4-GY-YOm">
-                        <rect key="frame" x="540" y="3" width="20" height="20"/>
+                        <rect key="frame" x="470" y="3" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="muteTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="7dZ-BU-MtG">
                             <behavior key="behavior" lightByContents="YES"/>
@@ -203,9 +205,18 @@
                         </buttonCell>
                     </button>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="214">
-                        <rect key="frame" x="589" y="8" width="92" height="11"/>
+                        <rect key="frame" x="630" y="8" width="54" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="Clock" id="1703">
+                        <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="0.00 MHz" id="1703">
+                            <font key="font" metaFont="label" size="9"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="frr-Fa-ugy">
+                        <rect key="frame" x="519" y="8" width="54" height="11"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="00 FPS" id="vge-HN-oJf">
                             <font key="font" metaFont="label" size="9"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -218,6 +229,15 @@
                             <font key="font" metaFont="message" size="11"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tD7-Kt-2R4">
+                        <rect key="frame" x="575" y="8" width="54" height="11"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="00% CPU" id="9E6-Hh-KcI">
+                            <font key="font" metaFont="label" size="9"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                 </subviews>

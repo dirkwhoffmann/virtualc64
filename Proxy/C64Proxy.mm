@@ -2524,4 +2524,10 @@
     return [self c64]->flash(*(FSDevice *)proxy->obj, (unsigned)nr);
 }
 
+- (NSInteger)cpuLoad
+{
+    double load = [self c64]->thread.getCpuLoad();
+    return (NSInteger)(100 * load);
+}
+
 @end

@@ -177,7 +177,6 @@
 @property (readonly) SnapshotProxy *latestUserSnapshot;
 - (void)loadFromSnapshot:(SnapshotProxy *)proxy;
 
-// @property (readonly) C64Config config;
 - (NSInteger)getConfig:(Option)opt;
 - (NSInteger)getConfig:(Option)opt id:(NSInteger)id;
 - (NSInteger)getConfig:(Option)opt drive:(DriveID)id;
@@ -190,33 +189,34 @@
 - (BOOL)configure:(Option)opt drive:(DriveID)id enable:(BOOL)val;
 - (void)configure:(C64Model)value;
 
-// - (Message)message;
 - (void)setListener:(const void *)sender function:(Callback *)func;
 
 - (void)stopAndGo;
 - (void)stepInto;
 - (void)stepOver;
 
-- (BOOL) hasRom:(RomType)type;
-- (BOOL) hasMega65Rom:(RomType)type;
+- (BOOL)hasRom:(RomType)type;
+- (BOOL)hasMega65Rom:(RomType)type;
 
-- (BOOL) isRom:(RomType)type url:(NSURL *)url;
+- (BOOL)isRom:(RomType)type url:(NSURL *)url;
 
-- (void) loadRom:(NSURL *)url error:(ErrorCode *)ec;
-- (void) loadRom:(RomFileProxy *)proxy;
-- (void) saveRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)ec;
-- (void) deleteRom:(RomType)type;
+- (void)loadRom:(NSURL *)url error:(ErrorCode *)ec;
+- (void)loadRom:(RomFileProxy *)proxy;
+- (void)saveRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)ec;
+- (void)deleteRom:(RomType)type;
 
-- (RomIdentifier) romIdentifier:(RomType)type;
+- (RomIdentifier)romIdentifier:(RomType)type;
 - (BOOL)isCommodoreRom:(RomIdentifier)rev;
 - (BOOL)isPatchedRom:(RomIdentifier)rev;
 
-- (NSString *) romTitle:(RomType)type;
-- (NSString *) romSubTitle:(RomType)type;
-- (NSString *) romRevision:(RomType)type;
+- (NSString *)romTitle:(RomType)type;
+- (NSString *)romSubTitle:(RomType)type;
+- (NSString *)romRevision:(RomType)type;
 
 - (BOOL)flash:(AnyFileProxy *)container;
 - (BOOL)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr;
+
+@property (readonly) NSInteger cpuLoad;
 
 @end
 

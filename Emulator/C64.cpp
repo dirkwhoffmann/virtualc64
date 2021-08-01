@@ -37,7 +37,7 @@ C64::C64()
         &drive9,
         &parCable,
         &datasette,
-        &oscillator
+        &supply
     };
 
     // Set up the initial state
@@ -142,7 +142,7 @@ C64::getConfigItem(Option option) const
             return cia1.getConfigItem(option);
 
         case OPT_POWER_GRID:
-            return oscillator.getConfigItem(option);
+            return supply.getConfigItem(option);
             
         case OPT_SID_REVISION:
         case OPT_SID_POWER_SAVE:
