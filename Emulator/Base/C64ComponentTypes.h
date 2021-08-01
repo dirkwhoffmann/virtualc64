@@ -40,7 +40,7 @@ enum_long(OPT)
     OPT_DMA_DEBUG_COLOR,
     OPT_DMA_DEBUG_OPACITY,
     
-    // Oscillator
+    // Power supply
     OPT_POWER_GRID,
     
     // Logic board

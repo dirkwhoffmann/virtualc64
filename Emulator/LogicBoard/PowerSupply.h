@@ -9,37 +9,14 @@
 
 #pragma once
 
-#include "OscillatorTypes.h"
+#include "PowerSupplyTypes.h"
 #include "SubComponent.h"
 #include "Chrono.h"
 
-class Oscillator : public SubComponent {
+class PowerSupply : public SubComponent {
     
     // Current configuration
-    OscillatorConfig config = getDefaultConfig();
-    
-    /* The heart of this class is method sychronize() which puts the thread to
-     * sleep for a certain interval. In order to calculate the delay, the
-     * function needs to know the values of the C64 clock and the Kernel
-     * clock at the time the synchronization timer was started. The values are
-     * stores in the following two variables and recorded in restart().
-     */
-    
-    // C64 clock
-    // Cycle clockBase = 0;
-
-    // Counts the number of calls to 'synchronize'
-    // isize syncCounter = 0;
-    
-    // Kernel clock
-    // util::Time timeBase;
-
-    // The current CPU load (%)
-    // float cpuLoad = 0.0;
-    
-    // Clocks for measuring the CPU load
-    // util::Clock nonstopClock;
-    // util::Clock loadClock;
+    PowerSupplyConfig config = getDefaultConfig();
 
     
     //
@@ -48,7 +25,7 @@ class Oscillator : public SubComponent {
     
 public:
     
-    Oscillator(C64& ref);
+    PowerSupply(C64& ref);
     
     const char *getDescription() const override;
 
@@ -63,8 +40,8 @@ private:
     
 public:
     
-    static OscillatorConfig getDefaultConfig();
-    OscillatorConfig getConfig() const { return config; }
+    static PowerSupplyConfig getDefaultConfig();
+    PowerSupplyConfig getConfig() const { return config; }
     void resetConfig() override;
 
     i64 getConfigItem(Option option) const;
@@ -93,16 +70,10 @@ private:
     
     
     //
-    // Managing emulation speed
+    //
     //
        
 public:
-    
-    // Restarts the synchronization timer
-    // void restart();
-
-    // Puts the emulator thread to rest
-    // oid synchronize();
     
     // Returns the number of CPU cycles between two TOD increments
     Cycle todTickDelay(u8 cra);

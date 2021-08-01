@@ -44,7 +44,7 @@
 #include "TOD.h"
 #include "CIA.h"
 #include "CPU.h"
-#include "Oscillator.h"
+#include "PowerSupply.h"
 #include "Recorder.h"
 #include "RegressionTester.h"
 #include "RetroShell.h"
@@ -91,7 +91,7 @@ public:
     SIDBridge sid = SIDBridge(*this);
 
     // Logic board
-    Oscillator oscillator = Oscillator(*this);
+    PowerSupply oscillator = PowerSupply(*this);
     
     // Keyboard
     Keyboard keyboard = Keyboard(*this);

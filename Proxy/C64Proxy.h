@@ -27,8 +27,8 @@
 #include "MemoryTypes.h"
 #include "MouseTypes.h"
 #include "MsgQueueTypes.h"
-#include "OscillatorTypes.h"
 #include "ParCableTypes.h"
+#include "PowerSupplyTypes.h"
 #include "SIDTypes.h"
 #include "VICIITypes.h"
 

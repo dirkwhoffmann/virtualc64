@@ -8,34 +8,30 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Oscillator.h"
+#include "PowerSupply.h"
 #include "C64.h"
 
-Oscillator::Oscillator(C64& ref) : SubComponent(ref)
+PowerSupply::PowerSupply(C64& ref) : SubComponent(ref)
 {
 
 }
 
 const char *
-Oscillator::getDescription() const
+PowerSupply::getDescription() const
 {
-#ifdef __MACH__
-    return "Oscillator (Mac)";
-#else
-    return "Oscillator (Generic)";
-#endif
+    return "PowerSupply";
 }
 
 void
-Oscillator::_reset(bool hard)
+PowerSupply::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)
 }
 
-OscillatorConfig
-Oscillator::getDefaultConfig()
+PowerSupplyConfig
+PowerSupply::getDefaultConfig()
 {
-    OscillatorConfig defaults;
+    PowerSupplyConfig defaults;
 
     defaults.powerGrid = GRID_STABLE_50HZ;
     
@@ -43,15 +39,15 @@ Oscillator::getDefaultConfig()
 }
 
 void
-Oscillator::resetConfig()
+PowerSupply::resetConfig()
 {
-    OscillatorConfig defaults = getDefaultConfig();
+    PowerSupplyConfig defaults = getDefaultConfig();
     
     setConfigItem(OPT_POWER_GRID, defaults.powerGrid);
 }
 
 i64
-Oscillator::getConfigItem(Option option) const
+PowerSupply::getConfigItem(Option option) const
 {
     switch (option) {
             
@@ -64,7 +60,7 @@ Oscillator::getConfigItem(Option option) const
 }
 
 void
-Oscillator::setConfigItem(Option option, i64 value)
+PowerSupply::setConfigItem(Option option, i64 value)
 {
     switch (option) {
             
@@ -82,70 +78,8 @@ Oscillator::setConfigItem(Option option, i64 value)
     }
 }
 
-/*
-void
-Oscillator::restart()
-{
-    clockBase = cpu.cycle;
-    timeBase = util::Time::now();
-}
-*/
-/*
-void
-Oscillator::synchronize()
-{
-    syncCounter++;
-        
-    auto now          = util::Time::now();
-    auto elapsedCyles = cpu.cycle - clockBase;
-    auto elapsedNanos = util::Time((i64)(elapsedCyles * 1000 * 1000000 / vic.getFrequency()));
-    auto targetTime   = timeBase + elapsedNanos;
-    
-    // Check if we're running too slow...
-    if (now > targetTime) {
-        
-        // Check if we're completely out of sync...
-        if ((now - targetTime).asMilliseconds() > 200) {
-            
-            // warn("The emulator is way too slow (%f).\n", (now - targetTime).asSeconds());
-            restart();
-            return;
-        }
-    }
-    
-    // Check if we're running too fast...
-    if (now < targetTime) {
-        
-        // Check if we're completely out of sync...
-        if ((targetTime - now).asMilliseconds() > 200) {
-            
-            warn("The emulator is way too fast (%f).\n", (targetTime - now).asSeconds());
-            restart();
-            return;
-        }
-        
-        // See you soon...
-        loadClock.stop();
-        targetTime.sleepUntil();
-        loadClock.go();
-    }
-    
-    // Compute the CPU load once in a while
-    if (syncCounter % 32 == 0) {
-        
-        auto used  = loadClock.getElapsedTime().asSeconds();
-        auto total = nonstopClock.getElapsedTime().asSeconds();
-        
-        cpuLoad = used / total;
-        
-        loadClock.restart();
-        nonstopClock.restart();
-    }
-}
-*/
-
 Cycle
-Oscillator::todTickDelay(u8 cra)
+PowerSupply::todTickDelay(u8 cra)
 {
     Cycle delay, jitter;
     i64 frequency = vic.isPAL() ? PAL_CLOCK_FREQUENCY : NTSC_CLOCK_FREQUENCY;

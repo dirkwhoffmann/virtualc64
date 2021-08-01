@@ -12,7 +12,7 @@
 #include "CIA.h"
 #include "CPU.h"
 #include "IO.h"
-#include "Oscillator.h"
+#include "PowerSupply.h"
 
 TOD::TOD(C64 &ref, CIA &ciaref) : SubComponent(ref), cia(ciaref)
 {

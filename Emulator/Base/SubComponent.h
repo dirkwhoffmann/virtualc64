@@ -32,7 +32,7 @@ class Mouse1350;
 class Mouse1351;
 class NeosMouse;
 class MsgQueue;
-class Oscillator;
+class PowerSupply;
 class ParCable;
 class Recorder;
 class RegressionTester;
@@ -72,7 +72,7 @@ protected:
     Keyboard &keyboard;
     C64Memory &mem;
     MsgQueue &messageQueue;
-    Oscillator &oscillator;
+    PowerSupply &oscillator;
     ParCable &parCable;
     Recorder &recorder;
     RegressionTester &regressionTester;

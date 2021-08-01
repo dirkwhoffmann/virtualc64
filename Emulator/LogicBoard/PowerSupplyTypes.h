@@ -59,4 +59,4 @@ typedef struct
 {
     PowerGrid powerGrid;
 }
-OscillatorConfig;
+PowerSupplyConfig;
