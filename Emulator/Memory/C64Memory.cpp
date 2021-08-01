@@ -149,7 +149,7 @@ C64Memory::getConfigItem(Option option) const
     }
 }
 
-bool
+void
 C64Memory::setConfigItem(Option option, i64 value)
 {
     switch (option) {
@@ -161,10 +161,10 @@ C64Memory::setConfigItem(Option option, i64 value)
             }
             
             config.ramPattern = (RamPattern)value;
-            return true;
+            return;
                         
         default:
-            return false;
+            return;
     }
 }
 

@@ -83,6 +83,7 @@ SIDBridge::resetConfig()
     setConfigItem(OPT_AUDVOLR, defaults.volR);
 
     for (isize i = 0; i < 4; i++) {
+        
         setConfigItem(OPT_SID_ENABLE, i, GET_BIT(defaults.enabled, i));
         setConfigItem(OPT_SID_ADDRESS, i, defaults.address[i]);
         setConfigItem(OPT_AUDVOL, i, defaults.vol[i]);
@@ -146,7 +147,7 @@ SIDBridge::getConfigItem(Option option, long id) const
     }
 }
 
-bool
+void
 SIDBridge::setConfigItem(Option option, i64 value)
 {
     bool wasMuted = isMuted();
@@ -160,8 +161,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
             suspend();
             setClockFrequency(newFrequency);
             resume();
-            
-            return true;
+            return;
         }
          
         case OPT_SID_POWER_SAVE:
@@ -169,7 +169,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
             suspend();
             config.powerSave = value;
             resume();
-            return true;
+            return;
             
         case OPT_SID_REVISION:
             
@@ -184,8 +184,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
                 fastsid[i].setRevision(value);
             }
             resume();
-            
-            return true;
+            return;
             
         case OPT_SID_FILTER:
             
@@ -196,8 +195,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
                 fastsid[i].setAudioFilter(value);
             }
             resume();
-            
-            return true;
+            return;
             
         case OPT_SID_ENGINE:
             
@@ -208,8 +206,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
             suspend();
             config.engine = (SIDEngine)value;
             resume();
-            
-            return true;
+            return;
             
         case OPT_SID_SAMPLING:
             
@@ -224,8 +221,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
                 // Note: fastSID has no such option
             }
             resume();
-            
-            return true;
+            return;
             
         case OPT_AUDVOLL:
             
@@ -236,7 +232,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
             if (wasMuted != isMuted()) {
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
             }
-            return true;
+            return;
             
         case OPT_AUDVOLR:
 
@@ -246,14 +242,14 @@ SIDBridge::setConfigItem(Option option, i64 value)
             if (wasMuted != isMuted()) {
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
             }
-            return true;
+            return;
             
         default:
-            return false;
+            return;
     }
 }
 
-bool
+void
 SIDBridge::setConfigItem(Option option, long id, i64 value)
 {
     bool wasMuted = isMuted();
@@ -266,11 +262,11 @@ SIDBridge::setConfigItem(Option option, long id, i64 value)
 
             if (id == 0 && value == false) {
                 warn("SID 0 can't be disabled\n");
-                return false;
+                return;
             }
             
             if (!!GET_BIT(config.enabled, id) == value) {
-                return false;
+                return;
             }
             
             suspend();
@@ -282,7 +278,7 @@ SIDBridge::setConfigItem(Option option, long id, i64 value)
                 fastsid[i].reset(true);
             }
             resume();
-            return true;
+            return;
             
         case OPT_SID_ADDRESS:
 
@@ -290,24 +286,24 @@ SIDBridge::setConfigItem(Option option, long id, i64 value)
 
             if (id == 0 && value != 0xD400) {
                 warn("SID 0 can't be remapped\n");
-                return false;
+                return;
             }
 
             if (value < 0xD400 || value > 0xD7E0 || (value & 0x1F)) {
                 warn("Invalid SID address: %llx\n", value);
                 warn("Valid values: D400, D420, ... D7E0\n");
-                return false;
+                return;
             }
 
             if (config.address[id] == value) {
-                return false;
+                return;
             }
             
             suspend();
             config.address[id] = value;
             clearSampleBuffer(id);
             resume();
-            return true;
+            return;
             
         case OPT_AUDVOL:
             
@@ -322,7 +318,7 @@ SIDBridge::setConfigItem(Option option, long id, i64 value)
                 messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
             }
 
-            return true;
+            return;
             
         case OPT_AUDPAN:
             
@@ -330,18 +326,18 @@ SIDBridge::setConfigItem(Option option, long id, i64 value)
             if (value < 0 || value > 200) {
                 warn("Invalid pan: %lld\n", value);
                 warn("Valid values: 0 ... 200\n");
-                return false;
+                return;
             }
 
-            config.pan[id] = value; //  MAX(0.0, MIN(value / 100.0, 1.0));
+            config.pan[id] = value;
             
             if (value <= 50) pan[id] = (50 + value) / 100.0;
             else if (value <= 150) pan[id] = (150 - value) / 100.0;
             else if (value <= 200) pan[id] = (value - 150) / 100.0;
-            return true;
+            return;
 
         default:
-            return false;
+            return;
     }
 }
 

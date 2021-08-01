@@ -102,19 +102,17 @@ public:
 
     /* Configures the component and it's subcomponents. This function
      * distributes a configuration request to all subcomponents by calling
-     * setConfigItem(). The function returns true iff the current configuration
-     * has changed.
+     * setConfigItem().
      */
-    bool configure(Option option, i64 value) throws;
-    bool configure(Option option, long id, i64 value) throws;
+    void configure(Option option, i64 value) throws;
+    void configure(Option option, long id, i64 value) throws;
     
     /* Requests the change of a single configuration item. Each sub-component
      * checks if it is responsible for the requested configuration item. If
      * yes, it changes the internal state. If no, it ignores the request.
-     * The function returns true iff the current configuration has changed.
      */
-    virtual bool setConfigItem(Option option, i64 value) throws { return false; }
-    virtual bool setConfigItem(Option option, long id, i64 value) throws { return false; }
+    virtual void setConfigItem(Option option, i64 value) throws { }
+    virtual void setConfigItem(Option option, long id, i64 value) throws { }
             
 
     //

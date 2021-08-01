@@ -101,7 +101,7 @@ DmaDebugger::getConfigItem(Option option, long id) const
     }
 }
 
-bool
+void
 DmaDebugger::setConfigItem(Option option, i64 value)
 {
     switch (option) {
@@ -115,7 +115,7 @@ DmaDebugger::setConfigItem(Option option, i64 value)
             vic.updateVicFunctionTable();
             messageQueue.put(value ? MSG_DMA_DEBUG_ON : MSG_DMA_DEBUG_OFF);
             resume();
-            return true;
+            return;
 
         case OPT_DMA_DEBUG_MODE:
             
@@ -123,32 +123,33 @@ DmaDebugger::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INV_ARG, DmaDisplayModeEnum::keyList());
             }
             config.dmaDisplayMode = (DmaDisplayMode)value;
-            return true;
+            return;
 
         case OPT_DMA_DEBUG_OPACITY:
             
             config.dmaOpacity = value;
-            return false; // 'false' to avoid a MSG_CONFIG being sent
+            return;
             
         case OPT_CUT_LAYERS:
             
             config.cutLayers = value;
-            return true;
+            return;
             
         case OPT_CUT_OPACITY:
             
             config.cutOpacity = value;
-            return false; // 'false' to avoid a MSG_CONFIG being sent
+            return;
 
         default:
-            return false;
+            return;
     }
 }
 
-bool
+void
 DmaDebugger::setConfigItem(Option option, long id, i64 value)
 {
-    if (!MemAccessEnum::isValid(id)) { return false; }
+    if (!MemAccessEnum::isValid(id)) return;
+    
     MemAccess access = (MemAccess)id;
     
     switch (option) {
@@ -156,15 +157,15 @@ DmaDebugger::setConfigItem(Option option, long id, i64 value)
         case OPT_DMA_DEBUG_ENABLE:
             
             config.dmaChannel[access] = value;
-            return true;
+            return;
             
         case OPT_DMA_DEBUG_COLOR:
             
             setDmaDebugColor(access, GpuColor((u32)value));
-            return true;
+            return;
             
         default:
-            return false;
+            return;
     }
 }
 

@@ -50,7 +50,7 @@ class Configuration {
     
     var vicCutOpacity: Int {
         get { return c64.getConfig(.CUT_OPACITY) }
-        set { c64.configure(.CUT_OPACITY, value: newValue) }
+        set { c64._configure(.CUT_OPACITY, value: newValue) }
     }
         
     var ciaRevision: Int {

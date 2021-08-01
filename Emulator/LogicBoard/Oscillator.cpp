@@ -63,7 +63,7 @@ Oscillator::getConfigItem(Option option) const
     }
 }
 
-bool
+void
 Oscillator::setConfigItem(Option option, i64 value)
 {
     switch (option) {
@@ -75,10 +75,10 @@ Oscillator::setConfigItem(Option option, i64 value)
             }
             
             config.powerGrid = (PowerGrid)value;
-            return true;
+            return;
 
         default:
-            return false;
+            return;
     }
 }
 

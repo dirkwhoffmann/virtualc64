@@ -2272,7 +2272,18 @@
 - (BOOL)configure:(Option)opt value:(NSInteger)val
 {
     try {
-        return [self c64]->configure(opt, val);
+        [self c64]->configure(opt, val);
+        return true;
+    } catch (VC64Error &exception) {
+        return false;
+    }
+}
+
+- (BOOL)_configure:(Option)opt value:(NSInteger)val
+{
+    try {
+        [self c64]->_configure(opt, val);
+        return true;
     } catch (VC64Error &exception) {
         return false;
     }
@@ -2281,7 +2292,8 @@
 - (BOOL)configure:(Option)opt enable:(BOOL)val
 {
     try {
-        return [self c64]->configure(opt, val ? 1 : 0);
+        [self c64]->configure(opt, val ? 1 : 0);
+        return true;
     } catch (VC64Error &exception) {
         return false;
     }
@@ -2290,7 +2302,8 @@
 - (BOOL)configure:(Option)opt id:(NSInteger)id value:(NSInteger)val
 {
     try {
-        return [self c64]->configure(opt, id, val);
+        [self c64]->configure(opt, id, val);
+        return true;
     } catch (VC64Error &exception) {
         return false;
     }
@@ -2299,7 +2312,8 @@
 - (BOOL)configure:(Option)opt id:(NSInteger)id enable:(BOOL)val
 {
     try {
-        return [self c64]->configure(opt, id, val ? 1 : 0);
+        [self c64]->configure(opt, id, val ? 1 : 0);
+        return true;
     } catch (VC64Error &exception) {
         return false;
     }
@@ -2308,7 +2322,8 @@
 - (BOOL)configure:(Option)opt drive:(DriveID)id value:(NSInteger)val
 {
     try {
-        return [self c64]->configure(opt, (long)id, val);
+        [self c64]->configure(opt, (long)id, val);
+        return true;
     } catch (VC64Error &exception) {
         return false;
     }
@@ -2317,7 +2332,8 @@
 - (BOOL)configure:(Option)opt drive:(DriveID)id enable:(BOOL)val
 {
     try {
-        return [self c64]->configure(opt, (long)id, val ? 1 : 0);
+        [self c64]->configure(opt, (long)id, val ? 1 : 0);
+        return true;
     } catch (VC64Error &exception) {
         return false;
     }

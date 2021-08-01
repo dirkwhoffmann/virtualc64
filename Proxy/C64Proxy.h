@@ -182,6 +182,7 @@
 - (NSInteger)getConfig:(Option)opt id:(NSInteger)id;
 - (NSInteger)getConfig:(Option)opt drive:(DriveID)id;
 - (BOOL)configure:(Option)opt value:(NSInteger)val;
+- (BOOL)_configure:(Option)opt value:(NSInteger)val;
 - (BOOL)configure:(Option)opt enable:(BOOL)val;
 - (BOOL)configure:(Option)opt id:(NSInteger)id value:(NSInteger)val;
 - (BOOL)configure:(Option)opt id:(NSInteger)id enable:(BOOL)val;

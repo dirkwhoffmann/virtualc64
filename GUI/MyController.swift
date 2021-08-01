@@ -558,26 +558,22 @@ extension MyController {
             refreshStatusBar()
             
         case .POWER_ON:
-            // track("POWER_ON")
             renderer.canvas.open(delay: 2)
             virtualKeyboard = nil
             toolbar.updateToolbar()
             inspector?.fullRefresh()
 
         case .POWER_OFF:
-            // track("POWER_OFF")
             toolbar.updateToolbar()
             inspector?.fullRefresh()
             
         case .RUN:
-            // track("RUN")
             needsSaving = true
             toolbar.updateToolbar()
             inspector?.fullRefresh()
             refreshStatusBar()
     
         case .PAUSE:
-            // track("PAUSE")
             toolbar.updateToolbar()
             inspector?.fullRefresh()
             refreshStatusBar()
@@ -592,12 +588,10 @@ extension MyController {
             shutDown()
 
         case .MUTE_ON:
-            track("MUTE_ON")
             muted = true
             refreshStatusBar()
             
         case .MUTE_OFF:
-            track("MUTE_OFF")
             muted = false
             refreshStatusBar()
 

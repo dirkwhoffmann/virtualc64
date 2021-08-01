@@ -129,7 +129,7 @@ Drive::getConfigItem(Option option) const
     }
 }
 
-bool
+void
 Drive::setConfigItem(Option option, i64 value)
 {
     switch (option) {
@@ -139,11 +139,11 @@ Drive::setConfigItem(Option option, i64 value)
             u64 duration = 10000000000 / VICII::getFrequency((VICIIRevision)value);
             
             if (durationOfOneCpuCycle == duration) {
-                return false;
+                return;
             }
             
             durationOfOneCpuCycle = duration;
-            return true;
+            return;
         }
         case OPT_DRV_AUTO_CONFIG:
         case OPT_DRV_POWER_SAVE:
@@ -155,20 +155,20 @@ Drive::setConfigItem(Option option, i64 value)
         case OPT_DRV_INSERT_VOL:
         case OPT_DRV_EJECT_VOL:
         case OPT_DRV_PAN:
-        {
-            bool result1 = setConfigItem(option, DRIVE8, value);
-            bool result2 = setConfigItem(option, DRIVE9, value);
-            return result1 || result2;
-        }
+            
+            setConfigItem(option, DRIVE8, value);
+            setConfigItem(option, DRIVE9, value);
+            return;
+
         default:
-            return false;
+            return;
     }
 }
 
-bool
+void
 Drive::setConfigItem(Option option, long id, i64 value)
 {
-    if (id != deviceNr) return false;
+    if (id != deviceNr) return;
     
     switch (option) {
 
@@ -178,7 +178,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
             config.autoConfig = value;
             if (value) autoConfigure();
             resume();
-            return true;
+            return;
         }
         case OPT_DRV_TYPE:
         {
@@ -187,7 +187,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
             }
             
             config.type = (DriveType)value;
-            return true;
+            return;
         }
         case OPT_DRV_RAM:
         {
@@ -199,7 +199,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
             config.ram = (DriveRam)value;
             mem.updateBankMap();
             resume();
-            return true;
+            return;
         }
         case OPT_DRV_PARCABLE:
         {
@@ -211,91 +211,91 @@ Drive::setConfigItem(Option option, long id, i64 value)
             config.parCable = (ParCableType)value;
             mem.updateBankMap();
             resume();
-            return true;
+            return;
         }
         case OPT_DRV_CONNECT:
         {
             if (value && !c64.hasRom(ROM_TYPE_VC1541)) {
                 warn("Can't connect drive (ROM missing).\n");
-                return false;
+                return;
             }
             suspend();
             config.connected = value;
             reset(true);
             resume();
             messageQueue.put(value ? MSG_DRIVE_CONNECT : MSG_DRIVE_DISCONNECT, deviceNr);
-            return true;
+            return;
         }
         case OPT_DRV_POWER_SWITCH:
         {
             if (value && !isPoweredOn()) {
                 warn("Can't switch drive on (not connected).\n");
                 // throw VCError(ERROR_DRV_NOT_CONNECTED);
-                return false;
+                return;
             }
             suspend();
             config.switchedOn = value;
             reset(true);
             resume();
             messageQueue.put(value ? MSG_DRIVE_POWER_ON : MSG_DRIVE_POWER_OFF, deviceNr);
-            return true;
+            return;
         }
         case OPT_DRV_POWER_SAVE:
         {
             config.powerSave = value;
             wakeUp();
-            return true;
+            return;
         }
         case OPT_DRV_EJECT_DELAY:
         {
             config.ejectDelay = value;
-            return true;
+            return;
         }
         case OPT_DRV_SWAP_DELAY:
         {
             config.swapDelay = value;
-            return true;
+            return;
         }
         case OPT_DRV_INSERT_DELAY:
         {
             config.insertDelay = value;
-            return true;
+            return;
         }
         case OPT_DRV_PAN:
         {
             config.pan = value;
-            return true;
+            return;
         }
         case OPT_DRV_POWER_VOL:
         {
             value = std::clamp(value, 0LL, 100LL);
 
             config.powerVolume = value;
-            return true;
+            return;
         }
         case OPT_DRV_STEP_VOL:
         {
             value = std::clamp(value, 0LL, 100LL);
 
             config.stepVolume = value;
-            return true;
+            return;
         }
         case OPT_DRV_EJECT_VOL:
         {
             value = std::clamp(value, 0LL, 100LL);
             
             config.ejectVolume = value;
-            return true;
+            return;
         }
         case OPT_DRV_INSERT_VOL:
         {
             value = std::clamp(value, 0LL, 100LL);
             
             config.insertVolume = value;
-            return true;
+            return;
         }
         default:
-            return false;
+            return;
     }
 }
 

@@ -62,16 +62,16 @@ Mouse::getConfigItem(Option option) const
     }
 }
 
-bool
+void
 Mouse::setConfigItem(Option option, i64 value)
 {
-    return setConfigItem(option, port.nr, value);
+    setConfigItem(option, port.nr, value);
 }
 
-bool
+void
 Mouse::setConfigItem(Option option, long id, i64 value)
 {
-    if (port.nr != id) return false;
+    if (port.nr != id) return;
     
     switch (option) {
             
@@ -79,12 +79,12 @@ Mouse::setConfigItem(Option option, long id, i64 value)
             
             config.model = (MouseModel)value;
             _reset(true);
-            return true;
+            return;
             
         case OPT_SHAKE_DETECTION:
             
             config.shakeDetection = value;
-            return true;
+            return;
             
         case OPT_MOUSE_VELOCITY:
                         
@@ -93,10 +93,10 @@ Mouse::setConfigItem(Option option, long id, i64 value)
             }
             config.velocity= value;
             updateScalingFactors();
-            return true;
+            return;
 
         default:
-            return false;
+            return;
     }
 }
 

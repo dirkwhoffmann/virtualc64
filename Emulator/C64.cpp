@@ -217,39 +217,36 @@ C64::getConfigItem(Option option, long id) const
     }
 }
 
-bool
+void
 C64::configure(Option option, i64 value)
 {
-//    trace(CNF_DEBUG, "configure(option: %lld, value: %lld\n", option, value);
-    trace(true, "configure(option: %lld, value: %lld\n", option, value);
-
-    // Propagate configuration request to all components
-    bool changed = HardwareComponent::configure(option, value);
-        
-    // Inform the GUI if the configuration has changed
-    if (changed) msgQueue.put(MSG_CONFIG);
-    
-    // Dump the current configuration in debugging mode
-    if (changed && CNF_DEBUG) dump(dump::Config);
-
-    return changed;
+    _configure(option, value);    
+    msgQueue.put(MSG_CONFIG);
 }
 
-bool
+void
+C64::_configure(Option option, i64 value)
+{
+    trace(CNF_DEBUG, "configure(option: %lld, value: %lld\n", option, value);
+
+    // Propagate configuration request to all components
+    HardwareComponent::configure(option, value);
+}
+
+void
 C64::configure(Option option, long id, i64 value)
+{
+    _configure(option, id, value);
+    msgQueue.put(MSG_CONFIG);
+}
+
+void
+C64::_configure(Option option, long id, i64 value)
 {
     trace(CNF_DEBUG, "configure(option: %lld, id: %ld, value: %lld\n", option, id, value);
     
     // Propagate configuration request to all components
-    bool changed = HardwareComponent::configure(option, id, value);
-    
-    // Inform the GUI if the configuration has changed
-    if (changed) msgQueue.put(MSG_CONFIG);
-    
-    // Dump the current configuration in debugging mode
-    if (changed && CNF_DEBUG) dump(dump::Config);
-
-    return changed;
+    HardwareComponent::configure(option, id, value);
 }
 
 void
@@ -260,74 +257,74 @@ C64::configure(C64Model model)
     switch(model) {
             
         case C64_MODEL_PAL:
-            configure(OPT_VIC_REVISION, VICII_PAL_6569_R3);
-            configure(OPT_GRAY_DOT_BUG, false);
-            configure(OPT_CIA_REVISION, MOS_6526);
-            configure(OPT_TIMER_B_BUG,  true);
-            configure(OPT_SID_REVISION, MOS_6581);
-            configure(OPT_SID_FILTER,   true);
-            configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
-            configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+            _configure(OPT_VIC_REVISION, VICII_PAL_6569_R3);
+            _configure(OPT_GRAY_DOT_BUG, false);
+            _configure(OPT_CIA_REVISION, MOS_6526);
+            _configure(OPT_TIMER_B_BUG,  true);
+            _configure(OPT_SID_REVISION, MOS_6581);
+            _configure(OPT_SID_FILTER,   true);
+            _configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
+            _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
             configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;
             
         case C64_MODEL_PAL_II:
-            configure(OPT_VIC_REVISION, VICII_PAL_8565);
-            configure(OPT_GRAY_DOT_BUG, true);
-            configure(OPT_CIA_REVISION, MOS_8521);
-            configure(OPT_TIMER_B_BUG,  false);
-            configure(OPT_SID_REVISION, MOS_8580);
-            configure(OPT_SID_FILTER,   true);
-            configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
-            configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
+            _configure(OPT_VIC_REVISION, VICII_PAL_8565);
+            _configure(OPT_GRAY_DOT_BUG, true);
+            _configure(OPT_CIA_REVISION, MOS_8521);
+            _configure(OPT_TIMER_B_BUG,  false);
+            _configure(OPT_SID_REVISION, MOS_8580);
+            _configure(OPT_SID_FILTER,   true);
+            _configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
+            _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
             configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;
 
         case C64_MODEL_PAL_OLD:
-            configure(OPT_VIC_REVISION, VICII_PAL_6569_R1);
-            configure(OPT_GRAY_DOT_BUG, false);
-            configure(OPT_CIA_REVISION, MOS_6526);
-            configure(OPT_TIMER_B_BUG,  true);
-            configure(OPT_SID_REVISION, MOS_6581);
-            configure(OPT_SID_FILTER,   true);
-            configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
-            configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+            _configure(OPT_VIC_REVISION, VICII_PAL_6569_R1);
+            _configure(OPT_GRAY_DOT_BUG, false);
+            _configure(OPT_CIA_REVISION, MOS_6526);
+            _configure(OPT_TIMER_B_BUG,  true);
+            _configure(OPT_SID_REVISION, MOS_6581);
+            _configure(OPT_SID_FILTER,   true);
+            _configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
+            _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
             configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;
 
         case C64_MODEL_NTSC:
-            configure(OPT_VIC_REVISION, VICII_NTSC_6567);
-            configure(OPT_GRAY_DOT_BUG, false);
-            configure(OPT_CIA_REVISION, MOS_6526);
-            configure(OPT_TIMER_B_BUG,  false);
-            configure(OPT_SID_REVISION, MOS_6581);
-            configure(OPT_SID_FILTER,   true);
-            configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
-            configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+            _configure(OPT_VIC_REVISION, VICII_NTSC_6567);
+            _configure(OPT_GRAY_DOT_BUG, false);
+            _configure(OPT_CIA_REVISION, MOS_6526);
+            _configure(OPT_TIMER_B_BUG,  false);
+            _configure(OPT_SID_REVISION, MOS_6581);
+            _configure(OPT_SID_FILTER,   true);
+            _configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
+            _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
             configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;
 
         case C64_MODEL_NTSC_II:
-            configure(OPT_VIC_REVISION, VICII_NTSC_8562);
-            configure(OPT_GRAY_DOT_BUG, true);
-            configure(OPT_CIA_REVISION, MOS_8521);
-            configure(OPT_TIMER_B_BUG,  true);
-            configure(OPT_SID_REVISION, MOS_8580);
-            configure(OPT_SID_FILTER,   true);
-            configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
-            configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
+            _configure(OPT_VIC_REVISION, VICII_NTSC_8562);
+            _configure(OPT_GRAY_DOT_BUG, true);
+            _configure(OPT_CIA_REVISION, MOS_8521);
+            _configure(OPT_TIMER_B_BUG,  true);
+            _configure(OPT_SID_REVISION, MOS_8580);
+            _configure(OPT_SID_FILTER,   true);
+            _configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
+            _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
             configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;
 
         case C64_MODEL_NTSC_OLD:
-            configure(OPT_VIC_REVISION, VICII_NTSC_6567_R56A);
-            configure(OPT_GRAY_DOT_BUG, false);
-            configure(OPT_CIA_REVISION, MOS_6526);
-            configure(OPT_TIMER_B_BUG,  false);
-            configure(OPT_SID_REVISION, MOS_6581);
-            configure(OPT_SID_FILTER,   true);
-            configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
-            configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+            _configure(OPT_VIC_REVISION, VICII_NTSC_6567_R56A);
+            _configure(OPT_GRAY_DOT_BUG, false);
+            _configure(OPT_CIA_REVISION, MOS_6526);
+            _configure(OPT_TIMER_B_BUG,  false);
+            _configure(OPT_SID_REVISION, MOS_6581);
+            _configure(OPT_SID_FILTER,   true);
+            _configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
+            _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
             configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
             break;
 
@@ -338,7 +335,7 @@ C64::configure(C64Model model)
     resume();
 }
 
-bool
+void
 C64::setConfigItem(Option option, i64 value)
 {
     switch (option) {
@@ -351,11 +348,11 @@ C64::setConfigItem(Option option, i64 value)
             frequency = (u32)newFrequency;
             durationOfOneCycle = 10000000000 / newFrequency;
             thread.setSyncDelay(1000000000 / newFps);
-            return true;
+            return;
         }
             
         default:
-            return false;
+            return;
     }
 }
 

@@ -34,36 +34,28 @@ HardwareComponent::reset(bool hard)
     _reset(hard);    
 }
 
-bool
+void
 HardwareComponent::configure(Option option, i64 value)
 {
-    bool result = false;
-    
     // Configure all subcomponents
     for (HardwareComponent *c : subComponents) {
-        result |= c->configure(option, value);
+        c->configure(option, value);
     }
     
     // Configure this component
-    result |= setConfigItem(option, value);
-
-    return result;
+    setConfigItem(option, value);
 }
 
-bool
+void
 HardwareComponent::configure(Option option, long id, i64 value)
 {
-    bool result = false;
-    
     // Configure all subcomponents
     for (HardwareComponent *c : subComponents) {
-        result |= c->configure(option, id, value);
+        c->configure(option, id, value);
     }
     
     // Configure this component
-    result |= setConfigItem(option, id, value);
-
-    return result;
+    setConfigItem(option, id, value);
 }
 
 isize

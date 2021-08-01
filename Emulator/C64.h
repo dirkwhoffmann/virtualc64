@@ -225,15 +225,17 @@ public:
     i64 getConfigItem(Option option) const;
     i64 getConfigItem(Option option, long id) const;
     
-    bool configure(Option option, i64 value) throws;
-    bool configure(Option option, long id, i64 value) throws;
+    void configure(Option option, i64 value) throws;
+    void configure(Option option, long id, i64 value) throws;
+    void _configure(Option option, i64 value) throws;
+    void _configure(Option option, long id, i64 value) throws;
 
     // Configures the C64 to match a specific C64 model
     void configure(C64Model model);
         
 private:
 
-    bool setConfigItem(Option option, i64 value) override;
+    void setConfigItem(Option option, i64 value) override;
 
     
     //

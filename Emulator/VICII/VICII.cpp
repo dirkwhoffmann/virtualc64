@@ -183,7 +183,7 @@ VICII::getConfigItem(Option option) const
     }
 }
 
-bool
+void
 VICII::setConfigItem(Option option, i64 value)
 {
     switch (option) {
@@ -197,12 +197,12 @@ VICII::setConfigItem(Option option, i64 value)
             suspend();
             setRevision((VICIIRevision)value);
             resume();
-            return true;
+            return;
 
         case OPT_VIC_POWER_SAVE:
             
             config.powerSave = value;
-            return true;
+            return;
             
         case OPT_PALETTE:
             
@@ -214,7 +214,7 @@ VICII::setConfigItem(Option option, i64 value)
             config.palette = (Palette)value;
             updatePalette();
             resume();
-            return true;
+            return;
             
         case OPT_BRIGHTNESS:
             
@@ -224,7 +224,7 @@ VICII::setConfigItem(Option option, i64 value)
 
             config.brightness = value;
             updatePalette();
-            return true;
+            return;
             
         case OPT_CONTRAST:
 
@@ -234,7 +234,7 @@ VICII::setConfigItem(Option option, i64 value)
 
             config.contrast = value;
             updatePalette();
-            return true;
+            return;
 
         case OPT_SATURATION:
         
@@ -244,27 +244,27 @@ VICII::setConfigItem(Option option, i64 value)
 
             config.saturation = value;
             updatePalette();
-            return true;
+            return;
 
         case OPT_GRAY_DOT_BUG:
             
             config.grayDotBug = value;
-            return true;
+            return;
             
         case OPT_HIDE_SPRITES:
             
             config.hideSprites = value;
-            return true;
+            return;
             
         case OPT_SS_COLLISIONS:
             
             config.checkSSCollisions = value;
-            return true;
+            return;
 
         case OPT_SB_COLLISIONS:
             
             config.checkSBCollisions = value;
-            return true;
+            return;
 
         case OPT_GLUE_LOGIC:
             
@@ -273,10 +273,10 @@ VICII::setConfigItem(Option option, i64 value)
             }
             
             config.glueLogic = (GlueLogic)value;
-            return true;
+            return;
             
         default:
-            return false;
+            return;
     }
 }
 

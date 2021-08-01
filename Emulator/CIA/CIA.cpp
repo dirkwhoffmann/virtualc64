@@ -69,7 +69,7 @@ CIA::getConfigItem(Option option) const
     }
 }
 
-bool
+void
 CIA::setConfigItem(Option option, i64 value)
 {
     switch (option) {
@@ -81,15 +81,15 @@ CIA::setConfigItem(Option option, i64 value)
             }
             
             config.revision = (CIARevision)value;
-            return true;
+            return;
             
         case OPT_TIMER_B_BUG:
             
             config.timerBBug = value;
-            return true;
+            return;
             
         default:
-            return false;
+            return;
     }
 }
 

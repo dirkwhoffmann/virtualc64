@@ -50,8 +50,8 @@ public:
 
     i64 getConfigItem(Option option) const;
     i64 getConfigItem(Option option, long id) const;
-    bool setConfigItem(Option option, i64 value) override;
-    bool setConfigItem(Option option, long id, i64 value) override;
+    void setConfigItem(Option option, i64 value) override;
+    void setConfigItem(Option option, long id, i64 value) override;
 
     
     //

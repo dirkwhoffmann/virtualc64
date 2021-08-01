@@ -56,16 +56,16 @@ Joystick::getConfigItem(Option option) const
     }
 }
 
-bool
+void
 Joystick::setConfigItem(Option option, i64 value)
 {
-    return setConfigItem(option, port.nr, value);
+    setConfigItem(option, port.nr, value);
 }
 
-bool
+void
 Joystick::setConfigItem(Option option, long id, i64 value)
 {
-    if (port.nr != id) return false;
+    if (port.nr != id) return;
     
     switch (option) {
             
@@ -75,8 +75,7 @@ Joystick::setConfigItem(Option option, long id, i64 value)
             
             // Release button immediately if autofire-mode is switches off
             if (value == false) button = false;
-
-            return true;
+            return;
 
         case OPT_AUTOFIRE_BULLETS:
             
@@ -84,16 +83,15 @@ Joystick::setConfigItem(Option option, long id, i64 value)
             
             // Update the bullet counter if we're currently firing
             if (bulletCounter > 0) reload();
-
-            return true;
+            return;
 
         case OPT_AUTOFIRE_DELAY:
             
             config.autofireDelay = value;
-            return true;
+            return;
 
         default:
-            return false;
+            return;
     }
 }
 
