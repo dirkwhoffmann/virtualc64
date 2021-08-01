@@ -193,7 +193,7 @@ private:
      * false. It is set to true by the regression tester to prevent the GUI
      * from disabling warp mode during an ongoing regression test.
      */
-    bool warpLock = false;
+    // bool warpLock = false;
     
     /* Indicates whether C64 is running in ultimax mode. Ultimax mode can be
      * enabled by external cartridges by pulling game line low and keeping
@@ -337,10 +337,10 @@ public:
     void pause();
     void shutdown();
     
-    void setWarp(bool enable);
+    void setWarp(bool enable) { enable ? thread.warpOn() : thread.warpOff(); }
     bool inWarpMode() const { return thread.warp; }
-    void lockWarpMode() { warpLock = true; }
-    void unlockWarpMode() { warpLock = false; }
+    void lockWarpMode() { thread.setWarpLock(true); }
+    void unlockWarpMode() { thread.setWarpLock(false); }
 
     void setDebug(bool enable);
     bool inDebugMode() const { return debugMode; }

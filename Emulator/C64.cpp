@@ -363,21 +363,6 @@ C64::setConfigItem(Option option, i64 value)
 }
 
 void
-C64::setWarp(bool enable)
-{
-    // if (warp != enable && !warpLock) {
-    if (!warpLock) {
-
-        enable ? thread.warpOn() : thread.warpOff();
-
-        /*
-        warp = enable;
-        HardwareComponent::setWarp(enable);
-        */
-    }
-}
-
-void
 C64::setDebug(bool enable)
 {
     suspend();
