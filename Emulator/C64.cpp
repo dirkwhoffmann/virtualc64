@@ -345,15 +345,11 @@ C64::setConfigItem(Option option, i64 value)
         case OPT_VIC_REVISION:
         {
             u64 newFrequency = VICII::getFrequency((VICIIRevision)value);
-
-            if (frequency == newFrequency) {
-                assert(durationOfOneCycle == 10000000000 / newFrequency);
-                return false;
-            }
+            isize newFps = VICII::getFps((VICIIRevision)value);
             
             frequency = (u32)newFrequency;
             durationOfOneCycle = 10000000000 / newFrequency;
-            thread.setSyncDelay(1000000000 / 50);
+            thread.setSyncDelay(1000000000 / newFps);
             return true;
         }
             
@@ -373,14 +369,14 @@ C64::setDebug(bool enable)
 bool
 C64::readyToPowerOn()
 {
-    msg("readyToPowerOn()\n");
+    debug(RUN_DEBUG, "readyToPowerOn()\n");
     return isReady();
 }
 
 void
 C64::threadPowerOff()
 {
-    msg("threadPowerOff()\n");
+    debug(RUN_DEBUG, "threadPowerOff()\n");
     
     // Power off all subcomponents
     HardwareComponent::powerOff();
@@ -395,7 +391,7 @@ C64::threadPowerOff()
 void
 C64::threadPowerOn()
 {
-    msg("threadPowerOn()\n");
+    debug(RUN_DEBUG, "threadPowerOn()\n");
     
     // Perform a reset
     hardReset();
@@ -413,13 +409,10 @@ C64::threadPowerOn()
 void
 C64::threadRun()
 {
-    msg("threadRun()\n");
+    debug(RUN_DEBUG, "threadRun()\n");
     
     // Launch all subcomponents
     HardwareComponent::run();
-
-    // Create the emulator thread
-    // pthread_create(&p, nullptr, threadMain, (void *)this);
     
     // Inform the GUI
     msgQueue.put(MSG_RUN);
@@ -428,7 +421,7 @@ C64::threadRun()
 void
 C64::threadPause()
 {
-    msg("threadPause()\n");
+    debug(RUN_DEBUG, "threadPause()\n");
     
     // Finish the current instruction to reach a clean state
     finishInstruction();
@@ -439,18 +432,31 @@ C64::threadPause()
     // Update the recorded debug information
     inspect();
     
-    // Ask the emulator thread to terminate
-    // signalStop();
-    
-    // Wait until the emulator thread has terminated
-    // pthread_join(p, nullptr);
-    
-    // Assure the emulator is no longer running
-    // assert(state == EMULATOR_STATE_PAUSED);
-    // assert(p == (pthread_t)0);
-    
     // Inform the GUI
     msgQueue.put(MSG_PAUSE);
+}
+
+void
+C64::threadHalt()
+{
+    debug(RUN_DEBUG, "threadHalt()\n");
+
+    // Inform the GUI
+    msgQueue.put(MSG_HALT);
+}
+
+void
+C64::threadWarpOff()
+{
+    // debug(RUN_DEBUG, "threadWarpOff()\n");
+    HardwareComponent::setWarp(false);
+}
+
+void
+C64::threadWarpOn()
+{
+    // debug(RUN_DEBUG, "threadWarpOn()\n");
+    HardwareComponent::setWarp(true);
 }
 
 void
@@ -526,62 +532,23 @@ C64::threadExecute()
 }
 
 void
-C64::threadHalt()
-{
-    msg("threadHalt()\n");
-}
-
-void
-C64::threadWarpOff()
-{
-    msg("threadWarpOff()\n");
-    HardwareComponent::setWarp(false);
-}
-
-void
-C64::threadWarpOn()
-{
-    msg("threadWarpOn()\n");
-    HardwareComponent::setWarp(true);
-}
-
-void
 C64::_powerOn()
 {
-    // state = EMULATOR_STATE_PAUSED;
 }
 
 void
 C64::_powerOff()
 {
-    // state = EMULATOR_STATE_OFF;
 }
 
 void
 C64::_run()
 {
-    // state = EMULATOR_STATE_RUNNING;
 }
 
 void
 C64::_pause()
 {
-    // state = EMULATOR_STATE_PAUSED;
-}
-
-void
-C64::shutdown()
-{
-    // Assure the emulator is powered off
-    assert(isPoweredOff());
-    
-    /* Send the SHUTDOWN message which is the last message ever send. The
-     * purpose of this message is to signal the GUI that no more messages will
-     * show up in the message queue. When the GUI receives this message, it
-     * knows that the emulator is powered off and the message queue empty. From
-     * this time on, it is safe to destroy the emulator object.
-     */
-    msgQueue.put(MSG_SHUTDOWN);
 }
 
 void
@@ -624,12 +591,12 @@ C64::_setWarp(bool enable)
 {
     if (enable) {
         
-        trace(RUN_DEBUG, "Warp on\n");
+        // debug(RUN_DEBUG, "Warp on\n");
         putMessage(MSG_WARP_ON);
         
     } else {
 
-        trace(RUN_DEBUG, "Warp off\n");
+        // debug(RUN_DEBUG, "Warp off\n");
         oscillator.restart();
         putMessage(MSG_WARP_OFF);
     }
@@ -646,7 +613,7 @@ C64::_setDebug(bool enable)
 void
 C64::suspend()
 {
-    debug(RUN_DEBUG, "Suspending (%zu)...\n", suspendCounter);
+    // debug(RUN_DEBUG, "Suspending (%zu)...\n", suspendCounter);
     
     if (suspendCounter || isRunning()) {
         pause();
@@ -657,7 +624,7 @@ C64::suspend()
 void
 C64::resume()
 {
-    trace(RUN_DEBUG, "Resuming (%zd)...\n", suspendCounter);
+    // debug(RUN_DEBUG, "Resuming (%zd)...\n", suspendCounter);
     
     if (suspendCounter && --suspendCounter == 0) {
         run();
@@ -690,104 +657,6 @@ C64::isReady(ErrorCode *err) const
     if (err) *err = ERROR_OK;
     return true;
 }
-
-/*
-void
-C64::oldRunLoop()
-{
-    trace(RUN_DEBUG, "runLoop()\n");
-        
-    // Inform the GUI
-    msgQueue.put(MSG_RUN);
-    
-    // Restart the synchronization timer
-    oscillator.restart();
-    
-    // Enter the loop
-    while (1) {
-        
-        // Run the emulator
-        while (runLoopCtrl == 0) { executeOneFrame(); }
-        
-        // Check if special action needs to be taken
-        if (runLoopCtrl) {
-            
-            // Are we requested to take a snapshot?
-            if (runLoopCtrl & ACTION_FLAG_AUTO_SNAPSHOT) {
-                trace(RUN_DEBUG, "RL_AUTO_SNAPSHOT\n");
-                autoSnapshot = Snapshot::makeWithC64(this);
-                putMessage(MSG_AUTO_SNAPSHOT_TAKEN);
-                clearActionFlags(ACTION_FLAG_AUTO_SNAPSHOT);
-            }
-            if (runLoopCtrl & ACTION_FLAG_USER_SNAPSHOT) {
-                trace(RUN_DEBUG, "RL_USER_SNAPSHOT\n");
-                userSnapshot = Snapshot::makeWithC64(this);
-                putMessage(MSG_USER_SNAPSHOT_TAKEN);
-                clearActionFlags(ACTION_FLAG_USER_SNAPSHOT);
-            }
-            
-            // Are we requested to update the debugger info structs?
-            if (runLoopCtrl & ACTION_FLAG_INSPECT) {
-                trace(RUN_DEBUG, "RL_INSPECT\n");
-                inspect();
-                clearActionFlags(ACTION_FLAG_INSPECT);
-            }
-            
-            // Did we reach a breakpoint?
-            if (runLoopCtrl & ACTION_FLAG_BREAKPOINT) {
-                putMessage(MSG_BREAKPOINT_REACHED);
-                trace(RUN_DEBUG, "BREAKPOINT_REACHED pc: %x\n", cpu.getPC0());
-                clearActionFlags(ACTION_FLAG_BREAKPOINT);
-                break;
-            }
-            
-            // Did we reach a watchpoint?
-            if (runLoopCtrl & ACTION_FLAG_WATCHPOINT) {
-                putMessage(MSG_WATCHPOINT_REACHED);
-                trace(RUN_DEBUG, "WATCHPOINT_REACHED pc: %x\n", cpu.getPC0());
-                clearActionFlags(ACTION_FLAG_WATCHPOINT);
-                break;
-            }
-            
-            // Are we requested to terminate the run loop?
-            if (runLoopCtrl & ACTION_FLAG_STOP) {
-                clearActionFlags(ACTION_FLAG_STOP);
-                trace(RUN_DEBUG, "STOP\n");
-                break;
-            }
-            
-            // Are we requested to pull the NMI line down?
-            if (runLoopCtrl & ACTION_FLAG_EXTERNAL_NMI) {
-                cpu.pullDownNmiLine(INTSRC_EXP);
-                trace(RUN_DEBUG, "EXTERNAL_NMI\n");
-                clearActionFlags(ACTION_FLAG_EXTERNAL_NMI);
-            }
-            
-            // Is the CPU jammed due the execution of an illegal instruction?
-            if (runLoopCtrl & ACTION_FLAG_CPU_JAM) {
-                putMessage(MSG_CPU_JAMMED);
-                trace(RUN_DEBUG, "CPU_JAMMED\n");
-                clearActionFlags(ACTION_FLAG_CPU_JAM);
-                break;
-            }
-                        
-            assert(runLoopCtrl == 0);
-        }
-    }
-    
-    // Finish the current instruction to reach a clean state
-    finishInstruction();
-    
-    // Enter pause mode
-    HardwareComponent::pause();
-
-    // Update the recorded debug information
-    inspect();
-
-    // Inform the GUI
-    msgQueue.put(MSG_PAUSE);
-}
-*/
 
 void
 C64::stopAndGo()

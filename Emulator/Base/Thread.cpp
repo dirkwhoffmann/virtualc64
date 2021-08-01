@@ -81,6 +81,8 @@ Thread::execute <ThreadMode::Pulsed> ()
 void
 Thread::main()
 {
+    debug(RUN_DEBUG, "main()\n");
+          
     while (1) {
                 
         if (isRunning()) {
@@ -254,6 +256,12 @@ Thread::pause(bool blocking)
         changeStateTo(EXEC_PAUSED, blocking);
     }
     entered = false;
+}
+
+void
+Thread::halt(bool blocking)
+{
+    changeStateTo(EXEC_TERMINATED, blocking);
 }
 
 void

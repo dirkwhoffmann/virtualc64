@@ -48,12 +48,6 @@ extension MyController: NSWindowDelegate {
         track()
         
         // Stop timers
-        /*
-        timerLock.lock()
-        timer?.invalidate()
-        timer = nil
-        timerLock.unlock()
-        */
         snapshotTimer?.invalidate()
         snapshotTimer = nil
 
@@ -69,18 +63,13 @@ extension MyController: NSWindowDelegate {
         // Disconnect all game pads
         gamePadManager.shutDown()
         
-        // Power off the emulator
-        c64.powerOff()
-        
-        // Ask the emulator to shutdown and to send the MSG_SHUTDOWN message
-        // c64.shutdown()
-        
-        shutDown()
+        // Shut down the emulator
+        c64.halt()        
     }
     
     func shutDown() {
         
-        // track("Shutting down the emulator (\(Thread.current.isMainThread))")
+        track("Shutting down the emulator")
         
         c64.kill()
         c64 = nil

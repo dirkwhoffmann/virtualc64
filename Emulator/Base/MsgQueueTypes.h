@@ -31,15 +31,15 @@ enum_long(MSG)
     MSG_RUN,
     MSG_PAUSE,
     MSG_RESET,
-    MSG_SCRIPT_DONE,
-    MSG_SCRIPT_PAUSE,
-    MSG_SCRIPT_ABORT,
-    MSG_SCRIPT_WAKEUP,
-    MSG_SHUTDOWN,
+    MSG_HALT,
     MSG_WARP_ON,
     MSG_WARP_OFF,
     MSG_MUTE_ON,
     MSG_MUTE_OFF,
+    MSG_SCRIPT_DONE,
+    MSG_SCRIPT_PAUSE,
+    MSG_SCRIPT_ABORT,
+    MSG_SCRIPT_WAKEUP,
 
     // ROMs
     MSG_BASIC_ROM_LOADED,
@@ -151,7 +151,7 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_SCRIPT_PAUSE:         return "SCRIPT_PAUSE";
             case MSG_SCRIPT_ABORT:         return "SCRIPT_ABORT";
             case MSG_SCRIPT_WAKEUP:        return "MSG_SCRIPT_WAKEUP";
-            case MSG_SHUTDOWN:             return "SHUTDOWN";
+            case MSG_HALT:                 return "HALT";
             case MSG_WARP_ON:              return "WARP_ON";
             case MSG_WARP_OFF:             return "WARP_OFF";
             case MSG_MUTE_ON:              return "MUTE_ON";

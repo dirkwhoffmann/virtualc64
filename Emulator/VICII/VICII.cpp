@@ -546,6 +546,12 @@ VICII::delayedLightPenIrqs(VICIIRevision revision)
      return revision & (VICII_PAL_6569_R1 | VICII_NTSC_6567_R56A);
 }
 
+isize
+VICII::getFps(VICIIRevision revision)
+{
+    return isPAL(revision) ? 50 : 60;
+}
+
 unsigned
 VICII::getFrequency(VICIIRevision revision)
 {

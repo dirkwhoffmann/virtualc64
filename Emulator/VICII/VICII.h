@@ -756,7 +756,11 @@ public:
     static bool delayedLightPenIrqs(VICIIRevision revision);
     bool delayedLightPenIrqs() { return delayedLightPenIrqs(config.revision); }
 
-    // Returns the clock frequencay of the selected VICII model
+    // Returns the number of frames per second of the selected VICII model
+    static isize getFps(VICIIRevision revision);
+    isize getFps() const { return getFps(config.revision); }
+
+    // Returns the clock frequency of the selected VICII model
     static unsigned getFrequency(VICIIRevision revision);
     unsigned getFrequency() const { return getFrequency(config.revision); }
     

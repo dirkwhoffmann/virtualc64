@@ -295,10 +295,10 @@ private:
     void threadPowerOn() override;
     void threadRun() override;
     void threadPause() override;
-    void threadExecute() override;
     void threadHalt() override;
     void threadWarpOff() override;
     void threadWarpOn() override;
+    void threadExecute() override;
 
     
     //
@@ -316,7 +316,7 @@ public:
     void powerOff() { thread.powerOff(); }
     void run() { thread.run(); }
     void pause() { thread.pause(); }
-    void shutdown();
+    void halt() { thread.halt(); }
     
     void setWarp(bool enable) { enable ? thread.warpOn() : thread.warpOff(); }
     bool inWarpMode() const { return thread.warp; }

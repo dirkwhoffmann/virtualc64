@@ -587,18 +587,8 @@ extension MyController {
             mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
             updateWarp()
             inspector?.fullRefresh()
-
-        case .SCRIPT_DONE,
-             .SCRIPT_PAUSE,
-             .SCRIPT_ABORT:
-            renderer.console.isDirty = true
-
-        case .SCRIPT_WAKEUP:
-            track()
-            c64.continueScript()
-            renderer.console.isDirty = true
             
-        case .SHUTDOWN:
+        case .HALT:
             shutDown()
 
         case .MUTE_ON:
@@ -613,6 +603,16 @@ extension MyController {
              .WARP_OFF:
             refreshStatusBar()
             
+        case .SCRIPT_DONE,
+             .SCRIPT_PAUSE,
+             .SCRIPT_ABORT:
+            renderer.console.isDirty = true
+
+        case .SCRIPT_WAKEUP:
+            track()
+            c64.continueScript()
+            renderer.console.isDirty = true
+
         case .BASIC_ROM_LOADED,
              .CHAR_ROM_LOADED,
              .KERNAL_ROM_LOADED,

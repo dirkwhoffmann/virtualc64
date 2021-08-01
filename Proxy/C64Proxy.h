@@ -150,22 +150,23 @@
 @property BOOL debugMode;
 @property InspectionTarget inspectionTarget;
 
-- (BOOL)isReady:(ErrorCode *)ec;
-- (BOOL)isReady;
-- (void)powerOn;
-- (void)powerOff;
 - (void)inspect;
 - (void)hardReset;
 - (void)softReset;
-- (void)shutdown;
 
 @property (readonly) BOOL poweredOn;
 @property (readonly) BOOL poweredOff;
 @property (readonly) BOOL running;
 @property (readonly) BOOL paused;
 
+- (BOOL)isReady:(ErrorCode *)ec;
+- (BOOL)isReady;
+- (void)powerOn;
+- (void)powerOff;
 - (void)run;
 - (void)pause;
+- (void)halt;
+
 - (void)suspend;
 - (void)resume;
 - (void)continueScript;

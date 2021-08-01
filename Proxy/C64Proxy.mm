@@ -2142,6 +2142,21 @@
     [self c64]->setInspectionTarget(target);
 }
 
+- (void)inspect
+{
+    [self c64]->inspect();
+}
+
+- (void)hardReset
+{
+    [self c64]->hardReset();
+}
+
+- (void)softReset
+{
+    [self c64]->softReset();
+}
+
 - (BOOL)isReady:(ErrorCode *)err
 {
     return [self c64]->isReady(err);
@@ -2160,26 +2175,6 @@
 - (void)powerOff
 {
     [self c64]->powerOff();
-}
-
-- (void)inspect
-{
-    [self c64]->inspect();
-}
-
-- (void)hardReset
-{
-    [self c64]->hardReset();
-}
-
-- (void)softReset
-{
-    [self c64]->softReset();
-}
-
-- (void)shutdown
-{
-    [self c64]->shutdown();
 }
 
 - (BOOL)poweredOn
@@ -2210,6 +2205,11 @@
 - (void)pause
 {
     [self c64]->pause();
+}
+
+- (void)halt
+{
+    [self c64]->halt();
 }
 
 - (void)suspend

@@ -90,10 +90,10 @@ public:
     virtual void threadPowerOn() = 0;
     virtual void threadRun() = 0;
     virtual void threadPause() = 0;
-    virtual void threadExecute() = 0;
     virtual void threadHalt() = 0;
     virtual void threadWarpOff() = 0;
     virtual void threadWarpOn() = 0;
+    virtual void threadExecute() = 0;
 };
 
 class Thread : public C64Object {
@@ -121,7 +121,7 @@ class Thread : public C64Object {
     bool condFlag = false;
 
     // Variables needed to implement "periodic" mode
-    util::Time delay = util::Time(1000000000);
+    util::Time delay = util::Time(1000000000 / 50);
     util::Time targetTime;
     
     // Indicates if the warp mode setting is locked
@@ -182,7 +182,8 @@ public:
     void powerOff(bool blocking = true);
     void run(bool blocking = true);
     void pause(bool blocking = true);
-
+    void halt(bool blocking = true);
+    
     void warpOn(bool blocking = false);
     void warpOff(bool blocking = false);
     
