@@ -37,7 +37,7 @@
 
 FastSID::FastSID(C64 &ref, SIDBridge &bridgeref, int n) : SubComponent(ref), bridge(bridgeref), nr(n)
 {    
-    subComponents = std::vector<HardwareComponent *> {
+    subComponents = std::vector<C64Component *> {
         
         &voice[0],
         &voice[1],

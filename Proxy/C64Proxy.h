@@ -22,7 +22,7 @@
 #include "ExpansionPortTypes.h"
 #include "FileTypes.h"
 #include "FSTypes.h"
-#include "HardwareComponentTypes.h"
+#include "C64ComponentTypes.h"
 #include "JoystickTypes.h"
 #include "MemoryTypes.h"
 #include "MouseTypes.h"

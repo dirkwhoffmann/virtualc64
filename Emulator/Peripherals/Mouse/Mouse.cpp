@@ -15,7 +15,7 @@
 
 Mouse::Mouse(C64 &ref, ControlPort& pref) : SubComponent(ref), port(pref)
 {
-    subComponents = std::vector<HardwareComponent *> {
+    subComponents = std::vector<C64Component *> {
         
         &mouse1350,
         &mouse1351,

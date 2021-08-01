@@ -16,7 +16,7 @@ Drive::Drive(DriveID id, C64 &ref) : SubComponent(ref), deviceNr(id)
 {
     assert(deviceNr == DRIVE8 || deviceNr == DRIVE9);
 	
-    subComponents = std::vector <HardwareComponent *> {
+    subComponents = std::vector <C64Component *> {
         
         &mem,
         &cpu,
@@ -391,7 +391,7 @@ Drive::_dump(dump::Category category, std::ostream& os) const
         os << tab("Eject volume");
         os << dec(config.ejectVolume) << std::endl;
         
-        mem.HardwareComponent::_dump(dump::BankMap, os);
+        mem.C64Component::_dump(dump::BankMap, os);
     }
     
     if (category & dump::State) {

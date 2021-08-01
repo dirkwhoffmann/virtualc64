@@ -14,12 +14,6 @@
 #include "SIDBridge.h"
 #include "VICII.h"
 
-/*
-Recorder::Recorder(C64& ref) : C64Component(ref)
-{
-}
-*/
-
 bool
 Recorder::hasFFmpeg() const
 {

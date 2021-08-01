@@ -162,7 +162,7 @@ public:
     
     SIDInfo getInfo(unsigned nr);
     VoiceInfo getVoiceInfo(unsigned nr, unsigned voice);
-    HardwareComponent &getSID(isize nr);
+    C64Component &getSID(isize nr);
 
 private:
     

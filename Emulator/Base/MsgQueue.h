@@ -33,7 +33,7 @@ class MsgQueue : public SubComponent {
     
     
     //
-    // Methods from HardwareComponent
+    // Methods from C64Component
     //
     
 public:

@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "HardwareComponent.h"
+#include "C64Component.h"
 
 class C64;
 class C64Memory;
@@ -54,7 +54,7 @@ class Snapshot;
 /* This class extends the C64Component class with references to all components
  * that are part of the C64 class.
  */
-class SubComponent : public HardwareComponent {
+class SubComponent : public C64Component {
 
 protected:
 

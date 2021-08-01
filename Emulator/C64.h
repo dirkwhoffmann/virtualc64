@@ -67,7 +67,7 @@
  * Please note that most subcomponents have their own public API. E.g., to
  * query information from VICII, you need to invoke a method on c64.vicii.
  */
-class C64 : public HardwareComponent, ThreadDelegate {
+class C64 : public C64Component, ThreadDelegate {
         
     // The currently set inspection target (only evaluated in debug mode)
     InspectionTarget inspectionTarget;

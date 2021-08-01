@@ -14,7 +14,7 @@
 
 CIA::CIA(C64 &ref) : SubComponent(ref)
 {    
-    subComponents = std::vector<HardwareComponent *> { &tod };    
+    subComponents = std::vector<C64Component *> { &tod };    
 }
 
 void

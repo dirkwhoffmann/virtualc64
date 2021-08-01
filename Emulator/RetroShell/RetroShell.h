@@ -193,7 +193,7 @@ public:
 
 private:
     
-    void dump(HardwareComponent &component, dump::Category category);
+    void dump(C64Component &component, dump::Category category);
     
     
     //

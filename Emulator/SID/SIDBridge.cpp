@@ -17,7 +17,7 @@
 
 SIDBridge::SIDBridge(C64 &ref) : SubComponent(ref)
 {        
-    subComponents = std::vector<HardwareComponent *> {
+    subComponents = std::vector<C64Component *> {
         
         &resid[0],
         &resid[1],
@@ -585,7 +585,7 @@ SIDBridge::getVoiceInfo(unsigned nr, unsigned voice)
     return info;
 }
 
-HardwareComponent &
+C64Component &
 SIDBridge::getSID(isize nr)
 {
     assert(nr >= 0 && nr <= 3);

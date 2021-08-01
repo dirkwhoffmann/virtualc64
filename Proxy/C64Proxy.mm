@@ -39,9 +39,9 @@
 
 @implementation HardwareComponentProxy
 
--(HardwareComponent *)hwc
+-(C64Component *)hwc
 {
-    return (HardwareComponent *)obj;
+    return (C64Component *)obj;
 }
 
 @end

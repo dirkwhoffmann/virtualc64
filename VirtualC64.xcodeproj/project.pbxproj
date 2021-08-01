@@ -95,7 +95,7 @@
 		504C438024AF29AC00E69CAE /* CPU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42E924AF29AB00E69CAE /* CPU.cpp */; };
 		504C438124AF29AC00E69CAE /* CPUInstructions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42EA24AF29AB00E69CAE /* CPUInstructions.cpp */; };
 		504C438224AF29AC00E69CAE /* C64Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42ED24AF29AB00E69CAE /* C64Object.cpp */; };
-		504C438324AF29AC00E69CAE /* HardwareComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42EE24AF29AB00E69CAE /* HardwareComponent.cpp */; };
+		504C438324AF29AC00E69CAE /* C64Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42EE24AF29AB00E69CAE /* C64Component.cpp */; };
 		504C438524AF29AC00E69CAE /* MsgQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F124AF29AB00E69CAE /* MsgQueue.cpp */; };
 		504C438724AF29AC00E69CAE /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F724AF29AB00E69CAE /* C64.cpp */; };
 		504C438824AF29AC00E69CAE /* Mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42FC24AF29AB00E69CAE /* Mouse.cpp */; };
@@ -444,11 +444,11 @@
 		504C42EA24AF29AB00E69CAE /* CPUInstructions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CPUInstructions.cpp; sourceTree = "<group>"; };
 		504C42EC24AF29AB00E69CAE /* C64Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Object.h; sourceTree = "<group>"; };
 		504C42ED24AF29AB00E69CAE /* C64Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64Object.cpp; sourceTree = "<group>"; };
-		504C42EE24AF29AB00E69CAE /* HardwareComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HardwareComponent.cpp; sourceTree = "<group>"; };
+		504C42EE24AF29AB00E69CAE /* C64Component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64Component.cpp; sourceTree = "<group>"; };
 		504C42F024AF29AB00E69CAE /* TimeDelayed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeDelayed.h; sourceTree = "<group>"; };
 		504C42F124AF29AB00E69CAE /* MsgQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MsgQueue.cpp; sourceTree = "<group>"; };
 		504C42F424AF29AB00E69CAE /* MsgQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MsgQueue.h; sourceTree = "<group>"; };
-		504C42F524AF29AB00E69CAE /* HardwareComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HardwareComponent.h; sourceTree = "<group>"; };
+		504C42F524AF29AB00E69CAE /* C64Component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Component.h; sourceTree = "<group>"; };
 		504C42F624AF29AB00E69CAE /* C64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64.h; sourceTree = "<group>"; };
 		504C42F724AF29AB00E69CAE /* C64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64.cpp; sourceTree = "<group>"; };
 		504C42F824AF29AB00E69CAE /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
@@ -641,7 +641,7 @@
 		50AEEE7226305625001DED20 /* C64Key.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Key.h; sourceTree = "<group>"; };
 		50AF2F8026AFFE9A002DC43B /* PIA.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PIA.cpp; sourceTree = "<group>"; };
 		50AF2F8126AFFE9A002DC43B /* PIA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PIA.h; sourceTree = "<group>"; };
-		50AFE0D32616E93A00D71E75 /* HardwareComponentTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HardwareComponentTypes.h; sourceTree = "<group>"; };
+		50AFE0D32616E93A00D71E75 /* C64ComponentTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64ComponentTypes.h; sourceTree = "<group>"; };
 		50B165AD25B06A03009B576D /* TextureToolbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureToolbox.swift; sourceTree = "<group>"; };
 		50B171051EE6AB840019E8D4 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyControllerTouchBar.swift; sourceTree = "<group>"; };
@@ -1449,9 +1449,9 @@
 				50F420C8250BA3460043DE56 /* Colors.cpp */,
 				504C42EC24AF29AB00E69CAE /* C64Object.h */,
 				504C42ED24AF29AB00E69CAE /* C64Object.cpp */,
-				50AFE0D32616E93A00D71E75 /* HardwareComponentTypes.h */,
-				504C42F524AF29AB00E69CAE /* HardwareComponent.h */,
-				504C42EE24AF29AB00E69CAE /* HardwareComponent.cpp */,
+				50AFE0D32616E93A00D71E75 /* C64ComponentTypes.h */,
+				504C42F524AF29AB00E69CAE /* C64Component.h */,
+				504C42EE24AF29AB00E69CAE /* C64Component.cpp */,
 				500EA6C624B09037009AA7D7 /* SubComponent.h */,
 				500EA6C524B09037009AA7D7 /* SubComponent.cpp */,
 				50E806C025A1DE9200F08732 /* MsgQueueTypes.h */,
@@ -1743,7 +1743,7 @@
 				500EA6C724B09037009AA7D7 /* SubComponent.cpp in Sources */,
 				501B80C325B1702500C90284 /* MyDocumentController.swift in Sources */,
 				5003382B266F7F3C00D5456E /* VICII_table.cpp in Sources */,
-				504C438324AF29AC00E69CAE /* HardwareComponent.cpp in Sources */,
+				504C438324AF29AC00E69CAE /* C64Component.cpp in Sources */,
 				50E9B92D201F299500065A89 /* MyController.swift in Sources */,
 				50DBB44B2025CE5700489271 /* Utils.swift in Sources */,
 				504C436F24AF29AC00E69CAE /* Comal80.cpp in Sources */,

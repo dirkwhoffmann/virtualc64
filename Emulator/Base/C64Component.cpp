@@ -8,37 +8,37 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "HardwareComponent.h"
+#include "C64Component.h"
 
-HardwareComponent::~HardwareComponent()
+C64Component::~C64Component()
 {
 }
 
 void
-HardwareComponent::initialize()
+C64Component::initialize()
 {
     // Initialize all subcomponents
-    for (HardwareComponent *c : subComponents) c->initialize();
+    for (C64Component *c : subComponents) c->initialize();
     
     // Initialize this component
     _initialize();
 }
 
 void
-HardwareComponent::reset(bool hard)
+C64Component::reset(bool hard)
 {
     // Reset all subcomponents
-    for (HardwareComponent *c : subComponents) c->reset(hard);
+    for (C64Component *c : subComponents) c->reset(hard);
 
     // Reset this component
     _reset(hard);    
 }
 
 void
-HardwareComponent::configure(Option option, i64 value)
+C64Component::configure(Option option, i64 value)
 {
     // Configure all subcomponents
-    for (HardwareComponent *c : subComponents) {
+    for (C64Component *c : subComponents) {
         c->configure(option, value);
     }
     
@@ -47,10 +47,10 @@ HardwareComponent::configure(Option option, i64 value)
 }
 
 void
-HardwareComponent::configure(Option option, long id, i64 value)
+C64Component::configure(Option option, long id, i64 value)
 {
     // Configure all subcomponents
-    for (HardwareComponent *c : subComponents) {
+    for (C64Component *c : subComponents) {
         c->configure(option, id, value);
     }
     
@@ -59,11 +59,11 @@ HardwareComponent::configure(Option option, long id, i64 value)
 }
 
 isize
-HardwareComponent::size()
+C64Component::size()
 {
     isize result = _size();
 
-    for (HardwareComponent *c : subComponents) {
+    for (C64Component *c : subComponents) {
         result += c->size();
     }
 
@@ -71,7 +71,7 @@ HardwareComponent::size()
 }
 
 isize
-HardwareComponent::load(const u8 *buffer)
+C64Component::load(const u8 *buffer)
 {    
     const u8 *ptr = buffer;
 
@@ -79,7 +79,7 @@ HardwareComponent::load(const u8 *buffer)
     ptr += willLoadFromBuffer(ptr);
 
     // Load internal state of all subcomponents
-    for (HardwareComponent *c : subComponents) {
+    for (C64Component *c : subComponents) {
         ptr += c->load(ptr);
     }
 
@@ -97,7 +97,7 @@ HardwareComponent::load(const u8 *buffer)
 }
 
 isize
-HardwareComponent::save(u8 *buffer)
+C64Component::save(u8 *buffer)
 {
     u8 *ptr = buffer;
 
@@ -105,7 +105,7 @@ HardwareComponent::save(u8 *buffer)
     ptr += willSaveToBuffer(ptr);
 
     // Save internal state of all subcomponents
-    for (HardwareComponent *c : subComponents) {
+    for (C64Component *c : subComponents) {
         ptr += c->save(ptr);
     }
 
@@ -123,38 +123,38 @@ HardwareComponent::save(u8 *buffer)
 }
 
 void
-HardwareComponent::powerOn()
+C64Component::powerOn()
 {
     for (auto c : subComponents) { c->powerOn(); }
     _powerOn();
 }
 
 void
-HardwareComponent::powerOff()
+C64Component::powerOff()
 {
     _powerOff();
     for (auto c : subComponents) { c->powerOff(); }
 }
 
 void
-HardwareComponent::run()
+C64Component::run()
 {
     for (auto c : subComponents) { c->run(); }
     _run();
 }
 
 void
-HardwareComponent::pause()
+C64Component::pause()
 {
     _pause();
     for (auto c : subComponents) { c->pause(); }
 }
 
 void
-HardwareComponent::inspect()
+C64Component::inspect()
 {
     // Inspect all subcomponents
-    for (HardwareComponent *c : subComponents) {
+    for (C64Component *c : subComponents) {
         c->inspect();
     }
     
@@ -162,34 +162,34 @@ HardwareComponent::inspect()
     _inspect();
 }
 
-void HardwareComponent::dump(dump::Category category, std::ostream& ss) const
+void C64Component::dump(dump::Category category, std::ostream& ss) const
 {
     _dump(category, ss);
 }
 
 void
-HardwareComponent::dump(dump::Category category) const
+C64Component::dump(dump::Category category) const
 {
     dump(category, std::cout);
 }
 
 void
-HardwareComponent::dump(std::ostream& ss) const
+C64Component::dump(std::ostream& ss) const
 {
     dump((dump::Category)(-1), ss);
 }
 
 void
-HardwareComponent::dump() const
+C64Component::dump() const
 {
     dump((dump::Category)(-1));
 }
 
 void
-HardwareComponent::setWarp(bool enable)
+C64Component::setWarp(bool enable)
 {
      // Enable or disable warp mode for all subcomponents
-     for (HardwareComponent *c : subComponents) {
+     for (C64Component *c : subComponents) {
          c->setWarp(enable);
      }
 
@@ -198,14 +198,14 @@ HardwareComponent::setWarp(bool enable)
 }
 
 void
-HardwareComponent::setDebug(bool enable)
+C64Component::setDebug(bool enable)
 {
     if (debugMode == enable) return;
     
     debugMode = enable;
 
      // Enable or disable debug mode for all subcomponents
-     for (HardwareComponent *c : subComponents) {
+     for (C64Component *c : subComponents) {
          c->setDebug(enable);
      }
 

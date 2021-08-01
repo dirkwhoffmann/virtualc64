@@ -13,7 +13,7 @@
 
 EasyFlash::EasyFlash(C64 &ref) : Cartridge(ref)
 {
-    subComponents = std::vector <HardwareComponent *> {
+    subComponents = std::vector <C64Component *> {
         
         &flashRomL,
         &flashRomH

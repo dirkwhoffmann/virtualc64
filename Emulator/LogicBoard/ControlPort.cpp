@@ -16,7 +16,7 @@ ControlPort::ControlPort(C64 &ref, PortId id) : SubComponent(ref), nr(id)
 {
     assert_enum(PortId, id);
     
-    subComponents = std::vector<HardwareComponent *> {
+    subComponents = std::vector<C64Component *> {
         
         &mouse,
         &joystick

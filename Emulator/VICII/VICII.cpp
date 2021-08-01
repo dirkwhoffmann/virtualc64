@@ -23,7 +23,7 @@
 
 VICII::VICII(C64 &ref) : SubComponent(ref), dmaDebugger(ref)
 {    
-    subComponents = std::vector<HardwareComponent *> { &dmaDebugger };
+    subComponents = std::vector<C64Component *> { &dmaDebugger };
 
     // Assign reference clock to all time delayed variables
     baLine.setClock(&cpu.cycle);

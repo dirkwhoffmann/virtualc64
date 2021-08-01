@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "HardwareComponentTypes.h"
+#include "C64ComponentTypes.h"
 #include "C64Object.h"
 #include "Serialization.h"
 #include "Concurrency.h"
@@ -43,14 +43,14 @@ enum Category : usize {
 
 }
     
-class HardwareComponent : public C64Object {
+class C64Component : public C64Object {
     
     friend class C64;
     
 public:
 
     // Sub components
-    std::vector<HardwareComponent *> subComponents;
+    std::vector<C64Component *> subComponents;
     
 protected:
         
@@ -75,7 +75,7 @@ protected:
     
 public:
     
-    virtual ~HardwareComponent();
+    virtual ~C64Component();
     
     /* Initializes the component and it's subcomponents. The initialization
      * procedure is initiated exactly once, in the constructor of the C64

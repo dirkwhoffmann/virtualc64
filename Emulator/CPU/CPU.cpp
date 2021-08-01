@@ -15,7 +15,7 @@
 template <typename M>
 CPU<M>::CPU(C64& ref, M& memref) : SubComponent(ref), mem(memref)
 {
-    subComponents = std::vector<HardwareComponent *> {
+    subComponents = std::vector<C64Component *> {
         
         &pport,
         &debugger

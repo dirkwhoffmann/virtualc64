@@ -21,7 +21,7 @@ C64::C64()
 {
     trace(RUN_DEBUG, "Creating virtual C64 [%p]\n", this);
         
-    subComponents = std::vector<HardwareComponent *> {
+    subComponents = std::vector<C64Component *> {
         
         &mem,
         &cpu,
@@ -41,7 +41,7 @@ C64::C64()
     };
 
     // Set up the initial state
-    HardwareComponent::initialize();
+    C64Component::initialize();
     _reset(true);
 }
 
@@ -65,7 +65,7 @@ C64::initialize(C64Model model)
     powerOff();
 
     // Put all components into their initial state
-    HardwareComponent::initialize();
+    C64Component::initialize();
     
     // Apply the selected configuration scheme
     configure(model);
@@ -77,7 +77,7 @@ C64::reset(bool hard)
     suspend();
     
     // Execute the standard reset routine
-    HardwareComponent::reset(hard);
+    C64Component::reset(hard);
     
     // Inform the GUI
     putMessage(MSG_RESET);
@@ -230,7 +230,7 @@ C64::_configure(Option option, i64 value)
     trace(CNF_DEBUG, "configure(option: %lld, value: %lld\n", option, value);
 
     // Propagate configuration request to all components
-    HardwareComponent::configure(option, value);
+    C64Component::configure(option, value);
 }
 
 void
@@ -246,7 +246,7 @@ C64::_configure(Option option, long id, i64 value)
     trace(CNF_DEBUG, "configure(option: %lld, id: %ld, value: %lld\n", option, id, value);
     
     // Propagate configuration request to all components
-    HardwareComponent::configure(option, id, value);
+    C64Component::configure(option, id, value);
 }
 
 void
@@ -360,7 +360,7 @@ void
 C64::setDebug(bool enable)
 {
     suspend();
-    HardwareComponent::setDebug(enable);
+    C64Component::setDebug(enable);
     resume();
 }
 
@@ -377,7 +377,7 @@ C64::threadPowerOff()
     debug(RUN_DEBUG, "threadPowerOff()\n");
     
     // Power off all subcomponents
-    HardwareComponent::powerOff();
+    C64Component::powerOff();
 
     // Update the recorded debug information
     inspect();
@@ -395,7 +395,7 @@ C64::threadPowerOn()
     hardReset();
             
     // Power on all subcomponents
-    HardwareComponent::powerOn();
+    C64Component::powerOn();
     
     // Update the recorded debug information
     inspect();
@@ -410,7 +410,7 @@ C64::threadRun()
     debug(RUN_DEBUG, "threadRun()\n");
     
     // Launch all subcomponents
-    HardwareComponent::run();
+    C64Component::run();
     
     // Inform the GUI
     msgQueue.put(MSG_RUN);
@@ -425,7 +425,7 @@ C64::threadPause()
     finishInstruction();
     
     // Enter pause mode
-    HardwareComponent::pause();
+    C64Component::pause();
     
     // Update the recorded debug information
     inspect();
@@ -447,7 +447,7 @@ void
 C64::threadWarpOff()
 {
     debug(WARP_DEBUG, "threadWarpOff()\n");
-    HardwareComponent::setWarp(false);
+    C64Component::setWarp(false);
     
     // Inform the GUI
     msgQueue.put(MSG_WARP_OFF);
@@ -457,7 +457,7 @@ void
 C64::threadWarpOn()
 {
     debug(WARP_DEBUG, "threadWarpOn()\n");
-    HardwareComponent::setWarp(true);
+    C64Component::setWarp(true);
 
     // Inform the GUI
     msgQueue.put(MSG_WARP_ON);

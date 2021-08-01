@@ -408,7 +408,7 @@ RetroShell::describe(const std::exception &e)
 }
 
 void
-RetroShell::dump(HardwareComponent &component, dump::Category category)
+RetroShell::dump(C64Component &component, dump::Category category)
 {
     std::stringstream ss; string line;
     
