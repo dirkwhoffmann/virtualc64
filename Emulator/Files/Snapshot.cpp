@@ -82,7 +82,7 @@ Snapshot::takeScreenshot(C64 *c64)
     unsigned xStart = FIRST_VISIBLE_PIXEL;
     unsigned yStart = FIRST_VISIBLE_LINE;
     header->screenshot.width = VISIBLE_PIXELS;
-    header->screenshot.height = c64->vic.numVisibleRasterlines();
+    header->screenshot.height = c64->vic.numVisibleLines();
     
     u32 *source = (u32 *)c64->vic.stableEmuTexture();
     u32 *target = header->screenshot.screen;

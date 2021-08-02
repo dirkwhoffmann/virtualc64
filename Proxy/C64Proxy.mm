@@ -340,7 +340,7 @@
 
 - (NSInteger)vPixels
 {
-    return [self vicii]->getRasterlinesPerFrame();
+    return [self vicii]->getLinesPerFrame();
 }
 
 - (VICIIConfig)getConfig

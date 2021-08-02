@@ -761,28 +761,28 @@ public:
     isize getFps() const { return getFps(config.revision); }
 
     // Returns the clock frequency of the selected VICII model
-    static unsigned getFrequency(VICIIRevision revision);
-    unsigned getFrequency() const { return getFrequency(config.revision); }
+    static isize getFrequency(VICIIRevision revision);
+    isize getFrequency() const { return getFrequency(config.revision); }
     
     // Returns the number of CPU cycles performed per rasterline
-    static unsigned getCyclesPerLine(VICIIRevision revision);
-    unsigned getCyclesPerLine() const { return getCyclesPerLine(config.revision); }
+    static isize getCyclesPerLine(VICIIRevision revision);
+    isize getCyclesPerLine() const { return getCyclesPerLine(config.revision); }
     
     // Returns true if the end of the rasterline has been reached
-    bool isLastCycleInRasterline(unsigned cycle) const;
+    bool isLastCycleInLine(isize cycle) const;
     
     // Returns the number of rasterlines drawn per frame
-    long getRasterlinesPerFrame() const;
+    long getLinesPerFrame() const;
 
     // Returns the number of visible rasterlines in a single frame
-    long numVisibleRasterlines() const;
+    long numVisibleLines() const;
 
     // Returns true if rasterline belongs to the VBLANK area
     bool isVBlankLine(unsigned rasterline) const;
     
     // Returns the number of CPU cycles executed in one frame
-    long getCyclesPerFrame() const {
-        return getRasterlinesPerFrame() * getCyclesPerLine(); }
+    isize getCyclesPerFrame() const {
+        return getLinesPerFrame() * getCyclesPerLine(); }
     
     /* Returns the number of frames drawn per second. The result is returned as
      * a floating point value, because Commodore did not manage to match the
@@ -794,9 +794,7 @@ public:
     }
     
     // Returns the time interval between two frames in nanoseconds
-    u64 getFrameDelay() const {
-        return u64(1000000000.0 / getFramesPerSecond());
-    }
+    i64 getFrameDelay() const { return i64(1000000000 / getFramesPerSecond()); }
     
     
     //

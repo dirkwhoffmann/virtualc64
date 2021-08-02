@@ -50,7 +50,7 @@ VICII::_reset(bool hard)
         for (isize i = 0; i < 8; i++) mcbase[i] = is656x() ? 0x3F : 0x00;
         
         // Reset counters
-        yCounter = (u32)getRasterlinesPerFrame();
+        yCounter = (u32)getLinesPerFrame();
         
         // Reset the memory source lookup table
         setUltimax(false);
@@ -95,7 +95,7 @@ VICII::resetTexture(u32 *p)
 {
     // Determine the HBLANK / VBLANK area
     long width = isPAL() ? PAL_PIXELS : NTSC_PIXELS;
-    long height = getRasterlinesPerFrame();
+    long height = getLinesPerFrame();
     
     for (int y = 0; y < TEX_HEIGHT; y++) {
         for (int x = 0; x < TEX_WIDTH; x++) {
@@ -552,7 +552,7 @@ VICII::getFps(VICIIRevision revision)
     return isPAL(revision) ? 50 : 60;
 }
 
-unsigned
+isize
 VICII::getFrequency(VICIIRevision revision)
 {
     switch (revision) {
@@ -567,7 +567,7 @@ VICII::getFrequency(VICIIRevision revision)
     }
 }
 
-unsigned
+isize
 VICII::getCyclesPerLine(VICIIRevision revision)
 {
     switch (revision) {
@@ -585,13 +585,13 @@ VICII::getCyclesPerLine(VICIIRevision revision)
 }
 
 bool
-VICII::isLastCycleInRasterline(unsigned cycle) const
+VICII::isLastCycleInLine(isize cycle) const
 {
     return cycle >= getCyclesPerLine();
 }
 
 long
-VICII::getRasterlinesPerFrame() const
+VICII::getLinesPerFrame() const
 {
     switch (config.revision) {
             
@@ -608,7 +608,7 @@ VICII::getRasterlinesPerFrame() const
 }
 
 long
-VICII::numVisibleRasterlines() const
+VICII::numVisibleLines() const
 {
     switch (config.revision) {
             
@@ -676,7 +676,7 @@ void
 VICII::checkForRasterIrq()
 {
     // Determine the comparison value
-    u32 counter = isLastCycleInRasterline(c64.rasterCycle) ? yCounter + 1 : yCounter;
+    u32 counter = isLastCycleInLine(c64.rasterCycle) ? yCounter + 1 : yCounter;
     
     // Check if the interrupt line matches
     bool match = rasterIrqLine == counter;

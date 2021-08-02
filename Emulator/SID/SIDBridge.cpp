@@ -156,10 +156,10 @@ SIDBridge::setConfigItem(Option option, i64 value)
             
         case OPT_VIC_REVISION:
         {
-            u32 newFrequency = VICII::getFrequency((VICIIRevision)value);
+            isize newFrequency = VICII::getFrequency((VICIIRevision)value);
                                     
             suspend();
-            setClockFrequency(newFrequency);
+            setClockFrequency((u32)newFrequency);
             resume();
             return;
         }

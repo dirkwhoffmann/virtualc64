@@ -342,7 +342,7 @@ C64::setConfigItem(Option option, i64 value)
             
         case OPT_VIC_REVISION:
         {
-            u64 newFrequency = VICII::getFrequency((VICIIRevision)value);
+            isize newFrequency = VICII::getFrequency((VICIIRevision)value);
             isize newFps = VICII::getFps((VICIIRevision)value);
             
             frequency = (u32)newFrequency;
@@ -586,7 +586,7 @@ C64::_dump(dump::Category category, std::ostream& os) const
                 
         os << tab("Machine type") << bol(vic.isPAL(), "PAL", "NTSC") << std::endl;
         os << tab("Frames per second") << vic.getFramesPerSecond() << std::endl;
-        os << tab("Rasterlines per frame") << vic.getRasterlinesPerFrame() << std::endl;
+        os << tab("Lines per frame") << vic.getLinesPerFrame() << std::endl;
         os << tab("Cycles per rasterline") << vic.getCyclesPerLine() << std::endl;
         os << tab("Current cycle") << cpu.cycle << std::endl;
         os << tab("Current frame") << frame << std::endl;
@@ -705,8 +705,8 @@ C64::executeOneLine()
     if (rasterCycle == 1) beginRasterLine();
     
     // Emulate the middle of a rasterline
-    unsigned lastCycle = vic.getCyclesPerLine();
-    for (unsigned i = rasterCycle; i <= lastCycle; i++) {
+    isize lastCycle = vic.getCyclesPerLine();
+    for (isize i = rasterCycle; i <= lastCycle; i++) {
         
         _executeOneCycle();
         if (runLoopCtrl != 0) {
@@ -723,7 +723,7 @@ void
 C64::executeOneCycle()
 {
     bool isFirstCycle = rasterCycle == 1;
-    bool isLastCycle = vic.isLastCycleInRasterline(rasterCycle);
+    bool isLastCycle = vic.isLastCycleInLine(rasterCycle);
     
     if (isFirstCycle) beginRasterLine();
     _executeOneCycle();
@@ -800,7 +800,7 @@ C64::endRasterLine()
     rasterCycle = 1;
     rasterLine++;
     
-    if (rasterLine >= vic.getRasterlinesPerFrame()) {
+    if (rasterLine >= vic.getLinesPerFrame()) {
         rasterLine = 0;
         endFrame();
     }
