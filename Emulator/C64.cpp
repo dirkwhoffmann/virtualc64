@@ -116,6 +116,7 @@ C64::getConfigItem(Option option) const
     switch (option) {
             
         case OPT_VIC_REVISION:
+        case OPT_VIC_SPEED:
         case OPT_VIC_POWER_SAVE:
         case OPT_GRAY_DOT_BUG:
         case OPT_GLUE_LOGIC:
@@ -342,15 +343,32 @@ C64::setConfigItem(Option option, i64 value)
             
         case OPT_VIC_REVISION:
         {
-            isize newFrequency = VICII::getFrequency((VICIIRevision)value);
-            isize newFps = VICII::getFps((VICIIRevision)value);
+            auto rev = (VICIIRevision)value;
+            auto speed = vic.getConfig().speed;
+            
+            isize newFrequency = VICII::getFrequency(rev, speed);
+            double newFps = VICII::getFps(rev, speed);
             
             frequency = (u32)newFrequency;
             durationOfOneCycle = 10000000000 / newFrequency;
-            thread.setSyncDelay(1000000000 / newFps);
+            thread.setSyncDelay((i64)(1000000000 / newFps));
             return;
         }
             
+        case OPT_VIC_SPEED:
+        {
+            auto rev = vic.getConfig().revision;
+            auto speed = (VICIISpeed)value;
+            
+            isize newFrequency = VICII::getFrequency(rev, speed);
+            double newFps = VICII::getFps(rev, speed);
+            
+            frequency = (u32)newFrequency;
+            durationOfOneCycle = 10000000000 / newFrequency;
+            thread.setSyncDelay((i64)(1000000000 / newFps));
+            return;
+        }
+
         default:
             return;
     }
@@ -585,7 +603,7 @@ C64::_dump(dump::Category category, std::ostream& os) const
     if (category & dump::State) {
                 
         os << tab("Machine type") << bol(vic.isPAL(), "PAL", "NTSC") << std::endl;
-        os << tab("Frames per second") << vic.getFramesPerSecond() << std::endl;
+        os << tab("Frames per second") << vic.getFps() << std::endl;
         os << tab("Lines per frame") << vic.getLinesPerFrame() << std::endl;
         os << tab("Cycles per rasterline") << vic.getCyclesPerLine() << std::endl;
         os << tab("Current cycle") << cpu.cycle << std::endl;

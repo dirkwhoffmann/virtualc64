@@ -641,8 +641,10 @@ private:
         worker
         
         << config.revision
-        << config.glueLogic
+        << config.speed
+        << config.powerSave
         << config.grayDotBug
+        << config.glueLogic
         
         << memSrc;
     }
@@ -737,64 +739,58 @@ private:
 public:
     
     // Returns true if a PAL chip is plugged in
-    static bool isPAL(VICIIRevision revision);
+    static bool isPAL(VICIIRevision rev);
     bool isPAL() const { return isPAL(config.revision); }
     
     // Returns true if a NTSC chip is plugged in
-    static bool isNTSC(VICIIRevision revision);
+    static bool isNTSC(VICIIRevision rev);
     bool isNTSC() const { return isNTSC(config.revision); }
 
     // Returns true if a newer MOS 856x chip is plugged in
-    static bool is856x(VICIIRevision revision);
+    static bool is856x(VICIIRevision rev);
     bool is856x() const { return is856x(config.revision); }
     
     // Returns true if an older MOS 656x chip is plugged in
-    static bool is656x(VICIIRevision revision);
+    static bool is656x(VICIIRevision rev);
     bool is656x() const { return is656x(config.revision); }
 
     // Returns true if light pen interrupts are triggered with a delay
-    static bool delayedLightPenIrqs(VICIIRevision revision);
+    static bool delayedLightPenIrqs(VICIIRevision rev);
     bool delayedLightPenIrqs() { return delayedLightPenIrqs(config.revision); }
 
-    // Returns the number of frames per second of the selected VICII model
-    static isize getFps(VICIIRevision revision);
-    isize getFps() const { return getFps(config.revision); }
+    // Returns the refresh rate of the selected VICII configuration
+    static double getFps(VICIIRevision rev, VICIISpeed speed);
+    double getFps() const { return getFps(config.revision, config.speed); }
 
     // Returns the clock frequency of the selected VICII model
-    static isize getFrequency(VICIIRevision revision);
-    isize getFrequency() const { return getFrequency(config.revision); }
+    static isize getFrequency(VICIIRevision rev, VICIISpeed speed);
+    isize getFrequency() const { return getFrequency(config.revision, config.speed); }
     
     // Returns the number of CPU cycles performed per rasterline
-    static isize getCyclesPerLine(VICIIRevision revision);
+    static isize getCyclesPerLine(VICIIRevision rev);
     isize getCyclesPerLine() const { return getCyclesPerLine(config.revision); }
-    
-    // Returns true if the end of the rasterline has been reached
-    bool isLastCycleInLine(isize cycle) const;
-    
+        
     // Returns the number of rasterlines drawn per frame
-    long getLinesPerFrame() const;
+    static isize getLinesPerFrame(VICIIRevision rev);
+    isize getLinesPerFrame() const { return getLinesPerFrame(config.revision); }
 
     // Returns the number of visible rasterlines in a single frame
-    long numVisibleLines() const;
-
-    // Returns true if rasterline belongs to the VBLANK area
-    bool isVBlankLine(unsigned rasterline) const;
+    static isize numVisibleLines(VICIIRevision rev);
+    long numVisibleLines() const { return numVisibleLines(config.revision); }
     
     // Returns the number of CPU cycles executed in one frame
-    isize getCyclesPerFrame() const {
-        return getLinesPerFrame() * getCyclesPerLine(); }
-    
-    /* Returns the number of frames drawn per second. The result is returned as
-     * a floating point value, because Commodore did not manage to match the
-     * expected values exactly (50 Hz for PAL and 60 Hz for NTSC). E.g., a PAL
-     * C64 outputs 50.125 Hz.
-     */
-    double getFramesPerSecond() const {
-        return (double)getFrequency() / (double)getCyclesPerFrame();
-    }
-    
+    static isize getCyclesPerFrame(VICIIRevision rev) {
+        return getLinesPerFrame(rev) * getCyclesPerLine(rev); }
+    isize getCyclesPerFrame() const { return getCyclesPerFrame(config.revision); }
+
+    // Returns true if the end of the rasterline has been reached
+    bool isLastCycleInLine(isize cycle) const;
+
+    // Returns true if rasterline belongs to the VBLANK area
+    bool isVBlankLine(isize line) const;
+
     // Returns the time interval between two frames in nanoseconds
-    i64 getFrameDelay() const { return i64(1000000000 / getFramesPerSecond()); }
+    i64 getFrameDelay() const { return i64(1000000000 / getFps()); }
     
     
     //

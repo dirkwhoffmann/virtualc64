@@ -299,7 +299,11 @@ Interpreter::registerInstructions()
     root.add({"vicii", "set", "revision"},
              "key", "Selects the emulated chip model",
              &RetroShell::exec <Token::vicii, Token::set, Token::revision>, 1);
-    
+
+    root.add({"vicii", "set", "speed"},
+             "key", "Sets the emulation speed",
+             &RetroShell::exec <Token::vicii, Token::set, Token::speed>, 1);
+
     root.add({"vicii", "set", "graydotbug"},
              "key", "Enables or disables the gray dot bug",
              &RetroShell::exec <Token::vicii, Token::set, Token::graydotbug>, 1);

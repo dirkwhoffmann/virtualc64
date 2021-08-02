@@ -122,6 +122,7 @@ VICII::getDefaultConfig()
     VICIIConfig defaults;
     
     defaults.revision = VICII_PAL_8565;
+    defaults.speed = VICII_NATIVE;
     defaults.powerSave = true;
     defaults.grayDotBug = true;
     defaults.glueLogic = GLUE_LOGIC_DISCRETE;
@@ -145,6 +146,7 @@ VICII::resetConfig()
     VICIIConfig defaults = getDefaultConfig();
     
     setConfigItem(OPT_VIC_REVISION, defaults.revision);
+    setConfigItem(OPT_VIC_SPEED, defaults.speed);
     setConfigItem(OPT_VIC_POWER_SAVE, defaults.powerSave);
     setConfigItem(OPT_GRAY_DOT_BUG, defaults.grayDotBug);
     setConfigItem(OPT_GLUE_LOGIC, defaults.glueLogic);
@@ -166,6 +168,7 @@ VICII::getConfigItem(Option option) const
     switch (option) {
             
         case OPT_VIC_REVISION:      return config.revision;
+        case OPT_VIC_SPEED:         return config.speed;
         case OPT_VIC_POWER_SAVE:    return config.powerSave;
         case OPT_PALETTE:           return config.palette;
         case OPT_BRIGHTNESS:        return config.brightness;
@@ -196,6 +199,18 @@ VICII::setConfigItem(Option option, i64 value)
             
             suspend();
             setRevision((VICIIRevision)value);
+            resume();
+            return;
+
+        case OPT_VIC_SPEED:
+            
+            if (!VICIISpeedEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INV_ARG, VICIISpeedEnum::keyList());
+            }
+            
+            suspend();
+            // setSpeed((VICIISpeed)value);
+            config.speed = value;
             resume();
             return;
 
@@ -384,6 +399,8 @@ VICII::_dump(dump::Category category, std::ostream& os) const
 
         os << tab("Chip model");
         os << VICIIRevisionEnum::key(config.revision) << std::endl;
+        os << tab("Speed");
+        os << VICIISpeedEnum::key(config.speed) << std::endl;
         os << tab("Power save mode");
         os << bol(config.powerSave, "during warp", "never") << std::endl;
         os << tab("Gray dot bug");
@@ -517,45 +534,45 @@ VICII::_run()
 }
 
 bool
-VICII::isPAL(VICIIRevision revision)
+VICII::isPAL(VICIIRevision rev)
 {
-    return revision & (VICII_PAL_6569_R1 | VICII_PAL_6569_R3 | VICII_PAL_8565);
+    return rev & (VICII_PAL_6569_R1 | VICII_PAL_6569_R3 | VICII_PAL_8565);
 }
 
 bool
-VICII::isNTSC(VICIIRevision revision)
+VICII::isNTSC(VICIIRevision rev)
 {
-     return revision & (VICII_NTSC_6567 | VICII_NTSC_6567_R56A | VICII_NTSC_8562);
+     return rev & (VICII_NTSC_6567 | VICII_NTSC_6567_R56A | VICII_NTSC_8562);
 }
 
 bool
-VICII::is856x(VICIIRevision revision)
+VICII::is856x(VICIIRevision rev)
 {
-     return revision & (VICII_PAL_8565 | VICII_NTSC_8562);
+     return rev & (VICII_PAL_8565 | VICII_NTSC_8562);
 }
  
 bool
-VICII::is656x(VICIIRevision revision)
+VICII::is656x(VICIIRevision rev)
 {
-     return revision & ~(VICII_PAL_8565 | VICII_NTSC_8562);
+     return rev & ~(VICII_PAL_8565 | VICII_NTSC_8562);
 }
 
 bool
-VICII::delayedLightPenIrqs(VICIIRevision revision)
+VICII::delayedLightPenIrqs(VICIIRevision rev)
 {
-     return revision & (VICII_PAL_6569_R1 | VICII_NTSC_6567_R56A);
+     return rev & (VICII_PAL_6569_R1 | VICII_NTSC_6567_R56A);
+}
+
+double
+VICII::getFps(VICIIRevision rev, VICIISpeed speed)
+{
+    return (double)getFrequency(rev, speed) / (double)getCyclesPerFrame(rev);
 }
 
 isize
-VICII::getFps(VICIIRevision revision)
+VICII::getFrequency(VICIIRevision rev, VICIISpeed speed)
 {
-    return isPAL(revision) ? 50 : 60;
-}
-
-isize
-VICII::getFrequency(VICIIRevision revision)
-{
-    switch (revision) {
+    switch (rev) {
             
         case VICII_NTSC_6567:
         case VICII_NTSC_8562:
@@ -568,9 +585,9 @@ VICII::getFrequency(VICIIRevision revision)
 }
 
 isize
-VICII::getCyclesPerLine(VICIIRevision revision)
+VICII::getCyclesPerLine(VICIIRevision rev)
 {
-    switch (revision) {
+    switch (rev) {
             
         case VICII_NTSC_6567_R56A:
             return 64;
@@ -584,16 +601,10 @@ VICII::getCyclesPerLine(VICIIRevision revision)
     }
 }
 
-bool
-VICII::isLastCycleInLine(isize cycle) const
+isize
+VICII::getLinesPerFrame(VICIIRevision rev)
 {
-    return cycle >= getCyclesPerLine();
-}
-
-long
-VICII::getLinesPerFrame() const
-{
-    switch (config.revision) {
+    switch (rev) {
             
         case VICII_NTSC_6567_R56A:
             return 262;
@@ -607,10 +618,10 @@ VICII::getLinesPerFrame() const
     }
 }
 
-long
-VICII::numVisibleLines() const
+isize
+VICII::numVisibleLines(VICIIRevision rev)
 {
-    switch (config.revision) {
+    switch (rev) {
             
         case VICII_NTSC_6567_R56A:
             return 234;
@@ -625,19 +636,25 @@ VICII::numVisibleLines() const
 }
 
 bool
-VICII::isVBlankLine(unsigned rasterline) const
+VICII::isLastCycleInLine(isize cycle) const
+{
+    return cycle >= getCyclesPerLine();
+}
+
+bool
+VICII::isVBlankLine(isize line) const
 {
     switch (config.revision) {
             
         case VICII_NTSC_6567_R56A:
-            return rasterline < 16 || rasterline >= 16 + 234;
+            return line < 16 || line >= 16 + 234;
             
         case VICII_NTSC_6567:
         case VICII_NTSC_8562:
-            return rasterline < 16 || rasterline >= 16 + 235;
+            return line < 16 || line >= 16 + 235;
             
         default:
-            return rasterline < 16 || rasterline >= 16 + 284;
+            return line < 16 || line >= 16 + 284;
     }
 }
 

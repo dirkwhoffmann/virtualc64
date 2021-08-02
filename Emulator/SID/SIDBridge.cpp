@@ -156,14 +156,30 @@ SIDBridge::setConfigItem(Option option, i64 value)
             
         case OPT_VIC_REVISION:
         {
-            isize newFrequency = VICII::getFrequency((VICIIRevision)value);
-                                    
+            auto rev = (VICIIRevision)value;
+            auto speed = vic.getConfig().speed;
+            
+            isize newFrequency = VICII::getFrequency(rev, speed);
+
             suspend();
             setClockFrequency((u32)newFrequency);
             resume();
             return;
         }
-         
+
+        case OPT_VIC_SPEED:
+        {
+            auto rev = vic.getConfig().revision;
+            auto speed = (VICIISpeed)value;
+            
+            isize newFrequency = VICII::getFrequency(rev, speed);
+
+            suspend();
+            setClockFrequency((u32)newFrequency);
+            resume();
+            return;
+        }
+
         case OPT_SID_POWER_SAVE:
             
             suspend();

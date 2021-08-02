@@ -558,6 +558,7 @@ extension Keys {
         
         // VICII
         static let vicRevision    = "VC64_HW_VicRev"
+        static let vicSpeed       = "VC64_HW_VicSpeed"
         static let vicGrayDotBug  = "VC64_HW_VicGrayDotBug"
         
         // CIAs
@@ -586,6 +587,7 @@ extension Keys {
 struct HardwareDefaults {
     
     var vicRevision: VICIIRevision
+    var vicSpeed: VICIISpeed
     var vicGrayDotBug: Bool
     
     var ciaRevision: CIARevision
@@ -612,6 +614,7 @@ struct HardwareDefaults {
     static let C64_PAL = HardwareDefaults.init(
         
         vicRevision:   .PAL_6569_R3,
+        vicSpeed:      .NATIVE,
         vicGrayDotBug: false,
         
         ciaRevision:   .MOS_6526,
@@ -635,6 +638,7 @@ struct HardwareDefaults {
     static let C64_II_PAL = HardwareDefaults.init(
         
         vicRevision:   .PAL_8565,
+        vicSpeed:      .NATIVE,
         vicGrayDotBug: true,
         
         ciaRevision:   .MOS_8521,
@@ -658,6 +662,7 @@ struct HardwareDefaults {
     static let C64_OLD_PAL = HardwareDefaults.init(
         
         vicRevision:   .PAL_6569_R1,
+        vicSpeed:      .NATIVE,
         vicGrayDotBug: false,
         
         ciaRevision:   .MOS_6526,
@@ -681,6 +686,7 @@ struct HardwareDefaults {
     static let C64_NTSC = HardwareDefaults.init(
         
         vicRevision:   .NTSC_6567,
+        vicSpeed:      .NATIVE,
         vicGrayDotBug: false,
         
         ciaRevision:   .MOS_6526,
@@ -704,6 +710,7 @@ struct HardwareDefaults {
     static let C64_II_NTSC = HardwareDefaults.init(
         
         vicRevision:   .NTSC_8562,
+        vicSpeed:      .NATIVE,
         vicGrayDotBug: true,
         
         ciaRevision:   .MOS_8521,
@@ -727,6 +734,7 @@ struct HardwareDefaults {
     static let C64_OLD_NTSC = HardwareDefaults.init(
         
         vicRevision:   .NTSC_6567_R56A,
+        vicSpeed:      .NATIVE,
         vicGrayDotBug: false,
         
         ciaRevision:   .MOS_6526,
@@ -756,6 +764,7 @@ extension UserDefaults {
         let dictionary: [String: Any] = [
             
             Keys.Hwd.vicRevision:   defaults.vicRevision.rawValue,
+            Keys.Hwd.vicSpeed:      defaults.vicSpeed.rawValue,
             Keys.Hwd.vicGrayDotBug: defaults.vicGrayDotBug,
             
             Keys.Hwd.ciaRevision:   defaults.ciaRevision.rawValue,
@@ -784,6 +793,7 @@ extension UserDefaults {
         let defaults = UserDefaults.standard
         
         let keys = [Keys.Hwd.vicRevision,
+                    Keys.Hwd.vicSpeed,
                     Keys.Hwd.vicGrayDotBug,
                     
                     Keys.Hwd.ciaRevision,

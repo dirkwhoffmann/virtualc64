@@ -32,7 +32,12 @@ class Configuration {
         get { return c64.getConfig(.VIC_REVISION) }
         set { c64.configure(.VIC_REVISION, value: newValue) }
     }
-    
+
+    var vicSpeed: Int {
+        get { return c64.getConfig(.VIC_SPEED) }
+        set { c64.configure(.VIC_SPEED, value: newValue) }
+    }
+
     var vicGrayDotBug: Bool {
         get { return c64.getConfig(.GRAY_DOT_BUG) != 0 }
         set { c64.configure(.GRAY_DOT_BUG, enable: newValue) }
@@ -488,6 +493,7 @@ class Configuration {
         c64.suspend()
         
         vicRevision = defaults.vicRevision.rawValue
+        vicSpeed = defaults.vicSpeed.rawValue
         vicGrayDotBug = defaults.vicGrayDotBug
         
         ciaRevision = defaults.ciaRevision.rawValue
@@ -518,6 +524,7 @@ class Configuration {
         c64.suspend()
         
         vicRevision = defaults.integer(forKey: Keys.Hwd.vicRevision)
+        vicSpeed = defaults.integer(forKey: Keys.Hwd.vicSpeed)
         vicGrayDotBug = defaults.bool(forKey: Keys.Hwd.vicGrayDotBug)
         
         ciaRevision = defaults.integer(forKey: Keys.Hwd.ciaRevision)
@@ -547,6 +554,7 @@ class Configuration {
         let defaults = UserDefaults.standard
         
         defaults.set(vicRevision, forKey: Keys.Hwd.vicRevision)
+        defaults.set(vicSpeed, forKey: Keys.Hwd.vicSpeed)
         defaults.set(vicGrayDotBug, forKey: Keys.Hwd.vicGrayDotBug)
         
         defaults.set(ciaRevision, forKey: Keys.Hwd.ciaRevision)

@@ -20,6 +20,7 @@ enum_long(OPT)
 {
     // VICII
     OPT_VIC_REVISION,
+    OPT_VIC_SPEED,
     OPT_PALETTE,
     OPT_BRIGHTNESS,
     OPT_CONTRAST,
@@ -109,6 +110,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
     static const char *key(Option value)
     {
         switch (value) {
+                
             case OPT_VIC_REVISION:        return "VIC_REVISION";
             case OPT_PALETTE:             return "PALETTE";
             case OPT_BRIGHTNESS:          return "BRIGHTNESS";
