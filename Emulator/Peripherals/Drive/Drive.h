@@ -119,7 +119,7 @@ private:
     u64 elapsedTime = 0;
     
     // Duration of a single CPU clock cycle in 1/10 nano seconds
-    u64 durationOfOneCpuCycle = 0;
+    // u64 durationOfOneCpuCycle = 0;
     
     /* Indicates when the next drive clock cycle occurs. The VC1541 drive is
      * clocked by 16 MHz. The clock signal is fed into a counter which serves
@@ -291,8 +291,8 @@ private:
         << config.stepVolume
         << config.insertVolume
         << config.ejectVolume
-        << insertionStatus
-        << durationOfOneCpuCycle;
+        << insertionStatus;
+        // << durationOfOneCpuCycle;
     }
     
     template <class T>

@@ -134,17 +134,15 @@ Drive::setConfigItem(Option option, i64 value)
 {
     switch (option) {
             
+        /*
         case OPT_VIC_REVISION:
         {
             u64 duration = 10000000000 / VICII::getFrequency((VICIIRevision)value);
             
-            if (durationOfOneCpuCycle == duration) {
-                return;
-            }
-            
             durationOfOneCpuCycle = duration;
             return;
         }
+        */
         case OPT_DRV_AUTO_CONFIG:
         case OPT_DRV_POWER_SAVE:
         case OPT_DRV_EJECT_DELAY:
@@ -430,8 +428,7 @@ Drive::_dump(dump::Category category, std::ostream& os) const
 void
 Drive::_run()
 {
-    // Make sure the emulator has been configured properly
-    assert(durationOfOneCpuCycle > 0);
+
 }
 
 void
