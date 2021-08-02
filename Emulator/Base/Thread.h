@@ -160,6 +160,7 @@ public:
 private:
     
     template <ThreadMode M> void execute();
+    template <ThreadMode M> void sleep();
     void main();
 
     // Returns true if this functions is called from within the emulator thread

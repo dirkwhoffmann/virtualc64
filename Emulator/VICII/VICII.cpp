@@ -566,7 +566,17 @@ VICII::delayedLightPenIrqs(VICIIRevision rev)
 double
 VICII::getFps(VICIIRevision rev, VICIISpeed speed)
 {
-    return (double)getFrequency(rev, speed) / (double)getCyclesPerFrame(rev);
+    switch (speed) {
+            
+        case VICII_TRUE_50: return 50;
+        case VICII_TRUE_60: return 60;
+        case VICII_TRUE_100: return 100;
+        case VICII_TRUE_120: return 120;
+            
+        default:
+            assert(speed == VICII_NATIVE);
+            return (double)getFrequency(rev, speed) / (double)getCyclesPerFrame(rev);
+    }
 }
 
 i64
@@ -576,7 +586,7 @@ VICII::getFrameDelay(VICIIRevision rev, VICIISpeed speed)
 }
 
 isize
-VICII::getFrequency(VICIIRevision rev, VICIISpeed speed)
+VICII::getNativeFrequency(VICIIRevision rev)
 {
     switch (rev) {
             
@@ -587,6 +597,22 @@ VICII::getFrequency(VICIIRevision rev, VICIISpeed speed)
             
         default:
             return PAL_CLOCK_FREQUENCY;
+    }
+}
+
+isize
+VICII::getFrequency(VICIIRevision rev, VICIISpeed speed)
+{
+    switch (speed) {
+            
+        case VICII_TRUE_50: return getCyclesPerFrame(rev) * 50;
+        case VICII_TRUE_60: return getCyclesPerFrame(rev) * 60;
+        case VICII_TRUE_100: return getCyclesPerFrame(rev) * 100;
+        case VICII_TRUE_120: return getCyclesPerFrame(rev) * 120;
+            
+        default:
+            assert(speed == VICII_NATIVE);
+            return getNativeFrequency(rev);
     }
 }
 

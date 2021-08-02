@@ -29,13 +29,27 @@ Thread::~Thread()
 template <> void
 Thread::execute <ThreadMode::Periodic> ()
 {
-    auto now = util::Time::now();
-    
+    // Call the execution function
+    loadClock.go();
+    delegate.threadExecute();
+    loadClock.stop();
+}
+
+template <> void
+Thread::execute <ThreadMode::Pulsed> ()
+{
     // Call the execution function
     loadClock.go();
     delegate.threadExecute();
     loadClock.stop();
     
+}
+
+template <> void
+Thread::sleep <ThreadMode::Periodic> ()
+{
+    auto now = util::Time::now();
+
     // Only proceed if we're not running in warp mode
     if (warp) return;
         
@@ -45,8 +59,7 @@ Thread::execute <ThreadMode::Periodic> ()
         // Check if we're completely out of sync...
         if ((now - targetTime).asMilliseconds() > 200) {
             
-            std::cout << "The emulator is way too slow: ";
-            std::cout << (now - targetTime).asSeconds() << std::endl;
+            warn("Emulation is way too slow: %f\n",(now - targetTime).asSeconds());
             restartSyncTimer();
         }
     }
@@ -57,8 +70,7 @@ Thread::execute <ThreadMode::Periodic> ()
         // Check if we're completely out of sync...
         if ((targetTime - now).asMilliseconds() > 200) {
             
-            std::cout << "The emulator is way too fast: ";
-            std::cout << (targetTime - now).asSeconds() << std::endl;
+            warn("Emulation is way too slow: %f\n",(targetTime - now).asSeconds());
             restartSyncTimer();
         }
     }
@@ -71,13 +83,8 @@ Thread::execute <ThreadMode::Periodic> ()
 }
 
 template <> void
-Thread::execute <ThreadMode::Pulsed> ()
+Thread::sleep <ThreadMode::Pulsed> ()
 {
-    // Call the execution function
-    loadClock.go();
-    delegate.threadExecute();
-    loadClock.stop();
-    
     // Wait for the next pulse
     if (!warp) waitForCondition();
 }
@@ -94,6 +101,14 @@ Thread::main()
             switch (mode) {
                 case ThreadMode::Periodic: execute<ThreadMode::Periodic>(); break;
                 case ThreadMode::Pulsed: execute<ThreadMode::Pulsed>(); break;
+            }
+        }
+        
+        if (!warp || isPaused()) {
+
+            switch (mode) {
+                case ThreadMode::Periodic: sleep<ThreadMode::Periodic>(); break;
+                case ThreadMode::Pulsed: sleep<ThreadMode::Pulsed>(); break;
             }
         }
         
@@ -173,6 +188,7 @@ Thread::main()
             cpuLoad = used / total;
             
             loadClock.restart();
+            loadClock.stop();
             nonstopClock.restart();
             
             // printf("CPU load = %f\n", cpuLoad);
