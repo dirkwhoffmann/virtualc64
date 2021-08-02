@@ -733,7 +733,7 @@ private:
 
     
     //
-    // Accessing
+    // Deriving chip properties
     //
     
 public:
@@ -762,6 +762,10 @@ public:
     static double getFps(VICIIRevision rev, VICIISpeed speed);
     double getFps() const { return getFps(config.revision, config.speed); }
 
+    // Returns the time interval between two frames in nanoseconds
+    static i64 getFrameDelay(VICIIRevision rev, VICIISpeed speed);
+    i64 getFrameDelay() const { return getFrameDelay(config.revision, config.speed); }
+
     // Returns the clock frequency of the selected VICII model
     static isize getFrequency(VICIIRevision rev, VICIISpeed speed);
     isize getFrequency() const { return getFrequency(config.revision, config.speed); }
@@ -774,23 +778,19 @@ public:
     static isize getLinesPerFrame(VICIIRevision rev);
     isize getLinesPerFrame() const { return getLinesPerFrame(config.revision); }
 
+    // Returns the number of CPU cycles executed in one frame
+    static isize getCyclesPerFrame(VICIIRevision rev);
+    isize getCyclesPerFrame() const { return getCyclesPerFrame(config.revision); }
+
     // Returns the number of visible rasterlines in a single frame
     static isize numVisibleLines(VICIIRevision rev);
     long numVisibleLines() const { return numVisibleLines(config.revision); }
     
-    // Returns the number of CPU cycles executed in one frame
-    static isize getCyclesPerFrame(VICIIRevision rev) {
-        return getLinesPerFrame(rev) * getCyclesPerLine(rev); }
-    isize getCyclesPerFrame() const { return getCyclesPerFrame(config.revision); }
-
     // Returns true if the end of the rasterline has been reached
     bool isLastCycleInLine(isize cycle) const;
 
     // Returns true if rasterline belongs to the VBLANK area
     bool isVBlankLine(isize line) const;
-
-    // Returns the time interval between two frames in nanoseconds
-    i64 getFrameDelay() const { return i64(1000000000 / getFps()); }
     
     
     //

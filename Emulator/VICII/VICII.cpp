@@ -569,6 +569,12 @@ VICII::getFps(VICIIRevision rev, VICIISpeed speed)
     return (double)getFrequency(rev, speed) / (double)getCyclesPerFrame(rev);
 }
 
+i64
+VICII::getFrameDelay(VICIIRevision rev, VICIISpeed speed)
+{
+    return i64(1000000000 / getFps(rev, speed));
+}
+
 isize
 VICII::getFrequency(VICIIRevision rev, VICIISpeed speed)
 {
@@ -616,6 +622,12 @@ VICII::getLinesPerFrame(VICIIRevision rev)
         default:
             return 312;
     }
+}
+
+isize
+VICII::getCyclesPerFrame(VICIIRevision rev)
+{
+    return getLinesPerFrame(rev) * getCyclesPerLine(rev);
 }
 
 isize

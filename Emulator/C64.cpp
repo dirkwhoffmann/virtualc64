@@ -347,11 +347,11 @@ C64::setConfigItem(Option option, i64 value)
             auto speed = vic.getConfig().speed;
             
             isize newFrequency = VICII::getFrequency(rev, speed);
-            double newFps = VICII::getFps(rev, speed);
+            isize newFrameDelay = VICII::getFrameDelay(rev, speed);
             
             frequency = (u32)newFrequency;
             durationOfOneCycle = 10000000000 / newFrequency;
-            thread.setSyncDelay((i64)(1000000000 / newFps));
+            thread.setSyncDelay(newFrameDelay);
             return;
         }
             
