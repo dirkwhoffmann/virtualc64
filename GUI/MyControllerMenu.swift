@@ -455,8 +455,6 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func resetAction(_ sender: Any!) {
 
-        track()
-
         renderer.rotateLeft()
         c64.hardReset()
         c64.powerOn()
@@ -465,7 +463,6 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func softResetAction(_ sender: Any!) {
 
-        track()
         c64.softReset()
     }
 
@@ -522,8 +519,6 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func stickyKeyboardAction(_ sender: Any!) {
         
-        track()
-
         if virtualKeyboard == nil {
             let name = NSNib.Name("VirtualKeyboard")
             virtualKeyboard = VirtualKeyboardController.make(parent: self, nibName: name)
@@ -539,7 +534,6 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func clearKeyboardMatrixAction(_ sender: Any!) {
         
-        track()
         c64.keyboard.releaseAll()
     }
 
@@ -595,11 +589,6 @@ extension MyController: NSMenuItemValidation {
     @IBAction func formatDiskAction(_ sender: Any!) {
         keyboard.type("OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1")
     }
-    /*
-    @IBAction func softResetAction(_ sender: Any!) {
-        keyboard.type("SYS 64738")
-    }
-    */
     
     //
     // Action methods (Drive menu)
@@ -686,9 +675,7 @@ extension MyController: NSMenuItemValidation {
     }
     
     func exportRecentDiskAction(drive id: DriveID, slot: Int) {
-        
-        track("drive: \(id) slot: \(slot)")
-        
+                
         if let url = myAppDelegate.getRecentlyExportedDiskURL(slot, drive: id) {
             
             do {
@@ -758,9 +745,7 @@ extension MyController: NSMenuItemValidation {
     }
     
     func drivePowerAction(drive: DriveID) {
-        
-        track()
-        
+                
         switch drive {
         case .DRIVE8: config.drive8PowerSwitch = !config.drive8PowerSwitch
         case .DRIVE9: config.drive9PowerSwitch = !config.drive9PowerSwitch
@@ -825,12 +810,12 @@ extension MyController: NSMenuItemValidation {
     }
 
     @IBAction func ejectTapeAction(_ sender: Any!) {
-        track()
+
         c64.datasette.ejectTape()
     }
     
     @IBAction func playOrStopAction(_ sender: Any!) {
-        track()
+
         if c64.datasette.playKey {
             c64.datasette.pressStop()
         } else {
@@ -839,7 +824,7 @@ extension MyController: NSMenuItemValidation {
     }
     
     @IBAction func rewindAction(_ sender: Any!) {
-        track()
+
         c64.datasette.rewind()
     }
 

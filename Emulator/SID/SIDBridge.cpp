@@ -241,7 +241,6 @@ SIDBridge::setConfigItem(Option option, i64 value)
             
         case OPT_AUDVOLL:
             
-            debug(true, "OPT_AUDVOLL: %lld\n", value);
             config.volL = std::clamp((int)value, 0, 100);
             volL.set(pow((double)config.volL / 50, 1.4));
             

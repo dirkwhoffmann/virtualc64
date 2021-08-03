@@ -445,11 +445,9 @@ class MyDocument: NSDocument {
     
     @discardableResult
     func setBootDiskID(_ id: UInt64) -> Bool {
-        
-        track("setBootDiskID(\(id))")
-        
+                
         if bootDiskID == 0 {
-            track("Assigning new ID")
+            
             bootDiskID = id
             return true
         }

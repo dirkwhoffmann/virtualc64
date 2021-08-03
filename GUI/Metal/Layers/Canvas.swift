@@ -120,14 +120,6 @@ class Canvas: Layer {
         scanlineTexture = device.makeTexture(size: TextureSize.upscaled, usage: rwtp)
         assert(upscaledTexture != nil, "Failed to create upscaledTexture")
         assert(scanlineTexture != nil, "Failed to create scanlineTexture")
-
-        var w = emulatorTexture.width
-        var h = emulatorTexture.height
-        track("Emulator texture created: \(w) x \(h)")
-        
-        w = upscaledTexture.width
-        h = upscaledTexture.height
-        track("Upscaled texture created: \(w) x \(h)")
     }
     
     //

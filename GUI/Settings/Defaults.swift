@@ -485,7 +485,6 @@ extension UserDefaults {
             Keys.Kbd.mapKeysByPosition: defaults.mapKeysByPosition
         ]
         
-        track("\(defaults.mapKeysByPosition)")
         let userDefaults = UserDefaults.standard
         userDefaults.register(defaults: dictionary)
         userDefaults.register(encodableItem: defaults.keyMap, forKey: Keys.Kbd.keyMap)
