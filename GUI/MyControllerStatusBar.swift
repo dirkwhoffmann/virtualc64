@@ -79,8 +79,8 @@ extension MyController {
             crtIcon: hasCrt,
             
             warpIcon: running,
-            fpsInfo: true,
-            cpuInfo: true,
+            fpsInfo: false,
+            cpuInfo: running,
             mhzInfo: running,
             clockSpeedBar: running
         ]
