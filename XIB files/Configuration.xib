@@ -765,13 +765,16 @@ Gw
                                                             <attributedString key="attributedTitle"/>
                                                         </menuItem>
                                                         <menuItem isSeparatorItem="YES" id="bsa-0s-HtF"/>
-                                                        <menuItem title="True 50 Hz" tag="1" id="YJ1-9r-tBS"/>
-                                                        <menuItem title="True 60 Hz" tag="2" id="5fH-Mb-Pvi">
+                                                        <menuItem title="True 25 Hz" tag="1" id="YJ1-9r-tBS"/>
+                                                        <menuItem title="True 30 Hz" tag="2" id="AoB-nq-dz0"/>
+                                                        <menuItem isSeparatorItem="YES" id="ygg-DP-ZrH"/>
+                                                        <menuItem title="True 50 Hz" tag="3" id="Vxp-Jj-cwJ"/>
+                                                        <menuItem title="True 60 Hz" tag="4" id="5fH-Mb-Pvi">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem isSeparatorItem="YES" id="5xo-GN-kde"/>
-                                                        <menuItem title="True 100 Hz" tag="3" id="vjE-WG-rdu"/>
-                                                        <menuItem title="True 120 Hz" tag="4" id="tdc-YT-JO3"/>
+                                                        <menuItem title="True 100 Hz" tag="5" id="vjE-WG-rdu"/>
+                                                        <menuItem title="True 120 Hz" tag="6" id="tdc-YT-JO3"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>

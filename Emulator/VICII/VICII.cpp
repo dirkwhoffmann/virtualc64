@@ -568,6 +568,8 @@ VICII::getFps(VICIIRevision rev, VICIISpeed speed)
 {
     switch (speed) {
             
+        case VICII_TRUE_25: return 25;
+        case VICII_TRUE_30: return 30;
         case VICII_TRUE_50: return 50;
         case VICII_TRUE_60: return 60;
         case VICII_TRUE_100: return 100;
@@ -605,6 +607,8 @@ VICII::getFrequency(VICIIRevision rev, VICIISpeed speed)
 {
     switch (speed) {
             
+        case VICII_TRUE_25: return getCyclesPerFrame(rev) * 25;
+        case VICII_TRUE_30: return getCyclesPerFrame(rev) * 30;
         case VICII_TRUE_50: return getCyclesPerFrame(rev) * 50;
         case VICII_TRUE_60: return getCyclesPerFrame(rev) * 60;
         case VICII_TRUE_100: return getCyclesPerFrame(rev) * 100;
