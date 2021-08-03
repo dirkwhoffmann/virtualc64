@@ -61,7 +61,7 @@ Keyboard::getColumnValues(u8 rowMask)
 {
     u8 result = 0xff;
     
-    for (unsigned i = 0; i < 8; i++) {
+    for (isize i = 0; i < 8; i++) {
         if (GET_BIT(rowMask, i)) {
             result &= kbMatrixCol[i];
         }
@@ -80,7 +80,7 @@ Keyboard::getRowValues(u8 columnMask)
 {
     u8 result = 0xff;
         
-    for (unsigned i = 0; i < 8; i++) {
+    for (isize i = 0; i < 8; i++) {
         if (GET_BIT(columnMask, i)) {
             result &= kbMatrixRow[i];
         }

@@ -76,13 +76,13 @@ KcsPower::pokeIO2(u16 addr, u8 value)
 }
 
 const char *
-KcsPower::getButtonTitle(unsigned nr) const
+KcsPower::getButtonTitle(isize nr) const
 {
     return nr == 1 ? "Freeze" : nullptr;
 }
 
 void
-KcsPower::pressButton(unsigned nr)
+KcsPower::pressButton(isize nr)
 {
     if (nr == 1) {
  
@@ -95,7 +95,7 @@ KcsPower::pressButton(unsigned nr)
 };
 
 void
-KcsPower::releaseButton(unsigned nr)
+KcsPower::releaseButton(isize nr)
 {
     if (nr == 1) {
     

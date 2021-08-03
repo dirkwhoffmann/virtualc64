@@ -809,8 +809,8 @@ public:
     u32 *getNoise() const;
     
     // Returns a C64 color in 32 bit big endian RGBA format
-    u32 getColor(unsigned nr) const { return rgbaTable[nr]; }
-    u32 getColor(unsigned nr, Palette palette);
+    u32 getColor(isize nr) const { return rgbaTable[nr]; }
+    u32 getColor(isize nr, Palette palette);
         
 private:
     

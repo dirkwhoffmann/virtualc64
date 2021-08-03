@@ -24,7 +24,7 @@ DriveMemory::_reset(bool hard)
     RESET_SNAPSHOT_ITEMS(hard)
 
     // Initialize RAM with the power-up pattern (pattern from Hoxs64)
-    for (unsigned i = 0; i < sizeof(ram); i++) {
+    for (isize i = 0; i < isizeof(ram); i++) {
         ram[i] = (i & 64) ? 0xFF : 0x00;
     }
 }

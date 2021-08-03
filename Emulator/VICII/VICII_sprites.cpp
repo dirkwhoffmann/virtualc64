@@ -156,7 +156,7 @@ VICII::drawSpritesSlowPath()
     // After the first pixel, color register changes show up
     reg.delayed.colors[COLREG_SPR_EX1] = reg.current.colors[COLREG_SPR_EX1];
     reg.delayed.colors[COLREG_SPR_EX2] = reg.current.colors[COLREG_SPR_EX2];
-    for (unsigned i = 0; i < 8; i++) {
+    for (isize i = 0; i < 8; i++) {
         reg.delayed.colors[COLREG_SPR0 + i] = reg.current.colors[COLREG_SPR0 + i];
     }
     
@@ -197,7 +197,7 @@ VICII::drawSpritesSlowPath()
         // sprite_mc_bits = next_mc_bits;
         
         reg.delayed.sprMC = reg.current.sprMC;
-        for (unsigned i = 0; i < 8; i++) {
+        for (isize i = 0; i < 8; i++) {
             if (GET_BIT(toggle,i))
                 spriteSr[i].mcFlop ^= !spriteSr[i].expFlop;
         }
@@ -213,7 +213,7 @@ VICII::drawSpritesSlowPath()
     if (toggle && is656x()) {
         
         reg.delayed.sprMC = reg.current.sprMC;
-        for (unsigned i = 0; i < 8; i++) {
+        for (isize i = 0; i < 8; i++) {
             if (GET_BIT(toggle,i))
                 spriteSr[i].mcFlop = 0;
         }

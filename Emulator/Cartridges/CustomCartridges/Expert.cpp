@@ -66,7 +66,7 @@ Expert::loadChip(isize nr, const CRTFile &crt)
     // Initialize RAM with data from CRT file
     trace(CRT_DEBUG, "Copying file contents into Expert RAM\n");
     assert(getRamCapacity() == chipSize);
-    for (unsigned i = 0; i < chipSize; i++) pokeRAM(i, chipData[i]);
+    for (isize i = 0; i < chipSize; i++) pokeRAM(i, chipData[i]);
 }
 
 u8
@@ -128,13 +128,13 @@ Expert::pokeIO1(u16 addr, u8 value)
 }
 
 const char *
-Expert::getButtonTitle(unsigned nr) const
+Expert::getButtonTitle(isize nr) const
 {
     return nr == 1 ? "Reset" : nr == 2 ? "ESM" : nullptr;
 }
 
 void
-Expert::pressButton(unsigned nr)
+Expert::pressButton(isize nr)
 {
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));

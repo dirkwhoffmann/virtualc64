@@ -986,7 +986,7 @@ VICII::compareSpriteY() const
 {
     u8 result = 0;
     
-    for (unsigned i = 0; i < 8; i++) {
+    for (isize i = 0; i < 8; i++) {
         result |= (reg.current.sprY[i] == (yCounter & 0xFF)) << i;
     }
     
@@ -1006,7 +1006,7 @@ VICII::turnSpriteDmaOff()
      *     After the MCBASE update, [5] the VIC checks if MCBASE is equal to 63
      *     and [6] turns off the DMA of the sprite if it is." [VIC Addendum]
      */
-    for (unsigned i = 0; i < 8; i++) {
+    for (isize i = 0; i < 8; i++) {
         
         if (GET_BIT(expansionFF,i)) { /* [1] */
             if (GET_BIT(cleared_bits_in_d017,i)) { /* [3] */
@@ -1035,7 +1035,7 @@ VICII::turnSpriteDmaOn()
      */
     u8 risingEdges = ~spriteDmaOnOff & (reg.current.sprEnable & compareSpriteY());
     
-    for (unsigned i = 0; i < 8; i++) {
+    for (isize i = 0; i < 8; i++) {
         if (GET_BIT(risingEdges,i))
             mcbase[i] = 0;
     }
@@ -1052,7 +1052,7 @@ VICII::turnSpritesOnOrOff()
      *  the lower 8 bits of RASTER. If this is the case, the display of the
      *  sprite is turned on."
      */
-    for (unsigned i = 0; i < 8; i++) {
+    for (isize i = 0; i < 8; i++) {
         mc[i] = mcbase[i];
     }
     
@@ -1201,5 +1201,5 @@ VICII::endRasterline()
     dmaDebugger.cutLayers();
 
     // Prepare buffers for the next line
-    for (unsigned i = 0; i < TEX_WIDTH; i++) { zBuffer[i] = 0; }
+    for (isize i = 0; i < TEX_WIDTH; i++) { zBuffer[i] = 0; }
 }

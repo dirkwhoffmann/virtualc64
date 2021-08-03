@@ -31,7 +31,7 @@ P00File::isCompatibleStream(std::istream &stream)
 P00File *
 P00File::makeWithFileSystem(FSDevice &fs)
 {
-    unsigned item = 0;
+    isize item = 0;
     usize itemSize = fs.fileSize(item);
 
     // Only proceed if the requested file exists

@@ -87,7 +87,7 @@ Snapshot::takeScreenshot(C64 *c64)
     u32 *source = (u32 *)c64->vic.stableEmuTexture();
     u32 *target = header->screenshot.screen;
     source += xStart + yStart * TEX_WIDTH;
-    for (unsigned i = 0; i < header->screenshot.height; i++) {
+    for (isize i = 0; i < header->screenshot.height; i++) {
         memcpy(target, source, header->screenshot.width * 4);
         target += header->screenshot.width;
         source += TEX_WIDTH;

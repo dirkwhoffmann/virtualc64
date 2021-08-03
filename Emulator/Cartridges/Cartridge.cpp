@@ -132,7 +132,7 @@ Cartridge::makeWithCRTFile(C64 &c64, CRTFile &file)
 
     // Load chip packets
     cart->numPackets = 0;
-    for (unsigned i = 0; i < file.chipCount(); i++) {
+    for (isize i = 0; i < file.chipCount(); i++) {
         cart->loadChip(i, file);
     }
     
@@ -157,7 +157,7 @@ Cartridge::~Cartridge()
 void
 Cartridge::dealloc()
 {
-    for (unsigned i = 0; i < numPackets; i++) {
+    for (isize i = 0; i < numPackets; i++) {
         assert(packet[i] != nullptr);
         delete packet[i];
         packet[i] = nullptr;
@@ -187,7 +187,7 @@ Cartridge::_reset(bool hard)
     if (externalRam && !battery) memset(externalRam, 0xFF, ramCapacity);
  
     // Reset all chip packets
-    for (unsigned i = 0; i < numPackets; i++) packet[i]->_reset(hard);
+    for (isize i = 0; i < numPackets; i++) packet[i]->_reset(hard);
         
     // Bank in visibile chips (chips with low numbers show up first)
     for (int i = MAX_PACKETS - 1; i >= 0; i--) bankIn(i);
@@ -240,7 +240,7 @@ Cartridge::_size()
  
     // Determine size of all packets
     usize packetSize = 0;
-    for (unsigned i = 0; i < numPackets; i++) {
+    for (isize i = 0; i < numPackets; i++) {
         assert(packet[i] != nullptr);
         packetSize += packet[i]->_size();
     }
@@ -258,7 +258,7 @@ Cartridge::_load(const u8 *buffer)
     applyToResetItems(reader);
         
     // Load ROM packets
-    for (unsigned i = 0; i < numPackets; i++) {
+    for (isize i = 0; i < numPackets; i++) {
         assert(packet[i] == nullptr);
         packet[i] = new CartridgeRom(c64);
         reader.ptr += packet[i]->_load(reader.ptr);
@@ -268,7 +268,7 @@ Cartridge::_load(const u8 *buffer)
     if (ramCapacity) {
         assert(externalRam == nullptr);
         externalRam = new u8[ramCapacity];
-        for (unsigned i = 0; i < ramCapacity; i++) externalRam[i] = util::read8(reader.ptr);
+        for (isize i = 0; i < ramCapacity; i++) externalRam[i] = util::read8(reader.ptr);
     }
 
     trace(SNP_DEBUG, "Recreated from %ld bytes\n", reader.ptr - buffer);
@@ -283,7 +283,7 @@ Cartridge::_save(u8 *buffer)
     applyToResetItems(writer);
     
     // Save ROM packets
-    for (unsigned i = 0; i < numPackets; i++) {
+    for (isize i = 0; i < numPackets; i++) {
         assert(packet[i] != nullptr);
         writer.ptr += packet[i]->_save(writer.ptr);
     }
@@ -291,7 +291,9 @@ Cartridge::_save(u8 *buffer)
     // Save on-board RAM
     if (ramCapacity) {
         assert(externalRam != nullptr);
-        for (unsigned i = 0; i < ramCapacity; i++) util::write8(writer.ptr, externalRam[i]);
+        for (isize i = 0; i < ramCapacity; i++) {
+            util::write8(writer.ptr, externalRam[i]);
+        }
     }
     
     trace(SNP_DEBUG, "Serialized %ld bytes\n", writer.ptr - buffer);

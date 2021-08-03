@@ -40,8 +40,8 @@ public:
     // Operating buttons
     //
     
-    long numButtons() const override { return 1; }
-    const char *getButtonTitle(unsigned nr) const override;
-    void pressButton(unsigned nr) override;
-    void releaseButton(unsigned nr) override;
+    isize numButtons() const override { return 1; }
+    const char *getButtonTitle(isize nr) const override;
+    void pressButton(isize nr) override;
+    void releaseButton(isize nr) override;
 };

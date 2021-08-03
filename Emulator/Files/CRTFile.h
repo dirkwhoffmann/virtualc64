@@ -26,7 +26,7 @@ class CRTFile : public AnyFile {
     static const unsigned MAX_PACKETS = 128;
 
     // Number of chips contained in cartridge file
-    unsigned int numberOfChips = 0;
+    isize numberOfChips = 0;
     
     // Indicates where each chip section starts
     u8 *chips[MAX_PACKETS] = {};

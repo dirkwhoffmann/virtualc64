@@ -198,7 +198,7 @@ Disk::Disk(C64 &ref) : SubComponent(ref)
      * Endian architecture to work. If you compile the emulator on a Big Endian
      * architecture, the byte order needs to be reversed.
      */
-    for (unsigned i = 0; i < 256; i++) {
+    for (isize i = 0; i < 256; i++) {
         bitExpansion[i] = 0;
         if (i & 0x80) bitExpansion[i] |= 0x0000000000000001;
         if (i & 0x40) bitExpansion[i] |= 0x0000000000000100;
@@ -358,7 +358,7 @@ bool
 Disk::halftrackIsEmpty(Halftrack ht) const
 {
     assert(isHalftrackNumber(ht));
-    for (unsigned i = 0; i < sizeof(data.halftrack[ht]); i++)
+    for (isize i = 0; i < isizeof(data.halftrack[ht]); i++)
         if (data.halftrack[ht][i] != 0x55) return false;
     return true;
 }
@@ -418,7 +418,7 @@ Disk::analyzeHalftrack(Halftrack ht)
     trackInfo.length = len;
     
     // Setup working buffer (two copies of the track, each bit represented by one byte).
-    for (unsigned i = 0; i < maxBytesOnTrack; i++)
+    for (isize i = 0; i < maxBytesOnTrack; i++)
         trackInfo.byte[i] = bitExpansion[data.halftrack[ht][i]];
     memcpy(trackInfo.bit + len, trackInfo.bit, len);
     
@@ -464,7 +464,7 @@ Disk::analyzeHalftrack(Halftrack ht)
     
     // Compute offsets for all sectors
     u8 sector = UINT8_MAX;
-    for (unsigned i = startOffset; i < startOffset + len; i++) {
+    for (isize i = startOffset; i < startOffset + len; i++) {
         
         if (sync[i] == 0x08) {
             
@@ -551,7 +551,7 @@ Disk::analyzeSectorDataBlock(usize offset)
     offset += 10;
     
     u8 checksum = 0;
-    for (unsigned i = 0; i < 256; i++, offset += 10) {
+    for (isize i = 0; i < 256; i++, offset += 10) {
         checksum ^= decodeGcr(trackInfo.bit + offset);
     }
     
@@ -729,7 +729,7 @@ Disk::decodeSector(usize offset, u8 *dest)
     offset += 10;
     
     if (dest) {
-        for (unsigned i = 0; i < 256; i++) {
+        for (isize i = 0; i < 256; i++) {
             dest[i] = decodeGcr(trackInfo.bit + offset);
             offset += 10;
         }
@@ -953,9 +953,8 @@ Disk::encodeSector(FSDevice &fs, Track t, Sector s, HeadPos start, int tailGap)
     
     // Data bytes
     checksum = 0;
-    for (unsigned i = 0; i < 256; i++, offset += 10) {
-        // u8 byte = (u8)d64->readTrack();
-        u8 byte = fs.readByte(ts, i);
+    for (isize i = 0; i < 256; i++, offset += 10) {
+        u8 byte = fs.readByte(ts, (u32)i);
         checksum ^= byte;
         encodeGcr(byte, t, offset);
     }

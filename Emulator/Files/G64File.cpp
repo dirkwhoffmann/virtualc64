@@ -92,10 +92,10 @@ G64File::makeWithDisk(Disk &disk)
             buffer[pos++] = LO_BYTE(numDataBytes);
             buffer[pos++] = HI_BYTE(numDataBytes);
             
-            for (unsigned i = 0; i < numDataBytes; i++) {
+            for (isize i = 0; i < numDataBytes; i++) {
                 buffer[pos++] = disk.data.halftrack[ht][i];
             }
-            for (unsigned i = 0; i < numFillBytes; i++) {
+            for (isize i = 0; i < numFillBytes; i++) {
                 buffer[pos++] = 0xFF;
             }
         }

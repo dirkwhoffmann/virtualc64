@@ -24,7 +24,7 @@ Mouse1350::_reset(bool hard)
     mouseY = 0;
     controlPort = 0xFF;
     
-    for (unsigned i = 0; i < 3; i++)
+    for (isize i = 0; i < 3; i++)
         latchedX[i] = latchedY[i] = 0;
 }
 
@@ -72,7 +72,7 @@ Mouse1350::execute(i64 targetX, i64 targetY)
     }
     
     // Update latch pipeline
-    for (unsigned i = 0; i < 2; i++) {
+    for (isize i = 0; i < 2; i++) {
         latchedX[i] = latchedX[i+1];
         latchedY[i] = latchedY[i+1];
     }

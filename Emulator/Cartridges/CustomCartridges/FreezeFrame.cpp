@@ -50,13 +50,13 @@ FreezeFrame::spypeekIO2(u16 addr) const
 }
 
 const char *
-FreezeFrame::getButtonTitle(unsigned nr) const
+FreezeFrame::getButtonTitle(isize nr) const
 {
     return nr == 1 ? "Freeze" : nullptr;
 }
 
 void
-FreezeFrame::pressButton(unsigned nr)
+FreezeFrame::pressButton(isize nr)
 {
     if (nr == 1) {
         
@@ -69,7 +69,7 @@ FreezeFrame::pressButton(unsigned nr)
 }
 
 void
-FreezeFrame::releaseButton(unsigned nr)
+FreezeFrame::releaseButton(isize nr)
 {
     if (nr == 1) {
         

@@ -482,7 +482,7 @@ VICII::poke(u16 addr, u8 value)
             
         case 0x10: // Sprite X (upper bit)
             
-            for (unsigned i = 0; i < 8; i++) {
+            for (isize i = 0; i < 8; i++) {
                 reg.current.sprX[i] &= 0xFF;
                 reg.current.sprX[i] |= GET_BIT(value, i) ? 0x100 : 0;
             }

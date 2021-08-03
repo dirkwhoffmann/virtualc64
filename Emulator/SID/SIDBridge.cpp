@@ -513,7 +513,7 @@ SIDBridge::_dump(SIDInfo &info, VoiceInfo (&vinfo)[3]) const
     msg("Filter resonance: %d\n\n", info.filterResonance);
     msg("Filter enable bits: %d\n\n", info.filterEnableBits);
 
-    for (unsigned i = 0; i < 3; i++) {
+    for (isize i = 0; i < 3; i++) {
         // VoiceInfo vinfo = getVoiceInfo(i);
         u8 wf = vinfo[i].waveform;
         msg("Voice %d:       Frequency: %d\n", i, vinfo[i].frequency);

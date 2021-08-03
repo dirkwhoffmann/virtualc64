@@ -33,7 +33,7 @@ double gammaCorrect(double value, double source, double target)
 }
 
 u32
-VICII::getColor(unsigned nr, Palette palette)
+VICII::getColor(isize nr, Palette palette)
 {
     double y, u, v;
     
@@ -229,7 +229,7 @@ VICII::getColor(unsigned nr, Palette palette)
 void
 VICII::updatePalette()
 {
-    for (unsigned i = 0; i < 16; i++) {
+    for (isize i = 0; i < 16; i++) {
         rgbaTable[i] = getColor(i, config.palette);
     }
 }

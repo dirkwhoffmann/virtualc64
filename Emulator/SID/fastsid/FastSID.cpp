@@ -203,7 +203,7 @@ FastSID::_dump(dump::Category category, std::ostream& os) const
     }
     
     /*
-    for (unsigned i = 0; i < 3; i++) {
+    for (isize i = 0; i < 3; i++) {
         VoiceInfo vinfo = getVoiceInfo(i);
         u8 wf = vinfo.waveform;
         msg("Voice %d:       Frequency: %d\n", i, vinfo.frequency);
@@ -413,7 +413,7 @@ FastSID::executeCycles(isize numCycles, SampleStream &stream)
     }
     
     // Compute missing samples
-    for (unsigned i = 0; i < samples; i++) {
+    for (isize i = 0; i < samples; i++) {
         stream.write(calculateSingleSample());
     }
     
@@ -433,7 +433,7 @@ FastSID::updateInternals()
     u8 res = filterResonance();
     u16 cutoff = filterCutoff();
     
-    for (unsigned i = 0; i < 3; i++) {
+    for (isize i = 0; i < 3; i++) {
     
         voice[i].setFilterType(type);
         

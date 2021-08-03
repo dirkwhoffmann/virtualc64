@@ -28,7 +28,7 @@ PRGFile::isCompatibleStream(std::istream &stream)
 PRGFile *
 PRGFile::makeWithFileSystem(FSDevice &fs)
 {
-    unsigned item = 0;
+    isize item = 0;
     usize itemSize = fs.fileSize(item);
 
     // Only proceed if the requested file exists

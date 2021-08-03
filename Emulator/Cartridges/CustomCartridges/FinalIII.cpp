@@ -116,13 +116,13 @@ FinalIII::updateGame()
 }
 
 const char *
-FinalIII::getButtonTitle(unsigned nr) const
+FinalIII::getButtonTitle(isize nr) const
 {
     return nr == 1 ? "Freeze" : nr == 2 ? "Reset" : nullptr;
 }
 
 void
-FinalIII::pressButton(unsigned nr)
+FinalIII::pressButton(isize nr)
 {
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
@@ -147,7 +147,7 @@ FinalIII::pressButton(unsigned nr)
 }
 
 void
-FinalIII::releaseButton(unsigned nr)
+FinalIII::releaseButton(isize nr)
 {
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr));

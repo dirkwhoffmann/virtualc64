@@ -77,7 +77,7 @@ private:
     u8 *externalRam = nullptr;
     
     // RAM capacity in bytes
-    u64 ramCapacity = 0;
+    i64 ramCapacity = 0;
     
     // Indicates whether RAM data is preserved during a reset
     bool battery = false;
@@ -302,18 +302,18 @@ public:
     //
 
     // Returns the number of available cartridge buttons
-    virtual long numButtons() const { return 0; }
+    virtual isize numButtons() const { return 0; }
     
     /* Returns a textual description for a button or nullptr, if there is no
      * button with the specified number.
      */
-    virtual const char *getButtonTitle(unsigned nr) const { return nullptr; }
+    virtual const char *getButtonTitle(isize nr) const { return nullptr; }
     
     // Presses a button (make sure to call releaseButton() afterwards)
-    virtual void pressButton(unsigned nr) { }
+    virtual void pressButton(isize nr) { }
 
     // Releases a button (make sure to call pressButton() before)
-    virtual void releaseButton(unsigned nr) { }
+    virtual void releaseButton(isize nr) { }
 
 
     //

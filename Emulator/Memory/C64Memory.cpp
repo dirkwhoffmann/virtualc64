@@ -73,7 +73,7 @@ C64Memory::C64Memory(C64 &ref) : SubComponent(ref)
         { M_RAM,  M_RAM,   M_BASIC, M_RAM,  M_IO,   M_KERNAL }
     };
     
-    for (unsigned i = 0; i < 32; i++) {
+    for (isize i = 0; i < 32; i++) {
         
         bankMap[i][0x0] = M_PP;
         bankMap[i][0x1] = map[i][0];
@@ -95,7 +95,7 @@ C64Memory::C64Memory(C64 &ref) : SubComponent(ref)
     
     // Initialize peekSource and pokeTarket tables
     peekSrc[0x0] = pokeTarget[0x0] = M_PP;
-    for (unsigned i = 0x1; i <= 0xF; i++) {
+    for (isize i = 0x1; i <= 0xF; i++) {
         peekSrc[i] = pokeTarget[i] = M_RAM;
     }
 }
@@ -112,7 +112,7 @@ C64Memory::_reset(bool hard)
         
         // Initialize color RAM with random numbers
         srand(1000);
-        for (unsigned i = 0; i < sizeof(colorRam); i++) {
+        for (isize i = 0; i < isizeof(colorRam); i++) {
             colorRam[i] = (rand() & 0xFF);
         }
     }

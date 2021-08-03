@@ -343,26 +343,26 @@ ExpansionPort::setBattery(bool value)
     if (cartridge) cartridge->setBattery(value);
 }
 
-long
+isize
 ExpansionPort::numButtons() const
 {
     return cartridge ? cartridge->numButtons() : 0;
 }
 
 const char *
-ExpansionPort::getButtonTitle(unsigned nr) const
+ExpansionPort::getButtonTitle(isize nr) const
 {
      return cartridge ? cartridge->getButtonTitle(nr) : nullptr;
 }
  
 void
-ExpansionPort::pressButton(unsigned nr)
+ExpansionPort::pressButton(isize nr)
 {
     if (cartridge) cartridge->pressButton(nr);
 }
 
 void
-ExpansionPort::releaseButton(unsigned nr)
+ExpansionPort::releaseButton(isize nr)
 {
     if (cartridge) cartridge->releaseButton(nr);
 }
