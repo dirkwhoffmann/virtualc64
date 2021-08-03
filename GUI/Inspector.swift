@@ -312,7 +312,7 @@ class Inspector: DialogController {
 
     // Used to determine the items to be refreshed
     var refreshCnt = 0
-    
+        
     override func showWindow(_ sender: Any?) {
 
         super.showWindow(self)
@@ -375,6 +375,17 @@ class Inspector: DialogController {
     func scrollToPC() {
 
         cpuInstrView.jumpTo(addr: Int(cpuInfo.reg.pc0))
+    }
+
+    func signalWatchPoint() {
+    
+        cpuInstrView.watchpointRow = cpuInstrView.selectedRow
+        cpuInstrView.refresh()
+    }
+
+    func clearWatchPoint() {
+    
+        cpuInstrView.watchpointRow = -1
     }
 
     @IBAction func refreshAction(_ sender: NSButton!) {

@@ -694,8 +694,8 @@ C64::stepInto()
     executeOneCycle();
     finishInstruction();
     
-    // Trigger a GUI refresh
-    putMessage(MSG_BREAKPOINT_REACHED);
+    // Inform the GUI
+    putMessage(MSG_STEP);
 }
 
 void

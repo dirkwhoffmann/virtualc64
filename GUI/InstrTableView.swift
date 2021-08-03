@@ -35,6 +35,9 @@ class InstrTableView: NSTableView {
     // Number format
     var hex = true
     
+    // Indicates if a certain row should be marked with a watchpoint symbol
+    var watchpointRow = -1
+
     override func awakeFromNib() {
         
         delegate = self
@@ -180,6 +183,8 @@ extension InstrTableView: NSTableViewDataSource {
         
         switch tableColumn?.identifier.rawValue {
             
+        case "break" where row == watchpointRow:
+            return "⚠️"
         case "break" where bpInRow[row] == .enabled:
             return "\u{26D4}" // "⛔" ("\u{1F534}" // "🔴")
         case "break" where bpInRow[row] == .disabled:

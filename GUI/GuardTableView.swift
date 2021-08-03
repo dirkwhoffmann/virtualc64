@@ -14,6 +14,11 @@ class GuardTableView: NSTableView {
     var breakpoints: GuardsProxy { return c64.breakpoints }
     var watchpoints: GuardsProxy { return c64.watchpoints }
 
+    // Symbols
+    var symEnabled = "⛔"  // "\u{26D4}"
+    var symDisabled = "⚪" // "\u{26AA}"
+    var symTrash = "🗑" // "\u{1F5D1}"
+
     // Data caches
     var disabledCache: [Int: Bool] = [:]
     var addrCache: [Int: Int] = [:]
@@ -61,13 +66,13 @@ extension GuardTableView: NSTableViewDataSource {
         switch tableColumn?.identifier.rawValue {
 
         case "break" where disabledCache[row] == true:
-            return last ? "" : "\u{26AA}" /* ⚪ */
+            return last ? "" : symDisabled
         case "break":
-            return last ? "" : "\u{26D4}" /* ⛔ */
+            return last ? "" : symEnabled
         case "addr":
             return last ? "Add..." : addrCache[row]!
         case "delete":
-            return last ? "" : "\u{1F5D1}" // "🗑"
+            return last ? "" : symTrash
 
         default: return ""
         }
@@ -116,7 +121,7 @@ extension GuardTableView: NSTableViewDelegate {
 }
 
 class BreakTableView: GuardTableView {
-
+    
     override func cache() {
 
         numRows = breakpoints.count
@@ -192,6 +197,8 @@ class WatchTableView: GuardTableView {
             disabledCache[i] = watchpoints.isDisabled(i)
             addrCache[i] = watchpoints.addr(i)
         }
+        
+        symEnabled = "⚠️"
     }
 
     override func click(row: Int, col: Int) {

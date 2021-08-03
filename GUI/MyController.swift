@@ -576,12 +576,19 @@ extension MyController {
             needsSaving = true
             toolbar.updateToolbar()
             inspector?.fullRefresh()
+            inspector?.clearWatchPoint()
             refreshStatusBar()
     
         case .PAUSE:
             toolbar.updateToolbar()
             inspector?.fullRefresh()
             refreshStatusBar()
+
+        case .STEP:
+            needsSaving = true
+            inspector?.clearWatchPoint()
+            inspector?.fullRefresh()
+            inspector?.scrollToPC()
 
         case .RESET:
             mydocument.deleteBootDiskID()
@@ -626,11 +633,15 @@ extension MyController {
         case .CPU_OK:
             break
             
-        case .BREAKPOINT_REACHED,
-             .WATCHPOINT_REACHED:
+        case .BREAKPOINT_REACHED:
             inspector?.fullRefresh()
             inspector?.scrollToPC()
-            
+
+        case .WATCHPOINT_REACHED:
+            inspector?.fullRefresh()
+            inspector?.scrollToPC()
+            inspector?.signalWatchPoint()
+
         case .CPU_JAMMED:
             refreshStatusBar()
             
