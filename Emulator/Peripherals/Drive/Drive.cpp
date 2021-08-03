@@ -133,24 +133,6 @@ void
 Drive::setConfigItem(Option option, i64 value)
 {
     switch (option) {
-            
-        case OPT_VIC_REVISION:
-        {
-            auto rev = (VICIIRevision)value;
-            auto speed = vic.getConfig().speed;
-            
-            durationOfOneCpuCycle = 10000000000 / VICII::getFrequency(rev, speed);
-            return;
-        }
-            
-        case OPT_VIC_SPEED:
-        {
-            auto rev = vic.getConfig().revision;
-            auto speed = (VICIISpeed)value;
-            
-            durationOfOneCpuCycle = 10000000000 / VICII::getFrequency(rev, speed);
-            return;
-        }
 
         case OPT_DRV_AUTO_CONFIG:
         case OPT_DRV_POWER_SAVE:
@@ -444,6 +426,7 @@ void
 Drive::execute(u64 duration)
 {
     elapsedTime += duration;
+    
     while (nextClock < (i64)elapsedTime || nextCarry < (i64)elapsedTime) {
 
         if (nextClock <= nextCarry) {

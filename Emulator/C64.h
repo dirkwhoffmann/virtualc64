@@ -149,12 +149,17 @@ public:
      */
     u8 rasterCycle;
     
-    // Clock frequency
+    // Clock frequency in Hz
     u32 frequency;
     
-    // Duration of a CPU cycle in 1/10 nano seconds
-    u64 durationOfOneCycle;
-        
+    /* Duration of a CPU cycle in 1/10 nano seconds. The first value depends
+     * on the selected VICII model and the selected speed setting. The second
+     * value depends on the VICII model, only. Both values match if VICII is
+     * run in speed mode "native".
+     */
+    i64 durationOfOneCycle;
+    i64 nativeDurationOfOneCycle;
+
     
     //
     // Emulator thread
@@ -239,6 +244,9 @@ private:
 
     void setConfigItem(Option option, i64 value) override;
 
+    // Updates the clock frequency and all variables derived from it
+    void updateClockFrequency(VICIIRevision rev, VICIISpeed speed);
+    
     
     //
     // Analyzing
@@ -268,7 +276,8 @@ private:
         worker
         
         << frequency
-        << durationOfOneCycle;
+        << durationOfOneCycle
+        << nativeDurationOfOneCycle;
     }
     
     template <class T>

@@ -343,35 +343,38 @@ C64::setConfigItem(Option option, i64 value)
             
         case OPT_VIC_REVISION:
         {
-            auto rev = (VICIIRevision)value;
-            auto speed = vic.getConfig().speed;
-            
-            isize newFrequency = VICII::getFrequency(rev, speed);
-            isize newFrameDelay = VICII::getFrameDelay(rev, speed);
-            
-            frequency = (u32)newFrequency;
-            durationOfOneCycle = 10000000000 / newFrequency;
-            thread.setSyncDelay(newFrameDelay);
+            updateClockFrequency((VICIIRevision)value, vic.getConfig().speed);
             return;
         }
             
         case OPT_VIC_SPEED:
         {
-            auto rev = vic.getConfig().revision;
-            auto speed = (VICIISpeed)value;
-            
-            isize newFrequency = VICII::getFrequency(rev, speed);
-            double newFps = VICII::getFps(rev, speed);
-            
-            frequency = (u32)newFrequency;
-            durationOfOneCycle = 10000000000 / newFrequency;
-            thread.setSyncDelay((i64)(1000000000 / newFps));
+            updateClockFrequency(vic.getConfig().revision, (VICIISpeed)value);
             return;
         }
 
         default:
             return;
     }
+}
+
+void
+C64::updateClockFrequency(VICIIRevision rev, VICIISpeed speed)
+{
+    /*
+    isize newFrequency = VICII::getFrequency(rev, speed);
+    isize newNativeFrequency = VICII::getNativeFrequency(rev);
+    isize newFrameDelay = VICII::getFrameDelay(rev, speed);
+    
+    frequency = (u32)newFrequency;
+    nativeDurationOfOneCycle = 10000000000 / newNativeFrequency;
+    durationOfOneCycle = 10000000000 / newFrequency;
+    thread.setSyncDelay(newFrameDelay);
+    */
+    frequency = (u32)VICII::getFrequency(rev, speed);
+    durationOfOneCycle = 10000000000 / frequency;
+    nativeDurationOfOneCycle = 10000000000 / VICII::getNativeFrequency(rev);
+    thread.setSyncDelay(VICII::getFrameDelay(rev, speed));
 }
 
 bool
@@ -779,8 +782,8 @@ C64::_executeOneCycle()
     
     // Second clock phase (o2 high)
     cpu.executeOneCycle();
-    if (drive8.needsEmulation) drive8.execute(durationOfOneCycle);
-    if (drive9.needsEmulation) drive9.execute(durationOfOneCycle);
+    if (drive8.needsEmulation) drive8.execute(nativeDurationOfOneCycle);
+    if (drive9.needsEmulation) drive9.execute(nativeDurationOfOneCycle);
     datasette.execute();
     
     rasterCycle++;
