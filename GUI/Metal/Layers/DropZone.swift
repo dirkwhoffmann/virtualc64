@@ -22,6 +22,7 @@ class DropZone: Layer {
     var ul = [NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0)]
     var lr = [NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0)]
     
+    static let unconnected = 0.15
     static let unselected = 0.6
     static let selected = 1.0
     
@@ -39,10 +40,10 @@ class DropZone: Layer {
         
         controller = renderer.parent
         
-        drive8.image = NSImage.init(named: "diskette")
+        drive8.image = NSImage.init(named: "dropDrive8")
         drive8.unregisterDraggedTypes()
 
-        drive9.image = NSImage.init(named: "diskette")
+        drive9.image = NSImage.init(named: "dropDrive9")
         drive9.unregisterDraggedTypes()
 
         super.init(renderer: renderer)
@@ -84,9 +85,16 @@ class DropZone: Layer {
     
     func draggingUpdated(_ sender: NSDraggingInfo) {
                 
+        var connected = false
+        
         for i in 0...1 {
+        
+            if i == 0 { connected = renderer.parent.c64.drive8.isConnected() }
+            if i == 1 { connected = renderer.parent.c64.drive9.isConnected() }
             
-            if isInside(sender, zone: i) {
+            if !connected {
+                targetAlpha[i] = DropZone.unconnected
+            } else if isInside(sender, zone: i) {
                 targetAlpha[i] = DropZone.selected
             } else {
                 targetAlpha[i] = DropZone.unselected
@@ -114,11 +122,11 @@ class DropZone: Layer {
     }
     
     func updateAlpha() {
-    
-        var delta = 0.0
-        
-        for i in 0...1 {
             
+        for i in 0...1 {
+    
+            var delta = 0.0
+
             if currentAlpha[i] < targetAlpha[i] && currentAlpha[i] < maxAlpha[i] {
                 delta = 0.05
             }
@@ -138,18 +146,22 @@ class DropZone: Layer {
                           
         let size = controller.metal.frame.size
         let origin = controller.metal.frame.origin
-        let w = size.width / 2
-        let h = size.height / 2
-        let newSize = NSSize.init(width: w, height: h)
-        
-        drive8.setFrameSize(newSize)
-        drive8.frame.origin = CGPoint.init(x: origin.x, y: origin.y)
-        ul[0] = CGPoint.init(x: origin.x, y: origin.y)
-        lr[0] = CGPoint.init(x: origin.x + w, y: origin.y + h)
+        let midx = origin.x + (size.width / 2)
+        let midy = origin.y + (size.height / 2)
 
-        drive9.setFrameSize(newSize)
-        drive9.frame.origin = CGPoint.init(x: origin.x + w, y: origin.y)
-        ul[1] = CGPoint.init(x: origin.x + w, y: origin.y)
-        lr[1] = CGPoint.init(x: origin.x + 2*w, y: origin.y + h)
+        let w = size.width / 4
+        let h = w
+        let margin = w / 8
+        let iconSize = NSSize.init(width: w, height: h)
+        
+        ul[0] = CGPoint.init(x: midx - w - margin, y: midy - (h / 2))
+        lr[0] = CGPoint.init(x: ul[0].x + w, y: ul[0].y + h)
+        drive8.frame.origin = ul[0]
+        drive8.setFrameSize(iconSize)
+
+        ul[1] = CGPoint.init(x: midx + margin, y: midy - (h / 2))
+        lr[1] = CGPoint.init(x: ul[1].x + w, y: ul[1].y + h)
+        drive9.frame.origin = ul[1]
+        drive9.setFrameSize(iconSize)
     }
 }
