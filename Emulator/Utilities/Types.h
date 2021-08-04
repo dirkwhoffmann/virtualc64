@@ -20,6 +20,7 @@
 #endif
 
 
+//
 // Strings
 //
 
@@ -61,8 +62,8 @@ typedef size_t             usize;
  * enum_long differs on both sides. On the Swift side, enums of this type are
  * mapped to 'long enums' to make them accessible via the Swift standard type
  * 'Int'. On the C side all enums are mapped to 'enum-less long longs'. This
- * makes them easily serializable and ensures that they the always have the
- * same size, both on 32-bit and 64-bit architectures.
+ * makes them easily serializable and ensures they have the same size on
+ * 32-bit and 64-bit architectures.
  */
 
 #if defined(__SWIFT__)
