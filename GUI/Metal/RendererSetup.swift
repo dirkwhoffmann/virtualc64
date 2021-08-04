@@ -90,6 +90,7 @@ extension Renderer {
         splashScreen = SplashScreen.init(renderer: self)
         canvas = Canvas.init(renderer: self)
         console = Console.init(renderer: self)
+        dropZone = DropZone.init(renderer: self)
     }
 
     func buildPipeline() {

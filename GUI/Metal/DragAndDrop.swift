@@ -44,6 +44,17 @@ public extension MetalView {
             
         case .compatibleFileURL:
             track("Dragged in filename")
+            
+            if let url = NSURL.init(from: pasteBoard) as URL? {
+            
+                // Open the drop zone layer if a disk file has been dragged in
+                let allowed: [FileType] = [ .T64, .P00, .PRG, .FOLDER, .D64, .G64 ]
+                let type = parent.mydocument.fileType(url: url)
+                if allowed.contains(type) {
+                    parent.renderer.dropZone.open(delay: 0.25)
+                }
+            }
+                
             return NSDragOperation.copy
             
         default:
@@ -51,13 +62,23 @@ public extension MetalView {
             return NSDragOperation()
         }
     }
+
+    override func draggingUpdated(_ sender: NSDraggingInfo) -> NSDragOperation {
+        
+        parent.renderer.dropZone.draggingUpdated(sender)
+        return NSDragOperation.copy
+    }
     
     override func draggingExited(_ sender: NSDraggingInfo?) {
     
+        parent.renderer.dropZone.close(delay: 0.25)
+        track()
     }
     
     override func prepareForDragOperation(_ sender: NSDraggingInfo) -> Bool {
         
+        parent.renderer.dropZone.close(delay: 0.25)
+        track()
         return true
     }
     
@@ -106,11 +127,18 @@ public extension MetalView {
         case .compatibleFileURL:
             
             if let url = NSURL.init(from: pasteBoard) as URL? {
-                
-                track("url = \(url)")
+                            
                 do {
                     try document.createAttachment(from: url)
+                    
+                    if parent.renderer.dropZone.isInside(sender, zone: 0) {
+                        return document.mountAttachment(destination: proxy?.drive8)
+                    }
+                    if parent.renderer.dropZone.isInside(sender, zone: 1) {
+                        return document.mountAttachment(destination: proxy?.drive9)
+                    }
                     return document.mountAttachment()
+                    
                 } catch {
                     (error as? VC64Error)?.cantOpen(url: url)
                 }

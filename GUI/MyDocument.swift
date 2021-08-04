@@ -226,6 +226,12 @@ class MyDocument: NSDocument {
     @discardableResult
     func mountAttachment() -> Bool {
 
+        mountAttachment(destination: parent.dragAndDropDrive)
+    }
+
+    @discardableResult
+    func mountAttachment(destination: DriveProxy?) -> Bool {
+
         // Only proceed if an attachment is present
         if attachment == nil { return false }
 
@@ -241,8 +247,8 @@ class MyDocument: NSDocument {
             return true
         }
 
-        // Try to insert the attachment into the drop drive (if any)
-        if let id = parent.dragAndDropDrive?.id {
+        // Try to insert the attachment as a disk
+        if let id = destination?.id {
             if mountAttachmentAsDisk(drive: id) {
                 return true
             }

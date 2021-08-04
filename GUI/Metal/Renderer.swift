@@ -49,6 +49,7 @@ class Renderer: NSObject, MTKViewDelegate {
     var splashScreen: SplashScreen! = nil
     var canvas: Canvas! = nil
     var console: Console! = nil
+    var dropZone: DropZone! = nil
         
     //
     // Ressources
@@ -170,6 +171,7 @@ class Renderer: NSObject, MTKViewDelegate {
                          
         if animates != 0 { animate() }
         
+        dropZone.update(frames: frames)
         console.update(frames: frames)
         canvas.update(frames: frames)
     }

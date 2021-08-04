@@ -71,13 +71,7 @@ class MyController: NSWindowController, MessageReceiver {
 
     // Virtual keyboard
     var virtualKeyboard: VirtualKeyboardController?
-    
-    // Loop timer for scheduling periodic updates
-    // var timer: Timer?
-    
-    // // Timer lock
-    // var timerLock = NSLock()
-    
+        
     // Snapshot timers
     var snapshotTimer: Timer?
     
