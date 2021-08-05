@@ -15,20 +15,21 @@ class DropZone: Layer {
     
     var window: NSWindow { return controller.window! }
     var contentView: NSView { return window.contentView! }
-    
-    let drive8 = NSImageView()
-    let drive9 = NSImageView()
-
-    var ul = [NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0)]
-    var lr = [NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0)]
+        
+    var zones = [NSImageView(), NSImageView(), NSImageView(), NSImageView()]
+    var ul = [NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0),
+              NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0)]
+    var lr = [NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0),
+              NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0)]
     
     static let unconnected = 0.15
-    static let unselected = 0.6
+    static let unselected = 0.75
     static let selected = 1.0
     
-    var currentAlpha = [0.0, 0.0]
-    var targetAlpha = [unselected, unselected]
-    var maxAlpha = [0.0, 0.0]
+    var enabled = [false, false, false, false]
+    var currentAlpha = [0.0, 0.0, 0.0, 0.0]
+    var targetAlpha = [unselected, unselected, unselected, unselected]
+    var maxAlpha = [0.0, 0.0, 0.0, 0.0]
         
     var isDirty = false
         
@@ -40,11 +41,10 @@ class DropZone: Layer {
         
         controller = renderer.parent
         
-        drive8.image = NSImage.init(named: "dropDrive8")
-        drive8.unregisterDraggedTypes()
-
-        drive9.image = NSImage.init(named: "dropDrive9")
-        drive9.unregisterDraggedTypes()
+        for i in 0...3 {
+            zones[i].unregisterDraggedTypes()
+            // zones[i].imageFrameStyle = .grayBezel
+        }
 
         super.init(renderer: renderer)
         
@@ -52,13 +52,45 @@ class DropZone: Layer {
         isDirty = true
     }
 
-    override func open() {
+    private func setType(_ type: FileType) {
     
-        track()        
-        super.open()
-        resize()
+        let connected8 = renderer.parent.c64.drive8.isConnected()
+        let connected9 = renderer.parent.c64.drive9.isConnected()
+
+        switch type {
+        
+        case .T64, .P00, .PRG, .FOLDER, .D64, .G64:
+            enabled = [connected8, connected9, false, false]
+
+        case .CRT:
+            enabled = [false, false, true, false]
+            
+        case .TAP:
+            enabled = [false, false, false, true]
+            
+        default:
+            enabled = [false, false, false, false]
+        }
+        
+        let imgDrive8 = enabled[0] ? "dropDrive8Enabled" : "dropDrive8Disabled"
+        let imgDrive9 = enabled[1] ? "dropDrive9Enabled" : "dropDrive9Disabled"
+        let imgExpansion = enabled[2] ? "dropExpansionEnabled" : "dropExpansionDisabled"
+        let imgDatasette = enabled[3] ? "dropDatasetteEnabled" : "dropDatasetteDisabled"
+
+        zones[0].image = NSImage.init(named: imgDrive8)
+        zones[1].image = NSImage.init(named: imgDrive9)
+        zones[2].image = NSImage.init(named: imgExpansion)
+        zones[3].image = NSImage.init(named: imgDatasette)
     }
 
+    func open(type: FileType, delay: Double) {
+
+        track()
+        setType(type)
+        open(delay: delay)
+        resize()
+    }
+    
     override func update(frames: Int64) {
         
         super.update(frames: frames)
@@ -75,8 +107,10 @@ class DropZone: Layer {
     
     func isInside(_ sender: NSDraggingInfo, zone i: Int) -> Bool {
 
-        assert(i >= 0 && i <= 1)
+        assert(i >= 0 && i <= 3)
 
+        if !enabled[i] { return false }
+        
         let x = sender.draggingLocation.x
         let y = sender.draggingLocation.y
 
@@ -84,15 +118,10 @@ class DropZone: Layer {
     }
     
     func draggingUpdated(_ sender: NSDraggingInfo) {
-                
-        var connected = false
+                        
+        for i in 0...3 {
         
-        for i in 0...1 {
-        
-            if i == 0 { connected = renderer.parent.c64.drive8.isConnected() }
-            if i == 1 { connected = renderer.parent.c64.drive9.isConnected() }
-            
-            if !connected {
+            if !enabled[i] {
                 targetAlpha[i] = DropZone.unconnected
             } else if isInside(sender, zone: i) {
                 targetAlpha[i] = DropZone.selected
@@ -104,40 +133,33 @@ class DropZone: Layer {
     
     override func alphaDidChange() {
                 
-        maxAlpha[0] = Double(alpha.current)
-        maxAlpha[1] = Double(alpha.current)
+        for i in 0...3 {
+            
+            maxAlpha[i] = Double(alpha.current)
         
-        if alpha.current > 0 && drive8.superview == nil {
-            contentView.addSubview(drive8)
-        }
-        if alpha.current > 0 && drive9.superview == nil {
-            contentView.addSubview(drive9)
-        }
-        if alpha.current == 0 && drive8.superview != nil {
-            drive8.removeFromSuperview()
-        }
-        if alpha.current == 0 && drive9.superview != nil {
-            drive9.removeFromSuperview()
+            if alpha.current > 0 && zones[i].superview == nil {
+                contentView.addSubview(zones[i])
+            }
+            if alpha.current == 0 && zones[i].superview != nil {
+                zones[i].removeFromSuperview()
+            }
         }
     }
     
     func updateAlpha() {
             
-        for i in 0...1 {
-    
+        for i in 0...3 {
+
+            let current = currentAlpha[i]
             var delta = 0.0
 
-            if currentAlpha[i] < targetAlpha[i] && currentAlpha[i] < maxAlpha[i] {
-                delta = 0.05
-            }
-            if currentAlpha[i] > targetAlpha[i] || currentAlpha[i] > maxAlpha[i] {
-                delta = -0.05
-            }
-            
+            if current < targetAlpha[i] && current < maxAlpha[i] { delta = 0.05 }
+            if current > targetAlpha[i] || current > maxAlpha[i] { delta = -0.05 }
+
             if delta != 0.0 {
+                
                 currentAlpha[i] += delta
-                if i == 0 { drive8.alphaValue = CGFloat(currentAlpha[i]) }
-                if i == 1 { drive9.alphaValue = CGFloat(currentAlpha[i]) }
+                zones[i].alphaValue = CGFloat(currentAlpha[i])
             }
         }
     }
@@ -149,19 +171,27 @@ class DropZone: Layer {
         let midx = origin.x + (size.width / 2)
         let midy = origin.y + (size.height / 2)
 
-        let w = size.width / 4
-        let h = w
+        let w = size.width / 6
+        let h = w * 1.2
         let margin = w / 8
         let iconSize = NSSize.init(width: w, height: h)
-        
-        ul[0] = CGPoint.init(x: midx - w - margin, y: midy - (h / 2))
-        lr[0] = CGPoint.init(x: ul[0].x + w, y: ul[0].y + h)
-        drive8.frame.origin = ul[0]
-        drive8.setFrameSize(iconSize)
 
-        ul[1] = CGPoint.init(x: midx + margin, y: midy - (h / 2))
+        ul[0] = CGPoint.init(x: midx - 2 * w - 1.5 * margin, y: midy - (h / 2))
+        lr[0] = CGPoint.init(x: ul[0].x + w, y: ul[0].y + h)
+
+        ul[1] = CGPoint.init(x: midx - w - 0.5 * margin, y: midy - (h / 2))
         lr[1] = CGPoint.init(x: ul[1].x + w, y: ul[1].y + h)
-        drive9.frame.origin = ul[1]
-        drive9.setFrameSize(iconSize)
+
+        ul[2] = CGPoint.init(x: midx + 0.5 * margin, y: midy - (h / 2))
+        lr[2] = CGPoint.init(x: ul[2].x + w, y: ul[2].y + h)
+
+        ul[3] = CGPoint.init(x: midx + w + 1.5 * margin, y: midy - (h / 2))
+        lr[3] = CGPoint.init(x: ul[3].x + w, y: ul[3].y + h)
+
+        for i in 0...3 {
+
+            zones[i].setFrameSize(iconSize)
+            zones[i].frame.origin = ul[i]
+        }
     }
 }

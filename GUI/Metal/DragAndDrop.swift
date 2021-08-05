@@ -47,12 +47,17 @@ public extension MetalView {
             
             if let url = NSURL.init(from: pasteBoard) as URL? {
             
-                // Open the drop zone layer if a disk file has been dragged in
-                let allowed: [FileType] = [ .T64, .P00, .PRG, .FOLDER, .D64, .G64 ]
+                // Open the drop zone layer
+                let type = parent.mydocument.fileType(url: url)
+                parent.renderer.dropZone.open(type: type, delay: 0.25)
+
+                /*
+                let allowed: [FileType] = [ .T64, .P00, .PRG, .FOLDER, .D64, .G64, .CRT, .TAP ]
                 let type = parent.mydocument.fileType(url: url)
                 if allowed.contains(type) {
-                    parent.renderer.dropZone.open(delay: 0.25)
+                    parent.renderer.dropZone.open(type: type, delay: 0.25)
                 }
+                */
             }
                 
             return NSDragOperation.copy
@@ -131,12 +136,23 @@ public extension MetalView {
                 do {
                     try document.createAttachment(from: url)
                     
+                    // Check drop zone for drive 8
                     if parent.renderer.dropZone.isInside(sender, zone: 0) {
-                        return document.mountAttachment(destination: proxy?.drive8)
+                        return document.mountAttachmentAsDisk(drive: .DRIVE8)
                     }
+                    // Check drop zone for drive 9
                     if parent.renderer.dropZone.isInside(sender, zone: 1) {
-                        return document.mountAttachment(destination: proxy?.drive9)
+                        return document.mountAttachmentAsDisk(drive: .DRIVE9)
                     }
+                    // Check drop zone for the expansion port
+                    if parent.renderer.dropZone.isInside(sender, zone: 2) {
+                        return document.mountAttachmentAsCartridge()
+                    }
+                    // Check drop zone for the datasette
+                    if parent.renderer.dropZone.isInside(sender, zone: 3) {
+                        return document.mountAttachmentAsTape()
+                    }
+
                     return document.mountAttachment()
                     
                 } catch {
