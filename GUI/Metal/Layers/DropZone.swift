@@ -72,10 +72,10 @@ class DropZone: Layer {
             enabled = [false, false, false, false]
         }
         
-        let imgDrive8 = enabled[0] ? "dropDrive8Enabled" : "dropDrive8Disabled"
-        let imgDrive9 = enabled[1] ? "dropDrive9Enabled" : "dropDrive9Disabled"
-        let imgExpansion = enabled[2] ? "dropExpansionEnabled" : "dropExpansionDisabled"
-        let imgDatasette = enabled[3] ? "dropDatasetteEnabled" : "dropDatasetteDisabled"
+        let imgDrive8 = enabled[0] ? "dropDrive8" : "dropDrive8Disabled"
+        let imgDrive9 = enabled[1] ? "dropDrive9" : "dropDrive9Disabled"
+        let imgExpansion = enabled[2] ? "dropExpansion" : "dropExpansionDisabled"
+        let imgDatasette = enabled[3] ? "dropDatasette" : "dropDatasetteDisabled"
 
         zones[0].image = NSImage.init(named: imgDrive8)
         zones[1].image = NSImage.init(named: imgDrive9)
