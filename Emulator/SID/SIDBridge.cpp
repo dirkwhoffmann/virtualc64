@@ -563,7 +563,7 @@ SIDBridge::_warpOff()
 }
 
 SIDInfo
-SIDBridge::getInfo(unsigned nr)
+SIDBridge::getInfo(isize nr)
 {
     assert(nr < 4);
     
@@ -583,7 +583,7 @@ SIDBridge::getInfo(unsigned nr)
 }
 
 VoiceInfo
-SIDBridge::getVoiceInfo(unsigned nr, unsigned voice)
+SIDBridge::getVoiceInfo(isize nr, isize voice)
 {
     assert(nr < 4);
     

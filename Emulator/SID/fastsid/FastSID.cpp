@@ -239,7 +239,7 @@ FastSID::getInfo()
 }
 
 VoiceInfo
-FastSID::getVoiceInfo(unsigned i)
+FastSID::getVoiceInfo(isize i)
 {
     assert(i < 3);
     

@@ -160,8 +160,8 @@ public:
 
 public:
     
-    SIDInfo getInfo(unsigned nr);
-    VoiceInfo getVoiceInfo(unsigned nr, unsigned voice);
+    SIDInfo getInfo(isize nr);
+    VoiceInfo getVoiceInfo(isize nr, isize voice);
     C64Component &getSID(isize nr);
 
 private:

@@ -1061,12 +1061,22 @@ VICII::turnSpritesOnOrOff()
 }
 
 void
-VICII::updateSpriteShiftRegisters() {
-    if (isSecondDMAcycle) {
-        for (unsigned sprite = 0; sprite < 8; sprite++) {
-            if (GET_BIT(isSecondDMAcycle, sprite)) {
-                loadSpriteShiftRegister(sprite);
-            }
+VICII::loadSpriteShiftRegister(isize nr)
+{
+    spriteSr[nr].data = LO_LO_HI(spriteSr[nr].chunk3,
+                                 spriteSr[nr].chunk2,
+                                 spriteSr[nr].chunk1);
+}
+
+void
+VICII::updateSpriteShiftRegisters()
+{
+    if (!isSecondDMAcycle) return;
+    
+    for (isize sprite = 0; sprite < 8; sprite++) {
+        
+        if (GET_BIT(isSecondDMAcycle, sprite)) {
+            loadSpriteShiftRegister(sprite);
         }
     }
 }

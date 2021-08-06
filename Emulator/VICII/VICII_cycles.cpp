@@ -813,7 +813,7 @@ VICII::cycle65()
 // Access functions
 //
 
-template <u16 flags, int sprite> void
+template <u16 flags, isize sprite> void
 VICII::sAccess1()
 {
     assert(sprite < 8);
@@ -837,7 +837,7 @@ VICII::sAccess1()
     spriteSr[sprite].chunk1 = dataBusPhi2;
 }
 
-template <u16 flags, int sprite> void
+template <u16 flags, isize sprite> void
 VICII::sAccess2()
 {
     assert(sprite < 8);
@@ -864,7 +864,7 @@ VICII::sAccess2()
     spriteSr[sprite].chunk2 = dataBusPhi1;
 }
 
-template <u16 flags, int sprite> void
+template <u16 flags, isize sprite> void
 VICII::sAccess3()
 {
     assert(sprite < 8);
@@ -1064,7 +1064,7 @@ VICII::gAccessAddr(bool bmm, bool ecm)
 }
 
 template <u16 flags> void
-VICII::pAccess(unsigned sprite)
+VICII::pAccess(isize sprite)
 {
     assert(sprite < 8);
     
@@ -1077,7 +1077,7 @@ VICII::pAccess(unsigned sprite)
     }
 }
 
-void VICII::sFinalize(unsigned sprite)
+void VICII::sFinalize(isize sprite)
 {
     isSecondDMAcycle = 0;
 }

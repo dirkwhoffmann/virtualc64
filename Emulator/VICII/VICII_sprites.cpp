@@ -227,12 +227,12 @@ VICII::drawSpritesSlowPath()
 }
 
 void
-VICII::drawSpritePixel(unsigned pixel, u8 enableBits, u8 freezeBits)
+VICII::drawSpritePixel(isize pixel, u8 enableBits, u8 freezeBits)
 {
     if (!enableBits && !spriteSrActive) return;
     
     // Iterate over all sprites
-    for (unsigned sprite = 0; sprite < 8; sprite++) {
+    for (isize sprite = 0; sprite < 8; sprite++) {
         
         bool enable = GET_BIT(enableBits, sprite);
         bool active = GET_BIT(spriteSrActive, sprite);

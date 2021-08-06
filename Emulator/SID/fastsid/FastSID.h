@@ -145,7 +145,7 @@ public:
 public:
     
     SIDInfo getInfo();
-    VoiceInfo getVoiceInfo(unsigned voice);
+    VoiceInfo getVoiceInfo(isize voice);
 
 private:
     

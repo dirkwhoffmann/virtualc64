@@ -895,17 +895,17 @@ private:
     u16 gAccessAddr(bool bmm, bool ecm);
     
     // Performs a sprite pointer access (p-access)
-    template <u16 flags> void pAccess(unsigned sprite);
+    template <u16 flags> void pAccess(isize sprite);
     
     // Performs one of the three sprite data accesses
-    template <u16 flags, int sprite> void sAccess1();
-    template <u16 flags, int sprite> void sAccess2();
-    template <u16 flags, int sprite> void sAccess3();
+    template <u16 flags, isize sprite> void sAccess1();
+    template <u16 flags, isize sprite> void sAccess2();
+    template <u16 flags, isize sprite> void sAccess3();
     
     /* Finalizes the sprite data access. This method is invoked one cycle after
      * the second and third sprite DMA has occurred.
      */
-    void sFinalize(unsigned sprite);
+    void sFinalize(isize sprite);
     
 
     //
@@ -1102,11 +1102,7 @@ private:
     /* Loads a sprite shift register. The shift register is loaded with the
      * three data bytes fetched in the previous sAccesses.
      */
-    void loadSpriteShiftRegister(unsigned nr) {
-        spriteSr[nr].data = LO_LO_HI(spriteSr[nr].chunk3,
-                                     spriteSr[nr].chunk2,
-                                     spriteSr[nr].chunk1);
-    }
+    void loadSpriteShiftRegister(isize nr);
     
     /* Updates the sprite shift registers. Checks if a sprite has completed
      * it's last DMA fetch and calls loadSpriteShiftRegister() accordingly.
@@ -1299,7 +1295,7 @@ private:
      *    enableBits : the spriteDisplay bits
      *    freezeBits : forces the sprites shift register to freeze temporarily
      */
-    void drawSpritePixel(unsigned pixel, u8 enableBits, u8 freezeBits);
+    void drawSpritePixel(isize pixel, u8 enableBits, u8 freezeBits);
          
     // Performs collision detection
     void checkCollisions();

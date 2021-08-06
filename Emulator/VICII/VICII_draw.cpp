@@ -18,7 +18,7 @@ VICII::drawBorder()
         
         SET_FRAME_PIXEL(0, reg.delayed.colors[COLREG_BORDER]);
 
-        for (unsigned pixel = 1; pixel <= 7; pixel++) {
+        for (isize pixel = 1; pixel <= 7; pixel++) {
             SET_FRAME_PIXEL(pixel, reg.current.colors[COLREG_BORDER]);
         }
     }
@@ -31,7 +31,7 @@ VICII::drawBorder17()
         
         // 38 column mode (only pixels 0...6 are drawn)
         SET_FRAME_PIXEL(0, reg.delayed.colors[COLREG_BORDER]);
-        for (unsigned pixel = 1; pixel <= 6; pixel++) {
+        for (isize pixel = 1; pixel <= 6; pixel++) {
             SET_FRAME_PIXEL(pixel, reg.current.colors[COLREG_BORDER]);
         }
         
