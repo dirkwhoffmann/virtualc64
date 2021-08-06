@@ -984,7 +984,7 @@ C64::romIdentifier(RomType type) const
     return RomFile::identifier(romFNV64(type));
 }
 
-const char *
+const string
 C64::romTitle(RomType type) const
 {
     switch (type) {
@@ -1023,7 +1023,7 @@ C64::romTitle(RomType type) const
     return nullptr;
 }
 
-const char *
+const string
 C64::romSubTitle(u64 fnv) const
 {
     RomIdentifier rev = RomFile::identifier(fnv);
@@ -1035,7 +1035,7 @@ C64::romSubTitle(u64 fnv) const
     return str;
 }
 
-const char *
+const string
 C64::romSubTitle(RomType type) const
 {
     switch (type) {
@@ -1070,7 +1070,7 @@ C64::romSubTitle(RomType type) const
     return nullptr;
 }
 
-const char *
+const string
 C64::romRevision(RomType type) const
 {
     switch (type) {

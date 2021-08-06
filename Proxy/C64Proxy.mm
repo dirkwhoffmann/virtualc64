@@ -2415,92 +2415,77 @@
 
 - (NSString *) romTitle:(RomType)type
 {
-    const char *str = [self c64]->romTitle(type);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self c64]->romTitle(type).c_str());
 }
 
 - (NSString *)basicRomTitle
 {
-    const char *str = [self c64]->romTitle(ROM_TYPE_BASIC);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self c64]->romTitle(ROM_TYPE_BASIC).c_str());
 }
 
 - (NSString *)charRomTitle
 {
-    const char *str = [self c64]->romTitle(ROM_TYPE_CHAR);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self c64]->romTitle(ROM_TYPE_CHAR).c_str());
 }
 
 - (NSString *)kernalRomTitle
 {
-    const char *str = [self c64]->romTitle(ROM_TYPE_KERNAL);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self c64]->romTitle(ROM_TYPE_KERNAL).c_str());
 }
 
 - (NSString *)vc1541RomTitle
 {
-    const char *str = [self c64]->romTitle(ROM_TYPE_VC1541);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self c64]->romTitle(ROM_TYPE_VC1541).c_str());
 }
 
 - (NSString *)romSubTitle:(RomType)type
 {
-    const char *str = [self c64]->romSubTitle(type);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self c64]->romSubTitle(type).c_str());
 }
 
 - (NSString *)basicRomSubTitle
 {
-    const char *str = [self c64]->romSubTitle(ROM_TYPE_BASIC);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self c64]->romSubTitle(ROM_TYPE_BASIC).c_str());
 }
 
 - (NSString *)charRomSubTitle
 {
-    const char *str = [self c64]->romSubTitle(ROM_TYPE_CHAR);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self c64]->romSubTitle(ROM_TYPE_CHAR).c_str());
 }
 
 - (NSString *)kernalRomSubTitle
 {
-    const char *str = [self c64]->romSubTitle(ROM_TYPE_KERNAL);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self c64]->romSubTitle(ROM_TYPE_KERNAL).c_str());
 }
 
 - (NSString *)vc1541RomSubTitle
 {
-    const char *str = [self c64]->romSubTitle(ROM_TYPE_VC1541);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self c64]->romSubTitle(ROM_TYPE_VC1541).c_str());
 }
 
 - (NSString *)romRevision:(RomType)type
 {
-    const char *str = [self c64]->romRevision(type);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self c64]->romRevision(type).c_str());
 }
 
 - (NSString *)basicRomRevision
 {
-    const char *str = [self c64]->romRevision(ROM_TYPE_BASIC);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self c64]->romRevision(ROM_TYPE_BASIC).c_str());
 }
 
 - (NSString *)charRomRevision
 {
-    const char *str = [self c64]->romRevision(ROM_TYPE_CHAR);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self c64]->romRevision(ROM_TYPE_CHAR).c_str());
 }
 
 - (NSString *)kernalRomRevision
 {
-    const char *str = [self c64]->romRevision(ROM_TYPE_KERNAL);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self c64]->romRevision(ROM_TYPE_KERNAL).c_str());
 }
 
 - (NSString *)vc1541RomRevision
 {
-    const char *str = [self c64]->romRevision(ROM_TYPE_VC1541);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self c64]->romRevision(ROM_TYPE_VC1541).c_str());
 }
 
 - (BOOL)isCommodoreRom:(RomIdentifier)rev
