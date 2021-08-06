@@ -39,11 +39,11 @@ public:
     static bool isKernalRomStream(std::istream &stream);
     static bool isVC1541RomStream(std::istream &stream);
     
-    static bool isRomFile(RomType type, const char *path);
-    static bool isBasicRomFile(const char *path);
-    static bool isCharRomFile(const char *path);
-    static bool isKernalRomFile(const char *path);
-    static bool isVC1541RomFile(const char *path);
+    static bool isRomFile(RomType type, const string &path);
+    static bool isBasicRomFile(const string &path);
+    static bool isCharRomFile(const string &path);
+    static bool isKernalRomFile(const string &path);
+    static bool isVC1541RomFile(const string &path);
 
     static bool isRomBuffer(RomType type, const u8 *buf, isize len);
     static bool isBasicRomBuffer(const u8 *buf, isize len);

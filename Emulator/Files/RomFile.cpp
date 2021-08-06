@@ -104,32 +104,32 @@ RomFile::isVC1541RomStream(std::istream &is)
 }
 
 bool
-RomFile::isRomFile(RomType type, const char *path)
+RomFile::isRomFile(RomType type, const string &path)
 {
     std::ifstream stream(path);
     return isRomStream(type, stream);
 }
 
 bool
-RomFile::isBasicRomFile(const char *path)
+RomFile::isBasicRomFile(const string &path)
 {
     return isRomFile(ROM_TYPE_BASIC, path);
 }
 
 bool
-RomFile::isCharRomFile(const char *path)
+RomFile::isCharRomFile(const string &path)
 {
     return isRomFile(ROM_TYPE_CHAR, path);
 }
 
 bool
-RomFile::isKernalRomFile(const char *path)
+RomFile::isKernalRomFile(const string &path)
 {
     return isRomFile(ROM_TYPE_KERNAL, path);
 }
 
 bool
-RomFile::isVC1541RomFile(const char *path)
+RomFile::isVC1541RomFile(const string &path)
 {
     return isRomFile(ROM_TYPE_VC1541, path);
 }
