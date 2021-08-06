@@ -87,7 +87,7 @@ private:
     //
     
     bool hasSwitch() const override { return true; }
-    const char *getSwitchDescription(i8 pos) const override;
+    const string getSwitchDescription(i8 pos) const override;
     void setSwitch(i8 pos) override;
     bool switchInOffPosition() const { return switchIsLeft(); }
     bool switchInOnPosition() const { return switchIsRight(); }

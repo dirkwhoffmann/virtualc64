@@ -397,13 +397,13 @@ ExpansionPort::switchIsRight() const
     return cartridge ? cartridge->switchIsRight() : false;
 }
 
-const char *
+const string
 ExpansionPort::getSwitchDescription(i8 pos) const
 {
-    return cartridge ? cartridge->getSwitchDescription(pos) : nullptr;
+    return cartridge ? cartridge->getSwitchDescription(pos) : "";
 }
 
-const char *
+const string
 ExpansionPort::getSwitchDescription() const
 {
     return getSwitchDescription(getSwitch());

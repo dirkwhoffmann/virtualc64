@@ -198,8 +198,8 @@ public:
     /* Returns a textual description for a switch position or nullptr if the
      * switch cannot be positioned this way.
      */
-    const char *getSwitchDescription(i8 pos) const;
-    const char *getSwitchDescription() const;
+    const string getSwitchDescription(i8 pos) const;
+    const string getSwitchDescription() const;
     bool validSwitchPosition(i8 pos) const;
     
     // Puts the switch in the provided position

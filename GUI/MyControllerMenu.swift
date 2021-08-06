@@ -139,16 +139,16 @@ extension MyController: NSMenuItemValidation {
             return c64.expansionport.numButtons() > 0
             
         case #selector(MyController.pressCartridgeButton1Action(_:)):
-            let title = c64.expansionport.getButtonTitle(1)
-            item.title = title ?? ""
-            item.isHidden = title == nil
-            return title != nil
+            let title = c64.expansionport.getButtonTitle(1)!
+            item.title = title
+            item.isHidden = title == ""
+            return title != ""
             
         case #selector(MyController.pressCartridgeButton2Action(_:)):
-            let title = c64.expansionport.getButtonTitle(2)
-            item.title = title ?? ""
-            item.isHidden = title == nil
-            return title != nil
+            let title = c64.expansionport.getButtonTitle(2)!
+            item.title = title
+            item.isHidden = title == ""
+            return title != ""
             
         case #selector(MyController.setSwitchDummyAction(_:)):
             return c64.expansionport.hasSwitch()

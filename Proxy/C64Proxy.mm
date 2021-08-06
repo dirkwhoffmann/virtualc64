@@ -733,14 +733,12 @@
 
 - (NSString *) switchDescription:(NSInteger)pos
 {
-    const char *str = [self eport]->getSwitchDescription(pos);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self eport]->getSwitchDescription(pos).c_str());
 }
 
 - (NSString *) currentSwitchDescription
 {
-    const char *str = [self eport]->getSwitchDescription();
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self eport]->getSwitchDescription().c_str());
 }
 
 - (BOOL) validSwitchPosition:(NSInteger)pos

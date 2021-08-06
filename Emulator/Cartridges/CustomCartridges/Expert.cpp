@@ -173,10 +173,10 @@ Expert::pressButton(isize nr)
 
 
 
-const char *
+const string
 Expert::getSwitchDescription(i8 pos) const
 {
-    return (pos == -1) ? "Prg" : (pos == 0) ? "Off" : (pos == 1) ? "On" : nullptr;
+    return (pos == -1) ? "Prg" : (pos == 0) ? "Off" : (pos == 1) ? "On" : "";
 }
 
 bool
