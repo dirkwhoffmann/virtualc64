@@ -19,10 +19,10 @@ Script::Script()
 }
 
 bool
-Script::isCompatibleName(const string &path)
+Script::isCompatiblePath(const string &path)
 {
-    string suffix = util::extractSuffix(path);
-    return suffix == "ini" || suffix == "INI";
+    auto s = util::extractSuffix(path);
+    return s == "ini" || s == "INI";
 }
 
 bool

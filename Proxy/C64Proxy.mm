@@ -1577,15 +1577,14 @@
     return file ? [[self alloc] initWith:file] : nil;
 }
 
-- (void)dealloc
-{
-    // NSLog(@"dealloc");
-    delete (AnyFile *)obj;
-}
-
 - (AnyFile *)file
 {
     return (AnyFile *)obj;
+}
+
++ (FileType)typeOfUrl:(NSURL *)url
+{
+    return AnyFile::type([url fileSystemRepresentation]);
 }
 
 - (FileType)type

@@ -13,9 +13,9 @@
 #include "IO.h"
 
 bool
-P00File::isCompatibleName(const std::string &name)
+P00File::isCompatiblePath(const std::string &path)
 {
-    auto s = util::extractSuffix(name);
+    auto s = util::extractSuffix(path);
     return s == "p00" || s == "P00";
 }
 

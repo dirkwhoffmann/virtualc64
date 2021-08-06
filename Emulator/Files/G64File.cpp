@@ -13,9 +13,9 @@
 #include "IO.h"
 
 bool
-G64File::isCompatibleName(const std::string &name)
+G64File::isCompatiblePath(const std::string &path)
 {
-    auto s = util::extractSuffix(name);
+    auto s = util::extractSuffix(path);
     return s == "g64" || s == "G64";
 }
 

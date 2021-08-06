@@ -106,7 +106,7 @@ public:
     
     template <class T> static T *make(const string &path) throws
     {
-        if (!T::isCompatibleName(path)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+        if (!T::isCompatiblePath(path)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
         
         std::ifstream stream(path);
         if (!stream.is_open()) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
@@ -169,21 +169,24 @@ public:
     // Returns the logical name of this file
     virtual PETName<16> getName() const;
 
+    // Determines the type of an arbitrary file on file
+    static FileType type(const string &path);
+
     // Returns the media type of this file
     virtual FileType type() const { return FILETYPE_UNKNOWN; }
      
     // Returns a data byte
     u8 getData(isize nr) { return (data && nr < size) ? data[nr] : 0; }
-    
-    // Removes a certain number of bytes from the beginning of the file
-    void strip(isize count);
-    
+        
     // Returns a fingerprint (hash value) for this file
     u64 fnv() const;
     
+    // Removes a certain number of bytes from the beginning of the file
+    void strip(isize count);
+
     
     //
-    // Flashing data
+    // Flashing
     //
 
     // Copies the file contents into a buffer starting at the provided offset

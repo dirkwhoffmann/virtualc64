@@ -10,6 +10,17 @@
 #include "config.h"
 #include "AnyFile.h"
 #include "Checksum.h"
+#include "CRTFile.h"
+#include "D64File.h"
+#include "Folder.h"
+#include "G64File.h"
+#include "P00File.h"
+#include "PRGFile.h"
+#include "RomFile.h"
+#include "Script.h"
+#include "Snapshot.h"
+#include "T64File.h"
+#include "TAPFile.h"
 
 AnyFile::AnyFile(usize capacity)
 {
@@ -34,6 +45,57 @@ AnyFile::getName() const
     return PETName<16>(path.substr(start, len));
 }
 
+FileType
+AnyFile::type(const string &path)
+{
+    std::ifstream stream(path);
+    if (!stream.is_open()) return FILETYPE_UNKNOWN;
+    
+    if (Snapshot::isCompatiblePath(path) &&
+        Snapshot::isCompatibleStream(stream))return FILETYPE_V64;
+
+    if (Script::isCompatiblePath(path) &&
+        Script::isCompatibleStream(stream))return FILETYPE_SCRIPT;
+
+    if (CRTFile::isCompatiblePath(path) &&
+        CRTFile::isCompatibleStream(stream))return FILETYPE_CRT;
+
+    if (T64File::isCompatiblePath(path) &&
+        T64File::isCompatibleStream(stream)) return FILETYPE_T64;
+
+    if (P00File::isCompatiblePath(path) &&
+        P00File::isCompatibleStream(stream)) return FILETYPE_P00;
+
+    if (PRGFile::isCompatiblePath(path) &&
+        PRGFile::isCompatibleStream(stream)) return FILETYPE_PRG;
+
+    if (D64File::isCompatiblePath(path) &&
+        D64File::isCompatibleStream(stream)) return FILETYPE_D64;
+
+    if (G64File::isCompatiblePath(path) &&
+        G64File::isCompatibleStream(stream)) return FILETYPE_G64;
+
+    if (TAPFile::isCompatiblePath(path) &&
+        TAPFile::isCompatibleStream(stream)) return FILETYPE_TAP;
+
+    if (RomFile::isCompatiblePath(path)) {
+        if (RomFile::isRomStream(ROM_TYPE_BASIC, stream)) return FILETYPE_BASIC_ROM;
+        if (RomFile::isRomStream(ROM_TYPE_CHAR, stream)) return FILETYPE_CHAR_ROM;
+        if (RomFile::isRomStream(ROM_TYPE_KERNAL, stream)) return FILETYPE_KERNAL_ROM;
+        if (RomFile::isRomStream(ROM_TYPE_VC1541, stream)) return FILETYPE_VC1541_ROM;
+    }
+    
+    if (Folder::isFolder(path.c_str())) return FILETYPE_FOLDER;
+
+    return FILETYPE_UNKNOWN;
+}
+
+u64
+AnyFile::fnv() const
+{
+    return data ? util::fnv_1a_64(data, size) : 0;
+}
+
 void
 AnyFile::strip(isize count)
 {
@@ -48,12 +110,6 @@ AnyFile::strip(isize count)
     
     size = newSize;
     data = newData;
-}
-
-u64
-AnyFile::fnv() const
-{
-    return data ? util::fnv_1a_64(data, size) : 0;
 }
 
 void

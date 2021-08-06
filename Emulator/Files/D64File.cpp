@@ -13,9 +13,9 @@
 #include "MemUtils.h"
 
 bool
-D64File::isCompatibleName(const std::string &name)
+D64File::isCompatiblePath(const std::string &path)
 {
-    auto s = util::extractSuffix(name);
+    auto s = util::extractSuffix(path);
     return s == "d64" || s == "D64";
 }
 

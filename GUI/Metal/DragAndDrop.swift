@@ -48,7 +48,7 @@ public extension MetalView {
             if let url = NSURL(from: pasteBoard) as URL? {
             
                 // Open the drop zone layer
-                let type = parent.mydocument.fileType(url: url)
+                let type = AnyFileProxy.type(of: url)
                 parent.renderer.dropZone.open(type: type, delay: 0.25)
             }
                 

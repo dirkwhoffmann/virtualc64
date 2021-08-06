@@ -42,7 +42,7 @@ public:
     // Class methods
     //
 
-    static bool isCompatibleName(const std::string &name);
+    static bool isCompatiblePath(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
      
     static Snapshot *makeWithC64(class C64 *c64);

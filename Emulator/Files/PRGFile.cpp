@@ -13,9 +13,9 @@
 #include "IO.h"
 
 bool
-PRGFile::isCompatibleName(const std::string &name)
+PRGFile::isCompatiblePath(const std::string &path)
 {
-    auto s = util::extractSuffix(name);
+    auto s = util::extractSuffix(path);
     return s == "prg" || s == "PRG";
 }
 

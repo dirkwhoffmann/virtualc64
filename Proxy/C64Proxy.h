@@ -694,7 +694,7 @@
 
 @interface AnyFileProxy : Proxy { }
 
-- (void)dealloc;
++ (FileType) typeOfUrl:(NSURL *)url;
 
 @property (readonly) FileType type;
 @property (readonly) NSString *name;

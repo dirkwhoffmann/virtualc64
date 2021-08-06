@@ -15,7 +15,7 @@ class P00File : public AnyCollection {
 
 public:
 
-    static bool isCompatibleName(const std::string &name);
+    static bool isCompatiblePath(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
     
     static P00File *makeWithFileSystem(class FSDevice &fs);

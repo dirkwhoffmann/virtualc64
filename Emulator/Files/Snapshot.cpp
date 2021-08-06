@@ -13,9 +13,9 @@
 #include "IO.h"
 
 bool
-Snapshot::isCompatibleName(const std::string &name)
+Snapshot::isCompatiblePath(const std::string &path)
 {
-    return true; // name == "VC64"; 
+    return true;
 }
 
 bool

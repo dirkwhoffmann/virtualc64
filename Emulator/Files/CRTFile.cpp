@@ -14,9 +14,9 @@
 #include "IO.h"
 
 bool
-CRTFile::isCompatibleName(const std::string &name)
+CRTFile::isCompatiblePath(const std::string &path)
 {
-    auto s = util::extractSuffix(name);
+    auto s = util::extractSuffix(path);
     return s == "crt" || s == "CRT";
 }
 

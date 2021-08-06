@@ -70,6 +70,7 @@ class MyDocument: NSDocument {
     // Creating attachments
     //
     
+    /*
     func fileType(url: URL) -> FileType {
                 
         if url.hasDirectoryPath {
@@ -90,6 +91,7 @@ class MyDocument: NSDocument {
         default:     return .UNKNOWN
         }
     }
+    */
     
     func createAttachment(from url: URL) throws {
         
@@ -118,7 +120,7 @@ class MyDocument: NSDocument {
         let newUrl = url.unpacked
 
         // Get the file type
-        let type = fileType(url: newUrl)
+        let type = AnyFileProxy.type(of: newUrl)
 
         // Only proceed if the file type is accepted
         if !allowedTypes.contains(type) {

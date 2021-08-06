@@ -12,9 +12,9 @@
 #include "IO.h"
 
 bool
-TAPFile::isCompatibleName(const std::string &name)
+TAPFile::isCompatiblePath(const std::string &path)
 {
-    auto s = util::extractSuffix(name);
+    auto s = util::extractSuffix(path);
     return s == "tap" || s == "TAP" || s == "t64" || s == "T64";
 }
 
