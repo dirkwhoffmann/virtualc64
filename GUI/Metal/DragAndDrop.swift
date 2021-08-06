@@ -50,14 +50,6 @@ public extension MetalView {
                 // Open the drop zone layer
                 let type = parent.mydocument.fileType(url: url)
                 parent.renderer.dropZone.open(type: type, delay: 0.25)
-
-                /*
-                let allowed: [FileType] = [ .T64, .P00, .PRG, .FOLDER, .D64, .G64, .CRT, .TAP ]
-                let type = parent.mydocument.fileType(url: url)
-                if allowed.contains(type) {
-                    parent.renderer.dropZone.open(type: type, delay: 0.25)
-                }
-                */
             }
                 
             return NSDragOperation.copy
@@ -77,13 +69,11 @@ public extension MetalView {
     override func draggingExited(_ sender: NSDraggingInfo?) {
     
         parent.renderer.dropZone.close(delay: 0.25)
-        track()
     }
     
     override func prepareForDragOperation(_ sender: NSDraggingInfo) -> Bool {
         
         parent.renderer.dropZone.close(delay: 0.25)
-        track()
         return true
     }
     

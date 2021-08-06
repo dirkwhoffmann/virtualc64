@@ -22,17 +22,16 @@ class DropZone: Layer {
     var lr = [NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0),
               NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0)]
     
-    static let unconnected = 0.15
-    static let unselected = 0.75
-    static let selected = 1.0
+    static let unconnected = 0.92
+    static let unselected = 0.92
+    static let selected = 0.92
     
     var enabled = [false, false, false, false]
+    var inside = [false, false, false, false]
     var currentAlpha = [0.0, 0.0, 0.0, 0.0]
     var targetAlpha = [unselected, unselected, unselected, unselected]
     var maxAlpha = [0.0, 0.0, 0.0, 0.0]
-        
-    var isDirty = false
-        
+    
     //
     // Initializing
     //
@@ -41,15 +40,9 @@ class DropZone: Layer {
         
         controller = renderer.parent
         
-        for i in 0...3 {
-            zones[i].unregisterDraggedTypes()
-            // zones[i].imageFrameStyle = .grayBezel
-        }
-
+        for i in 0...3 { zones[i].unregisterDraggedTypes() }
         super.init(renderer: renderer)
-        
         resize()
-        isDirty = true
     }
 
     private func setType(_ type: FileType) {
@@ -72,20 +65,15 @@ class DropZone: Layer {
             enabled = [false, false, false, false]
         }
         
-        let imgDrive8 = enabled[0] ? "dropDrive8" : "dropDrive8Disabled"
-        let imgDrive9 = enabled[1] ? "dropDrive9" : "dropDrive9Disabled"
-        let imgExpansion = enabled[2] ? "dropExpansion" : "dropExpansionDisabled"
-        let imgDatasette = enabled[3] ? "dropDatasette" : "dropDatasetteDisabled"
-
-        zones[0].image = NSImage.init(named: imgDrive8)
-        zones[1].image = NSImage.init(named: imgDrive9)
-        zones[2].image = NSImage.init(named: imgExpansion)
-        zones[3].image = NSImage.init(named: imgDatasette)
+        for i in 0...3 {
+            
+            let imgZone = enabled[i] ? "dropZone\(i)Empty" : "dropZone\(i)Disabled"
+            zones[i].image = NSImage.init(named: imgZone)
+        }
     }
 
     func open(type: FileType, delay: Double) {
 
-        track()
         setType(type)
         open(delay: delay)
         resize()
@@ -94,21 +82,13 @@ class DropZone: Layer {
     override func update(frames: Int64) {
         
         super.update(frames: frames)
-
-        if alpha.current > 0 {
-            updateAlpha()
-        }
-        
-        if isDirty {
-            
-            isDirty = false
-        }
+        if alpha.current > 0 { updateAlpha() }
     }
     
     func isInside(_ sender: NSDraggingInfo, zone i: Int) -> Bool {
 
         assert(i >= 0 && i <= 3)
-
+        
         if !enabled[i] { return false }
         
         let x = sender.draggingLocation.x
@@ -123,9 +103,22 @@ class DropZone: Layer {
         
             if !enabled[i] {
                 targetAlpha[i] = DropZone.unconnected
-            } else if isInside(sender, zone: i) {
+                continue
+            }
+            
+            let isIn = isInside(sender, zone: i)
+
+            if isIn && !inside[i] {
+                
+                inside[i] = true
+                zones[i].image = NSImage.init(named: "dropZone\(i)Selected")
                 targetAlpha[i] = DropZone.selected
-            } else {
+            }
+
+            if !isIn && inside[i] {
+
+                inside[i] = false
+                zones[i].image = NSImage.init(named: "dropZone\(i)Empty")
                 targetAlpha[i] = DropZone.unselected
             }
         }
