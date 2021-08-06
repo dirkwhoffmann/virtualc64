@@ -30,7 +30,7 @@ FSBlock::type() const
 }
 
 void
-FSBlock::writeBAM(const char *name)
+FSBlock::writeBAM(const string &name)
 {
     auto petName = PETName<16>(name);
     writeBAM(petName);

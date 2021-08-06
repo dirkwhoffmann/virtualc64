@@ -30,7 +30,7 @@ struct FSDirEntry
 
     // Initializes this entry
     void init(PETName<16> name, TSLink ref, isize numBlocks);
-    void init(const char *name, TSLink ref, isize numBlocks);
+    void init(const string &name, TSLink ref, isize numBlocks);
 
     // Checks whether this entry if empty
     bool isEmpty() const; 
@@ -42,7 +42,7 @@ struct FSDirEntry
     FSFileType getFileType() const;
     
     // Returns the file type as a string
-    const char *typeString() const;
+    const string typeString() const;
 
     // Returns true if this file does not appear in a regular directory listing
     bool isHidden() const;

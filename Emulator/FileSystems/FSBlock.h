@@ -62,7 +62,7 @@ public:
     //
     
     // Writes the Block Availability Map (BAM)
-    void writeBAM(const char *name = "");
+    void writeBAM(const string &name = "");
     void writeBAM(PETName<16> &name);
 
     

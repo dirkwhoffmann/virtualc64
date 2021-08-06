@@ -248,7 +248,7 @@ FSDevice::printDirectory()
     for (auto &item : dir) {
         msg("%3llu \"%-16s\" %s (%5llu bytes)\n",
             fileBlocks(item),
-            item->getName().c_str(), item->typeString(), fileSize(item));
+            item->getName().c_str(), item->typeString().c_str(), fileSize(item));
     }
 }
 

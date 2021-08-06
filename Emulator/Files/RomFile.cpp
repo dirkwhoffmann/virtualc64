@@ -311,7 +311,7 @@ RomFile::isPatchedRom(RomIdentifier rev)
     }
 }
 
-const char *
+const string
 RomFile::title(RomIdentifier rev)
 {
     switch (rev) {
@@ -379,7 +379,7 @@ RomFile::title(RomIdentifier rev)
     }
 }
 
-const char *
+const string
 RomFile::subTitle(RomIdentifier rev)
 {
     switch (rev) {
@@ -445,7 +445,7 @@ RomFile::subTitle(RomIdentifier rev)
     }
 }
 
-const char *
+const string
 RomFile::revision(RomIdentifier rev)
 {
     switch (rev) {

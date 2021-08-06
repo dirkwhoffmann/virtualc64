@@ -59,9 +59,9 @@ public:
     static bool isPatchedRom(RomIdentifier rev);
 
     // Provides information about known ROMs
-    static const char *title(RomIdentifier rev);
-    static const char *subTitle(RomIdentifier rev);
-    static const char *revision(RomIdentifier rev);
+    static const string title(RomIdentifier rev);
+    static const string subTitle(RomIdentifier rev);
+    static const string revision(RomIdentifier rev);
 
   
     //
