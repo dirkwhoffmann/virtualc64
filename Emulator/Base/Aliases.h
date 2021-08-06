@@ -23,11 +23,11 @@ typedef i64 Cycle;
 // Floppy drives and disks
 //
 
-typedef u32 Cylinder;
-typedef u32 Head;
-typedef u32 Track;
-typedef u32 Halftrack;
-typedef u32 Sector;
-typedef u32 Block;
+typedef i32 Cylinder;
+typedef i32 Head;
+typedef i32 Track;
+typedef i32 Halftrack;
+typedef i32 Sector;
+typedef i32 Block;
 
 typedef i32 HeadPos;

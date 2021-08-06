@@ -244,7 +244,7 @@ FastSID::getVoiceInfo(isize i)
     assert(i < 3);
     
     VoiceInfo info;
-    for (unsigned j = 0; j < 7; j++) {
+    for (isize j = 0; j < 7; j++) {
         info.reg[j] = sidreg[7*i+j];
     }
     info.frequency = voice[i].frequency();

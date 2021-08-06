@@ -70,24 +70,24 @@ const Disk::TrackDefaults Disk::trackDefaults[43] = {
     { 17, 0, 6250, 6250 * 8, 785, 0.830 }  // Track 42
 };
 
-unsigned
+isize
 Disk::numberOfSectorsInTrack(Track t)
 {
     return (t < 1) ? 0 : (t < 18) ? 21 : (t < 25) ? 19 : (t < 31) ? 18 : (t < 43) ? 17 : 0;
 }
-unsigned
+isize
 Disk::numberOfSectorsInHalftrack(Halftrack ht)
 {
     return numberOfSectorsInTrack((ht + 1) / 2);
 }
 
-unsigned
+isize
 Disk::speedZoneOfTrack(Track t)
 {
     return (t < 18) ? 3 : (t < 25) ? 2 : (t < 31) ? 1 : 0;
 }
 
-unsigned
+isize
 Disk::speedZoneOfHalftrack(Halftrack ht)
 {
     return (ht < 35) ? 3 : (ht < 49) ? 2 : (ht < 61) ? 1 : 0;
@@ -370,12 +370,12 @@ Disk::trackIsEmpty(Track t) const
     return halftrackIsEmpty(2 * t - 1);
 }
 
-unsigned
+isize
 Disk::nonemptyHalftracks() const
 {
     unsigned result = 0;
     
-    for (unsigned ht = 1; ht < 85; ht++) {
+    for (Halftrack ht = 1; ht < 85; ht++) {
         if (!halftrackIsEmpty(ht))
             result++;
     }
@@ -656,7 +656,7 @@ Disk::sectorBytesAsString(u8 *buffer, usize length, bool hex)
 // Decoding disk data
 //
 
-usize
+isize
 Disk::decodeDisk(u8 *dest)
 {
     // Determine highest non-empty track
@@ -673,8 +673,8 @@ Disk::decodeDisk(u8 *dest)
     return decodeDisk(dest, 42);
 }
 
-usize
-Disk::decodeDisk(u8 *dest, unsigned numTracks)
+isize
+Disk::decodeDisk(u8 *dest, isize numTracks)
 {
     unsigned numBytes = 0;
 
@@ -693,17 +693,17 @@ Disk::decodeDisk(u8 *dest, unsigned numTracks)
     return numBytes;
 }
 
-usize
+isize
 Disk::decodeTrack(Track t, u8 *dest)
 {
-    unsigned numBytes = 0;
-    unsigned numSectors = numberOfSectorsInTrack(t);
+    isize numBytes = 0;
+    isize numSectors = numberOfSectorsInTrack(t);
 
     // Gather sector information
     analyzeTrack(t);
 
     // For each sector ...
-    for (unsigned s = 0; s < numSectors; s++) {
+    for (Sector s = 0; s < numSectors; s++) {
         
         trace(GCR_DEBUG, "   Decoding sector %d\n", s);
         SectorInfo info = sectorLayout(s);
@@ -713,16 +713,14 @@ Disk::decodeTrack(Track t, u8 *dest)
 
             // The decoder failed to decode this sector.
             break;
-
-            // numBytes += decodeBrokenSector(dest + (dest ? numBytes : 0));
         }
     }
     
     return numBytes;
 }
 
-usize
-Disk::decodeSector(usize offset, u8 *dest)
+isize
+Disk::decodeSector(isize offset, u8 *dest)
 {
     // The first byte must be 0x07 (indicating a data block)
     assert(decodeGcr(trackInfo.bit + offset) == 0x07);
@@ -810,7 +808,7 @@ Disk::encode(FSDevice &fs, bool alignTracks)
     };
     */
     
-    unsigned numTracks = fs.getNumTracks();
+    auto numTracks = fs.getNumTracks();
 
     trace(GCR_DEBUG, "Encoding disk with %d tracks\n", numTracks);
 
@@ -825,7 +823,7 @@ Disk::encode(FSDevice &fs, bool alignTracks)
     HeadPos start;
     for (Track t = 1; t <= numTracks; t++) {
         
-        unsigned zone = speedZoneOfTrack(t);
+        auto zone = speedZoneOfTrack(t);
         if (alignTracks) {
             start = (HeadPos)(length.track[t][0] * trackDefaults[t].stagger);
         } else {

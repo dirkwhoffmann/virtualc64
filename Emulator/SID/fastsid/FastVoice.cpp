@@ -65,7 +65,7 @@ void
 FastVoice::initWaveTables()
 {
     // Most tables are the same for SID6581 and SID8580, so let's initialize both.
-    for (unsigned m = 0; m < 2; m++) {
+    for (isize m = 0; m < 2; m++) {
         for (isize i = 0; i < 4096; i++) {
             wavetable10[m][i] = (u16)(i < 2048 ? i << 4 : 0xffff - (i << 4));
             wavetable20[m][i] = (u16)(i << 3);

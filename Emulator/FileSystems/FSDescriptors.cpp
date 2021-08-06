@@ -47,7 +47,7 @@ FSDeviceDescriptor::isValidLink(TSLink ref) const
     return isTrackNr(ref.t) && ref.s >= 0 && ref.s < numSectors(ref.t);
 }
 
-u32
+i32
 FSDeviceDescriptor::speedZone(Cylinder t) const
 {
     assert(isTrackNr(t));
@@ -55,7 +55,7 @@ FSDeviceDescriptor::speedZone(Cylinder t) const
     return (t <= 17) ? 3 : (t <= 24) ? 2 : (t <= 30) ? 1 : 0;
 }
 
-u32
+i32
 FSDeviceDescriptor::numSectors(Track t) const
 {
     if (!isTrackNr(t)) return 0;
@@ -72,13 +72,13 @@ FSDeviceDescriptor::numSectors(Track t) const
     return 0;
 }
 
-u32
+i32
 FSDeviceDescriptor::numBlocks() const
 {
-    u32 result = 0;
+    i32 result = 0;
     
-    for (u32 i = 1; i <= numTracks(); i++) {
-        result += numSectors(i);
+    for (Track t = 1; t <= numTracks(); t++) {
+        result += numSectors(t);
     }
     
     return result;
@@ -89,7 +89,7 @@ FSDeviceDescriptor::tsLink(Block b) const
 {
     for (Track i = 1; i <= numTracks(); i++) {
 
-        u32 num = numSectors(i);
+        i32 num = numSectors(i);
         if (b < num) return TSLink{i,b};
         b -= num;
     }

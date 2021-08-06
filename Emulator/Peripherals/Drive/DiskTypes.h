@@ -12,7 +12,6 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
-
 //
 // Constants
 //
@@ -38,11 +37,11 @@
  */
 
 // Highest track and halftrack number (numbering starts with 1)
-static const unsigned highestTrack = 42;
-static const unsigned highestHalftrack = 84;
+static const isize highestTrack = 42;
+static const isize highestHalftrack = 84;
 
 // Highest sector number (numbering starts with 0)
-static const unsigned highestSector = 20;
+static const isize highestSector = 20;
 
 static inline bool isTrackNumber(usize nr) { return 1 <= nr && nr <= highestTrack; }
 static inline bool isHalftrackNumber(usize nr) { return 1 <= nr && nr <= highestHalftrack; }
@@ -53,15 +52,15 @@ static inline bool isSectorNumber(usize nr) { return nr <= highestSector; }
  * track number (inner tracks contain fewer bytes) and the actual write speed
  * of a drive.
  */
-static const unsigned maxBytesOnTrack = 7928;
-static const unsigned maxBitsOnTrack = maxBytesOnTrack * 8;
+static const isize maxBytesOnTrack = 7928;
+static const isize maxBitsOnTrack = maxBytesOnTrack * 8;
 
 /* Returns the average duration of a single bit in 1/10 nano seconds. The
  * returned value is the time span the drive head resists over a single bit.
  * The exact value depends on the speed zone and the disk rotation speed. We
  * assume a rotation speed of 300 rpm.
  */
- static const u64 averageBitTimeSpan[] =
+ static const i64 averageBitTimeSpan[] =
 {
      4 * 10000,        // 4 * 16/16 * 10^4 1/10 nsec
      4 * 9375,         // 4 * 15/16 * 10^4 1/10 nsec
@@ -73,7 +72,7 @@ static const unsigned maxBitsOnTrack = maxBytesOnTrack * 8;
  * drive with 300 rotations per minute which means that a full rotation lasts
  * 2.000.000.000 1/10 nsec.
  */
-static const unsigned averageBitsOnTrack[4] =
+static const isize averageBitsOnTrack[4] =
 {
     50000,             // 200.000.000.000 / averageBitTimeSpan[0]
     53333,             // 200.000.000.000 / averageBitTimeSpan[1]
@@ -84,7 +83,7 @@ static const unsigned averageBitsOnTrack[4] =
 /* Average number of bytes stored on a single track. The values are based on a
  * drive with 300 rotations per minute.
  */
-static const unsigned averageBytesOnTrack[4] =
+static const isize averageBytesOnTrack[4] =
 {
     6250,              // averageBitsOnTrack[0] / 8
     6666,              // averageBitsOnTrack[1] / 8
@@ -95,8 +94,8 @@ static const unsigned averageBytesOnTrack[4] =
 /* Size of a sector header or data block in bits. Each data block consists of
  * 325 GCR bytes (coding 260 real bytes).
  */
-static const unsigned headerBlockSize = 10 * 8;
-static const unsigned dataBlockSize = 325 * 8;
+static const isize headerBlockSize = 10 * 8;
+static const isize dataBlockSize = 325 * 8;
 
 
 //

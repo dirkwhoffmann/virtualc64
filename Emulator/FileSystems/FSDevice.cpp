@@ -53,7 +53,7 @@ FSDevice::makeWithD64(D64File &d64)
     catch (VC64Error &exception) { delete device; throw exception; }
     
     // Import error codes (if any)
-    for (Block b = 0; b < device->blocks.size(); b++) {
+    for (Block b = 0; b < (Block)device->blocks.size(); b++) {
         device->setErrorCode(b, d64.getErrorCode(b));
     }
     
@@ -251,7 +251,7 @@ FSDevice::printDirectory()
     }
 }
 
-u32
+i32
 FSDevice::numFreeBlocks() const
 {
     u32 result = 0;
@@ -263,7 +263,7 @@ FSDevice::numFreeBlocks() const
     return result;
 }
 
-u32
+i32
 FSDevice::numUsedBlocks() const
 {
     u32 result = 0;
@@ -752,7 +752,7 @@ FSDevice::prevCorrupted(u32 blockNr) const
 }
 
 u8
-FSDevice::readByte(u32 block, u32 offset) const
+FSDevice::readByte(Block block, u32 offset) const
 {
     assert(offset < 256);
     assert(block < blocks.size());

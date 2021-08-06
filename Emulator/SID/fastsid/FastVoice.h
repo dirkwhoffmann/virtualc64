@@ -190,7 +190,7 @@ private:
 public:
     
     SIDInfo getInfo() { return SubComponent::getInfo(info); }
-    VoiceInfo getVoiceInfo(unsigned nr) { return SubComponent::getInfo(voiceInfo[nr]); }
+    VoiceInfo getVoiceInfo(isize nr) { return SubComponent::getInfo(voiceInfo[nr]); }
     
     
     //

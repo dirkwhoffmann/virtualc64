@@ -289,7 +289,7 @@ C64Memory::updatePeekPokeLookupTables()
     c64.setUltimax(exrom && !game);
 
     // Update table entries
-    for (unsigned bank = 1; bank < 16; bank++) {
+    for (isize bank = 1; bank < 16; bank++) {
         peekSrc[bank] = pokeTarget[bank] = bankMap[index][bank];
     }
     

@@ -148,12 +148,12 @@ private:
 public:
     
     // Returns the number of sectors stored in a certain track or halftrack
-    static unsigned numberOfSectorsInTrack(Track t);
-    static unsigned numberOfSectorsInHalftrack(Halftrack ht);
+    static isize numberOfSectorsInTrack(Track t);
+    static isize numberOfSectorsInHalftrack(Halftrack ht);
 
     // Returns the default speed zone of a track or halftrack
-    static unsigned speedZoneOfTrack(Track t);
-    static unsigned speedZoneOfHalftrack(Halftrack ht);
+    static isize speedZoneOfTrack(Track t);
+    static isize speedZoneOfHalftrack(Halftrack ht);
 
     // Checks if the given pair is a valid (half)track / sector combination
     static bool isValidTrackSectorPair(Track t, Sector s);
@@ -358,7 +358,7 @@ public:
      */
     bool trackIsEmpty(Track t) const;
     bool halftrackIsEmpty(Halftrack ht) const;
-    unsigned nonemptyHalftracks() const;
+    isize nonemptyHalftracks() const;
 
     
     //
@@ -396,13 +396,13 @@ public:
     usize numErrors() { return errorLog.size(); }
     
     // Reads an error message from the error log
-    std::string errorMessage(unsigned nr) const { return errorLog.at(nr); }
+    std::string errorMessage(isize nr) const { return errorLog.at(nr); }
     
     // Reads the error begin index from the error log
-    usize firstErroneousBit(unsigned nr) const { return errorStartIndex.at(nr); }
+    usize firstErroneousBit(isize nr) const { return errorStartIndex.at(nr); }
     
     // Reads the error end index from the error log
-    usize lastErroneousBit(unsigned nr) const { return errorEndIndex.at(nr); }
+    usize lastErroneousBit(isize nr) const { return errorEndIndex.at(nr); }
     
     // Returns a textual representation of the disk name
     const char *diskNameAsString();
@@ -433,13 +433,13 @@ public:
      * passing a null pointer, a test run is performed. Test runs are used to
      * determine how many bytes will be written.
      */
-    usize decodeDisk(u8 *dest);
+    isize decodeDisk(u8 *dest);
  
 private:
     
-    usize decodeDisk(u8 *dest, unsigned numTracks);
-    usize decodeTrack(Track t, u8 *dest);
-    usize decodeSector(usize offset, u8 *dest);
+    isize decodeDisk(u8 *dest, isize numTracks);
+    isize decodeTrack(Track t, u8 *dest);
+    isize decodeSector(isize offset, u8 *dest);
 
 
     //

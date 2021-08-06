@@ -105,18 +105,18 @@ public:
     u8 diskId2() const { return bamPtr()->data[0xA3]; }
     
     // Reports layout information
-    u32 getNumCyls() const { return layout.numCyls; }
-    u32 getNumHeads() const { return layout.numHeads; }
-    u32 getNumTracks() const { return layout.numTracks(); }
-    u32 getNumSectors(Track track) const { return layout.numSectors(track); }
-    u32 getNumBlocks() const { return layout.numBlocks(); }
+    i32 getNumCyls() const { return layout.numCyls; }
+    i32 getNumHeads() const { return layout.numHeads; }
+    i32 getNumTracks() const { return layout.numTracks(); }
+    i32 getNumSectors(Track track) const { return layout.numSectors(track); }
+    i32 getNumBlocks() const { return layout.numBlocks(); }
 
     // Returns the number of free or used blocks
-    u32 numFreeBlocks() const;
-    u32 numUsedBlocks() const;
+    i32 numFreeBlocks() const;
+    i32 numUsedBlocks() const;
 
     // Returns the number of stored files (run a directory scan first!)
-    u32 numFiles() const { return (u32)dir.size(); }
+    i32 numFiles() const { return (u32)dir.size(); }
     
     
     //
