@@ -510,8 +510,8 @@ public:
 private:
     
     // Returns a revision string if a Mega65 Rom is installed
-    char *mega65BasicRev() const;
-    char *mega65KernalRev() const;
+    string mega65BasicRev() const;
+    string mega65KernalRev() const;
 
 public:
     

@@ -669,8 +669,7 @@ C64::isReady(ErrorCode *err) const
         if (err) *err = ERROR_ROM_KERNAL_MISSING;
         return false;
     }
-    if (FORCE_MEGA64_MISMATCH ||
-        (mega && strcmp(mega65BasicRev(), mega65KernalRev()) != 0)) {
+    if (FORCE_MEGA64_MISMATCH || (mega && mega65BasicRev() != mega65KernalRev())) {
         if (err) *err = ERROR_ROM_MEGA65_MISMATCH;
         return false;
     }
@@ -1156,7 +1155,7 @@ C64::hasMega65Rom(RomType type) const
     return false;
 }
 
-char *
+string
 C64::mega65BasicRev() const
 {
     static char rev[17];
@@ -1165,10 +1164,10 @@ C64::mega65BasicRev() const
     if (hasMega65Rom(ROM_TYPE_BASIC)) memcpy(rev, &mem.rom[0xBF55], 16);
     rev[16] = 0;
     
-    return rev;
+    return string(rev);
 }
 
-char *
+string
 C64::mega65KernalRev() const
 {
     static char rev[17];
@@ -1177,7 +1176,7 @@ C64::mega65KernalRev() const
     if (hasMega65Rom(ROM_TYPE_KERNAL)) memcpy(rev, &mem.rom[0xE4BC], 16);
     rev[16] = 0;
     
-    return rev;
+    return string(rev);
 }
 
 void

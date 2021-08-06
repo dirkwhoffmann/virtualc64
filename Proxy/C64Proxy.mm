@@ -1604,7 +1604,7 @@
 
 - (void)setPath:(NSString *)path
 {
-    [self file]->path = [path UTF8String];
+    [self file]->path = [path fileSystemRepresentation];
 }
 
 - (NSInteger)writeToFile:(NSString *)path error:(ErrorCode *)err
@@ -2375,13 +2375,13 @@
 
 - (BOOL) isRom:(RomType)type url:(NSURL *)url
 {
-    return RomFile::isRomFile(type, [[url path] UTF8String]);
+    return RomFile::isRomFile(type, [[url path] fileSystemRepresentation]);
 }
 
 - (void) loadRom:(NSURL *)url error:(ErrorCode *)ec
 {
     try {
-        [self c64]->loadRom(string([[url path] UTF8String]));
+        [self c64]->loadRom(string([[url path] fileSystemRepresentation]));
         *ec = ERROR_OK;
     } catch (VC64Error &exception) {
         *ec = exception.data;
@@ -2396,7 +2396,7 @@
 - (void) saveRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)ec
 {
     try {
-        [self c64]->saveRom(type, [[url path] UTF8String]);
+        [self c64]->saveRom(type, [[url path] fileSystemRepresentation]);
         *ec = ERROR_OK;
     } catch (VC64Error &exception) {
         *ec = exception.data;
