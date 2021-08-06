@@ -564,13 +564,6 @@ CA
                                     <action selector="drivePowerAction:" target="-1" id="iIs-IY-YB9"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="mV6-Gu-tn3"/>
-                            <menuItem title="Drag and Drop Target" tag="8" id="hef-Kr-5gt">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="dragAndDropTargetAction:" target="-1" id="5cX-EW-lfe"/>
-                                </connections>
-                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -705,13 +698,6 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="drivePowerAction:" target="-1" id="gXB-rR-28w"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="oOH-bQ-Acn"/>
-                            <menuItem title="Drag and Drop Target" tag="9" id="lhP-02-7vp">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="dragAndDropTargetAction:" target="-1" id="055-KW-iaG"/>
                                 </connections>
                             </menuItem>
                         </items>

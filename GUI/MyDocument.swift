@@ -224,13 +224,7 @@ class MyDocument: NSDocument {
     //
     
     @discardableResult
-    func mountAttachment() -> Bool {
-
-        mountAttachment(destination: parent.dragAndDropDrive)
-    }
-
-    @discardableResult
-    func mountAttachment(destination: DriveProxy?) -> Bool {
+    func mountAttachment(destination: DriveProxy? = nil) -> Bool {
 
         // Only proceed if an attachment is present
         if attachment == nil { return false }

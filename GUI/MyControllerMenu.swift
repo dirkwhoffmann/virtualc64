@@ -99,10 +99,6 @@ extension MyController: NSMenuItemValidation {
             track()
             item.title = drive.isSwitchedOn() ? "Switch off" : "Switch on"
             return true
-
-        case #selector(MyController.dragAndDropTargetAction(_:)):
-            item.state = drive === dragAndDropDrive ? .on : .off
-            return true
             
         // Tape menu
         case #selector(MyController.insertRecentTapeAction(_:)):
@@ -752,14 +748,7 @@ extension MyController: NSMenuItemValidation {
         default: fatalError()
         }         
     }
-    
-    @IBAction func dragAndDropTargetAction(_ sender: NSMenuItem!) {
         
-        let id = DriveID(rawValue: sender.tag)!
-        let drive = c64.drive(id)
-        dragAndDropDrive = (dragAndDropDrive === drive) ? nil : drive
-    }
-    
     //
     // Action methods (Datasette menu)
     //
