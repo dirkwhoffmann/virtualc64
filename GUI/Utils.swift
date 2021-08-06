@@ -14,7 +14,7 @@
 public func track(_ message: String = "",
                   path: String = #file, function: String = #function, line: Int = #line ) {
     
-    if let file = URL.init(string: path)?.deletingPathExtension().lastPathComponent {
+    if let file = URL(string: path)?.deletingPathExtension().lastPathComponent {
         if message == "" {
             print("\(file).\(line)::\(function)")
         } else {

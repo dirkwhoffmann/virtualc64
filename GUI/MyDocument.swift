@@ -28,7 +28,7 @@ class MyDocument: NSDocument {
     var attachment: AnyFileProxy?
     
     // Snapshots
-    private(set) var snapshots = ManagedArray<SnapshotProxy>.init(capacity: 32)
+    private(set) var snapshots = ManagedArray<SnapshotProxy>(capacity: 32)
     
     // Fingerprint of the first media file used after reset
     var bootDiskID = UInt64(0)
@@ -61,7 +61,7 @@ class MyDocument: NSDocument {
         track()
         
         let nibName = NSNib.Name("MyDocument")
-        let controller = MyController.init(windowNibName: nibName)
+        let controller = MyController(windowNibName: nibName)
         controller.c64 = c64
         self.addWindowController(controller)
     }
@@ -137,7 +137,7 @@ class MyDocument: NSDocument {
         track()
         
         // Get the file wrapper and create the proxy with it
-        let wrapper = try FileWrapper.init(url: fileUrl)
+        let wrapper = try FileWrapper(url: fileUrl)
         return try createFileProxy(wrapper: wrapper, type: type)
     }
     
@@ -422,7 +422,7 @@ class MyDocument: NSDocument {
             file = try Proxy.make(fs: fs) as P00FileProxy
 
         default:
-            throw VC64Error.init(ErrorCode.FILE_TYPE_MISMATCH)
+            throw VC64Error(ErrorCode.FILE_TYPE_MISMATCH)
         }
         
         try export(file: file!, to: url)
@@ -430,7 +430,6 @@ class MyDocument: NSDocument {
     
     func export(file: AnyFileProxy, to url: URL) throws {
         
-        track("file: \(file) to: \(url)")
         try file.writeToFile(url: url)
     }
 

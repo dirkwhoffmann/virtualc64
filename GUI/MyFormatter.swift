@@ -83,10 +83,10 @@ class MyFormatter: Formatter {
                                      number & 0x04 != 0 ? "1" : "0",
                                      number & 0x02 != 0 ? "1" : "0",
                                      number & 0x01 != 0 ? "1" : "0"]
-            return String.init(bits)
+            return String(bits)
             
         case 10, 16:
-            return String.init(format: format, number)
+            return String(format: format, number)
 
         default:
             assert(false)

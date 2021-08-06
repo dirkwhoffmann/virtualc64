@@ -15,7 +15,7 @@ extension MyController: NSMenuItemValidation {
         let running = c64.running
         var recording: Bool { return c64.recorder.recording }
         
-        var driveID: DriveID { return DriveID.init(rawValue: item.tag)! }
+        var driveID: DriveID { return DriveID(rawValue: item.tag)! }
         var drive: DriveProxy { return c64.drive(driveID) }
         
         func validateURLlist(_ list: [URL], image: NSImage) -> Bool {
@@ -335,7 +335,7 @@ extension MyController: NSMenuItemValidation {
         track()
         
         // Determine screenshot format
-        let format = ScreenshotSource.init(rawValue: pref.screenshotSource)!
+        let format = ScreenshotSource(rawValue: pref.screenshotSource)!
         
         // Take screenshot
         guard let screen = renderer.canvas.screenshot(source: format) else {
@@ -344,7 +344,7 @@ extension MyController: NSMenuItemValidation {
         }
 
         // Convert to Screenshot object
-        let screenshot = Screenshot.init(screen: screen, format: pref.screenshotTarget)
+        let screenshot = Screenshot(screen: screen, format: pref.screenshotTarget)
 
         // Save to disk
         try? screenshot.save(id: mydocument.bootDiskID)
@@ -475,7 +475,7 @@ extension MyController: NSMenuItemValidation {
             c64.powerOn()
             c64.run()
         } else {
-            VC64Error.init(error).warning("Unable to power up the emulator")
+            VC64Error(error).warning("Unable to power up the emulator")
         }
     }
      

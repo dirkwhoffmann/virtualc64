@@ -38,11 +38,11 @@ extension ConfigurationController {
         let hasCommodoreVC1541 = c64.isCommodoreRom(vc1541Identifier)
         let hasPatchedVC1541   = c64.isPatchedRom(vc1541Identifier)
 
-        let romMissing = NSImage.init(named: "rom_missing")
-        let romOrig    = NSImage.init(named: "rom_original")
-        let romMega    = NSImage.init(named: "rom_mega65")
-        let romPatched = NSImage.init(named: "rom_patched")
-        let romUnknown = NSImage.init(named: "rom_unknown")
+        let romMissing = NSImage(named: "rom_missing")
+        let romOrig    = NSImage(named: "rom_original")
+        let romMega    = NSImage(named: "rom_mega65")
+        let romPatched = NSImage(named: "rom_patched")
+        let romUnknown = NSImage(named: "rom_unknown")
         
         // Lock controls if emulator is powered on
         basicDropView.isEnabled = poweredOff
@@ -104,11 +104,11 @@ extension ConfigurationController {
 
         // Lock symbol and explanation
         if poweredOff {
-            romLockImage.image = NSImage.init(named: "NSInfo")
+            romLockImage.image = NSImage(named: "NSInfo")
             romLockText.stringValue = "To add a Rom, drag a Rom image file onto one of the four chip icons."
             romLockSubText.stringValue = "Original Roms are protected by copyright. Please obey legal regulations."
         } else {
-            romLockImage.image = NSImage.init(named: "lockIcon")
+            romLockImage.image = NSImage(named: "lockIcon")
             romLockText.stringValue = "The settings are locked because the emulator is running."
             romLockSubText.stringValue = "Click the lock to power down the emulator."
         }

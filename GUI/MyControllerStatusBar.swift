@@ -13,13 +13,13 @@ extension MyController {
         
         switch pref.warpMode {
         case .auto where c64.warp == true:
-            return NSImage.init(named: "hourglass3Template")
+            return NSImage(named: "hourglass3Template")
         case .auto:
-            return NSImage.init(named: "hourglass1Template")
+            return NSImage(named: "hourglass1Template")
         case .off:
-            return NSImage.init(named: "warpOffTemplate")
+            return NSImage(named: "warpOffTemplate")
         case .on:
-            return NSImage.init(named: "warpOnTemplate")
+            return NSImage(named: "warpOnTemplate")
         }
     }
     
@@ -188,7 +188,7 @@ extension MyController {
         let counter = c64.datasette.counter
         let min = counter / 60
         let sec = counter % 60
-        tapeCounter.stringValue = String.init(format: "%02d:%02d", min, sec)
+        tapeCounter.stringValue = String(format: "%02d:%02d", min, sec)
     }
     
     func refreshStatusBarWarpIcon() {

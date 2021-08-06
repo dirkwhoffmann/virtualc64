@@ -13,7 +13,7 @@ extension NSDraggingInfo {
         let pasteBoard = draggingPasteboard
         let types = [NSPasteboard.PasteboardType.compatibleFileURL]
         if pasteBoard.availableType(from: types) != nil {
-            return NSURL.init(from: pasteBoard) as URL?
+            return NSURL(from: pasteBoard) as URL?
         }
         return nil
     }
@@ -35,7 +35,7 @@ class RomDropView: NSImageView {
 
         if let url = sender.url {
             if acceptDragSource(url: url) {
-                image = NSImage.init(named: "rom_medium")
+                image = NSImage(named: "rom_medium")
                 return .copy
             }
         }

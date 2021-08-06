@@ -67,7 +67,7 @@ class Preferences {
     }
     var warpModeIntValue: Int {
         get { return Int(warpMode.rawValue) }
-        set { warpMode = WarpMode.init(rawValue: newValue)! }
+        set { warpMode = WarpMode(rawValue: newValue)! }
     }
     
     // Misc

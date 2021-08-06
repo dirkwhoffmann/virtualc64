@@ -30,7 +30,7 @@ class PreferencesWindow: NSWindow {
         track()
         
         if let parent = delegate as? PreferencesController {
-            if parent.keyDown(with: MacKey.init(event: event)) {
+            if parent.keyDown(with: MacKey(event: event)) {
                 return
             }
         }

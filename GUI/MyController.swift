@@ -98,9 +98,9 @@ class MyController: NSWindowController, MessageReceiver {
     
     // Small disk icon to be shown in NSMenuItems
     static let iconSize = CGSize(width: 16, height: 16)
-    var smallDisk = NSImage.init(named: "diskTemplate")!.resize(size: iconSize)
-    var smallTape = NSImage.init(named: "tapeTemplate")!.resize(size: iconSize)
-    var smallCart = NSImage.init(named: "crtTemplate")!.resize(size: iconSize)
+    var smallDisk = NSImage(named: "diskTemplate")!.resize(size: iconSize)
+    var smallTape = NSImage(named: "tapeTemplate")!.resize(size: iconSize)
+    var smallCart = NSImage(named: "crtTemplate")!.resize(size: iconSize)
         
     // Remembers the running state for the pauseInBackground feature
     var pauseInBackgroundSavedState = false
@@ -347,8 +347,8 @@ extension MyController {
         track()
                 
         mydocument = document as? MyDocument
-        config = Configuration.init(with: self)
-        macAudio = MacAudio.init(with: self)
+        config = Configuration(with: self)
+        macAudio = MacAudio(with: self)
     }
 
     override open func windowDidLoad() {
@@ -533,7 +533,7 @@ extension MyController {
     func processMessage(_ msg: Message) {
 
         var driveNr: Int { return msg.data & 0xFF }
-        var driveId: DriveID { return DriveID.init(rawValue: driveNr)! }
+        var driveId: DriveID { return DriveID(rawValue: driveNr)! }
         var halftrack: Int { return (msg.data >> 8) & 0xFF; }
         var vol: Int { return (msg.data >> 16) & 0xFF; }
         var pan: Int { return (msg.data >> 24) & 0xFF; }
@@ -725,16 +725,16 @@ extension MyController {
             
         case .SHAKING:
             track()
-            metal.lastShake = DispatchTime.init(uptimeNanoseconds: 0)
+            metal.lastShake = DispatchTime(uptimeNanoseconds: 0)
             if pref.releaseMouseByShaking {
                 metal.releaseMouse()
             }
 
         case .SNAPSHOT_TOO_OLD:
-            VC64Error.init(.SNP_TOO_OLD).warning("Unable to restore snapshot")
+            VC64Error(.SNP_TOO_OLD).warning("Unable to restore snapshot")
                         
         case .SNAPSHOT_TOO_NEW:
-            VC64Error.init(.SNP_TOO_NEW).warning("Unable to restore snapshot")
+            VC64Error(.SNP_TOO_NEW).warning("Unable to restore snapshot")
 
         case .AUTO_SNAPSHOT_TAKEN:
             mydocument.snapshots.append(c64.latestAutoSnapshot)

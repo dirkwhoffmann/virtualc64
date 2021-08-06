@@ -98,11 +98,11 @@ extension ErrorCode {
         case .OK:
             return ""
         case .FS_EXPECTED_VAL:
-            return String.init(format: "Expected $%02X", exp)
+            return String(format: "Expected $%02X", exp)
         case .FS_EXPECTED_MIN:
-            return String.init(format: "Expected a value greater or equal %d", exp)
+            return String(format: "Expected a value greater or equal %d", exp)
         case .FS_EXPECTED_MAX:
-            return String.init(format: "Expected a value less or equal %d", exp)
+            return String(format: "Expected a value less or equal %d", exp)
 
         default:
             track("\(self)")

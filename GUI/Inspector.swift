@@ -8,25 +8,25 @@
 // -----------------------------------------------------------------------------
 
 // Number formatters
-let fmt8b  = MyFormatter.init(radix: 2, min: 0, max: 0xFF)
+let fmt8b  = MyFormatter(radix: 2, min: 0, max: 0xFF)
 
-let fmt3d  = MyFormatter.init(radix: 10, min: 0, max: 0x7)
-let fmt4d  = MyFormatter.init(radix: 10, min: 0, max: 0xF)
-let fmt6d  = MyFormatter.init(radix: 10, min: 0, max: 0x3F)
-let fmt8d  = MyFormatter.init(radix: 10, min: 0, max: 0xFF)
-let fmt9d  = MyFormatter.init(radix: 10, min: 0, max: 0x1FF)
-let fmt10d = MyFormatter.init(radix: 10, min: 0, max: 0x3FF)
-let fmt12d = MyFormatter.init(radix: 10, min: 0, max: 0xFFF)
-let fmt16d = MyFormatter.init(radix: 10, min: 0, max: 0xFFFF)
+let fmt3d  = MyFormatter(radix: 10, min: 0, max: 0x7)
+let fmt4d  = MyFormatter(radix: 10, min: 0, max: 0xF)
+let fmt6d  = MyFormatter(radix: 10, min: 0, max: 0x3F)
+let fmt8d  = MyFormatter(radix: 10, min: 0, max: 0xFF)
+let fmt9d  = MyFormatter(radix: 10, min: 0, max: 0x1FF)
+let fmt10d = MyFormatter(radix: 10, min: 0, max: 0x3FF)
+let fmt12d = MyFormatter(radix: 10, min: 0, max: 0xFFF)
+let fmt16d = MyFormatter(radix: 10, min: 0, max: 0xFFFF)
 
-let fmt3x  = MyFormatter.init(radix: 16, min: 0, max: 0x7)
-let fmt4x  = MyFormatter.init(radix: 16, min: 0, max: 0xF)
-let fmt6x  = MyFormatter.init(radix: 16, min: 0, max: 0x3F)
-let fmt8x  = MyFormatter.init(radix: 16, min: 0, max: 0xFF)
-let fmt9x  = MyFormatter.init(radix: 16, min: 0, max: 0x1FF)
-let fmt10x = MyFormatter.init(radix: 16, min: 0, max: 0x3FF)
-let fmt12x = MyFormatter.init(radix: 16, min: 0, max: 0xFFF)
-let fmt16x = MyFormatter.init(radix: 16, min: 0, max: 0xFFFF)
+let fmt3x  = MyFormatter(radix: 16, min: 0, max: 0x7)
+let fmt4x  = MyFormatter(radix: 16, min: 0, max: 0xF)
+let fmt6x  = MyFormatter(radix: 16, min: 0, max: 0x3F)
+let fmt8x  = MyFormatter(radix: 16, min: 0, max: 0xFF)
+let fmt9x  = MyFormatter(radix: 16, min: 0, max: 0x1FF)
+let fmt10x = MyFormatter(radix: 16, min: 0, max: 0x3FF)
+let fmt12x = MyFormatter(radix: 16, min: 0, max: 0xFFF)
+let fmt16x = MyFormatter(radix: 16, min: 0, max: 0xFFFF)
 
 class Inspector: DialogController {
     
@@ -343,12 +343,12 @@ class Inspector: DialogController {
         if full {
             
             if c64.running {
-                stopAndGoButton.image = NSImage.init(named: "pauseTemplate")
+                stopAndGoButton.image = NSImage(named: "pauseTemplate")
                 stopAndGoButton.toolTip = "Pause"
                 stepIntoButton.isEnabled = false
                 stepOverButton.isEnabled = false
             } else {
-                stopAndGoButton.image = NSImage.init(named: "runTemplate")
+                stopAndGoButton.image = NSImage(named: "runTemplate")
                 stopAndGoButton.toolTip = "Run"
                 stepIntoButton.isEnabled = true
                 stepOverButton.isEnabled = true

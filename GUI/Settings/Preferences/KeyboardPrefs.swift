@@ -58,7 +58,7 @@ extension PreferencesController {
         // Update images
         for nr in 0 ... 65 {
             
-            let c64Key = C64Key.init(nr)
+            let c64Key = C64Key(nr)
             
             if c64Key == selectedKey {
                 keyView[nr]!.image = pressedKeyImage[nr]
@@ -108,7 +108,7 @@ extension PreferencesController {
 
         // Select the new key if it doesn't match the old one
         if oldKey?.nr != nr {
-            selectedKey = C64Key.init(nr)
+            selectedKey = C64Key(nr)
             keyView[selectedKey!.nr]?.image = pressedKeyImage[selectedKey!.nr]
         }
         

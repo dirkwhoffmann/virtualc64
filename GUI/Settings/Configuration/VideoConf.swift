@@ -86,7 +86,7 @@ extension ConfigurationController {
         guard let c64 = proxy else { return }
         
         // Create image representation in memory
-        let size = CGSize.init(width: 16, height: 1)
+        let size = CGSize(width: 16, height: 1)
         let cap = Int(size.width) * Int(size.height)
         let mask = calloc(cap, MemoryLayout<UInt32>.size)!
         let ptr = mask.bindMemory(to: UInt32.self, capacity: cap)

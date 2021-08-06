@@ -126,7 +126,7 @@ public extension MetalView {
         // Make coordinate independent of window size
         let scaleX = (256.0 * 400.0) / frame.width
         let scaleY = (256.0 * 300.0) / frame.height
-        let dxdy = NSPoint.init(x: dx * scaleX, y: dy * scaleY)
+        let dxdy = NSPoint(x: dx * scaleX, y: dy * scaleY)
                 
         mouse?.processMouseEvents(delta: dxdy)
     }

@@ -9,7 +9,7 @@
 
 extension NSTextStorage {
 
-    var fullRange: NSRange { return NSRange.init(location: 0, length: self.length) }
+    var fullRange: NSRange { return NSRange(location: 0, length: self.length) }
     
     func addAttr(_ name: NSAttributedString.Key, value: Any, range: NSRange?) {
         
@@ -165,7 +165,7 @@ extension Inspector {
         track("Warning")
         
         let nibName = NSNib.Name("DiskErrors")
-        let controller = DiskErrorController.init(windowNibName: nibName)
+        let controller = DiskErrorController(windowNibName: nibName)
         controller.parent = self
         
         window!.beginSheet(controller.window!, completionHandler: { result in

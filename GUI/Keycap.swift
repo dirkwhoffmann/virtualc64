@@ -10,7 +10,7 @@
 struct Keycap {
     
     // Fonts
-    static let proMono = NSFont.init(name: "C64ProMono", size: 9)
+    static let proMono = NSFont(name: "C64ProMono", size: 9)
     static let systemLarge = NSFont.systemFont(ofSize: 15)
     static let systemSmall = NSFont.systemFont(ofSize: 9)
 

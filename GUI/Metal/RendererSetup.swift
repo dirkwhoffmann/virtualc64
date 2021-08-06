@@ -51,7 +51,7 @@ extension Renderer {
     func buildDescriptors() {
         
         // Render pass descriptor
-        descriptor = MTLRenderPassDescriptor.init()
+        descriptor = MTLRenderPassDescriptor()
         descriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1)
         descriptor.colorAttachments[0].loadAction = MTLLoadAction.clear
         descriptor.colorAttachments[0].storeAction = MTLStoreAction.store
@@ -62,7 +62,7 @@ extension Renderer {
     
     func buildShaders() {
         
-        shaderOptions = ShaderOptions.init(
+        shaderOptions = ShaderOptions(
             
             blur: config.blur,
             blurRadius: config.blurRadius,
@@ -82,15 +82,15 @@ extension Renderer {
             disalignmentV: config.disalignmentV
         )
         
-        ressourceManager = RessourceManager.init(view: view, device: device, renderer: self)
+        ressourceManager = RessourceManager(view: view, device: device, renderer: self)
     }
     
     func buildLayers() {
         
-        splashScreen = SplashScreen.init(renderer: self)
-        canvas = Canvas.init(renderer: self)
-        console = Console.init(renderer: self)
-        dropZone = DropZone.init(renderer: self)
+        splashScreen = SplashScreen(renderer: self)
+        canvas = Canvas(renderer: self)
+        console = Console(renderer: self)
+        dropZone = DropZone(renderer: self)
     }
 
     func buildPipeline() {
@@ -104,13 +104,13 @@ extension Renderer {
         metalAssert(fragmentFunc != nil, "Failed to create fragment shader")
         
         // Create depth stencil state
-        let stencilDescriptor = MTLDepthStencilDescriptor.init()
+        let stencilDescriptor = MTLDepthStencilDescriptor()
         stencilDescriptor.depthCompareFunction = MTLCompareFunction.less
         stencilDescriptor.isDepthWriteEnabled = true
         depthState = device.makeDepthStencilState(descriptor: stencilDescriptor)
         
         // Setup vertex descriptor
-        let vertexDescriptor = MTLVertexDescriptor.init()
+        let vertexDescriptor = MTLVertexDescriptor()
         
         // Positions
         vertexDescriptor.attributes[0].format = MTLVertexFormat.float4
@@ -128,7 +128,7 @@ extension Renderer {
         vertexDescriptor.layouts[0].stepFunction = MTLVertexStepFunction.perVertex
         
         // Render pipeline
-        let pipelineDescriptor = MTLRenderPipelineDescriptor.init()
+        let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.label = "VirtualC64 Metal pipeline"
         pipelineDescriptor.depthAttachmentPixelFormat = MTLPixelFormat.depth32Float
         pipelineDescriptor.vertexFunction = vertexFunc
@@ -292,7 +292,7 @@ extension Renderer {
             let alert = NSAlert()
             
             alert.alertStyle = .critical
-            alert.icon = NSImage.init(named: "metal")
+            alert.icon = NSImage(named: "metal")
             alert.messageText = "Failed to initialize Metal Hardware"
             alert.informativeText = msg
             alert.addButton(withTitle: "OK")

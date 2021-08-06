@@ -40,7 +40,7 @@ extension NSImage {
     }
     
     var cgImage: CGImage? {
-        var rect = CGRect.init(origin: .zero, size: self.size)
+        var rect = CGRect(origin: .zero, size: self.size)
         return self.cgImage(forProposedRect: &rect, context: nil, hints: nil)
     }
 
@@ -52,7 +52,7 @@ extension NSImage {
     
     func expand(toSize size: NSSize) -> NSImage? {
         
-        let newImage = NSImage.init(size: size)
+        let newImage = NSImage(size: size)
         
         NSGraphicsContext.saveGraphicsState()
         newImage.lockFocus()
@@ -62,8 +62,8 @@ extension NSImage {
         t.scaleX(by: 1.0, yBy: -1.0)
         t.concat()
         
-        let inRect = NSRect.init(x: 0, y: 0, width: size.width, height: size.height)
-        let fromRect = NSRect.init(x: 0, y: 0, width: self.size.width, height: self.size.height)
+        let inRect = NSRect(x: 0, y: 0, width: size.width, height: size.height)
+        let fromRect = NSRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
         let operation = NSCompositingOperation.copy
         self.draw(in: inRect, from: fromRect, operation: operation, fraction: 1.0)
         
@@ -83,7 +83,7 @@ extension NSImage {
         let ctx = NSGraphicsContext.current
         ctx?.imageInterpolation = interpolation
         self.draw(in: cutout,
-                  from: NSRect.init(x: 0, y: 0, width: size.width, height: size.height),
+                  from: NSRect(x: 0, y: 0, width: size.width, height: size.height),
                   operation: .sourceOver,
                   fraction: 1)
         img.unlockFocus()
@@ -93,7 +93,7 @@ extension NSImage {
     
     func resize(width: CGFloat, height: CGFloat) -> NSImage {
         
-        let cutout = NSRect.init(x: 0, y: 0, width: width, height: height)
+        let cutout = NSRect(x: 0, y: 0, width: width, height: height)
         return resizeImage(width: width, height: height,
                            cutout: cutout)
     }
@@ -105,7 +105,7 @@ extension NSImage {
     
     func resizeSharp(width: CGFloat, height: CGFloat) -> NSImage {
         
-        let cutout = NSRect.init(x: 0, y: 0, width: width, height: height)
+        let cutout = NSRect(x: 0, y: 0, width: width, height: height)
         return resizeImage(width: width, height: height,
                            cutout: cutout,
                            interpolation: .none)
@@ -118,7 +118,7 @@ extension NSImage {
     
     func roundCorners(withRadius radius: CGFloat) -> NSImage {
         
-        let rect = NSRect.init(origin: NSPoint.zero, size: size)
+        let rect = NSRect(origin: NSPoint.zero, size: size)
         if
             let cgImage = self.cgImage,
             let context = CGContext(data: nil,
@@ -163,7 +163,7 @@ extension NSImage {
     
     func tint(_ color: NSColor) {
         
-        let imageRect = NSRect.init(origin: .zero, size: size)
+        let imageRect = NSRect(origin: .zero, size: size)
         
         lockFocus()
         color.set()
@@ -173,23 +173,22 @@ extension NSImage {
     
     func darken() {
         
-        tint(NSColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.33))
+        tint(NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.33))
     }
 
     func pressed() {
         
-        tint(NSColor.init(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5))
-        // tint(NSColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.15))
+        tint(NSColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5))
     }
 
     func mapped() {
         
-        tint(NSColor.init(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.25))
+        tint(NSColor(red: 0.0, green: 0.0, blue: 1.0, alpha: 0.25))
     }
 
     func red() {
         
-        tint(NSColor.init(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5))
+        tint(NSColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5))
     }
         
     func cgImageWH() -> (CGImage, Int, Int)? {
@@ -226,7 +225,7 @@ extension NSImage {
         }
         
         // Call 'draw' to fill the data array
-        let rect = CGRect.init(x: 0, y: 0, width: width, height: height)
+        let rect = CGRect(x: 0, y: 0, width: width, height: height)
         bitmapContext?.draw(cgimage, in: rect)
         return data
     }
@@ -245,58 +244,13 @@ extension NSImage {
         let texture = device.makeTexture(descriptor: textureDescriptor)
         
         // Copy data
-        // texture?.replace(w: width, h: height, buffer: data)
         let region = MTLRegionMake2D(0, 0, width, height)
         texture?.replace(region: region, mipmapLevel: 0, withBytes: data, bytesPerRow: 4 * width)
         
         free(data)
         return texture
     }
-    
-    /*
-    func toTexture(device: MTLDevice) -> MTLTexture? {
         
-        // let imageRect = NSMakeRect(0, 0, self.size.width, self.size.height);
-        let imageRef = self.cgImage(forProposedRect: nil, context: nil, hints: nil)
-        
-        // Create a suitable bitmap context for extracting the bits of the image
-        let width = imageRef!.width
-        let height = imageRef!.height
-        
-        if width == 0 || height == 0 { return nil }
-        
-        // Allocate memory
-        guard let data = malloc(height * width * 4) else { return nil }
-        let rawBitmapInfo =
-            CGImageAlphaInfo.noneSkipLast.rawValue |
-                CGBitmapInfo.byteOrder32Big.rawValue
-        let bitmapContext = CGContext(data: data,
-                                      width: width,
-                                      height: height,
-                                      bitsPerComponent: 8,
-                                      bytesPerRow: 4 * width,
-                                      space: CGColorSpaceCreateDeviceRGB(),
-                                      bitmapInfo: rawBitmapInfo)
-        
-        bitmapContext?.translateBy(x: 0.0, y: CGFloat(height))
-        bitmapContext?.scaleBy(x: 1.0, y: -1.0)
-        bitmapContext?.draw(imageRef!, in: CGRect.init(x: 0, y: 0, width: width, height: height))
-        // CGContextDrawImage(bitmapContext!, CGRectMake(0, 0, CGFloat(width), CGFloat(height)), imageRef)
-        
-        let textureDescriptor = MTLTextureDescriptor.texture2DDescriptor(
-            pixelFormat: MTLPixelFormat.rgba8Unorm,
-            width: width,
-            height: height,
-            mipmapped: false)
-        let texture = device.makeTexture(descriptor: textureDescriptor)
-        let region = MTLRegionMake2D(0, 0, width, height)
-        texture?.replace(region: region, mipmapLevel: 0, withBytes: data, bytesPerRow: 4 * width)
-        
-        free(data)
-        return texture
-    }
-    */
-    
     func imprint(_ text: String, dx: CGFloat, dy: CGFloat, font: NSFont) {
         
         let attributes: [NSAttributedString.Key: Any] = [

@@ -10,14 +10,14 @@
 struct MemColors {
 
     static let unmapped = NSColor.gray
-    static let pp       = NSColor.init(r: 0xFF, g: 0xFF, b: 0xFF, a: 0xFF)
-    static let ram      = NSColor.init(r: 0x99, g: 0xFF, b: 0x99, a: 0xFF)
-    static let cartlo   = NSColor.init(r: 0xCC, g: 0x99, b: 0xFF, a: 0xFF)
-    static let carthi   = NSColor.init(r: 0xFF, g: 0x99, b: 0xFF, a: 0xFF)
-    static let kernal   = NSColor.init(r: 0x99, g: 0xCC, b: 0xFF, a: 0xFF)
-    static let basic    = NSColor.init(r: 0xFF, g: 0x99, b: 0x99, a: 0xFF)
-    static let char     = NSColor.init(r: 0xFF, g: 0xFF, b: 0x99, a: 0xFF)
-    static let io       = NSColor.init(r: 0x99, g: 0xFF, b: 0xFF, a: 0xFF)
+    static let pp       = NSColor(r: 0xFF, g: 0xFF, b: 0xFF, a: 0xFF)
+    static let ram      = NSColor(r: 0x99, g: 0xFF, b: 0x99, a: 0xFF)
+    static let cartlo   = NSColor(r: 0xCC, g: 0x99, b: 0xFF, a: 0xFF)
+    static let carthi   = NSColor(r: 0xFF, g: 0x99, b: 0xFF, a: 0xFF)
+    static let kernal   = NSColor(r: 0x99, g: 0xCC, b: 0xFF, a: 0xFF)
+    static let basic    = NSColor(r: 0xFF, g: 0x99, b: 0x99, a: 0xFF)
+    static let char     = NSColor(r: 0xFF, g: 0xFF, b: 0x99, a: 0xFF)
+    static let io       = NSColor(r: 0x99, g: 0xFF, b: 0xFF, a: 0xFF)
 }
 
 extension Inspector {
@@ -126,14 +126,14 @@ extension Inspector {
         let size = NSSize(width: 16, height: 16)
         
         memLayoutButton.image   = memLayoutImage
-        memRamButton.image    = NSImage.init(color: MemColors.ram, size: size)
-        memKernalButton.image = NSImage.init(color: MemColors.kernal, size: size)
-        memBasicButton.image  = NSImage.init(color: MemColors.basic, size: size)
-        memCharButton.image   = NSImage.init(color: MemColors.char, size: size)
-        memPPButton.image     = NSImage.init(color: MemColors.pp, size: size)
-        memIOButton.image     = NSImage.init(color: MemColors.io, size: size)
-        memCartLoButton.image = NSImage.init(color: MemColors.cartlo, size: size)
-        memCartHiButton.image = NSImage.init(color: MemColors.carthi, size: size)
+        memRamButton.image    = NSImage(color: MemColors.ram, size: size)
+        memKernalButton.image = NSImage(color: MemColors.kernal, size: size)
+        memBasicButton.image  = NSImage(color: MemColors.basic, size: size)
+        memCharButton.image   = NSImage(color: MemColors.char, size: size)
+        memPPButton.image     = NSImage(color: MemColors.pp, size: size)
+        memIOButton.image     = NSImage(color: MemColors.io, size: size)
+        memCartLoButton.image = NSImage(color: MemColors.cartlo, size: size)
+        memCartHiButton.image = NSImage(color: MemColors.carthi, size: size)
     }
     
     @IBAction func memSourceAction(_ sender: NSPopUpButton!) {
@@ -246,7 +246,7 @@ extension Inspector {
     var memLayoutImage: NSImage? {
                 
         // Create image representation in memory
-        let size = CGSize.init(width: 256, height: 16)
+        let size = CGSize(width: 256, height: 16)
         let cap = Int(size.width) * Int(size.height)
         let mask = calloc(cap, MemoryLayout<UInt32>.size)!
         let ptr = mask.bindMemory(to: UInt32.self, capacity: cap)

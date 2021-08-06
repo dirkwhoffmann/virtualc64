@@ -111,7 +111,7 @@ extension Renderer {
             let h = CGFloat(cutoutY2.current - cutoutY1.current)
             
             // Update texture cutout
-            canvas.textureRect = CGRect.init(x: x, y: y, width: w, height: h)
+            canvas.textureRect = CGRect(x: x, y: y, width: w, height: h)
             
             if !cont {
                 animates -= AnimationType.texture

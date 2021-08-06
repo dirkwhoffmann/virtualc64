@@ -134,11 +134,11 @@ public extension C64Proxy {
 
 public extension DriveProxy {
     
-    static let ledGray = NSImage.init(named: "LEDgray")!
-    static let ledGreen = NSImage.init(named: "LEDgreen")!
-    static let ledRed = NSImage.init(named: "LEDred")!
-    static let diskSaved = NSImage.init(named: "diskTemplate")!
-    static let diskUnsaved = NSImage.init(named: "diskUnsavedTemplate")!
+    static let ledGray = NSImage(named: "LEDgray")!
+    static let ledGreen = NSImage(named: "LEDgreen")!
+    static let ledRed = NSImage(named: "LEDred")!
+    static let diskSaved = NSImage(named: "diskTemplate")!
+    static let diskUnsaved = NSImage(named: "diskUnsavedTemplate")!
         
     var greenLedImage: NSImage {        
         return isSwitchedOn() ? DriveProxy.ledGreen : DriveProxy.ledGray
@@ -160,13 +160,13 @@ extension AnyFileProxy {
         switch type {
      
         case .CRT:
-            return NSImage.init(named: "cartridge")!
+            return NSImage(named: "cartridge")!
         
         case .TAP:
-            return NSImage.init(named: "tape")!
+            return NSImage(named: "tape")!
             
         case .FOLDER:
-            return NSImage.init(named: "NSFolder")!
+            return NSImage(named: "NSFolder")!
 
         case .D64, .G64, .T64, .PRG, .P00:
             return AnyFileProxy.diskIcon(protected: protected)
@@ -179,17 +179,8 @@ extension AnyFileProxy {
     static func diskIcon(protected: Bool = false) -> NSImage {
 
         let name = "disk2" + (protected ? "_protected" : "")
-        return NSImage.init(named: name)!
+        return NSImage(named: name)!
     }
-}
-
-extension D64FileProxy {
-    /*
-    var layoutInfo: String {
-
-        return "Single sided, single density disk with \(numTracks) tracks"
-    }
-    */
 }
 
 extension CRTFileProxy {
@@ -232,7 +223,7 @@ extension FSDeviceProxy {
     func icon(protected: Bool) -> NSImage {
                         
         let name = "disk2" + (protected ? "_protected" : "")
-        return NSImage.init(named: name)!
+        return NSImage(named: name)!
     }
 
     var layoutInfo: String {

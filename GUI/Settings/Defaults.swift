@@ -117,7 +117,7 @@ extension MyController {
         
         let dict = UserDefaults.standard.dictionaryRepresentation()
         let filteredDict = dict.filter { prefixes.contains(where: $0.0.hasPrefix) }
-        let nsDict = NSDictionary.init(dictionary: filteredDict)
+        let nsDict = NSDictionary(dictionary: filteredDict)
         nsDict.write(to: url, atomically: true)
     }
 }
@@ -186,7 +186,7 @@ struct GeneralDefaults {
     // Schemes
     //
     
-    static let std = GeneralDefaults.init(
+    static let std = GeneralDefaults(
                 
         autoSnapshots: false,
         autoSnapshotInterval: 20,
@@ -327,22 +327,22 @@ struct ControlsDefaults {
     
     static let stdKeyMap1 = [
         
-        MacKey.init(keyCode: kVK_LeftArrow): GamePadAction.PULL_LEFT.rawValue,
-        MacKey.init(keyCode: kVK_RightArrow): GamePadAction.PULL_RIGHT.rawValue,
-        MacKey.init(keyCode: kVK_UpArrow): GamePadAction.PULL_UP.rawValue,
-        MacKey.init(keyCode: kVK_DownArrow): GamePadAction.PULL_DOWN.rawValue,
-        MacKey.init(keyCode: kVK_Space): GamePadAction.PRESS_FIRE.rawValue
+        MacKey(keyCode: kVK_LeftArrow): GamePadAction.PULL_LEFT.rawValue,
+        MacKey(keyCode: kVK_RightArrow): GamePadAction.PULL_RIGHT.rawValue,
+        MacKey(keyCode: kVK_UpArrow): GamePadAction.PULL_UP.rawValue,
+        MacKey(keyCode: kVK_DownArrow): GamePadAction.PULL_DOWN.rawValue,
+        MacKey(keyCode: kVK_Space): GamePadAction.PRESS_FIRE.rawValue
     ]
     static let stdKeyMap2 = [
         
-        MacKey.init(keyCode: kVK_ANSI_S): GamePadAction.PULL_LEFT.rawValue,
-        MacKey.init(keyCode: kVK_ANSI_D): GamePadAction.PULL_RIGHT.rawValue,
-        MacKey.init(keyCode: kVK_ANSI_E): GamePadAction.PULL_UP.rawValue,
-        MacKey.init(keyCode: kVK_ANSI_X): GamePadAction.PULL_DOWN.rawValue,
-        MacKey.init(keyCode: kVK_ANSI_C): GamePadAction.PRESS_FIRE.rawValue
+        MacKey(keyCode: kVK_ANSI_S): GamePadAction.PULL_LEFT.rawValue,
+        MacKey(keyCode: kVK_ANSI_D): GamePadAction.PULL_RIGHT.rawValue,
+        MacKey(keyCode: kVK_ANSI_E): GamePadAction.PULL_UP.rawValue,
+        MacKey(keyCode: kVK_ANSI_X): GamePadAction.PULL_DOWN.rawValue,
+        MacKey(keyCode: kVK_ANSI_C): GamePadAction.PRESS_FIRE.rawValue
     ]
     
-    static let std = ControlsDefaults.init(
+    static let std = ControlsDefaults(
         
         mouseKeyMap: [:],
         joyKeyMap1: stdKeyMap1,
@@ -462,13 +462,13 @@ struct KeyboardDefaults {
     // Schemes
     //
     
-    static let symbolicMapping = KeyboardDefaults.init(
+    static let symbolicMapping = KeyboardDefaults(
         
         keyMap: KeyboardController.standardKeyMap,
         mapKeysByPosition: false
     )
 
-    static let positionalMapping = KeyboardDefaults.init(
+    static let positionalMapping = KeyboardDefaults(
         
         keyMap: KeyboardController.standardKeyMap,
         mapKeysByPosition: true
@@ -610,7 +610,7 @@ struct HardwareDefaults {
     // Schemes
     //
     
-    static let C64_PAL = HardwareDefaults.init(
+    static let C64_PAL = HardwareDefaults(
         
         vicRevision:   .PAL_6569_R3,
         vicSpeed:      .NATIVE,
@@ -634,7 +634,7 @@ struct HardwareDefaults {
         ramPattern:    .VICE
     )
     
-    static let C64_II_PAL = HardwareDefaults.init(
+    static let C64_II_PAL = HardwareDefaults(
         
         vicRevision:   .PAL_8565,
         vicSpeed:      .NATIVE,
@@ -658,7 +658,7 @@ struct HardwareDefaults {
         ramPattern:    .VICE
     )
     
-    static let C64_OLD_PAL = HardwareDefaults.init(
+    static let C64_OLD_PAL = HardwareDefaults(
         
         vicRevision:   .PAL_6569_R1,
         vicSpeed:      .NATIVE,
@@ -682,7 +682,7 @@ struct HardwareDefaults {
         ramPattern:    .VICE
     )
 
-    static let C64_NTSC = HardwareDefaults.init(
+    static let C64_NTSC = HardwareDefaults(
         
         vicRevision:   .NTSC_6567,
         vicSpeed:      .NATIVE,
@@ -706,7 +706,7 @@ struct HardwareDefaults {
         ramPattern:    .VICE
     )
     
-    static let C64_II_NTSC = HardwareDefaults.init(
+    static let C64_II_NTSC = HardwareDefaults(
         
         vicRevision:   .NTSC_8562,
         vicSpeed:      .NATIVE,
@@ -730,7 +730,7 @@ struct HardwareDefaults {
         ramPattern:    .VICE
     )
     
-    static let C64_OLD_NTSC = HardwareDefaults.init(
+    static let C64_OLD_NTSC = HardwareDefaults(
         
         vicRevision:   .NTSC_6567_R56A,
         vicSpeed:      .NATIVE,
@@ -871,7 +871,7 @@ struct PeripheralsDefaults {
     // Schemes
     //
     
-    static let std = PeripheralsDefaults.init(
+    static let std = PeripheralsDefaults(
         
         driveConnect:    [true, false],
         driveAutoConf:   [true, true],
@@ -1109,7 +1109,7 @@ struct AudioDefaults {
     // Schemes
     //
     
-    static let mono = AudioDefaults.init(
+    static let mono = AudioDefaults(
         
         sidEngine: .RESID,
         sidSampling: .INTERPOLATE,
@@ -1132,7 +1132,7 @@ struct AudioDefaults {
         ejectVolume: 50
     )
     
-    static let stereo = AudioDefaults.init(
+    static let stereo = AudioDefaults(
         
         sidEngine: .RESID,
         sidSampling: .INTERPOLATE,
@@ -1306,7 +1306,7 @@ struct VideoDefaults {
     //
     
     // TFT monitor appearance
-    static let tft = VideoDefaults.init(
+    static let tft = VideoDefaults(
         
         palette: .COLOR,
         brightness: 50,
@@ -1341,7 +1341,7 @@ struct VideoDefaults {
     )
     
     // CRT monitor appearance
-    static let crt = VideoDefaults.init(
+    static let crt = VideoDefaults(
         
         palette: .COLOR,
         brightness: 50,

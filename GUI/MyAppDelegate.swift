@@ -74,7 +74,7 @@ var proxy: C64Proxy? {
     var prefController: PreferencesController?
     
     // Information provider for connected HID devices
-    var database = DeviceDatabase.init()
+    var database = DeviceDatabase()
     
     // The list of recently inserted media URLs
     var recentlyInsertedDiskURLs: [URL] = []
@@ -88,7 +88,7 @@ var proxy: C64Proxy? {
     override init() {
         
         super.init()
-        pref = Preferences.init()
+        pref = Preferences()
     }
     
     public func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -98,28 +98,8 @@ var proxy: C64Proxy? {
         // Make touch bar customizable
         if #available(OSX 10.12.2, *) {
             NSApplication.shared.isAutomaticCustomizeTouchBarMenuItemEnabled = true
-        }
-        
-        // parseCommandLineArguments()
+        }        
     }
-    
-    /*
-    func parseCommandLineArguments() {
-                
-        for argument in CommandLine.arguments {
-            
-            switch argument {
-                
-            case "-debugcart":
-                for c in controllers { c.c6
-                print("-debugcart")
-                                
-            default:
-                print("an argument")
-            }
-        }
-    }
-    */
     
     public func applicationWillTerminate(_ aNotification: Notification) {
         

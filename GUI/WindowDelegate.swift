@@ -103,7 +103,7 @@ extension MyController: NSWindowDelegate {
         
         track()
         let autoHideToolbar = NSApplication.PresentationOptions.autoHideToolbar
-        var options = NSApplication.PresentationOptions.init(rawValue: autoHideToolbar.rawValue)
+        var options = NSApplication.PresentationOptions(rawValue: autoHideToolbar.rawValue)
         options.insert(proposedOptions)
         return options
     }
@@ -132,7 +132,7 @@ extension MyController: NSWindowDelegate {
         let newMetalX  = metalY * (804.0 / 621.0)
         let dx = newMetalX - metalX
         
-        return NSSize.init(width: size.width + dx, height: size.height)
+        return NSSize(width: size.width + dx, height: size.height)
     }
 
     // Fixes a NSRect to match our desired aspect ration
@@ -141,7 +141,7 @@ extension MyController: NSWindowDelegate {
         let newSize = fixSize(window: window, size: rect.size)
         let newOriginX = (rect.width - newSize.width) / 2.0
         
-        return NSRect.init(x: newOriginX, y: 0, width: newSize.width, height: newSize.height)
+        return NSRect(x: newOriginX, y: 0, width: newSize.width, height: newSize.height)
     }
     
     public func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {

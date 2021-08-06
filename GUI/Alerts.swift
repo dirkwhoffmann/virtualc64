@@ -52,7 +52,7 @@ extension MyDocument {
         
         let alert = NSAlert()
         alert.alertStyle = .critical
-        alert.icon = NSImage.init(named: "metal")
+        alert.icon = NSImage(named: "metal")
         alert.messageText = "No suitable GPU hardware found"
         alert.informativeText = "VirtualC64 can only run on machines supporting the Metal graphics technology (2012 models and above)."
         alert.addButton(withTitle: "Exit")
@@ -66,7 +66,7 @@ extension MyDocument {
 
         let alert = NSAlert()
         alert.alertStyle = .warning
-        alert.icon = NSImage.init(named: "diskette")
+        alert.icon = NSImage(named: "diskette")
         alert.messageText = "Drive \(label) contains an unexported disk."
         alert.informativeText = "Your changes will be lost if you proceed."
         alert.addButton(withTitle: "Proceed")
@@ -79,7 +79,7 @@ extension MyDocument {
         
         let alert = NSAlert()
         alert.alertStyle = .warning
-        alert.icon = NSImage.init(named: "diskette")
+        alert.icon = NSImage(named: "diskette")
         alert.messageText = "Drive 1 and 2 contain unexported disks."
         alert.informativeText = "Your changes will be lost if you proceed."
         alert.addButton(withTitle: "Proceed")
@@ -145,7 +145,7 @@ extension MyController {
 
         let alert = NSAlert()
         alert.alertStyle = .warning
-        alert.icon = NSImage.init(named: "FFmpegIcon")
+        alert.icon = NSImage(named: "FFmpegIcon")
         alert.messageText = "Screen recording requires FFmpeg to be installed in /usr/local/bin."
         alert.informativeText = "Visit FFmpeg.org for installation instructions."
         alert.addButton(withTitle: "OK")
@@ -156,7 +156,7 @@ extension MyController {
 
         let alert = NSAlert()
         alert.alertStyle = .warning
-        alert.icon = NSImage.init(named: "FFmpegIcon")
+        alert.icon = NSImage(named: "FFmpegIcon")
         alert.messageText = "Failed to launch the screen recorder."
         alert.informativeText = "No content will be recorded."
         alert.addButton(withTitle: "OK")
@@ -167,7 +167,7 @@ extension MyController {
 
         let alert = NSAlert()
         alert.alertStyle = .critical
-        alert.icon = NSImage.init(named: "FFmpegIcon")
+        alert.icon = NSImage(named: "FFmpegIcon")
         alert.messageText = "\"\(url.lastPathComponent)\" cannot be opened."
         alert.informativeText = "The screen recorder failed to open this file for output."
         alert.addButton(withTitle: "OK")

@@ -28,7 +28,7 @@ public class MetalView: MTKView {
     var insideTrackingArea = false
         
     // Time stamp needed to detect a shaking mouse
-    var lastShake = DispatchTime.init(uptimeNanoseconds: 0)
+    var lastShake = DispatchTime(uptimeNanoseconds: 0)
     
     required public init(coder: NSCoder) {
     

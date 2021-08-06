@@ -14,10 +14,10 @@ extension Canvas {
 
     fileprivate func normalize(_ rect: CGRect) -> CGRect {
         
-        return CGRect.init(x: rect.origin.x / texW,
-                           y: rect.origin.y / texH,
-                           width: rect.width / texW,
-                           height: rect.height / texH)
+        return CGRect(x: rect.origin.x / texW,
+                      y: rect.origin.y / texH,
+                      width: rect.width / texW,
+                      height: rect.height / texH)
     }
     
     // Returns the used texture area (including HBLANK and VBLANK)
@@ -26,7 +26,7 @@ extension Canvas {
         let w = c64.vic.hPixels
         let h = c64.vic.vPixels
         
-        return CGRect.init(x: 0, y: 0, width: w, height: h)
+        return CGRect(x: 0, y: 0, width: w, height: h)
     }
     
     var entireNormalized: CGRect {
@@ -38,9 +38,9 @@ extension Canvas {
     var largestVisible: CGRect {
         
         if c64.vic.isPAL() {
-            return CGRect.init(x: 104, y: 16, width: 487 - 104, height: 299 - 16)
+            return CGRect(x: 104, y: 16, width: 487 - 104, height: 299 - 16)
         } else {
-            return CGRect.init(x: 104, y: 16, width: 487 - 104, height: 249 - 16)
+            return CGRect(x: 104, y: 16, width: 487 - 104, height: 249 - 16)
         }
     }
 
@@ -77,7 +77,7 @@ extension Canvas {
         let height = (1 - CGFloat(renderer.config.vZoom)) * max.height
         let bh = max.minY + CGFloat(renderer.config.vCenter) * (max.height - height)
         
-        return CGRect.init(x: bw, y: bh, width: width, height: height)
+        return CGRect(x: bw, y: bh, width: width, height: height)
     }
     
     var visibleNormalized: CGRect {

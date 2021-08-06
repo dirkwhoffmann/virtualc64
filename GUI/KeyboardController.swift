@@ -78,7 +78,7 @@ class KeyboardController: NSObject {
         // Ignore keys that are pressed in combination with the Command key
         if event.modifierFlags.contains(NSEvent.ModifierFlags.command) { return }
         
-        keyDown(with: MacKey.init(event: event))
+        keyDown(with: MacKey(event: event))
     }
     
     func keyUp(with event: NSEvent) {
@@ -86,7 +86,7 @@ class KeyboardController: NSObject {
         // Intercept if the console is open
         if renderer.console.isVisible { renderer.console.keyUp(with: event); return }
         
-        keyUp(with: MacKey.init(event: event))
+        keyUp(with: MacKey(event: event))
     }
     
     func flagsChanged(with event: NSEvent) {

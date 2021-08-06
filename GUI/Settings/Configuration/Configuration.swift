@@ -160,7 +160,7 @@ class Configuration {
     var blankDiskFormat = PeripheralsDefaults.std.blankDiskFormat
     var blankDiskFormatIntValue: Int {
         get { return Int(blankDiskFormat.rawValue) }
-        set { blankDiskFormat = DOSType.init(rawValue: newValue) ?? .NODOS }
+        set { blankDiskFormat = DOSType(rawValue: newValue) ?? .NODOS }
     }
 
     var gameDevice1 = PeripheralsDefaults.std.gameDevice1 {

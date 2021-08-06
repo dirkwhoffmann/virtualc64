@@ -17,7 +17,7 @@ class Layer: NSObject {
     var c64: C64Proxy { return renderer.parent.c64 }
     
     // Alpha channel
-    var alpha: AnimatedFloat = AnimatedFloat.init()
+    var alpha: AnimatedFloat = AnimatedFloat()
 
     //
     // Initializing

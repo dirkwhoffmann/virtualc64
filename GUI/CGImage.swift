@@ -69,6 +69,6 @@ public extension CGImage {
                          from: MTLRegionMake2D(x, y, w, h),
                          mipmapLevel: 0)
         
-        return make(data: data, size: CGSize.init(width: w, height: h))
+        return make(data: data, size: CGSize(width: w, height: h))
     }
 }

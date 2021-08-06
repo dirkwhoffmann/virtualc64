@@ -13,7 +13,7 @@ extension ConfigurationController {
         
         for addr in stride(from: 0xD400, through: 0xD7E0, by: 0x20) {
 
-            let label = String.init(format: "$%04X", addr)
+            let label = String(format: "$%04X", addr)
             hwSidAddress1.addItem(withTitle: label)
             hwSidAddress2.addItem(withTitle: label)
             hwSidAddress3.addItem(withTitle: label)
@@ -28,7 +28,7 @@ extension ConfigurationController {
         // VIC
         hwVicModelPopup.selectItem(withTag: config.vicRevision)
         
-        switch VICIIRevision.init(rawValue: config.vicRevision) {
+        switch VICIIRevision(rawValue: config.vicRevision) {
             
         case .PAL_6569_R1,
              .PAL_6569_R3,

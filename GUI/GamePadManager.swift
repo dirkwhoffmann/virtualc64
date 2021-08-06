@@ -156,7 +156,7 @@ class GamePadManager {
     }
 
     func icon(slot: Int) -> NSImage {
-        return gamePads[slot]?.icon ?? NSImage.init(named: "devGamepad1Template")!
+        return gamePads[slot]?.icon ?? NSImage(named: "devGamepad1Template")!
     }
 
     //

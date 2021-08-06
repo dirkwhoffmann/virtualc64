@@ -45,7 +45,7 @@ public extension MetalView {
         case .compatibleFileURL:
             track("Dragged in filename")
             
-            if let url = NSURL.init(from: pasteBoard) as URL? {
+            if let url = NSURL(from: pasteBoard) as URL? {
             
                 // Open the drop zone layer
                 let type = parent.mydocument.fileType(url: url)
@@ -121,7 +121,7 @@ public extension MetalView {
             
         case .compatibleFileURL:
             
-            if let url = NSURL.init(from: pasteBoard) as URL? {
+            if let url = NSURL(from: pasteBoard) as URL? {
                             
                 do {
                     try document.createAttachment(from: url)

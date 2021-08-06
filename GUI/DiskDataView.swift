@@ -78,7 +78,7 @@ class DiskDataView: NSScrollView {
                 unmarkSectors()
                 
                 // Update text storage
-                let textStorage = NSTextStorage.init(string: gcr)
+                let textStorage = NSTextStorage(string: gcr)
                 textStorage.font = font
                 textStorage.foregroundColor = .textColor
                 textView?.layoutManager?.replaceTextStorage(textStorage)
@@ -98,7 +98,7 @@ class DiskDataView: NSScrollView {
     func markHead() {
         
         unmarkHead()
-        headPosition = NSRange.init(location: Int(drive.offset()), length: 1)
+        headPosition = NSRange(location: Int(drive.offset()), length: 1)
         storage?.addAttr(.backgroundColor, value: NSColor.red, range: headPosition)
     }
     
@@ -118,7 +118,7 @@ class DiskDataView: NSScrollView {
         inspector.setSelectedSector(-1)
 
         // Highlight drive position inside the current track
-        let range = NSRange.init(location: Int(drive.offset()), length: 1)
+        let range = NSRange(location: Int(drive.offset()), length: 1)
         textView?.scrollRangeToVisible(range)
     }
             
@@ -136,22 +136,22 @@ class DiskDataView: NSScrollView {
         let dRight = info.dataEnd % (length + 1)
                 
         if hLeft < hRight {
-            firstHeaderRange = NSRange.init(location: hLeft, length: hRight - hLeft)
+            firstHeaderRange = NSRange(location: hLeft, length: hRight - hLeft)
             secondHeaderRange = nil
         } else if hLeft > hRight {
-            firstHeaderRange = NSRange.init(location: 0, length: hRight + 1)
-            secondHeaderRange = NSRange.init(location: hLeft, length: length - hLeft)
+            firstHeaderRange = NSRange(location: 0, length: hRight + 1)
+            secondHeaderRange = NSRange(location: hLeft, length: length - hLeft)
         } else {
             firstHeaderRange = nil
             secondHeaderRange = nil
         }
 
         if dLeft < dRight {
-            firstDataSectorRange = NSRange.init(location: dLeft, length: dRight - dLeft)
+            firstDataSectorRange = NSRange(location: dLeft, length: dRight - dLeft)
             secondDataSectorRange = nil
         } else if dLeft > dRight {
-            firstDataSectorRange = NSRange.init(location: 0, length: dRight + 1)
-            secondDataSectorRange = NSRange.init(location: dLeft, length: length - dLeft)
+            firstDataSectorRange = NSRange(location: 0, length: dRight + 1)
+            secondDataSectorRange = NSRange(location: dLeft, length: length - dLeft)
         } else {
             firstDataSectorRange = nil
             secondDataSectorRange = nil

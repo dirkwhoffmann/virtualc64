@@ -85,7 +85,7 @@ class VC64Error: Error {
         } else {
             let alert = NSAlert()
             alert.alertStyle = style
-            if icon != nil { alert.icon = NSImage.init(named: icon!) }
+            if icon != nil { alert.icon = NSImage(named: icon!) }
             alert.messageText = msg1
             alert.informativeText = msg2
             alert.addButton(withTitle: "OK")
@@ -126,7 +126,7 @@ class VC64Error: Error {
     
     static func unsupportedCrtAlert(type: Int, async: Bool = false) {
         
-        let crtType = CartridgeType.init(rawValue: type)
+        let crtType = CartridgeType(rawValue: type)
         let name = crtType?.description ?? "Unknown"
         
         warning("This cartridge cannot be attached.",

@@ -49,7 +49,7 @@ class Canvas: Layer {
     var scanlineTexture: MTLTexture! = nil
     
     // Part of the texture that is currently visible
-    var textureRect = CGRect.init() { didSet { buildVertexBuffers() } }
+    var textureRect = CGRect() { didSet { buildVertexBuffers() } }
 
     //
     // Buffers and Uniforms
@@ -83,15 +83,15 @@ class Canvas: Layer {
     }
     
     func buildVertexBuffers() {
-                
-        quad2D = Node.init(device: device,
-                           x: -1.0, y: -1.0, z: 0.0, w: 2.0, h: 2.0,
-                           t: textureRect)
         
-        quad3D = Quad.init(device: device,
-                           x1: -0.64, y1: -0.48, z1: -0.64,
-                           x2: 0.64, y2: 0.48, z2: 0.64,
-                           t: textureRect)
+        quad2D = Node(device: device,
+                      x: -1.0, y: -1.0, z: 0.0, w: 2.0, h: 2.0,
+                      t: textureRect)
+        
+        quad3D = Quad(device: device,
+                      x1: -0.64, y1: -0.48, z1: -0.64,
+                      x2: 0.64, y2: 0.48, z2: 0.64,
+                      t: textureRect)
     }
 
     func buildTextures() {

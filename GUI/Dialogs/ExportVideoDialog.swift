@@ -45,7 +45,7 @@ class ExportVideoDialog: DialogController {
             text.stringValue = "MPEG-4 Video Stream"
             icon.isHidden = false
             exportButton.isHidden = false
-            sizeOnDisk.stringValue = URL.init(fileURLWithPath: path).fileSizeString
+            sizeOnDisk.stringValue = URL(fileURLWithPath: path).fileSizeString
             duration.stringValue = String(format: "%.1f sec", c64.recorder.duration)
             frameRate.stringValue = "\(c64.recorder.frameRate) Hz"
             bitRate.stringValue = "\(c64.recorder.bitRate) kHz"
@@ -78,7 +78,7 @@ class ExportVideoDialog: DialogController {
                     track()
                     if let url = self.panel.url {
                         track("url = \(url)")
-                        let source = URL.init(fileURLWithPath: self.path)
+                        let source = URL(fileURLWithPath: self.path)
                         FileManager.copy(from: source, to: url)
                     }
                 }

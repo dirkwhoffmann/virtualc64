@@ -53,7 +53,7 @@ class Node {
     
     convenience init(device: MTLDevice,
                      x: Float, y: Float, z: Float, w: Float, h: Float,
-                     t: NSRect = NSRect.init(x: 0, y: 0, width: 1.0, height: 1.0)) {
+                     t: NSRect = NSRect(x: 0, y: 0, width: 1.0, height: 1.0)) {
         
         let upperLeft = NSPoint(x: t.minX, y: t.minY)
         let lowerLeft = NSPoint(x: t.minX, y: t.maxY)
@@ -137,18 +137,18 @@ class Quad {
          x1: Float, y1: Float, z1: Float,
          x2: Float, y2: Float, z2: Float, t: NSRect) {
         
-        front  = Node.init(device: device,
-                           x: x1, y: y1, z: z1, w: (x2 - x1), h: (y2 - y1), t: t)
-        back   = Node.init(device: device,
-                           x: x2, y: y1, z: z2, w: (x1 - x2), h: (y2 - y1), t: t)
-        left   = Node.init(device: device,
-                           x: x1, y: y1, z: z2, h: (y2 - y1), d: (z1 - z2), t: t)
-        right  = Node.init(device: device,
-                           x: x2, y: y1, z: z1, h: (y2 - y1), d: (z2 - z1), t: t)
-        top    = Node.init(device: device,
-                           x: x1, y: y2, z: z1, w: (x2 - x1), d: (y2 - y1), t: t)
-        bottom = Node.init(device: device,
-                           x: x1, y: y1, z: z2, w: (x2 - x1), d: (y1 - y2), t: t)
+        front  = Node(device: device,
+                      x: x1, y: y1, z: z1, w: (x2 - x1), h: (y2 - y1), t: t)
+        back   = Node(device: device,
+                      x: x2, y: y1, z: z2, w: (x1 - x2), h: (y2 - y1), t: t)
+        left   = Node(device: device,
+                      x: x1, y: y1, z: z2, h: (y2 - y1), d: (z1 - z2), t: t)
+        right  = Node(device: device,
+                      x: x2, y: y1, z: z1, h: (y2 - y1), d: (z2 - z1), t: t)
+        top    = Node(device: device,
+                      x: x1, y: y2, z: z1, w: (x2 - x1), d: (y2 - y1), t: t)
+        bottom = Node(device: device,
+                      x: x1, y: y1, z: z2, w: (x2 - x1), d: (y1 - y2), t: t)
     }
 
     func draw(_ commandEncoder: MTLRenderCommandEncoder, allSides: Bool) {
