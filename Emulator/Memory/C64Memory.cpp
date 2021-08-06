@@ -688,10 +688,10 @@ C64Memory::resetVector() {
     }
 }
 
-char *
+string
 C64Memory::memdump(u16 addr, long num, bool hex, MemoryType src)
 {
-    static char result[128];
+    char result[128];
     char *p = result;
     
     assert(num <= 16);
@@ -723,13 +723,13 @@ C64Memory::memdump(u16 addr, long num, bool hex, MemoryType src)
         }
     }
     
-    return result;
+    return string(result);
 }
 
-char *
+string
 C64Memory::txtdump(u16 addr, long num, MemoryType src)
 {
-    static char result[17];
+    char result[17];
     char *p = result;
     
     assert(num <= 16);
@@ -740,8 +740,6 @@ C64Memory::txtdump(u16 addr, long num, MemoryType src)
             
             u8 byte = spypeek(addr++, src);
             
-            // if (byte >=  1 && byte <= 26) { *p++ = (byte - 1) + 'A'; continue; }
-            // if (byte >= 48 && byte <= 57) { *p++ = (byte - 48) + '0'; continue; }
             if (byte >= 65 && byte <= 90) { *p++ = byte; continue; }
             if (byte >= 32 && byte <= 57) { *p++ = byte; continue; }
             *p++ = '.';
@@ -749,5 +747,5 @@ C64Memory::txtdump(u16 addr, long num, MemoryType src)
     }
     *p = 0;
 
-    return result;
+    return string(result);
 }

@@ -293,13 +293,11 @@
 
 - (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src
 {
-    const char *str = [self mem]->memdump(addr, num, hex, src);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self mem]->memdump(addr, num, hex, src).c_str());
 }
 - (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemoryType)src
 {
-    const char *str = [self mem]->txtdump(addr, num, src);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self mem]->txtdump(addr, num, src).c_str());
 }
 
 @end

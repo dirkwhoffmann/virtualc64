@@ -183,13 +183,13 @@ public:
     u16 resetVector();
     
     // Returns a string representations for a portion of memory
-    char *memdump(u16 addr, long num, bool hex, MemoryType src);
-    char *hexdump(u16 addr, long num, MemoryType src) { return memdump(addr, num, true, src); }
-    char *decdump(u16 addr, long num, MemoryType src) { return memdump(addr, num, false, src); }
-    char *txtdump(u16 addr, long num, MemoryType src);
+    string memdump(u16 addr, long num, bool hex, MemoryType src);
+    string hexdump(u16 addr, long num, MemoryType src) { return memdump(addr, num, true, src); }
+    string decdump(u16 addr, long num, MemoryType src) { return memdump(addr, num, false, src); }
+    string txtdump(u16 addr, long num, MemoryType src);
 
-    char *memdump(u16 addr, long num, bool hex) { return memdump(addr, num, hex, peekSrc[addr >> 12]); }
-    char *hexdump(u16 addr, long num) { return hexdump(addr, num, peekSrc[addr >> 12]); }
-    char *decdump(u16 addr, long num) { return decdump(addr, num, peekSrc[addr >> 12]); }
-    char *txtdump(u16 addr, long num) { return txtdump(addr, num, peekSrc[addr >> 12]); }
+    string memdump(u16 addr, long num, bool hex) { return memdump(addr, num, hex, peekSrc[addr >> 12]); }
+    string hexdump(u16 addr, long num) { return hexdump(addr, num, peekSrc[addr >> 12]); }
+    string decdump(u16 addr, long num) { return decdump(addr, num, peekSrc[addr >> 12]); }
+    string txtdump(u16 addr, long num) { return txtdump(addr, num, peekSrc[addr >> 12]); }
 };
