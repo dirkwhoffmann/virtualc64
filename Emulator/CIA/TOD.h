@@ -74,7 +74,7 @@ private:
 public:
     
 	TOD(C64 &ref, CIA &cia);
-    const char *getDescription() const override;
+    const string getDescription() const override;
 
 private:
     

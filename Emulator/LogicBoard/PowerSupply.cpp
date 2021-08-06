@@ -16,7 +16,7 @@ PowerSupply::PowerSupply(C64& ref) : SubComponent(ref)
 
 }
 
-const char *
+const string
 PowerSupply::getDescription() const
 {
     return "PowerSupply";

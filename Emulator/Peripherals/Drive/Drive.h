@@ -226,7 +226,7 @@ public:
 public:
     
     Drive(DriveID id, C64 &ref);
-    const char *getDescription() const override;
+    const string getDescription() const override;
 
 private:
 

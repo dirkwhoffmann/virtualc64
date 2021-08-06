@@ -16,7 +16,7 @@ class Rex : public Cartridge {
 public:
     
     Rex(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "Rex"; }
+    const string getDescription() const override { return "Rex"; }
     CartridgeType getCartridgeType() const override { return CRT_REX; }
     
     

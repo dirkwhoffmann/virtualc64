@@ -43,7 +43,7 @@ public:
 public:
  
     ControlPort(C64 &ref, PortId id);
-    const char *getDescription() const override { return "ControlPort"; }
+    const string getDescription() const override { return "ControlPort"; }
 
 private:
     

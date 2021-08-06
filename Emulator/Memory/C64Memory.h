@@ -66,7 +66,7 @@ public:
 public:
     
 	C64Memory(C64 &ref);
-    const char *getDescription() const override { return "C64Memory"; }
+    const string getDescription() const override { return "C64Memory"; }
 
 private:
     

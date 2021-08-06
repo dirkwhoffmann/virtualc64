@@ -57,7 +57,7 @@ class Keyboard : public SubComponent {
 public:
     
     Keyboard(C64 &ref) : SubComponent(ref) { }
-    const char *getDescription() const override { return "Keyboard"; }
+    const string getDescription() const override { return "Keyboard"; }
 
 private:
     

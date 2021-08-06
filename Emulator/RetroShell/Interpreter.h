@@ -71,7 +71,7 @@ public:
     
     Interpreter(C64 &ref);
 
-    const char *getDescription() const override { return "Interpreter"; }
+    const string getDescription() const override { return "Interpreter"; }
 
 private:
     

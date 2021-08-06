@@ -402,7 +402,7 @@ class C64CPU : public CPU<C64Memory> {
 public:
     
     C64CPU(C64& ref, C64Memory& memref) : CPU(ref, memref) { }
-    const char *getDescription() const override { return "CPU"; }
+    const string getDescription() const override { return "CPU"; }
 };
 
 
@@ -415,5 +415,5 @@ class DriveCPU : public CPU<DriveMemory> {
 public:
     
     DriveCPU(C64& ref, DriveMemory &memref) : CPU(ref, memref) { }
-    const char *getDescription() const override { return "DriveCPU"; }    
+    const string getDescription() const override { return "DriveCPU"; }    
 };

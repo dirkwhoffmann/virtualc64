@@ -190,7 +190,7 @@ public:
     
     CPUDebugger(C64 &ref) : SubComponent(ref) { };
 
-    const char *getDescription() const override { return "CPUDebugger"; }
+    const string getDescription() const override { return "CPUDebugger"; }
 
     // Initializes an entry of the lookup tables
     void registerInstruction(u8 opcode, const char *mnemonic, AddressingMode mode);

@@ -16,7 +16,7 @@ ParCable::ParCable(C64& ref) : SubComponent(ref)
 {
 };
 
-const char *
+const string
 ParCable::getDescription() const
 {
     return "ParCable";

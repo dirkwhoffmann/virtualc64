@@ -31,7 +31,7 @@ class DmaDebugger : public SubComponent {
 public:
     
     DmaDebugger(C64 &ref);
-    const char *getDescription() const override { return "DmaDebugger"; }
+    const string getDescription() const override { return "DmaDebugger"; }
 
 private:
     

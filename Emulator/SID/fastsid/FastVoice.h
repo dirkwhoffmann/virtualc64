@@ -173,7 +173,7 @@ public:
  
     using SubComponent::SubComponent;
     
-    const char *getDescription() const override { return "FastVoice"; }
+    const string getDescription() const override { return "FastVoice"; }
 
     static void initWaveTables();
     void init(FastSID *owner, unsigned voiceNr, FastVoice *prevVoice);

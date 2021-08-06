@@ -38,7 +38,7 @@ class MsgQueue : public SubComponent {
     
 public:
         
-    const char *getDescription() const override { return "MsgQueue"; }
+    const string getDescription() const override { return "MsgQueue"; }
 
 private:
     

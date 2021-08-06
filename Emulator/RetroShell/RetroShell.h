@@ -72,7 +72,7 @@ public:
     
     RetroShell(C64& ref);
         
-    const char *getDescription() const override { return "RetroShell"; }
+    const string getDescription() const override { return "RetroShell"; }
 
     void _reset(bool hard) override { }
     

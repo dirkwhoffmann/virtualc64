@@ -68,7 +68,7 @@ public:
     // Methods from C64Object
     //
     
-    const char *getDescription() const override { return "RomFile"; }
+    const string getDescription() const override { return "RomFile"; }
     
     
     //

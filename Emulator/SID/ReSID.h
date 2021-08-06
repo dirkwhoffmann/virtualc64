@@ -72,7 +72,7 @@ public:
     
 	ReSID(C64 &ref, SIDBridge &bridgeref, int n);
 	~ReSID();
-    const char *getDescription() const override { return "ReSID"; }
+    const string getDescription() const override { return "ReSID"; }
 
 private:
     

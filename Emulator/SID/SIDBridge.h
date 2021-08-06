@@ -120,7 +120,7 @@ public:
 public:
 	
 	SIDBridge(C64 &ref);
-    const char *getDescription() const override { return "SIDBridge"; }
+    const string getDescription() const override { return "SIDBridge"; }
 
 private:
     

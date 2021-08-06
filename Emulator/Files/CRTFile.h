@@ -45,7 +45,7 @@ public:
     // Methods from C64Object
     //
     
-    const char *getDescription() const override { return "CRTFile"; }
+    const string getDescription() const override { return "CRTFile"; }
 
         
     //

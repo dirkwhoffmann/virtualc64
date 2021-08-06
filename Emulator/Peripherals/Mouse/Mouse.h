@@ -86,7 +86,7 @@ class Mouse : public SubComponent {
 public:
     
     Mouse(C64 &ref, ControlPort& pref);
-    const char *getDescription() const override { return "Mouse"; }
+    const string getDescription() const override { return "Mouse"; }
     
 private:
     

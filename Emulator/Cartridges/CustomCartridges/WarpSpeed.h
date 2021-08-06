@@ -16,7 +16,7 @@ class WarpSpeed : public Cartridge {
 public:
     
     WarpSpeed(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "WarpSpeed"; }
+    const string getDescription() const override { return "WarpSpeed"; }
     CartridgeType getCartridgeType() const override { return CRT_WARPSPEED; }
 
     void resetCartConfig() override;

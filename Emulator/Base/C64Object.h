@@ -26,7 +26,7 @@ public:
     virtual ~C64Object() { };
     
     // Returns the name for this component (e.g., "CPU" or "VICII")
-    virtual const char *getDescription() const = 0;
+    virtual const string getDescription() const = 0;
     
     // Called by debug() and trace() to produce a detailed debug output
     virtual void prefix() const;

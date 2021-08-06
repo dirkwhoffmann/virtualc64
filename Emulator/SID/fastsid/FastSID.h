@@ -109,7 +109,7 @@ private:
 public:
         
 	FastSID(C64 &ref, SIDBridge &bridgeref, int n);
-    const char *getDescription() const override { return "FastSID"; }
+    const string getDescription() const override { return "FastSID"; }
 
 private:
     

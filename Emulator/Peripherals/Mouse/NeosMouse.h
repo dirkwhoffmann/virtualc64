@@ -54,7 +54,7 @@ class NeosMouse : public SubComponent {
 public:
     
     NeosMouse(C64 &ref) : SubComponent(ref) { }
-    const char *getDescription() const override { return "NeosMouse"; }
+    const string getDescription() const override { return "NeosMouse"; }
 
 private:
     

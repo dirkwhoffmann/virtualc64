@@ -30,7 +30,7 @@ public:
     // Methods from C64Object
     //
     
-    const char *getDescription() const override { return "TAPFile"; }
+    const string getDescription() const override { return "TAPFile"; }
     
     
     //

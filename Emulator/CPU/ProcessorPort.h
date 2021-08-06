@@ -52,7 +52,7 @@ class ProcessorPort : public SubComponent {
 public:
     
     ProcessorPort(C64 &ref) : SubComponent(ref) { }
-    const char *getDescription() const override { return "ProcessorPort"; }
+    const string getDescription() const override { return "ProcessorPort"; }
 
 private:
     

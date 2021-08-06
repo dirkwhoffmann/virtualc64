@@ -13,5 +13,5 @@
 void
 C64Object::prefix() const
 {
-    fprintf(stderr, "%s: ", getDescription());
+    fprintf(stderr, "%s: ", getDescription().c_str());
 }

@@ -51,7 +51,7 @@ protected:
 public:
     
     PIA6821(C64 &ref, Drive &drvref);
-    const char *getDescription() const override { return "PIA"; }
+    const string getDescription() const override { return "PIA"; }
     
 private:
     
@@ -166,7 +166,7 @@ public:
 
     using PIA6821::PIA6821;
     
-    const char *getDescription() const override { return "PiaDolphin"; }
+    const string getDescription() const override { return "PiaDolphin"; }
     
 private:
         
