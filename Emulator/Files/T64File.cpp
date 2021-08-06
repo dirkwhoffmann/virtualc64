@@ -90,7 +90,7 @@ T64File::makeWithFileSystem(class FSDevice &fs)
     u32 tapePosition = 64 + maxFiles * 32; // Start of item 0
     memset(ptr, 0, 32 * maxFiles);
     
-    for (unsigned n = 0; n < maxFiles; n++) {
+    for (isize n = 0; n < maxFiles; n++) {
         
         // Skip if this is an empty tape slot
         if (n >= numFiles) { ptr += 32; continue; }
@@ -134,7 +134,7 @@ T64File::makeWithFileSystem(class FSDevice &fs)
     // File data
     //
     
-    for (unsigned n = 0; n < numFiles; n++) {
+    for (isize n = 0; n < numFiles; n++) {
     
         fs.copyFile(n, ptr, length[n], 2);
         ptr += length[n];

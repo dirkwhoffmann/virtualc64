@@ -47,7 +47,7 @@ class FlashRom : public SubComponent {
 public:
 
     // Checks whether the provided number is a valid bank number
-    static bool isBankNumber(unsigned bank) { return bank < 64; }
+    static bool isBankNumber(isize bank) { return bank < 64; }
     
     // Converts a Flash Rom state to a string
     static const char *getStateAsString(FlashState state);
@@ -66,7 +66,7 @@ public:
     /* Loads an 8 KB chunk of Rom data from a buffer. This method is used when
      * loading the contents from a CRT file.
      */
-    void loadBank(unsigned bank, u8 *data);
+    void loadBank(isize bank, u8 *data);
     
 private:
     
@@ -117,16 +117,16 @@ private:
 public:
     
     u8 peek(u32 addr);
-    u8 peek(unsigned bank, u16 addr) {
-        assert(isBankNumber(bank)); return peek(bank * 0x2000 + addr); }
+    u8 peek(isize bank, u16 addr) {
+        assert(isBankNumber(bank)); return peek((u32)bank * 0x2000 + addr); }
     
     u8 spypeek(u32 addr) const;
-    u8 spypeek(unsigned bank, u16 addr) const {
-        assert(isBankNumber(bank)); return spypeek(bank * 0x2000 + addr); }
+    u8 spypeek(isize bank, u16 addr) const {
+        assert(isBankNumber(bank)); return spypeek((u32)bank * 0x2000 + addr); }
     
     void poke(u32 addr, u8 value);
-    void poke(unsigned bank, u16 addr, u8 value) {
-        assert(isBankNumber(bank)); poke(bank * 0x2000 + addr, value); }
+    void poke(isize bank, u16 addr, u8 value) {
+        assert(isBankNumber(bank)); poke((u32)bank * 0x2000 + addr, value); }
     
     
     //
@@ -143,15 +143,15 @@ public:
     bool doByteProgram(u32 addr, u8 value);
     
     // Convenience wrapper with bank,offset addressing
-    bool doByteProgram(unsigned bank, u16 addr, u8 value) {
-        assert(isBankNumber(bank)); return doByteProgram(bank * 0x2000 + addr, value); }
+    bool doByteProgram(isize bank, u16 addr, u8 value) {
+        assert(isBankNumber(bank)); return doByteProgram((u32)bank * 0x2000 + addr, value); }
     
     // Performs a "Sector Erase" operation
     void doSectorErase(u32 addr);
     
     // Convenience wrapper with bank,offset addressing
-    void doSectorErase(unsigned bank, u16 addr) {
-        assert(isBankNumber(bank)); doSectorErase(bank * 0x2000 + addr); }
+    void doSectorErase(isize bank, u16 addr) {
+        assert(isBankNumber(bank)); doSectorErase((u32)bank * 0x2000 + addr); }
     
     // Performs a "Chip Erase" operation
     void doChipErase();

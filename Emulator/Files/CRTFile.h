@@ -23,7 +23,7 @@
 class CRTFile : public AnyFile {
         
     // Maximum number of chip packets in a CRT file
-    static const unsigned MAX_PACKETS = 128;
+    static const isize MAX_PACKETS = 128;
 
     // Number of chips contained in cartridge file
     isize numberOfChips = 0;

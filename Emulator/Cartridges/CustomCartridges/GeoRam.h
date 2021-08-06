@@ -82,5 +82,5 @@ public:
 private:
     
     // Maps an address to the proper position in cartridge RAM
-    unsigned offset(u8 addr) const;
+    isize offset(u8 addr) const;
 };

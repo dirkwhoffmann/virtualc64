@@ -38,7 +38,7 @@ public:
     // Sets the control register and triggers side effects
     void setControlReg(u8 value);
     
-    unsigned bank() const { return control & 0x01; }
+    isize bank() const { return control & 0x01; }
     bool game() const { return !!(control & 0x02); }
     bool exrom() const { return !(control & 0x08); }
     bool disabled() const { return !!(control & 0x04); }
@@ -88,7 +88,7 @@ public:
     // Sets the control register and triggers side effects
     void setControlReg(u8 value);
     
-    virtual unsigned bank() const { return (control >> 3) & 0x03; }
+    virtual isize bank() const { return (control >> 3) & 0x03; }
     virtual bool game() const { return (control & 0x01) == 0; }
     virtual bool exrom() const { return (control & 0x02) != 0; }
     virtual bool disabled() const { return (control & 0x04) != 0; }

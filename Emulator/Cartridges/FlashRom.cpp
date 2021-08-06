@@ -51,10 +51,10 @@ FlashRom::~FlashRom()
 }
 
 void
-FlashRom::loadBank(unsigned bank, u8 *data)
+FlashRom::loadBank(isize bank, u8 *data)
 {
     assert(data);
-    memcpy(rom + bank * 0x2000, data, 0x2000);
+    memcpy(rom + (u32)bank * 0x2000, data, 0x2000);
 }
 
 void

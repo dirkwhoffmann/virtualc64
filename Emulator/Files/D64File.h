@@ -37,7 +37,7 @@ public:
     //
     
     D64File();
-    D64File(unsigned tracks, bool ecc);
+    D64File(isize tracks, bool ecc);
     
     
     //
@@ -72,7 +72,7 @@ public:
 private:
     
     // Translates a track and sector number into an offset (-1 if invalid)
-    int offset(Track track, Sector sector) const;
+    isize offset(Track track, Sector sector) const;
     
     
     //

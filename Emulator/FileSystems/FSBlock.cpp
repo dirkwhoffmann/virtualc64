@@ -53,7 +53,7 @@ FSBlock::writeBAM(PETName<16> &name)
     data[0x03] = 0x00;
     
     // BAM entries for each track (in groups of four bytes)
-    for (unsigned k = 1; k <= 35; k++) {
+    for (Track k = 1; k <= 35; k++) {
 
         u8 *p = data + 4 * k;
 
@@ -227,10 +227,10 @@ FSBlock::check(u32 byte, u8 *expected, bool strict) const
     return ERROR_OK;
 }
 
-unsigned
+isize
 FSBlock::check(bool strict) const
 {
-    unsigned count = 0;
+    isize count = 0;
     u8 expected;
     
     for (u32 i = 0; i < 256; i++) {

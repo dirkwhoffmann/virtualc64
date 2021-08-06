@@ -66,7 +66,7 @@ GeoRAM::pokeIO2(u16 addr, u8 value)
     }
 }
 
-unsigned
+isize
 GeoRAM::offset(u8 addr) const
 {
     /* From VICE:
@@ -78,7 +78,7 @@ GeoRAM::offset(u8 addr) const
      *  256-byte pages inside of 16k, the value in $dffe ranges from 0 to 63."
      */
     
-    unsigned bankOffset = (bank * 16384) % getRamCapacity();
-    unsigned pageOffset = (page & 0x3F) * 256;
+    isize bankOffset = (bank * 16384) % getRamCapacity();
+    isize pageOffset = (page & 0x3F) * 256;
     return bankOffset + pageOffset + addr;
 }

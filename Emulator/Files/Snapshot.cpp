@@ -79,8 +79,8 @@ Snapshot::takeScreenshot(C64 *c64)
 {
     SnapshotHeader *header = (SnapshotHeader *)data;
     
-    unsigned xStart = FIRST_VISIBLE_PIXEL;
-    unsigned yStart = FIRST_VISIBLE_LINE;
+    isize xStart = FIRST_VISIBLE_PIXEL;
+    isize yStart = FIRST_VISIBLE_LINE;
     header->screenshot.width = VISIBLE_PIXELS;
     header->screenshot.height = c64->vic.numVisibleLines();
     

@@ -23,7 +23,7 @@ class Cartridge : public SubComponent {
 public:
     
     // Maximum number of chip packets on a single cartridge
-    static const unsigned MAX_PACKETS = 128;
+    static const isize MAX_PACKETS = 128;
     
     
     //

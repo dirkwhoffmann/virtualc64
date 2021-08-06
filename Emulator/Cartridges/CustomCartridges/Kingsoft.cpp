@@ -28,11 +28,14 @@ Kingsoft::updatePeekPokeLookupTables()
         u8 game  = 0x08;
         u8 index = (cpu.pport.read() & 0x07) | exrom | game;
 
-        for (unsigned bank = 0x1; bank <= 0x7; bank++) {
+        for (isize bank = 0x1; bank <= 0x7; bank++) {
+            
             MemoryType type = mem.bankMap[index][bank];
             mem.peekSrc[bank] = mem.pokeTarget[bank] = type;
         }
-        for (unsigned bank = 0xC; bank <= 0xD; bank++) {
+        
+        for (isize bank = 0xC; bank <= 0xD; bank++) {
+            
             MemoryType type = mem.bankMap[index][bank];
             mem.peekSrc[bank] = mem.pokeTarget[bank] = type;
         }

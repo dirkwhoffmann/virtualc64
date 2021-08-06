@@ -38,7 +38,7 @@ D64File::D64File()
     memset(errors, 0x01, sizeof(errors));
 }
 
-D64File::D64File(unsigned tracks, bool ecc) : D64File()
+D64File::D64File(isize tracks, bool ecc) : D64File()
 {
     switch(tracks) {
             
@@ -91,7 +91,7 @@ D64File::readFromStream(std::istream &stream)
     isize result = AnyFile::readFromStream(stream);
     assert(result == size);
     
-    unsigned numSectors;
+    isize numSectors;
     bool errorCodes;
  
     switch (result)
@@ -175,11 +175,11 @@ D64File::getErrorCode(Block b) const
     return errors[b];
 }
 
-int
+isize
 D64File::offset(Track track, Sector sector) const
 {
     // secCnt[track] is the number of the first sector on track 'track'
-    const unsigned secCnt[43] = {  0 /* pad */,
+    const isize secCnt[43] = {  0 /* pad */,
         0,   21,  42,  63,  84,  105, 126, 147,
         168, 189, 210, 231, 252, 273, 294, 315,
         336, 357, 376, 395, 414, 433, 452, 471,

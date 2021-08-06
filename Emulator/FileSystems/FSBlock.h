@@ -89,7 +89,7 @@ public:
     ErrorCode check(u32 byte, u8 *expected, bool strict) const;
 
     // Scans the block data and returns the number of errors
-    unsigned check(bool strict) const;
+    isize check(bool strict) const;
 
       
     //

@@ -373,7 +373,7 @@ Disk::trackIsEmpty(Track t) const
 isize
 Disk::nonemptyHalftracks() const
 {
-    unsigned result = 0;
+    isize result = 0;
     
     for (Halftrack ht = 1; ht < 85; ht++) {
         if (!halftrackIsEmpty(ht))
@@ -427,7 +427,7 @@ Disk::analyzeHalftrack(Halftrack ht)
     memset(sync, 0, sizeof(sync));
     
     // Scan for SYNC sequences and decode the byte that follows.
-    unsigned noOfOnes = 0;
+    isize noOfOnes = 0;
     long stop = (long)(2 * len - 10);
     for (long i = 0; i < stop; i++) {
         
@@ -451,7 +451,7 @@ Disk::analyzeHalftrack(Halftrack ht)
     }
     
     // Lookup first sector header block
-    unsigned startOffset;
+    isize startOffset;
     for (startOffset = 0; startOffset < len; startOffset++) {
         if (sync[startOffset] == 0x08) {
             break;
@@ -580,8 +580,8 @@ Disk::diskNameAsString()
 {
     analyzeTrack(18);
     
-    unsigned i;
-    usize offset = trackInfo.sectorInfo[0].dataBegin + (0x90 * 10);
+    isize i;
+    isize offset = trackInfo.sectorInfo[0].dataBegin + (0x90 * 10);
     
     for (i = 0; i < 255; i++, offset += 10) {
         u8 value = decodeGcr(trackInfo.bit + offset);
@@ -676,7 +676,7 @@ Disk::decodeDisk(u8 *dest)
 isize
 Disk::decodeDisk(u8 *dest, isize numTracks)
 {
-    unsigned numBytes = 0;
+    isize numBytes = 0;
 
     assert(numTracks == 35 || numTracks == 40 || numTracks == 42);
 
