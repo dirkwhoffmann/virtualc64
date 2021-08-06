@@ -143,7 +143,7 @@ public:
     void attachCartridge(const string &path, bool reset = true) throws;
     bool attachCartridge(CRTFile *c, bool reset = true);
     void attachCartridge(Cartridge *c);
-    void attachGeoRamCartridge(usize capacity);
+    void attachGeoRamCartridge(isize capacity);
     void attachIsepicCartridge();
 
     // Removes a cartridge from the expansion port (if any)
@@ -156,7 +156,7 @@ public:
     //
     
     // Returns the size of the on-board RAM in bytes
-    usize getRamCapacity() const;
+    isize getRamCapacity() const;
     
     // Returns true if the attached cartridge has a RAM backing battery
     bool hasBattery() const;

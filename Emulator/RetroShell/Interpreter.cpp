@@ -20,6 +20,7 @@ Interpreter::Interpreter(C64 &ref) : SubComponent(ref)
 Arguments
 Interpreter::split(const string& userInput)
 {
+    isize userInputSize = (isize)userInput.size();
     std::stringstream ss(userInput);
     Arguments result;
 
@@ -27,7 +28,7 @@ Interpreter::split(const string& userInput)
     bool str = false; // String mode
     bool esc = false; // Escape mode
     
-    for (usize i = 0; i < userInput.size(); i++) {
+    for (isize i = 0; i < userInputSize; i++) {
 
         char c = userInput[i];
         

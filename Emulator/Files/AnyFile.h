@@ -89,14 +89,14 @@ public:
         return nullptr;
     }
         
-    template <class T> static T *make(const u8 *buf, usize len) throws
+    template <class T> static T *make(const u8 *buf, isize len) throws
     {
         std::stringstream stream;
         stream.write((const char *)buf, len);
         return make <T> (stream);
     }
     
-    template <class T> static T *make(const u8 *buf, usize len, ErrorCode *err)
+    template <class T> static T *make(const u8 *buf, isize len, ErrorCode *err)
     {
         *err = ERROR_OK;
         try { return make <T> (buf, len); }
@@ -157,7 +157,7 @@ public:
 public:
     
     AnyFile() { };
-    AnyFile(usize capacity);
+    AnyFile(isize capacity);
     virtual ~AnyFile();
     
     //

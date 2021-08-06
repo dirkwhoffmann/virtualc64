@@ -135,7 +135,7 @@ RomFile::isVC1541RomFile(const char *path)
 }
 
 bool
-RomFile::isRomBuffer(RomType type, const u8 *buf, usize len)
+RomFile::isRomBuffer(RomType type, const u8 *buf, isize len)
 {
     std::stringstream stream;
     stream.write((const char *)buf, len);
@@ -143,25 +143,25 @@ RomFile::isRomBuffer(RomType type, const u8 *buf, usize len)
 }
 
 bool
-RomFile::isBasicRomBuffer(const u8 *buf, usize len)
+RomFile::isBasicRomBuffer(const u8 *buf, isize len)
 {
     return isRomBuffer(ROM_TYPE_BASIC, buf, len);
 }
 
 bool
-RomFile::isCharRomBuffer(const u8 *buf, usize len)
+RomFile::isCharRomBuffer(const u8 *buf, isize len)
 {
     return isRomBuffer(ROM_TYPE_CHAR, buf, len);
 }
 
 bool
-RomFile::isKernalRomBuffer(const u8 *buf, usize len)
+RomFile::isKernalRomBuffer(const u8 *buf, isize len)
 {
     return isRomBuffer(ROM_TYPE_KERNAL, buf, len);
 }
 
 bool
-RomFile::isVC1541RomBuffer(const u8 *buf, usize len)
+RomFile::isVC1541RomBuffer(const u8 *buf, isize len)
 {
     return isRomBuffer(ROM_TYPE_VC1541, buf, len);
 }

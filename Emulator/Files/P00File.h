@@ -21,7 +21,7 @@ public:
     static P00File *makeWithFileSystem(class FSDevice &fs);
     
     P00File() : AnyCollection() { }
-    P00File(usize capacity) : AnyCollection(capacity) { }
+    P00File(isize capacity) : AnyCollection(capacity) { }
 
     //
     // Methods from C64Object

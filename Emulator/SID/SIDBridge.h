@@ -143,7 +143,7 @@ public:
     void setConfigItem(Option option, i64 value) override;
     void setConfigItem(Option option, long id, i64 value) override;
 
-    bool isEnabled(usize nr) const { return GET_BIT(config.enabled, nr); }
+    bool isEnabled(isize nr) const { return GET_BIT(config.enabled, nr); }
     
     bool isMuted() const;
 
@@ -274,7 +274,7 @@ public:
     // float readData();
     
     // Reads a audio sample pair without moving the read pointer
-    void ringbufferData(usize offset, float *left, float *right);
+    void ringbufferData(isize offset, float *left, float *right);
             
     /* Handles a buffer underflow condition. A buffer underflow occurs when the
      * audio device of the host machine needs sound samples than SID hasn't
@@ -304,7 +304,7 @@ public:
     void executeUntil(Cycle targetCycle);
 
     // Executes SID for a certain number of CPU cycles
-	usize executeCycles(isize numCycles);
+	isize executeCycles(isize numCycles);
 
 private:
     
@@ -331,7 +331,7 @@ public:
 public:
     
     // Translates a memory address to the mapped SID
-    usize mappedSID(u16 addr) const;
+    isize mappedSID(u16 addr) const;
     
 	// Special peek function for the I/O memory range
 	u8 peek(u16 addr);

@@ -15,7 +15,7 @@
 namespace util {
 
 // Checks if a certain memory area is all zero
-bool isZero(const u8 *ptr, usize size);
+bool isZero(const u8 *ptr, isize size);
 
 // Prints a hex dump of a buffer to the console
 void hexdump(u8 *p, isize size, isize cols, isize pad);

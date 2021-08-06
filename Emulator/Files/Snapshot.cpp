@@ -27,7 +27,7 @@ Snapshot::isCompatibleStream(std::istream &stream)
     return util::matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 
-Snapshot::Snapshot(usize capacity)
+Snapshot::Snapshot(isize capacity)
 {
     size = capacity + sizeof(SnapshotHeader);
     data = new u8[size];

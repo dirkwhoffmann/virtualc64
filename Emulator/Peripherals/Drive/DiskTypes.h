@@ -43,9 +43,9 @@ static const isize highestHalftrack = 84;
 // Highest sector number (numbering starts with 0)
 static const isize highestSector = 20;
 
-static inline bool isTrackNumber(usize nr) { return 1 <= nr && nr <= highestTrack; }
-static inline bool isHalftrackNumber(usize nr) { return 1 <= nr && nr <= highestHalftrack; }
-static inline bool isSectorNumber(usize nr) { return nr <= highestSector; }
+static inline bool isTrackNumber(isize nr) { return 1 <= nr && nr <= highestTrack; }
+static inline bool isHalftrackNumber(isize nr) { return 1 <= nr && nr <= highestHalftrack; }
+static inline bool isSectorNumber(isize nr) { return nr <= highestSector; }
 
 /* Maximum number of bits and bytes stored on a single track. Each track can
  * store a maximum of 7928 bytes (63424 bits). The exact number depends on the
@@ -175,10 +175,10 @@ struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
  */
 typedef struct
 {
-    usize headerBegin;
-    usize headerEnd;
-    usize dataBegin;
-    usize dataEnd;
+    isize headerBegin;
+    isize headerEnd;
+    isize dataBegin;
+    isize dataEnd;
 }
 SectorInfo;
 
@@ -189,7 +189,7 @@ SectorInfo;
  */
 typedef struct
 {
-    usize length;                       // Length of the track in bits
+    isize length;                       // Length of the track in bits
     
     union {
         u8 bit[2 * maxBitsOnTrack];      // Track data (bit access)

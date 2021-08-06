@@ -32,13 +32,13 @@ P00File *
 P00File::makeWithFileSystem(FSDevice &fs)
 {
     isize item = 0;
-    usize itemSize = fs.fileSize(item);
+    isize itemSize = fs.fileSize(item);
 
     // Only proceed if the requested file exists
     if (fs.numFiles() <= item) throw VC64Error(ERROR_FS_HAS_NO_FILES);
         
     // Create new archive
-    usize p00Size = itemSize + 8 + 17 + 1;
+    isize p00Size = itemSize + 8 + 17 + 1;
     P00File *p00 = new P00File(p00Size);
             
     // Write magic bytes (8 bytes)

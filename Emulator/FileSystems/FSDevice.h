@@ -190,27 +190,27 @@ private:
 public:
     
     // Returns the name of a file
-    PETName<16> fileName(usize nr) const;
+    PETName<16> fileName(isize nr) const;
     PETName<16> fileName(FSDirEntry *entry) const;
 
     // Returns the type of a file
-    FSFileType fileType(usize nr) const;
+    FSFileType fileType(isize nr) const;
     FSFileType fileType(FSDirEntry *entry) const;
     
     // Returns the precise size of a file in bytes
-    u64 fileSize(usize nr) const;
+    u64 fileSize(isize nr) const;
     u64 fileSize(FSDirEntry *entry) const;
     
     // Returns the size of a file in blocks (read from the BAM)
-    u64 fileBlocks(usize nr) const;
+    u64 fileBlocks(isize nr) const;
     u64 fileBlocks(FSDirEntry *entry) const;
 
     // Returns the load address of a file
-    u16 loadAddr(usize nr) const;
+    u16 loadAddr(isize nr) const;
     u16 loadAddr(FSDirEntry *entry) const;
     
     // Copies the file contents into a buffer
-    void copyFile(usize nr, u8 *buf, u64 len, u64 offset = 0) const;
+    void copyFile(isize nr, u8 *buf, u64 len, u64 offset = 0) const;
     void copyFile(FSDirEntry *entry, u8 *buf, u64 len, u64 offset = 0) const;
 
     // Scans the directory and stores the result in variable 'dir'
@@ -225,11 +225,11 @@ public:
     FSDirEntry *getOrCreateNextFreeDirEntry(); 
                     
     // Creates a new file
-    bool makeFile(PETName<16> name, const u8 *buf, usize cnt);
+    bool makeFile(PETName<16> name, const u8 *buf, isize cnt);
 
 private:
     
-    bool makeFile(PETName<16> name, FSDirEntry *entry, const u8 *buf, usize cnt);
+    bool makeFile(PETName<16> name, FSDirEntry *entry, const u8 *buf, isize cnt);
 
     
     //
@@ -272,19 +272,19 @@ public:
     u8 readByte(TSLink ts, u32 offset) const { return readByte(layout.blockNr(ts), offset); }
 
     // Imports the volume from a buffer
-    void importVolume(const u8 *src, usize size) throws;
-    bool importVolume(const u8 *src, usize size, ErrorCode *err);
+    void importVolume(const u8 *src, isize size) throws;
+    bool importVolume(const u8 *src, isize size, ErrorCode *err);
     
     // Imports a folder from the host file system
     bool importDirectory(const std::string &path);
     bool importDirectory(const std::string &path, DIR *dir);
 
     // Exports the volume to a buffer
-    bool exportVolume(u8 *dst, usize size, ErrorCode *err = nullptr);
+    bool exportVolume(u8 *dst, isize size, ErrorCode *err = nullptr);
 
     // Exports a single block or a range of blocks
-    bool exportBlock(u32 nr, u8 *dst, usize size, ErrorCode *err = nullptr);
-    bool exportBlocks(u32 first, u32 last, u8 *dst, usize size, ErrorCode *err = nullptr);
+    bool exportBlock(u32 nr, u8 *dst, isize size, ErrorCode *err = nullptr);
+    bool exportBlocks(u32 first, u32 last, u8 *dst, isize size, ErrorCode *err = nullptr);
 
     // Exports all files or a single file to a folder in the host file system
     bool exportDirectory(const std::string &path, ErrorCode *err);

@@ -45,11 +45,11 @@ public:
     static bool isKernalRomFile(const char *path);
     static bool isVC1541RomFile(const char *path);
 
-    static bool isRomBuffer(RomType type, const u8 *buf, usize len);
-    static bool isBasicRomBuffer(const u8 *buf, usize len);
-    static bool isCharRomBuffer(const u8 *buf, usize len);
-    static bool isKernalRomBuffer(const u8 *buf, usize len);
-    static bool isVC1541RomBuffer(const u8 *buf, usize len);
+    static bool isRomBuffer(RomType type, const u8 *buf, isize len);
+    static bool isBasicRomBuffer(const u8 *buf, isize len);
+    static bool isCharRomBuffer(const u8 *buf, isize len);
+    static bool isKernalRomBuffer(const u8 *buf, isize len);
+    static bool isVC1541RomBuffer(const u8 *buf, isize len);
 
     // Translates a FNV1A checksum (64 bit) into a ROM identifier
     static RomIdentifier identifier(u64 fnv);

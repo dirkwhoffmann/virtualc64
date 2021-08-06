@@ -26,7 +26,7 @@ public:
     //
     
     T64File() : AnyCollection() { }
-    T64File(usize capacity) : AnyCollection(capacity) { }
+    T64File(isize capacity) : AnyCollection(capacity) { }
 
     
     //

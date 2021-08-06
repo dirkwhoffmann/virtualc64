@@ -132,10 +132,10 @@ private:
     std::vector<std::string> errorLog;
 
     // Stores the start offset of the erroneous bit sequence
-    std::vector<usize> errorStartIndex;
+    std::vector<isize> errorStartIndex;
 
     // Stores the end offset of the erroneous bit sequence
-    std::vector<usize> errorEndIndex;
+    std::vector<isize> errorEndIndex;
 
     // Textual representation of track data
     char text[maxBitsOnTrack + 1];
@@ -256,7 +256,7 @@ public:
      * byte, 10 bits are written to the specified disk position.
      */
     void encodeGcr(u8 value, Track t, HeadPos offset);
-    void encodeGcr(u8 *values, usize length, Track t, HeadPos offset);
+    void encodeGcr(u8 *values, isize length, Track t, HeadPos offset);
     
     
     /* Decodes a nibble (4 bit) from a previously encoded GCR bitstream.
@@ -319,11 +319,11 @@ public:
     }
     
     // Writes a bit multiple times
-    void writeBitToHalftrack(Halftrack ht, HeadPos pos, bool bit, usize count) {
-        for (usize i = 0; i < count; i++)
+    void writeBitToHalftrack(Halftrack ht, HeadPos pos, bool bit, isize count) {
+        for (isize i = 0; i < count; i++)
             writeBitToHalftrack(ht, pos++, bit);
     }
-    void writeBitToTrack(Track t, HeadPos pos, bool bit, usize count) {
+    void writeBitToTrack(Track t, HeadPos pos, bool bit, isize count) {
             writeBitToHalftrack(2 * t - 1, pos, bit, count);
     }
 
@@ -337,11 +337,11 @@ public:
     }
     
     // Writes a certain number of interblock bytes to disk
-    void writeGapToHalftrack(Halftrack ht, HeadPos pos, usize length) {
-        for (usize i = 0; i < length; i++, pos += 8)
+    void writeGapToHalftrack(Halftrack ht, HeadPos pos, isize length) {
+        for (isize i = 0; i < length; i++, pos += 8)
             writeByteToHalftrack(ht, pos, 0x55);
     }
-    void writeGapToTrack(Track t, HeadPos pos, usize length) {
+    void writeGapToTrack(Track t, HeadPos pos, isize length) {
         writeGapToHalftrack(2 * t - 1, pos, length);
     }
 
@@ -380,11 +380,11 @@ public:
 private:
     
     // Checks the integrity of a sector header or sector data block
-    void analyzeSectorHeaderBlock(usize offset);
-    void analyzeSectorDataBlock(usize offset);
+    void analyzeSectorHeaderBlock(isize offset);
+    void analyzeSectorDataBlock(isize offset);
 
     // Writes an error message into the error log
-    void log(usize begin, usize length, const char *fmt, ...);
+    void log(isize begin, isize length, const char *fmt, ...);
     
 public:
     
@@ -393,16 +393,16 @@ public:
         assert(isSectorNumber(nr)); return trackInfo.sectorInfo[nr]; }
     
     // Returns the number of entries in the error log
-    usize numErrors() { return errorLog.size(); }
+    isize numErrors() { return errorLog.size(); }
     
     // Reads an error message from the error log
     std::string errorMessage(isize nr) const { return errorLog.at(nr); }
     
     // Reads the error begin index from the error log
-    usize firstErroneousBit(isize nr) const { return errorStartIndex.at(nr); }
+    isize firstErroneousBit(isize nr) const { return errorStartIndex.at(nr); }
     
     // Reads the error end index from the error log
-    usize lastErroneousBit(isize nr) const { return errorEndIndex.at(nr); }
+    isize lastErroneousBit(isize nr) const { return errorEndIndex.at(nr); }
     
     // Returns a textual representation of the disk name
     const char *diskNameAsString();
@@ -419,7 +419,7 @@ public:
 private:
     
     // Returns a textual representation
-    const char *sectorBytesAsString(u8 *buffer, usize length, bool hex);
+    const char *sectorBytesAsString(u8 *buffer, isize length, bool hex);
     
     
     //
@@ -467,13 +467,13 @@ private:
      * follwowing sectors with odd sector numbers. The number of written bits
      * is returned.
      */
-    usize encodeTrack(FSDevice &fs, Track t, u8 tailGap, HeadPos start);
+    isize encodeTrack(FSDevice &fs, Track t, u8 tailGap, HeadPos start);
     
     /* Encode a single sector. This function translates the logical byte
      * sequence of a single sector into the native VC1541 byte representation.
      * The sector is closed by 'gap' tail gap bytes. The number of written bits
      * is returned.
      */
-    usize encodeSector(FSDevice &fs, Track t, Sector sector, HeadPos start, int gap);
+    isize encodeSector(FSDevice &fs, Track t, Sector sector, HeadPos start, isize gap);
 };
  

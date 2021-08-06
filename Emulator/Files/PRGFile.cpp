@@ -29,7 +29,7 @@ PRGFile *
 PRGFile::makeWithFileSystem(FSDevice &fs)
 {
     isize item = 0;
-    usize itemSize = fs.fileSize(item);
+    isize itemSize = fs.fileSize(item);
 
     // Only proceed if the requested file exists
     if (fs.numFiles() <= item) throw VC64Error(ERROR_FS_HAS_NO_FILES);

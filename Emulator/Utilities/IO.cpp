@@ -195,7 +195,7 @@ bool loadFile(const string &path, u8 **bufptr, isize *size)
     std::ifstream stream(path);
     if (!stream.is_open()) return false;
     
-    usize len = streamLength(stream);
+    auto len = streamLength(stream);
     u8 *buf = new u8[len];
     stream.read((char *)buf, len);
     

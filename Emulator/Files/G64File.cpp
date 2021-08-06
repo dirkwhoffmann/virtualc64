@@ -29,7 +29,7 @@ G64File::isCompatibleStream(std::istream &stream)
     return util::matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
 
-G64File::G64File(usize capacity)
+G64File::G64File(isize capacity)
 {
     assert(capacity > 0);
     
@@ -59,7 +59,7 @@ G64File::makeWithDisk(Disk &disk)
     }
     
     // Allocate memory
-    usize length = pos + 84 * 4; // Speed zones entries
+    isize length = pos + 84 * 4; // Speed zones entries
     u8 *buffer = new u8[length];
     
     // Write header, number of tracks, and track length
@@ -127,12 +127,12 @@ G64File::makeWithDisk(class Disk &disk, ErrorCode *err)
     return nullptr;
 }
 
-usize
+isize
 G64File::getSizeOfHalftrack(Halftrack ht) const
 {
     assert(isHalftrackNumber(ht));
     
-    usize offset = getStartOfHalftrack(ht);
+    isize offset = getStartOfHalftrack(ht);
     return offset ? LO_HI(data[offset], data[offset+1]) : 0;
 }
 
@@ -141,18 +141,18 @@ G64File::copyHalftrack(Halftrack ht, u8 *buf) const
 {
     assert(buf);
 
-    usize start = getStartOfHalftrack(ht) + 2;
-    usize len = getSizeOfHalftrack(ht);
+    isize start = getStartOfHalftrack(ht) + 2;
+    isize len = getSizeOfHalftrack(ht);
     
     memcpy(buf, data + start, len);
 }
 
-usize
+isize
 G64File::getStartOfHalftrack(Halftrack ht) const
 {
     assert(isHalftrackNumber(ht));
     
-    usize offset = 0x008 + (4 * ht);
+    isize offset = 0x008 + (4 * ht);
     return LO_LO_HI_HI(data[offset], data[offset+1], data[offset+2], data[offset+3]);
 }
 

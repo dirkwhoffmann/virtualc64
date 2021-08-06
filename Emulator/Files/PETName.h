@@ -82,12 +82,12 @@ public:
         return true;
     }
 
-    void write(u8 *p, usize length)
+    void write(u8 *p, isize length)
     {
         assert(p);
         assert(length <= len);
         
-        for (usize i = 0; i < length; i++) p[i] = pet[i];
+        for (isize i = 0; i < length; i++) p[i] = pet[i];
     }
 
     void write(u8 *p) { write(p, len); }

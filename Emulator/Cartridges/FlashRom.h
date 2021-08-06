@@ -22,13 +22,13 @@
 class FlashRom : public SubComponent {
             
     // Number of sectors in this Flash Rom
-    static const usize numSectors = 8;
+    static const isize numSectors = 8;
     
     // Size of a single sector in bytes (64 KB)
-    static const usize sectorSize = 0x10000;
+    static const isize sectorSize = 0x10000;
     
     // Total size of the Flash Rom in bytes (512 KB)
-    static const usize romSize = 0x80000;
+    static const isize romSize = 0x80000;
 
     // Current Flash Rom state
     FlashState state;
@@ -102,7 +102,7 @@ private:
     {
     }
     
-    usize __size() { COMPUTE_SNAPSHOT_SIZE }
+    isize __size() { COMPUTE_SNAPSHOT_SIZE }
     isize _size() override { return __size() + romSize; }
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }

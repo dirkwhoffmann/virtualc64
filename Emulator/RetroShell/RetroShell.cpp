@@ -277,10 +277,10 @@ RetroShell::text()
 {
     all = "";
     
-    if (auto numRows = storage.size()) {
+    if (isize numRows = (isize)storage.size()) {
         
         // Add all rows except the last one
-        for (usize i = 0; i < numRows - 1; i++) all += storage[i] + "\n";
+        for (isize i = 0; i < numRows - 1; i++) all += storage[i] + "\n";
         
         // Add the last row
         all += storage[numRows - 1] + " ";        

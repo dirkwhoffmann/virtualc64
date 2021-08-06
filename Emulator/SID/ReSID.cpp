@@ -274,7 +274,7 @@ i64
 ReSID::executeCycles(isize numCycles, SampleStream &stream)
 {
     short buf[2049];
-    usize buflength = 2048;
+    isize buflength = 2048;
     
     if (numCycles > PAL_CYCLES_PER_SECOND) {
         warn("Number of missing SID cycles is far too large\n");
@@ -286,8 +286,7 @@ ReSID::executeCycles(isize numCycles, SampleStream &stream)
     reSID::cycle_count cycles = (reSID::cycle_count)numCycles;
     while (cycles) {
         int resid = sid->clock(cycles, buf + samples, int(buflength) - int(samples));
-        assert(resid >= 0); // TODO: REMOVE AFTER A WHILE
-        samples += (usize)resid;
+        samples += (isize)resid;
     }
     
     // Check for a buffer overflow

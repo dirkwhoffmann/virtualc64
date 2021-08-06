@@ -53,7 +53,7 @@ public:
     //
         
     Snapshot() { };
-    Snapshot(usize capacity);
+    Snapshot(isize capacity);
         
     
     //
@@ -87,8 +87,8 @@ public:
     // Queries time and screenshot properties
     time_t timeStamp() const { return header()->timestamp; }
     u8 *imageData() const { return (u8 *)(header()->screenshot.screen); }
-    usize imageWidth() const { return header()->screenshot.width; }
-    usize imageHeight() const { return header()->screenshot.height; }
+    isize imageWidth() const { return header()->screenshot.width; }
+    isize imageHeight() const { return header()->screenshot.height; }
     
     // Records a screenshot
     void takeScreenshot(class C64 *c64);

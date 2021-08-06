@@ -277,13 +277,13 @@ public:
     //
     
     // Returns the size of the on-board RAM in bytes
-    usize getRamCapacity() const;
+    isize getRamCapacity() const;
 
     /* Assigns external RAM to this cartridge. This functions frees any
      * previously assigned RAM and allocates memory of the specified size. The
      * size is stored in variable ramCapacity.
      */
-    void setRamCapacity(usize size);
+    void setRamCapacity(isize size);
 
     // Returns true if RAM data is preserved during a reset
     bool getBattery() const { return battery; }

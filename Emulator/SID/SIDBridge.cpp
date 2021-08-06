@@ -430,7 +430,7 @@ isize
 SIDBridge::didLoadFromBuffer(const u8 *buffer)
 {
     clearRingbuffer();
-    for (usize i = 0; i < 4; i++) sidStream[i].clear(0);
+    for (isize i = 0; i < 4; i++) sidStream[i].clear(0);
     return 0;
 }
 
@@ -637,7 +637,7 @@ SIDBridge::rampDown()
     ignoreNextUnderOrOverflow();
 }
 
-usize
+isize
 SIDBridge::mappedSID(u16 addr) const
 {
     addr &= 0xFFE0;
@@ -656,7 +656,7 @@ SIDBridge::peek(u16 addr)
     executeUntil(cpu.cycle);
  
     // Select the target SID
-    usize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
+    isize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
 
     addr &= 0x1F;
 
@@ -690,7 +690,7 @@ u8
 SIDBridge::spypeek(u16 addr) const
 {
     // Select the target SID
-    usize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
+    isize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
 
     addr &= 0x1F;
 
@@ -737,7 +737,7 @@ SIDBridge::poke(u16 addr, u8 value)
     executeUntil(cpu.cycle);
  
     // Select the target SID
-    usize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
+    isize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
 
     addr &= 0x1F;
     
@@ -777,7 +777,7 @@ SIDBridge::executeUntil(Cycle targetCycle)
           targetCycle, missingCycles, consumedCycles, cycles, targetCycle - cycles);
 }
 
-usize
+isize
 SIDBridge::executeCycles(isize numCycles)
 {
     isize numSamples;
@@ -935,7 +935,7 @@ SIDBridge::clearRingbuffer()
 }
 
 void
-SIDBridge::ringbufferData(usize offset, float *left, float *right)
+SIDBridge::ringbufferData(isize offset, float *left, float *right)
 {
     const SamplePair &pair = stream.current((int)offset);
     *left = pair.left;

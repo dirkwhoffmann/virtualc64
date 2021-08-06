@@ -11,9 +11,9 @@
 
 namespace util {
 
-bool isZero(const u8 *ptr, usize size)
+bool isZero(const u8 *ptr, isize size)
 {
-    for (usize i = 0; i < size; i++) {
+    for (isize i = 0; i < size; i++) {
         if (ptr[i]) return false;
     }
     return true;

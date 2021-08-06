@@ -839,7 +839,7 @@ Drive::executeStateTransition()
             insertionStatus = DISK_FULLY_INSERTED;
 
             // Copy the disk contents
-            usize size = diskToInsert->size();
+            isize size = diskToInsert->size();
             u8 *buffer = new u8[size];
             diskToInsert->save(buffer);
             disk.load(buffer);

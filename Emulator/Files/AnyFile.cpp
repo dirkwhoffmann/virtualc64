@@ -22,7 +22,7 @@
 #include "T64File.h"
 #include "TAPFile.h"
 
-AnyFile::AnyFile(usize capacity)
+AnyFile::AnyFile(isize capacity)
 {
     data = new u8[capacity]();
     size = capacity;
@@ -37,10 +37,10 @@ PETName<16>
 AnyFile::getName() const
 {
     auto idx = path.rfind('/');
-    usize start = idx != std::string::npos ? idx + 1 : 0;
+    isize start = idx != std::string::npos ? idx + 1 : 0;
     
     idx = path.rfind('.');
-    usize len = idx != std::string::npos ? idx - start : std::string::npos;
+    isize len = idx != std::string::npos ? idx - start : std::string::npos;
     
     return PETName<16>(path.substr(start, len));
 }

@@ -238,7 +238,7 @@ CPUDebugger::watchpointMatches(u32 addr)
     return watchpoints.eval(addr);
 }
 
-usize
+isize
 CPUDebugger::loggedInstructions() const
 {
     return logCnt < LOG_BUFFER_CAPACITY ? logCnt : LOG_BUFFER_CAPACITY;
@@ -249,9 +249,9 @@ CPUDebugger::logInstruction()
 {
     u16 pc = cpu.getPC0();
     u8 opcode = cpu.mem.spypeek(pc);
-    usize length = getLengthOfInstruction(opcode);
+    isize length = getLengthOfInstruction(opcode);
 
-    usize i = logCnt++ % LOG_BUFFER_CAPACITY;
+    isize i = logCnt++ % LOG_BUFFER_CAPACITY;
     
     logBuffer[i].cycle = cpu.cycle;
     logBuffer[i].pc = pc;
@@ -266,34 +266,34 @@ CPUDebugger::logInstruction()
 }
 
 const RecordedInstruction &
-CPUDebugger::logEntryRel(usize n) const
+CPUDebugger::logEntryRel(isize n) const
 {
     assert(n < loggedInstructions());
     return logBuffer[(logCnt - 1 - n) % LOG_BUFFER_CAPACITY];
 }
 
 const RecordedInstruction &
-CPUDebugger::logEntryAbs(usize n) const
+CPUDebugger::logEntryAbs(isize n) const
 {
     assert(n < loggedInstructions());
     return logEntryRel(loggedInstructions() - n - 1);
 }
 
 u16
-CPUDebugger::loggedPC0Rel(usize n) const
+CPUDebugger::loggedPC0Rel(isize n) const
 {
     assert(n < loggedInstructions());
     return logBuffer[(logCnt - 1 - n) % LOG_BUFFER_CAPACITY].pc;
 }
 
 u16
-CPUDebugger::loggedPC0Abs(usize n) const
+CPUDebugger::loggedPC0Abs(isize n) const
 {
     assert(n < loggedInstructions());
     return loggedPC0Rel(loggedInstructions() - n - 1);
 }
 
-usize
+isize
 CPUDebugger::getLengthOfInstruction(u8 opcode) const
 {
     switch(addressingMode[opcode]) {
@@ -318,13 +318,13 @@ CPUDebugger::getLengthOfInstruction(u8 opcode) const
     return 1;
 }
 
-usize
+isize
 CPUDebugger::getLengthOfInstructionAtAddress(u16 addr) const
 {
     return getLengthOfInstruction(cpu.mem.spypeek(addr));
 }
 
-usize
+isize
 CPUDebugger::getLengthOfCurrentInstruction() const
 {
     return getLengthOfInstructionAtAddress(cpu.getPC0());
@@ -517,7 +517,7 @@ CPUDebugger::disassembleBytes(const RecordedInstruction &instr) const
 {
     static char result[13]; char *ptr = result;
     
-    usize len = getLengthOfInstruction(instr.byte1);
+    isize len = getLengthOfInstruction(instr.byte1);
     
     if (hex) {
         if (len >= 1) { sprint8x(ptr, instr.byte1); ptr[2] = ' '; ptr += 3; }

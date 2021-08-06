@@ -41,7 +41,9 @@ Command::add(std::vector<string> firstTokens,
              void (RetroShell::*action)(Arguments&, long),
              isize numArgs, long param)
 {
-    for (usize i = 0; i < firstTokens.size(); i++) {
+    isize firstTokensSize = firstTokens.size();
+    
+    for (isize i = 0; i < firstTokensSize; i++) {
         
         tokens[0] = firstTokens[i];
         add(tokens, a1, help, action, numArgs, i);

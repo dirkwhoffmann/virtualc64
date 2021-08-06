@@ -17,12 +17,12 @@ class D64File : public AnyFile {
 public:
     
     // D64 files come in six different sizes
-    static const usize D64_683_SECTORS     = 174848;
-    static const usize D64_683_SECTORS_ECC = 175531;
-    static const usize D64_768_SECTORS     = 196608;
-    static const usize D64_768_SECTORS_ECC = 197376;
-    static const usize D64_802_SECTORS     = 205312;
-    static const usize D64_802_SECTORS_ECC = 206114;
+    static const isize D64_683_SECTORS     = 174848;
+    static const isize D64_683_SECTORS_ECC = 175531;
+    static const isize D64_768_SECTORS     = 196608;
+    static const isize D64_768_SECTORS_ECC = 197376;
+    static const isize D64_802_SECTORS     = 205312;
+    static const isize D64_802_SECTORS_ECC = 206114;
     
     // Error information stored in the D64 archive
     u8 errors[802];

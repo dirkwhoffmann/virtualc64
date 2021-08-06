@@ -26,7 +26,7 @@ public:
     //
     
     PRGFile() : AnyCollection() { }
-    PRGFile(usize capacity) : AnyCollection(capacity) { }
+    PRGFile(isize capacity) : AnyCollection(capacity) { }
     
     
     //

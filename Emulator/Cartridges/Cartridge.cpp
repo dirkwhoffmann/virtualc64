@@ -143,9 +143,6 @@ Cartridge::makeWithCRTFile(C64 &c64, CRTFile &file)
 Cartridge::Cartridge(C64 &ref) : SubComponent(ref)
 {
     trace(CRT_DEBUG, "Creating cartridge at address %p...\n", this);
-    
-    // REMOVE ASAP
-    for (usize i = 0; i < MAX_PACKETS; i++) assert(packet[i] == nullptr);
 }
 
 Cartridge::~Cartridge()
@@ -239,7 +236,7 @@ Cartridge::_size()
     applyToResetItems(counter);
  
     // Determine size of all packets
-    usize packetSize = 0;
+    isize packetSize = 0;
     for (isize i = 0; i < numPackets; i++) {
         assert(packet[i] != nullptr);
         packetSize += packet[i]->_size();
@@ -384,7 +381,7 @@ Cartridge::poke(u16 addr, u8 value)
     if (!c64.getUltimax()) mem.ram[addr] = value;
 }
 
-usize
+isize
 Cartridge::getRamCapacity() const
 {
     if (ramCapacity == 0) {
@@ -396,7 +393,7 @@ Cartridge::getRamCapacity() const
 }
 
 void
-Cartridge::setRamCapacity(usize size)
+Cartridge::setRamCapacity(isize size)
 {
     // Free
     if (getRamCapacity() > 0) {

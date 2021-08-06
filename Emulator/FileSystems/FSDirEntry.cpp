@@ -13,7 +13,7 @@
 #include "MemUtils.h"
 
 void
-FSDirEntry::init(PETName<16> name, TSLink ref, usize numBlocks)
+FSDirEntry::init(PETName<16> name, TSLink ref, isize numBlocks)
 {
     fileType        = 0x82;  // PRG
     firstDataTrack  = (u8)ref.t;
@@ -25,7 +25,7 @@ FSDirEntry::init(PETName<16> name, TSLink ref, usize numBlocks)
 }
 
 void
-FSDirEntry::init(const char *name, TSLink ref, usize numBlocks)
+FSDirEntry::init(const char *name, TSLink ref, isize numBlocks)
 {
     auto petName = PETName<16>(name);
     init(petName, ref, numBlocks);

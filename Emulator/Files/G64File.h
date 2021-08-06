@@ -31,7 +31,7 @@ public:
     //
     
     G64File() { };
-    G64File(usize capacity);
+    G64File(isize capacity);
     
     
     //
@@ -55,12 +55,12 @@ public:
 public:
     
     // Returns the size of a certain haltrack in bytes
-    usize getSizeOfHalftrack(Halftrack ht) const;
+    isize getSizeOfHalftrack(Halftrack ht) const;
         
     // Copies a certain track into a buffer
     void copyHalftrack(Halftrack ht, u8 *buf) const;
     
 private:
     
-    usize getStartOfHalftrack(Halftrack ht) const;
+    isize getStartOfHalftrack(Halftrack ht) const;
 };

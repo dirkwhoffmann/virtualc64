@@ -243,7 +243,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
 }
 
 void
-ExpansionPort::attachGeoRamCartridge(usize kb)
+ExpansionPort::attachGeoRamCartridge(isize kb)
 {
     debug(EXP_DEBUG, "Attaching GeoRAM cartridge (%zu KB)", kb);
 
@@ -325,7 +325,7 @@ ExpansionPort::detachCartridgeAndReset()
     resume();
 }
 
-usize
+isize
 ExpansionPort::getRamCapacity() const
 {
     return cartridge ? cartridge->getRamCapacity() : 0;

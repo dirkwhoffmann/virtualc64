@@ -22,7 +22,7 @@ D64File::isCompatiblePath(const std::string &path)
 bool
 D64File::isCompatibleStream(std::istream &stream)
 {
-    usize len = util::streamLength(stream);
+    isize len = util::streamLength(stream);
     
     return
     len == D64_683_SECTORS ||

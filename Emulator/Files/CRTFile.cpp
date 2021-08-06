@@ -39,7 +39,7 @@ CRTFile::getName() const
 isize
 CRTFile::readFromStream(std::istream &stream)
 {
-    usize result = AnyFile::readFromStream(stream);
+    isize result = AnyFile::readFromStream(stream);
     if (CRT_DEBUG) dump();
             
     // Load chip packets

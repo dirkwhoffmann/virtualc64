@@ -80,7 +80,7 @@ private:
         << bank;
     }
     
-    usize __size() { COMPUTE_SNAPSHOT_SIZE }
+    isize __size() { COMPUTE_SNAPSHOT_SIZE }
     isize _size() override { return Cartridge::_size() + __size(); }
     isize _load(const u8 *buffer) override { return Cartridge::_load(buffer); }
     isize _save(u8 *buffer) override { return Cartridge::_save(buffer); }
