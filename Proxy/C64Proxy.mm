@@ -708,8 +708,7 @@
 
 - (NSString *)getButtonTitle:(NSInteger)nr
 {
-    const char *str = [self eport]->getButtonTitle((unsigned)nr);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    return @([self eport]->getButtonTitle((unsigned)nr).c_str());
 }
 
 - (void) pressButton:(NSInteger)nr

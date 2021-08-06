@@ -41,7 +41,7 @@ public:
     //
     
     isize numButtons() const override { return 1; }
-    const char *getButtonTitle(isize nr) const override;
+    const string getButtonTitle(isize nr) const override;
     void pressButton(isize nr) override;
     void releaseButton(isize nr) override;
 };

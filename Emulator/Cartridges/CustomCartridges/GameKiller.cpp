@@ -45,10 +45,10 @@ GameKiller::pokeIO2(u16 addr, u8 value)
     }
 }
 
-const char *
+const string
 GameKiller::getButtonTitle(isize nr) const
 {
-    return nr == 1 ? "Freeze" : nullptr;
+    return nr == 1 ? "Freeze" : "";
 }
 
 void

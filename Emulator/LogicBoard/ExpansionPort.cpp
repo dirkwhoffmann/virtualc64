@@ -349,7 +349,7 @@ ExpansionPort::numButtons() const
     return cartridge ? cartridge->numButtons() : 0;
 }
 
-const char *
+const string
 ExpansionPort::getButtonTitle(isize nr) const
 {
      return cartridge ? cartridge->getButtonTitle(nr) : nullptr;

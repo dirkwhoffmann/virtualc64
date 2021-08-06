@@ -52,17 +52,17 @@ ActionReplay3::pokeIO1(u16 addr, u8 value)
         setControlReg(value);
 }
 
-const char *
+const string
 ActionReplay3::getButtonTitle(isize nr) const
 {
-    return nr == 1 ? "Freeze" : nr == 2 ? "Reset" : nullptr;
+    return nr == 1 ? "Freeze" : nr == 2 ? "Reset" : "";
 }
 
 void
 ActionReplay3::pressButton(isize nr)
 {
     assert(nr <= numButtons());
-    trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
+    trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr).c_str());
     
     suspend();
     
@@ -92,7 +92,7 @@ void
 ActionReplay3::releaseButton(isize nr)
 {
     assert(nr <= numButtons());
-    trace(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr));
+    trace(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr).c_str());
     
     suspend();
     
@@ -211,17 +211,17 @@ ActionReplay::pokeIO2(u16 addr, u8 value)
     }
 }
 
-const char *
+const string
 ActionReplay::getButtonTitle(isize nr) const
 {
-    return nr == 1 ? "Freeze" : nr == 2 ? "Reset" : nullptr;
+    return nr == 1 ? "Freeze" : nr == 2 ? "Reset" : "";
 }
 
 void
 ActionReplay::pressButton(isize nr)
 {
     assert(nr <= numButtons());
-    trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
+    trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr).c_str());
     
     suspend();
     
@@ -250,7 +250,7 @@ void
 ActionReplay::releaseButton(isize nr)
 {
     assert(nr <= numButtons());
-    trace(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr));
+    trace(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr).c_str());
     
     suspend();
     

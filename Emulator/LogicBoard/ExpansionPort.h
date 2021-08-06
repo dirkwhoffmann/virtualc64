@@ -173,7 +173,7 @@ public:
     isize numButtons() const;
     
     // Returns a textual description for a button
-    const char *getButtonTitle(isize nr) const;
+    const string getButtonTitle(isize nr) const;
     
     // Presses a button (make sure to call releaseButton() afterwards)
     void pressButton(isize nr);

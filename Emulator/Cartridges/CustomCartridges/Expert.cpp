@@ -127,17 +127,17 @@ Expert::pokeIO1(u16 addr, u8 value)
     active = false;
 }
 
-const char *
+const string
 Expert::getButtonTitle(isize nr) const
 {
-    return nr == 1 ? "Reset" : nr == 2 ? "ESM" : nullptr;
+    return nr == 1 ? "Reset" : nr == 2 ? "ESM" : "";
 }
 
 void
 Expert::pressButton(isize nr)
 {
     assert(nr <= numButtons());
-    trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
+    trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr).c_str());
     
     suspend();
     

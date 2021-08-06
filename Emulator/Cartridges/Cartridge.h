@@ -307,7 +307,7 @@ public:
     /* Returns a textual description for a button or nullptr, if there is no
      * button with the specified number.
      */
-    virtual const char *getButtonTitle(isize nr) const { return nullptr; }
+    virtual const string getButtonTitle(isize nr) const { return ""; }
     
     // Presses a button (make sure to call releaseButton() afterwards)
     virtual void pressButton(isize nr) { }
