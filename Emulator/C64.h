@@ -251,7 +251,7 @@ private:
 
     // Updates the clock frequency and all variables derived from it
     void updateClockFrequency(VICIIRevision rev, VICIISpeed speed);
-    
+
     
     //
     // Analyzing
@@ -519,8 +519,8 @@ public:
 private:
     
     // Returns a revision string if a Mega65 Rom is installed
-    string mega65BasicRev() const;
-    string mega65KernalRev() const;
+    const char *mega65BasicRev() const;
+    const char *mega65KernalRev() const;
 
 public:
     

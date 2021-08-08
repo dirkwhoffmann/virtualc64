@@ -63,7 +63,7 @@ CRTFile::readFromStream(std::istream &stream)
         ptr += chipSize(numberOfChips);
     }
     
-    plain("CRT file imported successfully (%zd chips)\n", numberOfChips);
+    plain(CRT_DEBUG, "CRT file imported successfully (%zd chips)\n", numberOfChips);
     return result;
 }
 

@@ -965,7 +965,7 @@ VICII::gAccess()
          */
  
         // Get address
-        addr = is856x() ? gAccessAddr85x() : gAccessAddr65x();
+        addr = is856x ? gAccessAddr85x() : gAccessAddr65x();
         
         // Fetch
         dataBusPhi1 = memAccess(addr);
@@ -984,7 +984,7 @@ VICII::gAccess()
         
         // Get address. In idle state, g-accesses read from $39FF or $3FFF,
         // depending on the ECM bit.
-        if (is856x()) {
+        if (is856x) {
             addr = GET_BIT(reg.delayed.ctrl1, 6) ? 0x39FF : 0x3FFF;
         } else {
             addr = GET_BIT(reg.current.ctrl1, 6) ? 0x39FF : 0x3FFF;

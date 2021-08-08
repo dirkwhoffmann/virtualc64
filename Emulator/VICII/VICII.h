@@ -24,14 +24,20 @@ class VICII : public SubComponent {
     
     // Current configuration
     VICIIConfig config = { };
-        
+
+    // Chip properties (derived from config.revision)
+    bool isPAL;
+    bool isNTSC;
+    bool is856x;
+    bool is656x;
+
     // Result of the latest inspection
     VICIIInfo info = { };
     SpriteInfo spriteInfo[8] = { };
     
     // Statistics
     VICIIStats stats = { };
-    
+        
 public:
     
     // Sub components
@@ -42,7 +48,6 @@ public:
      * stub. It is never called, because the first cycle is numbered 1.
      */
     typedef void (VICII::*ViciiFunc)(void);
-    // void (VICII::*vicfunc[66])(void);
     ViciiFunc vicfunc[66];
 
     // Indicates if VICII is run in headless mode (skipping pixel synthesis)
@@ -645,6 +650,10 @@ private:
         << config.powerSave
         << config.grayDotBug
         << config.glueLogic
+        << isPAL
+        << isNTSC
+        << is856x
+        << is656x
         
         << memSrc;
     }
@@ -738,22 +747,28 @@ private:
     
 public:
     
-    // Returns true if a PAL chip is plugged in
-    static bool isPAL(VICIIRevision rev);
-    bool isPAL() const { return isPAL(config.revision); }
+    // Returns true if a PAL or an NTSC chip is plugged in
+    bool pal() const { return isPAL; }
+    bool ntsc() const { return isNTSC; }
+    
+    /*
+    // Returns true if a PAL or an NTSC chip is plugged in
+    static bool _isPAL(VICIIRevision rev);
+    bool _isPAL() const { return _isPAL(config.revision); }
     
     // Returns true if a NTSC chip is plugged in
-    static bool isNTSC(VICIIRevision rev);
-    bool isNTSC() const { return isNTSC(config.revision); }
+    static bool _isNTSC(VICIIRevision rev);
+    bool _isNTSC() const { return _isNTSC(config.revision); }
 
     // Returns true if a newer MOS 856x chip is plugged in
-    static bool is856x(VICIIRevision rev);
-    bool is856x() const { return is856x(config.revision); }
+    static bool _is856x(VICIIRevision rev);
+    bool _is856x() const { return _is856x(config.revision); }
     
     // Returns true if an older MOS 656x chip is plugged in
-    static bool is656x(VICIIRevision rev);
-    bool is656x() const { return is656x(config.revision); }
-
+    static bool _is656x(VICIIRevision rev);
+    bool _is656x() const { return _is656x(config.revision); }
+    */
+    
     // Returns true if light pen interrupts are triggered with a delay
     static bool delayedLightPenIrqs(VICIIRevision rev);
     bool delayedLightPenIrqs() { return delayedLightPenIrqs(config.revision); }
@@ -924,7 +939,7 @@ private:
      * reset the yCounter in cycle 2 in the first rasterline wheras NTSC models
      * reset the yCounter in cycle 2 in the middle of the lower border area.
      */
-    bool yCounterOverflow() const { return rasterline() == (isPAL() ? 0 : 238); }
+    bool yCounterOverflow() const { return rasterline() == (isPAL ? 0 : 238); }
 
     /* Matches the yCounter with the raster interrupt line and stores the
      * result. If a positive edge is detected, a raster interrupt is triggered.

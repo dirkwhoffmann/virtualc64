@@ -230,7 +230,7 @@ VICII::drawCanvasSlowPath()
      * VICIIs, the one bits of D011 show up, too.
      */
     u8 newD016 = reg.current.ctrl2;
-    if (is656x()) d011 |= reg.current.ctrl1;
+    if (is656x) d011 |= reg.current.ctrl1;
     mode = (d011 & 0x60) | (newD016 & 0x10);
     
     //
@@ -241,7 +241,7 @@ VICII::drawCanvasSlowPath()
     drawCanvasPixel(5, mode, d016);
     
     // In older VICIIs, the zero bits of D011 show up here.
-    if (is656x()) {
+    if (is656x) {
         d011 = reg.current.ctrl1;
         mode = (d011 & 0x60) | (newD016 & 0x10);
     }

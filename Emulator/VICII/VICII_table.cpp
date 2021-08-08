@@ -73,7 +73,8 @@ VICII::updateVicFunctionTable()
             break;
             
         default:
-            assert(false);
+            // assert(false);
+            break;
     }
 }
 

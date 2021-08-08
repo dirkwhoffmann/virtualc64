@@ -348,7 +348,7 @@
 
 - (BOOL)isPAL
 {
-    return [self vicii]->isPAL();
+    return [self vicii]->pal();
 }
 
 - (VICIIInfo)getInfo {

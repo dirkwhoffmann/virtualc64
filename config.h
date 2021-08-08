@@ -24,7 +24,7 @@
 #define SNP_SUBMINOR 0
 
 // Uncomment these settings in a release build
-#define RELEASEBUILD
+// #define RELEASEBUILD
 
 
 //

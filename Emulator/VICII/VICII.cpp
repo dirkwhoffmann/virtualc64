@@ -47,7 +47,7 @@ VICII::_reset(bool hard)
         clearStats();
         
         // See README of VICE test VICII/spritemcbase
-        for (isize i = 0; i < 8; i++) mcbase[i] = is656x() ? 0x3F : 0x00;
+        for (isize i = 0; i < 8; i++) mcbase[i] = is656x ? 0x3F : 0x00;
         
         // Reset counters
         yCounter = (u32)getLinesPerFrame();
@@ -94,7 +94,7 @@ void
 VICII::resetTexture(u32 *p)
 {
     // Determine the HBLANK / VBLANK area
-    long width = isPAL() ? PAL_PIXELS : NTSC_PIXELS;
+    long width = isPAL ? PAL_PIXELS : NTSC_PIXELS;
     long height = getLinesPerFrame();
     
     for (int y = 0; y < TEX_HEIGHT; y++) {
@@ -320,7 +320,19 @@ VICII::setRevision(VICIIRevision revision)
     resetDmaTextures();
     vic.updateVicFunctionTable();
     
-    c64.putMessage(isPAL() ? MSG_PAL : MSG_NTSC);
+    isPAL =
+    revision == VICII_PAL_6569_R1 ||
+    revision == VICII_PAL_6569_R3 ||
+    revision == VICII_PAL_8565;
+
+    is856x =
+    revision == VICII_PAL_8565 ||
+    revision == VICII_NTSC_8562;
+
+    isNTSC = !isPAL;
+    is656x = !is856x;
+        
+    c64.putMessage(isPAL ? MSG_PAL : MSG_NTSC);
 }
 
 void
@@ -406,13 +418,13 @@ VICII::_dump(dump::Category category, std::ostream& os) const
         os << tab("Gray dot bug");
         os << bol(config.grayDotBug) << std::endl;
         os << tab("PAL");
-        os << bol(isPAL()) << std::endl;
+        os << bol(isPAL) << std::endl;
         os << tab("NTSC");
-        os << bol (isNTSC()) << std::endl;
+        os << bol (isNTSC) << std::endl;
         os << tab("is656x");
-        os << bol(is656x()) << std::endl;
+        os << bol(is656x) << std::endl;
         os << tab("is856x");
-        os << bol(is856x()) << std::endl;
+        os << bol(is856x) << std::endl;
         os << tab("Glue logic");
         os << GlueLogicEnum::key(config.glueLogic) << std::endl;
         os << tab("Check SS collisions");
@@ -533,29 +545,31 @@ VICII::_run()
 {
 }
 
+/*
 bool
-VICII::isPAL(VICIIRevision rev)
+VICII::_isPAL(VICIIRevision rev)
 {
     return rev & (VICII_PAL_6569_R1 | VICII_PAL_6569_R3 | VICII_PAL_8565);
 }
 
 bool
-VICII::isNTSC(VICIIRevision rev)
+VICII::_isNTSC(VICIIRevision rev)
 {
      return rev & (VICII_NTSC_6567 | VICII_NTSC_6567_R56A | VICII_NTSC_8562);
 }
 
 bool
-VICII::is856x(VICIIRevision rev)
+VICII::_is856x(VICIIRevision rev)
 {
      return rev & (VICII_PAL_8565 | VICII_NTSC_8562);
 }
  
 bool
-VICII::is656x(VICIIRevision rev)
+VICII::_is656x(VICIIRevision rev)
 {
      return rev & ~(VICII_PAL_8565 | VICII_NTSC_8562);
 }
+*/
 
 bool
 VICII::delayedLightPenIrqs(VICIIRevision rev)

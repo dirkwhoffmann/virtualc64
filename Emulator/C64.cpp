@@ -274,7 +274,7 @@ C64::configure(C64Model model)
             _configure(OPT_SID_FILTER,   true);
             _configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
             _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-            configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
+            configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
             break;
             
         case C64_MODEL_PAL_II:
@@ -286,7 +286,7 @@ C64::configure(C64Model model)
             _configure(OPT_SID_FILTER,   true);
             _configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
             _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
-            configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
+            configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
             break;
 
         case C64_MODEL_PAL_OLD:
@@ -298,7 +298,7 @@ C64::configure(C64Model model)
             _configure(OPT_SID_FILTER,   true);
             _configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
             _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-            configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
+            configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
             break;
 
         case C64_MODEL_NTSC:
@@ -310,7 +310,7 @@ C64::configure(C64Model model)
             _configure(OPT_SID_FILTER,   true);
             _configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
             _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-            configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
+            configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
             break;
 
         case C64_MODEL_NTSC_II:
@@ -322,7 +322,7 @@ C64::configure(C64Model model)
             _configure(OPT_SID_FILTER,   true);
             _configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
             _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
-            configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
+            configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
             break;
 
         case C64_MODEL_NTSC_OLD:
@@ -334,7 +334,7 @@ C64::configure(C64Model model)
             _configure(OPT_SID_FILTER,   true);
             _configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
             _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-            configure(OPT_RAM_PATTERN,  RAM_PATTERN_VICE);
+            configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
             break;
 
         default:
@@ -534,7 +534,7 @@ C64::threadExecute()
             thread.newState = EXEC_PAUSED;
         }
                     
-        assert(runLoopCtrl == 0);
+        assert(flags == 0);
     }
 }
 
@@ -587,7 +587,7 @@ C64::_dump(dump::Category category, std::ostream& os) const
         
     if (category & dump::State) {
                 
-        os << tab("Machine type") << bol(vic.isPAL(), "PAL", "NTSC") << std::endl;
+        os << tab("Machine type") << bol(vic.pal(), "PAL", "NTSC") << std::endl;
         os << tab("Frames per second") << vic.getFps() << std::endl;
         os << tab("Lines per frame") << vic.getLinesPerFrame() << std::endl;
         os << tab("Cycles per rasterline") << vic.getCyclesPerLine() << std::endl;
@@ -639,7 +639,7 @@ C64::isReady(ErrorCode *err) const
         if (err) *err = ERROR_ROM_KERNAL_MISSING;
         return false;
     }
-    if (FORCE_MEGA64_MISMATCH || (mega && mega65BasicRev() != mega65KernalRev())) {
+    if (FORCE_MEGA64_MISMATCH || (mega && string(mega65BasicRev()) != string(mega65KernalRev()))) {
         if (err) *err = ERROR_ROM_MEGA65_MISMATCH;
         return false;
     }
@@ -1125,7 +1125,7 @@ C64::hasMega65Rom(RomType type) const
     return false;
 }
 
-string
+const char *
 C64::mega65BasicRev() const
 {
     static char rev[17];
@@ -1134,10 +1134,10 @@ C64::mega65BasicRev() const
     if (hasMega65Rom(ROM_TYPE_BASIC)) memcpy(rev, &mem.rom[0xBF55], 16);
     rev[16] = 0;
     
-    return string(rev);
+    return rev;
 }
 
-string
+const char *
 C64::mega65KernalRev() const
 {
     static char rev[17];
@@ -1146,7 +1146,7 @@ C64::mega65KernalRev() const
     if (hasMega65Rom(ROM_TYPE_KERNAL)) memcpy(rev, &mem.rom[0xE4BC], 16);
     rev[16] = 0;
     
-    return string(rev);
+    return rev;
 }
 
 void

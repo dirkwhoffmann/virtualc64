@@ -217,7 +217,7 @@ VICII::getColor(isize nr, Palette palette)
     b = std::clamp(b, 0.0, 255.0);
     
     // Apply Gamma correction for PAL models
-    if (isPAL()) {
+    if (isPAL) {
         r = gammaCorrect(r, 2.8, 2.2);
         g = gammaCorrect(g, 2.8, 2.2);
         b = gammaCorrect(b, 2.8, 2.2);

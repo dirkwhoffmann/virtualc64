@@ -21,7 +21,7 @@ RegressionTester::prepare(C64 &c64, C64Model model)
     c64.initialize(model);
     
     // Select the default texture cutout
-    x1 = 104; y1 = 17; x2 = 488; y2 = c64.vic.isPAL() ? 291 : 241;
+    x1 = 104; y1 = 17; x2 = 488; y2 = c64.vic.pal() ? 291 : 241;
     
     // Run as fast as possible
     c64.warpOn();

@@ -76,7 +76,7 @@ Recorder::startRecording(int x1, int y1, int x2, int y2,
 
         // Set the bit rate, frame rate, and sample rate
         this->bitRate = bitRate;
-        frameRate = vic.isPAL() ? 50 : 60;
+        frameRate = vic.pal() ? 50 : 60;
         sampleRate = 44100;
         
         // Create pipes
@@ -286,7 +286,7 @@ Recorder::prepare()
      * apply a scaling factor that never makes SID produce less than the
      * required amout which would result in a buffer underflow.
      */
-    if (vic.isPAL()) {
+    if (vic.pal()) {
         sid.setSampleRate(sampleRate * 50.125 / 50.0);
         samplesPerFrame = 882;
     } else {

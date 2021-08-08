@@ -72,6 +72,7 @@ enum_u8(INTSRC)
 };
 typedef INTSRC IntSource;
 
+/*
 #ifdef __cplusplus
 struct IntSourceEnum : util::Reflection<IntSourceEnum, IntSource> {
     
@@ -104,6 +105,7 @@ struct IntSourceEnum : util::Reflection<IntSourceEnum, IntSource> {
     static std::map <string, long> pairs() { return Reflection::pairs(INTSRC_KBD); }
 };
 #endif
+*/
 
 enum_long(BPTYPE)
 {

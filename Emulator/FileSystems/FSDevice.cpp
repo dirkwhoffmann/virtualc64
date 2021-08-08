@@ -758,7 +758,7 @@ u8
 FSDevice::readByte(Block block, u32 offset) const
 {
     assert(offset < 256);
-    assert(block < blocks.size());
+    assert(block < (Block)blocks.size());
     
     return blocks[block]->data[offset];
 }
@@ -886,7 +886,7 @@ FSDevice::exportBlock(u32 nr, u8 *dst, isize size, ErrorCode *err)
 bool
 FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, isize size, ErrorCode *err)
 {
-    assert(last < layout.numBlocks());
+    assert(last < (u32)layout.numBlocks());
     assert(first <= last);
     assert(dst);
     
