@@ -15,7 +15,7 @@
 class C64Memory : public SubComponent {
 
     // Current configuration
-    MemConfig config = getDefaultConfig();
+    MemConfig config = { };
     
     // Result of the latest inspection
     MemInfo info = { };

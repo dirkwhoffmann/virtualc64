@@ -48,7 +48,7 @@ class Mouse : public SubComponent {
     ControlPort &port;
 
     // Current configuration
-    MouseConfig config;
+    MouseConfig config = { };
 
     //
     // Sub components
@@ -119,12 +119,6 @@ private:
     
     void _dump(dump::Category category, std::ostream& os) const override;
 
-    /*
-public:
-    
-    [[deprecated]] MouseModel getModel() { return config.model; }
-    [[deprecated]] void setModel(MouseModel model);
-    */
 
     //
     // Serializing

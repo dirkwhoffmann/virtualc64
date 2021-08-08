@@ -45,7 +45,7 @@ class SIDBridge : public SubComponent {
     friend C64Memory;
 
     // Current configuration
-    SIDConfig config = getDefaultConfig();
+    SIDConfig config = { };
     
     // Statistics
     SIDStats stats = { };

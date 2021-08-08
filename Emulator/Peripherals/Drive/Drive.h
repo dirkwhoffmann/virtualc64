@@ -63,7 +63,7 @@ class Drive : public SubComponent {
     DriveID deviceNr;
 
     // Current configuration
-    DriveConfig config = getDefaultConfig();
+    DriveConfig config = { };
 
     
     //

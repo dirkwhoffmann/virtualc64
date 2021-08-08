@@ -18,7 +18,7 @@ class Joystick : public SubComponent {
     ControlPort &port;
   
     // Current configuration
-    JoystickConfig config;
+    JoystickConfig config = { };
     
     // Button state
     bool button = false;

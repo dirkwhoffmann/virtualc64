@@ -18,7 +18,7 @@ class DmaDebugger : public SubComponent {
     friend class VICII;
     
     // Current configuration
-    DmaDebuggerConfig config = getDefaultConfig();
+    DmaDebuggerConfig config = { };
     
     // Color lookup table. There are 6 colors with different shades
     u32 debugColor[6][4];

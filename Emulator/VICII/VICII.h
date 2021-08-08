@@ -23,7 +23,7 @@ class VICII : public SubComponent {
     friend class DmaDebugger;
     
     // Current configuration
-    VICIIConfig config = getDefaultConfig();
+    VICIIConfig config = { };
         
     // Result of the latest inspection
     VICIIInfo info = { };

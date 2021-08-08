@@ -16,7 +16,7 @@
 class PowerSupply : public SubComponent {
     
     // Current configuration
-    PowerSupplyConfig config = getDefaultConfig();
+    PowerSupplyConfig config = { };
 
     
     //

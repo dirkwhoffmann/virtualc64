@@ -64,7 +64,7 @@ class CIA : public SubComponent {
     friend class ParCable;
     
     // Current configuration
-    CIAConfig config = getDefaultConfig();
+    CIAConfig config = { };
     
     // Result of the latest inspection
     CIAInfo info = { };
