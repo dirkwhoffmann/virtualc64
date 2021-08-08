@@ -50,6 +50,7 @@ class Mouse : public SubComponent {
     // Current configuration
     MouseConfig config = { };
 
+    
     //
     // Sub components
     //
@@ -86,7 +87,7 @@ class Mouse : public SubComponent {
 public:
     
     Mouse(C64 &ref, ControlPort& pref);
-    const string getDescription() const override { return "Mouse"; }
+    const char *getDescription() const override { return "Mouse"; }
     
 private:
     

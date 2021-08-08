@@ -209,7 +209,7 @@ public:
     
     C64();
     ~C64();
-    const string getDescription() const override { return "C64"; }
+    const char *getDescription() const override { return "C64"; }
     void prefix() const override;
 
     // Prepares the emulator for regression testing

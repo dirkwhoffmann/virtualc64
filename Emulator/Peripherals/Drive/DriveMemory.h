@@ -50,7 +50,7 @@ public:
 public:
     
     DriveMemory(C64 &ref, Drive &drive);
-    const string getDescription() const override { return "DriveMemory"; }
+    const char *getDescription() const override { return "DriveMemory"; }
 
 private:
     

@@ -86,7 +86,7 @@ public:
     
     using SubComponent::SubComponent;
     
-    const string getDescription() const override { return "Recorder"; }
+    const char *getDescription() const override { return "Recorder"; }
 
     bool hasFFmpeg() const;
     

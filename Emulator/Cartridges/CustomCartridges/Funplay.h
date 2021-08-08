@@ -16,7 +16,7 @@ class Funplay : public Cartridge {
 public:
 
     Funplay(C64 &ref) : Cartridge(ref) { };
-    const string getDescription() const override { return "Funplay"; }
+    const char *getDescription() const override { return "Funplay"; }
     CartridgeType getCartridgeType() const override { return CRT_FUNPLAY; }
     
     

@@ -16,7 +16,7 @@ class GameKiller : public Cartridge {
 public:
     
     GameKiller(C64 &ref) : Cartridge(ref) { };
-    const string getDescription() const override { return "GameKiller"; }
+    const char *getDescription() const override { return "GameKiller"; }
     CartridgeType getCartridgeType() const override { return CRT_GAME_KILLER; }
     
 private:

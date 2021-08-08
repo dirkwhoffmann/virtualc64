@@ -568,7 +568,7 @@ public:
 public:
 	
     VICII(C64 &ref);
-    const string getDescription() const override { return "VICII"; }
+    const char *getDescription() const override { return "VICII"; }
 
     void updateVicFunctionTable();
 

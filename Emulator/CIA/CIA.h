@@ -493,7 +493,7 @@ public:
     CIA1(C64 &ref) : CIA(ref) { };
     bool isCIA1() const override { return true; }
     bool isCIA2() const override { return false; }
-    const string getDescription() const override { return "CIA1"; }
+    const char *getDescription() const override { return "CIA1"; }
     
 private:
         
@@ -522,7 +522,7 @@ public:
     CIA2(C64 &ref) : CIA(ref) { };
     bool isCIA1() const override { return false; }
     bool isCIA2() const override { return true; }
-    const string getDescription() const override { return "CIA2"; }
+    const char *getDescription() const override { return "CIA2"; }
 
 private:
         

@@ -29,7 +29,7 @@ private:
 public:
     
     GeoRAM(C64 &ref) : Cartridge(ref) { };
-    const string getDescription() const override { return "GeoRam"; }
+    const char *getDescription() const override { return "GeoRam"; }
     CartridgeType getCartridgeType() const override { return CRT_GEO_RAM; }
     
 private:

@@ -44,7 +44,7 @@ public:
     // Methods from C64Object
     //
     
-    const string getDescription() const override { return "D64File"; }
+    const char *getDescription() const override { return "D64File"; }
 
         
     //

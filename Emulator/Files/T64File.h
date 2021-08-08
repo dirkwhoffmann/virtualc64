@@ -33,7 +33,7 @@ public:
     // Methods from C64Object
     //
     
-    const string getDescription() const override { return "T64File"; }
+    const char *getDescription() const override { return "T64File"; }
 
     
     //

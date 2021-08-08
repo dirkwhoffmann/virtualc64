@@ -36,7 +36,7 @@ class Mouse1351 : public SubComponent {
 public:
         
     Mouse1351(C64 &ref) : SubComponent(ref) { }
-    const string getDescription() const override { return "Mouse1351"; }
+    const char *getDescription() const override { return "Mouse1351"; }
 
 private:
     

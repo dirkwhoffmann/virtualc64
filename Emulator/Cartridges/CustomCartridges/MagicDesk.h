@@ -16,7 +16,7 @@ class MagicDesk : public Cartridge {
 public:
     
     MagicDesk(C64 &ref) : Cartridge(ref) { };
-    const string getDescription() const override { return "MagicDesk"; }
+    const char *getDescription() const override { return "MagicDesk"; }
     CartridgeType getCartridgeType() const override { return CRT_MAGIC_DESK; }
     void resetCartConfig() override;
     

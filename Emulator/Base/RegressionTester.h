@@ -43,7 +43,7 @@ private:
     
 private:
     
-    const string getDescription() const override { return "RegressionTester"; }
+    const char *getDescription() const override { return "RegressionTester"; }
     
     
     //

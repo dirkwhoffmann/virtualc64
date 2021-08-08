@@ -68,7 +68,7 @@ public:
     FSDevice(u32 capacity);
     ~FSDevice();
     
-    const string getDescription() const override { return "FSVolume"; }
+    const char *getDescription() const override { return "FSVolume"; }
         
     // Prints information about this volume
     void info();

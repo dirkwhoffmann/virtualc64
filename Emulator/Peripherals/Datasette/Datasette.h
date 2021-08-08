@@ -88,7 +88,7 @@ public:
     void alloc(isize capacity);
     void dealloc();
 
-    const string getDescription() const override { return "Datasette"; }
+    const char *getDescription() const override { return "Datasette"; }
     
 private:
     

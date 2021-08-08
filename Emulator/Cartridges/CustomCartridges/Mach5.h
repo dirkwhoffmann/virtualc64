@@ -16,7 +16,7 @@ class Mach5 : public Cartridge {
 public:
 
     Mach5(C64 &ref) : Cartridge(ref) { };
-    const string getDescription() const override { return "Mach5"; }
+    const char *getDescription() const override { return "Mach5"; }
     CartridgeType getCartridgeType() const override { return CRT_MACH5; }
 
 private:

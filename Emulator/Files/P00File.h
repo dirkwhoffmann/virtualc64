@@ -27,7 +27,7 @@ public:
     // Methods from C64Object
     //
 
-    const string getDescription() const override { return "P00File"; }
+    const char *getDescription() const override { return "P00File"; }
 
 
     //

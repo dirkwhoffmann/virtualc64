@@ -33,7 +33,7 @@ private:
 public:
     
     Epyx(C64 &ref) : Cartridge(ref) { };
-    const string getDescription() const override { return "Epyx"; }
+    const char *getDescription() const override { return "Epyx"; }
     CartridgeType getCartridgeType() const override { return CRT_EPYX_FASTLOAD; }
     
 private:

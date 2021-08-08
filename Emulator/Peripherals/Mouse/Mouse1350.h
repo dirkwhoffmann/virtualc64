@@ -42,7 +42,7 @@ private:
 public:
     
     Mouse1350(C64 &ref) : SubComponent(ref) { }
-    const string getDescription() const override { return "Mouse1350"; }
+    const char *getDescription() const override { return "Mouse1350"; }
     
 private:
     

@@ -44,7 +44,7 @@ public:
     
     Joystick(C64 &ref, ControlPort& pref);
     
-    const string getDescription() const override;
+    const char *getDescription() const override;
     
 private:
     

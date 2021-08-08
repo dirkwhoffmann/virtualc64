@@ -16,7 +16,7 @@ class FreezeFrame : public Cartridge {
 public:
     
     FreezeFrame(C64 &ref) : Cartridge(ref) { };
-    const string getDescription() const override { return "FreezeFrame"; }
+    const char *getDescription() const override { return "FreezeFrame"; }
     CartridgeType getCartridgeType() const override { return CRT_FREEZE_FRAME; }
     
 private:

@@ -136,7 +136,7 @@ public:
     
     Cartridge(C64 &ref);
     ~Cartridge();
-    const string getDescription() const override { return "Cartridge"; }
+    const char *getDescription() const override { return "Cartridge"; }
 
     /* Resets the Game and the Exrom line. The default implementation resets
      * the values to ones found in the CRT file. A few custom cartridges need

@@ -27,7 +27,7 @@ public:
     
     PowerSupply(C64& ref);
     
-    const string getDescription() const override;
+    const char *getDescription() const override { return "PowerSupply"; }
 
 private:
     

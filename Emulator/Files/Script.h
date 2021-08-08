@@ -35,7 +35,7 @@ public:
     // Methods from C64Object
     //
         
-    const string getDescription() const override { return "Script"; }
+    const char *getDescription() const override { return "Script"; }
     
     
     //

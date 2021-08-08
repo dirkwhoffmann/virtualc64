@@ -150,7 +150,7 @@ public:
     Thread(ThreadDelegate &d);
     ~Thread();
     
-    const string getDescription() const override { return "Thread"; }
+    const char *getDescription() const override { return "Thread"; }
 
     
     //
