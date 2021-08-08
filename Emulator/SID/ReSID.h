@@ -40,8 +40,8 @@ class ReSID : public SubComponent {
     reSID::SID *sid;
     
     // Result of the latest inspection
-    SIDInfo info;
-    VoiceInfo voiceInfo[3];
+    SIDInfo info = { };
+    VoiceInfo voiceInfo[3] = { };
         
 private:
     

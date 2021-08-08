@@ -228,7 +228,7 @@ C64::configure(Option option, i64 value)
 void
 C64::_configure(Option option, i64 value)
 {
-    trace(CNF_DEBUG, "configure(option: %lld, value: %lld\n", option, value);
+    debug(CNF_DEBUG, "configure(%lld, %lld)\n", option, value);
 
     // Propagate configuration request to all components
     C64Component::configure(option, value);
@@ -244,7 +244,7 @@ C64::configure(Option option, long id, i64 value)
 void
 C64::_configure(Option option, long id, i64 value)
 {
-    trace(CNF_DEBUG, "configure(option: %lld, id: %ld, value: %lld\n", option, id, value);
+    debug(CNF_DEBUG, "configure(%lld, %ld, %lld)\n", option, id, value);
     
     // Propagate configuration request to all components
     C64Component::configure(option, id, value);
@@ -361,16 +361,6 @@ C64::setConfigItem(Option option, i64 value)
 void
 C64::updateClockFrequency(VICIIRevision rev, VICIISpeed speed)
 {
-    /*
-    isize newFrequency = VICII::getFrequency(rev, speed);
-    isize newNativeFrequency = VICII::getNativeFrequency(rev);
-    isize newFrameDelay = VICII::getFrameDelay(rev, speed);
-    
-    frequency = (u32)newFrequency;
-    nativeDurationOfOneCycle = 10000000000 / newNativeFrequency;
-    durationOfOneCycle = 10000000000 / newFrequency;
-    thread.setSyncDelay(newFrameDelay);
-    */
     frequency = (u32)VICII::getFrequency(rev, speed);
     durationOfOneCycle = 10000000000 / frequency;
     nativeDurationOfOneCycle = 10000000000 / VICII::getNativeFrequency(rev);
@@ -565,23 +555,15 @@ C64::debugOff()
 }
 
 void
-C64::_powerOn()
+C64::_debugOn()
 {
+    vic.updateVicFunctionTable();
 }
 
 void
-C64::_powerOff()
+C64::_debugOff()
 {
-}
-
-void
-C64::_run()
-{
-}
-
-void
-C64::_pause()
-{
+    vic.updateVicFunctionTable();
 }
 
 void
@@ -617,18 +599,6 @@ C64::_dump(dump::Category category, std::ostream& os) const
         os << tab("Warp mode") << bol(inWarpMode()) << std::endl;
         os << tab("Debug mode") << bol(debugMode) << std::endl;
     }
-}
-
-void
-C64::_debugOn()
-{
-    vic.updateVicFunctionTable();
-}
-
-void
-C64::_debugOff()
-{
-    vic.updateVicFunctionTable();
 }
 
 void

@@ -67,7 +67,7 @@ class CIA : public SubComponent {
     CIAConfig config = getDefaultConfig();
     
     // Result of the latest inspection
-    CIAInfo info;
+    CIAInfo info = { };
     
     
     //

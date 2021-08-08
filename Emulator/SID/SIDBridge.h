@@ -48,7 +48,7 @@ class SIDBridge : public SubComponent {
     SIDConfig config = getDefaultConfig();
     
     // Statistics
-    SIDStats stats;
+    SIDStats stats = { };
 
     
     //

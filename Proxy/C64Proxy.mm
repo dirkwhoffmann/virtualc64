@@ -2505,7 +2505,7 @@
 
 - (NSInteger)cpuLoad
 {
-    double load = [self c64]->thread.getCpuLoad();
+    double load = [self c64]->getCpuLoad();
     return (NSInteger)(100 * load);
 }
 

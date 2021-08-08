@@ -567,7 +567,7 @@ SIDBridge::getInfo(isize nr)
 {
     assert(nr < 4);
     
-    SIDInfo info;
+    SIDInfo info = { };
     
     switch (config.engine) {
             

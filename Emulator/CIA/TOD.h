@@ -29,7 +29,7 @@ class TOD : public SubComponent {
 private:
     
     // Result of the latest inspection
-    TODInfo info;
+    TODInfo info = { };
     
     // Reference to the connected CIA
     class CIA &cia;

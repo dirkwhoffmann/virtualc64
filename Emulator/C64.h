@@ -69,10 +69,10 @@
  */
 class C64 : public C64Component, ThreadDelegate {
         
-    // The currently set inspection target (only evaluated in debug mode)
+    // The component which is currently observed by the debugger
     InspectionTarget inspectionTarget;
 
-public:
+// public:
     
     // The thread manager
     Thread thread = Thread(*this);
@@ -200,6 +200,7 @@ private:
     Snapshot *autoSnapshot = nullptr;
     Snapshot *userSnapshot = nullptr;
     
+    
     //
     // Initializing
     //
@@ -229,11 +230,15 @@ private:
 
 public:
     
+    // Gets a single configuration item
     i64 getConfigItem(Option option) const;
     i64 getConfigItem(Option option, long id) const;
     
+    // Sets a single configuration item and informs the GUI
     void configure(Option option, i64 value) throws;
     void configure(Option option, long id, i64 value) throws;
+    
+    // Sets a single configuration item without informing the GUI
     void _configure(Option option, i64 value) throws;
     void _configure(Option option, long id, i64 value) throws;
 
@@ -258,7 +263,7 @@ public:
     InspectionTarget getInspectionTarget() const;
     void setInspectionTarget(InspectionTarget target);
     void clearInspectionTarget() { setInspectionTarget(INSPECTION_TARGET_NONE); }
-    
+        
 private:
     
     void _dump(dump::Category category, std::ostream& os) const override;
@@ -340,12 +345,10 @@ public:
     void lockWarpMode() { thread.setWarpLock(true); }
     void unlockWarpMode() { thread.setWarpLock(false); }
     
+    double getCpuLoad() { return thread.getCpuLoad(); }
+    
 private:
 
-    void _powerOn() override;
-    void _powerOff() override;
-    void _run() override;
-    void _pause() override;
     void _debugOn() override;
     void _debugOff() override;
 
@@ -365,7 +368,12 @@ public:
         
     // Feeds a notification message into message queue
     void putMessage(MsgType msg, u64 data = 0) { msgQueue.put(msg, data); }
-                
+       
+    
+    //
+    // Executing
+    //
+    
     // Runs or pauses the emulator
     void stopAndGo();
 
@@ -456,6 +464,7 @@ public:
     void signalStop() { setActionFlags(ACTION_FLAG_STOP); }
     void signalExpPortNmi() { setActionFlags(ACTION_FLAG_EXTERNAL_NMI); }
 
+    
     //
     // Handling snapshots
     //

@@ -26,11 +26,11 @@ class VICII : public SubComponent {
     VICIIConfig config = getDefaultConfig();
         
     // Result of the latest inspection
-    VICIIInfo info;
-    SpriteInfo spriteInfo[8];
+    VICIIInfo info = { };
+    SpriteInfo spriteInfo[8] = { };
     
     // Statistics
-    VICIIStats stats;
+    VICIIStats stats = { };
     
 public:
     

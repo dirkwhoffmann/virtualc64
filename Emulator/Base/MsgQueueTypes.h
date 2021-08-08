@@ -37,6 +37,8 @@ enum_long(MSG)
     MSG_WARP_OFF,
     MSG_MUTE_ON,
     MSG_MUTE_OFF,
+    
+    // Scripting
     MSG_SCRIPT_DONE,
     MSG_SCRIPT_PAUSE,
     MSG_SCRIPT_ABORT,

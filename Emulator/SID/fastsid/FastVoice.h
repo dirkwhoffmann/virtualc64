@@ -69,8 +69,8 @@ class FastVoice : public SubComponent {
     friend class FastSID;
     
     // Result of the latest inspection
-    SIDInfo info;
-    VoiceInfo voiceInfo[3];
+    SIDInfo info = { };
+    VoiceInfo voiceInfo[3] = { };
     
     // Wave tables
     // The first index determines the chip model (0 = old, 1 = new).

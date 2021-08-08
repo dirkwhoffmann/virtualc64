@@ -38,7 +38,6 @@ class Recorder;
 class RegressionTester;
 class RetroShell;
 
-// class File;
 class AnyFile;
 class AnyCollection;
 class TAPFile;

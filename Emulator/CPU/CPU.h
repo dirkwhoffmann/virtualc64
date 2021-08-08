@@ -26,7 +26,7 @@ class CPU : public SubComponent {
     friend class Watchpoints;
             
     // Result of the latest inspection
-    CPUInfo info;
+    CPUInfo info = { };
         
     
     //

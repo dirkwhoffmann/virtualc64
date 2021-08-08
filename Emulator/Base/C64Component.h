@@ -207,12 +207,12 @@ protected:
     virtual void _warpOff() { }
     virtual void _debugOn() { }
     virtual void _debugOff() { }
+};
 
-    
-    //
-    // Standard implementations of _reset, _load, and _save
-    //
-    
+//
+// Standard implementations of _reset, _load, and _save
+//
+
 #define COMPUTE_SNAPSHOT_SIZE \
 util::SerCounter counter; \
 applyToPersistentItems(counter); \
@@ -234,5 +234,3 @@ util::SerWriter writer(buffer); \
 applyToPersistentItems(writer); \
 applyToResetItems(writer); \
 return writer.ptr - buffer;
-
-};
