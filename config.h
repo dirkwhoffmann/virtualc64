@@ -26,8 +26,7 @@
 // Configuration overrides
 //
 
-// Uncomment to override a configuration setting
-// EMPTY LIST SO FAR
+#define OVERRIDES { }
 
 
 //

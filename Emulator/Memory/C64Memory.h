@@ -80,7 +80,7 @@ private:
 public:
     
     static MemConfig getDefaultConfig();
-    MemConfig getConfig() const { return config; }
+    const MemConfig &getConfig() const { return config; }
     void resetConfig() override;
 
     i64 getConfigItem(Option option) const;

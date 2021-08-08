@@ -230,6 +230,14 @@ C64::_configure(Option option, i64 value)
 {
     debug(CNF_DEBUG, "configure(%lld, %lld)\n", option, value);
 
+    // Check if this option has been locked for debugging
+    static std::map<Option,i64> overrides = OVERRIDES;
+    if (overrides.find(option) != overrides.end()) {
+
+        msg("Overriding option: %s = %lld\n", OptionEnum::key(option), value);
+        value = overrides[option];
+    }
+
     // Propagate configuration request to all components
     C64Component::configure(option, value);
 }

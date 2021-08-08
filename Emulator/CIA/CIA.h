@@ -259,7 +259,7 @@ protected:
 public:
     
     static CIAConfig getDefaultConfig();
-    CIAConfig getConfig() const { return config; }
+    const CIAConfig &getConfig() const { return config; }
     void resetConfig() override;
 
     i64 getConfigItem(Option option) const;

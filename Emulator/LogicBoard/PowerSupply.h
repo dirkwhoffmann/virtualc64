@@ -41,7 +41,7 @@ private:
 public:
     
     static PowerSupplyConfig getDefaultConfig();
-    PowerSupplyConfig getConfig() const { return config; }
+    const PowerSupplyConfig &getConfig() const { return config; }
     void resetConfig() override;
 
     i64 getConfigItem(Option option) const;

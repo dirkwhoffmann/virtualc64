@@ -591,7 +591,7 @@ private:
 public:
     
     static VICIIConfig getDefaultConfig();
-    VICIIConfig getConfig() const { return config; }
+    const VICIIConfig &getConfig() const { return config; }
     void resetConfig() override;
 
     i64 getConfigItem(Option option) const;

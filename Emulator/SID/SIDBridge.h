@@ -134,7 +134,7 @@ private:
 public:
     
     static SIDConfig getDefaultConfig();
-    SIDConfig getConfig() const { return config; }
+    const SIDConfig &getConfig() const { return config; }
     void resetConfig() override;
 
     i64 getConfigItem(Option option) const;

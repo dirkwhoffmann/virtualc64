@@ -45,7 +45,7 @@ private:
 public:
     
     static DmaDebuggerConfig getDefaultConfig();
-    DmaDebuggerConfig getConfig() const { return config; }
+    const DmaDebuggerConfig &getConfig() const { return config; }
     void resetConfig() override;
 
     i64 getConfigItem(Option option) const;

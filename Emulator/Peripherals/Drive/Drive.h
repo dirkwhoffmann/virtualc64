@@ -241,7 +241,7 @@ private:
 public:
         
     static DriveConfig getDefaultConfig();
-    DriveConfig getConfig() const { return config; }
+    const DriveConfig &getConfig() const { return config; }
     void resetConfig() override;
 
     i64 getConfigItem(Option option) const;
