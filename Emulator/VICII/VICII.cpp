@@ -545,32 +545,6 @@ VICII::_run()
 {
 }
 
-/*
-bool
-VICII::_isPAL(VICIIRevision rev)
-{
-    return rev & (VICII_PAL_6569_R1 | VICII_PAL_6569_R3 | VICII_PAL_8565);
-}
-
-bool
-VICII::_isNTSC(VICIIRevision rev)
-{
-     return rev & (VICII_NTSC_6567 | VICII_NTSC_6567_R56A | VICII_NTSC_8562);
-}
-
-bool
-VICII::_is856x(VICIIRevision rev)
-{
-     return rev & (VICII_PAL_8565 | VICII_NTSC_8562);
-}
- 
-bool
-VICII::_is656x(VICIIRevision rev)
-{
-     return rev & ~(VICII_PAL_8565 | VICII_NTSC_8562);
-}
-*/
-
 bool
 VICII::delayedLightPenIrqs(VICIIRevision rev)
 {

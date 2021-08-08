@@ -576,22 +576,22 @@ Gw
                                         <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZQk-5s-Q3i" userLabel="System">
                                             <rect key="frame" x="109" y="356" width="174" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="MOS 6569 R1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="1" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="eM3-YM-a9W" id="3A2-Za-Kyn" userLabel="System">
+                                            <popUpButtonCell key="cell" type="push" title="MOS 6569 R1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="eM3-YM-a9W" id="3A2-Za-Kyn" userLabel="System">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="menu"/>
                                                 <menu key="menu" id="iEf-S6-IbN">
                                                     <items>
-                                                        <menuItem title="MOS 6569 R1" state="on" tag="1" id="eM3-YM-a9W">
+                                                        <menuItem title="MOS 6569 R1" state="on" id="eM3-YM-a9W">
                                                             <attributedString key="attributedTitle"/>
                                                         </menuItem>
-                                                        <menuItem title="MOS 6569 R3" tag="2" id="X5T-vd-adB"/>
-                                                        <menuItem title="MOS 8565" tag="4" id="PRe-f4-iSB">
+                                                        <menuItem title="MOS 6569 R3" tag="1" id="X5T-vd-adB"/>
+                                                        <menuItem title="MOS 8565" tag="2" id="PRe-f4-iSB">
                                                             <modifierMask key="keyEquivalentModifierMask"/>
                                                         </menuItem>
                                                         <menuItem isSeparatorItem="YES" id="OLa-XA-2LX"/>
-                                                        <menuItem title="MOS 6567  R56A" tag="8" id="6cl-4h-IcH"/>
-                                                        <menuItem title="MOS 6567" tag="16" id="f7G-hl-JPf"/>
-                                                        <menuItem title="MOS 8562" tag="32" id="1zU-oY-xYp"/>
+                                                        <menuItem title="MOS 6567  R56A" tag="3" id="6cl-4h-IcH"/>
+                                                        <menuItem title="MOS 6567" tag="4" id="f7G-hl-JPf"/>
+                                                        <menuItem title="MOS 8562" tag="5" id="1zU-oY-xYp"/>
                                                     </items>
                                                 </menu>
                                             </popUpButtonCell>

@@ -24,16 +24,12 @@ template <class T, typename E> struct Reflection {
     static const char *key(long nr) { return T::key((E)nr); }
 
     // Collects all key / value pairs
-    static std::map <string, long> pairs(long min = 1) {
+    static std::map <string, long> pairs() {
         
         std::map <string,long> result;
                 
-        for (isize i = 0;; i++) {
-            if (T::isValid(i)) {
-                result.insert(std::make_pair(key(i), i));
-            } else {
-                if (i >= min) break;
-            }
+        for (isize i = 0; T::isValid(i); i++) {
+            result.insert(std::make_pair(key(i), i));
         }
         
         return result;

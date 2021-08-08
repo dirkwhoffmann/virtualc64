@@ -12,9 +12,7 @@
 
 void
 VICII::updateVicFunctionTable()
-{
-    // bool headless = false;
-    
+{    
     trace(VIC_DEBUG, "updateVicFunctionTable (dmaDebug: %d)\n", dmaDebug());
     
     vicfunc[0] = nullptr;
@@ -73,8 +71,7 @@ VICII::updateVicFunctionTable()
             break;
             
         default:
-            // assert(false);
-            break;
+            assert(false);
     }
 }
 

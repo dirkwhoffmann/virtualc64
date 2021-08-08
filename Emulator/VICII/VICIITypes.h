@@ -84,12 +84,12 @@ VICClrSprBgCollReg);
 
 enum_long(VICII_REV)
 {
-    VICII_PAL_6569_R1 = 1,
-    VICII_PAL_6569_R3 = 2,
-    VICII_PAL_8565 = 4,
-    VICII_NTSC_6567_R56A = 8,
-    VICII_NTSC_6567 = 16,
-    VICII_NTSC_8562 = 32
+    VICII_PAL_6569_R1,
+    VICII_PAL_6569_R3,
+    VICII_PAL_8565,
+    VICII_NTSC_6567_R56A,
+    VICII_NTSC_6567,
+    VICII_NTSC_8562
 };
 typedef VICII_REV VICIIRevision;
 
@@ -98,13 +98,7 @@ struct VICIIRevisionEnum : util::Reflection<VICIIRevisionEnum, VICIIRevision> {
     
     static bool isValid(long value)
     {
-        return
-        (value == VICII_PAL_6569_R1) ||
-        (value == VICII_PAL_6569_R3) ||
-        (value == VICII_PAL_8565) ||
-        (value == VICII_NTSC_6567) ||
-        (value == VICII_NTSC_6567_R56A) ||
-        (value == VICII_NTSC_8562);
+        return (unsigned long)value <= VICII_NTSC_8562;
     }
 
     static const char *prefix() { return "VICII"; }
@@ -121,8 +115,6 @@ struct VICIIRevisionEnum : util::Reflection<VICIIRevisionEnum, VICIIRevision> {
         }
         return "???";
     }
-    
-    static std::map <string, long> pairs() { return Reflection::pairs(VICII_NTSC_8562); }
 };
 #endif
 

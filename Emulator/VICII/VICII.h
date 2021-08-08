@@ -750,25 +750,7 @@ public:
     // Returns true if a PAL or an NTSC chip is plugged in
     bool pal() const { return isPAL; }
     bool ntsc() const { return isNTSC; }
-    
-    /*
-    // Returns true if a PAL or an NTSC chip is plugged in
-    static bool _isPAL(VICIIRevision rev);
-    bool _isPAL() const { return _isPAL(config.revision); }
-    
-    // Returns true if a NTSC chip is plugged in
-    static bool _isNTSC(VICIIRevision rev);
-    bool _isNTSC() const { return _isNTSC(config.revision); }
-
-    // Returns true if a newer MOS 856x chip is plugged in
-    static bool _is856x(VICIIRevision rev);
-    bool _is856x() const { return _is856x(config.revision); }
-    
-    // Returns true if an older MOS 656x chip is plugged in
-    static bool _is656x(VICIIRevision rev);
-    bool _is656x() const { return _is656x(config.revision); }
-    */
-    
+        
     // Returns true if light pen interrupts are triggered with a delay
     static bool delayedLightPenIrqs(VICIIRevision rev);
     bool delayedLightPenIrqs() { return delayedLightPenIrqs(config.revision); }
