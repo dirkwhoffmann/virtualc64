@@ -168,10 +168,10 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var tapeCounter: NSTextField!
     @IBOutlet weak var tapeProgress: NSProgressIndicator!
     @IBOutlet weak var crtIcon: NSButton!
-    @IBOutlet weak var fpsInfo: NSTextField!
     @IBOutlet weak var cpuInfo: NSTextField!
     @IBOutlet weak var mhzInfo: NSTextField!
-    @IBOutlet weak var clockSpeedBar: NSLevelIndicator!
+    @IBOutlet weak var cpuIndicator: NSLevelIndicator!
+    @IBOutlet weak var mhzIndicator: NSLevelIndicator!
     @IBOutlet weak var warpIcon: NSButton!
     
     // Toolbar
@@ -515,14 +515,14 @@ extension MyController {
         
         speedometer.updateWith(cycle: c64.cpu.cycle(), frame: renderer.frames)
         
-        let fps = speedometer.fps
+        // let fps = speedometer.fps
         let cpu = c64.cpuLoad
         let mhz = speedometer.mhz
 
-        fpsInfo.stringValue = String(format: "%.0f FPS", fps)
         cpuInfo.stringValue = String(format: "%d%% CPU", cpu)
         mhzInfo.stringValue = String(format: "%.2f MHz", mhz)
-        clockSpeedBar.doubleValue = 10 * mhz
+        cpuIndicator.integerValue = cpu
+        mhzIndicator.doubleValue = 10 * mhz
     }
     
     @objc func snapshotTimerFunc() {

@@ -79,10 +79,10 @@ extension MyController {
             crtIcon: hasCrt,
             
             warpIcon: running,
-            fpsInfo: false,
             cpuInfo: running,
             mhzInfo: running,
-            clockSpeedBar: running
+            cpuIndicator: running,
+            mhzIndicator: running
         ]
         
         for (item, visible) in items {

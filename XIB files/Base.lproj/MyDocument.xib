@@ -8,17 +8,17 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MyController">
             <connections>
-                <outlet property="clockSpeedBar" destination="212" id="215"/>
+                <outlet property="cpuIndicator" destination="9Nj-IT-cDl" id="ehz-gA-VNz"/>
                 <outlet property="cpuInfo" destination="tD7-Kt-2R4" id="3c1-O6-Q9y"/>
                 <outlet property="crtIcon" destination="2003" id="CVl-nZ-xP2"/>
                 <outlet property="debugIcon" destination="6c9-VQ-Wmb" id="2dW-WG-eAT"/>
                 <outlet property="diskIcon8" destination="1045" id="wFy-Xz-5J7"/>
                 <outlet property="diskIcon9" destination="D1i-Ep-fTN" id="4H9-ek-oFn"/>
-                <outlet property="fpsInfo" destination="frr-Fa-ugy" id="nre-PW-ewb"/>
                 <outlet property="greenLED8" destination="1208" id="wdq-y9-MpT"/>
                 <outlet property="greenLED9" destination="FWS-Ng-oe6" id="A7p-ch-sbx"/>
                 <outlet property="haltIcon" destination="LJd-96-8ze" id="t1x-xJ-LfW"/>
                 <outlet property="metal" destination="DD4-5B-w9h" id="rGV-rL-MLo"/>
+                <outlet property="mhzIndicator" destination="212" id="215"/>
                 <outlet property="mhzInfo" destination="214" id="nnJ-4s-Uip"/>
                 <outlet property="muteIcon" destination="1v4-GY-YOm" id="Quj-qX-AH1"/>
                 <outlet property="redLED8" destination="1210" id="GLI-bf-y3R"/>
@@ -58,14 +58,14 @@
                         </connections>
                     </button>
                     <levelIndicator verticalHuggingPriority="750" id="212">
-                        <rect key="frame" x="713" y="3" width="80" height="18"/>
+                        <rect key="frame" x="715" y="3" width="51" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <levelIndicatorCell key="cell" alignment="left" maxValue="20" warningValue="11" criticalValue="15" id="1702">
                             <font key="font" metaFont="system"/>
                         </levelIndicatorCell>
                     </levelIndicator>
                     <button toolTip="Warp mode" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1052">
-                        <rect key="frame" x="687" y="4" width="18" height="18"/>
+                        <rect key="frame" x="774" y="4" width="18" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="hourglass1Template" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" id="1707">
                             <behavior key="behavior" lightByContents="YES"/>
@@ -205,18 +205,9 @@
                         </buttonCell>
                     </button>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="214">
-                        <rect key="frame" x="630" y="7" width="54" height="11"/>
+                        <rect key="frame" x="658" y="7" width="54" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="0.00 MHz" id="1703">
-                            <font key="font" metaFont="label" size="9"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="frr-Fa-ugy">
-                        <rect key="frame" x="519" y="7" width="54" height="11"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="00 FPS" id="vge-HN-oJf">
                             <font key="font" metaFont="label" size="9"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -232,7 +223,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tD7-Kt-2R4">
-                        <rect key="frame" x="575" y="7" width="54" height="11"/>
+                        <rect key="frame" x="543" y="7" width="54" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="00% CPU" id="9E6-Hh-KcI">
                             <font key="font" metaFont="label" size="9"/>
@@ -240,6 +231,13 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <levelIndicator verticalHuggingPriority="750" id="9Nj-IT-cDl">
+                        <rect key="frame" x="600" y="3" width="51" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <levelIndicatorCell key="cell" alignment="left" maxValue="100" warningValue="50" criticalValue="75" id="5VJ-SQ-5Qh">
+                            <font key="font" metaFont="system"/>
+                        </levelIndicatorCell>
+                    </levelIndicator>
                 </subviews>
             </view>
             <toolbar key="toolbar" implicitIdentifier="562FDE63-25B0-4E4E-80C7-EF6E742B5F6F" displayMode="iconAndLabel" sizeMode="regular" id="1845" customClass="MyToolbar" customModule="VirtualC64" customModuleProvider="target">
