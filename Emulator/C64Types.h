@@ -125,15 +125,22 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
 // Private data types
 //
 
-enum_long(ACTION_FLAG)
+#ifdef __cplusplus
+
+typedef u32 RunLoopFlags;
+
+namespace RL
 {
-    ACTION_FLAG_STOP          = 0b000000001,
-    ACTION_FLAG_CPU_JAM       = 0b000000010,
-    ACTION_FLAG_EXTERNAL_NMI  = 0b000000100,
-    ACTION_FLAG_INSPECT       = 0b000001000,
-    ACTION_FLAG_BREAKPOINT    = 0b000010000,
-    ACTION_FLAG_WATCHPOINT    = 0b000100000,
-    ACTION_FLAG_AUTO_SNAPSHOT = 0b001000000,
-    ACTION_FLAG_USER_SNAPSHOT = 0b010000000
+constexpr u32 STOP          = 0b0000000001;
+constexpr u32 INSPECT       = 0b0000000010;
+constexpr u32 WARP_ON       = 0b0000000100;
+constexpr u32 WARP_OFF      = 0b0000001000;
+constexpr u32 BREAKPOINT    = 0b0000010000;
+constexpr u32 WATCHPOINT    = 0b0000100000;
+constexpr u32 AUTO_SNAPSHOT = 0b0001000000;
+constexpr u32 USER_SNAPSHOT = 0b0010000000;
+constexpr u32 CPU_JAM       = 0b0100000000;
+constexpr u32 EXTERNAL_NMI  = 0b1000000000;
 };
-typedef ACTION_FLAG ActionFlag;
+
+#endif

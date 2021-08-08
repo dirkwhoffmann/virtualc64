@@ -173,7 +173,7 @@ private:
      * flags are set. These flags are flags processed and the loop either
      * repeats or terminates depending on the provided flags.
      */
-    u32 runLoopCtrl = 0;
+    RunLoopFlags runLoopCtrl = 0;
         
     // The invocation counter for implementing suspend() / resume()
     isize suspendCounter = 0;
@@ -455,14 +455,14 @@ public:
     void clearActionFlags(u32 flags);
     
     // Convenience wrappers for controlling the run loop
-    void signalAutoSnapshot() { setActionFlags(ACTION_FLAG_AUTO_SNAPSHOT); }
-    void signalUserSnapshot() { setActionFlags(ACTION_FLAG_USER_SNAPSHOT); }
-    void signalBreakpoint() { setActionFlags(ACTION_FLAG_BREAKPOINT); }
-    void signalWatchpoint() { setActionFlags(ACTION_FLAG_WATCHPOINT); }
-    void signalInspect() { setActionFlags(ACTION_FLAG_INSPECT); }
-    void signalJammed() { setActionFlags(ACTION_FLAG_CPU_JAM); }
-    void signalStop() { setActionFlags(ACTION_FLAG_STOP); }
-    void signalExpPortNmi() { setActionFlags(ACTION_FLAG_EXTERNAL_NMI); }
+    void signalAutoSnapshot() { setActionFlags(RL::AUTO_SNAPSHOT); }
+    void signalUserSnapshot() { setActionFlags(RL::USER_SNAPSHOT); }
+    void signalBreakpoint() { setActionFlags(RL::BREAKPOINT); }
+    void signalWatchpoint() { setActionFlags(RL::WATCHPOINT); }
+    void signalInspect() { setActionFlags(RL::INSPECT); }
+    void signalJammed() { setActionFlags(RL::CPU_JAM); }
+    void signalStop() { setActionFlags(RL::STOP); }
+    void signalExpPortNmi() { setActionFlags(RL::EXTERNAL_NMI); }
 
     
     //
