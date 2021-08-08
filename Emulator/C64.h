@@ -167,13 +167,13 @@ public:
     
 private:
         
-    /* Run loop control. This variable is checked at the end of each runloop
+    /* Run loop flags. This variable is checked at the end of each runloop
      * iteration. Most of the time, the variable is 0 which causes the runloop
      * to repeat. A value greater than 0 means that one or more runloop control
      * flags are set. These flags are flags processed and the loop either
      * repeats or terminates depending on the provided flags.
      */
-    RunLoopFlags runLoopCtrl = 0;
+    RunLoopFlags flags = 0;
         
     // The invocation counter for implementing suspend() / resume()
     isize suspendCounter = 0;
@@ -451,18 +451,18 @@ public:
     /* Sets or clears a run loop control flag. The functions are thread-safe
      * and can be called from inside or outside the emulator thread.
      */
-    void setActionFlags(u32 flags);
-    void clearActionFlags(u32 flags);
+    void setActionFlag(u32 flags);
+    void clearActionFlag(u32 flags);
     
     // Convenience wrappers for controlling the run loop
-    void signalAutoSnapshot() { setActionFlags(RL::AUTO_SNAPSHOT); }
-    void signalUserSnapshot() { setActionFlags(RL::USER_SNAPSHOT); }
-    void signalBreakpoint() { setActionFlags(RL::BREAKPOINT); }
-    void signalWatchpoint() { setActionFlags(RL::WATCHPOINT); }
-    void signalInspect() { setActionFlags(RL::INSPECT); }
-    void signalJammed() { setActionFlags(RL::CPU_JAM); }
-    void signalStop() { setActionFlags(RL::STOP); }
-    void signalExpPortNmi() { setActionFlags(RL::EXTERNAL_NMI); }
+    void signalAutoSnapshot() { setActionFlag(RL::AUTO_SNAPSHOT); }
+    void signalUserSnapshot() { setActionFlag(RL::USER_SNAPSHOT); }
+    void signalBreakpoint() { setActionFlag(RL::BREAKPOINT); }
+    void signalWatchpoint() { setActionFlag(RL::WATCHPOINT); }
+    void signalInspect() { setActionFlag(RL::INSPECT); }
+    void signalJammed() { setActionFlag(RL::CPU_JAM); }
+    void signalStop() { setActionFlag(RL::STOP); }
+    void signalExpPortNmi() { setActionFlag(RL::EXTERNAL_NMI); }
 
     
     //

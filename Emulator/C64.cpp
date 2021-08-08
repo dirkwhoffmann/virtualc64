@@ -93,7 +93,7 @@ C64::_reset(bool hard)
     // Initialize the program counter
     cpu.reg.pc = mem.resetVector();
     
-    runLoopCtrl = 0;
+    flags = 0;
     rasterCycle = 1;
 }
 
@@ -481,64 +481,56 @@ C64::threadExecute()
     executeOneFrame();
     
     // Check if special action needs to be taken
-    if (runLoopCtrl) {
+    if (flags) {
         
         // Are we requested to take a snapshot?
-        if (runLoopCtrl & ACTION_FLAG_AUTO_SNAPSHOT) {
-            trace(RUN_DEBUG, "RL_AUTO_SNAPSHOT\n");
+        if (flags & RL::AUTO_SNAPSHOT) {
+            clearActionFlag(RL::AUTO_SNAPSHOT);
             autoSnapshot = Snapshot::makeWithC64(this);
             putMessage(MSG_AUTO_SNAPSHOT_TAKEN);
-            clearActionFlags(ACTION_FLAG_AUTO_SNAPSHOT);
         }
-        if (runLoopCtrl & ACTION_FLAG_USER_SNAPSHOT) {
-            trace(RUN_DEBUG, "RL_USER_SNAPSHOT\n");
+        if (flags & RL::USER_SNAPSHOT) {
+            clearActionFlag(RL::USER_SNAPSHOT);
             userSnapshot = Snapshot::makeWithC64(this);
             putMessage(MSG_USER_SNAPSHOT_TAKEN);
-            clearActionFlags(ACTION_FLAG_USER_SNAPSHOT);
         }
         
         // Are we requested to update the debugger info structs?
-        if (runLoopCtrl & ACTION_FLAG_INSPECT) {
-            trace(RUN_DEBUG, "RL_INSPECT\n");
+        if (flags & RL::INSPECT) {
+            clearActionFlag(RL::INSPECT);
             inspect();
-            clearActionFlags(ACTION_FLAG_INSPECT);
         }
         
         // Did we reach a breakpoint?
-        if (runLoopCtrl & ACTION_FLAG_BREAKPOINT) {
+        if (flags & RL::BREAKPOINT) {
+            clearActionFlag(RL::BREAKPOINT);
             putMessage(MSG_BREAKPOINT_REACHED);
-            trace(RUN_DEBUG, "BREAKPOINT_REACHED pc: %x\n", cpu.getPC0());
-            clearActionFlags(ACTION_FLAG_BREAKPOINT);
             thread.newState = EXEC_PAUSED;
         }
         
         // Did we reach a watchpoint?
-        if (runLoopCtrl & ACTION_FLAG_WATCHPOINT) {
+        if (flags & RL::WATCHPOINT) {
+            clearActionFlag(RL::WATCHPOINT);
             putMessage(MSG_WATCHPOINT_REACHED);
-            trace(RUN_DEBUG, "WATCHPOINT_REACHED pc: %x\n", cpu.getPC0());
-            clearActionFlags(ACTION_FLAG_WATCHPOINT);
             thread.newState = EXEC_PAUSED;
         }
         
         // Are we requested to terminate the run loop?
-        if (runLoopCtrl & ACTION_FLAG_STOP) {
-            clearActionFlags(ACTION_FLAG_STOP);
-            trace(RUN_DEBUG, "STOP\n");
+        if (flags & RL::STOP) {
+            clearActionFlag(RL::STOP);
             thread.newState = EXEC_PAUSED;
         }
         
         // Are we requested to pull the NMI line down?
-        if (runLoopCtrl & ACTION_FLAG_EXTERNAL_NMI) {
+        if (flags & RL::EXTERNAL_NMI) {
+            clearActionFlag(RL::EXTERNAL_NMI);
             cpu.pullDownNmiLine(INTSRC_EXP);
-            trace(RUN_DEBUG, "EXTERNAL_NMI\n");
-            clearActionFlags(ACTION_FLAG_EXTERNAL_NMI);
         }
         
         // Is the CPU jammed due the execution of an illegal instruction?
-        if (runLoopCtrl & ACTION_FLAG_CPU_JAM) {
+        if (flags & RL::CPU_JAM) {
+            clearActionFlag(RL::CPU_JAM);
             putMessage(MSG_CPU_JAMMED);
-            trace(RUN_DEBUG, "CPU_JAMMED\n");
-            clearActionFlags(ACTION_FLAG_CPU_JAM);
             thread.newState = EXEC_PAUSED;
         }
                     
@@ -693,7 +685,7 @@ C64::stepOver()
 void
 C64::executeOneFrame()
 {
-    do { executeOneLine(); } while (rasterLine != 0 && runLoopCtrl == 0);
+    do { executeOneLine(); } while (rasterLine != 0 && flags == 0);
 }
 
 void
@@ -707,7 +699,7 @@ C64::executeOneLine()
     for (isize i = rasterCycle; i <= lastCycle; i++) {
         
         _executeOneCycle();
-        if (runLoopCtrl != 0) {
+        if (flags != 0) {
             if (i == lastCycle) endRasterLine();
             return;
         }
@@ -828,15 +820,15 @@ C64::endFrame()
 }
 
 void
-C64::setActionFlags(u32 flags)
+C64::setActionFlag(u32 flag)
 {
-    synchronized { runLoopCtrl |= flags; }
+    synchronized { flags |= flag; }
 }
 
 void
-C64::clearActionFlags(u32 flags)
+C64::clearActionFlag(u32 flag)
 {
-    synchronized { runLoopCtrl &= ~flags; }
+    synchronized { flags &= ~flag; }
 }
 
 void
