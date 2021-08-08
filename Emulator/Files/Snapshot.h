@@ -12,27 +12,39 @@
 #include "AnyFile.h"
 #include "Constants.h"
 
-typedef struct {
+class C64;
+
+struct Thumbnail {
     
-    // Header signature
-    char magicBytes[4];
+    // Image size
+    u16 width, height;
     
-    // Version number
+    // Raw texture data
+    u32 screen[TEX_HEIGHT * TEX_WIDTH];
+    
+    // Creation date and time
+    time_t timestamp;
+    
+    // Factory methods
+    static Thumbnail *makeWithC64(const C64 &c64, isize dx = 1, isize dy = 1);
+    
+    // Takes a screenshot from a given Amiga
+    void take(const C64 &c64, isize dx = 1, isize dy = 1);
+};
+
+struct SnapshotHeader {
+    
+    // Magic bytes ('V','C','6','4')
+    char magic[4];
+    
+    // Version number (V major.minor.subminor)
     u8 major;
     u8 minor;
     u8 subminor;
     
-    // Thumbnail image
-    struct {
-        u16 width, height;
-        u32 screen[TEX_HEIGHT * TEX_WIDTH];
-        
-    } screenshot;
-    
-    // Creation date
-    time_t timestamp;
-}
-SnapshotHeader;
+    // Preview image
+    Thumbnail screenshot;
+};
 
 class Snapshot : public AnyFile {
 
@@ -45,16 +57,16 @@ public:
     static bool isCompatiblePath(const std::string &name);
     static bool isCompatibleStream(std::istream &stream);
      
-    static Snapshot *makeWithC64(class C64 *c64);
-
     
     //
     // Initializing
     //
-        
+     
     Snapshot() { };
     Snapshot(isize capacity);
-        
+     
+    static Snapshot *makeWithC64(class C64 *c64);
+
     
     //
     // Methods from C64Object
@@ -74,21 +86,27 @@ public:
     // Accessing
     //
         
-    // Returns a pointer to the snapshot header
-    SnapshotHeader *header() const { return (SnapshotHeader *)data; }
-
     // Checks the snapshot version number
     bool isTooOld() const;
     bool isTooNew() const;
     bool matches() { return !isTooOld() && !isTooNew(); }
-    
+
+    // Returns a pointer to the snapshot header
+    SnapshotHeader *getHeader() const { return (SnapshotHeader *)data; }
+
+    // Returns a pointer to the thumbnail image
+    const Thumbnail &getThumbnail() const { return getHeader()->screenshot; }
+
+    // Returns pointer to the core data
     u8 *getData() { return data + sizeof(SnapshotHeader); }
     
     // Queries time and screenshot properties
-    time_t timeStamp() const { return header()->timestamp; }
-    u8 *imageData() const { return (u8 *)(header()->screenshot.screen); }
-    isize imageWidth() const { return header()->screenshot.width; }
-    isize imageHeight() const { return header()->screenshot.height; }
+    /*
+    time_t timeStamp() const { return getHeader()->timestamp; }
+    u8 *imageData() const { return (u8 *)(getHeader()->screenshot.screen); }
+    isize imageWidth() const { return getHeader()->screenshot.width; }
+    isize imageHeight() const { return getHeader()->screenshot.height; }
+    */
     
     // Records a screenshot
     void takeScreenshot(class C64 *c64);

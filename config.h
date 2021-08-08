@@ -13,10 +13,15 @@
 // Release settings
 //
 
+// Version number
+#define VER_MAJOR 4
+#define VER_MINOR 5
+#define VER_SUBMINOR 0
+
 // Snapshot version number
-#define V_MAJOR 4
-#define V_MINOR 4
-#define V_SUBMINOR 0
+#define SNP_MAJOR 4
+#define SNP_MINOR 5
+#define SNP_SUBMINOR 0
 
 // Uncomment these settings in a release build
 #define RELEASEBUILD

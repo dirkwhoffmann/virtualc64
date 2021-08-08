@@ -12,6 +12,40 @@
 #include "C64.h"
 #include "IO.h"
 
+Thumbnail *
+Thumbnail::makeWithC64(const C64 &c64, isize dx, isize dy)
+{
+    Thumbnail *screenshot = new Thumbnail();
+    screenshot->take(c64, dx, dy);
+    
+    return screenshot;
+}
+
+void
+Thumbnail::take(const C64 &c64, isize dx, isize dy)
+{
+    u32 *source = (u32 *)c64.vic.stableEmuTexture();
+    u32 *target = screen;
+
+    isize xStart = FIRST_VISIBLE_PIXEL;
+    isize yStart = FIRST_VISIBLE_LINE;
+
+    width = VISIBLE_PIXELS;
+    height = c64.vic.numVisibleLines();
+
+    source += xStart + yStart * TEX_WIDTH;
+    
+    for (isize y = 0; y < height; y++) {
+        for (isize x = 0; x < width; x++) {
+            target[x] = source[x * dx];
+        }
+        source += TEX_WIDTH;
+        target += width;
+    }
+    
+    timestamp = time(nullptr);
+}
+
 bool
 Snapshot::isCompatiblePath(const std::string &path)
 {
@@ -29,18 +63,18 @@ Snapshot::isCompatibleStream(std::istream &stream)
 
 Snapshot::Snapshot(isize capacity)
 {
+    u8 signature[] = { 'V', 'A', 'S', 'N', 'A', 'P' };
+
     size = capacity + sizeof(SnapshotHeader);
     data = new u8[size];
     
     SnapshotHeader *header = (SnapshotHeader *)data;
-    header->magicBytes[0] = 'V';
-    header->magicBytes[1] = 'C';
-    header->magicBytes[2] = '6';
-    header->magicBytes[3] = '4';
-    header->major = V_MAJOR;
-    header->minor = V_MINOR;
-    header->subminor = V_SUBMINOR;
-    header->timestamp = time(nullptr);
+    
+    for (isize i = 0; i < isizeof(signature); i++)
+        header->magic[i] = signature[i];
+    header->major = SNP_MAJOR;
+    header->minor = SNP_MINOR;
+    header->subminor = SNP_SUBMINOR;
 }
 
 Snapshot *
@@ -60,18 +94,28 @@ Snapshot::makeWithC64(C64 *c64)
 
 bool
 Snapshot::isTooOld() const
-{    
-    if (data[4] < V_MAJOR) return true; else if (data[4] > V_MAJOR) return false;
-    if (data[5] < V_MINOR) return true; else if (data[5] > V_MINOR) return false;
-    return data[6] < V_SUBMINOR;
+{
+    auto header = getHeader();
+    
+    if (header->major < SNP_MAJOR) return true;
+    if (header->major > SNP_MAJOR) return false;
+    if (header->minor < SNP_MINOR) return true;
+    if (header->minor > SNP_MINOR) return false;
+    
+    return header->subminor < SNP_SUBMINOR;
 }
 
 bool
 Snapshot::isTooNew() const
 {
-    if (data[4] > V_MAJOR) return true; else if (data[4] < V_MAJOR) return false;
-    if (data[5] > V_MINOR) return true; else if (data[5] < V_MINOR) return false;
-    return data[6] > V_SUBMINOR;
+    auto header = getHeader();
+    
+    if (header->major > SNP_MAJOR) return true;
+    if (header->major < SNP_MAJOR) return false;
+    if (header->minor > SNP_MINOR) return true;
+    if (header->minor < SNP_MINOR) return false;
+
+    return header->subminor > SNP_SUBMINOR;
 }
 
 void

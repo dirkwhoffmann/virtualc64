@@ -1650,32 +1650,32 @@
     if (preview) { return preview; }
     
     // Create preview image
-    NSInteger width = [self snapshot]->imageWidth();
-    NSInteger height = [self snapshot]->imageHeight();
-    unsigned char *data = [self snapshot]->imageData();
-    
+    const Thumbnail &thumbnail = [self snapshot]->getThumbnail();
+    unsigned char *data = (unsigned char *)thumbnail.screen;
     
     NSBitmapImageRep *rep = [[NSBitmapImageRep alloc]
                              initWithBitmapDataPlanes: &data
-                             pixelsWide:width
-                             pixelsHigh:height
+                             pixelsWide:thumbnail.width
+                             pixelsHigh:thumbnail.height
                              bitsPerSample:8
                              samplesPerPixel:4
                              hasAlpha:true
                              isPlanar:false
                              colorSpaceName:NSCalibratedRGBColorSpace
-                             bytesPerRow:4*width
+                             bytesPerRow:4*thumbnail.width
                              bitsPerPixel:32];
     
     preview = [[NSImage alloc] initWithSize:[rep size]];
     [preview addRepresentation:rep];
+    
+    // image.makeGlossy()
     
     return preview;
 }
 
 - (time_t)timeStamp
 {
-    return [self snapshot]->timeStamp();
+    return [self snapshot]->getThumbnail().timestamp;
 }
 
 @end

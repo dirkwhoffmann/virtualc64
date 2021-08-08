@@ -23,7 +23,7 @@ RetroShell::RetroShell(C64& ref) : SubComponent(ref), interpreter(ref)
     input.push_back("");
     
     // Print a startup message
-    *this << "VirtualC64 " << V_MAJOR << '.' << V_MINOR << '.' << V_SUBMINOR;
+    *this << "VirtualC64 " << VER_MAJOR << '.' << VER_MINOR << '.' << VER_SUBMINOR;
     *this << " (" << __DATE__ << " " << __TIME__ << ")" << '\n';
     *this << '\n';
     *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
