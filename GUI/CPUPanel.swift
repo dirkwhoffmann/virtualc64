@@ -43,13 +43,13 @@ extension Inspector {
         cpuC.state = cpuInfo.reg.sr.c ? .on : .off
 
         cpuIrq.state = (cpuInfo.irq != 0) ? .on : .off
-        cpuIrqCIA.state = (cpuInfo.irq & IntSource.CIA.rawValue) != 0 ? .on : .off
-        cpuIrqVIC.state = (cpuInfo.irq & IntSource.VIC.rawValue) != 0 ? .on : .off
-        cpuIrqEXP.state = (cpuInfo.irq & IntSource.EXP.rawValue) != 0 ? .on : .off
+        cpuIrqCIA.state = (cpuInfo.irq & UInt8(INTSRC_CIA)) != 0 ? .on : .off
+        cpuIrqVIC.state = (cpuInfo.irq & UInt8(INTSRC_VIC)) != 0 ? .on : .off
+        cpuIrqEXP.state = (cpuInfo.irq & UInt8(INTSRC_EXP)) != 0 ? .on : .off
         cpuNmi.state = (cpuInfo.nmi != 0) ? .on : .off
-        cpuNmiCIA.state = (cpuInfo.irq & IntSource.CIA.rawValue) != 0 ? .on : .off
-        cpuNmiKBD.state = (cpuInfo.irq & IntSource.KBD.rawValue) != 0 ? .on : .off
-        cpuNmiEXP.state = (cpuInfo.irq & IntSource.EXP.rawValue) != 0 ? .on : .off
+        cpuNmiCIA.state = (cpuInfo.irq & UInt8(INTSRC_CIA)) != 0 ? .on : .off
+        cpuNmiKBD.state = (cpuInfo.irq & UInt8(INTSRC_KBD)) != 0 ? .on : .off
+        cpuNmiEXP.state = (cpuInfo.irq & UInt8(INTSRC_EXP)) != 0 ? .on : .off
         cpuRdy.state = cpuInfo.rdy ? .on : .off
         
         cpuPortReg.integerValue = Int(cpuInfo.processorPort)

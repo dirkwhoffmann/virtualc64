@@ -28,6 +28,20 @@
 
 
 //
+// Bit fields
+//
+
+typedef u8 IntSource;
+
+#define INTSRC_CIA  0b00000001
+#define INTSRC_VIC  0b00000010
+#define INTSRC_VIA1 0b00000100
+#define INTSRC_VIA2 0b00001000
+#define INTSRC_EXP  0b00010000
+#define INTSRC_KBD  0b00100000
+
+
+//
 // Enumerations
 //
 
@@ -60,52 +74,6 @@ struct CPURevisionEnum : util::Reflection<CPURevisionEnum, CPURevision> {
     }
 };
 #endif
-
-enum_u8(INTSRC)
-{
-    INTSRC_CIA  = 0x01,
-    INTSRC_VIC  = 0x02,
-    INTSRC_VIA1 = 0x04,
-    INTSRC_VIA2 = 0x08,
-    INTSRC_EXP  = 0x10,
-    INTSRC_KBD  = 0x20
-};
-typedef INTSRC IntSource;
-
-/*
-#ifdef __cplusplus
-struct IntSourceEnum : util::Reflection<IntSourceEnum, IntSource> {
-    
-    static bool isValid(long value)
-    {
-        return
-        value == INTSRC_CIA  ||
-        value == INTSRC_VIC  ||
-        value == INTSRC_VIA1 ||
-        value == INTSRC_VIA2 ||
-        value == INTSRC_EXP  ||
-        value == INTSRC_KBD;
-    }
-    
-    static const char *prefix() { return "INTSRC"; }
-    static const char *key(IntSource value)
-    {
-        switch (value) {
-                
-            case INTSRC_CIA:   return "CIA";
-            case INTSRC_VIC:   return "VIC";
-            case INTSRC_VIA1:  return "VIA1";
-            case INTSRC_VIA2:  return "VIA2";
-            case INTSRC_EXP:   return "EXP";
-            case INTSRC_KBD:   return "KBD";
-        }
-        return "???";
-    }
-    
-    static std::map <string, long> pairs() { return Reflection::pairs(INTSRC_KBD); }
-};
-#endif
-*/
 
 enum_long(BPTYPE)
 {
