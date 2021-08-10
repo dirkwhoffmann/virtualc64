@@ -63,7 +63,7 @@ Snapshot::isCompatibleStream(std::istream &stream)
 
 Snapshot::Snapshot(isize capacity)
 {
-    u8 signature[] = { 'V', 'A', 'S', 'N', 'A', 'P' };
+    u8 signature[] = { 'V', 'C', '6', '4' };
 
     size = capacity + sizeof(SnapshotHeader);
     data = new u8[size];

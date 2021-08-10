@@ -32,7 +32,6 @@
 #include "SIDTypes.h"
 #include "VICIITypes.h"
 
-
 //
 // Forward declarations
 //
@@ -73,6 +72,20 @@
 @class VIAProxy;
 @class VICProxy;
 
+//
+// Exception wrapper
+//
+
+@interface ExceptionWrapper : NSObject {
+    
+    ErrorCode errorCode;
+    NSString *what;
+}
+
+@property ErrorCode errorCode;
+@property NSString *what;
+
+@end
 
 //
 // Base proxies
@@ -161,9 +174,9 @@
 
 - (BOOL)isReady:(ErrorCode *)ec;
 - (BOOL)isReady;
-- (void)powerOn;
+- (void)powerOn:(ExceptionWrapper *)e;
 - (void)powerOff;
-- (void)run;
+- (void)run:(ExceptionWrapper *)e;
 - (void)pause;
 - (void)halt;
 

@@ -390,7 +390,7 @@ public:
     /* Loads the current state from a snapshot file. This function is not
      * thread-safe and must not be called on a running emulator.
      */
-    bool loadFromSnapshot(Snapshot *snapshot);
+    void loadFromSnapshot(Snapshot *snapshot) throws;
     
     
     //

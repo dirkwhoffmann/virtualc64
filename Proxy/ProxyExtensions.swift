@@ -70,7 +70,21 @@ extension Proxy {
 //
 
 extension C64Proxy {
- 
+
+    func powerOn() throws {
+        
+        let exception = ExceptionWrapper()
+        power(on: exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
+    }
+
+    func run() throws {
+        
+        let exception = ExceptionWrapper()
+        run(exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
+    }
+
     func saveRom(_ type: RomType, url: URL) throws {
 
         var err = ErrorCode.OK

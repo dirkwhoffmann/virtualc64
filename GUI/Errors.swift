@@ -10,9 +10,21 @@
 class VC64Error: Error {
     
     var errorCode: ErrorCode
+    var what: String
     
-    init(_ errorCode: ErrorCode) { self.errorCode = errorCode }
+    init(_ exception: ExceptionWrapper) {
 
+        self.errorCode = exception.errorCode
+        self.what = exception.what
+    }
+    
+    init(_ errorCode: ErrorCode, _ what: String = "") {
+        
+        self.errorCode = errorCode
+        self.what = what
+    }
+
+    /*
     var description: String {
         
         switch errorCode {
@@ -74,6 +86,7 @@ class VC64Error: Error {
             return ""
         }
     }
+    */
     
     static func alert(_ msg1: String, _ msg2: String, style: NSAlert.Style,
                       async: Bool = false, icon: String?) {
@@ -109,11 +122,11 @@ class VC64Error: Error {
     }
 
     func warning(_ msg: String, async: Bool = false, icon: String? = nil) {
-        VC64Error.warning(msg, description, async: async, icon: icon)
+        VC64Error.warning(msg, what, async: async, icon: icon)
     }
 
     func critical(_ msg: String, async: Bool = false, icon: String? = nil) {
-        VC64Error.warning(msg, description, async: async, icon: icon)
+        VC64Error.warning(msg, what, async: async, icon: icon)
     }
     
     //

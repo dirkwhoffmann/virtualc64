@@ -271,7 +271,7 @@ class ConfigurationController: DialogController {
     @IBAction func powerAction(_ sender: Any!) {
         
         hideSheet()
-        c64.run()
+        try? c64.run()
     }
 }
 

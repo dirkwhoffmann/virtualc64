@@ -402,7 +402,7 @@ RetroShell::describe(const std::exception &e)
 
     } else if (auto err = dynamic_cast<const VC64Error *>(&e)) {
 
-        *this << "Error: " << err->describe();
+        *this << err->what();
         *this << '\n';
     }
 }

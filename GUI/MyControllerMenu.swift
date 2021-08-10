@@ -431,7 +431,7 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func continueAction(_ sender: Any!) {
         
-        if c64.paused { c64.run() }
+        if c64.paused { try? c64.run() }
     }
 
     @IBAction func stopAndGoAction(_ sender: Any!) {
@@ -453,8 +453,7 @@ extension MyController: NSMenuItemValidation {
 
         renderer.rotateLeft()
         c64.hardReset()
-        c64.powerOn()
-        c64.run()
+        try? c64.run()
     }
 
     @IBAction func softResetAction(_ sender: Any!) {
@@ -472,8 +471,7 @@ extension MyController: NSMenuItemValidation {
         }
         
         if c64.isReady(&error) {
-            c64.powerOn()
-            c64.run()
+            try? c64.run()
         } else {
             VC64Error(error).warning("Unable to power up the emulator")
         }

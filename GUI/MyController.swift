@@ -230,28 +230,28 @@ extension MyController {
                             device: MTLCreateSystemDefaultDevice()!,
                             controller: self)
         
-        // Prepare to run
+        // Setup window
         configureWindow()
+        
+        // Load user defaults
         loadUserDefaults()
+        
+        // Enable message processing
         addListener()
                 
+        // Process attachment (if any)
+        mydocument.mountAttachment()
+
         // Check if the C64 is ready to power on
         if c64.isReady() {
             
             // Switch on and launch the emulator thread
-            c64.powerOn()
-
-            // Process attachment (if any)
-            mydocument.mountAttachment()
-
-            // Launch the emulator thread
-            c64.run()
+            try? c64.run()
 
         } else {
             
             // Open the Rom dialog
             openConfigurator(tab: "Roms")
-            // renderer.zoomOut()
         }
 
         // Create speed monitor and get the timer tunning

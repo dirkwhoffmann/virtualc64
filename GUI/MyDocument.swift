@@ -115,7 +115,7 @@ class MyDocument: NSDocument {
     func createFileProxy(url: URL, allowedTypes: [FileType]) throws -> AnyFileProxy? {
         
         track("Creating proxy object from URL: \(url.lastPathComponent)")
-        
+
         // If the provided URL points to compressed file, decompress it first
         let newUrl = url.unpacked
 

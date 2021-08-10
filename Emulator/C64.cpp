@@ -804,21 +804,20 @@ C64::latestUserSnapshot()
     return result;
 }
 
-bool
+void
 C64::loadFromSnapshot(Snapshot *snapshot)
 {
-    assert(snapshot);
-    assert(snapshot->getData());
+    assert(snapshot && snapshot->getData());
     assert(!isRunning());
     
     // Check if this snapshot is compatible with the emulator
     if (snapshot->isTooOld() || FORCE_SNAPSHOT_TOO_OLD) {
         msgQueue.put(MSG_SNAPSHOT_TOO_OLD);
-        return false;
+        throw VC64Error(ERROR_SNP_TOO_OLD);
     }
     if (snapshot->isTooNew() || FORCE_SNAPSHOT_TOO_NEW) {
         msgQueue.put(MSG_SNAPSHOT_TOO_NEW);
-        return false;
+        throw VC64Error(ERROR_SNP_TOO_NEW);
     }
     
     // Restore the saved state
@@ -831,7 +830,6 @@ C64::loadFromSnapshot(Snapshot *snapshot)
     msgQueue.put(MSG_SNAPSHOT_RESTORED);
     
     if (SNP_DEBUG) dump();
-    return true;
 }
 
 u32
@@ -1239,7 +1237,7 @@ C64::flash(AnyFile *file)
             break;
             
         case FILETYPE_V64:
-            result = loadFromSnapshot((Snapshot *)file);
+            try { loadFromSnapshot((Snapshot *)file); } catch (...) { result = false; }
             break;
             
         default:

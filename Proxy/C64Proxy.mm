@@ -15,6 +15,33 @@
 #import "Script.h"
 
 //
+// Exception wrapper
+//
+
+@implementation ExceptionWrapper
+
+@synthesize errorCode;
+@synthesize what;
+
+- (instancetype)init {
+
+    if (self = [super init]) {
+        
+        errorCode = ERROR_OK;
+        what = @"";
+    }
+    return self;
+}
+
+- (void)save:(const VC64Error &)exception
+{
+    errorCode = exception.data;
+    what = @(exception.what());
+}
+
+@end
+
+//
 // Base Proxy
 //
 
@@ -2169,9 +2196,10 @@
     return [self isReady:&ec];
 }
 
-- (void)powerOn
+- (void)powerOn:(ExceptionWrapper *)e
 {
-    [self c64]->powerOn();
+    try { [self c64]->powerOn(); }
+    catch (VC64Error &error) { [e save:error]; }
 }
 
 - (void)powerOff
@@ -2199,9 +2227,10 @@
     return [self c64]->isPaused();
 }
 
-- (void)run
+- (void)run:(ExceptionWrapper *)e
 {
-    [self c64]->run();
+    try { [self c64]->run(); }
+    catch (VC64Error &error) { [e save:error]; }
 }
 
 - (void)pause
@@ -2253,7 +2282,8 @@
 
 - (void)loadFromSnapshot:(SnapshotProxy *)proxy
 {
-    [self c64]->loadFromSnapshot((Snapshot *)proxy->obj);
+    try { [self c64]->loadFromSnapshot((Snapshot *)proxy->obj); }
+    catch (...) { }
 }
 
 - (NSInteger)getConfig:(Option)opt

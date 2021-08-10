@@ -17,7 +17,7 @@ extension MyController: NSWindowDelegate {
         myAppDelegate.windowDidBecomeMain(window)
         
         // Restart the emulator if it was paused when the window lost focus
-        if pref.pauseInBackground && pauseInBackgroundSavedState { c64.run() }
+        if pref.pauseInBackground && pauseInBackgroundSavedState { try? c64.run() }
 
         // Register to receive mouse movement events
         window.acceptsMouseMovedEvents = true
