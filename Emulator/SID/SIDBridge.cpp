@@ -925,7 +925,7 @@ SIDBridge::clearSampleBuffers()
 void
 SIDBridge::clearSampleBuffer(long nr)
 {
-    for (int i = 0; i < 4; i++) sidStream[i].clear(0);
+    sidStream[nr].clear(0);
 }
 
 void
