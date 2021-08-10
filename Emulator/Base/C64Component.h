@@ -50,14 +50,6 @@ protected:
     // Sub components
     std::vector<C64Component *> subComponents;
             
-    /* Indicates if the emulator should be executed in debug mode. Debug mode
-     * is enabled when the GUI debugger is opend and disabled when the GUI
-     * debugger is closed. In debug mode, several time-consuming tasks are
-     * performed that are usually left out. E.g., the CPU checks for
-     * breakpoints and records the executed instruction in it's trace buffer.
-     */
-    bool debugMode = false;
-    
     /* Mutex for implementing the 'synchronized' macro. The macro can be used
      * to prevent multiple threads to enter the same code block. It mimics the
      * behaviour of the well known Java construct 'synchronized(this) { }'.
@@ -92,9 +84,6 @@ public:
     // Configuring
     //
     
-    // Initializes all configuration items with their default values
-    virtual void resetConfig() { };
-
     /* Configures the component and it's subcomponents. This function
      * distributes a configuration request to all subcomponents by calling
      * setConfigItem().
@@ -108,7 +97,10 @@ public:
      */
     virtual void setConfigItem(Option option, i64 value) throws { }
     virtual void setConfigItem(Option option, long id, i64 value) throws { }
-            
+    
+    // Initializes all configuration items with their default values
+    virtual void resetConfig() { };
+
 
     //
     // Analyzing
@@ -190,19 +182,27 @@ public:
     
 protected:
     
+    bool isReady() const throws;
     void powerOn();
     void powerOff();
     void run();
     void pause();
+    void halt();
     void warpOn();
     void warpOff();
     void debugOn();
     void debugOff();
     
+    void powerOnOff(bool value) { value ? powerOn() : powerOff(); }
+    void warpOnOff(bool value) { value ? warpOn() : warpOff(); }
+    void debugOnOff(bool value) { value ? debugOn() : debugOff(); }
+
+    virtual bool _isReady() const throws { return true; }
     virtual void _powerOn() { }
     virtual void _powerOff() { }
     virtual void _run() { }
     virtual void _pause() { }
+    virtual void _halt() { }
     virtual void _warpOn() { }
     virtual void _warpOff() { }
     virtual void _debugOn() { }

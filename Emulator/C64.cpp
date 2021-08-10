@@ -372,110 +372,11 @@ C64::updateClockFrequency(VICIIRevision rev, VICIISpeed speed)
     frequency = (u32)VICII::getFrequency(rev, speed);
     durationOfOneCycle = 10000000000 / frequency;
     nativeDurationOfOneCycle = 10000000000 / VICII::getNativeFrequency(rev);
-    thread.setSyncDelay(VICII::getFrameDelay(rev, speed));
-}
-
-bool
-C64::readyToPowerOn()
-{
-    debug(RUN_DEBUG, "readyToPowerOn()\n");
-    return isReady();
+    setSyncDelay(VICII::getFrameDelay(rev, speed));
 }
 
 void
-C64::threadPowerOff()
-{
-    debug(RUN_DEBUG, "threadPowerOff()\n");
-    
-    // Power off all subcomponents
-    C64Component::powerOff();
-
-    // Update the recorded debug information
-    inspect();
-    
-    // Inform the GUI
-    msgQueue.put(MSG_POWER_OFF);
-}
-
-void
-C64::threadPowerOn()
-{
-    debug(RUN_DEBUG, "threadPowerOn()\n");
-    
-    // Perform a reset
-    hardReset();
-            
-    // Power on all subcomponents
-    C64Component::powerOn();
-    
-    // Update the recorded debug information
-    inspect();
-
-    // Inform the GUI
-    msgQueue.put(MSG_POWER_ON);
-}
-
-void
-C64::threadRun()
-{
-    debug(RUN_DEBUG, "threadRun()\n");
-    
-    // Launch all subcomponents
-    C64Component::run();
-    
-    // Inform the GUI
-    msgQueue.put(MSG_RUN);
-}
-
-void
-C64::threadPause()
-{
-    debug(RUN_DEBUG, "threadPause()\n");
-    
-    // Finish the current instruction to reach a clean state
-    finishInstruction();
-    
-    // Enter pause mode
-    C64Component::pause();
-    
-    // Update the recorded debug information
-    inspect();
-    
-    // Inform the GUI
-    msgQueue.put(MSG_PAUSE);
-}
-
-void
-C64::threadHalt()
-{
-    debug(RUN_DEBUG, "threadHalt()\n");
-
-    // Inform the GUI
-    msgQueue.put(MSG_HALT);
-}
-
-void
-C64::threadWarpOff()
-{
-    debug(WARP_DEBUG, "threadWarpOff()\n");
-    C64Component::warpOff();
-    
-    // Inform the GUI
-    msgQueue.put(MSG_WARP_OFF);
-}
-
-void
-C64::threadWarpOn()
-{
-    debug(WARP_DEBUG, "threadWarpOn()\n");
-    C64Component::warpOn();
-
-    // Inform the GUI
-    msgQueue.put(MSG_WARP_ON);
-}
-
-void
-C64::threadExecute()
+C64::execute()
 {
     // Run the emulator
     executeOneFrame();
@@ -505,20 +406,20 @@ C64::threadExecute()
         if (flags & RL::BREAKPOINT) {
             clearActionFlag(RL::BREAKPOINT);
             putMessage(MSG_BREAKPOINT_REACHED);
-            thread.newState = EXEC_PAUSED;
+            newState = EXEC_PAUSED;
         }
         
         // Did we reach a watchpoint?
         if (flags & RL::WATCHPOINT) {
             clearActionFlag(RL::WATCHPOINT);
             putMessage(MSG_WATCHPOINT_REACHED);
-            thread.newState = EXEC_PAUSED;
+            newState = EXEC_PAUSED;
         }
         
         // Are we requested to terminate the run loop?
         if (flags & RL::STOP) {
             clearActionFlag(RL::STOP);
-            thread.newState = EXEC_PAUSED;
+            newState = EXEC_PAUSED;
         }
         
         // Are we requested to pull the NMI line down?
@@ -531,38 +432,114 @@ C64::threadExecute()
         if (flags & RL::CPU_JAM) {
             clearActionFlag(RL::CPU_JAM);
             putMessage(MSG_CPU_JAMMED);
-            thread.newState = EXEC_PAUSED;
+            newState = EXEC_PAUSED;
         }
                     
         assert(flags == 0);
     }
 }
 
-void
-C64::debugOn()
+bool
+C64::_isReady() const
 {
-    suspend();
-    C64Component::debugOn();
-    resume();
+    bool mega = hasMega65Rom(ROM_TYPE_BASIC) && hasMega65Rom(ROM_TYPE_KERNAL);
+    
+    if (!hasRom(ROM_TYPE_BASIC)) {
+        throw VC64Error(ERROR_ROM_BASIC_MISSING);
+    }
+    if (!hasRom(ROM_TYPE_CHAR)) {
+        throw VC64Error(ERROR_ROM_CHAR_MISSING);
+    }
+    if (!hasRom(ROM_TYPE_KERNAL) || FORCE_ROM_MISSING) {
+        throw VC64Error(ERROR_ROM_KERNAL_MISSING);
+    }
+    if (FORCE_MEGA64_MISMATCH || (mega && string(mega65BasicRev()) != string(mega65KernalRev()))) {
+        throw VC64Error(ERROR_ROM_MEGA65_MISMATCH);
+    }
+    
+    return true;
 }
 
 void
-C64::debugOff()
+C64::_powerOn()
 {
-    suspend();
-    C64Component::debugOff();
-    resume();
+    debug(RUN_DEBUG, "_powerOn\n");
+    
+    // Perform a reset
+    hardReset();
+            
+    // Update the recorded debug information
+    inspect();
+
+    msgQueue.put(MSG_POWER_ON);
+}
+
+void
+C64::_powerOff()
+{
+    debug(RUN_DEBUG, "_powerOff\n");
+
+    inspect();
+    msgQueue.put(MSG_POWER_OFF);
+}
+
+void
+C64::_run()
+{
+    debug(RUN_DEBUG, "_run\n");
+
+    msgQueue.put(MSG_RUN);
+}
+
+void
+C64::_pause()
+{
+    debug(RUN_DEBUG, "_pause\n");
+
+    // Finish the current instruction to reach a clean state
+    finishInstruction();
+    
+    inspect();
+    msgQueue.put(MSG_PAUSE);
+}
+
+void
+C64::_halt()
+{
+    debug(RUN_DEBUG, "_halt\n");
+
+    msgQueue.put(MSG_HALT);
+}
+
+void
+C64::_warpOn()
+{
+    debug(RUN_DEBUG, "_warpOn\n");
+
+    msgQueue.put(MSG_WARP_ON);
+}
+
+void
+C64::_warpOff()
+{
+    debug(RUN_DEBUG, "_warpOff\n");
+
+    msgQueue.put(MSG_WARP_OFF);
 }
 
 void
 C64::_debugOn()
 {
+    debug(RUN_DEBUG, "_debugOn\n");
+
     vic.updateVicFunctionTable();
 }
 
 void
 C64::_debugOff()
 {
+    debug(RUN_DEBUG, "_debugOff\n");
+
     vic.updateVicFunctionTable();
 }
 
@@ -599,53 +576,6 @@ C64::_dump(dump::Category category, std::ostream& os) const
         os << tab("Warp mode") << bol(inWarpMode()) << std::endl;
         os << tab("Debug mode") << bol(debugMode) << std::endl;
     }
-}
-
-void
-C64::suspend()
-{
-    // debug(RUN_DEBUG, "Suspending (%zu)...\n", suspendCounter);
-    
-    if (suspendCounter || isRunning()) {
-        pause();
-        suspendCounter++;
-    }
-}
-
-void
-C64::resume()
-{
-    // debug(RUN_DEBUG, "Resuming (%zd)...\n", suspendCounter);
-    
-    if (suspendCounter && --suspendCounter == 0) {
-        run();
-    }
-}
- 
-bool
-C64::isReady(ErrorCode *err) const
-{
-    bool mega = hasMega65Rom(ROM_TYPE_BASIC) && hasMega65Rom(ROM_TYPE_KERNAL);
-    
-    if (!hasRom(ROM_TYPE_BASIC)) {
-        if (err) *err = ERROR_ROM_BASIC_MISSING;
-        return false;
-    }
-    if (!hasRom(ROM_TYPE_CHAR)) {
-        if (err) *err = ERROR_ROM_CHAR_MISSING;
-        return false;
-    }
-    if (!hasRom(ROM_TYPE_KERNAL) || FORCE_ROM_MISSING) {
-        if (err) *err = ERROR_ROM_KERNAL_MISSING;
-        return false;
-    }
-    if (FORCE_MEGA64_MISMATCH || (mega && string(mega65BasicRev()) != string(mega65KernalRev()))) {
-        if (err) *err = ERROR_ROM_MEGA65_MISMATCH;
-        return false;
-    }
-    
-    if (err) *err = ERROR_OK;
-    return true;
 }
 
 void

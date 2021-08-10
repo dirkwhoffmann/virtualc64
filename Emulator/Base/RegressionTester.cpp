@@ -27,7 +27,7 @@ RegressionTester::prepare(C64 &c64, C64Model model)
     c64.warpOn();
     
     // Prevent the GUI from disabling warp mode
-    c64.lockWarpMode();
+    c64.setWarpLock(true);
     
     // Launch the emulator
     c64.run();

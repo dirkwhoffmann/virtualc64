@@ -33,6 +33,9 @@
 
 #define OVERRIDES { }
 
+// Uncomment to fallback to an older style thread messaging mechanism
+// #define USE_CONDITION_VARIABLE
+
 
 //
 // Debug settings

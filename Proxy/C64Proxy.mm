@@ -2151,14 +2151,22 @@
     [self c64]->softReset();
 }
 
-- (BOOL)isReady:(ErrorCode *)err
+- (BOOL)isReady:(ErrorCode *)ec
 {
-    return [self c64]->isReady(err);
+    try {
+        *ec = ERROR_OK;
+        [self c64]->isReady();
+        return true;
+    } catch (const VC64Error &exc) {
+        *ec = exc.data;
+        return false;
+    }
 }
 
 - (BOOL)isReady
 {
-    return [self c64]->isReady();
+    ErrorCode ec;
+    return [self isReady:&ec];
 }
 
 - (void)powerOn

@@ -122,6 +122,13 @@ C64Component::save(u8 *buffer)
     return ptr - buffer;
 }
 
+bool
+C64Component::isReady() const
+{
+    for (auto c : subComponents) { if (!c->isReady()) return false; }
+    return _isReady();
+}
+
 void
 C64Component::powerOn()
 {
@@ -151,6 +158,13 @@ C64Component::pause()
 }
 
 void
+C64Component::halt()
+{
+    for (auto c : subComponents) { c->halt(); }
+    _halt();
+}
+
+void
 C64Component::warpOn()
 {
     for (auto c : subComponents) { c->warpOn(); }
@@ -160,14 +174,13 @@ C64Component::warpOn()
 void
 C64Component::warpOff()
 {
-    _warpOff();
     for (auto c : subComponents) { c->warpOff(); }
+    _warpOff();
 }
 
 void
 C64Component::debugOn()
 {
-    debugMode = true;
     for (auto c : subComponents) { c->debugOn(); }
     _debugOn();
 }
@@ -175,20 +188,14 @@ C64Component::debugOn()
 void
 C64Component::debugOff()
 {
-    debugMode = false;
-    _debugOff();
     for (auto c : subComponents) { c->debugOff(); }
+    _debugOff();
 }
 
 void
 C64Component::inspect()
 {
-    // Inspect all subcomponents
-    for (C64Component *c : subComponents) {
-        c->inspect();
-    }
-    
-    // Inspect this component
+    for (C64Component *c : subComponents) { c->inspect(); }
     _inspect();
 }
 

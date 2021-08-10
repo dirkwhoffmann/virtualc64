@@ -10,65 +10,67 @@
 #pragma once
 
 #include "ThreadTypes.h"
-#include "SubComponent.h"
+#include "C64Component.h"
 #include "Chrono.h"
-#include <thread>
+#include "Concurrency.h"
 
-/* The Thread class manages the emulator thread that runs side by side to
- * the graphical user interface. The thread exists during the lifetime of
- * the emulator instance, but does not have to be active all the time. The
- * behavior of the thread is controlled by its internal state, which defines
- * the "emulator state". During the lifetime of the thread, three possible
+/* This class manages the emulator thread that runs side by side to the
+ * graphical user interface. The thread exists during the lifetime of the
+ * emulator instance, but does not have to be active all the time. The
+ * behavior of the thread is controlled by it's internal state. Four possible
  * states are distinguished:
  *
- *        Off: The emulator is turned off.
- *     Paused: The emulator is turned on, but not running.
- *    Running: The emulator is turned on and running.
+ *        Off: The emulator is turned off
+ *     Paused: The emulator is turned on, but not running
+ *    Running: The emulator is turned on and running
+ *     Halted: The emulator is shutting down
  *
- *          -----------------------------------------------
- *         |                     run()                     |
- *         |                                               V
- *     ---------   powerOn()   ---------     run()     ---------
- *    |   Off   |------------>| Paused  |------------>| Running |
- *    |         |<------------|         |<------------|         |
- *     ---------   powerOff()  ---------    pause()    ---------
- *         ^                                               |
- *         |                   powerOff()                  |
- *          -----------------------------------------------
+ *         -----------------------------------------------
+ *        |                     run()                     |
+ *        |                                               V
+ *    ---------   powerOn()   ---------     run()     ---------
+ *   |   Off   |------------>| Paused  |------------>| Running |
+ *   |         |<------------|         |<------------|         |
+ *    ---------   powerOff()  ---------    pause()    ---------
+ *        ^                                               |
+ *        |                   powerOff()                  |
+ *         -----------------------------------------------
  *
  *     isPoweredOff()         isPaused()          isRunning()
- * |-------------------||-------------------||-------------------|
- *                      |----------------------------------------|
- *                                     isPoweredOn()
+ *   |----------------||-------------------||------------------|
+ *                     |---------------------------------------|
+ *                                    isPoweredOn()
  *
  * State changes are triggered by the following functions:
  *
  * Command    | Current   | Next      | Actions on the delegate
  * ------------------------------------------------------------------------
- * powerOn()  | off       | paused    | threadPowerOn()
+ * powerOn()  | off       | paused    | _powerOn()
  *            | paused    | paused    | none
  *            | running   | running   | none
  * ------------------------------------------------------------------------
  * powerOff() | off       | off       | none
- *            | paused    | off       | threadPowerOff()
- *            | running   | off       | threadPowerOff() + threadPause()
+ *            | paused    | off       | _powerOff()
+ *            | running   | off       | _powerOff() + _pause()
  * ------------------------------------------------------------------------
- * run()      | off       | running   | threadPowerOn() + threadRunning()
- *            | paused    | running   | threadRunning()
+ * run()      | off       | running   | _powerOn() + _run()
+ *            | paused    | running   | _run()
  *            | running   | running   | none
  * ------------------------------------------------------------------------
- * pause()    |  off      | off       | none
+ * pause()    | off       | off       | none
  *            | paused    | paused    | none
- *            | running   | paused    | threadPaused()
+ *            | running   | paused    | _pause()
+ * ------------------------------------------------------------------------
+ * halt()     | --        | halted    | _halt()
  *
  * When an instance of the Thread class has been created, a new thread is
  * started which executes the thread's main() function. This function executes
- * a loop which periodically calls the delegate's threadExecute() function.
- * After each iteration, the thread is put to sleep to synchronize timing. Two
- * synchronization modes are supported: Periodic or Pulsed. In periodic mode,
- * the thread is put to sleep for a certain amout of time and wakes up
- * automatically. The second mode puts the thread to sleep indefinitely and
- * waits for an external signal (a call to pulse()) to continue.
+ * a loop which periodically calls function execute(). After each iteration,
+ * the thread is put to sleep to synchronize timing. Two synchronization modes
+ * are supported: Periodic or Pulsed. In periodic mode, the thread is put to
+ * sleep for a certain amout of time and wakes up automatically. The second
+ * mode puts the thread to sleep indefinitely and waits for an external signal
+ * (a call to wakeUp()) to continue.
  *
  * To speed up emulation (e.g., during disk accesses), the emulator may be put
  * into warp mode. In this mode, timing synchronization is disabled causing the
@@ -76,69 +78,65 @@
  * "locked" which means that it can't be changed any more. This lock is utilized
  * by the regression tester to prevent the GUI from disabling warp mode during
  * an ongoing test.
+ *
+ * Similar to warp mode, the emulator may be put into debug mode. This mode is
+ * enabled when the GUI debugger is opend and disabled when the debugger is
+ * closed. In debug mode, several time-consuming tasks are performed that are
+ * usually left out. E.g., the CPU checks for breakpoints and records the
+ * executed instruction in it's trace buffer.
+ *
+ * In many occasions, the thread needs to be paused temporarily (e.g., when the
+ * GUI changes state). This can be done easily by embedding the code inside a
+ * suspend / resume block like so:
+ *
+ *            suspend();
+ *            do something with the internal state;
+ *            resume();
+ *
+ *  It it safe to nest multiple suspend() / resume() blocks.
  */
 
-class ThreadDelegate {
-    
-public:
-    
-    virtual ~ThreadDelegate() { };
-    
-    virtual bool readyToPowerOn() = 0;
-    
-    virtual void threadPowerOff() = 0;
-    virtual void threadPowerOn() = 0;
-    virtual void threadRun() = 0;
-    virtual void threadPause() = 0;
-    virtual void threadHalt() = 0;
-    virtual void threadWarpOff() = 0;
-    virtual void threadWarpOn() = 0;
-    virtual void threadExecute() = 0;
-};
-
-class Thread : public C64Object {
+class Thread : public C64Component, util::Wakeable {
     
     friend class C64;
     
-    // The actual thread and the thread delegate
+    // The thread object
     std::thread thread;
-    ThreadDelegate &delegate;
 
     // The current synchronization mode
-    volatile ThreadMode mode = ThreadMode::Periodic;
+    enum class SyncMode { Periodic, Pulsed };
+    volatile SyncMode mode = SyncMode::Periodic;
     
-    // The current and the next thread state
+    // The current thread state and a change request
     volatile ExecutionState state = EXEC_OFF;
     volatile ExecutionState newState = EXEC_OFF;
 
-    // The current and the next warp state
-    volatile bool warp = false;
-    volatile bool newWarp = false;
+    // The current warp state and a change request
+    volatile bool warpMode = false;
+    volatile bool newWarpMode = false;
 
-    // Variables needed to implement "pulsed" mode
-    std::mutex condMutex;
-    std::condition_variable cond;
-    bool condFlag = false;
+    // The current debug state and a change request
+    volatile bool debugMode = false;
+    volatile bool newDebugMode = false;
 
-    // Variables needed to implement "periodic" mode
+    // Indicates if warp mode or debug mode is locked
+    bool warpLock = false;
+    bool debugLock = false;
+    
+    // Counters
+    isize loopCounter = 0;
+    isize suspendCounter = 0;
+
+    // Synchronization variables
     util::Time delay = util::Time(1000000000 / 50);
     util::Time targetTime;
-    
-    // Indicates if the warp mode setting is locked
-    bool warpLock = false;
-    
-    // Guard for securing non-reentrant functions (for debugging only)
-    bool entered = false;
-    
-    // Loop counter
-    isize loops = 0;
-
-    // The current CPU load (%)
-    double cpuLoad = 0.0;
-    
+            
     // Clocks for measuring the CPU load
     util::Clock nonstopClock;
     util::Clock loadClock;
+
+    // The current CPU load (%)
+    double cpuLoad = 0.0;
 
     
     //
@@ -147,7 +145,7 @@ class Thread : public C64Object {
 
 public:
     
-    Thread(ThreadDelegate &d);
+    Thread();
     ~Thread();
     
     const char *getDescription() const override { return "Thread"; }
@@ -159,9 +157,14 @@ public:
 
 private:
     
-    template <ThreadMode M> void execute();
-    template <ThreadMode M> void sleep();
+    template <SyncMode M> void execute();
+    template <SyncMode M> void sleep();
+
+    // The main entry point (called when the thread is created)
     void main();
+
+    // The code to be executed in each iteration (implemented by the subclass)
+    virtual void execute() = 0;
 
     // Returns true if this functions is called from within the emulator thread
     bool isEmulatorThread() { return std::this_thread::get_id() == thread.get_id(); }
@@ -174,15 +177,15 @@ private:
 public:
     
     void setSyncDelay(util::Time newDelay);
-    void setMode(ThreadMode newMode);
+    void setMode(SyncMode newMode);
     void setWarpLock(bool value);
-    
+    void setDebugLock(bool value);
+
     
     //
     // Analyzing
     //
     
-    // Returns the current CPU load
     double getCpuLoad() { return cpuLoad; }
     
     
@@ -192,27 +195,34 @@ public:
     
 public:
     
-    bool isPoweredOn() const { return state != EXEC_OFF; }
-    bool isPoweredOff() const { return state == EXEC_OFF; }
-    bool isRunning() const { return state == EXEC_RUNNING; }
-    bool isPaused() const { return state == EXEC_PAUSED; }
+    bool isPoweredOn() const override { return state != EXEC_OFF; }
+    bool isPoweredOff() const override { return state == EXEC_OFF; }
+    bool isRunning() const override { return state == EXEC_RUNNING; }
+    bool isPaused() const override { return state == EXEC_PAUSED; }
 
-    void powerOn(bool blocking = true);
+    bool isReady() const throws { return C64Component::isReady(); }
+    void powerOn(bool blocking = true) throws;
     void powerOff(bool blocking = true);
-    void run(bool blocking = true);
+    void run(bool blocking = true) throws;
     void pause(bool blocking = true);
     void halt(bool blocking = true);
+
+    void suspend();
+    void resume();
     
-    void warpOn(bool blocking = false);
-    void warpOff(bool blocking = false);
-    
+    bool inWarpMode() const { return warpMode; }
+    void warpOn(bool blocking = true);
+    void warpOff(bool blocking = true);
+
+    bool inDebugMode() const { return debugMode; }
+    void debugOn(bool blocking = true);
+    void debugOff(bool blocking = true);
+
 private:
 
     void changeStateTo(ExecutionState requestedState, bool blocking);
     void changeWarpTo(bool value, bool blocking);
-    
-    void waitForCondition();
-    void signalCondition();
+    void changeDebugTo(bool value, bool blocking);
     
     
     //
@@ -222,13 +232,10 @@ private:
 public:
     
     // Awakes the thread if it runs in pulse mode
-    void pulse();
+    void wakeUp();
 
 private:
     
-    // Resynchonizes a periodic thread that got out-of-sync
-    void restartSyncTimer();
-
     // Wait until the thread has terminated
     void join() { if (thread.joinable()) thread.join(); }
 };

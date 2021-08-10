@@ -67,17 +67,12 @@
  * Please note that most subcomponents have their own public API. E.g., to
  * query information from VICII, you need to invoke a method on c64.vicii.
  */
-class C64 : public C64Component, ThreadDelegate {
+class C64 : public Thread {
         
     // The component which is currently observed by the debugger
     InspectionTarget inspectionTarget;
 
-// public:
-    
-    // The thread manager
-    Thread thread = Thread(*this);
-    
-    
+
     //
     // Sub components
     //
@@ -174,10 +169,7 @@ private:
      * repeats or terminates depending on the provided flags.
      */
     RunLoopFlags flags = 0;
-        
-    // The invocation counter for implementing suspend() / resume()
-    isize suspendCounter = 0;
-        
+                
 
     //
     // Operation modes
@@ -302,63 +294,25 @@ private:
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-    
-    
-    //
-    // Methods from ThreadDelegate
-    //
-    
-    bool readyToPowerOn() override;
-    void threadPowerOff() override;
-    void threadPowerOn() override;
-    void threadRun() override;
-    void threadPause() override;
-    void threadHalt() override;
-    void threadWarpOff() override;
-    void threadWarpOn() override;
-    void threadExecute() override;
 
     
     //
     // Controlling
     //
-    
-public:
-
-    bool isPoweredOff() const override { return thread.isPoweredOff(); }
-    bool isPoweredOn() const override { return thread.isPoweredOn(); }
-    bool isPaused() const override { return thread.isPaused(); }
-    bool isRunning() const override { return thread.isRunning(); }
-    bool inWarpMode() const { return thread.warp; }
-    bool inDebugMode() const { return debugMode; }
-
-    void powerOn() { thread.powerOn(); }
-    void powerOff() { thread.powerOff(); }
-    void run() { thread.run(); }
-    void pause() { thread.pause(); }
-    void halt() { thread.halt(); }
-    void warpOn() { thread.warpOn(); }
-    void warpOff() { thread.warpOff(); }
-    void debugOn();
-    void debugOff();
-
-    void lockWarpMode() { thread.setWarpLock(true); }
-    void unlockWarpMode() { thread.setWarpLock(false); }
-    
-    double getCpuLoad() { return thread.getCpuLoad(); }
-    
+        
 private:
 
+    bool _isReady() const override;
+    void _powerOn() override;
+    void _powerOff() override;
+    void _run() override;
+    void _pause() override;
+    void _halt() override;
+    void _warpOn() override;
+    void _warpOff() override;
     void _debugOn() override;
     void _debugOff() override;
 
-public:
-    
-    /* Returns true if a call to powerOn() will be successful.
-     * It returns false, e.g., if no Rom is installed.
-     */
-    bool isReady(ErrorCode *err = nullptr) const;
-    
     
     //
     // Accessing the message queue
@@ -371,9 +325,16 @@ public:
        
     
     //
-    // Executing
+    // Methods from Thread class
     //
     
+    void execute() override;
+    
+    
+    //
+    // Running the emulator
+    //
+        
     // Runs or pauses the emulator
     void stopAndGo();
 
@@ -433,20 +394,6 @@ private:
     //
     
 public:
-    
-    /* Pauses the emulation thread temporarily. Because the emulator is running
-     * in a separate thread, the GUI has to pause the emulator before changing
-     * it's internal state. This is done by embedding the code inside a
-     * suspend / resume block:
-     *
-     *           suspend();
-     *           do something with the internal state;
-     *           resume();
-     *
-     * It it safe to nest multiple suspend() / resume() blocks.
-     */
-    void suspend();
-    void resume();
     
     /* Sets or clears a run loop control flag. The functions are thread-safe
      * and can be called from inside or outside the emulator thread.

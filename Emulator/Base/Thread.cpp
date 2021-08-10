@@ -12,9 +12,10 @@
 #include "Chrono.h"
 #include <iostream>
 
-Thread::Thread(ThreadDelegate &d) : delegate(d)
+Thread::Thread()
 {
-    restartSyncTimer();
+    // Initialize the sync timer
+    targetTime = util::Time::now();
     
     // Start the thread and enter the main function
     thread = std::thread(&Thread::main, this);
@@ -27,40 +28,42 @@ Thread::~Thread()
 }
 
 template <> void
-Thread::execute <ThreadMode::Periodic> ()
+Thread::execute <Thread::SyncMode::Periodic> ()
 {
     // Call the execution function
     loadClock.go();
-    delegate.threadExecute();
+    execute();
     loadClock.stop();
 }
 
 template <> void
-Thread::execute <ThreadMode::Pulsed> ()
+Thread::execute <Thread::SyncMode::Pulsed> ()
 {
     // Call the execution function
     loadClock.go();
-    delegate.threadExecute();
+    execute();
     loadClock.stop();
     
 }
 
 template <> void
-Thread::sleep <ThreadMode::Periodic> ()
+Thread::sleep <Thread::SyncMode::Periodic> ()
 {
     auto now = util::Time::now();
 
     // Only proceed if we're not running in warp mode
-    if (warp) return;
+    if (warpMode) return;
         
     // Check if we're running too slow...
     if (now > targetTime) {
         
         // Check if we're completely out of sync...
         if ((now - targetTime).asMilliseconds() > 200) {
-            
+                        
             warn("Emulation is way too slow: %f\n",(now - targetTime).asSeconds());
-            restartSyncTimer();
+
+            // Restart the sync timer
+            targetTime = util::Time::now();
         }
     }
     
@@ -71,7 +74,9 @@ Thread::sleep <ThreadMode::Periodic> ()
         if ((targetTime - now).asMilliseconds() > 200) {
             
             warn("Emulation is way too slow: %f\n",(targetTime - now).asSeconds());
-            restartSyncTimer();
+
+            // Restart the sync timer
+            targetTime = util::Time::now();
         }
     }
         
@@ -83,10 +88,10 @@ Thread::sleep <ThreadMode::Periodic> ()
 }
 
 template <> void
-Thread::sleep <ThreadMode::Pulsed> ()
+Thread::sleep <Thread::SyncMode::Pulsed> ()
 {
     // Wait for the next pulse
-    if (!warp) waitForCondition();
+    if (!warpMode) waitForWakeUp();
 }
 
 void
@@ -94,82 +99,90 @@ Thread::main()
 {
     debug(RUN_DEBUG, "main()\n");
           
-    while (++loops) {
+    while (++loopCounter) {
            
         if (isRunning()) {
                         
             switch (mode) {
-                case ThreadMode::Periodic: execute<ThreadMode::Periodic>(); break;
-                case ThreadMode::Pulsed: execute<ThreadMode::Pulsed>(); break;
+                case SyncMode::Periodic: execute<SyncMode::Periodic>(); break;
+                case SyncMode::Pulsed: execute<SyncMode::Pulsed>(); break;
             }
         }
         
-        if (!warp || isPaused()) {
+        if (!warpMode || isPaused()) {
 
             switch (mode) {
-                case ThreadMode::Periodic: sleep<ThreadMode::Periodic>(); break;
-                case ThreadMode::Pulsed: sleep<ThreadMode::Pulsed>(); break;
+                case SyncMode::Periodic: sleep<SyncMode::Periodic>(); break;
+                case SyncMode::Pulsed: sleep<SyncMode::Pulsed>(); break;
             }
         }
         
         // Are we requested to enter or exit warp mode?
-        while (newWarp != warp) {
+        while (newWarpMode != warpMode) {
             
-            newWarp ? delegate.threadWarpOn() : delegate.threadWarpOff();
-            warp = newWarp;
+            C64Component::warpOnOff(newWarpMode);
+            warpMode = newWarpMode;
             break;
         }
-        
+
+        // Are we requested to enter or exit warp mode?
+        while (newDebugMode != debugMode) {
+            
+            C64Component::debugOnOff(newDebugMode);
+            debugMode = newDebugMode;
+            break;
+        }
+
         // Are we requested to change state?
         while (newState != state) {
             
             if (state == EXEC_OFF && newState == EXEC_PAUSED) {
                 
-                delegate.threadPowerOn();
+                C64Component::powerOn();
                 state = newState;
                 break;
             }
 
             if (state == EXEC_OFF && newState == EXEC_RUNNING) {
                 
-                delegate.threadPowerOn();
-                delegate.threadRun();
+                C64Component::powerOn();
+                C64Component::run();
                 state = newState;
                 break;
             }
 
             if (state == EXEC_PAUSED && newState == EXEC_OFF) {
                 
-                delegate.threadPowerOff();
+                C64Component::powerOff();
                 state = newState;
                 break;
             }
 
             if (state == EXEC_PAUSED && newState == EXEC_RUNNING) {
                 
-                delegate.threadRun();
+                C64Component::run();
                 state = newState;
                 break;
             }
 
             if (state == EXEC_RUNNING && newState == EXEC_OFF) {
                 
-                delegate.threadPause();
-                delegate.threadPowerOff();
+                C64Component::pause();
+                C64Component::powerOff();
                 state = newState;
                 break;
             }
 
             if (state == EXEC_RUNNING && newState == EXEC_PAUSED) {
                 
-                delegate.threadPause();
+                C64Component::pause();
                 state = newState;
                 break;
             }
             
-            if (newState == EXEC_TERMINATED) {
+            if (newState == EXEC_HALTED) {
                 
-                delegate.threadHalt();
+                C64Component::halt();
                 state = newState;
                 return;
             }
@@ -180,7 +193,7 @@ Thread::main()
         }
         
         // Compute the CPU load once in a while
-        if (loops % 32 == 0) {
+        if (loopCounter % 32 == 0) {
             
             auto used  = loadClock.getElapsedTime().asSeconds();
             auto total = nonstopClock.getElapsedTime().asSeconds();
@@ -190,23 +203,19 @@ Thread::main()
             loadClock.restart();
             loadClock.stop();
             nonstopClock.restart();
-            
-            // printf("CPU load = %f\n", cpuLoad);
         }
     }
 }
 
 void
 Thread::setSyncDelay(util::Time newDelay)
-{    
+{
     delay = newDelay;
 }
 
 void
-Thread::setMode(ThreadMode newMode)
+Thread::setMode(SyncMode newMode)
 {
-    if (mode == newMode) return;
-    
     mode = newMode;
 }
 
@@ -217,22 +226,24 @@ Thread::setWarpLock(bool value)
 }
 
 void
+Thread::setDebugLock(bool value)
+{
+    debugLock = value;
+}
+
+void
 Thread::powerOn(bool blocking)
 {
     debug(RUN_DEBUG, "powerOn()\n");
 
     // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
-
-    // Never reenter this function
-    assert(!entered); entered = true;
-
-    if (isPoweredOff() && delegate.readyToPowerOn()) {
+    
+    if (isPoweredOff() && isReady()) {
         
         // Request a state change and wait until the new state has been reached
         changeStateTo(EXEC_PAUSED, blocking);
     }
-    entered = false;
 }
 
 void
@@ -242,16 +253,12 @@ Thread::powerOff(bool blocking)
 
     // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
-
-    // Never reenter this function
-    assert(!entered); entered = true;
     
     if (!isPoweredOff()) {
                 
         // Request a state change and wait until the new state has been reached
         changeStateTo(EXEC_OFF, blocking);
     }
-    entered = false;
 }
 
 void
@@ -261,16 +268,12 @@ Thread::run(bool blocking)
 
     // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
-
-    // Never reenter this function
-    assert(!entered); entered = true;
     
-    if (!isRunning() && delegate.readyToPowerOn()) {
+    if (!isRunning() && isReady()) {
         
         // Request a state change and wait until the new state has been reached
         changeStateTo(EXEC_RUNNING, blocking);
     }
-    entered = false;
 }
 
 void
@@ -280,22 +283,39 @@ Thread::pause(bool blocking)
 
     // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
-
-    // Never reenter this function
-    assert(!entered); entered = true;
     
     if (isRunning()) {
                 
         // Request a state change and wait until the new state has been reached
         changeStateTo(EXEC_PAUSED, blocking);
     }
-    entered = false;
 }
 
 void
 Thread::halt(bool blocking)
 {
-    changeStateTo(EXEC_TERMINATED, blocking);
+    changeStateTo(EXEC_HALTED, blocking);
+}
+
+void
+Thread::suspend()
+{
+    debug(RUN_DEBUG, "Suspending (%zu)...\n", suspendCounter);
+    
+    if (suspendCounter || isRunning()) {
+        pause();
+        suspendCounter++;
+    }
+}
+
+void
+Thread::resume()
+{
+    debug(RUN_DEBUG, "Resuming (%zu)...\n", suspendCounter);
+    
+    if (suspendCounter && --suspendCounter == 0) {
+        run();
+    }
 }
 
 void
@@ -311,6 +331,18 @@ Thread::warpOff(bool blocking)
 }
 
 void
+Thread::debugOn(bool blocking)
+{
+    if (!debugLock) changeDebugTo(true, blocking);
+}
+
+void
+Thread::debugOff(bool blocking)
+{
+    if (!debugLock) changeDebugTo(false, blocking);
+}
+
+void
 Thread::changeStateTo(ExecutionState requestedState, bool blocking)
 {
     newState = requestedState;
@@ -320,38 +352,19 @@ Thread::changeStateTo(ExecutionState requestedState, bool blocking)
 void
 Thread::changeWarpTo(bool value, bool blocking)
 {
-    newWarp = value;
-    if (blocking) while (warp != newWarp) { };
+    newWarpMode = value;
+    if (blocking) while (warpMode != newWarpMode) { };
 }
 
 void
-Thread::waitForCondition()
+Thread::changeDebugTo(bool value, bool blocking)
 {
-    std::unique_lock<std::mutex> lock(condMutex);
-    condFlag = false;
-    cond.wait_for(lock,
-                  std::chrono::seconds(1000),
-                  [this]() { return condFlag; } );
+    newDebugMode = value;
+    if (blocking) while (debugMode != newDebugMode) { };
 }
 
 void
-Thread::signalCondition()
+Thread::wakeUp()
 {
-    std::lock_guard<std::mutex> lock(condMutex);
-    condFlag = true;
-    cond.notify_one();
-}
-
-void
-Thread::pulse()
-{
-    if (mode == ThreadMode::Pulsed) {
-        signalCondition();
-    }
-}
-
-void
-Thread::restartSyncTimer()
-{
-    targetTime = util::Time::now();
+    if (mode == SyncMode::Pulsed) wakeUp();
 }
