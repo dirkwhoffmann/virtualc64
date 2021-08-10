@@ -343,7 +343,7 @@ DmaDebugger::cutLayers()
             u8 b = (emuTexturePtr[i] >> 16) & 0xFF;
 
             double scale = config.cutOpacity / 255.0;
-            u8 bg = (vic.rasterline() / 4) % 2 == (i / 4) % 2 ? 0x22 : 0x44;
+            u8 bg = (vic.scanline() / 4) % 2 == (i / 4) % 2 ? 0x22 : 0x44;
             u8 newr = (u8)(r * (1 - scale) + bg * scale);
             u8 newg = (u8)(g * (1 - scale) + bg * scale);
             u8 newb = (u8)(b * (1 - scale) + bg * scale);

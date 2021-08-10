@@ -440,7 +440,7 @@ FrameFlipflops;
 typedef struct
 {
     // Counters
-    u16 rasterLine;
+    u16 scanline;
     u8 rasterCycle;
     u32 yCounter;
     u16 xCounter;
@@ -475,7 +475,7 @@ typedef struct
     u16 charMemoryAddr;
 
     // Interrupts
-    u16 irqRasterline;
+    u16 irqLine;
     u8 irr;
     u8 imr;
 

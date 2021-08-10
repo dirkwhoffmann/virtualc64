@@ -343,7 +343,7 @@ VICII::_inspect()
         u8 ctrl1 = reg.current.ctrl1;
         u8 ctrl2 = reg.current.ctrl2;
         
-        info.rasterLine = c64.rasterLine;
+        info.scanline = c64.scanline;
         info.rasterCycle = c64.rasterCycle;
         info.yCounter = yCounter;
         info.xCounter = xCounter;
@@ -375,7 +375,7 @@ VICII::_inspect()
         info.screenMemoryAddr = VM13VM12VM11VM10() << 6;
         info.charMemoryAddr = (CB13CB12CB11() << 10) % 0x4000;
         
-        info.irqRasterline = rasterIrqLine;
+        info.irqLine = rasterIrqLine;
         info.imr = imr;
         info.irr = irr;
         
@@ -476,7 +476,7 @@ VICII::_dump(dump::Category category, std::ostream& os) const
         os << tab("badLine");
         os << bol(badLine) << std::endl;
         os << tab("DENwasSetIn30");
-        os << bol(DENwasSetInRasterline30) << std::endl;
+        os << bol(DENwasSetInLine30) << std::endl;
         os << tab("VC");
         os << hex(vc) << std::endl;
         os << tab("VCBASE");
@@ -708,9 +708,9 @@ VICII::getNoise() const
 }
 
 u16
-VICII::rasterline() const
+VICII::scanline() const
 {
-    return c64.rasterLine;
+    return c64.scanline;
 }
 
 u8
@@ -729,13 +729,13 @@ VICII::checkForRasterIrq()
     bool match = rasterIrqLine == counter;
 
     // A positive edge triggers a raster interrupt
-    if (match && !rasterlineMatchesIrqLine) {
+    if (match && !lineMatchesIrqLine) {
         
         trace(RASTERIRQ_DEBUG, "Triggering raster interrupt\n");
         triggerIrq(1);
     }
     
-    rasterlineMatchesIrqLine = match;
+    lineMatchesIrqLine = match;
 }
 
 
@@ -821,7 +821,7 @@ VICII::badLineCondition() const
     return
     (yCounter >= 0x30 && yCounter <= 0xf7) && /* [1] */
     (yCounter & 0x07) == (reg.current.ctrl1 & 0x07) && /* [2] */
-    DENwasSetInRasterline30; /* [3] */
+    DENwasSetInLine30; /* [3] */
 }
 
 void
@@ -907,7 +907,7 @@ VICII::checkForLightpenIrq()
     // ... a previous interrupt has occurred in the current frame
     if (lpIrqHasOccurred) return;
 
-    // ... we are in the last PAL rasterline and not in cycle 1
+    // ... we are in the last PAL scanline and not in cycle 1
     if (yCounter == 311 && vicCycle != 1) return;
     
     // Latch coordinates
@@ -925,7 +925,7 @@ void
 VICII::checkForLightpenIrqAtStartOfFrame()
 {
     // This function is called at the beginning of a frame, only.
-    assert(c64.rasterLine == 0);
+    assert(c64.scanline == 0);
     assert(c64.rasterCycle == 2);
  
     // Latch coordinate (values according to VICE 3.1)
@@ -1165,7 +1165,7 @@ VICII::processDelayedActions()
 }
 
 void 
-VICII::beginRasterline(u16 line)
+VICII::beginScanline(u16 line)
 {
     verticalFrameFFsetCond = false;
 
@@ -1179,8 +1179,8 @@ VICII::beginRasterline(u16 line)
     // Increase the y counter (overflow is handled in cycle 2)
     if (!yCounterOverflow()) yCounter++;
     
-    // Check the DEN bit in rasterline 30 (value might change later)
-    if (line == 0x30) DENwasSetInRasterline30 = DENbit();
+    // Check the DEN bit in line 30 (value might change later)
+    if (line == 0x30) DENwasSetInLine30 = DENbit();
 
     // Check if this line is a DMA line (bad line) (value might change later)
     if ((badLine = badLineCondition())) delay |= VICSetDisplayState;
@@ -1190,7 +1190,7 @@ VICII::beginRasterline(u16 line)
 }
 
 void 
-VICII::endRasterline()
+VICII::endScanline()
 {
     // Set vertical flipflop if condition was hit
     if (verticalFrameFFsetCond) setVerticalFrameFF(true);

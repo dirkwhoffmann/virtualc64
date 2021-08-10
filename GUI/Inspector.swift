@@ -153,7 +153,7 @@ class Inspector: DialogController {
     @IBOutlet weak var ciaIdleLevel: NSLevelIndicator!
     
     // VICII panel
-    @IBOutlet weak var vicRasterLine: NSTextField!
+    @IBOutlet weak var vicScanline: NSTextField!
     @IBOutlet weak var vicRasterCycle: NSTextField!
     @IBOutlet weak var vicYCounter: NSTextField!
     @IBOutlet weak var vicXCounter: NSTextField!

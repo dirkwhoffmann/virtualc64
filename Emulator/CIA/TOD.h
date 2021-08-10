@@ -185,7 +185,7 @@ private:
     
 public:
     
-    // Increments the TOD clock if necessary (called after each rasterline)
+    // Increments the TOD clock if necessary (called after each scanline)
     void increment();
 
 private:

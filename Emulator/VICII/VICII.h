@@ -44,7 +44,7 @@ public:
     DmaDebugger dmaDebugger;
     
     /* The VICII function table. Each entry in this table is a pointer to a
-     * VICII method executed in a certain rasterline cycle. vicfunc[0] is a
+     * VICII method executed in a certain scanline cycle. vicfunc[0] is a
      * stub. It is never called, because the first cycle is numbered 1.
      */
     typedef void (VICII::*ViciiFunc)(void);
@@ -151,7 +151,7 @@ private:
      */
     u16 xCounter;
     
-    /* Y raster counter (3): The rasterline counter is usually incremented in
+    /* Y raster counter (3): The scanline counter is usually incremented in
      * cycle 1. The only exception is the overflow condition which is handled
      * in cycle 2.
      */
@@ -171,12 +171,12 @@ private:
      */
     u8 rc;
     
-    /* Video matrix (6): Every 8th rasterline, the VICII chips performs a
+    /* Video matrix (6): Every 8th scanline, the VICII chips performs a
      * c-access and fills this array with character information.
      */
     u8 videoMatrix[40];
     
-    /* Color line (7): Every 8th rasterline, the VICII chips performs a
+    /* Color line (7): Every 8th scanline, the VICII chips performs a
      * c-access and fills the array with color information.
      */
     u8 colorLine[40];
@@ -231,12 +231,12 @@ private:
     } sr;
     
     /* Sprite data sequencer (11): The VICII chip has a 24 bit (3 byte) shift
-     * register for each sprite. It stores the sprite for one rasterline. If a
-     * sprite is a display candidate in the current rasterline, its shift
+     * register for each sprite. It stores the sprite for one scanline. If a
+     * sprite is a display candidate in the current scanline, its shift
      * register is activated when the raster X coordinate matches the sprites
      * X coordinate. The comparison is done in method drawSprite(). Once a
      * shift register is activated, it remains activated until the beginning of
-     * the next rasterline. However, after an activated shift register has
+     * the next scanline. However, after an activated shift register has
      * dumped out its 24 pixels, it can't draw anything else than transparent
      * pixels (which is the same as not to draw anything). An exception is
      * during DMA cycles. When a shift register is activated during such a
@@ -273,7 +273,7 @@ private:
     } flipflops;
     
     /* Vertical frame flipflop set condition. Indicates whether the vertical
-     * frame flipflop needs to be set in the current rasterline.
+     * frame flipflop needs to be set in the current scanline.
      */
     bool verticalFrameFFsetCond;
     
@@ -305,7 +305,7 @@ private:
     /* Indicates whether the current raster line matches the IRQ line. A
      * positive edge on this value triggers a raster interrupt.
      */
-    bool rasterlineMatchesIrqLine;
+    bool lineMatchesIrqLine;
     
     
     //
@@ -319,17 +319,17 @@ private:
      */
     bool isVisibleColumn;
         
-    // True if the current rasterline belongs to the VBLANK area
+    // True if the current scanline belongs to the VBLANK area
     bool vblank;
     
-    // Indicates if the current rasterline is a DMA line (bad line)
+    // Indicates if the current scanline is a DMA line (bad line)
     bool badLine;
     
     /* True, if DMA lines can occurr within the current frame. Bad lines can
-     * occur only if the DEN bit was set during an arbitary cycle in rasterline
+     * occur only if the DEN bit was set during an arbitary cycle in scanline
      * 30. The DEN bit is located in control register 1 (0x11).
      */
-    bool DENwasSetInRasterline30;
+    bool DENwasSetInLine30;
     
     /* Current display State
      *
@@ -366,7 +366,7 @@ private:
     // Flags the second or third DMA access for each sprite
     u8 isSecondDMAcycle;
         
-    // Determines if a sprite needs to be drawn in the current rasterline
+    // Determines if a sprite needs to be drawn in the current scanline
     u8 spriteDisplay;
 
     // Value of spriteDisplay, delayed by one cycle
@@ -523,11 +523,11 @@ private:
     u32 *emuTexture;
     u32 *dmaTexture;
 
-    /* Pointer to the beginning of the current rasterline inside the current
+    /* Pointer to the beginning of the current scanline inside the current
      * working textures. These pointers are used by all rendering methods to
-     * write pixels. It always points to the beginning of a rasterline, either
+     * write pixels. It always points to the beginning of a scanline, either
      * the first or the second texture buffer. They are reset at the beginning
-     * of each frame and incremented at the beginning of each rasterline.
+     * of each frame and incremented at the beginning of each scanline.
      */
     u32 *emuTexturePtr;
     u32 *dmaTexturePtr;
@@ -702,11 +702,11 @@ private:
             << rightComparisonVal
             << upperComparisonVal
             << lowerComparisonVal
-            << rasterlineMatchesIrqLine
+            << lineMatchesIrqLine
             << isVisibleColumn
             << vblank
             << badLine
-            << DENwasSetInRasterline30
+            << DENwasSetInLine30
             << displayState
             << mc
             << mcbase
@@ -771,11 +771,11 @@ public:
     static isize getFrequency(VICIIRevision rev, VICIISpeed speed);
     isize getFrequency() const { return getFrequency(config.revision, config.speed); }
     
-    // Returns the number of CPU cycles performed per rasterline
+    // Returns the number of CPU cycles performed per scanline
     static isize getCyclesPerLine(VICIIRevision rev);
     isize getCyclesPerLine() const { return getCyclesPerLine(config.revision); }
         
-    // Returns the number of rasterlines drawn per frame
+    // Returns the number of scanline drawn per frame
     static isize getLinesPerFrame(VICIIRevision rev);
     isize getLinesPerFrame() const { return getLinesPerFrame(config.revision); }
 
@@ -783,14 +783,14 @@ public:
     static isize getCyclesPerFrame(VICIIRevision rev);
     isize getCyclesPerFrame() const { return getCyclesPerFrame(config.revision); }
 
-    // Returns the number of visible rasterlines in a single frame
+    // Returns the number of visible scanlines in a single frame
     static isize numVisibleLines(VICIIRevision rev);
     long numVisibleLines() const { return numVisibleLines(config.revision); }
     
-    // Returns true if the end of the rasterline has been reached
+    // Returns true if the end of the scanline has been reached
     bool isLastCycleInLine(isize cycle) const;
 
-    // Returns true if rasterline belongs to the VBLANK area
+    // Returns true if scanline belongs to the VBLANK area
     bool isVBlankLine(isize line) const;
     
     
@@ -909,19 +909,19 @@ private:
     // Handling the x and y counters
     //
     
-    /* Returns the current rasterline. This value is not always identical to
+    /* Returns the current scanline. This value is not always identical to
      * the yCounter, because the yCounter is incremented with a little delay.
      */
-    u16 rasterline() const;
+    u16 scanline() const;
 
-    // Returns the current rasterline cycle
+    // Returns the current scanline cycle
     u8 rastercycle() const;
 
-    /* Indicates if yCounter needs to be reset in this rasterline. PAL models
-     * reset the yCounter in cycle 2 in the first rasterline wheras NTSC models
+    /* Indicates if yCounter needs to be reset in this scanline. PAL models
+     * reset the yCounter in cycle 2 in the first scanline wheras NTSC models
      * reset the yCounter in cycle 2 in the middle of the lower border area.
      */
-    bool yCounterOverflow() const { return rasterline() == (isPAL ? 0 : 238); }
+    bool yCounterOverflow() const { return scanline() == (isPAL ? 0 : 238); }
 
     /* Matches the yCounter with the raster interrupt line and stores the
      * result. If a positive edge is detected, a raster interrupt is triggered.
@@ -1109,7 +1109,7 @@ private:
     /* Toggles expansion flipflop for vertically stretched sprites. In cycle 56,
      * register D017 is read and the flipflop gets inverted for all sprites with
      * vertical stretching enabled. When the flipflop goes down, advanceMCBase()
-     * will have no effect in the next rasterline. This causes each sprite line
+     * will have no effect in the next scanline. This causes each sprite line
      * to be drawn twice.
      */
     void toggleExpansionFlipflop() { expansionFF ^= reg.current.sprExpandY; }
@@ -1126,15 +1126,15 @@ public:
      */
 	void beginFrame();
 	
-	/* Prepares VICII for drawing a new rasterline. This function is called
-     * prior to the first cycle of each rasterline.
+	/* Prepares VICII for drawing a new scanline. This function is called
+     * prior to the first cycle of each scanline.
      */
-	void beginRasterline(u16 rasterline);
+	void beginScanline(u16 line);
 
-	/* Finishes up a rasterline. This function is called after the last cycle
-     * of each rasterline.
+	/* Finishes up a scanline. This function is called after the last cycle
+     * of each scanline.
      */
-	void endRasterline();
+	void endScanline();
 	
 	/* Finishes up a frame. This function is called after the last cycle of
      * each frame.
@@ -1146,7 +1146,7 @@ public:
      */
     void processDelayedActions();
     
-	// Emulates a specific rasterline cycle
+	// Emulates a specific scanline cycle
     template <u16 flags> void cycle1();
     template <u16 flags> void cycle2();
     template <u16 flags> void cycle3();

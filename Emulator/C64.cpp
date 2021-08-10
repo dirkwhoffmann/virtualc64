@@ -53,7 +53,7 @@ C64::~C64()
 void
 C64::prefix() const
 {
-    fprintf(stderr, "[%lld] (%3d,%3d) %04X ", frame, rasterLine, rasterCycle, cpu.getPC0());
+    fprintf(stderr, "[%lld] (%3d,%3d) %04X ", frame, scanline, rasterCycle, cpu.getPC0());
 }
 
 void
@@ -369,8 +369,7 @@ C64::setConfigItem(Option option, i64 value)
 void
 C64::updateClockFrequency(VICIIRevision rev, VICIISpeed speed)
 {
-    frequency = (u32)VICII::getFrequency(rev, speed);
-    durationOfOneCycle = 10000000000 / frequency;
+    durationOfOneCycle = 10000000000 / VICII::getFrequency(rev, speed);
     nativeDurationOfOneCycle = 10000000000 / VICII::getNativeFrequency(rev);
     setSyncDelay(VICII::getFrameDelay(rev, speed));
 }
@@ -567,11 +566,11 @@ C64::_dump(dump::Category category, std::ostream& os) const
         os << tab("Machine type") << bol(vic.pal(), "PAL", "NTSC") << std::endl;
         os << tab("Frames per second") << vic.getFps() << std::endl;
         os << tab("Lines per frame") << vic.getLinesPerFrame() << std::endl;
-        os << tab("Cycles per rasterline") << vic.getCyclesPerLine() << std::endl;
+        os << tab("Cycles per scanline") << vic.getCyclesPerLine() << std::endl;
         os << tab("Current cycle") << cpu.cycle << std::endl;
         os << tab("Current frame") << frame << std::endl;
-        os << tab("Current rasterline") << rasterLine << std::endl;
-        os << tab("Current rasterline cycle") << dec(rasterCycle) << std::endl;
+        os << tab("Current scanline") << scanline << std::endl;
+        os << tab("Current scanline cycle") << dec(rasterCycle) << std::endl;
         os << tab("Ultimax mode") << bol(getUltimax()) << std::endl;
         os << tab("Warp mode") << bol(inWarpMode()) << std::endl;
         os << tab("Debug mode") << bol(debugMode) << std::endl;
@@ -615,28 +614,28 @@ C64::stepOver()
 void
 C64::executeOneFrame()
 {
-    do { executeOneLine(); } while (rasterLine != 0 && flags == 0);
+    do { executeOneLine(); } while (scanline != 0 && flags == 0);
 }
 
 void
 C64::executeOneLine()
 {
-    // Emulate the beginning of a rasterline
-    if (rasterCycle == 1) beginRasterLine();
+    // Emulate the beginning of a scanline
+    if (rasterCycle == 1) beginScanline();
     
-    // Emulate the middle of a rasterline
+    // Emulate the middle of a scanline
     isize lastCycle = vic.getCyclesPerLine();
     for (isize i = rasterCycle; i <= lastCycle; i++) {
         
         _executeOneCycle();
         if (flags != 0) {
-            if (i == lastCycle) endRasterLine();
+            if (i == lastCycle) endScanline();
             return;
         }
     }
     
-    // Emulate the end of a rasterline
-    endRasterLine();
+    // Emulate the end of a scanline
+    endScanline();
 }
 
 void
@@ -645,9 +644,9 @@ C64::executeOneCycle()
     bool isFirstCycle = rasterCycle == 1;
     bool isLastCycle = vic.isLastCycleInLine(rasterCycle);
     
-    if (isFirstCycle) beginRasterLine();
+    if (isFirstCycle) beginScanline();
     _executeOneCycle();
-    if (isLastCycle) endRasterLine();
+    if (isLastCycle) endScanline();
 }
 
 void
@@ -697,31 +696,28 @@ C64::finishInstruction()
 void
 C64::finishFrame()
 {
-    while (rasterLine != 0 || rasterCycle > 1) executeOneCycle();
+    while (scanline != 0 || rasterCycle > 1) executeOneCycle();
 }
 
 void
-C64::beginRasterLine()
+C64::beginScanline()
 {
-    // First cycle of rasterline
-    if (rasterLine == 0) {
-        vic.beginFrame();
-    }
-    vic.beginRasterline(rasterLine);
+    if (scanline == 0) vic.beginFrame();
+    vic.beginScanline(scanline);
 }
 
 void
-C64::endRasterLine()
+C64::endScanline()
 {
     cia1.tod.increment();
     cia2.tod.increment();
 
-    vic.endRasterline();
+    vic.endScanline();
     rasterCycle = 1;
-    rasterLine++;
+    scanline++;
     
-    if (rasterLine >= vic.getLinesPerFrame()) {
-        rasterLine = 0;
+    if (scanline >= vic.getLinesPerFrame()) {
+        scanline = 0;
         endFrame();
     }
 }

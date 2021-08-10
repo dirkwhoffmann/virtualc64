@@ -92,7 +92,7 @@ public:
     void visualizeDma(isize offset, u8 data, MemAccess type);
     void visualizeDma(u32 *ptr, u8 data, MemAccess type);
     
-    // Superimposes the debug output onto the current rasterline
+    // Superimposes the debug output onto the current scanline
     void computeOverlay(u32 *emuTexture, u32 *dmaTexture);
 
     

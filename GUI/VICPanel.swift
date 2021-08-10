@@ -25,7 +25,7 @@ extension Inspector {
         
         if full {
          
-            vicRasterLine.assignFormatter(fmt9)
+            vicScanline.assignFormatter(fmt9)
             vicRasterCycle.assignFormatter(fmt9)
             vicYCounter.assignFormatter(fmt9)
             vicXCounter.assignFormatter(fmt9)
@@ -55,14 +55,14 @@ extension Inspector {
             // seem distributed randomly. To make the debugger output look
             // realistic, we fake the output...
             
-            vicRasterLine.integerValue = (vicRasterLine.integerValue + 173) % 263
+            vicScanline.integerValue = (vicScanline.integerValue + 173) % 263
             vicRasterCycle.integerValue = (vicRasterCycle.integerValue + 17) % 64
             vicYCounter.integerValue = (vicYCounter.integerValue + 173) % 263
             vicXCounter.integerValue = (vicXCounter.integerValue + 136) % 512
 
         } else {
 
-            vicRasterLine.integerValue = Int(vicInfo.rasterLine)
+            vicScanline.integerValue = Int(vicInfo.scanline)
             vicRasterCycle.integerValue = Int(vicInfo.rasterCycle)
             vicYCounter.integerValue = Int(vicInfo.yCounter)
             vicXCounter.integerValue = Int(vicInfo.xCounter)
@@ -94,7 +94,7 @@ extension Inspector {
         vicMemoryBankAddr.selectItem(withTag: Int(vicInfo.memoryBankAddr))
         vicScreenMemoryAddr.selectItem(withTag: Int(vicInfo.screenMemoryAddr))
         vicCharMemoryAddr.selectItem(withTag: Int(vicInfo.charMemoryAddr))
-        vicIrqRasterline.integerValue = Int(vicInfo.irqRasterline)
+        vicIrqRasterline.integerValue = Int(vicInfo.irqLine)
         vicImr.integerValue = Int(vicInfo.imr)
         vicImrLP.state = (vicInfo.imr & 0b1000) != 0 ? .on : .off
         vicImrSS.state = (vicInfo.imr & 0b0100) != 0 ? .on : .off
@@ -145,7 +145,7 @@ extension MyController {
         // debugger output look realistic, we fake the output ...
  
         if c64.isRunning {
-            info.rasterline = UInt16((vicRasterline.intValue + 173) % 263)
+            info.rasterline = UInt16((vicScanline.intValue + 173) % 263)
             info.cycle = UInt8((vicCycle.intValue + 17) % 64)
             info.xCounter = UInt16((vicXCounter.intValue + 136) % 512)
         }

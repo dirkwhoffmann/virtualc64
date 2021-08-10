@@ -35,7 +35,7 @@ void VIA6522::_reset(bool hard)
 void
 VIA6522::prefix() const
 {
-    fprintf(stderr, "D[%lld] (%3d,%3d) %04X ", c64.frame, c64.rasterLine, c64.rasterCycle, drive.cpu.getPC0());
+    fprintf(stderr, "D[%lld] (%3d,%3d) %04X ", c64.frame, c64.scanline, c64.rasterCycle, drive.cpu.getPC0());
 }
 
 void

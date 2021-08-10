@@ -19,7 +19,7 @@
  *   Phi 1 phase     |  Phi1.2 Draw
  *                   |  Phi1.3 Fetch
  *                   |-------------------------------
- *   Current cycle   |  Phi2.1 Rasterline interrupt
+ *   Current cycle   |  Phi2.1 Scanline interrupt
  *   Phi 2 phase     |  Phi2.2 Sprite logic
  *                   |  Phi2.3 VC/RC logic
  *                   |  Phi2.4 BA logic
@@ -49,7 +49,7 @@ VICII::cycle1()
     NTSC { sAccess2 <flags,3> (); }
     NTSC { assert(isSecondDMAcycle); }
     
-    // Phi2.1 Rasterline interrupt
+    // Phi2.1 Scanline interrupt
     checkForRasterIrq();
     
     // Phi2.4 BA logic
@@ -65,8 +65,8 @@ VICII::cycle2()
 {
     NTSC { assert(isSecondDMAcycle); }
     
-    // Check for lightpen IRQ in first rasterline
-    if (!lpLine && c64.rasterLine == 0)
+    // Check for lightpen IRQ in first scanline
+    if (!lpLine && c64.scanline == 0)
         checkForLightpenIrqAtStartOfFrame();
     
     // Phi2.5 Fetch (previous cycle)

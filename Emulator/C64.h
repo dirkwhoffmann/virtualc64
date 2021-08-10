@@ -9,27 +9,9 @@
 
 #pragma once
 
-// General
-#include "SubComponent.h"
-#include "MsgQueue.h"
-#include "Serialization.h"
-#include "Thread.h"
-
-// Data types and constants
 #include "C64Types.h"
-
-// Loading and saving
-#include "Snapshot.h"
-#include "T64File.h"
-#include "D64File.h"
-#include "G64File.h"
-#include "PRGFile.h"
-#include "Folder.h"
-#include "P00File.h"
-#include "RomFile.h"
-#include "TAPFile.h"
-#include "CRTFile.h"
-#include "FSDevice.h"
+#include "MsgQueue.h"
+#include "Thread.h"
 
 // Sub components
 #include "ExpansionPort.h"
@@ -59,6 +41,19 @@
 #include "Datasette.h"
 #include "Mouse.h"
 
+// Loading and saving
+#include "Snapshot.h"
+#include "T64File.h"
+#include "D64File.h"
+#include "G64File.h"
+#include "PRGFile.h"
+#include "Folder.h"
+#include "P00File.h"
+#include "RomFile.h"
+#include "TAPFile.h"
+#include "CRTFile.h"
+#include "FSDevice.h"
+
 
 /* A complete virtual C64. This class is the most prominent one of all. To run
  * the emulator, it is sufficient to create a single object of this type. All
@@ -68,7 +63,7 @@
  * query information from VICII, you need to invoke a method on c64.vicii.
  */
 class C64 : public Thread {
-        
+            
     // The component which is currently observed by the debugger
     InspectionTarget inspectionTarget;
 
@@ -79,6 +74,9 @@ class C64 : public Thread {
     
 public:
     
+    // Communication channel to the GUI
+    MsgQueue msgQueue = MsgQueue(*this);
+
     // Core components
     C64Memory mem = C64Memory(*this);
     C64CPU cpu = C64CPU(*this, mem);
@@ -89,71 +87,22 @@ public:
 
     // Logic board
     PowerSupply supply = PowerSupply(*this);
-    
-    // Keyboard
-    Keyboard keyboard = Keyboard(*this);
-    
-    // Control ports
     ControlPort port1 = ControlPort(*this, PORT_ONE);
     ControlPort port2 = ControlPort(*this, PORT_TWO);
-    
-    // Expansion port (cartridge port)
     ExpansionPort expansionport = ExpansionPort(*this);
-    
-    // IEC bus (connects the VC1541 floppy drives)
     IEC iec = IEC(*this);
     
-    // Floppy drives
+    // Peripherals
+    Keyboard keyboard = Keyboard(*this);
     Drive drive8 = Drive(DRIVE8, *this);
     Drive drive9 = Drive(DRIVE9, *this);
-    
-    // Parallel cable
     ParCable parCable = ParCable(*this);
-    
-    // Datasette
     Datasette datasette = Datasette(*this);
     
-    // Command console
+    // Misc
     RetroShell retroShell = RetroShell(*this);
-
-    // Screen recorder
-    Recorder recorder = Recorder(*this);
-    
-    // Communication channel to the GUI
-    MsgQueue msgQueue = MsgQueue(*this);
-
-    // Regression test manager
     RegressionTester regressionTester;
-    
-    
-    //
-    // Frame, rasterline, and rasterline cycle information
-    //
-    
-    // The total number of frames drawn since power up
-    u64 frame;
-    
-    /* The currently drawn rasterline. The first rasterline is numbered 0. The
-     * number of the last rasterline varies between PAL and NTSC models.
-     */
-    u16 rasterLine;
-    
-    /* The currently executed rasterline cycle. The first rasterline cycle is
-     * numbered 1. The number of the last cycle varies between PAL and NTSC
-     * models.
-     */
-    u8 rasterCycle;
-    
-    // Clock frequency in Hz
-    u32 frequency;
-    
-    /* Duration of a CPU cycle in 1/10 nano seconds. The first value depends
-     * on the selected VICII model and the selected speed setting. The second
-     * value depends on the VICII model, only. Both values match if VICII is
-     * run in speed mode "native".
-     */
-    i64 durationOfOneCycle;
-    i64 nativeDurationOfOneCycle;
+    Recorder recorder = Recorder(*this);
 
     
     //
@@ -169,19 +118,7 @@ private:
      * repeats or terminates depending on the provided flags.
      */
     RunLoopFlags flags = 0;
-                
 
-    //
-    // Operation modes
-    //
-    
-    /* Indicates whether C64 is running in ultimax mode. Ultimax mode can be
-     * enabled by external cartridges by pulling game line low and keeping
-     * exrom line high. In ultimax mode, most of the C64's RAM and ROM is
-     * invisible.
-     */
-    bool ultimax = false;
-    
     
     //
     // Snapshot storage
@@ -191,7 +128,45 @@ private:
     
     Snapshot *autoSnapshot = nullptr;
     Snapshot *userSnapshot = nullptr;
+
     
+    //
+    // State
+    //
+    
+public:
+    
+    // The total number of frames drawn since power up
+    u64 frame = 0;
+    
+    /* The currently drawn scanline. The first scanline is numbered 0. The
+     * number of the last scanline varies between PAL and NTSC models.
+     */
+    u16 scanline = 0;
+    
+    /* The currently executed scanline cycle. The first scanline cycle is
+     * numbered 1. The number of the last cycle varies between PAL and NTSC
+     * models.
+     */
+    u8 rasterCycle = 1;
+        
+private:
+    
+    /* Indicates whether C64 is running in ultimax mode. Ultimax mode can be
+     * enabled by external cartridges by pulling game line low and keeping
+     * exrom line high. In ultimax mode, most of the C64's RAM and ROM is
+     * invisible.
+     */
+    bool ultimax = false;
+
+    /* Duration of a CPU cycle in 1/10 nano seconds. The first value depends
+     * on the selected VICII model and the selected speed setting. The second
+     * value depends on the VICII model, only. Both values match if VICII is
+     * run in speed mode "native".
+     */
+    i64 durationOfOneCycle;
+    i64 nativeDurationOfOneCycle;
+        
     
     //
     // Initializing
@@ -272,7 +247,6 @@ private:
     {
         worker
         
-        << frequency
         << durationOfOneCycle
         << nativeDurationOfOneCycle;
     }
@@ -285,7 +259,7 @@ private:
             worker
             
             << frame
-            << rasterLine
+            << scanline
             << rasterCycle
             << ultimax;
         }
@@ -359,7 +333,7 @@ public:
      */
     void executeOneFrame();
     
-    /* Emulates the C64 until the end of the current rasterline. This function
+    /* Emulates the C64 until the end of the current scanline. This function
      * is called inside executeOneFrame().
      */
     void executeOneLine();
@@ -379,13 +353,13 @@ public:
     
 private:
     
-    // Invoked before executing the first cycle of a rasterline
-    void beginRasterLine();
+    // Invoked before executing the first cycle of a scanline
+    void beginScanline();
     
-    // Invoked after executing the last cycle of a rasterline
-    void endRasterLine();
+    // Invoked after executing the last cycle of a scanline
+    void endScanline();
     
-    // Invoked after executing the last rasterline of a frame
+    // Invoked after executing the last scanline of a frame
     void endFrame();
     
     
