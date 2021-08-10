@@ -108,13 +108,14 @@ DmaDebugger::setConfigItem(Option option, i64 value)
             
         case OPT_DMA_DEBUG_ENABLE:
                      
-            suspend();
-            config.dmaDebug = value;
-            vic.resetDmaTextures();
-            vic.resetEmuTextures();
-            vic.updateVicFunctionTable();
-            msgQueue.put(value ? MSG_DMA_DEBUG_ON : MSG_DMA_DEBUG_OFF);
-            resume();
+            suspended {
+                
+                config.dmaDebug = value;
+                vic.resetDmaTextures();
+                vic.resetEmuTextures();
+                vic.updateVicFunctionTable();
+                msgQueue.put(value ? MSG_DMA_DEBUG_ON : MSG_DMA_DEBUG_OFF);
+            }
             return;
 
         case OPT_DMA_DEBUG_MODE:

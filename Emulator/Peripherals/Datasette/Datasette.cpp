@@ -142,30 +142,29 @@ Datasette::tapeDuration(isize pos)
 void
 Datasette::insertTape(TAPFile *file)
 {
-    suspend();
-
-    debug(TAP_DEBUG, "Inserting tape...\n");
-
-    // Allocate pulse buffer
-    isize numPulses = file->numPulses();
-    alloc(numPulses);
-    debug(true, "Tape contains %zd pulsed\n", numPulses);
-    
-    // Read pulses
-    file->seek(0);
-    for (isize i = 0; i < numPulses; i++) {
-
-        pulses[i].cycles = (i32)file->read();
-        assert(pulses[i].cycles != -1);
+    suspended {
+        
+        debug(TAP_DEBUG, "Inserting tape...\n");
+        
+        // Allocate pulse buffer
+        isize numPulses = file->numPulses();
+        alloc(numPulses);
+        debug(true, "Tape contains %zd pulsed\n", numPulses);
+        
+        // Read pulses
+        file->seek(0);
+        for (isize i = 0; i < numPulses; i++) {
+            
+            pulses[i].cycles = (i32)file->read();
+            assert(pulses[i].cycles != -1);
+        }
+        
+        // Rewind the tape
+        rewind();
+        
+        // Inform the GUI
+        msgQueue.put(MSG_VC1530_TAPE, 1);
     }
-
-    // Rewind the tape
-    rewind();
-    
-    // Inform the GUI
-    msgQueue.put(MSG_VC1530_TAPE, 1);
-    
-    resume();
 }
 
 void
@@ -174,16 +173,16 @@ Datasette::ejectTape()
     // Only proceed if a tape is present
     if (!hasTape()) return;
 
-    suspend();
-    
-    debug(TAP_DEBUG, "Ejecting tape\n");
-    
-    pressStop();
-    rewind();
-    dealloc();
-    
-    msgQueue.put(MSG_VC1530_TAPE, 0);
-    resume();
+    suspended {
+        
+        debug(TAP_DEBUG, "Ejecting tape\n");
+        
+        pressStop();
+        rewind();
+        dealloc();
+        
+        msgQueue.put(MSG_VC1530_TAPE, 0);
+    }
 }
 
 void

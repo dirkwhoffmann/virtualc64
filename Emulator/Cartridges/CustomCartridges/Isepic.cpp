@@ -127,32 +127,31 @@ Isepic::getSwitchDescription(i8 pos) const
 void
 Isepic::setSwitch(i8 pos)
 {
-    suspend();
-
-    bool oldVisible = cartIsVisible();
-    Cartridge::setSwitch(pos);
-    bool newVisible = cartIsVisible();
-
-    if (oldVisible != newVisible) {
-
-        // Enforce a call to updatePeekPokeLookupTables()
-        expansionport.setCartridgeMode(CRTMODE_OFF);
-
-        if (newVisible) {
-
-            trace(CRT_DEBUG, "Activating Ipsec cartridge\n");
-
-            // Trigger NMI
-            cpu.pullDownNmiLine(INTSRC_EXP);
-            cpu.releaseNmiLine(INTSRC_EXP);
-
-        } else {
-
-            trace(CRT_DEBUG, "Hiding Ipsec cartridge\n");
+    suspended {
+        
+        bool oldVisible = cartIsVisible();
+        Cartridge::setSwitch(pos);
+        bool newVisible = cartIsVisible();
+        
+        if (oldVisible != newVisible) {
+            
+            // Enforce a call to updatePeekPokeLookupTables()
+            expansionport.setCartridgeMode(CRTMODE_OFF);
+            
+            if (newVisible) {
+                
+                trace(CRT_DEBUG, "Activating Ipsec cartridge\n");
+                
+                // Trigger NMI
+                cpu.pullDownNmiLine(INTSRC_EXP);
+                cpu.releaseNmiLine(INTSRC_EXP);
+                
+            } else {
+                
+                trace(CRT_DEBUG, "Hiding Ipsec cartridge\n");
+            }
         }
     }
-
-    resume();
 }
 
 void

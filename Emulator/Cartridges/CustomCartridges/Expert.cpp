@@ -139,36 +139,35 @@ Expert::pressButton(isize nr)
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr).c_str());
     
-    suspend();
-    
-    switch (nr) {
-            
-        case 1: // Reset
-            
-            if (switchInOnPosition()) { active = true; }
-            resetWithoutDeletingRam();
-            break;
-            
-        case 2: // ESM (Freeze)
-            
-            if (switchInOnPosition()) { active = true; }
-            
-            /* The Expert cartridge uses two three-state buffers in parallel to
-             * force the NMI line high, even if a program leaves it low to
-             * protect itself against freezers. The following code is surely
-             * not accurate, but it forces an NMI a trigger, regardless of the
-             * current value of the NMI line.
-             */
-            u8 oldLine = cpu.nmiLine;
-            u8 newLine = oldLine | INTSRC_EXP;
-            
-            cpu.releaseNmiLine((IntSource)0xFF);
-            cpu.pullDownNmiLine((IntSource)newLine);
-            cpu.releaseNmiLine(INTSRC_EXP);
-            break;
+    suspended {
+        
+        switch (nr) {
+                
+            case 1: // Reset
+                
+                if (switchInOnPosition()) { active = true; }
+                resetWithoutDeletingRam();
+                break;
+                
+            case 2: // ESM (Freeze)
+                
+                if (switchInOnPosition()) { active = true; }
+                
+                /* The Expert cartridge uses two three-state buffers in parallel
+                 * to force the NMI line high, even if a program leaves it low
+                 * to protect itself against freezers. The following code is
+                 * surely not accurate, but it forces an NMI a trigger,
+                 * regardless of the current value of the NMI line.
+                 */
+                u8 oldLine = cpu.nmiLine;
+                u8 newLine = oldLine | INTSRC_EXP;
+                
+                cpu.releaseNmiLine((IntSource)0xFF);
+                cpu.pullDownNmiLine((IntSource)newLine);
+                cpu.releaseNmiLine(INTSRC_EXP);
+                break;
+        }
     }
-    
-    resume();
 }
 
 

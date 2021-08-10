@@ -224,22 +224,22 @@ ExpansionPort::attachCartridge(Cartridge *c)
     assert(c);
     assert(c->isSupported());
     
-    suspend();
-    
-    // Remove old cartridge (if any) and assign new one
-    detachCartridge();
-    cartridge = std::unique_ptr<Cartridge>(c);
-    crtType = c->getCartridgeType();
-    
-    // Reset cartridge to update exrom and game line on the expansion port
-    cartridge->reset(true);
-    
-    msgQueue.put(MSG_CRT_ATTACHED);
-    if (cartridge->hasSwitch()) msgQueue.put(MSG_CART_SWITCH);
-    
-    debug(EXP_DEBUG, "Cartridge attached to expansion port");
-    
-    resume();
+    suspended {
+        
+        // Remove old cartridge (if any) and assign new one
+        detachCartridge();
+        cartridge = std::unique_ptr<Cartridge>(c);
+        crtType = c->getCartridgeType();
+        
+        // Reset cartridge to update exrom and game line on the expansion port
+        cartridge->reset(true);
+        
+        msgQueue.put(MSG_CRT_ATTACHED);
+        if (cartridge->hasSwitch()) msgQueue.put(MSG_CART_SWITCH);
+        
+        debug(EXP_DEBUG, "Cartridge attached to expansion port");
+        
+    }
 }
 
 void
@@ -280,10 +280,11 @@ ExpansionPort::attachCartridge(CRTFile *file, bool reset)
     }
         
     // Attach cartridge
-    suspend();
-    attachCartridge(cartridge);
-    if (reset) c64.hardReset();
-    resume();
+    suspended {
+        
+        attachCartridge(cartridge);
+        if (reset) c64.hardReset();
+    }
     
     return true;
 }
@@ -300,29 +301,29 @@ ExpansionPort::attachIsepicCartridge()
 void
 ExpansionPort::detachCartridge()
 {
-    suspend();
-
-    if (cartridge) {
-                
-        cartridge = nullptr;
-        crtType = CRT_NONE;
+    suspended {
         
-        setCartridgeMode(CRTMODE_OFF);
-        
-        debug(EXP_DEBUG, "Cartridge detached from expansion port");
-        msgQueue.put(MSG_CRT_DETACHED);
+        if (cartridge) {
+            
+            cartridge = nullptr;
+            crtType = CRT_NONE;
+            
+            setCartridgeMode(CRTMODE_OFF);
+            
+            debug(EXP_DEBUG, "Cartridge detached from expansion port");
+            msgQueue.put(MSG_CRT_DETACHED);
+        }
     }
-    
-    resume();
 }
 
 void
 ExpansionPort::detachCartridgeAndReset()
 {
-    suspend();
-    detachCartridge();
-    c64.hardReset();
-    resume();
+    suspended {
+        
+        detachCartridge();
+        c64.hardReset();
+    }
 }
 
 isize

@@ -87,10 +87,11 @@ KcsPower::pressButton(isize nr)
     if (nr == 1) {
  
         // Pressing the button triggers an NMI in Ultimax mode
-        suspend();
-        expansionport.setCartridgeMode(CRTMODE_ULTIMAX);
-        cpu.pullDownNmiLine(INTSRC_EXP);
-        resume();
+        suspended {
+
+            expansionport.setCartridgeMode(CRTMODE_ULTIMAX);
+            cpu.pullDownNmiLine(INTSRC_EXP);
+        }
     }
 };
 
@@ -99,8 +100,6 @@ KcsPower::releaseButton(isize nr)
 {
     if (nr == 1) {
     
-        suspend();
-        cpu.releaseNmiLine(INTSRC_EXP);
-        resume();
+        suspended { cpu.releaseNmiLine(INTSRC_EXP); }
     }
 };

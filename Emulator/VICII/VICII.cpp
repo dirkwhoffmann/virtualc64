@@ -197,9 +197,9 @@ VICII::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INV_ARG, VICIIRevisionEnum::keyList());
             }
             
-            suspend();
-            setRevision((VICIIRevision)value);
-            resume();
+            suspended {
+                setRevision((VICIIRevision)value);
+            }
             return;
 
         case OPT_VIC_SPEED:
@@ -208,10 +208,10 @@ VICII::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INV_ARG, VICIISpeedEnum::keyList());
             }
             
-            suspend();
-            // setSpeed((VICIISpeed)value);
-            config.speed = value;
-            resume();
+            suspended {
+                // TODO: setSpeed(...)
+                config.speed = value;
+            }
             return;
 
         case OPT_VIC_POWER_SAVE:
@@ -225,10 +225,10 @@ VICII::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INV_ARG, PaletteEnum::keyList());
             }
             
-            suspend();
-            config.palette = (Palette)value;
-            updatePalette();
-            resume();
+            suspended {
+                config.palette = (Palette)value;
+                updatePalette();
+            }
             return;
             
         case OPT_BRIGHTNESS:

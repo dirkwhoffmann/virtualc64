@@ -412,9 +412,7 @@ RetroShell::dump(C64Component &component, dump::Category category)
 {
     std::stringstream ss; string line;
     
-    c64.suspend();
-    component.dump(category, ss);
-    c64.resume();
+    suspended { component.dump(category, ss); }
     
     while(std::getline(ss, line)) *this << line << '\n';
 }

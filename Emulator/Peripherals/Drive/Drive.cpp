@@ -162,10 +162,11 @@ Drive::setConfigItem(Option option, long id, i64 value)
 
         case OPT_DRV_AUTO_CONFIG:
         {
-            suspend();
-            config.autoConfig = value;
-            if (value) autoConfigure();
-            resume();
+            suspended {
+                
+                config.autoConfig = value;
+                if (value) autoConfigure();
+            }
             return;
         }
         case OPT_DRV_TYPE:
@@ -183,10 +184,11 @@ Drive::setConfigItem(Option option, long id, i64 value)
                 throw VC64Error(ERROR_OPT_INV_ARG, DriveRamEnum::keyList());
             }
             
-            suspend();
-            config.ram = (DriveRam)value;
-            mem.updateBankMap();
-            resume();
+            suspended {
+                
+                config.ram = (DriveRam)value;
+                mem.updateBankMap();
+            }
             return;
         }
         case OPT_DRV_PARCABLE:
@@ -195,10 +197,11 @@ Drive::setConfigItem(Option option, long id, i64 value)
                 throw VC64Error(ERROR_OPT_INV_ARG, ParCableTypeEnum::keyList());
             }
             
-            suspend();
-            config.parCable = (ParCableType)value;
-            mem.updateBankMap();
-            resume();
+            suspended {
+
+                config.parCable = (ParCableType)value;
+                mem.updateBankMap();
+            }
             return;
         }
         case OPT_DRV_CONNECT:
@@ -207,10 +210,11 @@ Drive::setConfigItem(Option option, long id, i64 value)
                 warn("Can't connect drive (ROM missing).\n");
                 return;
             }
-            suspend();
-            config.connected = value;
-            reset(true);
-            resume();
+            suspended {
+
+                config.connected = value;
+                reset(true);
+            }
             msgQueue.put(value ? MSG_DRIVE_CONNECT : MSG_DRIVE_DISCONNECT, deviceNr);
             return;
         }
@@ -221,10 +225,11 @@ Drive::setConfigItem(Option option, long id, i64 value)
                 // throw VCError(ERROR_DRV_NOT_CONNECTED);
                 return;
             }
-            suspend();
-            config.switchedOn = value;
-            reset(true);
-            resume();
+            suspended {
+                
+                config.switchedOn = value;
+                reset(true);
+            }
             msgQueue.put(value ? MSG_DRIVE_POWER_ON : MSG_DRIVE_POWER_OFF, deviceNr);
             return;
         }
@@ -688,18 +693,17 @@ Drive::insertDisk(Disk *otherDisk, bool wp)
 {
     debug(DSKCHG_DEBUG, "insertDisk(otherDisk %p)\n", otherDisk);
 
-    suspend();
-    
-    if (!diskToInsert) {
+    suspended {
         
-        // Initiate the disk change procedure
-        wakeUp();
-        diskToInsert = otherDisk;
-        diskToInsertWP = wp;
-        diskChangeCounter = 1;
+        if (!diskToInsert) {
+            
+            // Initiate the disk change procedure
+            wakeUp();
+            diskToInsert = otherDisk;
+            diskToInsertWP = wp;
+            diskChangeCounter = 1;
+        }
     }
-    
-    resume();
 }
 
 void
@@ -742,16 +746,15 @@ Drive::ejectDisk()
 {
     debug(DSKCHG_DEBUG, "ejectDisk()\n");
 
-    suspend();
-    
-    if (insertionStatus == DISK_FULLY_INSERTED && !diskToInsert) {
+    suspended {
         
-        // Initiate the disk change procedure
-        wakeUp();
-        diskChangeCounter = 1;
+        if (insertionStatus == DISK_FULLY_INSERTED && !diskToInsert) {
+            
+            // Initiate the disk change procedure
+            wakeUp();
+            diskChangeCounter = 1;
+        }
     }
-    
-    resume();
 }
 
 void

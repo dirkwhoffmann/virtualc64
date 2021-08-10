@@ -63,7 +63,5 @@ WarpSpeed::pressButton(isize nr)
 {
     assert(nr <= numButtons());
 
-    suspend();
-    resetWithoutDeletingRam();
-    resume();
+    suspended { resetWithoutDeletingRam(); }
 }

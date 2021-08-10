@@ -207,8 +207,8 @@ public:
     void pause(bool blocking = true);
     void halt(bool blocking = true);
 
-    void suspend();
-    void resume();
+    void suspend() override;
+    void resume() override;
     
     bool inWarpMode() const { return warpMode; }
     void warpOn(bool blocking = true);
@@ -239,3 +239,18 @@ private:
     // Wait until the thread has terminated
     void join() { if (thread.joinable()) thread.join(); }
 };
+
+class AutoResume {
+
+    C64Component *comp;
+    
+public:
+
+    bool active = true;
+
+    AutoResume(C64Component *c) : comp(c) { comp->suspend(); }
+    ~AutoResume() { comp->resume(); }
+};
+
+#define suspended \
+for (AutoResume _ar(this); _ar.active; _ar.active = false)

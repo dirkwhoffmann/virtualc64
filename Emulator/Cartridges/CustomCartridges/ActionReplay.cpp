@@ -64,28 +64,27 @@ ActionReplay3::pressButton(isize nr)
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr).c_str());
     
-    suspend();
-    
-    switch (nr) {
-            
-        case 1: // Freeze
-            
-            cpu.pullDownNmiLine(INTSRC_EXP);
-            cpu.pullDownIrqLine(INTSRC_EXP);
-            
-            // By setting the control register to 0, exrom/game is set to 1/0
-            // which activates ultimax mode. This mode is reset later, in the
-            // ActionReplay's interrupt handler.
-            setControlReg(0);
-            break;
-            
-        case 2: // Reset
-            
-            resetWithoutDeletingRam();
-            break;
+    suspended {
+        
+        switch (nr) {
+                
+            case 1: // Freeze
+                
+                cpu.pullDownNmiLine(INTSRC_EXP);
+                cpu.pullDownIrqLine(INTSRC_EXP);
+                
+                // By setting the control register to 0, exrom/game is set to 1/0
+                // which activates ultimax mode. This mode is reset later, in the
+                // ActionReplay's interrupt handler.
+                setControlReg(0);
+                break;
+                
+            case 2: // Reset
+                
+                resetWithoutDeletingRam();
+                break;
+        }
     }
-    
-    resume();
 }
 
 void
@@ -94,18 +93,17 @@ ActionReplay3::releaseButton(isize nr)
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr).c_str());
     
-    suspend();
-    
-    switch (nr) {
-            
-        case 1: // Freeze
-            
-            cpu.releaseNmiLine(INTSRC_EXP);
-            cpu.releaseIrqLine(INTSRC_EXP);
-            break;
+    suspended {
+        
+        switch (nr) {
+                
+            case 1: // Freeze
+                
+                cpu.releaseNmiLine(INTSRC_EXP);
+                cpu.releaseIrqLine(INTSRC_EXP);
+                break;
+        }
     }
-    
-    resume();
 }
 
 void
@@ -223,27 +221,26 @@ ActionReplay::pressButton(isize nr)
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr).c_str());
     
-    suspend();
-    
-    switch (nr) {
-            
-        case 1: // Freeze
-            
-            // Turn Ultimax mode on
-            setControlReg(0x23);
-            
-            // Pressing the freeze bottom pulls down both the NMI and the IRQ line
-            cpu.pullDownNmiLine(INTSRC_EXP);
-            cpu.pullDownIrqLine(INTSRC_EXP);
-            break;
-            
-        case 2: // Reset
-            
-            resetWithoutDeletingRam();
-            break;
+    suspended {
+        
+        switch (nr) {
+                
+            case 1: // Freeze
+                
+                // Turn Ultimax mode on
+                setControlReg(0x23);
+                
+                // Pressing the freeze bottom pulls down both the NMI and the IRQ line
+                cpu.pullDownNmiLine(INTSRC_EXP);
+                cpu.pullDownIrqLine(INTSRC_EXP);
+                break;
+                
+            case 2: // Reset
+                
+                resetWithoutDeletingRam();
+                break;
+        }
     }
-    
-    resume();
 }
 
 void
@@ -252,18 +249,17 @@ ActionReplay::releaseButton(isize nr)
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr).c_str());
     
-    suspend();
-    
-    switch (nr) {
-            
-        case 1: // Freeze
-            
-            cpu.releaseNmiLine(INTSRC_EXP);
-            cpu.releaseIrqLine(INTSRC_EXP);
-            break;
+    suspended {
+        
+        switch (nr) {
+                
+            case 1: // Freeze
+                
+                cpu.releaseNmiLine(INTSRC_EXP);
+                cpu.releaseIrqLine(INTSRC_EXP);
+                break;
+        }
     }
-    
-    resume();
 }
 
 void

@@ -63,9 +63,7 @@ void
 GameKiller::releaseButton(isize nr)
 {
     if (nr == 1) {
-        suspend();
-        cpu.releaseNmiLine(INTSRC_EXP);
-        resume();
+        suspended { cpu.releaseNmiLine(INTSRC_EXP); }
     }
 }
 

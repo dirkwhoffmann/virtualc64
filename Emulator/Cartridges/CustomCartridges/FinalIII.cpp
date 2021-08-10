@@ -127,23 +127,22 @@ FinalIII::pressButton(isize nr)
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr).c_str());
     
-    suspend();
-    
-    switch (nr) {
-            
-        case 1: // Freeze
-            
-            freeezeButtonIsPressed = true;
-            updateNMI();
-            break;
-            
-        case 2: // Reset
-            
-            resetWithoutDeletingRam();
-            break;
+    suspended {
+        
+        switch (nr) {
+                
+            case 1: // Freeze
+                
+                freeezeButtonIsPressed = true;
+                updateNMI();
+                break;
+                
+            case 2: // Reset
+                
+                resetWithoutDeletingRam();
+                break;
+        }
     }
-    
-    resume();
 }
 
 void
@@ -152,18 +151,17 @@ FinalIII::releaseButton(isize nr)
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr).c_str());
     
-    suspend();
-    
-    switch (nr) {
-            
-        case 1: // Freeze
-            
-            freeezeButtonIsPressed = false;
-            qD = true;
-            updateNMI();
-            updateGame();
-            break;
+    suspended {
+        
+        switch (nr) {
+                
+            case 1: // Freeze
+                
+                freeezeButtonIsPressed = false;
+                qD = true;
+                updateNMI();
+                updateGame();
+                break;
+        }
     }
-    
-    resume();
 }

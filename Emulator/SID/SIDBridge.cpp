@@ -161,9 +161,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
             
             isize newFrequency = VICII::getFrequency(rev, speed);
 
-            suspend();
-            setClockFrequency((u32)newFrequency);
-            resume();
+            suspended { setClockFrequency((u32)newFrequency); }
             return;
         }
 
@@ -174,17 +172,13 @@ SIDBridge::setConfigItem(Option option, i64 value)
             
             isize newFrequency = VICII::getFrequency(rev, speed);
 
-            suspend();
-            setClockFrequency((u32)newFrequency);
-            resume();
+            suspended { setClockFrequency((u32)newFrequency); }
             return;
         }
 
         case OPT_SID_POWER_SAVE:
             
-            suspend();
-            config.powerSave = value;
-            resume();
+            suspended { config.powerSave = value; }
             return;
             
         case OPT_SID_REVISION:
@@ -193,24 +187,26 @@ SIDBridge::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INV_ARG, SIDRevisionEnum::keyList());
             }
             
-            suspend();
-            config.revision = (SIDRevision)value;
-            for (int i = 0; i < 4; i++) {
-                resid[i].setRevision(value);
-                fastsid[i].setRevision(value);
+            suspended {
+                
+                config.revision = (SIDRevision)value;
+                for (int i = 0; i < 4; i++) {
+                    resid[i].setRevision(value);
+                    fastsid[i].setRevision(value);
+                }
             }
-            resume();
             return;
             
         case OPT_SID_FILTER:
             
-            suspend();
-            config.filter = value;
-            for (int i = 0; i < 4; i++) {
-                resid[i].setAudioFilter(value);
-                fastsid[i].setAudioFilter(value);
+            suspended {
+                
+                config.filter = value;
+                for (int i = 0; i < 4; i++) {
+                    resid[i].setAudioFilter(value);
+                    fastsid[i].setAudioFilter(value);
+                }
             }
-            resume();
             return;
             
         case OPT_SID_ENGINE:
@@ -219,9 +215,10 @@ SIDBridge::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INV_ARG, SIDEngineEnum::keyList());
             }
 
-            suspend();
-            config.engine = (SIDEngine)value;
-            resume();
+            suspended {
+
+                config.engine = (SIDEngine)value;
+            }
             return;
             
         case OPT_SID_SAMPLING:
@@ -230,13 +227,14 @@ SIDBridge::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INV_ARG, SamplingMethodEnum::keyList());
             }
 
-            suspend();
-            config.sampling = (SamplingMethod)value;
-            for (int i = 0; i < 4; i++) {
-                resid[i].setSamplingMethod(value);
-                // Note: fastSID has no such option
+            suspended {
+                
+                config.sampling = (SamplingMethod)value;
+                for (int i = 0; i < 4; i++) {
+                    resid[i].setSamplingMethod(value);
+                    // Note: fastSID has no such option
+                }
             }
-            resume();
             return;
             
         case OPT_AUDVOLL:
@@ -284,15 +282,16 @@ SIDBridge::setConfigItem(Option option, long id, i64 value)
                 return;
             }
             
-            suspend();
-            REPLACE_BIT(config.enabled, id, value);
-            clearSampleBuffer(id);
-            
-            for (int i = 0; i < 4; i++) {
-                resid[i].reset(true);
-                fastsid[i].reset(true);
+            suspended {
+                
+                REPLACE_BIT(config.enabled, id, value);
+                clearSampleBuffer(id);
+                
+                for (int i = 0; i < 4; i++) {
+                    resid[i].reset(true);
+                    fastsid[i].reset(true);
+                }
             }
-            resume();
             return;
             
         case OPT_SID_ADDRESS:
@@ -314,10 +313,11 @@ SIDBridge::setConfigItem(Option option, long id, i64 value)
                 return;
             }
             
-            suspend();
-            config.address[id] = value;
-            clearSampleBuffer(id);
-            resume();
+            suspended {
+                
+                config.address[id] = value;
+                clearSampleBuffer(id);
+            }
             return;
             
         case OPT_AUDVOL:

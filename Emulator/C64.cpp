@@ -59,15 +59,14 @@ C64::prefix() const
 void
 C64::reset(bool hard)
 {
-    suspend();
-    
-    // Execute the standard reset routine
-    C64Component::reset(hard);
-    
-    // Inform the GUI
-    msgQueue.put(MSG_RESET);
-    
-    resume();
+    suspended {
+        
+        // Execute the standard reset routine
+        C64Component::reset(hard);
+                
+        // Inform the GUI
+        msgQueue.put(MSG_RESET);
+    }
 }
 
 void
@@ -248,87 +247,86 @@ C64::configure(C64Model model)
 {
     assert_enum(C64Model, model);
     
-    suspend();
-    
-    switch(model) {
-            
-        case C64_MODEL_PAL:
-            _configure(OPT_VIC_REVISION, VICII_PAL_6569_R3);
-            _configure(OPT_GRAY_DOT_BUG, false);
-            _configure(OPT_CIA_REVISION, MOS_6526);
-            _configure(OPT_TIMER_B_BUG,  true);
-            _configure(OPT_SID_REVISION, MOS_6581);
-            _configure(OPT_SID_FILTER,   true);
-            _configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
-            _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-            configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
-            break;
-            
-        case C64_MODEL_PAL_II:
-            _configure(OPT_VIC_REVISION, VICII_PAL_8565);
-            _configure(OPT_GRAY_DOT_BUG, true);
-            _configure(OPT_CIA_REVISION, MOS_8521);
-            _configure(OPT_TIMER_B_BUG,  false);
-            _configure(OPT_SID_REVISION, MOS_8580);
-            _configure(OPT_SID_FILTER,   true);
-            _configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
-            _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
-            configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
-            break;
-
-        case C64_MODEL_PAL_OLD:
-            _configure(OPT_VIC_REVISION, VICII_PAL_6569_R1);
-            _configure(OPT_GRAY_DOT_BUG, false);
-            _configure(OPT_CIA_REVISION, MOS_6526);
-            _configure(OPT_TIMER_B_BUG,  true);
-            _configure(OPT_SID_REVISION, MOS_6581);
-            _configure(OPT_SID_FILTER,   true);
-            _configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
-            _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-            configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
-            break;
-
-        case C64_MODEL_NTSC:
-            _configure(OPT_VIC_REVISION, VICII_NTSC_6567);
-            _configure(OPT_GRAY_DOT_BUG, false);
-            _configure(OPT_CIA_REVISION, MOS_6526);
-            _configure(OPT_TIMER_B_BUG,  false);
-            _configure(OPT_SID_REVISION, MOS_6581);
-            _configure(OPT_SID_FILTER,   true);
-            _configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
-            _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-            configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
-            break;
-
-        case C64_MODEL_NTSC_II:
-            _configure(OPT_VIC_REVISION, VICII_NTSC_8562);
-            _configure(OPT_GRAY_DOT_BUG, true);
-            _configure(OPT_CIA_REVISION, MOS_8521);
-            _configure(OPT_TIMER_B_BUG,  true);
-            _configure(OPT_SID_REVISION, MOS_8580);
-            _configure(OPT_SID_FILTER,   true);
-            _configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
-            _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
-            configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
-            break;
-
-        case C64_MODEL_NTSC_OLD:
-            _configure(OPT_VIC_REVISION, VICII_NTSC_6567_R56A);
-            _configure(OPT_GRAY_DOT_BUG, false);
-            _configure(OPT_CIA_REVISION, MOS_6526);
-            _configure(OPT_TIMER_B_BUG,  false);
-            _configure(OPT_SID_REVISION, MOS_6581);
-            _configure(OPT_SID_FILTER,   true);
-            _configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
-            _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-            configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
-            break;
-
-        default:
-            assert(false);
+    suspended {
+        
+        switch(model) {
+                
+            case C64_MODEL_PAL:
+                _configure(OPT_VIC_REVISION, VICII_PAL_6569_R3);
+                _configure(OPT_GRAY_DOT_BUG, false);
+                _configure(OPT_CIA_REVISION, MOS_6526);
+                _configure(OPT_TIMER_B_BUG,  true);
+                _configure(OPT_SID_REVISION, MOS_6581);
+                _configure(OPT_SID_FILTER,   true);
+                _configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
+                _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+                configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                break;
+                
+            case C64_MODEL_PAL_II:
+                _configure(OPT_VIC_REVISION, VICII_PAL_8565);
+                _configure(OPT_GRAY_DOT_BUG, true);
+                _configure(OPT_CIA_REVISION, MOS_8521);
+                _configure(OPT_TIMER_B_BUG,  false);
+                _configure(OPT_SID_REVISION, MOS_8580);
+                _configure(OPT_SID_FILTER,   true);
+                _configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
+                _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
+                configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                break;
+                
+            case C64_MODEL_PAL_OLD:
+                _configure(OPT_VIC_REVISION, VICII_PAL_6569_R1);
+                _configure(OPT_GRAY_DOT_BUG, false);
+                _configure(OPT_CIA_REVISION, MOS_6526);
+                _configure(OPT_TIMER_B_BUG,  true);
+                _configure(OPT_SID_REVISION, MOS_6581);
+                _configure(OPT_SID_FILTER,   true);
+                _configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
+                _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+                configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                break;
+                
+            case C64_MODEL_NTSC:
+                _configure(OPT_VIC_REVISION, VICII_NTSC_6567);
+                _configure(OPT_GRAY_DOT_BUG, false);
+                _configure(OPT_CIA_REVISION, MOS_6526);
+                _configure(OPT_TIMER_B_BUG,  false);
+                _configure(OPT_SID_REVISION, MOS_6581);
+                _configure(OPT_SID_FILTER,   true);
+                _configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
+                _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+                configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                break;
+                
+            case C64_MODEL_NTSC_II:
+                _configure(OPT_VIC_REVISION, VICII_NTSC_8562);
+                _configure(OPT_GRAY_DOT_BUG, true);
+                _configure(OPT_CIA_REVISION, MOS_8521);
+                _configure(OPT_TIMER_B_BUG,  true);
+                _configure(OPT_SID_REVISION, MOS_8580);
+                _configure(OPT_SID_FILTER,   true);
+                _configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
+                _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
+                configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                break;
+                
+            case C64_MODEL_NTSC_OLD:
+                _configure(OPT_VIC_REVISION, VICII_NTSC_6567_R56A);
+                _configure(OPT_GRAY_DOT_BUG, false);
+                _configure(OPT_CIA_REVISION, MOS_6526);
+                _configure(OPT_TIMER_B_BUG,  false);
+                _configure(OPT_SID_REVISION, MOS_6581);
+                _configure(OPT_SID_FILTER,   true);
+                _configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
+                _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+                configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                break;
+                
+            default:
+                assert(false);
+        }
     }
-    
-    resume();
 }
 
 void
@@ -1216,35 +1214,37 @@ C64::flash(AnyFile *file)
     
     bool result = true;
     
-    suspend();
-    switch (file->type()) {
-            
-        case FILETYPE_BASIC_ROM:
-            file->flash(mem.rom, 0xA000);
-            break;
-            
-        case FILETYPE_CHAR_ROM:
-            file->flash(mem.rom, 0xD000);
-            break;
-            
-        case FILETYPE_KERNAL_ROM:
-            file->flash(mem.rom, 0xE000);
-            break;
-            
-        case FILETYPE_VC1541_ROM:
-            drive8.mem.loadRom((RomFile *)file);
-            drive9.mem.loadRom((RomFile *)file);
-            break;
-            
-        case FILETYPE_V64:
-            try { loadFromSnapshot((Snapshot *)file); } catch (...) { result = false; }
-            break;
-            
-        default:
-            assert(false);
-            result = false;
+    suspended {
+        
+        switch (file->type()) {
+                
+            case FILETYPE_BASIC_ROM:
+                file->flash(mem.rom, 0xA000);
+                break;
+                
+            case FILETYPE_CHAR_ROM:
+                file->flash(mem.rom, 0xD000);
+                break;
+                
+            case FILETYPE_KERNAL_ROM:
+                file->flash(mem.rom, 0xE000);
+                break;
+                
+            case FILETYPE_VC1541_ROM:
+                drive8.mem.loadRom((RomFile *)file);
+                drive9.mem.loadRom((RomFile *)file);
+                break;
+                
+            case FILETYPE_V64:
+                try { loadFromSnapshot((Snapshot *)file); } catch (...) { result = false; }
+                break;
+                
+            default:
+                assert(false);
+                result = false;
+        }
     }
-    resume();
+    
     return result;
 }
 
@@ -1257,25 +1257,25 @@ C64::flash(AnyCollection *file, isize nr)
     u64 size = (u64)file->itemSize(nr);
     if (size <= 2) return false;
     
-    suspend();
-    
-    switch (file->type()) {
-            
-        case FILETYPE_D64:
-        case FILETYPE_T64:
-        case FILETYPE_P00:
-        case FILETYPE_PRG:
-        case FILETYPE_FOLDER:
-            
-            size = std::min(size - 2, (u64)(0x10000 - addr));
-            file->copyItem(nr, mem.ram + addr, size, 2);
-            break;
-            
-        default:
-            assert(false);
-            result = false;
+    suspended {
+        
+        switch (file->type()) {
+                
+            case FILETYPE_D64:
+            case FILETYPE_T64:
+            case FILETYPE_P00:
+            case FILETYPE_PRG:
+            case FILETYPE_FOLDER:
+                
+                size = std::min(size - 2, (u64)(0x10000 - addr));
+                file->copyItem(nr, mem.ram + addr, size, 2);
+                break;
+                
+            default:
+                assert(false);
+                result = false;
+        }
     }
-    resume();
     
     msgQueue.put(MSG_FILE_FLASHED);
     return result;
@@ -1290,12 +1290,11 @@ C64::flash(const FSDevice &fs, isize nr)
     u64 size = fs.fileSize(nr);
     if (size <= 2) return false;
     
-    suspend();
-                
-    size = std::min(size - 2, (u64)(0x10000 - addr));
-    fs.copyFile(nr, mem.ram + addr, size, 2);
-
-    resume();
+    suspended {
+        
+        size = std::min(size - 2, (u64)(0x10000 - addr));
+        fs.copyFile(nr, mem.ram + addr, size, 2);
+    }
     
     msgQueue.put(MSG_FILE_FLASHED);
     return result;
