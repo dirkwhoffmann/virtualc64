@@ -550,5 +550,5 @@ void
 Cartridge::setSwitch(i8 pos)
 {
     switchPos = pos;
-    c64.putMessage(MSG_CART_SWITCH);
+    c64.msgQueue.put(MSG_CART_SWITCH);
 }

@@ -234,8 +234,8 @@ ExpansionPort::attachCartridge(Cartridge *c)
     // Reset cartridge to update exrom and game line on the expansion port
     cartridge->reset(true);
     
-    c64.putMessage(MSG_CRT_ATTACHED);
-    if (cartridge->hasSwitch()) c64.putMessage(MSG_CART_SWITCH);
+    msgQueue.put(MSG_CRT_ATTACHED);
+    if (cartridge->hasSwitch()) msgQueue.put(MSG_CART_SWITCH);
     
     debug(EXP_DEBUG, "Cartridge attached to expansion port");
     
@@ -269,7 +269,7 @@ ExpansionPort::attachCartridge(CRTFile *file, bool reset)
     
     // Only proceed if this cartridge is supported
     if (!file->isSupported()) {
-        c64.putMessage(MSG_CRT_UNSUPPORTED, file->cartridgeType());
+        msgQueue.put(MSG_CRT_UNSUPPORTED, file->cartridgeType());
         return false;
     }
     
@@ -310,7 +310,7 @@ ExpansionPort::detachCartridge()
         setCartridgeMode(CRTMODE_OFF);
         
         debug(EXP_DEBUG, "Cartridge detached from expansion port");
-        c64.putMessage(MSG_CRT_DETACHED);
+        msgQueue.put(MSG_CRT_DETACHED);
     }
     
     resume();

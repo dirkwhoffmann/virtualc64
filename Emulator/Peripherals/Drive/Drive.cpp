@@ -211,7 +211,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
             config.connected = value;
             reset(true);
             resume();
-            messageQueue.put(value ? MSG_DRIVE_CONNECT : MSG_DRIVE_DISCONNECT, deviceNr);
+            msgQueue.put(value ? MSG_DRIVE_CONNECT : MSG_DRIVE_DISCONNECT, deviceNr);
             return;
         }
         case OPT_DRV_POWER_SWITCH:
@@ -225,7 +225,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
             config.switchedOn = value;
             reset(true);
             resume();
-            messageQueue.put(value ? MSG_DRIVE_POWER_ON : MSG_DRIVE_POWER_OFF, deviceNr);
+            msgQueue.put(value ? MSG_DRIVE_POWER_ON : MSG_DRIVE_POWER_OFF, deviceNr);
             return;
         }
         case OPT_DRV_POWER_SAVE:
@@ -596,12 +596,12 @@ Drive::setRedLED(bool b)
     if (!redLED && b) {
         redLED = true;
         wakeUp();
-        c64.putMessage(MSG_DRIVE_LED_ON, deviceNr);
+        msgQueue.put(MSG_DRIVE_LED_ON, deviceNr);
         
     } else if (redLED && !b) {
         redLED = false;
         wakeUp();
-        c64.putMessage(MSG_DRIVE_LED_OFF, deviceNr);
+        msgQueue.put(MSG_DRIVE_LED_OFF, deviceNr);
     }
 }
 
@@ -611,7 +611,7 @@ Drive::setRotating(bool b)
     if (spinning == b) return;
     
     spinning = b;
-    c64.putMessage(b ? MSG_DRIVE_MOTOR_ON : MSG_DRIVE_MOTOR_OFF, deviceNr);
+    msgQueue.put(b ? MSG_DRIVE_MOTOR_ON : MSG_DRIVE_MOTOR_OFF, deviceNr);
     iec.updateTransferStatus();
 }
 
@@ -621,7 +621,7 @@ Drive::wakeUp()
     if (isIdle()) {
         
         trace(DRV_DEBUG, "Exiting power-safe mode\n");
-        c64.putMessage(MSG_DRIVE_POWER_SAVE_OFF, deviceNr);
+        msgQueue.put(MSG_DRIVE_POWER_SAVE_OFF, deviceNr);
         idleCounter = 0;
         needsEmulation = true;
     }
@@ -643,7 +643,7 @@ Drive::moveHeadUp()
    
     assert(disk.isValidHeadPos(halftrack, offset));
     
-    c64.putMessage(MSG_DRIVE_STEP,
+    msgQueue.put(MSG_DRIVE_STEP,
                    config.pan << 24 | config.stepVolume << 16 | halftrack << 8 | deviceNr);
 }
 
@@ -662,7 +662,7 @@ Drive::moveHeadDown()
     
     assert(disk.isValidHeadPos(halftrack, offset));
     
-    c64.putMessage(MSG_DRIVE_STEP,
+    msgQueue.put(MSG_DRIVE_STEP,
                    config.pan << 24 | config.stepVolume << 16 | halftrack << 8 | deviceNr);
 }
 
@@ -670,7 +670,7 @@ void
 Drive::setModifiedDisk(bool value)
 {
     disk.setModified(value);
-    c64.putMessage(value ? MSG_DISK_UNSAVED : MSG_DISK_SAVED, deviceNr);
+    msgQueue.put(value ? MSG_DISK_UNSAVED : MSG_DISK_SAVED, deviceNr);
 }
 
 void
@@ -777,7 +777,7 @@ Drive::vsyncHandler()
 
             trace(DRV_DEBUG, "Entering power-save mode\n");
             needsEmulation = false;
-            messageQueue.put(MSG_DRIVE_POWER_SAVE_ON, deviceNr);
+            msgQueue.put(MSG_DRIVE_POWER_SAVE_ON, deviceNr);
         }
     }
 }
@@ -809,7 +809,7 @@ Drive::executeStateTransition()
             insertionStatus = DISK_FULLY_EJECTED;
             
             // Inform listeners
-            c64.putMessage(MSG_DISK_EJECT,
+            msgQueue.put(MSG_DISK_EJECT,
                            config.pan << 24 | config.ejectVolume << 16 | halftrack << 8 | deviceNr);
             
             // Schedule the next transition
@@ -849,7 +849,7 @@ Drive::executeStateTransition()
             disk.setWriteProtection(diskToInsertWP);
 
             // Inform listeners
-            c64.putMessage(MSG_DISK_INSERT,
+            msgQueue.put(MSG_DISK_INSERT,
                            config.pan << 24 | config.insertVolume << 16 | halftrack << 8 | deviceNr);
             return;
         }

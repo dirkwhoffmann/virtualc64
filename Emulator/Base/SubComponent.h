@@ -70,7 +70,7 @@ protected:
     IEC &iec;
     Keyboard &keyboard;
     C64Memory &mem;
-    MsgQueue &messageQueue;
+    MsgQueue &msgQueue;
     PowerSupply &oscillator;
     ParCable &parCable;
     Recorder &recorder;

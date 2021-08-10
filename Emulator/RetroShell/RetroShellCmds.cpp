@@ -29,7 +29,7 @@ RetroShell::exec <Token::clear> (Arguments &argv, long param)
 template <> void
 RetroShell::exec <Token::close> (Arguments &argv, long param)
 {
-    messageQueue.put(MSG_CLOSE_CONSOLE);
+    msgQueue.put(MSG_CLOSE_CONSOLE);
 }
 
 template <> void
@@ -214,7 +214,9 @@ template <> void
 RetroShell::exec <Token::c64, Token::init> (Arguments &argv, long param)
 {
     auto model = util::parseEnum <C64ModelEnum> (argv.front());
-    c64.initialize(model);
+    
+    c64.revertToFactorySettings();
+    c64.configure(model);
 }
 
 

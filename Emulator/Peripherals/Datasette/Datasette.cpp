@@ -163,7 +163,7 @@ Datasette::insertTape(TAPFile *file)
     rewind();
     
     // Inform the GUI
-    c64.putMessage(MSG_VC1530_TAPE, 1);
+    msgQueue.put(MSG_VC1530_TAPE, 1);
     
     resume();
 }
@@ -182,7 +182,7 @@ Datasette::ejectTape()
     rewind();
     dealloc();
     
-    c64.putMessage(MSG_VC1530_TAPE, 0);
+    msgQueue.put(MSG_VC1530_TAPE, 0);
     resume();
 }
 
@@ -202,7 +202,7 @@ Datasette::rewind(isize seconds)
     
     // Inform the GUI
     if (old != (i64)counter.asSeconds()) {
-        messageQueue.put(MSG_VC1530_COUNTER, (i64)counter.asSeconds());
+        msgQueue.put(MSG_VC1530_COUNTER, (i64)counter.asSeconds());
     }
 }
 
@@ -218,7 +218,7 @@ Datasette::advanceHead()
     
     // Inform the GUI
     if (old != (i64)counter.asSeconds()) {
-        messageQueue.put(MSG_VC1530_COUNTER, (i64)counter.asSeconds());
+        msgQueue.put(MSG_VC1530_COUNTER, (i64)counter.asSeconds());
     }
 }
 
@@ -236,7 +236,7 @@ Datasette::pressPlay()
     schedulePulse(head);
     advanceHead();
     
-    messageQueue.put(MSG_VC1530_PLAY, 1);
+    msgQueue.put(MSG_VC1530_PLAY, 1);
 }
 
 void
@@ -247,7 +247,7 @@ Datasette::pressStop()
     playKey = false;
     motor = false;
 
-    messageQueue.put(MSG_VC1530_PLAY, 0);
+    msgQueue.put(MSG_VC1530_PLAY, 0);
 }
 
 void
@@ -272,7 +272,7 @@ void
 Datasette::vsyncHandler()
 {
     if (--msgMotorDelay == 0) {
-        messageQueue.put(MSG_VC1530_MOTOR, motor);
+        msgQueue.put(MSG_VC1530_MOTOR, motor);
     }
 }
 

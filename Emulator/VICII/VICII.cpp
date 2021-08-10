@@ -332,7 +332,7 @@ VICII::setRevision(VICIIRevision revision)
     isNTSC = !isPAL;
     is656x = !is856x;
         
-    c64.putMessage(isPAL ? MSG_PAL : MSG_NTSC);
+    msgQueue.put(isPAL ? MSG_PAL : MSG_NTSC);
 }
 
 void

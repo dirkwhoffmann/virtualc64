@@ -245,7 +245,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
             volL.set(pow((double)config.volL / 50, 1.4));
             
             if (wasMuted != isMuted()) {
-                messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
+                msgQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
             }
             return;
             
@@ -255,7 +255,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
             volR.set(pow((double)config.volR / 50, 1.4));
 
             if (wasMuted != isMuted()) {
-                messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
+                msgQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
             }
             return;
             
@@ -330,7 +330,7 @@ SIDBridge::setConfigItem(Option option, long id, i64 value)
             vol[id] *= 0.15;
 #endif
             if (wasMuted != isMuted()) {
-                messageQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
+                msgQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
             }
 
             return;

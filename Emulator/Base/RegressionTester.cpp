@@ -17,8 +17,9 @@
 void
 RegressionTester::prepare(C64 &c64, C64Model model)
 {
-    // Revert to factory settings
-    c64.initialize(model);
+    // Initialize the emulator according to the specified model
+    c64.revertToFactorySettings();
+    c64.configure(model);
     
     // Select the default texture cutout
     x1 = 104; y1 = 17; x2 = 488; y2 = c64.vic.pal() ? 291 : 241;

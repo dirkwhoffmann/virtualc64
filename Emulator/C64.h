@@ -179,9 +179,6 @@ public:
     const char *getDescription() const override { return "C64"; }
     void prefix() const override;
 
-    // Prepares the emulator for regression testing
-    void initialize(C64Model model);
-
     void reset(bool hard);
     void hardReset() { reset(true); }
     void softReset() { reset(false); }
@@ -212,6 +209,9 @@ public:
     // Configures the C64 to match a specific C64 model
     void configure(C64Model model);
         
+    // Powers off and resets the emulator to it's initial state
+    void revertToFactorySettings();
+    
 private:
 
     void setConfigItem(Option option, i64 value) override;
@@ -229,7 +229,7 @@ public:
     void inspect();
     InspectionTarget getInspectionTarget() const;
     void setInspectionTarget(InspectionTarget target);
-    void clearInspectionTarget() { setInspectionTarget(INSPECTION_TARGET_NONE); }
+    void removeInspectionTarget() { setInspectionTarget(INSPECTION_TARGET_NONE); }
         
 private:
     
@@ -289,26 +289,32 @@ private:
 
     
     //
-    // Accessing the message queue
-    //
-    
-public:
-        
-    // Feeds a notification message into message queue
-    void putMessage(MsgType msg, u64 data = 0) { msgQueue.put(msg, data); }
-       
-    
-    //
-    // Methods from Thread class
-    //
-    
-    void execute() override;
-    
-    
-    //
     // Running the emulator
     //
-        
+    
+private:
+    
+    // Main execution method (from Thread class)
+    void execute() override;
+
+public:
+    
+    /* Sets or clears a run loop control flag. The functions are thread-safe
+     * and can be called from inside or outside the emulator thread.
+     */
+    void setActionFlag(u32 flags);
+    void clearActionFlag(u32 flags);
+    
+    // Convenience wrappers for controlling the run loop
+    void signalAutoSnapshot() { setActionFlag(RL::AUTO_SNAPSHOT); }
+    void signalUserSnapshot() { setActionFlag(RL::USER_SNAPSHOT); }
+    void signalBreakpoint() { setActionFlag(RL::BREAKPOINT); }
+    void signalWatchpoint() { setActionFlag(RL::WATCHPOINT); }
+    void signalInspect() { setActionFlag(RL::INSPECT); }
+    void signalJammed() { setActionFlag(RL::CPU_JAM); }
+    void signalStop() { setActionFlag(RL::STOP); }
+    void signalExpPortNmi() { setActionFlag(RL::EXTERNAL_NMI); }
+
     // Runs or pauses the emulator
     void stopAndGo();
 
@@ -362,29 +368,6 @@ private:
     // Invoked after executing the last scanline of a frame
     void endFrame();
     
-    
-    //
-    // Managing the emulator thread
-    //
-    
-public:
-    
-    /* Sets or clears a run loop control flag. The functions are thread-safe
-     * and can be called from inside or outside the emulator thread.
-     */
-    void setActionFlag(u32 flags);
-    void clearActionFlag(u32 flags);
-    
-    // Convenience wrappers for controlling the run loop
-    void signalAutoSnapshot() { setActionFlag(RL::AUTO_SNAPSHOT); }
-    void signalUserSnapshot() { setActionFlag(RL::USER_SNAPSHOT); }
-    void signalBreakpoint() { setActionFlag(RL::BREAKPOINT); }
-    void signalWatchpoint() { setActionFlag(RL::WATCHPOINT); }
-    void signalInspect() { setActionFlag(RL::INSPECT); }
-    void signalJammed() { setActionFlag(RL::CPU_JAM); }
-    void signalStop() { setActionFlag(RL::STOP); }
-    void signalExpPortNmi() { setActionFlag(RL::EXTERNAL_NMI); }
-
     
     //
     // Handling snapshots

@@ -57,21 +57,6 @@ C64::prefix() const
 }
 
 void
-C64::initialize(C64Model model)
-{
-    assert_enum(C64Model, model);
-    
-    // Power off the emulator
-    powerOff();
-
-    // Put all components into their initial state
-    C64Component::initialize();
-    
-    // Apply the selected configuration scheme
-    configure(model);
-}
-
-void
 C64::reset(bool hard)
 {
     suspend();
@@ -80,7 +65,7 @@ C64::reset(bool hard)
     C64Component::reset(hard);
     
     // Inform the GUI
-    putMessage(MSG_RESET);
+    msgQueue.put(MSG_RESET);
     
     resume();
 }
@@ -261,6 +246,8 @@ C64::_configure(Option option, long id, i64 value)
 void
 C64::configure(C64Model model)
 {
+    assert_enum(C64Model, model);
+    
     suspend();
     
     switch(model) {
@@ -345,6 +332,16 @@ C64::configure(C64Model model)
 }
 
 void
+C64::revertToFactorySettings()
+{
+    // Power off the emulator
+    powerOff();
+
+    // Put all components into their initial state
+    initialize();
+}
+
+void
 C64::setConfigItem(Option option, i64 value)
 {
     switch (option) {
@@ -387,12 +384,12 @@ C64::execute()
         if (flags & RL::AUTO_SNAPSHOT) {
             clearActionFlag(RL::AUTO_SNAPSHOT);
             autoSnapshot = Snapshot::makeWithC64(this);
-            putMessage(MSG_AUTO_SNAPSHOT_TAKEN);
+            msgQueue.put(MSG_AUTO_SNAPSHOT_TAKEN);
         }
         if (flags & RL::USER_SNAPSHOT) {
             clearActionFlag(RL::USER_SNAPSHOT);
             userSnapshot = Snapshot::makeWithC64(this);
-            putMessage(MSG_USER_SNAPSHOT_TAKEN);
+            msgQueue.put(MSG_USER_SNAPSHOT_TAKEN);
         }
         
         // Are we requested to update the debugger info structs?
@@ -404,14 +401,14 @@ C64::execute()
         // Did we reach a breakpoint?
         if (flags & RL::BREAKPOINT) {
             clearActionFlag(RL::BREAKPOINT);
-            putMessage(MSG_BREAKPOINT_REACHED);
+            msgQueue.put(MSG_BREAKPOINT_REACHED);
             newState = EXEC_PAUSED;
         }
         
         // Did we reach a watchpoint?
         if (flags & RL::WATCHPOINT) {
             clearActionFlag(RL::WATCHPOINT);
-            putMessage(MSG_WATCHPOINT_REACHED);
+            msgQueue.put(MSG_WATCHPOINT_REACHED);
             newState = EXEC_PAUSED;
         }
         
@@ -430,7 +427,7 @@ C64::execute()
         // Is the CPU jammed due the execution of an illegal instruction?
         if (flags & RL::CPU_JAM) {
             clearActionFlag(RL::CPU_JAM);
-            putMessage(MSG_CPU_JAMMED);
+            msgQueue.put(MSG_CPU_JAMMED);
             newState = EXEC_PAUSED;
         }
                     
@@ -552,7 +549,9 @@ C64::inspect()
         case INSPECTION_TARGET_CIA: cia1.inspect(); cia2.inspect(); break;
         case INSPECTION_TARGET_VIC: vic.inspect(); break;
         case INSPECTION_TARGET_SID: sid.inspect(); break;
-        default: break;
+            
+        default:
+            break;
     }
 }
 
@@ -593,7 +592,7 @@ C64::stepInto()
     finishInstruction();
     
     // Inform the GUI
-    putMessage(MSG_STEP);
+    msgQueue.put(MSG_STEP);
 }
 
 void
@@ -764,7 +763,7 @@ C64::requestAutoSnapshot()
         
         // Take snapshot immediately
         autoSnapshot = Snapshot::makeWithC64(this);
-        putMessage(MSG_AUTO_SNAPSHOT_TAKEN);
+        msgQueue.put(MSG_AUTO_SNAPSHOT_TAKEN);
         
     } else {
         
@@ -780,7 +779,7 @@ C64::requestUserSnapshot()
         
         // Take snapshot immediately
         userSnapshot = Snapshot::makeWithC64(this);
-        putMessage(MSG_USER_SNAPSHOT_TAKEN);
+        msgQueue.put(MSG_USER_SNAPSHOT_TAKEN);
         
     } else {
         
