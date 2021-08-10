@@ -621,7 +621,7 @@ C64Memory::pokeIO(u16 addr, u8 value)
             sid.poke(addr, value);
 
             // Check the error register (debugcart feature)
-            if (addr == 0xD7FF) c64.regressionTester.debugcart(value);
+            if (addr == 0xD7FF) regressionTester.debugcart(value);
             return;
             
         case 0x8: // Color RAM

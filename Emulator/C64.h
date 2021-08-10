@@ -63,7 +63,7 @@
  * query information from VICII, you need to invoke a method on c64.vicii.
  */
 class C64 : public Thread {
-            
+                
     // The component which is currently observed by the debugger
     InspectionTarget inspectionTarget;
 
