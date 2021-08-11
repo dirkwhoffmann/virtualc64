@@ -225,40 +225,32 @@ class MyDocument: NSDocument {
     // Processing attachments
     //
     
-    @discardableResult
-    func mountAttachment(destination: DriveProxy? = nil) -> Bool {
+    func mountAttachment(destination: DriveProxy? = nil) throws {
 
         // Only proceed if an attachment is present
-        if attachment == nil { return false }
+        if attachment == nil { return }
         
         // If the attachment is a snapshot, flash it and return
         if let proxy = attachment as? SnapshotProxy {
             
-            do {
-                try c64.flash(proxy)
-            } catch let error as VC64Error {
-                error.warning("Failed to read snapshot")
-            } catch { }
-            
-            return true
+            try c64.flash(proxy)
+            return
         }
         
         // If the attachment is a script, execute it
         if let proxy = attachment as? ScriptProxy {
             parent.renderer.console.runScript(script: proxy)
-            return true
+            return
         }
         
         // Try to insert the attachment as a disk
         if let id = destination?.id {
             if mountAttachmentAsDisk(drive: id) {
-                return true
+                return
             }
         }
         
         runMountDialog()
-        
-        return true
     }
     
     func runMountDialog() {
@@ -340,8 +332,10 @@ class MyDocument: NSDocument {
         
         do {
             try createAttachment(from: url)
-            mountAttachment()
+            try mountAttachment()
+            
         } catch let error as VC64Error {
+            
             error.cantOpen(url: url)
         }
     }

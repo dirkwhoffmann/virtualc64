@@ -142,7 +142,7 @@ public extension MetalView {
                         return document.mountAttachmentAsTape()
                     }
 
-                    return document.mountAttachment()
+                    try document.mountAttachment()
                     
                 } catch {
                     (error as? VC64Error)?.cantOpen(url: url)

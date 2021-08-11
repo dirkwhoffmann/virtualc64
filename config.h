@@ -110,7 +110,7 @@ static const int FORCE_ROM_MISSING      = 0;
 static const int FORCE_MEGA64_MISMATCH  = 0;
 static const int FORCE_UNSUPPORTED_CRT  = 0;
 static const int FORCE_SNAPSHOT_TOO_OLD = 0;
-static const int FORCE_SNAPSHOT_TOO_NEW = 0;
+static const int FORCE_SNAPSHOT_TOO_NEW = 1;
 
 
 #ifdef RELEASEBUILD

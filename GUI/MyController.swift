@@ -240,7 +240,7 @@ extension MyController {
         addListener()
                 
         // Process attachment (if any)
-        mydocument.mountAttachment()
+        try? mydocument.mountAttachment()
 
         // Check if the C64 is ready to power on
         if c64.isReady() {
