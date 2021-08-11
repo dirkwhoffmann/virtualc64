@@ -14,29 +14,17 @@ extension MyController {
     //
     // Snapshots
     //
-    
-    func load(snapshot: SnapshotProxy?) {
         
-        if snapshot == nil { return }
-        
-        c64.suspend()
-        c64.load(fromSnapshot: snapshot)
-        c64.resume()
-    }
-        
-    func restoreSnapshot(item: Int) -> Bool {
+    func restoreSnapshot(item: Int) throws {
         
         if let snapshot = mydocument.snapshots.element(at: item) {
-            load(snapshot: snapshot)
-            return true
+            try c64.loadSnapshot(snapshot)
         }
-        
-        return false
     }
     
-    func restoreLatestSnapshot() -> Bool {
+    func restoreLatestSnapshot() throws {
         
         let count = mydocument!.snapshots.count
-        return count > 0 ? restoreSnapshot(item: count - 1) : false
+        if count > 0 { try restoreSnapshot(item: count - 1) }
     }
 }

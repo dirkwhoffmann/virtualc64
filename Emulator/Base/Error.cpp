@@ -20,14 +20,30 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
             assert(false);
             break;
 
-        case ERROR_OPT_INV_ARG:
-            description = "Invalid argument. Expected:  " + s;
+        case ERROR_OPT_UNSUPPORTED:
+            description = "This option is not supported yet.";
             break;
             
+        case ERROR_OPT_INVARG:
+            description = "Invalid argument. Expected: " + s;
+            break;
+            
+        case ERROR_OPT_LOCKED:
+            description = "This option is locked because the C64 is powered on.";
+            break;
+
+        case ERROR_OUT_OF_MEMORY:
+            description = "Out of memory.";
+            break;
+
         case ERROR_FILE_NOT_FOUND:
             description = "File \"" + s + "\" not found.";
             break;
-
+            
+        case ERROR_FILE_TYPE_MISMATCH:
+            description = "The file content and the file type do not match.";
+            break;
+            
         case ERROR_FILE_CANT_READ:
             description = "Failed to read from file \"" + s + "\".";
             break;
@@ -35,8 +51,78 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
         case ERROR_FILE_CANT_WRITE:
             description = "Failed to write to file \"" + s + "\".";
             break;
+            
+        case ERROR_FILE_CANT_CREATE:
+            description = "Failed to create file \"" + s + "\".";
+            break;
 
-        default:
+        case ERROR_DIR_CANT_CREATE:
+            description = "Failed to create directory \"" + s + "\".";
+            break;
+
+        case ERROR_DIR_NOT_EMPTY:
+            description = "Directory \"" + s + "\" is not empty.";
+            break;
+
+        case ERROR_ROM_BASIC_MISSING:
+            description = "No Basic Rom installed.";
+            break;
+
+        case ERROR_ROM_CHAR_MISSING:
+            description = "No Character Rom installed.";
+            break;
+
+        case ERROR_ROM_KERNAL_MISSING:
+            description = "No Kernal Rom installed.";
+            break;
+
+        case ERROR_ROM_MEGA65_MISMATCH:
+            description = "Mega65 Rom revisions do not match.";
+            break;
+
+        case ERROR_SNP_TOO_OLD:
+            description = "The snapshot was created with an older version of VirtualC64";
+            description += " and is incompatible with this release.";
+            break;
+
+        case ERROR_SNP_TOO_NEW:
+            description = "The snapshot was created with a newer version of VirtualC64";
+            description += " and is incompatible with this release.";
+            break;
+
+        case ERROR_DRV_UNCONNECTED:
+            description = "Drive is unconnected.";
+            break;
+
+        case ERROR_CRT_UNSUPPORTED:
+            description = "This cartridge is not supported yet.";
+            break;
+
+        case ERROR_FS_UNSUPPORTED:
+            description = "Unsupported file system.";
+            break;
+            
+        case ERROR_FS_WRONG_CAPACITY:
+            description = "Wrong file system capacity.";
+            break;
+
+        case ERROR_FS_CORRUPTED:
+            description = "Corrupted file system.";
+            break;
+
+        case ERROR_FS_HAS_NO_FILES:
+            description = "Directory is empty.";
+            break;
+
+        case ERROR_FS_HAS_CYCLES:
+            description = "Cyclic reference chain detected.";
+            break;
+            
+        case ERROR_FS_CANT_IMPORT:
+            description = "Unable to import.";
+            break;
+
+    default:
             description = "Error code " + std::to_string(data) + " (" + ErrorCodeEnum::key(data) + ").";
             break;
     }

@@ -230,19 +230,25 @@ class MyDocument: NSDocument {
 
         // Only proceed if an attachment is present
         if attachment == nil { return false }
-
+        
         // If the attachment is a snapshot, flash it and return
         if let proxy = attachment as? SnapshotProxy {
-            c64.flash(proxy)
+            
+            do {
+                try c64.flash(proxy)
+            } catch let error as VC64Error {
+                error.warning("Failed to read snapshot")
+            } catch { }
+            
             return true
         }
-
+        
         // If the attachment is a script, execute it
         if let proxy = attachment as? ScriptProxy {
             parent.renderer.console.runScript(script: proxy)
             return true
         }
-
+        
         // Try to insert the attachment as a disk
         if let id = destination?.id {
             if mountAttachmentAsDisk(drive: id) {
@@ -251,6 +257,7 @@ class MyDocument: NSDocument {
         }
         
         runMountDialog()
+        
         return true
     }
     

@@ -89,7 +89,7 @@ Mouse::setConfigItem(Option option, long id, i64 value)
         case OPT_MOUSE_VELOCITY:
                         
             if (value < 0 || value > 255) {
-                throw VC64Error(ERROR_OPT_INV_ARG, "0 ... 255");
+                throw VC64Error(ERROR_OPT_INVARG, "0 ... 255");
             }
             config.velocity= value;
             updateScalingFactors();

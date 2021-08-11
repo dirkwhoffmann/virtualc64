@@ -349,7 +349,7 @@ class ImportDialog: DialogController {
         
         track("flashAction: \(sender.selectedTag())")
         
-        parent.c64.flash(volume, item: sender.selectedTag())
+        try? parent.c64.flash(volume!, item: sender.selectedTag())
         parent.keyboard.type("RUN\n")
         parent.renderer.rotateLeft()
         hideSheet()

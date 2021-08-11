@@ -807,7 +807,7 @@ C64::loadFromSnapshot(Snapshot *snapshot)
 {
     assert(snapshot && snapshot->getData());
     assert(!isRunning());
-    
+
     // Check if this snapshot is compatible with the emulator
     if (snapshot->isTooOld() || FORCE_SNAPSHOT_TOO_OLD) {
         msgQueue.put(MSG_SNAPSHOT_TOO_OLD);
@@ -818,16 +818,20 @@ C64::loadFromSnapshot(Snapshot *snapshot)
         throw VC64Error(ERROR_SNP_TOO_NEW);
     }
     
-    // Restore the saved state
-    load(snapshot->getData());
-    
-    // Clear the keyboard matrix to avoid constantly pressed keys
-    keyboard.releaseAll();
+    suspended {
+        
+        // Restore the saved state
+        load(snapshot->getData());
+        
+        // Clear the keyboard matrix to avoid constantly pressed keys
+        keyboard.releaseAll();
+        
+        // Print some debug info if requested
+        if (SNP_DEBUG) dump();
+    }
     
     // Inform the GUI
     msgQueue.put(MSG_SNAPSHOT_RESTORED);
-    
-    if (SNP_DEBUG) dump();
 }
 
 u32
@@ -1207,13 +1211,11 @@ C64::saveRom(RomType type, const string &path, ErrorCode *ec)
     catch (VC64Error &exception) { *ec = exception.data; }
 }
 
-bool
+void
 C64::flash(AnyFile *file)
 {
     assert(file);
-    
-    bool result = true;
-    
+        
     suspended {
         
         switch (file->type()) {
@@ -1236,26 +1238,21 @@ C64::flash(AnyFile *file)
                 break;
                 
             case FILETYPE_V64:
-                try { loadFromSnapshot((Snapshot *)file); } catch (...) { result = false; }
+                loadFromSnapshot((Snapshot *)file);
                 break;
                 
             default:
                 assert(false);
-                result = false;
         }
     }
-    
-    return result;
 }
 
-bool
+void
 C64::flash(AnyCollection *file, isize nr)
 {
-    bool result = true;
-    
     u16 addr = (u16)file->itemLoadAddr(nr);
     u64 size = (u64)file->itemSize(nr);
-    if (size <= 2) return false;
+    if (size <= 2) return;
     
     suspended {
         
@@ -1273,22 +1270,21 @@ C64::flash(AnyCollection *file, isize nr)
                 
             default:
                 assert(false);
-                result = false;
         }
     }
     
     msgQueue.put(MSG_FILE_FLASHED);
-    return result;
 }
 
-bool
+void
 C64::flash(const FSDevice &fs, isize nr)
 {
-    bool result = true;
-    
     u16 addr = fs.loadAddr(nr);
     u64 size = fs.fileSize(nr);
-    if (size <= 2) return false;
+    
+    if (size <= 2) {
+        return;
+    }
     
     suspended {
         
@@ -1297,5 +1293,4 @@ C64::flash(const FSDevice &fs, isize nr)
     }
     
     msgQueue.put(MSG_FILE_FLASHED);
-    return result;
 }

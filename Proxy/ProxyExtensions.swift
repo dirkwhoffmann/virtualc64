@@ -91,8 +91,29 @@ extension C64Proxy {
         saveRom(type, url: url, error: &err)
         if err != .OK { throw VC64Error(err) }        
     }
-}
+ 
+    func loadSnapshot(_ proxy: SnapshotProxy) throws {
 
+        let exception = ExceptionWrapper()
+        load(fromSnapshot: proxy, exception: exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
+    }
+    
+    func flash(_ proxy: AnyFileProxy) throws {
+
+        let exception = ExceptionWrapper()
+        flash(proxy, exception: exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
+    }
+    
+    func flash(_ proxy: FSDeviceProxy, item: Int) throws {
+
+        let exception = ExceptionWrapper()
+        flash(proxy, item: item, exception: exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
+    }
+}
+    
 extension AnyFileProxy {
     
     @discardableResult

@@ -184,7 +184,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
         case OPT_SID_REVISION:
             
             if (!SIDRevisionEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INV_ARG, SIDRevisionEnum::keyList());
+                throw VC64Error(ERROR_OPT_INVARG, SIDRevisionEnum::keyList());
             }
             
             suspended {
@@ -212,7 +212,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
         case OPT_SID_ENGINE:
             
             if (!SIDEngineEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INV_ARG, SIDEngineEnum::keyList());
+                throw VC64Error(ERROR_OPT_INVARG, SIDEngineEnum::keyList());
             }
 
             suspended {
@@ -224,7 +224,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
         case OPT_SID_SAMPLING:
             
             if (!SamplingMethodEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INV_ARG, SamplingMethodEnum::keyList());
+                throw VC64Error(ERROR_OPT_INVARG, SamplingMethodEnum::keyList());
             }
 
             suspended {

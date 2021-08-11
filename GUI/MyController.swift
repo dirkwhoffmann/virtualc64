@@ -590,10 +590,12 @@ extension MyController {
             }
 
         case .SNAPSHOT_TOO_OLD:
-            VC64Error(.SNP_TOO_OLD).warning("Unable to restore snapshot")
+            track("Unable to restore snapshot (too old)")
+            // VC64Error(.SNP_TOO_OLD).warning("Unable to restore snapshot")
                         
         case .SNAPSHOT_TOO_NEW:
-            VC64Error(.SNP_TOO_NEW).warning("Unable to restore snapshot")
+            track("Unable to restore snapshot (too new)")
+            // VC64Error(.SNP_TOO_NEW).warning("Unable to restore snapshot")
 
         case .AUTO_SNAPSHOT_TAKEN:
             mydocument.snapshots.append(c64.latestAutoSnapshot)

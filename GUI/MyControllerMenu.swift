@@ -315,7 +315,9 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func restoreSnapshotAction(_ sender: Any!) {
         
-        if !restoreLatestSnapshot() {
+        do {
+            try restoreLatestSnapshot()
+        } catch {
             NSSound.beep()
         }
     }

@@ -172,7 +172,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
         case OPT_DRV_TYPE:
         {
             if (!DriveTypeEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INV_ARG, DriveTypeEnum::keyList());
+                throw VC64Error(ERROR_OPT_INVARG, DriveTypeEnum::keyList());
             }
             
             config.type = (DriveType)value;
@@ -181,7 +181,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
         case OPT_DRV_RAM:
         {
             if (!DriveRamEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INV_ARG, DriveRamEnum::keyList());
+                throw VC64Error(ERROR_OPT_INVARG, DriveRamEnum::keyList());
             }
             
             suspended {
@@ -194,7 +194,7 @@ Drive::setConfigItem(Option option, long id, i64 value)
         case OPT_DRV_PARCABLE:
         {
             if (!ParCableTypeEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INV_ARG, ParCableTypeEnum::keyList());
+                throw VC64Error(ERROR_OPT_INVARG, ParCableTypeEnum::keyList());
             }
             
             suspended {

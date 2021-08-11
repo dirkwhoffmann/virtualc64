@@ -188,7 +188,7 @@
 - (void)requestUserSnapshot;
 @property (readonly) SnapshotProxy *latestAutoSnapshot;
 @property (readonly) SnapshotProxy *latestUserSnapshot;
-- (void)loadFromSnapshot:(SnapshotProxy *)proxy;
+- (void)loadFromSnapshot:(SnapshotProxy *)proxy exception:(ExceptionWrapper *)e;
 
 - (NSInteger)getConfig:(Option)opt;
 - (NSInteger)getConfig:(Option)opt id:(NSInteger)id;
@@ -226,8 +226,8 @@
 - (NSString *)romSubTitle:(RomType)type;
 - (NSString *)romRevision:(RomType)type;
 
-- (BOOL)flash:(AnyFileProxy *)container;
-- (BOOL)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr;
+- (void)flash:(AnyFileProxy *)container exception:(ExceptionWrapper *)e;
+- (void)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)e;
 
 @property (readonly) NSInteger cpuLoad;
 

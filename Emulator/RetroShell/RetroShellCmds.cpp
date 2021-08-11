@@ -696,7 +696,7 @@ template <> void
 RetroShell::exec <Token::sid, Token::inspect, Token::state> (Arguments& argv, long param)
 {
     auto value = util::parseNum(argv.front());
-    if (value < 0 || value > 3) throw VC64Error(ERROR_OPT_INV_ARG, "0, 1, 2, or 3");
+    if (value < 0 || value > 3) throw VC64Error(ERROR_OPT_INVARG, "0, 1, 2, or 3");
     dump(sid.getSID(value), dump::State);
 }
 
@@ -704,7 +704,7 @@ template <> void
 RetroShell::exec <Token::sid, Token::inspect, Token::registers> (Arguments& argv, long param)
 {
     auto value = util::parseNum(argv.front());
-    if (value < 0 || value > 3) throw VC64Error(ERROR_OPT_INV_ARG, "0, 1, 2, or 3");
+    if (value < 0 || value > 3) throw VC64Error(ERROR_OPT_INVARG, "0, 1, 2, or 3");
     dump(sid.getSID(value), dump::Registers);
 }
 

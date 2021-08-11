@@ -2280,10 +2280,10 @@
     return [SnapshotProxy make:snapshot];
 }
 
-- (void)loadFromSnapshot:(SnapshotProxy *)proxy
+- (void)loadFromSnapshot:(SnapshotProxy *)proxy exception:(ExceptionWrapper *)e;
 {
     try { [self c64]->loadFromSnapshot((Snapshot *)proxy->obj); }
-    catch (...) { }
+    catch (VC64Error &error) { [e save:error]; }
 }
 
 - (NSInteger)getConfig:(Option)opt
@@ -2531,14 +2531,16 @@
     return RomFile::isPatchedRom(rev);
 }
 
-- (BOOL)flash:(AnyFileProxy *)proxy
+- (void)flash:(AnyFileProxy *)proxy exception:(ExceptionWrapper *)e;
 {
-    return [self c64]->flash((AnyFile *)proxy->obj);
+    try { [self c64]->flash((AnyFile *)proxy->obj); }
+    catch (VC64Error &error) { [e save:error]; }
 }
 
-- (BOOL)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr
+- (void)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)e;
 {
-    return [self c64]->flash(*(FSDevice *)proxy->obj, (unsigned)nr);
+    try { [self c64]->flash(*(FSDevice *)proxy->obj, (unsigned)nr); }
+    catch (VC64Error &error) { [e save:error]; }
 }
 
 - (NSInteger)cpuLoad

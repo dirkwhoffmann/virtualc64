@@ -446,9 +446,9 @@ public:
     //
     
     // Flashes a single file into memory
-    bool flash(AnyFile *file);
-    bool flash(AnyCollection *file, isize item);
-    bool flash(const FSDevice &fs, isize item);
+    void flash(AnyFile *file) throws;
+    void flash(AnyCollection *file, isize item) throws;
+    void flash(const FSDevice &fs, isize item) throws;
     
     //
     // Handling ultimax mode

@@ -111,8 +111,7 @@ public extension MetalView {
             
             if document.proceedWithUnexportedDisk() {
                 DispatchQueue.main.async {
-                    let snap = snapshot
-                    self.parent.c64.flash(snap)
+                    try? self.parent.c64.flash(snapshot!)
                 }
                 return true
             } else {
