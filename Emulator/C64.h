@@ -11,7 +11,7 @@
 
 #include "C64Types.h"
 #include "MsgQueue.h"
-#include "Thread.h"
+#include "SuspendableThread.h"
 
 // Sub components
 #include "ExpansionPort.h"
@@ -62,7 +62,7 @@
  * Please note that most subcomponents have their own public API. E.g., to
  * query information from VICII, you need to invoke a method on c64.vicii.
  */
-class C64 : public Thread {
+class C64 : public SuspendableThread {
                 
     // The component which is currently observed by the debugger
     InspectionTarget inspectionTarget;

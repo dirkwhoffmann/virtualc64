@@ -298,27 +298,6 @@ Thread::halt(bool blocking)
 }
 
 void
-Thread::suspend()
-{
-    debug(RUN_DEBUG, "Suspending (%zu)...\n", suspendCounter);
-    
-    if (suspendCounter || isRunning()) {
-        pause();
-        suspendCounter++;
-    }
-}
-
-void
-Thread::resume()
-{
-    debug(RUN_DEBUG, "Resuming (%zu)...\n", suspendCounter);
-    
-    if (suspendCounter && --suspendCounter == 0) {
-        run();
-    }
-}
-
-void
 Thread::warpOn(bool blocking)
 {
     if (!warpLock) changeWarpTo(true, blocking);

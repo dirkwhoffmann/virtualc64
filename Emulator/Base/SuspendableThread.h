@@ -12,14 +12,49 @@
 #include "Thread.h"
 
 /* This class extends the Thread class by a suspend-resume mechanism for
- * pausing the thread temporarily. This is useful in all cases where an
- * operation cannot be performed on a running emulator thread. Such critical
- * code sections can be embedded in a suspend / resume block like so:
+ * pausing the thread temporarily. This functionality is utilized frequently
+ * by the GUI to perform atomic state-change operations that require a paused
+ * emulator. Such code sections can be embedded in a suspend / resume block
+ * like this:
  *
- *            suspend();
- *            do something with the internal state;
- *            resume();
+ *        suspend();
+ *        do something with the internal state;
+ *        resume();
  *
  * It it safe to nest multiple suspend() / resume() blocks. It is essential
- * that each
+ * that each call to suspend() must be followed by a call to resume() which
+ * means that the function must not exit in the middle of the block. An
+ * exit-safe version is provided by the "suspended" macro which is the
+ * recommended way to safely pause the emulator:
+ *
+ *        suspended {
+ *            do something with the internal state;
+ *        }
  */
+
+class SuspendableThread : public Thread {
+    
+private:
+    
+    isize suspendCounter = 0;
+
+public:
+
+    void suspend() override;
+    void resume() override;
+};
+
+class AutoResume {
+
+    C64Component *comp;
+    
+public:
+
+    bool active = true;
+
+    AutoResume(C64Component *c) : comp(c) { comp->suspend(); }
+    ~AutoResume() { comp->resume(); }
+};
+
+#define suspended \
+for (AutoResume _ar(this); _ar.active; _ar.active = false)
