@@ -11,10 +11,39 @@
 
 #include "Error.h"
 
-/* Base class for all C64 objects. This class contains a textual description
- * of the object and offers several functions for printing debug and warning
- * messages.
+/* Object model:
+ *
+ * ------------------
+ * |   C64Object    |
+ * ------------------
+ *         |
+ * ------------------
+ * |  C64Component  |
+ * ------------------
+ *         |
+ *         |   ------------------   ---------------------   ----------------
+ *         |-->|     Thread     |-->| SuspendableThread |-->|     C64      |
+ *         |   ------------------   ---------------------   ----------------
+ *         |   ------------------
+ *         |-->|  SubComponent  |
+ *             ------------------
+ *
+ * C64Object is the base class for all C64 related classes. It provides a
+ * a textual description for the object as well as functions for printing
+ * debug messages and warnings.
+ *
+ * C64Component defines the base functionality of all hardware components. It
+ * comprises functions for initializing, configuring, and serializing the
+ * object, as well as functions for powering up and down, running and
+ * pausing. Furthermore, a 'synchronized' macro is provided to prevent mutual
+ * execution of certain code components.
+ *
+ * Thread adds the ability to run the component asynchroneously. It implements
+ * the emulator's state model (off, paused, running). SuspendableThread extends
+ * the Thread class with the suspend/resume mechanism which can be utilized to
+ * pause the emulator temporarily.
  */
+
 class C64Object {
                              
     //

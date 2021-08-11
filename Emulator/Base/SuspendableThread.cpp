@@ -30,4 +30,3 @@ SuspendableThread::resume()
         run();
     }
 }
-
