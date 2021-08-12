@@ -429,8 +429,7 @@ public:
     
     // Installs a Rom
     void loadRom(const string &path) throws;
-    // void loadRom(const string &path, ErrorCode *ec);
-    void loadRom(RomFile *file);
+    void loadRom(const RomFile &file);
     
     // Erases an installed Rom
     void deleteRom(RomType type);

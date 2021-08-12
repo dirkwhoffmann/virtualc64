@@ -1248,19 +1248,18 @@ void
 C64::loadRom(const string &path)
 {
     RomFile *file = RomFile::make <RomFile> (path.c_str());
-    loadRom(file);
+    loadRom(*file);
+    delete file;
 }
 
 void
-C64::loadRom(RomFile *file)
+C64::loadRom(const RomFile &file)
 {
-    assert(file);
-    
-    switch (file->type()) {
+    switch (file.type()) {
             
         case FILETYPE_BASIC_ROM:
             
-            file->flash(mem.rom, 0xA000);
+            file.flash(mem.rom, 0xA000);
             debug(MEM_DEBUG, "Basic Rom flashed\n");
             debug(MEM_DEBUG, "hasMega65Rom() = %d\n", hasMega65Rom(ROM_TYPE_BASIC));
             debug(MEM_DEBUG, "mega65BasicRev() = %s\n", mega65BasicRev());
@@ -1268,13 +1267,13 @@ C64::loadRom(RomFile *file)
             
         case FILETYPE_CHAR_ROM:
             
-            file->flash(mem.rom, 0xD000);
+            file.flash(mem.rom, 0xD000);
             debug(MEM_DEBUG, "Character Rom flashed\n");
             break;
             
         case FILETYPE_KERNAL_ROM:
             
-            file->flash(mem.rom, 0xE000);
+            file.flash(mem.rom, 0xE000);
             debug(MEM_DEBUG, "Kernal Rom flashed\n");
             debug(MEM_DEBUG, "hasMega65Rom() = %d\n", hasMega65Rom(ROM_TYPE_KERNAL));
             debug(MEM_DEBUG, "mega65KernalRev() = %s\n", mega65KernalRev());
@@ -1282,8 +1281,8 @@ C64::loadRom(RomFile *file)
             
         case FILETYPE_VC1541_ROM:
             
-            drive8.mem.loadRom(file->data, file->size);
-            drive9.mem.loadRom(file->data, file->size);
+            drive8.mem.loadRom(file.data, file.size);
+            drive9.mem.loadRom(file.data, file.size);
             debug(MEM_DEBUG, "VC1541 Rom flashed\n");
             break;
             

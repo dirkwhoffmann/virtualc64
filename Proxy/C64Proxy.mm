@@ -2414,7 +2414,7 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 
 - (void) loadRom:(RomFileProxy *)proxy
 {
-    [self c64]->loadRom((RomFile *)proxy->obj);
+    [self c64]->loadRom(*(RomFile *)proxy->obj);
 }
 
 - (void) saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)e
