@@ -608,7 +608,7 @@ C64::execute()
     }
 }
 
-bool
+void
 C64::_isReady() const
 {
     bool mega = hasMega65Rom(ROM_TYPE_BASIC) && hasMega65Rom(ROM_TYPE_KERNAL);
@@ -624,9 +624,7 @@ C64::_isReady() const
     }
     if (FORCE_MEGA64_MISMATCH || (mega && string(mega65BasicRev()) != string(mega65KernalRev()))) {
         throw VC64Error(ERROR_ROM_MEGA65_MISMATCH);
-    }
-    
-    return true;
+    }    
 }
 
 void

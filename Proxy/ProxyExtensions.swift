@@ -85,6 +85,13 @@ extension Proxy {
 
 extension C64Proxy {
 
+    func isReady() throws {
+        
+        let exception = ExceptionWrapper()
+        isReady(exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
+    }
+
     func powerOn() throws {
         
         let exception = ExceptionWrapper()

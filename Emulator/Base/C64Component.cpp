@@ -98,11 +98,11 @@ C64Component::save(u8 *buffer)
     return ptr - buffer;
 }
 
-bool
+void
 C64Component::isReady() const
 {
-    for (auto c : subComponents) { if (!c->isReady()) return false; }
-    return _isReady();
+    for (auto c : subComponents) { c->isReady(); }
+    _isReady();
 }
 
 void

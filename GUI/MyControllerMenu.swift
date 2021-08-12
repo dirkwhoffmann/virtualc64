@@ -465,17 +465,17 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func powerAction(_ sender: Any!) {
         
-        var error = ErrorCode.OK
-
         if c64.poweredOn {
             c64.powerOff()
             return
         }
         
-        if c64.isReady(&error) {
-            try? c64.run()
-        } else {
-            VC64Error(error).warning("Unable to power up the emulator")
+        do {
+            try c64.run()
+        } catch let error as VC64Error {
+            error.warning("Unable to power up the emulator")
+        } catch {
+            fatalError()
         }
     }
      

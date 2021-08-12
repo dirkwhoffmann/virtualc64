@@ -172,8 +172,7 @@
 @property (readonly) BOOL running;
 @property (readonly) BOOL paused;
 
-- (BOOL)isReady:(ErrorCode *)ec;
-- (BOOL)isReady;
+- (void)isReady:(ExceptionWrapper *)e;
 - (void)powerOn:(ExceptionWrapper *)e;
 - (void)powerOff;
 - (void)run:(ExceptionWrapper *)e;

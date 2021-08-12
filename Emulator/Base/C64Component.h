@@ -173,9 +173,11 @@ public:
     virtual void suspend() = 0;
     virtual void resume() = 0;
 
+    // Throws an exception if the emulator is not ready to power on
+    void isReady() const throws;
+
 protected:
-    
-    bool isReady() const throws;
+        
     void powerOn();
     void powerOff();
     void run();
@@ -190,7 +192,7 @@ protected:
     void warpOnOff(bool value) { value ? warpOn() : warpOff(); }
     void debugOnOff(bool value) { value ? debugOn() : debugOff(); }
 
-    virtual bool _isReady() const throws { return true; }
+    virtual void _isReady() const throws { }
     virtual void _powerOn() { }
     virtual void _powerOff() { }
     virtual void _run() { }

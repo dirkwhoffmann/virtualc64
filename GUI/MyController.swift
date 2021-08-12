@@ -242,13 +242,14 @@ extension MyController {
         // Process attachment (if any)
         try? mydocument.mountAttachment()
 
-        // Check if the C64 is ready to power on
-        if c64.isReady() {
+        do {
+            // Let the C64 throw an exception if it is not ready to power on
+            try c64.isReady()
             
             // Switch on and launch the emulator thread
-            try? c64.run()
+            try c64.run()
 
-        } else {
+        } catch {
             
             // Open the Rom dialog
             openConfigurator(tab: "Roms")

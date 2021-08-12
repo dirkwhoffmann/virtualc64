@@ -210,9 +210,9 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var vidPowerButton: NSButton!
     
     var bootable: Bool {
-        let off   = c64.poweredOff
-        let ready = c64.isReady()
-        return off && ready
+        
+        do { try c64.isReady(); } catch { return false }
+        return c64.poweredOff
     }
 
     // The tab to open first

@@ -2195,22 +2195,10 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     [self c64]->softReset();
 }
 
-- (BOOL)isReady:(ErrorCode *)ec
+- (void)isReady:(ExceptionWrapper *)e
 {
-    try {
-        *ec = ERROR_OK;
-        [self c64]->isReady();
-        return true;
-    } catch (const VC64Error &exc) {
-        *ec = exc.data;
-        return false;
-    }
-}
-
-- (BOOL)isReady
-{
-    ErrorCode ec;
-    return [self isReady:&ec];
+    try { [self c64]->isReady(); }
+    catch (VC64Error &error) { [e save:error]; }
 }
 
 - (void)powerOn:(ExceptionWrapper *)e

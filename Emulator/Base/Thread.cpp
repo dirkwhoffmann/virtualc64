@@ -239,8 +239,11 @@ Thread::powerOn(bool blocking)
     // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
     
-    if (isPoweredOff() && isReady()) {
+    if (isPoweredOff()) {
         
+        // Throw an exception if the emulator is not ready to power on
+        isReady();
+
         // Request a state change and wait until the new state has been reached
         changeStateTo(EXEC_PAUSED, blocking);
     }
@@ -269,7 +272,10 @@ Thread::run(bool blocking)
     // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
     
-    if (!isRunning() && isReady()) {
+    if (!isRunning()) {
+        
+        // Throw an exception if the emulator is not ready to power on
+        isReady();
         
         // Request a state change and wait until the new state has been reached
         changeStateTo(EXEC_RUNNING, blocking);

@@ -277,7 +277,7 @@ private:
         
 private:
 
-    bool _isReady() const override;
+    void _isReady() const override;
     void _powerOn() override;
     void _powerOff() override;
     void _run() override;
