@@ -393,12 +393,12 @@ public:
      * the currently inserted disk halfway out before it is removed completely,
      * and pushing the new disk halfway in before it is inserted completely.
      */
-    void insertDisk(const string &path, bool wp);
+    void insertDisk(const string &path, bool wp) throws;
     void insertDisk(Disk *otherDisk, bool wp);
     void insertNewDisk(DOSType fstype);
     void insertNewDisk(DOSType fstype, PETName<16> name);
-    void insertFileSystem(class FSDevice *device, bool wp);
-    void insertG64(G64File *g64, bool wp);
+    void insertFileSystem(const class FSDevice &device, bool wp);
+    void insertG64(const G64File &g64, bool wp);
     void insertDisk(AnyCollection &archive, bool wp);
     void ejectDisk();
 

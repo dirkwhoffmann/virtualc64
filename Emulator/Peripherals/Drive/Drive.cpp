@@ -675,7 +675,7 @@ Drive::setModifiedDisk(bool value)
 void
 Drive::insertDisk(const string &path, bool wp)
 {
-    auto disk = Disk::make(c64, path);
+    auto disk = new Disk(c64, path);
     
     if (disk) {
         insertDisk(disk, wp);
@@ -710,29 +710,29 @@ Drive::insertNewDisk(DOSType fsType)
 void
 Drive::insertNewDisk(DOSType fsType, PETName<16> name)
 {
-    Disk *newDisk = Disk::make(c64, fsType, name);
+    Disk *newDisk = new Disk(c64, fsType, name);
     insertDisk(newDisk, false);
 }
 
 void
-Drive::insertFileSystem(FSDevice *device, bool wp)
+Drive::insertFileSystem(const FSDevice &device, bool wp)
 {
-    debug(DSKCHG_DEBUG, "insertFileSystem(%p)\n", device);
-    insertDisk(Disk::makeWithFileSystem(c64, *device), wp);
+    debug(DSKCHG_DEBUG, "insertFileSystem()\n");
+    insertDisk(new Disk(c64, device), wp);
 }
 
 void
-Drive::insertG64(G64File *g64, bool wp)
+Drive::insertG64(const G64File &g64, bool wp)
 {
-    debug(DSKCHG_DEBUG, "insertG64(%p)\n", g64);
-    insertDisk(Disk::makeWithG64(c64, g64), wp);
+    debug(DSKCHG_DEBUG, "insertG64()\n");
+    insertDisk(new Disk(c64, g64), wp);
 }
 
 void
 Drive::insertDisk(AnyCollection &collection, bool wp)
 {
     debug(DSKCHG_DEBUG, "insertDisk(collection)\n");
-    insertDisk(Disk::makeWithCollection(c64, collection), wp);
+    insertDisk(new Disk(c64, collection), wp);
 }
 
 void 
@@ -807,7 +807,7 @@ Drive::executeStateTransition()
             
             // Inform listeners
             msgQueue.put(MSG_DISK_EJECT,
-                           config.pan << 24 | config.ejectVolume << 16 | halftrack << 8 | deviceNr);
+                         config.pan << 24 | config.ejectVolume << 16 | halftrack << 8 | deviceNr);
             
             // Schedule the next transition
             diskChangeCounter = config.swapDelay;
@@ -847,7 +847,7 @@ Drive::executeStateTransition()
 
             // Inform listeners
             msgQueue.put(MSG_DISK_INSERT,
-                           config.pan << 24 | config.insertVolume << 16 | halftrack << 8 | deviceNr);
+                         config.pan << 24 | config.insertVolume << 16 | halftrack << 8 | deviceNr);
             return;
         }
         default:

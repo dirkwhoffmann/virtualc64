@@ -1012,12 +1012,12 @@
 
 - (void)insertG64:(G64FileProxy *)proxy protected:(BOOL)wp
 {
-    [self drive]->insertG64((G64File *)proxy->obj, wp);
+    [self drive]->insertG64(*(G64File *)proxy->obj, wp);
 }
 
 - (void)insertFileSystem:(FSDeviceProxy *)proxy protected:(BOOL)wp;
 {
-    [self drive]->insertFileSystem((FSDevice *)proxy->obj, wp);
+    [self drive]->insertFileSystem(*(FSDevice *)proxy->obj, wp);
 }
 
 - (void)insertNewDisk:(DOSType)fsType
