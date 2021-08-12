@@ -342,6 +342,7 @@ C64::revertToFactorySettings()
 void
 C64::setConfigItem(Option option, i64 value)
 {
+    /*
     switch (option) {
             
         case OPT_VIC_REVISION:
@@ -359,6 +360,7 @@ C64::setConfigItem(Option option, i64 value)
         default:
             return;
     }
+    */
 }
 
 void

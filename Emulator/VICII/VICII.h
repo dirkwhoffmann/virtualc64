@@ -602,9 +602,13 @@ public:
     i64 getConfigItem(Option option) const;
     void setConfigItem(Option option, i64 value) override;
 
-    VICIIRevision getRevision() const { return config.revision; }    
+    // [[deprecated]] VICIIRevision getRevision() const { return config.revision; }    
+
+private:
+    
     void setRevision(VICIIRevision revision);
-        
+    void setSpeed(VICIISpeed speed);
+
 
     //
     // Analyzing

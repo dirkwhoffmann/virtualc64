@@ -211,13 +211,13 @@ public:
         
     // Powers off and resets the emulator to it's initial state
     void revertToFactorySettings();
-    
-private:
-
-    void setConfigItem(Option option, i64 value) override;
 
     // Updates the clock frequency and all variables derived from it
     void updateClockFrequency(VICIIRevision rev, VICIISpeed speed);
+
+private:
+
+    void setConfigItem(Option option, i64 value) override;
 
     
     //

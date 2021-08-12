@@ -154,6 +154,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
         
     switch (option) {
             
+        /*
         case OPT_VIC_REVISION:
         {
             auto rev = (VICIIRevision)value;
@@ -175,7 +176,8 @@ SIDBridge::setConfigItem(Option option, i64 value)
             suspended { setClockFrequency((u32)newFrequency); }
             return;
         }
-
+        */
+            
         case OPT_SID_POWER_SAVE:
             
             suspended { config.powerSave = value; }

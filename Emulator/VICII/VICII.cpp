@@ -197,9 +197,7 @@ VICII::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INVARG, VICIIRevisionEnum::keyList());
             }
             
-            suspended {
-                setRevision((VICIIRevision)value);
-            }
+            setRevision((VICIIRevision)value);
             return;
 
         case OPT_VIC_SPEED:
@@ -208,10 +206,7 @@ VICII::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INVARG, VICIISpeedEnum::keyList());
             }
             
-            suspended {
-                // TODO: setSpeed(...)
-                config.speed = value;
-            }
+            setSpeed((VICIISpeed)value);
             return;
 
         case OPT_VIC_POWER_SAVE:
@@ -303,36 +298,58 @@ VICII::setRevision(VICIIRevision revision)
     
     debug(VIC_DEBUG, "setRevision(%s)\n", VICIIRevisionEnum::key(revision));
 
-    /* If the VICII revision is changed while the emulator is powered on, some
-     * precautions must be taken. First, we interrupt a running screen capture.
-     * After that, we move the emulator to a safe spot by finishing the current
-     * frame.
-     */
-    if (isPoweredOn()) {
-        recorder.stopRecording();
-        c64.finishFrame();
+    suspended {
+        
+        /* If the VICII revision is changed while the emulator is powered on,
+         * we take some precautions. Firstly, we interrupt a running screen
+         * capture. Secondly, we move the emulator to a safe spot by finishing
+         * the current frame.
+         */
+        if (isPoweredOn()) {
+            recorder.stopRecording();
+            c64.finishFrame();
+        }
+        
+        config.revision = revision;
+        isFirstDMAcycle = isSecondDMAcycle = 0;
+        updatePalette();
+        resetEmuTextures();
+        resetDmaTextures();
+        vic.updateVicFunctionTable();
+        
+        isPAL =
+        revision == VICII_PAL_6569_R1 ||
+        revision == VICII_PAL_6569_R3 ||
+        revision == VICII_PAL_8565;
+        
+        is856x =
+        revision == VICII_PAL_8565 ||
+        revision == VICII_NTSC_8562;
+        
+        isNTSC = !isPAL;
+        is656x = !is856x;
+        
+        // Update other components
+        isize newFrequency = VICII::getFrequency();
+        sid.setClockFrequency((u32)newFrequency);
+        c64.updateClockFrequency(config.revision, config.speed);
     }
     
-    config.revision = revision;
-    isFirstDMAcycle = isSecondDMAcycle = 0;
-    updatePalette();
-    resetEmuTextures();
-    resetDmaTextures();
-    vic.updateVicFunctionTable();
-    
-    isPAL =
-    revision == VICII_PAL_6569_R1 ||
-    revision == VICII_PAL_6569_R3 ||
-    revision == VICII_PAL_8565;
-
-    is856x =
-    revision == VICII_PAL_8565 ||
-    revision == VICII_NTSC_8562;
-
-    isNTSC = !isPAL;
-    is656x = !is856x;
-        
     msgQueue.put(isPAL ? MSG_PAL : MSG_NTSC);
+}
+
+void
+VICII::setSpeed(VICIISpeed speed)
+{
+    suspended {
+        
+        config.speed = speed;
+        
+        // Update other components
+        isize newFrequency = VICII::getFrequency();
+        sid.setClockFrequency((u32)newFrequency);
+        c64.updateClockFrequency(config.revision, config.speed);
+    }
 }
 
 void
