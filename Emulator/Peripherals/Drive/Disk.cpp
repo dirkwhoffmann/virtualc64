@@ -165,25 +165,15 @@ Disk::makeWithG64(C64 &ref, const G64File &g64)
 Disk *
 Disk::makeWithD64(C64 &ref, const D64File &d64)
 {
-    FSDevice *fs = FSDevice::makeWithD64(d64);
-    assert(fs);
-    
-    Disk *disk = makeWithFileSystem(ref, *fs);
-    delete fs;
-    
-    return disk;
+    std::unique_ptr<FSDevice> fs(FSDevice::makeWithD64(d64));
+    return makeWithFileSystem(ref, *fs);
 }
 
 Disk *
 Disk::makeWithCollection(C64 &ref, AnyCollection &collection)
 {
-    FSDevice *fs = FSDevice::makeWithCollection(collection);
-    assert(fs);
-    
-    Disk *disk = makeWithFileSystem(ref, *fs);
-    delete fs;
-    
-    return disk;
+    std::unique_ptr<FSDevice> fs(FSDevice::makeWithCollection(collection));
+    return makeWithFileSystem(ref, *fs);
 }
 
 Disk::Disk(C64 &ref) : SubComponent(ref)

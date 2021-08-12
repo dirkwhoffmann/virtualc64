@@ -158,7 +158,7 @@ FSDevice::makeWithFolder(const string &path)
 FSDevice::FSDevice(u32 capacity)
 {
     debug(FS_DEBUG, "Creating device with %d blocks\n", capacity);
-    
+
     // Initialize the block storage
     blocks.reserve(capacity);
     blocks.assign(capacity, 0);
