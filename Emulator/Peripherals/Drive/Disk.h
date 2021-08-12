@@ -166,12 +166,12 @@ public:
     
 public:
     
-    [[deprecated]] static Disk *make(C64 &ref, const string &path) throws;
-    [[deprecated]] static Disk *make(C64 &ref, DOSType type, PETName<16> name);
-    [[deprecated]] static Disk *makeWithFileSystem(C64 &ref, class FSDevice &device);
-    [[deprecated]] static Disk *makeWithG64(C64 &ref, G64File *g64);
-    [[deprecated]] static Disk *makeWithD64(C64 &ref, D64File *d64) throws;
-    [[deprecated]] static Disk *makeWithCollection(C64 &ref, AnyCollection &archive) throws;
+    static Disk *make(C64 &ref, const string &path) throws;
+    static Disk *make(C64 &ref, DOSType type, PETName<16> name);
+    static Disk *makeWithFileSystem(C64 &ref, const class FSDevice &device);
+    static Disk *makeWithG64(C64 &ref, const G64File &g64);
+    static Disk *makeWithD64(C64 &ref, const D64File &d64) throws;
+    static Disk *makeWithCollection(C64 &ref, AnyCollection &archive) throws;
 
 
     //
@@ -181,21 +181,6 @@ public:
 public:
     
     Disk(C64 &ref);
-
-    Disk(C64 &ref, const string &path) throws;
-    Disk(C64 &ref, DOSType type, PETName<16> name);
-    Disk(C64 &ref, const class FSDevice &device);
-    Disk(C64 &ref, const G64File &g64);
-    Disk(C64 &ref, const D64File &d64) throws;
-    Disk(C64 &ref, AnyCollection &collection) throws;
-
-    void init(C64 &ref, const string &path) throws;
-    void init(C64 &ref, DOSType type, PETName<16> name);
-    void init(C64 &ref, const class FSDevice &device);
-    void init(C64 &ref, const G64File &g64);
-    void init(C64 &ref, const D64File &d64) throws;
-    void init(C64 &ref, AnyCollection &collection) throws;
-    
     const char *getDescription() const override { return "Disk"; }
     
 private:

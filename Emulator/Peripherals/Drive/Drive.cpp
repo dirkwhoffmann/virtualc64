@@ -675,7 +675,7 @@ Drive::setModifiedDisk(bool value)
 void
 Drive::insertDisk(const string &path, bool wp)
 {
-    auto disk = new Disk(c64, path);
+    auto disk = Disk::make(c64, path);
     
     if (disk) {
         insertDisk(disk, wp);
@@ -710,7 +710,7 @@ Drive::insertNewDisk(DOSType fsType)
 void
 Drive::insertNewDisk(DOSType fsType, PETName<16> name)
 {
-    Disk *newDisk = new Disk(c64, fsType, name);
+    Disk *newDisk = Disk::make(c64, fsType, name);
     insertDisk(newDisk, false);
 }
 
@@ -718,21 +718,21 @@ void
 Drive::insertFileSystem(const FSDevice &device, bool wp)
 {
     debug(DSKCHG_DEBUG, "insertFileSystem()\n");
-    insertDisk(new Disk(c64, device), wp);
+    insertDisk(Disk::makeWithFileSystem(c64, device), wp);
 }
 
 void
 Drive::insertG64(const G64File &g64, bool wp)
 {
     debug(DSKCHG_DEBUG, "insertG64()\n");
-    insertDisk(new Disk(c64, g64), wp);
+    insertDisk(Disk::makeWithG64(c64, g64), wp);
 }
 
 void
 Drive::insertDisk(AnyCollection &collection, bool wp)
 {
     debug(DSKCHG_DEBUG, "insertDisk(collection)\n");
-    insertDisk(new Disk(c64, collection), wp);
+    insertDisk(Disk::makeWithCollection(c64, collection), wp);
 }
 
 void 
