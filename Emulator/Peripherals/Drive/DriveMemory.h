@@ -113,7 +113,7 @@ public:
     void deleteRom();
     
     // Loads a Rom
-    void loadRom(const RomFile *file);
+    void loadRom(const RomFile &file);
     void loadRom(const u8 *buf, isize size);
     
     // Saves the currently installed Rom

@@ -388,10 +388,8 @@ public:
     Snapshot *latestAutoSnapshot();
     Snapshot *latestUserSnapshot();
     
-    /* Loads the current state from a snapshot file. This function is not
-     * thread-safe and must not be called on a running emulator.
-     */
-    void loadFromSnapshot(Snapshot *snapshot) throws;
+    // Loads the current state from a snapshot file
+    void loadFromSnapshot(const Snapshot &snapshot) throws;
     
     
     //
@@ -439,7 +437,6 @@ public:
     
     // Saves a Rom to disk
     void saveRom(RomType rom, const string &path) throws;
-    // void saveRom(RomType rom, const string &path, ErrorCode *ec);
 
     
     //
@@ -447,8 +444,8 @@ public:
     //
     
     // Flashes a single file into memory
-    void flash(AnyFile *file) throws;
-    void flash(AnyCollection *file, isize item) throws;
+    void flash(const AnyFile &file) throws;
+    void flash(const AnyCollection &file, isize item) throws;
     void flash(const FSDevice &fs, isize item) throws;
     
     //

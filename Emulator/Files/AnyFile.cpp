@@ -113,7 +113,7 @@ AnyFile::strip(isize count)
 }
 
 void
-AnyFile::flash(u8 *buffer, isize offset)
+AnyFile::flash(u8 *buffer, isize offset) const
 {
     assert(buffer);
     memcpy(buffer + offset, data, size);

@@ -86,7 +86,7 @@ RetroShell::exec <Token::regression, Token::run> (Arguments &argv, long param)
     if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
 
     PRGFile *file = AnyFile::make <PRGFile> (path);
-    c64.flash(file, 0);
+    c64.flash(*file, 0);
     delete file;
     
     keyboard.autoType("run\n");
@@ -249,7 +249,7 @@ RetroShell::exec <Token::memory, Token::flash> (Arguments& argv, long param)
     if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
 
     PRGFile *file = AnyFile::make <PRGFile> (argv.front());
-    c64.flash(file, 0);
+    c64.flash(*file, 0);
     delete file;
 }
 

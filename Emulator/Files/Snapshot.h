@@ -98,7 +98,7 @@ public:
     const Thumbnail &getThumbnail() const { return getHeader()->screenshot; }
 
     // Returns pointer to the core data
-    u8 *getData() { return data + sizeof(SnapshotHeader); }
+    u8 *getData() const { return data + sizeof(SnapshotHeader); }
     
     // Queries time and screenshot properties
     /*

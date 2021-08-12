@@ -270,7 +270,7 @@
 - (NSInteger)loggedPCRel:(NSInteger)nr;
 - (NSInteger)loggedPCAbs:(NSInteger)nr;
 - (void)clearLog;
-- (bool)isJammed;
+- (BOOL)isJammed;
 
 - (void)setHex;
 - (void)setDec;

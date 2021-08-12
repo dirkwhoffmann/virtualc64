@@ -202,7 +202,7 @@
     [self cpu]->debugger.clearLog();
 }
 
-- (bool)isJammed
+- (BOOL)isJammed
 {
     return [self cpu]->isJammed();
 }
@@ -2277,7 +2277,7 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 
 - (void)loadFromSnapshot:(SnapshotProxy *)proxy exception:(ExceptionWrapper *)e;
 {
-    try { [self c64]->loadFromSnapshot((Snapshot *)proxy->obj); }
+    try { [self c64]->loadFromSnapshot(*(Snapshot *)proxy->obj); }
     catch (VC64Error &error) { [e save:error]; }
 }
 
@@ -2520,7 +2520,7 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 
 - (void)flash:(AnyFileProxy *)proxy exception:(ExceptionWrapper *)e;
 {
-    try { [self c64]->flash((AnyFile *)proxy->obj); }
+    try { [self c64]->flash(*(AnyFile *)proxy->obj); }
     catch (VC64Error &error) { [e save:error]; }
 }
 

@@ -976,25 +976,22 @@ C64::latestUserSnapshot()
 }
 
 void
-C64::loadFromSnapshot(Snapshot *snapshot)
+C64::loadFromSnapshot(const Snapshot &snapshot)
 {
-    assert(snapshot && snapshot->getData());
     assert(!isRunning());
 
     // Check if this snapshot is compatible with the emulator
-    if (snapshot->isTooOld() || FORCE_SNAPSHOT_TOO_OLD) {
-        msgQueue.put(MSG_SNAPSHOT_TOO_OLD);
+    if (snapshot.isTooOld() || FORCE_SNAPSHOT_TOO_OLD) {
         throw VC64Error(ERROR_SNP_TOO_OLD);
     }
-    if (snapshot->isTooNew() || FORCE_SNAPSHOT_TOO_NEW) {
-        msgQueue.put(MSG_SNAPSHOT_TOO_NEW);
+    if (snapshot.isTooNew() || FORCE_SNAPSHOT_TOO_NEW) {
         throw VC64Error(ERROR_SNP_TOO_NEW);
     }
     
     suspended {
         
         // Restore the saved state
-        load(snapshot->getData());
+        load(snapshot.getData());
         
         // Clear the keyboard matrix to avoid constantly pressed keys
         keyboard.releaseAll();
@@ -1370,43 +1367,32 @@ C64::saveRom(RomType type, const string &path)
     }
 }
 
-/*
 void
-C64::saveRom(RomType type, const string &path, ErrorCode *ec)
+C64::flash(const AnyFile &file)
 {
-    try { saveRom(type, path); *ec = ERROR_OK; }
-    catch (VC64Error &exception) { *ec = exception.data; }
-}
-*/
-
-void
-C64::flash(AnyFile *file)
-{
-    assert(file);
-        
     suspended {
         
-        switch (file->type()) {
+        switch (file.type()) {
                 
             case FILETYPE_BASIC_ROM:
-                file->flash(mem.rom, 0xA000);
+                file.flash(mem.rom, 0xA000);
                 break;
                 
             case FILETYPE_CHAR_ROM:
-                file->flash(mem.rom, 0xD000);
+                file.flash(mem.rom, 0xD000);
                 break;
                 
             case FILETYPE_KERNAL_ROM:
-                file->flash(mem.rom, 0xE000);
+                file.flash(mem.rom, 0xE000);
                 break;
                 
             case FILETYPE_VC1541_ROM:
-                drive8.mem.loadRom((RomFile *)file);
-                drive9.mem.loadRom((RomFile *)file);
+                drive8.mem.loadRom(dynamic_cast<const RomFile &>(file));
+                drive9.mem.loadRom(dynamic_cast<const RomFile &>(file));
                 break;
-                
+
             case FILETYPE_V64:
-                loadFromSnapshot((Snapshot *)file);
+                loadFromSnapshot(dynamic_cast<const Snapshot &>(file));
                 break;
                 
             default:
@@ -1416,15 +1402,15 @@ C64::flash(AnyFile *file)
 }
 
 void
-C64::flash(AnyCollection *file, isize nr)
+C64::flash(const AnyCollection &file, isize nr)
 {
-    u16 addr = (u16)file->itemLoadAddr(nr);
-    u64 size = (u64)file->itemSize(nr);
+    u16 addr = (u16)file.itemLoadAddr(nr);
+    u64 size = (u64)file.itemSize(nr);
     if (size <= 2) return;
     
     suspended {
         
-        switch (file->type()) {
+        switch (file.type()) {
                 
             case FILETYPE_D64:
             case FILETYPE_T64:
@@ -1433,7 +1419,7 @@ C64::flash(AnyCollection *file, isize nr)
             case FILETYPE_FOLDER:
                 
                 size = std::min(size - 2, (u64)(0x10000 - addr));
-                file->copyItem(nr, mem.ram + addr, size, 2);
+                file.copyItem(nr, mem.ram + addr, size, 2);
                 break;
                 
             default:

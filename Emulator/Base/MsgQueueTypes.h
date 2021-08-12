@@ -105,8 +105,6 @@ enum_long(MSG)
     MSG_SHAKING,
     
     // Snapshots
-    MSG_SNAPSHOT_TOO_OLD,
-    MSG_SNAPSHOT_TOO_NEW,
     MSG_AUTO_SNAPSHOT_TAKEN,
     MSG_USER_SNAPSHOT_TAKEN,
     MSG_SNAPSHOT_RESTORED,
@@ -211,8 +209,6 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
 
             case MSG_SHAKING:              return "SHAKING";
                 
-            case MSG_SNAPSHOT_TOO_OLD:     return "SNAPSHOT_TOO_OLD";
-            case MSG_SNAPSHOT_TOO_NEW:     return "SNAPSHOT_TOO_NEW";
             case MSG_AUTO_SNAPSHOT_TAKEN:  return "AUTO_SNAPSHOT_TAKEN";
             case MSG_USER_SNAPSHOT_TAKEN:  return "USER_SNAPSHOT_TAKEN";
             case MSG_SNAPSHOT_RESTORED:    return "SNAPSHOT_RESTORED";

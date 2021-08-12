@@ -116,10 +116,9 @@ DriveMemory::deleteRom()
 }
 
 void
-DriveMemory::loadRom(const RomFile *file)
+DriveMemory::loadRom(const RomFile &file)
 {
-    assert(file != nullptr);
-    loadRom(file->data, file->size);
+    loadRom(file.data, file.size);
 }
 
 void
