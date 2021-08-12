@@ -913,215 +913,6 @@
 @end
 
 //
-// FSDevice
-//
-
-@implementation FSDeviceProxy
-
-+ (instancetype)make:(FSDevice *)fs
-{
-    return fs ? [[self alloc] initWith: fs] : nil;
-}
-
-+ (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err;
-{
-    FSDevice *fs = FSDevice::makeWithDisk(*(Disk *)proxy->obj, err);
-    return [self make:fs];
-}
-
-+ (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy error:(ErrorCode *)err;
-{
-    FSDevice *volume = FSDevice::makeWithCollection(*(AnyCollection *)proxy->obj, err);
-    return [self make:volume];
-}
-
-+ (instancetype)makeWithD64:(D64FileProxy *)proxy error:(ErrorCode *)err;
-{
-    FSDevice *fs = FSDevice::makeWithD64(*(D64File *)proxy->obj, err);
-    return [self make:fs];
-}
-
-- (FSDevice *)fs
-{
-    return (FSDevice *)obj;
-}
-
-- (DOSType)dos
-{
-    return [self fs]->dos();
-}
-
-- (NSInteger)numCyls
-{
-    return [self fs]->getNumCyls();
-}
-
-- (NSInteger)numHeads
-{
-    return [self fs]->getNumHeads();
-}
-
-- (NSInteger)numTracks
-{
-    return [self fs]->getNumTracks();
-}
-
-- (NSInteger)numSectors:(NSInteger)track
-{
-    return [self fs]->getNumSectors((Track)track);
-}
-
-- (NSInteger)numBlocks
-{
-    return [self fs]->getNumBlocks();
-}
-
-- (NSInteger)numFreeBlocks
-{
-    return [self fs]->numFreeBlocks();
-}
-
-- (NSInteger)numUsedBlocks
-{
-    return [self fs]->numUsedBlocks();
-}
-
-- (NSInteger)numFiles
-{
-    return [self fs]->numFiles();
-}
-
-- (NSInteger)cylNr:(NSInteger)t
-{
-    return [self fs]->layout.cylNr((Track)t);
-}
-
-- (NSInteger)headNr:(NSInteger)t
-{
-    return [self fs]->layout.headNr((Track)t);
-}
-
-- (NSInteger)trackNr:(NSInteger)c head:(NSInteger)h
-{
-    return [self fs]->layout.trackNr((Cylinder)c, (Head)h);
-}
-
-- (TSLink)tsLink:(NSInteger)b
-{
-    return [self fs]->layout.tsLink((Block)b);
-}
-
-- (NSInteger)trackNr:(NSInteger)b
-{
-    return (NSInteger)[self tsLink:b].t;
-}
-
-- (NSInteger)sectorNr:(NSInteger)b
-{
-    return (NSInteger)[self tsLink:b].s;
-}
-
-- (NSInteger)blockNr:(TSLink)ts
-{
-    return [self fs]->layout.blockNr(ts);
-}
-
-- (NSInteger)blockNr:(NSInteger)t sector:(NSInteger)s
-{
-    return [self fs]->layout.blockNr((Track)t, (Sector)s);
-}
-
-- (NSInteger)blockNr:(NSInteger)c head:(NSInteger)h sector:(NSInteger)s
-{
-    return [self fs]->layout.blockNr((Cylinder)c, (Head)h, (Sector)s);
-}
-
-- (FSBlockType) blockType:(NSInteger)blockNr
-{
-    return [self fs]->blockType((u32)blockNr);
-}
-
-- (FSUsage) itemType:(NSInteger)blockNr pos:(NSInteger)pos
-{
-    return [self fs]->usage((u32)blockNr, (u32)pos);
-}
-
-- (FSErrorReport) check:(BOOL)strict
-{
-    return [self fs]->check(strict);
-}
-
-- (ErrorCode) check:(NSInteger)blockNr
-                pos:(NSInteger)pos
-           expected:(unsigned char *)exp
-             strict:(BOOL)strict
-{
-    return [self fs]->check((u32)blockNr, (u32)pos, exp, strict);
-}
-
-- (BOOL) isCorrupted:(NSInteger)blockNr
-{
-    return [self fs]->isCorrupted((u32)blockNr);
-}
-
-- (NSInteger) getCorrupted:(NSInteger)blockNr
-{
-    return [self fs]->getCorrupted((u32)blockNr);
-}
-
-- (NSInteger) nextCorrupted:(NSInteger)blockNr
-{
-    return [self fs]->nextCorrupted((u32)blockNr);
-}
-
-- (NSInteger) prevCorrupted:(NSInteger)blockNr
-{
-    return [self fs]->prevCorrupted((u32)blockNr);
-}
-
-- (void) printDirectory
-{
-    return [self fs]->printDirectory();
-}
-
-- (NSInteger) readByte:(NSInteger)block offset:(NSInteger)offset
-{
-    return [self fs]->readByte((u32)block, (u32)offset);
-}
-
-- (BOOL) exportDirectory:(NSString *)path error:(ErrorCode *)err
-{
-    return [self fs]->exportDirectory([path fileSystemRepresentation], err);
-}
-
-- (void) info
-{
-    [self fs]->info();
-}
-
-- (NSString *)fileName:(NSInteger)nr
-{
-    return @([self fs]->fileName((unsigned)nr).c_str());
-}
-
-- (FSFileType)fileType:(NSInteger)nr
-{
-    return [self fs]->fileType((unsigned)nr);
-}
-
-- (NSInteger)fileSize:(NSInteger)nr
-{
-    return [self fs]->fileSize((unsigned)nr);
-}
-
-- (NSInteger)fileBlocks:(NSInteger)nr
-{
-    return [self fs]->fileBlocks((unsigned)nr);
-}
-
-@end
-
-//
 // VIA
 //
 
@@ -1636,6 +1427,9 @@
 
 @end
 
+#define TRYMAKE(cmd) \
+try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return nil; }
+
 //
 // Snapshot proxy
 //
@@ -1647,14 +1441,16 @@
     return snapshot ? [[self alloc] initWith:snapshot] : nil;
 }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
++ (instancetype)makeWithFile:(NSString *)path
+                   exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <Snapshot> ([path fileSystemRepresentation], err)];
+    TRYMAKE ( AnyFile::make <Snapshot> ([path fileSystemRepresentation]) )
 }
 
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len
+                     exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <Snapshot> ((const u8 *)buf, len, err)];
+    TRYMAKE ( AnyFile::make <Snapshot> ((const u8 *)buf, len) )
 }
 
 + (instancetype)makeWithC64:(C64Proxy *)c64proxy
@@ -1723,14 +1519,16 @@
     return file ? [[self alloc] initWith:file] : nil;
 }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <Script> ([path fileSystemRepresentation], err)];
+    try { return [self make: AnyFile::make <Script> ([path fileSystemRepresentation])]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <Script> ((const u8 *)buf, len, err)];
+    try { return [self make: AnyFile::make <Script> ((const u8 *)buf, len)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 - (void)execute:(C64Proxy *)proxy
@@ -1753,14 +1551,14 @@
     return file ? [[self alloc] initWith:file] : nil;
 }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <RomFile> ([path fileSystemRepresentation], err)];
+    TRYMAKE ( AnyFile::make <RomFile> ([path fileSystemRepresentation]) )
 }
 
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <RomFile> ((const u8 *)buf, len, err)];
+    TRYMAKE ( AnyFile::make <RomFile> ((const u8 *)buf, len) )
 }
 
 @end
@@ -1776,14 +1574,14 @@
     return container ? [[self alloc] initWith:container] : nil;
 }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <CRTFile> ([path fileSystemRepresentation], err)];
+    TRYMAKE ( AnyFile::make <CRTFile> ([path fileSystemRepresentation]) )
 }
 
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <CRTFile> ((const u8 *)buf, len, err)];
+    TRYMAKE ( AnyFile::make <CRTFile> ((const u8 *)buf, len) )
 }
 
 - (CRTFile *)crt
@@ -1829,14 +1627,14 @@
     return container ? [[self alloc] initWith:container] : nil;
 }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <TAPFile> ([path fileSystemRepresentation], err)];
+    TRYMAKE ( AnyFile::make <TAPFile> ([path fileSystemRepresentation]) )
 }
 
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <TAPFile> ((const u8 *)buf, len, err)];
+    TRYMAKE ( AnyFile::make <TAPFile> ((const u8 *)buf, len) )
 }
 
 - (TAPFile *)tap
@@ -1876,19 +1674,19 @@
     return archive ? [[self alloc] initWith:archive] : nil;
 }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <T64File> ([path fileSystemRepresentation], err)];
+    TRYMAKE ( AnyFile::make <T64File> ([path fileSystemRepresentation]) )
 }
 
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <T64File> ((const u8 *)buf, len, err)];
+    TRYMAKE ( AnyFile::make <T64File> ((const u8 *)buf, len) )
 }
 
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    return [self make: T64File::makeWithFileSystem(*(FSDevice *)proxy->obj)];
+    TRYMAKE ( AnyFile::make <T64File> (*(FSDevice *)proxy->obj) )
 }
 
 @end
@@ -1904,19 +1702,19 @@
     return archive ? [[self alloc] initWith:archive] : nil;
 }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <PRGFile> ([path fileSystemRepresentation], err)];
+    TRYMAKE ( AnyFile::make <PRGFile> ([path fileSystemRepresentation]) )
 }
 
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <PRGFile> ((const u8 *)buf, len, err)];
+    TRYMAKE ( AnyFile::make <PRGFile> ((const u8 *)buf, len) )
 }
 
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <PRGFile> (*(FSDevice *)proxy->obj, err)];
+    TRYMAKE ( AnyFile::make <PRGFile> (*(FSDevice *)proxy->obj) )
 }
 
 @end
@@ -1932,19 +1730,19 @@
     return archive ? [[self alloc] initWith:archive] : nil;
 }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <P00File> ([path fileSystemRepresentation], err)];
+    TRYMAKE ( AnyFile::make <P00File> ([path fileSystemRepresentation]) )
 }
 
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <P00File> ((const u8 *)buf, len, err)];
+    TRYMAKE ( AnyFile::make <P00File> ((const u8 *)buf, len) )
 }
 
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <P00File> (*(FSDevice *)proxy->obj, err)];
+    TRYMAKE ( AnyFile::make <P00File> (*(FSDevice *)proxy->obj) )
 }
 
 @end
@@ -1965,19 +1763,19 @@
     return archive ? [[self alloc] initWith:archive] : nil;
 }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <D64File> ([path fileSystemRepresentation], err)];
+    TRYMAKE ( AnyFile::make <D64File> ([path fileSystemRepresentation]) )
 }
 
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <D64File> ((const u8 *)buf, len, err)];
+    TRYMAKE ( AnyFile::make <D64File> ((const u8 *)buf, len) )
 }
 
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <D64File> (*(FSDevice *)proxy->obj, err)];
+    TRYMAKE ( AnyFile::make <D64File> (*(FSDevice *)proxy->obj) )
 }
 
 @end
@@ -1993,20 +1791,240 @@
     return archive ? [[self alloc] initWith:archive] : nil;
 }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <G64File> ([path fileSystemRepresentation], err)];
+    TRYMAKE ( AnyFile::make <G64File> ([path fileSystemRepresentation]) )
 }
 
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    return [self make: AnyFile::make <G64File> ((const u8 *)buf, len, err)];
+    TRYMAKE ( AnyFile::make <G64File> ((const u8 *)buf, len) )
 }
 
-+ (instancetype)makeWithDisk:(DiskProxy *)proxy error:(ErrorCode *)err
++ (instancetype)makeWithDisk:(DiskProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    // Disk *disk = (Disk *)proxy->obj;
-    return [self make: AnyFile::make <G64File> (*(Disk *)proxy->obj, err)];
+    TRYMAKE ( AnyFile::make <G64File> (*(Disk *)proxy->obj) )
+}
+
+@end
+
+//
+// FSDevice
+//
+
+@implementation FSDeviceProxy
+
++ (instancetype)make:(FSDevice *)fs
+{
+    return fs ? [[self alloc] initWith: fs] : nil;
+}
+
++ (instancetype)makeWithDisk:(DiskProxy *)proxy exception:(ExceptionWrapper *)ex
+{
+    try { return [self make: FSDevice::makeWithDisk(*(Disk *)proxy->obj)]; }
+    catch (VC64Error &err) { [ex save:err]; return nil; }
+    /*
+    FSDevice *fs = FSDevice::makeWithDisk(*(Disk *)proxy->obj, err);
+    return [self make:fs];
+    */
+}
+
++ (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy exception:(ExceptionWrapper *)ex
+{
+    try { return [self make: FSDevice::makeWithCollection(*(AnyCollection *)proxy->obj)]; }
+    catch (VC64Error &err) { [ex save:err]; return nil; }
+    /*
+    FSDevice *volume = FSDevice::makeWithCollection(*(AnyCollection *)proxy->obj, err);
+    return [self make:volume];
+    */
+}
+
++ (instancetype)makeWithD64:(D64FileProxy *)proxy exception:(ExceptionWrapper *)ex
+{
+    try { return [self make: FSDevice::makeWithD64(*(D64File *)proxy->obj)]; }
+    catch (VC64Error &err) { [ex save:err]; return nil; }
+    /*
+    FSDevice *fs = FSDevice::makeWithD64(*(D64File *)proxy->obj, err);
+    return [self make:fs];
+    */
+}
+
+- (FSDevice *)fs
+{
+    return (FSDevice *)obj;
+}
+
+- (DOSType)dos
+{
+    return [self fs]->dos();
+}
+
+- (NSInteger)numCyls
+{
+    return [self fs]->getNumCyls();
+}
+
+- (NSInteger)numHeads
+{
+    return [self fs]->getNumHeads();
+}
+
+- (NSInteger)numTracks
+{
+    return [self fs]->getNumTracks();
+}
+
+- (NSInteger)numSectors:(NSInteger)track
+{
+    return [self fs]->getNumSectors((Track)track);
+}
+
+- (NSInteger)numBlocks
+{
+    return [self fs]->getNumBlocks();
+}
+
+- (NSInteger)numFreeBlocks
+{
+    return [self fs]->numFreeBlocks();
+}
+
+- (NSInteger)numUsedBlocks
+{
+    return [self fs]->numUsedBlocks();
+}
+
+- (NSInteger)numFiles
+{
+    return [self fs]->numFiles();
+}
+
+- (NSInteger)cylNr:(NSInteger)t
+{
+    return [self fs]->layout.cylNr((Track)t);
+}
+
+- (NSInteger)headNr:(NSInteger)t
+{
+    return [self fs]->layout.headNr((Track)t);
+}
+
+- (NSInteger)trackNr:(NSInteger)c head:(NSInteger)h
+{
+    return [self fs]->layout.trackNr((Cylinder)c, (Head)h);
+}
+
+- (TSLink)tsLink:(NSInteger)b
+{
+    return [self fs]->layout.tsLink((Block)b);
+}
+
+- (NSInteger)trackNr:(NSInteger)b
+{
+    return (NSInteger)[self tsLink:b].t;
+}
+
+- (NSInteger)sectorNr:(NSInteger)b
+{
+    return (NSInteger)[self tsLink:b].s;
+}
+
+- (NSInteger)blockNr:(TSLink)ts
+{
+    return [self fs]->layout.blockNr(ts);
+}
+
+- (NSInteger)blockNr:(NSInteger)t sector:(NSInteger)s
+{
+    return [self fs]->layout.blockNr((Track)t, (Sector)s);
+}
+
+- (NSInteger)blockNr:(NSInteger)c head:(NSInteger)h sector:(NSInteger)s
+{
+    return [self fs]->layout.blockNr((Cylinder)c, (Head)h, (Sector)s);
+}
+
+- (FSBlockType) blockType:(NSInteger)blockNr
+{
+    return [self fs]->blockType((u32)blockNr);
+}
+
+- (FSUsage) itemType:(NSInteger)blockNr pos:(NSInteger)pos
+{
+    return [self fs]->usage((u32)blockNr, (u32)pos);
+}
+
+- (FSErrorReport) check:(BOOL)strict
+{
+    return [self fs]->check(strict);
+}
+
+- (ErrorCode) check:(NSInteger)blockNr
+                pos:(NSInteger)pos
+           expected:(unsigned char *)exp
+             strict:(BOOL)strict
+{
+    return [self fs]->check((u32)blockNr, (u32)pos, exp, strict);
+}
+
+- (BOOL) isCorrupted:(NSInteger)blockNr
+{
+    return [self fs]->isCorrupted((u32)blockNr);
+}
+
+- (NSInteger) getCorrupted:(NSInteger)blockNr
+{
+    return [self fs]->getCorrupted((u32)blockNr);
+}
+
+- (NSInteger) nextCorrupted:(NSInteger)blockNr
+{
+    return [self fs]->nextCorrupted((u32)blockNr);
+}
+
+- (NSInteger) prevCorrupted:(NSInteger)blockNr
+{
+    return [self fs]->prevCorrupted((u32)blockNr);
+}
+
+- (void) printDirectory
+{
+    return [self fs]->printDirectory();
+}
+
+- (NSInteger) readByte:(NSInteger)block offset:(NSInteger)offset
+{
+    return [self fs]->readByte((u32)block, (u32)offset);
+}
+
+- (BOOL) exportDirectory:(NSString *)path error:(ErrorCode *)err
+{
+    return [self fs]->exportDirectory([path fileSystemRepresentation], err);
+}
+
+- (void) info
+{
+    [self fs]->info();
+}
+
+- (NSString *)fileName:(NSInteger)nr
+{
+    return @([self fs]->fileName((unsigned)nr).c_str());
+}
+
+- (FSFileType)fileType:(NSInteger)nr
+{
+    return [self fs]->fileType((unsigned)nr);
+}
+
+- (NSInteger)fileSize:(NSInteger)nr
+{
+    return [self fs]->fileSize((unsigned)nr);
+}
+
+- (NSInteger)fileBlocks:(NSInteger)nr
+{
+    return [self fs]->fileBlocks((unsigned)nr);
 }
 
 @end
@@ -2022,10 +2040,9 @@
     return folder ? [[self alloc] initWith:folder] : nil;
 }
 
-+ (instancetype)makeWithFolder:(NSString *)path error:(ErrorCode *)err
++ (instancetype)makeWithFolder:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    std::string str = string([path fileSystemRepresentation]);
-    return [self make: Folder::makeWithFolder(str, err)];
+    TRYMAKE ( Folder::makeWithFolder([path fileSystemRepresentation]) )
 }
 
 - (Folder *)folder

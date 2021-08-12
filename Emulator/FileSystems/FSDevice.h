@@ -52,11 +52,11 @@ public:
     static FSDevice *makeWithCollection(AnyCollection &collection) throws;
     static FSDevice *makeWithCollection(AnyCollection &collection, ErrorCode *err);
     
-    static FSDevice *makeWithPath(const std::string &path) throws;
-    static FSDevice *makeWithPath(const std::string &path, ErrorCode *err);
+    static FSDevice *makeWithPath(const string &path) throws;
+    static FSDevice *makeWithPath(const string &path, ErrorCode *err);
 
-    static FSDevice *makeWithFolder(const std::string &path) throws;
-    static FSDevice *makeWithFolder(const std::string &path, ErrorCode *err);
+    static FSDevice *makeWithFolder(const string &path) throws;
+    static FSDevice *makeWithFolder(const string &path, ErrorCode *err);
 
     
     //

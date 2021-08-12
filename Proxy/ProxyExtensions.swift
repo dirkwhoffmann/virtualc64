@@ -17,50 +17,64 @@ extension Proxy {
         
         track()
         
-        var err = ErrorCode.OK
-        let obj = T.make(withBuffer: buffer, length: length, error: &err)
-        if err != ErrorCode.OK { throw VC64Error(err) }
+        let exception = ExceptionWrapper()
+        let obj = T.make(withBuffer: buffer, length: length, exception: exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
         if obj == nil { fatalError() }
         return obj!
     }
     
     static func make<T: MakeWithFile>(url: URL) throws -> T {
         
-        var err = ErrorCode.OK
-        let obj = T.make(withFile: url.path, error: &err)
-        if err != ErrorCode.OK { throw VC64Error(err) }
+        let exception = ExceptionWrapper()
+        let obj = T.make(withFile: url.path, exception: exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
+        if obj == nil { fatalError() }
         return obj!
     }
     
     static func make<T: MakeWithDisk>(disk: DiskProxy) throws -> T {
         
-        var err = ErrorCode.OK
-        let obj = T.make(withDisk: disk, error: &err)
-        if err != ErrorCode.OK { throw VC64Error(err) }
+        let exception = ExceptionWrapper()
+        let obj = T.make(withDisk: disk, exception: exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
+        if obj == nil { fatalError() }
         return obj!
     }
     
     static func make<T: MakeWithFileSystem>(fs: FSDeviceProxy) throws -> T {
         
-        var err = ErrorCode.OK
-        let obj = T.make(withFileSystem: fs, error: &err)
-        if err != ErrorCode.OK { throw VC64Error(err) }
+        let exception = ExceptionWrapper()
+        let obj = T.make(withFileSystem: fs, exception: exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
+        if obj == nil { fatalError() }
         return obj!
     }
     
     static func make<T: MakeWithCollection>(collection: AnyCollectionProxy) throws -> T {
         
-        var err = ErrorCode.OK
-        let obj = T.make(withCollection: collection, error: &err)
-        if err != ErrorCode.OK { throw VC64Error(err) }
+        let exception = ExceptionWrapper()
+        let obj = T.make(withCollection: collection, exception: exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
+        if obj == nil { fatalError() }
         return obj!
     }
     
     static func make<T: MakeWithD64>(d64: D64FileProxy) throws -> T {
+
+        let exception = ExceptionWrapper()
+        let obj = T.make(withD64: d64, exception: exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
+        if obj == nil { fatalError() }
+        return obj!
+    }
+    
+    static func make<T: MakeWithFolder>(folder: URL) throws -> T {
         
-        var err = ErrorCode.OK
-        let obj = T.make(withD64: d64, error: &err)
-        if err != ErrorCode.OK { throw VC64Error(err) }
+        let exception = ExceptionWrapper()
+        let obj = T.make(withFolder: folder.path, exception: exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
+        if obj == nil { fatalError() }
         return obj!
     }
 }
@@ -139,7 +153,7 @@ extension FSDeviceProxy {
 }
 
 //
-// Informational extensions
+// Other extensions
 //
 
 public extension C64Proxy {

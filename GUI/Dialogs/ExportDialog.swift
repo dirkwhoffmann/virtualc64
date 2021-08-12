@@ -193,8 +193,7 @@ class ExportDialog: DialogController {
         disk = c64.drive(nr)?.disk
         
         // Try to extract the file system
-        var err = ErrorCode.OK
-        volume = FSDeviceProxy.make(withDisk: disk, error: &err)
+        if disk != nil { volume = try? FSDeviceProxy.make(disk: disk!) }
         
         // REMOVE ASAP
         track("Exporter: Volume:")

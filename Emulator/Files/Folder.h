@@ -30,7 +30,7 @@ public:
     //
     
     static Folder *makeWithFolder(const std::string &path) throws;
-    static Folder *makeWithFolder(const std::string &path, ErrorCode *err);
+    // static Folder *makeWithFolder(const std::string &path, ErrorCode *err);
 
         
     //

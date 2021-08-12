@@ -81,6 +81,7 @@ public:
         return obj;
     }
 
+    /*
     template <class T> static T *make(std::istream &stream, ErrorCode *err)
     {
         *err = ERROR_OK;
@@ -88,7 +89,8 @@ public:
         catch (VC64Error &exception) { *err = exception.data; }
         return nullptr;
     }
-        
+    */
+    
     template <class T> static T *make(const u8 *buf, isize len) throws
     {
         std::stringstream stream;
@@ -96,6 +98,7 @@ public:
         return make <T> (stream);
     }
     
+    /*
     template <class T> static T *make(const u8 *buf, isize len, ErrorCode *err)
     {
         *err = ERROR_OK;
@@ -103,6 +106,7 @@ public:
         catch (VC64Error &exception) { *err = exception.data; }
         return nullptr;
     }
+    */
     
     template <class T> static T *make(const string &path) throws
     {
@@ -115,6 +119,7 @@ public:
         return file;
     }
 
+    /*
     template <class T> static T *make(const string &path, ErrorCode *err)
     {
         *err = ERROR_OK;
@@ -122,12 +127,14 @@ public:
         catch (VC64Error &exception) { *err = exception.data; }
         return nullptr;
     }
+    */
     
     template <class T> static T *make(class Disk &disk) throws
     {
         return T::makeWithDisk(disk);
     }
 
+    /*
     template <class T> static T *make(class Disk &disk, ErrorCode *err)
     {
         *err = ERROR_OK;
@@ -135,12 +142,14 @@ public:
         catch (VC64Error &exception) { *err = exception.data; }
         return nullptr;
     }
-
+    */
+    
     template <class T> static T *make(class FSDevice &fs) throws
     {
         return T::makeWithFileSystem(fs);
     }
 
+    /*
     template <class T> static T *make(class FSDevice &fs, ErrorCode *err)
     {
         *err = ERROR_OK;
@@ -148,6 +157,7 @@ public:
         catch (VC64Error &exception) { *err = exception.data; }
         return nullptr;
     }
+    */
     
     
     //

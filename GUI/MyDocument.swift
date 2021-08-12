@@ -207,16 +207,12 @@ class MyDocument: NSDocument {
         switch type {
             
         case .FOLDER:
-            var err = ErrorCode.OK
-            result = FolderProxy.make(withFolder: name, error: &err)
+            try result = Proxy.make(folder: folderUrl) as FolderProxy
             
         default:
             fatalError()
         }
         
-        if result == nil {
-            throw NSError.corruptedFileError(filename: name)
-        }
         result!.setPath(name)
         return result
     }
@@ -232,7 +228,6 @@ class MyDocument: NSDocument {
         
         // If the attachment is a snapshot, flash it and return
         if let proxy = attachment as? SnapshotProxy {
-            
             try c64.flash(proxy)
             return
         }

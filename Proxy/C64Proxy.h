@@ -678,27 +678,31 @@
 //
 
 @protocol MakeWithFile
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)ec;
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 @end
 
 @protocol MakeWithBuffer
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)ec;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
 @end
 
 @protocol MakeWithDisk
-+ (instancetype)makeWithDisk:(DiskProxy *)disk error:(ErrorCode *)ec;
++ (instancetype)makeWithDisk:(DiskProxy *)disk exception:(ExceptionWrapper *)ex;
 @end
 
 @protocol MakeWithFileSystem
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)fs error:(ErrorCode *)ec;
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)fs exception:(ExceptionWrapper *)ex;;
 @end
 
 @protocol MakeWithCollection
-+ (instancetype)makeWithCollection:(AnyCollectionProxy *)collection error:(ErrorCode *)ec;
++ (instancetype)makeWithCollection:(AnyCollectionProxy *)collection exception:(ExceptionWrapper *)ex;;
 @end
 
 @protocol MakeWithD64
-+ (instancetype)makeWithD64:(D64FileProxy *)d64 error:(ErrorCode *)ec;
++ (instancetype)makeWithD64:(D64FileProxy *)d64 exception:(ExceptionWrapper *)ex;;
+@end
+
+@protocol MakeWithFolder
++ (instancetype)makeWithFolder:(NSString *)path exception:(ExceptionWrapper *)ex;
 @end
 
 //
@@ -735,8 +739,8 @@
    NSImage *preview;
 }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithC64:(C64Proxy *)c64proxy;
 
 @property (readonly, strong) NSImage *previewImage;
@@ -750,8 +754,8 @@
 
 @interface ScriptProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> { }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
  
 - (void)execute:(C64Proxy *)proxy;
 
@@ -763,8 +767,8 @@
 
 @interface RomFileProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> { }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
  
 @property (readonly) RomType romType;
 
@@ -776,8 +780,8 @@
 
 @interface CRTFileProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> { }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
  
 @property (readonly) CartridgeType cartridgeType;
 @property (readonly) BOOL isSupported;
@@ -793,8 +797,8 @@
 
 @interface TAPFileProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> { }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
 
 @property (readonly) TAPVersion version;
 
@@ -807,9 +811,9 @@
 @interface T64FileProxy :
 AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex;
 
 @end
 
@@ -820,9 +824,9 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 @interface PRGFileProxy :
 AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex;
 
 @end
 
@@ -833,9 +837,9 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 @interface P00FileProxy :
 AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex;
 
 @end
 
@@ -846,9 +850,9 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 @interface D64FileProxy :
 AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 
-+ (instancetype)makeWithFile:(NSString *)path error:(ErrorCode *)err;
-+ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy error:(ErrorCode *)err;
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex;
 
 @end
 
@@ -859,9 +863,9 @@ AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 @interface G64FileProxy :
 AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk> { }
 
-+ (instancetype) makeWithFile:(NSString *)path error:(ErrorCode *)err;
-+ (instancetype) makeWithBuffer:(const void *)buf length:(NSInteger)len error:(ErrorCode *)err;
-+ (instancetype) makeWithDisk:(DiskProxy *)diskProxy error:(ErrorCode *)err;
++ (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithDisk:(DiskProxy *)diskProxy exception:(ExceptionWrapper *)ex;
 
 @end
 
@@ -869,9 +873,10 @@ AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk> { }
 // Folder proxy
 //
 
-@interface FolderProxy : AnyCollectionProxy { }
+@interface FolderProxy :
+AnyCollectionProxy <MakeWithFolder> { }
 
-+ (instancetype)makeWithFolder:(NSString *)path error:(ErrorCode *)err;
++ (instancetype)makeWithFolder:(NSString *)path exception:(ExceptionWrapper *)ex;
 
 @property (readonly) FSDeviceProxy *fileSystem;
 
@@ -883,9 +888,9 @@ AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk> { }
 
 @interface FSDeviceProxy : Proxy <MakeWithDisk, MakeWithCollection, MakeWithD64> { }
 
-+ (instancetype)makeWithD64:(D64FileProxy *)d64 error:(ErrorCode *)err;;
-+ (instancetype)makeWithDisk:(DiskProxy *)disk error:(ErrorCode *)err;
-+ (instancetype)makeWithCollection:(AnyCollectionProxy *)collection error:(ErrorCode *)err;
++ (instancetype)makeWithD64:(D64FileProxy *)d64 exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithDisk:(DiskProxy *)disk exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithCollection:(AnyCollectionProxy *)collection exception:(ExceptionWrapper *)ex;
 
 @property (readonly) DOSType dos;
 @property (readonly) NSInteger numCyls;

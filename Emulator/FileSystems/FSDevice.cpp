@@ -146,10 +146,23 @@ FSDevice::makeWithCollection(AnyCollection &collection, ErrorCode *err)
 }
 
 FSDevice *
-FSDevice::makeWithPath(const std::string &path)
+FSDevice::makeWithPath(const string &path)
 {
-    ErrorCode ec;
+    try { return makeWithD64(*AnyFile::make <D64File> (path)); }
+    catch (...) { }
         
+    try { return makeWithCollection(*AnyFile::make <T64File> (path)); }
+    catch (...) { }
+
+    try { return makeWithCollection(*AnyFile::make <PRGFile> (path)); }
+    catch (...) { }
+
+    try { return makeWithCollection(*AnyFile::make <P00File> (path)); }
+    catch (...) { }
+
+    /*
+    ErrorCode ec;
+
     if (auto file = AnyFile::make <D64File> (path, &ec)) {
         return makeWithD64(*file);
     }
@@ -162,7 +175,8 @@ FSDevice::makeWithPath(const std::string &path)
     if (auto file = AnyFile::make <P00File> (path, &ec)) {
         return makeWithCollection(*file);
     }
-    
+    */
+        
     throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
  }
 
