@@ -130,11 +130,9 @@ Disk::make(C64 &ref, DOSType type, PETName<16> name)
         }
         case DOS_TYPE_CBM:
         {
-            FSDevice *fs = FSDevice::makeWithType(DISK_TYPE_SS_SD, DOS_TYPE_CBM);
+            std::unique_ptr<FSDevice> fs(FSDevice::makeWithType(DISK_TYPE_SS_SD, DOS_TYPE_CBM));
             fs->setName(name);
-            Disk *disk = makeWithFileSystem(ref, *fs);
-            delete fs;
-            return disk;
+            return makeWithFileSystem(ref, *fs);
         }
         default:
         {
