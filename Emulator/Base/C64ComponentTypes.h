@@ -118,6 +118,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_SATURATION:          return "SATURATION";
             case OPT_GRAY_DOT_BUG:        return "GRAY_DOT_BUG";
             case OPT_VIC_POWER_SAVE:      return "VIC_POWER_SAVE";
+                
             case OPT_HIDE_SPRITES:        return "HIDE_SPRITES";
             case OPT_CUT_LAYERS:          return "CUT_LAYERS";
             case OPT_CUT_OPACITY:         return "CUT_OPACITY";

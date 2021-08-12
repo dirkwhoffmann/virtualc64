@@ -215,15 +215,114 @@ C64::_configure(Option option, i64 value)
     debug(CNF_DEBUG, "configure(%lld, %lld)\n", option, value);
 
     // Check if this option has been locked for debugging
-    static std::map<Option,i64> overrides = OVERRIDES;
-    if (overrides.find(option) != overrides.end()) {
+    value = overrideOption(option, value);
 
-        msg("Overriding option: %s = %lld\n", OptionEnum::key(option), value);
-        value = overrides[option];
+    // Distribute configuration request
+    switch (option) {
+            
+        case OPT_VIC_REVISION:
+        case OPT_VIC_SPEED:
+        case OPT_PALETTE:
+        case OPT_BRIGHTNESS:
+        case OPT_CONTRAST:
+        case OPT_SATURATION:
+        case OPT_GRAY_DOT_BUG:
+        case OPT_VIC_POWER_SAVE:
+        case OPT_HIDE_SPRITES:
+        case OPT_SS_COLLISIONS:
+        case OPT_SB_COLLISIONS:
+        case OPT_GLUE_LOGIC:
+
+            vic.setConfigItem(option, value);
+            break;
+                        
+        case OPT_CUT_LAYERS:
+        case OPT_CUT_OPACITY:
+        case OPT_DMA_DEBUG_ENABLE:
+        case OPT_DMA_DEBUG_MODE:
+        case OPT_DMA_DEBUG_COLOR:
+        case OPT_DMA_DEBUG_OPACITY:
+
+            vic.dmaDebugger.setConfigItem(option, value);
+            break;
+
+        case OPT_POWER_GRID:
+            
+            supply.setConfigItem(option, value);
+            break;
+
+        case OPT_CIA_REVISION:
+        case OPT_TIMER_B_BUG:
+            
+            cia1.setConfigItem(option, value);
+            cia2.setConfigItem(option, value);
+            break;
+
+        case OPT_MOUSE_MODEL:
+        case OPT_SHAKE_DETECTION:
+        case OPT_MOUSE_VELOCITY:
+
+            port1.mouse.setConfigItem(option, value);
+            port2.mouse.setConfigItem(option, value);
+            break;
+
+        case OPT_AUTOFIRE:
+        case OPT_AUTOFIRE_BULLETS:
+        case OPT_AUTOFIRE_DELAY:
+            
+            port1.joystick.setConfigItem(option, value);
+            port2.joystick.setConfigItem(option, value);
+            break;
+
+        case OPT_SID_ENABLE:
+        case OPT_SID_ADDRESS:
+
+            sid.setConfigItem(option, 0, value);
+            sid.setConfigItem(option, 1, value);
+            sid.setConfigItem(option, 2, value);
+            sid.setConfigItem(option, 3, value);
+
+        case OPT_SID_REVISION:
+        case OPT_SID_FILTER:
+        case OPT_SID_SAMPLING:
+        case OPT_SID_POWER_SAVE:
+        case OPT_SID_ENGINE:
+        case OPT_AUDPAN:
+        case OPT_AUDVOL:
+        case OPT_AUDVOLL:
+        case OPT_AUDVOLR:
+                
+            sid.setConfigItem(option, value);
+            break;
+            
+        case OPT_RAM_PATTERN:
+            
+            mem.setConfigItem(option, value);
+            break;
+
+        case OPT_DRV_AUTO_CONFIG:
+        case OPT_DRV_TYPE:
+        case OPT_DRV_RAM:
+        case OPT_DRV_PARCABLE:
+        case OPT_DRV_CONNECT:
+        case OPT_DRV_POWER_SWITCH:
+        case OPT_DRV_POWER_SAVE:
+        case OPT_DRV_EJECT_DELAY:
+        case OPT_DRV_SWAP_DELAY:
+        case OPT_DRV_INSERT_DELAY:
+        case OPT_DRV_PAN:
+        case OPT_DRV_POWER_VOL:
+        case OPT_DRV_STEP_VOL:
+        case OPT_DRV_INSERT_VOL:
+        case OPT_DRV_EJECT_VOL:
+            
+            drive8.setConfigItem(option, value);
+            drive9.setConfigItem(option, value);
+            break;
+            
+        default:
+            assert(false);
     }
-
-    // Propagate configuration request to all components
-    C64Component::configure(option, value);
 }
 
 void
@@ -237,9 +336,93 @@ void
 C64::_configure(Option option, long id, i64 value)
 {
     debug(CNF_DEBUG, "configure(%lld, %ld, %lld)\n", option, id, value);
-    
-    // Propagate configuration request to all components
-    C64Component::configure(option, id, value);
+
+    // Check if this option has been locked for debugging
+    value = overrideOption(option, value);
+
+    // Distribute configuration request
+    switch (option) {
+            
+                        
+        case OPT_DMA_DEBUG_ENABLE:
+        case OPT_DMA_DEBUG_COLOR:
+            
+            vic.dmaDebugger.setConfigItem(option, id, value);
+            break;
+
+        case OPT_CIA_REVISION:
+        case OPT_TIMER_B_BUG:
+            
+            switch (id) {
+                case 0: cia1.setConfigItem(option, value); break;
+                case 1: cia2.setConfigItem(option, value); break;
+                default: assert(false);
+            }
+            break;
+
+        case OPT_MOUSE_MODEL:
+        case OPT_SHAKE_DETECTION:
+        case OPT_MOUSE_VELOCITY:
+
+            switch (id) {
+                case PORT_ONE: port1.mouse.setConfigItem(option, value); break;
+                case PORT_TWO: port2.mouse.setConfigItem(option, value); break;
+                default: assert(false);
+            }
+            break;
+
+        case OPT_AUTOFIRE:
+        case OPT_AUTOFIRE_BULLETS:
+        case OPT_AUTOFIRE_DELAY:
+
+            switch (id) {
+                case PORT_ONE: port1.joystick.setConfigItem(option, value); break;
+                case PORT_TWO: port2.joystick.setConfigItem(option, value); break;
+                default: assert(false);
+            }
+            break;
+
+        case OPT_SID_ENABLE:
+        case OPT_SID_ADDRESS:
+        case OPT_SID_REVISION:
+        case OPT_SID_FILTER:
+        case OPT_SID_POWER_SAVE:
+        case OPT_SID_ENGINE:
+        case OPT_SID_SAMPLING:
+        case OPT_AUDPAN:
+        case OPT_AUDVOL:
+        case OPT_AUDVOLL:
+        case OPT_AUDVOLR:
+                
+            sid.setConfigItem(option, id, value);
+            break;
+            
+        case OPT_DRV_AUTO_CONFIG:
+        case OPT_DRV_TYPE:
+        case OPT_DRV_RAM:
+        case OPT_DRV_PARCABLE:
+        case OPT_DRV_CONNECT:
+        case OPT_DRV_POWER_SWITCH:
+        case OPT_DRV_POWER_SAVE:
+        case OPT_DRV_EJECT_DELAY:
+        case OPT_DRV_SWAP_DELAY:
+        case OPT_DRV_INSERT_DELAY:
+        case OPT_DRV_PAN:
+        case OPT_DRV_POWER_VOL:
+        case OPT_DRV_STEP_VOL:
+        case OPT_DRV_INSERT_VOL:
+        case OPT_DRV_EJECT_VOL:
+            
+            switch (id) {
+                case DRIVE8: drive8.setConfigItem(option, value); break;
+                case DRIVE9: drive9.setConfigItem(option, value); break;
+                default: assert(false);
+            }
+            break;
+            
+        default:
+            assert(false);
+    }
 }
 
 void
@@ -340,35 +523,25 @@ C64::revertToFactorySettings()
 }
 
 void
-C64::setConfigItem(Option option, i64 value)
-{
-    /*
-    switch (option) {
-            
-        case OPT_VIC_REVISION:
-        {
-            updateClockFrequency((VICIIRevision)value, vic.getConfig().speed);
-            return;
-        }
-            
-        case OPT_VIC_SPEED:
-        {
-            updateClockFrequency(vic.getConfig().revision, (VICIISpeed)value);
-            return;
-        }
-
-        default:
-            return;
-    }
-    */
-}
-
-void
 C64::updateClockFrequency(VICIIRevision rev, VICIISpeed speed)
 {
     durationOfOneCycle = 10000000000 / VICII::getFrequency(rev, speed);
     nativeDurationOfOneCycle = 10000000000 / VICII::getNativeFrequency(rev);
     setSyncDelay(VICII::getFrameDelay(rev, speed));
+}
+
+i64
+C64::overrideOption(Option option, i64 value)
+{
+    static std::map<Option,i64> overrides = OVERRIDES;
+
+    if (overrides.find(option) != overrides.end()) {
+
+        msg("Overriding option: %s = %lld\n", OptionEnum::key(option), value);
+        return overrides[option];
+    }
+
+    return value;
 }
 
 void

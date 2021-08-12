@@ -286,7 +286,7 @@ VICII::setConfigItem(Option option, i64 value)
             return;
             
         default:
-            return;
+            assert(false);
     }
 }
 
@@ -294,18 +294,16 @@ void
 VICII::setRevision(VICIIRevision revision)
 {
     assert_enum(VICIIRevision, revision);
-    assert(!isRunning());
     
-    debug(VIC_DEBUG, "setRevision(%s)\n", VICIIRevisionEnum::key(revision));
-
     suspended {
         
-        /* If the VICII revision is changed while the emulator is powered on,
-         * we take some precautions. Firstly, we interrupt a running screen
-         * capture. Secondly, we move the emulator to a safe spot by finishing
-         * the current frame.
-         */
         if (isPoweredOn()) {
+            
+            /* If the VICII revision is changed while the emulator is powered
+             * on, we take some precautions. Firstly, we interrupt a running
+             * screen capture. Secondly, we move the emulator to a safe spot by
+             * finishing the current frame.
+             */
             recorder.stopRecording();
             c64.finishFrame();
         }

@@ -83,18 +83,8 @@ public:
     //
     // Configuring
     //
-    
-    /* Configures the component and it's subcomponents. This function
-     * distributes a configuration request to all subcomponents by calling
-     * setConfigItem().
-     */
-    void configure(Option option, i64 value) throws;
-    void configure(Option option, long id, i64 value) throws;
-    
-    /* Requests the change of a single configuration item. Each sub-component
-     * checks if it is responsible for the requested configuration item. If
-     * yes, it changes the internal state. If no, it ignores the request.
-     */
+        
+    // Sets a single config item
     virtual void setConfigItem(Option option, i64 value) throws { }
     virtual void setConfigItem(Option option, long id, i64 value) throws { }
     

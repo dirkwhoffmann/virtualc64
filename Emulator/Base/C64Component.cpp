@@ -34,30 +34,6 @@ C64Component::reset(bool hard)
     _reset(hard);    
 }
 
-void
-C64Component::configure(Option option, i64 value)
-{
-    // Configure all subcomponents
-    for (C64Component *c : subComponents) {
-        c->configure(option, value);
-    }
-    
-    // Configure this component
-    setConfigItem(option, value);
-}
-
-void
-C64Component::configure(Option option, long id, i64 value)
-{
-    // Configure all subcomponents
-    for (C64Component *c : subComponents) {
-        c->configure(option, id, value);
-    }
-    
-    // Configure this component
-    setConfigItem(option, id, value);
-}
-
 isize
 C64Component::size()
 {

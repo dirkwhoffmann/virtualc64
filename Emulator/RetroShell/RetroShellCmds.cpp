@@ -391,22 +391,14 @@ template <> void
 RetroShell::exec <Token::cia, Token::set, Token::revision> (Arguments &argv, long param)
 {
     auto value = util::parseEnum <CIARevisionEnum> (argv.front());
-    
-    if (param == 0) {
-        cia1.configure(OPT_CIA_REVISION, value);
-    } else {
-        cia2.configure(OPT_CIA_REVISION, value);
-    }
+    c64.configure(OPT_CIA_REVISION, param, value);
 }
 
 template <> void
 RetroShell::exec <Token::cia, Token::set, Token::timerbbug> (Arguments &argv, long param)
 {
-    if (param == 0) {
-        cia1.configure(OPT_TIMER_B_BUG, util::parseBool(argv.front()));
-    } else {
-        cia2.configure(OPT_TIMER_B_BUG, util::parseBool(argv.front()));
-    }
+    auto value = util::parseBool(argv.front());
+    c64.configure(OPT_TIMER_B_BUG, param, value);
 }
 
 template <> void

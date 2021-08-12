@@ -59,14 +59,6 @@ Joystick::getConfigItem(Option option) const
 void
 Joystick::setConfigItem(Option option, i64 value)
 {
-    setConfigItem(option, port.nr, value);
-}
-
-void
-Joystick::setConfigItem(Option option, long id, i64 value)
-{
-    if (port.nr != id) return;
-    
     switch (option) {
             
         case OPT_AUTOFIRE:

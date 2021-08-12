@@ -216,9 +216,10 @@ public:
     void updateClockFrequency(VICIIRevision rev, VICIISpeed speed);
 
 private:
-
-    void setConfigItem(Option option, i64 value) override;
-
+    
+    // Overrides a config option if the corresponding debug option is enabled
+    i64 overrideOption(Option option, i64 value);
+    
     
     //
     // Analyzing

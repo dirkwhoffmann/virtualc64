@@ -153,31 +153,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
     bool wasMuted = isMuted();
         
     switch (option) {
-            
-        /*
-        case OPT_VIC_REVISION:
-        {
-            auto rev = (VICIIRevision)value;
-            auto speed = vic.getConfig().speed;
-            
-            isize newFrequency = VICII::getFrequency(rev, speed);
-
-            suspended { setClockFrequency((u32)newFrequency); }
-            return;
-        }
-
-        case OPT_VIC_SPEED:
-        {
-            auto rev = vic.getConfig().revision;
-            auto speed = (VICIISpeed)value;
-            
-            isize newFrequency = VICII::getFrequency(rev, speed);
-
-            suspended { setClockFrequency((u32)newFrequency); }
-            return;
-        }
-        */
-            
+                        
         case OPT_SID_POWER_SAVE:
             
             suspended { config.powerSave = value; }
@@ -260,7 +236,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
             return;
             
         default:
-            return;
+            assert(false);
     }
 }
 
@@ -354,7 +330,7 @@ SIDBridge::setConfigItem(Option option, long id, i64 value)
             return;
 
         default:
-            return;
+            assert(false);
     }
 }
 
