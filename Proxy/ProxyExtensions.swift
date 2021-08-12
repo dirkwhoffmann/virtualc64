@@ -108,9 +108,9 @@ extension C64Proxy {
 
     func saveRom(_ type: RomType, url: URL) throws {
 
-        var err = ErrorCode.OK
-        saveRom(type, url: url, error: &err)
-        if err != .OK { throw VC64Error(err) }        
+        let exception = ExceptionWrapper()
+        saveRom(type, url: url, exception: exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
     }
  
     func loadSnapshot(_ proxy: SnapshotProxy) throws {
@@ -140,9 +140,9 @@ extension AnyFileProxy {
     @discardableResult
     func writeToFile(url: URL) throws -> Int {
         
-        var err = ErrorCode.OK
-        let result = write(toFile: url.path, error: &err)
-        if err != .OK { throw VC64Error(err) }
+        let exception = ExceptionWrapper()
+        let result = write(toFile: url.path, exception: exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
         
         return result
     }
@@ -152,10 +152,9 @@ extension FSDeviceProxy {
         
     func exportDirectory(url: URL) throws {
             
-        var err = ErrorCode.OK
-        if exportDirectory(url.path, error: &err) == false {
-            throw VC64Error(err)
-        }
+        let exception = ExceptionWrapper()
+        exportDirectory(url.path, exception: exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
     }
 }
 

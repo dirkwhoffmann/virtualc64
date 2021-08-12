@@ -431,7 +431,7 @@ public:
     
     // Installs a Rom
     void loadRom(const string &path) throws;
-    void loadRom(const string &path, ErrorCode *ec);
+    // void loadRom(const string &path, ErrorCode *ec);
     void loadRom(RomFile *file);
     
     // Erases an installed Rom
@@ -439,7 +439,7 @@ public:
     
     // Saves a Rom to disk
     void saveRom(RomType rom, const string &path) throws;
-    void saveRom(RomType rom, const string &path, ErrorCode *ec);
+    // void saveRom(RomType rom, const string &path, ErrorCode *ec);
 
     
     //

@@ -867,15 +867,13 @@ FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, isize size, ErrorCode *err)
     return true;
 }
 
-bool
-FSDevice::exportDirectory(const string &path, ErrorCode *err)
+void
+FSDevice::exportDirectory(const string &path)
 {
-    // Only proceed if path points to an empty directory
     isize numItems = util::numDirectoryItems(path);
-    if (numItems != 0) {
-        if (err) *err = ERROR_DIR_NOT_EMPTY;
-        return false;
-    }
+
+    // Only proceed if path points to an empty directory
+    if (numItems != 0) throw VC64Error(ERROR_DIR_NOT_EMPTY);
     
     // Rescan the directory to get the directory cache up to date
     scanDirectory();
@@ -888,36 +886,26 @@ FSDevice::exportDirectory(const string &path, ErrorCode *err)
             continue;
         }
         
-        if (!exportFile(entry, path, err)) {
-            msg("Export error: %ld\n", (long)*err);
-            return false;
-        }
+        exportFile(entry, path);
     }
     
     msg("Exported %lu items", dir.size());
-    if (err) *err = ERROR_OK;
-    return true;
 }
 
-bool
-FSDevice::exportFile(FSDirEntry *entry, const string &path, ErrorCode *err)
+void
+FSDevice::exportFile(FSDirEntry *entry, const string &path)
 {
     string name = path + "/" + entry->getName().str();
     debug(FS_DEBUG, "Exporting file to %s\n", name.c_str());
 
     std::ofstream stream(name);
-    if (!stream.is_open()) {
-        // TODO: throw
-        *err = ERROR_FILE_CANT_CREATE;
-        return false;
-    }
+    if (!stream.is_open()) throw VC64Error(ERROR_FILE_CANT_CREATE);
 
-    exportFile(entry, stream, err);
-    return true;
+    exportFile(entry, stream);
 }
 
 void
-FSDevice::exportFile(FSDirEntry *entry, std::ofstream &stream, ErrorCode *err)
+FSDevice::exportFile(FSDirEntry *entry, std::ofstream &stream)
 {
     std::set<Block> visited;
 

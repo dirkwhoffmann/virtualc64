@@ -212,9 +212,9 @@
 
 - (BOOL)isRom:(RomType)type url:(NSURL *)url;
 
-- (void)loadRom:(NSURL *)url error:(ErrorCode *)ec;
+- (void)loadRom:(NSURL *)url exception:(ExceptionWrapper *)e;
 - (void)loadRom:(RomFileProxy *)proxy;
-- (void)saveRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)ec;
+- (void)saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)e;
 - (void)deleteRom:(RomType)type;
 
 - (RomIdentifier)romIdentifier:(RomType)type;
@@ -717,7 +717,7 @@
 @property (readonly) u64 fnv;
 
 - (void)setPath:(NSString *)path;
-- (NSInteger)writeToFile:(NSString *)path error:(ErrorCode *)err;
+- (NSInteger)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 
 @end
 
@@ -923,7 +923,7 @@ AnyCollectionProxy <MakeWithFolder> { }
 - (void)printDirectory;
 
 - (NSInteger)readByte:(NSInteger)block offset:(NSInteger)offset;
-- (BOOL)exportDirectory:(NSString *)path error:(ErrorCode *)err;
+- (void)exportDirectory:(NSString *)path exception:(ExceptionWrapper *)e;
 
 - (void)info;
 

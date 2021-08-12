@@ -736,87 +736,87 @@
     return @([self eport]->getButtonTitle((unsigned)nr).c_str());
 }
 
-- (void) pressButton:(NSInteger)nr
+- (void)pressButton:(NSInteger)nr
 {
     [self eport]->pressButton((unsigned)nr);
 }
 
-- (void) releaseButton:(NSInteger)nr
+- (void)releaseButton:(NSInteger)nr
 {
     [self eport]->releaseButton((unsigned)nr);
 }
 
-- (BOOL) hasSwitch
+- (BOOL)hasSwitch
 {
     return [self eport]->hasSwitch();
 }
 
-- (NSInteger) switchPosition
+- (NSInteger)switchPosition
 {
     return [self eport]->getSwitch();
 }
 
-- (NSString *) switchDescription:(NSInteger)pos
+- (NSString *)switchDescription:(NSInteger)pos
 {
     return @([self eport]->getSwitchDescription(pos).c_str());
 }
 
-- (NSString *) currentSwitchDescription
+- (NSString *)currentSwitchDescription
 {
     return @([self eport]->getSwitchDescription().c_str());
 }
 
-- (BOOL) validSwitchPosition:(NSInteger)pos
+- (BOOL)validSwitchPosition:(NSInteger)pos
 {
     return [self eport]->validSwitchPosition(pos);
 }
 
-- (BOOL) switchIsNeutral
+- (BOOL)switchIsNeutral
 {
     return [self eport]->switchIsNeutral();
 }
 
-- (BOOL) switchIsLeft
+- (BOOL)switchIsLeft
 {
     return [self eport]->switchIsLeft();
 }
 
-- (BOOL) switchIsRight
+- (BOOL)switchIsRight
 {
     return [self eport]->switchIsRight();
 }
 
-- (void) setSwitchPosition:(NSInteger)pos
+- (void)setSwitchPosition:(NSInteger)pos
 {
     [self eport]->setSwitch(pos);
 }
 
-- (BOOL) hasLed
+- (BOOL)hasLed
 {
     return [self eport]->hasLED();
 }
 
-- (BOOL) led
+- (BOOL)led
 {
     return [self eport]->getLED();
 }
 
-- (void) setLed:(BOOL)value
+- (void)setLed:(BOOL)value
 {
     [self eport]->setLED(value);
 }
 
-- (NSInteger) ramCapacity
+- (NSInteger)ramCapacity
 {
     return (NSInteger)[self eport]->getRamCapacity();
 }
 
-- (BOOL) hasBattery
+- (BOOL)hasBattery
 {
     return [self eport]->hasBattery();
 }
 
-- (void) setBattery:(BOOL)value
+- (void)setBattery:(BOOL)value
 {
     [self eport]->setBattery(value);
 }
@@ -1020,7 +1020,7 @@
     [self drive]->insertFileSystem((FSDevice *)proxy->obj, wp);
 }
 
-- (void) insertNewDisk:(DOSType)fsType
+- (void)insertNewDisk:(DOSType)fsType
 {
     [self drive]->insertNewDisk(fsType);
 }
@@ -1128,7 +1128,7 @@
     return [self datasette]->getPlayKey();
 }
 
-- (NSInteger) counter
+- (NSInteger)counter
 {
     return [self datasette]->getCounter();
 }
@@ -1192,7 +1192,7 @@
     [self mouse]->setDxDy((double)pos.x, (double)pos.y);
 }
 
-- (void) trigger:(GamePadAction)event
+- (void)trigger:(GamePadAction)event
 {
     [self mouse]->trigger(event);
 }
@@ -1210,7 +1210,7 @@
     return (Joystick *)obj;
 }
 
-- (void) trigger:(GamePadAction)event
+- (void)trigger:(GamePadAction)event
 {
     [self joystick]->trigger(event);
 }
@@ -1420,9 +1420,10 @@
     [self file]->path = [path fileSystemRepresentation];
 }
 
-- (NSInteger)writeToFile:(NSString *)path error:(ErrorCode *)err
+- (NSInteger)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    return [self file]->writeToFile(string([path fileSystemRepresentation]), err);
+    try { return [self file]->writeToFile(string([path fileSystemRepresentation])); }
+    catch (VC64Error &err) { [ex save:err]; return 0; }    
 }
 
 @end
@@ -1823,30 +1824,18 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 {
     try { return [self make: FSDevice::makeWithDisk(*(Disk *)proxy->obj)]; }
     catch (VC64Error &err) { [ex save:err]; return nil; }
-    /*
-    FSDevice *fs = FSDevice::makeWithDisk(*(Disk *)proxy->obj, err);
-    return [self make:fs];
-    */
 }
 
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     try { return [self make: FSDevice::makeWithCollection(*(AnyCollection *)proxy->obj)]; }
     catch (VC64Error &err) { [ex save:err]; return nil; }
-    /*
-    FSDevice *volume = FSDevice::makeWithCollection(*(AnyCollection *)proxy->obj, err);
-    return [self make:volume];
-    */
 }
 
 + (instancetype)makeWithD64:(D64FileProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     try { return [self make: FSDevice::makeWithD64(*(D64File *)proxy->obj)]; }
     catch (VC64Error &err) { [ex save:err]; return nil; }
-    /*
-    FSDevice *fs = FSDevice::makeWithD64(*(D64File *)proxy->obj, err);
-    return [self make:fs];
-    */
 }
 
 - (FSDevice *)fs
@@ -1944,65 +1933,66 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     return [self fs]->layout.blockNr((Cylinder)c, (Head)h, (Sector)s);
 }
 
-- (FSBlockType) blockType:(NSInteger)blockNr
+- (FSBlockType)blockType:(NSInteger)blockNr
 {
     return [self fs]->blockType((u32)blockNr);
 }
 
-- (FSUsage) itemType:(NSInteger)blockNr pos:(NSInteger)pos
+- (FSUsage)itemType:(NSInteger)blockNr pos:(NSInteger)pos
 {
     return [self fs]->usage((u32)blockNr, (u32)pos);
 }
 
-- (FSErrorReport) check:(BOOL)strict
+- (FSErrorReport)check:(BOOL)strict
 {
     return [self fs]->check(strict);
 }
 
-- (ErrorCode) check:(NSInteger)blockNr
-                pos:(NSInteger)pos
-           expected:(unsigned char *)exp
-             strict:(BOOL)strict
+- (ErrorCode)check:(NSInteger)blockNr
+               pos:(NSInteger)pos
+          expected:(unsigned char *)exp
+            strict:(BOOL)strict
 {
     return [self fs]->check((u32)blockNr, (u32)pos, exp, strict);
 }
 
-- (BOOL) isCorrupted:(NSInteger)blockNr
+- (BOOL)isCorrupted:(NSInteger)blockNr
 {
     return [self fs]->isCorrupted((u32)blockNr);
 }
 
-- (NSInteger) getCorrupted:(NSInteger)blockNr
+- (NSInteger)getCorrupted:(NSInteger)blockNr
 {
     return [self fs]->getCorrupted((u32)blockNr);
 }
 
-- (NSInteger) nextCorrupted:(NSInteger)blockNr
+- (NSInteger)nextCorrupted:(NSInteger)blockNr
 {
     return [self fs]->nextCorrupted((u32)blockNr);
 }
 
-- (NSInteger) prevCorrupted:(NSInteger)blockNr
+- (NSInteger)prevCorrupted:(NSInteger)blockNr
 {
     return [self fs]->prevCorrupted((u32)blockNr);
 }
 
-- (void) printDirectory
+- (void)printDirectory
 {
     return [self fs]->printDirectory();
 }
 
-- (NSInteger) readByte:(NSInteger)block offset:(NSInteger)offset
+- (NSInteger)readByte:(NSInteger)block offset:(NSInteger)offset
 {
     return [self fs]->readByte((u32)block, (u32)offset);
 }
 
-- (BOOL) exportDirectory:(NSString *)path error:(ErrorCode *)err
+- (void)exportDirectory:(NSString *)path exception:(ExceptionWrapper *)e
 {
-    return [self fs]->exportDirectory([path fileSystemRepresentation], err);
+    try { [self fs]->exportDirectory([path fileSystemRepresentation]); }
+    catch (VC64Error &error) { [e save:error]; }
 }
 
-- (void) info
+- (void)info
 {
     [self fs]->info();
 }
@@ -2413,17 +2403,13 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 
 - (BOOL) isRom:(RomType)type url:(NSURL *)url
 {
-    return RomFile::isRomFile(type, [[url path] fileSystemRepresentation]);
+    return RomFile::isRomFile(type, [url fileSystemRepresentation]);
 }
 
-- (void) loadRom:(NSURL *)url error:(ErrorCode *)ec
+- (void) loadRom:(NSURL *)url exception:(ExceptionWrapper *)e
 {
-    try {
-        [self c64]->loadRom(string([[url path] fileSystemRepresentation]));
-        *ec = ERROR_OK;
-    } catch (VC64Error &exception) {
-        *ec = exception.data;
-    }
+    try { [self c64]->loadRom(string([url fileSystemRepresentation])); }
+    catch (VC64Error &error) { [e save:error]; }
 }
 
 - (void) loadRom:(RomFileProxy *)proxy
@@ -2431,14 +2417,10 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     [self c64]->loadRom((RomFile *)proxy->obj);
 }
 
-- (void) saveRom:(RomType)type url:(NSURL *)url error:(ErrorCode *)ec
+- (void) saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)e
 {
-    try {
-        [self c64]->saveRom(type, [[url path] fileSystemRepresentation]);
-        *ec = ERROR_OK;
-    } catch (VC64Error &exception) {
-        *ec = exception.data;
-    }
+    try { [self c64]->saveRom(type, string([url fileSystemRepresentation])); }
+    catch (VC64Error &error) { [e save:error]; }
 }
 
 - (void) deleteRom:(RomType)type
@@ -2446,12 +2428,12 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     [self c64]->deleteRom(type);
 }
 
-- (RomIdentifier) romIdentifier:(RomType)type
+- (RomIdentifier)romIdentifier:(RomType)type
 {
     return [self c64]->romIdentifier(type);
 }
 
-- (NSString *) romTitle:(RomType)type
+- (NSString *)romTitle:(RomType)type
 {
     return @([self c64]->romTitle(type).c_str());
 }
