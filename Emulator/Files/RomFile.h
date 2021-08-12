@@ -30,7 +30,7 @@ public:
     // Class methods
     //
     
-    static bool isCompatiblePath(const std::string &name);
+    static bool isCompatiblePath(const string &name);
     static bool isCompatibleStream(std::istream &stream);
     
     static bool isRomStream(RomType type, std::istream &stream);

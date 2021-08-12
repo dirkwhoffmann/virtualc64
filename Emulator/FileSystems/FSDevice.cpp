@@ -181,7 +181,7 @@ FSDevice::makeWithPath(const string &path)
  }
 
 FSDevice *
-FSDevice::makeWithPath(const std::string &path, ErrorCode *err)
+FSDevice::makeWithPath(const string &path, ErrorCode *err)
 {
     *err = ERROR_OK;
     try { return makeWithPath(path); }
@@ -190,7 +190,7 @@ FSDevice::makeWithPath(const std::string &path, ErrorCode *err)
 }
 
 FSDevice *
-FSDevice::makeWithFolder(const std::string &path)
+FSDevice::makeWithFolder(const string &path)
 {
     // Create the device
     FSDevice *device = makeWithType(DISK_TYPE_SS_SD);
@@ -209,7 +209,7 @@ FSDevice::makeWithFolder(const std::string &path)
 }
 
 FSDevice *
-FSDevice::makeWithFolder(const std::string &path, ErrorCode *err)
+FSDevice::makeWithFolder(const string &path, ErrorCode *err)
 {
     *err = ERROR_OK;
     try { return makeWithFolder(path); }
@@ -844,7 +844,7 @@ FSDevice::importDirectory(const char *path)
 */
 
 bool
-FSDevice::importDirectory(const std::string &path, DIR *dir)
+FSDevice::importDirectory(const string &path, DIR *dir)
 {
     struct dirent *item;
     bool result = true;
@@ -854,9 +854,9 @@ FSDevice::importDirectory(const std::string &path, DIR *dir)
         // Skip '.', '..' and all hidden files
         if (item->d_name[0] == '.') continue;
         
-        // Assemble file name (TODO: PORT TO std::string)
-        std::string name = std::string(item->d_name);
-        std::string full = path + "/" + name;
+        // Assemble file name
+        string name = string(item->d_name);
+        string full = path + "/" + name;
         
         msg("importDirectory: Processing %s (%s)\n", name.c_str(), full.c_str());
 
@@ -930,7 +930,7 @@ FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, isize size, ErrorCode *err)
 }
 
 bool
-FSDevice::exportDirectory(const std::string &path, ErrorCode *err)
+FSDevice::exportDirectory(const string &path, ErrorCode *err)
 {
     // Only proceed if path points to an empty directory
     isize numItems = util::numDirectoryItems(path);
@@ -962,9 +962,9 @@ FSDevice::exportDirectory(const std::string &path, ErrorCode *err)
 }
 
 bool
-FSDevice::exportFile(FSDirEntry *entry, const std::string &path, ErrorCode *err)
+FSDevice::exportFile(FSDirEntry *entry, const string &path, ErrorCode *err)
 {
-    std::string name = path + "/" + entry->getName().str();
+    string name = path + "/" + entry->getName().str();
     debug(FS_DEBUG, "Exporting file to %s\n", name.c_str());
 
     std::ofstream stream(name);

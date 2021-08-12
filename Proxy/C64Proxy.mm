@@ -871,7 +871,7 @@
 
 - (NSString *)errorMessage:(NSInteger)nr
 {
-    std::string s = [self disk]->errorMessage((unsigned)nr);
+    string s = [self disk]->errorMessage((unsigned)nr);
     return [NSString stringWithUTF8String:s.c_str()];
 }
 

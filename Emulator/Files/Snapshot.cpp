@@ -47,7 +47,7 @@ Thumbnail::take(const C64 &c64, isize dx, isize dy)
 }
 
 bool
-Snapshot::isCompatiblePath(const std::string &path)
+Snapshot::isCompatiblePath(const string &path)
 {
     return true;
 }

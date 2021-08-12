@@ -67,7 +67,7 @@ public:
         }
     }
 
-    PETName(std::string str) : PETName(str.c_str()) { }
+    PETName(string str) : PETName(str.c_str()) { }
     
     const char *getDescription() const override { return "PETName"; }
     
@@ -93,5 +93,5 @@ public:
     void write(u8 *p) { write(p, len); }
 
     const char *c_str() { return asc; }
-    std::string str() { return string(asc); }
+    string str() { return string(asc); }
 };

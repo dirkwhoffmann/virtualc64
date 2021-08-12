@@ -13,7 +13,7 @@
 #include "IO.h"
 
 bool
-P00File::isCompatiblePath(const std::string &path)
+P00File::isCompatiblePath(const string &path)
 {
     auto s = util::extractSuffix(path);
     return s == "p00" || s == "P00";

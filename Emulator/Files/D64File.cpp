@@ -13,7 +13,7 @@
 #include "MemUtils.h"
 
 bool
-D64File::isCompatiblePath(const std::string &path)
+D64File::isCompatiblePath(const string &path)
 {
     auto s = util::extractSuffix(path);
     return s == "d64" || s == "D64";

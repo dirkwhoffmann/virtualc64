@@ -15,7 +15,7 @@ class T64File : public AnyCollection {
      
 public:
 
-    static bool isCompatiblePath(const std::string &name);
+    static bool isCompatiblePath(const string &name);
     static bool isCompatibleStream(std::istream &stream);
     
     static T64File *makeWithFileSystem(class FSDevice &fs);

@@ -80,16 +80,6 @@ public:
         }
         return obj;
     }
-
-    /*
-    template <class T> static T *make(std::istream &stream, ErrorCode *err)
-    {
-        *err = ERROR_OK;
-        try { return make <T> (stream); }
-        catch (VC64Error &exception) { *err = exception.data; }
-        return nullptr;
-    }
-    */
     
     template <class T> static T *make(const u8 *buf, isize len) throws
     {
@@ -97,17 +87,7 @@ public:
         stream.write((const char *)buf, len);
         return make <T> (stream);
     }
-    
-    /*
-    template <class T> static T *make(const u8 *buf, isize len, ErrorCode *err)
-    {
-        *err = ERROR_OK;
-        try { return make <T> (buf, len); }
-        catch (VC64Error &exception) { *err = exception.data; }
-        return nullptr;
-    }
-    */
-    
+        
     template <class T> static T *make(const string &path) throws
     {
         if (!T::isCompatiblePath(path)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
@@ -118,46 +98,16 @@ public:
         file->path = path;
         return file;
     }
-
-    /*
-    template <class T> static T *make(const string &path, ErrorCode *err)
-    {
-        *err = ERROR_OK;
-        try { return make <T> (path); }
-        catch (VC64Error &exception) { *err = exception.data; }
-        return nullptr;
-    }
-    */
     
     template <class T> static T *make(class Disk &disk) throws
     {
         return T::makeWithDisk(disk);
     }
-
-    /*
-    template <class T> static T *make(class Disk &disk, ErrorCode *err)
-    {
-        *err = ERROR_OK;
-        try { return make <T> (disk); }
-        catch (VC64Error &exception) { *err = exception.data; }
-        return nullptr;
-    }
-    */
     
     template <class T> static T *make(class FSDevice &fs) throws
     {
         return T::makeWithFileSystem(fs);
     }
-
-    /*
-    template <class T> static T *make(class FSDevice &fs, ErrorCode *err)
-    {
-        *err = ERROR_OK;
-        try { return make <T> (fs); }
-        catch (VC64Error &exception) { *err = exception.data; }
-        return nullptr;
-    }
-    */
     
     
     //

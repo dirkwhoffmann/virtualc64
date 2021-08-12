@@ -13,7 +13,7 @@
 #include "IO.h"
 
 bool
-G64File::isCompatiblePath(const std::string &path)
+G64File::isCompatiblePath(const string &path)
 {
     auto s = util::extractSuffix(path);
     return s == "g64" || s == "G64";

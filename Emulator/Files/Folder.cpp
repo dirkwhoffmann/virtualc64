@@ -24,7 +24,7 @@ Folder::isFolder(const char *path)
 }
 
 Folder *
-Folder::makeWithFolder(const std::string &path)
+Folder::makeWithFolder(const string &path)
 {
     Folder *folder = new Folder();
     
@@ -37,18 +37,6 @@ Folder::makeWithFolder(const std::string &path)
     }
     return folder;
 }
-
-/*
-Folder *
-Folder::makeWithFolder(const std::string &path, ErrorCode *err)
-{
-    *err = ERROR_OK;
-    
-    try { return makeWithFolder(path); }
-    catch (VC64Error &exception) { *err = exception.data; }
-    return nullptr;
-}
-*/
 
 PETName<16>
 Folder::collectionName()

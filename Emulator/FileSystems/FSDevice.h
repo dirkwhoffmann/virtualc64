@@ -276,8 +276,8 @@ public:
     bool importVolume(const u8 *src, isize size, ErrorCode *err);
     
     // Imports a folder from the host file system
-    bool importDirectory(const std::string &path);
-    bool importDirectory(const std::string &path, DIR *dir);
+    bool importDirectory(const string &path);
+    bool importDirectory(const string &path, DIR *dir);
 
     // Exports the volume to a buffer
     bool exportVolume(u8 *dst, isize size, ErrorCode *err = nullptr);
@@ -287,8 +287,8 @@ public:
     bool exportBlocks(u32 first, u32 last, u8 *dst, isize size, ErrorCode *err = nullptr);
 
     // Exports all files or a single file to a folder in the host file system
-    bool exportDirectory(const std::string &path, ErrorCode *err);
-    bool exportFile(FSDirEntry *item, const std::string &path, ErrorCode *err);
+    bool exportDirectory(const string &path, ErrorCode *err);
+    bool exportFile(FSDirEntry *item, const string &path, ErrorCode *err);
     void exportFile(FSDirEntry *entry, std::ofstream &stream, ErrorCode *err);
 
 };

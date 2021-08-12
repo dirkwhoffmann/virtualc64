@@ -27,7 +27,7 @@ public:
     // Error information stored in the D64 archive
     u8 errors[802];
     
-    static bool isCompatiblePath(const std::string &name);
+    static bool isCompatiblePath(const string &name);
     static bool isCompatibleStream(std::istream &stream);  
     static D64File *makeWithFileSystem(class FSDevice &volume) throws;
 

@@ -578,7 +578,7 @@ Disk::log(isize begin, isize length, const char *fmt, ...)
     vsnprintf(buf, sizeof(buf), fmt, ap);
     va_end(ap);
 
-    errorLog.push_back(std::string(buf));
+    errorLog.push_back(string(buf));
     errorStartIndex.push_back(begin);
     errorEndIndex.push_back(begin + length);
 }

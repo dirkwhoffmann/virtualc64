@@ -129,7 +129,7 @@ private:
     TrackInfo trackInfo;
 
     // Error log created by analyzeTrack
-    std::vector<std::string> errorLog;
+    std::vector<string> errorLog;
 
     // Stores the start offset of the erroneous bit sequence
     std::vector<isize> errorStartIndex;
@@ -396,7 +396,7 @@ public:
     isize numErrors() { return errorLog.size(); }
     
     // Reads an error message from the error log
-    std::string errorMessage(isize nr) const { return errorLog.at(nr); }
+    string errorMessage(isize nr) const { return errorLog.at(nr); }
     
     // Reads the error begin index from the error log
     isize firstErroneousBit(isize nr) const { return errorStartIndex.at(nr); }

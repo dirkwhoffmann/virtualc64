@@ -14,7 +14,7 @@
 #include "Macros.h"
 
 bool
-T64File::isCompatiblePath(const std::string &path)
+T64File::isCompatiblePath(const string &path)
 {
     auto s = util::extractSuffix(path);
     return s == "t64" || s == "T64";

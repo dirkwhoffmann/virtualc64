@@ -13,7 +13,7 @@
 #include "IO.h"
 
 bool
-PRGFile::isCompatiblePath(const std::string &path)
+PRGFile::isCompatiblePath(const string &path)
 {
     auto s = util::extractSuffix(path);
     return s == "prg" || s == "PRG";

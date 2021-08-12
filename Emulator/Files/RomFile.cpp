@@ -41,7 +41,7 @@ const RomSignature RomFile::signatures[] = {
 };
 
 bool
-RomFile::isCompatiblePath(const std::string &path)
+RomFile::isCompatiblePath(const string &path)
 {
     return true;
 }
