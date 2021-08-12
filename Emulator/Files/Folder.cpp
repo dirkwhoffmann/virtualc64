@@ -27,14 +27,7 @@ Folder *
 Folder::makeWithFolder(const string &path)
 {
     Folder *folder = new Folder();
-    
-    ErrorCode err;
-    if (!(folder->fs = FSDevice::makeWithFolder(path, &err))) {
-        delete folder;
-        // TODO: throw
-        warn("Failed to create file system from folder %s\n", path.c_str());
-        return nullptr;
-    }
+    folder->fs = FSDevice::makeWithFolder(path);
     return folder;
 }
 

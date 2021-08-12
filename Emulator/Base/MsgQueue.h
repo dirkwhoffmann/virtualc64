@@ -16,7 +16,7 @@
 class MsgQueue : public SubComponent {
         
     // Ring buffer storing all pending messages
-    util::RingBuffer<Message, 64> queue;
+    util::RingBuffer <Message, 128> queue;
                 
     // The registered listener
     const void *listener = nullptr;

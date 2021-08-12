@@ -61,15 +61,6 @@ FSDevice::makeWithD64(D64File &d64)
 }
 
 FSDevice *
-FSDevice::makeWithD64(D64File &d64, ErrorCode *err)
-{
-    *err = ERROR_OK;
-    try { return makeWithD64(d64); }
-    catch (VC64Error &exception) { *err = exception.data; }
-    return nullptr;
-}
-  
-FSDevice *
 FSDevice::makeWithDisk(class Disk &disk)
 {
     // Translate the GCR stream into a byte stream
@@ -96,15 +87,6 @@ FSDevice::makeWithDisk(class Disk &disk)
     catch (VC64Error &exception) { delete device; throw exception; }
         
     return device;
-}
-
-FSDevice *
-FSDevice::makeWithDisk(class Disk &disk, ErrorCode *err)
-{
-    *err = ERROR_OK;
-    try { return makeWithDisk(disk); }
-    catch (VC64Error &exception) { *err = exception.data; }
-    return nullptr;
 }
 
 FSDevice *
@@ -137,15 +119,6 @@ FSDevice::makeWithCollection(AnyCollection &collection)
 }
 
 FSDevice *
-FSDevice::makeWithCollection(AnyCollection &collection, ErrorCode *err)
-{
-    *err = ERROR_OK;
-    try { return makeWithCollection(collection); }
-    catch (VC64Error &exception) { *err = exception.data; }
-    return nullptr;
-}
-
-FSDevice *
 FSDevice::makeWithPath(const string &path)
 {
     try { return makeWithD64(*AnyFile::make <D64File> (path)); }
@@ -159,35 +132,9 @@ FSDevice::makeWithPath(const string &path)
 
     try { return makeWithCollection(*AnyFile::make <P00File> (path)); }
     catch (...) { }
-
-    /*
-    ErrorCode ec;
-
-    if (auto file = AnyFile::make <D64File> (path, &ec)) {
-        return makeWithD64(*file);
-    }
-    if (auto file = AnyFile::make <T64File> (path, &ec)) {
-        return makeWithCollection(*file);
-    }
-    if (auto file = AnyFile::make <PRGFile> (path, &ec)) {
-        return makeWithCollection(*file);
-    }
-    if (auto file = AnyFile::make <P00File> (path, &ec)) {
-        return makeWithCollection(*file);
-    }
-    */
         
     throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
  }
-
-FSDevice *
-FSDevice::makeWithPath(const string &path, ErrorCode *err)
-{
-    *err = ERROR_OK;
-    try { return makeWithPath(path); }
-    catch (VC64Error &exception) { *err = exception.data; }
-    return nullptr;
-}
 
 FSDevice *
 FSDevice::makeWithFolder(const string &path)
@@ -206,15 +153,6 @@ FSDevice::makeWithFolder(const string &path)
     
     device->printDirectory();
     return device;
-}
-
-FSDevice *
-FSDevice::makeWithFolder(const string &path, ErrorCode *err)
-{
-    *err = ERROR_OK;
-    try { return makeWithFolder(path); }
-    catch (VC64Error &exception) { *err = exception.data; }
-    return nullptr;
 }
 
 FSDevice::FSDevice(u32 capacity)

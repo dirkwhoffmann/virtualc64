@@ -220,11 +220,6 @@ Drive::setConfigItem(Option option, long id, i64 value)
         }
         case OPT_DRV_POWER_SWITCH:
         {
-            if (value && !isPoweredOn()) {
-                warn("Can't switch drive on (not connected).\n");
-                // throw VCError(ERROR_DRV_NOT_CONNECTED);
-                return;
-            }
             suspended {
                 
                 config.switchedOn = value;
@@ -235,8 +230,11 @@ Drive::setConfigItem(Option option, long id, i64 value)
         }
         case OPT_DRV_POWER_SAVE:
         {
-            config.powerSave = value;
-            wakeUp();
+            suspended {
+                
+                config.powerSave = value;
+                wakeUp();
+            }
             return;
         }
         case OPT_DRV_EJECT_DELAY:
@@ -262,28 +260,24 @@ Drive::setConfigItem(Option option, long id, i64 value)
         case OPT_DRV_POWER_VOL:
         {
             value = std::clamp(value, 0LL, 100LL);
-
             config.powerVolume = value;
             return;
         }
         case OPT_DRV_STEP_VOL:
         {
             value = std::clamp(value, 0LL, 100LL);
-
             config.stepVolume = value;
             return;
         }
         case OPT_DRV_EJECT_VOL:
         {
             value = std::clamp(value, 0LL, 100LL);
-            
             config.ejectVolume = value;
             return;
         }
         case OPT_DRV_INSERT_VOL:
         {
             value = std::clamp(value, 0LL, 100LL);
-            
             config.insertVolume = value;
             return;
         }

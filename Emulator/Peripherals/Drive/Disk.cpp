@@ -177,8 +177,7 @@ Disk::makeWithG64(C64 &ref, G64File *g64)
 Disk *
 Disk::makeWithD64(C64 &ref, D64File *d64)
 {
-    ErrorCode err;
-    FSDevice *fs = FSDevice::makeWithD64(*d64, &err);
+    FSDevice *fs = FSDevice::makeWithD64(*d64);
     assert(fs);
     
     Disk *disk = makeWithFileSystem(ref, *fs);
@@ -190,8 +189,7 @@ Disk::makeWithD64(C64 &ref, D64File *d64)
 Disk *
 Disk::makeWithCollection(C64 &ref, AnyCollection &collection)
 {
-    ErrorCode err;
-    FSDevice *fs = FSDevice::makeWithCollection(collection, &err);
+    FSDevice *fs = FSDevice::makeWithCollection(collection);
     assert(fs);
     
     Disk *disk = makeWithFileSystem(ref, *fs);
