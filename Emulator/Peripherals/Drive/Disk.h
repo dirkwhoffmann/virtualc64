@@ -181,6 +181,21 @@ public:
 public:
     
     Disk(C64 &ref);
+
+    Disk(C64 &ref, const string &path) throws;
+    Disk(C64 &ref, DOSType type, PETName<16> name);
+    Disk(C64 &ref, const class FSDevice &device);
+    Disk(C64 &ref, const G64File &g64);
+    Disk(C64 &ref, const D64File &d64) throws;
+    Disk(C64 &ref, AnyCollection &collection) throws;
+
+    void init(C64 &ref, const string &path) throws;
+    void init(C64 &ref, DOSType type, PETName<16> name);
+    void init(C64 &ref, const class FSDevice &device);
+    void init(C64 &ref, const G64File &g64);
+    void init(C64 &ref, const D64File &d64) throws;
+    void init(C64 &ref, AnyCollection &collection) throws;
+    
     const char *getDescription() const override { return "Disk"; }
     
 private:
@@ -449,13 +464,13 @@ private:
 public:
     
     // Encodes a G64 file
-    void encodeG64(G64File *a);
+    void encodeG64(const G64File &a);
     
     /* Encodes a file system. The method creates sync marks, GRC encoded header
      * and data blocks, checksums and gaps. If alignTracks is true, the first
      * sector always starts at the beginning of a track.
      */
-    void encode(FSDevice &fs, bool alignTracks = false);
+    void encode(const FSDevice &fs, bool alignTracks = false);
     
 private:
     
@@ -467,13 +482,13 @@ private:
      * follwowing sectors with odd sector numbers. The number of written bits
      * is returned.
      */
-    isize encodeTrack(FSDevice &fs, Track t, u8 tailGap, HeadPos start);
+    isize encodeTrack(const FSDevice &fs, Track t, u8 tailGap, HeadPos start);
     
     /* Encode a single sector. This function translates the logical byte
      * sequence of a single sector into the native VC1541 byte representation.
      * The sector is closed by 'gap' tail gap bytes. The number of written bits
      * is returned.
      */
-    isize encodeSector(FSDevice &fs, Track t, Sector sector, HeadPos start, isize gap);
+    isize encodeSector(const FSDevice &fs, Track t, Sector sector, HeadPos start, isize gap);
 };
  

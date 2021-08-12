@@ -40,7 +40,7 @@ FSDevice::makeWithType(DiskType type, DOSType vType)
 }
 
 FSDevice *
-FSDevice::makeWithD64(D64File &d64)
+FSDevice::makeWithD64(const D64File &d64)
 {
     // Get device descriptor
     FSDeviceDescriptor descriptor = FSDeviceDescriptor(d64);

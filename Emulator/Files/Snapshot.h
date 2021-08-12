@@ -64,8 +64,9 @@ public:
      
     Snapshot() { };
     Snapshot(isize capacity);
-     
-    static Snapshot *makeWithC64(class C64 *c64);
+    Snapshot(class C64 &c64);
+    
+    [[deprecated]] static Snapshot *makeWithC64(class C64 *c64);
 
     
     //
@@ -99,15 +100,7 @@ public:
 
     // Returns pointer to the core data
     u8 *getData() const { return data + sizeof(SnapshotHeader); }
-    
-    // Queries time and screenshot properties
-    /*
-    time_t timeStamp() const { return getHeader()->timestamp; }
-    u8 *imageData() const { return (u8 *)(getHeader()->screenshot.screen); }
-    isize imageWidth() const { return getHeader()->screenshot.width; }
-    isize imageHeight() const { return getHeader()->screenshot.height; }
-    */
-    
+        
     // Records a screenshot
-    void takeScreenshot(class C64 *c64);
+    void takeScreenshot(class C64 &c64);
 };

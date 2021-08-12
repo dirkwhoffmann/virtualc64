@@ -34,7 +34,7 @@ FSDeviceDescriptor::FSDeviceDescriptor(DiskType type, DOSType dos)
     }
 }
 
-FSDeviceDescriptor::FSDeviceDescriptor(D64File &d64)
+FSDeviceDescriptor::FSDeviceDescriptor(const D64File &d64)
 {    
     this->dos = DOS_TYPE_CBM;
     numCyls = d64.numTracks();

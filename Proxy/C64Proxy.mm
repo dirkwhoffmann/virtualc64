@@ -1458,7 +1458,8 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 {
     C64 *c64 = (C64 *)c64proxy->obj;
     c64->suspend();
-    Snapshot *snapshot = Snapshot::makeWithC64(c64);
+    // Snapshot *snapshot = Snapshot::makeWithC64(c64);
+    Snapshot *snapshot = new Snapshot(*c64);
     c64->resume();
     return [self make:snapshot];
 }

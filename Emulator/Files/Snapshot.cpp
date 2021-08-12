@@ -77,6 +77,14 @@ Snapshot::Snapshot(isize capacity)
     header->subminor = SNP_SUBMINOR;
 }
 
+Snapshot::Snapshot(C64 &c64): Snapshot(c64.size())
+{
+    takeScreenshot(c64);
+
+    if (SNP_DEBUG) c64.dump();
+    c64.save(getData());
+}
+
 Snapshot *
 Snapshot::makeWithC64(C64 *c64)
 {
@@ -84,7 +92,7 @@ Snapshot::makeWithC64(C64 *c64)
     
     snapshot = new Snapshot(c64->size());
     
-    snapshot->takeScreenshot(c64);
+    snapshot->takeScreenshot(*c64);
 
     if (SNP_DEBUG) c64->dump();
     c64->save(snapshot->getData());
@@ -119,16 +127,16 @@ Snapshot::isTooNew() const
 }
 
 void
-Snapshot::takeScreenshot(C64 *c64)
+Snapshot::takeScreenshot(C64 &c64)
 {
     SnapshotHeader *header = (SnapshotHeader *)data;
     
     isize xStart = FIRST_VISIBLE_PIXEL;
     isize yStart = FIRST_VISIBLE_LINE;
     header->screenshot.width = VISIBLE_PIXELS;
-    header->screenshot.height = c64->vic.numVisibleLines();
+    header->screenshot.height = c64.vic.numVisibleLines();
     
-    u32 *source = (u32 *)c64->vic.stableEmuTexture();
+    u32 *source = (u32 *)c64.vic.stableEmuTexture();
     u32 *target = header->screenshot.screen;
     source += xStart + yStart * TEX_WIDTH;
     for (isize i = 0; i < header->screenshot.height; i++) {

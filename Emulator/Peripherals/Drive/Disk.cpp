@@ -108,30 +108,23 @@ Disk::isValidHalftrackSectorPair(Halftrack ht, Sector s)
 Disk *
 Disk::make(C64 &ref, const string &path)
 {
+    return new Disk(ref, path);
+    /*
     try { return makeWithG64(ref, AnyFile::make <G64File> (path)); }
     catch (...) { }
 
     try { return makeWithFileSystem(ref, *FSDevice::makeWithPath(path)); }
     catch (...) { }
-
-    /*
-     ErrorCode ec;
-
-     if (auto g64 = AnyFile::make <G64File> (path, &ec)) {
-        return makeWithG64(ref, g64);
-    }
-
-    if (auto fs = FSDevice::makeWithPath(path, &ec)) {
-        return makeWithFileSystem(ref, *fs);
-    }
-    */
     
     throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+    */
 }
 
 Disk *
 Disk::make(C64 &ref, DOSType type, PETName<16> name)
 {
+    return new Disk(ref, type, name);
+    /*
     assert_enum(DOSType, type);
     
     switch (type) {
@@ -154,29 +147,38 @@ Disk::make(C64 &ref, DOSType type, PETName<16> name)
             return nullptr;
         }
     }
+    */
 }
 
 Disk *
 Disk::makeWithFileSystem(C64 &ref, FSDevice &fs)
 {
+    return new Disk(ref, fs);
+    /*
     Disk *disk = new Disk(ref);
 
     disk->encode(fs);
     return disk;
+    */
 }
 
 Disk *
 Disk::makeWithG64(C64 &ref, G64File *g64)
 {
+    return new Disk(ref, *g64);
+    /*
     Disk *disk = new Disk(ref);
 
-    disk->encodeG64(g64);
+    disk->encodeG64(*g64);
     return disk;
+    */
 }
 
 Disk *
 Disk::makeWithD64(C64 &ref, D64File *d64)
 {
+    return new Disk(ref, *d64);
+    /*
     FSDevice *fs = FSDevice::makeWithD64(*d64);
     assert(fs);
     
@@ -184,11 +186,14 @@ Disk::makeWithD64(C64 &ref, D64File *d64)
     delete fs;
     
     return disk;
+    */
 }
 
 Disk *
 Disk::makeWithCollection(C64 &ref, AnyCollection &collection)
 {
+    return new Disk(ref, collection);
+    /*
     FSDevice *fs = FSDevice::makeWithCollection(collection);
     assert(fs);
     
@@ -196,6 +201,7 @@ Disk::makeWithCollection(C64 &ref, AnyCollection &collection)
     delete fs;
     
     return disk;
+    */
 }
 
 Disk::Disk(C64 &ref) : SubComponent(ref)
@@ -217,6 +223,105 @@ Disk::Disk(C64 &ref) : SubComponent(ref)
     }
     
     clearDisk();
+}
+
+Disk::Disk(C64 &ref, const string &path) : Disk(ref)
+{
+    init(ref, path);
+}
+
+Disk::Disk(C64 &ref, DOSType type, PETName<16> name) : Disk(ref)
+{
+    init(ref, type, name);
+}
+
+Disk::Disk(C64 &ref, const class FSDevice &device) : Disk(ref)
+{
+    init(ref, device);
+}
+
+Disk::Disk(C64 &ref, const G64File &g64) : Disk(ref)
+{
+    init(ref, g64);
+}
+
+Disk::Disk(C64 &ref, const D64File &d64) : Disk(ref)
+{
+    init(ref, d64);
+}
+
+Disk::Disk(C64 &ref, AnyCollection &collection) : Disk(ref)
+{
+    init(ref, collection);
+}
+
+void
+Disk::init(C64 &ref, const string &path)
+{
+    try { init(ref, *AnyFile::make <G64File> (path)); }
+    catch (...) { }
+
+    try { init(ref, *FSDevice::makeWithPath(path)); }
+    catch (...) { }
+    
+    throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+}
+
+void
+Disk::init(C64 &ref, DOSType type, PETName<16> name)
+{
+    assert_enum(DOSType, type);
+    
+    switch (type) {
+            
+        case DOS_TYPE_NODOS:
+        {
+            break;
+        }
+        case DOS_TYPE_CBM:
+        {
+            FSDevice *fs = FSDevice::makeWithType(DISK_TYPE_SS_SD, DOS_TYPE_CBM);
+            fs->setName(name);
+            init(ref, *fs);
+            delete fs;
+        }
+        default:
+        {
+            assert(false);
+        }
+    }
+}
+
+void
+Disk::init(C64 &ref, const FSDevice &device)
+{
+    encode(device);
+}
+
+void
+Disk::init(C64 &ref, const G64File &g64)
+{
+    encodeG64(g64);
+}
+
+void
+Disk::init(C64 &ref, const D64File &d64)
+{
+    FSDevice *fs = FSDevice::makeWithD64(d64);
+    assert(fs);
+    
+    init(ref, *fs);
+    delete fs;
+}
+
+void
+Disk::init(C64 &ref, AnyCollection &collection)
+{
+    FSDevice *fs = FSDevice::makeWithCollection(collection);
+    assert(fs);
+    
+    init(ref, *fs);
+    delete fs;
 }
 
 void
@@ -747,16 +852,14 @@ Disk::decodeSector(isize offset, u8 *dest)
 //
 
 void
-Disk::encodeG64(G64File *a)
+Disk::encodeG64(const G64File &a)
 {
     trace(GCR_DEBUG, "Encoding G64 archive\n");
-    
-    assert(a);
-    
+        
     clearDisk();
     for (Halftrack ht = 1; ht <= 84; ht++) {
         
-        u16 size = a->getSizeOfHalftrack(ht);
+        u16 size = a.getSizeOfHalftrack(ht);
         
         if (size == 0) {
             if (ht > 1) {
@@ -773,12 +876,12 @@ Disk::encodeG64(G64File *a)
         trace(GCR_DEBUG, "  Encoding halftrack %d (%d bytes)\n", ht, size);
         length.halftrack[ht] = 8 * size;
         
-        a->copyHalftrack(ht, data.halftrack[ht]);
+        a.copyHalftrack(ht, data.halftrack[ht]);
     }
 }
 
 void
-Disk::encode(FSDevice &fs, bool alignTracks)
+Disk::encode(const FSDevice &fs, bool alignTracks)
 {    
     // 64COPY (fails on VICE test drive/skew)
     /*
@@ -845,7 +948,7 @@ Disk::encode(FSDevice &fs, bool alignTracks)
 }
 
 isize
-Disk::encodeTrack(FSDevice &fs, Track t, u8 tailGap, HeadPos start)
+Disk::encodeTrack(const FSDevice &fs, Track t, u8 tailGap, HeadPos start)
 {
     assert(isTrackNumber(t));
     trace(GCR_DEBUG, "Encoding track %d\n", t);
@@ -864,7 +967,7 @@ Disk::encodeTrack(FSDevice &fs, Track t, u8 tailGap, HeadPos start)
 }
 
 isize
-Disk::encodeSector(FSDevice &fs, Track t, Sector s, HeadPos start, isize tailGap)
+Disk::encodeSector(const FSDevice &fs, Track t, Sector s, HeadPos start, isize tailGap)
 {
     assert(isValidTrackSectorPair(t, s));
     
