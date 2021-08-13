@@ -12,9 +12,7 @@
 #include "Types.h"
 #include <dirent.h>
 #include <fcntl.h>
-#include <iomanip>
 #include <istream>
-#include <ostream>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <vector>
@@ -41,6 +39,9 @@ string stripSuffix(const string &path);
 
 // Concatinates two path segments
 string appendPath(const string &path, const string &path2);
+
+// Checks if a string starts with '/'
+bool isAbsolutePath(const string &path);
 
 
 //

@@ -16,14 +16,14 @@ namespace util {
 
 struct Exception : public std::exception {
     
-    string description;
     i64 data;
+    string description;
     
-    Exception(const string &s, i64 d) : description(s), data(d) { }
-    Exception(const string &s) : description(s), data(0) { }
-    Exception(i64 d) : data(d) { }
+    Exception(i64 d, const string &s) : data(d), description(s) { }
+    Exception(i64 d) : data(d), description("") { }
+    Exception(const string &s) : data(0), description(s) { }
     Exception() : data(0) { }
-
+    
     const char *what() const throw() override { return description.c_str(); }
 };
 
