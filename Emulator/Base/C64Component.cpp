@@ -10,39 +10,55 @@
 #include "config.h"
 #include "C64Component.h"
 
-C64Component::~C64Component()
-{
-}
-
 void
 C64Component::initialize()
 {
-    // Initialize all subcomponents
-    for (C64Component *c : subComponents) c->initialize();
-    
-    // Initialize this component
+    for (C64Component *c : subComponents) { c->initialize(); }
     _initialize();
 }
 
 void
 C64Component::reset(bool hard)
 {
-    // Reset all subcomponents
-    for (C64Component *c : subComponents) c->reset(hard);
+    for (C64Component *c : subComponents) { c->reset(hard); }
+    _reset(hard);
+}
 
-    // Reset this component
-    _reset(hard);    
+void
+C64Component::inspect()
+{
+    for (C64Component *c : subComponents) { c->inspect(); }
+    _inspect();
+}
+
+void C64Component::dump(dump::Category category, std::ostream& ss) const
+{
+    _dump(category, ss);
+}
+
+void
+C64Component::dump(dump::Category category) const
+{
+    dump(category, std::cout);
+}
+
+void
+C64Component::dump(std::ostream& ss) const
+{
+    dump((dump::Category)(-1), ss);
+}
+
+void
+C64Component::dump() const
+{
+    dump((dump::Category)(-1));
 }
 
 isize
 C64Component::size()
 {
     isize result = _size();
-
-    for (C64Component *c : subComponents) {
-        result += c->size();
-    }
-
+    for (C64Component *c : subComponents) { result += c->size(); }
     return result;
 }
 
@@ -64,12 +80,13 @@ C64Component::load(const u8 *buffer)
 
     // Call delegation method
     ptr += didLoadFromBuffer(ptr);
-
+    isize result = (isize)(ptr - buffer);
+    
     // Verify that the number of written bytes matches the snapshot size
-    trace(SNP_DEBUG, "Loaded %ld bytes (expected %zu)\n", ptr - buffer, size());
-    assert(ptr - buffer == (long)size());
+    trace(SNP_DEBUG, "Loaded %zd bytes (expected %zd)\n", result, size());
+    assert(result == size());
 
-    return ptr - buffer;
+    return result;
 }
 
 isize
@@ -90,12 +107,13 @@ C64Component::save(u8 *buffer)
 
     // Call delegation method
     ptr += didSaveToBuffer(ptr);
-
+    isize result = (isize)(ptr - buffer);
+    
     // Verify that the number of written bytes matches the snapshot size
-    trace(SNP_DEBUG, "Saved %ld bytes (expected %zu)\n", ptr - buffer, size());
-    assert(ptr - buffer == (long)size());
+    trace(SNP_DEBUG, "Saved %zd bytes (expected %zd)\n", result, size());
+    assert(result == size());
 
-    return ptr - buffer;
+    return result;
 }
 
 void
@@ -115,8 +133,8 @@ C64Component::powerOn()
 void
 C64Component::powerOff()
 {
-    _powerOff();
     for (auto c : subComponents) { c->powerOff(); }
+    _powerOff();
 }
 
 void
@@ -129,8 +147,8 @@ C64Component::run()
 void
 C64Component::pause()
 {
-    _pause();
     for (auto c : subComponents) { c->pause(); }
+    _pause();
 }
 
 void
@@ -166,34 +184,4 @@ C64Component::debugOff()
 {
     for (auto c : subComponents) { c->debugOff(); }
     _debugOff();
-}
-
-void
-C64Component::inspect()
-{
-    for (C64Component *c : subComponents) { c->inspect(); }
-    _inspect();
-}
-
-void C64Component::dump(dump::Category category, std::ostream& ss) const
-{
-    _dump(category, ss);
-}
-
-void
-C64Component::dump(dump::Category category) const
-{
-    dump(category, std::cout);
-}
-
-void
-C64Component::dump(std::ostream& ss) const
-{
-    dump((dump::Category)(-1), ss);
-}
-
-void
-C64Component::dump() const
-{
-    dump((dump::Category)(-1));
 }

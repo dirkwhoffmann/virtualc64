@@ -54,7 +54,7 @@ protected:
     
 public:
     
-    virtual ~C64Component();
+    virtual ~C64Component() { };
     
     /* Initializes the component and it's subcomponents. The initialization
      * procedure is initiated once, in the constructor of the C64 class. By
@@ -129,21 +129,21 @@ public:
     virtual isize _size() = 0;
     
     // Loads the internal state from a memory buffer
-    isize load(const u8 *buffer);
-    virtual isize _load(const u8 *buffer) = 0;
+    isize load(const u8 *buf);
+    virtual isize _load(const u8 *buf) = 0;
     
     // Saves the internal state to a memory buffer
-    isize save(u8 *buffer);
-    virtual isize _save(u8 *buffer) = 0;
+    isize save(u8 *buf);
+    virtual isize _save(u8 *buf) = 0;
     
     /* Delegation methods called inside load() or save(). Some components
      * override these methods to add custom behavior if not all elements can be
      * processed by the default implementation.
      */
-    virtual isize willLoadFromBuffer(const u8 *buffer) { return 0; }
-    virtual isize didLoadFromBuffer(const u8 *buffer) { return 0; }
-    virtual isize willSaveToBuffer(const u8 *buffer) {return 0; }
-    virtual isize didSaveToBuffer(u8 *buffer) { return 0; }
+    virtual isize willLoadFromBuffer(const u8 *buf) { return 0; }
+    virtual isize didLoadFromBuffer(const u8 *buf) { return 0; }
+    virtual isize willSaveToBuffer(const u8 *buf) {return 0; }
+    virtual isize didSaveToBuffer(u8 *buf) { return 0; }
     
     
     //
@@ -203,16 +203,19 @@ return counter.count;
     
 #define RESET_SNAPSHOT_ITEMS(hard) \
 util::SerResetter resetter; \
-applyToResetItems(resetter, hard);
+applyToResetItems(resetter, hard); \
+debug(SNP_DEBUG, "Resetted (%s)\n", hard ? "hard" : "soft"); \
     
 #define LOAD_SNAPSHOT_ITEMS \
 util::SerReader reader(buffer); \
 applyToPersistentItems(reader); \
 applyToResetItems(reader); \
+debug(SNP_DEBUG, "Recreated from %zu bytes\n", reader.ptr - buffer); \
 return reader.ptr - buffer;
     
 #define SAVE_SNAPSHOT_ITEMS \
 util::SerWriter writer(buffer); \
 applyToPersistentItems(writer); \
 applyToResetItems(writer); \
+debug(SNP_DEBUG, "Serialized to %zu bytes\n", writer.ptr - buffer); \
 return writer.ptr - buffer;

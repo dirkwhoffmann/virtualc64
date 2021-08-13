@@ -16,7 +16,7 @@
 // Enumerations
 //
 
-enum_long(MSG)
+enum_long(MSG_TYPE)
 {
     MSG_NONE = 0,
     
@@ -122,7 +122,7 @@ enum_long(MSG)
     
     MSG_COUNT
 };
-typedef MSG MsgType;
+typedef MSG_TYPE MsgType;
 
 #ifdef __cplusplus
 struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
