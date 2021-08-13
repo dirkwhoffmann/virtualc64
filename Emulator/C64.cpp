@@ -94,6 +94,12 @@ C64::setInspectionTarget(InspectionTarget target)
     inspectionTarget = target;
 }
 
+void
+C64::removeInspectionTarget()
+{
+    setInspectionTarget(INSPECTION_TARGET_NONE);
+}
+
 i64
 C64::getConfigItem(Option option) const
 {
@@ -555,13 +561,13 @@ C64::execute()
         
         // Are we requested to take a snapshot?
         if (flags & RL::AUTO_SNAPSHOT) {
-            clearActionFlag(RL::AUTO_SNAPSHOT);
+            clearFlag(RL::AUTO_SNAPSHOT);
             // autoSnapshot = Snapshot::makeWithC64(this);
             autoSnapshot = new Snapshot(*this);
             msgQueue.put(MSG_AUTO_SNAPSHOT_TAKEN);
         }
         if (flags & RL::USER_SNAPSHOT) {
-            clearActionFlag(RL::USER_SNAPSHOT);
+            clearFlag(RL::USER_SNAPSHOT);
             // userSnapshot = Snapshot::makeWithC64(this);
             userSnapshot = new Snapshot(*this);
             msgQueue.put(MSG_USER_SNAPSHOT_TAKEN);
@@ -569,39 +575,39 @@ C64::execute()
         
         // Are we requested to update the debugger info structs?
         if (flags & RL::INSPECT) {
-            clearActionFlag(RL::INSPECT);
+            clearFlag(RL::INSPECT);
             inspect();
         }
         
         // Did we reach a breakpoint?
         if (flags & RL::BREAKPOINT) {
-            clearActionFlag(RL::BREAKPOINT);
+            clearFlag(RL::BREAKPOINT);
             msgQueue.put(MSG_BREAKPOINT_REACHED);
             newState = EXEC_PAUSED;
         }
         
         // Did we reach a watchpoint?
         if (flags & RL::WATCHPOINT) {
-            clearActionFlag(RL::WATCHPOINT);
+            clearFlag(RL::WATCHPOINT);
             msgQueue.put(MSG_WATCHPOINT_REACHED);
             newState = EXEC_PAUSED;
         }
         
         // Are we requested to terminate the run loop?
         if (flags & RL::STOP) {
-            clearActionFlag(RL::STOP);
+            clearFlag(RL::STOP);
             newState = EXEC_PAUSED;
         }
         
         // Are we requested to pull the NMI line down?
         if (flags & RL::EXTERNAL_NMI) {
-            clearActionFlag(RL::EXTERNAL_NMI);
+            clearFlag(RL::EXTERNAL_NMI);
             cpu.pullDownNmiLine(INTSRC_EXP);
         }
         
         // Is the CPU jammed due the execution of an illegal instruction?
         if (flags & RL::CPU_JAM) {
-            clearActionFlag(RL::CPU_JAM);
+            clearFlag(RL::CPU_JAM);
             msgQueue.put(MSG_CPU_JAMMED);
             newState = EXEC_PAUSED;
         }
@@ -918,13 +924,13 @@ C64::endFrame()
 }
 
 void
-C64::setActionFlag(u32 flag)
+C64::setFlag(u32 flag)
 {
     synchronized { flags |= flag; }
 }
 
 void
-C64::clearActionFlag(u32 flag)
+C64::clearFlag(u32 flag)
 {
     synchronized { flags &= ~flag; }
 }
@@ -980,10 +986,8 @@ C64::latestUserSnapshot()
 }
 
 void
-C64::loadFromSnapshot(const Snapshot &snapshot)
+C64::loadSnapshot(const Snapshot &snapshot)
 {
-    assert(!isRunning());
-
     // Check if this snapshot is compatible with the emulator
     if (snapshot.isTooOld() || FORCE_SNAPSHOT_TOO_OLD) {
         throw VC64Error(ERROR_SNP_TOO_OLD);
@@ -1395,7 +1399,7 @@ C64::flash(const AnyFile &file)
                 break;
 
             case FILETYPE_V64:
-                loadFromSnapshot(dynamic_cast<const Snapshot &>(file));
+                loadSnapshot(dynamic_cast<const Snapshot &>(file));
                 break;
                 
             default:

@@ -226,9 +226,10 @@ class MyDocument: NSDocument {
         // Only proceed if an attachment is present
         if attachment == nil { return }
         
-        // If the attachment is a snapshot, flash it and return
+        // If the attachment is a snapshot, flash it
         if let proxy = attachment as? SnapshotProxy {
             try c64.flash(proxy)
+            snapshots.append(proxy)
             return
         }
         
@@ -316,7 +317,9 @@ class MyDocument: NSDocument {
         
         do {
             try createAttachment(from: url)
+            
         } catch let error as VC64Error {
+            
             error.cantOpen(url: url)
         }
     }

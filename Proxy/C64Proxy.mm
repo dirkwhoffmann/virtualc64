@@ -1437,6 +1437,11 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 
 @implementation SnapshotProxy
 
+- (Snapshot *)snapshot
+{
+    return (Snapshot *)obj;
+}
+
 + (instancetype)make:(Snapshot *)snapshot
 {
     return snapshot ? [[self alloc] initWith:snapshot] : nil;
@@ -1462,11 +1467,6 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     Snapshot *snapshot = new Snapshot(*c64);
     c64->resume();
     return [self make:snapshot];
-}
-
-- (Snapshot *)snapshot
-{
-    return (Snapshot *)obj;
 }
 
 - (NSImage *)previewImage
@@ -2186,16 +2186,16 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     [self c64]->softReset();
 }
 
-- (void)isReady:(ExceptionWrapper *)e
+- (void)isReady:(ExceptionWrapper *)ex
 {
     try { [self c64]->isReady(); }
-    catch (VC64Error &error) { [e save:error]; }
+    catch (VC64Error &error) { [ex save:error]; }
 }
 
-- (void)powerOn:(ExceptionWrapper *)e
+- (void)powerOn:(ExceptionWrapper *)ex
 {
     try { [self c64]->powerOn(); }
-    catch (VC64Error &error) { [e save:error]; }
+    catch (VC64Error &error) { [ex save:error]; }
 }
 
 - (void)powerOff
@@ -2276,10 +2276,10 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     return [SnapshotProxy make:snapshot];
 }
 
-- (void)loadFromSnapshot:(SnapshotProxy *)proxy exception:(ExceptionWrapper *)e;
+- (void)loadFromSnapshot:(SnapshotProxy *)proxy exception:(ExceptionWrapper *)ex;
 {
-    try { [self c64]->loadFromSnapshot(*(Snapshot *)proxy->obj); }
-    catch (VC64Error &error) { [e save:error]; }
+    try { [self c64]->loadSnapshot(*[proxy snapshot]); }
+    catch (VC64Error &error) { [ex save:error]; }
 }
 
 - (NSInteger)getConfig:(Option)opt
@@ -2519,16 +2519,16 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     return RomFile::isPatchedRom(rev);
 }
 
-- (void)flash:(AnyFileProxy *)proxy exception:(ExceptionWrapper *)e;
+- (void)flash:(AnyFileProxy *)proxy exception:(ExceptionWrapper *)ex;
 {
     try { [self c64]->flash(*(AnyFile *)proxy->obj); }
-    catch (VC64Error &error) { [e save:error]; }
+    catch (VC64Error &error) { [ex save:error]; }
 }
 
-- (void)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)e;
+- (void)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
 {
     try { [self c64]->flash(*(FSDevice *)proxy->obj, (unsigned)nr); }
-    catch (VC64Error &error) { [e save:error]; }
+    catch (VC64Error &error) { [ex save:error]; }
 }
 
 - (NSInteger)cpuLoad

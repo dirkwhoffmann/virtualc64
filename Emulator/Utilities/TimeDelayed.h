@@ -13,7 +13,7 @@
 
 template <class T, isize delay> class TimeDelayed {
     
-    static const isize capacity = delay + 1;
+    static constexpr isize capacity = delay + 1;
     
     /* Value pipeline (history buffer)
      *
@@ -61,6 +61,7 @@ public:
         for (isize i = 0; i < capacity; i++) if (pipeline[i]) return false;
         return true;
     }
+    
     
     //
     // Serializing

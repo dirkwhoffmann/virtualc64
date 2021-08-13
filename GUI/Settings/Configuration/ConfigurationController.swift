@@ -211,7 +211,7 @@ class ConfigurationController: DialogController {
     
     var bootable: Bool {
         
-        do { try c64.isReady(); } catch { return false }
+        do { try c64.isReady() } catch { return false }
         return c64.poweredOff
     }
 

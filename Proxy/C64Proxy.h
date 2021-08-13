@@ -172,10 +172,10 @@
 @property (readonly) BOOL running;
 @property (readonly) BOOL paused;
 
-- (void)isReady:(ExceptionWrapper *)e;
-- (void)powerOn:(ExceptionWrapper *)e;
+- (void)isReady:(ExceptionWrapper *)ex;
+- (void)powerOn:(ExceptionWrapper *)ex;
 - (void)powerOff;
-- (void)run:(ExceptionWrapper *)e;
+- (void)run:(ExceptionWrapper *)ex;
 - (void)pause;
 - (void)halt;
 
@@ -187,7 +187,7 @@
 - (void)requestUserSnapshot;
 @property (readonly) SnapshotProxy *latestAutoSnapshot;
 @property (readonly) SnapshotProxy *latestUserSnapshot;
-- (void)loadFromSnapshot:(SnapshotProxy *)proxy exception:(ExceptionWrapper *)e;
+- (void)loadFromSnapshot:(SnapshotProxy *)proxy exception:(ExceptionWrapper *)ex;
 
 - (NSInteger)getConfig:(Option)opt;
 - (NSInteger)getConfig:(Option)opt id:(NSInteger)id;
@@ -212,9 +212,9 @@
 
 - (BOOL)isRom:(RomType)type url:(NSURL *)url;
 
-- (void)loadRom:(NSURL *)url exception:(ExceptionWrapper *)e;
+- (void)loadRom:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)loadRom:(RomFileProxy *)proxy;
-- (void)saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)e;
+- (void)saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)deleteRom:(RomType)type;
 
 - (RomIdentifier)romIdentifier:(RomType)type;
@@ -225,8 +225,8 @@
 - (NSString *)romSubTitle:(RomType)type;
 - (NSString *)romRevision:(RomType)type;
 
-- (void)flash:(AnyFileProxy *)container exception:(ExceptionWrapper *)e;
-- (void)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)e;
+- (void)flash:(AnyFileProxy *)container exception:(ExceptionWrapper *)ex;
+- (void)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
 
 @property (readonly) NSInteger cpuLoad;
 
@@ -923,7 +923,7 @@ AnyCollectionProxy <MakeWithFolder> { }
 - (void)printDirectory;
 
 - (NSInteger)readByte:(NSInteger)block offset:(NSInteger)offset;
-- (void)exportDirectory:(NSString *)path exception:(ExceptionWrapper *)e;
+- (void)exportDirectory:(NSString *)path exception:(ExceptionWrapper *)ex;
 
 - (void)info;
 

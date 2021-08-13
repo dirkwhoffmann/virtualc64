@@ -11,6 +11,7 @@
 
 #include "Concurrency.h"
 #include "RingBuffer.h"
+#include "Volume.h"
 
 typedef util::RingBuffer<short, 2048> SampleStream;
 

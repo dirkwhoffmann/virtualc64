@@ -56,7 +56,7 @@ typedef size_t             usize;
 // Enumerations
 //
 
-/* The following macros 'enum_<type>' provides a way to make enumerations
+/* The following macros 'enum_<type>' provide a way to make enumerations
  * easily accessible in Swift. All macros have two definitions, one for the
  * Swift side and one for the C side. Please note that the type mapping for
  * enum_long differs on both sides. On the Swift side, enums of this type are
@@ -74,9 +74,7 @@ typedef enum __attribute__((enum_extensibility(open))) _name : _type _name; \
 enum _name : _type
 
 #define enum_long(_name) enum_generic(_name, long)
-#define enum_u32(_name) enum_generic(_name, u32)
 #define enum_i8(_name) enum_generic(_name, i8)
-#define enum_u8(_name) enum_generic(_name, u8)
 
 #else
 
@@ -86,8 +84,6 @@ typedef _type _name; \
 enum : _type
 
 #define enum_long(_name) enum_generic(_name, long long)
-#define enum_u32(_name) enum_generic(_name, u32)
 #define enum_i8(_name) enum_generic(_name, i8)
-#define enum_u8(_name) enum_generic(_name, u8)
 
 #endif

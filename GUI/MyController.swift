@@ -211,9 +211,7 @@ extension MyController {
     }
 
     override open func windowDidLoad() {
- 
-        track()
-        
+         
         // Reset mouse coordinates
         hideMouse = false
         
@@ -240,7 +238,7 @@ extension MyController {
         addListener()
                 
         // Process attachment (if any)
-        try? mydocument.mountAttachment()
+        try? mydocument.mountAttachment(destination: c64.drive8)
 
         do {
             // Let the C64 throw an exception if it is not ready to power on

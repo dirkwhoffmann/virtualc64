@@ -176,6 +176,7 @@ public:
     
     C64();
     ~C64();
+    
     const char *getDescription() const override { return "C64"; }
     void prefix() const override;
 
@@ -230,7 +231,7 @@ public:
     void inspect();
     InspectionTarget getInspectionTarget() const;
     void setInspectionTarget(InspectionTarget target);
-    void removeInspectionTarget() { setInspectionTarget(INSPECTION_TARGET_NONE); }
+    void removeInspectionTarget();
         
 private:
     
@@ -277,7 +278,7 @@ private:
         
 private:
 
-    void _isReady() const override;
+    void _isReady() const throws override;
     void _powerOn() override;
     void _powerOff() override;
     void _run() override;
@@ -299,22 +300,25 @@ private:
     void execute() override;
 
 public:
-    
-    /* Sets or clears a run loop control flag. The functions are thread-safe
-     * and can be called from inside or outside the emulator thread.
+
+    bool getUltimax() const { return ultimax; }
+    void setUltimax(bool b) { ultimax = b; }
+
+    /* Sets or clears a flag for controlling the run loop. The functions are
+     * thread-safe and can be called safely from outside the emulator thread.
      */
-    void setActionFlag(u32 flags);
-    void clearActionFlag(u32 flags);
+    void setFlag(u32 flags);
+    void clearFlag(u32 flags);
     
-    // Convenience wrappers for controlling the run loop
-    void signalAutoSnapshot() { setActionFlag(RL::AUTO_SNAPSHOT); }
-    void signalUserSnapshot() { setActionFlag(RL::USER_SNAPSHOT); }
-    void signalBreakpoint() { setActionFlag(RL::BREAKPOINT); }
-    void signalWatchpoint() { setActionFlag(RL::WATCHPOINT); }
-    void signalInspect() { setActionFlag(RL::INSPECT); }
-    void signalJammed() { setActionFlag(RL::CPU_JAM); }
-    void signalStop() { setActionFlag(RL::STOP); }
-    void signalExpPortNmi() { setActionFlag(RL::EXTERNAL_NMI); }
+    // Convenience wrappers
+    void signalAutoSnapshot() { setFlag(RL::AUTO_SNAPSHOT); }
+    void signalUserSnapshot() { setFlag(RL::USER_SNAPSHOT); }
+    void signalBreakpoint() { setFlag(RL::BREAKPOINT); }
+    void signalWatchpoint() { setFlag(RL::WATCHPOINT); }
+    void signalInspect() { setFlag(RL::INSPECT); }
+    void signalJammed() { setFlag(RL::CPU_JAM); }
+    void signalStop() { setFlag(RL::STOP); }
+    void signalExpPortNmi() { setFlag(RL::EXTERNAL_NMI); }
 
     // Runs or pauses the emulator
     void stopAndGo();
@@ -389,7 +393,7 @@ public:
     Snapshot *latestUserSnapshot();
     
     // Loads the current state from a snapshot file
-    void loadFromSnapshot(const Snapshot &snapshot) throws;
+    void loadSnapshot(const Snapshot &snapshot) throws;
     
     
     //
@@ -446,19 +450,4 @@ public:
     void flash(const AnyFile &file) throws;
     void flash(const AnyCollection &file, isize item) throws;
     void flash(const FSDevice &fs, isize item) throws;
-    
-    //
-    // Handling ultimax mode
-    //
-    
-public:
-    
-    // Returns the ultimax flag
-    bool getUltimax() const { return ultimax; }
-    
-    /* Setter for ultimax mode. When the peek / poke lookup table is updated,
-     * this function is called if a certain combination is present on the Game
-     * and Exrom lines.
-     */
-    void setUltimax(bool b) { ultimax = b; }
 };

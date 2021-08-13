@@ -10,13 +10,6 @@
 #pragma once
 
 #include "Macros.h"
-#include "C64Types.h"
-#include "CPUInstructions.h"
-#include "TimeDelayed.h"
-#include "Volume.h"
-#include "envelope.h"
-
-#include <string.h>
 
 namespace util {
 

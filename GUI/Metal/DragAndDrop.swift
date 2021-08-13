@@ -81,10 +81,10 @@ public extension MetalView {
         
         let pasteBoard = sender.draggingPasteboard
         
-        guard let type = pasteBoard.availableType(from: acceptedTypes()),
-            let document = parent.mydocument else {
-                return false
-        }
+        guard
+            let type = pasteBoard.availableType(from: acceptedTypes()),
+            let document = parent.mydocument
+        else { return false }
         
         switch type {
             
@@ -114,8 +114,6 @@ public extension MetalView {
                     try? self.parent.c64.flash(snapshot!)
                 }
                 return true
-            } else {
-                return false
             }
             
         case .compatibleFileURL:
@@ -143,16 +141,18 @@ public extension MetalView {
                     }
 
                     try document.mountAttachment()
+                    return true
                     
                 } catch {
                     (error as? VC64Error)?.cantOpen(url: url)
                 }
             }
-            return false
             
         default:
-            return false
+            break
         }
+
+        return false
     }
     
     override func concludeDragOperation(_ sender: NSDraggingInfo?) {
