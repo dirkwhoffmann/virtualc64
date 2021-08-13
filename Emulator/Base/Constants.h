@@ -12,7 +12,7 @@
 #include "Aliases.h"
 
 //
-// Timing parameters
+// Frequencies
 //
 
 // Clock frequency in Hz

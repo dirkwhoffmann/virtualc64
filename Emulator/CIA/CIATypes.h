@@ -59,8 +59,7 @@ enum_long(CIAREG)
     CIAREG_SDR,
     CIAREG_ICR,
     CIAREG_CRA,
-    CIAREG_CRB,
-    CIAREG_COUNT
+    CIAREG_CRB
 };
 typedef CIAREG CIAReg;
 
@@ -69,7 +68,7 @@ struct CIARegEnum : util::Reflection<CIARegEnum, CIAReg> {
 
     static bool isValid(long value)
     {
-        return (unsigned long)value < CIAREG_COUNT;
+        return (unsigned long)value <= CIAREG_CRB;
     }
     
     static const char *prefix() { return "CIAREG"; }
@@ -93,7 +92,6 @@ struct CIARegEnum : util::Reflection<CIARegEnum, CIAReg> {
             case CIAREG_ICR:     return "ICR";
             case CIAREG_CRA:     return "CRA";
             case CIAREG_CRB:     return "CRB";
-            case CIAREG_COUNT:   return "???";
         }
         return "???";
     }

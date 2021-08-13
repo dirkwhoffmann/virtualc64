@@ -11,17 +11,11 @@
 
 #include "Macros.h"
 
-
 //
-// Cycles
+// Type aliases
 //
 
 typedef i64 Cycle;
-
-
-//
-// Floppy drives and disks
-//
 
 typedef i32 Cylinder;
 typedef i32 Head;

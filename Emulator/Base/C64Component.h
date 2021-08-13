@@ -16,14 +16,6 @@
 
 #include <vector>
 #include <iostream>
-#include <iomanip>
-
-/* This class defines the base functionality of all hardware components. It
- * comprises functions for initializing, configuring, and serializing, as well
- * as functions for powering up and down, running and pausing. Furthermore,
- * a 'synchronized' macro is provided to prevent mutual execution of certain
- * code sections.
- */
 
 #define synchronized \
 for (util::AutoMutex _am(mutex); _am.active; _am.active = false)
@@ -40,7 +32,6 @@ enum Category : usize {
     BankMap   = 0b01000000,
     Disk      = 0b10000000
 };
-
 }
     
 class C64Component : public C64Object {
@@ -84,10 +75,6 @@ public:
     // Configuring
     //
         
-    // Sets a single config item
-    virtual void setConfigItem(Option option, i64 value) throws { }
-    virtual void setConfigItem(Option option, long id, i64 value) throws { }
-    
     // Initializes all configuration items with their default values
     virtual void resetConfig() { };
 
