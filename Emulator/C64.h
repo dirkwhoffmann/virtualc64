@@ -74,15 +74,12 @@ class C64 : public SuspendableThread {
     
 public:
     
-    // Communication channel to the GUI
-    MsgQueue msgQueue = MsgQueue(*this);
-
     // Core components
     C64Memory mem = C64Memory(*this);
     C64CPU cpu = C64CPU(*this, mem);
-    VICII vic = VICII(*this);
     CIA1 cia1 = CIA1(*this);
     CIA2 cia2 = CIA2(*this);
+    VICII vic = VICII(*this);
     SIDBridge sid = SIDBridge(*this);
 
     // Logic board
@@ -101,8 +98,9 @@ public:
     
     // Misc
     RetroShell retroShell = RetroShell(*this);
-    RegressionTester regressionTester;
+    RegressionTester regressionTester = RegressionTester(*this);
     Recorder recorder = Recorder(*this);
+    MsgQueue msgQueue = MsgQueue(*this);
 
     
     //

@@ -9,10 +9,10 @@
 
 #pragma once
 
-#include "C64Object.h"
+#include "SubComponent.h"
 #include "C64Types.h"
 
-class RegressionTester : public C64Object {
+class RegressionTester : public SubComponent {
    
 public:
     
@@ -20,12 +20,6 @@ public:
     string dumpTexturePath = "texture";
     
     // Texture cutout
-    /*
-    isize x1 = 104;
-    isize y1 = 16;
-    isize x2 = 488;
-    isize y2 = 290;
-    */
     isize x1 = 104;
     isize y1 = 17;
     isize x2 = 488;
@@ -38,12 +32,26 @@ private:
 
     
     //
-    // Methods from C64Object
+    // Constructing
     //
+    
+public:
+    
+    using SubComponent::SubComponent;
+    const char *getDescription() const override { return "RegressionTester"; }
     
 private:
     
-    const char *getDescription() const override { return "RegressionTester"; }
+    void _reset(bool hard) override { };
+    
+    
+    //
+    // Serializing
+    //
+    
+    isize _size() override { return 0; }
+    isize _load(const u8 *buffer) override { return 0; }
+    isize _save(u8 *buffer) override { return 0; }
     
     
     //
@@ -56,9 +64,9 @@ public:
     void prepare(class C64 &c64, C64Model model);
     
     // Creates the test image and exits the emulator
-    void dumpTexture(class C64 &c64) const;
-    void dumpTexture(class C64 &c64, const string &filename) const;
-    void dumpTexture(class C64 &c64, std::ostream& os) const;
+    void dumpTexture(class C64 &c64);
+    void dumpTexture(class C64 &c64, const string &filename);
+    void dumpTexture(class C64 &c64, std::ostream& os);
 
     
     //

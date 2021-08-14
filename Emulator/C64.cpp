@@ -28,16 +28,20 @@ C64::C64()
         &cia1, &cia2,
         &vic,
         &sid,
-        &keyboard,
+        &supply,
         &port1,
         &port2,
         &expansionport,
         &iec,
+        &keyboard,
         &drive8,
         &drive9,
         &parCable,
         &datasette,
-        &supply
+        &retroShell,
+        &regressionTester,
+        &recorder,
+        &msgQueue
     };
 
     // Set up the initial state
