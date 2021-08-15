@@ -12,12 +12,7 @@ class MyDocument: NSDocument {
     // The window controller for this document
     var parent: MyController { return windowControllers.first as! MyController }
 
-    // The application delegate
-    var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
-    
-    /* Emulator proxy. This object is an Objective-C bridge between the Swift
-     * GUI an the core emulator which is written in C++.
-     */
+    // Gateway to the core emulator
     var c64: C64Proxy!
     
     /* An otional media object attached to this document. This variable is
@@ -39,7 +34,6 @@ class MyDocument: NSDocument {
     
     override init() {
         
-        track()
         super.init()
         
         // Check for Metal support
@@ -52,7 +46,7 @@ class MyDocument: NSDocument {
         // Register standard user defaults
         UserDefaults.registerUserDefaults()
         
-        // Create emulator instance
+        // Create an emulator instance
         c64 = C64Proxy()
     }
      
@@ -69,30 +63,7 @@ class MyDocument: NSDocument {
     //
     // Creating attachments
     //
-    
-    /*
-    func fileType(url: URL) -> FileType {
-                
-        if url.hasDirectoryPath {
-            return .FOLDER
-        }
         
-        switch url.pathExtension.uppercased() {
-            
-        case "VC64": return .V64
-        case "INI":  return .SCRIPT
-        case "CRT":  return .CRT
-        case "D64":  return .D64
-        case "T64":  return .T64
-        case "P00":  return .P00
-        case "PRG":  return .PRG
-        case "G64":  return .G64
-        case "TAP":  return .TAP
-        default:     return .UNKNOWN
-        }
-    }
-    */
-    
     func createAttachment(from url: URL) throws {
         
         let types: [FileType] =

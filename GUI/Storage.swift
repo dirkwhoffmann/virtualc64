@@ -43,6 +43,7 @@ class ManagedArray<Element> {
             
             var itemToDelete = 0
             
+            /*
             if counter % 2 == 0 {
                 itemToDelete = 24
             } else if (counter >> 1) % 2 == 0 {
@@ -50,6 +51,7 @@ class ManagedArray<Element> {
             } else if (counter >> 2) % 2 == 0 {
                 itemToDelete = 8
             }
+            */
             counter += 1
             
             // WE ALWAYS DELETE THE OLDEST ELEMENT FOR NOW

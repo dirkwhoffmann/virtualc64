@@ -9,11 +9,7 @@
 
 import Cocoa
 
-var myAppDelegate: MyAppDelegate {
-    
-    let delegate = NSApp.delegate as? MyAppDelegate
-    return delegate!
-}
+var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
 
 @NSApplicationMain
 @objc public class MyAppDelegate: NSObject, NSApplicationDelegate {
