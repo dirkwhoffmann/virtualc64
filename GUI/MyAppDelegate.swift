@@ -23,19 +23,6 @@ var myAppDelegate: MyAppDelegate {
 
     // Replace the old document controller by instantiating a custom controller
     let myDocumentController = MyDocumentController()
-
-    var documents: [MyDocument] {
-        return NSDocumentController.shared.documents as? [MyDocument] ?? []
-    }
-    var windows: [NSWindow] {
-        return documents.compactMap({ $0.windowForSheet })
-    }
-    var controllers: [MyController] {
-        return documents.compactMap({ $0.windowForSheet?.windowController as? MyController })
-    }
-    var proxies: [C64Proxy] {
-        return documents.map({ $0.c64 })
-    }
     
     // Preferences
     var pref: Preferences!
@@ -79,10 +66,13 @@ var myAppDelegate: MyAppDelegate {
     //
     
     func noteRecentlyUsedURL(_ url: URL, to list: inout [URL], size: Int) {
+        
         if !list.contains(url) {
-            if list.count == size {
-                list.remove(at: size - 1)
-            }
+            
+            // Shorten the list if it is too large
+            if list.count == size { list.remove(at: size - 1) }
+            
+            // Add new item at the beginning
             list.insert(url, at: 0)
         }
     }
@@ -173,6 +163,19 @@ var myAppDelegate: MyAppDelegate {
 
 extension MyAppDelegate {
     
+    var documents: [MyDocument] {
+        return NSDocumentController.shared.documents as? [MyDocument] ?? []
+    }
+    var windows: [NSWindow] {
+        return documents.compactMap({ $0.windowForSheet })
+    }
+    var controllers: [MyController] {
+        return documents.compactMap({ $0.windowForSheet?.windowController as? MyController })
+    }
+    var proxies: [C64Proxy] {
+        return documents.map({ $0.c64 })
+    }
+    
     func windowDidBecomeMain(_ window: NSWindow) {
         
         for c in controllers {
@@ -201,7 +204,6 @@ extension MyAppDelegate {
     
     // Callen when a HID device has been added
     func deviceAdded() {
-        track()
         prefController?.refresh()
     }
     
@@ -212,7 +214,6 @@ extension MyAppDelegate {
 
     // Callen when a HID device has been pulled
     func devicePulled(events: [GamePadAction]) {
-        
         prefController?.refreshDeviceEvents(events: events)
     }
 }
