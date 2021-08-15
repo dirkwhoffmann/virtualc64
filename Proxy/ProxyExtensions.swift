@@ -112,14 +112,7 @@ extension C64Proxy {
         saveRom(type, url: url, exception: exception)
         if exception.errorCode != .OK { throw VC64Error(exception) }
     }
- 
-    func loadSnapshot(_ proxy: SnapshotProxy) throws {
-
-        let exception = ExceptionWrapper()
-        loadSnapshot(proxy, exception: exception)
-        if exception.errorCode != .OK { throw VC64Error(exception) }
-    }
-    
+     
     func flash(_ proxy: AnyFileProxy) throws {
 
         let exception = ExceptionWrapper()

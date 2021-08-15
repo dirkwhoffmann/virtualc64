@@ -2281,12 +2281,6 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     return [SnapshotProxy make:snapshot];
 }
 
-- (void)loadSnapshot:(SnapshotProxy *)proxy exception:(ExceptionWrapper *)ex;
-{
-    try { [self c64]->loadSnapshot(*[proxy snapshot]); }
-    catch (VC64Error &error) { [ex save:error]; }
-}
-
 - (NSInteger)getConfig:(Option)opt
 {
     return [self c64]->getConfigItem(opt);
