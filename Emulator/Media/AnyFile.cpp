@@ -52,7 +52,7 @@ AnyFile::type(const string &path)
     if (!stream.is_open()) return FILETYPE_UNKNOWN;
     
     if (Snapshot::isCompatiblePath(path) &&
-        Snapshot::isCompatibleStream(stream))return FILETYPE_V64;
+        Snapshot::isCompatibleStream(stream))return FILETYPE_SNAPSHOT;
 
     if (Script::isCompatiblePath(path) &&
         Script::isCompatibleStream(stream))return FILETYPE_SCRIPT;

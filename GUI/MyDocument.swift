@@ -67,7 +67,7 @@ class MyDocument: NSDocument {
     func createAttachment(from url: URL) throws {
         
         let types: [FileType] =
-            [ .V64, .SCRIPT, .CRT, .T64, .P00, .PRG, .FOLDER, .D64, .G64, .TAP ]
+            [ .SNAPSHOT, .SCRIPT, .CRT, .T64, .P00, .PRG, .FOLDER, .D64, .G64, .TAP ]
         
         try createAttachment(from: url, allowedTypes: types)
     }
@@ -90,108 +90,57 @@ class MyDocument: NSDocument {
         // If the provided URL points to compressed file, decompress it first
         let newUrl = url.unpacked
 
-        // Get the file type
-        let type = AnyFileProxy.type(of: newUrl)
-
-        // Only proceed if the file type is accepted
-        if !allowedTypes.contains(type) {
-            throw NSError.unsupportedFormatError(filename: url.lastPathComponent)
-        }
-        
-        if url.hasDirectoryPath {
-            return try createFileProxy(folderUrl: newUrl, type: type)
-        } else {
-            return try createFileProxy(fileUrl: newUrl, type: type)
-        }
-    }
+        // Iterate through all allowed file types
+        for type in allowedTypes {
+                        
+            do {
+                switch type {
                 
-    func createFileProxy(fileUrl: URL, type: FileType) throws -> AnyFileProxy? {
-            
-        track()
-        
-        // Get the file wrapper and create the proxy with it
-        let wrapper = try FileWrapper(url: fileUrl)
-        return try createFileProxy(wrapper: wrapper, type: type)
-    }
-    
-    fileprivate
-    func createFileProxy(wrapper: FileWrapper, type: FileType) throws -> AnyFileProxy? {
+                case .SNAPSHOT:
+                    return try Proxy.make(url: newUrl) as SnapshotProxy
+                    
+                case .SCRIPT:
+                    return try Proxy.make(url: newUrl) as ScriptProxy
+                    
+                case .CRT:
+                    return try Proxy.make(url: newUrl) as CRTFileProxy
+                    
+                case .D64:
+                    return try Proxy.make(url: newUrl) as D64FileProxy
+                    
+                case .T64:
+                    return try Proxy.make(url: newUrl) as T64FileProxy
+                    
+                case .PRG:
+                    return try Proxy.make(url: newUrl) as PRGFileProxy
+                    
+                case .P00:
+                    return try Proxy.make(url: newUrl) as P00FileProxy
+                    
+                case .G64:
+                    return try Proxy.make(url: newUrl) as G64FileProxy
+                    
+                case .TAP:
+                    return try Proxy.make(url: newUrl) as TAPFileProxy
+                    
+                case .FOLDER:
+                    return try Proxy.make(folder: newUrl) as FolderProxy
+                    
+                default:
+                    fatalError()
+                }
                 
-        guard let name = wrapper.filename else {
-            throw NSError.fileAccessError()
+            } catch let error as VC64Error {
+                if error.errorCode != .FILE_TYPE_MISMATCH {
+                    throw error
+                }
+            }
         }
-        guard let data = wrapper.regularFileContents else {
-            throw NSError.fileAccessError(filename: name)
-        }
-        
-        var result: AnyFileProxy?
-        let buffer = (data as NSData).bytes
-        let length = data.count
-        
-        track("Read \(length) bytes from file \(name) [\(type.rawValue)].")
-        
-        switch type {
-        
-        case .V64:
-            try result = Proxy.make(buffer: buffer, length: length) as SnapshotProxy
-            
-        case .SCRIPT:
-            try? result = Proxy.make(buffer: buffer, length: length) as ScriptProxy
 
-        case .CRT:
-            try result = Proxy.make(buffer: buffer, length: length) as CRTFileProxy
-            
-        case .D64:
-            try result = Proxy.make(buffer: buffer, length: length) as D64FileProxy
-            
-        case .T64:
-            try result = Proxy.make(buffer: buffer, length: length) as T64FileProxy
-            
-        case .PRG:
-            try result = Proxy.make(buffer: buffer, length: length) as PRGFileProxy
-            
-        case .P00:
-            try result = Proxy.make(buffer: buffer, length: length) as P00FileProxy
-            
-        case .G64:
-            try result = Proxy.make(buffer: buffer, length: length) as G64FileProxy
-            
-        case .TAP:
-            try result = Proxy.make(buffer: buffer, length: length) as TAPFileProxy
-            
-        default:
-            fatalError()
-        }
-        
-        result!.setPath(name)
-        return result
+        // None of the allowed typed matched the file
+        throw VC64Error(.FILE_TYPE_MISMATCH, url.lastPathComponent)
     }
 
-    fileprivate
-    func createFileProxy(folderUrl: URL, type: FileType) throws -> AnyFileProxy? {
-
-        var result: AnyFileProxy?
-        
-        let name = folderUrl.path
-        track("Creating proxy from directory \(name)")
-        
-        switch type {
-            
-        case .FOLDER:
-            try result = Proxy.make(folder: folderUrl) as FolderProxy
-            
-        default:
-            fatalError()
-        }
-        
-        result!.setPath(name)
-        return result
-    }
-                
-    //
-    // Processing attachments
-    //
-    
     func mountAttachment(destination: DriveProxy? = nil) throws {
 
         // Only proceed if an attachment is present

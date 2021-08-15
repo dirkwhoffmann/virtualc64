@@ -41,7 +41,7 @@ class ManagedArray<Element> {
         // Thin out the array if capacity has been reached
         if elements.count >= capacity {
             
-            var itemToDelete = 0
+            let itemToDelete = 0
             
             /*
             if counter % 2 == 0 {
@@ -53,10 +53,7 @@ class ManagedArray<Element> {
             }
             */
             counter += 1
-            
-            // WE ALWAYS DELETE THE OLDEST ELEMENT FOR NOW
-            itemToDelete = elements.count - 1
-            
+                        
             elements.remove(at: itemToDelete)
         }
         

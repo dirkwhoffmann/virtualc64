@@ -1425,7 +1425,7 @@ C64::flash(const AnyFile &file)
                 drive9.mem.loadRom(dynamic_cast<const RomFile &>(file));
                 break;
 
-            case FILETYPE_V64:
+            case FILETYPE_SNAPSHOT:
                 loadSnapshot(dynamic_cast<const Snapshot &>(file));
                 break;
                 

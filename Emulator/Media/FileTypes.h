@@ -19,7 +19,7 @@
 enum_long(FILETYPE)
 {
     FILETYPE_UNKNOWN = 0,
-    FILETYPE_V64,
+    FILETYPE_SNAPSHOT,
     FILETYPE_SCRIPT,
     FILETYPE_CRT,
     FILETYPE_T64,
@@ -51,7 +51,7 @@ struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
         switch (value) {
                 
             case FILETYPE_UNKNOWN:    return "UNKNOWN";
-            case FILETYPE_V64:        return "V64";
+            case FILETYPE_SNAPSHOT:   return "V64";
             case FILETYPE_CRT:        return "CRT";
             case FILETYPE_T64:        return "T64";
             case FILETYPE_PRG:        return "PRG";
