@@ -7,9 +7,6 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#import <Cocoa/Cocoa.h>
-#import <MetalKit/MetalKit.h>
-
 #include "Constants.h"
 #include "C64Types.h"
 #include "CartridgeTypes.h"
@@ -31,6 +28,9 @@
 #include "PowerSupplyTypes.h"
 #include "SIDTypes.h"
 #include "VICIITypes.h"
+
+#import <Cocoa/Cocoa.h>
+#import <MetalKit/MetalKit.h>
 
 //
 // Forward declarations
@@ -159,11 +159,14 @@
 - (void)kill;
 
 @property (readonly) BOOL isReleaseBuild;
+
 @property BOOL warp;
 @property BOOL debugMode;
-@property InspectionTarget inspectionTarget;
 
+@property InspectionTarget inspectionTarget;
+- (void) removeInspectionTarget;
 - (void)inspect;
+
 - (void)hardReset;
 - (void)softReset;
 
@@ -187,13 +190,12 @@
 - (void)requestUserSnapshot;
 @property (readonly) SnapshotProxy *latestAutoSnapshot;
 @property (readonly) SnapshotProxy *latestUserSnapshot;
-- (void)loadFromSnapshot:(SnapshotProxy *)proxy exception:(ExceptionWrapper *)ex;
+- (void)loadSnapshot:(SnapshotProxy *)proxy exception:(ExceptionWrapper *)ex;
 
 - (NSInteger)getConfig:(Option)opt;
 - (NSInteger)getConfig:(Option)opt id:(NSInteger)id;
 - (NSInteger)getConfig:(Option)opt drive:(DriveID)id;
 - (BOOL)configure:(Option)opt value:(NSInteger)val;
-- (BOOL)_configure:(Option)opt value:(NSInteger)val;
 - (BOOL)configure:(Option)opt enable:(BOOL)val;
 - (BOOL)configure:(Option)opt id:(NSInteger)id value:(NSInteger)val;
 - (BOOL)configure:(Option)opt id:(NSInteger)id enable:(BOOL)val;

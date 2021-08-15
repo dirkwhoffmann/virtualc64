@@ -1,5 +1,5 @@
 //
-//  Use this file to import your target's public headers that you would like to expose to Swift.
+//  Public headers that are exposed to Swift
 //
 
 #define __SWIFT__

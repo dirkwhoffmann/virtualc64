@@ -66,7 +66,7 @@
 
 @implementation C64ComponentProxy
 
--(C64Component *)hwc
+-(C64Component *)component
 {
     return (C64Component *)obj;
 }
@@ -2171,6 +2171,11 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     [self c64]->setInspectionTarget(target);
 }
 
+- (void) removeInspectionTarget
+{
+    [self c64]->removeInspectionTarget();
+}
+
 - (void)inspect
 {
     [self c64]->inspect();
@@ -2276,7 +2281,7 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     return [SnapshotProxy make:snapshot];
 }
 
-- (void)loadFromSnapshot:(SnapshotProxy *)proxy exception:(ExceptionWrapper *)ex;
+- (void)loadSnapshot:(SnapshotProxy *)proxy exception:(ExceptionWrapper *)ex;
 {
     try { [self c64]->loadSnapshot(*[proxy snapshot]); }
     catch (VC64Error &error) { [ex save:error]; }
@@ -2301,16 +2306,6 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 {
     try {
         [self c64]->configure(opt, val);
-        return true;
-    } catch (VC64Error &exception) {
-        return false;
-    }
-}
-
-- (BOOL)_configure:(Option)opt value:(NSInteger)val
-{
-    try {
-        [self c64]->_configure(opt, val);
         return true;
     } catch (VC64Error &exception) {
         return false;

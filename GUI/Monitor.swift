@@ -150,7 +150,7 @@ class Monitor: DialogController {
     @IBAction func busOpacityAction(_ sender: NSSlider!) {
         
         track()
-        c64._configure(.DMA_DEBUG_OPACITY, value: sender.integerValue)
+        c64.configure(.DMA_DEBUG_OPACITY, value: sender.integerValue)
         refresh()
     }
     

@@ -116,7 +116,7 @@ extension C64Proxy {
     func loadSnapshot(_ proxy: SnapshotProxy) throws {
 
         let exception = ExceptionWrapper()
-        load(fromSnapshot: proxy, exception: exception)
+        loadSnapshot(proxy, exception: exception)
         if exception.errorCode != .OK { throw VC64Error(exception) }
     }
     

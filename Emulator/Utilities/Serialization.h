@@ -216,7 +216,7 @@ public:
     
     void copy(void *dst, isize n)
     {
-        memcpy(dst, (void *)ptr, n);
+        std::memcpy(dst, (void *)ptr, n);
         ptr += n;
     }
 };
@@ -290,7 +290,7 @@ public:
     
     void copy(const void *src, isize n)
     {
-        memcpy((void *)ptr, src, n);
+        std::memcpy((void *)ptr, src, n);
         ptr += n;
     }
 

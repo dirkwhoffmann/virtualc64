@@ -86,12 +86,12 @@ struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
 
 enum_long(INSPECTION_TARGET)
 {
-    INSPECTION_TARGET_NONE,
-    INSPECTION_TARGET_CPU,
-    INSPECTION_TARGET_MEM,
-    INSPECTION_TARGET_CIA,
-    INSPECTION_TARGET_VIC,
-    INSPECTION_TARGET_SID
+    INSPECTION_NONE,
+    INSPECTION_CPU,
+    INSPECTION_CIA,
+    INSPECTION_MEM,
+    INSPECTION_VIC,
+    INSPECTION_SID
 };
 typedef INSPECTION_TARGET InspectionTarget;
 
@@ -100,20 +100,20 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
     
     static bool isValid(long value)
     {
-        return (unsigned long)value <= INSPECTION_TARGET_SID;
+        return (unsigned long)value <= INSPECTION_SID;
     }
     
-    static const char *prefix() { return "INSPECTION_TARGET"; }
+    static const char *prefix() { return "INSPECTION"; }
     static const char *key(InspectionTarget value)
     {
         switch (value) {
                 
-            case INSPECTION_TARGET_NONE:  return "NONE";
-            case INSPECTION_TARGET_CPU:   return "CPU";
-            case INSPECTION_TARGET_MEM:   return "IMEM";
-            case INSPECTION_TARGET_CIA:   return "CIA";
-            case INSPECTION_TARGET_VIC:   return "VIC";
-            case INSPECTION_TARGET_SID:   return "SID";
+            case INSPECTION_NONE:  return "NONE";
+            case INSPECTION_CPU:   return "CPU";
+            case INSPECTION_CIA:   return "CIA";
+            case INSPECTION_MEM:   return "MEM";
+            case INSPECTION_VIC:   return "VIC";
+            case INSPECTION_SID:   return "SID";
         }
         return "???";
     }

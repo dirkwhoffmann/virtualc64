@@ -98,12 +98,6 @@ C64::setInspectionTarget(InspectionTarget target)
     inspectionTarget = target;
 }
 
-void
-C64::removeInspectionTarget()
-{
-    setInspectionTarget(INSPECTION_TARGET_NONE);
-}
-
 i64
 C64::getConfigItem(Option option) const
 {
@@ -215,19 +209,32 @@ C64::getConfigItem(Option option, long id) const
 void
 C64::configure(Option option, i64 value)
 {
-    _configure(option, value);    
-    msgQueue.put(MSG_CONFIG);
-}
-
-void
-C64::_configure(Option option, i64 value)
-{
     debug(CNF_DEBUG, "configure(%lld, %lld)\n", option, value);
 
+    // The following options do not send a message to the GUI
+    static std::vector<Option> quiet = {
+        
+        OPT_BRIGHTNESS,
+        OPT_CONTRAST,
+        OPT_SATURATION,
+        OPT_CUT_OPACITY,
+        OPT_DMA_DEBUG_OPACITY,
+        OPT_MOUSE_VELOCITY,
+        OPT_AUTOFIRE_DELAY,
+        OPT_AUDPAN,
+        OPT_AUDVOL,
+        OPT_AUDVOLL,
+        OPT_AUDVOLR,
+        OPT_DRV_PAN,
+        OPT_DRV_POWER_VOL,
+        OPT_DRV_STEP_VOL,
+        OPT_DRV_INSERT_VOL,
+        OPT_DRV_EJECT_VOL
+    };
+    
     // Check if this option has been locked for debugging
     value = overrideOption(option, value);
 
-    // Distribute configuration request
     switch (option) {
             
         case OPT_VIC_REVISION:
@@ -333,24 +340,36 @@ C64::_configure(Option option, i64 value)
         default:
             assert(false);
     }
+    
+    if (std::find(quiet.begin(), quiet.end(), option) == quiet.end()) {
+        msgQueue.put(MSG_CONFIG, option);
+    }
 }
 
 void
 C64::configure(Option option, long id, i64 value)
-{
-    _configure(option, id, value);
-    msgQueue.put(MSG_CONFIG);
-}
-
-void
-C64::_configure(Option option, long id, i64 value)
 {
     debug(CNF_DEBUG, "configure(%lld, %ld, %lld)\n", option, id, value);
 
     // Check if this option has been locked for debugging
     value = overrideOption(option, value);
 
-    // Distribute configuration request
+    // The following options do not send a message to the GUI
+    static std::vector<Option> quiet = {
+        
+        OPT_MOUSE_VELOCITY,
+        OPT_AUTOFIRE_DELAY,
+        OPT_AUDPAN,
+        OPT_AUDVOL,
+        OPT_AUDVOLL,
+        OPT_AUDVOLR,
+        OPT_DRV_PAN,
+        OPT_DRV_POWER_VOL,
+        OPT_DRV_STEP_VOL,
+        OPT_DRV_INSERT_VOL,
+        OPT_DRV_EJECT_VOL
+    };
+    
     switch (option) {
             
                         
@@ -433,6 +452,10 @@ C64::_configure(Option option, long id, i64 value)
         default:
             assert(false);
     }
+    
+    if (std::find(quiet.begin(), quiet.end(), option) == quiet.end()) {
+        msgQueue.put(MSG_CONFIG, option);
+    }
 }
 
 void
@@ -445,74 +468,74 @@ C64::configure(C64Model model)
         switch(model) {
                 
             case C64_MODEL_PAL:
-                _configure(OPT_VIC_REVISION, VICII_PAL_6569_R3);
-                _configure(OPT_GRAY_DOT_BUG, false);
-                _configure(OPT_CIA_REVISION, MOS_6526);
-                _configure(OPT_TIMER_B_BUG,  true);
-                _configure(OPT_SID_REVISION, MOS_6581);
-                _configure(OPT_SID_FILTER,   true);
-                _configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
-                _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+                configure(OPT_VIC_REVISION, VICII_PAL_6569_R3);
+                configure(OPT_GRAY_DOT_BUG, false);
+                configure(OPT_CIA_REVISION, MOS_6526);
+                configure(OPT_TIMER_B_BUG,  true);
+                configure(OPT_SID_REVISION, MOS_6581);
+                configure(OPT_SID_FILTER,   true);
+                configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
+                configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
                 configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
                 break;
                 
             case C64_MODEL_PAL_II:
-                _configure(OPT_VIC_REVISION, VICII_PAL_8565);
-                _configure(OPT_GRAY_DOT_BUG, true);
-                _configure(OPT_CIA_REVISION, MOS_8521);
-                _configure(OPT_TIMER_B_BUG,  false);
-                _configure(OPT_SID_REVISION, MOS_8580);
-                _configure(OPT_SID_FILTER,   true);
-                _configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
-                _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
+                configure(OPT_VIC_REVISION, VICII_PAL_8565);
+                configure(OPT_GRAY_DOT_BUG, true);
+                configure(OPT_CIA_REVISION, MOS_8521);
+                configure(OPT_TIMER_B_BUG,  false);
+                configure(OPT_SID_REVISION, MOS_8580);
+                configure(OPT_SID_FILTER,   true);
+                configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
+                configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
                 configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
                 break;
                 
             case C64_MODEL_PAL_OLD:
-                _configure(OPT_VIC_REVISION, VICII_PAL_6569_R1);
-                _configure(OPT_GRAY_DOT_BUG, false);
-                _configure(OPT_CIA_REVISION, MOS_6526);
-                _configure(OPT_TIMER_B_BUG,  true);
-                _configure(OPT_SID_REVISION, MOS_6581);
-                _configure(OPT_SID_FILTER,   true);
-                _configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
-                _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+                configure(OPT_VIC_REVISION, VICII_PAL_6569_R1);
+                configure(OPT_GRAY_DOT_BUG, false);
+                configure(OPT_CIA_REVISION, MOS_6526);
+                configure(OPT_TIMER_B_BUG,  true);
+                configure(OPT_SID_REVISION, MOS_6581);
+                configure(OPT_SID_FILTER,   true);
+                configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
+                configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
                 configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
                 break;
                 
             case C64_MODEL_NTSC:
-                _configure(OPT_VIC_REVISION, VICII_NTSC_6567);
-                _configure(OPT_GRAY_DOT_BUG, false);
-                _configure(OPT_CIA_REVISION, MOS_6526);
-                _configure(OPT_TIMER_B_BUG,  false);
-                _configure(OPT_SID_REVISION, MOS_6581);
-                _configure(OPT_SID_FILTER,   true);
-                _configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
-                _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+                configure(OPT_VIC_REVISION, VICII_NTSC_6567);
+                configure(OPT_GRAY_DOT_BUG, false);
+                configure(OPT_CIA_REVISION, MOS_6526);
+                configure(OPT_TIMER_B_BUG,  false);
+                configure(OPT_SID_REVISION, MOS_6581);
+                configure(OPT_SID_FILTER,   true);
+                configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
+                configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
                 configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
                 break;
                 
             case C64_MODEL_NTSC_II:
-                _configure(OPT_VIC_REVISION, VICII_NTSC_8562);
-                _configure(OPT_GRAY_DOT_BUG, true);
-                _configure(OPT_CIA_REVISION, MOS_8521);
-                _configure(OPT_TIMER_B_BUG,  true);
-                _configure(OPT_SID_REVISION, MOS_8580);
-                _configure(OPT_SID_FILTER,   true);
-                _configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
-                _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
+                configure(OPT_VIC_REVISION, VICII_NTSC_8562);
+                configure(OPT_GRAY_DOT_BUG, true);
+                configure(OPT_CIA_REVISION, MOS_8521);
+                configure(OPT_TIMER_B_BUG,  true);
+                configure(OPT_SID_REVISION, MOS_8580);
+                configure(OPT_SID_FILTER,   true);
+                configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
+                configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
                 configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
                 break;
                 
             case C64_MODEL_NTSC_OLD:
-                _configure(OPT_VIC_REVISION, VICII_NTSC_6567_R56A);
-                _configure(OPT_GRAY_DOT_BUG, false);
-                _configure(OPT_CIA_REVISION, MOS_6526);
-                _configure(OPT_TIMER_B_BUG,  false);
-                _configure(OPT_SID_REVISION, MOS_6581);
-                _configure(OPT_SID_FILTER,   true);
-                _configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
-                _configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+                configure(OPT_VIC_REVISION, VICII_NTSC_6567_R56A);
+                configure(OPT_GRAY_DOT_BUG, false);
+                configure(OPT_CIA_REVISION, MOS_6526);
+                configure(OPT_TIMER_B_BUG,  false);
+                configure(OPT_SID_REVISION, MOS_6581);
+                configure(OPT_SID_FILTER,   true);
+                configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
+                configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
                 configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
                 break;
                 
@@ -727,11 +750,11 @@ C64::inspect()
 {
     switch(inspectionTarget) {
             
-        case INSPECTION_TARGET_CPU: cpu.inspect(); break;
-        case INSPECTION_TARGET_MEM: mem.inspect(); break;
-        case INSPECTION_TARGET_CIA: cia1.inspect(); cia2.inspect(); break;
-        case INSPECTION_TARGET_VIC: vic.inspect(); break;
-        case INSPECTION_TARGET_SID: sid.inspect(); break;
+        case INSPECTION_CPU: cpu.inspect(); break;
+        case INSPECTION_MEM: mem.inspect(); break;
+        case INSPECTION_CIA: cia1.inspect(); cia2.inspect(); break;
+        case INSPECTION_VIC: vic.inspect(); break;
+        case INSPECTION_SID: sid.inspect(); break;
             
         default:
             break;

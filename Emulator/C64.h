@@ -197,14 +197,10 @@ public:
     i64 getConfigItem(Option option) const;
     i64 getConfigItem(Option option, long id) const;
     
-    // Sets a single configuration item and informs the GUI
+    // Sets a single configuration item
     void configure(Option option, i64 value) throws;
     void configure(Option option, long id, i64 value) throws;
     
-    // Sets a single configuration item without informing the GUI
-    void _configure(Option option, i64 value) throws;
-    void _configure(Option option, long id, i64 value) throws;
-
     // Configures the C64 to match a specific C64 model
     void configure(C64Model model);
         
@@ -229,7 +225,7 @@ public:
     void inspect();
     InspectionTarget getInspectionTarget() const;
     void setInspectionTarget(InspectionTarget target);
-    void removeInspectionTarget();
+    void removeInspectionTarget() { setInspectionTarget(INSPECTION_NONE); }
         
 private:
     
