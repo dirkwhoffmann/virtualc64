@@ -66,8 +66,6 @@ public:
     Snapshot(isize capacity);
     Snapshot(class C64 &c64);
     
-    [[deprecated]] static Snapshot *makeWithC64(class C64 *c64);
-
     
     //
     // Methods from C64Object

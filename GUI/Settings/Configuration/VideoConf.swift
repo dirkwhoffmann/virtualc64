@@ -83,7 +83,7 @@ extension ConfigurationController {
     
     func updatePalettePreviewImages() {
         
-        guard let c64 = proxy else { return }
+        guard let c64 = parent.c64 else { return }
         
         // Create image representation in memory
         let size = CGSize(width: 16, height: 1)

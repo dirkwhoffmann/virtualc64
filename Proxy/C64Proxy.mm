@@ -2108,17 +2108,6 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     return (C64 *)obj;
 }
 
-/*
-- (DriveProxy *)drive:(DriveID)id
-{
-    switch (id) {
-        case DRIVE8:  return drive8;
-        case DRIVE9:  return drive9;
-        default:      return NULL;
-    }
-}
-*/
-
 - (void)dealloc
 {
     NSLog(@"C64 dealloc");

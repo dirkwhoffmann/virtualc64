@@ -215,6 +215,6 @@ class Renderer: NSObject, MTKViewDelegate {
         }
         
         // Perform periodic events inside the controller
-        if frames % 5 == 0 { myController?.timerFunc() }
+        if frames % 5 == 0 { parent.timerFunc() }
     }
 }

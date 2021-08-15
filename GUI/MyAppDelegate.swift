@@ -15,39 +15,6 @@ var myAppDelegate: MyAppDelegate {
     return delegate!
 }
 
-/* The document of the currently active emulator instance.
- * This variable is global and can be accessed from anywhere in the Swift code.
- */
-var myDocument: MyDocument? {
-    if let doc = NSApplication.shared.orderedDocuments.first as? MyDocument {
-        return doc
-    } else {
-        track("No document object found. Returning nil.")
-        return nil
-    }
-}
-
-/* The window controller of the currently active emulator instance.
- * This variable is global and can be accessed from anywhere in the Swift code.
- */
-var myController: MyController? {
-    return myDocument?.windowControllers.first as? MyController
-}
-
-/* The window of the currently active emulator instance.
- * This variable is global and can be accessed from anywhere in the Swift code.
- */
-var myWindow: NSWindow? {
-    return myController?.window
-}
-
-/* The C64 proxy of the currently active emulator instance.
- * This variable is global and can be accessed from anywhere in the Swift code.
- */
-var proxy: C64Proxy? {
-    return myDocument?.c64
-}
-
 @NSApplicationMain
 @objc public class MyAppDelegate: NSObject, NSApplicationDelegate {
            

@@ -123,29 +123,29 @@ extension ConfigurationController {
     
     @IBAction func romDeleteBasicAction(_ sender: Any!) {
 
-        proxy?.powerOff()
-        proxy?.deleteRom(.BASIC)
+        c64.powerOff()
+        c64.deleteRom(.BASIC)
         refresh()
     }
     
     @IBAction func romDeleteCharAction(_ sender: Any!) {
 
-        proxy?.powerOff()
-        proxy?.deleteRom(.CHAR)
+        c64.powerOff()
+        c64.deleteRom(.CHAR)
         refresh()
     }
     
     @IBAction func romDeleteKernalAction(_ sender: Any!) {
 
-        proxy?.powerOff()
-        proxy?.deleteRom(.KERNAL)
+        c64.powerOff()
+        c64.deleteRom(.KERNAL)
         refresh()
     }
     
     @IBAction func romDeleteVC1541Action(_ sender: Any!) {
 
-        proxy?.powerOff()
-        proxy?.deleteRom(.VC1541)
+        c64.powerOff()
+        c64.deleteRom(.VC1541)
         refresh()
     }
         

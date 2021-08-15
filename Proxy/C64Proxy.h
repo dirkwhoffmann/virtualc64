@@ -153,8 +153,6 @@
 @property (readonly, strong) SIDProxy *sid;
 @property (readonly, strong) VICProxy *vic;
 
-// - (DriveProxy *) drive:(DriveID)id;
-
 - (void)dealloc;
 - (void)kill;
 

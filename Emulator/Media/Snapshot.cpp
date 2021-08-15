@@ -85,6 +85,7 @@ Snapshot::Snapshot(C64 &c64): Snapshot(c64.size())
     c64.save(getData());
 }
 
+/*
 Snapshot *
 Snapshot::makeWithC64(C64 *c64)
 {
@@ -99,6 +100,7 @@ Snapshot::makeWithC64(C64 *c64)
     
     return snapshot;
 }
+*/
 
 bool
 Snapshot::isTooOld() const
