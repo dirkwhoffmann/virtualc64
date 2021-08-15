@@ -20,7 +20,6 @@ extension Proxy {
         let exception = ExceptionWrapper()
         let obj = T.make(withBuffer: buffer, length: length, exception: exception)
         if exception.errorCode != .OK { throw VC64Error(exception) }
-        if obj == nil { fatalError() }
         return obj!
     }
     
@@ -29,7 +28,6 @@ extension Proxy {
         let exception = ExceptionWrapper()
         let obj = T.make(withFile: url.path, exception: exception)
         if exception.errorCode != .OK { throw VC64Error(exception) }
-        if obj == nil { fatalError() }
         return obj!
     }
     
@@ -38,7 +36,6 @@ extension Proxy {
         let exception = ExceptionWrapper()
         let obj = T.make(withDisk: disk, exception: exception)
         if exception.errorCode != .OK { throw VC64Error(exception) }
-        if obj == nil { fatalError() }
         return obj!
     }
     
@@ -47,7 +44,6 @@ extension Proxy {
         let exception = ExceptionWrapper()
         let obj = T.make(withFileSystem: fs, exception: exception)
         if exception.errorCode != .OK { throw VC64Error(exception) }
-        if obj == nil { fatalError() }
         return obj!
     }
     
@@ -56,7 +52,6 @@ extension Proxy {
         let exception = ExceptionWrapper()
         let obj = T.make(withCollection: collection, exception: exception)
         if exception.errorCode != .OK { throw VC64Error(exception) }
-        if obj == nil { fatalError() }
         return obj!
     }
     
@@ -65,7 +60,6 @@ extension Proxy {
         let exception = ExceptionWrapper()
         let obj = T.make(withD64: d64, exception: exception)
         if exception.errorCode != .OK { throw VC64Error(exception) }
-        if obj == nil { fatalError() }
         return obj!
     }
     
@@ -74,7 +68,6 @@ extension Proxy {
         let exception = ExceptionWrapper()
         let obj = T.make(withFolder: folder.path, exception: exception)
         if exception.errorCode != .OK { throw VC64Error(exception) }
-        if obj == nil { fatalError() }
         return obj!
     }
 }
@@ -157,11 +150,34 @@ extension FSDeviceProxy {
 
 public extension C64Proxy {
     
+    func drive(_ nr: DriveID) -> DriveProxy {
+        
+        switch nr {
+            
+        case .DRIVE8: return drive8
+        case .DRIVE9: return drive9
+        
+        default:
+            fatalError()
+        }
+    }
+    
+    func drive(_ item: NSButton!) -> DriveProxy {
+        
+        return drive(DriveID(rawValue: item.tag)!)
+    }
+    
+    func drive(_ item: NSMenuItem!) -> DriveProxy {
+        
+        return drive(DriveID(rawValue: item.tag)!)
+    }
+    
     func image(data: UnsafeMutablePointer<UInt8>?, size: NSSize) -> NSImage {
         
         var bitmap = data
         let width = Int(size.width)
         let height = Int(size.height)
+        
         let imageRep = NSBitmapImageRep(bitmapDataPlanes: &bitmap,
                                         pixelsWide: width,
                                         pixelsHigh: height,
@@ -170,8 +186,9 @@ public extension C64Proxy {
                                         hasAlpha: true,
                                         isPlanar: false,
                                         colorSpaceName: NSColorSpaceName.calibratedRGB,
-                                        bytesPerRow: 4*width,
+                                        bytesPerRow: 4 * width,
                                         bitsPerPixel: 32)
+        
         let image = NSImage(size: (imageRep?.size)!)
         image.addRepresentation(imageRep!)
         image.makeGlossy()

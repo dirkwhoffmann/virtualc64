@@ -1238,11 +1238,6 @@
     return [self recorder]->isRecording();
 }
 
-- (NSInteger)recordCounter
-{
-    return [self recorder]->getRecordCounter();
-}
-
 - (double)duration
 {
     return [self recorder]->getDuration().asSeconds();
@@ -2113,6 +2108,7 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     return (C64 *)obj;
 }
 
+/*
 - (DriveProxy *)drive:(DriveID)id
 {
     switch (id) {
@@ -2121,6 +2117,7 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
         default:      return NULL;
     }
 }
+*/
 
 - (void)dealloc
 {
@@ -2141,12 +2138,12 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     return releaseBuild;
 }
 
-- (BOOL)warp
+- (BOOL)warpMode
 {
     return [self c64]->inWarpMode();
 }
 
-- (void)setWarp:(BOOL)enable;
+- (void)setWarpMode:(BOOL)enable;
 {
     enable ? [self c64]->warpOn() : [self c64]->warpOff();
 }
@@ -2159,6 +2156,12 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 - (void)setDebugMode:(BOOL)enable
 {
     enable ? [self c64]->debugOn() : [self c64]->debugOff();
+}
+
+- (NSInteger)cpuLoad
+{
+    double load = [self c64]->getCpuLoad();
+    return (NSInteger)(100 * load);
 }
 
 - (InspectionTarget)inspectionTarget
@@ -2518,12 +2521,6 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 {
     try { [self c64]->flash(*(FSDevice *)proxy->obj, (unsigned)nr); }
     catch (VC64Error &error) { [ex save:error]; }
-}
-
-- (NSInteger)cpuLoad
-{
-    double load = [self c64]->getCpuLoad();
-    return (NSInteger)(100 * load);
 }
 
 @end

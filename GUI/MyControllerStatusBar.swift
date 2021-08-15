@@ -12,7 +12,7 @@ extension MyController {
     var hourglass: NSImage? {
         
         switch pref.warpMode {
-        case .auto where c64.warp == true:
+        case .auto where c64.warpMode == true:
             return NSImage(named: "hourglass3Template")
         case .auto:
             return NSImage(named: "hourglass1Template")
@@ -44,7 +44,7 @@ extension MyController {
         let running = c64.running
         let debug = c64.debugMode
         let jammed = c64.cpu.isJammed()
-        let warp = c64.warp
+        let warp = c64.warpMode
         
         let hasCrt = c64.expansionport.cartridgeAttached()
             

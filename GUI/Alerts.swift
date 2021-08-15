@@ -134,11 +134,11 @@ extension MyDocument {
 extension MyController {
             
     func proceedWithUnexportedDisk(drive: DriveID) -> Bool {
-        return mydocument?.proceedWithUnexportedDisk(drive: drive) ?? false
+        return mydocument.proceedWithUnexportedDisk(drive: drive)
     }
 
     func proceedWithUnexportedDisk() -> Bool {
-        return mydocument?.proceedWithUnexportedDisk() ?? false
+        return mydocument.proceedWithUnexportedDisk()
     }
     
     func showMissingFFmpegAlert() {

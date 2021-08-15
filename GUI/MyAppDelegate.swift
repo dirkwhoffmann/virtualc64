@@ -10,6 +10,7 @@
 import Cocoa
 
 var myAppDelegate: MyAppDelegate {
+    
     let delegate = NSApp.delegate as? MyAppDelegate
     return delegate!
 }
@@ -214,7 +215,7 @@ extension MyAppDelegate {
                 // Start playback
                 if !c.macAudio!.isRunning {
                     c.macAudio!.startPlayback()
-                    if !c.c64.warp { c.c64.sid.rampUpFromZero() }
+                    if !c.c64.warpMode { c.c64.sid.rampUpFromZero() }
                 }
                 
                 // Update the visibility of all drive menus

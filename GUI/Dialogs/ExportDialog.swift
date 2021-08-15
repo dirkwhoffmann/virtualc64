@@ -190,14 +190,12 @@ class ExportDialog: DialogController {
         driveID = nr
         
         // Get the disk from the specified drive
-        disk = c64.drive(nr)?.disk
+        disk = c64.drive(nr).disk
         
         // Try to extract the file system
         if disk != nil { volume = try? FSDeviceProxy.make(disk: disk!) }
         
-        // REMOVE ASAP
-        track("Exporter: Volume:")
-        volume?.printDirectory()
+        // volume?.printDirectory()
                         
         super.showSheet(completionHandler: handler)
     }

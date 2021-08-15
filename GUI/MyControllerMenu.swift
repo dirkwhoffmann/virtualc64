@@ -592,9 +592,10 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func newDiskAction(_ sender: NSMenuItem!) {
         
-        let id = DriveID(rawValue: sender.tag)!
-        c64.drive(id)?.insertNewDisk(config.blankDiskFormat)
-        myAppDelegate.clearRecentlyExportedDiskURLs(drive: id)
+        let drive = c64.drive(sender)
+        
+        drive.insertNewDisk(config.blankDiskFormat)
+        myAppDelegate.clearRecentlyExportedDiskURLs(drive: drive.id)
     }
     
     @IBAction func insertDiskAction(_ sender: NSMenuItem!) {
@@ -705,12 +706,12 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func ejectDiskAction(_ sender: NSMenuItem!) {
         
-        let drive = DriveID(rawValue: sender.tag)!
+        let drive = c64.drive(sender)
         
-        if proceedWithUnexportedDisk(drive: drive) {
+        if proceedWithUnexportedDisk(drive: drive.id) {
             
-            c64.drive(drive)?.ejectDisk()
-            myAppDelegate.clearRecentlyExportedDiskURLs(drive: drive)
+            drive.ejectDisk()
+            myAppDelegate.clearRecentlyExportedDiskURLs(drive: drive.id)
         }
     }
     

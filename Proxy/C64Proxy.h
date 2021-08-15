@@ -104,7 +104,7 @@
 @end
 
 //
-// C64 proxy
+// C64
 //
 
 @interface C64Proxy : C64ComponentProxy {
@@ -153,15 +153,15 @@
 @property (readonly, strong) SIDProxy *sid;
 @property (readonly, strong) VICProxy *vic;
 
-- (DriveProxy *) drive:(DriveID)id;
+// - (DriveProxy *) drive:(DriveID)id;
 
 - (void)dealloc;
 - (void)kill;
 
 @property (readonly) BOOL isReleaseBuild;
-
-@property BOOL warp;
+@property BOOL warpMode;
 @property BOOL debugMode;
+@property (readonly) NSInteger cpuLoad;
 
 @property InspectionTarget inspectionTarget;
 - (void) removeInspectionTarget;
@@ -229,13 +229,11 @@
 - (void)flash:(AnyFileProxy *)container exception:(ExceptionWrapper *)ex;
 - (void)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
 
-@property (readonly) NSInteger cpuLoad;
-
 @end
 
 
 //
-// Guards proxy (Breakpoints, Watchpoints)
+// Guards (Breakpoints, Watchpoints)
 //
 
 @interface GuardsProxy : Proxy { }
@@ -261,12 +259,13 @@
 
 
 //
-// CPU proxy
+// CPU
 //
 
 @interface CPUProxy : C64ComponentProxy { }
 
 - (CPUInfo)getInfo;
+
 - (NSInteger)loggedInstructions;
 - (NSInteger)loggedPCRel:(NSInteger)nr;
 - (NSInteger)loggedPCAbs:(NSInteger)nr;
@@ -290,8 +289,20 @@
 
 @end
 
+
 //
-// Memory proxy
+// CIA
+//
+
+@interface CIAProxy : C64ComponentProxy { }
+
+- (CIAInfo)getInfo;
+
+@end
+
+
+//
+// Memory
 //
 
 @interface MemoryProxy : C64ComponentProxy { }
@@ -313,18 +324,7 @@
 
 
 //
-// CIA proxy
-//
-
-@interface CIAProxy : C64ComponentProxy { }
-
-- (CIAInfo)getInfo;
-
-@end
-
-
-//
-// VICII proxy
+// VICII
 //
 
 
@@ -335,19 +335,19 @@
 
 - (VICIIConfig)getConfig;
 - (BOOL)isPAL;
-- (void *)stableEmuTexture;
 - (NSColor *)color:(NSInteger)nr;
 - (UInt32)rgbaColor:(NSInteger)nr palette:(Palette)palette;
 - (VICIIInfo)getInfo;
 - (SpriteInfo)getSpriteInfo:(NSInteger)sprite;
 
-- (u32 *)noise;
+@property (readonly) void *stableEmuTexture;
+@property (readonly) u32 *noise;
 
 @end
 
 
 //
-// DmaDebugger proxy
+// DmaDebugger
 //
 
 
@@ -359,7 +359,7 @@
 
 
 //
-// SID proxy
+// SID
 //
 
 @interface SIDProxy : C64ComponentProxy { }
@@ -386,7 +386,7 @@
 
 
 //
-// Keyboard proxy
+// Keyboard
 //
 
 @interface KeyboardProxy : C64ComponentProxy { }
@@ -421,7 +421,7 @@
 @end
 
 //
-// ControlPort proxy
+// ControlPort
 //
 
 @interface ControlPortProxy : C64ComponentProxy {
@@ -437,7 +437,7 @@
 
 
 //
-// ExpansionPort proxy
+// ExpansionPort
 //
 
 @interface ExpansionPortProxy : C64ComponentProxy { }
@@ -477,7 +477,7 @@
 
 
 //
-// IEC bus proxy
+// IEC bus
 //
 
 @interface IECProxy : C64ComponentProxy { }
@@ -488,7 +488,7 @@
 
 
 //
-// Drive proxy
+// Drive
 //
 
 @interface DriveProxy : C64ComponentProxy {
@@ -538,7 +538,7 @@
 
 
 //
-// VIA proxy
+// VIA
 //
 
 @interface VIAProxy : C64ComponentProxy { }
@@ -547,7 +547,7 @@
 
 
 //
-// ParCable proxy
+// ParCable
 //
 
 @interface ParCableProxy : C64ComponentProxy { }
@@ -556,7 +556,7 @@
 
 
 //
-// Disk proxy
+// Disk
 //
 
 @interface DiskProxy : C64ComponentProxy { }
@@ -580,7 +580,7 @@
 @end
 
 //
-// Datasette proxy
+// Datasette
 //
 
 @interface DatasetteProxy : C64ComponentProxy { }
@@ -600,7 +600,7 @@
 @end
 
 //
-// Mouse proxy
+// Mouse
 //
 
 @interface MouseProxy : C64ComponentProxy { }
@@ -615,7 +615,7 @@
 
 
 //
-// Joystick proxy
+// Joystick
 //
 
 @interface JoystickProxy : C64ComponentProxy { }
@@ -626,14 +626,13 @@
 
 
 //
-// Recorder proxy
+// Recorder
 //
 
 @interface RecorderProxy : Proxy { }
 
 @property (readonly) BOOL hasFFmpeg;
 @property (readonly) BOOL recording;
-@property (readonly) NSInteger recordCounter;
 @property (readonly) double duration;
 @property (readonly) NSInteger frameRate;
 @property (readonly) NSInteger bitRate;
@@ -650,7 +649,7 @@
 
 
 //
-// RetroShell proxy
+// RetroShell
 //
 
 @interface RetroShellProxy : Proxy { }
@@ -706,7 +705,7 @@
 @end
 
 //
-// AnyFile proxy
+// AnyFile
 //
 
 @interface AnyFileProxy : Proxy { }
@@ -723,7 +722,7 @@
 @end
 
 //
-// AnyCollection proxy
+// AnyCollection
 //
 
 @interface AnyCollectionProxy : AnyFileProxy { }
@@ -731,7 +730,7 @@
 @end
 
 //
-// Snapshot proxy
+// Snapshot
 //
 
 @interface SnapshotProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer>
@@ -749,7 +748,7 @@
 @end
 
 //
-// Script proxy
+// Script
 //
 
 @interface ScriptProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> { }
@@ -762,7 +761,7 @@
 @end
 
 //
-// RomFile proxy
+// RomFile
 //
 
 @interface RomFileProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> { }
@@ -775,7 +774,7 @@
 @end
 
 //
-// CRTFile proxy
+// CRTFile
 //
 
 @interface CRTFileProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> { }
@@ -792,7 +791,7 @@
 @end
 
 //
-// TAPFile proxy
+// TAPFile
 //
 
 @interface TAPFileProxy : AnyFileProxy <MakeWithFile, MakeWithBuffer> { }
@@ -805,7 +804,7 @@
 @end
 
 //
-// T64File proxy
+// T64File
 //
 
 @interface T64FileProxy :
@@ -818,7 +817,7 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 @end
 
 //
-// PRGFile proxy
+// PRGFile
 //
 
 @interface PRGFileProxy :
@@ -831,7 +830,7 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 @end
 
 //
-// P00File proxy
+// P00File
 //
 
 @interface P00FileProxy :
@@ -844,7 +843,7 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 @end
 
 //
-// D64File proxy
+// D64File
 //
 
 @interface D64FileProxy :
@@ -857,7 +856,7 @@ AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 @end
 
 //
-// G64File proxy
+// G64File
 //
 
 @interface G64FileProxy :
@@ -870,7 +869,7 @@ AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk> { }
 @end
 
 //
-// Folder proxy
+// Folder
 //
 
 @interface FolderProxy :
@@ -883,7 +882,7 @@ AnyCollectionProxy <MakeWithFolder> { }
 @end
 
 //
-// FSDevice proxy
+// FSDevice
 //
 
 @interface FSDeviceProxy : Proxy <MakeWithDisk, MakeWithCollection, MakeWithD64> { }

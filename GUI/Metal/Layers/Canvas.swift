@@ -171,11 +171,11 @@ class Canvas: Layer {
 
             let w = TextureSize.upscaled.width
             let h = TextureSize.upscaled.height
-            scanlineTexture.replace(w: w, h: h, buffer: c64.vic.noise())
+            scanlineTexture.replace(w: w, h: h, buffer: c64.vic.noise)
             return
         }
         
-        let buf = c64.vic.stableEmuTexture()
+        let buf = c64.vic.stableEmuTexture
         precondition(buf != nil)
         
         let pixelSize = 4

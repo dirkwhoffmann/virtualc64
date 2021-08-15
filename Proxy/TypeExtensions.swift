@@ -7,9 +7,9 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-extension DOSType {
+extension DOSType: CustomStringConvertible {
 
-    var description: String {
+    public var description: String {
         
         switch self {
         
@@ -21,9 +21,9 @@ extension DOSType {
     }
 }
 
-extension FSFileType {
+extension FSFileType: CustomStringConvertible {
 
-    var description: String {
+    public var description: String {
         
         switch self {
         
@@ -38,9 +38,9 @@ extension FSFileType {
     }
 }
 
-extension FSBlockType {
+extension FSBlockType: CustomStringConvertible {
     
-    var description: String {
+    public var description: String {
         
         switch self {
         
@@ -54,9 +54,9 @@ extension FSBlockType {
     }
 }
 
-extension FSUsage {
+extension FSUsage: CustomStringConvertible {
     
-    var description: String {
+    public var description: String {
         
         switch self {
         

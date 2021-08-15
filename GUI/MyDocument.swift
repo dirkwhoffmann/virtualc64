@@ -259,7 +259,7 @@ class MyDocument: NSDocument {
     @discardableResult
     func mountAttachmentAsDisk(drive id: DriveID) -> Bool {
 
-        let drive = c64.drive(id)!
+        let drive = c64.drive(id)
         
         if let file = attachment as? D64FileProxy {
 
@@ -370,10 +370,9 @@ class MyDocument: NSDocument {
         track("drive: \(id.rawValue) to: \(url)")
         
         let drive = c64.drive(id)
-        let disk = c64.drive(id).disk
-        try export(disk: disk!, to: url)
+        try export(disk: drive.disk, to: url)
         
-        drive?.setModifiedDisk(false)
+        drive.setModifiedDisk(false)
     }
  
     func export(disk: DiskProxy, to url: URL) throws {
