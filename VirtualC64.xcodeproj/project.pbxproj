@@ -1001,7 +1001,7 @@
 				504C42E024AF29AB00E69CAE /* Memory */,
 				504C42F924AF29AB00E69CAE /* Peripherals */,
 				504C428E24AF29AB00E69CAE /* Cartridges */,
-				504C42C624AF29AB00E69CAE /* Files */,
+				504C42C624AF29AB00E69CAE /* Media */,
 				5080501C2587A177004FE1F5 /* FileSystems */,
 				5036E0AD261AEF000048E66A /* RetroShell */,
 			);
@@ -1087,7 +1087,7 @@
 			path = CustomCartridges;
 			sourceTree = "<group>";
 		};
-		504C42C624AF29AB00E69CAE /* Files */ = {
+		504C42C624AF29AB00E69CAE /* Media */ = {
 			isa = PBXGroup;
 			children = (
 				5078BEC8264D74AB00EDA161 /* Makefile */,
@@ -1120,7 +1120,7 @@
 				50AE19382632B787005A5898 /* Script.h */,
 				50AE19372632B787005A5898 /* Script.cpp */,
 			);
-			path = Files;
+			path = Media;
 			sourceTree = "<group>";
 		};
 		504C42E024AF29AB00E69CAE /* Memory */ = {
