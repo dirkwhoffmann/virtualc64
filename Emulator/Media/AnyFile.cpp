@@ -119,7 +119,7 @@ AnyFile::flash(u8 *buffer, isize offset) const
     memcpy(buffer + offset, data, size);
 }
 
-isize
+void
 AnyFile::readFromStream(std::istream &stream)
 {
     // Get stream size
@@ -138,11 +138,9 @@ AnyFile::readFromStream(std::istream &stream)
     
     // Fix known inconsistencies
     repair();
-    
-    return size;
 }
 
-isize
+void
 AnyFile::readFromFile(const string  &path)
 {
     std::ifstream stream(path);
@@ -151,31 +149,23 @@ AnyFile::readFromFile(const string  &path)
         throw VC64Error(ERROR_FILE_CANT_READ);
     }
     
-    isize result = readFromStream(stream);
-    assert(result == size);
-    
+    readFromStream(stream);
     this->path = string(path);
-    return result;
 }
 
-isize
+void
 AnyFile::readFromBuffer(const u8 *buf, isize len)
 {
     assert(buf);
 
     std::istringstream stream(string((const char *)buf, len));
-    
-    isize result = readFromStream(stream);
-    assert(result == size);
-    
-    return result;
+    readFromStream(stream);
 }
 
-isize
+void
 AnyFile::writeToStream(std::ostream &stream)
 {
     stream.write((char *)data, size);
-    return size;
 }
 
 void

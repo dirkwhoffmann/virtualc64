@@ -159,13 +159,13 @@ public:
     
 protected:
 
-    virtual isize readFromStream(std::istream &stream) throws;
-    isize readFromFile(const string &path) throws;
-    isize readFromBuffer(const u8 *buf, isize len) throws;
+    virtual void readFromStream(std::istream &stream) throws;
+    void readFromFile(const string &path) throws;
+    void readFromBuffer(const u8 *buf, isize len) throws;
 
 public:
     
-    virtual isize writeToStream(std::ostream &stream) throws;
+    virtual void writeToStream(std::ostream &stream) throws;
     void writeToFile(const string &path) throws;
     void writeToBuffer(u8 *buf) throws;
 

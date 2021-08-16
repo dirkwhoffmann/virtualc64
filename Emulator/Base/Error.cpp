@@ -98,6 +98,13 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
             description = "This cartridge is not supported yet.";
             break;
 
+        case ERROR_CRT_TOO_MANY_PACKETS:
+            description = "The packet counts exceeds the allowed limit.";
+            break;
+
+        case ERROR_CRT_CORRUPTED_PACKET:
+            description = "Corrputed packet detected.";
+            
         case ERROR_FS_UNSUPPORTED:
             description = "Unsupported file system.";
             break;

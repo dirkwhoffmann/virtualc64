@@ -36,10 +36,10 @@ CRTFile::getName() const
     return PETName<16>(data + 0x20, 0x00);
 }
 
-isize
+void
 CRTFile::readFromStream(std::istream &stream)
 {
-    isize result = AnyFile::readFromStream(stream);
+    AnyFile::readFromStream(stream);
     if (CRT_DEBUG) dump();
             
     // Load chip packets
@@ -47,13 +47,10 @@ CRTFile::readFromStream(std::istream &stream)
     for (numberOfChips = 0; ptr < data + size; numberOfChips++) {
         
         if (numberOfChips == MAX_PACKETS) {
-            warn("CRT file contains too many chip packets. Aborting!\n");
-            break;
+            throw VC64Error(ERROR_CRT_TOO_MANY_PACKETS);
         }
-        
         if (memcmp("CHIP", ptr, 4) != 0) {
-            warn("Unexpected data in cartridge, expected 'CHIP'\n");
-            return result; // TODO: throw exception instead
+            throw VC64Error(ERROR_CRT_CORRUPTED_PACKET);
         }
         
         // Remember start address of each chip section
@@ -64,7 +61,6 @@ CRTFile::readFromStream(std::istream &stream)
     }
     
     plain(CRT_DEBUG, "CRT file imported successfully (%zd chips)\n", numberOfChips);
-    return result;
 }
 
 CartridgeType

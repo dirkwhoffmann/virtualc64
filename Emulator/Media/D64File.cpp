@@ -88,16 +88,15 @@ D64File::getName() const
     return PETName<16>(data + offset(18, 0) + 0x90);
 }
 
-isize
+void
 D64File::readFromStream(std::istream &stream)
 {
-    isize result = AnyFile::readFromStream(stream);
-    assert(result == size);
+    AnyFile::readFromStream(stream);
     
     isize numSectors;
     bool errorCodes;
  
-    switch (result)
+    switch (size)
     {
         case D64_683_SECTORS: // 35 tracks, no errors
             
@@ -152,8 +151,6 @@ D64File::readFromStream(std::istream &stream)
     if (errorCodes) {
         memcpy(errors, data + (numSectors * 256), numSectors);
     }
-    
-    return result;
 }
 
 Track

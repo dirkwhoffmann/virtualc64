@@ -512,7 +512,7 @@ RomFile::revision(RomIdentifier rev)
     }
 }
 
-isize
+void
 RomFile::readFromStream(std::istream &stream)
 {
     romFileType =
@@ -522,7 +522,7 @@ RomFile::readFromStream(std::istream &stream)
     isVC1541RomStream(stream) ? FILETYPE_VC1541_ROM :
     FILETYPE_UNKNOWN;
     
-    return AnyFile::readFromStream(stream);
+    AnyFile::readFromStream(stream);
 }
 
 void

@@ -53,7 +53,7 @@ public:
     
     FileType type() const override { return FILETYPE_D64; }
     PETName<16> getName() const override;
-    isize readFromStream(std::istream &stream) override;
+    void readFromStream(std::istream &stream) throws override;
 
         
     //
