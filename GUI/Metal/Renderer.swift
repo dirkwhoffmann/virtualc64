@@ -191,6 +191,7 @@ class Renderer: NSObject, MTKViewDelegate {
         update(frames: frames)
         
         semaphore.wait()
+        
         if let drawable = metalLayer.nextDrawable() {
                  
             // Create the command buffer
@@ -206,12 +207,20 @@ class Renderer: NSObject, MTKViewDelegate {
             let flat = fullscreen && !parent.pref.keepAspectRatio
             if canvas.isTransparent || animates != 0 { splashScreen.render(encoder) }
             if canvas.isVisible { canvas.render(encoder, flat: flat) }
-            
-            // Commit the command buffer
             encoder.endEncoding()
+
+            // Commit the command buffer
+            buffer.addCompletedHandler { _ in
+                self.canvas.updateTexture()
+                self.semaphore.signal()
+            }
+            buffer.present(drawable)
+            buffer.commit()
+            /*
             buffer.addCompletedHandler { _ in self.semaphore.signal() }
             buffer.present(drawable)
             buffer.commit()
+            */
         }
         
         // Perform periodic events inside the controller

@@ -253,8 +253,8 @@ extension MyController {
             openConfigurator(tab: "Roms")
         }
 
-        // Create speed monitor and get the timer tunning
-        createTimer()
+        // Create speed monitor
+        speedometer = Speedometer()
         
         // Update toolbar
         toolbar.validateVisibleItems()
@@ -300,29 +300,11 @@ extension MyController {
         }
     }
     
-    func createTimer() {
-    
-        // Create speed monitor
-        speedometer = Speedometer()
-        
-        // Create timer and speedometer
-        /*
-        assert(timer == nil)
-        timer = Timer.scheduledTimer(timeInterval: 1.0/12, // 12 times a second
-                                     target: self,
-                                     selector: #selector(timerFunc),
-                                     userInfo: nil,
-                                     repeats: true)
-        */
-    }
-
     //
     // Timer and message processing
     //
     
-    @objc func timerFunc() {
-
-        // timerLock.lock()
+    func timerFunc() {
  
         animationCounter += 1
 
@@ -365,8 +347,6 @@ extension MyController {
                 NSCursor.setHiddenUntilMouseMoves(true)
             }
         }
-        
-        // timerLock.unlock()
     }
     
     func updateSpeedometer() {
