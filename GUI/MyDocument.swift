@@ -198,7 +198,7 @@ class MyDocument: NSDocument {
         }
     }
             
-    func runMountDialog() {
+    func runImportDialog() {
         
         let name = NSNib.Name("ImportDialog")
         let controller = ImportDialog.make(parent: parent, nibName: name)

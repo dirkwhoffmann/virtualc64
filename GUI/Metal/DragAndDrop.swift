@@ -152,12 +152,11 @@ public extension MetalView {
                         try document.createAttachment(from: url, allowedTypes: types)
                         try document.mountAttachment()
                         return true
-
                     }
 
-                    // Run the mount dialog
+                    // Run the import dialog
                     try document.createAttachment(from: url)
-                    document.runMountDialog()
+                    document.runImportDialog()
                     return true
                     
                 } catch {
