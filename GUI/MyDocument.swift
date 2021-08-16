@@ -174,10 +174,8 @@ class MyDocument: NSDocument {
 
             if proceedWithUnexportedDisk(drive: id) {
                 
-                if let fs = try? Proxy.make(d64: proxy) as FSDeviceProxy {
-                    drive.insertFileSystem(fs, protected: false)
-                    return
-                }
+                drive.insertD64(proxy, protected: false)
+                return
             }
         }
         if let proxy = attachment as? G64FileProxy {
@@ -188,12 +186,12 @@ class MyDocument: NSDocument {
                 return
             }
         }
-        if let file = attachment as? AnyCollectionProxy {
+        if let proxy = attachment as? AnyCollectionProxy {
             
             if proceedWithUnexportedDisk(drive: id) {
-                if let fs = try? Proxy.make(collection: file) as FSDeviceProxy {
-                    drive.insertFileSystem(fs, protected: false)
-                }
+                
+                drive.insertCollection(proxy, protected: false)
+                return
             }
         }
     }

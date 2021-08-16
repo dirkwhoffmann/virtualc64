@@ -396,9 +396,10 @@ public:
     void insertDisk(Disk *otherDisk, bool wp);
     void insertNewDisk(DOSType fstype);
     void insertNewDisk(DOSType fstype, PETName<16> name);
-    void insertFileSystem(const class FSDevice &device, bool wp);
+    void insertD64(const D64File &d64, bool wp);
     void insertG64(const G64File &g64, bool wp);
-    void insertDisk(AnyCollection &archive, bool wp);
+    void insertCollection(AnyCollection &archive, bool wp) throws;
+    void insertFileSystem(const class FSDevice &device, bool wp);
     void ejectDisk();
 
 

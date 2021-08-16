@@ -722,6 +722,13 @@ Drive::insertFileSystem(const FSDevice &device, bool wp)
 }
 
 void
+Drive::insertD64(const D64File &d64, bool wp)
+{
+    debug(DSKCHG_DEBUG, "insertD64()\n");
+    insertDisk(Disk::makeWithD64(c64, d64), wp);
+}
+
+void
 Drive::insertG64(const G64File &g64, bool wp)
 {
     debug(DSKCHG_DEBUG, "insertG64()\n");
@@ -729,7 +736,7 @@ Drive::insertG64(const G64File &g64, bool wp)
 }
 
 void
-Drive::insertDisk(AnyCollection &collection, bool wp)
+Drive::insertCollection(AnyCollection &collection, bool wp)
 {
     debug(DSKCHG_DEBUG, "insertDisk(collection)\n");
     insertDisk(Disk::makeWithCollection(c64, collection), wp);
