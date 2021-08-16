@@ -715,7 +715,7 @@
 @property (readonly) u64 fnv;
 
 - (void)setPath:(NSString *)path;
-- (NSInteger)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex;
+- (void)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 
 @end
 

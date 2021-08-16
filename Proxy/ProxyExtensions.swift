@@ -123,14 +123,11 @@ extension C64Proxy {
     
 extension AnyFileProxy {
     
-    @discardableResult
-    func writeToFile(url: URL) throws -> Int {
+    func writeToFile(url: URL) throws {
         
         let exception = ExceptionWrapper()
-        let result = write(toFile: url.path, exception: exception)
+        write(toFile: url.path, exception: exception)
         if exception.errorCode != .OK { throw VC64Error(exception) }
-        
-        return result
     }
 }
 

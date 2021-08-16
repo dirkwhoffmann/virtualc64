@@ -166,13 +166,8 @@ protected:
 public:
     
     virtual isize writeToStream(std::ostream &stream) throws;
-    isize writeToStream(std::ostream &stream, ErrorCode *ec);
-
-    isize writeToFile(const string &path) throws;
-    isize writeToFile(const string &path, ErrorCode *ec);
-    
-    isize writeToBuffer(u8 *buf) throws;
-    isize writeToBuffer(u8 *buf, ErrorCode *ec);
+    void writeToFile(const string &path) throws;
+    void writeToBuffer(u8 *buf) throws;
 
 
     //

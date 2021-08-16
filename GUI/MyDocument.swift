@@ -251,7 +251,7 @@ class MyDocument: NSDocument {
 
                 // Write to data buffer
                 do {
-                    _ = try snapshot.writeToFile(url: url)
+                    try snapshot.writeToFile(url: url)
                 } catch {
                     throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
                 }

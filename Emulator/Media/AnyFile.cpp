@@ -178,14 +178,7 @@ AnyFile::writeToStream(std::ostream &stream)
     return size;
 }
 
-isize
-AnyFile::writeToStream(std::ostream &stream, ErrorCode *err)
-{
-    try { *err = ERROR_OK; return writeToStream(stream); }
-    catch (VC64Error &exception) { *err = exception.data; return 0; }
-}
-
-isize
+void
 AnyFile::writeToFile(const string &path)
 {
     std::ofstream stream(path);
@@ -194,31 +187,12 @@ AnyFile::writeToFile(const string &path)
         throw VC64Error(ERROR_FILE_CANT_WRITE);
     }
     
-    isize result = writeToStream(stream);
-    assert(result == (isize)size);
-    
-    return result;
+    writeToStream(stream);
 }
 
-isize
-AnyFile::writeToFile(const string &path, ErrorCode *ec)
-{
-    try { *ec = ERROR_OK; return writeToFile(path); }
-    catch (VC64Error &exception) { *ec = exception.data; return 0; }
-}
-
-isize
+void
 AnyFile::writeToBuffer(u8 *buf)
 {
     assert(buf);
-
     memcpy(buf, data, size);
-    return size;
-}
-
-isize
-AnyFile::writeToBuffer(u8 *buf, ErrorCode *err)
-{
-    try { *err = ERROR_OK; return writeToBuffer(buf); }
-    catch (VC64Error &exception) { *err = exception.data; return 0; }
 }

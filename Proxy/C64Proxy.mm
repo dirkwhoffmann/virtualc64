@@ -1415,10 +1415,10 @@
     [self file]->path = [path fileSystemRepresentation];
 }
 
-- (NSInteger)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex
+- (void)writeToFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    try { return [self file]->writeToFile(string([path fileSystemRepresentation])); }
-    catch (VC64Error &err) { [ex save:err]; return 0; }    
+    try { [self file]->writeToFile(string([path fileSystemRepresentation])); }
+    catch (VC64Error &err) { [ex save:err]; }    
 }
 
 @end
