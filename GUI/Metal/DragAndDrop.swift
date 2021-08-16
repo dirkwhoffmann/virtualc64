@@ -121,26 +121,43 @@ public extension MetalView {
             if let url = NSURL(from: pasteBoard) as URL? {
                             
                 do {
-                    try document.createAttachment(from: url)
-                    
                     // Check drop zone for drive 8
                     if parent.renderer.dropZone.isInside(sender, zone: 0) {
-                        return document.mountAttachmentAsDisk(drive: .DRIVE8)
+
+                        let types: [FileType] = [ .T64, .P00, .PRG, .D64, .G64 ]
+                        try document.createAttachment(from: url, allowedTypes: types)
+                        try document.mountAttachment(drive: .DRIVE8)
+                        return true
                     }
                     // Check drop zone for drive 9
                     if parent.renderer.dropZone.isInside(sender, zone: 1) {
-                        return document.mountAttachmentAsDisk(drive: .DRIVE9)
+
+                        let types: [FileType] = [ .T64, .P00, .PRG, .D64, .G64 ]
+                        try document.createAttachment(from: url, allowedTypes: types)
+                        try document.mountAttachment(drive: .DRIVE9)
+                        return true
                     }
                     // Check drop zone for the expansion port
                     if parent.renderer.dropZone.isInside(sender, zone: 2) {
-                        return document.mountAttachmentAsCartridge()
+
+                        let types: [FileType] = [ .CRT ]
+                        try document.createAttachment(from: url, allowedTypes: types)
+                        try document.mountAttachment()
+                        return true
                     }
                     // Check drop zone for the datasette
                     if parent.renderer.dropZone.isInside(sender, zone: 3) {
-                        return document.mountAttachmentAsTape()
+
+                        let types: [FileType] = [ .TAP ]
+                        try document.createAttachment(from: url, allowedTypes: types)
+                        try document.mountAttachment()
+                        return true
+
                     }
 
-                    try document.mountAttachment()
+                    // Run the mount dialog
+                    try document.createAttachment(from: url)
+                    document.runMountDialog()
                     return true
                     
                 } catch {

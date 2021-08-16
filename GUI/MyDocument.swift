@@ -73,9 +73,7 @@ class MyDocument: NSDocument {
     }
     
     func createAttachment(from url: URL, allowedTypes: [FileType]) throws {
-        
-        track("Creating attachment from URL: \(url.lastPathComponent)")
-        
+                
         attachment = try createFileProxy(url: url, allowedTypes: allowedTypes)
         myAppDelegate.noteNewRecentlyUsedURL(url)
         
@@ -141,60 +139,53 @@ class MyDocument: NSDocument {
         throw VC64Error(.FILE_TYPE_MISMATCH, url.lastPathComponent)
     }
 
-    func mountAttachment(destination: DriveProxy? = nil) throws {
+    func mountAttachment() throws {
 
         // Only proceed if an attachment is present
         if attachment == nil { return }
         
-        // If the attachment is a snapshot, flash it
         if let proxy = attachment as? SnapshotProxy {
             try c64.flash(proxy)
             snapshots.append(proxy)
             return
         }
-        
-        // If the attachment is a script, execute it
         if let proxy = attachment as? ScriptProxy {
             parent.renderer.console.runScript(script: proxy)
             return
         }
-        
-        // Try to insert the attachment as a disk
-        if let id = destination?.id {
-            if mountAttachmentAsDisk(drive: id) {
-                return
-            }
+        if let proxy = attachment as? CRTFileProxy {
+            c64.expansionport.attachCartridge(proxy, reset: true)
+            return
+        }
+        if let proxy = attachment as? TAPFileProxy {
+            c64.datasette.insertTape(proxy)
+            return
         }
         
-        runMountDialog()
+        // Try to insert the attachment as a disk in drive 8
+        try mountAttachment(drive: .DRIVE8)
     }
-    
-    func runMountDialog() {
         
-        let name = NSNib.Name("ImportDialog")
-        let controller = ImportDialog.make(parent: parent, nibName: name)
-        controller?.showSheet()
-    }
-    
-    @discardableResult
-    func mountAttachmentAsDisk(drive id: DriveID) -> Bool {
+    func mountAttachment(drive id: DriveID) throws {
 
         let drive = c64.drive(id)
         
-        if let file = attachment as? D64FileProxy {
+        if let proxy = attachment as? D64FileProxy {
 
             if proceedWithUnexportedDisk(drive: id) {
-                if let fs = try? Proxy.make(d64: file) as FSDeviceProxy {
+                
+                if let fs = try? Proxy.make(d64: proxy) as FSDeviceProxy {
                     drive.insertFileSystem(fs, protected: false)
-                    return true
+                    return
                 }
             }
         }
-        if let file = attachment as? G64FileProxy {
+        if let proxy = attachment as? G64FileProxy {
             
             if proceedWithUnexportedDisk(drive: id) {
-                drive.insertG64(file, protected: false)
-                return true
+                
+                drive.insertG64(proxy, protected: false)
+                return
             }
         }
         if let file = attachment as? AnyCollectionProxy {
@@ -202,29 +193,16 @@ class MyDocument: NSDocument {
             if proceedWithUnexportedDisk(drive: id) {
                 if let fs = try? Proxy.make(collection: file) as FSDeviceProxy {
                     drive.insertFileSystem(fs, protected: false)
-                    return true
                 }
             }
         }
-        return false
     }
-    
-    @discardableResult
-    func mountAttachmentAsTape() -> Bool {
+            
+    func runMountDialog() {
         
-        track()
-        
-        if let tape = attachment as? TAPFileProxy {
-            parent.c64.datasette.insertTape(tape)
-        }
-        return true
-    }
-        
-    @discardableResult
-    func mountAttachmentAsCartridge() -> Bool {
-        
-        guard let cartridge = attachment as? CRTFileProxy else { return false }
-        return c64.expansionport.attachCartridge(cartridge, reset: true)
+        let name = NSNib.Name("ImportDialog")
+        let controller = ImportDialog.make(parent: parent, nibName: name)
+        controller?.showSheet()
     }
 
     //

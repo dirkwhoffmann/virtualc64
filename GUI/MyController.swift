@@ -238,7 +238,7 @@ extension MyController {
         addListener()
                 
         // Process attachment (if any)
-        try? mydocument.mountAttachment(destination: c64.drive8)
+        try? mydocument.mountAttachment()
 
         do {
             // Let the C64 throw an exception if it is not ready to power on

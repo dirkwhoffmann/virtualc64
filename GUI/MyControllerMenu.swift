@@ -647,7 +647,7 @@ extension MyController: NSMenuItemValidation {
             if !proceedWithUnexportedDisk(drive: drive) { return }
             
             // Insert the disk
-            mydocument.mountAttachmentAsDisk(drive: drive)
+            try mydocument.mountAttachment(drive: drive)
                         
             // Remember the URL
             myAppDelegate.noteNewRecentlyUsedURL(url)
@@ -788,7 +788,7 @@ extension MyController: NSMenuItemValidation {
             try mydocument.createAttachment(from: url, allowedTypes: types)
             
             // Insert the tape
-            mydocument.mountAttachmentAsTape()
+            try mydocument.mountAttachment()
             
             // Remember the URL
             myAppDelegate.noteNewRecentlyUsedURL(url)
@@ -856,7 +856,7 @@ extension MyController: NSMenuItemValidation {
             try mydocument.createAttachment(from: url, allowedTypes: types)
             
             // Attach the cartridge
-            mydocument.mountAttachmentAsCartridge()
+            try mydocument.mountAttachment()
             
             // Remember the URL
             myAppDelegate.noteNewRecentlyUsedURL(url)

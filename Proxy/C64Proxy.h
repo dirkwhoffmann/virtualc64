@@ -442,7 +442,7 @@
 
 - (BOOL)cartridgeAttached;
 - (CartridgeType)cartridgeType;
-- (BOOL)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset;
+- (BOOL)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset; // TODO: throw
 - (void)attachGeoRamCartridge:(NSInteger)capacity;
 - (void)attachIsepicCartridge;
 - (void)detachCartridgeAndReset;
@@ -593,7 +593,7 @@
 - (void)pressStop;
 - (void)rewind;
 - (void)ejectTape;
-- (void)insertTape:(TAPFileProxy *)tape;
+- (void)insertTape:(TAPFileProxy *)tape; // TODO: throw??
 
 @end
 
