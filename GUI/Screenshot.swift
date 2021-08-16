@@ -15,6 +15,9 @@ class Screenshot {
     // Proposed file format for this screenshot
     var format = NSBitmapImageRep.FileType.jpeg
         
+    // Creation date
+    var date = Date()
+
     // Image width and height
     var width: Int { return Int(screen?.size.width ?? 0) }
     var height: Int { return Int(screen?.size.height ?? 0) }
@@ -53,6 +56,7 @@ class Screenshot {
         
         self.screen = screen
         self.format = format
+        date = Date()
     }
     
     convenience init?(fromUrl url: URL) {

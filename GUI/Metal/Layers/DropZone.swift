@@ -137,6 +137,8 @@ class DropZone: Layer {
                 zones[i].removeFromSuperview()
             }
         }
+        
+        resize()
     }
     
     func updateAlpha() {
@@ -158,7 +160,7 @@ class DropZone: Layer {
     }
     
     func resize() {
-                          
+                         
         let size = controller.metal.frame.size
         let origin = controller.metal.frame.origin
         let midx = origin.x + (size.width / 2)
@@ -168,17 +170,22 @@ class DropZone: Layer {
         let h = w * 1.2
         let margin = w / 8
         let iconSize = NSSize(width: w, height: h)
-
-        ul[0] = CGPoint(x: midx - 2 * w - 1.5 * margin, y: midy - (h / 2))
+        // let y = midy - (h / 2)
+        let y = size.height + origin.y - 24 - h * CGFloat(alpha.current)
+            
+        ul[0] = CGPoint(x: midx - 2 * w - 1.5 * margin, y: y)
         lr[0] = CGPoint(x: ul[0].x + w, y: ul[0].y + h)
 
-        ul[1] = CGPoint(x: midx - w - 0.5 * margin, y: midy - (h / 2))
+        ul[1] = CGPoint(x: midx - w - 0.5 * margin, y: y)
+        ul[1].y = size.height - h * CGFloat(alpha.current)
         lr[1] = CGPoint(x: ul[1].x + w, y: ul[1].y + h)
 
-        ul[2] = CGPoint(x: midx + 0.5 * margin, y: midy - (h / 2))
+        ul[2] = CGPoint(x: midx + 0.5 * margin, y: y)
+        ul[2].y = size.height - h * CGFloat(alpha.current)
         lr[2] = CGPoint(x: ul[2].x + w, y: ul[2].y + h)
 
-        ul[3] = CGPoint(x: midx + w + 1.5 * margin, y: midy - (h / 2))
+        ul[3] = CGPoint(x: midx + w + 1.5 * margin, y: y)
+        ul[3].y = size.height - h * CGFloat(alpha.current)
         lr[3] = CGPoint(x: ul[3].x + w, y: ul[3].y + h)
 
         for i in 0...3 {

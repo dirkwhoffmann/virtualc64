@@ -1307,8 +1307,8 @@
 			children = (
 				5052A7C025A0AC0700E62EDD /* Errors.swift */,
 				50DBB44A2025CE5700489271 /* Utils.swift */,
-				505184DF24F23CB6002C6124 /* Storage.swift */,
 				507E7AA124FB897D00AB433C /* Screenshot.swift */,
+				505184DF24F23CB6002C6124 /* Storage.swift */,
 			);
 			name = Foundation;
 			sourceTree = "<group>";
