@@ -426,7 +426,11 @@ Muxer::didLoadFromBuffer(const u8 *buffer)
 void
 Muxer::_run()
 {
-    clear();
+    if (volL.current == 0.0) {
+        debug(AUDBUF_DEBUG, "Ramping up from 0\n");
+        clear();
+    }
+    rampUp();
 }
 
 void
@@ -603,8 +607,11 @@ Muxer::getSID(isize nr)
 void
 Muxer::rampUp()
 {
-    volL.fadeIn(30000);
-    volR.fadeIn(30000);
+    trace(AUDBUF_DEBUG, "rampUp()\n");
+          
+    const isize steps = 20000;
+    volL.fadeIn(steps);
+    volR.fadeIn(steps);
     
     ignoreNextUnderOrOverflow();
 }
@@ -612,6 +619,8 @@ Muxer::rampUp()
 void
 Muxer::rampUpFromZero()
 {
+    trace(AUDBUF_DEBUG, "rampUpFromZero()\n");
+
     volL.current = 0;
     volR.current = 0;
 
@@ -621,8 +630,11 @@ Muxer::rampUpFromZero()
 void
 Muxer::rampDown()
 {
-    volL.fadeOut(2000);
-    volR.fadeOut(2000);
+    trace(AUDBUF_DEBUG, "rampDown()\n");
+
+    const isize steps = 2000;
+    volL.fadeOut(steps);
+    volR.fadeOut(steps);
     
     ignoreNextUnderOrOverflow();
 }
@@ -934,7 +946,7 @@ Muxer::handleBufferUnderflow()
     // (1) The consumer runs slightly faster than the producer.
     // (2) The producer is halted or not startet yet.
     
-    trace(SID_DEBUG, "BUFFER UNDERFLOW (r: %zd w: %zd)\n", stream.r, stream.w);
+    trace(AUDBUF_DEBUG, "BUFFER UNDERFLOW (r: %zd w: %zd)\n", stream.r, stream.w);
 
     // Reset the write pointer
     stream.alignWritePtr();
@@ -962,7 +974,7 @@ Muxer::handleBufferOverflow()
     // (1) The consumer runs slightly slower than the producer
     // (2) The consumer is halted or not startet yet
     
-    trace(SID_DEBUG, "BUFFER OVERFLOW (r: %zd w: %zd)\n", stream.r, stream.w);
+    trace(AUDBUF_DEBUG, "BUFFER OVERFLOW (r: %zd w: %zd)\n", stream.r, stream.w);
     
     // Reset the write pointer
     stream.alignWritePtr();
@@ -970,7 +982,7 @@ Muxer::handleBufferOverflow()
     // Determine the number of elapsed seconds since the last adjustment
     auto elapsedTime = util::Time::now() - lastAlignment;
     lastAlignment = util::Time::now();
-    trace(SID_DEBUG, "elapsedTime: %f\n", elapsedTime.asSeconds());
+    trace(AUDBUF_DEBUG, "elapsedTime: %f\n", elapsedTime.asSeconds());
     
     // Adjust the sample rate, if condition (1) holds
     if (elapsedTime.asSeconds() > 10.0) {
@@ -981,7 +993,7 @@ Muxer::handleBufferOverflow()
         isize offPerSecond = (isize)(stream.count() / elapsedTime.asSeconds());
         double newSampleRate = getSampleRate() - offPerSecond;
 
-        trace(SID_DEBUG, "Changing sample rate to %f\n", newSampleRate);
+        trace(AUDBUF_DEBUG, "Changing sample rate to %f\n", newSampleRate);
         setSampleRate(newSampleRate);
     }
 }

@@ -48,14 +48,14 @@ template <typename T> struct AudioVolume {
     bool isFading() const { return current != target[0]; }
 
     // Initiates a fading effect
-    void fadeIn(int steps) {
+    void fadeIn(isize steps) {
         
         target[0] = normal;
         target[1] = normal;
         delta[0]  = normal / steps;
         delta[1]  = normal / steps;
     }
-    void fadeOut(int steps) {
+    void fadeOut(isize steps) {
         
         target[0] = 0;
         target[1] = 0;
@@ -78,7 +78,7 @@ template <typename T> struct AudioVolume {
         if (current < target[0]) {
             if ((current += delta[0]) < target[0]) return;
         } else {
-            if ((current -= delta[0]) < target[0]) return;
+            if ((current -= delta[0]) > target[0]) return;
         }
         
         current = target[0];
