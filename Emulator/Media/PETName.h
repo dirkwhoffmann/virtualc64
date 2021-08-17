@@ -82,6 +82,16 @@ public:
         return true;
     }
 
+    void stripSpaces()
+    {
+        if (isize length = strlen(asc); length > 0 && asc[length - 1] == ' ') {
+            
+            asc[length - 1] = 0;
+            pet[length - 1] = 0xA0;
+            stripSpaces();
+        }
+    }
+    
     void write(u8 *p, isize length)
     {
         assert(p);

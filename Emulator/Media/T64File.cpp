@@ -166,8 +166,9 @@ T64File::itemName(isize nr) const
 {
     assert(nr < collectionCount());
     
-    u8 padChar = 0x20;
-    return PETName<16>(data + 0x50 + nr * 0x20, padChar);
+    auto name = PETName<16>(data + 0x50 + nr * 0x20);
+    name.stripSpaces();
+    return name;
 }
 
 u64
