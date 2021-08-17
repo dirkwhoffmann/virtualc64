@@ -31,7 +31,7 @@ class Preferences {
     // Snapshots and screenshots
     var autoSnapshots = GeneralDefaults.std.autoSnapshots
     var snapshotInterval = 0 {
-        didSet { for c in myAppDelegate.controllers { c.startSnapshotTimer() } }
+        didSet { for c in myAppDelegate.controllers { c.validateSnapshotTimer() } }
     }
     var screenshotSource = GeneralDefaults.std.screenshotSource
     var screenshotTarget = GeneralDefaults.std.screenshotTarget

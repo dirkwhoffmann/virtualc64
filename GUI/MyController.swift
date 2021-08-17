@@ -14,32 +14,18 @@ enum WarpMode: Int {
     case on
 }
 
-enum AutoMountAction: Int, Codable {
-    
-    case openBrowser = 0
-    case flashFirstFile = 1
-    case insertIntoDrive8 = 2
-    case insertIntoDrive9 = 3
-    case insertIntoDatasette = 4
-    case attachToExpansionPort = 5
-}
-
 protocol MessageReceiver {
     func processMessage(_ msg: Message)
 }
 
 class MyController: NSWindowController, MessageReceiver {
 
-    var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
     var pref: Preferences { return myAppDelegate.pref }
 
     // Reference to the connected document
     var mydocument: MyDocument!
     
-    /* Proxy object. The proxy implements a bridge between the emulator written
-     * in C++ and the GUI written in Swift. Because Swift cannot interact with
-     * C++ directly, the proxy is written in Objective-C.
-     */
+    // C64 proxy (bridge between the Swift frontend and the C++ backend)
     var c64: C64Proxy!
     
     // Inspector panel of this emulator instance
@@ -90,7 +76,7 @@ class MyController: NSWindowController, MessageReceiver {
     // TouchBar is pressed.
     var modifierFlags: NSEvent.ModifierFlags = .init(rawValue: 0)
         
-    // Indicates if mouse is currently hidden
+    // Indicates if the mouse is currently hidden
     var hideMouse = false
         
     // Indicates if a status bar is shown
@@ -104,43 +90,7 @@ class MyController: NSWindowController, MessageReceiver {
         
     // Remembers the running state for the pauseInBackground feature
     var pauseInBackgroundSavedState = false
-    
-    //
-    // Timers
-    //
-    
-    func startSnapshotTimer() {
-        
-        if pref.snapshotInterval > 0 {
             
-            snapshotTimer?.invalidate()
-            snapshotTimer =
-                Timer.scheduledTimer(timeInterval: TimeInterval(pref.snapshotInterval),
-                                     target: self,
-                                     selector: #selector(snapshotTimerFunc),
-                                     userInfo: nil,
-                                     repeats: true)
-        }
-    }
-    
-    func stopSnapshotTimer() {
-        
-        snapshotTimer?.invalidate()
-    }
-    
-    func updateWarp() {
-        
-        var warp: Bool
-        
-        switch pref.warpMode {
-        case .auto: warp = c64.iec.transferring
-        case .off: warp = false
-        case .on: warp = true
-        }
-        
-        c64.warpMode = warp
-    }
-    
     //
     // Outlets
     //
@@ -168,11 +118,11 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var tapeCounter: NSTextField!
     @IBOutlet weak var tapeProgress: NSProgressIndicator!
     @IBOutlet weak var crtIcon: NSButton!
+    @IBOutlet weak var warpIcon: NSButton!
     @IBOutlet weak var cpuInfo: NSTextField!
     @IBOutlet weak var mhzInfo: NSTextField!
     @IBOutlet weak var cpuIndicator: NSLevelIndicator!
     @IBOutlet weak var mhzIndicator: NSLevelIndicator!
-    @IBOutlet weak var warpIcon: NSButton!
     
     // Toolbar
     @IBOutlet weak var toolbar: MyToolbar!
@@ -202,8 +152,6 @@ extension MyController {
     //
 
     override open func awakeFromNib() {
-
-        track()
                 
         mydocument = document as? MyDocument
         config = Configuration(with: self)
@@ -212,7 +160,7 @@ extension MyController {
 
     override open func windowDidLoad() {
          
-        // Reset mouse coordinates
+        // Show the mouse
         hideMouse = false
         
         // Create keyboard controller
@@ -235,7 +183,7 @@ extension MyController {
         loadUserDefaults()
         
         // Enable message processing
-        addListener()
+        registerAsListener()
                 
         // Process attachment (if any)
         try? mydocument.mountAttachment()
@@ -280,7 +228,7 @@ extension MyController {
         window?.collectionBehavior = .fullScreenPrimary
     }
     
-    func addListener() {
+    func registerAsListener() {
         
         track()
         
@@ -320,25 +268,15 @@ extension MyController {
                 crtIcon.needsDisplay = true
             }
         }
-        
+                
         // Do less frequently...
-        if (animationCounter % 2) == 0 {
-            
-            /* Update the tape progress icon. Note: The tape progress icon is
-             * not switched on or off by push notification (message), because
-             * some games continously switch the datasette motor on and off.
-             */
-            if c64.datasette.motor && c64.datasette.playKey {
-                tapeProgress.startAnimation(self)
-            } else {
-                tapeProgress.stopAnimation(self)
-            }
-        }
-        
-        // Do even less frequently...
         if (animationCounter % 4) == 0 {
             
             updateSpeedometer()
+        }
+        
+        // Do lesser times...
+        if (animationCounter % 32) == 0 {
             
             // Let the cursor disappear in fullscreen mode
             if renderer.fullscreen &&
@@ -351,7 +289,7 @@ extension MyController {
     
     func updateSpeedometer() {
         
-        speedometer.updateWith(cycle: c64.cpu.cycle(), frame: renderer.frames)
+        speedometer.updateWith(cycle: c64.cpu.cycles, frame: renderer.frames)
         
         // let fps = speedometer.fps
         let cpu = c64.cpuLoad
@@ -362,12 +300,20 @@ extension MyController {
         cpuIndicator.integerValue = cpu
         mhzIndicator.doubleValue = 10 * mhz
     }
-    
-    @objc func snapshotTimerFunc() {
         
-        if pref.autoSnapshots { c64.requestAutoSnapshot() }
+    func updateWarp() {
+        
+        var warp: Bool
+        
+        switch pref.warpMode {
+        case .auto: warp = c64.iec.transferring
+        case .off: warp = false
+        case .on: warp = true
+        }
+        
+        if warp != c64.warpMode {  c64.warpMode = warp }
     }
-    
+
     func processMessage(_ msg: Message) {
 
         var driveNr: Int { return msg.data & 0xFF }
@@ -446,7 +392,6 @@ extension MyController {
             renderer.console.isDirty = true
 
         case .SCRIPT_WAKEUP:
-            track()
             c64.continueScript()
             renderer.console.isDirty = true
 
@@ -489,7 +434,6 @@ extension MyController {
             inspector?.fullRefresh()
 
         case .DISK_EJECT:
-            track()
             macAudio.playEjectSound(volume: vol, pan: pan)
             refreshStatusBarDiskIcons(drive: driveId)
             inspector?.fullRefresh()

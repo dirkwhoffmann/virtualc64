@@ -11,11 +11,11 @@ class Speedometer: NSObject {
     
     // Current emulation speed in MHz
     private var _mhz = 0.0
-    var mhz: Double { return truncate(_mhz, digits: 2); }
+    var mhz: Double { return _mhz.truncate(digits: 2); }
     
     // Current GPU performance in frames per second
     private var _fps = 0.0
-    var fps: Double { return truncate(_fps, digits: 0); }
+    var fps: Double { return _fps.truncate(digits: 2); }
     
     // Smoothing factor
     private let alpha = 0.6
@@ -33,16 +33,11 @@ class Speedometer: NSObject {
 
         latchedTimestamp = Date().timeIntervalSince1970
     }
-
-    func truncate(_ value: Double, digits: Int) -> Double {
-        let factor = Double(truncating: pow(10, digits) as NSNumber)
-        return (value * factor).rounded() / factor
-    }
-
-    // Updates speed, frame and jitter information. This function needs to be
-    // invoked periodically to get meaningful results.
-    //    - cycles  Elapsed CPU cycles since power up
-    //    - frames  Drawn frames since power up
+    
+    /* Updates speed, frame and jitter information. 'cycles' is the number of
+     * elapsed cycles since power up. 'frames' is the number of computed frames
+     * since power up.
+     */
     func updateWith(cycle: Int64, frame: Int64) {
         
         let timestamp = Date().timeIntervalSince1970

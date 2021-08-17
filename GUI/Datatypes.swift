@@ -33,6 +33,18 @@ extension UInt32 {
 }
 
 //
+// Extensions to Double
+//
+
+extension Double {
+   
+    func truncate(digits: Int) -> Double {
+        let factor = Double(truncating: pow(10, digits) as NSNumber)
+        return (self * factor).rounded() / factor
+    }
+}
+
+//
 // Numeric types
 //
 

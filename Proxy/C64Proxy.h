@@ -264,6 +264,9 @@
 
 - (CPUInfo)getInfo;
 
+@property (readonly) i64 cycles;
+@property (readonly) u16 pc;
+
 - (NSInteger)loggedInstructions;
 - (NSInteger)loggedPCRel:(NSInteger)nr;
 - (NSInteger)loggedPCAbs:(NSInteger)nr;
@@ -273,8 +276,8 @@
 - (void)setHex;
 - (void)setDec;
 
-- (i64)cycle;
-- (u16)pc;
+// - (i64)cycle;
+// - (u16)pc;
 
 - (NSString *)disassembleRecordedInstr:(NSInteger)i length:(NSInteger *)len;
 - (NSString *)disassembleRecordedBytes:(NSInteger)i;

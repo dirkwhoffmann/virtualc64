@@ -177,6 +177,16 @@
     return [self cpu]->getInfo();
 }
 
+- (i64)cycles
+{
+    return (i64)[self cpu]->cycle;
+}
+
+- (u16)pc
+{
+    return [self cpu]->getPC0();
+}
+
 - (NSInteger)loggedInstructions
 {
     return [self cpu]->debugger.loggedInstructions();
@@ -215,16 +225,6 @@
 - (void)setDec
 {
     [self cpu]->debugger.hex = false;
-}
-
-- (i64)cycle
-{
-    return (i64)[self cpu]->cycle;
-}
-
-- (u16)pc
-{
-    return [self cpu]->getPC0();
 }
 
 - (NSString *)disassembleRecordedInstr:(NSInteger)i length:(NSInteger *)len

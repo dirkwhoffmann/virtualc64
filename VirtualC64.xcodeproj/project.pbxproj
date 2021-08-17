@@ -132,7 +132,7 @@
 		504C43A924AF29AC00E69CAE /* Drive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434D24AF29AC00E69CAE /* Drive.cpp */; };
 		504C43AA24AF29AC00E69CAE /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C435524AF29AC00E69CAE /* TOD.cpp */; };
 		504C43AB24AF29AC00E69CAE /* CIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C435824AF29AC00E69CAE /* CIA.cpp */; };
-		505184DE24F23484002C6124 /* MyControllerStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505184DD24F23484002C6124 /* MyControllerStorage.swift */; };
+		505184DE24F23484002C6124 /* MyControllerSnapshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505184DD24F23484002C6124 /* MyControllerSnapshots.swift */; };
 		505184E024F23CB6002C6124 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505184DF24F23CB6002C6124 /* Storage.swift */; };
 		5051A1521B88438800CBFB5A /* 1541_track_change_0.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */; };
 		5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5051A1591B885E1B00CBFB5A /* 1541_door_closed_2.aiff */; };
@@ -529,7 +529,7 @@
 		504C435424AF29AC00E69CAE /* TOD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TOD.h; sourceTree = "<group>"; };
 		504C435524AF29AC00E69CAE /* TOD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TOD.cpp; sourceTree = "<group>"; };
 		504C435824AF29AC00E69CAE /* CIA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CIA.cpp; sourceTree = "<group>"; };
-		505184DD24F23484002C6124 /* MyControllerStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerStorage.swift; sourceTree = "<group>"; };
+		505184DD24F23484002C6124 /* MyControllerSnapshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerSnapshots.swift; sourceTree = "<group>"; };
 		505184DF24F23CB6002C6124 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		5051A1511B88438800CBFB5A /* 1541_track_change_0.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = 1541_track_change_0.aiff; sourceTree = "<group>"; };
 		5051A1551B884EBE00CBFB5A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -828,7 +828,7 @@
 				50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */,
 				50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */,
 				50D3091D24C5CE1A00B92563 /* MyControllerStatusBar.swift */,
-				505184DD24F23484002C6124 /* MyControllerStorage.swift */,
+				505184DD24F23484002C6124 /* MyControllerSnapshots.swift */,
 				507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */,
 				50EAFFE924B2600D00024CD2 /* MyToolbar.swift */,
 				50ED5BF712DD99C000596417 /* Speedometer.swift */,
@@ -1772,7 +1772,7 @@
 				504C436A24AF29AC00E69CAE /* FreezeFrame.cpp in Sources */,
 				504C439124AF29AC00E69CAE /* VICII_memory.cpp in Sources */,
 				50FF818F1F88D9100004548A /* GamePad.swift in Sources */,
-				505184DE24F23484002C6124 /* MyControllerStorage.swift in Sources */,
+				505184DE24F23484002C6124 /* MyControllerSnapshots.swift in Sources */,
 				504C438024AF29AC00E69CAE /* CPU.cpp in Sources */,
 				50A077FE258A1ADF005ACF5B /* FSBlock.cpp in Sources */,
 				5080501B2587A16D004FE1F5 /* FSDescriptors.cpp in Sources */,

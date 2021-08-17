@@ -9,6 +9,8 @@
 
 class MyToolbar: NSToolbar {
     
+    var c64: C64Proxy { parent.c64 }
+
     @IBOutlet weak var parent: MyController!
     @IBOutlet weak var controlPort1: NSPopUpButton!
     @IBOutlet weak var controlPort2: NSPopUpButton!
@@ -17,8 +19,6 @@ class MyToolbar: NSToolbar {
     @IBOutlet weak var screenshotSegCtrl: NSSegmentedControl!
     @IBOutlet weak var controlsSegCtrl: NSSegmentedControl!
     
-    var c64: C64Proxy { parent.c64 }
-
     override func validateVisibleItems() {
                            
         // Disable the keyboard button if the virtual keyboard is open
@@ -57,16 +57,6 @@ class MyToolbar: NSToolbar {
     // Action methods
     //
     
-    @IBAction func port1Action(_ sender: NSPopUpButton) {
-        
-        parent.config.gameDevice1 = sender.selectedTag()
-    }
- 
-    @IBAction func port2Action(_ sender: NSPopUpButton) {
-        
-        parent.config.gameDevice2 = sender.selectedTag()
-    }
-                
     @IBAction func inspectAction(_ sender: NSSegmentedControl) {
         
         switch sender.selectedSegment {
@@ -79,10 +69,10 @@ class MyToolbar: NSToolbar {
         }
     }
     
-     @IBAction func snapshotAction(_ sender: NSSegmentedControl) {
+    @IBAction func snapshotAction(_ sender: NSSegmentedControl) {
         
         switch sender.selectedSegment {
-            
+        
         case 0: parent.takeSnapshotAction(self)
         case 1: parent.restoreSnapshotAction(self)
         case 2: parent.browseSnapshotsAction(self)
@@ -92,9 +82,7 @@ class MyToolbar: NSToolbar {
     }
     
     @IBAction func screenshotAction(_ sender: NSSegmentedControl) {
-        
-        track()
-        
+                
         switch sender.selectedSegment {
             
         case 0: parent.takeScreenshotAction(self)
@@ -104,25 +92,27 @@ class MyToolbar: NSToolbar {
         }
     }
     
+    @IBAction func port1Action(_ sender: NSPopUpButton) {
+        
+        parent.config.gameDevice1 = sender.selectedTag()
+    }
+ 
+    @IBAction func port2Action(_ sender: NSPopUpButton) {
+        
+        parent.config.gameDevice2 = sender.selectedTag()
+    }
+
     @IBAction func keyboardAction(_ sender: Any!) {
         
-        track()
-
         if parent.virtualKeyboard == nil {
-            let name = NSNib.Name("VirtualKeyboard")
-            parent.virtualKeyboard = VirtualKeyboardController.make(parent: parent, nibName: name)
+            parent.virtualKeyboard = VirtualKeyboardController.make(parent: parent)
         }
-        if parent.virtualKeyboard?.window?.isVisible == true {
-            track("Virtual keyboard already open")
-        } else {
-            track("Opening virtual keyboard as a sheet")
+        if parent.virtualKeyboard?.window?.isVisible == false {
             parent.virtualKeyboard?.showSheet()
         }
     }
     
     @IBAction func preferencesAction(_ sender: NSSegmentedControl) {
-
-        track()
         
         switch sender.selectedSegment {
 

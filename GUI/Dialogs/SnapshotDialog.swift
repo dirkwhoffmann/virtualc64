@@ -198,7 +198,7 @@ class SnapshotDialog: DialogController {
                         
         hideSheet()
 
-        parent.startSnapshotTimer()
+        parent.validateSnapshotTimer()
         
         // Hide some controls
         let items: [NSView] = [

@@ -34,6 +34,11 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
      */
     var autoClose = true
     
+    static func make(parent: MyController) -> VirtualKeyboardController? {
+
+        return make(parent: parent, nibName: NSNib.Name("VirtualKeyboard"))
+    }
+    
     func showSheet() {
         
         autoClose = true

@@ -226,9 +226,7 @@ extension MyController {
         case 8: drivePowerAction(drive: .DRIVE8)
         case 9: drivePowerAction(drive: .DRIVE9)
         default: fatalError()
-        }
-        
-        // refreshStatusBar()
+        }        
     }
     
     @IBAction func warpAction(_ sender: Any!) {
