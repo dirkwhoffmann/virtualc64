@@ -58,14 +58,14 @@
                         </connections>
                     </button>
                     <levelIndicator verticalHuggingPriority="750" id="212">
-                        <rect key="frame" x="590" y="3" width="72" height="18"/>
+                        <rect key="frame" x="583" y="3" width="64" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <levelIndicatorCell key="cell" alignment="left" maxValue="20" warningValue="11" criticalValue="15" id="1702">
                             <font key="font" metaFont="system"/>
                         </levelIndicatorCell>
                     </levelIndicator>
                     <button toolTip="Warp mode" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1052">
-                        <rect key="frame" x="514" y="4" width="18" height="18"/>
+                        <rect key="frame" x="655" y="4" width="18" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="hourglass1Template" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" id="1707">
                             <behavior key="behavior" lightByContents="YES"/>
@@ -146,7 +146,7 @@
                         </connections>
                     </customView>
                     <button hidden="YES" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="LJd-96-8ze">
-                        <rect key="frame" x="414" y="3" width="20" height="20"/>
+                        <rect key="frame" x="444" y="3" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="haltTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="f5d-Lu-xCR">
                             <behavior key="behavior" lightByContents="YES"/>
@@ -157,7 +157,7 @@
                         </connections>
                     </button>
                     <button hidden="YES" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="6c9-VQ-Wmb">
-                        <rect key="frame" x="442" y="3" width="20" height="20"/>
+                        <rect key="frame" x="472" y="3" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="inspectTemplate" imagePosition="only" alignment="right" alternateImage="crtButtonOnTemplate" imageScaling="proportionallyUpOrDown" id="9FI-3x-DAh">
                             <behavior key="behavior" lightByContents="YES"/>
@@ -168,7 +168,7 @@
                         </connections>
                     </button>
                     <button hidden="YES" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="1v4-GY-YOm">
-                        <rect key="frame" x="470" y="3" width="20" height="20"/>
+                        <rect key="frame" x="500" y="3" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="muteTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="7dZ-BU-MtG">
                             <behavior key="behavior" lightByContents="YES"/>
@@ -214,7 +214,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tD7-Kt-2R4">
-                        <rect key="frame" x="661" y="7" width="54" height="11"/>
+                        <rect key="frame" x="671" y="7" width="54" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="00% CPU" id="9E6-Hh-KcI">
                             <font key="font" metaFont="label" size="9"/>
@@ -223,14 +223,14 @@
                         </textFieldCell>
                     </textField>
                     <levelIndicator verticalHuggingPriority="750" id="9Nj-IT-cDl">
-                        <rect key="frame" x="719" y="3" width="72" height="18"/>
+                        <rect key="frame" x="729" y="3" width="64" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <levelIndicatorCell key="cell" alignment="left" maxValue="100" warningValue="50" criticalValue="75" id="5VJ-SQ-5Qh">
                             <font key="font" metaFont="system"/>
                         </levelIndicatorCell>
                     </levelIndicator>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="214">
-                        <rect key="frame" x="530" y="7" width="54" height="11"/>
+                        <rect key="frame" x="526" y="7" width="54" height="11"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="0.00 MHz" id="1703">
                             <font key="font" metaFont="label" size="9"/>
