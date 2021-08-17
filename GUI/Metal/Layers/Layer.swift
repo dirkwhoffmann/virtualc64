@@ -16,7 +16,7 @@ class Layer: NSObject {
     var view: MTKView { return renderer.view }
     var c64: C64Proxy { return renderer.parent.c64 }
     
-    // Alpha channel
+    // Alpha channel of this layer
     var alpha: AnimatedFloat = AnimatedFloat()
 
     //

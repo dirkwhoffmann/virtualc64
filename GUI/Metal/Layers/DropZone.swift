@@ -164,14 +164,12 @@ class DropZone: Layer {
         let size = controller.metal.frame.size
         let origin = controller.metal.frame.origin
         let midx = origin.x + (size.width / 2)
-        let midy = origin.y + (size.height / 2)
 
         let w = size.width / 6
         let h = w * 1.2
+        let y = size.height + origin.y - 24 - h * CGFloat(alpha.current)
         let margin = w / 8
         let iconSize = NSSize(width: w, height: h)
-        // let y = midy - (h / 2)
-        let y = size.height + origin.y - 24 - h * CGFloat(alpha.current)
             
         ul[0] = CGPoint(x: midx - 2 * w - 1.5 * margin, y: y)
         lr[0] = CGPoint(x: ul[0].x + w, y: ul[0].y + h)

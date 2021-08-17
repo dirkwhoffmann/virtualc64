@@ -103,8 +103,8 @@ class Renderer: NSObject, MTKViewDelegate {
         
         super.init()
                 
-        view.delegate = self
-        view.device = device
+        self.view.device = device
+        self.view.delegate = self
         
         setup()
     }
@@ -216,11 +216,6 @@ class Renderer: NSObject, MTKViewDelegate {
             }
             buffer.present(drawable)
             buffer.commit()
-            /*
-            buffer.addCompletedHandler { _ in self.semaphore.signal() }
-            buffer.present(drawable)
-            buffer.commit()
-            */
         }
         
         // Perform periodic events inside the controller

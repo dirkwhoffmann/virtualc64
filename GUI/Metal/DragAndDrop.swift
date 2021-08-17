@@ -35,16 +35,12 @@ public extension MetalView {
         switch type {
             
         case .string:
-            track("Dragged in string")
             return NSDragOperation.copy
         
         case .fileContents:
-            track("Dragged in file contents")
             return NSDragOperation.copy
             
         case .compatibleFileURL:
-            track("Dragged in filename")
-            
             if let url = NSURL(from: pasteBoard) as URL? {
             
                 // Open the drop zone layer
@@ -55,7 +51,6 @@ public extension MetalView {
             return NSDragOperation.copy
             
         default:
-            track("Unsupported type")
             return NSDragOperation()
         }
     }

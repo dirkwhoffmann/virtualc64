@@ -141,7 +141,6 @@ public extension MetalView {
         mouseMoved(with: event)
     }
 
-    @discardableResult
     func checkForMouseKeys(with event: NSEvent) -> Bool {
                 
         if !gotMouse && prefs.retainMouseWithKeys {

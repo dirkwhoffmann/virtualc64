@@ -387,7 +387,7 @@
     return [self vicii]->getSpriteInfo((unsigned)sprite);
 }
 
-- (void *)stableEmuTexture
+- (u32 *)stableEmuTexture
 {
     return [self vicii]->stableEmuTexture();
 }

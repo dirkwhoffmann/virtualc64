@@ -15,6 +15,9 @@ class Canvas: Layer {
     var upscaler: ComputeKernel! { return ressourceManager.upscaler }
     var scanlineFilter: ComputeKernel! { return ressourceManager.scanlineFilter }
 
+    // Used to determine if the GPU texture needs to be updated
+    var prevBuffer: UnsafeMutablePointer<u32>?
+
     //
     // Textures
     //
@@ -103,23 +106,29 @@ class Canvas: Layer {
         let rwt: MTLTextureUsage = [ .shaderRead, .shaderWrite, .renderTarget ]
         let rwtp: MTLTextureUsage = [ .shaderRead, .shaderWrite, .renderTarget, .pixelFormatView ]
                 
-        // Emulator texture (long frames)
+        // Emulator texture
         emulatorTexture = device.makeTexture(size: TextureSize.original, usage: r)
-        assert(emulatorTexture != nil, "Failed to create emulatorTexture")
+        renderer.metalAssert(emulatorTexture != nil,
+                             "Failed to create emulatorTexture.")
         
         // Build bloom textures
         bloomTextureR = device.makeTexture(size: TextureSize.original, usage: rwt)
         bloomTextureG = device.makeTexture(size: TextureSize.original, usage: rwt)
         bloomTextureB = device.makeTexture(size: TextureSize.original, usage: rwt)
-        assert(bloomTextureR != nil, "Failed to create bloomTextureR")
-        assert(bloomTextureG != nil, "Failed to create bloomTextureG")
-        assert(bloomTextureB != nil, "Failed to create bloomTextureB")
-        
+        renderer.metalAssert(bloomTextureR != nil,
+                             "The bloom texture (R channel) could not be allocated.")
+        renderer.metalAssert(bloomTextureG != nil,
+                             "The bloom texture (G channel) could not be allocated.")
+        renderer.metalAssert(bloomTextureB != nil,
+                             "The bloom texture (B channel) could not be allocated.")
+
         // Upscaled texture
         upscaledTexture = device.makeTexture(size: TextureSize.upscaled, usage: rwtp)
         scanlineTexture = device.makeTexture(size: TextureSize.upscaled, usage: rwtp)
-        assert(upscaledTexture != nil, "Failed to create upscaledTexture")
-        assert(scanlineTexture != nil, "Failed to create scanlineTexture")
+        renderer.metalAssert(upscaledTexture != nil,
+                             "The upscaling texture could not be allocated.")
+        renderer.metalAssert(scanlineTexture != nil,
+                             "The scanline texture could not be allocated.")
     }
     
     //
@@ -162,33 +171,33 @@ class Canvas: Layer {
     override func update(frames: Int64) {
             
         super.update(frames: frames)
-        updateTexture()
     }
     
     func updateTexture() {
                 
+        precondition(scanlineTexture != nil)
+        precondition(emulatorTexture != nil)
+
         if c64.poweredOff {
 
-            let w = TextureSize.upscaled.width
-            let h = TextureSize.upscaled.height
-            scanlineTexture.replace(w: w, h: h, buffer: c64.vic.noise)
+            let w = TextureSize.original.width
+            let h = TextureSize.original.height
+            emulatorTexture.replace(w: w, h: h, buffer: c64.vic.noise)
             return
         }
         
-        let buf = c64.vic.stableEmuTexture
-        precondition(buf != nil)
-        
-        let pixelSize = 4
-        let rowBytes = TEX_WIDTH * pixelSize
-        let imageBytes = rowBytes * TEX_HEIGHT
-        let region = MTLRegionMake2D(0, 0, TEX_WIDTH, TEX_HEIGHT)
-        
-        emulatorTexture.replace(region: region,
-                                mipmapLevel: 0,
-                                slice: 0,
-                                withBytes: buf!,
-                                bytesPerRow: rowBytes,
-                                bytesPerImage: imageBytes)
+        // Get a pointer to most recent texture
+        let buffer = c64.vic.stableEmuTexture
+        precondition(buffer != nil)
+
+        // Only proceed if the emulator delivers a new texture
+        if prevBuffer == buffer { return }
+        prevBuffer = buffer
+                
+        // Update the GPU texture
+        let w = Int(TEX_WIDTH)
+        let h = Int(TEX_HEIGHT)
+        emulatorTexture.replace(w: w, h: h, buffer: buffer)
     }
     
     //
@@ -205,9 +214,6 @@ class Canvas: Layer {
                              inPlaceTexture: &texture, fallbackCopyAllocator: nil)
             }
         }
-
-        // Only proceed if the emulator is powered on
-        if c64.poweredOff { return }
                 
         // Compute the bloom textures
         if renderer.shaderOptions.bloom != 0 {
@@ -225,7 +231,7 @@ class Canvas: Layer {
             applyGauss(&bloomTextureB, radius: renderer.shaderOptions.bloomRadiusB)
         }
         
-        // Run the upscaler
+        // Compute the upscaled texture
         upscaler.apply(commandBuffer: buffer,
                        source: emulatorTexture,
                        target: upscaledTexture,

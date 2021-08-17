@@ -338,7 +338,7 @@
 - (VICIIInfo)getInfo;
 - (SpriteInfo)getSpriteInfo:(NSInteger)sprite;
 
-@property (readonly) void *stableEmuTexture;
+@property (readonly) u32 *stableEmuTexture;
 @property (readonly) u32 *noise;
 
 @end
