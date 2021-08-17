@@ -8,7 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "SIDBridge.h"
+#include "Muxer.h"
 
 void
 StereoStream::alignWritePtr()

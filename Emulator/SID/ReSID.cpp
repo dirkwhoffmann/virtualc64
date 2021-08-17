@@ -12,7 +12,7 @@
 #include "C64.h"
 #include "IO.h"
 
-ReSID::ReSID(C64 &ref, SIDBridge &bridgeref, int n) : SubComponent(ref), bridge(bridgeref), nr(n)
+ReSID::ReSID(C64 &ref, Muxer &bridgeref, int n) : SubComponent(ref), bridge(bridgeref), nr(n)
 {
     model = MOS_6581;
     emulateFilter = true;

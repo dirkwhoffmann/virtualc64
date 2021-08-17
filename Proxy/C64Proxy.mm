@@ -444,9 +444,9 @@
 
 @implementation SIDProxy
 
-- (SIDBridge *)bridge
+- (Muxer *)bridge
 {
-    return (SIDBridge *)obj;
+    return (Muxer *)obj;
 }
 
 - (SIDInfo)getInfo:(NSInteger)nr

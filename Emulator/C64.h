@@ -22,7 +22,7 @@
 #include "DriveMemory.h"
 #include "FlashRom.h"
 #include "VICII.h"
-#include "SIDBridge.h"
+#include "Muxer.h"
 #include "TOD.h"
 #include "CIA.h"
 #include "CPU.h"
@@ -80,7 +80,7 @@ public:
     CIA1 cia1 = CIA1(*this);
     CIA2 cia2 = CIA2(*this);
     VICII vic = VICII(*this);
-    SIDBridge sid = SIDBridge(*this);
+    Muxer sid = Muxer(*this);
 
     // Logic board
     PowerSupply supply = PowerSupply(*this);

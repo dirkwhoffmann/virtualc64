@@ -11,7 +11,7 @@
 #include "Recorder.h"
 #include "IO.h"
 #include "MsgQueue.h"
-#include "SIDBridge.h"
+#include "Muxer.h"
 #include "VICII.h"
 
 bool

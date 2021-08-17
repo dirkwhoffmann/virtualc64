@@ -31,7 +31,7 @@
 class ReSID : public SubComponent {
         
     // Reference to the SID bridge
-    SIDBridge &bridge;
+    Muxer &bridge;
     
     // Number of this SID (0 = primary SID)
     int nr;
@@ -70,7 +70,7 @@ private:
     
 public:
     
-	ReSID(C64 &ref, SIDBridge &bridgeref, int n);
+	ReSID(C64 &ref, Muxer &bridgeref, int n);
 	~ReSID();
     const char *getDescription() const override { return "ReSID"; }
 

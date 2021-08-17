@@ -8,14 +8,14 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "SIDBridge.h"
+#include "Muxer.h"
 #include "C64.h"
 #include "IO.h"
 
 #include <algorithm>
 #include <cmath>
 
-SIDBridge::SIDBridge(C64 &ref) : SubComponent(ref)
+Muxer::Muxer(C64 &ref) : SubComponent(ref)
 {        
     subComponents = std::vector<C64Component *> {
         
@@ -36,7 +36,7 @@ SIDBridge::SIDBridge(C64 &ref) : SubComponent(ref)
 }
 
 void
-SIDBridge::_reset(bool hard)
+Muxer::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)
     
@@ -45,7 +45,7 @@ SIDBridge::_reset(bool hard)
 }
 
 void
-SIDBridge::clear()
+Muxer::clear()
 {
     debug(AUDBUF_DEBUG, "clear()\n");
     
@@ -57,7 +57,7 @@ SIDBridge::clear()
 }
 
 SIDConfig
-SIDBridge::getDefaultConfig()
+Muxer::getDefaultConfig()
 {
     SIDConfig defaults;
     
@@ -83,7 +83,7 @@ SIDBridge::getDefaultConfig()
 }
 
 void
-SIDBridge::resetConfig()
+Muxer::resetConfig()
 {
     SIDConfig defaults = getDefaultConfig();
     
@@ -104,7 +104,7 @@ SIDBridge::resetConfig()
 }
 
 i64
-SIDBridge::getConfigItem(Option option) const
+Muxer::getConfigItem(Option option) const
 {
     switch (option) {
             
@@ -136,7 +136,7 @@ SIDBridge::getConfigItem(Option option) const
 }
 
 i64
-SIDBridge::getConfigItem(Option option, long id) const
+Muxer::getConfigItem(Option option, long id) const
 {
     
     switch (option) {
@@ -160,7 +160,7 @@ SIDBridge::getConfigItem(Option option, long id) const
 }
 
 void
-SIDBridge::setConfigItem(Option option, i64 value)
+Muxer::setConfigItem(Option option, i64 value)
 {
     bool wasMuted = isMuted();
         
@@ -253,7 +253,7 @@ SIDBridge::setConfigItem(Option option, i64 value)
 }
 
 void
-SIDBridge::setConfigItem(Option option, long id, i64 value)
+Muxer::setConfigItem(Option option, long id, i64 value)
 {
     bool wasMuted = isMuted();
 
@@ -347,7 +347,7 @@ SIDBridge::setConfigItem(Option option, long id, i64 value)
 }
 
 bool
-SIDBridge::isMuted() const
+Muxer::isMuted() const
 {
     if (config.volL == 0 && config.volR == 0) return true;
     
@@ -359,7 +359,7 @@ SIDBridge::isMuted() const
 }
 
 u32
-SIDBridge::getClockFrequency()
+Muxer::getClockFrequency()
 {
     u32 result = resid[0].getClockFrequency();
     
@@ -372,7 +372,7 @@ SIDBridge::getClockFrequency()
 }
 
 void
-SIDBridge::setClockFrequency(u32 frequency)
+Muxer::setClockFrequency(u32 frequency)
 {
     trace(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
 
@@ -385,7 +385,7 @@ SIDBridge::setClockFrequency(u32 frequency)
 }
 
 double
-SIDBridge::getSampleRate() const
+Muxer::getSampleRate() const
 {
     double result = resid[0].getSampleRate();
     
@@ -404,7 +404,7 @@ SIDBridge::getSampleRate() const
 }
 
 void
-SIDBridge::setSampleRate(double rate)
+Muxer::setSampleRate(double rate)
 {
     trace(SID_DEBUG, "Setting sample rate to %f\n", rate);
 
@@ -417,26 +417,26 @@ SIDBridge::setSampleRate(double rate)
 }
 
 isize
-SIDBridge::didLoadFromBuffer(const u8 *buffer)
+Muxer::didLoadFromBuffer(const u8 *buffer)
 {
     for (isize i = 0; i < 4; i++) sidStream[i].clear(0);
     return 0;
 }
 
 void
-SIDBridge::_run()
+Muxer::_run()
 {
     clear();
 }
 
 void
-SIDBridge::_pause()
+Muxer::_pause()
 {
     rampDown();
 }
 
 void
-SIDBridge::_warpOn()
+Muxer::_warpOn()
 {
     /* Warping has the unavoidable drawback that audio playback gets out of
      * sync. To cope with it, we ramp down the volume when warping is switched
@@ -446,14 +446,14 @@ SIDBridge::_warpOn()
 }
 
 void
-SIDBridge::_warpOff()
+Muxer::_warpOff()
 {
     rampUp();
     clear();
 }
 
 void
-SIDBridge::_dump(dump::Category category, std::ostream& os) const
+Muxer::_dump(dump::Category category, std::ostream& os) const
 {
     using namespace util;
     
@@ -495,7 +495,7 @@ SIDBridge::_dump(dump::Category category, std::ostream& os) const
 }
 
 void
-SIDBridge::_dump(dump::Category category, std::ostream& os, isize nr) const
+Muxer::_dump(dump::Category category, std::ostream& os, isize nr) const
 {
     switch (config.engine) {
             
@@ -507,7 +507,7 @@ SIDBridge::_dump(dump::Category category, std::ostream& os, isize nr) const
 
 /*
 void
-SIDBridge::_dump(SIDInfo &info, VoiceInfo (&vinfo)[3]) const
+Muxer::_dump(SIDInfo &info, VoiceInfo (&vinfo)[3]) const
 {
     u8 ft = info.filterType;
     msg("        Volume: %d\n", info.volume);
@@ -540,20 +540,20 @@ SIDBridge::_dump(SIDInfo &info, VoiceInfo (&vinfo)[3]) const
 */
 
 SIDStats
-SIDBridge::getStats()
+Muxer::getStats()
 {
     stats.fillLevel = stream.fillLevel();
     return stats;
 }
 
 void
-SIDBridge::clearStats()
+Muxer::clearStats()
 {
     memset(&stats, 0, sizeof(stats));
 }
 
 SIDInfo
-SIDBridge::getInfo(isize nr)
+Muxer::getInfo(isize nr)
 {
     assert(nr < 4);
     
@@ -573,7 +573,7 @@ SIDBridge::getInfo(isize nr)
 }
 
 VoiceInfo
-SIDBridge::getVoiceInfo(isize nr, isize voice)
+Muxer::getVoiceInfo(isize nr, isize voice)
 {
     assert(nr < 4);
     
@@ -590,7 +590,7 @@ SIDBridge::getVoiceInfo(isize nr, isize voice)
 }
 
 C64Component &
-SIDBridge::getSID(isize nr)
+Muxer::getSID(isize nr)
 {
     assert(nr >= 0 && nr <= 3);
     if (config.engine == SIDENGINE_FASTSID) {
@@ -601,7 +601,7 @@ SIDBridge::getSID(isize nr)
 }
 
 void
-SIDBridge::rampUp()
+Muxer::rampUp()
 {
     volL.fadeIn(30000);
     volR.fadeIn(30000);
@@ -610,7 +610,7 @@ SIDBridge::rampUp()
 }
 
 void
-SIDBridge::rampUpFromZero()
+Muxer::rampUpFromZero()
 {
     volL.current = 0;
     volR.current = 0;
@@ -619,7 +619,7 @@ SIDBridge::rampUpFromZero()
 }
  
 void
-SIDBridge::rampDown()
+Muxer::rampDown()
 {
     volL.fadeOut(2000);
     volR.fadeOut(2000);
@@ -628,7 +628,7 @@ SIDBridge::rampDown()
 }
 
 isize
-SIDBridge::mappedSID(u16 addr) const
+Muxer::mappedSID(u16 addr) const
 {
     addr &= 0xFFE0;
     
@@ -640,7 +640,7 @@ SIDBridge::mappedSID(u16 addr) const
 }
 
 u8 
-SIDBridge::peek(u16 addr)
+Muxer::peek(u16 addr)
 {
     // Get SIDs up to date
     executeUntil(cpu.cycle);
@@ -677,7 +677,7 @@ SIDBridge::peek(u16 addr)
 }
 
 u8
-SIDBridge::spypeek(u16 addr) const
+Muxer::spypeek(u16 addr) const
 {
     // Select the target SID
     isize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
@@ -697,7 +697,7 @@ SIDBridge::spypeek(u16 addr) const
 }
 
 u8
-SIDBridge::readPotX() const
+Muxer::readPotX() const
 {
     u8 result = 0xFF;
 
@@ -708,7 +708,7 @@ SIDBridge::readPotX() const
 }
 
 u8
-SIDBridge::readPotY() const
+Muxer::readPotY() const
 {
     u8 result = 0xFF;
 
@@ -719,7 +719,7 @@ SIDBridge::readPotY() const
 }
 
 void 
-SIDBridge::poke(u16 addr, u8 value)
+Muxer::poke(u16 addr, u8 value)
 {
     trace(SIDREG_DEBUG, "poke(%x,%x)\n", addr, value);
     
@@ -737,7 +737,7 @@ SIDBridge::poke(u16 addr, u8 value)
 }
 
 void
-SIDBridge::executeUntil(Cycle targetCycle)
+Muxer::executeUntil(Cycle targetCycle)
 {
     assert(targetCycle >= cycles);
     
@@ -768,7 +768,7 @@ SIDBridge::executeUntil(Cycle targetCycle)
 }
 
 isize
-SIDBridge::executeCycles(isize numCycles)
+Muxer::executeCycles(isize numCycles)
 {
     isize numSamples;
     
@@ -825,7 +825,7 @@ SIDBridge::executeCycles(isize numCycles)
 }
 
 void
-SIDBridge::mixSingleSID(isize numSamples)
+Muxer::mixSingleSID(isize numSamples)
 {    
     stream.lock();
     
@@ -861,7 +861,7 @@ SIDBridge::mixSingleSID(isize numSamples)
 }
         
 void
-SIDBridge::mixMultiSID(isize numSamples)
+Muxer::mixMultiSID(isize numSamples)
 {
     stream.lock();
     
@@ -907,19 +907,19 @@ SIDBridge::mixMultiSID(isize numSamples)
 }
 
 void
-SIDBridge::clearSampleBuffers()
+Muxer::clearSampleBuffers()
 {
     for (int i = 0; i < 4; i++) clearSampleBuffer(i);
 }
 
 void
-SIDBridge::clearSampleBuffer(long nr)
+Muxer::clearSampleBuffer(long nr)
 {
     sidStream[nr].clear(0);
 }
 
 void
-SIDBridge::ringbufferData(isize offset, float *left, float *right)
+Muxer::ringbufferData(isize offset, float *left, float *right)
 {
     const SamplePair &pair = stream.current((int)offset);
     *left = pair.left;
@@ -927,7 +927,7 @@ SIDBridge::ringbufferData(isize offset, float *left, float *right)
 }
 
 void
-SIDBridge::handleBufferUnderflow()
+Muxer::handleBufferUnderflow()
 {
     // There are two common scenarios in which buffer underflows occur:
     //
@@ -955,7 +955,7 @@ SIDBridge::handleBufferUnderflow()
 }
 
 void
-SIDBridge::handleBufferOverflow()
+Muxer::handleBufferOverflow()
 {
     // There are two common scenarios in which buffer overflows occur:
     //
@@ -987,13 +987,13 @@ SIDBridge::handleBufferOverflow()
 }
 
 void
-SIDBridge::ignoreNextUnderOrOverflow()
+Muxer::ignoreNextUnderOrOverflow()
 {
     lastAlignment = util::Time::now();
 }
 
 void
-SIDBridge::copyMono(float *target, isize n)
+Muxer::copyMono(float *target, isize n)
 {
     if (recorder.isRecording()) {
         for (isize i = 0; i < n; i++) target[i] = 0.0;
@@ -1012,7 +1012,7 @@ SIDBridge::copyMono(float *target, isize n)
 }
 
 void
-SIDBridge::copyStereo(float *target1, float *target2, isize n)
+Muxer::copyStereo(float *target1, float *target2, isize n)
 {
     if (recorder.isRecording()) {
         for (isize i = 0; i < n; i++) target1[i] = target2[i] = 0.0;
@@ -1031,7 +1031,7 @@ SIDBridge::copyStereo(float *target1, float *target2, isize n)
 }
 
 void
-SIDBridge::copyInterleaved(float *target, isize n)
+Muxer::copyInterleaved(float *target, isize n)
 {
     if (recorder.isRecording()) {
         for (isize i = 0; i < n; i++) target[i] = 0.0;

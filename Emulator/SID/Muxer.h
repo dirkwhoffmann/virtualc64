@@ -40,7 +40,7 @@
  *           -------------------------------------------------
  */
 
-class SIDBridge : public SubComponent {
+class Muxer : public SubComponent {
 
     friend C64Memory;
 
@@ -119,8 +119,8 @@ public:
     
 public:
 	
-	SIDBridge(C64 &ref);
-    const char *getDescription() const override { return "SIDBridge"; }
+	Muxer(C64 &ref);
+    const char *getDescription() const override { return "Muxer"; }
 
     // Resets the output buffer
     void clear();

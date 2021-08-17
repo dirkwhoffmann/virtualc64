@@ -19,7 +19,7 @@ class ProcessorPort;
 class VICII;
 class CIA1;
 class CIA2;
-class SIDBridge;
+class Muxer;
 class SIDStream;
 class Keyboard;
 class ControlPort;
@@ -76,7 +76,7 @@ protected:
     Recorder &recorder;
     RegressionTester &regressionTester;
     RetroShell &retroShell;
-    SIDBridge &sid;
+    Muxer &sid;
     VICII &vic;
 
     Drive *drive[2] = { &drive8, &drive9 };
