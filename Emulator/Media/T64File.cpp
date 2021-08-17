@@ -146,13 +146,13 @@ T64File::makeWithFileSystem(class FSDevice &fs)
 PETName<16>
 T64File::getName() const
 {
-    return PETName<16>(data + 0x28, 0x20);
+    return PETName<16>(data + 0x28).stripped(' ');
 }
 
 PETName<16>
 T64File::collectionName()
 {
-    return PETName<16>(data + 0x28, 0x20);
+    return PETName<16>(data + 0x28).stripped(' ');
 }
 
 isize
@@ -166,9 +166,7 @@ T64File::itemName(isize nr) const
 {
     assert(nr < collectionCount());
     
-    auto name = PETName<16>(data + 0x50 + nr * 0x20);
-    name.stripSpaces();
-    return name;
+    return PETName<16>(data + 0x50 + nr * 0x20).stripped(' ');
 }
 
 u64

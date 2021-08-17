@@ -38,7 +38,7 @@ public:
         asciichar = toupper(asciichar);
         return asciichar >= 0x20 && asciichar <= 0x5D ? asciichar : ' ';
     }
-    
+        
     PETName(const u8 *_pet, u8 _pad = 0xA0) : pad(_pad)
     {
         assert(_pet);
@@ -82,15 +82,30 @@ public:
         return true;
     }
 
-    void stripSpaces()
+    PETName<len> stripped(u8 c)
     {
-        if (isize length = strlen(asc); length > 0 && asc[length - 1] == ' ') {
+        PETName<len> name = *this;
+        
+        for (isize i = strlen(name.asc); i > 0 && name.asc[i - 1] == c; i--) {
+
+            name.asc[i - 1] = 0;
+            name.pet[i - 1] = 0xA0;
+        }
+        
+        return name;
+    }
+
+    /*
+    void strip(u8 c)
+    {
+        if (isize length = strlen(asc); length > 0 && asc[length - 1] == c) {
             
             asc[length - 1] = 0;
             pet[length - 1] = 0xA0;
-            stripSpaces();
+            strip(c);
         }
     }
+    */
     
     void write(u8 *p, isize length)
     {
@@ -99,9 +114,9 @@ public:
         
         for (isize i = 0; i < length; i++) p[i] = pet[i];
     }
-
+    
     void write(u8 *p) { write(p, len); }
-
+    
     const char *c_str() { return asc; }
     string str() { return string(asc); }
 };
