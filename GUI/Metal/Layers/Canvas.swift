@@ -241,12 +241,7 @@ class Canvas: Layer {
         // Blur the upscaled texture
         if renderer.shaderOptions.blur > 0 {
             
-            let sigma = renderer.shaderOptions.blurRadius
-            let gauss = MPSImageGaussianBlur(device: device, sigma: sigma)
-            
-            gauss.encode(commandBuffer: buffer,
-                         inPlaceTexture: &upscaledTexture,
-                         fallbackCopyAllocator: nil)
+            applyGauss(&upscaledTexture, radius: renderer.shaderOptions.blurRadius)
         }
         
         // Add scanlines

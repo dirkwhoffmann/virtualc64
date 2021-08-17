@@ -20,27 +20,27 @@ typedef struct { float left; float right; } SamplePair;
 class StereoStream : public util::RingBuffer < SamplePair, 12288 > {
     
     // Mutex for synchronizing read / write accesses
-    util::Mutex mutex;
+    util::ReentrantMutex mutex;
 
-    
-    //
-    // Initializing
-    //
-    
-public:
-        
-    // StereoStream() { }
-    
-    
+
     //
     // Synchronizing access
     //
 
 public:
 
-    // Locks or unlocks the synchronization mutex
+    // Locks or unlocks the mutex
     void lock() { mutex.lock(); }
     void unlock() { mutex.unlock(); }
+
+    // Initializes the ring buffer with zeroes
+    void wipeOut() { this->clear(SamplePair {0,0} ); }
+    
+    // Adds a sample to the ring buffer
+    void add(float l, float r) { this->write(SamplePair {l,r} ); }
+        
+    // Puts the write pointer somewhat ahead of the read pointer
+    void alignWritePtr();
 
     
     //

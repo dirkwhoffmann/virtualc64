@@ -41,7 +41,19 @@ SIDBridge::_reset(bool hard)
     RESET_SNAPSHOT_ITEMS(hard)
     
     if (hard) clearStats();
-    clearRingbuffer();
+    clear();
+}
+
+void
+SIDBridge::clear()
+{
+    debug(AUDBUF_DEBUG, "clear()\n");
+    
+    // Wipe out the ringbuffer
+    stream.lock();
+    stream.wipeOut();
+    stream.alignWritePtr();
+    stream.unlock();
 }
 
 SIDConfig
@@ -407,7 +419,6 @@ SIDBridge::setSampleRate(double rate)
 isize
 SIDBridge::didLoadFromBuffer(const u8 *buffer)
 {
-    clearRingbuffer();
     for (isize i = 0; i < 4; i++) sidStream[i].clear(0);
     return 0;
 }
@@ -415,13 +426,30 @@ SIDBridge::didLoadFromBuffer(const u8 *buffer)
 void
 SIDBridge::_run()
 {
-    clearRingbuffer();
+    clear();
 }
 
 void
 SIDBridge::_pause()
 {
-    clearSampleBuffers();
+    rampDown();
+}
+
+void
+SIDBridge::_warpOn()
+{
+    /* Warping has the unavoidable drawback that audio playback gets out of
+     * sync. To cope with it, we ramp down the volume when warping is switched
+     * on and fade in smoothly when it is switched off.
+     */
+    rampDown();
+}
+
+void
+SIDBridge::_warpOff()
+{
+    rampUp();
+    clear();
 }
 
 void
@@ -522,22 +550,6 @@ void
 SIDBridge::clearStats()
 {
     memset(&stats, 0, sizeof(stats));
-}
-
-void
-SIDBridge::_warpOn()
-{
-    // Warping has the unavoidable drawback that audio playback gets out of
-    // sync. To cope with this issue, we ramp down the volume when warping
-    // is switched on and fade in smoothly when it is switched off.
-    rampDown();
-}
-
-void
-SIDBridge::_warpOff()
-{
-    rampUp();
-    alignWritePtr();
 }
 
 SIDInfo
@@ -907,12 +919,6 @@ SIDBridge::clearSampleBuffer(long nr)
 }
 
 void
-SIDBridge::clearRingbuffer()
-{
-    alignWritePtr();
-}
-
-void
 SIDBridge::ringbufferData(isize offset, float *left, float *right)
 {
     const SamplePair &pair = stream.current((int)offset);
@@ -931,7 +937,7 @@ SIDBridge::handleBufferUnderflow()
     trace(SID_DEBUG, "BUFFER UNDERFLOW (r: %zd w: %zd)\n", stream.r, stream.w);
 
     // Reset the write pointer
-    alignWritePtr();
+    stream.alignWritePtr();
     
     // Determine the elapsed seconds since the last pointer adjustment
     auto elapsedTime = util::Time::now() - lastAlignment;
@@ -959,7 +965,7 @@ SIDBridge::handleBufferOverflow()
     trace(SID_DEBUG, "BUFFER OVERFLOW (r: %zd w: %zd)\n", stream.r, stream.w);
     
     // Reset the write pointer
-    alignWritePtr();
+    stream.alignWritePtr();
     
     // Determine the number of elapsed seconds since the last adjustment
     auto elapsedTime = util::Time::now() - lastAlignment;

@@ -122,6 +122,9 @@ public:
 	SIDBridge(C64 &ref);
     const char *getDescription() const override { return "SIDBridge"; }
 
+    // Resets the output buffer
+    void clear();
+
 private:
     
     void _reset(bool hard) override;
@@ -266,13 +269,7 @@ public:
     //
     
 public:
-    
-    // Clears the ringbuffer and resets the read and write pointer
-    void clearRingbuffer();
-    
-    // Reads a single audio sample from the ringbuffer
-    // float readData();
-    
+        
     // Reads a audio sample pair without moving the read pointer
     void ringbufferData(isize offset, float *left, float *right);
             
@@ -295,8 +292,8 @@ public:
      * ahead of the read pointer. With a standard sample rate of 44100 Hz, 735
      * samples is 1/60 sec.
      */
-    const u32 samplesAhead = 8 * 735;
-    void alignWritePtr() { stream.clear(SamplePair {0,0} ); stream.align(samplesAhead); }
+    // const u32 samplesAhead = 8 * 735;
+    // void alignWritePtr() { stream.clear(SamplePair {0,0} ); stream.align(samplesAhead); }
     
     /* Executes SID until a certain cycle is reached. The function returns the
      * number of produced sound samples (not yet).

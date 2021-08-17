@@ -11,6 +11,12 @@
 #include "SIDBridge.h"
 
 void
+StereoStream::alignWritePtr()
+{
+    this->align(this->cap() / 2);
+}
+
+void
 StereoStream::copyMono(float *buffer, isize n, Volume &volL, Volume &volR)
 {    
     // The caller has to ensure that no buffer underflows occurs

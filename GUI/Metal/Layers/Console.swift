@@ -69,9 +69,6 @@ class Console: Layer {
                                     value: cursorColor,
                                     range: NSRange(location: string.length - 1 - cpos, length: 1))
                 textView.textStorage?.setAttributedString(string)
-
-            } else {
-                track("ERROR: text is NULL\n")
             }
             
             textView.scrollToEndOfDocument(self)
@@ -87,14 +84,10 @@ class Console: Layer {
         textView.backgroundColor = NSColor(r: 0x80, g: 0x80, b: 0x80, a: a2)
         
         if alpha.current > 0 && scrollView.superview == nil {
-            
-            track("Adding console sub view")
             contentView.addSubview(scrollView)
         }
         
         if alpha.current == 0 && scrollView.superview != nil {
-        
-            track("Removing console sub view")
             scrollView.removeFromSuperview()
         }
     }

@@ -74,6 +74,7 @@ static const int VIC_STATS       = 0; // Collect statistical information
 static const int SID_DEBUG       = 0; // Sound Interface Device
 static const int SID_EXEC        = 0; // Sound Interface Device (Execution)
 static const int SIDREG_DEBUG    = 0; // Sound Interface Device (Registers)
+static const int AUDBUF_DEBUG    = 0; // Audio buffers
 
 // Drive
 static const int VIA_DEBUG       = 0; // Versatile Interface Adapter
