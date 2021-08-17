@@ -452,6 +452,7 @@ Muxer::_warpOn()
 void
 Muxer::_warpOff()
 {
+    printf("Warp off\n");
     rampUp();
     clear();
 }
@@ -755,7 +756,7 @@ Muxer::executeUntil(Cycle targetCycle)
     
     // Skip sample synthesis in power-safe mode
     if (volL.current == 0 && volR.current == 0 && config.powerSave) {
-        
+    
         /* https://sourceforge.net/p/vice-emu/bugs/1374/
          *
          * Due to a bug in reSID, pending register writes are dropped if we
@@ -763,9 +764,15 @@ Muxer::executeUntil(Cycle targetCycle)
          * As a workaround, we ignore the power-saving setting in this case.
          */
         if (config.revision != MOS_8580 || config.sampling != SAMPLING_FAST) {
-            
-            cycles = targetCycle;
-            return;
+
+            /* Update: This feature seems to be broken alltogether. reSID has
+             * issues with the audio filter if sample synthesis is skipped,
+             * even in other modes as the one stated above. Until I know how to
+             * fix the problem, I disable the powerSave feature.
+             */
+
+            // cycles = targetCycle;
+            // return;
         }
     }
     
