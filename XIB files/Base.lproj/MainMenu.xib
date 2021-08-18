@@ -339,48 +339,101 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Press" id="Xvx-By-SBS">
                                     <items>
-                                        <menuItem title="RUNSTOP" hidden="YES" id="306">
+                                        <menuItem title="COMMODORE" tag="49" id="zAn-ph-JWd">
                                             <connections>
-                                                <action selector="runstopAction:" target="-1" id="h99-wl-I6J"/>
+                                                <action selector="pressAction:" target="-1" id="2ej-5e-SrQ"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="RESTORE" hidden="YES" id="305" userLabel="RESTORE">
+                                        <menuItem title="RUNSTOP" tag="33" id="Cse-9Z-tWo">
                                             <connections>
-                                                <action selector="revertAction:" target="-1" id="XDR-D8-h89"/>
+                                                <action selector="pressAction:" target="-1" id="42Q-Yt-3sk"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="RESTORE" tag="31" id="305" userLabel="RESTORE">
+                                            <connections>
+                                                <action selector="pressAction:" target="-1" id="e2G-rE-82f"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="RUNSTOP RESTORE" id="VdY-b4-dYs">
                                             <connections>
-                                                <action selector="runstopRestoreAction:" target="-1" id="OF3-DS-8i4"/>
+                                                <action selector="pressRunstopRestoreAction:" target="-1" id="SJm-Py-oRw"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="CLR" hidden="YES" id="512">
+                                        <menuItem isSeparatorItem="YES" id="S53-00-p8x"/>
+                                        <menuItem title="HOME" tag="14" id="515">
+                                            <connections>
+                                                <action selector="pressAction:" target="-1" id="25B-xW-bPZ"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="CLR" tag="14" id="512">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="clearKeyAction:" target="-1" id="NgL-jP-5vs"/>
+                                                <action selector="pressWithShiftAction:" target="-1" id="mx0-W2-q3g"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="HOME" hidden="YES" id="515">
-                                            <connections>
-                                                <action selector="homeKeyAction:" target="-1" id="fhb-me-fFL"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="DEL" hidden="YES" id="MPz-Ta-mSQ">
+                                        <menuItem title="INST" tag="15" id="518">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="deleteKeyAction:" target="-1" id="6fc-Gs-5bU"/>
+                                                <action selector="pressAction:" target="-1" id="dmQ-Bc-6pd"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="INST" hidden="YES" id="518">
+                                        <menuItem title="DEL" tag="15" id="MPz-Ta-mSQ">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="insertKeyAction:" target="-1" id="IEY-Sr-0Wx"/>
+                                                <action selector="pressWithShiftAction:" target="-1" id="3WT-sH-4e1"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="LEFT ARROW" hidden="YES" id="q9V-Gy-eCL">
+                                        <menuItem isSeparatorItem="YES" id="Svw-qA-eWb"/>
+                                        <menuItem title="LEFT ARROW" id="q9V-Gy-eCL">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="leftarrowKeyAction:" target="-1" id="tYs-2R-d3U"/>
+                                                <action selector="pressAction:" target="-1" id="4Gh-a2-zMj"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="POWND" tag="13" id="vlz-6C-SB5">
+                                            <connections>
+                                                <action selector="pressAction:" target="-1" id="o8c-La-kkF"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="9dc-Qb-WwM"/>
+                                        <menuItem title="F1" tag="16" id="306">
+                                            <connections>
+                                                <action selector="pressAction:" target="-1" id="Ezw-fm-58e"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="F2" tag="16" id="vv3-dg-kzk">
+                                            <connections>
+                                                <action selector="pressWithShiftAction:" target="-1" id="83d-oM-THN"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="F3" tag="32" id="Mh0-9K-xRE">
+                                            <connections>
+                                                <action selector="pressAction:" target="-1" id="4s0-YS-1qn"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="F4" tag="32" id="yLP-qf-dfd">
+                                            <connections>
+                                                <action selector="pressWithShiftAction:" target="-1" id="0Jm-bk-Cvo"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="F5" tag="48" id="qjQ-KV-xhV">
+                                            <connections>
+                                                <action selector="pressAction:" target="-1" id="hxy-6M-5RK"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="F6" tag="48" id="Hwx-g9-L4o">
+                                            <connections>
+                                                <action selector="pressWithShiftAction:" target="-1" id="uUG-rZ-Kek"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="F7" tag="64" id="MpE-FX-Bm2">
+                                            <connections>
+                                                <action selector="pressAction:" target="-1" id="IVp-Ep-aHv"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="F8" tag="64" id="ggC-Pn-rNc">
+                                            <connections>
+                                                <action selector="pressWithShiftAction:" target="-1" id="YVL-Hg-12m"/>
                                             </connections>
                                         </menuItem>
                                     </items>

@@ -28,33 +28,7 @@ class KeyboardController: NSObject {
     // This variable is only used when keys are mapped symbolically. It it
     // written in keyDown and picked up in keyUp.
     var pressedKeys: [Int: [C64Key]] = [:]
-    
-    /* Checks if the internal values are consistent with the provides flags.
-     * There should never be an insonsistency. But if there is, we release the
-     * suspicous key. Otherwise, we risk to permanently block the C64's
-     * keyboard matrix
-     */
-    /*
-    func checkConsistency(withEvent event: NSEvent) {
         
-        let flags = event.modifierFlags
-        
-        if (leftShift || rightShift) != flags.contains(NSEvent.ModifierFlags.shift) {
-            keyUp(with: MacKey.shift)
-            keyUp(with: MacKey.rightShift)
-            Swift.print("*** SHIFT inconsistency detected *** \(leftShift) \(rightShift)")
-        }
-        if control != flags.contains(NSEvent.ModifierFlags.control) {
-            keyUp(with: MacKey.control)
-            Swift.print("*** CONTROL inconsistency *** \(control)")
-        }
-        if option != flags.contains(NSEvent.ModifierFlags.option) {
-            keyUp(with: MacKey.option)
-            Swift.print("*** OPTION inconsistency *** \(option)")
-        }
-    }
-    */
-    
     init(parent: MyController) {
         
         super.init()
