@@ -8,7 +8,9 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MyController">
             <connections>
-                <outlet property="cpuIndicator" destination="9Nj-IT-cDl" id="ehz-gA-VNz"/>
+                <outlet property="activityBar" destination="9Nj-IT-cDl" id="QvU-2F-QaA"/>
+                <outlet property="activityInfo" destination="tD7-Kt-2R4" id="vjY-Pa-Shn"/>
+                <outlet property="activityType" destination="ApN-dX-M4Z" id="zMi-4l-Cko"/>
                 <outlet property="cpuInfo" destination="tD7-Kt-2R4" id="3c1-O6-Q9y"/>
                 <outlet property="crtIcon" destination="2003" id="CVl-nZ-xP2"/>
                 <outlet property="debugIcon" destination="6c9-VQ-Wmb" id="2dW-WG-eAT"/>
@@ -18,8 +20,6 @@
                 <outlet property="greenLED9" destination="FWS-Ng-oe6" id="A7p-ch-sbx"/>
                 <outlet property="haltIcon" destination="LJd-96-8ze" id="t1x-xJ-LfW"/>
                 <outlet property="metal" destination="DD4-5B-w9h" id="rGV-rL-MLo"/>
-                <outlet property="mhzIndicator" destination="212" id="215"/>
-                <outlet property="mhzInfo" destination="214" id="nnJ-4s-Uip"/>
                 <outlet property="muteIcon" destination="1v4-GY-YOm" id="Quj-qX-AH1"/>
                 <outlet property="redLED8" destination="1210" id="GLI-bf-y3R"/>
                 <outlet property="redLED9" destination="iKN-RM-vsV" id="cac-3p-tQd"/>
@@ -57,15 +57,8 @@
                             <action selector="drivePowerButtonAction:" target="-2" id="8WG-jz-D5t"/>
                         </connections>
                     </button>
-                    <levelIndicator verticalHuggingPriority="750" id="212">
-                        <rect key="frame" x="583" y="3" width="64" height="18"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <levelIndicatorCell key="cell" alignment="left" maxValue="20" warningValue="11" criticalValue="15" id="1702">
-                            <font key="font" metaFont="system"/>
-                        </levelIndicatorCell>
-                    </levelIndicator>
                     <button toolTip="Warp mode" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1052">
-                        <rect key="frame" x="655" y="4" width="18" height="18"/>
+                        <rect key="frame" x="701" y="4" width="18" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="hourglass1Template" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" id="1707">
                             <behavior key="behavior" lightByContents="YES"/>
@@ -214,7 +207,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tD7-Kt-2R4">
-                        <rect key="frame" x="671" y="7" width="54" height="11"/>
+                        <rect key="frame" x="624" y="7" width="54" height="12"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="00% CPU" id="9E6-Hh-KcI">
                             <font key="font" metaFont="label" size="9"/>
@@ -225,19 +218,28 @@
                     <levelIndicator verticalHuggingPriority="750" id="9Nj-IT-cDl">
                         <rect key="frame" x="729" y="3" width="64" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <levelIndicatorCell key="cell" alignment="left" maxValue="100" warningValue="50" criticalValue="75" id="5VJ-SQ-5Qh">
+                        <levelIndicatorCell key="cell" alignment="left" maxValue="20" warningValue="13" criticalValue="16" id="5VJ-SQ-5Qh">
                             <font key="font" metaFont="system"/>
                         </levelIndicatorCell>
                     </levelIndicator>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="214">
-                        <rect key="frame" x="526" y="7" width="54" height="11"/>
+                    <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ApN-dX-M4Z">
+                        <rect key="frame" x="673" y="3" width="27" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="right" title="0.00 MHz" id="1703">
-                            <font key="font" metaFont="label" size="9"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
+                        <popUpButtonCell key="cell" type="check" title="CPU Frequency (C64)" bezelStyle="regularSquare" imagePosition="left" lineBreakMode="truncatingTail" state="on" inset="2" arrowPosition="arrowAtCenter" preferredEdge="minX" selectedItem="LP1-PF-LdL" id="qjo-CF-dOg">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <menu key="menu" id="m7b-17-QHH">
+                                <items>
+                                    <menuItem title="CPU Frequency (C64)" state="on" id="LP1-PF-LdL"/>
+                                    <menuItem title="CPU Load (Mac)" tag="1" id="fbG-FO-q2S"/>
+                                    <menuItem title="Frames per Second (Mac)" tag="2" id="meX-8h-Eo8"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                        <connections>
+                            <action selector="activityTypeAction:" target="-2" id="8M0-s6-SDQ"/>
+                        </connections>
+                    </popUpButton>
                 </subviews>
             </view>
             <toolbar key="toolbar" implicitIdentifier="562FDE63-25B0-4E4E-80C7-EF6E742B5F6F" displayMode="iconAndLabel" sizeMode="regular" id="1845" customClass="MyToolbar" customModule="VirtualC64" customModuleProvider="target">
