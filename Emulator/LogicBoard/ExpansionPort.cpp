@@ -262,31 +262,26 @@ ExpansionPort::attachCartridge(const string &path, bool reset)
     attachCartridge(file, reset);
 }
 
-bool
+void
 ExpansionPort::attachCartridge(CRTFile *file, bool reset)
 {
     assert(file);
     
     // Only proceed if this cartridge is supported
     if (!file->isSupported()) {
-        msgQueue.put(MSG_CRT_UNSUPPORTED, file->cartridgeType());
-        return false;
+        msgQueue.put(MSG_CRT_UNSUPPORTED, file->cartridgeType()); // TODO: REMOVE
+        throw VC64Error(ERROR_CRT_UNSUPPORTED);
     }
     
     // Create cartridge from cartridge file
-    Cartridge *cartridge;
-    if (!(cartridge = Cartridge::makeWithCRTFile(c64, *file))) {
-        return false;
-    }
+    Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, *file);
         
-    // Attach cartridge
+    // Attach cartridge to the expansion port
     suspended {
         
         attachCartridge(cartridge);
         if (reset) c64.hardReset();
     }
-    
-    return true;
 }
 
 void

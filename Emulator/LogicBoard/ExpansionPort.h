@@ -141,7 +141,7 @@ public:
 
     // Attaches a cartridge to the expansion port
     void attachCartridge(const string &path, bool reset = true) throws;
-    bool attachCartridge(CRTFile *c, bool reset = true);
+    void attachCartridge(CRTFile *c, bool reset = true) throws;
     void attachCartridge(Cartridge *c);
     void attachGeoRamCartridge(isize capacity);
     void attachIsepicCartridge();

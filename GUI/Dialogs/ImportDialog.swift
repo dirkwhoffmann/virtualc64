@@ -329,7 +329,7 @@ class ImportDialog: DialogController {
         } else if crt != nil {
             
             track("Inserting Cartridge")
-            c64.expansionport.attachCartridge(crt, reset: true)
+            try? c64.expansionport.attachCartridge(crt!, reset: true)
             
         } else if g64 != nil {
             

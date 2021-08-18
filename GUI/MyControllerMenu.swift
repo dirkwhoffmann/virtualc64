@@ -536,7 +536,6 @@ extension MyController: NSMenuItemValidation {
     // -----------------------------------------------------------------
     @IBAction func pressAction(_ sender: NSMenuItem!) {
      
-        track("Tag: \(sender.tag)")
         keyboard.pressKey(C64Key(sender.tag), duration: 4)
         virtualKeyboard?.refresh()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
@@ -546,7 +545,6 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func pressWithShiftAction(_ sender: NSMenuItem!) {
         
-        track("Tag: \(sender.tag)")
         keyboard.pressKeys([C64Key.shift, C64Key(sender.tag)], duration: 4)
         virtualKeyboard?.refresh()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {

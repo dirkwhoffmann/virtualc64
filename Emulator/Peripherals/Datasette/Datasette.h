@@ -158,7 +158,7 @@ public:
     isize getCounter() { return (isize)counter.asSeconds(); }
 
     //Inserts a TAP archive as a virtual tape
-    void insertTape(TAPFile *a);
+    void insertTape(TAPFile &file);
 
     // Ejects the tape (if any)
     void ejectTape();

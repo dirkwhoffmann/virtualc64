@@ -140,22 +140,21 @@ Datasette::tapeDuration(isize pos)
 }
 
 void
-Datasette::insertTape(TAPFile *file)
+Datasette::insertTape(TAPFile &file)
 {
     suspended {
-        
-        debug(TAP_DEBUG, "Inserting tape...\n");
-        
+                
         // Allocate pulse buffer
-        isize numPulses = file->numPulses();
+        isize numPulses = file.numPulses();
         alloc(numPulses);
-        debug(true, "Tape contains %zd pulsed\n", numPulses);
+        
+        debug(TAP_DEBUG, "Inserting tape (%zd pulses)...\n", numPulses);
         
         // Read pulses
-        file->seek(0);
+        file.seek(0);
         for (isize i = 0; i < numPulses; i++) {
             
-            pulses[i].cycles = (i32)file->read();
+            pulses[i].cycles = (i32)file.read();
             assert(pulses[i].cycles != -1);
         }
         
@@ -175,7 +174,7 @@ Datasette::ejectTape()
 
     suspended {
         
-        debug(TAP_DEBUG, "Ejecting tape\n");
+        debug(TAP_DEBUG, "Ejecting tape...\n");
         
         pressStop();
         rewind();

@@ -445,7 +445,7 @@
 
 - (BOOL)cartridgeAttached;
 - (CartridgeType)cartridgeType;
-- (BOOL)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset; // TODO: throw
+- (void)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex;
 - (void)attachGeoRamCartridge:(NSInteger)capacity;
 - (void)attachIsepicCartridge;
 - (void)detachCartridgeAndReset;

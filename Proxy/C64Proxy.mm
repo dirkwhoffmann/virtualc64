@@ -705,10 +705,11 @@
 {
     return [self eport]->getCartridgeAttached();
 }
-
-- (BOOL)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset
+ 
+- (void)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex
 {
-    return [self eport]->attachCartridge((CRTFile *)c->obj, reset);
+    try { [self eport]->attachCartridge((CRTFile *)c->obj, reset); }
+    catch (VC64Error &err) { [ex save:err]; }
 }
 
 - (void)attachGeoRamCartridge:(NSInteger)capacity
@@ -1160,7 +1161,7 @@
 
 - (void)insertTape:(TAPFileProxy *)proxy
 {
-    [self datasette]->insertTape((TAPFile *)proxy->obj);
+    [self datasette]->insertTape(*(TAPFile *)proxy->obj);
 }
 
 - (void)ejectTape
