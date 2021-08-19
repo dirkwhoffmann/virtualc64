@@ -12,9 +12,17 @@
 #include "C64.h"
 
 bool
+Cartridge::isKnownType(CartridgeType type)
+{
+    if (FORCE_CRT_UNKNOWN) return false;
+    
+    return type >= CRT_NORMAL && type <= CRT_GMOD2;
+}
+
+bool
 Cartridge::isSupportedType(CartridgeType type)
 {
-    if (FORCE_UNSUPPORTED_CRT) return false;
+    if (FORCE_CRT_UNSUPPORTED) return false;
     
     switch (type) {
         
@@ -40,7 +48,7 @@ Cartridge::isSupportedType(CartridgeType type)
         case CRT_COMAL80:
         case CRT_STRUCTURED_BASIC:
             
-        case CRT_MIKRO_ASS:
+        case CRT_MIKRO_ASSEMBLER:
 
         case CRT_STARDOS:
         case CRT_EASYFLASH:
@@ -103,7 +111,7 @@ Cartridge::makeWithType(C64 &c64, CartridgeType type)
         case CRT_MAGIC_DESK:       return new MagicDesk(c64);
         case CRT_COMAL80:          return new Comal80(c64);
         case CRT_STRUCTURED_BASIC: return new StructuredBasic(c64);
-        case CRT_MIKRO_ASS:        return new MikroAss(c64);
+        case CRT_MIKRO_ASSEMBLER:  return new MikroAss(c64);
         case CRT_STARDOS:          return new StarDos(c64);
         case CRT_EASYFLASH:        return new EasyFlash(c64);
         case CRT_ACTION_REPLAY3:   return new ActionReplay3(c64);
@@ -116,15 +124,21 @@ Cartridge::makeWithType(C64 &c64, CartridgeType type)
         case CRT_GEO_RAM:          return new GeoRAM(c64);
             
         default:
-            throw VC64Error(ERROR_CRT_UNSUPPORTED);
+            throw VC64Error(ERROR_CRT_UNSUPPORTED,
+                            std::to_string(type) + " (" + CartridgeTypeEnum::key(type) + ")");
     }
 }
 
 Cartridge *
 Cartridge::makeWithCRTFile(C64 &c64, CRTFile &file)
 {
+    auto type = file.cartridgeType();
+
+    // Only proceed if the cartridge ID is valid
+    if (!isKnownType(type)) throw VC64Error(ERROR_CRT_UNKNOWN, std::to_string(type));
+    
+    // Try to create the cartridge
     Cartridge *cart = makeWithType(c64, file.cartridgeType());
-    assert(cart);
     
     // Remember powerup values for game line and exrom line
     cart->gameLineInCrtFile = file.initialGameLine();

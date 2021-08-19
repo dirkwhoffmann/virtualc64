@@ -94,8 +94,13 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
             description = "Drive is unconnected.";
             break;
 
+        case ERROR_CRT_UNKNOWN:
+            description = "This cartridge is a type " + s + " cartridge which";
+            description += " is unknown to the emulator.";
+            break;
+
         case ERROR_CRT_UNSUPPORTED:
-            description = "This cartridge is not supported yet.";
+            description = "Cartridges of type " + s + " are not yet supported.";
             break;
 
         case ERROR_CRT_TOO_MANY_PACKETS:
@@ -134,7 +139,7 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
             break;
     }
 }
-
+            
 const char *
 VC64Error::what() const throw()
 {

@@ -109,7 +109,8 @@ static const int REC_DEBUG       = 0; // Screen recorder
 
 static const int FORCE_ROM_MISSING      = 0;
 static const int FORCE_MEGA64_MISMATCH  = 0;
-static const int FORCE_UNSUPPORTED_CRT  = 0;
+static const int FORCE_CRT_UNKNOWN      = 0;
+static const int FORCE_CRT_UNSUPPORTED  = 0;
 static const int FORCE_SNAPSHOT_TOO_OLD = 0;
 static const int FORCE_SNAPSHOT_TOO_NEW = 0;
 

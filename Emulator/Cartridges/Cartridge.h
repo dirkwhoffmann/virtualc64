@@ -115,7 +115,10 @@ protected:
     //
 
 public:
-        
+
+    // Checks whether this cartridge has a known type indentifier
+    static bool isKnownType(CartridgeType type);
+
     // Checks whether this cartridge is a supported by the emulator
     static bool isSupportedType(CartridgeType type);
     
@@ -136,6 +139,7 @@ public:
     
     Cartridge(C64 &ref);
     ~Cartridge();
+    
     const char *getDescription() const override { return "Cartridge"; }
 
     /* Resets the Game and the Exrom line. The default implementation resets

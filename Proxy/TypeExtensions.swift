@@ -131,7 +131,7 @@ extension CartridgeType {
         case .REX: return "REX"
         case .FINAL_I: return "Final Cartridge I"
         case .MAGIC_FORMEL: return "Magic Formel"
-        case .GAME_SYSTEM_SYSTEM_3: return "Game System 3"
+        case .GS: return "Game System 3"
         case .WARPSPEED: return "WarpSpeed"
         case .DINAMIC: return "Dinamic"
         case .ZAXXON: return "Zaxxon (SEGA)"
@@ -144,7 +144,7 @@ extension CartridgeType {
         case .DELA_EP7X8: return "Dela EP7x8"
         case .DELA_EP256: return "Dela EP256"
         case .REX_EP256: return "Rex EP256"
-        case .MIKRO_ASS: return "Mikro Assembler"
+        case .MIKRO_ASSEMBLER: return "Mikro Assembler"
         case .FINAL_PLUS: return "Final Plus"
         case .ACTION_REPLAY4: return "Action Replay 4"
         case .STARDOS: return "Stardos"
@@ -178,7 +178,7 @@ extension CartridgeType {
         case .EASYCALC: return "Easy Calc"
         case .GMOD2: return "GMOD 2"
             
-        default: return "TAP type \(self.rawValue) (Unknown)"
+        default: return "CRT type \(self.rawValue) (Unknown)"
         }
     }
 }

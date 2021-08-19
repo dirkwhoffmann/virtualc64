@@ -47,6 +47,7 @@ enum_long(ERROR_CODE)
     ERROR_DRV_UNCONNECTED,
     
     // Cartridges
+    ERROR_CRT_UNKNOWN,
     ERROR_CRT_UNSUPPORTED,
     ERROR_CRT_TOO_MANY_PACKETS,
     ERROR_CRT_CORRUPTED_PACKET,
@@ -105,6 +106,7 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
 
             case ERROR_DRV_UNCONNECTED:      return "DRV_UNCONNECTED";
 
+            case ERROR_CRT_UNKNOWN:          return "ERROR_CRT_UNKNOWN";
             case ERROR_CRT_UNSUPPORTED:      return "CRT_UNSUPPORTED";
             case ERROR_CRT_TOO_MANY_PACKETS: return "CRT_TOO_MANY_PACKETS";
             case ERROR_CRT_CORRUPTED_PACKET: return "CRT_CORRUPTED_PACKET";
