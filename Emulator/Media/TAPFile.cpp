@@ -12,14 +12,14 @@
 #include "IO.h"
 
 bool
-TAPFile::isCompatiblePath(const string &path)
+TAPFile::isCompatible(const string &path)
 {
     auto s = util::extractSuffix(path);
     return s == "tap" || s == "TAP" || s == "t64" || s == "T64";
 }
 
 bool
-TAPFile::isCompatibleStream(std::istream &stream)
+TAPFile::isCompatible(std::istream &stream)
 {
     const u8 magicBytes[] = {
         0x43, 0x36, 0x34, 0x2D, 0x54, 0x41, 0x50, 0x45, 0x2D, 0x52, 0x41, 0x57 };

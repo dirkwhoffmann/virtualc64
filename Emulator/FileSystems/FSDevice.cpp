@@ -18,6 +18,7 @@
 #include <limits.h>
 #include <set>
 
+/*
 FSDevice *
 FSDevice::makeWithFormat(FSDeviceDescriptor &layout)
 {
@@ -121,16 +122,16 @@ FSDevice::makeWithCollection(AnyCollection &collection)
 FSDevice *
 FSDevice::makeWithPath(const string &path)
 {
-    try { return makeWithD64(*AnyFile::make <D64File> (path)); }
+    try { auto file = D64File(path); return makeWithD64(file); }
     catch (...) { }
         
-    try { return makeWithCollection(*AnyFile::make <T64File> (path)); }
+    try { auto file = T64File(path); return makeWithCollection(file); }
     catch (...) { }
 
-    try { return makeWithCollection(*AnyFile::make <PRGFile> (path)); }
+    try { auto file = PRGFile(path); return makeWithCollection(file); }
     catch (...) { }
 
-    try { return makeWithCollection(*AnyFile::make <P00File> (path)); }
+    try { auto file = P00File(path); return makeWithCollection(file); }
     catch (...) { }
         
     throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
@@ -154,10 +155,17 @@ FSDevice::makeWithFolder(const string &path)
     device->printDirectory();
     return device;
 }
+*/
 
-FSDevice::FSDevice(u32 capacity)
+FSDevice::~FSDevice()
 {
-    debug(FS_DEBUG, "Creating device with %d blocks\n", capacity);
+    for (auto &b : blocks) delete b;
+}
+
+void
+FSDevice::init(isize capacity)
+{
+    debug(FS_DEBUG, "Creating device with %zd blocks\n", capacity);
 
     // Initialize the block storage
     blocks.reserve(capacity);
@@ -167,9 +175,127 @@ FSDevice::FSDevice(u32 capacity)
     for (u32 i = 0; i < capacity; i++) blocks[i] = new FSBlock(*this, i);
 }
 
-FSDevice::~FSDevice()
+void
+FSDevice::init(FSDeviceDescriptor &layout)
 {
-    for (auto &b : blocks) delete b;
+    init(layout.numBlocks());
+    this->layout = layout;
+}
+
+void
+FSDevice::init(DiskType type, DOSType vType)
+{
+    FSDeviceDescriptor layout = FSDeviceDescriptor(type);
+    init(layout);
+    
+    if (vType != DOS_TYPE_NODOS) {
+        bamPtr()->writeBAM();
+    }
+}
+
+void
+FSDevice::init(const D64File &d64)
+{
+    // Get device descriptor
+    FSDeviceDescriptor descriptor = FSDeviceDescriptor(d64);
+        
+    // Create the device
+    init(descriptor);
+
+    // Import file system
+    importVolume(d64.data, d64.size);
+    
+    // Import error codes (if any)
+    for (Block b = 0; b < (Block)blocks.size(); b++) {
+        setErrorCode(b, d64.getErrorCode(b));
+    }
+}
+
+void
+FSDevice::init(class Disk &disk)
+{
+    // Translate the GCR stream into a byte stream
+    u8 buffer[D64File::D64_802_SECTORS];
+    isize len = disk.decodeDisk(buffer);
+    
+    // Create a suitable device descriptor
+    FSDeviceDescriptor descriptor = FSDeviceDescriptor(DISK_TYPE_SS_SD);
+    switch (len) {
+            
+        case D64File::D64_683_SECTORS: descriptor.numCyls = 35; break;
+        case D64File::D64_768_SECTORS: descriptor.numCyls = 40; break;
+        case D64File::D64_802_SECTORS: descriptor.numCyls = 42; break;
+
+        default:
+            throw VC64Error(ERROR_FS_CORRUPTED);
+    }
+        
+    // Create the device
+    init(descriptor);
+
+    // Import file system
+    importVolume(buffer, len);
+}
+
+void
+FSDevice::init(AnyCollection &collection)
+{
+    // Create the device
+    init(DISK_TYPE_SS_SD);
+    
+    // Write BAM
+    auto name = PETName<16>(collection.collectionName());
+    bamPtr()->writeBAM(name);
+
+    // Loop over all items
+    isize numberOfItems = collection.collectionCount();
+    for (isize i = 0; i < numberOfItems; i++) {
+        
+        // Serialize item into a buffer
+        u64 size = collection.itemSize(i);
+        u8 *buffer = new u8[size];
+        collection.copyItem(i, buffer, size);
+        
+        // Create a file for this item
+        makeFile(collection.itemName(i), buffer, size);
+        delete[] buffer;
+    }
+    
+    printDirectory();
+}
+
+void
+FSDevice::init(const string &path)
+{
+    if (util::isDirectory(path)) {
+    
+        // Create the device
+        init(DISK_TYPE_SS_SD);
+        
+        // Write BAM
+        auto name = PETName<16>(util::extractName(path));
+        bamPtr()->writeBAM(name);
+        
+        // Import the folder
+        importDirectory(path);
+        
+        printDirectory();
+        return;
+    }
+    
+    try { auto file = D64File(path); init(file); return; }
+    catch (...) { }
+        
+    try { auto file = T64File(path); init(file); return; }
+    catch (...) { }
+
+    try { auto file = PRGFile(path); init(file); return; }
+    catch (...) { }
+
+    try { auto file = P00File(path); init(file); return; }
+    catch (...) { }
+        
+    throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
 }
 
 void
@@ -813,15 +939,6 @@ FSDevice::importDirectory(const string &path, DIR *dir)
     }
     return result;
 }
-
-/*
-bool
-FSDevice::importDirectory(const char *path, DIR *dir)
-{
-    assert(dir);
-    return importDirectory(std::string(path), dir);
-}
-*/
 
 bool
 FSDevice::exportVolume(u8 *dst, isize size, ErrorCode *err)

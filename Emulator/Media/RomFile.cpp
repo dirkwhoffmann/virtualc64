@@ -41,13 +41,13 @@ const RomSignature RomFile::signatures[] = {
 };
 
 bool
-RomFile::isCompatiblePath(const string &path)
+RomFile::isCompatible(const string &path)
 {
     return true;
 }
 
 bool
-RomFile::isCompatibleStream(std::istream &stream)
+RomFile::isCompatible(std::istream &stream)
 {
     return
     isBasicRomStream(stream) ||
@@ -311,7 +311,7 @@ RomFile::isPatchedRom(RomIdentifier rev)
     }
 }
 
-const string
+const char *
 RomFile::title(RomIdentifier rev)
 {
     switch (rev) {
@@ -379,7 +379,7 @@ RomFile::title(RomIdentifier rev)
     }
 }
 
-const string
+const char *
 RomFile::subTitle(RomIdentifier rev)
 {
     switch (rev) {
@@ -445,7 +445,7 @@ RomFile::subTitle(RomIdentifier rev)
     }
 }
 
-const string
+const char *
 RomFile::revision(RomIdentifier rev)
 {
     switch (rev) {

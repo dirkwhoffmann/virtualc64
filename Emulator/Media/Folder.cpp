@@ -12,23 +12,17 @@
 #include "C64.h"
 
 bool
-Folder::isFolder(const char *path)
+Folder::isCompatible(const string &path)
 {
-    DIR *dir;
-    
-    // We accept all directories
-    if ((dir = opendir(path)) == nullptr) return false;
-    
-    closedir(dir);
-    return true;
+    return util::isDirectory(path);
 }
 
-Folder *
-Folder::makeWithFolder(const string &path)
+void
+Folder::init(const string &path)
 {
-    Folder *folder = new Folder();
-    folder->fs = FSDevice::makeWithFolder(path);
-    return folder;
+    if (!isCompatiblePath(path)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+    
+    fs = new FSDevice(path);
 }
 
 PETName<16>

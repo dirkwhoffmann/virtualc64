@@ -258,8 +258,7 @@ ExpansionPort::attachGeoRamCartridge(isize kb)
 void
 ExpansionPort::attachCartridge(const string &path, bool reset)
 {
-    auto file = AnyFile::make <CRTFile> (path);
-    attachCartridge(file, reset);
+    attachCartridge(new CRTFile(path), reset);
 }
 
 void

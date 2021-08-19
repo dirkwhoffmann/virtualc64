@@ -19,11 +19,8 @@ public:
     // Class methods
     //
 
-    static bool isCompatiblePath(const string &name);
-    static bool isCompatibleStream(std::istream &stream);
-    
-    static G64File *makeWithDisk(class Disk &disk) throws;
-    static G64File *makeWithDisk(class Disk &disk, ErrorCode *err);
+    static bool isCompatible(const string &name);
+    static bool isCompatible(std::istream &stream);
 
     
     //
@@ -32,11 +29,21 @@ public:
     
     G64File() { };
     G64File(isize capacity);
+    G64File(const string &path) throws { init(path); }
+    G64File(const u8 *buf, isize len) throws { init(buf, len); }
+    G64File(class Disk &disk) throws { init(disk); }
+
+private:
+    
+    using AnyFile::init;
+    void init(class Disk &disk) throws;
     
     
     //
     // Methods from C64Object
     //
+    
+public:
     
     const char *getDescription() const override { return "G64File"; }
 
@@ -45,6 +52,8 @@ public:
     // Methods from AnyFile
     //
     
+    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_G64; }
         
   

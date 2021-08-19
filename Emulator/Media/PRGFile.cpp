@@ -13,14 +13,14 @@
 #include "IO.h"
 
 bool
-PRGFile::isCompatiblePath(const string &path)
+PRGFile::isCompatible(const string &path)
 {
     auto s = util::extractSuffix(path);
     return s == "prg" || s == "PRG";
 }
 
 bool
-PRGFile::isCompatibleStream(std::istream &stream)
+PRGFile::isCompatible(std::istream &stream)
 {
     return (util::streamLength(stream) >= 2);
 }
@@ -41,6 +41,22 @@ PRGFile::makeWithFileSystem(FSDevice &fs)
     fs.copyFile(item, prg->data, itemSize);
     
     return prg;
+}
+
+void
+PRGFile::init(FSDevice &fs)
+{
+    isize item = 0;
+    isize itemSize = fs.fileSize(item);
+
+    // Only proceed if the requested file exists
+    if (fs.numFiles() <= item) throw VC64Error(ERROR_FS_HAS_NO_FILES);
+        
+    // Create new archive
+    init(itemSize);
+                
+    // Add data
+    fs.copyFile(item, data, itemSize);
 }
 
 PETName<16>

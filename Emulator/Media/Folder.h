@@ -13,28 +13,37 @@
 
 class Folder : public AnyCollection {
     
-    FSDevice *fs = nullptr;
+    class FSDevice *fs = nullptr;
             
 public:
-
-    //
-    // Class methods
-    //
         
-    // Returns true iff the specified path points to a folder
-    static bool isFolder(const char *path);
-    
+    static bool isCompatible(const string &path);
+    static bool isCompatible(std::istream &stream) { return false; }
+
     
     //
     // Constructing
     //
     
-    static Folder *makeWithFolder(const string &path) throws;
+    // static Folder *makeWithFolder(const string &path) throws;
 
+    
+    //
+    // Initializing
+    //
+    
+    Folder(const string &path) throws { init(path); }
+
+private:
+    
+    void init(const string &path) throws;
+    
         
     //
     // Methods from C64Object
     //
+    
+public:
     
     const char *getDescription() const override { return "Folder"; }
     
@@ -43,6 +52,8 @@ public:
     // Methods from AnyFile
     //
 
+    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_FOLDER; }
     
     

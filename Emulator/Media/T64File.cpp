@@ -14,14 +14,14 @@
 #include "Macros.h"
 
 bool
-T64File::isCompatiblePath(const string &path)
+T64File::isCompatible(const string &path)
 {
     auto s = util::extractSuffix(path);
     return s == "t64" || s == "T64";
 }
 
 bool
-T64File::isCompatibleStream(std::istream &stream)
+T64File::isCompatible(std::istream &stream)
 {
     const u8 magicT64[] = { 'C', '6', '4' };
     const u8 magicTAP[] = { 'C', '6', '4', '-', 'T', 'A', 'P', 'E' };
@@ -34,8 +34,15 @@ T64File::isCompatibleStream(std::istream &stream)
     util::matchingStreamHeader(stream, magicT64, sizeof(magicT64));
 }
 
+/*
 T64File *
 T64File::makeWithFileSystem(class FSDevice &fs)
+{
+}
+*/
+
+void
+T64File::init(class FSDevice &fs)
 {
     // Analyze the file system
     u16 numFiles = (u16)fs.numFiles();
@@ -46,17 +53,17 @@ T64File::makeWithFileSystem(class FSDevice &fs)
         dataLength += length[i];
     }
     
-    // Create new archive
+    // Initialize the archive
     u16 maxFiles = std::max(numFiles, (u16)30);
     isize fileSize = 64 + maxFiles * 32 + dataLength;
-    T64File *t64 = new T64File(fileSize);
+    init(fileSize);
     
     //
     // Header
     //
     
     // Magic bytes (32 bytes)
-    u8 *ptr = t64->data;
+    u8 *ptr = data;
     strncpy((char *)ptr, "C64 tape image file", 32);
     ptr += 32;
     
@@ -81,7 +88,7 @@ T64File::makeWithFileSystem(class FSDevice &fs)
     name.write(ptr);
     ptr += 24;
     
-    assert(ptr - t64->data == 64);
+    assert(ptr - data == 64);
     
     //
     // Tape entries
@@ -139,8 +146,6 @@ T64File::makeWithFileSystem(class FSDevice &fs)
         fs.copyFile(n, ptr, length[n], 2);
         ptr += length[n];
     }
-
-    return t64;
 }
 
 PETName<16>

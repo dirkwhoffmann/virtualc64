@@ -159,9 +159,8 @@ DriveMemory::saveRom(const string &path)
             
     debug(true, "Saving Rom at %x (%x bytes)\n", addr, size);
     
-    RomFile *file = RomFile::make <RomFile> (rom + (addr & 0x7FFF), size);
-    file->writeToFile(path);
-    delete file;
+    RomFile file = RomFile(rom + (addr & 0x7FFF), size);
+    file.writeToFile(path);
 }
 
 u8

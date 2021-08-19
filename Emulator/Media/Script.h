@@ -19,8 +19,8 @@ public:
     // Class methods
     //
     
-    static bool isCompatiblePath(const string &path);
-    static bool isCompatibleStream(std::istream &stream);
+    static bool isCompatible(const string &path);
+    static bool isCompatible(std::istream &stream);
     
     
     //
@@ -29,7 +29,10 @@ public:
     
 public:
     
-    Script();
+    // Script();
+    Script(const string &path) throws { init(path); }
+    Script(const u8 *buf, isize len) throws { init(buf, len); }
+    
     
     //
     // Methods from C64Object
@@ -44,6 +47,8 @@ public:
     
 public:
     
+    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_SCRIPT; }
     
     

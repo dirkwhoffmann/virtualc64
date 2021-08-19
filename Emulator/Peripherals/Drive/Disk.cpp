@@ -108,10 +108,10 @@ Disk::isValidHalftrackSectorPair(Halftrack ht, Sector s)
 Disk *
 Disk::make(C64 &ref, const string &path)
 {
-    try { return makeWithG64(ref, *AnyFile::make <G64File> (path)); }
+    try { auto file = G64File(path); return makeWithG64(ref, file); }
     catch (...) { }
 
-    try { return makeWithFileSystem(ref, *FSDevice::makeWithPath(path)); }
+    try { auto fs = FSDevice(path); return makeWithFileSystem(ref, fs); }
     catch (...) { }
     
     throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
@@ -130,9 +130,9 @@ Disk::make(C64 &ref, DOSType type, PETName<16> name)
         }
         case DOS_TYPE_CBM:
         {
-            std::unique_ptr<FSDevice> fs(FSDevice::makeWithType(DISK_TYPE_SS_SD, DOS_TYPE_CBM));
-            fs->setName(name);
-            return makeWithFileSystem(ref, *fs);
+            auto fs = FSDevice(DISK_TYPE_SS_SD, DOS_TYPE_CBM);
+            fs.setName(name);
+            return makeWithFileSystem(ref, fs);
         }
         default:
         {
@@ -163,15 +163,15 @@ Disk::makeWithG64(C64 &ref, const G64File &g64)
 Disk *
 Disk::makeWithD64(C64 &ref, const D64File &d64)
 {
-    std::unique_ptr<FSDevice> fs(FSDevice::makeWithD64(d64));
-    return makeWithFileSystem(ref, *fs);
+    auto fs = FSDevice(d64);
+    return makeWithFileSystem(ref, fs);
 }
 
 Disk *
 Disk::makeWithCollection(C64 &ref, AnyCollection &collection)
 {
-    std::unique_ptr<FSDevice> fs(FSDevice::makeWithCollection(collection));
-    return makeWithFileSystem(ref, *fs);
+    auto fs = FSDevice(collection);
+    return makeWithFileSystem(ref, fs);
 }
 
 Disk::Disk(C64 &ref) : SubComponent(ref)

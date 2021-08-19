@@ -30,8 +30,8 @@ public:
     // Class methods
     //
     
-    static bool isCompatiblePath(const string &name);
-    static bool isCompatibleStream(std::istream &stream);
+    static bool isCompatible(const string &name);
+    static bool isCompatible(std::istream &stream);
     
     static bool isRomStream(RomType type, std::istream &stream);
     static bool isBasicRomStream(std::istream &stream);
@@ -58,12 +58,21 @@ public:
     static bool isCommodoreRom(RomIdentifier rev);
     static bool isPatchedRom(RomIdentifier rev);
 
-    // Provides information about known ROMs
-    static const string title(RomIdentifier rev);
-    static const string subTitle(RomIdentifier rev);
-    static const string revision(RomIdentifier rev);
+    // Translates a ROM indentifier into a textual description
+    static const char *title(RomIdentifier rev);
+    static const char *subTitle(RomIdentifier rev);
+    static const char *revision(RomIdentifier rev);
 
   
+    //
+    // Initializing
+    //
+    
+    RomFile(const string &path) throws { init(path); }
+    RomFile(const string &path, std::istream &stream) throws { init(path, stream); }
+    RomFile(const u8 *buf, isize len) throws { init(buf, len); }
+
+    
     //
     // Methods from C64Object
     //
@@ -75,6 +84,8 @@ public:
     // Methods from AnyFile
     //
     
+    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return romFileType; }
     void readFromStream(std::istream &stream) throws override;
     void repair() override;

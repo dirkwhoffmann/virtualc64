@@ -13,23 +13,23 @@
 #include "IO.h"
 
 bool
-P00File::isCompatiblePath(const string &path)
+P00File::isCompatible(const string &path)
 {
     auto s = util::extractSuffix(path);
     return s == "p00" || s == "P00";
 }
 
 bool
-P00File::isCompatibleStream(std::istream &stream)
+P00File::isCompatible(std::istream &stream)
 {
     const u8 magicBytes[] = { 0x43, 0x36, 0x34, 0x46, 0x69, 0x6C, 0x65 };
 
     if (util::streamLength(stream) < 0x1A) return false;
     return util::matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
-
-P00File *
-P00File::makeWithFileSystem(FSDevice &fs)
+ 
+void
+P00File::init(FSDevice &fs)
 {
     isize item = 0;
     isize itemSize = fs.fileSize(item);
@@ -39,10 +39,10 @@ P00File::makeWithFileSystem(FSDevice &fs)
         
     // Create new archive
     isize p00Size = itemSize + 8 + 17 + 1;
-    P00File *p00 = new P00File(p00Size);
+    init(p00Size);
             
     // Write magic bytes (8 bytes)
-    u8 *p = p00->data;
+    u8 *p = data;
     strcpy((char *)p, "C64File");
     p += 8;
     
@@ -58,10 +58,8 @@ P00File::makeWithFileSystem(FSDevice &fs)
         
     // Add data
     fs.copyFile(item, p, itemSize);
-        
-    return p00;
 }
-    
+
 PETName<16>
 P00File::getName() const
 {

@@ -40,6 +40,7 @@ public:
     
 public:
 
+    /*
     static FSDevice *makeWithFormat(FSDeviceDescriptor &layout);
     static FSDevice *makeWithType(DiskType type, DOSType vType = DOS_TYPE_NODOS);
     static FSDevice *makeWithD64(const class D64File &d64) throws;
@@ -47,7 +48,8 @@ public:
     static FSDevice *makeWithCollection(AnyCollection &collection) throws;
     static FSDevice *makeWithPath(const string &path) throws;
     static FSDevice *makeWithFolder(const string &path) throws;
-
+    */
+    
     
     //
     // Initializing
@@ -55,8 +57,27 @@ public:
     
 public:
 
-    FSDevice(u32 capacity);
+    FSDevice(isize capacity) { init(capacity); }
+    FSDevice(FSDeviceDescriptor &layout) { init(layout); }
+    FSDevice(DiskType type, DOSType vType) { init(type, vType); }
+    FSDevice(const class D64File &d64) throws { init(d64); }
+    FSDevice(class Disk &disk) throws { init(disk); }
+    FSDevice(AnyCollection &collection) throws { init(collection); }
+    FSDevice(const string &path) throws { init(path); }
     ~FSDevice();
+    
+private:
+    
+    void init(isize capacity);
+    void init(FSDeviceDescriptor &layout);
+    void init(DiskType type, DOSType vType);
+    void init(const class D64File &d64) throws;
+    void init(class Disk &disk) throws;
+    void init(AnyCollection &collection) throws;
+    void init(const string &path) throws;
+
+    
+public:
     
     const char *getDescription() const override { return "FSVolume"; }
         

@@ -85,9 +85,8 @@ RetroShell::exec <Token::regression, Token::run> (Arguments &argv, long param)
     auto path = argv.front();
     if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
 
-    PRGFile *file = AnyFile::make <PRGFile> (path);
-    c64.flash(*file, 0);
-    delete file;
+    auto file = PRGFile(path);
+    c64.flash(file, 0);
     
     keyboard.autoType("run\n");
 }
@@ -248,9 +247,8 @@ RetroShell::exec <Token::memory, Token::flash> (Arguments& argv, long param)
     auto path = argv.front();
     if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
 
-    PRGFile *file = AnyFile::make <PRGFile> (argv.front());
-    c64.flash(*file, 0);
-    delete file;
+    auto file = PRGFile(argv.front());
+    c64.flash(file, 0);
 }
 
 template <> void

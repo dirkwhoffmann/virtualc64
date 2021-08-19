@@ -47,13 +47,13 @@ Thumbnail::take(const C64 &c64, isize dx, isize dy)
 }
 
 bool
-Snapshot::isCompatiblePath(const string &path)
+Snapshot::isCompatible(const string &path)
 {
     return true;
 }
 
 bool
-Snapshot::isCompatibleStream(std::istream &stream)
+Snapshot::isCompatible(std::istream &stream)
 {
     const u8 magicBytes[] = { 'V', 'C', '6', '4' };
     
@@ -84,23 +84,6 @@ Snapshot::Snapshot(C64 &c64): Snapshot(c64.size())
     if (SNP_DEBUG) c64.dump();
     c64.save(getData());
 }
-
-/*
-Snapshot *
-Snapshot::makeWithC64(C64 *c64)
-{
-    Snapshot *snapshot;
-    
-    snapshot = new Snapshot(c64->size());
-    
-    snapshot->takeScreenshot(*c64);
-
-    if (SNP_DEBUG) c64->dump();
-    c64->save(snapshot->getData());
-    
-    return snapshot;
-}
-*/
 
 bool
 Snapshot::isTooOld() const

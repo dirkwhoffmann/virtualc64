@@ -14,14 +14,14 @@
 #include "IO.h"
 
 bool
-CRTFile::isCompatiblePath(const string &path)
+CRTFile::isCompatible(const string &path)
 {
     auto s = util::extractSuffix(path);
     return s == "crt" || s == "CRT";
 }
 
 bool
-CRTFile::isCompatibleStream(std::istream &stream)
+CRTFile::isCompatible(std::istream &stream)
 {
     const u8 magicBytes[] = {
         'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ' };

@@ -1282,9 +1282,8 @@ C64::mega65KernalRev() const
 void
 C64::loadRom(const string &path)
 {
-    RomFile *file = RomFile::make <RomFile> (path.c_str());
-    loadRom(*file);
-    delete file;
+    RomFile file(path);
+    loadRom(file);
 }
 
 void
@@ -1364,27 +1363,24 @@ C64::saveRom(RomType type, const string &path)
         case ROM_TYPE_BASIC:
         {
             if (hasRom(ROM_TYPE_BASIC)) {
-                RomFile *file = RomFile::make <RomFile> (mem.rom + 0xA000, 0x2000);
-                file->writeToFile(path);
-                delete file;
+                RomFile file(mem.rom + 0xA000, 0x2000);
+                file.writeToFile(path);
             }
             break;
         }
         case ROM_TYPE_CHAR:
         {
             if (hasRom(ROM_TYPE_CHAR)) {
-                RomFile *file = RomFile::make <RomFile> (mem.rom + 0xD000, 0x1000);
-                file->writeToFile(path);
-                delete file;
+                RomFile file(mem.rom + 0xD000, 0x1000);
+                file.writeToFile(path);
             }
             break;
         }
         case ROM_TYPE_KERNAL:
         {
             if (hasRom(ROM_TYPE_KERNAL)) {
-                RomFile *file = RomFile::make <RomFile> (mem.rom + 0xE000, 0x2000);
-                file->writeToFile(path);
-                delete file;
+                RomFile file(mem.rom + 0xE000, 0x2000);
+                file.writeToFile(path);
             }
             break;
         }
