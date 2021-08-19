@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -123,6 +124,7 @@
                 <outlet property="memSearchField" destination="oqV-f6-ndp" id="Ycg-Xf-avt"/>
                 <outlet property="memSource" destination="JGr-5C-bxz" id="zse-ng-d6z"/>
                 <outlet property="memTableView" destination="9cm-34-eYe" id="iCO-ae-FMN"/>
+                <outlet property="message" destination="SRP-bu-eZG" id="h82-84-Hae"/>
                 <outlet property="panel" destination="QhJ-8A-HRo" id="g4P-OI-piB"/>
                 <outlet property="sidAttackRate1" destination="4Be-zt-a2X" id="mqD-Ti-DTA"/>
                 <outlet property="sidAttackRate2" destination="IYc-bd-Leo" id="6NQ-pp-S6y"/>
@@ -244,7 +246,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="868" height="476"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1095"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1536" height="935"/>
             <value key="minSize" type="size" width="868" height="468"/>
             <value key="maxSize" type="size" width="868" height="4096"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
@@ -573,7 +575,7 @@
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <clipView key="contentView" id="dcc-4e-gyd">
                                                             <rect key="frame" x="1" y="1" width="245" height="296"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="ALr-f0-WIK" id="xEC-N2-WnB" customClass="InstrTableView" customModule="VirtualC64" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="245" height="271"/>
@@ -665,7 +667,7 @@
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <clipView key="contentView" drawsBackground="NO" id="nC0-Gv-hW4">
                                                             <rect key="frame" x="1" y="1" width="222" height="296"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <tableView wantsLayer="YES" focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="qgE-9f-3uH" id="K0a-6q-Knn" customClass="TraceTableView" customModule="VirtualC64" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="222" height="271"/>
@@ -757,7 +759,7 @@
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <clipView key="contentView" drawsBackground="NO" id="mRl-hX-mQo">
                                                             <rect key="frame" x="1" y="1" width="121" height="92"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <tableView wantsLayer="YES" focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="wbj-db-lZC" id="WPz-W0-GJ8" customClass="BreakTableView" customModule="VirtualC64" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="121" height="67"/>
@@ -838,7 +840,7 @@
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <clipView key="contentView" drawsBackground="NO" id="Poy-ev-hhS">
                                                             <rect key="frame" x="1" y="1" width="121" height="92"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <tableView wantsLayer="YES" focusRingType="exterior" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="X1V-uU-mk8" id="QIG-ge-U6S" userLabel="Watch Table View" customClass="WatchTableView" customModule="VirtualC64" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="121" height="67"/>
@@ -4241,6 +4243,15 @@
                             <outlet property="delegate" destination="-2" id="qQx-cs-AZj"/>
                         </connections>
                     </tabView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SRP-bu-eZG">
+                        <rect key="frame" x="119" y="20" width="576" height="16"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Ipsum lorem" id="cMK-ob-Mzd">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
             <connections>

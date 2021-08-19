@@ -580,6 +580,9 @@ C64::overrideOption(Option option, i64 value)
 void
 C64::execute()
 {
+    cpu.debugger.watchpointPC = -1;
+    cpu.debugger.breakpointPC = -1;
+    
     // Run the emulator
     executeOneFrame();
     
@@ -589,13 +592,11 @@ C64::execute()
         // Are we requested to take a snapshot?
         if (flags & RL::AUTO_SNAPSHOT) {
             clearFlag(RL::AUTO_SNAPSHOT);
-            // autoSnapshot = Snapshot::makeWithC64(this);
             autoSnapshot = new Snapshot(*this);
             msgQueue.put(MSG_AUTO_SNAPSHOT_TAKEN);
         }
         if (flags & RL::USER_SNAPSHOT) {
             clearFlag(RL::USER_SNAPSHOT);
-            // userSnapshot = Snapshot::makeWithC64(this);
             userSnapshot = new Snapshot(*this);
             msgQueue.put(MSG_USER_SNAPSHOT_TAKEN);
         }
@@ -609,14 +610,14 @@ C64::execute()
         // Did we reach a breakpoint?
         if (flags & RL::BREAKPOINT) {
             clearFlag(RL::BREAKPOINT);
-            msgQueue.put(MSG_BREAKPOINT_REACHED);
+            msgQueue.put(MSG_BREAKPOINT_REACHED, cpu.debugger.breakpointPC);
             newState = EXEC_PAUSED;
         }
         
         // Did we reach a watchpoint?
         if (flags & RL::WATCHPOINT) {
             clearFlag(RL::WATCHPOINT);
-            msgQueue.put(MSG_WATCHPOINT_REACHED);
+            msgQueue.put(MSG_WATCHPOINT_REACHED, cpu.debugger.watchpointPC);
             newState = EXEC_PAUSED;
         }
         

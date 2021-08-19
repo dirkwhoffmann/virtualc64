@@ -157,6 +157,10 @@ public:
     // Watchpoint storage (not yet supported)
     Watchpoints watchpoints = Watchpoints(cpu);
     
+    // Saved program counters
+    i32 breakpointPC = -1;
+    i32 watchpointPC = -1;
+
 private:
     
     /* Number of logged instructions.

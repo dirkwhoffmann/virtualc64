@@ -229,13 +229,19 @@ CPUDebugger::breakpointMatches(u32 addr)
         return true;
     }
 
-    return breakpoints.eval(addr);
+    if (!breakpoints.eval(addr)) return false;
+        
+    breakpointPC = cpu.reg.pc;
+    return true;
 }
 
 bool
 CPUDebugger::watchpointMatches(u32 addr)
 {
-    return watchpoints.eval(addr);
+    if (!watchpoints.eval(addr)) return false;
+    
+    watchpointPC = cpu.reg.pc0;
+    return true;
 }
 
 isize

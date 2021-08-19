@@ -328,35 +328,32 @@ extension MyController {
             renderer.canvas.open(delay: 2)
             virtualKeyboard = nil
             toolbar.updateToolbar()
-            inspector?.fullRefresh()
+            inspector?.powerOn()
 
         case .POWER_OFF:
             toolbar.updateToolbar()
-            inspector?.fullRefresh()
+            inspector?.powerOff()
             
         case .RUN:
             needsSaving = true
             toolbar.updateToolbar()
-            inspector?.fullRefresh()
-            inspector?.clearWatchPoint()
+            inspector?.run()
             refreshStatusBar()
     
         case .PAUSE:
             toolbar.updateToolbar()
-            inspector?.fullRefresh()
+            inspector?.pause()
             refreshStatusBar()
 
         case .STEP:
             needsSaving = true
-            inspector?.clearWatchPoint()
-            inspector?.fullRefresh()
-            inspector?.scrollToPC()
+            inspector?.step()
 
         case .RESET:
             mydocument.deleteBootDiskID()
             mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
             updateWarp()
-            inspector?.fullRefresh()
+            inspector?.reset()
             
         case .HALT:
             shutDown()
@@ -395,13 +392,14 @@ extension MyController {
             break
             
         case .BREAKPOINT_REACHED:
-            inspector?.fullRefresh()
-            inspector?.scrollToPC()
+            inspector?.signalBreakPoint(pc: msg.data)
+            // inspector?.fullRefresh()
+            // inspector?.scrollToPC()
 
         case .WATCHPOINT_REACHED:
-            inspector?.fullRefresh()
-            inspector?.scrollToPC()
-            inspector?.signalWatchPoint()
+            // inspector?.fullRefresh()
+            // inspector?.scrollToPC()
+            inspector?.signalWatchPoint(pc: msg.data)
 
         case .CPU_JAMMED:
             refreshStatusBar()

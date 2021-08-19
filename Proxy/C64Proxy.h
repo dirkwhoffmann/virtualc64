@@ -206,6 +206,11 @@
 - (void)stepInto;
 - (void)stepOver;
 
+/*
+@property (readonly) NSInteger breakpointPC;
+@property (readonly) NSInteger watchpointPC;
+*/
+
 - (BOOL)hasRom:(RomType)type;
 - (BOOL)hasMega65Rom:(RomType)type;
 

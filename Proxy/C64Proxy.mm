@@ -2408,6 +2408,18 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     [self c64]->stepOver();
 }
 
+/*
+- (NSInteger)breakpointPC
+{
+    return [self c64]->cpu.debugger.breakpointPC;
+}
+
+- (NSInteger)watchpointPC
+{
+    return [self c64]->cpu.debugger.watchpointPC;
+}
+*/
+
 - (BOOL) hasRom:(RomType)type
 {
     return [self c64]->hasRom(type);

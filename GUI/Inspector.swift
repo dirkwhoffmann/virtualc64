@@ -36,6 +36,7 @@ class Inspector: DialogController {
     @IBOutlet weak var stopAndGoButton: NSButton!
     @IBOutlet weak var stepIntoButton: NSButton!
     @IBOutlet weak var stepOverButton: NSButton!
+    @IBOutlet weak var message: NSTextField!
     @IBOutlet weak var hexDecSelector: NSMatrix!
 
     // CPU panel
@@ -372,20 +373,65 @@ class Inspector: DialogController {
         }
     }
     
+    func powerOn() {
+    
+        message.stringValue = ""
+        fullRefresh()
+    }
+
+    func powerOff() {
+    
+        message.stringValue = ""
+        fullRefresh()
+    }
+
+    func run() {
+        
+        message.stringValue = ""
+        cpuInstrView.breakpointPC = -1
+        cpuInstrView.watchpointPC = -1
+        fullRefresh()
+    }
+    
+    func pause() {
+        
+        fullRefresh()
+    }
+
+    func step() {
+        
+        message.stringValue = ""
+        cpuInstrView.breakpointPC = -1
+        cpuInstrView.watchpointPC = -1
+        fullRefresh()
+        scrollToPC()
+    }
+    
+    func reset() {
+        
+        message.stringValue = ""
+        cpuInstrView.breakpointPC = -1
+        cpuInstrView.watchpointPC = -1
+        fullRefresh()
+    }
+
     func scrollToPC() {
 
         cpuInstrView.jumpTo(addr: Int(cpuInfo.reg.pc0))
     }
 
-    func signalWatchPoint() {
+    func signalBreakPoint(pc: Int) {
     
-        cpuInstrView.watchpointRow = cpuInstrView.selectedRow
-        cpuInstrView.refresh()
+        message.stringValue = String(format: "Breakpoint reached")
+        cpuInstrView.breakpointPC = pc
+        scrollToPC()
     }
 
-    func clearWatchPoint() {
+    func signalWatchPoint(pc: Int) {
     
-        cpuInstrView.watchpointRow = -1
+        message.stringValue = String(format: "Watchpoint reached")
+        cpuInstrView.watchpointPC = pc
+        scrollToPC()
     }
 
     @IBAction func refreshAction(_ sender: NSButton!) {
