@@ -250,7 +250,7 @@ ExpansionPort::attachGeoRamCartridge(isize kb)
     // kb must be a power of two between 64 and 4096
     if (kb < 64 || kb > 4096 || (kb & (kb - 1))) assert(false);
     
-    Cartridge *geoRAM = Cartridge::makeWithType(c64, CRT_GEO_RAM);
+    Cartridge *geoRAM = new GeoRAM(c64);
     geoRAM->setRamCapacity(kb * 1024);
     attachCartridge(geoRAM);
 }
@@ -268,10 +268,7 @@ ExpansionPort::attachCartridge(CRTFile *file, bool reset)
     assert(file);
     
     // Only proceed if this cartridge is supported
-    if (!file->isSupported()) {
-        msgQueue.put(MSG_CRT_UNSUPPORTED, file->cartridgeType()); // TODO: REMOVE
-        throw VC64Error(ERROR_CRT_UNSUPPORTED);
-    }
+    if (!file->isSupported()) throw VC64Error(ERROR_CRT_UNSUPPORTED);
     
     // Create cartridge from cartridge file
     Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, *file);
@@ -289,7 +286,7 @@ ExpansionPort::attachIsepicCartridge()
 {
     debug(EXP_DEBUG, "Attaching Isepic cartridge\n");
     
-    Cartridge *isepic = Cartridge::makeWithType(c64, CRT_ISEPIC);
+    Cartridge *isepic = new Isepic(c64); //  Cartridge::makeWithType(c64, CRT_ISEPIC);
     (void)attachCartridge(isepic);
 }
 

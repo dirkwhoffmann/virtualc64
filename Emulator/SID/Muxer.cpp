@@ -452,7 +452,6 @@ Muxer::_warpOn()
 void
 Muxer::_warpOff()
 {
-    printf("Warp off\n");
     rampUp();
     clear();
 }

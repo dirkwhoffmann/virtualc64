@@ -155,7 +155,8 @@ public extension MetalView {
                     return true
                     
                 } catch {
-                    (error as? VC64Error)?.cantOpen(url: url)
+                    track("ERROR")
+                    (error as? VC64Error)?.cantOpen(url: url, async: true)
                 }
             }
             

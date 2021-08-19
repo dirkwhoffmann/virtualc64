@@ -473,9 +473,6 @@ extension MyController {
 
         case .VC1530_COUNTER:
             refreshStatusBar()
-
-        case .CRT_UNSUPPORTED:
-            VC64Error.unsupportedCrtAlert(type: msg.data)
             
         case .CRT_ATTACHED:
             mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
