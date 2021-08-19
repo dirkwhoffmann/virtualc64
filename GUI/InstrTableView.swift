@@ -16,6 +16,7 @@ class InstrTableView: NSTableView {
     var breakpoints: GuardsProxy { return c64.breakpoints }
 
     enum BreakpointType {
+        
         case none
         case enabled
         case disabled

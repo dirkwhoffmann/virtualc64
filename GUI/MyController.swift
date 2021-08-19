@@ -393,12 +393,8 @@ extension MyController {
             
         case .BREAKPOINT_REACHED:
             inspector?.signalBreakPoint(pc: msg.data)
-            // inspector?.fullRefresh()
-            // inspector?.scrollToPC()
 
         case .WATCHPOINT_REACHED:
-            // inspector?.fullRefresh()
-            // inspector?.scrollToPC()
             inspector?.signalWatchPoint(pc: msg.data)
 
         case .CPU_JAMMED:

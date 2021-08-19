@@ -104,9 +104,8 @@ public:
         
         if (!isRunning()) inspect();
         
-        T result;
-        synchronized { result = cachedValues; }
-        return result;
+        synchronized { return cachedValues; }
+        unreachable;
     }
     
     /* Prints debug information about this component. The additional 'flags'

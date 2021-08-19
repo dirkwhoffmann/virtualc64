@@ -373,6 +373,11 @@ class Inspector: DialogController {
         }
     }
     
+    func scrollToPC() {
+
+        cpuInstrView.jumpTo(addr: Int(cpuInfo.reg.pc0))
+    }
+
     func powerOn() {
     
         message.stringValue = ""
@@ -400,6 +405,8 @@ class Inspector: DialogController {
 
     func step() {
         
+        track()
+        
         message.stringValue = ""
         cpuInstrView.breakpointPC = -1
         cpuInstrView.watchpointPC = -1
@@ -415,13 +422,10 @@ class Inspector: DialogController {
         fullRefresh()
     }
 
-    func scrollToPC() {
-
-        cpuInstrView.jumpTo(addr: Int(cpuInfo.reg.pc0))
-    }
-
     func signalBreakPoint(pc: Int) {
     
+        track("pc = \(pc)")
+        
         message.stringValue = String(format: "Breakpoint reached")
         cpuInstrView.breakpointPC = pc
         scrollToPC()
