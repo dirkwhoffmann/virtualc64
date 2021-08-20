@@ -238,7 +238,7 @@ FSBlock::check(bool strict) const
         ErrorCode err = check(i, &expected, strict);
         if (err != ERROR_OK) {
             count++;
-            debug(FS_DEBUG, "Block %d [%d.%d]: %s\n",
+            debug(FS_DEBUG, "Block %zd [%d.%d]: %s\n",
                   nr, i / 4, i % 4, ErrorCodeEnum::key(err));
         }
     }

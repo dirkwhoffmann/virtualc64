@@ -668,7 +668,7 @@ Disk::decodeDisk(u8 *dest, isize numTracks)
         if (trackIsEmpty(t))
             break;
         
-        trace(GCR_DEBUG, "Decoding track %d %s\n", t, dest ? "" : "(test run)");
+       trace(GCR_DEBUG, "Decoding track %zd %s\n", t, dest ? "" : "(test run)");
         numBytes += decodeTrack(t, dest + (dest ? numBytes : 0));
     }
     
@@ -687,7 +687,7 @@ Disk::decodeTrack(Track t, u8 *dest)
     // For each sector ...
     for (Sector s = 0; s < numSectors; s++) {
         
-        trace(GCR_DEBUG, "   Decoding sector %d\n", s);
+        trace(GCR_DEBUG, "   Decoding sector %zd\n", s);
         SectorInfo info = sectorLayout(s);
         if (info.dataBegin != info.dataEnd) {
             numBytes += decodeSector(info.dataBegin, dest + (dest ? numBytes : 0));
@@ -741,10 +741,10 @@ Disk::encodeG64(const G64File &a)
         }
         
         if (size > 7928) {
-            warn("Halftrack %d has %d bytes. Must be less than 7928\n", ht, size);
+            warn("Halftrack %zd has %d bytes. Must be less than 7928\n", ht, size);
             continue;
         }
-        trace(GCR_DEBUG, "  Encoding halftrack %d (%d bytes)\n", ht, size);
+        trace(GCR_DEBUG, "  Encoding halftrack %zd (%d bytes)\n", ht, size);
         length.halftrack[ht] = 8 * size;
         
         a.copyHalftrack(ht, data.halftrack[ht]);
@@ -788,9 +788,9 @@ Disk::encode(const FSDevice &fs, bool alignTracks)
     };
     */
     
-    auto numTracks = fs.getNumTracks();
+    isize numTracks = fs.getNumTracks();
 
-    trace(GCR_DEBUG, "Encoding disk with %d tracks\n", numTracks);
+    trace(GCR_DEBUG, "Encoding disk with %zd tracks\n", numTracks);
 
     // Wipe out track data
     clearDisk();
@@ -822,7 +822,7 @@ isize
 Disk::encodeTrack(const FSDevice &fs, Track t, u8 tailGap, HeadPos start)
 {
     assert(isTrackNumber(t));
-    trace(GCR_DEBUG, "Encoding track %d\n", t);
+    trace(GCR_DEBUG, "Encoding track %zd\n", t);
 
     isize totalEncodedBits = 0;
     
@@ -847,7 +847,7 @@ Disk::encodeSector(const FSDevice &fs, Track t, Sector s, HeadPos start, isize t
     HeadPos offset = start;
     u8 errorCode = fs.getErrorCode(ts);
         
-    trace(GCR_DEBUG, "  Encoding track/sector %d/%d\n", t, s);
+    trace(GCR_DEBUG, "  Encoding track/sector %zd/%zd\n", t, s);
     
     // Get disk id and compute checksum
     u8 id1 = fs.diskId1();

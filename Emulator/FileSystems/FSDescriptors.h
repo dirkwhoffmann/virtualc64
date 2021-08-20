@@ -30,10 +30,10 @@ struct FSDeviceDescriptor : C64Object {
     DOSType dos = DOS_TYPE_NODOS;
     
     // Number of cylinders
-    i32 numCyls = 0;
+    isize numCyls = 0;
     
     // Number of heads
-    i32 numHeads = 0;
+    isize numHeads = 0;
         
     
     //
@@ -65,10 +65,10 @@ struct FSDeviceDescriptor : C64Object {
     // Querying device properties
     //
     
-    i32 numTracks() const { return numCyls * numHeads; }
-    i32 speedZone(Cylinder track) const;
-    i32 numSectors(Cylinder track) const;
-    i32 numBlocks() const;
+    isize numTracks() const { return numCyls * numHeads; }
+    isize speedZone(Cylinder track) const;
+    isize numSectors(Cylinder track) const;
+    isize numBlocks() const;
 
     
     //

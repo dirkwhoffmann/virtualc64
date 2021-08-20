@@ -116,11 +116,11 @@ public:
     u8 diskId2() const { return bamPtr()->data[0xA3]; }
     
     // Reports layout information
-    i32 getNumCyls() const { return layout.numCyls; }
-    i32 getNumHeads() const { return layout.numHeads; }
-    i32 getNumTracks() const { return layout.numTracks(); }
-    i32 getNumSectors(Track track) const { return layout.numSectors(track); }
-    i32 getNumBlocks() const { return layout.numBlocks(); }
+    isize getNumCyls() const { return layout.numCyls; }
+    isize getNumHeads() const { return layout.numHeads; }
+    isize getNumTracks() const { return layout.numTracks(); }
+    isize getNumSectors(Track track) const { return layout.numSectors(track); }
+    isize getNumBlocks() const { return layout.numBlocks(); }
 
     // Returns the number of free or used blocks
     i32 numFreeBlocks() const;
@@ -190,8 +190,8 @@ public:
 private:
     
     // Locates the allocation bit for a certain block
-    FSBlock *locateAllocBit(Block b, u32 *byte, u32 *bit) const;
-    FSBlock *locateAllocBit(TSLink ref, u32 *byte, u32 *bit) const;
+    FSBlock *locateAllocBit(Block b, isize *byte, isize *bit) const;
+    FSBlock *locateAllocBit(TSLink ref, isize *byte, isize *bit) const;
 
     
     //
@@ -294,8 +294,8 @@ public:
     bool exportVolume(u8 *dst, isize size, ErrorCode *err = nullptr);
 
     // Exports a single block or a range of blocks
-    bool exportBlock(u32 nr, u8 *dst, isize size, ErrorCode *err = nullptr);
-    bool exportBlocks(u32 first, u32 last, u8 *dst, isize size, ErrorCode *err = nullptr);
+    bool exportBlock(isize nr, u8 *dst, isize size, ErrorCode *err = nullptr);
+    bool exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode *err = nullptr);
 
     // Exports all files or a single file to a folder in the host file system
     void exportDirectory(const string &path) throws;

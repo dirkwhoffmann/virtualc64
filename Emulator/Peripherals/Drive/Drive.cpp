@@ -635,9 +635,9 @@ Drive::moveHeadUp()
         halftrack++;
         offset = (HeadPos)(position * disk.lengthOfHalftrack(halftrack));
         
-        trace(DRV_DEBUG, "Moving head up to halftrack %d (track %2.1f) (offset %d)\n",
+        trace(DRV_DEBUG, "Moving head up to halftrack %zd (track %2.1f) (offset %zd)\n",
               halftrack, (halftrack + 1) / 2.0, offset);
-        trace(DRV_DEBUG, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
+        trace(DRV_DEBUG, "Halftrack %zd has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
     }
    
     assert(disk.isValidHeadPos(halftrack, offset));
@@ -654,9 +654,9 @@ Drive::moveHeadDown()
         halftrack--;
         offset = (HeadPos)(position * disk.lengthOfHalftrack(halftrack));
         
-        trace(DRV_DEBUG, "Moving head down to halftrack %d (track %2.1f)\n",
+        trace(DRV_DEBUG, "Moving head down to halftrack %zd (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
-        trace(DRV_DEBUG, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
+        trace(DRV_DEBUG, "Halftrack %zd has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
     }
     
     assert(disk.isValidHeadPos(halftrack, offset));

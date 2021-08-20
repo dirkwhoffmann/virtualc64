@@ -311,7 +311,7 @@ FSDevice::dump() const
     
     for (isize i = 0; i < blocksSize; i++)  {
         
-        msg("\nBlock %zu (%d):", i, blocks[i]->nr);
+        msg("\nBlock %zu (%zd):", i, blocks[i]->nr);
         msg(" %s\n", FSBlockTypeEnum::key(blocks[i]->type()));
         
         blocks[i]->dump();
@@ -420,7 +420,7 @@ FSDevice::setName(PETName<16> name)
 bool
 FSDevice::isFree(TSLink ts) const
 {
-    u32 byte, bit;
+    isize byte, bit;
     FSBlock *bam = locateAllocBit(ts, &byte, &bit);
     
     return GET_BIT(bam->data[byte], bit);
@@ -441,7 +441,7 @@ FSDevice::nextFreeBlock(TSLink ref) const
 void
 FSDevice::setAllocBit(TSLink ts, bool value)
 {
-    u32 byte, bit;
+    isize byte, bit;
     FSBlock *bam = locateAllocBit(ts, &byte, &bit);
 
     if (value && !GET_BIT(bam->data[byte], bit)) {
@@ -498,13 +498,13 @@ FSDevice::allocate(TSLink ts, u32 n)
 }
 
 FSBlock *
-FSDevice::locateAllocBit(Block b, u32 *byte, u32 *bit) const
+FSDevice::locateAllocBit(Block b, isize *byte, isize *bit) const
 {
     return locateAllocBit(layout.tsLink(b), byte, bit);
 }
 
 FSBlock *
-FSDevice::locateAllocBit(TSLink ts, u32 *byte, u32 *bit) const
+FSDevice::locateAllocBit(TSLink ts, isize *byte, isize *bit) const
 {
     assert(layout.isValidLink(ts));
         
@@ -947,21 +947,21 @@ FSDevice::exportVolume(u8 *dst, isize size, ErrorCode *err)
 }
 
 bool
-FSDevice::exportBlock(u32 nr, u8 *dst, isize size, ErrorCode *err)
+FSDevice::exportBlock(isize nr, u8 *dst, isize size, ErrorCode *err)
 {
     return exportBlocks(nr, nr, dst, size, err);
 }
 
 bool
-FSDevice::exportBlocks(u32 first, u32 last, u8 *dst, isize size, ErrorCode *err)
+FSDevice::exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode *err)
 {
     assert(last < (u32)layout.numBlocks());
     assert(first <= last);
     assert(dst);
     
-    u32 count = last - first + 1;
+    isize count = last - first + 1;
     
-    debug(FS_DEBUG, "Exporting %d blocks (%d - %d)\n", count, first, last);
+    debug(FS_DEBUG, "Exporting %zd blocks (%zd - %zd)\n", count, first, last);
 
     // Only proceed if the source buffer contains the right amount of data
     if (count * 256 != size) {

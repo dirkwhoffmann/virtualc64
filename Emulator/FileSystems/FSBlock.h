@@ -116,13 +116,13 @@ typedef FSBlock* BlockPtr;
 typedef FSBlock* BlockPtr;
 
 #define EXPECT_BYTE(exp) { \
-if (value != (exp)) { *expected = (exp); return ERROR_FS_EXPECTED_VAL; } }
+if (value != (exp)) { *expected = (u8)(exp); return ERROR_FS_EXPECTED_VAL; } }
 
 #define EXPECT_MIN(min) { \
-if (value < (min)) { *expected = (min); return ERROR_FS_EXPECTED_MIN; } }
+if (value < (min)) { *expected = (u8)(min); return ERROR_FS_EXPECTED_MIN; } }
 
 #define EXPECT_MAX(max) { \
-if (value > (max)) { *expected = (max); return ERROR_FS_EXPECTED_MAX; } }
+if (value > (max)) { *expected = (u8)(max); return ERROR_FS_EXPECTED_MAX; } }
 
 #define EXPECT_RANGE(min,max) { \
 EXPECT_MIN(min); EXPECT_MAX(max) }
@@ -131,5 +131,5 @@ EXPECT_MIN(min); EXPECT_MAX(max) }
 EXPECT_RANGE(0, device.layout.numTracks() + 1)
 
 #define EXPECT_SECTOR_REF(t) { \
-if (u32 num = device.layout.numSectors(t)) \
+if (isize num = device.layout.numSectors(t)) \
 EXPECT_RANGE(0,num) else if (strict) EXPECT_MAX(254) }
