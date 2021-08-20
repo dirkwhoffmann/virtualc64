@@ -156,7 +156,6 @@
 - (void)dealloc;
 - (void)kill;
 
-@property (readonly) BOOL isReleaseBuild;
 @property BOOL warpMode;
 @property BOOL debugMode;
 @property (readonly) NSInteger cpuLoad;
@@ -777,8 +776,6 @@
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
  
-@property (readonly) RomType romType;
-
 @end
 
 //
