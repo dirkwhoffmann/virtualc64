@@ -76,6 +76,10 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
             description = "No Kernal Rom installed.";
             break;
 
+        case ERROR_ROM_DRIVE_MISSING:
+            description = "No Floppy Drive Rom installed.";
+            break;
+
         case ERROR_ROM_MEGA65_MISMATCH:
             description = "Mega65 Rom revisions do not match.";
             break;

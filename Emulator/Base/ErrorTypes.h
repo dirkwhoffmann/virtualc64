@@ -37,6 +37,7 @@ enum_long(ERROR_CODE)
     ERROR_ROM_BASIC_MISSING,
     ERROR_ROM_CHAR_MISSING,
     ERROR_ROM_KERNAL_MISSING,
+    ERROR_ROM_DRIVE_MISSING,
     ERROR_ROM_MEGA65_MISMATCH,
     
     // Snapshots
@@ -99,6 +100,7 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
             case ERROR_ROM_BASIC_MISSING:    return "ROM_BASIC_MISSING";
             case ERROR_ROM_CHAR_MISSING:     return "ROM_CHAR_MISSING";
             case ERROR_ROM_KERNAL_MISSING:   return "ROM_KERNAL_MISSING";
+            case ERROR_ROM_DRIVE_MISSING:    return "ROM_DRIVE_MISSING";
             case ERROR_ROM_MEGA65_MISMATCH:  return "ROM_MEGA65_MISMATCH";
                 
             case ERROR_SNP_TOO_OLD:          return "SNP_TOO_OLD";

@@ -294,9 +294,7 @@ Muxer::setConfigItem(Option option, long id, i64 value)
             }
 
             if (value < 0xD400 || value > 0xD7E0 || (value & 0x1F)) {
-                warn("Invalid SID address: %llx\n", value);
-                warn("Valid values: D400, D420, ... D7E0\n");
-                return;
+                throw VC64Error(ERROR_OPT_INVARG, "D400, D420 ... D7E0");
             }
 
             if (config.address[id] == value) {

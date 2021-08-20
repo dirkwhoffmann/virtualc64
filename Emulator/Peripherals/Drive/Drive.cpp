@@ -86,7 +86,7 @@ Drive::resetConfig()
     setConfigItem(OPT_DRV_TYPE, defaults.type);
     setConfigItem(OPT_DRV_RAM, defaults.ram);
     setConfigItem(OPT_DRV_PARCABLE, defaults.parCable);
-    setConfigItem(OPT_DRV_CONNECT, deviceNr == DRIVE8);
+    try { setConfigItem(OPT_DRV_CONNECT, deviceNr == DRIVE8); } catch (...) { }
     setConfigItem(OPT_DRV_POWER_SWITCH, defaults.switchedOn);
     setConfigItem(OPT_DRV_POWER_SAVE, defaults.powerSave);
 
@@ -127,33 +127,6 @@ Drive::getConfigItem(Option option) const
             return 0;
     }
 }
-
-/*
-void
-Drive::setConfigItem(Option option, i64 value)
-{
-    switch (option) {
-
-        case OPT_DRV_AUTO_CONFIG:
-        case OPT_DRV_POWER_SAVE:
-        case OPT_DRV_EJECT_DELAY:
-        case OPT_DRV_SWAP_DELAY:
-        case OPT_DRV_INSERT_DELAY:
-        case OPT_DRV_POWER_VOL:
-        case OPT_DRV_STEP_VOL:
-        case OPT_DRV_INSERT_VOL:
-        case OPT_DRV_EJECT_VOL:
-        case OPT_DRV_PAN:
-            
-            setConfigItem(option, DRIVE8, value);
-            setConfigItem(option, DRIVE9, value);
-            return;
-
-        default:
-            assert(false);
-    }
-}
-*/
 
 void
 Drive::setConfigItem(Option option, i64 value)
@@ -207,9 +180,9 @@ Drive::setConfigItem(Option option, i64 value)
         case OPT_DRV_CONNECT:
         {
             if (value && !c64.hasRom(ROM_TYPE_VC1541)) {
-                warn("Can't connect drive (ROM missing).\n");
-                return;
+                throw VC64Error(ERROR_ROM_DRIVE_MISSING);
             }
+            
             suspended {
 
                 config.connected = value;
