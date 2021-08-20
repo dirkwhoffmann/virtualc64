@@ -253,19 +253,19 @@
 
 - (NSString *)disassembleInstr:(NSInteger)addr length:(NSInteger *)len
 {
-    const char *str = [self cpu]->debugger.disassembleInstr(addr, len);
+    const char *str = [self cpu]->debugger.disassembleInstr((u16)addr, len);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 
 - (NSString *)disassembleBytes:(NSInteger)addr
 {
-    const char *str = [self cpu]->debugger.disassembleBytes(addr);
+    const char *str = [self cpu]->debugger.disassembleBytes((u16)addr);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 
 - (NSString *)disassembleAddr:(NSInteger)addr
 {
-    const char *str = [self cpu]->debugger.disassembleAddr(addr);
+    const char *str = [self cpu]->debugger.disassembleAddr((u16)addr);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 
@@ -320,11 +320,11 @@
 
 - (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src
 {
-    return @([self mem]->memdump(addr, num, hex, src).c_str());
+    return @([self mem]->memdump((u16)addr, num, hex, src).c_str());
 }
 - (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemoryType)src
 {
-    return @([self mem]->txtdump(addr, num, src).c_str());
+    return @([self mem]->txtdump((u16)addr, num, src).c_str());
 }
 
 @end

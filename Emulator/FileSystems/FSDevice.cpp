@@ -485,8 +485,8 @@ FSDevice::allocate(TSLink ts, u32 n)
             // Link this block
             block = blockPtr(ts);
             ts = layout.nextBlockRef(ts);
-            block->data[0] = ts.t;
-            block->data[1] = ts.s;
+            block->data[0] = (u8)ts.t;
+            block->data[1] = (u8)ts.s;
         }
         
         // Delete the block reference in the last block
@@ -670,8 +670,8 @@ FSDevice::getOrCreateNextFreeDirEntry()
         
         // Create a new directory block and link to it
         TSLink ts = layout.nextBlockRef(layout.tsLink(ptr->nr));
-        ptr->data[0] = ts.t;
-        ptr->data[1] = ts.s;
+        ptr->data[0] = (u8)ts.t;
+        ptr->data[1] = (u8)ts.s;
     }
     
     return nullptr;

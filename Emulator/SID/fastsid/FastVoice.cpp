@@ -69,9 +69,9 @@ FastVoice::initWaveTables()
         for (isize i = 0; i < 4096; i++) {
             wavetable10[m][i] = (u16)(i < 2048 ? i << 4 : 0xffff - (i << 4));
             wavetable20[m][i] = (u16)(i << 3);
-            wavetable30[m][i] = waveform30_8580[i] << 7;
+            wavetable30[m][i] = (u16)(waveform30_8580[i] << 7);
             wavetable40[m][i + 4096] = 0x7fff;
-            wavetable50[m][i + 4096] = waveform50_6581[i >> 3] << 7;
+            wavetable50[m][i + 4096] = (u16)(waveform50_6581[i >> 3] << 7);
             wavetable60[m][i + 4096] = 0;
             wavetable70[m][i + 4096] = 0;
         }
@@ -79,9 +79,9 @@ FastVoice::initWaveTables()
     
     // Modify some tables for SID8580
     for (isize i = 0; i < 4096; i++) {
-        wavetable50[1][i + 4096] = waveform50_8580[i] << 7;
-        wavetable60[1][i + 4096] = waveform60_8580[i] << 7;
-        wavetable70[1][i + 4096] = waveform70_8580[i] << 7;
+        wavetable50[1][i + 4096] = (u16)(waveform50_8580[i] << 7);
+        wavetable60[1][i + 4096] = (u16)(waveform60_8580[i] << 7);
+        wavetable70[1][i + 4096] = (u16)(waveform70_8580[i] << 7);
     }
     
     // Noise tables are the same for both SID models

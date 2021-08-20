@@ -268,7 +268,7 @@ C64Memory::eraseWithPattern(RamPattern pattern)
             std::uniform_int_distribution<> distrib(0, 0xFF);
          
             for (isize i = 0; i < isizeof(ram); i++)
-                ram[i] = distrib(gen);
+                ram[i] = (u8)distrib(gen);
         
             break;
         }
@@ -487,7 +487,7 @@ C64Memory::spypeekIO(u16 addr) const
         case 0x9: // Color Ram
         case 0xA: // Color Ram
         case 0xB: // Color Ram
-            return spypeekColor(addr - 0xD8000);
+            return spypeekColor(addr - 0xD800);
 
         case 0xC: // CIA 1
             

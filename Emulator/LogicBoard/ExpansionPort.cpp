@@ -390,7 +390,7 @@ ExpansionPort::switchIsRight() const
 }
 
 const string
-ExpansionPort::getSwitchDescription(i8 pos) const
+ExpansionPort::getSwitchDescription(isize pos) const
 {
     return cartridge ? cartridge->getSwitchDescription(pos) : "";
 }
@@ -402,7 +402,7 @@ ExpansionPort::getSwitchDescription() const
 }
 
 bool
-ExpansionPort::validSwitchPosition(i8 pos) const
+ExpansionPort::validSwitchPosition(isize pos) const
 {
     return cartridge ? cartridge->validSwitchPosition(pos) : false;    
 }

@@ -293,7 +293,7 @@ VICII::drawCanvasPixel(u8 pixel, u8 mode, u8 d016)
     } else {
         
         // Update every cycle
-        sr.colorbits = (sr.data >> 7) << multicolorDisplayMode;
+        sr.colorbits = (u8)((sr.data >> 7) << multicolorDisplayMode);
     }
     sr.data <<= 1;
     sr.mcFlop = !sr.mcFlop;

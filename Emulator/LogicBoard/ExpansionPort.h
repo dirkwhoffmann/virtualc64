@@ -198,12 +198,12 @@ public:
     /* Returns a textual description for a switch position or nullptr if the
      * switch cannot be positioned this way.
      */
-    const string getSwitchDescription(i8 pos) const;
+    const string getSwitchDescription(isize pos) const;
     const string getSwitchDescription() const;
-    bool validSwitchPosition(i8 pos) const;
+    bool validSwitchPosition(isize pos) const;
     
     // Puts the switch in the provided position
-    void setSwitch(u8 pos) { if (cartridge) cartridge->setSwitch(pos); }
+    void setSwitch(isize pos) { if (cartridge) cartridge->setSwitch(pos); }
 
     
     //

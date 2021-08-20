@@ -267,7 +267,7 @@ T64File::repair()
 
         // Compute start address in file
         n = 0x48 + (i * 0x20);
-        u16 startAddrInContainer = LO_LO_HI_HI(data[n], data[n+1], data[n+2], data[n+3]);
+        isize startAddrInContainer = LO_LO_HI_HI(data[n], data[n+1], data[n+2], data[n+3]);
 
         if (startAddrInContainer >= size) {
             warn("T64: Offset mismatch. Sorry, can't repair.\n");

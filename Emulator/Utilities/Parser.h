@@ -43,7 +43,7 @@ long parseNum(string& token) throws;
 template <typename Enum> long parseEnum(const string& key) throws
 {
     string upperKey;
-    for (auto c : key) { upperKey += toupper(c); }
+    for (auto c : key) { upperKey += (char)std::toupper(c); }
     
     auto p = Enum::pairs();
     

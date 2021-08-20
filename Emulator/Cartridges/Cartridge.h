@@ -104,7 +104,7 @@ protected:
     /* Current position of the cartridge switch (if any). Only a few cartridges
      * have a switch such as ISEPIC and EXPERT.
      */
-    i8 switchPos = 0;
+    isize switchPos = 0;
 
     // Status of the cartridge LED (true = on)
     bool led = false;
@@ -328,7 +328,7 @@ public:
     virtual bool hasSwitch() const { return false; }
 
     // Returns the current switch position
-    virtual i8 getSwitch() const { return switchPos; }
+    virtual isize getSwitch() const { return switchPos; }
     bool switchIsNeutral() const { return getSwitch() == 0; }
     bool switchIsLeft() const { return getSwitch() < 0; }
     bool switchIsRight() const { return getSwitch() > 0; }
@@ -336,12 +336,12 @@ public:
     /* Returns a textual description for a switch position or nullptr if the
      * switch cannot be positioned this way.
      */
-    virtual const string getSwitchDescription(i8 pos) const { return ""; }
+    virtual const string getSwitchDescription(isize pos) const { return ""; }
     const string getSwitchDescription() const { return getSwitchDescription(getSwitch()); }
-    bool validSwitchPosition(i8 pos) const { return getSwitchDescription(pos) != ""; }
+    bool validSwitchPosition(isize pos) const { return getSwitchDescription(pos) != ""; }
     
     // Puts the switch in a certain position
-    virtual void setSwitch(i8 pos);
+    virtual void setSwitch(isize pos);
 
     
     //

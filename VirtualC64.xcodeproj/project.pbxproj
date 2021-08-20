@@ -112,8 +112,8 @@
 		504C439524AF29AC00E69CAE /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431724AF29AC00E69CAE /* envelope.cc */; };
 		504C439624AF29AC00E69CAE /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431824AF29AC00E69CAE /* pot.cc */; };
 		504C439724AF29AC00E69CAE /* voice.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431C24AF29AC00E69CAE /* voice.cc */; };
-		504C439824AF29AC00E69CAE /* sid.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431F24AF29AC00E69CAE /* sid.cc */; };
-		504C439924AF29AC00E69CAE /* filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432024AF29AC00E69CAE /* filter.cc */; settings = {COMPILER_FLAGS = "-c"; }; };
+		504C439824AF29AC00E69CAE /* sid.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431F24AF29AC00E69CAE /* sid.cc */; settings = {COMPILER_FLAGS = "-w"; }; };
+		504C439924AF29AC00E69CAE /* filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432024AF29AC00E69CAE /* filter.cc */; settings = {COMPILER_FLAGS = "-w"; }; };
 		504C439A24AF29AC00E69CAE /* dac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432224AF29AC00E69CAE /* dac.cc */; };
 		504C439B24AF29AC00E69CAE /* extfilt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432B24AF29AC00E69CAE /* extfilt.cc */; };
 		504C439C24AF29AC00E69CAE /* wave.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432D24AF29AC00E69CAE /* wave.cc */; settings = {COMPILER_FLAGS = "-w"; }; };

@@ -561,7 +561,7 @@ Cartridge::bankOut(isize nr)
 }
 
 void
-Cartridge::setSwitch(i8 pos)
+Cartridge::setSwitch(isize pos)
 {
     switchPos = pos;
     c64.msgQueue.put(MSG_CART_SWITCH);

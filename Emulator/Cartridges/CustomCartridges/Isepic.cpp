@@ -119,13 +119,13 @@ Isepic::pokeIO2(u16 addr, u8 value)
 }
 
 const string
-Isepic::getSwitchDescription(i8 pos) const
+Isepic::getSwitchDescription(isize pos) const
 {
     return (pos == -1) ? "Off" : (pos == 1) ? "On" : "";
 }
 
 void
-Isepic::setSwitch(i8 pos)
+Isepic::setSwitch(isize pos)
 {
     suspended {
         
