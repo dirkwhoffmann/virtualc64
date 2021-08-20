@@ -926,8 +926,8 @@ VICII::checkForLightpenIrq()
     if (yCounter == 311 && vicCycle != 1) return;
     
     // Latch coordinates
-    latchedLPX = lightpenX() / 2;
-    latchedLPY = lightpenY();
+    latchedLPX = (u8)(lightpenX() / 2);
+    latchedLPY = (u8)(lightpenY());
     
     // Newer VICII models trigger an interrupt immediately
     if (!delayedLightPenIrqs()) triggerIrq(8);
@@ -976,12 +976,12 @@ VICII::checkForLightpenIrqAtStartOfFrame()
 //
 
 u8
-VICII::spriteDepth(u8 nr) const
+VICII::spriteDepth(isize nr) const
 {
     return
     GET_BIT(reg.delayed.sprPriority, nr) ?
-    (DEPTH_SPRITE_BG | nr) :
-    (DEPTH_SPRITE_FG | nr);
+    (u8)(DEPTH_SPRITE_BG | nr) :
+    (u8)(DEPTH_SPRITE_FG | nr);
 }
 
 u8

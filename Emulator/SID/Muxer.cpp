@@ -230,7 +230,7 @@ Muxer::setConfigItem(Option option, i64 value)
         case OPT_AUDVOLL:
             
             config.volL = std::clamp((int)value, 0, 100);
-            volL.set(pow((double)config.volL / 50, 1.4));
+            volL.set(powf((float)config.volL / 50, 1.4f));
             
             if (wasMuted != isMuted()) {
                 msgQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
@@ -240,7 +240,7 @@ Muxer::setConfigItem(Option option, i64 value)
         case OPT_AUDVOLR:
 
             config.volR = std::clamp((int)value, 0, 100);
-            volR.set(pow((double)config.volR / 50, 1.4));
+            volR.set(powf((float)config.volR / 50, 1.4f));
 
             if (wasMuted != isMuted()) {
                 msgQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
@@ -305,7 +305,7 @@ Muxer::setConfigItem(Option option, long id, i64 value)
             
             suspended {
                 
-                config.address[id] = value;
+                config.address[id] = (u16)value;
                 clearSampleBuffer(id);
             }
             return;
@@ -315,9 +315,9 @@ Muxer::setConfigItem(Option option, long id, i64 value)
             assert(id >= 0 && id <= 3);
 
             config.vol[id] = std::clamp((int)value, 0, 100);
-            vol[id] = pow((double)config.vol[id] / 100, 1.4) * 0.000025;
+            vol[id] = powf((float)config.vol[id] / 100, 1.4f) * 0.000025f;
 #ifdef __EMSCRIPTEN__
-            vol[id] *= 0.15;
+            vol[id] *= 0.15f;
 #endif
             if (wasMuted != isMuted()) {
                 msgQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
@@ -336,9 +336,9 @@ Muxer::setConfigItem(Option option, long id, i64 value)
 
             config.pan[id] = value;
             
-            if (value <= 50) pan[id] = (50 + value) / 100.0;
-            else if (value <= 150) pan[id] = (150 - value) / 100.0;
-            else if (value <= 200) pan[id] = (value - 150) / 100.0;
+            if (value <= 50) pan[id] = (50 + value) / 100.0f;
+            else if (value <= 150) pan[id] = (150 - value) / 100.0f;
+            else if (value <= 200) pan[id] = (value - 150) / 100.0f;
             return;
 
         default:

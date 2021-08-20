@@ -130,8 +130,8 @@ CPU<M>::registerCallback(u8 opcode, const char *mnemonic,
 template <typename M> void
 CPU<M>::registerInstructions()
 {
-    for (int i = 0; i < 256; i++) {
-        registerCallback(i, "???", ADDR_IMPLIED, JAM);
+    for (isize i = 0; i < 256; i++) {
+        registerCallback((u8)i, "???", ADDR_IMPLIED, JAM);
     }
     registerLegalInstructions();
     registerIllegalInstructions();
@@ -994,8 +994,8 @@ CPU<M>::executeOneCycle()
         // Flags:       N Z C I D V
         //              / / / - - -
     
-        #define DO_ASL_ACC setC(reg.a & 0x80); loadA(reg.a << 1);
-        #define DO_ASL setC(reg.d & 0x80); reg.d = reg.d << 1;
+        #define DO_ASL_ACC setC(reg.a & 0x80); loadA((u8)(reg.a << 1));
+        #define DO_ASL setC(reg.d & 0x80); reg.d = (u8)(reg.d << 1);
 
         case ASL_acc:
             
@@ -2078,8 +2078,8 @@ CPU<M>::executeOneCycle()
         // Flags:       N Z C I D V
         //              / / / - - -
          
-        #define DO_ROL_ACC { int c = !!getC(); setC(reg.a & 0x80); loadA((reg.a << 1) | c); }
-        #define DO_ROL { int c = !!getC(); setC(reg.d & 0x80); reg.d = (reg.d << 1) | c; }
+        #define DO_ROL_ACC { u8 c = !!getC(); setC(reg.a & 0x80); loadA((u8)(reg.a << 1 | c)); }
+        #define DO_ROL { u8 c = !!getC(); setC(reg.d & 0x80); reg.d = (u8)(reg.d << 1 | c); }
 
         case ROL_acc:
             
@@ -2128,8 +2128,8 @@ CPU<M>::executeOneCycle()
         // Flags:       N Z C I D V
         //              / / / - - -
     
-        #define DO_ROR_ACC { int c = !!getC(); setC(reg.a & 0x1); loadA((reg.a >> 1) | (c << 7)); }
-        #define DO_ROR { int c = !!getC(); setC(reg.d & 0x1); reg.d = (reg.d >> 1) | (c << 7); }
+        #define DO_ROR_ACC { u8 c = !!getC(); setC(reg.a & 0x1); loadA((u8)(reg.a >> 1 | c << 7)); }
+        #define DO_ROR { u8 c = !!getC(); setC(reg.d & 0x1); reg.d = (u8)(reg.d >> 1 | c << 7); }
             
         case ROR_acc:
             

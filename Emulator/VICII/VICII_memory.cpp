@@ -134,7 +134,7 @@ VICII::peek(u16 addr)
         case 0x0C:
         case 0x0E:
             
-            result = reg.current.sprX[addr >> 1];
+            result = (u8)reg.current.sprX[addr >> 1];
             break;
             
         case 0x01: // Sprite Y
@@ -314,7 +314,7 @@ VICII::spypeek(u16 addr) const
         case 0x0C:
         case 0x0E:
             
-            return reg.current.sprX[addr >> 1];
+            return (u8)reg.current.sprX[addr >> 1];
             
         case 0x01: // Sprite Y
         case 0x03:

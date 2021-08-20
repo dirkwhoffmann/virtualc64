@@ -537,7 +537,7 @@
 - (Halftrack)halftrack;
 - (u16)sizeOfHalftrack:(Halftrack)ht;
 - (u16)sizeOfCurrentHalftrack;
-- (u16)offset;
+- (NSInteger)offset;
 - (u8)readBitFromHead;
 
 - (BOOL)isRotating;

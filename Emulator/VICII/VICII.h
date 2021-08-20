@@ -1072,7 +1072,7 @@ private:
 private:
 
     // Gets the depth of a sprite (will be written into the z buffer)
-    u8 spriteDepth(u8 nr) const;
+    u8 spriteDepth(isize nr) const;
     
     // Compares the Y coordinates of all sprites with the yCounter
     u8 compareSpriteY() const;

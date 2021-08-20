@@ -1076,7 +1076,7 @@
     return [self drive]->sizeOfCurrentHalftrack();
 }
 
-- (u16)offset
+- (NSInteger)offset
 {
     return [self drive]->getOffset();
 }
