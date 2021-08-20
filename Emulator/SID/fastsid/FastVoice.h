@@ -271,7 +271,7 @@ public:
      * The pulse width is a 12-bit number which linearly controls the pulse
      * width (duty cycle) of the pulse waveform.
      */
-    u16 pulseWidth() { return ((sidreg[3] & 0x0F) << 8) | sidreg[0x02]; }
+    u16 pulseWidth() { return (u16)((sidreg[3] & 0x0F) << 8 | sidreg[0x02]); }
 
     /* Returns the GATE bit for this voice
      * The gate bit controls the Envelope Generator. When this bit is set to a

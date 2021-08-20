@@ -238,7 +238,7 @@ private:
     // Filter related configuration items
     
     // Returns the filter cutoff frequency (11 bit value)
-    u16 filterCutoff() const { return (sidreg[0x16] << 3) | (sidreg[0x15] & 0x07); }
+    u16 filterCutoff() const { return (u16)(sidreg[0x16] << 3 | (sidreg[0x15] & 0x07)); }
 
     // Returns the filter resonance (4 bit value)
     u8 filterResonance() const { return sidreg[0x17] >> 4; }

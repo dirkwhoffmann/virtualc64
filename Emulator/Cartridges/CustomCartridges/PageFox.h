@@ -100,6 +100,6 @@ public:
     
 private:
     
-    u16 ramAddrL(u16 addr) const { return (bankSelect() << 14) + (addr & 0x1FFF); }
+    u16 ramAddrL(u16 addr) const { return (u16)(bankSelect() << 14 | (addr & 0x1FFF)); }
     u16 ramAddrH(u16 addr) const { return 0x2000 + ramAddrL(addr); }
 };

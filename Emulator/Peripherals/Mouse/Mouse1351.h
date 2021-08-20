@@ -86,6 +86,6 @@ public:
     void executeY(i64 targetY);
 
     // Returns the mouse bits as they show up in the SID register
-    u8 mouseXBits() const { return (mouseX & 0x3F) << 1; }
-    u8 mouseYBits() const { return (mouseY & 0x3F) << 1; }
+    u8 mouseXBits() const { return (u8)((mouseX & 0x3F) << 1); }
+    u8 mouseYBits() const { return (u8)((mouseY & 0x3F) << 1); }
 };

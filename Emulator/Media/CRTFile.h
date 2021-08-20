@@ -93,7 +93,7 @@ public:
     //
     
     // Returns how many chips are contained in this cartridge
-    u8 chipCount() const { return numberOfChips; }
+    isize chipCount() const { return numberOfChips; }
     
     // Returns where the data of a certain chip can be found
     u8 *chipData(isize nr) const { return chips[nr]+0x10; }

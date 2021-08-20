@@ -113,12 +113,12 @@
 		504C439624AF29AC00E69CAE /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431824AF29AC00E69CAE /* pot.cc */; };
 		504C439724AF29AC00E69CAE /* voice.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431C24AF29AC00E69CAE /* voice.cc */; };
 		504C439824AF29AC00E69CAE /* sid.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431F24AF29AC00E69CAE /* sid.cc */; };
-		504C439924AF29AC00E69CAE /* filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432024AF29AC00E69CAE /* filter.cc */; };
+		504C439924AF29AC00E69CAE /* filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432024AF29AC00E69CAE /* filter.cc */; settings = {COMPILER_FLAGS = "-c"; }; };
 		504C439A24AF29AC00E69CAE /* dac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432224AF29AC00E69CAE /* dac.cc */; };
 		504C439B24AF29AC00E69CAE /* extfilt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432B24AF29AC00E69CAE /* extfilt.cc */; };
-		504C439C24AF29AC00E69CAE /* wave.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432D24AF29AC00E69CAE /* wave.cc */; };
+		504C439C24AF29AC00E69CAE /* wave.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432D24AF29AC00E69CAE /* wave.cc */; settings = {COMPILER_FLAGS = "-w"; }; };
 		504C439D24AF29AC00E69CAE /* version.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432F24AF29AC00E69CAE /* version.cc */; };
-		504C439E24AF29AC00E69CAE /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433124AF29AC00E69CAE /* ReSID.cpp */; };
+		504C439E24AF29AC00E69CAE /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433124AF29AC00E69CAE /* ReSID.cpp */; settings = {COMPILER_FLAGS = "-w"; }; };
 		504C439F24AF29AC00E69CAE /* FastSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433524AF29AC00E69CAE /* FastSID.cpp */; };
 		504C43A024AF29AC00E69CAE /* FastVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433824AF29AC00E69CAE /* FastVoice.cpp */; };
 		504C43A124AF29AC00E69CAE /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433C24AF29AC00E69CAE /* IEC.cpp */; };
@@ -2053,6 +2053,7 @@
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_SEMICOLON_BEFORE_METHOD_BODY = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -2122,6 +2123,7 @@
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_SEMICOLON_BEFORE_METHOD_BODY = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
