@@ -66,7 +66,7 @@ FSBlock::writeBAM(PETName<16> &name)
             
         } else {
             
-            p[0] = device.layout.numSectors(k);
+            p[0] = (u8)device.layout.numSectors(k);
             p[1] = 0xFF;
             p[2] = 0xFF;
             p[3] = p[0] == 21 ? 0x1F : p[0] == 19 ? 0x07 : p[0] == 18 ? 0x03 : 0x01;

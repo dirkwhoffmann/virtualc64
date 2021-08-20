@@ -467,7 +467,7 @@ private:
      * follwowing sectors with odd sector numbers. The number of written bits
      * is returned.
      */
-    isize encodeTrack(const FSDevice &fs, Track t, u8 tailGap, HeadPos start);
+    isize encodeTrack(const FSDevice &fs, Track t, isize gap, HeadPos start);
     
     /* Encode a single sector. This function translates the logical byte
      * sequence of a single sector into the native VC1541 byte representation.

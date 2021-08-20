@@ -17,7 +17,7 @@ class C64;
 struct Thumbnail {
     
     // Image size
-    u16 width, height;
+    isize width, height;
     
     // Raw texture data
     u32 screen[TEX_HEIGHT * TEX_WIDTH];

@@ -241,7 +241,7 @@ PIA6821::peek(bool rs1, bool rs0)
 void
 PIA6821::poke(bool rs1, bool rs0, u8 value)
 {
-    u8 addr = rs1 << 3 | rs0 << 2 | (cra & 0b100) >> 1 | (crb & 0b100) >> 2;
+    auto addr = rs1 << 3 | rs0 << 2 | (cra & 0b100) >> 1 | (crb & 0b100) >> 2;
     
     /* |  RS1  |  RS0  | CRA-2 | CRB-2  | Register
      * -------------------------------------------

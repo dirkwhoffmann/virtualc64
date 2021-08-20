@@ -97,7 +97,7 @@ FastVoice::initWaveTables()
 }
 
 void
-FastVoice::init(FastSID *owner, unsigned voiceNr, FastVoice *prevVoice)
+FastVoice::init(FastSID *owner, isize voiceNr, FastVoice *prevVoice)
 {
     assert(prevVoice);
     
@@ -382,7 +382,7 @@ FastVoice::applyFilter()
     if (filterType == FASTSID_HIGH_PASS) {
         filterLow += filterRef * filterDy * 0.1;
         filterRef += (filterIO - filterLow - (filterRef * filterResDy)) * filterDy;
-        sample = filterRef - (filterIO / 8);
+        sample = (float)(filterRef - (filterIO / 8));
         sample = std::max(sample, -128.f);
         sample = std::max(sample, 127.f);
         filterIO = (signed char)sample;
@@ -391,9 +391,9 @@ FastVoice::applyFilter()
     
     filterLow += filterRef * filterDy;
     sample = filterIO;
-    sample2 = sample - filterLow;
+    sample2 = (float)(sample - filterLow);
     int tmp = (int)sample2;
-    sample2 -= filterRef * filterResDy;
+    sample2 -= (float)(filterRef * filterResDy);
     filterRef += sample2 * filterDy;
     
     switch (filterType) {

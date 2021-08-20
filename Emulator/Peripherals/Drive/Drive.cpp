@@ -254,31 +254,31 @@ Drive::setConfigItem(Option option, i64 value)
         }
         case OPT_DRV_PAN:
         {
-            config.pan = value;
+            config.pan = (i16)value;
             return;
         }
         case OPT_DRV_POWER_VOL:
         {
             value = std::clamp(value, 0LL, 100LL);
-            config.powerVolume = value;
+            config.powerVolume = (u8)value;
             return;
         }
         case OPT_DRV_STEP_VOL:
         {
             value = std::clamp(value, 0LL, 100LL);
-            config.stepVolume = value;
+            config.stepVolume = (u8)value;
             return;
         }
         case OPT_DRV_EJECT_VOL:
         {
             value = std::clamp(value, 0LL, 100LL);
-            config.ejectVolume = value;
+            config.ejectVolume = (u8)value;
             return;
         }
         case OPT_DRV_INSERT_VOL:
         {
             value = std::clamp(value, 0LL, 100LL);
-            config.insertVolume = value;
+            config.insertVolume = (u8)value;
             return;
         }
         default:

@@ -88,7 +88,7 @@ class FastVoice : public SubComponent {
     static u8 noiseLSB[256];
     
     // The SID voice which is represented by this object (1,2, or 3)
-    u8 nr;
+    isize nr;
 
     // Pointer to parent SID object
     class FastSID *fastsid;
@@ -176,7 +176,7 @@ public:
     const char *getDescription() const override { return "FastVoice"; }
 
     static void initWaveTables();
-    void init(FastSID *owner, unsigned voiceNr, FastVoice *prevVoice);
+    void init(FastSID *owner, isize voiceNr, FastVoice *prevVoice);
     
 private:
     

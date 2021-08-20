@@ -19,7 +19,7 @@ string
 lowercased(const string& s)
 {
     string result;
-    for (auto c : s) { result += tolower(c); }
+    for (auto c : s) { result += (char)std::tolower(c); }
     return result;
 }
 
@@ -27,7 +27,7 @@ string
 uppercased(const string& s)
 {
     string result;
-    for (auto c : s) { result += toupper(c); }
+    for (auto c : s) { result += (char)std::toupper(c); }
     return result;
 }
 

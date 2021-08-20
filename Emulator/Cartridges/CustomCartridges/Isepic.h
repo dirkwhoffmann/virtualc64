@@ -14,7 +14,7 @@
 class Isepic : public Cartridge {
     
     // Selected page inside the selected RAM bank
-    u8 page;
+    isize page;
 
     // Original mapping of the uppermost memory page
     MemoryType oldPeekSource;

@@ -45,16 +45,18 @@ void
 T64File::init(class FSDevice &fs)
 {
     // Analyze the file system
-    u16 numFiles = (u16)fs.numFiles();
-    std::vector<u64> length(numFiles);
+    isize numFiles = fs.numFiles();
+    std::vector<isize> length(numFiles);
     isize dataLength = 0;
-    for (u16 i = 0; i < numFiles; i++) {
+    
+    for (isize i = 0; i < numFiles; i++) {
+        
         length[i] = fs.fileSize(i) - 2;
         dataLength += length[i];
     }
     
     // Initialize the archive
-    u16 maxFiles = std::max(numFiles, (u16)30);
+    isize maxFiles = std::max(numFiles, (isize)30);
     isize fileSize = 64 + maxFiles * 32 + dataLength;
     init(fileSize);
     
@@ -94,7 +96,7 @@ T64File::init(class FSDevice &fs)
     // Tape entries
     //
     
-    u32 tapePosition = 64 + maxFiles * 32; // Start of item 0
+    isize tapePosition = 64 + maxFiles * 32; // Start of item 0
     memset(ptr, 0, 32 * maxFiles);
     
     for (isize n = 0; n < maxFiles; n++) {
@@ -114,7 +116,7 @@ T64File::init(class FSDevice &fs)
         *ptr++ = HI_BYTE(startAddr);
         
         // End address (2 bytes)
-        u16 endAddr = startAddr + length[n];
+        u16 endAddr = (u16)(startAddr + length[n]);
         *ptr++ = LO_BYTE(endAddr);
         *ptr++ = HI_BYTE(endAddr);
         
@@ -280,18 +282,18 @@ T64File::repair()
         
         // Compute start address in memory
         n = 0x42 + (i * 0x20);
-        u16 startAddrInMemory = LO_HI(data[n], data[n+1]);
+        isize startAddrInMemory = LO_HI(data[n], data[n+1]);
     
         // Compute end address in memory
         n = 0x44 + (i * 0x20);
-        u16 endAddrInMemory = LO_HI(data[n], data[n+1]);
+        isize endAddrInMemory = LO_HI(data[n], data[n+1]);
     
         if (endAddrInMemory == 0xC3C6) {
 
             // Let's assume that the rest of the file data belongs to this file ...
-            u16 fixedEndAddrInMemory = startAddrInMemory + (size - startAddrInContainer);
+            isize fixedEndAddrInMemory = startAddrInMemory + (size - startAddrInContainer);
 
-            warn("T64: Changing end address of item %zd from %04X to %04X.\n",
+            warn("T64: Changing end address of item %zd from %04zX to %04zX.\n",
                  i, endAddrInMemory, fixedEndAddrInMemory);
 
             data[n] = LO_BYTE(fixedEndAddrInMemory);

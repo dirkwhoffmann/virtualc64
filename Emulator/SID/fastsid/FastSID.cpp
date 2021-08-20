@@ -120,7 +120,7 @@ FastSID::initFilter(double sampleRate)
     yAdd = (float)((yMax - yMin) / 2048.0);
     yTmp = yMin;
     for (uk = 0, rk = 0; rk < 0x800; rk++, uk++) {
-        bandPassParam[uk] = (yTmp * filterRefFreq) / sampleRate;
+        bandPassParam[uk] = (float)((yTmp * filterRefFreq) / sampleRate);
         yTmp += yAdd;
     }
     
@@ -131,7 +131,7 @@ FastSID::initFilter(double sampleRate)
     }
     filterResTable[0] = resDyMin;
     filterResTable[15] = resDyMax;
-    filterAmpl = emulateFilter ? 0.7 : 1.0;
+    filterAmpl = emulateFilter ? 0.7f : 1.0f;
     
     // Amplifier lookup table
     for (uk = 0, si = 0; si < 256; si++, uk++) {

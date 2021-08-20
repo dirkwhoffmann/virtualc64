@@ -267,7 +267,7 @@ Disk::decodeGcrNibble(u8 *gcr)
 {
     assert(gcr);
     
-    u8 codeword = (gcr[0] << 4) | (gcr[1] << 3) | (gcr[2] << 2) | (gcr[3] << 1) | gcr[4];
+    auto codeword = gcr[0] << 4 | gcr[1] << 3 | gcr[2] << 2 | gcr[3] << 1 | gcr[4];
     assert(codeword < 32);
     
     return invgcr[codeword];
@@ -281,7 +281,7 @@ Disk::decodeGcr(u8 *gcr)
     u8 nibble1 = decodeGcrNibble(gcr);
     u8 nibble2 = decodeGcrNibble(gcr + 5);
 
-    return (nibble1 << 4) | nibble2;
+    return (u8)(nibble1 << 4 | nibble2);
 }
 
 bool
@@ -730,7 +730,7 @@ Disk::encodeG64(const G64File &a)
     clearDisk();
     for (Halftrack ht = 1; ht <= 84; ht++) {
         
-        u16 size = a.getSizeOfHalftrack(ht);
+        isize size = a.getSizeOfHalftrack(ht);
         
         if (size == 0) {
             if (ht > 1) {
@@ -741,11 +741,11 @@ Disk::encodeG64(const G64File &a)
         }
         
         if (size > 7928) {
-            warn("Halftrack %zd has %d bytes. Must be less than 7928\n", ht, size);
+            warn("Halftrack %zd has %zd bytes. Must be less than 7928\n", ht, size);
             continue;
         }
-        trace(GCR_DEBUG, "  Encoding halftrack %zd (%d bytes)\n", ht, size);
-        length.halftrack[ht] = 8 * size;
+        trace(GCR_DEBUG, "  Encoding halftrack %zd (%zd bytes)\n", ht, size);
+        length.halftrack[ht] = (u16)(8 * size);
         
         a.copyHalftrack(ht, data.halftrack[ht]);
     }
@@ -819,7 +819,7 @@ Disk::encode(const FSDevice &fs, bool alignTracks)
 }
 
 isize
-Disk::encodeTrack(const FSDevice &fs, Track t, u8 tailGap, HeadPos start)
+Disk::encodeTrack(const FSDevice &fs, Track t, isize gap, HeadPos start)
 {
     assert(isTrackNumber(t));
     trace(GCR_DEBUG, "Encoding track %zd\n", t);
@@ -829,7 +829,7 @@ Disk::encodeTrack(const FSDevice &fs, Track t, u8 tailGap, HeadPos start)
     // For each sector in this track ...
     for (Sector s = 0; s < trackDefaults[t].sectors; s++) {
         
-        isize encodedBits = encodeSector(fs, t, s, start, tailGap);
+        isize encodedBits = encodeSector(fs, t, s, start, gap);
         start += (HeadPos)encodedBits;
         totalEncodedBits += encodedBits;
     }
@@ -852,7 +852,7 @@ Disk::encodeSector(const FSDevice &fs, Track t, Sector s, HeadPos start, isize t
     // Get disk id and compute checksum
     u8 id1 = fs.diskId1();
     u8 id2 = fs.diskId2();
-    u8 checksum = id1 ^ id2 ^ t ^ s; // Header checksum byte
+    u8 checksum = (u8)(id1 ^ id2 ^ t ^ s); // Header checksum byte
     
     // SYNC (0xFF 0xFF 0xFF 0xFF 0xFF)
     if (errorCode == 0x3) {
@@ -879,9 +879,9 @@ Disk::encodeSector(const FSDevice &fs, Track t, Sector s, HeadPos start, isize t
     offset += 10;
     
     // Sector and track number
-    encodeGcr(s, t, offset);
+    encodeGcr((u8)s, t, offset);
     offset += 10;
-    encodeGcr(t, t, offset);
+    encodeGcr((u8)t, t, offset);
     offset += 10;
     
     // Disk ID (two bytes)

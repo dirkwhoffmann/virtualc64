@@ -128,17 +128,17 @@ DmaDebugger::setConfigItem(Option option, i64 value)
 
         case OPT_DMA_DEBUG_OPACITY:
             
-            config.dmaOpacity = value;
+            config.dmaOpacity = (u8)value;
             return;
             
         case OPT_CUT_LAYERS:
             
-            config.cutLayers = value;
+            config.cutLayers = (u16)value;
             return;
             
         case OPT_CUT_OPACITY:
             
-            config.cutOpacity = value;
+            config.cutOpacity = (u8)value;
             return;
 
         default:

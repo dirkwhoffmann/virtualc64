@@ -190,7 +190,7 @@ public:
     bool hasSwitch() const;
     
     // Returns the current switch position
-    i8 getSwitch() const;
+    isize getSwitch() const;
     bool switchIsNeutral() const;
     bool switchIsLeft() const;
     bool switchIsRight() const;

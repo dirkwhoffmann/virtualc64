@@ -365,7 +365,7 @@ ExpansionPort::hasSwitch() const
     return cartridge ? cartridge->hasSwitch() : false;
 }
 
-i8
+isize
 ExpansionPort::getSwitch() const
 {
     return cartridge ? cartridge->getSwitch() : 0;

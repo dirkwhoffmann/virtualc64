@@ -387,7 +387,7 @@ VICII::_inspect()
         info.memSelect = memSelect;
         info.ultimax = ultimax;
         info.memoryBankAddr = bankAddr;
-        info.screenMemoryAddr = VM13VM12VM11VM10() << 6;
+        info.screenMemoryAddr = (u16)(VM13VM12VM11VM10() << 6);
         info.charMemoryAddr = (CB13CB12CB11() << 10) % 0x4000;
         
         info.irqLine = rasterIrqLine;
@@ -456,7 +456,9 @@ VICII::_dump(dump::Category category, std::ostream& os) const
         
         for (isize i = 0; i < 6; i++) {
             os << tab(addr[i]);
-            for (isize j = 0; j < 8; j++) os << hex(spypeek(8 * i + j)) << " ";
+            for (isize j = 0; j < 8; j++) {
+                os << hex(spypeek((u16)(8 * i + j))) << " ";
+            }
             os << std::endl;
         }
     }
@@ -898,7 +900,7 @@ VICII::lightpenX() const
 u16
 VICII::lightpenY() const
 {
-    return yCounter;
+    return (u16)yCounter;
 }
 
 void

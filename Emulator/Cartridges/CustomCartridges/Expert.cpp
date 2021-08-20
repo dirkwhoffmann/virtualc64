@@ -66,7 +66,7 @@ Expert::loadChip(isize nr, const CRTFile &crt)
     // Initialize RAM with data from CRT file
     trace(CRT_DEBUG, "Copying file contents into Expert RAM\n");
     assert(getRamCapacity() == chipSize);
-    for (isize i = 0; i < chipSize; i++) pokeRAM(i, chipData[i]);
+    for (isize i = 0; i < chipSize; i++) pokeRAM((u16)i, chipData[i]);
 }
 
 u8

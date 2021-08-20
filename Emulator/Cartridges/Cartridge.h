@@ -46,12 +46,12 @@ private:
     
 protected:
 
-    u8 numPackets = 0;
+    isize numPackets = 0;
     CartridgeRom *packet[MAX_PACKETS] = {};
     
     // Indicates which packets are currently mapped to ROML and ROMH
-    u8 chipL = 0;
-    u8 chipH = 0;
+    isize chipL = 0;
+    isize chipH = 0;
     
     /* Number of bytes that are mapped to ROML and ROMH. For most cartridges,
      * this value is equals packet[romX]->size which means that the ROM is
