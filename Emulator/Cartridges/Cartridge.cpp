@@ -156,7 +156,7 @@ Cartridge::makeWithCRTFile(C64 &c64, CRTFile &file)
 
 Cartridge::Cartridge(C64 &ref) : SubComponent(ref)
 {
-    trace(CRT_DEBUG, "Creating cartridge at address %p...\n", this);
+    trace(CRT_DEBUG, "Creating cartridge at address %p...\n", (void *)this);
 }
 
 Cartridge::~Cartridge()

@@ -19,7 +19,7 @@
 
 C64::C64()
 {
-    trace(RUN_DEBUG, "Creating virtual C64 [%p]\n", this);
+    trace(RUN_DEBUG, "Creating virtual C64\n");
         
     subComponents = std::vector<C64Component *> {
         
@@ -51,7 +51,7 @@ C64::C64()
 
 C64::~C64()
 {
-    trace(RUN_DEBUG, "Destroying C64[%p]\n", this);
+    trace(RUN_DEBUG, "Destroying C64\n");
 }
 
 void

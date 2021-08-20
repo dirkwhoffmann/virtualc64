@@ -685,7 +685,7 @@ Drive::insertDisk(const string &path, bool wp)
 void
 Drive::insertDisk(Disk *otherDisk, bool wp)
 {
-    debug(DSKCHG_DEBUG, "insertDisk(otherDisk %p)\n", otherDisk);
+    debug(DSKCHG_DEBUG, "insertDisk\n");
 
     suspended {
         
