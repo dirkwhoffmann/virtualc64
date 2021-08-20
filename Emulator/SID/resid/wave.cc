@@ -169,7 +169,7 @@ void WaveformGenerator::writePW_HI(reg8 pw_hi)
   pulse_output = (accumulator >> 12) >= pw ? 0xfff : 0x000;
 }
 
-bool do_pre_writeback(reg8 waveform_prev, reg8 waveform, bool is6581)
+static bool do_pre_writeback(reg8 waveform_prev, reg8 waveform, bool is6581)
 {
     // no writeback without combined waveforms
     if (likely(waveform_prev <= 0x8))

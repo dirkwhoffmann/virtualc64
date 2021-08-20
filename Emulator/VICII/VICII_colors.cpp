@@ -19,7 +19,7 @@
  * http://unusedino.de/ec64/technical/misc/vic656x/colors/
  */
 
-double gammaCorrect(double value, double source, double target)
+static double gammaCorrect(double value, double source, double target)
 {
     // Reverse gamma correction of source
     double factor = pow(255.0, 1.0 - source);

@@ -1023,10 +1023,10 @@
 
 - (void)insertCollection:(AnyCollectionProxy *)proxy protected:(BOOL)wp
 {
-    [self drive]->insertCollection(*(AnyCollection *)proxy->obj, wp);;
+    [self drive]->insertCollection(*(AnyCollection *)proxy->obj, wp);
 }
 
-- (void)insertFileSystem:(FSDeviceProxy *)proxy protected:(BOOL)wp;
+- (void)insertFileSystem:(FSDeviceProxy *)proxy protected:(BOOL)wp
 {
     [self drive]->insertFileSystem(*(FSDevice *)proxy->obj, wp);
 }
@@ -2167,7 +2167,7 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     return [self c64]->inWarpMode();
 }
 
-- (void)setWarpMode:(BOOL)enable;
+- (void)setWarpMode:(BOOL)enable
 {
     enable ? [self c64]->warpOn() : [self c64]->warpOff();
 }
@@ -2542,18 +2542,18 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     return RomFile::isCommodoreRom(rev);
 }
 
-- (BOOL)isPatchedRom:(RomIdentifier)rev;
+- (BOOL)isPatchedRom:(RomIdentifier)rev
 {
     return RomFile::isPatchedRom(rev);
 }
 
-- (void)flash:(AnyFileProxy *)proxy exception:(ExceptionWrapper *)ex;
+- (void)flash:(AnyFileProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     try { [self c64]->flash(*(AnyFile *)proxy->obj); }
     catch (VC64Error &error) { [ex save:error]; }
 }
 
-- (void)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
+- (void)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex
 {
     try { [self c64]->flash(*(FSDevice *)proxy->obj, (unsigned)nr); }
     catch (VC64Error &error) { [ex save:error]; }
