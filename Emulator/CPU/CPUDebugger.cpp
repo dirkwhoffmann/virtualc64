@@ -339,7 +339,7 @@ CPUDebugger::getLengthOfCurrentInstruction() const
 u16
 CPUDebugger::getAddressOfNextInstruction() const
 {
-    return cpu.getPC0() + getLengthOfCurrentInstruction();
+    return (u16)(cpu.getPC0() + getLengthOfCurrentInstruction());
 }
 
 const char *
