@@ -274,14 +274,12 @@ Keyboard::isPressed(C64Key key) const
         case 31: return restoreIsPressed();
     }
 
-    bool result1 = (kbMatrixRow[key.row] & (1 << key.col)) == 0;
+    bool result = (kbMatrixRow[key.row] & (1 << key.col)) == 0;
 
     // We could have also checked the column matrix
-    if (KBD_DEBUG) {
-        assert(result1 == ((kbMatrixCol[key.col] & (1 << key.row)) == 0));
-    }
+    assert(result == ((kbMatrixCol[key.col] & (1 << key.row)) == 0));
 
-    return result1;
+    return result;
 }
     
 bool

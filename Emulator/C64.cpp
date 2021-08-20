@@ -1033,7 +1033,7 @@ C64::loadSnapshot(const Snapshot &snapshot)
         keyboard.releaseAll();
         
         // Print some debug info if requested
-        if (SNP_DEBUG) dump();
+        if constexpr (SNP_DEBUG) dump();
     }
     
     // Inform the GUI

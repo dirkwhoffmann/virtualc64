@@ -875,7 +875,7 @@ FSDevice::importVolume(const u8 *src, isize size, ErrorCode *err)
     // Run a directory scan
     scanDirectory();
     
-    if (FS_DEBUG) {
+    if constexpr (FS_DEBUG) {
         // info();
         // dump();
         printDirectory();

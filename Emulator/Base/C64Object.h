@@ -113,15 +113,15 @@ fprintf(stderr, "Warning: " format, ##__VA_ARGS__);
 #ifndef NDEBUG
 
 #define debug(verbose, format, ...) \
-if (verbose) { \
+if constexpr (verbose) { \
 fprintf(stderr, "%s:%d " format, getDescription(), __LINE__, ##__VA_ARGS__); }
 
 #define plain(verbose, format, ...) \
-if (verbose) { \
+if constexpr (verbose) { \
 fprintf(stderr, format, ##__VA_ARGS__); }
 
 #define trace(verbose, format, ...) \
-if (verbose) { \
+if constexpr (verbose) { \
 prefix(); \
 fprintf(stderr, "%s:%d " format, getDescription(), __LINE__, ##__VA_ARGS__); }
 

@@ -40,7 +40,7 @@ void
 CRTFile::readFromStream(std::istream &stream)
 {
     AnyFile::readFromStream(stream);
-    if (CRT_DEBUG) dump();
+    if constexpr (CRT_DEBUG) dump();
             
     // Load chip packets
     u8 *ptr = data + headerSize();

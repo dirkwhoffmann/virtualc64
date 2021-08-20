@@ -81,7 +81,7 @@ Snapshot::Snapshot(C64 &c64): Snapshot(c64.size())
 {
     takeScreenshot(c64);
 
-    if (SNP_DEBUG) c64.dump();
+    if constexpr (SNP_DEBUG) c64.dump();
     c64.save(getData());
 }
 
