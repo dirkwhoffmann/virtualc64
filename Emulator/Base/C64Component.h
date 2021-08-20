@@ -19,20 +19,6 @@
 
 #define synchronized \
 for (util::AutoMutex _am(mutex); _am.active; _am.active = false)
-
-namespace dump {
-enum Category : usize {
-    
-    Config    = 0b00000001,
-    State     = 0b00000010,
-    Registers = 0b00000100,
-    Events    = 0b00001000,
-    Checksums = 0b00010000,
-    Dma       = 0b00100000,
-    BankMap   = 0b01000000,
-    Disk      = 0b10000000
-};
-}
     
 class C64Component : public C64Object {
         
@@ -107,18 +93,8 @@ public:
         synchronized { return cachedValues; }
         unreachable;
     }
+        
     
-    /* Prints debug information about this component. The additional 'flags'
-     * parameter is a bit field which can be used to limit the displayed
-     * information to certain categories.
-     */
-    void dump(dump::Category category, std::ostream& ss) const;
-    void dump(dump::Category category) const;
-    void dump(std::ostream& ss) const;
-    void dump() const;
-    virtual void _dump(dump::Category category, std::ostream& ss) const { };
-    
- 
     //
     // Serializing
     //
