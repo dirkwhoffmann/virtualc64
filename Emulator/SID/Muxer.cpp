@@ -229,7 +229,7 @@ Muxer::setConfigItem(Option option, i64 value)
             
         case OPT_AUDVOLL:
             
-            config.volL = std::clamp((int)value, 0, 100);
+            config.volL = std::clamp(value, 0LL, 100LL);
             volL.set(powf((float)config.volL / 50, 1.4f));
             
             if (wasMuted != isMuted()) {
@@ -239,7 +239,7 @@ Muxer::setConfigItem(Option option, i64 value)
             
         case OPT_AUDVOLR:
 
-            config.volR = std::clamp((int)value, 0, 100);
+            config.volR = std::clamp(value, 0LL, 100LL);
             volR.set(powf((float)config.volR / 50, 1.4f));
 
             if (wasMuted != isMuted()) {
@@ -312,7 +312,7 @@ Muxer::setConfigItem(Option option, long id, i64 value)
             
             assert(id >= 0 && id <= 3);
 
-            config.vol[id] = std::clamp((int)value, 0, 100);
+            config.vol[id] = std::clamp(value, 0LL, 100LL);
             vol[id] = powf((float)config.vol[id] / 100, 1.4f) * 0.000025f;
 #ifdef __EMSCRIPTEN__
             vol[id] *= 0.15f;
@@ -326,13 +326,8 @@ Muxer::setConfigItem(Option option, long id, i64 value)
         case OPT_AUDPAN:
             
             assert(id >= 0 && id <= 3);
-            if (value < 0 || value > 200) {
-                warn("Invalid pan: %lld\n", value);
-                warn("Valid values: 0 ... 200\n");
-                return;
-            }
 
-            config.pan[id] = value;
+            config.pan[id] = std::clamp(value, 0LL, 200LL);
             
             if (value <= 50) pan[id] = (50 + value) / 100.0f;
             else if (value <= 150) pan[id] = (150 - value) / 100.0f;
