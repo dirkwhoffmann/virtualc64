@@ -183,15 +183,12 @@ class DropZone: Layer {
         lr[0] = CGPoint(x: ul[0].x + w, y: ul[0].y + h)
 
         ul[1] = CGPoint(x: midx - w - 0.5 * margin, y: y)
-        ul[1].y = size.height - h * CGFloat(alpha.current)
         lr[1] = CGPoint(x: ul[1].x + w, y: ul[1].y + h)
 
         ul[2] = CGPoint(x: midx + 0.5 * margin, y: y)
-        ul[2].y = size.height - h * CGFloat(alpha.current)
         lr[2] = CGPoint(x: ul[2].x + w, y: ul[2].y + h)
 
         ul[3] = CGPoint(x: midx + w + 1.5 * margin, y: y)
-        ul[3].y = size.height - h * CGFloat(alpha.current)
         lr[3] = CGPoint(x: ul[3].x + w, y: ul[3].y + h)
 
         for i in 0...3 {

@@ -10,32 +10,35 @@
 class PreferencesController: DialogController {
     
     var pref: Preferences { return parent.pref }
-    var gamePadManager: GamePadManager { return parent.gamePadManager! }
-    var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
-    
+    var gamePadManager: GamePadManager { return parent.gamePadManager }
+    var firstTab: String? // The tab to open first
+
     @IBOutlet weak var tabView: NSTabView!
     
     //
     // General preferences
     //
         
-    // Fullscreen
-    @IBOutlet weak var genAspectRatioButton: NSButton!
-    @IBOutlet weak var genExitOnEscButton: NSButton!
-
-    // Snapshots and Screenshots
+    // Snapshots
     @IBOutlet weak var genAutoSnapshots: NSButton!
     @IBOutlet weak var genSnapshotInterval: NSTextField!
+    
+    // Screenshots
     @IBOutlet weak var genScreenshotSourcePopup: NSPopUpButton!
     @IBOutlet weak var genScreenshotTargetPopup: NSPopUpButton!
         
     // Screen captures
+    @IBOutlet weak var genFFmpegIcon: NSButton!
     @IBOutlet weak var genFFmpegPath: NSTextField!
     @IBOutlet weak var genCaptureSource: NSPopUpButton!
     @IBOutlet weak var genAspectX: NSTextField!
     @IBOutlet weak var genAspectY: NSTextField!
     @IBOutlet weak var genBitRate: NSComboBox!
     
+    // Fullscreen
+    @IBOutlet weak var genAspectRatioButton: NSButton!
+    @IBOutlet weak var genExitOnEscButton: NSButton!
+
     // Warp mode
     @IBOutlet weak var genWarpMode: NSPopUpButton!
 
@@ -96,11 +99,7 @@ class PreferencesController: DialogController {
     @IBOutlet weak var conAutofireCeaseText: NSTextField!
     @IBOutlet weak var conAutofireBullets: NSTextField!
     @IBOutlet weak var conAutofireFrequency: NSSlider!
-    
-    // Buttons
-    @IBOutlet weak var conOkButton: NSButton!
-    @IBOutlet weak var conPowerButton: NSButton!
-    
+        
     //
     // Devices
     //
@@ -151,13 +150,11 @@ class PreferencesController: DialogController {
     
     // The C64 key that has been selected to be mapped
     var selectedKey: C64Key?
+        
+    //
+    // Methods
+    //
     
-    @IBOutlet weak var keyOkButton: NSButton!
-    @IBOutlet weak var keyPowerButton: NSButton!
-    
-    // The tab to open first
-    var firstTab: String?
-
     func showSheet(tab: String) {
 
         firstTab = tab
@@ -179,7 +176,6 @@ class PreferencesController: DialogController {
 
     override func cleanup() {
      
-        track()
         parent.gamePadManager.gamePads[3]?.notify = false
         parent.gamePadManager.gamePads[4]?.notify = false
     }
@@ -228,9 +224,9 @@ class PreferencesController: DialogController {
     
     @IBAction override func okAction(_ sender: Any!) {
         
-        track()
         pref.saveGeneralUserDefaults()
         pref.saveControlsUserDefaults()
+        pref.saveDevicesUserDefaults()
         pref.saveKeyboardUserDefaults()
         myAppDelegate.database.save()
         hideSheet()
@@ -241,7 +237,6 @@ extension PreferencesController: NSTabViewDelegate {
     
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
         
-        track()
         select()
     }
 }
@@ -255,7 +250,6 @@ extension PreferencesController: NSWindowDelegate {
         
     func windowDidBecomeKey(_ notification: Notification) {
         
-        track()
         select()
     }
 }

@@ -7,9 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-/* Preferences
- *
- * This class stores all emulator settings that belong to the application level.
+/* This class stores all emulator settings that belong to the application level.
  * There is a single object of this class stored in the application delegate.
  * The object is shared among all emulator instances.
  *
@@ -17,22 +15,20 @@
  */
 
 class Preferences {
-    
-    var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
-    
+        
     //
     // General
     //
-        
-    // Fullscreen
-    var keepAspectRatio = GeneralDefaults.std.keepAspectRatio
-    var exitOnEsc = GeneralDefaults.std.exitOnEsc
-    
-    // Snapshots and screenshots
-    var autoSnapshots = GeneralDefaults.std.autoSnapshots
+
+    // Snapshots
+    var autoSnapshots = GeneralDefaults.std.autoSnapshots {
+        didSet { for c in myAppDelegate.controllers { c.validateSnapshotTimer() } }
+    }
     var snapshotInterval = 0 {
         didSet { for c in myAppDelegate.controllers { c.validateSnapshotTimer() } }
     }
+
+    // Screenshots
     var screenshotSource = GeneralDefaults.std.screenshotSource
     var screenshotTarget = GeneralDefaults.std.screenshotTarget
     var screenshotTargetIntValue: Int {
@@ -61,6 +57,10 @@ class Preferences {
         }
     }
     
+    // Fullscreen
+    var keepAspectRatio = GeneralDefaults.std.keepAspectRatio
+    var exitOnEsc = GeneralDefaults.std.exitOnEsc
+
     // Warp mode
     var warpMode = GeneralDefaults.std.warpMode {
         didSet { for c in myAppDelegate.controllers { c.updateWarp() } }
@@ -133,14 +133,12 @@ class Preferences {
     func loadGeneralUserDefaults() {
         
         let defaults = UserDefaults.standard
-                
-        // Fullscreen
-        keepAspectRatio = defaults.bool(forKey: Keys.Gen.keepAspectRatio)
-        exitOnEsc = defaults.bool(forKey: Keys.Gen.exitOnEsc)
-        
-        // Snapshots and screenshots
+                        
+        // Snapshots
         autoSnapshots = defaults.bool(forKey: Keys.Gen.autoSnapshots)
         snapshotInterval = defaults.integer(forKey: Keys.Gen.autoSnapshotInterval)
+
+        // Screenshots
         screenshotSource = defaults.integer(forKey: Keys.Gen.screenshotSource)
         screenshotTargetIntValue = defaults.integer(forKey: Keys.Gen.screenshotTarget)
         
@@ -149,6 +147,10 @@ class Preferences {
         bitRate = defaults.integer(forKey: Keys.Gen.bitRate)
         aspectX = defaults.integer(forKey: Keys.Gen.aspectX)
         aspectY = defaults.integer(forKey: Keys.Gen.aspectY)
+
+        // Fullscreen
+        keepAspectRatio = defaults.bool(forKey: Keys.Gen.keepAspectRatio)
+        exitOnEsc = defaults.bool(forKey: Keys.Gen.exitOnEsc)
 
         // Warp mode
         warpModeIntValue = defaults.integer(forKey: Keys.Gen.warpMode)
@@ -162,14 +164,12 @@ class Preferences {
     func saveGeneralUserDefaults() {
         
         let defaults = UserDefaults.standard
-        
-        // Fullscreen
-        defaults.set(keepAspectRatio, forKey: Keys.Gen.keepAspectRatio)
-        defaults.set(exitOnEsc, forKey: Keys.Gen.exitOnEsc)
-        
-        // Snapshots and screenshots
+                
+        // Snapshots
         defaults.set(autoSnapshots, forKey: Keys.Gen.autoSnapshots)
         defaults.set(snapshotInterval, forKey: Keys.Gen.autoSnapshotInterval)
+
+        // Screenshots
         defaults.set(screenshotSource, forKey: Keys.Gen.screenshotSource)
         defaults.set(screenshotTargetIntValue, forKey: Keys.Gen.screenshotTarget)
 
@@ -178,6 +178,10 @@ class Preferences {
         defaults.set(bitRate, forKey: Keys.Gen.bitRate)
         defaults.set(aspectX, forKey: Keys.Gen.aspectX)
         defaults.set(aspectY, forKey: Keys.Gen.aspectY)
+
+        // Fullscreen
+        defaults.set(keepAspectRatio, forKey: Keys.Gen.keepAspectRatio)
+        defaults.set(exitOnEsc, forKey: Keys.Gen.exitOnEsc)
 
         // Warp mode
         defaults.set(warpModeIntValue, forKey: Keys.Gen.warpMode)
