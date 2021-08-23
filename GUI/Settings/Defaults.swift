@@ -982,7 +982,7 @@ struct CompatibilityDefaults {
         
         drivePowerSave: true,
         viciiPowerSave: true,
-        sidPowerSave: true,
+        sidPowerSave: false,
         
         ssCollisions: true,
         sbCollisions: true

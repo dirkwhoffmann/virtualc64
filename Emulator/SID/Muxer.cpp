@@ -62,7 +62,7 @@ Muxer::getDefaultConfig()
     SIDConfig defaults;
     
     defaults.revision = MOS_8580;
-    defaults.powerSave = true;
+    defaults.powerSave = false;
     defaults.enabled = 1;
     defaults.address[0] = 0xD400;
     defaults.address[1] = 0xD420;
@@ -757,14 +757,8 @@ Muxer::executeUntil(Cycle targetCycle)
          */
         if (config.revision != MOS_8580 || config.sampling != SAMPLING_FAST) {
 
-            /* Update: This feature seems to be broken alltogether. reSID has
-             * issues with the audio filter if sample synthesis is skipped,
-             * even in other modes as the one stated above. Until I know how to
-             * fix the problem, I disable the powerSave feature.
-             */
-
-            // cycles = targetCycle;
-            // return;
+            cycles = targetCycle;
+            return;
         }
     }
     
