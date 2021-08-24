@@ -110,6 +110,8 @@ Disk::isValidHalftrackSectorPair(Halftrack ht, Sector s)
 Disk *
 Disk::make(C64 &ref, const string &path)
 {
+    return new Disk(ref, path);
+    /*
     try { auto file = G64File(path); return makeWithG64(ref, file); }
     catch (...) { }
 
@@ -117,11 +119,14 @@ Disk::make(C64 &ref, const string &path)
     catch (...) { }
     
     throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+    */
 }
 
 Disk *
 Disk::make(C64 &ref, DOSType type, PETName<16> name)
 {
+    return new Disk(ref, type, name);
+    /*
     assert_enum(DOSType, type);
     
     switch (type) {
@@ -142,38 +147,51 @@ Disk::make(C64 &ref, DOSType type, PETName<16> name)
             return nullptr;
         }
     }
+    */
 }
 
 Disk *
 Disk::makeWithFileSystem(C64 &ref, const FSDevice &fs)
 {
+    return new Disk(ref, fs);
+    /*
     Disk *disk = new Disk(ref);
 
     disk->encode(fs);
     return disk;
+    */
 }
 
 Disk *
 Disk::makeWithG64(C64 &ref, const G64File &g64)
 {
+    return new Disk(ref, g64);
+    /*
     Disk *disk = new Disk(ref);
 
     disk->encodeG64(g64);
     return disk;
+    */
 }
 
 Disk *
 Disk::makeWithD64(C64 &ref, const D64File &d64)
 {
+    return new Disk(ref, d64);
+    /*
     auto fs = FSDevice(d64);
     return makeWithFileSystem(ref, fs);
+    */
 }
 
 Disk *
 Disk::makeWithCollection(C64 &ref, AnyCollection &collection)
 {
+    return new Disk(ref, collection);
+    /*
     auto fs = FSDevice(collection);
     return makeWithFileSystem(ref, fs);
+    */
 }
 
 Disk::Disk(C64 &ref) : SubComponent(ref)
@@ -195,6 +213,57 @@ Disk::Disk(C64 &ref) : SubComponent(ref)
     }
     
     clearDisk();
+}
+
+void
+Disk::init(const string &path)
+{
+    try { auto file = G64File(path); init(file); }
+    catch (...) { }
+
+    try { auto fs = FSDevice(path); init(fs); }
+    catch (...) { }
+    
+    throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+}
+
+void
+Disk::init(DOSType type, PETName<16> name)
+{
+    assert_enum(DOSType, type);
+    
+    if (type == DOS_TYPE_CBM) {
+        
+        auto fs = FSDevice(DISK_TYPE_SS_SD, DOS_TYPE_CBM);
+        fs.setName(name);
+        init(fs);
+    }
+}
+
+void
+Disk::init(const FSDevice &fs)
+{
+    encode(fs);
+}
+
+void
+Disk::init(const G64File &g64)
+{
+    encodeG64(g64);
+}
+
+void
+Disk::init(const D64File &d64)
+{
+    auto fs = FSDevice(d64);
+    init(fs);
+}
+
+void
+Disk::init(AnyCollection &collection)
+{
+    auto fs = FSDevice(collection);
+    init(fs);
 }
 
 void

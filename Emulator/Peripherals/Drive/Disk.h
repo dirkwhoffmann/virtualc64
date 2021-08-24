@@ -183,20 +183,35 @@ public:
 public:
     
     Disk(C64 &ref);
-    const char *getDescription() const override { return "Disk"; }
+    Disk(C64 &ref, const string &path) : Disk(ref) { init(path); } throws
+    Disk(C64 &ref, DOSType type, PETName<16> name) : Disk(ref) { init(type, name); } throws
+    Disk(C64 &ref, const class FSDevice &device) : Disk(ref) { init(device); } throws
+    Disk(C64 &ref, const G64File &g64) : Disk(ref) { init(g64); } throws
+    Disk(C64 &ref, const D64File &d64) : Disk(ref) { init(d64); } throws
+    Disk(C64 &ref, AnyCollection &archive) : Disk(ref) { init(archive); } throws
     
+private:
+    
+    void init(const string &path) throws;
+    void init(DOSType type, PETName<16> name);
+    void init(const class FSDevice &device);
+    void init(const G64File &g64);
+    void init(const D64File &d64) throws;
+    void init(AnyCollection &archive) throws;
+
+
+    //
+    // Methods from C64Object
+    //
+
+private:
+    
+    const char *getDescription() const override { return "Disk"; }
+    void _dump(dump::Category category, std::ostream& os) const override;
+
 private:
     
     void _reset(bool hard) override;
-
-    
-    //
-    // Analyzing
-    //
-    
-private:
-    
-    void _dump(dump::Category category, std::ostream& os) const override;
 
     
     //
