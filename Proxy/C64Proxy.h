@@ -520,6 +520,7 @@
 
 - (BOOL)redLED;
 - (BOOL)hasDisk;
+- (BOOL)hasWriteProtectedDisk;
 - (BOOL)hasModifiedDisk;
 - (void)setModifiedDisk:(BOOL)b;
 - (void)insertNewDisk:(DOSType)fstype;
@@ -528,9 +529,6 @@
 - (void)insertCollection:(AnyCollectionProxy *)proxy protected:(BOOL)wp;
 - (void)insertFileSystem:(FSDeviceProxy *)proxy protected:(BOOL)wp;
 - (void)ejectDisk;
-- (BOOL)writeProtected;
-- (void)setWriteProtection:(BOOL)b;
-- (BOOL)hasWriteProtectedDisk;
 
 - (Track)track;
 - (Halftrack)halftrack;

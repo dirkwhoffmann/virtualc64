@@ -1001,6 +1001,11 @@
     return [self drive]->hasDisk();
 }
 
+- (BOOL)hasWriteProtectedDisk
+{
+    return [self drive]->hasWriteProtectedDisk();
+}
+
 - (BOOL)hasModifiedDisk
 {
     return [self drive]->hasModifiedDisk();
@@ -1039,21 +1044,6 @@
 - (void)ejectDisk
 {
     [self drive]->ejectDisk();
-}
-
-- (BOOL)writeProtected
-{
-    return [self drive]->disk->isWriteProtected();
-}
-
-- (void)setWriteProtection:(BOOL)b
-{
-    [self drive]->disk->setWriteProtection(b);
-}
-
-- (BOOL)hasWriteProtectedDisk
-{
-    return [self drive]->hasWriteProtectedDisk();
 }
 
 - (Track)track
