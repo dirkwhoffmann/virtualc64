@@ -133,6 +133,7 @@ Disk::Disk(C64 &ref) : SubComponent(ref)
 void
 Disk::init(const string &path)
 {
+    // TODO: Port better code from vAmiga
     try { auto file = G64File(path); init(file); }
     catch (...) { }
 

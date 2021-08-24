@@ -909,16 +909,10 @@ Drive::executeStateTransition()
 
             // Fully insert the disk (unblocks the light barrier)
             insertionStatus = DISK_FULLY_INSERTED;
-
-            // Copy the disk contents
-            isize size = diskToInsert->size();
-            u8 *buffer = new u8[size];
-            diskToInsert->save(buffer);
-            disk->load(buffer);
-            delete[] buffer;
-            diskToInsert = nullptr;
+            disk = std::move(diskToInsert);
             
-            // Enable or disable the write protection
+            // Enable or disable write protection
+            // TODO: Do this directly in diskToInsert
             disk->setWriteProtection(diskToInsertWP);
 
             // Inform listeners
