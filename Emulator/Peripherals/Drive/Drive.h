@@ -88,7 +88,7 @@ public:
     //
     
     // A disk waiting to be inserted
-    class Disk *diskToInsert = nullptr;
+    std::unique_ptr<Disk> diskToInsert;
 
     // The write protection status of the disk to insert
     bool diskToInsertWP = false;
@@ -395,7 +395,7 @@ public:
      * and pushing the new disk halfway in before it is inserted completely.
      */
     void insertDisk(const string &path, bool wp) throws;
-    void insertDisk(Disk *otherDisk, bool wp);
+    void insertDisk(std::unique_ptr<Disk> disk, bool wp);
     void insertNewDisk(DOSType fstype);
     void insertNewDisk(DOSType fstype, PETName<16> name);
     void insertD64(const D64File &d64, bool wp);

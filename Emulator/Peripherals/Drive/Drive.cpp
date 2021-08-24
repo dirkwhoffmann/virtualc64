@@ -753,15 +753,15 @@ Drive::setModifiedDisk(bool value)
 void
 Drive::insertDisk(const string &path, bool wp)
 {
-    auto disk = Disk::make(c64, path);
+    auto disk = std::unique_ptr<Disk>(Disk::make(c64, path));
     
     if (disk) {
-        insertDisk(disk, wp);
+        insertDisk(std::move(disk), wp);
     }
 }
 
 void
-Drive::insertDisk(Disk *otherDisk, bool wp)
+Drive::insertDisk(std::unique_ptr<Disk> disk, bool wp)
 {
     debug(DSKCHG_DEBUG, "insertDisk\n");
 
@@ -771,7 +771,7 @@ Drive::insertDisk(Disk *otherDisk, bool wp)
             
             // Initiate the disk change procedure
             wakeUp();
-            diskToInsert = otherDisk;
+            diskToInsert = std::move(disk);
             diskToInsertWP = wp;
             diskChangeCounter = 1;
         }
@@ -788,36 +788,51 @@ Drive::insertNewDisk(DOSType fsType)
 void
 Drive::insertNewDisk(DOSType fsType, PETName<16> name)
 {
-    Disk *newDisk = Disk::make(c64, fsType, name);
-    insertDisk(newDisk, false);
+    auto disk = std::unique_ptr<Disk>(Disk::make(c64, fsType, name));
+
+    if (disk) {
+        insertDisk(std::move(disk), false);
+    }
 }
 
 void
 Drive::insertFileSystem(const FSDevice &device, bool wp)
 {
-    debug(DSKCHG_DEBUG, "insertFileSystem()\n");
-    insertDisk(Disk::makeWithFileSystem(c64, device), wp);
+    auto disk = std::unique_ptr<Disk>(Disk::makeWithFileSystem(c64, device));
+    
+    if (disk) {
+        insertDisk(std::move(disk), wp);
+    }
 }
 
 void
 Drive::insertD64(const D64File &d64, bool wp)
 {
-    debug(DSKCHG_DEBUG, "insertD64()\n");
-    insertDisk(Disk::makeWithD64(c64, d64), wp);
+    auto disk = std::unique_ptr<Disk>(Disk::makeWithD64(c64, d64));
+    
+    if (disk) {
+        insertDisk(std::move(disk), wp);
+    }
 }
 
 void
 Drive::insertG64(const G64File &g64, bool wp)
 {
-    debug(DSKCHG_DEBUG, "insertG64()\n");
-    insertDisk(Disk::makeWithG64(c64, g64), wp);
+    auto disk = std::unique_ptr<Disk>(Disk::makeWithG64(c64, g64));
+    
+    if (disk) {
+        insertDisk(std::move(disk), wp);
+    }
 }
 
 void
 Drive::insertCollection(AnyCollection &collection, bool wp)
 {
-    debug(DSKCHG_DEBUG, "insertDisk(collection)\n");
-    insertDisk(Disk::makeWithCollection(c64, collection), wp);
+    auto disk = std::unique_ptr<Disk>(Disk::makeWithCollection(c64, collection));
+    
+    if (disk) {
+        insertDisk(std::move(disk), wp);
+    }
 }
 
 void 
