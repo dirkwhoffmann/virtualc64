@@ -11,9 +11,10 @@
 #include "Command.h"
 #include <algorithm>
 
-Command *
+//Command *
+void
 Command::add(std::vector<string> tokens,
-             const string &a1,
+             const string &type,
              const string &help,
              void (RetroShell::*action)(Arguments&, long),
              isize numArgs, long param)
@@ -24,31 +25,12 @@ Command::add(std::vector<string> tokens,
 
         auto node = seek(tokens.front());
         tokens.erase(tokens.begin());
-        return node->add(tokens, a1, help, action, numArgs, param);
+        node->add(tokens, type, help, action, numArgs, param);
     }
         
     // Register instruction
-    Command d { this, tokens.front(), a1, help, std::list<Command>(), action, numArgs, param };
+    Command d { this, tokens.front(), type, help, std::list<Command>(), action, numArgs, param };
     args.push_back(d);
-    return seek(tokens.front());
-}
-
-Command *
-Command::add(std::vector<string> firstTokens,
-             std::vector<string> tokens,
-             const string &a1,
-             const string &help,
-             void (RetroShell::*action)(Arguments&, long),
-             isize numArgs, long param)
-{
-    isize firstTokensSize = firstTokens.size();
-    
-    for (isize i = 0; i < firstTokensSize; i++) {
-        
-        tokens[0] = firstTokens[i];
-        add(tokens, a1, help, action, numArgs, i);
-    }
-    return nullptr;
 }
 
 void

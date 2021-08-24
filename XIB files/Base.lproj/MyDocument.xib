@@ -225,14 +225,14 @@
                     <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ApN-dX-M4Z">
                         <rect key="frame" x="673" y="3" width="27" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <popUpButtonCell key="cell" type="check" title="CPU Frequency (C64)" bezelStyle="regularSquare" imagePosition="left" lineBreakMode="truncatingTail" state="on" inset="2" arrowPosition="arrowAtCenter" preferredEdge="minX" selectedItem="LP1-PF-LdL" id="qjo-CF-dOg">
+                        <popUpButtonCell key="cell" type="check" title="C64 Frequency" bezelStyle="regularSquare" imagePosition="left" lineBreakMode="truncatingTail" state="on" inset="2" arrowPosition="arrowAtCenter" preferredEdge="minX" selectedItem="LP1-PF-LdL" id="qjo-CF-dOg">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
+                            <font key="font" metaFont="menu"/>
                             <menu key="menu" id="m7b-17-QHH">
                                 <items>
-                                    <menuItem title="CPU Frequency (C64)" state="on" id="LP1-PF-LdL"/>
-                                    <menuItem title="CPU Load (Mac)" tag="1" id="fbG-FO-q2S"/>
-                                    <menuItem title="Frames per Second (Mac)" tag="2" id="meX-8h-Eo8"/>
+                                    <menuItem title="C64 Frequency" state="on" id="LP1-PF-LdL"/>
+                                    <menuItem title="CPU Load" tag="1" id="fbG-FO-q2S"/>
+                                    <menuItem title="Frames per Second" tag="2" id="meX-8h-Eo8"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
@@ -330,7 +330,7 @@
                         <popUpButton key="view" tag="11" id="4MP-rV-xX2" userLabel="Port 2">
                             <rect key="frame" x="0.0" y="14" width="41" height="20"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">

@@ -48,20 +48,12 @@ struct Command {
     bool hidden = false;
         
     // Creates a new node in the command tree
-    Command *add(std::vector<string> tokens,
-                 const string &a1,
+    void add(std::vector<string> tokens,
+                 const string &type,
                  const string &help,
                  void (RetroShell::*action)(Arguments&, long) = nullptr,
                  isize numArgs = 0, long param = 0);
-
-    // Creates multiple nodes in the command tree
-    Command *add(std::vector<string> firstTokens,
-                 std::vector<string> tokens,
-                 const string &a1,
-                 const string &help,
-                 void (RetroShell::*action)(Arguments&, long) = nullptr,
-                 isize numArgs = 0, long param = 0);
-
+    
     // Removes a registered command
     void remove(const string& token);
     
