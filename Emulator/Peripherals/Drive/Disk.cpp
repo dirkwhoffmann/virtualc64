@@ -107,93 +107,6 @@ Disk::isValidHalftrackSectorPair(Halftrack ht, Sector s)
     return s < numberOfSectorsInHalftrack(ht);
 }
 
-Disk *
-Disk::make(C64 &ref, const string &path)
-{
-    return new Disk(ref, path);
-    /*
-    try { auto file = G64File(path); return makeWithG64(ref, file); }
-    catch (...) { }
-
-    try { auto fs = FSDevice(path); return makeWithFileSystem(ref, fs); }
-    catch (...) { }
-    
-    throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
-    */
-}
-
-Disk *
-Disk::make(C64 &ref, DOSType type, PETName<16> name)
-{
-    return new Disk(ref, type, name);
-    /*
-    assert_enum(DOSType, type);
-    
-    switch (type) {
-            
-        case DOS_TYPE_NODOS:
-        {
-            return new Disk(ref);
-        }
-        case DOS_TYPE_CBM:
-        {
-            auto fs = FSDevice(DISK_TYPE_SS_SD, DOS_TYPE_CBM);
-            fs.setName(name);
-            return makeWithFileSystem(ref, fs);
-        }
-        default:
-        {
-            assert(false);
-            return nullptr;
-        }
-    }
-    */
-}
-
-Disk *
-Disk::makeWithFileSystem(C64 &ref, const FSDevice &fs)
-{
-    return new Disk(ref, fs);
-    /*
-    Disk *disk = new Disk(ref);
-
-    disk->encode(fs);
-    return disk;
-    */
-}
-
-Disk *
-Disk::makeWithG64(C64 &ref, const G64File &g64)
-{
-    return new Disk(ref, g64);
-    /*
-    Disk *disk = new Disk(ref);
-
-    disk->encodeG64(g64);
-    return disk;
-    */
-}
-
-Disk *
-Disk::makeWithD64(C64 &ref, const D64File &d64)
-{
-    return new Disk(ref, d64);
-    /*
-    auto fs = FSDevice(d64);
-    return makeWithFileSystem(ref, fs);
-    */
-}
-
-Disk *
-Disk::makeWithCollection(C64 &ref, AnyCollection &collection)
-{
-    return new Disk(ref, collection);
-    /*
-    auto fs = FSDevice(collection);
-    return makeWithFileSystem(ref, fs);
-    */
-}
-
 Disk::Disk(C64 &ref) : SubComponent(ref)
 {    
     /* Create the bit expansion table. Note that this table expects a Little
@@ -201,7 +114,9 @@ Disk::Disk(C64 &ref) : SubComponent(ref)
      * architecture, the byte order needs to be reversed.
      */
     for (isize i = 0; i < 256; i++) {
+        
         bitExpansion[i] = 0;
+        
         if (i & 0x80) bitExpansion[i] |= 0x0000000000000001;
         if (i & 0x40) bitExpansion[i] |= 0x0000000000000100;
         if (i & 0x20) bitExpansion[i] |= 0x0000000000010000;

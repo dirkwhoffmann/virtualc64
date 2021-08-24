@@ -163,20 +163,6 @@ public:
     
     
     //
-    // Creating
-    //
-    
-public:
-    
-    static Disk *make(C64 &ref, const string &path) throws;
-    static Disk *make(C64 &ref, DOSType type, PETName<16> name);
-    static Disk *makeWithFileSystem(C64 &ref, const class FSDevice &device);
-    static Disk *makeWithG64(C64 &ref, const G64File &g64);
-    static Disk *makeWithD64(C64 &ref, const D64File &d64) throws;
-    static Disk *makeWithCollection(C64 &ref, AnyCollection &archive) throws;
-
-
-    //
     // Initializing
     //
     

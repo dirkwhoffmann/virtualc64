@@ -753,11 +753,7 @@ Drive::setModifiedDisk(bool value)
 void
 Drive::insertDisk(const string &path, bool wp)
 {
-    auto disk = std::unique_ptr<Disk>(Disk::make(c64, path));
-    
-    if (disk) {
-        insertDisk(std::move(disk), wp);
-    }
+    insertDisk(std::make_unique<Disk>(c64, path), wp);
 }
 
 void
@@ -788,51 +784,31 @@ Drive::insertNewDisk(DOSType fsType)
 void
 Drive::insertNewDisk(DOSType fsType, PETName<16> name)
 {
-    auto disk = std::unique_ptr<Disk>(Disk::make(c64, fsType, name));
-
-    if (disk) {
-        insertDisk(std::move(disk), false);
-    }
+    insertDisk(std::make_unique<Disk>(c64, fsType, name), false);
 }
 
 void
 Drive::insertFileSystem(const FSDevice &device, bool wp)
 {
-    auto disk = std::unique_ptr<Disk>(Disk::makeWithFileSystem(c64, device));
-    
-    if (disk) {
-        insertDisk(std::move(disk), wp);
-    }
+    insertDisk(std::make_unique<Disk>(c64, device), wp);
 }
 
 void
 Drive::insertD64(const D64File &d64, bool wp)
 {
-    auto disk = std::unique_ptr<Disk>(Disk::makeWithD64(c64, d64));
-    
-    if (disk) {
-        insertDisk(std::move(disk), wp);
-    }
+    insertDisk(std::make_unique<Disk>(c64, d64), wp);
 }
 
 void
 Drive::insertG64(const G64File &g64, bool wp)
 {
-    auto disk = std::unique_ptr<Disk>(Disk::makeWithG64(c64, g64));
-    
-    if (disk) {
-        insertDisk(std::move(disk), wp);
-    }
+    insertDisk(std::make_unique<Disk>(c64, g64), wp);
 }
 
 void
 Drive::insertCollection(AnyCollection &collection, bool wp)
 {
-    auto disk = std::unique_ptr<Disk>(Disk::makeWithCollection(c64, collection));
-    
-    if (disk) {
-        insertDisk(std::move(disk), wp);
-    }
+    insertDisk(std::make_unique<Disk>(c64, collection), wp);
 }
 
 void 
