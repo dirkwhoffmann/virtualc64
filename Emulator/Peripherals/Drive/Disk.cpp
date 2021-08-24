@@ -70,6 +70,8 @@ const Disk::TrackDefaults Disk::trackDefaults[43] = {
     { 17, 0, 6250, 6250 * 8, 785, 0.830 }  // Track 42
 };
 
+u64 Disk::bitExpansion[256];
+
 isize
 Disk::numberOfSectorsInTrack(Track t)
 {

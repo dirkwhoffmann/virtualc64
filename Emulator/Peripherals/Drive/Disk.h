@@ -90,7 +90,7 @@ private:
      *
      *     Example: 0110 ... -> 00000000 00000001 0000001 00000000 ...
      */
-    u64 bitExpansion[256];
+    static u64 bitExpansion[256];
     
     
     //
@@ -113,10 +113,10 @@ private:
 public:
     
     // Data information for each halftrack on this disk
-    DiskData data;
+    DiskData data = { };
 
     // Length information for each halftrack on this disk
-    DiskLength length;
+    DiskLength length = { };
 
     
     //
@@ -126,7 +126,7 @@ public:
 private:
     
     // Track layout as determined by analyzeTrack
-    TrackInfo trackInfo;
+    TrackInfo trackInfo = { };
 
     // Error log created by analyzeTrack
     std::vector<string> errorLog;
@@ -138,7 +138,7 @@ private:
     std::vector<isize> errorEndIndex;
 
     // Textual representation of track data
-    char text[maxBitsOnTrack + 1];
+    char text[maxBitsOnTrack + 1] = { };
     
     
     //
