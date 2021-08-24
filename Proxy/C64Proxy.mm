@@ -1043,12 +1043,12 @@
 
 - (BOOL)writeProtected
 {
-    return [self drive]->disk.isWriteProtected();
+    return [self drive]->disk->isWriteProtected();
 }
 
 - (void)setWriteProtection:(BOOL)b
 {
-    [self drive]->disk.setWriteProtection(b);
+    [self drive]->disk->setWriteProtection(b);
 }
 
 - (BOOL)hasWriteProtectedDisk

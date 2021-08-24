@@ -78,7 +78,9 @@ public:
     VIA2 via2 = VIA2(c64, *this);
     PiaDolphin pia = PiaDolphin(c64, *this);
     
-    Disk disk = Disk(c64);
+    // The currently inserted disk (if any)
+    std::unique_ptr<Disk> disk;
+    // Disk disk = Disk(c64);
     
 
     //
@@ -364,10 +366,10 @@ public:
     bool hasDisk() const { return insertionStatus == DISK_FULLY_INSERTED; }
     bool hasPartiallyRemovedDisk() const {
         return insertionStatus == DISK_PARTIALLY_INSERTED || insertionStatus == DISK_PARTIALLY_EJECTED; }
-    bool hasWriteProtectedDisk() const { return hasDisk() && disk.isWriteProtected(); }
+    bool hasWriteProtectedDisk() const { return hasDisk() && disk->isWriteProtected(); }
 
     // Gets or sets the modification status
-    bool hasModifiedDisk() const { return hasDisk() && disk.isModified(); }
+    bool hasModifiedDisk() const { return hasDisk() && disk->isModified(); }
     void setModifiedDisk(bool value);
  
     /* Returns the current state of the write protection barrier. If the light
@@ -381,7 +383,7 @@ public:
         return
         (cpu.cycle < 1500000)
         || hasPartiallyRemovedDisk()
-        || disk.isWriteProtected();
+        || hasWriteProtectedDisk();
     }
 
     /* Requests the emulator to inserts or eject a disk. Background: Many C64
@@ -431,7 +433,7 @@ public:
         
     // Returns the number of bits in a halftrack
     u16 sizeOfHalftrack(Halftrack ht) {
-        return hasDisk() ? disk.lengthOfHalftrack(ht) : 0; }
+        return hasDisk() ? disk->lengthOfHalftrack(ht) : 0; }
     u16 sizeOfCurrentHalftrack() { return sizeOfHalftrack(halftrack); }
 
     // Returns the position of the drive head inside the current track
@@ -463,13 +465,13 @@ public:
     void setZone(u8 value);
 
     // Reads a single bit from the disk head (result is 0 or 1)
-    u8 readBitFromHead() const { return disk.readBitFromHalftrack(halftrack, offset); }
+    u8 readBitFromHead() const;
     
     // Writes a single bit to the disk head
-    void writeBitToHead(u8 bit) { disk.writeBitToHalftrack(halftrack, offset, bit); }
+    void writeBitToHead(u8 bit);
     
     // Advances drive head position by one bit
-    void rotateDisk() { if (++offset >= disk.lengthOfHalftrack(halftrack)) offset = 0; }
+    void rotateDisk();
 
     // Performs periodic actions
     void vsyncHandler();

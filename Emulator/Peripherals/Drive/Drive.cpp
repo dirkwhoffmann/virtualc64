@@ -16,13 +16,15 @@ Drive::Drive(DriveID id, C64 &ref) : SubComponent(ref), deviceNr(id)
 {
     assert(deviceNr == DRIVE8 || deviceNr == DRIVE9);
 	
+    disk = std::make_unique<Disk>(c64);
+    
     subComponents = std::vector <C64Component *> {
         
         &mem,
         &cpu,
         &via1,
         &via2,
-        &disk
+        disk.get()
     };
 }
 
@@ -38,7 +40,7 @@ Drive::_initialize()
     C64Component::_initialize();
     
     insertionStatus = DISK_FULLY_EJECTED;
-    disk.clearDisk();
+    disk->clearDisk();
 }
 
 void
@@ -380,7 +382,7 @@ Drive::_dump(dump::Category category, std::ostream& os) const
     if (category & dump::Disk) {
         
         if (hasDisk()) {
-            disk.dump(dump::State, os);
+            disk->dump(dump::State, os);
         } else {
             os << "No disk";
         }
@@ -436,7 +438,7 @@ Drive::executeUF4()
         // When a bit comes in and ...
         //   ... it's value equals 0, nothing happens.
         //   ... it's value equals 1, counter UF4 is reset.
-        if (readMode() && readBitFromHead()) {
+        if (readMode() && hasDisk() && readBitFromHead()) {
             counterUF4 = 0;
         }
         rotateDisk();
@@ -495,9 +497,9 @@ Drive::executeUF4()
             byteReadyCounter = sync ? (byteReadyCounter + 1) % 8 : 0;
             
             // (4) Execute the write shift register
-            if (writeMode() && !getLightBarrier()) {
+            if (writeMode() && hasDisk() && !getLightBarrier()) {
                 writeBitToHead(writeShiftreg & 0x80);
-                disk.setModified(true);
+                disk->setModified(true);
             }
             writeShiftreg <<= 1;
             
@@ -562,6 +564,28 @@ Drive::setZone(u8 value)
     }
 }
 
+u8
+Drive::readBitFromHead() const
+{
+    assert(hasDisk());
+    return disk->readBitFromHalftrack(halftrack, offset);
+}
+
+void
+Drive::writeBitToHead(u8 bit)
+{
+    assert(hasDisk());
+    disk->writeBitToHalftrack(halftrack, offset, bit);
+}
+
+void
+Drive::rotateDisk()
+{
+    if (hasDisk()) {
+        if (++offset >= disk->lengthOfHalftrack(halftrack)) offset = 0;
+    }
+}
+
 void
 Drive::setRedLED(bool b)
 {
@@ -604,17 +628,23 @@ Drive::moveHeadUp()
 {
     if (halftrack < 84) {
 
-        float position = (float)offset / (float)disk.lengthOfHalftrack(halftrack);
-        halftrack++;
-        offset = (HeadPos)(position * disk.lengthOfHalftrack(halftrack));
+        if (hasDisk()) {
+            
+            float pos = (float)offset / (float)disk->lengthOfHalftrack(halftrack);
+            halftrack++;
+            offset = (HeadPos)(pos * disk->lengthOfHalftrack(halftrack));
+            assert(disk->isValidHeadPos(halftrack, offset));
+            
+        } else {
+            
+            halftrack++;
+            offset = 0;
+        }
         
         trace(DRV_DEBUG, "Moving head up to halftrack %zd (track %2.1f) (offset %zd)\n",
               halftrack, (halftrack + 1) / 2.0, offset);
-        trace(DRV_DEBUG, "Halftrack %zd has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
     }
-   
-    assert(disk.isValidHeadPos(halftrack, offset));
-    
+       
     msgQueue.put(MSG_DRIVE_STEP,
                    config.pan << 24 | config.stepVolume << 16 | halftrack << 8 | deviceNr);
 }
@@ -623,16 +653,23 @@ void
 Drive::moveHeadDown()
 {
     if (halftrack > 1) {
-        float position = (float)offset / (float)disk.lengthOfHalftrack(halftrack);
-        halftrack--;
-        offset = (HeadPos)(position * disk.lengthOfHalftrack(halftrack));
+        
+        if (hasDisk()) {
+
+            float pos = (float)offset / (float)disk->lengthOfHalftrack(halftrack);
+            halftrack--;
+            offset = (HeadPos)(pos * disk->lengthOfHalftrack(halftrack));
+            assert(disk->isValidHeadPos(halftrack, offset));
+
+        } else {
+            
+            halftrack--;
+            offset = 0;
+        }
         
         trace(DRV_DEBUG, "Moving head down to halftrack %zd (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
-        trace(DRV_DEBUG, "Halftrack %zd has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
     }
-    
-    assert(disk.isValidHeadPos(halftrack, offset));
     
     msgQueue.put(MSG_DRIVE_STEP,
                    config.pan << 24 | config.stepVolume << 16 | halftrack << 8 | deviceNr);
@@ -641,7 +678,7 @@ Drive::moveHeadDown()
 void
 Drive::setModifiedDisk(bool value)
 {
-    disk.setModified(value);
+    if (hasDisk()) disk->setModified(value);
     msgQueue.put(value ? MSG_DISK_UNSAVED : MSG_DISK_SAVED, deviceNr);
 }
 
@@ -772,7 +809,7 @@ Drive::executeStateTransition()
             insertionStatus = DISK_PARTIALLY_EJECTED;
             
             // Make sure the drive can no longer read from this disk
-            disk.clearDisk();
+            disk->clearDisk();
             
             // Schedule the next transition
             diskChangeCounter = config.ejectDelay;
@@ -818,12 +855,12 @@ Drive::executeStateTransition()
             isize size = diskToInsert->size();
             u8 *buffer = new u8[size];
             diskToInsert->save(buffer);
-            disk.load(buffer);
+            disk->load(buffer);
             delete[] buffer;
             diskToInsert = nullptr;
             
             // Enable or disable the write protection
-            disk.setWriteProtection(diskToInsertWP);
+            disk->setWriteProtection(diskToInsertWP);
 
             // Inform listeners
             msgQueue.put(MSG_DISK_INSERT,
