@@ -23,8 +23,7 @@ Drive::Drive(DriveID id, C64 &ref) : SubComponent(ref), deviceNr(id)
         &mem,
         &cpu,
         &via1,
-        &via2,
-        disk.get()
+        &via2
     };
 }
 
@@ -387,6 +386,75 @@ Drive::_dump(dump::Category category, std::ostream& os) const
             os << "No disk";
         }
     }
+}
+
+isize
+Drive::_size()
+{
+    util::SerCounter counter;
+
+    applyToPersistentItems(counter);
+    applyToResetItems(counter);
+
+    // Add the size of the boolean indicating whether a disk is inserted
+    counter.count += sizeof(bool);
+
+    if (hasDisk()) {
+
+        // Add the disk size
+        disk->applyToPersistentItems(counter);
+    }
+
+    return counter.count;
+}
+
+isize
+Drive::_load(const u8 *buffer)
+{
+    util::SerReader reader(buffer);
+    isize result;
+    
+    // Read own state
+    applyToPersistentItems(reader);
+    applyToResetItems(reader);
+
+    // Check if the snapshot includes a disk
+    bool diskInSnapshot;
+    reader << diskInSnapshot;
+
+    // If yes, create recreate the disk
+    if (diskInSnapshot) {
+        
+        disk->applyToPersistentItems(reader);
+    }
+
+    result = (isize)(reader.ptr - buffer);
+    trace(SNP_DEBUG, "Recreated from %zd bytes\n", result);
+    return result;
+}
+
+isize
+Drive::_save(u8 *buffer)
+{
+    util::SerWriter writer(buffer);
+    isize result;
+    
+    // Write own state
+    applyToPersistentItems(writer);
+    applyToResetItems(writer);
+
+    // Indicate whether this drive has a disk is inserted
+    writer << hasDisk();
+
+    if (hasDisk()) {
+
+        // Write the disk
+        disk->applyToPersistentItems(writer);
+    }
+    
+    result = (isize)(writer.ptr - buffer);
+    trace(SNP_DEBUG, "Serialized to %zd bytes\n", result);
+    return result;
 }
 
 void

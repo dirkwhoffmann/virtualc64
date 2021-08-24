@@ -316,10 +316,10 @@ private:
         << byteReady;
     }
     
-    isize _size() override { COMPUTE_SNAPSHOT_SIZE }
-    isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-    
+    isize _size() override;
+    isize _load(const u8 *buffer) override;
+    isize _save(u8 *buffer) override;
+
 private:
     
     void _run() override;

@@ -16,6 +16,8 @@
 
 class Disk : public SubComponent {
     
+    friend class Drive;
+    
 public:
     
     //
