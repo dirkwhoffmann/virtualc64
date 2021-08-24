@@ -949,11 +949,11 @@
 				5036E0AE261AEF000048E66A /* RetroShell.h */,
 				5036E0B3261AEF000048E66A /* RetroShell.cpp */,
 				5036E0B6261AEF000048E66A /* RetroShellCmds.cpp */,
+				5036E0B4261AEF000048E66A /* Command.h */,
+				5036E0B2261AEF000048E66A /* Command.cpp */,
 				5036E0B1261AEF000048E66A /* Interpreter.h */,
 				5036E0AF261AEF000048E66A /* Interpreter.cpp */,
 				5036E0B5261AEF000048E66A /* InterpreterCmds.cpp */,
-				5036E0B4261AEF000048E66A /* Command.h */,
-				5036E0B2261AEF000048E66A /* Command.cpp */,
 			);
 			path = RetroShell;
 			sourceTree = "<group>";
