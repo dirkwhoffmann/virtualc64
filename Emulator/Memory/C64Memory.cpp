@@ -169,7 +169,7 @@ C64Memory::setConfigItem(Option option, i64 value)
 }
 
 void
-C64Memory::_inspect()
+C64Memory::_inspect() const
 {
     synchronized {
         

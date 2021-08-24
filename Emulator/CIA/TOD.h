@@ -29,7 +29,7 @@ class TOD : public SubComponent {
 private:
     
     // Result of the latest inspection
-    TODInfo info = { };
+    mutable TODInfo info = { };
     
     // Reference to the connected CIA
     class CIA &cia;
@@ -88,11 +88,11 @@ private:
 public:
     
     // Returns the result of the most recent call to inspect()
-    TODInfo getInfo() { return SubComponent::getInfo(info); }
+    TODInfo getInfo() const { return C64Component::getInfo(info); }
 
 private:
     
-    void _inspect() override;
+    void _inspect() const override;
     void _dump(dump::Category category, std::ostream& os) const override;
     
     

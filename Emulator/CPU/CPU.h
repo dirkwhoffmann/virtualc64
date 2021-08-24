@@ -26,7 +26,7 @@ class CPU : public SubComponent {
     friend class Watchpoints;
             
     // Result of the latest inspection
-    CPUInfo info = { };
+    mutable CPUInfo info = { };
         
     
     //
@@ -218,11 +218,11 @@ public:
 public:
     
     // Returns the result of the latest inspection
-    CPUInfo getInfo() { return SubComponent::getInfo(info); }
+    CPUInfo getInfo() const { return C64Component::getInfo(info); }
     
 private:
     
-    void _inspect() override;
+    void _inspect() const override;
     void _dump(dump::Category category, std::ostream& os) const override;
     
     //

@@ -40,8 +40,8 @@ class ReSID : public SubComponent {
     reSID::SID *sid;
     
     // Result of the latest inspection
-    SIDInfo info = { };
-    VoiceInfo voiceInfo[3] = { };
+    mutable SIDInfo info = { };
+    mutable VoiceInfo voiceInfo[3] = { };
         
 private:
     
@@ -107,12 +107,12 @@ public:
     
 public:
     
-    SIDInfo getInfo() { return SubComponent::getInfo(info); }
-    VoiceInfo getVoiceInfo(isize nr) { return SubComponent::getInfo(voiceInfo[nr]); }
+    SIDInfo getInfo() const { return C64Component::getInfo(info); }
+    VoiceInfo getVoiceInfo(isize nr) const { return C64Component::getInfo(voiceInfo[nr]); }
     
 private:
     
-    void _inspect() override;
+    void _inspect() const override;
     void _dump(dump::Category category, std::ostream& os) const override;
     
     //

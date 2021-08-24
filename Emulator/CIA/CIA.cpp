@@ -94,16 +94,16 @@ CIA::setConfigItem(Option option, i64 value)
 }
 
 void
-CIA::_inspect()
+CIA::_inspect() const
 {
     synchronized {
         
-        updatePA();
+        // updatePA();
         info.portA.port = PA;
         info.portA.reg = PRA;
         info.portA.dir = DDRA;
         
-        updatePB();
+        // updatePB();
         info.portB.port = PB;
         info.portB.reg = PRB;
         info.portB.dir = DDRB;

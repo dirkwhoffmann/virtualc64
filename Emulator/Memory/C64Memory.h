@@ -18,7 +18,7 @@ class C64Memory : public SubComponent {
     MemConfig config = { };
     
     // Result of the latest inspection
-    MemInfo info = { };
+    mutable MemInfo info = { };
     
 public:
     
@@ -93,11 +93,11 @@ public:
     
 public:
     
-    MemInfo getInfo() { return SubComponent::getInfo(info); }
+    MemInfo getInfo() const { return C64Component::getInfo(info); }
     
 private:
     
-    void _inspect() override;
+    void _inspect() const override;
     void _dump(dump::Category category, std::ostream& os) const override;
     
     

@@ -67,7 +67,7 @@ class CIA : public SubComponent {
     CIAConfig config = { };
     
     // Result of the latest inspection
-    CIAInfo info = { };
+    mutable CIAInfo info = { };
     
     
     //
@@ -272,11 +272,11 @@ public:
 
 public:
     
-    CIAInfo getInfo() { return SubComponent::getInfo(info); }
+    CIAInfo getInfo() const { return C64Component::getInfo(info); }
     
 protected:
     
-    void _inspect() override;
+    void _inspect() const override;
     void _dump(dump::Category category, std::ostream& os) const override;
     
     

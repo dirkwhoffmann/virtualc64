@@ -351,7 +351,7 @@ VICII::setSpeed(VICIISpeed speed)
 }
 
 void
-VICII::_inspect()
+VICII::_inspect() const
 {
     synchronized {
         

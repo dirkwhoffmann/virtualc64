@@ -25,7 +25,7 @@ C64Component::reset(bool hard)
 }
 
 void
-C64Component::inspect()
+C64Component::inspect() const
 {
     for (C64Component *c : subComponents) { c->inspect(); }
     _inspect();

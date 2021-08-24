@@ -25,19 +25,19 @@ class VICII : public SubComponent {
     // Current configuration
     VICIIConfig config = { };
 
+    // Result of the latest inspection
+    mutable VICIIInfo info = { };
+    mutable SpriteInfo spriteInfo[8] = { };
+    
+    // Statistics
+    VICIIStats stats = { };
+
     // Chip properties (derived from config.revision)
     bool isPAL;
     bool isNTSC;
     bool is856x;
     bool is656x;
 
-    // Result of the latest inspection
-    VICIIInfo info = { };
-    SpriteInfo spriteInfo[8] = { };
-    
-    // Statistics
-    VICIIStats stats = { };
-        
 public:
     
     // Sub components
@@ -614,12 +614,12 @@ private:
     
 public:
     
-    VICIIInfo getInfo() { return SubComponent::getInfo(info); }
+    VICIIInfo getInfo() const { return C64Component::getInfo(info); }
     SpriteInfo getSpriteInfo(int nr);
 
 private:
     
-    void _inspect() override;
+    void _inspect() const override;
     void _dump(dump::Category category, std::ostream& os) const override;
 
 public:

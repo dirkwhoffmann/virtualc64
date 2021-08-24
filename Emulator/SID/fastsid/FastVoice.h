@@ -69,8 +69,8 @@ class FastVoice : public SubComponent {
     friend class FastSID;
     
     // Result of the latest inspection
-    SIDInfo info = { };
-    VoiceInfo voiceInfo[3] = { };
+    mutable SIDInfo info = { };
+    mutable VoiceInfo voiceInfo[3] = { };
     
     // Wave tables
     // The first index determines the chip model (0 = old, 1 = new).
@@ -189,8 +189,8 @@ private:
     
 public:
     
-    SIDInfo getInfo() { return SubComponent::getInfo(info); }
-    VoiceInfo getVoiceInfo(isize nr) { return SubComponent::getInfo(voiceInfo[nr]); }
+    SIDInfo getInfo() const { return C64Component::getInfo(info); }
+    VoiceInfo getVoiceInfo(isize nr) const { return C64Component::getInfo(voiceInfo[nr]); }
     
     
     //
