@@ -49,7 +49,6 @@ class ExpansionPort : public SubComponent {
 public:
     
     ExpansionPort(C64 &ref) : SubComponent(ref) { };
-    ~ExpansionPort();
     const char *getDescription() const override { return "ExpansionPort"; }
 
 private:

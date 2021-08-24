@@ -11,11 +11,6 @@
 #include "ExpansionPort.h"
 #include "C64.h"
 
-ExpansionPort::~ExpansionPort()
-{
-    detachCartridge();
-}
-
 void
 ExpansionPort::_reset(bool hard)
 {

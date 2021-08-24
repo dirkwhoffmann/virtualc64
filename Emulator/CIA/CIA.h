@@ -371,6 +371,7 @@ private:
     
     // Computes the value we currently see at port A
     virtual void updatePA() = 0;
+    virtual u8 computePA() const = 0;
     
     // Returns the value driving port A from inside the chip
     virtual u8 portAinternal() const = 0;
@@ -380,6 +381,7 @@ private:
     
     // Computes the value we currently see at port B
     virtual void updatePB() = 0;
+    virtual u8 computePB() const = 0;
     
     // Returns the value driving port B from inside the chip
     virtual u8 portBinternal() const = 0;
@@ -503,9 +505,12 @@ private:
     u8 portAinternal() const override;
     u8 portAexternal() const override;
     void updatePA() override;
+    u8 computePA() const override;
+    
     u8 portBinternal() const override;
     u8 portBexternal() const override;
     void updatePB() override;
+    u8 computePB() const override;
 };
 	
 
@@ -535,12 +540,14 @@ private:
 public:
     
     void updatePA() override;
+    u8 computePA() const override;
     
 private:
     
     u8 portBinternal() const override;
     u8 portBexternal() const override;
     void updatePB() override;
+    u8 computePB() const override;
     void pokePRA(u8 value) override;
     void pokePRB(u8 value) override;
     void pokeDDRA(u8 value) override;

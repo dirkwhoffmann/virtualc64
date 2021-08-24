@@ -98,13 +98,11 @@ CIA::_inspect() const
 {
     synchronized {
         
-        // updatePA();
-        info.portA.port = PA;
+        info.portA.port = computePA();
         info.portA.reg = PRA;
         info.portA.dir = DDRA;
         
-        // updatePB();
-        info.portB.port = PB;
+        info.portB.port = computePB();
         info.portB.reg = PRB;
         info.portB.dir = DDRB;
         
@@ -676,21 +674,28 @@ void
 CIA1::updatePA()
 {
     u8 oldPA = PA;
-    
-    PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
+    PA = computePA();
+        
+    // An edge on PA4 triggers the NeosMouse on port 2
+    if (FALLING_EDGE_BIT(oldPA, PA, 4)) port2.mouse.fallingStrobe();
+    if (RISING_EDGE_BIT(oldPA, PA, 4)) port2.mouse.risingStrobe();
+}
+
+u8
+CIA1::computePA() const
+{
+    u8 result = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
 
     // Get lines which are driven actively low by port 2
     u8 rowMask = ~PRB & DDRB & port1.getControlPort();
     
     // Pull lines low that are connected by a pressed key
-    PA &= keyboard.getColumnValues(rowMask);
+    result &= keyboard.getColumnValues(rowMask);
     
     // The control port can always bring the port lines low
-    PA &= port2.getControlPort();
+    result &= port2.getControlPort();
     
-    // An edge on PA4 triggers the NeosMouse on port 2
-    if (FALLING_EDGE_BIT(oldPA, PA, 4)) port2.mouse.fallingStrobe();
-    if (RISING_EDGE_BIT(oldPA, PA, 4)) port2.mouse.risingStrobe();
+    return result;
 }
 
 //                    -------
@@ -720,30 +725,37 @@ void
 CIA1::updatePB()
 {
     u8 oldPB = PB;
-    
-    PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
- 
-    // Get lines which are driven actively low by port 2
-    u8 columnMask = ~PRA & DDRA & port2.getControlPort();
-    
-    // Pull lines low that are connected by a pressed key
-    PB &= keyboard.getRowValues(columnMask, PRB & DDRB);
+    PB = computePB();
         
-    // Check if timer A underflow shows up on PB6
-    if (GET_BIT(PB67TimerMode, 6)) REPLACE_BIT(PB, 6, PB67TimerOut & (1 << 6));
-    
-    // Check if timer B underflow shows up on PB7
-    if (GET_BIT(PB67TimerMode, 7)) REPLACE_BIT(PB, 7, PB67TimerOut & (1 << 7));
-    
-    // The control port can always bring the port lines low
-    PB &= port1.getControlPort();
-    
     // PB4 is connected to the VICII (LP pin)
     vic.setLP(GET_BIT(PB, 4) != 0);
     
     // An edge on PB4 triggers the NeosMouse on port 1
     if (FALLING_EDGE_BIT(oldPB, PB, 4)) port1.mouse.fallingStrobe();
     if (RISING_EDGE_BIT(oldPB, PB, 4)) port1.mouse.risingStrobe();
+}
+
+u8
+CIA1::computePB() const
+{
+    u8 result = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
+ 
+    // Get lines which are driven actively low by port 2
+    u8 columnMask = ~PRA & DDRA & port2.getControlPort();
+    
+    // Pull lines low that are connected by a pressed key
+    result &= keyboard.getRowValues(columnMask, PRB & DDRB);
+        
+    // Check if timer A underflow shows up on PB6
+    if (GET_BIT(PB67TimerMode, 6)) REPLACE_BIT(result, 6, PB67TimerOut & (1 << 6));
+    
+    // Check if timer B underflow shows up on PB7
+    if (GET_BIT(PB67TimerMode, 7)) REPLACE_BIT(result, 7, PB67TimerOut & (1 << 7));
+    
+    // The control port can always bring the port lines low
+    result &= port1.getControlPort();
+    
+    return result;
 }
 
 
@@ -793,15 +805,18 @@ CIA2::portAexternal() const
 void
 CIA2::updatePA()
 {
-    PA = (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
-    
-    // PA0 (VA14) and PA1 (VA15) determine the memory bank seen by the VICII
-    // vic.updateBankAddr();
-    
+    PA = computePA();
+        
     // Mark IEC bus as dirty
     iec.setNeedsUpdateC64Side();
 }
 
+u8
+CIA2::computePA() const
+{
+    return (portAinternal() & DDRA) | (portAexternal() & ~DDRA);
+}
+    
 //                        -------
 // User port (pin C) <--> | PB0 |
 // User port (pin D) <--> | PB1 |
@@ -839,10 +854,13 @@ CIA2::portBexternal() const
 void
 CIA2::updatePB()
 {
-    // Read the value from the parallel cable
-    PB = parCable.getValue();
-    
-    // PB = (portBinternal() & DDRB) | (portBexternal() & ~DDRB);
+    PB = computePB();
+}
+
+u8
+CIA2::computePB() const
+{
+    return parCable.getValue();
 }
 
 void
