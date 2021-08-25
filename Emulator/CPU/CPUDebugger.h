@@ -139,7 +139,8 @@ public:
 class CPUDebugger : public SubComponent {
     
     friend class CPU<C64Memory>;
-    
+    friend class CPU<DriveMemory>;
+
     // Textual representation for each opcode (used by the disassembler)
     const char *mnemonic[256];
      
@@ -194,22 +195,29 @@ public:
     
     CPUDebugger(C64 &ref) : SubComponent(ref) { };
 
+private:
+    
+    void registerInstruction(u8 opcode, const char *mnemonic, AddressingMode mode);
+
+    
+    //
+    // Methods from C64Object
+    //
+
+private:
+    
     const char *getDescription() const override { return "CPUDebugger"; }
 
-    // Initializes an entry of the lookup tables
-    void registerInstruction(u8 opcode, const char *mnemonic, AddressingMode mode);
+    
+    //
+    // Methods from C64Component
+    //
 
 private:
     
     void _reset(bool hard) override;
+    void _powerOn() override;
 
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -223,15 +231,6 @@ private:
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-    
-    
-    //
-    // Controlling
-    //
-    
-private:
-    
-    void _powerOn() override;
 
 
     //
@@ -274,6 +273,7 @@ public:
     // Clears the log buffer
     void clearLog() { logCnt = 0; }
     
+    
     //
     // Examining instructions
     //
@@ -285,6 +285,7 @@ public:
 
     // Returns the address of the instruction following the current one
     u16 getAddressOfNextInstruction() const;
+    
     
     //
     // Running the disassembler

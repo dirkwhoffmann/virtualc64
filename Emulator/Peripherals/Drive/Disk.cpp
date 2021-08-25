@@ -131,20 +131,20 @@ Disk::Disk(C64 &ref) : SubComponent(ref)
 }
 
 void
-Disk::init(const string &path)
+Disk::init(const string &path, bool wp)
 {
     // TODO: Port better code from vAmiga
-    try { auto file = G64File(path); init(file); }
+    try { auto file = G64File(path); init(file, wp); }
     catch (...) { }
 
-    try { auto fs = FSDevice(path); init(fs); }
+    try { auto fs = FSDevice(path); init(fs, wp); }
     catch (...) { }
     
     throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
 }
 
 void
-Disk::init(DOSType type, PETName<16> name)
+Disk::init(DOSType type, PETName<16> name, bool wp)
 {
     assert_enum(DOSType, type);
     
@@ -152,34 +152,36 @@ Disk::init(DOSType type, PETName<16> name)
         
         auto fs = FSDevice(DISK_TYPE_SS_SD, DOS_TYPE_CBM);
         fs.setName(name);
-        init(fs);
+        init(fs, wp);
     }
 }
 
 void
-Disk::init(const FSDevice &fs)
+Disk::init(const FSDevice &fs, bool wp)
 {
     encode(fs);
+    setWriteProtection(wp);
 }
 
 void
-Disk::init(const G64File &g64)
+Disk::init(const G64File &g64, bool wp)
 {
     encodeG64(g64);
+    setWriteProtection(wp);
 }
 
 void
-Disk::init(const D64File &d64)
+Disk::init(const D64File &d64, bool wp)
 {
     auto fs = FSDevice(d64);
-    init(fs);
+    init(fs, wp);
 }
 
 void
-Disk::init(AnyCollection &collection)
+Disk::init(AnyCollection &collection, bool wp)
 {
     auto fs = FSDevice(collection);
-    init(fs);
+    init(fs, wp);
 }
 
 void

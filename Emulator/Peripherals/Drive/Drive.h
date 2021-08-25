@@ -91,7 +91,7 @@ public:
     std::unique_ptr<Disk> diskToInsert;
 
     // The write protection status of the disk to insert
-    bool diskToInsertWP = false;
+    // bool diskToInsertWP = false;
     
     // State change delay counter (checked in the vsync handler)
     i64 diskChangeCounter = 0;
@@ -395,7 +395,7 @@ public:
      * and pushing the new disk halfway in before it is inserted completely.
      */
     void insertDisk(const string &path, bool wp) throws;
-    void insertDisk(std::unique_ptr<Disk> disk, bool wp);
+    void insertDisk(std::unique_ptr<Disk> disk);
     void insertNewDisk(DOSType fstype);
     void insertNewDisk(DOSType fstype, PETName<16> name);
     void insertD64(const D64File &d64, bool wp);

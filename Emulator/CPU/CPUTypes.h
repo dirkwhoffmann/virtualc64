@@ -48,8 +48,7 @@ typedef u8 IntSource;
 enum_long(CPUREV)
 {
     MOS_6510,
-    MOS_6502,
-    CPUREV_COUNT
+    MOS_6502
 };
 typedef CPUREV CPURevision;
 
@@ -58,7 +57,7 @@ struct CPURevisionEnum : util::Reflection<CPURevisionEnum, CPURevision> {
     
     static bool isValid(long value)
     {
-        return (unsigned long)value < CPUREV_COUNT;
+        return (unsigned long)value <= MOS_6502;
     }
     
     static const char *prefix() { return nullptr; }
@@ -68,7 +67,6 @@ struct CPURevisionEnum : util::Reflection<CPURevisionEnum, CPURevision> {
                 
             case MOS_6510:      return "MOS_6510";
             case MOS_6502:      return "MOS_6502";
-            case CPUREV_COUNT:  return "???";
         }
         return "???";
     }
@@ -79,8 +77,7 @@ enum_long(BPTYPE)
 {
     BPTYPE_NONE,
     BPTYPE_HARD,
-    BPTYPE_SOFT,
-    BPTYPE_COUNT
+    BPTYPE_SOFT
 };
 typedef BPTYPE BreakpointType;
 
@@ -89,7 +86,7 @@ struct BreakpointTypeEnum : util::Reflection<BreakpointTypeEnum, BreakpointType>
     
     static bool isValid(long value)
     {
-        return (unsigned long)value < BPTYPE_COUNT;
+        return (unsigned long)value <= BPTYPE_SOFT;
     }
     
     static const char *prefix() { return "BPTYPE"; }
@@ -100,7 +97,6 @@ struct BreakpointTypeEnum : util::Reflection<BreakpointTypeEnum, BreakpointType>
             case BPTYPE_NONE:   return "NONE";
             case BPTYPE_HARD:   return "HARD";
             case BPTYPE_SOFT:   return "SOFT";
-            case BPTYPE_COUNT:  return "???";
         }
         return "???";
     }

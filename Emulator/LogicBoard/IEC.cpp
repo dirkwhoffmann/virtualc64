@@ -49,12 +49,6 @@ IEC::_dump(dump::Category category, std::ostream& os) const
     }
 }
 
-void 
-IEC::dumpTrace()
-{
-    trace(IEC_DEBUG, "ATN: %d CLK: %d DATA: %d\n", atnLine, clockLine, dataLine);
-}
-
 bool IEC::_updateIecLines()
 {
     // Save current values

@@ -49,31 +49,23 @@ class ExpansionPort : public SubComponent {
 public:
     
     ExpansionPort(C64 &ref) : SubComponent(ref) { };
+
+
+    //
+    // Methods from C64Object
+    //
+
     const char *getDescription() const override { return "ExpansionPort"; }
+    void _dump(dump::Category category, std::ostream& os) const override;
+
+    
+    //
+    // Methods from C64Component
+    //
 
 private:
     
     void _reset(bool hard) override;
-    
-    
-    //
-    // Analyzing
-    //
-    
-public:
-    
-    CartridgeType getCartridgeType();
-
-private:
-    
-    void _dump(dump::Category category, std::ostream& os) const override;
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
     
     template <class T>
     void applyToPersistentItems(T& worker)
@@ -93,6 +85,15 @@ private:
     isize _size() override;
     isize _load(const u8 *buffer) override;
     isize _save(u8 *buffer) override;
+
+    
+    //
+    // Analyzing
+    //
+    
+public:
+    
+    CartridgeType getCartridgeType();
 
  
     //

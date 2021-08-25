@@ -201,36 +201,25 @@ private:
                           AddressingMode mode,
                           MicroInstruction mInstr);
     
-    void _reset(bool hard) override;
+
+    //
+    // Methods from C64Object
+    //
+
+    void _dump(dump::Category category, std::ostream& os) const override;
 
     
     //
-    // Configuring
+    // Methods from C64Component
     //
-    
-public:
-    
-    
-    //
-    // Analyzing
-    //
-    
-public:
-    
-    // Returns the result of the latest inspection
-    CPUInfo getInfo() const { return C64Component::getInfo(info); }
-    
+
 private:
     
+    void _reset(bool hard) override;
     void _inspect() const override;
-    void _dump(dump::Category category, std::ostream& os) const override;
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
+    void _debugOn() override;
+    void _debugOff() override;
+
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -282,13 +271,13 @@ private:
 
     
     //
-    // Controlling
+    // Analyzing
     //
     
-private:
+public:
     
-    void _debugOn() override;
-    void _debugOff() override;
+    // Returns the result of the latest inspection
+    CPUInfo getInfo() const { return C64Component::getInfo(info); }
 
     
     //
@@ -402,6 +391,14 @@ class C64CPU : public CPU<C64Memory> {
 public:
     
     C64CPU(C64& ref, C64Memory& memref) : CPU(ref, memref) { }
+
+    
+    //
+    // Methods from C64Object
+    //
+
+private:
+
     const char *getDescription() const override { return "CPU"; }
 };
 
@@ -415,5 +412,13 @@ class DriveCPU : public CPU<DriveMemory> {
 public:
     
     DriveCPU(C64& ref, DriveMemory &memref) : CPU(ref, memref) { }
+    
+    
+    //
+    // Methods from C64Object
+    //
+
+private:
+
     const char *getDescription() const override { return "DriveCPU"; }    
 };

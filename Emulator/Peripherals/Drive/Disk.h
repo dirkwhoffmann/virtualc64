@@ -169,22 +169,22 @@ public:
 public:
     
     Disk(C64 &ref);
-    Disk(C64 &ref, const string &path) : Disk(ref) { init(path); } throws
-    Disk(C64 &ref, DOSType type, PETName<16> name) : Disk(ref) { init(type, name); } throws
-    Disk(C64 &ref, const class FSDevice &device) : Disk(ref) { init(device); } throws
-    Disk(C64 &ref, const G64File &g64) : Disk(ref) { init(g64); } throws
-    Disk(C64 &ref, const D64File &d64) : Disk(ref) { init(d64); } throws
-    Disk(C64 &ref, AnyCollection &archive) : Disk(ref) { init(archive); } throws
+    Disk(C64 &ref, const string &path, bool wp = false) : Disk(ref) { init(path, wp); } throws
+    Disk(C64 &ref, DOSType type, PETName<16> name, bool wp = false) : Disk(ref) { init(type, name); } throws
+    Disk(C64 &ref, const class FSDevice &device, bool wp = false) : Disk(ref) { init(device); } throws
+    Disk(C64 &ref, const G64File &g64, bool wp = false) : Disk(ref) { init(g64); } throws
+    Disk(C64 &ref, const D64File &d64, bool wp = false) : Disk(ref) { init(d64); } throws
+    Disk(C64 &ref, AnyCollection &archive, bool wp = false) : Disk(ref) { init(archive); } throws
     Disk(C64 &ref, util::SerReader &reader) : Disk(ref) throws { init(reader); }
     
 private:
     
-    void init(const string &path) throws;
-    void init(DOSType type, PETName<16> name);
-    void init(const class FSDevice &device);
-    void init(const G64File &g64);
-    void init(const D64File &d64) throws;
-    void init(AnyCollection &archive) throws;
+    void init(const string &path, bool wp = false) throws;
+    void init(DOSType type, PETName<16> name, bool wp = false);
+    void init(const class FSDevice &device, bool wp = false);
+    void init(const G64File &g64, bool wp = false);
+    void init(const D64File &d64, bool wp = false) throws;
+    void init(AnyCollection &archive, bool wp = false) throws;
     void init(util::SerReader &reader) throws;
 
     

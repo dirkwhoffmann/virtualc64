@@ -652,14 +652,18 @@ void
 Drive::setRedLED(bool b)
 {
     if (!redLED && b) {
+        
         redLED = true;
         wakeUp();
         msgQueue.put(MSG_DRIVE_LED_ON, deviceNr);
+        return;
+    }
+    if (redLED && !b) {
         
-    } else if (redLED && !b) {
         redLED = false;
         wakeUp();
         msgQueue.put(MSG_DRIVE_LED_OFF, deviceNr);
+        return;
     }
 }
 
@@ -747,11 +751,11 @@ Drive::setModifiedDisk(bool value)
 void
 Drive::insertDisk(const string &path, bool wp)
 {
-    insertDisk(std::make_unique<Disk>(c64, path), wp);
+    insertDisk(std::make_unique<Disk>(c64, path, wp));
 }
 
 void
-Drive::insertDisk(std::unique_ptr<Disk> disk, bool wp)
+Drive::insertDisk(std::unique_ptr<Disk> disk)
 {
     debug(DSKCHG_DEBUG, "insertDisk\n");
 
@@ -762,7 +766,7 @@ Drive::insertDisk(std::unique_ptr<Disk> disk, bool wp)
             // Initiate the disk change procedure
             wakeUp();
             diskToInsert = std::move(disk);
-            diskToInsertWP = wp;
+            // diskToInsertWP = wp;
             diskChangeCounter = 1;
         }
     }
@@ -778,31 +782,31 @@ Drive::insertNewDisk(DOSType fsType)
 void
 Drive::insertNewDisk(DOSType fsType, PETName<16> name)
 {
-    insertDisk(std::make_unique<Disk>(c64, fsType, name), false);
+    insertDisk(std::make_unique<Disk>(c64, fsType, name));
 }
 
 void
 Drive::insertFileSystem(const FSDevice &device, bool wp)
 {
-    insertDisk(std::make_unique<Disk>(c64, device), wp);
+    insertDisk(std::make_unique<Disk>(c64, device, wp));
 }
 
 void
 Drive::insertD64(const D64File &d64, bool wp)
 {
-    insertDisk(std::make_unique<Disk>(c64, d64), wp);
+    insertDisk(std::make_unique<Disk>(c64, d64, wp));
 }
 
 void
 Drive::insertG64(const G64File &g64, bool wp)
 {
-    insertDisk(std::make_unique<Disk>(c64, g64), wp);
+    insertDisk(std::make_unique<Disk>(c64, g64, wp));
 }
 
 void
 Drive::insertCollection(AnyCollection &collection, bool wp)
 {
-    insertDisk(std::make_unique<Disk>(c64, collection), wp);
+    insertDisk(std::make_unique<Disk>(c64, collection, wp));
 }
 
 void 
@@ -905,10 +909,6 @@ Drive::executeStateTransition()
             insertionStatus = DISK_FULLY_INSERTED;
             disk = std::move(diskToInsert);
             
-            // Enable or disable write protection
-            // TODO: Do this directly in diskToInsert
-            disk->setWriteProtection(diskToInsertWP);
-
             // Inform listeners
             msgQueue.put(MSG_DISK_INSERT,
                          config.pan << 24 | config.insertVolume << 16 | halftrack << 8 | deviceNr);
