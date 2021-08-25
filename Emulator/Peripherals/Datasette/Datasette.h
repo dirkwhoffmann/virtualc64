@@ -88,27 +88,24 @@ public:
     void alloc(isize capacity);
     void dealloc();
 
+    
+    //
+    // Methods from C64Object
+    //
+
+private:
+    
     const char *getDescription() const override { return "Datasette"; }
-    
-private:
-    
-    void _reset(bool hard) override;
-    
-    
-    //
-    // Analyzing
-    //
-    
-private:
-    
     void _dump(dump::Category category, std::ostream& os) const override;
 
     
     //
-    // Serializing
+    // Methods from C64Component
     //
-    
+
 private:
+
+    void _reset(bool hard) override;
     
     template <class T>
     void applyToPersistentItems(T& worker)

@@ -61,33 +61,26 @@ public:
     
     FlashRom(C64 &ref);
     ~FlashRom();
-    const char *getDescription() const override { return "FlashRom"; }
-
-    /* Loads an 8 KB chunk of Rom data from a buffer. This method is used when
-     * loading the contents from a CRT file.
-     */
-    void loadBank(isize bank, u8 *data);
     
+    
+    //
+    // Methods from C64Object
+    //
+
 private:
     
+    const char *getDescription() const override { return "FlashRom"; }
+    void _dump(dump::Category category, std::ostream& os) const override;
+
+    
+    //
+    // Methods from C64Component
+    //
+
+private:
+
     void _reset(bool hard) override;
 
-    
-    //
-    // Analyzing
-    //
-    
-private:
-    
-    void _dump(dump::Category category, std::ostream& os) const override;
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -110,6 +103,18 @@ private:
     isize didSaveToBuffer(u8 *buffer) override;
 
     
+    //
+    // Loading banks
+    //
+    
+public:
+    
+    /* Loads an 8 KB chunk of Rom data from a buffer. This method is used when
+     * loading the contents from a CRT file.
+     */
+    void loadBank(isize bank, u8 *data);
+        
+ 
     //
     // Accessing memory
     //

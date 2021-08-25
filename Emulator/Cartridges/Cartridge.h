@@ -139,8 +139,6 @@ public:
     
     Cartridge(C64 &ref);
     ~Cartridge();
-    
-    const char *getDescription() const override { return "Cartridge"; }
 
     /* Resets the Game and the Exrom line. The default implementation resets
      * the values to ones found in the CRT file. A few custom cartridges need
@@ -148,36 +146,28 @@ public:
      */
     virtual void resetCartConfig();
 
+    void dealloc();
+
+    
+    //
+    // Methods from C64Object
+    //
+
 protected:
     
-    void dealloc();
+    const char *getDescription() const override { return "Cartridge"; }
+    void _dump(dump::Category category, std::ostream& os) const override;
+
+    
+    //
+    // Methods from C64Component
+    //
+    
+protected:
+    
     void _reset(bool hard) override;
     void resetWithoutDeletingRam();
         
-    
-    //
-    // Analyzing
-    //
-
-public:
-    
-    // Returns the cartridge type
-    virtual CartridgeType getCartridgeType() const { return CRT_NORMAL; }
-    
-    // Checks whether this cartridge is supported by the emulator yet
-    bool isSupported() const { return isSupportedType(getCartridgeType()); }
-    
-protected:
-    
-    void _dump(dump::Category category, std::ostream& os) const override;
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -212,6 +202,27 @@ protected:
     isize _load(const u8 *buffer) override;
     isize _save(u8 *buffer) override;
         
+    
+    //
+    // Analyzing
+    //
+
+public:
+    
+    // Returns the cartridge type
+    virtual CartridgeType getCartridgeType() const { return CRT_NORMAL; }
+    
+    // Checks whether this cartridge is supported by the emulator yet
+    bool isSupported() const { return isSupportedType(getCartridgeType()); }
+        
+    
+    //
+    // Serializing
+    //
+    
+private:
+    
+ 
         
     //
     // Accessing
