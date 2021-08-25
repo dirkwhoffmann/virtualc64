@@ -14,7 +14,7 @@
 #include "SubComponent.h"
 #include "PETName.h"
 
-class Disk : public SubComponent {
+class Disk : public C64Object {
     
     friend class Drive;
     
@@ -168,14 +168,14 @@ public:
     
 public:
     
-    Disk(C64 &ref);
-    Disk(C64 &ref, const string &path, bool wp = false) : Disk(ref) { init(path, wp); } throws
-    Disk(C64 &ref, DOSType type, PETName<16> name, bool wp = false) : Disk(ref) { init(type, name); } throws
-    Disk(C64 &ref, const class FSDevice &device, bool wp = false) : Disk(ref) { init(device); } throws
-    Disk(C64 &ref, const G64File &g64, bool wp = false) : Disk(ref) { init(g64); } throws
-    Disk(C64 &ref, const D64File &d64, bool wp = false) : Disk(ref) { init(d64); } throws
-    Disk(C64 &ref, AnyCollection &archive, bool wp = false) : Disk(ref) { init(archive); } throws
-    Disk(C64 &ref, util::SerReader &reader) : Disk(ref) throws { init(reader); }
+    Disk();
+    Disk(const string &path, bool wp = false) { init(path, wp); } throws
+    Disk(DOSType type, PETName<16> name, bool wp = false) { init(type, name); } throws
+    Disk(const class FSDevice &device, bool wp = false) { init(device); } throws
+    Disk(const G64File &g64, bool wp = false) { init(g64); } throws
+    Disk(const D64File &d64, bool wp = false) { init(d64); } throws
+    Disk(AnyCollection &archive, bool wp = false) { init(archive); } throws
+    Disk(util::SerReader &reader) throws { init(reader); }
     
 private:
     
@@ -197,10 +197,6 @@ private:
     const char *getDescription() const override { return "Disk"; }
     void _dump(dump::Category category, std::ostream& os) const override;
 
-private:
-    
-    void _reset(bool hard) override;
-
     
     //
     // Serializing
@@ -218,16 +214,7 @@ private:
         >> data
         >> length;
     }
-    
-    template <class T>
-    void applyToResetItems(T& worker, bool hard = true)
-    {
-    }
-    
-    isize _size() override { COMPUTE_SNAPSHOT_SIZE }
-    isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-    
+        
     
     //
     // Accessing

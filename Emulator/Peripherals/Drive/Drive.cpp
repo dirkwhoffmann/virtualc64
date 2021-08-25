@@ -16,7 +16,7 @@ Drive::Drive(DriveID id, C64 &ref) : SubComponent(ref), deviceNr(id)
 {
     assert(deviceNr == DRIVE8 || deviceNr == DRIVE9);
 	
-    disk = std::make_unique<Disk>(c64);
+    disk = std::make_unique<Disk>();
     
     subComponents = std::vector <C64Component *> {
         
@@ -421,7 +421,7 @@ Drive::_load(const u8 *buffer)
     bool diskInSnapshot; reader << diskInSnapshot;
 
     // If yes, create recreate the disk
-    if (diskInSnapshot) disk = std::make_unique<Disk>(c64, reader);
+    if (diskInSnapshot) disk = std::make_unique<Disk>(reader);
 
     // Compute the number of read bytes and return
     result = (isize)(reader.ptr - buffer);
@@ -751,7 +751,7 @@ Drive::setModifiedDisk(bool value)
 void
 Drive::insertDisk(const string &path, bool wp)
 {
-    insertDisk(std::make_unique<Disk>(c64, path, wp));
+    insertDisk(std::make_unique<Disk>(path, wp));
 }
 
 void
@@ -782,31 +782,31 @@ Drive::insertNewDisk(DOSType fsType)
 void
 Drive::insertNewDisk(DOSType fsType, PETName<16> name)
 {
-    insertDisk(std::make_unique<Disk>(c64, fsType, name));
+    insertDisk(std::make_unique<Disk>(fsType, name));
 }
 
 void
 Drive::insertFileSystem(const FSDevice &device, bool wp)
 {
-    insertDisk(std::make_unique<Disk>(c64, device, wp));
+    insertDisk(std::make_unique<Disk>(device, wp));
 }
 
 void
 Drive::insertD64(const D64File &d64, bool wp)
 {
-    insertDisk(std::make_unique<Disk>(c64, d64, wp));
+    insertDisk(std::make_unique<Disk>(d64, wp));
 }
 
 void
 Drive::insertG64(const G64File &g64, bool wp)
 {
-    insertDisk(std::make_unique<Disk>(c64, g64, wp));
+    insertDisk(std::make_unique<Disk>(g64, wp));
 }
 
 void
 Drive::insertCollection(AnyCollection &collection, bool wp)
 {
-    insertDisk(std::make_unique<Disk>(c64, collection, wp));
+    insertDisk(std::make_unique<Disk>(collection, wp));
 }
 
 void 

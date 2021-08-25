@@ -107,7 +107,7 @@ Disk::isValidHalftrackSectorPair(Halftrack ht, Sector s)
     return s < numberOfSectorsInHalftrack(ht);
 }
 
-Disk::Disk(C64 &ref) : SubComponent(ref)
+Disk::Disk()
 {    
     /* Create the bit expansion table. Note that this table expects a Little
      * Endian architecture to work. If you compile the emulator on a Big Endian
@@ -188,12 +188,6 @@ void
 Disk::init(util::SerReader &reader)
 {
     applyToPersistentItems(reader);
-}
-
-void
-Disk::_reset(bool hard)
-{
-    RESET_SNAPSHOT_ITEMS(hard)
 }
 
 void
