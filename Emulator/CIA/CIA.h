@@ -247,43 +247,25 @@ public:
     virtual bool isCIA1() const = 0;
     virtual bool isCIA2() const = 0;
 
+    
+    //
+    // Methods from C64Object
+    //
+
+private:
+    
+    void _dump(dump::Category category, std::ostream& os) const override;
+
+    
+    //
+    // Methods from C64Component
+    //
+
 protected:
     
     void _reset(bool hard) override;
-    
-    
-    //
-    // Configuring
-    //
-    
-public:
-    
-    static CIAConfig getDefaultConfig();
-    const CIAConfig &getConfig() const { return config; }
-    void resetConfig() override;
-
-    i64 getConfigItem(Option option) const;
-    void setConfigItem(Option option, i64 value);
-
-    
-    //
-    // Analyzing
-    //
-
-public:
-    
-    CIAInfo getInfo() const { return C64Component::getInfo(info); }
-    
-protected:
-    
     void _inspect() const override;
-    void _dump(dump::Category category, std::ostream& os) const override;
-    
-    
-    //
-    // Serializing
-    //
-    
+        
 private:
     
     template <class T>
@@ -336,6 +318,29 @@ private:
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
+    
+    //
+    // Analyzing
+    //
+
+public:
+    
+    CIAInfo getInfo() const { return C64Component::getInfo(info); }
+
+    
+    //
+    // Configuring
+    //
+    
+public:
+    
+    static CIAConfig getDefaultConfig();
+    const CIAConfig &getConfig() const { return config; }
+    void resetConfig() override;
+
+    i64 getConfigItem(Option option) const;
+    void setConfigItem(Option option, i64 value);
+
         
     //
     // Accessing the I/O register space

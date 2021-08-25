@@ -742,17 +742,15 @@ C64::_warpOff()
 void
 C64::_debugOn()
 {
-    debug(RUN_DEBUG, "_debugOn\n");
-
-    vic.updateVicFunctionTable();
+    // debug(RUN_DEBUG, "_debugOn\n");
+    // vic.updateVicFunctionTable();
 }
 
 void
 C64::_debugOff()
 {
-    debug(RUN_DEBUG, "_debugOff\n");
-
-    vic.updateVicFunctionTable();
+    // debug(RUN_DEBUG, "_debugOff\n");
+    // vic.updateVicFunctionTable();
 }
 
 void

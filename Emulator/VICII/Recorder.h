@@ -86,30 +86,27 @@ public:
     
     using SubComponent::SubComponent;
     
-    const char *getDescription() const override { return "Recorder"; }
-
     bool hasFFmpeg() const;
-    
-private:
-    
-    void _initialize() override;
-    void _reset(bool hard) override;
 
     
     //
-    // Analyzing
+    // Methods from C64Object
     //
 
 private:
     
+    const char *getDescription() const override { return "Recorder"; }
     void _dump(dump::Category category, std::ostream& os) const override;
     
     
     //
-    // Serializing
+    // Methods from C64Object
     //
-    
+
 private:
+    
+    void _initialize() override;
+    void _reset(bool hard) override;
     
     template <class T>
     void applyToPersistentItems(T& worker)

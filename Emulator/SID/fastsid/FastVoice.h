@@ -173,31 +173,26 @@ public:
  
     using SubComponent::SubComponent;
     
-    const char *getDescription() const override { return "FastVoice"; }
-
     static void initWaveTables();
     void init(FastSID *owner, isize voiceNr, FastVoice *prevVoice);
+
+    
+    //
+    // Methods from C64Object
+    //
+
+private:
+    
+    const char *getDescription() const override { return "FastVoice"; }
+
+    
+    //
+    // Methods from C64Component
+    //
     
 private:
     
     void _reset(bool hard) override;
-    
-    
-    //
-    // Analyzing
-    //
-    
-public:
-    
-    SIDInfo getInfo() const { return C64Component::getInfo(info); }
-    VoiceInfo getVoiceInfo(isize nr) const { return C64Component::getInfo(voiceInfo[nr]); }
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
     
     template <class T>
     void applyToPersistentItems(T& worker)
@@ -232,6 +227,16 @@ private:
     isize didLoadFromBuffer(const u8 *buffer) override;
     
  
+    //
+    // Analyzing
+    //
+    
+public:
+    
+    SIDInfo getInfo() const { return C64Component::getInfo(info); }
+    VoiceInfo getVoiceInfo(isize nr) const { return C64Component::getInfo(voiceInfo[nr]); }
+   
+    
     //
     // Accessing
     //

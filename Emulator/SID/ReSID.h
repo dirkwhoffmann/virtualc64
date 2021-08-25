@@ -72,11 +72,68 @@ public:
     
 	ReSID(C64 &ref, Muxer &bridgeref, int n);
 	~ReSID();
+    
+    
+    //
+    // Methods from C64Object
+    //
+    
+private:
+    
     const char *getDescription() const override { return "ReSID"; }
+
+    
+    //
+    // Methods from C64Component
+    //
 
 private:
     
     void _reset(bool hard) override;
+    
+    template <class T>
+    void applyToPersistentItems(T& worker)
+    {
+        worker
+                
+        << st.sid_register
+        << st.bus_value
+        << st.bus_value_ttl
+        << st.write_pipeline
+        << st.write_address
+        << st.voice_mask
+        << st.accumulator
+        << st.shift_register
+        << st.shift_register_reset
+        << st.shift_pipeline
+        << st.pulse_output
+        << st.floating_output_ttl
+        << st.rate_counter
+        << st.rate_counter_period
+        << st.exponential_counter
+        << st.exponential_counter_period
+        << st.envelope_counter
+        << st.envelope_state
+        << st.hold_zero
+        << st.envelope_pipeline
+        
+        << model
+        << clockFrequency
+        << samplingMethod
+        << emulateFilter;
+    }
+    
+    template <class T>
+    void applyToResetItems(T& worker, bool hard = true)
+    {
+        
+    }
+    
+    isize _size() override { COMPUTE_SNAPSHOT_SIZE }
+    isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
+    isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+    isize didLoadFromBuffer(const u8 *buffer) override;
+    isize willSaveToBuffer(const u8 *buffer) override;
 
     
     //
@@ -115,55 +172,6 @@ private:
     void _inspect() const override;
     void _dump(dump::Category category, std::ostream& os) const override;
     
-    //
-    // Serializing
-    //
-    
-private:
-    
-    template <class T>
-    void applyToPersistentItems(T& worker)
-    {
-        worker
-                
-        << st.sid_register
-        << st.bus_value
-        << st.bus_value_ttl
-        << st.write_pipeline
-        << st.write_address
-        << st.voice_mask
-        << st.accumulator
-        << st.shift_register
-        << st.shift_register_reset
-        << st.shift_pipeline
-        << st.pulse_output
-        << st.floating_output_ttl
-        << st.rate_counter
-        << st.rate_counter_period
-        << st.exponential_counter
-        << st.exponential_counter_period
-        << st.envelope_counter
-        << st.envelope_state
-        << st.hold_zero
-        << st.envelope_pipeline
-        
-        << model
-        << clockFrequency
-        << samplingMethod
-        << emulateFilter;
-    }
-    
-    template <class T>
-    void applyToResetItems(T& worker, bool hard = true)
-    {
-    }
-    
-    isize _size() override { COMPUTE_SNAPSHOT_SIZE }
-    isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-    isize didLoadFromBuffer(const u8 *buffer) override;
-    isize willSaveToBuffer(const u8 *buffer) override;
-
 
     //
     // Accessing

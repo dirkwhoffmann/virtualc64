@@ -109,54 +109,28 @@ private:
 public:
         
 	FastSID(C64 &ref, Muxer &bridgeref, int n);
-    const char *getDescription() const override { return "FastSID"; }
-
+    
 private:
     
     void init(double sampleRate, int cycles_per_sec);
     void initFilter(double sampleRate);
 
-    void _reset(bool hard) override;
+    
+    //
+    // Methods from C64Object
+    //
 
-
-    //
-    // Configuring
-    //
-    
-public:
-    
-    u32 getClockFrequency() const { return cpuFrequency; }
-    void setClockFrequency(u32 frequency);
-    
-    SIDRevision getRevision() const { return model; }
-    void setRevision(SIDRevision m);
-    
-    double getSampleRate() const { return (double)sampleRate; }
-    void setSampleRate(double rate);
-    
-    bool getAudioFilter() const { return emulateFilter; }
-    void setAudioFilter(bool value) { emulateFilter = value; }
-    
-    
-    //
-    // Analyzing
-    //
-    
-public:
-    
-    SIDInfo getInfo();
-    VoiceInfo getVoiceInfo(isize voice);
-
-private:
-    
+    const char *getDescription() const override { return "FastSID"; }
     void _dump(dump::Category category, std::ostream& os) const override;
-    
+
     
     //
-    // Serializing
+    // Methods from C64Component
     //
-    
+
 private:
+
+    void _reset(bool hard) override;
     
     template <class T>
     void applyToPersistentItems(T& worker)
@@ -190,6 +164,35 @@ private:
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
+
+    //
+    // Configuring
+    //
+    
+public:
+    
+    u32 getClockFrequency() const { return cpuFrequency; }
+    void setClockFrequency(u32 frequency);
+    
+    SIDRevision getRevision() const { return model; }
+    void setRevision(SIDRevision m);
+    
+    double getSampleRate() const { return (double)sampleRate; }
+    void setSampleRate(double rate);
+    
+    bool getAudioFilter() const { return emulateFilter; }
+    void setAudioFilter(bool value) { emulateFilter = value; }
+    
+    
+    //
+    // Analyzing
+    //
+    
+public:
+    
+    SIDInfo getInfo();
+    VoiceInfo getVoiceInfo(isize voice);
+
     
     //
     // Accessing

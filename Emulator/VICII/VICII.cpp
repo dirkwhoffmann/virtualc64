@@ -560,6 +560,23 @@ VICII::getSpriteInfo(int nr)
 void
 VICII::_run()
 {
+    
+}
+
+void
+VICII::_debugOn()
+{
+    debug(RUN_DEBUG, "_debugOn\n");
+
+    updateVicFunctionTable();
+}
+
+void
+VICII::_debugOff()
+{
+    debug(RUN_DEBUG, "_debugOff\n");
+
+    updateVicFunctionTable();
 }
 
 bool

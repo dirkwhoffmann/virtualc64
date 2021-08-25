@@ -66,12 +66,47 @@ public:
 public:
     
 	C64Memory(C64 &ref);
+    
+    
+    //
+    // Methods from C64Object
+    //
+    
+private:
+    
     const char *getDescription() const override { return "C64Memory"; }
+    void _dump(dump::Category category, std::ostream& os) const override;
+
+    
+    //
+    // Methods from C64Component
+    //
 
 private:
     
     void _reset(bool hard) override;
-
+    
+    template <class T>
+    void applyToPersistentItems(T& worker)
+    {
+        worker
+        
+        << ram
+        << colorRam
+        << rom
+        << peekSrc
+        << pokeTarget;
+    }
+    
+    template <class T>
+    void applyToResetItems(T& worker, bool hard = true)
+    {
+    }
+    
+    isize _size() override { COMPUTE_SNAPSHOT_SIZE }
+    isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
+    isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+    
     
     //
     // Configuring
@@ -98,35 +133,6 @@ public:
 private:
     
     void _inspect() const override;
-    void _dump(dump::Category category, std::ostream& os) const override;
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
-    template <class T>
-    void applyToPersistentItems(T& worker)
-    {
-        worker
-        
-        << ram
-        << colorRam
-        << rom
-        << peekSrc
-        << pokeTarget;
-    }
-    
-    template <class T>
-    void applyToResetItems(T& worker, bool hard = true)
-    {
-    }
-    
-    isize _size() override { COMPUTE_SNAPSHOT_SIZE }
-    isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
     
     //

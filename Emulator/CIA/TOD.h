@@ -74,34 +74,27 @@ private:
 public:
     
 	TOD(C64 &ref, CIA &cia);
-    const char *getDescription() const override;
+    
+    
+    //
+    // Methods from C64Object
+    //
 
+private:
+    
+    const char *getDescription() const override;
+    void _dump(dump::Category category, std::ostream& os) const override;
+
+    
+    //
+    // Methods from C64Component
+    //
+    
 private:
     
     void _reset(bool hard) override;
-
-    
-    //
-    // Analyzing
-    //
-
-public:
-    
-    // Returns the result of the most recent call to inspect()
-    TODInfo getInfo() const { return C64Component::getInfo(info); }
-
-private:
-    
     void _inspect() const override;
-    void _dump(dump::Category category, std::ostream& os) const override;
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
+
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -125,6 +118,16 @@ private:
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
+    
+    //
+    // Analyzing
+    //
+
+public:
+    
+    // Returns the result of the most recent call to inspect()
+    TODInfo getInfo() const { return C64Component::getInfo(info); }
+
     
     //
     // Accessing

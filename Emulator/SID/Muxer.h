@@ -120,73 +120,34 @@ public:
 public:
 	
 	Muxer(C64 &ref);
-    const char *getDescription() const override { return "Muxer"; }
 
     // Resets the output buffer
     void clear();
 
-private:
-    
-    void _reset(bool hard) override;
-
     
     //
-    // Configuring
+    // Methods from C64Object
     //
-    
-public:
-    
-    static SIDConfig getDefaultConfig();
-    const SIDConfig &getConfig() const { return config; }
-    void resetConfig() override;
-
-    i64 getConfigItem(Option option) const;
-    i64 getConfigItem(Option option, long id) const;
-
-    void setConfigItem(Option option, i64 value);
-    void setConfigItem(Option option, long id, i64 value);
-
-    bool isEnabled(isize nr) const { return GET_BIT(config.enabled, nr); }
-    
-    bool isMuted() const;
-
-    u32 getClockFrequency();
-    void setClockFrequency(u32 frequency);
-    
-    double getSampleRate() const;
-    void setSampleRate(double rate);
-    
-
-    //
-    // Analyzing
-    //
-
-public:
-    
-    SIDInfo getInfo(isize nr);
-    VoiceInfo getVoiceInfo(isize nr, isize voice);
-    C64Component &getSID(isize nr);
 
 private:
     
+    const char *getDescription() const override { return "Muxer"; }
     void _dump(dump::Category category, std::ostream& os) const override;
     void _dump(dump::Category category, std::ostream& os, isize nr) const;
 
-public:
     
-    SIDStats getStats();
-    
-private:
-    
-    void clearStats();
+    //
+    // Methods from C64Component
+    //
 
-    
-    //
-    // Serializing
-    //
-    
 private:
     
+    void _reset(bool hard) override;
+    void _run() override;
+    void _pause() override;
+    void _warpOn() override;
+    void _warpOff() override;
+
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -226,15 +187,50 @@ private:
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     isize didLoadFromBuffer(const u8 *buffer) override;
     
- 
+    
+    //
+    // Configuring
+    //
+    
+public:
+    
+    static SIDConfig getDefaultConfig();
+    const SIDConfig &getConfig() const { return config; }
+    void resetConfig() override;
+
+    i64 getConfigItem(Option option) const;
+    i64 getConfigItem(Option option, long id) const;
+
+    void setConfigItem(Option option, i64 value);
+    void setConfigItem(Option option, long id, i64 value);
+
+    bool isEnabled(isize nr) const { return GET_BIT(config.enabled, nr); }
+    
+    bool isMuted() const;
+
+    u32 getClockFrequency();
+    void setClockFrequency(u32 frequency);
+    
+    double getSampleRate() const;
+    void setSampleRate(double rate);
+    
+
+    //
+    // Analyzing
+    //
+
+public:
+    
+    SIDInfo getInfo(isize nr);
+    VoiceInfo getVoiceInfo(isize nr, isize voice);
+    C64Component &getSID(isize nr);
+    SIDStats getStats();
+    
 private:
     
-    void _run() override;
-    void _pause() override;
-    void _warpOn() override;
-    void _warpOff() override;
-    
-  
+    void clearStats();
+
+
     //
     // Controlling the volume
     //
