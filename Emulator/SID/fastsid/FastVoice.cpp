@@ -368,11 +368,13 @@ FastVoice::applyFilter()
     float sample, sample2;
     
     if (filterType == 0) {
+        
         filterIO = 0;
         return;
     }
     
     if (filterType == FASTSID_BAND_PASS) {
+        
         filterLow += filterRef * filterDy;
         filterRef += (filterIO - filterLow - (filterRef * filterResDy)) * filterDy;
         filterIO = (signed char)(filterRef - filterLow / 4);
@@ -380,6 +382,7 @@ FastVoice::applyFilter()
     }
     
     if (filterType == FASTSID_HIGH_PASS) {
+        
         filterLow += filterRef * filterDy * 0.1;
         filterRef += (filterIO - filterLow - (filterRef * filterResDy)) * filterDy;
         sample = (float)(filterRef - (filterIO / 8));
@@ -400,20 +403,22 @@ FastVoice::applyFilter()
             
         case FASTSID_LOW_PASS:
         case FASTSID_BAND_PASS | FASTSID_LOW_PASS:
+            
             filterIO = (signed char)filterLow;
             break;
             
         case FASTSID_HIGH_PASS | FASTSID_LOW_PASS:
         case FASTSID_HIGH_PASS | FASTSID_BAND_PASS | FASTSID_LOW_PASS:
+            
             filterIO = (signed char)((int)(sample) - (tmp >> 1));
             break;
             
         case FASTSID_HIGH_PASS | FASTSID_BAND_PASS:
+            
             filterIO = (signed char)tmp;
             break;
             
         default:
-            assert(false); 
-            filterIO = 0;
+            fatalError;
     }
 }

@@ -188,7 +188,7 @@ Thread::main()
             }
             
             // Invalid state transition
-            assert(false);
+            fatalError;
             break;
         }
         

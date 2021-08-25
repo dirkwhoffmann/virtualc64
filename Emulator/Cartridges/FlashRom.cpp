@@ -31,8 +31,7 @@ FlashRom::getStateAsString(FlashState state)
         case FLASH_SECTOR_ERASE_SUSPEND: return "FLASH_SECTOR_ERASE_SUSPEND";
         
         default:
-            assert(false);
-            return "";
+            fatalError;
     }
 }
 

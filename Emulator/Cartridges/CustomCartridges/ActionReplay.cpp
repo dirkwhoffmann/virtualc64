@@ -29,8 +29,7 @@ ActionReplay3::peek(u16 addr)
         return packet[bank()]->peek(addr - 0xA000);
     }
     
-    assert(false);
-    return 0;
+    fatalError;
 }
 
 u8

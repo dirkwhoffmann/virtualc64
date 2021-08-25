@@ -181,7 +181,7 @@ public:
      * logic board that breaks down the 16 Mhz base frequency. This mechanism
      * is used to slow down the read/write process on inner tracks.
      */
-    u8 zone = 0;
+    isize zone = 0;
     
     /* The 74LS164 serial to parallel shift register. In read mode, this
      * register is fed by the drive head with data.
@@ -462,7 +462,7 @@ public:
     bool getZone() const { return zone; }
 
     // Sets the current track zone (0 to 3)
-    void setZone(u8 value);
+    void setZone(isize value);
 
     // Reads a single bit from the disk head (result is 0 or 1)
     u8 readBitFromHead() const;

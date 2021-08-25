@@ -182,8 +182,7 @@ bool
 Expert::cartridgeRamIsVisible(u16 addr) const
 {
     if (addr < 0x8000) {
-        assert(false); // Should never be called for this address space
-        return false;
+        fatalError; // Should never be called for this address space
     }
     if (addr < 0xA000) {
         return switchInPrgPosition() || (switchInOnPosition() && active);

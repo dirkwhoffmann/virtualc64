@@ -50,7 +50,7 @@ D64File::D64File(isize tracks, bool ecc) : D64File()
         case 42: size = ecc ? D64_802_SECTORS_ECC : D64_802_SECTORS; break;
             
         default:
-            assert(false);
+            fatalError;
     }
     
     data = new u8[size]();
@@ -68,8 +68,7 @@ D64File::makeWithFileSystem(FSDevice &volume)
         case D64_802_SECTORS: d64 = new D64File(42, false); break;
 
         default:
-            assert(false);
-            return nullptr;
+            fatalError;
     }
 
     ErrorCode err;
@@ -92,7 +91,7 @@ D64File::init(isize tracks, bool ecc)
         case 42: size = ecc ? D64_802_SECTORS_ECC : D64_802_SECTORS; break;
             
         default:
-            assert(false);
+            fatalError;
     }
     
     data = new u8[size]();
@@ -108,7 +107,7 @@ D64File::init(FSDevice &volume)
         case D64_802_SECTORS: init(42, false); break;
 
         default:
-            assert(false);
+            fatalError;
     }
 
     ErrorCode err;
@@ -199,8 +198,7 @@ D64File::numHalftracks() const
         case D64_802_SECTORS: case D64_802_SECTORS_ECC: return 2 * 42;
             
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 

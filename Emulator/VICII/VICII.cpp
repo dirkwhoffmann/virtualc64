@@ -71,18 +71,19 @@ VICII::_reset(bool hard)
 }
 
 void
-VICII::resetEmuTexture(int nr)
+VICII::resetEmuTexture(isize nr)
 {
-    if (nr == 1) { resetTexture(emuTexture1); return; }
-    if (nr == 2) { resetTexture(emuTexture2); return; }
-    
-    assert(false);
+    assert(nr == 1 || nr == 2);
+
+    if (nr == 1) { resetTexture(emuTexture1); }
+    if (nr == 2) { resetTexture(emuTexture2); }
 }
 
 void
-VICII::resetDmaTexture(int nr)
+VICII::resetDmaTexture(isize nr)
 {
     assert(nr == 1 || nr == 2);
+    
     u32 *p = nr == 1 ? dmaTexture1 : dmaTexture2;
 
     for (int i = 0; i < TEX_HEIGHT * TEX_WIDTH; i++) {
@@ -181,8 +182,7 @@ VICII::getConfigItem(Option option) const
         case OPT_SB_COLLISIONS:     return config.checkSBCollisions;
 
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 
@@ -286,7 +286,7 @@ VICII::setConfigItem(Option option, i64 value)
             return;
             
         default:
-            assert(false);
+            fatalError;
     }
 }
 
@@ -891,9 +891,7 @@ VICII::lightpenX() const
             return 2 + (cycle < 14 ? 400 + (8 * cycle) : (cycle - 14) * 8);
             
         default:
-            
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 

@@ -97,17 +97,17 @@ EasyFlash::peek(u16 addr)
     u8 result;
     
     if (isROMLaddr(addr)) {
+        
         result = flashRomL.peek(bank, addr & 0x1FFF);
         return result;
+    }
+    if (isROMHaddr(addr)) {
         
-    } else if (isROMHaddr(addr)) {
         result = flashRomH.peek(bank, addr & 0x1FFF);
         return result;
-        
-    } else {
-        assert(false);
-        return 0;
     }
+    
+    fatalError;
 }
 
 u8
@@ -116,17 +116,17 @@ EasyFlash::spypeek(u16 addr) const
     u8 result;
     
     if (isROMLaddr(addr)) {
+        
         result = flashRomL.spypeek(bank, addr & 0x1FFF);
         return result;
+    }
+    if (isROMHaddr(addr)) {
         
-    } else if (isROMHaddr(addr)) {
         result = flashRomH.spypeek(bank, addr & 0x1FFF);
         return result;
-        
-    } else {
-        assert(false);
-        return 0;
     }
+    
+    fatalError;
 }
 
 void
@@ -229,39 +229,44 @@ EasyFlash::pokeModeReg(u8 value)
             
         case 0b000:
         case 0b001:
+            
             game = jumper;
             exrom = 1;
             break;
             
         case 0b010:
         case 0b011:
+            
             game = jumper;
             exrom = 0;
             break;
             
         case 0b100:
+            
             game = 1;
             exrom = 1;
             break;
             
         case 0b101:
+            
             game = 0;
             exrom = 1;
             break;
             
         case 0b110:
+            
             game = 1;
             exrom = 0;
             break;
             
         case 0b111:
+            
             game = 0;
             exrom = 0;
             break;
             
         default:
-            assert(false);
-            return;
+            fatalError;
     }
     
     expansionport.setGameAndExrom(game, exrom);

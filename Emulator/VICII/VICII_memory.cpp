@@ -104,7 +104,7 @@ VICII::switchBank(u16 addr) {
             break;
             
         default:
-            assert(false);
+            fatalError;
     }
    
     // Switch to final bank one cycle later

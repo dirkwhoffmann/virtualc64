@@ -20,6 +20,7 @@
 #define unlikely(x)    __builtin_expect(!!(x), 0)
 
 #define unreachable    __builtin_unreachable()
+#define fatalError     assert(false); __builtin_unreachable()
 
 
 //

@@ -49,10 +49,9 @@ Joystick::getConfigItem(Option option) const
         case OPT_AUTOFIRE:          return (i64)config.autofire;
         case OPT_AUTOFIRE_BULLETS:  return (i64)config.autofireBullets;
         case OPT_AUTOFIRE_DELAY:    return (i64)config.autofireDelay;
-
+            
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 
@@ -83,7 +82,7 @@ Joystick::setConfigItem(Option option, i64 value)
             return;
 
         default:
-            return;
+            fatalError;
     }
 }
 
@@ -157,12 +156,12 @@ Joystick::trigger(GamePadAction event)
         case PULL_DOWN:  axisY =  1; break;
         case PULL_LEFT:  axisX = -1; break;
         case PULL_RIGHT: axisX =  1; break;
-            
         case RELEASE_X:  axisX =  0; break;
         case RELEASE_Y:  axisY =  0; break;
         case RELEASE_XY: axisX = axisY = 0; break;
             
         case PRESS_FIRE:
+            
             if (config.autofire) {
                 if (bulletCounter) {
                     
@@ -184,12 +183,14 @@ Joystick::trigger(GamePadAction event)
             break;
 
         case RELEASE_FIRE:
+            
             if (!config.autofire) button = false;
             break;
   
         default:
-            assert(false);
+            fatalError;
     }
+    
     port.device = CPDEVICE_JOYSTICK;
 }
 

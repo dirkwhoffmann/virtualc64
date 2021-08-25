@@ -581,9 +581,9 @@ private:
     
     void _reset(bool hard) override;
 
-    void resetEmuTexture(int nr);
+    void resetEmuTexture(isize nr);
     void resetEmuTextures() { resetEmuTexture(1); resetEmuTexture(2); }
-    void resetDmaTexture(int nr);
+    void resetDmaTexture(isize nr);
     void resetDmaTextures() { resetDmaTexture(1); resetDmaTexture(2); }
     void resetTexture(u32 *p);
 

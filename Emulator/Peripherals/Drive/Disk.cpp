@@ -183,6 +183,12 @@ Disk::init(AnyCollection &collection)
 }
 
 void
+Disk::init(util::SerReader &reader)
+{
+    applyToPersistentItems(reader);
+}
+
+void
 Disk::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)

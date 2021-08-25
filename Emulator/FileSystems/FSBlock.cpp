@@ -158,7 +158,7 @@ FSBlock::itemType(u32 byte) const
             return FS_USAGE_DATA;
             
         default:
-            assert(false);
+            fatalError;
     }
     
     return FS_USAGE_UNKNOWN;
@@ -221,7 +221,7 @@ FSBlock::check(u32 byte, u8 *expected, bool strict) const
             return ERROR_OK;
             
         default:
-            assert(false);
+            fatalError;
     }
     
     return ERROR_OK;

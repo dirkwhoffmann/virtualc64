@@ -64,8 +64,7 @@ CIA::getConfigItem(Option option) const
         case OPT_TIMER_B_BUG:   return config.timerBBug;
         
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 
@@ -89,7 +88,7 @@ CIA::setConfigItem(Option option, i64 value)
             return;
             
         default:
-            assert(false);
+            fatalError;
     }
 }
 
@@ -223,7 +222,7 @@ CIA::triggerTimerIrq()
             return;
             
         default:
-            assert(false);
+            fatalError;
     }
 }
 

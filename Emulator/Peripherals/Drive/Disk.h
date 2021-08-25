@@ -175,6 +175,7 @@ public:
     Disk(C64 &ref, const G64File &g64) : Disk(ref) { init(g64); } throws
     Disk(C64 &ref, const D64File &d64) : Disk(ref) { init(d64); } throws
     Disk(C64 &ref, AnyCollection &archive) : Disk(ref) { init(archive); } throws
+    Disk(C64 &ref, util::SerReader &reader) : Disk(ref) throws { init(reader); }
     
 private:
     
@@ -184,8 +185,9 @@ private:
     void init(const G64File &g64);
     void init(const D64File &d64) throws;
     void init(AnyCollection &archive) throws;
+    void init(util::SerReader &reader) throws;
 
-
+    
     //
     // Methods from C64Object
     //

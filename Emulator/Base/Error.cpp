@@ -17,8 +17,7 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
     switch (code) {
             
         case ERROR_OK:
-            assert(false);
-            break;
+            fatalError;
 
         case ERROR_OPT_UNSUPPORTED:
             description = "This option is not supported yet.";

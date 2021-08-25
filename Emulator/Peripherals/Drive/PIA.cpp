@@ -230,8 +230,7 @@ PIA6821::peek(bool rs1, bool rs0)
             
         default:
             
-            assert(false);
-            return 0;
+            fatalError;
     }
     
     // trace(PIA_DEBUG, "peek(%x) = %x\n", addr, result);
@@ -346,8 +345,7 @@ PIA6821::poke(bool rs1, bool rs0, u8 value)
             break;
         }
         default:
-            assert(false);
-            break;
+            fatalError;
     }
 }
 

@@ -59,24 +59,32 @@ NeosMouse::readControlPort() const
 
     switch (state) {
             
-        case 0: // Transmit X_HIGH
+        case 0:
+            
+            // Transmit X_HIGH
             result |= (((u8)deltaX >> 4) & 0x0F);
             break;
             
-        case 1: // Transmit X_LOW
+        case 1:
+            
+            // Transmit X_LOW
             result |= ((u8)deltaX & 0x0F);
             break;
             
-        case 2: // Transmit Y_HIGH
+        case 2:
+            
+            // Transmit Y_HIGH
             result |= (((u8)deltaY >> 4) & 0x0F);
             break;
             
-        case 3: // Transmit Y_LOW
+        case 3:
+            
+            // Transmit Y_LOW
             result |= ((u8)deltaY & 0x0F);
             break;
             
         default:
-            assert(false);
+            fatalError;
     }
     
     return result;
@@ -88,11 +96,15 @@ NeosMouse::risingStrobe(i64 targetX, i64 targetY)
     // Perform rising edge state changes
     switch (state) {
             
-        case 0:  // X_HIGH -> X_LOW
+        case 0:
+            
+            // X_HIGH -> X_LOW
             state = 1;
             break;
             
-        case 2:  // Y_HIGH -> Y_LOW
+        case 2:
+            
+            // Y_HIGH -> Y_LOW
             state = 3;
             break;
     }
@@ -107,11 +119,15 @@ NeosMouse::fallingStrobe(i64 targetX, i64 targetY)
     // Perform falling edge state changes
     switch (state) {
             
-        case 1:  // X_LOW -> Y_HIGH
+        case 1:
+            
+            // X_LOW -> Y_HIGH
             state = 2;
             break;
             
-        case 3:  // Y_LOW -> X_HIGH
+        case 3:
+            
+            // Y_LOW -> X_HIGH
             state = 0;
             latchPosition(targetX, targetY);
             break;

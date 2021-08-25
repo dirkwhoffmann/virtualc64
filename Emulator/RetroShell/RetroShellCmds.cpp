@@ -665,7 +665,7 @@ RetroShell::exec <Token::sid, Token::set, Token::volume> (Arguments& argv, long 
         case 5: c64.configure(OPT_AUDVOLR, value); break;
             
         default:
-            assert(false);
+            fatalError;
     }
 }
 

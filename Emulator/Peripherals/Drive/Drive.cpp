@@ -124,8 +124,7 @@ Drive::getConfigItem(Option option) const
         case OPT_DRV_EJECT_VOL:     return (i64)config.ejectVolume;
             
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 
@@ -135,25 +134,25 @@ Drive::setConfigItem(Option option, i64 value)
     switch (option) {
 
         case OPT_DRV_AUTO_CONFIG:
-        {
+
             suspended {
                 
                 config.autoConfig = value;
                 if (value) autoConfigure();
             }
             return;
-        }
+
         case OPT_DRV_TYPE:
-        {
+
             if (!DriveTypeEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INVARG, DriveTypeEnum::keyList());
             }
             
             config.type = (DriveType)value;
             return;
-        }
+
         case OPT_DRV_RAM:
-        {
+
             if (!DriveRamEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INVARG, DriveRamEnum::keyList());
             }
@@ -164,9 +163,9 @@ Drive::setConfigItem(Option option, i64 value)
                 mem.updateBankMap();
             }
             return;
-        }
+
         case OPT_DRV_PARCABLE:
-        {
+
             if (!ParCableTypeEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INVARG, ParCableTypeEnum::keyList());
             }
@@ -177,9 +176,9 @@ Drive::setConfigItem(Option option, i64 value)
                 mem.updateBankMap();
             }
             return;
-        }
+
         case OPT_DRV_CONNECT:
-        {
+
             if (value && !c64.hasRom(ROM_TYPE_VC1541)) {
                 throw VC64Error(ERROR_ROM_DRIVE_MISSING);
             }
@@ -191,9 +190,9 @@ Drive::setConfigItem(Option option, i64 value)
             }
             msgQueue.put(value ? MSG_DRIVE_CONNECT : MSG_DRIVE_DISCONNECT, deviceNr);
             return;
-        }
+
         case OPT_DRV_POWER_SWITCH:
-        {
+
             suspended {
                 
                 config.switchedOn = value;
@@ -201,62 +200,62 @@ Drive::setConfigItem(Option option, i64 value)
             }
             msgQueue.put(value ? MSG_DRIVE_POWER_ON : MSG_DRIVE_POWER_OFF, deviceNr);
             return;
-        }
+
         case OPT_DRV_POWER_SAVE:
-        {
+
             suspended {
                 
                 config.powerSave = value;
                 wakeUp();
             }
             return;
-        }
+
         case OPT_DRV_EJECT_DELAY:
-        {
+
             config.ejectDelay = value;
             return;
-        }
+
         case OPT_DRV_SWAP_DELAY:
-        {
+
             config.swapDelay = value;
             return;
-        }
+
         case OPT_DRV_INSERT_DELAY:
-        {
+
             config.insertDelay = value;
             return;
-        }
+
         case OPT_DRV_PAN:
-        {
+
             config.pan = (i16)value;
             return;
-        }
+
         case OPT_DRV_POWER_VOL:
-        {
+
             value = std::clamp(value, 0LL, 100LL);
             config.powerVolume = (u8)value;
             return;
-        }
+
         case OPT_DRV_STEP_VOL:
-        {
+
             value = std::clamp(value, 0LL, 100LL);
             config.stepVolume = (u8)value;
             return;
-        }
+
         case OPT_DRV_EJECT_VOL:
-        {
+
             value = std::clamp(value, 0LL, 100LL);
             config.ejectVolume = (u8)value;
             return;
-        }
+
         case OPT_DRV_INSERT_VOL:
-        {
+
             value = std::clamp(value, 0LL, 100LL);
             config.insertVolume = (u8)value;
             return;
-        }
+
         default:
-            return;
+            fatalError;
     }
 }
 
@@ -419,15 +418,12 @@ Drive::_load(const u8 *buffer)
     applyToResetItems(reader);
 
     // Check if the snapshot includes a disk
-    bool diskInSnapshot;
-    reader << diskInSnapshot;
+    bool diskInSnapshot; reader << diskInSnapshot;
 
     // If yes, create recreate the disk
-    if (diskInSnapshot) {
-        
-        disk->applyToPersistentItems(reader);
-    }
+    if (diskInSnapshot) disk = std::make_unique<Disk>(c64, reader);
 
+    // Compute the number of read bytes and return
     result = (isize)(reader.ptr - buffer);
     trace(SNP_DEBUG, "Recreated from %zd bytes\n", result);
     return result;
@@ -446,12 +442,10 @@ Drive::_save(u8 *buffer)
     // Indicate whether this drive has a disk is inserted
     writer << hasDisk();
 
-    if (hasDisk()) {
-
-        // Write the disk
-        disk->applyToPersistentItems(writer);
-    }
+    // If yes, write the disk
+    if (hasDisk()) disk->applyToPersistentItems(writer);
     
+    // Compute the number of written bytes and return
     result = (isize)(writer.ptr - buffer);
     trace(SNP_DEBUG, "Serialized to %zd bytes\n", result);
     return result;
@@ -622,12 +616,12 @@ Drive::raiseByteReady()
 }
 
 void
-Drive::setZone(u8 value)
+Drive::setZone(isize value)
 {
     assert(value < 4);
     
     if (value != zone) {
-        trace(DRV_DEBUG, "Switching from disk zone %d to disk zone %d\n", zone, value);
+        trace(DRV_DEBUG, "Switching zone: %zd --> %zd\n", zone, value);
         zone = value;
     }
 }
@@ -921,6 +915,6 @@ Drive::executeStateTransition()
             return;
         }
         default:
-            assert(false);
+            fatalError;
     }
 }

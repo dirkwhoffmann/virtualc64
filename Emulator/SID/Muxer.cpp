@@ -130,8 +130,7 @@ Muxer::getConfigItem(Option option) const
             return config.volR;
             
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 
@@ -154,8 +153,7 @@ Muxer::getConfigItem(Option option, long id) const
             return config.pan[id];
                         
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 
@@ -248,7 +246,7 @@ Muxer::setConfigItem(Option option, i64 value)
             return;
             
         default:
-            assert(false);
+            fatalError;
     }
 }
 
@@ -335,7 +333,7 @@ Muxer::setConfigItem(Option option, long id, i64 value)
             return;
 
         default:
-            assert(false);
+            fatalError;
     }
 }
 
@@ -498,7 +496,9 @@ Muxer::_dump(dump::Category category, std::ostream& os, isize nr) const
             
         case SIDENGINE_FASTSID: fastsid[nr].dump(category, os); break;
         case SIDENGINE_RESID:   resid[nr].dump(category, os); break;
-        default: assert(false);
+        
+        default:
+            fatalError;
     }
 }
 
@@ -560,7 +560,9 @@ Muxer::getInfo(isize nr)
             
         case SIDENGINE_FASTSID: info = fastsid[nr].getInfo(); break;
         case SIDENGINE_RESID:   info = resid[nr].getInfo(); break;
-        default: assert(false);
+            
+        default:
+            fatalError;
     }
     
     info.potX = port1.mouse.readPotX() & port2.mouse.readPotX();
@@ -572,28 +574,30 @@ Muxer::getInfo(isize nr)
 VoiceInfo
 Muxer::getVoiceInfo(isize nr, isize voice)
 {
-    assert(nr < 4);
-    
-    VoiceInfo info;
-    
+    assert(nr >= 0 && nr <= 3);
+        
     switch (config.engine) {
             
-        case SIDENGINE_FASTSID: info = fastsid[nr].getVoiceInfo(voice); break;
-        case SIDENGINE_RESID:   info = resid[nr].getVoiceInfo(voice); break;
-        default: assert(false);
+        case SIDENGINE_FASTSID: return fastsid[nr].getVoiceInfo(voice);
+        case SIDENGINE_RESID:   return resid[nr].getVoiceInfo(voice);
+        
+        default:
+            fatalError;
     }
-    
-    return info;
 }
 
 C64Component &
 Muxer::getSID(isize nr)
 {
     assert(nr >= 0 && nr <= 3);
-    if (config.engine == SIDENGINE_FASTSID) {
-        return fastsid[nr];
-    } else {
-        return resid[nr];
+    
+    switch (config.engine) {
+            
+        case SIDENGINE_FASTSID: return fastsid[nr];
+        case SIDENGINE_RESID:   return resid[nr];
+        
+        default:
+            fatalError;
     }
 }
 
@@ -672,13 +676,13 @@ Muxer::peek(u16 addr)
     }
     
     switch (config.engine) {
+            
         case SIDENGINE_FASTSID: return fastsid[sidNr].peek(addr);
         case SIDENGINE_RESID:   return resid[sidNr].peek(addr);
-        default: assert(false);
+            
+        default:
+            fatalError;
     }
-    
-    assert(false);
-    return 0;
 }
 
 u8
@@ -819,8 +823,7 @@ Muxer::executeCycles(isize numCycles)
             break;
 
         default:
-            numSamples = 0;
-            assert(false);
+            fatalError;
     }
     
     // Produce the final stereo stream

@@ -171,36 +171,42 @@ DriveMemory::peek(u16 addr)
     switch (usage[addr >> 10]) {
             
         case DRVMEM_NONE:
+            
             result = addr >> 8 & 0x1F;
             break;
             
         case DRVMEM_RAM:
+            
             result = ram[addr & 0x07FF];
             break;
             
         case DRVMEM_EXP:
+            
             result = ram[addr];
             break;
             
         case DRVMEM_ROM:
+            
             result = rom[addr & 0x7FFF];
             break;
 
         case DRVMEM_VIA1:
+            
             result = drive.via1.peek(addr & 0xF);
             break;
             
         case DRVMEM_VIA2:
+            
             result = drive.via2.peek(addr & 0xF);
             break;
 
         case DRVMEM_PIA:
+            
             result = drive.pia.peek(addr);
             break;
             
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
     
     return result;
@@ -214,36 +220,42 @@ DriveMemory::spypeek(u16 addr) const
     switch (usage[addr >> 10]) {
             
         case DRVMEM_NONE:
+            
             result = addr >> 8 & 0x1F;
             break;
             
         case DRVMEM_RAM:
+            
             result = ram[addr & 0x07FF];
             break;
             
         case DRVMEM_EXP:
+            
             result = ram[addr];
             break;
             
         case DRVMEM_ROM:
+            
             result = rom[addr & 0x7FFF];
             break;
 
         case DRVMEM_VIA1:
+            
             result = drive.via1.spypeek(addr & 0xF);
             break;
             
         case DRVMEM_VIA2:
+            
             result = drive.via2.spypeek(addr & 0xF);
             break;
             
         case DRVMEM_PIA:
+            
             result = drive.pia.spypeek(addr);
             break;
 
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 
     return result;
@@ -255,22 +267,27 @@ DriveMemory::poke(u16 addr, u8 value)
     switch (usage[addr >> 10]) {
                         
         case DRVMEM_RAM:
+            
             ram[addr & 0x07FF] = value;
             break;
             
         case DRVMEM_EXP:
+            
             ram[addr] = value;
             break;
             
         case DRVMEM_VIA1:
+            
             drive.via1.poke(addr & 0xF, value);
             break;
             
         case DRVMEM_VIA2:
+            
             drive.via2.poke(addr & 0xF, value);
             break;
             
         case DRVMEM_PIA:
+            
             drive.pia.poke(addr, value);
             break;
 

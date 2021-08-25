@@ -301,12 +301,12 @@ VIA6522::peek(u16 addr)
             break;
             
         case 0xF: // ORA - Output register A (no handshake)
+            
             result = peekORA(false);
             break;
             
         default:
-            assert(false);
-            result = 0;
+            fatalError;
     }
     
     if (drive.cpu.getPC0() < 0xE000 && addr != 0) {
@@ -325,38 +325,54 @@ VIA6522::peekORA(bool handshake)
     
     switch (CA2control) {
             
-        case 0: // Input mode: Interrupt on negative edge
+        case 0:
+            
+            // Input mode: Interrupt on negative edge
             clearInterruptFlag_CA2();
             break;
             
-        case 1: // Input mode: Interrupt on negative edge, no register clearance
+        case 1:
+            
+            // Input mode: Interrupt on negative edge, no register clearance
             break;
             
-        case 2: // Input mode: Interrupt on positive edge
+        case 2:
+            
+            // Input mode: Interrupt on positive edge
             clearInterruptFlag_CA2();
             break;
             
-        case 3: // Input mode: Interrupt on positive edge, no register clearance
+        case 3:
+            
+            // Input mode: Interrupt on positive edge, no register clearance
             break;
             
-        case 4: // Handshake output mode
+        case 4:
+            
+            // Handshake output mode
             // Set CA2 output low on a read or write of the Peripheral A Output
             // Register. Reset CA2 high with an active transition on CAl.
             clearInterruptFlag_CA2();
             if (handshake) delay |= VIAClearCA2out1;
             break;
             
-        case 5: // Pulse output mode
+        case 5:
+            
+            // Pulse output mode
             // CA2 goes low for one cycle following a read or write of the
             // Peripheral A Output Register.
             clearInterruptFlag_CA2();
             if (handshake) delay |= VIAClearCA2out1 | VIASetCA2out0;
             break;
             
-        case 6: // Manual output mode (keep line low)
+        case 6:
+            
+            // Manual output mode (keep line low)
             break;
             
-        case 7: // Manual output mode (keep line low)
+        case 7:
+            
+            // Manual output mode (keep line low)
             break;
     }
     
@@ -380,32 +396,48 @@ VIA6522::peekORB()
     
     switch (CB2control) {
             
-        case 0: // Input mode: Interrupt on negative edge
+        case 0:
+            
+            // Input mode: Interrupt on negative edge
             clearInterruptFlag_CB2();
             break;
             
-        case 1: // Input mode: Interrupt on negative edge, no register clearance
+        case 1:
+            
+            // Input mode: Interrupt on negative edge, no register clearance
             break;
             
-        case 2: // Input mode: Interrupt on positive edge
+        case 2:
+            
+            // Input mode: Interrupt on positive edge
             clearInterruptFlag_CB2();
             break;
             
-        case 3: // Input mode: Interrupt on positive edge, no register clearance
+        case 3:
+            
+            // Input mode: Interrupt on positive edge, no register clearance
             break;
             
-        case 4: // Handshake output mode
+        case 4:
+            
+            // Handshake output mode
             // In contrast to CA2, CB2 is only affected on write accesses.
             break;
             
-        case 5: // Pulse output mode
+        case 5:
+            
+            // Pulse output mode
             // In contrast to CA2, CB2 is only affected on write accesses.
             break;
             
-        case 6: // Manual output mode (keep line low)
+        case 6:
+            
+            // Manual output mode (keep line low)
             break;
             
-        case 7: // Manual output mode (keep line low)
+        case 7:
+            
+            // Manual output mode (keep line low)
             break;
     }
     
@@ -440,10 +472,10 @@ VIA6522::spypeek(u16 addr) const
         case 0xD: return ifr | ((ifr & ier) ? 0x80 : 0x00);
         case 0xE: return ier | 0x80;
         case 0xF: return ira;
+            
+        default:
+            fatalError;
     }
-
-    assert(false);
-    return 0;
 }
 
 void VIA6522::poke(u16 addr, u8 value)

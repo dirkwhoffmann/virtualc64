@@ -768,7 +768,7 @@ VICII::cycle64()
     // Phi2.5 Fetch (previous cycle)
     NTSC { sAccess1 <flags,2> (); }
 
-    PAL { assert(false); } // NTSC only
+    PAL { fatalError; } // NTSC only
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -791,7 +791,7 @@ VICII::cycle64()
 template <u16 flags> void
 VICII::cycle65()
 {
-    PAL { assert(false); } // NTSC only
+    PAL { fatalError; } // NTSC only
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();

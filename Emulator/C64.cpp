@@ -146,8 +146,7 @@ C64::getConfigItem(Option option) const
             return mem.getConfigItem(option);
             
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 
@@ -160,12 +159,14 @@ C64::getConfigItem(Option option, long id) const
             
         case OPT_DMA_DEBUG_ENABLE:
         case OPT_DMA_DEBUG_COLOR:
+            
             return vic.dmaDebugger.getConfigItem(option, id);
 
         case OPT_SID_ENABLE:
         case OPT_SID_ADDRESS:
         case OPT_AUDPAN:
         case OPT_AUDVOL:
+            
             assert(id >= 0 && id <= 3);
             return sid.getConfigItem(option, id);
 
@@ -184,25 +185,27 @@ C64::getConfigItem(Option option, long id) const
         case OPT_DRV_STEP_VOL:
         case OPT_DRV_INSERT_VOL:
         case OPT_DRV_EJECT_VOL:
+            
             return drive.getConfigItem(option);
 
         case OPT_MOUSE_MODEL:
         case OPT_SHAKE_DETECTION:
         case OPT_MOUSE_VELOCITY:
+            
             if (id == PORT_ONE) return port1.mouse.getConfigItem(option);
             if (id == PORT_TWO) return port2.mouse.getConfigItem(option);
-            assert(false);
+            fatalError;
 
         case OPT_AUTOFIRE:
         case OPT_AUTOFIRE_BULLETS:
         case OPT_AUTOFIRE_DELAY:
+            
             if (id == PORT_ONE) return port1.joystick.getConfigItem(option);
             if (id == PORT_TWO) return port2.joystick.getConfigItem(option);
-            assert(false);
+            fatalError;
 
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 
@@ -338,7 +341,7 @@ C64::configure(Option option, i64 value)
             break;
             
         default:
-            assert(false);
+            fatalError;
     }
     
     if (std::find(quiet.begin(), quiet.end(), option) == quiet.end()) {
@@ -385,7 +388,7 @@ C64::configure(Option option, long id, i64 value)
             switch (id) {
                 case 0: cia1.setConfigItem(option, value); break;
                 case 1: cia2.setConfigItem(option, value); break;
-                default: assert(false);
+                default: fatalError;
             }
             break;
 
@@ -396,7 +399,7 @@ C64::configure(Option option, long id, i64 value)
             switch (id) {
                 case PORT_ONE: port1.mouse.setConfigItem(option, value); break;
                 case PORT_TWO: port2.mouse.setConfigItem(option, value); break;
-                default: assert(false);
+                default: fatalError;
             }
             break;
 
@@ -407,7 +410,7 @@ C64::configure(Option option, long id, i64 value)
             switch (id) {
                 case PORT_ONE: port1.joystick.setConfigItem(option, value); break;
                 case PORT_TWO: port2.joystick.setConfigItem(option, value); break;
-                default: assert(false);
+                default: fatalError;
             }
             break;
 
@@ -445,12 +448,12 @@ C64::configure(Option option, long id, i64 value)
             switch (id) {
                 case DRIVE8: drive8.setConfigItem(option, value); break;
                 case DRIVE9: drive9.setConfigItem(option, value); break;
-                default: assert(false);
+                default: fatalError;
             }
             break;
             
         default:
-            assert(false);
+            fatalError;
     }
     
     if (std::find(quiet.begin(), quiet.end(), option) == quiet.end()) {
@@ -468,6 +471,7 @@ C64::configure(C64Model model)
         switch(model) {
                 
             case C64_MODEL_PAL:
+                
                 configure(OPT_VIC_REVISION, VICII_PAL_6569_R3);
                 configure(OPT_GRAY_DOT_BUG, false);
                 configure(OPT_CIA_REVISION, MOS_6526);
@@ -480,6 +484,7 @@ C64::configure(C64Model model)
                 break;
                 
             case C64_MODEL_PAL_II:
+                
                 configure(OPT_VIC_REVISION, VICII_PAL_8565);
                 configure(OPT_GRAY_DOT_BUG, true);
                 configure(OPT_CIA_REVISION, MOS_8521);
@@ -492,6 +497,7 @@ C64::configure(C64Model model)
                 break;
                 
             case C64_MODEL_PAL_OLD:
+                
                 configure(OPT_VIC_REVISION, VICII_PAL_6569_R1);
                 configure(OPT_GRAY_DOT_BUG, false);
                 configure(OPT_CIA_REVISION, MOS_6526);
@@ -504,6 +510,7 @@ C64::configure(C64Model model)
                 break;
                 
             case C64_MODEL_NTSC:
+                
                 configure(OPT_VIC_REVISION, VICII_NTSC_6567);
                 configure(OPT_GRAY_DOT_BUG, false);
                 configure(OPT_CIA_REVISION, MOS_6526);
@@ -516,6 +523,7 @@ C64::configure(C64Model model)
                 break;
                 
             case C64_MODEL_NTSC_II:
+                
                 configure(OPT_VIC_REVISION, VICII_NTSC_8562);
                 configure(OPT_GRAY_DOT_BUG, true);
                 configure(OPT_CIA_REVISION, MOS_8521);
@@ -528,6 +536,7 @@ C64::configure(C64Model model)
                 break;
                 
             case C64_MODEL_NTSC_OLD:
+                
                 configure(OPT_VIC_REVISION, VICII_NTSC_6567_R56A);
                 configure(OPT_GRAY_DOT_BUG, false);
                 configure(OPT_CIA_REVISION, MOS_6526);
@@ -540,7 +549,7 @@ C64::configure(C64Model model)
                 break;
                 
             default:
-                assert(false);
+                fatalError;
         }
     }
 }
@@ -1043,38 +1052,34 @@ C64::loadSnapshot(const Snapshot &snapshot)
 u32
 C64::romCRC32(RomType type) const
 {
+    if (!hasRom(type)) return 0;
+    
     switch (type) {
             
-        case ROM_TYPE_BASIC:
-            return hasRom(ROM_TYPE_BASIC)  ? util::crc32(mem.rom + 0xA000, 0x2000) : 0;
-        case ROM_TYPE_CHAR:
-            return hasRom(ROM_TYPE_CHAR)   ? util::crc32(mem.rom + 0xD000, 0x1000) : 0;
-        case ROM_TYPE_KERNAL:
-            return hasRom(ROM_TYPE_KERNAL) ? util::crc32(mem.rom + 0xE000, 0x2000) : 0;
-        case ROM_TYPE_VC1541:
-            return drive8.mem.romCRC32();
+        case ROM_TYPE_BASIC:  return util::crc32(mem.rom + 0xA000, 0x2000);
+        case ROM_TYPE_CHAR:   return util::crc32(mem.rom + 0xD000, 0x1000);
+        case ROM_TYPE_KERNAL: return util::crc32(mem.rom + 0xE000, 0x2000);
+        case ROM_TYPE_VC1541: return drive8.mem.romCRC32();
+
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 
 u64
 C64::romFNV64(RomType type) const
 {
+    if (!hasRom(type)) return 0;
+    
     switch (type) {
             
-        case ROM_TYPE_BASIC:
-            return hasRom(ROM_TYPE_BASIC)  ? util::fnv_1a_64(mem.rom + 0xA000, 0x2000) : 0;
-        case ROM_TYPE_CHAR:
-            return hasRom(ROM_TYPE_CHAR)   ? util::fnv_1a_64(mem.rom + 0xD000, 0x1000) : 0;
-        case ROM_TYPE_KERNAL:
-            return hasRom(ROM_TYPE_KERNAL) ? util::fnv_1a_64(mem.rom + 0xE000, 0x2000) : 0;
-        case ROM_TYPE_VC1541:
-            return drive8.mem.romFNV64();
+        case ROM_TYPE_BASIC:  return util::fnv_1a_64(mem.rom + 0xA000, 0x2000);
+        case ROM_TYPE_CHAR:   return util::fnv_1a_64(mem.rom + 0xD000, 0x1000);
+        case ROM_TYPE_KERNAL: return util::fnv_1a_64(mem.rom + 0xE000, 0x2000);
+        case ROM_TYPE_VC1541: return drive8.mem.romFNV64();
+        
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 
@@ -1087,40 +1092,32 @@ C64::romIdentifier(RomType type) const
 const string
 C64::romTitle(RomType type) const
 {
+    RomIdentifier rev = romIdentifier(type);
+    
     switch (type) {
             
         case ROM_TYPE_BASIC:
-        {
-            // Intercept if a MEGA65 Rom is installed
+
             if (hasMega65Rom(ROM_TYPE_BASIC)) return "M.E.G.A. C64 OpenROM";
-            
-            RomIdentifier rev = romIdentifier(ROM_TYPE_BASIC);
             return rev == ROM_UNKNOWN ? "Unknown Basic Rom" : RomFile::title(rev);
-        }
+
         case ROM_TYPE_CHAR:
-        {
-            // Intercept if a MEGA65 Rom is installed
+
             if (hasMega65Rom(ROM_TYPE_CHAR)) return "M.E.G.A. C64 OpenROM";
-            
-            RomIdentifier rev = romIdentifier(ROM_TYPE_CHAR);
             return rev == ROM_UNKNOWN ? "Unknown Character Rom" : RomFile::title(rev);
-        }
+
         case ROM_TYPE_KERNAL:
-        {
-            // Intercept if a MEGA65 Rom is installed
+
             if (hasMega65Rom(ROM_TYPE_KERNAL)) return "M.E.G.A. C64 OpenROM";
-            
-            RomIdentifier rev = romIdentifier(ROM_TYPE_KERNAL);
             return rev == ROM_UNKNOWN ? "Unknown Kernal Rom" : RomFile::title(rev);
-        }
+
         case ROM_TYPE_VC1541:
-        {
-            RomIdentifier rev = romIdentifier(ROM_TYPE_VC1541);
+
             return rev == ROM_UNKNOWN ? "Unknown Drive Firmware" : RomFile::title(rev);
-        }
-        default: assert(false);
+
+        default:
+            fatalError;
     }
-    return nullptr;
 }
 
 const string
@@ -1141,33 +1138,27 @@ C64::romSubTitle(RomType type) const
     switch (type) {
             
         case ROM_TYPE_BASIC:
-        {
-            // Intercept if a MEGA65 Rom is installed
+
             if (hasMega65Rom(ROM_TYPE_BASIC)) return "Free Basic Replacement";
-            
             return romSubTitle(romFNV64(ROM_TYPE_BASIC));
-        }
+
         case ROM_TYPE_CHAR:
-        {
-            // Intercept if a MEGA65 Rom is installed
+
             if (hasMega65Rom(ROM_TYPE_CHAR)) return "Free Charset Replacement";
-            
             return romSubTitle(romFNV64(ROM_TYPE_CHAR));
-        }
+
         case ROM_TYPE_KERNAL:
-        {
-            // Intercept if a MEGA65 Rom is installed
+
             if (hasMega65Rom(ROM_TYPE_KERNAL)) return "Free Kernal Replacement";
-            
             return romSubTitle(romFNV64(ROM_TYPE_KERNAL));
-        }
+
         case ROM_TYPE_VC1541:
-        {
+
             return romSubTitle(romFNV64(ROM_TYPE_VC1541));
-        }
-        default: assert(false);
+
+        default:
+            fatalError;
     }
-    return nullptr;
 }
 
 const string
@@ -1176,30 +1167,26 @@ C64::romRevision(RomType type) const
     switch (type) {
              
          case ROM_TYPE_BASIC:
-         {
-             // Intercept if a MEGA65 Rom is installed
+
              if (hasMega65Rom(ROM_TYPE_BASIC)) return mega65BasicRev();
-             
              return RomFile::revision(romIdentifier(ROM_TYPE_BASIC));
-         }
+
          case ROM_TYPE_CHAR:
-         {
+
              return RomFile::revision(romIdentifier(ROM_TYPE_CHAR));
-         }
+
          case ROM_TYPE_KERNAL:
-         {
-             // Intercept if a MEGA65 Rom is installed
+
              if (hasMega65Rom(ROM_TYPE_KERNAL)) return mega65KernalRev();
-             
              return RomFile::revision(romIdentifier(ROM_TYPE_KERNAL));
-         }
+
          case ROM_TYPE_VC1541:
-         {
+
              return RomFile::revision(romIdentifier(ROM_TYPE_VC1541));
-         }
-         default: assert(false);
+
+         default:
+            fatalError;
      }
-     return nullptr;
 }
 
 bool
@@ -1208,52 +1195,54 @@ C64::hasRom(RomType type) const
     switch (type) {
             
         case ROM_TYPE_BASIC:
-        {
+
             return (mem.rom[0xA000] | mem.rom[0xA001]) != 0x00;
-        }
+
         case ROM_TYPE_CHAR:
-        {
+
             return (mem.rom[0xD000] | mem.rom[0xD001]) != 0x00;
-        }
+
         case ROM_TYPE_KERNAL:
-        {
+
             return (mem.rom[0xE000] | mem.rom[0xE001]) != 0x00;
-        }
+
         case ROM_TYPE_VC1541:
-        {
+
             assert(drive8.mem.hasRom() == drive9.mem.hasRom());
             return drive8.mem.hasRom();
-        }
-        default: assert(false);
+
+        default:
+            fatalError;
     }
-    return false;
 }
 
 bool
 C64::hasMega65Rom(RomType type) const
 {
+    RomIdentifier id;
+    
     switch (type) {
             
         case ROM_TYPE_BASIC:
-        {
+
             return mem.rom[0xBF52] == 'O' && mem.rom[0xBF53] == 'R';
-        }
+
         case ROM_TYPE_CHAR:
-        {
-            auto id = romIdentifier(ROM_TYPE_CHAR);
+
+            id = romIdentifier(ROM_TYPE_CHAR);
             return id == CHAR_MEGA65 || id == CHAR_PXLFONT_V23;
-        }
+
         case ROM_TYPE_KERNAL:
-        {
+
             return mem.rom[0xE4B9] == 'O' && mem.rom[0xE4BA] == 'R';
-        }
+
         case ROM_TYPE_VC1541:
-        {
+
             return false;
-        }
-        default: assert(false);
+
+        default:
+            fatalError;
     }
-    return false;
 }
 
 const char *
@@ -1322,7 +1311,7 @@ C64::loadRom(const RomFile &file)
             break;
             
         default:
-            assert(false);
+            fatalError;
     }
 }
 
@@ -1332,27 +1321,28 @@ C64::deleteRom(RomType type)
     switch (type) {
             
         case ROM_TYPE_BASIC:
-        {
+
             memset(mem.rom + 0xA000, 0, 0x2000);
             break;
-        }
+
         case ROM_TYPE_CHAR:
-        {
+
             memset(mem.rom + 0xD000, 0, 0x1000);
             break;
-        }
+
         case ROM_TYPE_KERNAL:
-        {
+
             memset(mem.rom + 0xE000, 0, 0x2000);
             break;
-        }
+
         case ROM_TYPE_VC1541:
-        {
+
             drive8.mem.deleteRom();
             drive9.mem.deleteRom();
             break;
-        }
-        default: assert(false);
+
+        default:
+            fatalError;
     }
 }
 
@@ -1362,39 +1352,38 @@ C64::saveRom(RomType type, const string &path)
     switch (type) {
             
         case ROM_TYPE_BASIC:
-        {
+
             if (hasRom(ROM_TYPE_BASIC)) {
                 RomFile file(mem.rom + 0xA000, 0x2000);
                 file.writeToFile(path);
             }
             break;
-        }
+
         case ROM_TYPE_CHAR:
-        {
+
             if (hasRom(ROM_TYPE_CHAR)) {
                 RomFile file(mem.rom + 0xD000, 0x1000);
                 file.writeToFile(path);
             }
             break;
-        }
+
         case ROM_TYPE_KERNAL:
-        {
+
             if (hasRom(ROM_TYPE_KERNAL)) {
                 RomFile file(mem.rom + 0xE000, 0x2000);
                 file.writeToFile(path);
             }
             break;
-        }
+
         case ROM_TYPE_VC1541:
-        {
+
             if (hasRom(ROM_TYPE_VC1541)) {
                 drive8.mem.saveRom(path);
             }
             break;
-        }
             
         default:
-            assert(false);
+            fatalError;
     }
 }
 
@@ -1427,7 +1416,7 @@ C64::flash(const AnyFile &file)
                 break;
                 
             default:
-                assert(false);
+                fatalError;
         }
     }
 }
@@ -1454,7 +1443,7 @@ C64::flash(const AnyCollection &file, isize nr)
                 break;
                 
             default:
-                assert(false);
+                fatalError;
         }
     }
     

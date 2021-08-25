@@ -48,8 +48,7 @@ PowerSupply::getConfigItem(Option option) const
         case OPT_POWER_GRID:  return config.powerGrid;
         
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 
@@ -68,7 +67,7 @@ PowerSupply::setConfigItem(Option option, i64 value)
             return;
 
         default:
-            assert(false);
+            fatalError;
     }
 }
 
@@ -105,8 +104,7 @@ PowerSupply::todTickDelay(u8 cra)
             break;
 
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 
     return delay + jitter;

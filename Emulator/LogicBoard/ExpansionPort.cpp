@@ -243,11 +243,9 @@ ExpansionPort::attachGeoRamCartridge(isize kb)
     debug(EXP_DEBUG, "Attaching GeoRAM cartridge (%zu KB)", kb);
 
     // kb must be a power of two between 64 and 4096
-    if (kb < 64 || kb > 4096 || (kb & (kb - 1))) assert(false);
+    assert(kb >= 64 && kb <= 4096 && !(kb & (kb - 1)));
     
-    Cartridge *geoRAM = new GeoRAM(c64);
-    geoRAM->setRamCapacity(kb * 1024);
-    attachCartridge(geoRAM);
+    attachCartridge(new GeoRAM(c64, kb));
 }
 
 void
