@@ -20,19 +20,16 @@ enum_long(MOUSE_MODEL)
 {
     MOUSE_C1350,
     MOUSE_C1351,
-    MOUSE_NEOS,
-    
-    MOUSE_COUNT
+    MOUSE_NEOS
 };
 typedef MOUSE_MODEL MouseModel;
 
 #ifdef __cplusplus
 struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < MOUSE_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return MOUSE_NEOS; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "DISK_TYPE"; }
     static const char *key(MouseModel value)
@@ -42,7 +39,6 @@ struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
             case MOUSE_C1350:  return "C1350";
             case MOUSE_C1351:  return "C1351";
             case MOUSE_NEOS:   return "NEOS";
-            case MOUSE_COUNT:  return "???";
         }
         return "???";
     }
@@ -53,19 +49,16 @@ enum_long(PORT_ID)
 {
     PORT_NONE,
     PORT_ONE,
-    PORT_TWO,
-    
-    PORT_COUNT
+    PORT_TWO
 };
 typedef PORT_ID PortId;
 
 #ifdef __cplusplus
 struct PortIdEnum : util::Reflection<PortIdEnum, PortId> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < PORT_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return PORT_TWO; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "PORT"; }
     static const char *key(PortId value)
@@ -75,7 +68,6 @@ struct PortIdEnum : util::Reflection<PortIdEnum, PortId> {
             case PORT_NONE:   return "NONE";
             case PORT_ONE:    return "ONE";
             case PORT_TWO:    return "TWO";
-            case PORT_COUNT:  return "???";
         }
         return "???";
     }

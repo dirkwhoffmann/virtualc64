@@ -19,18 +19,16 @@
 enum_long(DOS_TYPE)
 {
     DOS_TYPE_NODOS,
-    DOS_TYPE_CBM,
-    DOS_TYPE_COUNT
+    DOS_TYPE_CBM
 };
 typedef DOS_TYPE DOSType;
 
 #ifdef __cplusplus
 struct DOSTypeEnum : util::Reflection<DOSTypeEnum, DOSType> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value <= DOS_TYPE_CBM;
-    }
+    static long min() { return 0; }
+    static long max() { return DOS_TYPE_CBM; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "DOS_TYPE"; }
     static const char *key(DOSType value)
@@ -39,30 +37,28 @@ struct DOSTypeEnum : util::Reflection<DOSTypeEnum, DOSType> {
                 
             case DOS_TYPE_NODOS:  return "NODOS";
             case DOS_TYPE_CBM:    return "CBM";
-            default:              return "???";
         }
+        return "???";
     }
 };
 #endif
 
 enum_long(FS_FILETYPE)
 {
-    FS_FILETYPE_DEL = 0,
-    FS_FILETYPE_SEQ = 1,
-    FS_FILETYPE_PRG = 2,
-    FS_FILETYPE_USR = 3,
-    FS_FILETYPE_REL = 4,
-    FS_FILETYPE_COUNT
+    FS_FILETYPE_DEL,
+    FS_FILETYPE_SEQ,
+    FS_FILETYPE_PRG,
+    FS_FILETYPE_USR,
+    FS_FILETYPE_REL
 };
 typedef FS_FILETYPE FSFileType;
 
 #ifdef __cplusplus
 struct FSFileTypeEnum : util::Reflection<FSFileTypeEnum, FSFileType> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < FS_FILETYPE_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return FS_FILETYPE_REL; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "FS_FILETYPE"; }
     static const char *key(FSFileType value)
@@ -74,7 +70,6 @@ struct FSFileTypeEnum : util::Reflection<FSFileTypeEnum, FSFileType> {
             case FS_FILETYPE_PRG:    return "PRG";
             case FS_FILETYPE_USR:    return "USR";
             case FS_FILETYPE_REL:    return "REL";
-            case FS_FILETYPE_COUNT:  return "???";
         }
         return "???";
     }
@@ -86,18 +81,16 @@ enum_long(FS_BLOCKTYPE)
     FS_BLOCKTYPE_UNKNOWN,
     FS_BLOCKTYPE_BAM,
     FS_BLOCKTYPE_DIR,
-    FS_BLOCKTYPE_DATA,
-    FS_BLOCKTYPE_COUNT
+    FS_BLOCKTYPE_DATA
 };
 typedef FS_BLOCKTYPE FSBlockType;
 
 #ifdef __cplusplus
 struct FSBlockTypeEnum : util::Reflection<FSBlockTypeEnum, FSBlockType> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < FS_BLOCKTYPE_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return FS_BLOCKTYPE_DATA; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "FS_BLOCKTYPE"; }
     static const char *key(FSBlockType value)
@@ -108,7 +101,6 @@ struct FSBlockTypeEnum : util::Reflection<FSBlockTypeEnum, FSBlockType> {
             case FS_BLOCKTYPE_BAM:      return "BAM";
             case FS_BLOCKTYPE_DIR:      return "DIR";
             case FS_BLOCKTYPE_DATA:     return "DATA";
-            case FS_BLOCKTYPE_COUNT:    return "???";
         }
         return "???";
     }
@@ -138,18 +130,16 @@ enum_long(FS_USAGE)
     FS_USAGE_FILE_LENGTH_HI,
     FS_USAGE_REL_RECORD_LENGTH,
     FS_USAGE_GEOS,
-    FS_USAGE_DATA,
-    FS_USAGE_COUNT
+    FS_USAGE_DATA
 };
 typedef FS_USAGE FSUsage;
 
 #ifdef __cplusplus
 struct FSUsageEnum : util::Reflection<FSUsageEnum, FSUsage> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value <= FS_BLOCKTYPE_DATA;
-    }
+    static long min() { return 0; }
+    static long max() { return FS_USAGE_DATA; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "FS_USAGE"; }
     static const char *key(FSUsage value) { return "???"; }

@@ -15,18 +15,16 @@
 enum_long(CIAREV)
 {
     MOS_6526,
-    MOS_8521,
-    CIAREV_COUNT
+    MOS_8521
 };
 typedef CIAREV CIARevision;
 
 #ifdef __cplusplus
 struct CIARevisionEnum : util::Reflection<CIARevisionEnum, CIARevision> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < CIAREV_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return MOS_8521; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
 
     static const char *prefix() { return nullptr; }
     static const char *key(CIARevision value)
@@ -35,7 +33,6 @@ struct CIARevisionEnum : util::Reflection<CIARevisionEnum, CIARevision> {
                 
             case MOS_6526:      return "MOS_6526";
             case MOS_8521:      return "MOS_8521";
-            case CIAREV_COUNT:  return "???";
         }
         return "";
     }
@@ -66,10 +63,9 @@ typedef CIAREG CIAReg;
 #ifdef __cplusplus
 struct CIARegEnum : util::Reflection<CIARegEnum, CIAReg> {
 
-    static bool isValid(long value)
-    {
-        return (unsigned long)value <= CIAREG_CRB;
-    }
+    static long min() { return 0; }
+    static long max() { return CIAREG_CRB; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "CIAREG"; }
     static const char *key(CIAReg value)

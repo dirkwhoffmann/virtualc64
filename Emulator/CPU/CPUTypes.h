@@ -55,10 +55,9 @@ typedef CPUREV CPURevision;
 #ifdef __cplusplus
 struct CPURevisionEnum : util::Reflection<CPURevisionEnum, CPURevision> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value <= MOS_6502;
-    }
+    static long min() { return 0; }
+    static long max() { return MOS_6502; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return nullptr; }
     static const char *key(CPURevision value)
@@ -84,10 +83,9 @@ typedef BPTYPE BreakpointType;
 #ifdef __cplusplus
 struct BreakpointTypeEnum : util::Reflection<BreakpointTypeEnum, BreakpointType> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value <= BPTYPE_SOFT;
-    }
+    static long min() { return 0; }
+    static long max() { return BPTYPE_SOFT; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "BPTYPE"; }
     static const char *key(BreakpointType value)

@@ -21,18 +21,16 @@ enum_long(CRTMODE)
     CRTMODE_16K,
     CRTMODE_8K,
     CRTMODE_ULTIMAX,
-    CRTMODE_OFF,
-    CRTMODE_COUNT
+    CRTMODE_OFF
 };
 typedef CRTMODE CRTMode;
 
 #ifdef __cplusplus
 struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < CRTMODE_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return CRTMODE_OFF; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "CRTMODE"; }
     static const char *key(CRTMode value)
@@ -43,7 +41,6 @@ struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
             case CRTMODE_8K:       return "8K";
             case CRTMODE_ULTIMAX:  return "ULTIMAX";
             case CRTMODE_OFF:      return "OFF";
-            case CRTMODE_COUNT:    return "???";
         }
         return "???";
     }

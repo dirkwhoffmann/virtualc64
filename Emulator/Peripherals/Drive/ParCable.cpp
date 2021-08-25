@@ -72,7 +72,7 @@ ParCable::c64Handshake()
 void
 ParCable::c64Handshake(Drive &drive)
 {
-    trace(PAR_DEBUG, "c64Handshake(%s)\n", drive.getDescription());
+    trace(PAR_DEBUG, "c64Handshake(%d)\n", drive.getDeviceNr());
     
     switch (drive.getParCableType()) {
             

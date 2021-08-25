@@ -19,18 +19,16 @@
 enum_long(SIDREV)
 {
     MOS_6581,
-    MOS_8580,
-    SIDREV_COUNT
+    MOS_8580
 };
 typedef SIDREV SIDRevision;
 
 #ifdef __cplusplus
 struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < SIDREV_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return MOS_8580; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return nullptr; }
     static const char *key(SIDRevision value)
@@ -39,7 +37,6 @@ struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
                 
             case MOS_6581:      return "MOS_6581";
             case MOS_8580:      return "MOS_8580";
-            case SIDREV_COUNT:  return "???";
         }
         return "???";
     }
@@ -49,18 +46,16 @@ struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
 enum_long(SIDENGINE)
 {
     SIDENGINE_FASTSID,
-    SIDENGINE_RESID,
-    SIDENGINE_COUNT
+    SIDENGINE_RESID
 };
 typedef SIDENGINE SIDEngine;
 
 #ifdef __cplusplus
 struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < SIDENGINE_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return SIDENGINE_RESID; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "SIDENGINE"; }
     static const char *key(SIDEngine value)
@@ -69,7 +64,6 @@ struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
                 
             case SIDENGINE_FASTSID:  return "FASTSID";
             case SIDENGINE_RESID:    return "RESID";
-            case SIDENGINE_COUNT:    return "???";
         }
         return "???";
     }
@@ -82,18 +76,16 @@ enum_long(SAMPLING)
     SAMPLING_FAST,
     SAMPLING_INTERPOLATE,
     SAMPLING_RESAMPLE,
-    SAMPLING_RESAMPLE_FASTMEM,
-    SAMPLING_COUNT
+    SAMPLING_RESAMPLE_FASTMEM
 };
 typedef SAMPLING SamplingMethod;
 
 #ifdef __cplusplus
 struct SamplingMethodEnum : util::Reflection<SamplingMethodEnum, SamplingMethod> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < SAMPLING_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return SAMPLING_RESAMPLE_FASTMEM; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "SAMPLING"; }
     static const char *key(SamplingMethod value)
@@ -104,7 +96,6 @@ struct SamplingMethodEnum : util::Reflection<SamplingMethodEnum, SamplingMethod>
             case SAMPLING_INTERPOLATE:       return "INTERPOLATE";
             case SAMPLING_RESAMPLE:          return "RESAMPLE";
             case SAMPLING_RESAMPLE_FASTMEM:  return "RESAMPLE FASTMEM";
-            case SAMPLING_COUNT:             return "???";
         }
         return "???";
     }

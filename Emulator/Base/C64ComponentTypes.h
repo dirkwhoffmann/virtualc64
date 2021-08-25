@@ -101,10 +101,9 @@ typedef OPT Option;
 #ifdef __cplusplus
 struct OptionEnum : util::Reflection<OptionEnum, Option> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < OPT_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return OPT_DRV_EJECT_VOL; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
 
     static const char *prefix() { return "OPT"; }
     static const char *key(Option value)

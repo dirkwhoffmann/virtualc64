@@ -27,10 +27,9 @@ typedef PAR_CABLE_TYPE ParCableType;
 #ifdef __cplusplus
 struct ParCableTypeEnum : util::Reflection<ParCableTypeEnum, ParCableType> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value <= PAR_CABLE_DOLPHIN3;
-    }
+    static long min() { return 0; }
+    static long max() { return PAR_CABLE_DOLPHIN3; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "PAR_CABLE"; }
     static const char *key(ParCableType value)

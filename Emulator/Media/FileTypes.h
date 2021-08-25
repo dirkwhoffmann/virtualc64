@@ -32,18 +32,16 @@ enum_long(FILETYPE)
     FILETYPE_BASIC_ROM,
     FILETYPE_CHAR_ROM,
     FILETYPE_KERNAL_ROM,
-    FILETYPE_VC1541_ROM,
-    FILETYPE_COUNT
+    FILETYPE_VC1541_ROM
 };
 typedef FILETYPE FileType;
 
 #ifdef __cplusplus
 struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < FILETYPE_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return FILETYPE_VC1541_ROM; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "FILETYPE"; }
     static const char *key(FileType value)
@@ -64,7 +62,6 @@ struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
             case FILETYPE_CHAR_ROM:   return "ROM";
             case FILETYPE_KERNAL_ROM: return "ROM";
             case FILETYPE_VC1541_ROM: return "ROM";
-            case FILETYPE_COUNT:      return "???";
         }
         return "???";
     }
@@ -81,10 +78,9 @@ typedef TAP_VERSION TAPVersion;
 #ifdef __cplusplus
 struct TAPVersionEnum : util::Reflection<TAPVersionEnum, TAPVersion> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value <= TAP_VERSION_ADVANCED;
-    }
+    static long min() { return 0; }
+    static long max() { return TAP_VERSION_ADVANCED; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "TAP_VERSION"; }
     static const char *key(TAPVersion value)
