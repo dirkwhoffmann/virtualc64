@@ -197,6 +197,12 @@ matchingStreamHeader(std::istream &is, const u8 *header, isize len, isize offset
 }
 
 bool
+matchingStreamHeader(std::istream &is, const string &header, isize offset)
+{
+    return matchingStreamHeader(is, (u8 *)header.c_str(), header.length(), offset);
+}
+
+bool
 matchingBufferHeader(const u8 *buffer, const u8 *header, isize len, isize offset)
 {
     assert(buffer != nullptr);

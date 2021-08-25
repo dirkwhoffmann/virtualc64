@@ -23,23 +23,19 @@ T64File::isCompatible(const string &path)
 bool
 T64File::isCompatible(std::istream &stream)
 {
-    const u8 magicT64[] = { 'C', '6', '4' };
-    const u8 magicTAP[] = { 'C', '6', '4', '-', 'T', 'A', 'P', 'E' };
+     const string magicT64 = "C64";
+     const string magicTAP = "C64-TAPE";
 
-    if (util::streamLength(stream) < 0x40) return false;
-    
-    // T64 files must begin with "C64" and must not begin with "C64-TAPE"
-    return
-    !util::matchingStreamHeader(stream, magicTAP, sizeof(magicTAP)) &&
-    util::matchingStreamHeader(stream, magicT64, sizeof(magicT64));
+     if (util::streamLength(stream) < 0x40) return false;
+     
+     // T64 files must begin with "C64"
+     if (!util::matchingStreamHeader(stream, magicT64)) return false;
+     
+     // T64 files must *not* begin with "C64-TAPE" (which is used by TAP files)
+     if (util::matchingStreamHeader(stream, magicTAP)) return false;
+     
+     return true;
 }
-
-/*
-T64File *
-T64File::makeWithFileSystem(class FSDevice &fs)
-{
-}
-*/
 
 void
 T64File::init(class FSDevice &fs)

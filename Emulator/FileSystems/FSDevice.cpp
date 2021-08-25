@@ -241,7 +241,7 @@ void
 FSDevice::init(AnyCollection &collection)
 {
     // Create the device
-    init(DISK_TYPE_SS_SD);
+    init(DISK_TYPE_SS_SD, DOS_TYPE_CBM);
     
     // Write BAM
     auto name = PETName<16>(collection.collectionName());
