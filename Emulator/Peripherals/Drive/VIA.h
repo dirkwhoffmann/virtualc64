@@ -215,29 +215,31 @@ protected:
 public:
     
     VIA6522(C64 &ref, Drive &drvref);
-    void prefix() const override;
+
     virtual bool isVia1() const = 0;
-    
-private:
-    
-    void _reset(bool hard) override;
-    
+
     
     //
-    // Analyzing
+    // Methods from C64Object
     //
+
+public:
+    
+    void prefix() const override;
     
 private:
     
     void _dump(dump::Category category, std::ostream& os) const override;
-    
+
     
     //
-    // Serializing
+    // Methods from C64Component
     //
-    
+
 private:
     
+    void _reset(bool hard) override;
+        
     template <class T>
     void applyToPersistentItems(T& worker)
     {

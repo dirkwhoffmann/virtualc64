@@ -51,19 +51,25 @@ protected:
 public:
     
     PIA6821(C64 &ref, Drive &drvref);
+    
+    
+    //
+    // Methods from C64Object
+    //
+
+private:
+    
     const char *getDescription() const override { return "PIA"; }
     
+    
+    //
+    // Methods from C64Component
+    //
+
 private:
     
     void _reset(bool hard) override;
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
+        
     template <class T>
     void applyToPersistentItems(T& worker)
     {

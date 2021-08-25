@@ -89,9 +89,6 @@ public:
     
     // A disk waiting to be inserted
     std::unique_ptr<Disk> diskToInsert;
-
-    // The write protection status of the disk to insert
-    // bool diskToInsertWP = false;
     
     // State change delay counter (checked in the vsync handler)
     i64 diskChangeCounter = 0;
@@ -228,48 +225,28 @@ public:
 public:
     
     Drive(DriveID id, C64 &ref);
+    
+    
+    //
+    // Methods from C64Object
+    //
+
+private:
+    
     const char *getDescription() const override;
+    void _dump(dump::Category category, std::ostream& os) const override;
+
+    
+    //
+    // Methods from C64Component
+    //
 
 private:
 
     void _initialize() override;
     void _reset(bool hard) override;
+    void _run() override;
 
-    
-    //
-    // Configuring
-    //
-    
-public:
-        
-    static DriveConfig getDefaultConfig();
-    const DriveConfig &getConfig() const { return config; }
-    void resetConfig() override;
-
-    i64 getConfigItem(Option option) const;
-    void setConfigItem(Option option, i64 value);
-
-    // Updates the current configuration according to the installed ROM
-    void autoConfigure();
-    
-    bool hasParCable() { return config.parCable != PAR_CABLE_NONE; }
-    ParCableType getParCableType() const { return config.parCable; }
-    
-    //
-    // Analyzing
-    //
-    
-private:
-    
-    void _dump(dump::Category category, std::ostream& os) const override;
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -320,10 +297,26 @@ private:
     isize _load(const u8 *buffer) override;
     isize _save(u8 *buffer) override;
 
-private:
     
-    void _run() override;
+    //
+    // Configuring
+    //
     
+public:
+        
+    static DriveConfig getDefaultConfig();
+    const DriveConfig &getConfig() const { return config; }
+    void resetConfig() override;
+
+    i64 getConfigItem(Option option) const;
+    void setConfigItem(Option option, i64 value);
+
+    // Updates the current configuration according to the installed ROM
+    void autoConfigure();
+    
+    bool hasParCable() { return config.parCable != PAR_CABLE_NONE; }
+    ParCableType getParCableType() const { return config.parCable; }
+
     
     //
     // Working with the drive
