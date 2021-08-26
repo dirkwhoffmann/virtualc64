@@ -253,6 +253,9 @@ CIA::executeOneCycle()
 {
     if (sleeping) wakeUp(cpu.cycle - 1);
     
+    // Make a local copy for speed
+    u64 delay = this->delay;
+    
     u64 oldDelay = delay;
     u64 oldFeed  = feed;
     
@@ -572,10 +575,10 @@ CIA::executeOneCycle()
     }
 
     // Move delay flags left and feed in new bits
-    delay = ((delay << 1) & DelayMask) | feed;
+    this->delay = ((delay << 1) & DelayMask) | feed;
     
     // Get tired if nothing has happened in this cycle
-    if (oldDelay == delay && oldFeed == feed) tiredness++; else tiredness = 0;
+    if (oldDelay == this->delay && oldFeed == feed) tiredness++; else tiredness = 0;
     
     // Sleep if threshold is reached
     if (tiredness > 8 && !CIA_ON_STEROIDS) sleep();
