@@ -11,6 +11,7 @@
 #include "FSDevice.h"
 #include "Disk.h"
 #include "IO.h"
+#include "Folder.h"
 #include "PRGFile.h"
 #include "P00File.h"
 #include "T64File.h"
@@ -267,7 +268,7 @@ FSDevice::init(AnyCollection &collection)
 void
 FSDevice::init(const string &path)
 {
-    if (util::isDirectory(path)) {
+    if (Folder::isCompatible(path)) {
     
         // Create the device
         init(DISK_TYPE_SS_SD);
@@ -282,18 +283,30 @@ FSDevice::init(const string &path)
         printDirectory();
         return;
     }
+    if (D64File::isCompatible(path)) {
     
-    try { auto file = D64File(path); init(file); return; }
-    catch (...) { }
+        auto file = D64File(path);
+        init(file);
+        return;
+    }
+    if (T64File::isCompatible(path)) {
         
-    try { auto file = T64File(path); init(file); return; }
-    catch (...) { }
-
-    try { auto file = PRGFile(path); init(file); return; }
-    catch (...) { }
-
-    try { auto file = P00File(path); init(file); return; }
-    catch (...) { }
+        auto file = T64File(path);
+        init(file);
+        return;
+    }
+    if (PRGFile::isCompatible(path)) {
+        
+        auto file = PRGFile(path);
+        init(file);
+        return;
+    }
+    if (P00File::isCompatible(path)) {
+        
+        auto file = P00File(path);
+        init(file);
+        return;
+    }
         
     throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
 }

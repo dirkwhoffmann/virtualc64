@@ -248,6 +248,7 @@ template void    CPU<DriveMemory>::_debugOn();
 template void    CPU<DriveMemory>::_debugOff();
 template void    CPU<DriveMemory>::_reset(bool hard);
 template void    CPU<DriveMemory>::_inspect() const;
+template u8      CPU<DriveMemory>::getP() const;
 template u8      CPU<DriveMemory>::getPWithClearedB() const;
 template void    CPU<DriveMemory>::setP(u8 p);
 template void    CPU<DriveMemory>::setPWithoutB(u8 p);

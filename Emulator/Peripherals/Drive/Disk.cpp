@@ -133,14 +133,15 @@ Disk::Disk()
 void
 Disk::init(const string &path, bool wp)
 {
-    // TODO: Port better code from vAmiga
-    try { auto file = G64File(path); init(file, wp); }
-    catch (...) { }
-
-    try { auto fs = FSDevice(path); init(fs, wp); }
-    catch (...) { }
+    if (G64File::isCompatible(path)) {
     
-    throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+        auto file = G64File(path);
+        init(file, wp);
+        return;
+    }
+    
+    auto fs = FSDevice(path);
+    init(fs, wp);
 }
 
 void

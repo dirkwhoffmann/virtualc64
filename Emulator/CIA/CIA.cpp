@@ -204,21 +204,23 @@ CIA::triggerFallingEdgeOnFlagPin()
 }
 
 void
-CIA::triggerTimerIrq()
+CIA::triggerTimerIrq(u64 *delay)
 {
     switch (config.revision) {
             
         case MOS_6526:
-            delay |= CIASetInt0;
-            delay |= CIASetIcr0;
+            
+            *delay |= CIASetInt0;
+            *delay |= CIASetIcr0;
             return;
             
         case MOS_8521:
+            
             // Test cases:  (?)
             // testprogs\interrupts\irqnmi\cia-int-irq-new.prg
             // testprogs\interrupts\irqnmi\cia-int-nmi-new.prg
-            delay |= (delay & CIAReadIcr0) ? CIASetInt0 : CIASetInt1;
-            delay |= (delay & CIAReadIcr0) ? CIASetIcr0 : CIASetIcr1;
+            *delay |= (*delay & CIAReadIcr0) ? CIASetInt0 : CIASetInt1;
+            *delay |= (*delay & CIAReadIcr0) ? CIASetIcr0 : CIASetIcr1;
             return;
             
         default:
@@ -227,17 +229,17 @@ CIA::triggerTimerIrq()
 }
 
 void
-CIA::triggerTodIrq()
+CIA::triggerTodIrq(u64 *delay)
 {
-    delay |= CIASetInt0;
-    delay |= CIASetIcr0;
+    *delay |= CIASetInt0;
+    *delay |= CIASetIcr0;
 }
 
 void
-CIA::triggerSerialIrq()
+CIA::triggerSerialIrq(u64 *delay)
 {
-    delay |= CIASetInt0;
-    delay |= CIASetIcr0;
+    *delay |= CIASetInt0;
+    *delay |= CIASetIcr0;
 }
 
 void
@@ -260,27 +262,27 @@ CIA::executeOneCycle()
 
     // Source: "A Software Model of the CIA6526" by Wolfgang Lorenz
 	//
-    //                           Phi2            Phi2                  Phi2
-	//                            |               |                     |
-	// timerA      -----    ------v------   ------v------     ----------v---------
-	// input  ---->| & |--->| dwDelay & |-X-| dwDelay & |---->| decrement counter|
-	//         --->|   |    |  CountA2  | | |  CountA3  |     |        (1)       |
-	//         |   -----    ------------- | -------------     |                  |
-	// -----------------          ^ Clr   |                   |                  |
-	// | bCRA & 0x01   | Clr (3)  |       | ------------------| new counter = 0? |
-	// | timer A start |<----     |       | |                 |                  |
-	// -----------------    |     |       v v                 |                  |
- 	//                    -----   |      -----                |      timer A     |
-	//                    | & |   |      | & |                |  16 bit counter  |
-	//                    |   |   |      |   |                |     and latch    |
-	//                    -----   |      -----                |                  |
-    //                     ^ ^    |        |(2)               |                  |
-    //                     | |    ---------|-------------     |                  |
-    //                     | |             |            |     |                  |
-	// timer A             | |             |    -----   |     |                  |
-	// output  <-----------|-X-------------X--->|>=1|---X---->| load from latch  |
-	//                     |                --->|   |         |        (4)       |
-	//                    -----             |   -----         --------------------
+    //                           Phi2            Phi2                Phi2
+	//                            |               |                   |
+	// timerA      -----    ------v------   ------v------   ----------v---------
+	// input  ---->| & |--->| dwDelay & |-X-| dwDelay & |-->| decrement counter|
+	//         --->|   |    |  CountA2  | | |  CountA3  |   |        (1)       |
+	//         |   -----    ------------- | -------------   |                  |
+	// -----------------          ^ Clr   |                 |                  |
+	// | bCRA & 0x01   | Clr (3)  |       | ----------------| new counter = 0? |
+	// | timer A start |<----     |       | |               |                  |
+	// -----------------    |     |       v v               |                  |
+ 	//                    -----   |      -----              |      timer A     |
+	//                    | & |   |      | & |              |  16 bit counter  |
+	//                    |   |   |      |   |              |     and latch    |
+	//                    -----   |      -----              |                  |
+    //                     ^ ^    |        |(2)             |                  |
+    //                     | |    ---------|-------------   |                  |
+    //                     | |             |            |   |                  |
+	// timer A             | |             |    -----   |   |                  |
+	// output  <-----------|-X-------------X--->|>=1|---X-->| load from latch  |
+	//                     |                --->|   |       |        (4)       |
+	//                    -----             |   -----       --------------------
 	//                    |>=1|             |
 	//                    |   |             |       Phi2
 	//                    -----             |        |
@@ -326,8 +328,11 @@ CIA::executeOneCycle()
 	}
     
 	// Load counter
-	if (delay & CIALoadA1) // (4)
-		reloadTimerA(); 
+    if (delay & CIALoadA1) { // (4)
+
+        counterA = latchA;
+        delay &= ~CIACountA2;
+    }
 	
 	// Timer B
 	
@@ -353,9 +358,12 @@ CIA::executeOneCycle()
 	}
 	
 	// Load counter
-	if (delay & CIALoadB1) // (4)
-		reloadTimerB();
-		
+    if (delay & CIALoadB1) { // (4)
+        
+        counterB = latchB;
+        delay &= ~CIACountB2;
+    }
+    
     //
     // Serial register
     //
@@ -380,12 +388,15 @@ CIA::executeOneCycle()
     
     // Run shift register with generated clock signal
     if (serCounter) {
-        if ((delay & (CIASerClk2 | CIASerClk1)) == CIASerClk1) {      // Positive edge
-            if (serCounter == 1) {
-                delay |= CIASerInt0; // Trigger interrupt
-            }
-        }
-        else if ((delay & (CIASerClk2 | CIASerClk1)) == CIASerClk2) { // Negative edge
+        
+        if ((delay & (CIASerClk2 | CIASerClk1)) == CIASerClk1) {
+            
+            // Positive edge
+            if (serCounter == 1) delay |= CIASerInt0;
+
+        } else if ((delay & (CIASerClk2 | CIASerClk1)) == CIASerClk2) {
+            
+            // Negative edge
             serCounter--;
         }
     }
@@ -419,12 +430,15 @@ CIA::executeOneCycle()
 		
 		if (CRA & 0x02) { // (6)
 
-			if ((CRA & 0x04) == 0) { 
+			if ((CRA & 0x04) == 0) {
+                
 				// (7) set PB6 high for one clock cycle
 				PB67TimerOut |= 0x40;
 				delay |= CIAPB6Low0;
 				delay &= ~CIAPB6Low1;
-			} else { 
+                
+			} else {
+                
 				// (8) toggle PB6 (copy bit 6 from PB67Toggle)
 				// PB67TimerOut = (PB67TimerOut & 0xBF) | (PB67Toggle & 0x40);
                 PB67TimerOut ^= 0x40;
@@ -441,13 +455,15 @@ CIA::executeOneCycle()
 		if (CRB & 0x02) { // (6)
 		
 			if ((CRB & 0x04) == 0) {
+                
 				// (7) set PB7 high for one clock cycle
 				PB67TimerOut |= 0x80;
 				delay |= CIAPB7Low0;
 				delay &= ~CIAPB7Low1;
+                
 			} else {
+                
 				// (8) toggle PB7 (copy bit 7 from PB67Toggle)
-				// PB67TimerOut = (PB67TimerOut & 0x7F) | (PB67Toggle & 0x80);
                 PB67TimerOut ^= 0x80;
 			}
 		}
@@ -515,14 +531,14 @@ CIA::executeOneCycle()
     
     // Check for timer interrupt
     if ((timerAOutput && (imr & 0x01)) || (timerBOutput && (imr & 0x02))) { // (11)
-        triggerTimerIrq();
+        triggerTimerIrq(&delay);
     }
 
     // Check for TOD interrupt
     if (delay & CIATODInt0) {
         icr |= 0x04;
         if (imr & 0x04) {
-            triggerTodIrq();
+            triggerTodIrq(&delay);
         }
     }
     
@@ -530,7 +546,7 @@ CIA::executeOneCycle()
     if (delay & CIASerInt2) {
         icr |= 0x08;
         if (imr & 0x08) {
-            triggerSerialIrq();
+            triggerSerialIrq(&delay);
         }
     }
     

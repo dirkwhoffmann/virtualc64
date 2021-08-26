@@ -436,13 +436,13 @@ private:
     virtual void releaseInterruptLine() = 0;
     
     // Loads a latched value into timer
-    void reloadTimerA() { counterA = latchA; delay &= ~CIACountA2; }
-    void reloadTimerB() { counterB = latchB; delay &= ~CIACountB2; }
+    // void reloadTimerA() { counterA = latchA; delay &= ~CIACountA2; }
+    // void reloadTimerB() { counterB = latchB; delay &= ~CIACountB2; }
     
     // Triggers an interrupt (invoked inside executeOneCycle())
-    void triggerTimerIrq();
-    void triggerTodIrq();
-    void triggerSerialIrq();
+    void triggerTimerIrq(u64 *delay);
+    void triggerTodIrq(u64 *delay);
+    void triggerSerialIrq(u64 *delay);
     
 public:
     
