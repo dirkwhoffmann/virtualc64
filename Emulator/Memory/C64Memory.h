@@ -184,15 +184,15 @@ public:
     void pokeIO(u16 addr, u8 value);
     
     // Reads a vector address from memory
-    u16 nmiVector();
-    u16 irqVector();
-    u16 resetVector();
+    u16 nmiVector() const;
+    u16 irqVector() const;
+    u16 resetVector() const;
     
     // Returns a string representations for a portion of memory
-    string memdump(u16 addr, long num, bool hex, MemoryType src);
+    string memdump(u16 addr, long num, bool hex, MemoryType src) const;
     string hexdump(u16 addr, long num, MemoryType src) { return memdump(addr, num, true, src); }
     string decdump(u16 addr, long num, MemoryType src) { return memdump(addr, num, false, src); }
-    string txtdump(u16 addr, long num, MemoryType src);
+    string txtdump(u16 addr, long num, MemoryType src) const;
 
     string memdump(u16 addr, long num, bool hex) { return memdump(addr, num, hex, peekSrc[addr >> 12]); }
     string hexdump(u16 addr, long num) { return hexdump(addr, num, peekSrc[addr >> 12]); }

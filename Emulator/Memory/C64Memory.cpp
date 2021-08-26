@@ -670,37 +670,37 @@ C64Memory::pokeIO(u16 addr, u8 value)
 }
 
 u16
-C64Memory::nmiVector() {
+C64Memory::nmiVector() const {
     
     if (peekSrc[0xF] != M_KERNAL || c64.hasRom(ROM_TYPE_KERNAL)) {
-        return LO_HI(peek(0xFFFA), peek(0xFFFB));
+        return LO_HI(spypeek(0xFFFA), spypeek(0xFFFB));
     } else {
         return 0xFE43;
     }
 }
 
 u16
-C64Memory::irqVector() {
+C64Memory::irqVector() const {
     
     if (peekSrc[0xF] != M_KERNAL || c64.hasRom(ROM_TYPE_KERNAL)) {
-        return LO_HI(peek(0xFFFE), peek(0xFFFF));
+        return LO_HI(spypeek(0xFFFE), spypeek(0xFFFF));
     } else {
         return 0xFF48;
     }
 }
 
 u16
-C64Memory::resetVector() {
+C64Memory::resetVector() const {
     
     if (peekSrc[0xF] != M_KERNAL || c64.hasRom(ROM_TYPE_KERNAL)) {
-        return LO_HI(peek(0xFFFC), peek(0xFFFD));
+        return LO_HI(spypeek(0xFFFC), spypeek(0xFFFD));
     } else {
         return 0xFCE2;
     }
 }
 
 string
-C64Memory::memdump(u16 addr, long num, bool hex, MemoryType src)
+C64Memory::memdump(u16 addr, long num, bool hex, MemoryType src) const
 {
     char result[128];
     char *p = result;
@@ -738,7 +738,7 @@ C64Memory::memdump(u16 addr, long num, bool hex, MemoryType src)
 }
 
 string
-C64Memory::txtdump(u16 addr, long num, MemoryType src)
+C64Memory::txtdump(u16 addr, long num, MemoryType src) const
 {
     char result[17];
     char *p = result;
