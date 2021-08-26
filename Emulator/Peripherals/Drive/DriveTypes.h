@@ -24,6 +24,26 @@ enum_long(DRIVE_ID)
 };
 typedef DRIVE_ID DriveID;
 
+#ifdef __cplusplus
+struct DriveIDEnum : util::Reflection<DriveIDEnum, DriveID> {
+    
+    static long min() { return DRIVE8; }
+    static long max() { return DRIVE9; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
+    
+    static const char *prefix() { return ""; }
+    static const char *key(DriveID value)
+    {
+        switch (value) {
+                
+            case DRIVE8:  return "DRIVE8";
+            case DRIVE9:  return "DRIVE9";
+        }
+        return "???";
+    }
+};
+#endif
+
 enum_long(DRIVE_TYPE)
 {
     DRIVE_VC1541,

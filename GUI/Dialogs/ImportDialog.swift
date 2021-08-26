@@ -313,7 +313,7 @@ class ImportDialog: DialogController {
 
         if volume != nil {
             
-            track("Inserting Volume")
+            track("Inserting Volume (wp: \(writeProtect))")
             drive.insertFileSystem(volume, protected: writeProtect)
         
         } else if tap != nil {

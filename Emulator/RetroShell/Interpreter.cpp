@@ -172,6 +172,8 @@ Interpreter::help(const Arguments &argv)
 void
 Interpreter::help(const Command& current)
 {
+    retroShell << '\n';
+    
     // Print the usage string
     usage(current);
     
@@ -179,20 +181,17 @@ Interpreter::help(const Command& current)
     auto types = current.types();
 
     // Determine tabular positions to align the output
-    int tab = 0;
-    // for (auto &it : types) tab = std::max(tab, (int)it.length());
+    isize tab = 0;
     for (auto &it : current.args) {
-        tab = std::max(tab, (int)it.token.length());
-        tab = std::max(tab, 2 + (int)it.type.length());
+        tab = std::max(tab, (isize)it.token.length());
+        tab = std::max(tab, 2 + (isize)it.type.length());
     }
     tab += 5;
-    
-    retroShell << '\n';
 
     for (auto &it : types) {
         
         auto opts = current.filterType(it);
-        int size = (int)it.length();
+        isize size = (isize)it.length();
 
         retroShell.tab(tab - size);
         retroShell << "<" << it << "> : ";
@@ -202,7 +201,7 @@ Interpreter::help(const Command& current)
         for (auto &opt : opts) {
 
             string name = opt->token == "" ? "<>" : opt->token;
-            retroShell.tab(tab + 2 - (int)name.length());
+            retroShell.tab(tab + 2 - (isize)name.length());
             retroShell << name;
             retroShell << " : ";
             retroShell << opt->info;

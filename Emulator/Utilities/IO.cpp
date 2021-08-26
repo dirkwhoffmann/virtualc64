@@ -186,6 +186,7 @@ matchingStreamHeader(std::istream &is, const u8 *header, isize len, isize offset
     is.seekg(offset, std::ios::beg);
     
     for (isize i = 0; i < len; i++) {
+        
         int c = is.get();
         if (c != (int)header[i]) {
             is.seekg(0, std::ios::beg);

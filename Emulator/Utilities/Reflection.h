@@ -28,8 +28,8 @@ template <class T, typename E> struct Reflection {
         
         std::map <string,long> result;
                 
-        for (isize i = 0; T::isValid(i); i++) {
-            result.insert(std::make_pair(key(i), i));
+        for (isize i = T::min(); i <= T::max(); i++) {
+            if (T::isValid(i)) result.insert(std::make_pair(key(i), i));
         }
         
         return result;
@@ -42,6 +42,7 @@ template <class T, typename E> struct Reflection {
         
         auto p = pairs();
         for(auto it = std::begin(p); it != std::end(p); ++it) {
+            
             if (it != std::begin(p)) result += ", ";
             if (prefix && T::prefix()) result += T::prefix();
             result += it->first;

@@ -766,7 +766,6 @@ Drive::insertDisk(std::unique_ptr<Disk> disk)
             // Initiate the disk change procedure
             wakeUp();
             diskToInsert = std::move(disk);
-            // diskToInsertWP = wp;
             diskChangeCounter = 1;
         }
     }
