@@ -257,6 +257,7 @@ void
 sprint8d(char *s, u8 value)
 {
     for (int i = 2; i >= 0; i--) {
+        
         u8 digit = value % 10;
         s[i] = '0' + digit;
         value /= 10;
@@ -268,6 +269,7 @@ void
 sprint8x(char *s, u8 value)
 {
     for (int i = 1; i >= 0; i--) {
+        
         u8 digit = value % 16;
         s[i] = (digit <= 9) ? ('0' + digit) : ('A' + digit - 10);
         value /= 16;
@@ -279,6 +281,7 @@ void
 sprint8b(char *s, u8 value)
 {
     for (int i = 7; i >= 0; i--) {
+        
         s[i] = (value & 0x01) ? '1' : '0';
         value >>= 1;
     }
@@ -289,6 +292,7 @@ void
 sprint16d(char *s, u16 value)
 {
     for (int i = 4; i >= 0; i--) {
+        
         u8 digit = value % 10;
         s[i] = '0' + digit;
         value /= 10;
@@ -300,6 +304,7 @@ void
 sprint16x(char *s, u16 value)
 {
     for (int i = 3; i >= 0; i--) {
+        
         u8 digit = value % 16;
         s[i] = (digit <= 9) ? ('0' + digit) : ('A' + digit - 10);
         value /= 16;
@@ -311,6 +316,7 @@ void
 sprint16b(char *s, u16 value)
 {
     for (int i = 15; i >= 0; i--) {
+        
         s[i] = (value & 0x01) ? '1' : '0';
         value >>= 1;
     }

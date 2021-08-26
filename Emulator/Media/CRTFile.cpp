@@ -16,18 +16,13 @@
 bool
 CRTFile::isCompatible(const string &path)
 {
-    auto s = util::extractSuffix(path);
-    return s == "crt" || s == "CRT";
+    return util::uppercased(util::extractSuffix(path)) == "CRT";
 }
 
 bool
 CRTFile::isCompatible(std::istream &stream)
 {
-    const u8 magicBytes[] = {
-        'C','6','4',' ','C','A','R','T','R','I','D','G','E',' ',' ',' ' };
-    
-    if (util::streamLength(stream) < 0x40) return false;
-    return util::matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
+    return util::matchingStreamHeader(stream, "C64 CARTRIDGE   ");
 }
 
 PETName<16>
@@ -60,7 +55,7 @@ CRTFile::readFromStream(std::istream &stream)
         ptr += chipSize(numberOfChips);
     }
     
-    plain(CRT_DEBUG, "CRT file imported successfully (%zd chips)\n", numberOfChips);
+    plain(CRT_DEBUG, "CRT file imported (%zd chips)\n", numberOfChips);
 }
 
 CartridgeType

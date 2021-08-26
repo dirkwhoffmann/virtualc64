@@ -312,4 +312,7 @@ private:
     const char *disassembleInstr(const RecordedInstruction &instr, long *len) const;
     const char *disassembleBytes(const RecordedInstruction &instr) const;
     const char *disassembleRecordedFlags(const RecordedInstruction &instr) const;
+
+    template <bool hex>
+    const char *disassembleInstr(const RecordedInstruction &instr, long *len) const;
 };

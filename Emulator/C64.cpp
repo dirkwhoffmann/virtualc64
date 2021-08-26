@@ -1249,7 +1249,7 @@ C64::mega65BasicRev() const
     static char rev[17];
     rev[0] = 0;
     
-    if (hasMega65Rom(ROM_TYPE_BASIC)) memcpy(rev, &mem.rom[0xBF55], 16);
+    if (hasMega65Rom(ROM_TYPE_BASIC)) std::memcpy(rev, &mem.rom[0xBF55], 16);
     rev[16] = 0;
     
     return rev;
@@ -1261,7 +1261,7 @@ C64::mega65KernalRev() const
     static char rev[17];
     rev[0] = 0;
     
-    if (hasMega65Rom(ROM_TYPE_KERNAL)) memcpy(rev, &mem.rom[0xE4BC], 16);
+    if (hasMega65Rom(ROM_TYPE_KERNAL)) std::memcpy(rev, &mem.rom[0xE4BC], 16);
     rev[16] = 0;
     
     return rev;

@@ -205,19 +205,6 @@ Cartridge::_reset(bool hard)
 }
 
 void
-Cartridge::resetWithoutDeletingRam()
-{
-    u8 ram[0x10000];
-    
-    trace(RUN_DEBUG, "Resetting virtual C64 (preserving RAM)\n");
-    
-    // TODO: REPLACE THE FOLLOWING BY c64.softReset()
-    memcpy(ram, mem.ram, 0x10000);
-    c64.hardReset();
-    memcpy(mem.ram, ram, 0x10000);
-}
-
-void
 Cartridge::_dump(dump::Category category, std::ostream& os) const
 {
     using namespace util;

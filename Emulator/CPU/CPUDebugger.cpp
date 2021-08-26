@@ -421,6 +421,16 @@ CPUDebugger::disassemblePC() const
 const char *
 CPUDebugger::disassembleInstr(const RecordedInstruction &instr, long *len) const
 {
+    if (hex) {
+        return disassembleInstr<true>(instr, len);
+    } else {
+        return disassembleInstr<false>(instr, len);
+    }
+}
+
+template <bool hex> const char *
+CPUDebugger::disassembleInstr(const RecordedInstruction &instr, long *len) const
+{
     static char result[16];
         
     u8 opcode = instr.byte1;
@@ -435,7 +445,8 @@ CPUDebugger::disassembleInstr(const RecordedInstruction &instr, long *len) const
         case ADDR_ZERO_PAGE_X:
         case ADDR_ZERO_PAGE_Y:
         case ADDR_INDIRECT_X:
-        case ADDR_INDIRECT_Y: {
+        case ADDR_INDIRECT_Y:
+        {
             u8 value = instr.byte2;
             hex ? sprint8x(operand, value) : sprint8d(operand, value);
             break;
@@ -444,12 +455,14 @@ CPUDebugger::disassembleInstr(const RecordedInstruction &instr, long *len) const
         case ADDR_INDIRECT:
         case ADDR_ABSOLUTE:
         case ADDR_ABSOLUTE_X:
-        case ADDR_ABSOLUTE_Y: {
+        case ADDR_ABSOLUTE_Y:
+        {
             u16 value = LO_HI(instr.byte2, instr.byte3);
             hex ? sprint16x(operand, value) : sprint16d(operand, value);
             break;
         }
-        case ADDR_RELATIVE: {
+        case ADDR_RELATIVE:
+        {
             u16 value = instr.pc + 2 + (i8)instr.byte2;
             hex ? sprint16x(operand, value) : sprint16d(operand, value);
             break;
@@ -462,59 +475,85 @@ CPUDebugger::disassembleInstr(const RecordedInstruction &instr, long *len) const
             
         case ADDR_IMPLIED:
         case ADDR_ACCUMULATOR:
-            strcpy(result, "xxx");
+            
+            std::strcpy(result, "xxx");
             break;
+            
         case ADDR_IMMEDIATE:
-            strcpy(result, hex ? "xxx #hh" : "xxx #ddd");
-            memcpy(&result[5], operand, hex ? 2 : 3);
+            
+            std::strcpy(result, hex ? "xxx #hh" : "xxx #ddd");
+            std::memcpy(&result[5], operand, hex ? 2 : 3);
             break;
+            
         case ADDR_ZERO_PAGE:
-            strcpy(result, hex ? "xxx hh" : "xxx ddd");
-            memcpy(&result[4], operand, hex ? 2 : 3);
+            
+            std::strcpy(result, hex ? "xxx hh" : "xxx ddd");
+            std::memcpy(&result[4], operand, hex ? 2 : 3);
             break;
+            
         case ADDR_ZERO_PAGE_X:
-            strcpy(result, hex ? "xxx hh,X" : "xxx ddd,X");
-            memcpy(&result[4], operand, hex ? 2 : 3);
+            
+            std::strcpy(result, hex ? "xxx hh,X" : "xxx ddd,X");
+            std::memcpy(&result[4], operand, hex ? 2 : 3);
             break;
+            
         case ADDR_ZERO_PAGE_Y:
-            strcpy(result, hex ? "xxx hh,Y" : "xxx ddd,Y");
-            memcpy(&result[4], operand, hex ? 2 : 3);
+            
+            std::strcpy(result, hex ? "xxx hh,Y" : "xxx ddd,Y");
+            std::memcpy(&result[4], operand, hex ? 2 : 3);
             break;
+            
         case ADDR_ABSOLUTE:
         case ADDR_DIRECT:
-            strcpy(result, hex ? "xxx hhhh" : "xxx ddddd");
-            memcpy(&result[4], operand, hex ? 4 : 5);
+            
+            std::strcpy(result, hex ? "xxx hhhh" : "xxx ddddd");
+            std::memcpy(&result[4], operand, hex ? 4 : 5);
             break;
+            
         case ADDR_ABSOLUTE_X:
-            strcpy(result, hex ? "xxx hhhh,X" : "xxx ddddd,X");
-            memcpy(&result[4], operand, hex ? 4 : 5);
+            
+            std::strcpy(result, hex ? "xxx hhhh,X" : "xxx ddddd,X");
+            std::memcpy(&result[4], operand, hex ? 4 : 5);
             break;
+            
         case ADDR_ABSOLUTE_Y:
-            strcpy(result, hex ? "xxx hhhh,Y" : "xxx ddddd,Y");
-            memcpy(&result[4], operand, hex ? 4 : 5);
+            
+            std::strcpy(result, hex ? "xxx hhhh,Y" : "xxx ddddd,Y");
+            std::memcpy(&result[4], operand, hex ? 4 : 5);
             break;
+            
         case ADDR_INDIRECT:
-            strcpy(result, hex ? "xxx (hhhh)" : "xxx (ddddd)");
-            memcpy(&result[5], operand, hex ? 4 : 5);
+            
+            std::strcpy(result, hex ? "xxx (hhhh)" : "xxx (ddddd)");
+            std::memcpy(&result[5], operand, hex ? 4 : 5);
             break;
+            
         case ADDR_INDIRECT_X:
-            strcpy(result, hex ? "xxx (hh,X)" : "xxx (ddd,X)");
-            memcpy(&result[5], operand, hex ? 2 : 3);
+            
+            std::strcpy(result, hex ? "xxx (hh,X)" : "xxx (ddd,X)");
+            std::memcpy(&result[5], operand, hex ? 2 : 3);
             break;
+            
         case ADDR_INDIRECT_Y:
-            strcpy(result, hex ? "xxx (hh),Y" : "xxx (ddd),Y");
-            memcpy(&result[5], operand, hex ? 2 : 3);
+            
+            std::strcpy(result, hex ? "xxx (hh),Y" : "xxx (ddd),Y");
+            std::memcpy(&result[5], operand, hex ? 2 : 3);
             break;
+            
         case ADDR_RELATIVE:
-            strcpy(result, hex ? "xxx hhhh" : "xxx ddddd");
-            memcpy(&result[4], operand, hex ? 4 : 5);
+            
+            std::strcpy(result, hex ? "xxx hhhh" : "xxx ddddd");
+            std::memcpy(&result[4], operand, hex ? 4 : 5);
             break;
+            
         default:
-            strcpy(result, "???");
+            
+            std::strcpy(result, "???");
     }
     
     // Copy mnemonic
     strncpy(result, mnemonic[opcode], 3);
+    
     return result;
 }
 
@@ -526,10 +565,13 @@ CPUDebugger::disassembleBytes(const RecordedInstruction &instr) const
     isize len = getLengthOfInstruction(instr.byte1);
     
     if (hex) {
+        
         if (len >= 1) { sprint8x(ptr, instr.byte1); ptr[2] = ' '; ptr += 3; }
         if (len >= 2) { sprint8x(ptr, instr.byte2); ptr[2] = ' '; ptr += 3; }
         if (len >= 3) { sprint8x(ptr, instr.byte3); ptr[2] = ' '; ptr += 3; }
+        
     } else {
+        
         if (len >= 1) { sprint8d(ptr, instr.byte1); ptr[3] = ' '; ptr += 4; }
         if (len >= 2) { sprint8d(ptr, instr.byte2); ptr[3] = ' '; ptr += 4; }
         if (len >= 3) { sprint8d(ptr, instr.byte3); ptr[3] = ' '; ptr += 4; }

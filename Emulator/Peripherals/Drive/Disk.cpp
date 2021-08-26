@@ -391,11 +391,11 @@ Disk::analyzeHalftrack(Halftrack ht)
     // Setup working buffer (two copies of the track, each bit represented by one byte).
     for (isize i = 0; i < maxBytesOnTrack; i++)
         trackInfo.byte[i] = bitExpansion[data.halftrack[ht][i]];
-    memcpy(trackInfo.bit + len, trackInfo.bit, len);
+    std::memcpy(trackInfo.bit + len, trackInfo.bit, len);
     
     // Indicates where the sector headers blocks and the sectors data blocks start.
     u8 sync[sizeof(trackInfo.bit)];
-    memset(sync, 0, sizeof(sync));
+    std::memset(sync, 0, sizeof(sync));
     
     // Scan for SYNC sequences and decode the byte that follows.
     isize noOfOnes = 0;

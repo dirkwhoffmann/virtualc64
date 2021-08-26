@@ -166,7 +166,6 @@ protected:
 protected:
     
     void _reset(bool hard) override;
-    void resetWithoutDeletingRam();
         
     template <class T>
     void applyToPersistentItems(T& worker)

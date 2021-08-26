@@ -146,7 +146,7 @@ Expert::pressButton(isize nr)
             case 1: // Reset
                 
                 if (switchInOnPosition()) { active = true; }
-                resetWithoutDeletingRam();
+                c64.softReset();
                 break;
                 
             case 2: // ESM (Freeze)

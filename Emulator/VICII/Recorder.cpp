@@ -331,7 +331,7 @@ Recorder::recordVideo()
     u8 *dst = data;
     
     for (isize y = 0; y < height; y++, src += 4 * TEX_WIDTH, dst += width) {
-        memcpy(dst, src, width);
+        std::memcpy(dst, src, width);
     }
     
     // Feed the video pipe
