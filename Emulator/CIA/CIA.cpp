@@ -575,7 +575,7 @@ CIA::executeOneCycle()
     }
 
     // Move delay flags left and feed in new bits
-    this->delay = ((delay << 1) & DelayMask) | feed;
+    this->delay = ((delay << 1) & CIADelayMask) | feed;
     
     // Get tired if nothing has happened in this cycle
     if (oldDelay == this->delay && oldFeed == feed) tiredness++; else tiredness = 0;
