@@ -204,6 +204,20 @@ CIA::triggerFallingEdgeOnFlagPin()
 }
 
 void
+CIA::reloadTimerA(u64 *delay)
+{
+    counterA = latchA;
+    *delay &= ~CIACountA2;
+}
+
+void
+CIA::reloadTimerB(u64 *delay)
+{
+    counterB = latchB;
+    *delay &= ~CIACountB2;
+}
+
+void
 CIA::triggerTimerIrq(u64 *delay)
 {
     switch (config.revision) {
@@ -299,23 +313,23 @@ CIA::executeOneCycle()
 	// | one shot      |---X->| oneShotA0 |--
 	// -----------------      -------------
 
-				
+    //
 	// Timer A
-
-	// Decrement counter
-
-	if (delay & CIACountA3)
-		counterA--; // (1)
+    //
+    
+	// (1) : Decrement counter
+	if (delay & CIACountA3) counterA--;
 	
-	// Check underflow condition
-	bool timerAOutput = (counterA == 0 && (delay & CIACountA2)); // (2)
+	// (2) : Check underflow condition
+	bool timerAOutput = (counterA == 0 && (delay & CIACountA2));
 	
 	if (timerAOutput) {
         
         icrAck &= ~0x01;
         
-		// Stop timer in one shot mode
-		if ((delay | feed) & CIAOneShotA0) { // (3)
+		// (3) : Stop timer in one shot mode
+		if ((delay | feed) & CIAOneShotA0) {
+            
 			CRA &= ~0x01;
 			delay &= ~(CIACountA2 | CIACountA1 | CIACountA0);
 			feed &= ~CIACountA0;
@@ -323,6 +337,7 @@ CIA::executeOneCycle()
 		
 		// Timer A output to timer B in cascade mode
 		if ((CRB & 0x61) == 0x41 || ((CRB & 0x61) == 0x61 && CNT)) {
+            
 			delay |= CIACountB1;
 		}
         
@@ -330,19 +345,15 @@ CIA::executeOneCycle()
 		delay |= CIALoadA1;
 	}
     
-	// Load counter
-    if (delay & CIALoadA1) { // (4)
-
-        counterA = latchA;
-        delay &= ~CIACountA2;
-    }
+	// (4) : Load counter
+    if (delay & CIALoadA1) reloadTimerA(&delay);
 	
+    //
 	// Timer B
-	
-	// Decrement counter
-	if (delay & CIACountB3) {
-		counterB--; // (1)
-	}
+	//
+    
+	// (1) Decrement counter
+	if (delay & CIACountB3) counterB--;
 
 	// Check underflow condition
 	bool timerBOutput = (counterB == 0 && (delay & CIACountB2)); // (2)
@@ -351,8 +362,9 @@ CIA::executeOneCycle()
 				
         icrAck &= ~0x02;
         
-		// Stop timer in one shot mode
-		if ((delay | feed) & CIAOneShotB0) { // (3)
+		// (3) : Stop timer in one shot mode
+		if ((delay | feed) & CIAOneShotB0) {
+            
 			CRB &= ~0x01;
 			delay &= ~(CIACountB2 | CIACountB1 | CIACountB0);
 			feed &= ~CIACountB0;
@@ -360,20 +372,17 @@ CIA::executeOneCycle()
 		delay |= CIALoadB1;
 	}
 	
-	// Load counter
-    if (delay & CIALoadB1) { // (4)
-        
-        counterB = latchB;
-        delay &= ~CIACountB2;
-    }
+	// (4) : Load counter
+    if (delay & CIALoadB1) reloadTimerB(&delay);
     
     //
     // Serial register
     //
     
     // Generate clock signal
-    if (timerAOutput && (CRA & 0x40) /* output mode */ ) {
+    if (timerAOutput && (CRA & 0x40)) {
         
+        // Output mode
         if (serCounter) {
             
             // Toggle serial clock signal
@@ -417,7 +426,7 @@ CIA::executeOneCycle()
 	// timerA  | Flip ---------------     |       (7)     |  |              |
     // output -X----->| bPB67Toggle |---->| 0x04: toggle  |  | bCRA & 0x02  |
 	//            (5) |  ^ 0x40     |     |       (8)     |  | output mode  |-> PB6 out
-	//                ---------------     -----------------  |              |
+	//                ---------------     -----------------  |     (6)      |
 	//                       ^ Set        -----------------  | 0x00 (port)  |
 	//                       |            | port B bit 6  |->|              |
 	// ----------------- 0->1|            |    output     |  ----------------
@@ -425,59 +434,63 @@ CIA::executeOneCycle()
 	// | timer A start |
 	// -----------------
 
+    //
 	// Timer A output to PB6
-	
+	//
+    
 	if (timerAOutput) {
 		
-		PB67Toggle ^= 0x40; // (5) toggle underflow counter bit
+        // (5) : Toggle underflow counter bit
+		PB67Toggle ^= 0x40;
 		
-		if (CRA & 0x02) { // (6)
+        // (6)
+		if (CRA & 0x02) {
 
 			if ((CRA & 0x04) == 0) {
                 
-				// (7) set PB6 high for one clock cycle
+				// (7) : Set PB6 high for one clock cycle
 				PB67TimerOut |= 0x40;
 				delay |= CIAPB6Low0;
 				delay &= ~CIAPB6Low1;
                 
 			} else {
                 
-				// (8) toggle PB6 (copy bit 6 from PB67Toggle)
-				// PB67TimerOut = (PB67TimerOut & 0xBF) | (PB67Toggle & 0x40);
+				// (8) : Toggle PB6
                 PB67TimerOut ^= 0x40;
 			}
 		}
 	}
 
+    //
 	// Timer B output to PB7
-	
+	//
+    
 	if (timerBOutput) {
 		
-		PB67Toggle ^= 0x80; // (5) toggle underflow counter bit
+        // (5) : Toggle underflow counter bit
+		PB67Toggle ^= 0x80;
 	
-		if (CRB & 0x02) { // (6)
+        // (6)
+		if (CRB & 0x02) {
 		
 			if ((CRB & 0x04) == 0) {
                 
-				// (7) set PB7 high for one clock cycle
+				// (7) : Set PB7 high for one clock cycle
 				PB67TimerOut |= 0x80;
 				delay |= CIAPB7Low0;
 				delay &= ~CIAPB7Low1;
                 
 			} else {
                 
-				// (8) toggle PB7 (copy bit 7 from PB67Toggle)
+				// (8) : Toggle PB7
                 PB67TimerOut ^= 0x80;
 			}
 		}
 	}
 	
 	// Set PB67 back to low
-	if (delay & CIAPB6Low1)
-		PB67TimerOut &= ~0x40;
-
-	if (delay & CIAPB7Low1)
-		PB67TimerOut &= ~0x80;
+    if (delay & CIAPB6Low1) { PB67TimerOut &= ~0x40; }
+    if (delay & CIAPB7Low1) { PB67TimerOut &= ~0x80; }
 
 	
 	//
@@ -513,27 +526,24 @@ CIA::executeOneCycle()
 	//                                              |
 	//                                             Phi2
     
-	if (timerAOutput) { // (9)
-		icr |= 0x01;
-	}
-	
-	// if (timerBOutput && !(delay & CIAReadIcr0)) { // (10)
+    if (timerAOutput) { icr |= 0x01; } // (9)
     if (timerBOutput) { // (10)
         
         if ((delay & CIAReadIcr0) && config.timerBBug) {
             
-            // The old CIA chips (NMOS technology) exhibit a race condition here
-            // which is known as the "timer B bug". If ICR is currently read,
-            // the read access occurs *after* timer B sets bit 2. Hence, bit 2
-            // won't show up.
+            /* The old CIA chips (NMOS technology) exhibit a race condition
+             * here which is known as the "timer B bug". If ICR is currently
+             * read, the read access occurs *after* timer B sets bit 2. Hence,
+             * bit 2 won't show up.
+             */
             
         } else {
             icr |= 0x02;
         }
     }
     
-    // Check for timer interrupt
-    if ((timerAOutput && (imr & 0x01)) || (timerBOutput && (imr & 0x02))) { // (11)
+    // (11) : Check for timer interrupt
+    if ((timerAOutput && (imr & 0x01)) || (timerBOutput && (imr & 0x02))) {
         triggerTimerIrq(&delay);
     }
 
@@ -575,10 +585,13 @@ CIA::executeOneCycle()
     }
 
     // Move delay flags left and feed in new bits
-    this->delay = ((delay << 1) & CIADelayMask) | feed;
+    delay = ((delay << 1) & CIADelayMask) | feed;
     
     // Get tired if nothing has happened in this cycle
-    if (oldDelay == this->delay && oldFeed == feed) tiredness++; else tiredness = 0;
+    if (oldDelay == delay && oldFeed == feed) tiredness++; else tiredness = 0;
+    
+    // Write back local copy
+    this->delay = delay;
     
     // Sleep if threshold is reached
     if (tiredness > 8 && !CIA_ON_STEROIDS) sleep();
@@ -597,11 +610,10 @@ CIA::sleep()
     // CIAs with stopped timers can sleep forever
     if (!(feed & CIACountA0)) sleepA = INT64_MAX;
     if (!(feed & CIACountB0)) sleepB = INT64_MAX;
-    Cycle sleep = std::min(sleepA, sleepB);
 
     // ZZzzz
     sleepCycle = cpu.cycle;
-    wakeUpCycle = sleep;
+    wakeUpCycle = std::min(sleepA, sleepB);;
     tiredness = 0;
     sleeping = true;
 }
@@ -615,8 +627,6 @@ CIA::wakeUp()
 void
 CIA::wakeUp(Cycle targetCycle)
 {
-    // Don't call this method on an active CIA
-    // assert(sleeping);
     if (!sleeping) return;
         
     // Calculate the number of missed cycles
@@ -685,7 +695,6 @@ u8
 CIA1::portAexternal() const
 {
     return 0xFF;
-    // return keyboard.getColumnValues(PB);
 }
 
 void
