@@ -420,8 +420,11 @@ Drive::_load(const u8 *buffer)
     // Check if the snapshot includes a disk
     bool diskInSnapshot; reader << diskInSnapshot;
 
-    // If yes, create recreate the disk
-    if (diskInSnapshot) disk = std::make_unique<Disk>(reader);
+    if (diskInSnapshot) {
+        disk = std::make_unique<Disk>(reader);
+    } else {
+        disk = nullptr;
+    }
 
     // Compute the number of read bytes and return
     result = (isize)(reader.ptr - buffer);
