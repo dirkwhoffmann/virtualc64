@@ -26,6 +26,7 @@
 
 #ifdef __cplusplus
 #include <string>
+#include <cstring>
 using std::string;
 #endif
 

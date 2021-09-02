@@ -361,7 +361,7 @@ Keyboard::abortAutoTyping()
 void
 Keyboard::_scheduleKeyAction(KeyAction::Action type, C64Key key, i64 delay)
 {
-    debug(KBD_DEBUG, "Recording %d %zd %lld\n", type, key.nr, delay);
+    debug(KBD_DEBUG, "Recording %d %zd %lld\n", (int)type, key.nr, delay);
 
     if (actions.empty()) this->delay = delay;
     actions.push(KeyAction(type, key.nr, delay));

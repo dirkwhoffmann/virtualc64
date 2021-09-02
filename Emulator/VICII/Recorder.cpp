@@ -335,7 +335,9 @@ Recorder::recordVideo()
     }
     
     // Feed the video pipe
-    (void)write(videoPipe, data, width * height);
+    if (write(videoPipe, data, width * height) != width * height) {
+        warn("Failed to write to the video pipe\n");
+    }
 }
 
 void
@@ -349,10 +351,16 @@ Recorder::recordAudio()
     
     for (isize i = 0; i < samplesPerFrame; i++) {
     
+        usize written = 0;
+        
         // Feed the audio pipe
         SamplePair pair = muxer.stream.read();
-        (void)write(audioPipe, &pair.left, sizeof(float));
-        (void)write(audioPipe, &pair.right, sizeof(float));
+        written += write(audioPipe, &pair.left, sizeof(float));
+        written += write(audioPipe, &pair.right, sizeof(float));
+        
+        if (written != 2 * sizeof(float)) {
+            warn("Failed to write to audio pipe\n");
+        }
     }
     
     muxer.stream.clear();

@@ -84,7 +84,8 @@ protected:
 public:
 
     SubComponent(C64& ref);
-
+    SubComponent(const SubComponent &other) : SubComponent(other.c64) { }
+    
     virtual bool isPoweredOff() const override;
     virtual bool isPoweredOn() const override;
     virtual bool isPaused() const override;

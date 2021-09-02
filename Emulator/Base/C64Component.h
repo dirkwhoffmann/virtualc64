@@ -20,19 +20,7 @@
 #define synchronized \
 for (util::AutoMutex _am(mutex); _am.active; _am.active = false)
     
-struct NoCopy
-{
-    NoCopy() { };
-    NoCopy(NoCopy const&) = delete;
-};
-
-struct NoAssign
-{
-    NoAssign() { };
-    NoAssign& operator=(NoAssign const&) = delete;
-};
-
-class C64Component : public C64Object, NoCopy, NoAssign {
+class C64Component : public C64Object {
         
 protected:
     
