@@ -76,7 +76,7 @@ protected:
     Recorder &recorder;
     RegressionTester &regressionTester;
     RetroShell &retroShell;
-    Muxer &sid;
+    Muxer &muxer;
     VICII &vic;
 
     Drive *drive[2] = { &drive8, &drive9 };

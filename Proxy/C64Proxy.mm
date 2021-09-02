@@ -2121,7 +2121,7 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     port2 = [[ControlPortProxy alloc] initWith:&c64->port2];
     recorder = [[RecorderProxy alloc] initWith:&c64->recorder];
     retroShell = [[RetroShellProxy alloc] initWith:&c64->retroShell];
-    sid = [[SIDProxy alloc] initWith:&c64->sid];
+    sid = [[SIDProxy alloc] initWith:&c64->muxer];
     vic = [[VICProxy alloc] initWith:&c64->vic];
     watchpoints = [[GuardsProxy alloc] initWith:&c64->cpu.debugger.watchpoints];
 

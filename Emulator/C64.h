@@ -80,7 +80,7 @@ public:
     CIA1 cia1 = CIA1(*this);
     CIA2 cia2 = CIA2(*this);
     VICII vic = VICII(*this);
-    Muxer sid = Muxer(*this);
+    Muxer muxer = Muxer(*this);
 
     // Logic board
     PowerSupply supply = PowerSupply(*this);

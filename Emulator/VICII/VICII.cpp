@@ -329,7 +329,7 @@ VICII::setRevision(VICIIRevision revision)
         
         // Update other components
         isize newFrequency = VICII::getFrequency();
-        sid.setClockFrequency((u32)newFrequency);
+        muxer.setClockFrequency((u32)newFrequency);
         c64.updateClockFrequency(config.revision, config.speed);
     }
     
@@ -345,7 +345,7 @@ VICII::setSpeed(VICIISpeed speed)
         
         // Update other components
         isize newFrequency = VICII::getFrequency();
-        sid.setClockFrequency((u32)newFrequency);
+        muxer.setClockFrequency((u32)newFrequency);
         c64.updateClockFrequency(config.revision, config.speed);
     }
 }

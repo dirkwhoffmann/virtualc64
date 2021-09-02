@@ -287,17 +287,17 @@ Recorder::prepare()
      * required amout which would result in a buffer underflow.
      */
     if (vic.pal()) {
-        sid.setSampleRate(sampleRate * 50.125 / 50.0);
+        muxer.setSampleRate(sampleRate * 50.125 / 50.0);
         samplesPerFrame = 882;
     } else {
-        sid.setSampleRate(sampleRate * 59.827 / 60.0);
+        muxer.setSampleRate(sampleRate * 59.827 / 60.0);
         samplesPerFrame = 735;
     }
     
     // Start with a nearly empty buffer
-    sid.stream.lock();
-    while (sid.stream.count() > 1) sid.stream.read();
-    sid.stream.unlock();
+    muxer.stream.lock();
+    while (muxer.stream.count() > 1) muxer.stream.read();
+    muxer.stream.unlock();
 
     // Switch state and inform the GUI
     state = State::record;
@@ -341,21 +341,21 @@ Recorder::recordVideo()
 void
 Recorder::recordAudio()
 {
-    if (sid.stream.count() != samplesPerFrame) {
+    if (muxer.stream.count() != samplesPerFrame) {
         
-        trace(REC_DEBUG, "Samples: %zd\n", sid.stream.count());
-        assert(sid.stream.count() >= samplesPerFrame);
+        trace(REC_DEBUG, "Samples: %zd\n", muxer.stream.count());
+        assert(muxer.stream.count() >= samplesPerFrame);
     }
     
     for (isize i = 0; i < samplesPerFrame; i++) {
     
         // Feed the audio pipe
-        SamplePair pair = sid.stream.read();
+        SamplePair pair = muxer.stream.read();
         (void)write(audioPipe, &pair.left, sizeof(float));
         (void)write(audioPipe, &pair.right, sizeof(float));
     }
     
-    sid.stream.clear();
+    muxer.stream.clear();
 }
 
 void

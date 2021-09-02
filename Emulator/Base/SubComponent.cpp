@@ -32,7 +32,7 @@ parCable(ref.parCable),
 recorder(ref.recorder),
 regressionTester(ref.regressionTester),
 retroShell(ref.retroShell),
-sid(ref.sid),
+muxer(ref.muxer),
 vic(ref.vic)
 {
 };

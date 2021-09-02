@@ -619,7 +619,7 @@ RetroShell::exec <Token::monitor, Token::set, Token::saturation> (Arguments& arg
 template <> void
 RetroShell::exec <Token::sid, Token::config> (Arguments& argv, long param)
 {
-    dump(sid, dump::Config);
+    dump(muxer, dump::Config);
 }
 
 template <> void
@@ -679,7 +679,7 @@ RetroShell::exec <Token::sid, Token::set, Token::pan> (Arguments& argv, long par
 template <> void
 RetroShell::exec <Token::sid, Token::inspect, Token::sid> (Arguments& argv, long param)
 {
-    dump(sid, dump::State);
+    dump(muxer, dump::State);
 }
 
 template <> void
@@ -687,7 +687,7 @@ RetroShell::exec <Token::sid, Token::inspect, Token::state> (Arguments& argv, lo
 {
     auto value = util::parseNum(argv.front());
     if (value < 0 || value > 3) throw VC64Error(ERROR_OPT_INVARG, "0, 1, 2, or 3");
-    dump(sid.getSID(value), dump::State);
+    dump(muxer.getSID(value), dump::State);
 }
 
 template <> void
@@ -695,7 +695,7 @@ RetroShell::exec <Token::sid, Token::inspect, Token::registers> (Arguments& argv
 {
     auto value = util::parseNum(argv.front());
     if (value < 0 || value > 3) throw VC64Error(ERROR_OPT_INVARG, "0, 1, 2, or 3");
-    dump(sid.getSID(value), dump::Registers);
+    dump(muxer.getSID(value), dump::Registers);
 }
 
 

@@ -396,7 +396,7 @@ C64Memory::peekIO(u16 addr)
         case 0x6: // SID
         case 0x7: // SID
             
-            return sid.peek(addr);
+            return muxer.peek(addr);
             
         case 0x8: // Color RAM
         case 0x9: // Color RAM
@@ -489,7 +489,7 @@ C64Memory::spypeekIO(u16 addr) const
         case 0x6: // SID
         case 0x7: // SID
             
-            return sid.spypeek(addr & 0x001F);
+            return muxer.spypeek(addr & 0x001F);
             
         case 0x8: // Color Ram
         case 0x9: // Color Ram
@@ -629,7 +629,7 @@ C64Memory::pokeIO(u16 addr, u8 value)
         case 0x6: // SID
         case 0x7: // SID
             
-            sid.poke(addr, value);
+            muxer.poke(addr, value);
             
             // Check the error register (debugcart feature)
             if (addr == 0xD7FF) regressionTester.debugcart(value);

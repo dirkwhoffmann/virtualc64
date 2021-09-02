@@ -33,7 +33,7 @@ C64::C64()
         &cpu,
         &cia1, &cia2,
         &vic,
-        &sid,
+        &muxer,
         &supply,
         &port1,
         &port2,
@@ -146,7 +146,7 @@ C64::getConfigItem(Option option) const
         case OPT_SID_SAMPLING:
         case OPT_AUDVOLL:
         case OPT_AUDVOLR:
-            return sid.getConfigItem(option);
+            return muxer.getConfigItem(option);
 
         case OPT_RAM_PATTERN:
             return mem.getConfigItem(option);
@@ -174,7 +174,7 @@ C64::getConfigItem(Option option, long id) const
         case OPT_AUDVOL:
             
             assert(id >= 0 && id <= 3);
-            return sid.getConfigItem(option, id);
+            return muxer.getConfigItem(option, id);
 
         case OPT_DRV_CONNECT:
         case OPT_DRV_AUTO_CONFIG:
@@ -303,10 +303,10 @@ C64::configure(Option option, i64 value)
         case OPT_SID_ENABLE:
         case OPT_SID_ADDRESS:
 
-            sid.setConfigItem(option, 0, value);
-            sid.setConfigItem(option, 1, value);
-            sid.setConfigItem(option, 2, value);
-            sid.setConfigItem(option, 3, value);
+            muxer.setConfigItem(option, 0, value);
+            muxer.setConfigItem(option, 1, value);
+            muxer.setConfigItem(option, 2, value);
+            muxer.setConfigItem(option, 3, value);
 
         case OPT_SID_REVISION:
         case OPT_SID_FILTER:
@@ -318,7 +318,7 @@ C64::configure(Option option, i64 value)
         case OPT_AUDVOLL:
         case OPT_AUDVOLR:
                 
-            sid.setConfigItem(option, value);
+            muxer.setConfigItem(option, value);
             break;
             
         case OPT_RAM_PATTERN:
@@ -432,7 +432,7 @@ C64::configure(Option option, long id, i64 value)
         case OPT_AUDVOLL:
         case OPT_AUDVOLR:
                 
-            sid.setConfigItem(option, id, value);
+            muxer.setConfigItem(option, id, value);
             break;
             
         case OPT_DRV_AUTO_CONFIG:
@@ -768,7 +768,7 @@ C64::inspect()
         case INSPECTION_MEM: mem.inspect(); break;
         case INSPECTION_CIA: cia1.inspect(); cia2.inspect(); break;
         case INSPECTION_VIC: vic.inspect(); break;
-        case INSPECTION_SID: sid.inspect(); break;
+        case INSPECTION_SID: muxer.inspect(); break;
             
         default:
             break;
@@ -949,7 +949,7 @@ C64::endFrame()
     vic.endFrame();
         
     // Execute remaining SID cycles
-    sid.executeUntil(cpu.cycle);
+    muxer.executeUntil(cpu.cycle);
     
     // Execute other components
     iec.execute();
