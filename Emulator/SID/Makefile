@@ -23,4 +23,4 @@ clean:
 
 %.o: %.cpp
 	@echo "Compiling $<"
-	@$(MYCC) $(MYFLAGS) -c -o $@ $< $(CFLAGS)
+	@$(CC) $(CCFLAGS) $(CPPFLAGS) -c -o $@ $< $(CFLAGS)

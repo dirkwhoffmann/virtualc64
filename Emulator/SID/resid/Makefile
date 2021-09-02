@@ -12,4 +12,4 @@ clean:
 
 %.o: %.cc $(DEPS)
 	@echo "Compiling $<"
-	@$(MYCC) $(MYFLAGS) -c -o $@ $<
+	@$(CC) $(CCFLAGS) $(CPPFLAGS) -c -o $@ $<
