@@ -262,6 +262,7 @@ Recorder::vsyncHandler()
             case State::prepare: prepare(); break;
             case State::record: record(); break;
             case State::finalize: finalize(); break;
+            case State::abort: abort(); break;
         }
     }
 }
@@ -335,8 +336,10 @@ Recorder::recordVideo()
     }
     
     // Feed the video pipe
-    if (write(videoPipe, data, width * height) != width * height) {
-        warn("Failed to write to the video pipe\n");
+    isize written = write(videoPipe, data, width * height);
+    
+    if (written != width * height || FORCE_RECORDING_ERROR) {
+        state = State::abort;
     }
 }
 
@@ -351,15 +354,15 @@ Recorder::recordAudio()
     
     for (isize i = 0; i < samplesPerFrame; i++) {
     
-        usize written = 0;
+        isize written = 0;
         
         // Feed the audio pipe
         SamplePair pair = muxer.stream.read();
         written += write(audioPipe, &pair.left, sizeof(float));
         written += write(audioPipe, &pair.right, sizeof(float));
         
-        if (written != 2 * sizeof(float)) {
-            warn("Failed to write to audio pipe\n");
+        if (written != 2 * sizeof(float) || FORCE_RECORDING_ERROR) {
+            state = State::abort;
         }
     }
     
@@ -387,4 +390,11 @@ Recorder::finalize()
     state = State::wait;
     recStop = util::Time::now();
     msgQueue.put(MSG_RECORDING_STOPPED);
+}
+
+void
+Recorder::abort()
+{
+    finalize();
+    msgQueue.put(MSG_RECORDING_ABORTED);
 }

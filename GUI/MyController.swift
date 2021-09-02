@@ -511,6 +511,10 @@ extension MyController {
             window?.backgroundColor = .windowBackgroundColor
             refreshStatusBar()
 
+        case .RECORDING_ABORTED:
+            refreshStatusBar()
+            VC64Error.recordingAborted()
+
         case .CLOSE_CONSOLE:
             renderer.console.close(delay: 0.25)
             

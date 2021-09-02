@@ -76,15 +76,10 @@ class VC64Error: Error {
         warning("\"\(url.lastPathComponent)\" can't be opened.", async: async)
     }
     
-    /*
-    static func unsupportedCrtAlert(type: Int, async: Bool = false) {
-        
-        let crtType = CartridgeType(rawValue: type)
-        let name = crtType?.description ?? "Unknown"
-        
-        warning("This cartridge cannot be attached.",
-                "The emulator does not support cartridges of type " +
-                    "\(type) " + "(\(name)) yet.", async: async)
+    static func recordingAborted(async: Bool = false) {
+                
+        warning("Screen recording has been aborted.",
+                "Failed to write to the FFmpeg pipes.",
+                async: async, icon: "mp4")
     }
-    */
 }

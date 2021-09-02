@@ -124,6 +124,7 @@ static const int FORCE_CRT_UNKNOWN      = 0;
 static const int FORCE_CRT_UNSUPPORTED  = 0;
 static const int FORCE_SNAPSHOT_TOO_OLD = 0;
 static const int FORCE_SNAPSHOT_TOO_NEW = 0;
+static const int FORCE_RECORDING_ERROR  = 0;
 
 
 #ifdef RELEASEBUILD
