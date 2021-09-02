@@ -34,10 +34,7 @@
 #include "Constants.h"
 
 class FastSID : public SubComponent {
-        
-    // Reference to the SID bridge
-    Muxer &bridge;
-    
+
     // Number of this SID (0 = primary SID)
     int nr;
 
@@ -108,7 +105,7 @@ private:
     
 public:
         
-	FastSID(C64 &ref, Muxer &bridgeref, int n);
+	FastSID(C64 &ref, int n);
     
 private:
     

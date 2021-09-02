@@ -29,10 +29,7 @@
  */
 
 class ReSID : public SubComponent {
-        
-    // Reference to the SID bridge
-    Muxer &bridge;
-    
+
     // Number of this SID (0 = primary SID)
     int nr;
 
@@ -70,7 +67,7 @@ private:
     
 public:
     
-	ReSID(C64 &ref, Muxer &bridgeref, int n);
+	ReSID(C64 &ref, int n);
 	~ReSID();
     
     

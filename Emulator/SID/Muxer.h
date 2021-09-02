@@ -57,18 +57,18 @@ class Muxer : public SubComponent {
             
     FastSID fastsid[4] = {
         
-        FastSID(c64, *this, 0),
-        FastSID(c64, *this, 1),
-        FastSID(c64, *this, 2),
-        FastSID(c64, *this, 3)
+        FastSID(c64, 0),
+        FastSID(c64, 1),
+        FastSID(c64, 2),
+        FastSID(c64, 3)
     };
     
     ReSID resid[4] = {
         
-        ReSID(c64, *this, 0),
-        ReSID(c64, *this, 1),
-        ReSID(c64, *this, 2),
-        ReSID(c64, *this, 3)
+        ReSID(c64, 0),
+        ReSID(c64, 1),
+        ReSID(c64, 2),
+        ReSID(c64, 3)
     };
         
 private:

@@ -35,7 +35,7 @@
 
 #include <cmath>
 
-FastSID::FastSID(C64 &ref, Muxer &bridgeref, int n) : SubComponent(ref), bridge(bridgeref), nr(n)
+FastSID::FastSID(C64 &ref, int n) : SubComponent(ref), nr(n)
 {    
     subComponents = std::vector<C64Component *> {
         
@@ -423,7 +423,7 @@ FastSID::executeCycles(isize numCycles, SampleStream &stream)
 i64
 FastSID::executeCycles(isize numCycles)
 {
-    return executeCycles(numCycles, bridge.sidStream[nr]);
+    return executeCycles(numCycles, muxer.sidStream[nr]);
 }
 
 void
