@@ -93,7 +93,6 @@ enum_long(MSG_TYPE)
     MSG_VC1530_COUNTER,
 
     // Peripherals (Expansion port)
-    MSG_CRT_UNSUPPORTED,
     MSG_CRT_ATTACHED,
     MSG_CRT_DETACHED,
     MSG_CART_SWITCH,
@@ -127,10 +126,9 @@ typedef MSG_TYPE MsgType;
 #ifdef __cplusplus
 struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < MSG_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return MSG_DMA_DEBUG_OFF; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
 
     static const char *prefix() { return "MSG"; }
     static const char *key(MsgType value)
@@ -200,7 +198,6 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_VC1530_MOTOR:         return "VC1530_MOTOR";
             case MSG_VC1530_COUNTER:       return "VC1530_COUNTER";
                 
-            case MSG_CRT_UNSUPPORTED:      return "CRT_UNSUPPORTED";
             case MSG_CRT_ATTACHED:         return "CRT_ATTACHED";
             case MSG_CRT_DETACHED:         return "CRT_DETACHED";
             case MSG_CART_SWITCH:          return "CART_SWITCH";

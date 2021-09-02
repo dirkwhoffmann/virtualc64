@@ -19,7 +19,7 @@ string
 lowercased(const string& s)
 {
     string result;
-    for (auto c : s) { result += tolower(c); }
+    for (auto c : s) { result += (char)std::tolower(c); }
     return result;
 }
 
@@ -27,7 +27,7 @@ string
 uppercased(const string& s)
 {
     string result;
-    for (auto c : s) { result += toupper(c); }
+    for (auto c : s) { result += (char)std::toupper(c); }
     return result;
 }
 
@@ -186,6 +186,7 @@ matchingStreamHeader(std::istream &is, const u8 *header, isize len, isize offset
     is.seekg(offset, std::ios::beg);
     
     for (isize i = 0; i < len; i++) {
+        
         int c = is.get();
         if (c != (int)header[i]) {
             is.seekg(0, std::ios::beg);
@@ -194,6 +195,12 @@ matchingStreamHeader(std::istream &is, const u8 *header, isize len, isize offset
     }
     is.seekg(0, std::ios::beg);
     return true;
+}
+
+bool
+matchingStreamHeader(std::istream &is, const string &header, isize offset)
+{
+    return matchingStreamHeader(is, (u8 *)header.c_str(), header.length(), offset);
 }
 
 bool
@@ -250,6 +257,7 @@ void
 sprint8d(char *s, u8 value)
 {
     for (int i = 2; i >= 0; i--) {
+        
         u8 digit = value % 10;
         s[i] = '0' + digit;
         value /= 10;
@@ -261,6 +269,7 @@ void
 sprint8x(char *s, u8 value)
 {
     for (int i = 1; i >= 0; i--) {
+        
         u8 digit = value % 16;
         s[i] = (digit <= 9) ? ('0' + digit) : ('A' + digit - 10);
         value /= 16;
@@ -272,6 +281,7 @@ void
 sprint8b(char *s, u8 value)
 {
     for (int i = 7; i >= 0; i--) {
+        
         s[i] = (value & 0x01) ? '1' : '0';
         value >>= 1;
     }
@@ -282,6 +292,7 @@ void
 sprint16d(char *s, u16 value)
 {
     for (int i = 4; i >= 0; i--) {
+        
         u8 digit = value % 10;
         s[i] = '0' + digit;
         value /= 10;
@@ -293,6 +304,7 @@ void
 sprint16x(char *s, u16 value)
 {
     for (int i = 3; i >= 0; i--) {
+        
         u8 digit = value % 16;
         s[i] = (digit <= 9) ? ('0' + digit) : ('A' + digit - 10);
         value /= 16;
@@ -304,6 +316,7 @@ void
 sprint16b(char *s, u16 value)
 {
     for (int i = 15; i >= 0; i--) {
+        
         s[i] = (value & 0x01) ? '1' : '0';
         value >>= 1;
     }

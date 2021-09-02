@@ -37,9 +37,17 @@ public:
     // Class methods
     //
     
-    static bool isCompatiblePath(const string &name);
-    static bool isCompatibleStream(std::istream &stream);
+    static bool isCompatible(const string &name);
+    static bool isCompatible(std::istream &stream);
         
+    
+    //
+    // Initializing
+    //
+    
+    CRTFile(const string &path) throws { init(path); }
+    CRTFile(const u8 *buf, isize len) throws { init(buf, len); }
+    
     
     //
     // Methods from C64Object
@@ -52,6 +60,8 @@ public:
     // Methods from AnyFile
     //
     
+    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_CRT; }
     PETName<16> getName() const override;
     void readFromStream(std::istream &stream) throws override;
@@ -83,7 +93,7 @@ public:
     //
     
     // Returns how many chips are contained in this cartridge
-    u8 chipCount() const { return numberOfChips; }
+    isize chipCount() const { return numberOfChips; }
     
     // Returns where the data of a certain chip can be found
     u8 *chipData(isize nr) const { return chips[nr]+0x10; }

@@ -19,22 +19,20 @@
 
 #define synchronized \
 for (util::AutoMutex _am(mutex); _am.active; _am.active = false)
-
-namespace dump {
-enum Category : usize {
     
-    Config    = 0b00000001,
-    State     = 0b00000010,
-    Registers = 0b00000100,
-    Events    = 0b00001000,
-    Checksums = 0b00010000,
-    Dma       = 0b00100000,
-    BankMap   = 0b01000000,
-    Disk      = 0b10000000
+struct NoCopy
+{
+    NoCopy() { };
+    NoCopy(NoCopy const&) = delete;
 };
-}
-    
-class C64Component : public C64Object {
+
+struct NoAssign
+{
+    NoAssign() { };
+    NoAssign& operator=(NoAssign const&) = delete;
+};
+
+class C64Component : public C64Object, NoCopy, NoAssign {
         
 protected:
     
@@ -45,7 +43,7 @@ protected:
      * to prevent multiple threads to enter the same code block. It mimics the
      * behaviour of the well known Java construct 'synchronized(this) { }'.
      */
-    util::ReentrantMutex mutex;
+    mutable util::ReentrantMutex mutex;
     
 
     //
@@ -92,34 +90,23 @@ public:
      * To carry out inspections while the emulator is running, set up an
      * inspection target via C64::setInspectionTarget().
      */
-    void inspect();
-    virtual void _inspect() { }
+    void inspect() const;
+    virtual void _inspect() const { }
     
     /* Base method for building the class specific getInfo() methods. When the
      * emulator is running, the result of the most recent inspection is
      * returned. If the emulator isn't running, the function first updates the
      * cached values in order to return up-to-date results.
      */
-    template<class T> T getInfo(T &cachedValues) {
+    template<class T> T getInfo(T &cachedValues) const {
         
         if (!isRunning()) inspect();
         
-        T result;
-        synchronized { result = cachedValues; }
-        return result;
+        synchronized { return cachedValues; }
+        unreachable;
     }
+        
     
-    /* Prints debug information about this component. The additional 'flags'
-     * parameter is a bit field which can be used to limit the displayed
-     * information to certain categories.
-     */
-    void dump(dump::Category category, std::ostream& ss) const;
-    void dump(dump::Category category) const;
-    void dump(std::ostream& ss) const;
-    void dump() const;
-    virtual void _dump(dump::Category category, std::ostream& ss) const { };
-    
- 
     //
     // Serializing
     //

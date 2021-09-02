@@ -7,9 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-/* Configuration
- *
- * This class stores all items that are specific to an individual emulator
+/* This class stores all items that are specific to an individual emulator
  * instance. Each instance keeps its own object of this class inside the
  * document controller.
  *

@@ -78,7 +78,9 @@ public:
     VIA2 via2 = VIA2(c64, *this);
     PiaDolphin pia = PiaDolphin(c64, *this);
     
-    Disk disk = Disk(c64);
+    // The currently inserted disk (if any)
+    std::unique_ptr<Disk> disk;
+    // Disk disk = Disk(c64);
     
 
     //
@@ -86,10 +88,7 @@ public:
     //
     
     // A disk waiting to be inserted
-    class Disk *diskToInsert = nullptr;
-
-    // The write protection status of the disk to insert
-    bool diskToInsertWP = false;
+    std::unique_ptr<Disk> diskToInsert;
     
     // State change delay counter (checked in the vsync handler)
     i64 diskChangeCounter = 0;
@@ -179,7 +178,7 @@ public:
      * logic board that breaks down the 16 Mhz base frequency. This mechanism
      * is used to slow down the read/write process on inner tracks.
      */
-    u8 zone = 0;
+    isize zone = 0;
     
     /* The 74LS164 serial to parallel shift register. In read mode, this
      * register is fed by the drive head with data.
@@ -226,48 +225,28 @@ public:
 public:
     
     Drive(DriveID id, C64 &ref);
+    
+    
+    //
+    // Methods from C64Object
+    //
+
+private:
+    
     const char *getDescription() const override;
+    void _dump(dump::Category category, std::ostream& os) const override;
+
+    
+    //
+    // Methods from C64Component
+    //
 
 private:
 
     void _initialize() override;
     void _reset(bool hard) override;
+    void _run() override;
 
-    
-    //
-    // Configuring
-    //
-    
-public:
-        
-    static DriveConfig getDefaultConfig();
-    const DriveConfig &getConfig() const { return config; }
-    void resetConfig() override;
-
-    i64 getConfigItem(Option option) const;
-    void setConfigItem(Option option, i64 value);
-
-    // Updates the current configuration according to the installed ROM
-    void autoConfigure();
-    
-    bool hasParCable() { return config.parCable != PAR_CABLE_NONE; }
-    ParCableType getParCableType() const { return config.parCable; }
-    
-    //
-    // Analyzing
-    //
-    
-private:
-    
-    void _dump(dump::Category category, std::ostream& os) const override;
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -314,14 +293,30 @@ private:
         << byteReady;
     }
     
-    isize _size() override { COMPUTE_SNAPSHOT_SIZE }
-    isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+    isize _size() override;
+    isize _load(const u8 *buffer) override;
+    isize _save(u8 *buffer) override;
+
     
-private:
+    //
+    // Configuring
+    //
     
-    void _run() override;
+public:
+        
+    static DriveConfig getDefaultConfig();
+    const DriveConfig &getConfig() const { return config; }
+    void resetConfig() override;
+
+    i64 getConfigItem(Option option) const;
+    void setConfigItem(Option option, i64 value);
+
+    // Updates the current configuration according to the installed ROM
+    void autoConfigure();
     
+    bool hasParCable() { return config.parCable != PAR_CABLE_NONE; }
+    ParCableType getParCableType() const { return config.parCable; }
+
     
     //
     // Working with the drive
@@ -364,10 +359,10 @@ public:
     bool hasDisk() const { return insertionStatus == DISK_FULLY_INSERTED; }
     bool hasPartiallyRemovedDisk() const {
         return insertionStatus == DISK_PARTIALLY_INSERTED || insertionStatus == DISK_PARTIALLY_EJECTED; }
-    bool hasWriteProtectedDisk() const { return hasDisk() && disk.isWriteProtected(); }
+    bool hasWriteProtectedDisk() const { return hasDisk() && disk->isWriteProtected(); }
 
     // Gets or sets the modification status
-    bool hasModifiedDisk() const { return hasDisk() && disk.isModified(); }
+    bool hasModifiedDisk() const { return hasDisk() && disk->isModified(); }
     void setModifiedDisk(bool value);
  
     /* Returns the current state of the write protection barrier. If the light
@@ -381,7 +376,7 @@ public:
         return
         (cpu.cycle < 1500000)
         || hasPartiallyRemovedDisk()
-        || disk.isWriteProtected();
+        || hasWriteProtectedDisk();
     }
 
     /* Requests the emulator to inserts or eject a disk. Background: Many C64
@@ -393,7 +388,7 @@ public:
      * and pushing the new disk halfway in before it is inserted completely.
      */
     void insertDisk(const string &path, bool wp) throws;
-    void insertDisk(Disk *otherDisk, bool wp);
+    void insertDisk(std::unique_ptr<Disk> disk);
     void insertNewDisk(DOSType fstype);
     void insertNewDisk(DOSType fstype, PETName<16> name);
     void insertD64(const D64File &d64, bool wp);
@@ -431,7 +426,7 @@ public:
         
     // Returns the number of bits in a halftrack
     u16 sizeOfHalftrack(Halftrack ht) {
-        return hasDisk() ? disk.lengthOfHalftrack(ht) : 0; }
+        return hasDisk() ? disk->lengthOfHalftrack(ht) : 0; }
     u16 sizeOfCurrentHalftrack() { return sizeOfHalftrack(halftrack); }
 
     // Returns the position of the drive head inside the current track
@@ -460,16 +455,16 @@ public:
     bool getZone() const { return zone; }
 
     // Sets the current track zone (0 to 3)
-    void setZone(u8 value);
+    void setZone(isize value);
 
     // Reads a single bit from the disk head (result is 0 or 1)
-    u8 readBitFromHead() const { return disk.readBitFromHalftrack(halftrack, offset); }
+    u8 readBitFromHead() const;
     
     // Writes a single bit to the disk head
-    void writeBitToHead(u8 bit) { disk.writeBitToHalftrack(halftrack, offset, bit); }
+    void writeBitToHead(u8 bit);
     
     // Advances drive head position by one bit
-    void rotateDisk() { if (++offset >= disk.lengthOfHalftrack(halftrack)) offset = 0; }
+    void rotateDisk();
 
     // Performs periodic actions
     void vsyncHandler();

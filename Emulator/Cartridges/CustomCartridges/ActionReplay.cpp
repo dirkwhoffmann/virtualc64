@@ -29,8 +29,7 @@ ActionReplay3::peek(u16 addr)
         return packet[bank()]->peek(addr - 0xA000);
     }
     
-    assert(false);
-    return 0;
+    fatalError;
 }
 
 u8
@@ -73,15 +72,16 @@ ActionReplay3::pressButton(isize nr)
                 cpu.pullDownNmiLine(INTSRC_EXP);
                 cpu.pullDownIrqLine(INTSRC_EXP);
                 
-                // By setting the control register to 0, exrom/game is set to 1/0
-                // which activates ultimax mode. This mode is reset later, in the
-                // ActionReplay's interrupt handler.
+                /* By setting the control register to 0, exrom/game is set to
+                 * 1/0 which activates ultimax mode. This mode is reset later,
+                 * in the ActionReplay's interrupt handler.
+                 */
                 setControlReg(0);
                 break;
                 
             case 2: // Reset
                 
-                resetWithoutDeletingRam();
+                c64.softReset();
                 break;
         }
     }
@@ -237,7 +237,7 @@ ActionReplay::pressButton(isize nr)
                 
             case 2: // Reset
                 
-                resetWithoutDeletingRam();
+                c64.softReset();
                 break;
         }
     }

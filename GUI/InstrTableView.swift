@@ -16,6 +16,7 @@ class InstrTableView: NSTableView {
     var breakpoints: GuardsProxy { return c64.breakpoints }
 
     enum BreakpointType {
+        
         case none
         case enabled
         case disabled
@@ -35,8 +36,9 @@ class InstrTableView: NSTableView {
     // Number format
     var hex = true
     
-    // Indicates if a certain row should be marked with a watchpoint symbol
-    var watchpointRow = -1
+    // Saved program counters
+    var breakpointPC = -1
+    var watchpointPC = -1
 
     override func awakeFromNib() {
         
@@ -183,7 +185,7 @@ extension InstrTableView: NSTableViewDataSource {
         
         switch tableColumn?.identifier.rawValue {
             
-        case "break" where row == watchpointRow:
+        case "break" where addrInRow[row] == watchpointPC:
             return "⚠️"
         case "break" where bpInRow[row] == .enabled:
             return "\u{26D4}" // "⛔" ("\u{1F534}" // "🔴")

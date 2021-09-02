@@ -10,12 +10,11 @@
 #pragma once
 
 #include "Aliases.h"
-#include <list>
 #include <vector>
 
 class RetroShell;
 
-typedef std::list<string> Arguments;
+typedef std::vector<string> Arguments;
 
 struct Command {
     
@@ -32,10 +31,9 @@ struct Command {
     string info;
     
     // The sub commands of this command
-    std::list<Command> args;
+    std::vector<Command> args;
     
     // Command handler
-    // std::function <void(Arguments&, long)> action;
     void (RetroShell::*action)(Arguments&, long) = nullptr;
     
     // Number of additional arguments expected by the command handler
@@ -48,40 +46,32 @@ struct Command {
     bool hidden = false;
         
     // Creates a new node in the command tree
-    Command *add(std::vector<string> tokens,
-                 const string &a1,
-                 const string &help,
-                 void (RetroShell::*action)(Arguments&, long) = nullptr,
-                 isize numArgs = 0, long param = 0);
-
-    // Creates multiple nodes in the command tree
-    Command *add(std::vector<string> firstTokens,
-                 std::vector<string> tokens,
-                 const string &a1,
-                 const string &help,
-                 void (RetroShell::*action)(Arguments&, long) = nullptr,
-                 isize numArgs = 0, long param = 0);
-
+    void add(const std::vector<string> tokens,
+             const string &type,
+             const string &help,
+             void (RetroShell::*action)(Arguments&, long) = nullptr,
+             isize numArgs = 0, long param = 0);
+    
     // Removes a registered command
     void remove(const string& token);
     
     // Seeks a command object inside the command object tree
     Command *seek(const string& token);
-    Command *seek(Arguments argv);
+    Command *seek(const std::vector<string> &tokens);
     
     // Collects the type descriptions in the args vector
-    std::vector<string> types();
+    std::vector<string> types() const;
     
     // Filters the argument list
-    std::vector<Command *> filterType(const string& type);
-    std::vector<Command *> filterPrefix(const string& prefix);
+    std::vector<const Command *> filterType(const string& type) const;
+    std::vector<const Command *> filterPrefix(const string& prefix) const;
 
     // Automatically completes a partial token string
     string autoComplete(const string& token);
     
     // Returns the full command string for this command
-    string tokens();
+    string tokens() const;
     
     // Returns a syntax string for this command
-    string usage();
+    string usage() const;
 };

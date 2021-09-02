@@ -37,6 +37,7 @@ enum_long(ERROR_CODE)
     ERROR_ROM_BASIC_MISSING,
     ERROR_ROM_CHAR_MISSING,
     ERROR_ROM_KERNAL_MISSING,
+    ERROR_ROM_DRIVE_MISSING,
     ERROR_ROM_MEGA65_MISMATCH,
     
     // Snapshots
@@ -47,6 +48,7 @@ enum_long(ERROR_CODE)
     ERROR_DRV_UNCONNECTED,
     
     // Cartridges
+    ERROR_CRT_UNKNOWN,
     ERROR_CRT_UNSUPPORTED,
     ERROR_CRT_TOO_MANY_PACKETS,
     ERROR_CRT_CORRUPTED_PACKET,
@@ -69,11 +71,10 @@ typedef ERROR_CODE ErrorCode;
 #ifdef __cplusplus
 struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < ERROR_COUNT;
-    }
-    
+    static long min() { return 0; }
+    static long max() { return ERROR_FS_EXPECTED_MAX; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
+        
     static const char *prefix() { return "ERROR"; }
     static const char *key(ErrorCode value)
     {
@@ -98,6 +99,7 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
             case ERROR_ROM_BASIC_MISSING:    return "ROM_BASIC_MISSING";
             case ERROR_ROM_CHAR_MISSING:     return "ROM_CHAR_MISSING";
             case ERROR_ROM_KERNAL_MISSING:   return "ROM_KERNAL_MISSING";
+            case ERROR_ROM_DRIVE_MISSING:    return "ROM_DRIVE_MISSING";
             case ERROR_ROM_MEGA65_MISMATCH:  return "ROM_MEGA65_MISMATCH";
                 
             case ERROR_SNP_TOO_OLD:          return "SNP_TOO_OLD";
@@ -105,6 +107,7 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
 
             case ERROR_DRV_UNCONNECTED:      return "DRV_UNCONNECTED";
 
+            case ERROR_CRT_UNKNOWN:          return "ERROR_CRT_UNKNOWN";
             case ERROR_CRT_UNSUPPORTED:      return "CRT_UNSUPPORTED";
             case ERROR_CRT_TOO_MANY_PACKETS: return "CRT_TOO_MANY_PACKETS";
             case ERROR_CRT_CORRUPTED_PACKET: return "CRT_CORRUPTED_PACKET";

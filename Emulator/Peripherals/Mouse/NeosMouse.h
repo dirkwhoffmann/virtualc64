@@ -54,18 +54,24 @@ class NeosMouse : public SubComponent {
 public:
     
     NeosMouse(C64 &ref) : SubComponent(ref) { }
+    
+    
+    //
+    // Methods from C64Object
+    //
+
+private:
+    
     const char *getDescription() const override { return "NeosMouse"; }
+
+    
+    //
+    // Methods from C64Component
+    //
 
 private:
     
     void _reset(bool hard) override;
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
     
     template <class T>
     void applyToPersistentItems(T& worker)

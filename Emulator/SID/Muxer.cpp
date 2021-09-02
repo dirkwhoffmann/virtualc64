@@ -62,7 +62,7 @@ Muxer::getDefaultConfig()
     SIDConfig defaults;
     
     defaults.revision = MOS_8580;
-    defaults.powerSave = true;
+    defaults.powerSave = false;
     defaults.enabled = 1;
     defaults.address[0] = 0xD400;
     defaults.address[1] = 0xD420;
@@ -130,8 +130,7 @@ Muxer::getConfigItem(Option option) const
             return config.volR;
             
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 
@@ -154,8 +153,7 @@ Muxer::getConfigItem(Option option, long id) const
             return config.pan[id];
                         
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 
@@ -229,8 +227,8 @@ Muxer::setConfigItem(Option option, i64 value)
             
         case OPT_AUDVOLL:
             
-            config.volL = std::clamp((int)value, 0, 100);
-            volL.set(pow((double)config.volL / 50, 1.4));
+            config.volL = std::clamp(value, 0LL, 100LL);
+            volL.set(powf((float)config.volL / 50, 1.4f));
             
             if (wasMuted != isMuted()) {
                 msgQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
@@ -239,8 +237,8 @@ Muxer::setConfigItem(Option option, i64 value)
             
         case OPT_AUDVOLR:
 
-            config.volR = std::clamp((int)value, 0, 100);
-            volR.set(pow((double)config.volR / 50, 1.4));
+            config.volR = std::clamp(value, 0LL, 100LL);
+            volR.set(powf((float)config.volR / 50, 1.4f));
 
             if (wasMuted != isMuted()) {
                 msgQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
@@ -248,7 +246,7 @@ Muxer::setConfigItem(Option option, i64 value)
             return;
             
         default:
-            assert(false);
+            fatalError;
     }
 }
 
@@ -294,9 +292,7 @@ Muxer::setConfigItem(Option option, long id, i64 value)
             }
 
             if (value < 0xD400 || value > 0xD7E0 || (value & 0x1F)) {
-                warn("Invalid SID address: %llx\n", value);
-                warn("Valid values: D400, D420, ... D7E0\n");
-                return;
+                throw VC64Error(ERROR_OPT_INVARG, "D400, D420 ... D7E0");
             }
 
             if (config.address[id] == value) {
@@ -305,7 +301,7 @@ Muxer::setConfigItem(Option option, long id, i64 value)
             
             suspended {
                 
-                config.address[id] = value;
+                config.address[id] = (u16)value;
                 clearSampleBuffer(id);
             }
             return;
@@ -314,10 +310,10 @@ Muxer::setConfigItem(Option option, long id, i64 value)
             
             assert(id >= 0 && id <= 3);
 
-            config.vol[id] = std::clamp((int)value, 0, 100);
-            vol[id] = pow((double)config.vol[id] / 100, 1.4) * 0.000025;
+            config.vol[id] = std::clamp(value, 0LL, 100LL);
+            vol[id] = powf((float)config.vol[id] / 100, 1.4f) * 0.000025f;
 #ifdef __EMSCRIPTEN__
-            vol[id] *= 0.15;
+            vol[id] *= 0.15f;
 #endif
             if (wasMuted != isMuted()) {
                 msgQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
@@ -328,21 +324,16 @@ Muxer::setConfigItem(Option option, long id, i64 value)
         case OPT_AUDPAN:
             
             assert(id >= 0 && id <= 3);
-            if (value < 0 || value > 200) {
-                warn("Invalid pan: %lld\n", value);
-                warn("Valid values: 0 ... 200\n");
-                return;
-            }
 
-            config.pan[id] = value;
+            config.pan[id] = std::clamp(value, 0LL, 200LL);
             
-            if (value <= 50) pan[id] = (50 + value) / 100.0;
-            else if (value <= 150) pan[id] = (150 - value) / 100.0;
-            else if (value <= 200) pan[id] = (value - 150) / 100.0;
+            if (value <= 50) pan[id] = (50 + value) / 100.0f;
+            else if (value <= 150) pan[id] = (150 - value) / 100.0f;
+            else if (value <= 200) pan[id] = (value - 150) / 100.0f;
             return;
 
         default:
-            assert(false);
+            fatalError;
     }
 }
 
@@ -452,7 +443,6 @@ Muxer::_warpOn()
 void
 Muxer::_warpOff()
 {
-    printf("Warp off\n");
     rampUp();
     clear();
 }
@@ -506,7 +496,9 @@ Muxer::_dump(dump::Category category, std::ostream& os, isize nr) const
             
         case SIDENGINE_FASTSID: fastsid[nr].dump(category, os); break;
         case SIDENGINE_RESID:   resid[nr].dump(category, os); break;
-        default: assert(false);
+        
+        default:
+            fatalError;
     }
 }
 
@@ -568,7 +560,9 @@ Muxer::getInfo(isize nr)
             
         case SIDENGINE_FASTSID: info = fastsid[nr].getInfo(); break;
         case SIDENGINE_RESID:   info = resid[nr].getInfo(); break;
-        default: assert(false);
+            
+        default:
+            fatalError;
     }
     
     info.potX = port1.mouse.readPotX() & port2.mouse.readPotX();
@@ -580,28 +574,30 @@ Muxer::getInfo(isize nr)
 VoiceInfo
 Muxer::getVoiceInfo(isize nr, isize voice)
 {
-    assert(nr < 4);
-    
-    VoiceInfo info;
-    
+    assert(nr >= 0 && nr <= 3);
+        
     switch (config.engine) {
             
-        case SIDENGINE_FASTSID: info = fastsid[nr].getVoiceInfo(voice); break;
-        case SIDENGINE_RESID:   info = resid[nr].getVoiceInfo(voice); break;
-        default: assert(false);
+        case SIDENGINE_FASTSID: return fastsid[nr].getVoiceInfo(voice);
+        case SIDENGINE_RESID:   return resid[nr].getVoiceInfo(voice);
+        
+        default:
+            fatalError;
     }
-    
-    return info;
 }
 
 C64Component &
 Muxer::getSID(isize nr)
 {
     assert(nr >= 0 && nr <= 3);
-    if (config.engine == SIDENGINE_FASTSID) {
-        return fastsid[nr];
-    } else {
-        return resid[nr];
+    
+    switch (config.engine) {
+            
+        case SIDENGINE_FASTSID: return fastsid[nr];
+        case SIDENGINE_RESID:   return resid[nr];
+        
+        default:
+            fatalError;
     }
 }
 
@@ -680,13 +676,13 @@ Muxer::peek(u16 addr)
     }
     
     switch (config.engine) {
+            
         case SIDENGINE_FASTSID: return fastsid[sidNr].peek(addr);
         case SIDENGINE_RESID:   return resid[sidNr].peek(addr);
-        default: assert(false);
+            
+        default:
+            fatalError;
     }
-    
-    assert(false);
-    return 0;
 }
 
 u8
@@ -765,14 +761,8 @@ Muxer::executeUntil(Cycle targetCycle)
          */
         if (config.revision != MOS_8580 || config.sampling != SAMPLING_FAST) {
 
-            /* Update: This feature seems to be broken alltogether. reSID has
-             * issues with the audio filter if sample synthesis is skipped,
-             * even in other modes as the one stated above. Until I know how to
-             * fix the problem, I disable the powerSave feature.
-             */
-
-            // cycles = targetCycle;
-            // return;
+            cycles = targetCycle;
+            return;
         }
     }
     
@@ -833,8 +823,7 @@ Muxer::executeCycles(isize numCycles)
             break;
 
         default:
-            numSamples = 0;
-            assert(false);
+            fatalError;
     }
     
     // Produce the final stereo stream

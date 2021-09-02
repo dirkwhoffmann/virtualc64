@@ -66,7 +66,7 @@ Expert::loadChip(isize nr, const CRTFile &crt)
     // Initialize RAM with data from CRT file
     trace(CRT_DEBUG, "Copying file contents into Expert RAM\n");
     assert(getRamCapacity() == chipSize);
-    for (isize i = 0; i < chipSize; i++) pokeRAM(i, chipData[i]);
+    for (isize i = 0; i < chipSize; i++) pokeRAM((u16)i, chipData[i]);
 }
 
 u8
@@ -146,7 +146,7 @@ Expert::pressButton(isize nr)
             case 1: // Reset
                 
                 if (switchInOnPosition()) { active = true; }
-                resetWithoutDeletingRam();
+                c64.softReset();
                 break;
                 
             case 2: // ESM (Freeze)
@@ -173,7 +173,7 @@ Expert::pressButton(isize nr)
 
 
 const string
-Expert::getSwitchDescription(i8 pos) const
+Expert::getSwitchDescription(isize pos) const
 {
     return (pos == -1) ? "Prg" : (pos == 0) ? "Off" : (pos == 1) ? "On" : "";
 }
@@ -182,8 +182,7 @@ bool
 Expert::cartridgeRamIsVisible(u16 addr) const
 {
     if (addr < 0x8000) {
-        assert(false); // Should never be called for this address space
-        return false;
+        fatalError; // Should never be called for this address space
     }
     if (addr < 0xA000) {
         return switchInPrgPosition() || (switchInOnPosition() && active);

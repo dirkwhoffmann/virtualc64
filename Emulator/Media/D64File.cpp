@@ -13,7 +13,7 @@
 #include "MemUtils.h"
 
 bool
-D64File::isCompatiblePath(const string &path)
+D64File::isCompatible(const string &path)
 {
     auto s = util::extractSuffix(path);
  
@@ -23,7 +23,7 @@ D64File::isCompatiblePath(const string &path)
 }
 
 bool
-D64File::isCompatibleStream(std::istream &stream)
+D64File::isCompatible(std::istream &stream)
 {
     isize len = util::streamLength(stream);
     
@@ -50,7 +50,7 @@ D64File::D64File(isize tracks, bool ecc) : D64File()
         case 42: size = ecc ? D64_802_SECTORS_ECC : D64_802_SECTORS; break;
             
         default:
-            assert(false);
+            fatalError;
     }
     
     data = new u8[size]();
@@ -68,8 +68,7 @@ D64File::makeWithFileSystem(FSDevice &volume)
         case D64_802_SECTORS: d64 = new D64File(42, false); break;
 
         default:
-            assert(false);
-            return nullptr;
+            fatalError;
     }
 
     ErrorCode err;
@@ -81,6 +80,42 @@ D64File::makeWithFileSystem(FSDevice &volume)
     
     return d64;
 }
+
+void
+D64File::init(isize tracks, bool ecc)
+{
+    switch(tracks) {
+            
+        case 35: size = ecc ? D64_683_SECTORS_ECC : D64_683_SECTORS; break;
+        case 40: size = ecc ? D64_768_SECTORS_ECC : D64_768_SECTORS; break;
+        case 42: size = ecc ? D64_802_SECTORS_ECC : D64_802_SECTORS; break;
+            
+        default:
+            fatalError;
+    }
+    
+    data = new u8[size]();
+}
+
+void
+D64File::init(FSDevice &volume)
+{
+    switch (volume.getNumBlocks() * 256) {
+                        
+        case D64_683_SECTORS: init(35, false); break;
+        case D64_768_SECTORS: init(40, false); break;
+        case D64_802_SECTORS: init(42, false); break;
+
+        default:
+            fatalError;
+    }
+
+    ErrorCode err;
+    if (!volume.exportVolume(data, size, &err)) {
+        throw VC64Error(err);
+    }
+}
+
 
 PETName<16>
 D64File::getName() const
@@ -163,8 +198,7 @@ D64File::numHalftracks() const
         case D64_802_SECTORS: case D64_802_SECTORS_ECC: return 2 * 42;
             
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 

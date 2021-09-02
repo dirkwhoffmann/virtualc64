@@ -35,7 +35,7 @@ public:
     {
         if (asciichar == 0x00) return 0x00;
         
-        asciichar = toupper(asciichar);
+        asciichar = (u8)std::toupper(asciichar);
         return asciichar >= 0x20 && asciichar <= 0x5D ? asciichar : ' ';
     }
         

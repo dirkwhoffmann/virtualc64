@@ -71,18 +71,19 @@ VICII::_reset(bool hard)
 }
 
 void
-VICII::resetEmuTexture(int nr)
+VICII::resetEmuTexture(isize nr)
 {
-    if (nr == 1) { resetTexture(emuTexture1); return; }
-    if (nr == 2) { resetTexture(emuTexture2); return; }
-    
-    assert(false);
+    assert(nr == 1 || nr == 2);
+
+    if (nr == 1) { resetTexture(emuTexture1); }
+    if (nr == 2) { resetTexture(emuTexture2); }
 }
 
 void
-VICII::resetDmaTexture(int nr)
+VICII::resetDmaTexture(isize nr)
 {
     assert(nr == 1 || nr == 2);
+    
     u32 *p = nr == 1 ? dmaTexture1 : dmaTexture2;
 
     for (int i = 0; i < TEX_HEIGHT * TEX_WIDTH; i++) {
@@ -181,8 +182,7 @@ VICII::getConfigItem(Option option) const
         case OPT_SB_COLLISIONS:     return config.checkSBCollisions;
 
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 
@@ -286,7 +286,7 @@ VICII::setConfigItem(Option option, i64 value)
             return;
             
         default:
-            assert(false);
+            fatalError;
     }
 }
 
@@ -351,7 +351,7 @@ VICII::setSpeed(VICIISpeed speed)
 }
 
 void
-VICII::_inspect()
+VICII::_inspect() const
 {
     synchronized {
         
@@ -387,7 +387,7 @@ VICII::_inspect()
         info.memSelect = memSelect;
         info.ultimax = ultimax;
         info.memoryBankAddr = bankAddr;
-        info.screenMemoryAddr = VM13VM12VM11VM10() << 6;
+        info.screenMemoryAddr = (u16)(VM13VM12VM11VM10() << 6);
         info.charMemoryAddr = (CB13CB12CB11() << 10) % 0x4000;
         
         info.irqLine = rasterIrqLine;
@@ -456,7 +456,9 @@ VICII::_dump(dump::Category category, std::ostream& os) const
         
         for (isize i = 0; i < 6; i++) {
             os << tab(addr[i]);
-            for (isize j = 0; j < 8; j++) os << hex(spypeek(8 * i + j)) << " ";
+            for (isize j = 0; j < 8; j++) {
+                os << hex(spypeek((u16)(8 * i + j))) << " ";
+            }
             os << std::endl;
         }
     }
@@ -558,6 +560,23 @@ VICII::getSpriteInfo(int nr)
 void
 VICII::_run()
 {
+    
+}
+
+void
+VICII::_debugOn()
+{
+    debug(RUN_DEBUG, "_debugOn\n");
+
+    updateVicFunctionTable();
+}
+
+void
+VICII::_debugOff()
+{
+    debug(RUN_DEBUG, "_debugOff\n");
+
+    updateVicFunctionTable();
 }
 
 bool
@@ -889,16 +908,14 @@ VICII::lightpenX() const
             return 2 + (cycle < 14 ? 400 + (8 * cycle) : (cycle - 14) * 8);
             
         default:
-            
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 
 u16
 VICII::lightpenY() const
 {
-    return yCounter;
+    return (u16)yCounter;
 }
 
 void
@@ -926,8 +943,8 @@ VICII::checkForLightpenIrq()
     if (yCounter == 311 && vicCycle != 1) return;
     
     // Latch coordinates
-    latchedLPX = lightpenX() / 2;
-    latchedLPY = lightpenY();
+    latchedLPX = (u8)(lightpenX() / 2);
+    latchedLPY = (u8)(lightpenY());
     
     // Newer VICII models trigger an interrupt immediately
     if (!delayedLightPenIrqs()) triggerIrq(8);
@@ -976,12 +993,12 @@ VICII::checkForLightpenIrqAtStartOfFrame()
 //
 
 u8
-VICII::spriteDepth(u8 nr) const
+VICII::spriteDepth(isize nr) const
 {
     return
     GET_BIT(reg.delayed.sprPriority, nr) ?
-    (DEPTH_SPRITE_BG | nr) :
-    (DEPTH_SPRITE_FG | nr);
+    (u8)(DEPTH_SPRITE_BG | nr) :
+    (u8)(DEPTH_SPRITE_FG | nr);
 }
 
 u8

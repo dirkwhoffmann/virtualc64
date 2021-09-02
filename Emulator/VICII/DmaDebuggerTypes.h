@@ -21,18 +21,16 @@ enum_long(DMA_DISPLAY_MODE)
 {
     DMA_DISPLAY_MODE_FG_LAYER,
     DMA_DISPLAY_MODE_BG_LAYER,
-    DMA_DISPLAY_MODE_ODD_EVEN_LAYERS,
-    DMA_DISPLAY_MODE_COUNT
+    DMA_DISPLAY_MODE_ODD_EVEN_LAYERS
 };
 typedef DMA_DISPLAY_MODE DmaDisplayMode;
 
 #ifdef __cplusplus
 struct DmaDisplayModeEnum : util::Reflection<DmaDisplayModeEnum, DmaDisplayMode> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < DMA_DISPLAY_MODE_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return DMA_DISPLAY_MODE_ODD_EVEN_LAYERS; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "DMA_DISPLAY_MODE"; }
     static const char *key(DmaDisplayMode value)
@@ -42,7 +40,6 @@ struct DmaDisplayModeEnum : util::Reflection<DmaDisplayModeEnum, DmaDisplayMode>
             case DMA_DISPLAY_MODE_FG_LAYER:         return "FG_LAYER";
             case DMA_DISPLAY_MODE_BG_LAYER:         return "BG_LAYER";
             case DMA_DISPLAY_MODE_ODD_EVEN_LAYERS:  return "ODD_EVEN_LAYERS";
-            case DMA_DISPLAY_MODE_COUNT:            return "???";
         }
         return "???";
     }

@@ -253,19 +253,19 @@
 
 - (NSString *)disassembleInstr:(NSInteger)addr length:(NSInteger *)len
 {
-    const char *str = [self cpu]->debugger.disassembleInstr(addr, len);
+    const char *str = [self cpu]->debugger.disassembleInstr((u16)addr, len);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 
 - (NSString *)disassembleBytes:(NSInteger)addr
 {
-    const char *str = [self cpu]->debugger.disassembleBytes(addr);
+    const char *str = [self cpu]->debugger.disassembleBytes((u16)addr);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 
 - (NSString *)disassembleAddr:(NSInteger)addr
 {
-    const char *str = [self cpu]->debugger.disassembleAddr(addr);
+    const char *str = [self cpu]->debugger.disassembleAddr((u16)addr);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 
@@ -320,11 +320,11 @@
 
 - (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src
 {
-    return @([self mem]->memdump(addr, num, hex, src).c_str());
+    return @([self mem]->memdump((u16)addr, num, hex, src).c_str());
 }
 - (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemoryType)src
 {
-    return @([self mem]->txtdump(addr, num, src).c_str());
+    return @([self mem]->txtdump((u16)addr, num, src).c_str());
 }
 
 @end
@@ -705,10 +705,11 @@
 {
     return [self eport]->getCartridgeAttached();
 }
-
-- (BOOL)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset
+ 
+- (void)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex
 {
-    return [self eport]->attachCartridge((CRTFile *)c->obj, reset);
+    try { [self eport]->attachCartridge((CRTFile *)c->obj, reset); }
+    catch (VC64Error &err) { [ex save:err]; }
 }
 
 - (void)attachGeoRamCartridge:(NSInteger)capacity
@@ -1000,6 +1001,11 @@
     return [self drive]->hasDisk();
 }
 
+- (BOOL)hasWriteProtectedDisk
+{
+    return [self drive]->hasWriteProtectedDisk();
+}
+
 - (BOOL)hasModifiedDisk
 {
     return [self drive]->hasModifiedDisk();
@@ -1022,10 +1028,10 @@
 
 - (void)insertCollection:(AnyCollectionProxy *)proxy protected:(BOOL)wp
 {
-    [self drive]->insertCollection(*(AnyCollection *)proxy->obj, wp);;
+    [self drive]->insertCollection(*(AnyCollection *)proxy->obj, wp);
 }
 
-- (void)insertFileSystem:(FSDeviceProxy *)proxy protected:(BOOL)wp;
+- (void)insertFileSystem:(FSDeviceProxy *)proxy protected:(BOOL)wp
 {
     [self drive]->insertFileSystem(*(FSDevice *)proxy->obj, wp);
 }
@@ -1038,21 +1044,6 @@
 - (void)ejectDisk
 {
     [self drive]->ejectDisk();
-}
-
-- (BOOL)writeProtected
-{
-    return [self drive]->disk.isWriteProtected();
-}
-
-- (void)setWriteProtection:(BOOL)b
-{
-    [self drive]->disk.setWriteProtection(b);
-}
-
-- (BOOL)hasWriteProtectedDisk
-{
-    return [self drive]->hasWriteProtectedDisk();
 }
 
 - (Track)track
@@ -1075,7 +1066,7 @@
     return [self drive]->sizeOfCurrentHalftrack();
 }
 
-- (u16)offset
+- (NSInteger)offset
 {
     return [self drive]->getOffset();
 }
@@ -1160,7 +1151,7 @@
 
 - (void)insertTape:(TAPFileProxy *)proxy
 {
-    [self datasette]->insertTape((TAPFile *)proxy->obj);
+    [self datasette]->insertTape(*(TAPFile *)proxy->obj);
 }
 
 - (void)ejectTape
@@ -1455,13 +1446,15 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 + (instancetype)makeWithFile:(NSString *)path
                    exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <Snapshot> ([path fileSystemRepresentation]) )
+    try { return [self make: new Snapshot([path fileSystemRepresentation])]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len
                      exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <Snapshot> ((const u8 *)buf, len) )
+    try { return [self make: new Snapshot((u8 *)buf, len)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithC64:(C64Proxy *)c64proxy
@@ -1528,14 +1521,14 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    try { return [self make: AnyFile::make <Script> ([path fileSystemRepresentation])]; }
+    try { return [self make: new Script([path fileSystemRepresentation])]; }
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    try { return [self make: AnyFile::make <Script> ((const u8 *)buf, len)]; }
-    catch (VC64Error &error) { [ex save:error]; return nil; }
+    try { return [self make: new Script((u8 *)buf, len)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }    
 }
 
 - (void)execute:(C64Proxy *)proxy
@@ -1560,12 +1553,14 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <RomFile> ([path fileSystemRepresentation]) )
+    try { return [self make: new RomFile([path fileSystemRepresentation])]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <RomFile> ((const u8 *)buf, len) )
+    try { return [self make: new RomFile((const u8 *)buf, len)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 @end
@@ -1583,12 +1578,14 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <CRTFile> ([path fileSystemRepresentation]) )
+    try { return [self make: new CRTFile([path fileSystemRepresentation])]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <CRTFile> ((const u8 *)buf, len) )
+    try { return [self make: new CRTFile((const u8 *)buf, len)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 - (CRTFile *)crt
@@ -1636,12 +1633,14 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <TAPFile> ([path fileSystemRepresentation]) )
+    try { return [self make: new TAPFile([path fileSystemRepresentation])]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <TAPFile> ((const u8 *)buf, len) )
+    try { return [self make: new TAPFile((const u8 *)buf, len)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 - (TAPFile *)tap
@@ -1683,17 +1682,20 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <T64File> ([path fileSystemRepresentation]) )
+    try { return [self make: new T64File([path fileSystemRepresentation])]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <T64File> ((const u8 *)buf, len) )
+    try { return [self make: new T64File((const u8 *)buf, len)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <T64File> (*(FSDevice *)proxy->obj) )
+    try { return [self make: new T64File(*(FSDevice *)proxy->obj)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 @end
@@ -1711,17 +1713,20 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <PRGFile> ([path fileSystemRepresentation]) )
+    try { return [self make: new PRGFile([path fileSystemRepresentation])]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <PRGFile> ((const u8 *)buf, len) )
+    try { return [self make: new PRGFile((const u8 *)buf, len)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <PRGFile> (*(FSDevice *)proxy->obj) )
+    try { return [self make: new PRGFile(*(FSDevice *)proxy->obj)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 @end
@@ -1739,17 +1744,20 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <P00File> ([path fileSystemRepresentation]) )
+    try { return [self make: new P00File([path fileSystemRepresentation])]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <P00File> ((const u8 *)buf, len) )
+    try { return [self make: new P00File((const u8 *)buf, len)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <P00File> (*(FSDevice *)proxy->obj) )
+    try { return [self make: new P00File(*(FSDevice *)proxy->obj)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 @end
@@ -1772,17 +1780,20 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <D64File> ([path fileSystemRepresentation]) )
+    try { return [self make: new D64File([path fileSystemRepresentation])]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <D64File> ((const u8 *)buf, len) )
+    try { return [self make: new D64File((const u8 *)buf, len)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <D64File> (*(FSDevice *)proxy->obj) )
+    try { return [self make: new D64File(*(FSDevice *)proxy->obj)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 @end
@@ -1800,17 +1811,20 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <G64File> ([path fileSystemRepresentation]) )
+    try { return [self make: new G64File([path fileSystemRepresentation])]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <G64File> ((const u8 *)buf, len) )
+    try { return [self make: new G64File((const u8 *)buf, len)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 + (instancetype)makeWithDisk:(DiskProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( AnyFile::make <G64File> (*(Disk *)proxy->obj) )
+    try { return [self make: new G64File(*(Disk *)proxy->obj)]; }
+    catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
 @end
@@ -1828,19 +1842,19 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 
 + (instancetype)makeWithDisk:(DiskProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    try { return [self make: FSDevice::makeWithDisk(*(Disk *)proxy->obj)]; }
+    try { return [self make: new FSDevice(*(Disk *)proxy->obj)]; }
     catch (VC64Error &err) { [ex save:err]; return nil; }
 }
 
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    try { return [self make: FSDevice::makeWithCollection(*(AnyCollection *)proxy->obj)]; }
+    try { return [self make: new FSDevice(*(AnyCollection *)proxy->obj)]; }
     catch (VC64Error &err) { [ex save:err]; return nil; }
 }
 
 + (instancetype)makeWithD64:(D64FileProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    try { return [self make: FSDevice::makeWithD64(*(D64File *)proxy->obj)]; }
+    try { return [self make: new FSDevice(*(D64File *)proxy->obj)]; }
     catch (VC64Error &err) { [ex save:err]; return nil; }
 }
 
@@ -2038,7 +2052,8 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
 
 + (instancetype)makeWithFolder:(NSString *)path exception:(ExceptionWrapper *)ex
 {
-    TRYMAKE ( Folder::makeWithFolder([path fileSystemRepresentation]) )
+    try { return [self make: new Folder([path fileSystemRepresentation])]; }
+    catch (VC64Error &err) { [ex save:err]; return nil; }    
 }
 
 - (Folder *)folder
@@ -2142,7 +2157,7 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     return [self c64]->inWarpMode();
 }
 
-- (void)setWarpMode:(BOOL)enable;
+- (void)setWarpMode:(BOOL)enable
 {
     enable ? [self c64]->warpOn() : [self c64]->warpOff();
 }
@@ -2383,6 +2398,18 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     [self c64]->stepOver();
 }
 
+/*
+- (NSInteger)breakpointPC
+{
+    return [self c64]->cpu.debugger.breakpointPC;
+}
+
+- (NSInteger)watchpointPC
+{
+    return [self c64]->cpu.debugger.watchpointPC;
+}
+*/
+
 - (BOOL) hasRom:(RomType)type
 {
     return [self c64]->hasRom(type);
@@ -2505,18 +2532,18 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     return RomFile::isCommodoreRom(rev);
 }
 
-- (BOOL)isPatchedRom:(RomIdentifier)rev;
+- (BOOL)isPatchedRom:(RomIdentifier)rev
 {
     return RomFile::isPatchedRom(rev);
 }
 
-- (void)flash:(AnyFileProxy *)proxy exception:(ExceptionWrapper *)ex;
+- (void)flash:(AnyFileProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     try { [self c64]->flash(*(AnyFile *)proxy->obj); }
     catch (VC64Error &error) { [ex save:error]; }
 }
 
-- (void)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
+- (void)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex
 {
     try { [self c64]->flash(*(FSDevice *)proxy->obj, (unsigned)nr); }
     catch (VC64Error &error) { [ex save:error]; }

@@ -27,8 +27,8 @@ public:
     // Error information stored in the D64 archive
     u8 errors[802];
     
-    static bool isCompatiblePath(const string &name);
-    static bool isCompatibleStream(std::istream &stream);  
+    static bool isCompatible(const string &name);
+    static bool isCompatible(std::istream &stream);  
     static D64File *makeWithFileSystem(class FSDevice &volume) throws;
 
 
@@ -38,11 +38,22 @@ public:
     
     D64File();
     D64File(isize tracks, bool ecc);
+    D64File(const string &path) throws { init(path); }
+    D64File(const u8 *buf, isize len) throws { init(buf, len); }
+    D64File(FSDevice &fs) throws { init(fs); }
+    
+private:
+    
+    using AnyFile::init;
+    void init(isize tracks, bool ecc);
+    void init(FSDevice &fs) throws;
     
     
     //
     // Methods from C64Object
     //
+    
+public:
     
     const char *getDescription() const override { return "D64File"; }
 
@@ -51,6 +62,8 @@ public:
     // Methods from AnyFile
     //
     
+    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_D64; }
     PETName<16> getName() const override;
     void readFromStream(std::istream &stream) throws override;

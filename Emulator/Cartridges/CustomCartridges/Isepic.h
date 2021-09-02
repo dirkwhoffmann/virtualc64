@@ -14,7 +14,7 @@
 class Isepic : public Cartridge {
     
     // Selected page inside the selected RAM bank
-    u8 page;
+    isize page;
 
     // Original mapping of the uppermost memory page
     MemoryType oldPeekSource;
@@ -87,8 +87,8 @@ private:
     //
     
     bool hasSwitch() const override { return true; }
-    const string getSwitchDescription(i8 pos) const override;
-    void setSwitch(i8 pos) override;
+    const string getSwitchDescription(isize pos) const override;
+    void setSwitch(isize pos) override;
     bool switchInOffPosition() const { return switchIsLeft(); }
     bool switchInOnPosition() const { return switchIsRight(); }
     

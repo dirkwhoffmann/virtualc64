@@ -12,20 +12,16 @@
 #include "IO.h"
 
 bool
-TAPFile::isCompatiblePath(const string &path)
+TAPFile::isCompatible(const string &path)
 {
-    auto s = util::extractSuffix(path);
-    return s == "tap" || s == "TAP" || s == "t64" || s == "T64";
+    auto s = util::uppercased(util::extractSuffix(path));
+    return s == "TAP" || s == "T64";
 }
 
 bool
-TAPFile::isCompatibleStream(std::istream &stream)
+TAPFile::isCompatible(std::istream &stream)
 {
-    const u8 magicBytes[] = {
-        0x43, 0x36, 0x34, 0x2D, 0x54, 0x41, 0x50, 0x45, 0x2D, 0x52, 0x41, 0x57 };
-    
-    if (util::streamLength(stream) < 0x15) return false;
-    return util::matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
+    return util::matchingStreamHeader(stream, "C64-TAPE-RAW");
 }
 
 PETName<16>
@@ -37,17 +33,6 @@ TAPFile::getName() const
 isize
 TAPFile::headerSize() const
 {
-    /* According to the specs, the first pulse byte is supposed to be found at
-     * position 0x14. However, some TAP files that are found in the wild don't
-     * seem to comply to this scheme. Hence, we take a slightly approach. The
-     * function starts scanning at position 0x14 and returns the position of
-     * the first non-zero byte.
-     */
-    /*
-    for (isize i = 0x14; i < (isize)size; i++) {
-        if (data[i]) return i;
-    }
-    */
     return 0x14;
 }
 

@@ -43,28 +43,26 @@ public:
 public:
  
     ControlPort(C64 &ref, PortId id);
+
+
+    //
+    // Methods from C64Object
+    //
+
+private:
+    
     const char *getDescription() const override { return "ControlPort"; }
+    void _dump(dump::Category category, std::ostream& os) const override;
+
+    
+    //
+    // Methods from C64Component
+    //
 
 private:
     
     void _reset(bool hard) override { RESET_SNAPSHOT_ITEMS(hard) };
-    
-
-    //
-    // Analyzing
-    //
-    
-private:
-    
-    void _dump(dump::Category category, std::ostream& os) const override;
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
+        
     template <class T>
     void applyToPersistentItems(T& worker)
     {

@@ -66,11 +66,12 @@ public:
     // Creating
     //
     
+    /*
 public:
     
     template <class T> static T *make(std::istream &stream) throws
     {
-        if (!T::isCompatibleStream(stream)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+        if (!T::isCompatible(stream)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
         
         T *obj = new T();
         
@@ -90,7 +91,7 @@ public:
         
     template <class T> static T *make(const string &path) throws
     {
-        if (!T::isCompatiblePath(path)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+        if (!T::isCompatible(path)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
         
         std::ifstream stream(path);
         if (!stream.is_open()) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
@@ -108,7 +109,7 @@ public:
     {
         return T::makeWithFileSystem(fs);
     }
-    
+    */
     
     //
     // Initializing
@@ -119,6 +120,14 @@ public:
     AnyFile() { };
     AnyFile(isize capacity);
     virtual ~AnyFile();
+    
+    void init(isize capacity);
+    void init(std::istream &stream) throws;
+    void init(const string &path, std::istream &stream) throws;
+    void init(const u8 *buf, isize len) throws;
+    void init(const string &path) throws;
+    void init(FILE *file) throws;
+    
     
     //
     // Accessing
@@ -159,6 +168,8 @@ public:
     
 protected:
 
+    virtual bool isCompatiblePath(const string &path) = 0;
+    virtual bool isCompatibleStream(std::istream &stream) = 0;
     virtual void readFromStream(std::istream &stream) throws;
     void readFromFile(const string &path) throws;
     void readFromBuffer(const u8 *buf, isize len) throws;

@@ -16,13 +16,14 @@ Drive::Drive(DriveID id, C64 &ref) : SubComponent(ref), deviceNr(id)
 {
     assert(deviceNr == DRIVE8 || deviceNr == DRIVE9);
 	
+    disk = std::make_unique<Disk>();
+    
     subComponents = std::vector <C64Component *> {
         
         &mem,
         &cpu,
         &via1,
-        &via2,
-        &disk
+        &via2
     };
 }
 
@@ -38,7 +39,7 @@ Drive::_initialize()
     C64Component::_initialize();
     
     insertionStatus = DISK_FULLY_EJECTED;
-    disk.clearDisk();
+    disk->clearDisk();
 }
 
 void
@@ -86,7 +87,7 @@ Drive::resetConfig()
     setConfigItem(OPT_DRV_TYPE, defaults.type);
     setConfigItem(OPT_DRV_RAM, defaults.ram);
     setConfigItem(OPT_DRV_PARCABLE, defaults.parCable);
-    setConfigItem(OPT_DRV_CONNECT, deviceNr == DRIVE8);
+    try { setConfigItem(OPT_DRV_CONNECT, deviceNr == DRIVE8); } catch (...) { }
     setConfigItem(OPT_DRV_POWER_SWITCH, defaults.switchedOn);
     setConfigItem(OPT_DRV_POWER_SAVE, defaults.powerSave);
 
@@ -123,37 +124,9 @@ Drive::getConfigItem(Option option) const
         case OPT_DRV_EJECT_VOL:     return (i64)config.ejectVolume;
             
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
-
-/*
-void
-Drive::setConfigItem(Option option, i64 value)
-{
-    switch (option) {
-
-        case OPT_DRV_AUTO_CONFIG:
-        case OPT_DRV_POWER_SAVE:
-        case OPT_DRV_EJECT_DELAY:
-        case OPT_DRV_SWAP_DELAY:
-        case OPT_DRV_INSERT_DELAY:
-        case OPT_DRV_POWER_VOL:
-        case OPT_DRV_STEP_VOL:
-        case OPT_DRV_INSERT_VOL:
-        case OPT_DRV_EJECT_VOL:
-        case OPT_DRV_PAN:
-            
-            setConfigItem(option, DRIVE8, value);
-            setConfigItem(option, DRIVE9, value);
-            return;
-
-        default:
-            assert(false);
-    }
-}
-*/
 
 void
 Drive::setConfigItem(Option option, i64 value)
@@ -161,25 +134,25 @@ Drive::setConfigItem(Option option, i64 value)
     switch (option) {
 
         case OPT_DRV_AUTO_CONFIG:
-        {
+
             suspended {
                 
                 config.autoConfig = value;
                 if (value) autoConfigure();
             }
             return;
-        }
+
         case OPT_DRV_TYPE:
-        {
+
             if (!DriveTypeEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INVARG, DriveTypeEnum::keyList());
             }
             
             config.type = (DriveType)value;
             return;
-        }
+
         case OPT_DRV_RAM:
-        {
+
             if (!DriveRamEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INVARG, DriveRamEnum::keyList());
             }
@@ -190,9 +163,9 @@ Drive::setConfigItem(Option option, i64 value)
                 mem.updateBankMap();
             }
             return;
-        }
+
         case OPT_DRV_PARCABLE:
-        {
+
             if (!ParCableTypeEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INVARG, ParCableTypeEnum::keyList());
             }
@@ -203,13 +176,13 @@ Drive::setConfigItem(Option option, i64 value)
                 mem.updateBankMap();
             }
             return;
-        }
+
         case OPT_DRV_CONNECT:
-        {
+
             if (value && !c64.hasRom(ROM_TYPE_VC1541)) {
-                warn("Can't connect drive (ROM missing).\n");
-                return;
+                throw VC64Error(ERROR_ROM_DRIVE_MISSING);
             }
+            
             suspended {
 
                 config.connected = value;
@@ -217,9 +190,9 @@ Drive::setConfigItem(Option option, i64 value)
             }
             msgQueue.put(value ? MSG_DRIVE_CONNECT : MSG_DRIVE_DISCONNECT, deviceNr);
             return;
-        }
+
         case OPT_DRV_POWER_SWITCH:
-        {
+
             suspended {
                 
                 config.switchedOn = value;
@@ -227,62 +200,62 @@ Drive::setConfigItem(Option option, i64 value)
             }
             msgQueue.put(value ? MSG_DRIVE_POWER_ON : MSG_DRIVE_POWER_OFF, deviceNr);
             return;
-        }
+
         case OPT_DRV_POWER_SAVE:
-        {
+
             suspended {
                 
                 config.powerSave = value;
                 wakeUp();
             }
             return;
-        }
+
         case OPT_DRV_EJECT_DELAY:
-        {
+
             config.ejectDelay = value;
             return;
-        }
+
         case OPT_DRV_SWAP_DELAY:
-        {
+
             config.swapDelay = value;
             return;
-        }
+
         case OPT_DRV_INSERT_DELAY:
-        {
+
             config.insertDelay = value;
             return;
-        }
+
         case OPT_DRV_PAN:
-        {
-            config.pan = value;
+
+            config.pan = (i16)value;
             return;
-        }
+
         case OPT_DRV_POWER_VOL:
-        {
+
             value = std::clamp(value, 0LL, 100LL);
-            config.powerVolume = value;
+            config.powerVolume = (u8)value;
             return;
-        }
+
         case OPT_DRV_STEP_VOL:
-        {
+
             value = std::clamp(value, 0LL, 100LL);
-            config.stepVolume = value;
+            config.stepVolume = (u8)value;
             return;
-        }
+
         case OPT_DRV_EJECT_VOL:
-        {
+
             value = std::clamp(value, 0LL, 100LL);
-            config.ejectVolume = value;
+            config.ejectVolume = (u8)value;
             return;
-        }
+
         case OPT_DRV_INSERT_VOL:
-        {
+
             value = std::clamp(value, 0LL, 100LL);
-            config.insertVolume = value;
+            config.insertVolume = (u8)value;
             return;
-        }
+
         default:
-            return;
+            fatalError;
     }
 }
 
@@ -407,11 +380,78 @@ Drive::_dump(dump::Category category, std::ostream& os) const
     if (category & dump::Disk) {
         
         if (hasDisk()) {
-            disk.dump(dump::State, os);
+            disk->dump(dump::State, os);
         } else {
             os << "No disk";
         }
     }
+}
+
+isize
+Drive::_size()
+{
+    util::SerCounter counter;
+
+    applyToPersistentItems(counter);
+    applyToResetItems(counter);
+
+    // Add the size of the boolean indicating whether a disk is inserted
+    counter.count += sizeof(bool);
+
+    if (hasDisk()) {
+
+        // Add the disk size
+        disk->applyToPersistentItems(counter);
+    }
+
+    return counter.count;
+}
+
+isize
+Drive::_load(const u8 *buffer)
+{
+    util::SerReader reader(buffer);
+    isize result;
+    
+    // Read own state
+    applyToPersistentItems(reader);
+    applyToResetItems(reader);
+
+    // Check if the snapshot includes a disk
+    bool diskInSnapshot; reader << diskInSnapshot;
+
+    if (diskInSnapshot) {
+        disk = std::make_unique<Disk>(reader);
+    } else {
+        disk = nullptr;
+    }
+
+    // Compute the number of read bytes and return
+    result = (isize)(reader.ptr - buffer);
+    trace(SNP_DEBUG, "Recreated from %zd bytes\n", result);
+    return result;
+}
+
+isize
+Drive::_save(u8 *buffer)
+{
+    util::SerWriter writer(buffer);
+    isize result;
+    
+    // Write own state
+    applyToPersistentItems(writer);
+    applyToResetItems(writer);
+
+    // Indicate whether this drive has a disk is inserted
+    writer << hasDisk();
+
+    // If yes, write the disk
+    if (hasDisk()) disk->applyToPersistentItems(writer);
+    
+    // Compute the number of written bytes and return
+    result = (isize)(writer.ptr - buffer);
+    trace(SNP_DEBUG, "Serialized to %zd bytes\n", result);
+    return result;
 }
 
 void
@@ -463,7 +503,7 @@ Drive::executeUF4()
         // When a bit comes in and ...
         //   ... it's value equals 0, nothing happens.
         //   ... it's value equals 1, counter UF4 is reset.
-        if (readMode() && readBitFromHead()) {
+        if (readMode() && hasDisk() && readBitFromHead()) {
             counterUF4 = 0;
         }
         rotateDisk();
@@ -522,9 +562,9 @@ Drive::executeUF4()
             byteReadyCounter = sync ? (byteReadyCounter + 1) % 8 : 0;
             
             // (4) Execute the write shift register
-            if (writeMode() && !getLightBarrier()) {
+            if (writeMode() && hasDisk() && !getLightBarrier()) {
                 writeBitToHead(writeShiftreg & 0x80);
-                disk.setModified(true);
+                disk->setModified(true);
             }
             writeShiftreg <<= 1;
             
@@ -579,13 +619,35 @@ Drive::raiseByteReady()
 }
 
 void
-Drive::setZone(u8 value)
+Drive::setZone(isize value)
 {
     assert(value < 4);
     
     if (value != zone) {
-        trace(DRV_DEBUG, "Switching from disk zone %d to disk zone %d\n", zone, value);
+        trace(DRV_DEBUG, "Switching zone: %zd --> %zd\n", zone, value);
         zone = value;
+    }
+}
+
+u8
+Drive::readBitFromHead() const
+{
+    assert(hasDisk());
+    return disk->readBitFromHalftrack(halftrack, offset);
+}
+
+void
+Drive::writeBitToHead(u8 bit)
+{
+    assert(hasDisk());
+    disk->writeBitToHalftrack(halftrack, offset, bit);
+}
+
+void
+Drive::rotateDisk()
+{
+    if (hasDisk()) {
+        if (++offset >= disk->lengthOfHalftrack(halftrack)) offset = 0;
     }
 }
 
@@ -593,14 +655,18 @@ void
 Drive::setRedLED(bool b)
 {
     if (!redLED && b) {
+        
         redLED = true;
         wakeUp();
         msgQueue.put(MSG_DRIVE_LED_ON, deviceNr);
+        return;
+    }
+    if (redLED && !b) {
         
-    } else if (redLED && !b) {
         redLED = false;
         wakeUp();
         msgQueue.put(MSG_DRIVE_LED_OFF, deviceNr);
+        return;
     }
 }
 
@@ -631,17 +697,23 @@ Drive::moveHeadUp()
 {
     if (halftrack < 84) {
 
-        float position = (float)offset / (float)disk.lengthOfHalftrack(halftrack);
-        halftrack++;
-        offset = (HeadPos)(position * disk.lengthOfHalftrack(halftrack));
+        if (hasDisk()) {
+            
+            float pos = (float)offset / (float)disk->lengthOfHalftrack(halftrack);
+            halftrack++;
+            offset = (HeadPos)(pos * disk->lengthOfHalftrack(halftrack));
+            assert(disk->isValidHeadPos(halftrack, offset));
+            
+        } else {
+            
+            halftrack++;
+            offset = 0;
+        }
         
-        trace(DRV_DEBUG, "Moving head up to halftrack %d (track %2.1f) (offset %d)\n",
+        trace(DRV_DEBUG, "Moving head up to halftrack %zd (track %2.1f) (offset %zd)\n",
               halftrack, (halftrack + 1) / 2.0, offset);
-        trace(DRV_DEBUG, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
     }
-   
-    assert(disk.isValidHeadPos(halftrack, offset));
-    
+       
     msgQueue.put(MSG_DRIVE_STEP,
                    config.pan << 24 | config.stepVolume << 16 | halftrack << 8 | deviceNr);
 }
@@ -650,16 +722,23 @@ void
 Drive::moveHeadDown()
 {
     if (halftrack > 1) {
-        float position = (float)offset / (float)disk.lengthOfHalftrack(halftrack);
-        halftrack--;
-        offset = (HeadPos)(position * disk.lengthOfHalftrack(halftrack));
         
-        trace(DRV_DEBUG, "Moving head down to halftrack %d (track %2.1f)\n",
+        if (hasDisk()) {
+
+            float pos = (float)offset / (float)disk->lengthOfHalftrack(halftrack);
+            halftrack--;
+            offset = (HeadPos)(pos * disk->lengthOfHalftrack(halftrack));
+            assert(disk->isValidHeadPos(halftrack, offset));
+
+        } else {
+            
+            halftrack--;
+            offset = 0;
+        }
+        
+        trace(DRV_DEBUG, "Moving head down to halftrack %zd (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
-        trace(DRV_DEBUG, "Halftrack %d has %d bits.\n", halftrack, disk.lengthOfHalftrack(halftrack));
     }
-    
-    assert(disk.isValidHeadPos(halftrack, offset));
     
     msgQueue.put(MSG_DRIVE_STEP,
                    config.pan << 24 | config.stepVolume << 16 | halftrack << 8 | deviceNr);
@@ -668,24 +747,20 @@ Drive::moveHeadDown()
 void
 Drive::setModifiedDisk(bool value)
 {
-    disk.setModified(value);
+    if (hasDisk()) disk->setModified(value);
     msgQueue.put(value ? MSG_DISK_UNSAVED : MSG_DISK_SAVED, deviceNr);
 }
 
 void
 Drive::insertDisk(const string &path, bool wp)
 {
-    auto disk = Disk::make(c64, path);
-    
-    if (disk) {
-        insertDisk(disk, wp);
-    }
+    insertDisk(std::make_unique<Disk>(path, wp));
 }
 
 void
-Drive::insertDisk(Disk *otherDisk, bool wp)
+Drive::insertDisk(std::unique_ptr<Disk> disk)
 {
-    debug(DSKCHG_DEBUG, "insertDisk(otherDisk %p)\n", otherDisk);
+    debug(DSKCHG_DEBUG, "insertDisk\n");
 
     suspended {
         
@@ -693,8 +768,7 @@ Drive::insertDisk(Disk *otherDisk, bool wp)
             
             // Initiate the disk change procedure
             wakeUp();
-            diskToInsert = otherDisk;
-            diskToInsertWP = wp;
+            diskToInsert = std::move(disk);
             diskChangeCounter = 1;
         }
     }
@@ -710,36 +784,31 @@ Drive::insertNewDisk(DOSType fsType)
 void
 Drive::insertNewDisk(DOSType fsType, PETName<16> name)
 {
-    Disk *newDisk = Disk::make(c64, fsType, name);
-    insertDisk(newDisk, false);
+    insertDisk(std::make_unique<Disk>(fsType, name));
 }
 
 void
 Drive::insertFileSystem(const FSDevice &device, bool wp)
 {
-    debug(DSKCHG_DEBUG, "insertFileSystem()\n");
-    insertDisk(Disk::makeWithFileSystem(c64, device), wp);
+    insertDisk(std::make_unique<Disk>(device, wp));
 }
 
 void
 Drive::insertD64(const D64File &d64, bool wp)
 {
-    debug(DSKCHG_DEBUG, "insertD64()\n");
-    insertDisk(Disk::makeWithD64(c64, d64), wp);
+    insertDisk(std::make_unique<Disk>(d64, wp));
 }
 
 void
 Drive::insertG64(const G64File &g64, bool wp)
 {
-    debug(DSKCHG_DEBUG, "insertG64()\n");
-    insertDisk(Disk::makeWithG64(c64, g64), wp);
+    insertDisk(std::make_unique<Disk>(g64, wp));
 }
 
 void
 Drive::insertCollection(AnyCollection &collection, bool wp)
 {
-    debug(DSKCHG_DEBUG, "insertDisk(collection)\n");
-    insertDisk(Disk::makeWithCollection(c64, collection), wp);
+    insertDisk(std::make_unique<Disk>(collection, wp));
 }
 
 void 
@@ -799,7 +868,7 @@ Drive::executeStateTransition()
             insertionStatus = DISK_PARTIALLY_EJECTED;
             
             // Make sure the drive can no longer read from this disk
-            disk.clearDisk();
+            disk->clearDisk();
             
             // Schedule the next transition
             diskChangeCounter = config.ejectDelay;
@@ -840,24 +909,14 @@ Drive::executeStateTransition()
 
             // Fully insert the disk (unblocks the light barrier)
             insertionStatus = DISK_FULLY_INSERTED;
-
-            // Copy the disk contents
-            isize size = diskToInsert->size();
-            u8 *buffer = new u8[size];
-            diskToInsert->save(buffer);
-            disk.load(buffer);
-            delete[] buffer;
-            diskToInsert = nullptr;
+            disk = std::move(diskToInsert);
             
-            // Enable or disable the write protection
-            disk.setWriteProtection(diskToInsertWP);
-
             // Inform listeners
             msgQueue.put(MSG_DISK_INSERT,
                          config.pan << 24 | config.insertVolume << 16 | halftrack << 8 | deviceNr);
             return;
         }
         default:
-            assert(false);
+            fatalError;
     }
 }

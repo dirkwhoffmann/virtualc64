@@ -13,14 +13,14 @@
 #include "IO.h"
 
 bool
-G64File::isCompatiblePath(const string &path)
+G64File::isCompatible(const string &path)
 {
     auto s = util::extractSuffix(path);
     return s == "g64" || s == "G64";
 }
 
 bool
-G64File::isCompatibleStream(std::istream &stream)
+G64File::isCompatible(std::istream &stream)
 {
     // const u8 magicBytes[] = { 0x47, 0x43, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31 };
     const u8 magicBytes[] = { 'G', 'C', 'R', '-', '1', '5', '4', '1' };
@@ -37,8 +37,8 @@ G64File::G64File(isize capacity)
     size = capacity;
 }
 
-G64File *
-G64File::makeWithDisk(Disk &disk)
+void
+G64File::init(Disk &disk)
 {
     // Determine empty halftracks
     bool empty[85];
@@ -86,7 +86,7 @@ G64File::makeWithDisk(Disk &disk)
             u16 numFillBytes = maxBytesOnTrack - numDataBytes;
 
             if (disk.lengthOfHalftrack(ht) % 8 != 0) {
-                warn("Size of halftrack %d is not a multiple of 8\n", ht);
+                warn("Size of halftrack %zd is not a multiple of 8\n", ht);
             }
             assert(pos == offset[ht]);
             buffer[pos++] = LO_BYTE(numDataBytes);
@@ -114,17 +114,7 @@ G64File::makeWithDisk(Disk &disk)
     stream.write((char *)buffer, length);
     stream.seekg(0, std::ios::beg);
     
-    return make <G64File> (stream);
-}
-
-G64File *
-G64File::makeWithDisk(class Disk &disk, ErrorCode *err)
-{
-    *err = ERROR_OK;
-    
-    try { return makeWithDisk(disk); }
-    catch (VC64Error &exception) { *err = exception.data; }
-    return nullptr;
+    init(stream);
 }
 
 isize

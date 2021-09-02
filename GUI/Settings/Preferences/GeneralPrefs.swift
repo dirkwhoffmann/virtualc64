@@ -10,17 +10,13 @@
 extension PreferencesController {
     
     func refreshGeneralTab() {
-        
-        track()
-                
-        // Fullscreen
-        genAspectRatioButton.state = pref.keepAspectRatio ? .on : .off
-        genExitOnEscButton.state = pref.exitOnEsc ? .on : .off
-        
-        // Snapshots and Screenshots
+                                
+        // Snapshots
         genAutoSnapshots.state = pref.autoSnapshots ? .on : .off
         genSnapshotInterval.integerValue = pref.snapshotInterval
         genSnapshotInterval.isEnabled = pref.autoSnapshots
+
+        // Screenshots
         genScreenshotSourcePopup.selectItem(withTag: pref.screenshotSource)
         genScreenshotTargetPopup.selectItem(withTag: pref.screenshotTargetIntValue)
         
@@ -34,15 +30,22 @@ extension PreferencesController {
         genBitRate.isEnabled = hasFFmpeg
         genAspectX.isEnabled = hasFFmpeg
         genAspectY.isEnabled = hasFFmpeg
+        
         if hasFFmpeg {
+            genFFmpegIcon.isHidden = false
             genFFmpegPath.textColor = .textColor
             genFFmpegPath.stringValue = "/usr/local/bin/ffmpeg"
         } else {
+            genFFmpegIcon.isHidden = true
             genFFmpegPath.textColor = .warningColor
             genFFmpegPath.stringValue = "Requires /usr/local/bin/ffmpeg"
         }
 
-        // Drive
+        // Fullscreen
+        genAspectRatioButton.state = pref.keepAspectRatio ? .on : .off
+        genExitOnEscButton.state = pref.exitOnEsc ? .on : .off
+
+        // Warp mode
         genWarpMode.selectItem(withTag: pref.warpModeIntValue)
         
         // Miscellaneous
@@ -53,28 +56,11 @@ extension PreferencesController {
     
     func selectGeneralTab() {
 
-        track()
         refreshGeneralTab()
     }
-    
-    //
-    // Action methods (Fullscreen)
-    //
-    
-    @IBAction func genAspectRatioAction(_ sender: NSButton!) {
         
-        pref.keepAspectRatio = (sender.state == .on)
-        refresh()
-    }
-    
-    @IBAction func genExitOnEscAction(_ sender: NSButton!) {
-        
-        pref.exitOnEsc = (sender.state == .on)
-        refresh()
-    }
-    
     //
-    // Action methods (Snapshots and screenshots)
+    // Action methods (Snapshots)
     //
     
     @IBAction func genAutoSnapshotAction(_ sender: NSButton!) {
@@ -91,6 +77,10 @@ extension PreferencesController {
         refresh()
     }
     
+    //
+    // Action methods (Screenshots)
+    //
+
     @IBAction func genScreenshotSourceAction(_ sender: NSPopUpButton!) {
         
         pref.screenshotSource = sender.selectedTag()
@@ -109,7 +99,6 @@ extension PreferencesController {
     
     @IBAction func genCaptureSourceAction(_ sender: NSPopUpButton!) {
         
-        track("tag = \(sender.selectedTag())")
         pref.captureSource = sender.selectedTag()
         refresh()
     }
@@ -120,7 +109,6 @@ extension PreferencesController {
         if input == nil { input = sender.integerValue }
         
         if let bitrate = input {
-            track("bitrate = \(bitrate)")
             pref.bitRate = bitrate
         }
         refresh()
@@ -128,18 +116,32 @@ extension PreferencesController {
 
     @IBAction func genAspectXAction(_ sender: NSTextField!) {
         
-        track("value = \(sender.integerValue)")
         pref.aspectX = sender.integerValue
         refresh()
     }
 
     @IBAction func genAspectYAction(_ sender: NSTextField!) {
         
-        track("value = \(sender.integerValue)")
         pref.aspectY = sender.integerValue
         refresh()
     }
     
+    //
+    // Action methods (Fullscreen)
+    //
+    
+    @IBAction func genAspectRatioAction(_ sender: NSButton!) {
+        
+        pref.keepAspectRatio = (sender.state == .on)
+        refresh()
+    }
+    
+    @IBAction func genExitOnEscAction(_ sender: NSButton!) {
+        
+        pref.exitOnEsc = (sender.state == .on)
+        refresh()
+    }
+
     //
     // Action methods (Warp mode)
     //

@@ -103,7 +103,7 @@ private:
     //
     
     bool hasSwitch() const override { return true; }
-    const string getSwitchDescription(i8 pos) const override;
+    const string getSwitchDescription(isize pos) const override;
     bool switchInPrgPosition() const { return switchIsLeft(); }
     bool switchInOffPosition() const { return switchIsNeutral(); }
     bool switchInOnPosition() const { return switchIsRight(); }

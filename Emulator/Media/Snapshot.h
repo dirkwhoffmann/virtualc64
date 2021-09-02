@@ -17,7 +17,7 @@ class C64;
 struct Thumbnail {
     
     // Image size
-    u16 width, height;
+    isize width, height;
     
     // Raw texture data
     u32 screen[TEX_HEIGHT * TEX_WIDTH];
@@ -54,18 +54,19 @@ public:
     // Class methods
     //
 
-    static bool isCompatiblePath(const string &name);
-    static bool isCompatibleStream(std::istream &stream);
+    static bool isCompatible(const string &name);
+    static bool isCompatible(std::istream &stream);
      
     
     //
     // Initializing
     //
      
-    Snapshot() { };
+    Snapshot(const string &path) throws { init(path); }
+    Snapshot(const u8 *buf, isize len) throws { init(buf, len); }
     Snapshot(isize capacity);
     Snapshot(class C64 &c64);
-    
+
     
     //
     // Methods from C64Object
@@ -77,7 +78,9 @@ public:
     //
     // Methods from AnyFile
     //
-        
+      
+    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_SNAPSHOT; }
     
     

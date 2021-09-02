@@ -79,10 +79,9 @@ extension MyController {
             crtIcon: hasCrt,
             
             warpIcon: running,
-            cpuInfo: running,
-            mhzInfo: running,
-            cpuIndicator: running,
-            mhzIndicator: running
+            activityType: running,
+            activityInfo: running,
+            activityBar: running
         ]
         
         for (item, visible) in items {
@@ -218,6 +217,37 @@ extension MyController {
         }
     }
     
+    func updateSpeedometer() {
+        
+        speedometer.updateWith(cycle: c64.cpu.cycles, frame: renderer.frames)
+        
+        switch activityType.selectedTag() {
+
+        case 0:
+            let mhz = speedometer.mhz
+            activityBar.doubleValue = 10 * mhz
+            activityInfo.stringValue = String(format: "%.2f MHz", mhz)
+            
+        case 1:
+            let cpu = c64.cpuLoad
+            activityBar.integerValue = cpu
+            activityInfo.stringValue = String(format: "%d%% CPU", cpu)
+            
+        case 2:
+            let fps = speedometer.fps
+            activityBar.doubleValue = fps
+            activityInfo.stringValue = String(format: "%d FPS", Int(fps))
+
+        default:
+            activityBar.integerValue = 0
+            activityInfo.stringValue = "???"
+        }
+    }
+    
+    //
+    // Action methods
+    //
+    
     @IBAction func drivePowerButtonAction(_ sender: NSButton!) {
         
         track()
@@ -239,6 +269,30 @@ extension MyController {
         case .on: pref.warpMode = .auto
         }
         
+        refreshStatusBar()
+    }
+    
+    @IBAction func activityTypeAction(_ sender: NSPopUpButton!) {
+
+        track()
+        
+        var min, max, warn, crit: Double
+        
+        switch sender.selectedTag() {
+        
+        case 0: min = 0; max = 20; warn = 13; crit = 16
+        case 1: min = 0; max = 100; warn = 50; crit = 75
+        case 2: min = 0; max = 120; warn = 75; crit = 100
+
+        default:
+            fatalError()
+        }
+        
+        activityBar.minValue = min
+        activityBar.maxValue = max
+        activityBar.warningValue = warn
+        activityBar.criticalValue = crit
+
         refreshStatusBar()
     }
 }

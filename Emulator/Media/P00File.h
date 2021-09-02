@@ -15,14 +15,26 @@ class P00File : public AnyCollection {
 
 public:
 
-    static bool isCompatiblePath(const string &name);
-    static bool isCompatibleStream(std::istream &stream);
+    static bool isCompatible(const string &name);
+    static bool isCompatible(std::istream &stream);
     
-    static P00File *makeWithFileSystem(class FSDevice &fs);
+    
+    //
+    // Initializing
+    //
     
     P00File() : AnyCollection() { }
     P00File(isize capacity) : AnyCollection(capacity) { }
-
+    P00File(const string &path) throws { init(path); }
+    P00File(const u8 *buf, isize len) throws { init(buf, len); }
+    P00File(class FSDevice &fs) throws { init(fs); }
+    
+private:
+    
+    using AnyFile::init;
+    void init(FSDevice &fs) throws;
+    
+    
     //
     // Methods from C64Object
     //
@@ -34,6 +46,8 @@ public:
     // Methods from AnyFile
     //
     
+    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_P00; }
     PETName<16> getName() const override;
 

@@ -158,7 +158,7 @@ u8
 PIA6821::peek(bool rs1, bool rs0)
 {
     u8 result;
-    u8 addr = rs1 << 3 | rs0 << 2 | (cra & 0b100) >> 1 | (crb & 0b100) >> 2;
+    auto addr = rs1 << 3 | rs0 << 2 | (cra & 0b100) >> 1 | (crb & 0b100) >> 2;
     
     /* |  RS1  |  RS0  | CRA-2 | CRB-2  | Register
      * -------------------------------------------
@@ -230,8 +230,7 @@ PIA6821::peek(bool rs1, bool rs0)
             
         default:
             
-            assert(false);
-            return 0;
+            fatalError;
     }
     
     // trace(PIA_DEBUG, "peek(%x) = %x\n", addr, result);
@@ -241,7 +240,7 @@ PIA6821::peek(bool rs1, bool rs0)
 void
 PIA6821::poke(bool rs1, bool rs0, u8 value)
 {
-    u8 addr = rs1 << 3 | rs0 << 2 | (cra & 0b100) >> 1 | (crb & 0b100) >> 2;
+    auto addr = rs1 << 3 | rs0 << 2 | (cra & 0b100) >> 1 | (crb & 0b100) >> 2;
     
     /* |  RS1  |  RS0  | CRA-2 | CRB-2  | Register
      * -------------------------------------------
@@ -346,8 +345,7 @@ PIA6821::poke(bool rs1, bool rs0, u8 value)
             break;
         }
         default:
-            assert(false);
-            break;
+            fatalError;
     }
 }
 

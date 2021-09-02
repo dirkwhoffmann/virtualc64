@@ -14,7 +14,9 @@
 #include "SubComponent.h"
 #include "PETName.h"
 
-class Disk : public SubComponent {
+class Disk : public C64Object {
+    
+    friend class Drive;
     
 public:
     
@@ -90,7 +92,7 @@ private:
      *
      *     Example: 0110 ... -> 00000000 00000001 0000001 00000000 ...
      */
-    u64 bitExpansion[256];
+    static u64 bitExpansion[256];
     
     
     //
@@ -113,10 +115,10 @@ private:
 public:
     
     // Data information for each halftrack on this disk
-    DiskData data;
+    DiskData data = { };
 
     // Length information for each halftrack on this disk
-    DiskLength length;
+    DiskLength length = { };
 
     
     //
@@ -126,7 +128,7 @@ public:
 private:
     
     // Track layout as determined by analyzeTrack
-    TrackInfo trackInfo;
+    TrackInfo trackInfo = { };
 
     // Error log created by analyzeTrack
     std::vector<string> errorLog;
@@ -138,7 +140,7 @@ private:
     std::vector<isize> errorEndIndex;
 
     // Textual representation of track data
-    char text[maxBitsOnTrack + 1];
+    char text[maxBitsOnTrack + 1] = { };
     
     
     //
@@ -161,39 +163,38 @@ public:
     
     
     //
-    // Creating
-    //
-    
-public:
-    
-    static Disk *make(C64 &ref, const string &path) throws;
-    static Disk *make(C64 &ref, DOSType type, PETName<16> name);
-    static Disk *makeWithFileSystem(C64 &ref, const class FSDevice &device);
-    static Disk *makeWithG64(C64 &ref, const G64File &g64);
-    static Disk *makeWithD64(C64 &ref, const D64File &d64) throws;
-    static Disk *makeWithCollection(C64 &ref, AnyCollection &archive) throws;
-
-
-    //
     // Initializing
     //
     
 public:
     
-    Disk(C64 &ref);
-    const char *getDescription() const override { return "Disk"; }
+    Disk();
+    Disk(const string &path, bool wp = false) { init(path, wp); } throws
+    Disk(DOSType type, PETName<16> name, bool wp = false) { init(type, name, wp); } throws
+    Disk(const class FSDevice &device, bool wp = false) { init(device, wp); } throws
+    Disk(const G64File &g64, bool wp = false) { init(g64, wp); } throws
+    Disk(const D64File &d64, bool wp = false) { init(d64, wp); } throws
+    Disk(AnyCollection &archive, bool wp = false) { init(archive, wp); } throws
+    Disk(util::SerReader &reader) throws { init(reader); }
     
 private:
     
-    void _reset(bool hard) override;
+    void init(const string &path, bool wp) throws;
+    void init(DOSType type, PETName<16> name, bool wp);
+    void init(const class FSDevice &device, bool wp);
+    void init(const G64File &g64, bool wp);
+    void init(const D64File &d64, bool wp) throws;
+    void init(AnyCollection &archive, bool wp) throws;
+    void init(util::SerReader &reader) throws;
 
     
     //
-    // Analyzing
+    // Methods from C64Object
     //
-    
+
 private:
     
+    const char *getDescription() const override { return "Disk"; }
     void _dump(dump::Category category, std::ostream& os) const override;
 
     
@@ -213,16 +214,7 @@ private:
         >> data
         >> length;
     }
-    
-    template <class T>
-    void applyToResetItems(T& worker, bool hard = true)
-    {
-    }
-    
-    isize _size() override { COMPUTE_SNAPSHOT_SIZE }
-    isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-    
+        
     
     //
     // Accessing
@@ -467,7 +459,7 @@ private:
      * follwowing sectors with odd sector numbers. The number of written bits
      * is returned.
      */
-    isize encodeTrack(const FSDevice &fs, Track t, u8 tailGap, HeadPos start);
+    isize encodeTrack(const FSDevice &fs, Track t, isize gap, HeadPos start);
     
     /* Encode a single sector. This function translates the logical byte
      * sequence of a single sector into the native VC1541 byte representation.

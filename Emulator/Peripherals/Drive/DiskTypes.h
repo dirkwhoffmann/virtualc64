@@ -105,19 +105,17 @@ static const isize dataBlockSize = 325 * 8;
 enum_long(DISK_TYPE)
 {
     DISK_TYPE_SS_SD,   // Single-sided, single density (VC1541)
-    DISK_TYPE_DS_SD,   // Double-sided, single density (VC1571) (not supported)
-    DISK_TYPE_COUNT
+    DISK_TYPE_DS_SD    // Double-sided, single density (VC1571) (not supported)
 };
 typedef DISK_TYPE DiskType;
 
 #ifdef __cplusplus
 struct DiskTypeEnum : util::Reflection<DiskTypeEnum, DiskType> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < DISK_TYPE_COUNT;
-    }
-    
+    static long min() { return 0; }
+    static long max() { return DISK_TYPE_DS_SD; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
+
     static const char *prefix() { return "DISK_TYPE"; }
     static const char *key(DiskType value)
     {
@@ -125,7 +123,6 @@ struct DiskTypeEnum : util::Reflection<DiskTypeEnum, DiskType> {
                 
             case DISK_TYPE_SS_SD:  return "SS_SD";
             case DISK_TYPE_DS_SD:  return "DS_SD";
-            case DISK_TYPE_COUNT:  return "???";
         }
         return "???";
     }
@@ -137,18 +134,16 @@ enum_long(CBM_FILE_TYPE)
     CBM_FILE_PRG,
     CBM_FILE_SEQ,
     CBM_FILE_USR,
-    CBM_FILE_REL,
-    CBM_FILE_COUNT
+    CBM_FILE_REL
 };
 typedef CBM_FILE_TYPE CBMFileType;
 
 #ifdef __cplusplus
 struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < CBM_FILE_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return CBM_FILE_REL; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "CBM"; }
     static const char *key(CBMFileType value)
@@ -159,7 +154,6 @@ struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
             case CBM_FILE_SEQ:    return "SEQ";
             case CBM_FILE_USR:    return "USR";
             case CBM_FILE_REL:    return "REL";
-            case CBM_FILE_COUNT:  return "???";
         }
         return "???";
     }

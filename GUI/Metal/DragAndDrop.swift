@@ -114,7 +114,15 @@ public extension MetalView {
         case .compatibleFileURL:
             
             if let url = NSURL(from: pasteBoard) as URL? {
-                            
+                
+                // Check if the file is a snapshot or a script
+                do {
+                    let types: [FileType] = [ .SNAPSHOT, .SCRIPT ]
+                    try document.createAttachment(from: url, allowedTypes: types)
+                    try document.mountAttachment()
+                    return true
+                } catch { }
+
                 do {
                     // Check drop zone for drive 8
                     if parent.renderer.dropZone.isInside(sender, zone: 0) {
@@ -148,14 +156,14 @@ public extension MetalView {
                         try document.mountAttachment()
                         return true
                     }
-
+                    
                     // Run the import dialog
                     try document.createAttachment(from: url)
                     document.runImportDialog()
                     return true
                     
                 } catch {
-                    (error as? VC64Error)?.cantOpen(url: url)
+                    (error as? VC64Error)?.cantOpen(url: url, async: true)
                 }
             }
             

@@ -46,12 +46,12 @@ private:
     
 protected:
 
-    u8 numPackets = 0;
+    isize numPackets = 0;
     CartridgeRom *packet[MAX_PACKETS] = {};
     
     // Indicates which packets are currently mapped to ROML and ROMH
-    u8 chipL = 0;
-    u8 chipH = 0;
+    isize chipL = 0;
+    isize chipH = 0;
     
     /* Number of bytes that are mapped to ROML and ROMH. For most cartridges,
      * this value is equals packet[romX]->size which means that the ROM is
@@ -104,7 +104,7 @@ protected:
     /* Current position of the cartridge switch (if any). Only a few cartridges
      * have a switch such as ISEPIC and EXPERT.
      */
-    i8 switchPos = 0;
+    isize switchPos = 0;
 
     // Status of the cartridge LED (true = on)
     bool led = false;
@@ -115,7 +115,10 @@ protected:
     //
 
 public:
-        
+
+    // Checks whether this cartridge has a known type indentifier
+    static bool isKnownType(CartridgeType type);
+
     // Checks whether this cartridge is a supported by the emulator
     static bool isSupportedType(CartridgeType type);
     
@@ -136,7 +139,6 @@ public:
     
     Cartridge(C64 &ref);
     ~Cartridge();
-    const char *getDescription() const override { return "Cartridge"; }
 
     /* Resets the Game and the Exrom line. The default implementation resets
      * the values to ones found in the CRT file. A few custom cartridges need
@@ -144,36 +146,27 @@ public:
      */
     virtual void resetCartConfig();
 
-protected:
-    
     void dealloc();
-    void _reset(bool hard) override;
-    void resetWithoutDeletingRam();
-        
+
     
     //
-    // Analyzing
+    // Methods from C64Object
     //
 
-public:
+protected:
     
-    // Returns the cartridge type
-    virtual CartridgeType getCartridgeType() const { return CRT_NORMAL; }
+    const char *getDescription() const override { return "Cartridge"; }
+    void _dump(dump::Category category, std::ostream& os) const override;
+
     
-    // Checks whether this cartridge is supported by the emulator yet
-    bool isSupported() const { return isSupportedType(getCartridgeType()); }
+    //
+    // Methods from C64Component
+    //
     
 protected:
     
-    void _dump(dump::Category category, std::ostream& os) const override;
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
+    void _reset(bool hard) override;
+        
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -208,6 +201,27 @@ protected:
     isize _load(const u8 *buffer) override;
     isize _save(u8 *buffer) override;
         
+    
+    //
+    // Analyzing
+    //
+
+public:
+    
+    // Returns the cartridge type
+    virtual CartridgeType getCartridgeType() const { return CRT_NORMAL; }
+    
+    // Checks whether this cartridge is supported by the emulator yet
+    bool isSupported() const { return isSupportedType(getCartridgeType()); }
+        
+    
+    //
+    // Serializing
+    //
+    
+private:
+    
+ 
         
     //
     // Accessing
@@ -324,7 +338,7 @@ public:
     virtual bool hasSwitch() const { return false; }
 
     // Returns the current switch position
-    virtual i8 getSwitch() const { return switchPos; }
+    virtual isize getSwitch() const { return switchPos; }
     bool switchIsNeutral() const { return getSwitch() == 0; }
     bool switchIsLeft() const { return getSwitch() < 0; }
     bool switchIsRight() const { return getSwitch() > 0; }
@@ -332,12 +346,12 @@ public:
     /* Returns a textual description for a switch position or nullptr if the
      * switch cannot be positioned this way.
      */
-    virtual const string getSwitchDescription(i8 pos) const { return ""; }
+    virtual const string getSwitchDescription(isize pos) const { return ""; }
     const string getSwitchDescription() const { return getSwitchDescription(getSwitch()); }
-    bool validSwitchPosition(i8 pos) const { return getSwitchDescription(pos) != ""; }
+    bool validSwitchPosition(isize pos) const { return getSwitchDescription(pos) != ""; }
     
     // Puts the switch in a certain position
-    virtual void setSwitch(i8 pos);
+    virtual void setSwitch(isize pos);
 
     
     //

@@ -33,6 +33,54 @@ AnyFile::~AnyFile()
     if (data) delete[] data;
 }
 
+void
+AnyFile::init(isize capacity)
+{
+    data = new u8[capacity]();
+    size = capacity;
+}
+
+void
+AnyFile::init(const string &path)
+{
+    std::ifstream stream(path);
+    if (!stream.is_open()) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
+    init(path, stream);
+}
+
+void
+AnyFile::init(const string &path, std::istream &stream)
+{
+    if (!isCompatiblePath(path)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+    init(stream);
+    this->path = path;
+}
+
+void
+AnyFile::init(std::istream &stream)
+{
+    if (!isCompatibleStream(stream)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
+    readFromStream(stream);
+}
+
+void
+AnyFile::init(const u8 *buf, isize len)
+{
+    assert(buf);
+    std::stringstream stream;
+    stream.write((const char *)buf, len);
+    init(stream);
+}
+    
+void
+AnyFile::init(FILE *file)
+{
+    assert(file);
+    std::stringstream stream;
+    int c; while ((c = fgetc(file)) != EOF) { stream.put((char)c); }
+    init(stream);
+}
+
 PETName<16>
 AnyFile::getName() const
 {
@@ -51,41 +99,41 @@ AnyFile::type(const string &path)
     std::ifstream stream(path);
     if (!stream.is_open()) return FILETYPE_UNKNOWN;
     
-    if (Snapshot::isCompatiblePath(path) &&
-        Snapshot::isCompatibleStream(stream))return FILETYPE_SNAPSHOT;
+    if (Snapshot::isCompatible(path) &&
+        Snapshot::isCompatible(stream))return FILETYPE_SNAPSHOT;
 
-    if (Script::isCompatiblePath(path) &&
-        Script::isCompatibleStream(stream))return FILETYPE_SCRIPT;
+    if (Script::isCompatible(path) &&
+        Script::isCompatible(stream))return FILETYPE_SCRIPT;
 
-    if (CRTFile::isCompatiblePath(path) &&
-        CRTFile::isCompatibleStream(stream))return FILETYPE_CRT;
+    if (CRTFile::isCompatible(path) &&
+        CRTFile::isCompatible(stream))return FILETYPE_CRT;
 
-    if (T64File::isCompatiblePath(path) &&
-        T64File::isCompatibleStream(stream)) return FILETYPE_T64;
+    if (T64File::isCompatible(path) &&
+        T64File::isCompatible(stream)) return FILETYPE_T64;
 
-    if (P00File::isCompatiblePath(path) &&
-        P00File::isCompatibleStream(stream)) return FILETYPE_P00;
+    if (P00File::isCompatible(path) &&
+        P00File::isCompatible(stream)) return FILETYPE_P00;
 
-    if (PRGFile::isCompatiblePath(path) &&
-        PRGFile::isCompatibleStream(stream)) return FILETYPE_PRG;
+    if (PRGFile::isCompatible(path) &&
+        PRGFile::isCompatible(stream)) return FILETYPE_PRG;
 
-    if (D64File::isCompatiblePath(path) &&
-        D64File::isCompatibleStream(stream)) return FILETYPE_D64;
+    if (D64File::isCompatible(path) &&
+        D64File::isCompatible(stream)) return FILETYPE_D64;
 
-    if (G64File::isCompatiblePath(path) &&
-        G64File::isCompatibleStream(stream)) return FILETYPE_G64;
+    if (G64File::isCompatible(path) &&
+        G64File::isCompatible(stream)) return FILETYPE_G64;
 
-    if (TAPFile::isCompatiblePath(path) &&
-        TAPFile::isCompatibleStream(stream)) return FILETYPE_TAP;
+    if (TAPFile::isCompatible(path) &&
+        TAPFile::isCompatible(stream)) return FILETYPE_TAP;
 
-    if (RomFile::isCompatiblePath(path)) {
+    if (RomFile::isCompatible(path)) {
         if (RomFile::isRomStream(ROM_TYPE_BASIC, stream)) return FILETYPE_BASIC_ROM;
         if (RomFile::isRomStream(ROM_TYPE_CHAR, stream)) return FILETYPE_CHAR_ROM;
         if (RomFile::isRomStream(ROM_TYPE_KERNAL, stream)) return FILETYPE_KERNAL_ROM;
         if (RomFile::isRomStream(ROM_TYPE_VC1541, stream)) return FILETYPE_VC1541_ROM;
     }
     
-    if (Folder::isFolder(path.c_str())) return FILETYPE_FOLDER;
+    if (Folder::isCompatible(path)) return FILETYPE_FOLDER;
 
     return FILETYPE_UNKNOWN;
 }

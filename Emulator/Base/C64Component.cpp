@@ -25,33 +25,10 @@ C64Component::reset(bool hard)
 }
 
 void
-C64Component::inspect()
+C64Component::inspect() const
 {
     for (C64Component *c : subComponents) { c->inspect(); }
     _inspect();
-}
-
-void C64Component::dump(dump::Category category, std::ostream& ss) const
-{
-    _dump(category, ss);
-}
-
-void
-C64Component::dump(dump::Category category) const
-{
-    dump(category, std::cout);
-}
-
-void
-C64Component::dump(std::ostream& ss) const
-{
-    dump((dump::Category)(-1), ss);
-}
-
-void
-C64Component::dump() const
-{
-    dump((dump::Category)(-1));
 }
 
 isize

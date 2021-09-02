@@ -70,6 +70,8 @@ const Disk::TrackDefaults Disk::trackDefaults[43] = {
     { 17, 0, 6250, 6250 * 8, 785, 0.830 }  // Track 42
 };
 
+u64 Disk::bitExpansion[256];
+
 isize
 Disk::numberOfSectorsInTrack(Track t)
 {
@@ -105,83 +107,16 @@ Disk::isValidHalftrackSectorPair(Halftrack ht, Sector s)
     return s < numberOfSectorsInHalftrack(ht);
 }
 
-Disk *
-Disk::make(C64 &ref, const string &path)
-{
-    try { return makeWithG64(ref, *AnyFile::make <G64File> (path)); }
-    catch (...) { }
-
-    try { return makeWithFileSystem(ref, *FSDevice::makeWithPath(path)); }
-    catch (...) { }
-    
-    throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
-}
-
-Disk *
-Disk::make(C64 &ref, DOSType type, PETName<16> name)
-{
-    assert_enum(DOSType, type);
-    
-    switch (type) {
-            
-        case DOS_TYPE_NODOS:
-        {
-            return new Disk(ref);
-        }
-        case DOS_TYPE_CBM:
-        {
-            std::unique_ptr<FSDevice> fs(FSDevice::makeWithType(DISK_TYPE_SS_SD, DOS_TYPE_CBM));
-            fs->setName(name);
-            return makeWithFileSystem(ref, *fs);
-        }
-        default:
-        {
-            assert(false);
-            return nullptr;
-        }
-    }
-}
-
-Disk *
-Disk::makeWithFileSystem(C64 &ref, const FSDevice &fs)
-{
-    Disk *disk = new Disk(ref);
-
-    disk->encode(fs);
-    return disk;
-}
-
-Disk *
-Disk::makeWithG64(C64 &ref, const G64File &g64)
-{
-    Disk *disk = new Disk(ref);
-
-    disk->encodeG64(g64);
-    return disk;
-}
-
-Disk *
-Disk::makeWithD64(C64 &ref, const D64File &d64)
-{
-    std::unique_ptr<FSDevice> fs(FSDevice::makeWithD64(d64));
-    return makeWithFileSystem(ref, *fs);
-}
-
-Disk *
-Disk::makeWithCollection(C64 &ref, AnyCollection &collection)
-{
-    std::unique_ptr<FSDevice> fs(FSDevice::makeWithCollection(collection));
-    return makeWithFileSystem(ref, *fs);
-}
-
-Disk::Disk(C64 &ref) : SubComponent(ref)
+Disk::Disk()
 {    
     /* Create the bit expansion table. Note that this table expects a Little
      * Endian architecture to work. If you compile the emulator on a Big Endian
      * architecture, the byte order needs to be reversed.
      */
     for (isize i = 0; i < 256; i++) {
+        
         bitExpansion[i] = 0;
+        
         if (i & 0x80) bitExpansion[i] |= 0x0000000000000001;
         if (i & 0x40) bitExpansion[i] |= 0x0000000000000100;
         if (i & 0x20) bitExpansion[i] |= 0x0000000000010000;
@@ -196,9 +131,64 @@ Disk::Disk(C64 &ref) : SubComponent(ref)
 }
 
 void
-Disk::_reset(bool hard)
+Disk::init(const string &path, bool wp)
 {
-    RESET_SNAPSHOT_ITEMS(hard)
+    if (G64File::isCompatible(path)) {
+    
+        auto file = G64File(path);
+        init(file, wp);
+        return;
+    }
+    
+    auto fs = FSDevice(path);
+    init(fs, wp);
+}
+
+void
+Disk::init(DOSType type, PETName<16> name, bool wp)
+{
+    assert_enum(DOSType, type);
+    
+    if (type == DOS_TYPE_CBM) {
+        
+        auto fs = FSDevice(DISK_TYPE_SS_SD, DOS_TYPE_CBM);
+        fs.setName(name);
+        init(fs, wp);
+    }
+}
+
+void
+Disk::init(const FSDevice &fs, bool wp)
+{
+    encode(fs);
+    setWriteProtection(wp);
+}
+
+void
+Disk::init(const G64File &g64, bool wp)
+{
+    encodeG64(g64);
+    setWriteProtection(wp);
+}
+
+void
+Disk::init(const D64File &d64, bool wp)
+{
+    auto fs = FSDevice(d64);
+    init(fs, wp);
+}
+
+void
+Disk::init(AnyCollection &collection, bool wp)
+{
+    auto fs = FSDevice(collection);
+    init(fs, wp);
+}
+
+void
+Disk::init(util::SerReader &reader)
+{
+    applyToPersistentItems(reader);
 }
 
 void
@@ -267,7 +257,7 @@ Disk::decodeGcrNibble(u8 *gcr)
 {
     assert(gcr);
     
-    u8 codeword = (gcr[0] << 4) | (gcr[1] << 3) | (gcr[2] << 2) | (gcr[3] << 1) | gcr[4];
+    auto codeword = gcr[0] << 4 | gcr[1] << 3 | gcr[2] << 2 | gcr[3] << 1 | gcr[4];
     assert(codeword < 32);
     
     return invgcr[codeword];
@@ -281,7 +271,7 @@ Disk::decodeGcr(u8 *gcr)
     u8 nibble1 = decodeGcrNibble(gcr);
     u8 nibble2 = decodeGcrNibble(gcr + 5);
 
-    return (nibble1 << 4) | nibble2;
+    return (u8)(nibble1 << 4 | nibble2);
 }
 
 bool
@@ -402,11 +392,11 @@ Disk::analyzeHalftrack(Halftrack ht)
     // Setup working buffer (two copies of the track, each bit represented by one byte).
     for (isize i = 0; i < maxBytesOnTrack; i++)
         trackInfo.byte[i] = bitExpansion[data.halftrack[ht][i]];
-    memcpy(trackInfo.bit + len, trackInfo.bit, len);
+    std::memcpy(trackInfo.bit + len, trackInfo.bit, len);
     
     // Indicates where the sector headers blocks and the sectors data blocks start.
     u8 sync[sizeof(trackInfo.bit)];
-    memset(sync, 0, sizeof(sync));
+    std::memset(sync, 0, sizeof(sync));
     
     // Scan for SYNC sequences and decode the byte that follows.
     isize noOfOnes = 0;
@@ -668,7 +658,7 @@ Disk::decodeDisk(u8 *dest, isize numTracks)
         if (trackIsEmpty(t))
             break;
         
-        trace(GCR_DEBUG, "Decoding track %d %s\n", t, dest ? "" : "(test run)");
+       trace(GCR_DEBUG, "Decoding track %zd %s\n", t, dest ? "" : "(test run)");
         numBytes += decodeTrack(t, dest + (dest ? numBytes : 0));
     }
     
@@ -687,7 +677,7 @@ Disk::decodeTrack(Track t, u8 *dest)
     // For each sector ...
     for (Sector s = 0; s < numSectors; s++) {
         
-        trace(GCR_DEBUG, "   Decoding sector %d\n", s);
+        trace(GCR_DEBUG, "   Decoding sector %zd\n", s);
         SectorInfo info = sectorLayout(s);
         if (info.dataBegin != info.dataEnd) {
             numBytes += decodeSector(info.dataBegin, dest + (dest ? numBytes : 0));
@@ -730,7 +720,7 @@ Disk::encodeG64(const G64File &a)
     clearDisk();
     for (Halftrack ht = 1; ht <= 84; ht++) {
         
-        u16 size = a.getSizeOfHalftrack(ht);
+        isize size = a.getSizeOfHalftrack(ht);
         
         if (size == 0) {
             if (ht > 1) {
@@ -741,11 +731,11 @@ Disk::encodeG64(const G64File &a)
         }
         
         if (size > 7928) {
-            warn("Halftrack %d has %d bytes. Must be less than 7928\n", ht, size);
+            warn("Halftrack %zd has %zd bytes. Must be less than 7928\n", ht, size);
             continue;
         }
-        trace(GCR_DEBUG, "  Encoding halftrack %d (%d bytes)\n", ht, size);
-        length.halftrack[ht] = 8 * size;
+        trace(GCR_DEBUG, "  Encoding halftrack %zd (%zd bytes)\n", ht, size);
+        length.halftrack[ht] = (u16)(8 * size);
         
         a.copyHalftrack(ht, data.halftrack[ht]);
     }
@@ -788,9 +778,9 @@ Disk::encode(const FSDevice &fs, bool alignTracks)
     };
     */
     
-    auto numTracks = fs.getNumTracks();
+    isize numTracks = fs.getNumTracks();
 
-    trace(GCR_DEBUG, "Encoding disk with %d tracks\n", numTracks);
+    trace(GCR_DEBUG, "Encoding disk with %zd tracks\n", numTracks);
 
     // Wipe out track data
     clearDisk();
@@ -819,17 +809,17 @@ Disk::encode(const FSDevice &fs, bool alignTracks)
 }
 
 isize
-Disk::encodeTrack(const FSDevice &fs, Track t, u8 tailGap, HeadPos start)
+Disk::encodeTrack(const FSDevice &fs, Track t, isize gap, HeadPos start)
 {
     assert(isTrackNumber(t));
-    trace(GCR_DEBUG, "Encoding track %d\n", t);
+    trace(GCR_DEBUG, "Encoding track %zd\n", t);
 
     isize totalEncodedBits = 0;
     
     // For each sector in this track ...
     for (Sector s = 0; s < trackDefaults[t].sectors; s++) {
         
-        isize encodedBits = encodeSector(fs, t, s, start, tailGap);
+        isize encodedBits = encodeSector(fs, t, s, start, gap);
         start += (HeadPos)encodedBits;
         totalEncodedBits += encodedBits;
     }
@@ -847,12 +837,12 @@ Disk::encodeSector(const FSDevice &fs, Track t, Sector s, HeadPos start, isize t
     HeadPos offset = start;
     u8 errorCode = fs.getErrorCode(ts);
         
-    trace(GCR_DEBUG, "  Encoding track/sector %d/%d\n", t, s);
+    trace(GCR_DEBUG, "  Encoding track/sector %zd/%zd\n", t, s);
     
     // Get disk id and compute checksum
     u8 id1 = fs.diskId1();
     u8 id2 = fs.diskId2();
-    u8 checksum = id1 ^ id2 ^ t ^ s; // Header checksum byte
+    u8 checksum = (u8)(id1 ^ id2 ^ t ^ s); // Header checksum byte
     
     // SYNC (0xFF 0xFF 0xFF 0xFF 0xFF)
     if (errorCode == 0x3) {
@@ -879,9 +869,9 @@ Disk::encodeSector(const FSDevice &fs, Track t, Sector s, HeadPos start, isize t
     offset += 10;
     
     // Sector and track number
-    encodeGcr(s, t, offset);
+    encodeGcr((u8)s, t, offset);
     offset += 10;
-    encodeGcr(t, t, offset);
+    encodeGcr((u8)t, t, offset);
     offset += 10;
     
     // Disk ID (two bytes)

@@ -156,7 +156,6 @@
 - (void)dealloc;
 - (void)kill;
 
-@property (readonly) BOOL isReleaseBuild;
 @property BOOL warpMode;
 @property BOOL debugMode;
 @property (readonly) NSInteger cpuLoad;
@@ -205,6 +204,11 @@
 - (void)stopAndGo;
 - (void)stepInto;
 - (void)stepOver;
+
+/*
+@property (readonly) NSInteger breakpointPC;
+@property (readonly) NSInteger watchpointPC;
+*/
 
 - (BOOL)hasRom:(RomType)type;
 - (BOOL)hasMega65Rom:(RomType)type;
@@ -445,7 +449,7 @@
 
 - (BOOL)cartridgeAttached;
 - (CartridgeType)cartridgeType;
-- (BOOL)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset; // TODO: throw
+- (void)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex;
 - (void)attachGeoRamCartridge:(NSInteger)capacity;
 - (void)attachIsepicCartridge;
 - (void)detachCartridgeAndReset;
@@ -516,6 +520,7 @@
 
 - (BOOL)redLED;
 - (BOOL)hasDisk;
+- (BOOL)hasWriteProtectedDisk;
 - (BOOL)hasModifiedDisk;
 - (void)setModifiedDisk:(BOOL)b;
 - (void)insertNewDisk:(DOSType)fstype;
@@ -524,15 +529,12 @@
 - (void)insertCollection:(AnyCollectionProxy *)proxy protected:(BOOL)wp;
 - (void)insertFileSystem:(FSDeviceProxy *)proxy protected:(BOOL)wp;
 - (void)ejectDisk;
-- (BOOL)writeProtected;
-- (void)setWriteProtection:(BOOL)b;
-- (BOOL)hasWriteProtectedDisk;
 
 - (Track)track;
 - (Halftrack)halftrack;
 - (u16)sizeOfHalftrack:(Halftrack)ht;
 - (u16)sizeOfCurrentHalftrack;
-- (u16)offset;
+- (NSInteger)offset;
 - (u8)readBitFromHead;
 
 - (BOOL)isRotating;
@@ -772,8 +774,6 @@
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
  
-@property (readonly) RomType romType;
-
 @end
 
 //

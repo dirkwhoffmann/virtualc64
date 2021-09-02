@@ -57,8 +57,7 @@ Mouse::getConfigItem(Option option) const
         case OPT_MOUSE_VELOCITY:   return config.velocity;
 
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
 }
 
@@ -174,7 +173,7 @@ Mouse::setLeftButton(bool value)
         case MOUSE_NEOS:  mouseNeos.setLeftMouseButton(value); break;
             
         default:
-            assert(false);
+            fatalError;
     }
     port.device = CPDEVICE_MOUSE;
 }
@@ -191,7 +190,7 @@ Mouse::setRightButton(bool value)
         case MOUSE_NEOS:  mouseNeos.setRightMouseButton(value); break;
             
         default:
-            assert(false);
+            fatalError;
     }
     port.device = CPDEVICE_MOUSE;
 }
@@ -255,8 +254,7 @@ Mouse::readPotX() const
         case MOUSE_NEOS:  return mouseNeos.readPotX();
             
         default:
-            assert(false);
-            return 0xFF;
+            fatalError;
     }
 }
 
@@ -270,8 +268,7 @@ Mouse::readPotY() const
         case MOUSE_NEOS:  return mouseNeos.readPotY();
             
         default:
-            assert(false);
-            return 0xFF;
+            fatalError;
     }
 }
 
@@ -293,8 +290,7 @@ Mouse::getControlPort() const
         case MOUSE_NEOS:  return mouseNeos.readControlPort();
             
         default:
-            assert(false);
-            return 0xFF;
+            fatalError;
     }
 }
 
@@ -304,16 +300,22 @@ Mouse::execute()
     switch(config.model) {
             
         case MOUSE_C1350:
+            
             mouse1350.execute((i64)targetX, (i64)targetY);
             break;
+            
         case MOUSE_C1351:
+            
             // Coordinates are updated in readPotX() and readPotY()
             break;
+            
         case MOUSE_NEOS:
+            
             // Coordinates are updated in latchPosition()
             break;
+            
         default:
-            assert(false);
+            fatalError;
     }
 }
 

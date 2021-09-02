@@ -25,19 +25,19 @@ class VICII : public SubComponent {
     // Current configuration
     VICIIConfig config = { };
 
+    // Result of the latest inspection
+    mutable VICIIInfo info = { };
+    mutable SpriteInfo spriteInfo[8] = { };
+    
+    // Statistics
+    VICIIStats stats = { };
+
     // Chip properties (derived from config.revision)
     bool isPAL;
     bool isNTSC;
     bool is856x;
     bool is656x;
 
-    // Result of the latest inspection
-    VICIIInfo info = { };
-    SpriteInfo spriteInfo[8] = { };
-    
-    // Statistics
-    VICIIStats stats = { };
-        
 public:
     
     // Sub components
@@ -573,75 +573,42 @@ public:
 public:
 	
     VICII(C64 &ref);
-    const char *getDescription() const override { return "VICII"; }
 
     void updateVicFunctionTable();
 
 private:
     
-    void _reset(bool hard) override;
-
-    void resetEmuTexture(int nr);
+    void resetEmuTexture(isize nr);
     void resetEmuTextures() { resetEmuTexture(1); resetEmuTexture(2); }
-    void resetDmaTexture(int nr);
+    void resetDmaTexture(isize nr);
     void resetDmaTextures() { resetDmaTexture(1); resetDmaTexture(2); }
     void resetTexture(u32 *p);
 
     template <u16 flags> ViciiFunc getViciiFunc(isize cycle);
-    
-    //
-    // Configuring
-    //
-    
-public:
-    
-    static VICIIConfig getDefaultConfig();
-    const VICIIConfig &getConfig() const { return config; }
-    void resetConfig() override;
 
-    i64 getConfigItem(Option option) const;
-    void setConfigItem(Option option, i64 value);
+    
+    //
+    // Methods from C64Object
+    //
 
 private:
     
-    void setRevision(VICIIRevision revision);
-    void setSpeed(VICIISpeed speed);
-
-
-    //
-    // Analyzing
-    //
-    
-public:
-    
-    VICIIInfo getInfo() { return SubComponent::getInfo(info); }
-    SpriteInfo getSpriteInfo(int nr);
-
-private:
-    
-    void _inspect() override;
+    const char *getDescription() const override { return "VICII"; }
     void _dump(dump::Category category, std::ostream& os) const override;
 
-public:
-    
-    VICIIStats getStats() { return stats; }
-    
+
+    //
+    // Methods from C64Component
+    //
+
 private:
     
-    void clearStats();
-    
-public:
-    
-    // Returns true if the DMA debugger is switched on
-    bool dmaDebug() const { return dmaDebugger.config.dmaDebug; }
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
+    void _reset(bool hard) override;
+    void _inspect() const override;
+    void _run() override;
+    void _debugOn() override;
+    void _debugOff() override;
+
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -737,11 +704,43 @@ private:
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+    
+    
+    //
+    // Configuring
+    //
+    
+public:
+    
+    static VICIIConfig getDefaultConfig();
+    const VICIIConfig &getConfig() const { return config; }
+    void resetConfig() override;
+
+    i64 getConfigItem(Option option) const;
+    void setConfigItem(Option option, i64 value);
+
+    bool dmaDebug() const { return dmaDebugger.config.dmaDebug; }
 
 private:
     
-    void _run() override;
+    void setRevision(VICIIRevision revision);
+    void setSpeed(VICIISpeed speed);
 
+
+    //
+    // Analyzing
+    //
+    
+public:
+    
+    VICIIInfo getInfo() const { return C64Component::getInfo(info); }
+    SpriteInfo getSpriteInfo(int nr);
+    VICIIStats getStats() { return stats; }
+    
+private:
+    
+    void clearStats();
+    
     
     //
     // Deriving chip properties
@@ -850,7 +849,7 @@ private:
     /* Updates the VICII bank address. The new address is computed from the
      * provided bank number.
      */
-    void updateBankAddr(u8 bank) { assert(bank < 4); bankAddr = bank << 14; }
+    void updateBankAddr(u8 bank) { bankAddr = (u16)(bank << 14); }
 
     /* Updates the VICII bank address. The new address is computed from the
      * bits in CIA2::PA.
@@ -1072,7 +1071,7 @@ private:
 private:
 
     // Gets the depth of a sprite (will be written into the z buffer)
-    u8 spriteDepth(u8 nr) const;
+    u8 spriteDepth(isize nr) const;
     
     // Compares the Y coordinates of all sprites with the yCounter
     u8 compareSpriteY() const;

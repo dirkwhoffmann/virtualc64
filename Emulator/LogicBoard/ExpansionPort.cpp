@@ -11,11 +11,6 @@
 #include "ExpansionPort.h"
 #include "C64.h"
 
-ExpansionPort::~ExpansionPort()
-{
-    detachCartridge();
-}
-
 void
 ExpansionPort::_reset(bool hard)
 {
@@ -248,45 +243,34 @@ ExpansionPort::attachGeoRamCartridge(isize kb)
     debug(EXP_DEBUG, "Attaching GeoRAM cartridge (%zu KB)", kb);
 
     // kb must be a power of two between 64 and 4096
-    if (kb < 64 || kb > 4096 || (kb & (kb - 1))) assert(false);
+    assert(kb >= 64 && kb <= 4096 && !(kb & (kb - 1)));
     
-    Cartridge *geoRAM = Cartridge::makeWithType(c64, CRT_GEO_RAM);
-    geoRAM->setRamCapacity(kb * 1024);
-    attachCartridge(geoRAM);
+    attachCartridge(new GeoRAM(c64, kb));
 }
 
 void
 ExpansionPort::attachCartridge(const string &path, bool reset)
 {
-    auto file = AnyFile::make <CRTFile> (path);
-    attachCartridge(file, reset);
+    attachCartridge(new CRTFile(path), reset);
 }
 
-bool
+void
 ExpansionPort::attachCartridge(CRTFile *file, bool reset)
 {
     assert(file);
     
     // Only proceed if this cartridge is supported
-    if (!file->isSupported()) {
-        msgQueue.put(MSG_CRT_UNSUPPORTED, file->cartridgeType());
-        return false;
-    }
+    if (!file->isSupported()) throw VC64Error(ERROR_CRT_UNSUPPORTED);
     
     // Create cartridge from cartridge file
-    Cartridge *cartridge;
-    if (!(cartridge = Cartridge::makeWithCRTFile(c64, *file))) {
-        return false;
-    }
+    Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, *file);
         
-    // Attach cartridge
+    // Attach cartridge to the expansion port
     suspended {
         
         attachCartridge(cartridge);
         if (reset) c64.hardReset();
     }
-    
-    return true;
 }
 
 void
@@ -294,7 +278,7 @@ ExpansionPort::attachIsepicCartridge()
 {
     debug(EXP_DEBUG, "Attaching Isepic cartridge\n");
     
-    Cartridge *isepic = Cartridge::makeWithType(c64, CRT_ISEPIC);
+    Cartridge *isepic = new Isepic(c64); //  Cartridge::makeWithType(c64, CRT_ISEPIC);
     (void)attachCartridge(isepic);
 }
 
@@ -374,7 +358,7 @@ ExpansionPort::hasSwitch() const
     return cartridge ? cartridge->hasSwitch() : false;
 }
 
-i8
+isize
 ExpansionPort::getSwitch() const
 {
     return cartridge ? cartridge->getSwitch() : 0;
@@ -399,7 +383,7 @@ ExpansionPort::switchIsRight() const
 }
 
 const string
-ExpansionPort::getSwitchDescription(i8 pos) const
+ExpansionPort::getSwitchDescription(isize pos) const
 {
     return cartridge ? cartridge->getSwitchDescription(pos) : "";
 }
@@ -411,7 +395,7 @@ ExpansionPort::getSwitchDescription() const
 }
 
 bool
-ExpansionPort::validSwitchPosition(i8 pos) const
+ExpansionPort::validSwitchPosition(isize pos) const
 {
     return cartridge ? cartridge->validSwitchPosition(pos) : false;    
 }

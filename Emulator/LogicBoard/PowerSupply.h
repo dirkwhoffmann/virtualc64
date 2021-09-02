@@ -20,38 +20,29 @@ class PowerSupply : public SubComponent {
 
     
     //
-    // Constructing
+    // Initializing
     //
     
 public:
     
     PowerSupply(C64& ref);
     
+    
+    //
+    // Methods from C64Object
+    //
+    
     const char *getDescription() const override { return "PowerSupply"; }
+
+
+    //
+    // Methods from C64Component
+    //
 
 private:
     
     void _reset(bool hard) override;
-    
-    
-    //
-    // Configuring
-    //
-    
-public:
-    
-    static PowerSupplyConfig getDefaultConfig();
-    const PowerSupplyConfig &getConfig() const { return config; }
-    void resetConfig() override;
-
-    i64 getConfigItem(Option option) const;
-    void setConfigItem(Option option, i64 value);
-    
-    
-    //
-    // Serializing
-    //
-    
+        
 private:
     
     template <class T>
@@ -70,7 +61,21 @@ private:
     
     
     //
+    // Configuring
     //
+    
+public:
+    
+    static PowerSupplyConfig getDefaultConfig();
+    const PowerSupplyConfig &getConfig() const { return config; }
+    void resetConfig() override;
+
+    i64 getConfigItem(Option option) const;
+    void setConfigItem(Option option, i64 value);
+
+    
+    //
+    // Using the device
     //
        
 public:

@@ -49,7 +49,7 @@ CPU<M>::_reset(bool hard)
 }
 
 template <typename M> void
-CPU<M>::_inspect()
+CPU<M>::_inspect() const
 {    
     synchronized {
         
@@ -225,12 +225,12 @@ CPU<M>::setRDY(bool value)
 //
 
 template         CPU<C64Memory>::CPU(C64& ref, C64Memory& memref);
-template CPUInfo CPU<C64Memory>::getInfo();
+template CPUInfo CPU<C64Memory>::getInfo() const;
 template void    CPU<C64Memory>::_dump(dump::Category category, std::ostream& os) const;
 template void    CPU<C64Memory>::_debugOn();
 template void    CPU<C64Memory>::_debugOff();
 template void    CPU<C64Memory>::_reset(bool hard);
-template void    CPU<C64Memory>::_inspect();
+template void    CPU<C64Memory>::_inspect() const;
 template u8      CPU<C64Memory>::getP() const;
 template u8      CPU<C64Memory>::getPWithClearedB() const;
 template void    CPU<C64Memory>::setP(u8 p);
@@ -242,12 +242,12 @@ template void    CPU<C64Memory>::releaseIrqLine(IntSource source);
 template void    CPU<C64Memory>::setRDY(bool value);
 
 template         CPU<DriveMemory>::CPU(C64& ref, DriveMemory& memref);
-template CPUInfo CPU<DriveMemory>::getInfo();
+template CPUInfo CPU<DriveMemory>::getInfo() const;
 template void    CPU<DriveMemory>::_dump(dump::Category category, std::ostream& os) const;
 template void    CPU<DriveMemory>::_debugOn();
 template void    CPU<DriveMemory>::_debugOff();
 template void    CPU<DriveMemory>::_reset(bool hard);
-template void    CPU<DriveMemory>::_inspect();
+template void    CPU<DriveMemory>::_inspect() const;
 template u8      CPU<DriveMemory>::getP() const;
 template u8      CPU<DriveMemory>::getPWithClearedB() const;
 template void    CPU<DriveMemory>::setP(u8 p);

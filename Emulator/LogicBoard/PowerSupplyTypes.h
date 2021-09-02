@@ -21,18 +21,16 @@ enum_long(GRID)
     GRID_STABLE_50HZ,
     GRID_UNSTABLE_50HZ,
     GRID_STABLE_60HZ,
-    GRID_UNSTABLE_60HZ,
-    GRID_COUNT
+    GRID_UNSTABLE_60HZ
 };
 typedef GRID PowerGrid;
 
 #ifdef __cplusplus
 struct PowerGridEnum : util::Reflection<PowerGridEnum, PowerGrid> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < GRID_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return GRID_UNSTABLE_60HZ; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "GRID"; }
     static const char *key(PowerGrid value)
@@ -43,7 +41,6 @@ struct PowerGridEnum : util::Reflection<PowerGridEnum, PowerGrid> {
             case GRID_UNSTABLE_50HZ:  return "UNSTABLE_50HZ";
             case GRID_STABLE_60HZ:    return "STABLE_60HZ";
             case GRID_UNSTABLE_60HZ:  return "UNSTABLE_60HZ";
-            case GRID_COUNT:          return "???";
         }
         return "???";
     }

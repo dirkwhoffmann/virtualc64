@@ -44,41 +44,25 @@ public:
     
     Joystick(C64 &ref, ControlPort& pref);
     
-    const char *getDescription() const override;
     
+    //
+    // Methods from C64Object
+    //
+
+private:
+    
+    const char *getDescription() const override;
+    void _dump(dump::Category category, std::ostream& os) const override;
+
+    
+    //
+    // Methods from C64Component
+    //
+
 private:
     
     void _reset(bool hard) override;
-    
-    
-    //
-    // Configuring
-    //
-    
-public:
-
-    const JoystickConfig &getConfig() const { return config; }
-    void resetConfig() override;
-
-    i64 getConfigItem(Option option) const;
-    void setConfigItem(Option option, i64 value);
-    
-    
-    //
-    // Analyzing
-    //
-    
-private:
-    
-    void _dump(dump::Category category, std::ostream& os) const override;
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
+        
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -93,6 +77,19 @@ private:
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     isize didLoadFromBuffer(const u8 *buffer) override;
+    
+    
+    //
+    // Configuring
+    //
+    
+public:
+
+    const JoystickConfig &getConfig() const { return config; }
+    void resetConfig() override;
+
+    i64 getConfigItem(Option option) const;
+    void setConfigItem(Option option, i64 value);
     
     
     //

@@ -31,12 +31,28 @@ class DmaDebugger : public SubComponent {
 public:
     
     DmaDebugger(C64 &ref);
+    
+    
+    //
+    // Methods from C64Object
+    //
+
     const char *getDescription() const override { return "DmaDebugger"; }
+    void _dump(dump::Category category, std::ostream& os) const override;
+
+    
+    //
+    // Methods from C64Component
+    //
 
 private:
     
     void _reset(bool hard) override { };
-
+    
+    isize _size() override { return 0; }
+    isize _load(const u8 *buffer) override {return 0; }
+    isize _save(u8 *buffer) override { return 0; }
+    
     
     //
     // Configuring
@@ -52,26 +68,6 @@ public:
     i64 getConfigItem(Option option, long id) const;
     void setConfigItem(Option option, i64 value);
     void setConfigItem(Option option, long id, i64 value);
-
-    
-    //
-    // Analyzing
-    //
-
-private:
-    
-    void _dump(dump::Category category, std::ostream& os) const override;
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
-    isize _size() override { return 0; }
-    isize _load(const u8 *buffer) override {return 0; }
-    isize _save(u8 *buffer) override { return 0; }
     
     
     //

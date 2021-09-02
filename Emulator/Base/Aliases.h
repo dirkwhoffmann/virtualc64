@@ -17,11 +17,11 @@
 
 typedef i64 Cycle;
 
-typedef i32 Cylinder;
-typedef i32 Head;
-typedef i32 Track;
-typedef i32 Halftrack;
-typedef i32 Sector;
-typedef i32 Block;
+typedef isize Cylinder;
+typedef isize Head;
+typedef isize Track;
+typedef isize Halftrack;
+typedef isize Sector;
+typedef isize Block;
 
-typedef i32 HeadPos;
+typedef isize HeadPos;

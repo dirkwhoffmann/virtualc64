@@ -87,12 +87,41 @@ class Mouse : public SubComponent {
 public:
     
     Mouse(C64 &ref, ControlPort& pref);
-    const char *getDescription() const override { return "Mouse"; }
     
+    
+    //
+    // Methods from C64Object
+    //
+
+private:
+    
+    const char *getDescription() const override { return "Mouse"; }
+    void _dump(dump::Category category, std::ostream& os) const override;
+
+    
+    //
+    // Methods from C64Component
+    //
+
 private:
     
     void _reset(bool hard) override;
 
+    template <class T>
+    void applyToPersistentItems(T& worker)
+    {
+        worker << config.model;
+    }
+    
+    template <class T>
+    void applyToResetItems(T& worker, bool hard = true)
+    {
+    }
+    
+    isize _size() override { COMPUTE_SNAPSHOT_SIZE }
+    isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
+    isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+    
     
     //
     // Configuring
@@ -110,38 +139,7 @@ private:
     
     void updateScalingFactors();
     
-    
-    //
-    // Analyzing
-    //
-    
-private:
-    
-    void _dump(dump::Category category, std::ostream& os) const override;
-
-
-    //
-    // Serializing
-    //
-    
-private:
-    
-    template <class T>
-    void applyToPersistentItems(T& worker)
-    {
-        worker << config.model;
-    }
-    
-    template <class T>
-    void applyToResetItems(T& worker, bool hard = true)
-    {
-    }
-    
-    isize _size() override { COMPUTE_SNAPSHOT_SIZE }
-    isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-    
-    
+ 
     //
     // Accessing
     //

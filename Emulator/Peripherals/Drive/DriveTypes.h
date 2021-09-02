@@ -24,6 +24,26 @@ enum_long(DRIVE_ID)
 };
 typedef DRIVE_ID DriveID;
 
+#ifdef __cplusplus
+struct DriveIDEnum : util::Reflection<DriveIDEnum, DriveID> {
+    
+    static long min() { return DRIVE8; }
+    static long max() { return DRIVE9; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
+    
+    static const char *prefix() { return ""; }
+    static const char *key(DriveID value)
+    {
+        switch (value) {
+                
+            case DRIVE8:  return "DRIVE8";
+            case DRIVE9:  return "DRIVE9";
+        }
+        return "???";
+    }
+};
+#endif
+
 enum_long(DRIVE_TYPE)
 {
     DRIVE_VC1541,
@@ -35,10 +55,9 @@ typedef DRIVE_TYPE DriveType;
 #ifdef __cplusplus
 struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value <= DRIVE_VC1541II;
-    }
+    static long min() { return 0; }
+    static long max() { return DRIVE_VC1541II; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "DRIVE"; }
     static const char *key(DriveType value)
@@ -65,10 +84,9 @@ typedef DRVRAM DriveRam;
 #ifdef __cplusplus
 struct DriveRamEnum : util::Reflection<DriveRamEnum, DriveRam> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value <= DRVRAM_6000_7FFF;
-    }
+    static long min() { return 0; }
+    static long max() { return DRVRAM_6000_7FFF; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "DRVRAM"; }
     static const char *key(DriveType value)
@@ -99,10 +117,9 @@ typedef DRVMEM_TYPE DrvMemType;
 #ifdef __cplusplus
 struct DrvMemTypeEnum : util::Reflection<DrvMemTypeEnum, DrvMemType> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value <= DRVMEM_PIA;
-    }
+    static long min() { return 0; }
+    static long max() { return DRVMEM_PIA; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "DRVMEM"; }
     static const char *key(DrvMemType value)
@@ -127,18 +144,16 @@ enum_long(DISK_INSERTION_STATUS)
     DISK_FULLY_EJECTED,
     DISK_PARTIALLY_INSERTED,
     DISK_FULLY_INSERTED,
-    DISK_PARTIALLY_EJECTED,
-    DISK_INSERTION_STATUS_COUNT
+    DISK_PARTIALLY_EJECTED
 };
 typedef DISK_INSERTION_STATUS InsertionStatus;
 
 #ifdef __cplusplus
 struct InsertionStatusEnum : util::Reflection<InsertionStatusEnum, InsertionStatus> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned)value < DISK_INSERTION_STATUS_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return DISK_PARTIALLY_EJECTED; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "DISK"; }
     static const char *key(InsertionStatus value)
@@ -149,7 +164,6 @@ struct InsertionStatusEnum : util::Reflection<InsertionStatusEnum, InsertionStat
             case DISK_PARTIALLY_INSERTED:      return "PARTIALLY_INSERTED";
             case DISK_FULLY_INSERTED:          return "FULLY_INSERTED";
             case DISK_PARTIALLY_EJECTED:       return "PARTIALLY_EJECTED";
-            case DISK_INSERTION_STATUS_COUNT:  return "???";
         }
         return "???";
     }

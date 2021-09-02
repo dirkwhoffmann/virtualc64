@@ -154,7 +154,7 @@ class MyDocument: NSDocument {
             return
         }
         if let proxy = attachment as? CRTFileProxy {
-            c64.expansionport.attachCartridge(proxy, reset: true)
+            try c64.expansionport.attachCartridge(proxy, reset: true)
             return
         }
         if let proxy = attachment as? TAPFileProxy {

@@ -73,7 +73,7 @@ ReSID::setClockFrequency(u32 frequency)
 }
 
 void
-ReSID::_inspect()
+ReSID::_inspect() const
 {
     synchronized {
         

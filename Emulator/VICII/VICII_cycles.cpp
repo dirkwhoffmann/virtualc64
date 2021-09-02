@@ -768,7 +768,7 @@ VICII::cycle64()
     // Phi2.5 Fetch (previous cycle)
     NTSC { sAccess1 <flags,2> (); }
 
-    PAL { assert(false); } // NTSC only
+    PAL { fatalError; } // NTSC only
     
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -791,7 +791,7 @@ VICII::cycle64()
 template <u16 flags> void
 VICII::cycle65()
 {
-    PAL { assert(false); } // NTSC only
+    PAL { fatalError; } // NTSC only
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -910,7 +910,7 @@ VICII::cAccess()
     if (BApulledDownForAtLeastThreeCycles()) {
         
         // |VM13|VM12|VM11|VM10| VC9| VC8| VC7| VC6| VC5| VC4| VC3| VC2| VC1| VC0|
-        u16 addr = (VM13VM12VM11VM10() << 6) | vc;
+        u16 addr = (u16)(VM13VM12VM11VM10() << 6 | vc);
         
         dataBusPhi2 = memAccess(addr);
         videoMatrix[vmli] = dataBusPhi2;
@@ -1048,9 +1048,9 @@ VICII::gAccessAddr(bool bmm, bool ecm)
      *  BMM=0: |CB13|CB12|CB11|D7 |D6 |D5 |D4 |D3 |D2 |D1 |D0 |RC2|RC1|RC0|
      */
      if (bmm) {
-        addr = (CB13() << 10) | (vc << 3) | rc;
+        addr = (u16)(CB13() << 10 | vc << 3 | rc);
     } else {
-        addr = (CB13CB12CB11() << 10) | (videoMatrix[vmli] << 3) | rc;
+        addr = (u16)(CB13CB12CB11() << 10 | videoMatrix[vmli] << 3 | rc);
     }
     
     /* "If the ECM bit is set, the address generator always holds the
@@ -1069,8 +1069,8 @@ VICII::pAccess(isize sprite)
     assert(sprite < 8);
     
     // |VM13|VM12|VM11|VM10|  1 |  1 |  1 |  1 |  1 |  1 |  1 |  Spr.-Nummer |
-    dataBusPhi1 = memAccess((VM13VM12VM11VM10() << 6) | 0x03F8 | sprite);
-    spritePtr[sprite] = dataBusPhi1 << 6;
+    dataBusPhi1 = memAccess((u16)(VM13VM12VM11VM10() << 6 | 0x03F8 | sprite));
+    spritePtr[sprite] = (u16)(dataBusPhi1 << 6);
     
     if (flags & DEBUG_CYCLE) {
         dmaDebugger.visualizeDma(bufferoffset, dataBusPhi1, MEMACCESS_P);

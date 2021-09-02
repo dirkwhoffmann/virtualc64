@@ -15,8 +15,6 @@
 #include "Error.h"
 #include "Parser.h"
 
-typedef std::list<string> Arguments;
-
 enum class Token
 {
     none,
@@ -69,7 +67,7 @@ class Interpreter: SubComponent
 
 public:
     
-    Interpreter(C64 &ref);
+    Interpreter(C64 &ref) : SubComponent(ref) { registerInstructions(); }
 
     const char *getDescription() const override { return "Interpreter"; }
 
@@ -98,12 +96,16 @@ private:
     
 public:
     
+    // Auto-completes a user command
+    string autoComplete(const string& userInput);
+    
+private:
+    
     // Splits an input string into an argument list
     Arguments split(const string& userInput);
 
-    // Auto-completes a command. Returns the number of auto-completed tokens
+    // Auto-completes an argument list
     void autoComplete(Arguments &argv);
-    string autoComplete(const string& userInput);
 
     
     //
@@ -114,14 +116,14 @@ public:
     
     // Executes a single command
     void exec(const string& userInput, bool verbose = false) throws;
-    void exec(Arguments &argv, bool verbose = false) throws;
+    void exec(const Arguments &argv, bool verbose = false) throws;
             
     // Prints a usage string for a command
-    void usage(Command &command);
+    void usage(const Command &command);
     
     // Displays a help text for a (partially typed in) command
     void help(const string &userInput);
-    void help(Arguments &argv);
-    void help(Command &command);
+    void help(const Arguments &argv);
+    void help(const Command &command);
 
 };

@@ -40,6 +40,7 @@ public:
     
 public:
 
+    /*
     static FSDevice *makeWithFormat(FSDeviceDescriptor &layout);
     static FSDevice *makeWithType(DiskType type, DOSType vType = DOS_TYPE_NODOS);
     static FSDevice *makeWithD64(const class D64File &d64) throws;
@@ -47,7 +48,8 @@ public:
     static FSDevice *makeWithCollection(AnyCollection &collection) throws;
     static FSDevice *makeWithPath(const string &path) throws;
     static FSDevice *makeWithFolder(const string &path) throws;
-
+    */
+    
     
     //
     // Initializing
@@ -55,8 +57,27 @@ public:
     
 public:
 
-    FSDevice(u32 capacity);
+    FSDevice(isize capacity) { init(capacity); }
+    FSDevice(FSDeviceDescriptor &layout) { init(layout); }
+    FSDevice(DiskType type, DOSType vType) { init(type, vType); }
+    FSDevice(const class D64File &d64) throws { init(d64); }
+    FSDevice(class Disk &disk) throws { init(disk); }
+    FSDevice(AnyCollection &collection) throws { init(collection); }
+    FSDevice(const string &path) throws { init(path); }
     ~FSDevice();
+    
+private:
+    
+    void init(isize capacity);
+    void init(FSDeviceDescriptor &layout);
+    void init(DiskType type, DOSType vType);
+    void init(const class D64File &d64) throws;
+    void init(class Disk &disk) throws;
+    void init(AnyCollection &collection) throws;
+    void init(const string &path) throws;
+
+    
+public:
     
     const char *getDescription() const override { return "FSVolume"; }
         
@@ -95,11 +116,11 @@ public:
     u8 diskId2() const { return bamPtr()->data[0xA3]; }
     
     // Reports layout information
-    i32 getNumCyls() const { return layout.numCyls; }
-    i32 getNumHeads() const { return layout.numHeads; }
-    i32 getNumTracks() const { return layout.numTracks(); }
-    i32 getNumSectors(Track track) const { return layout.numSectors(track); }
-    i32 getNumBlocks() const { return layout.numBlocks(); }
+    isize getNumCyls() const { return layout.numCyls; }
+    isize getNumHeads() const { return layout.numHeads; }
+    isize getNumTracks() const { return layout.numTracks(); }
+    isize getNumSectors(Track track) const { return layout.numSectors(track); }
+    isize getNumBlocks() const { return layout.numBlocks(); }
 
     // Returns the number of free or used blocks
     i32 numFreeBlocks() const;
@@ -169,8 +190,8 @@ public:
 private:
     
     // Locates the allocation bit for a certain block
-    FSBlock *locateAllocBit(Block b, u32 *byte, u32 *bit) const;
-    FSBlock *locateAllocBit(TSLink ref, u32 *byte, u32 *bit) const;
+    FSBlock *locateAllocBit(Block b, isize *byte, isize *bit) const;
+    FSBlock *locateAllocBit(TSLink ref, isize *byte, isize *bit) const;
 
     
     //
@@ -273,8 +294,8 @@ public:
     bool exportVolume(u8 *dst, isize size, ErrorCode *err = nullptr);
 
     // Exports a single block or a range of blocks
-    bool exportBlock(u32 nr, u8 *dst, isize size, ErrorCode *err = nullptr);
-    bool exportBlocks(u32 first, u32 last, u8 *dst, isize size, ErrorCode *err = nullptr);
+    bool exportBlock(isize nr, u8 *dst, isize size, ErrorCode *err = nullptr);
+    bool exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode *err = nullptr);
 
     // Exports all files or a single file to a folder in the host file system
     void exportDirectory(const string &path) throws;

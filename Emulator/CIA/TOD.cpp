@@ -25,7 +25,7 @@ TOD::getDescription() const
 }
 
 void
-TOD::_inspect()
+TOD::_inspect() const
 {
     synchronized {
         

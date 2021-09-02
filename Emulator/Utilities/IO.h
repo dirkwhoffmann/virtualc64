@@ -66,6 +66,7 @@ std::vector<string> files(const string &path, std::vector <string> &suffixes);
 
 // Checks the header signature (magic bytes) of a stream or buffer
 bool matchingStreamHeader(std::istream &is, const u8 *header, isize len, isize offset = 0);
+bool matchingStreamHeader(std::istream &is, const string &header, isize offset = 0);
 bool matchingBufferHeader(const u8 *buffer, const u8 *header, isize len, isize offset = 0);
 
 // Loads a file from disk

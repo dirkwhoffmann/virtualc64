@@ -17,8 +17,7 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
     switch (code) {
             
         case ERROR_OK:
-            assert(false);
-            break;
+            fatalError;
 
         case ERROR_OPT_UNSUPPORTED:
             description = "This option is not supported yet.";
@@ -76,6 +75,10 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
             description = "No Kernal Rom installed.";
             break;
 
+        case ERROR_ROM_DRIVE_MISSING:
+            description = "No Floppy Drive Rom installed.";
+            break;
+
         case ERROR_ROM_MEGA65_MISMATCH:
             description = "Mega65 Rom revisions do not match.";
             break;
@@ -94,8 +97,13 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
             description = "Drive is unconnected.";
             break;
 
+        case ERROR_CRT_UNKNOWN:
+            description = "This cartridge is a type " + s + " cartridge which";
+            description += " is unknown to the emulator.";
+            break;
+
         case ERROR_CRT_UNSUPPORTED:
-            description = "This cartridge is not supported yet.";
+            description = "Cartridges of type " + s + " are not yet supported.";
             break;
 
         case ERROR_CRT_TOO_MANY_PACKETS:
@@ -134,7 +142,7 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
             break;
     }
 }
-
+            
 const char *
 VC64Error::what() const throw()
 {

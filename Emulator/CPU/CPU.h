@@ -26,7 +26,7 @@ class CPU : public SubComponent {
     friend class Watchpoints;
             
     // Result of the latest inspection
-    CPUInfo info = { };
+    mutable CPUInfo info = { };
         
     
     //
@@ -201,36 +201,25 @@ private:
                           AddressingMode mode,
                           MicroInstruction mInstr);
     
-    void _reset(bool hard) override;
+
+    //
+    // Methods from C64Object
+    //
+
+    void _dump(dump::Category category, std::ostream& os) const override;
 
     
     //
-    // Configuring
+    // Methods from C64Component
     //
-    
-public:
-    
-    
-    //
-    // Analyzing
-    //
-    
-public:
-    
-    // Returns the result of the latest inspection
-    CPUInfo getInfo() { return SubComponent::getInfo(info); }
-    
+
 private:
     
-    void _inspect() override;
-    void _dump(dump::Category category, std::ostream& os) const override;
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
+    void _reset(bool hard) override;
+    void _inspect() const override;
+    void _debugOn() override;
+    void _debugOff() override;
+
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -282,13 +271,13 @@ private:
 
     
     //
-    // Controlling
+    // Analyzing
     //
     
-private:
+public:
     
-    void _debugOn() override;
-    void _debugOff() override;
+    // Returns the result of the latest inspection
+    CPUInfo getInfo() const { return C64Component::getInfo(info); }
 
     
     //
@@ -308,8 +297,8 @@ public:
     u16 getPC0() const { return reg.pc0; }
     
     void jumpToAddress(u16 addr) { reg.pc0 = reg.pc = addr; next = fetch; }
-    void setPCL(u8 lo) { reg.pc = (reg.pc & 0xff00) | lo; }
-    void setPCH(u8 hi) { reg.pc = (reg.pc & 0x00ff) | ((u16)hi << 8); }
+    void setPCL(u8 lo) { reg.pc = (u16)((reg.pc & 0xff00) | lo); }
+    void setPCH(u8 hi) { reg.pc = (u16)((reg.pc & 0x00ff) | hi << 8); }
     void incPC(u8 offset = 1) { reg.pc += offset; }
     void incPCL(u8 offset = 1) { setPCL(LO_BYTE(reg.pc) + offset); }
     void incPCH(u8 offset = 1) { setPCH(HI_BYTE(reg.pc) + offset); }
@@ -402,6 +391,14 @@ class C64CPU : public CPU<C64Memory> {
 public:
     
     C64CPU(C64& ref, C64Memory& memref) : CPU(ref, memref) { }
+
+    
+    //
+    // Methods from C64Object
+    //
+
+private:
+
     const char *getDescription() const override { return "CPU"; }
 };
 
@@ -415,5 +412,13 @@ class DriveCPU : public CPU<DriveMemory> {
 public:
     
     DriveCPU(C64& ref, DriveMemory &memref) : CPU(ref, memref) { }
+    
+    
+    //
+    // Methods from C64Object
+    //
+
+private:
+
     const char *getDescription() const override { return "DriveCPU"; }    
 };

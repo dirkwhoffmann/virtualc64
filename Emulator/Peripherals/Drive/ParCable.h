@@ -23,28 +23,25 @@ public:
     
     ParCable(C64 &ref);
     
-    const char *getDescription() const override { return "ParCable"; }
     
+    //
+    // Methods from C64Object
+    //
+
+private:
+    
+    const char *getDescription() const override { return "ParCable"; }
+    void _dump(dump::Category category, std::ostream& os) const override;
+
+    
+    //
+    // Methods from C64Component
+    //
+
 private:
     
     void _reset(bool hard) override;
-    
-    
-    //
-    // Analyzing
-    //
-    
-private:
-    
-    void _dump(dump::Category category, std::ostream& os) const override;
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
+        
     template <class T>
     void applyToPersistentItems(T& worker)
     {

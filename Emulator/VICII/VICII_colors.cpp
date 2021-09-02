@@ -19,7 +19,7 @@
  * http://unusedino.de/ec64/technical/misc/vic656x/colors/
  */
 
-double gammaCorrect(double value, double source, double target)
+static double gammaCorrect(double value, double source, double target)
 {
     // Reverse gamma correction of source
     double factor = pow(255.0, 1.0 - source);
@@ -41,7 +41,9 @@ VICII::getColor(isize nr, Palette palette)
     #define LUMA_VICE(x,y,z) ((double)(x - y) * 256)/((double)(z - y))
     #define LUMA_COLORES(x) (x * 7.96875)
     
-    double luma_vice_6569_r1[16] = { /* taken from VICE 3.2 */
+    double luma_vice_6569_r1[16] = {
+        
+        // Taken from VICE 3.2
         LUMA_VICE( 630,630,1850), LUMA_VICE(1850,630,1850),
         LUMA_VICE( 900,630,1850), LUMA_VICE(1560,630,1850),
         LUMA_VICE(1260,630,1850), LUMA_VICE(1260,630,1850),
@@ -52,7 +54,9 @@ VICII::getColor(isize nr, Palette palette)
         LUMA_VICE(1260,630,1850), LUMA_VICE(1560,630,1850)
     };
     
-    double luma_vice_6569_r3[16] = { /* taken from VICE 3.2 */
+    double luma_vice_6569_r3[16] = {
+        
+        // Taken from VICE 3.2
         LUMA_VICE( 700,700,1850), LUMA_VICE(1850,700,1850),
         LUMA_VICE(1090,700,1850), LUMA_VICE(1480,700,1850),
         LUMA_VICE(1180,700,1850), LUMA_VICE(1340,700,1850),
@@ -63,7 +67,9 @@ VICII::getColor(isize nr, Palette palette)
         LUMA_VICE(1300,700,1850), LUMA_VICE(1480,700,1850),
     };
     
-    double luma_vice_6567[16] = { /* taken from VICE 3.2 */
+    double luma_vice_6567[16] = {
+        
+        // taken from VICE 3.2
         LUMA_VICE( 590,590,1825), LUMA_VICE(1825,590,1825),
         LUMA_VICE( 950,590,1825), LUMA_VICE(1380,590,1825),
         LUMA_VICE(1030,590,1825), LUMA_VICE(1210,590,1825),
@@ -74,7 +80,9 @@ VICII::getColor(isize nr, Palette palette)
         LUMA_VICE(1160,590,1825), LUMA_VICE(1380,590,1825)
     };
     
-    double luma_vice_6567_r65a[16] = { /* taken from VICE 3.2 */
+    double luma_vice_6567_r65a[16] = {
+        
+        // Taken from VICE 3.2
         LUMA_VICE( 560,560,1825), LUMA_VICE(1825,560,1825),
         LUMA_VICE( 840,560,1825), LUMA_VICE(1500,560,1825),
         LUMA_VICE(1180,560,1825), LUMA_VICE(1180,560,1825),
@@ -85,7 +93,9 @@ VICII::getColor(isize nr, Palette palette)
         LUMA_VICE(1180,560,1825), LUMA_VICE(1500,560,1825),
     };
     
-    double luma_pepto[16] = { /* taken from Pepto's Colodore palette */
+    double luma_pepto[16] = {
+        
+        // Taken from Pepto's Colodore palette
         LUMA_COLORES(0),  LUMA_COLORES(32),
         LUMA_COLORES(10), LUMA_COLORES(20),
         LUMA_COLORES(12), LUMA_COLORES(16),
@@ -100,28 +110,36 @@ VICII::getColor(isize nr, Palette palette)
     switch(config.revision) {
             
         case VICII_PAL_6569_R1:
+            
             luma = luma_vice_6569_r1;
             break;
+            
         case VICII_PAL_6569_R3:
+            
             luma = luma_vice_6569_r3;
             break;
+            
         case VICII_NTSC_6567:
+            
             luma = luma_vice_6567;
             break;
+            
         case VICII_NTSC_6567_R56A:
+            
             luma = luma_vice_6567_r65a;
             break;
+            
         case VICII_PAL_8565:
         case VICII_NTSC_8562:
+            
             luma = luma_pepto;
             break;
+            
         default:
-            assert(false);
-            return 0;
+            fatalError;
     }
     
     // Angles in the color plane
-    
     #define ANGLE_PEPTO(x) (x * 22.5 * M_PI / 180.0)
     #define ANGLE_COLORES(x) ((x * 22.5 + 11.5) * M_PI / 180.0)
     

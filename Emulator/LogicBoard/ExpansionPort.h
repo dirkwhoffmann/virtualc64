@@ -49,32 +49,23 @@ class ExpansionPort : public SubComponent {
 public:
     
     ExpansionPort(C64 &ref) : SubComponent(ref) { };
-    ~ExpansionPort();
+
+
+    //
+    // Methods from C64Object
+    //
+
     const char *getDescription() const override { return "ExpansionPort"; }
+    void _dump(dump::Category category, std::ostream& os) const override;
+
+    
+    //
+    // Methods from C64Component
+    //
 
 private:
     
     void _reset(bool hard) override;
-    
-    
-    //
-    // Analyzing
-    //
-    
-public:
-    
-    CartridgeType getCartridgeType();
-
-private:
-    
-    void _dump(dump::Category category, std::ostream& os) const override;
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
     
     template <class T>
     void applyToPersistentItems(T& worker)
@@ -94,6 +85,15 @@ private:
     isize _size() override;
     isize _load(const u8 *buffer) override;
     isize _save(u8 *buffer) override;
+
+    
+    //
+    // Analyzing
+    //
+    
+public:
+    
+    CartridgeType getCartridgeType();
 
  
     //
@@ -141,7 +141,7 @@ public:
 
     // Attaches a cartridge to the expansion port
     void attachCartridge(const string &path, bool reset = true) throws;
-    bool attachCartridge(CRTFile *c, bool reset = true);
+    void attachCartridge(CRTFile *c, bool reset = true) throws;
     void attachCartridge(Cartridge *c);
     void attachGeoRamCartridge(isize capacity);
     void attachIsepicCartridge();
@@ -190,7 +190,7 @@ public:
     bool hasSwitch() const;
     
     // Returns the current switch position
-    i8 getSwitch() const;
+    isize getSwitch() const;
     bool switchIsNeutral() const;
     bool switchIsLeft() const;
     bool switchIsRight() const;
@@ -198,12 +198,12 @@ public:
     /* Returns a textual description for a switch position or nullptr if the
      * switch cannot be positioned this way.
      */
-    const string getSwitchDescription(i8 pos) const;
+    const string getSwitchDescription(isize pos) const;
     const string getSwitchDescription() const;
-    bool validSwitchPosition(i8 pos) const;
+    bool validSwitchPosition(isize pos) const;
     
     // Puts the switch in the provided position
-    void setSwitch(u8 pos) { if (cartridge) cartridge->setSwitch(pos); }
+    void setSwitch(isize pos) { if (cartridge) cartridge->setSwitch(pos); }
 
     
     //

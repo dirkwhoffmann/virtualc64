@@ -47,31 +47,28 @@ Thumbnail::take(const C64 &c64, isize dx, isize dy)
 }
 
 bool
-Snapshot::isCompatiblePath(const string &path)
+Snapshot::isCompatible(const string &path)
 {
     return true;
 }
 
 bool
-Snapshot::isCompatibleStream(std::istream &stream)
+Snapshot::isCompatible(std::istream &stream)
 {
-    const u8 magicBytes[] = { 'V', 'C', '6', '4' };
-    
-    if (util::streamLength(stream) < 0x15) return false; 
-    return util::matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
+    return util::matchingStreamHeader(stream, "VC64");
 }
 
 Snapshot::Snapshot(isize capacity)
 {
-    u8 signature[] = { 'V', 'C', '6', '4' };
-
     size = capacity + sizeof(SnapshotHeader);
     data = new u8[size];
     
     SnapshotHeader *header = (SnapshotHeader *)data;
     
-    for (isize i = 0; i < isizeof(signature); i++)
-        header->magic[i] = signature[i];
+    header->magic[0] = 'V';
+    header->magic[1] = 'C';
+    header->magic[2] = '6';
+    header->magic[3] = '4';
     header->major = SNP_MAJOR;
     header->minor = SNP_MINOR;
     header->subminor = SNP_SUBMINOR;
@@ -81,26 +78,9 @@ Snapshot::Snapshot(C64 &c64): Snapshot(c64.size())
 {
     takeScreenshot(c64);
 
-    if (SNP_DEBUG) c64.dump();
+    if constexpr (SNP_DEBUG) c64.dump();
     c64.save(getData());
 }
-
-/*
-Snapshot *
-Snapshot::makeWithC64(C64 *c64)
-{
-    Snapshot *snapshot;
-    
-    snapshot = new Snapshot(c64->size());
-    
-    snapshot->takeScreenshot(*c64);
-
-    if (SNP_DEBUG) c64->dump();
-    c64->save(snapshot->getData());
-    
-    return snapshot;
-}
-*/
 
 bool
 Snapshot::isTooOld() const
@@ -133,16 +113,19 @@ Snapshot::takeScreenshot(C64 &c64)
 {
     SnapshotHeader *header = (SnapshotHeader *)data;
     
-    isize xStart = FIRST_VISIBLE_PIXEL;
-    isize yStart = FIRST_VISIBLE_LINE;
     header->screenshot.width = VISIBLE_PIXELS;
     header->screenshot.height = c64.vic.numVisibleLines();
     
     u32 *source = (u32 *)c64.vic.stableEmuTexture();
     u32 *target = header->screenshot.screen;
+
+    isize xStart = FIRST_VISIBLE_PIXEL;
+    isize yStart = FIRST_VISIBLE_LINE;
     source += xStart + yStart * TEX_WIDTH;
+    
     for (isize i = 0; i < header->screenshot.height; i++) {
-        memcpy(target, source, header->screenshot.width * 4);
+        
+        std::memcpy(target, source, header->screenshot.width * 4);
         target += header->screenshot.width;
         source += TEX_WIDTH;
     }

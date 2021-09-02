@@ -34,10 +34,9 @@ typedef M_TYPE MemoryType;
 #ifdef __cplusplus
 struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
     
-    static bool isValid(long value)
-    {
-        return value >= 1 && value < M_COUNT;
-    }
+    static long min() { return 1; }
+    static long max() { return M_NONE; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "M"; }
     static const char *key(MemoryType value)
@@ -66,18 +65,16 @@ enum_long(RAM_PATTERN)
     RAM_PATTERN_CCS,
     RAM_PATTERN_ZEROES,
     RAM_PATTERN_ONES,
-    RAM_PATTERN_RANDOM,
-    RAM_PATTERN_COUNT
+    RAM_PATTERN_RANDOM
 };
 typedef RAM_PATTERN RamPattern;
 
 #ifdef __cplusplus
 struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < RAM_PATTERN_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return RAM_PATTERN_RANDOM; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "RAM_PATTERN"; }
     static const char *key(RamPattern value)
@@ -89,7 +86,6 @@ struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
             case RAM_PATTERN_ZEROES: return "ZEROES";
             case RAM_PATTERN_ONES:   return "ONES";
             case RAM_PATTERN_RANDOM: return "RANDOM";
-            case RAM_PATTERN_COUNT:  return "???";
         }
         return "???";
     }

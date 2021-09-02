@@ -76,6 +76,7 @@ class VC64Error: Error {
         warning("\"\(url.lastPathComponent)\" can't be opened.", async: async)
     }
     
+    /*
     static func unsupportedCrtAlert(type: Int, async: Bool = false) {
         
         let crtType = CartridgeType(rawValue: type)
@@ -85,4 +86,5 @@ class VC64Error: Error {
                 "The emulator does not support cartridges of type " +
                     "\(type) " + "(\(name)) yet.", async: async)
     }
+    */
 }

@@ -69,9 +69,9 @@ FastVoice::initWaveTables()
         for (isize i = 0; i < 4096; i++) {
             wavetable10[m][i] = (u16)(i < 2048 ? i << 4 : 0xffff - (i << 4));
             wavetable20[m][i] = (u16)(i << 3);
-            wavetable30[m][i] = waveform30_8580[i] << 7;
+            wavetable30[m][i] = (u16)(waveform30_8580[i] << 7);
             wavetable40[m][i + 4096] = 0x7fff;
-            wavetable50[m][i + 4096] = waveform50_6581[i >> 3] << 7;
+            wavetable50[m][i + 4096] = (u16)(waveform50_6581[i >> 3] << 7);
             wavetable60[m][i + 4096] = 0;
             wavetable70[m][i + 4096] = 0;
         }
@@ -79,9 +79,9 @@ FastVoice::initWaveTables()
     
     // Modify some tables for SID8580
     for (isize i = 0; i < 4096; i++) {
-        wavetable50[1][i + 4096] = waveform50_8580[i] << 7;
-        wavetable60[1][i + 4096] = waveform60_8580[i] << 7;
-        wavetable70[1][i + 4096] = waveform70_8580[i] << 7;
+        wavetable50[1][i + 4096] = (u16)(waveform50_8580[i] << 7);
+        wavetable60[1][i + 4096] = (u16)(waveform60_8580[i] << 7);
+        wavetable70[1][i + 4096] = (u16)(waveform70_8580[i] << 7);
     }
     
     // Noise tables are the same for both SID models
@@ -97,7 +97,7 @@ FastVoice::initWaveTables()
 }
 
 void
-FastVoice::init(FastSID *owner, unsigned voiceNr, FastVoice *prevVoice)
+FastVoice::init(FastSID *owner, isize voiceNr, FastVoice *prevVoice)
 {
     assert(prevVoice);
     
@@ -368,11 +368,13 @@ FastVoice::applyFilter()
     float sample, sample2;
     
     if (filterType == 0) {
+        
         filterIO = 0;
         return;
     }
     
     if (filterType == FASTSID_BAND_PASS) {
+        
         filterLow += filterRef * filterDy;
         filterRef += (filterIO - filterLow - (filterRef * filterResDy)) * filterDy;
         filterIO = (signed char)(filterRef - filterLow / 4);
@@ -380,9 +382,10 @@ FastVoice::applyFilter()
     }
     
     if (filterType == FASTSID_HIGH_PASS) {
+        
         filterLow += filterRef * filterDy * 0.1;
         filterRef += (filterIO - filterLow - (filterRef * filterResDy)) * filterDy;
-        sample = filterRef - (filterIO / 8);
+        sample = (float)(filterRef - (filterIO / 8));
         sample = std::max(sample, -128.f);
         sample = std::max(sample, 127.f);
         filterIO = (signed char)sample;
@@ -391,29 +394,31 @@ FastVoice::applyFilter()
     
     filterLow += filterRef * filterDy;
     sample = filterIO;
-    sample2 = sample - filterLow;
+    sample2 = (float)(sample - filterLow);
     int tmp = (int)sample2;
-    sample2 -= filterRef * filterResDy;
+    sample2 -= (float)(filterRef * filterResDy);
     filterRef += sample2 * filterDy;
     
     switch (filterType) {
             
         case FASTSID_LOW_PASS:
         case FASTSID_BAND_PASS | FASTSID_LOW_PASS:
+            
             filterIO = (signed char)filterLow;
             break;
             
         case FASTSID_HIGH_PASS | FASTSID_LOW_PASS:
         case FASTSID_HIGH_PASS | FASTSID_BAND_PASS | FASTSID_LOW_PASS:
+            
             filterIO = (signed char)((int)(sample) - (tmp >> 1));
             break;
             
         case FASTSID_HIGH_PASS | FASTSID_BAND_PASS:
+            
             filterIO = (signed char)tmp;
             break;
             
         default:
-            assert(false); 
-            filterIO = 0;
+            fatalError;
     }
 }

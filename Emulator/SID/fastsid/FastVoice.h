@@ -69,8 +69,8 @@ class FastVoice : public SubComponent {
     friend class FastSID;
     
     // Result of the latest inspection
-    SIDInfo info = { };
-    VoiceInfo voiceInfo[3] = { };
+    mutable SIDInfo info = { };
+    mutable VoiceInfo voiceInfo[3] = { };
     
     // Wave tables
     // The first index determines the chip model (0 = old, 1 = new).
@@ -88,7 +88,7 @@ class FastVoice : public SubComponent {
     static u8 noiseLSB[256];
     
     // The SID voice which is represented by this object (1,2, or 3)
-    u8 nr;
+    isize nr;
 
     // Pointer to parent SID object
     class FastSID *fastsid;
@@ -173,31 +173,26 @@ public:
  
     using SubComponent::SubComponent;
     
+    static void initWaveTables();
+    void init(FastSID *owner, isize voiceNr, FastVoice *prevVoice);
+
+    
+    //
+    // Methods from C64Object
+    //
+
+private:
+    
     const char *getDescription() const override { return "FastVoice"; }
 
-    static void initWaveTables();
-    void init(FastSID *owner, unsigned voiceNr, FastVoice *prevVoice);
+    
+    //
+    // Methods from C64Component
+    //
     
 private:
     
     void _reset(bool hard) override;
-    
-    
-    //
-    // Analyzing
-    //
-    
-public:
-    
-    SIDInfo getInfo() { return SubComponent::getInfo(info); }
-    VoiceInfo getVoiceInfo(isize nr) { return SubComponent::getInfo(voiceInfo[nr]); }
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
     
     template <class T>
     void applyToPersistentItems(T& worker)
@@ -232,6 +227,16 @@ private:
     isize didLoadFromBuffer(const u8 *buffer) override;
     
  
+    //
+    // Analyzing
+    //
+    
+public:
+    
+    SIDInfo getInfo() const { return C64Component::getInfo(info); }
+    VoiceInfo getVoiceInfo(isize nr) const { return C64Component::getInfo(voiceInfo[nr]); }
+   
+    
     //
     // Accessing
     //
@@ -271,7 +276,7 @@ public:
      * The pulse width is a 12-bit number which linearly controls the pulse
      * width (duty cycle) of the pulse waveform.
      */
-    u16 pulseWidth() { return ((sidreg[3] & 0x0F) << 8) | sidreg[0x02]; }
+    u16 pulseWidth() { return (u16)((sidreg[3] & 0x0F) << 8 | sidreg[0x02]); }
 
     /* Returns the GATE bit for this voice
      * The gate bit controls the Envelope Generator. When this bit is set to a

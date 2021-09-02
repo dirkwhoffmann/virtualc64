@@ -139,7 +139,7 @@ FinalIII::pressButton(isize nr)
                 
             case 2: // Reset
                 
-                resetWithoutDeletingRam();
+                c64.softReset();
                 break;
         }
     }

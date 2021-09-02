@@ -15,8 +15,8 @@ class T64File : public AnyCollection {
      
 public:
 
-    static bool isCompatiblePath(const string &name);
-    static bool isCompatibleStream(std::istream &stream);
+    static bool isCompatible(const string &name);
+    static bool isCompatible(std::istream &stream);
     
     static T64File *makeWithFileSystem(class FSDevice &fs);
 
@@ -27,6 +27,14 @@ public:
     
     T64File() : AnyCollection() { }
     T64File(isize capacity) : AnyCollection(capacity) { }
+    T64File(const string &path) throws { init(path); }
+    T64File(const u8 *buf, isize len) throws { init(buf, len); }
+    T64File(FSDevice &fs) throws { init(fs); }
+    
+private:
+    
+    using AnyFile::init;
+    void init(FSDevice &fs) throws;
 
     
     //
@@ -40,6 +48,8 @@ public:
     // Methods from AnyFile
     //
     
+    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_T64; }
     PETName<16> getName() const override;
         

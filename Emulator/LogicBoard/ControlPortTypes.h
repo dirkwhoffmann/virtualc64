@@ -20,18 +20,16 @@ enum_long(CPDEVICE)
 {
     CPDEVICE_NONE,
     CPDEVICE_MOUSE,
-    CPDEVICE_JOYSTICK,
-    CPDEVICE_COUNT
+    CPDEVICE_JOYSTICK
 };
 typedef CPDEVICE ControlPortDevice;
 
 #ifdef __cplusplus
 struct ControlPortDeviceEnum : util::Reflection<ControlPortDeviceEnum, ControlPortDevice> {
     
-    static bool isValid(long value)
-    {
-        return (unsigned long)value < CPDEVICE_COUNT;
-    }
+    static long min() { return 0; }
+    static long max() { return CPDEVICE_JOYSTICK; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return "CPDEVICE"; }
     static const char *key(ControlPortDevice value)
@@ -41,7 +39,6 @@ struct ControlPortDeviceEnum : util::Reflection<ControlPortDeviceEnum, ControlPo
             case CPDEVICE_NONE:      return "NONE";
             case CPDEVICE_MOUSE:     return "MOUSE";
             case CPDEVICE_JOYSTICK:  return "JOYSTICK";
-            case CPDEVICE_COUNT:     return "???";
         }
         return "???";
     }

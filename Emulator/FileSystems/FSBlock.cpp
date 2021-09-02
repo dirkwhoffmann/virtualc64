@@ -66,7 +66,7 @@ FSBlock::writeBAM(PETName<16> &name)
             
         } else {
             
-            p[0] = device.layout.numSectors(k);
+            p[0] = (u8)device.layout.numSectors(k);
             p[1] = 0xFF;
             p[2] = 0xFF;
             p[3] = p[0] == 21 ? 0x1F : p[0] == 19 ? 0x07 : p[0] == 18 ? 0x03 : 0x01;
@@ -158,7 +158,7 @@ FSBlock::itemType(u32 byte) const
             return FS_USAGE_DATA;
             
         default:
-            assert(false);
+            fatalError;
     }
     
     return FS_USAGE_UNKNOWN;
@@ -221,7 +221,7 @@ FSBlock::check(u32 byte, u8 *expected, bool strict) const
             return ERROR_OK;
             
         default:
-            assert(false);
+            fatalError;
     }
     
     return ERROR_OK;
@@ -238,7 +238,7 @@ FSBlock::check(bool strict) const
         ErrorCode err = check(i, &expected, strict);
         if (err != ERROR_OK) {
             count++;
-            debug(FS_DEBUG, "Block %d [%d.%d]: %s\n",
+            debug(FS_DEBUG, "Block %zd [%d.%d]: %s\n",
                   nr, i / 4, i % 4, ErrorCodeEnum::key(err));
         }
     }

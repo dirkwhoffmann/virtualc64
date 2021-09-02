@@ -534,33 +534,65 @@ extension MyController: NSMenuItemValidation {
     }
 
     // -----------------------------------------------------------------
+    @IBAction func pressAction(_ sender: NSMenuItem!) {
+     
+        keyboard.pressKey(C64Key(sender.tag), duration: 4)
+        virtualKeyboard?.refresh()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            self.virtualKeyboard?.refresh()
+        }
+    }
+
+    @IBAction func pressWithShiftAction(_ sender: NSMenuItem!) {
+        
+        keyboard.pressKeys([C64Key.shift, C64Key(sender.tag)], duration: 4)
+        virtualKeyboard?.refresh()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            self.virtualKeyboard?.refresh()
+        }
+    }
+
+    @IBAction func pressRunstopRestoreAction(_ sender: Any!) {
+        
+        keyboard.pressKeys([C64Key.runStop, C64Key.restore], duration: 4)
+        virtualKeyboard?.refresh()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            self.virtualKeyboard?.refresh()
+        }
+    }
+
     @IBAction func runstopAction(_ sender: Any!) {
         keyboard.pressKey(C64Key.runStop, duration: 4)
     }
+    
     @IBAction func restoreAction(_ sender: Any!) {
         keyboard.pressKey(C64Key.restore, duration: 4)
     }
-    @IBAction func runstopRestoreAction(_ sender: Any!) {
-        keyboard.pressKeys([C64Key.runStop, C64Key.restore], duration: 4)
-    }
+    
     @IBAction func commodoreKeyAction(_ sender: Any!) {
         keyboard.pressKey(C64Key.commodore, duration: 4)
     }
+    
     @IBAction func clearKeyAction(_ sender: Any!) {
         keyboard.pressKeys([C64Key.home, C64Key.shift], duration: 4)
     }
+    
     @IBAction func homeKeyAction(_ sender: Any!) {
         keyboard.pressKey(C64Key.home, duration: 4)
     }
+    
     @IBAction func insertKeyAction(_ sender: Any!) {
         keyboard.pressKeys([C64Key.delete, C64Key.shift], duration: 4)
     }
+    
     @IBAction func deleteKeyAction(_ sender: Any!) {
         keyboard.pressKey(C64Key.delete, duration: 4)
     }
+    
     @IBAction func leftarrowKeyAction(_ sender: Any!) {
         keyboard.pressKey(C64Key.leftArrow, duration: 4)
     }
+    
     @IBAction func shiftLockAction(_ sender: Any!) {
         
         undoManager?.registerUndo(withTarget: self) { targetSelf in

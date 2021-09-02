@@ -42,19 +42,25 @@ private:
 public:
     
     Mouse1350(C64 &ref) : SubComponent(ref) { }
+    
+    
+    //
+    // Methods from C64Object
+    //
+
+private:
+    
     const char *getDescription() const override { return "Mouse1350"; }
     
+    
+    //
+    // Methods from C64Component
+    //
+
 private:
     
     void _reset(bool hard) override;
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
+        
     template <class T>
     void applyToPersistentItems(T& worker)
     {

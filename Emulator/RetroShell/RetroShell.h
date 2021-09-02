@@ -32,7 +32,7 @@ class RetroShell : public SubComponent {
     std::vector<string> input;
 
     // Input prompt
-    string prompt = "vc64\% ";
+    string prompt = "vc64% ";
     
     // The current cursor position
     isize cpos = 0;

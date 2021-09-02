@@ -27,14 +27,14 @@ u8
 GeoRAM::peekIO1(u16 addr)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
-    return peekRAM(offset(addr - 0xDE00));
+    return peekRAM((u16)offset(addr & 0xFF));
 }
 
 u8
 GeoRAM::spypeekIO1(u16 addr) const
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
-    return peekRAM(offset(addr - 0xDE00));
+    return peekRAM((u16)offset(addr & 0xFF));
 }
 
 u8
@@ -53,7 +53,7 @@ void
 GeoRAM::pokeIO1(u16 addr, u8 value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
-    pokeRAM(offset(addr - 0xDE00), value);
+    pokeRAM((u16)offset(addr & 0xFF), value);
 }
 
 void

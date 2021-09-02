@@ -36,19 +36,25 @@ class Mouse1351 : public SubComponent {
 public:
         
     Mouse1351(C64 &ref) : SubComponent(ref) { }
+    
+    
+    //
+    // Methods from C64Component
+    //
+
+private:
+    
     const char *getDescription() const override { return "Mouse1351"; }
+
+    
+    //
+    // Methods from C64Component
+    //
 
 private:
     
     void _reset(bool hard) override;
-    
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
+        
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -86,6 +92,6 @@ public:
     void executeY(i64 targetY);
 
     // Returns the mouse bits as they show up in the SID register
-    u8 mouseXBits() const { return (mouseX & 0x3F) << 1; }
-    u8 mouseYBits() const { return (mouseY & 0x3F) << 1; }
+    u8 mouseXBits() const { return (u8)((mouseX & 0x3F) << 1); }
+    u8 mouseYBits() const { return (u8)((mouseY & 0x3F) << 1); }
 };

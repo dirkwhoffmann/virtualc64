@@ -353,15 +353,14 @@ RESID_INLINE void WaveformGenerator::write_shift_register()
 
 RESID_INLINE void WaveformGenerator::set_noise_output()
 {
-  noise_output =
-    ((shift_register & 0x100000) >> 9) |
-    ((shift_register & 0x040000) >> 8) |
-    ((shift_register & 0x004000) >> 5) |
-    ((shift_register & 0x000800) >> 3) |
-    ((shift_register & 0x000200) >> 2) |
-    ((shift_register & 0x000020) << 1) |
-    ((shift_register & 0x000004) << 3) |
-    ((shift_register & 0x000001) << 4);
+    noise_output = (unsigned short)(((shift_register & 0x100000) >> 9) |
+                                    ((shift_register & 0x040000) >> 8) |
+                                    ((shift_register & 0x004000) >> 5) |
+                                    ((shift_register & 0x000800) >> 3) |
+                                    ((shift_register & 0x000200) >> 2) |
+                                    ((shift_register & 0x000020) << 1) |
+                                    ((shift_register & 0x000004) << 3) |
+                                    ((shift_register & 0x000001) << 4) );
 
   no_noise_or_noise_output = no_noise | noise_output;
 }

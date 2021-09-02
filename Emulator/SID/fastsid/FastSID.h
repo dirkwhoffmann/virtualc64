@@ -109,54 +109,28 @@ private:
 public:
         
 	FastSID(C64 &ref, Muxer &bridgeref, int n);
-    const char *getDescription() const override { return "FastSID"; }
-
+    
 private:
     
     void init(double sampleRate, int cycles_per_sec);
     void initFilter(double sampleRate);
 
-    void _reset(bool hard) override;
+    
+    //
+    // Methods from C64Object
+    //
 
-
-    //
-    // Configuring
-    //
-    
-public:
-    
-    u32 getClockFrequency() const { return cpuFrequency; }
-    void setClockFrequency(u32 frequency);
-    
-    SIDRevision getRevision() const { return model; }
-    void setRevision(SIDRevision m);
-    
-    double getSampleRate() const { return (double)sampleRate; }
-    void setSampleRate(double rate);
-    
-    bool getAudioFilter() const { return emulateFilter; }
-    void setAudioFilter(bool value) { emulateFilter = value; }
-    
-    
-    //
-    // Analyzing
-    //
-    
-public:
-    
-    SIDInfo getInfo();
-    VoiceInfo getVoiceInfo(isize voice);
-
-private:
-    
+    const char *getDescription() const override { return "FastSID"; }
     void _dump(dump::Category category, std::ostream& os) const override;
-    
+
     
     //
-    // Serializing
+    // Methods from C64Component
     //
-    
+
 private:
+
+    void _reset(bool hard) override;
     
     template <class T>
     void applyToPersistentItems(T& worker)
@@ -190,6 +164,35 @@ private:
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
+
+    //
+    // Configuring
+    //
+    
+public:
+    
+    u32 getClockFrequency() const { return cpuFrequency; }
+    void setClockFrequency(u32 frequency);
+    
+    SIDRevision getRevision() const { return model; }
+    void setRevision(SIDRevision m);
+    
+    double getSampleRate() const { return (double)sampleRate; }
+    void setSampleRate(double rate);
+    
+    bool getAudioFilter() const { return emulateFilter; }
+    void setAudioFilter(bool value) { emulateFilter = value; }
+    
+    
+    //
+    // Analyzing
+    //
+    
+public:
+    
+    SIDInfo getInfo();
+    VoiceInfo getVoiceInfo(isize voice);
+
     
     //
     // Accessing
@@ -238,7 +241,7 @@ private:
     // Filter related configuration items
     
     // Returns the filter cutoff frequency (11 bit value)
-    u16 filterCutoff() const { return (sidreg[0x16] << 3) | (sidreg[0x15] & 0x07); }
+    u16 filterCutoff() const { return (u16)(sidreg[0x16] << 3 | (sidreg[0x15] & 0x07)); }
 
     // Returns the filter resonance (4 bit value)
     u8 filterResonance() const { return sidreg[0x17] >> 4; }

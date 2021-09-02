@@ -71,7 +71,7 @@ VICII::updateVicFunctionTable()
             break;
             
         default:
-            assert(false);
+            fatalError;
     }
 }
 

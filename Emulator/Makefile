@@ -1,6 +1,6 @@
 SUBDIRS = \
-Utilities Base Cartridges CIA CPU Datasette Drive FileSystems LogicBoard Media \
-Memory Peripherals RetroShell SID VICII
+Utilities Base Cartridges CIA CPU FileSystems LogicBoard Media Memory \
+Peripherals RetroShell SID VICII
 
 MYCC = g++ -O2 -std=c++17 -Wfatal-errors -Wall
 MYFLAGS = \
@@ -15,10 +15,15 @@ MYFLAGS = \
 -I $(CURDIR)/Datasette \
 -I $(CURDIR)/Drive \
 -I $(CURDIR)/FileSystems \
--I $(CURDIR)/Files \
 -I $(CURDIR)/LogicBoard \
+-I $(CURDIR)/Media \
 -I $(CURDIR)/Memory \
 -I $(CURDIR)/Peripherals \
+-I $(CURDIR)/Peripherals/Drive \
+-I $(CURDIR)/Peripherals/Datasette \
+-I $(CURDIR)/Peripherals/Joystick \
+-I $(CURDIR)/Peripherals/Mouse \
+-I $(CURDIR)/Peripherals/Keyboard \
 -I $(CURDIR)/RetroShell \
 -I $(CURDIR)/SID \
 -I $(CURDIR)/SID/resid \

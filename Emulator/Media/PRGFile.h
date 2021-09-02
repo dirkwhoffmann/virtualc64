@@ -15,10 +15,14 @@ class PRGFile : public AnyCollection {
 
 public:
     
-    static bool isCompatiblePath(const string &name);
-    static bool isCompatibleStream(std::istream &stream);
+    //
+    // Class methods
+    //
     
-    static PRGFile *makeWithFileSystem(class FSDevice &fs);
+    static bool isCompatible(const string &name);
+    static bool isCompatible(std::istream &stream);
+    
+    [[deprecated]] static PRGFile *makeWithFileSystem(class FSDevice &fs);
 
     
     //
@@ -27,6 +31,14 @@ public:
     
     PRGFile() : AnyCollection() { }
     PRGFile(isize capacity) : AnyCollection(capacity) { }
+    PRGFile(const string &path) throws { init(path); }
+    PRGFile(const u8 *buf, isize len) throws { init(buf, len); }
+    PRGFile(FSDevice &fs) throws { init(fs); }
+    
+private:
+    
+    using AnyFile::init;
+    void init(FSDevice &fs) throws;
     
     
     //
@@ -40,6 +52,8 @@ public:
     // Methods from AnyFile
     //
 
+    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_PRG; }
     
     

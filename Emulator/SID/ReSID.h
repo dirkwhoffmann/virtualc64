@@ -40,8 +40,8 @@ class ReSID : public SubComponent {
     reSID::SID *sid;
     
     // Result of the latest inspection
-    SIDInfo info = { };
-    VoiceInfo voiceInfo[3] = { };
+    mutable SIDInfo info = { };
+    mutable VoiceInfo voiceInfo[3] = { };
         
 private:
     
@@ -72,54 +72,24 @@ public:
     
 	ReSID(C64 &ref, Muxer &bridgeref, int n);
 	~ReSID();
+    
+    
+    //
+    // Methods from C64Object
+    //
+    
+private:
+    
     const char *getDescription() const override { return "ReSID"; }
+
+    
+    //
+    // Methods from C64Component
+    //
 
 private:
     
     void _reset(bool hard) override;
-
-    
-    //
-    // Configuring
-    //
-    
-public:
-    
-    u32 getClockFrequency() const;
-    void setClockFrequency(u32 frequency);
-    
-    SIDRevision getRevision() const;
-    void setRevision(SIDRevision m);
-    
-    double getSampleRate() const { return sampleRate; }
-    void setSampleRate(double rate);
-    
-    bool getAudioFilter() const { return emulateFilter; }
-    void setAudioFilter(bool enable);
-    
-    SamplingMethod getSamplingMethod() const;
-    void setSamplingMethod(SamplingMethod value);
-    
-    
-    //
-    // Analyzing
-    //
-    
-public:
-    
-    SIDInfo getInfo() { return SubComponent::getInfo(info); }
-    VoiceInfo getVoiceInfo(isize nr) { return SubComponent::getInfo(voiceInfo[nr]); }
-    
-private:
-    
-    void _inspect() override;
-    void _dump(dump::Category category, std::ostream& os) const override;
-    
-    //
-    // Serializing
-    //
-    
-private:
     
     template <class T>
     void applyToPersistentItems(T& worker)
@@ -156,6 +126,7 @@ private:
     template <class T>
     void applyToResetItems(T& worker, bool hard = true)
     {
+        
     }
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }
@@ -164,6 +135,43 @@ private:
     isize didLoadFromBuffer(const u8 *buffer) override;
     isize willSaveToBuffer(const u8 *buffer) override;
 
+    
+    //
+    // Configuring
+    //
+    
+public:
+    
+    u32 getClockFrequency() const;
+    void setClockFrequency(u32 frequency);
+    
+    SIDRevision getRevision() const;
+    void setRevision(SIDRevision m);
+    
+    double getSampleRate() const { return sampleRate; }
+    void setSampleRate(double rate);
+    
+    bool getAudioFilter() const { return emulateFilter; }
+    void setAudioFilter(bool enable);
+    
+    SamplingMethod getSamplingMethod() const;
+    void setSamplingMethod(SamplingMethod value);
+    
+    
+    //
+    // Analyzing
+    //
+    
+public:
+    
+    SIDInfo getInfo() const { return C64Component::getInfo(info); }
+    VoiceInfo getVoiceInfo(isize nr) const { return C64Component::getInfo(voiceInfo[nr]); }
+    
+private:
+    
+    void _inspect() const override;
+    void _dump(dump::Category category, std::ostream& os) const override;
+    
 
     //
     // Accessing

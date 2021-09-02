@@ -111,6 +111,7 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var trackNumber9: NSTextField!
     @IBOutlet weak var spinning8: NSProgressIndicator!
     @IBOutlet weak var spinning9: NSProgressIndicator!
+    
     @IBOutlet weak var haltIcon: NSButton!
     @IBOutlet weak var debugIcon: NSButton!
     @IBOutlet weak var muteIcon: NSButton!
@@ -118,12 +119,12 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var tapeCounter: NSTextField!
     @IBOutlet weak var tapeProgress: NSProgressIndicator!
     @IBOutlet weak var crtIcon: NSButton!
-    @IBOutlet weak var warpIcon: NSButton!
-    @IBOutlet weak var cpuInfo: NSTextField!
-    @IBOutlet weak var mhzInfo: NSTextField!
-    @IBOutlet weak var cpuIndicator: NSLevelIndicator!
-    @IBOutlet weak var mhzIndicator: NSLevelIndicator!
     
+    @IBOutlet weak var warpIcon: NSButton!
+    @IBOutlet weak var activityType: NSPopUpButton!
+    @IBOutlet weak var activityInfo: NSTextField!
+    @IBOutlet weak var activityBar: NSLevelIndicator!
+
     // Toolbar
     @IBOutlet weak var toolbar: MyToolbar!
 }
@@ -287,20 +288,6 @@ extension MyController {
         }
     }
     
-    func updateSpeedometer() {
-        
-        speedometer.updateWith(cycle: c64.cpu.cycles, frame: renderer.frames)
-        
-        // let fps = speedometer.fps
-        let cpu = c64.cpuLoad
-        let mhz = speedometer.mhz
-
-        cpuInfo.stringValue = String(format: "%d%% CPU", cpu)
-        mhzInfo.stringValue = String(format: "%.2f MHz", mhz)
-        cpuIndicator.integerValue = cpu
-        mhzIndicator.doubleValue = 10 * mhz
-    }
-        
     func updateWarp() {
         
         var warp: Bool
@@ -341,35 +328,32 @@ extension MyController {
             renderer.canvas.open(delay: 2)
             virtualKeyboard = nil
             toolbar.updateToolbar()
-            inspector?.fullRefresh()
+            inspector?.powerOn()
 
         case .POWER_OFF:
             toolbar.updateToolbar()
-            inspector?.fullRefresh()
+            inspector?.powerOff()
             
         case .RUN:
             needsSaving = true
             toolbar.updateToolbar()
-            inspector?.fullRefresh()
-            inspector?.clearWatchPoint()
+            inspector?.run()
             refreshStatusBar()
     
         case .PAUSE:
             toolbar.updateToolbar()
-            inspector?.fullRefresh()
+            inspector?.pause()
             refreshStatusBar()
 
         case .STEP:
             needsSaving = true
-            inspector?.clearWatchPoint()
-            inspector?.fullRefresh()
-            inspector?.scrollToPC()
+            inspector?.step()
 
         case .RESET:
             mydocument.deleteBootDiskID()
             mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
             updateWarp()
-            inspector?.fullRefresh()
+            inspector?.reset()
             
         case .HALT:
             shutDown()
@@ -408,13 +392,10 @@ extension MyController {
             break
             
         case .BREAKPOINT_REACHED:
-            inspector?.fullRefresh()
-            inspector?.scrollToPC()
+            inspector?.signalBreakPoint(pc: msg.data)
 
         case .WATCHPOINT_REACHED:
-            inspector?.fullRefresh()
-            inspector?.scrollToPC()
-            inspector?.signalWatchPoint()
+            inspector?.signalWatchPoint(pc: msg.data)
 
         case .CPU_JAMMED:
             refreshStatusBar()
@@ -486,9 +467,6 @@ extension MyController {
 
         case .VC1530_COUNTER:
             refreshStatusBar()
-
-        case .CRT_UNSUPPORTED:
-            VC64Error.unsupportedCrtAlert(type: msg.data)
             
         case .CRT_ATTACHED:
             mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
