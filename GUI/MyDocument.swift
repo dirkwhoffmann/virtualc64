@@ -86,7 +86,7 @@ class MyDocument: NSDocument {
         track("Creating proxy object from URL: \(url.lastPathComponent)")
 
         // If the provided URL points to compressed file, decompress it first
-        let newUrl = url.unpacked
+        let newUrl = url.unpacked(maxSize: 512 * 1024)
 
         // Iterate through all allowed file types
         for type in allowedTypes {
@@ -135,8 +135,9 @@ class MyDocument: NSDocument {
             }
         }
 
-        // None of the allowed typed matched the file
-        throw VC64Error(.FILE_TYPE_MISMATCH, url.lastPathComponent)
+        // None of the allowed types matched the file
+        throw VC64Error(.FILE_TYPE_MISMATCH,
+                        "The type of this file is not known to the emulator.")
     }
 
     func mountAttachment() throws {

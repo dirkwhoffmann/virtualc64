@@ -87,11 +87,11 @@ extension URL {
     // Returns all files inside a folder
     func contents(allowedTypes: [String]? = nil) throws -> [URL] {
         
+        // Collect files
         let urls = try FileManager.default.contentsOfDirectory(
             at: self, includingPropertiesForKeys: nil,
             options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants]
         )
-        track("urls = \(urls)")
 
         // Filter out sub directories
         var filtered = urls.filter {
@@ -102,7 +102,7 @@ extension URL {
         filtered = filtered.filter {
             allowedTypes?.contains($0.pathExtension.uppercased()) ?? true
         }
-        track("filtered = \(filtered)")
+
         return filtered
     }
     
@@ -126,7 +126,14 @@ extension URL {
         
         return dest
     }
-    
+
+    func unpacked(maxSize: Int) -> URL {
+        
+        if fileSize < maxSize { return unpacked }
+        
+        return self
+    }
+
     var unpacked: URL {
         
         if self.pathExtension == "zip" {
@@ -145,7 +152,7 @@ extension URL {
     func unpackZip() throws -> URL {
         
         let urls = try unpack(suffix: "zip")
-
+        track("zip: \(urls)")
         if let first = urls.first { return first }
         
         throw UnpackError.noSupportedFiles
@@ -154,16 +161,17 @@ extension URL {
     func unpackGz() throws -> URL {
         
         let urls = try unpack(suffix: "gz")
+        track("gz: \(urls)")
         if let first = urls.first { return first }
         
         throw UnpackError.noSupportedFiles
     }
     
     func unpack(suffix: String) throws -> [URL] {
-        
+
         // Request the URL of a tempory folder
         let tmp = try URL.tmpFolder()
-        
+                
         // Copy the compressed file into it and fix the extension
         let url = try self.copy(to: tmp, replaceExtensionBy: suffix)
         

@@ -41,10 +41,16 @@ public extension MetalView {
             return NSDragOperation.copy
             
         case .compatibleFileURL:
+            
             if let url = NSURL(from: pasteBoard) as URL? {
             
+                // Unpack the file if it is compressed
+                draggedUrl = url.unpacked(maxSize: 512 * 1024)
+                
+                // Analyze the file type
+                let type = AnyFileProxy.type(of: draggedUrl)
+
                 // Open the drop zone layer
-                let type = AnyFileProxy.type(of: url)
                 parent.renderer.dropZone.open(type: type, delay: 0.25)
             }
                 
@@ -113,7 +119,7 @@ public extension MetalView {
             
         case .compatibleFileURL:
             
-            if let url = NSURL(from: pasteBoard) as URL? {
+            if let url = draggedUrl {
                 
                 // Check if the file is a snapshot or a script
                 do {

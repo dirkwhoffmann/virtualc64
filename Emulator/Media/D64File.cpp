@@ -17,8 +17,6 @@ D64File::isCompatible(const string &path)
 {
     auto s = util::extractSuffix(path);
  
-    printf("Checking D64 path for %s (%s)(= %d)\n", path.c_str(), s.c_str(), s == "d64" || s == "D64");
-
     return s == "d64" || s == "D64";
 }
 
