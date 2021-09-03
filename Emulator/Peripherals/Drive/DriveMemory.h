@@ -35,10 +35,7 @@ public:
      */
     u8 ram[0xA000];
     u8 rom[0x8000] = {};
-        
-    // Memory (Ram, Rom, or unused) DEPRECATED
-    // [[deprecated]] u8 mem[0x10000];
-    
+            
     // Memory usage table (one entry for each KB)
     DrvMemType usage[64];
     

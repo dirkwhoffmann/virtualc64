@@ -1424,8 +1424,6 @@
 
 @end
 
-#define TRYMAKE(cmd) \
-try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return nil; }
 
 //
 // Snapshot proxy
@@ -1457,13 +1455,12 @@ try { return [self make: cmd]; } catch (VC64Error &err) { [ex save:err]; return 
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
-+ (instancetype)makeWithC64:(C64Proxy *)c64proxy
++ (instancetype)makeWithC64:(C64Proxy *)proxy
 {
-    C64 *c64 = (C64 *)c64proxy->obj;
-    c64->suspend();
-    // Snapshot *snapshot = Snapshot::makeWithC64(c64);
-    Snapshot *snapshot = new Snapshot(*c64);
-    c64->resume();
+    [proxy suspend];
+    Snapshot *snapshot = new Snapshot(*(C64 *)proxy->obj);
+    [proxy resume];
+
     return [self make:snapshot];
 }
 

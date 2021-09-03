@@ -25,24 +25,6 @@ PRGFile::isCompatible(std::istream &stream)
     return (util::streamLength(stream) >= 2);
 }
 
-PRGFile *
-PRGFile::makeWithFileSystem(FSDevice &fs)
-{
-    isize item = 0;
-    isize itemSize = fs.fileSize(item);
-
-    // Only proceed if the requested file exists
-    if (fs.numFiles() <= item) throw VC64Error(ERROR_FS_HAS_NO_FILES);
-        
-    // Create new archive
-    PRGFile *prg = new PRGFile(itemSize);
-                
-    // Add data
-    fs.copyFile(item, prg->data, itemSize);
-    
-    return prg;
-}
-
 void
 PRGFile::init(FSDevice &fs)
 {

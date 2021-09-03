@@ -61,55 +61,6 @@ public:
     // The size of this file in bytes
     isize size = 0;
     
-
-    //
-    // Creating
-    //
-    
-    /*
-public:
-    
-    template <class T> static T *make(std::istream &stream) throws
-    {
-        if (!T::isCompatible(stream)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
-        
-        T *obj = new T();
-        
-        try { obj->readFromStream(stream); } catch (VC64Error &err) {
-            delete obj;
-            throw err;
-        }
-        return obj;
-    }
-    
-    template <class T> static T *make(const u8 *buf, isize len) throws
-    {
-        std::stringstream stream;
-        stream.write((const char *)buf, len);
-        return make <T> (stream);
-    }
-        
-    template <class T> static T *make(const string &path) throws
-    {
-        if (!T::isCompatible(path)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
-        
-        std::ifstream stream(path);
-        if (!stream.is_open()) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
-        auto file = make <T> (stream);
-        file->path = path;
-        return file;
-    }
-    
-    template <class T> static T *make(class Disk &disk) throws
-    {
-        return T::makeWithDisk(disk);
-    }
-    
-    template <class T> static T *make(class FSDevice &fs) throws
-    {
-        return T::makeWithFileSystem(fs);
-    }
-    */
     
     //
     // Initializing
@@ -122,10 +73,10 @@ public:
     virtual ~AnyFile();
     
     void init(isize capacity);
-    void init(std::istream &stream) throws;
-    void init(const string &path, std::istream &stream) throws;
-    void init(const u8 *buf, isize len) throws;
     void init(const string &path) throws;
+    void init(const string &path, std::istream &stream) throws;
+    void init(std::istream &stream) throws;
+    void init(const u8 *buf, isize len) throws;
     void init(FILE *file) throws;
     
     

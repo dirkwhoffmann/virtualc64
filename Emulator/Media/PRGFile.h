@@ -22,8 +22,6 @@ public:
     static bool isCompatible(const string &name);
     static bool isCompatible(std::istream &stream);
     
-    [[deprecated]] static PRGFile *makeWithFileSystem(class FSDevice &fs);
-
     
     //
     // Initializing
@@ -33,7 +31,7 @@ public:
     PRGFile(isize capacity) : AnyCollection(capacity) { }
     PRGFile(const string &path) throws { init(path); }
     PRGFile(const u8 *buf, isize len) throws { init(buf, len); }
-    PRGFile(FSDevice &fs) throws { init(fs); }
+    PRGFile(class FSDevice &fs) throws { init(fs); }
     
 private:
     

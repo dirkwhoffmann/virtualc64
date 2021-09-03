@@ -22,7 +22,7 @@ extension Proxy {
         if exception.errorCode != .OK { throw VC64Error(exception) }
         return obj!
     }
-    
+
     static func make<T: MakeWithFile>(url: URL) throws -> T {
         
         let exception = ExceptionWrapper()
