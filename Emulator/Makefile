@@ -2,10 +2,12 @@ SUBDIRS = \
 Utilities Base Cartridges CIA CPU FileSystems LogicBoard Media Memory \
 Peripherals RetroShell SID VICII
 
+EXEC       = virtualc64
 CXX        = g++
 CC         = $(CXX)
 CCFLAGS    = -std=c++17 -O3 -Wall -Wfatal-errors
 CPPFLAGS   = -I $(CURDIR)/.. $(addprefix -I, $(shell find $(CURDIR) -type d))
+LDFLAGS    = -pthread
 
 export CC CCFLAGS CPPFLAGS
 
@@ -35,7 +37,7 @@ clean:
 
 bin:
 	@echo "Linking"
-	g++ -pthread -o virtualC64 ../Utilities/*.o *.o */*.o */*/*.o
+	@$(CC) $(LDFLAGS) -o $(EXEC) *.o */*.o */*/*.o
 
 %.o: %.cpp $(DEPS)
 	@echo "Compiling $<"
