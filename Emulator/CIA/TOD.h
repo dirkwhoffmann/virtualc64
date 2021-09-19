@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "CIATypes.h"
+#include "TODTypes.h"
 #include "SubComponent.h"
 
 inline u8 incBCD(u8 x)

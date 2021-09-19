@@ -52,7 +52,7 @@ C64::C64()
 
     // Set up the initial state
     C64Component::initialize();
-    _reset(true);
+    C64Component::reset(true);
 }
 
 C64::~C64()

@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "CIATypes.h"
 #include "SubComponent.h"
 #include "TOD.h"
 

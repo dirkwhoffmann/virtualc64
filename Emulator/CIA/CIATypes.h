@@ -11,6 +11,7 @@
 
 #include "Aliases.h"
 #include "Reflection.h"
+#include "TODTypes.h"
 
 enum_long(CIAREV)
 {
@@ -106,57 +107,32 @@ typedef struct
 }
 CIAConfig;
 
-typedef union
+typedef struct
 {
-    struct {
-        u8 tenth;
-        u8 sec;
-        u8 min;
-        u8 hour;
-    };
-    u32 value;
+    u8 port;
+    u8 reg;
+    u8 dir;
 }
-TimeOfDay;
+CIAPortInfo;
 
 typedef struct
 {
-    TimeOfDay time;
-    TimeOfDay latch;
-    TimeOfDay alarm;
+    u16 count;
+    u16 latch;
+    bool running;
+    bool toggle;
+    bool pbout;
+    bool oneShot;
 }
-TODInfo;
+CIATimerInfo;
 
 typedef struct
 {
-    struct {
-        u8 port;
-        u8 reg;
-        u8 dir;
-    } portA;
+    CIAPortInfo portA;
+    CIAPortInfo portB;
 
-    struct {
-        u8 port;
-        u8 reg;
-        u8 dir;
-    } portB;
-
-    struct {
-        u16 count;
-        u16 latch;
-        bool running;
-        bool toggle;
-        bool pbout;
-        bool oneShot;
-    } timerA;
-
-    struct {
-        u16 count;
-        u16 latch;
-        bool running;
-        bool toggle;
-        bool pbout;
-        bool oneShot;
-    } timerB;
+    CIATimerInfo timerA;
+    CIATimerInfo timerB;
 
     u8 sdr;
     u8 ssr;

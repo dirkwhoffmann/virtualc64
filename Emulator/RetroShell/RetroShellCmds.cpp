@@ -24,6 +24,31 @@ template <> void
 RetroShell::exec <Token::clear> (Arguments &argv, long param)
 {
     clear();
+
+    /*
+    printf("Experimental code...\n");
+
+    // Create D64File from file
+    D64File d64 = D64File("/tmp/test.d64");
+
+    // Create D64File from buffer
+    D64File d64_2 = D64File(d64.data, d64.size);
+
+    // Create disk from D64File
+    auto disk = std::make_unique<Disk>(d64_2);
+
+    // Insert the disk into drive 8
+    drive8.insertDisk(std::move(disk));
+    */
+    /*
+    // Create a file system from the disk in drive 8
+    FSDevice fs = FSDevice(*drive8.disk);
+
+    // Convert it to a disk
+    D64File d64_3 = D64File(fs);
+    */
+
+    // printf("Done...\n");
 }
 
 template <> void
