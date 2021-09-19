@@ -1,3 +1,4 @@
+SRC=$(wildcard *.cpp)
 OBJ=$(SRC:.cpp=.o)
 
 .PHONY: all clean

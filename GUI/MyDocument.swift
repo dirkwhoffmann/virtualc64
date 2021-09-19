@@ -86,7 +86,7 @@ class MyDocument: NSDocument {
         track("Creating proxy object from URL: \(url.lastPathComponent)")
 
         // If the provided URL points to compressed file, decompress it first
-        let newUrl = url.unpacked(maxSize: 512 * 1024)
+        let newUrl = url.unpacked(maxSize: 2048 * 1024)
 
         // Iterate through all allowed file types
         for type in allowedTypes {

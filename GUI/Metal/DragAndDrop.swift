@@ -45,7 +45,7 @@ public extension MetalView {
             if let url = NSURL(from: pasteBoard) as URL? {
             
                 // Unpack the file if it is compressed
-                draggedUrl = url.unpacked(maxSize: 512 * 1024)
+                draggedUrl = url.unpacked(maxSize: 2048 * 1024)
                 
                 // Analyze the file type
                 let type = AnyFileProxy.type(of: draggedUrl)

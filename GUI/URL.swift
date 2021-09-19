@@ -152,7 +152,6 @@ extension URL {
     func unpackZip() throws -> URL {
         
         let urls = try unpack(suffix: "zip")
-        track("zip: \(urls)")
         if let first = urls.first { return first }
         
         throw UnpackError.noSupportedFiles
@@ -161,7 +160,6 @@ extension URL {
     func unpackGz() throws -> URL {
         
         let urls = try unpack(suffix: "gz")
-        track("gz: \(urls)")
         if let first = urls.first { return first }
         
         throw UnpackError.noSupportedFiles
