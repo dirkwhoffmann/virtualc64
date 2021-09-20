@@ -38,9 +38,9 @@ public:
     
     D64File();
     D64File(isize tracks, bool ecc);
-    D64File(const string &path) throws { init(path); }
-    D64File(const u8 *buf, isize len) throws { init(buf, len); }
-    D64File(FSDevice &fs) throws { init(fs); }
+    D64File(const string &path) : D64File() throws { init(path); }
+    D64File(const u8 *buf, isize len) : D64File() throws { init(buf, len); }
+    D64File(FSDevice &fs) : D64File() throws { init(fs); }
     
 private:
     
