@@ -10,6 +10,7 @@
 #include "config.h"
 #include "C64.h"
 #include "IO.h"
+#include "Checksum.h"
 
 #include <stdarg.h>
 
@@ -198,19 +199,23 @@ Disk::_dump(dump::Category category, std::ostream& os) const
     
     if (category & dump::State) {
 
+        auto checksum = util::fnv_1a_32((const u8 *)data.track, sizeof(data.track));
+
         os << tab("Write protected") << bol(writeProtected) << std::endl;
         os << tab("Modified") << bol(modified) << std::endl;
+        os << tab("Checksum") << hex(checksum) << std::endl;
+    }
 
-        /*
+    if (category & dump::Layout) {
+
         for (Halftrack ht = 1; ht <= highestHalftrack; ht++) {
             
-            u16 length = lengthOfHalftrack(ht);
+            auto length = lengthOfHalftrack(ht);
             
             os << tab("Halftrack " + std::to_string(ht));
             os << dec(length) << " Bits (" << dec(length / 8) << " Bytes)";
             os << std::endl;
         }
-        */
     }
 }
 

@@ -47,14 +47,15 @@
 namespace dump {
 enum Category : usize {
     
-    Config    = 0b00000001,
-    State     = 0b00000010,
-    Registers = 0b00000100,
-    Events    = 0b00001000,
-    Checksums = 0b00010000,
-    Dma       = 0b00100000,
-    BankMap   = 0b01000000,
-    Disk      = 0b10000000
+    Config    = 0b000000001,
+    State     = 0b000000010,
+    Registers = 0b000000100,
+    Events    = 0b000001000,
+    Checksums = 0b000010000,
+    Dma       = 0b000100000,
+    BankMap   = 0b001000000,
+    Layout    = 0b010000000,
+    Disk      = 0b100000000
 };
 }
 
