@@ -29,7 +29,6 @@ public:
     
     static bool isCompatible(const string &name);
     static bool isCompatible(std::istream &stream);  
-    static D64File *makeWithFileSystem(class FSDevice &volume) throws;
 
 
     //
@@ -40,7 +39,7 @@ public:
     D64File(isize tracks, bool ecc);
     D64File(const string &path) : D64File() throws { init(path); }
     D64File(const u8 *buf, isize len) : D64File() throws { init(buf, len); }
-    D64File(FSDevice &fs) : D64File() throws { init(fs); }
+    D64File(class FSDevice &fs) : D64File() throws { init(fs); }
     
 private:
     

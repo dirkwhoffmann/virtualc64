@@ -32,24 +32,7 @@ public:
 
     // Result of the latest directory scan
     std::vector<FSDirEntry *> dir;
-    
-    
-    //
-    // Factory methods
-    //
-    
-public:
 
-    /*
-    static FSDevice *makeWithFormat(FSDeviceDescriptor &layout);
-    static FSDevice *makeWithType(DiskType type, DOSType vType = DOS_TYPE_NODOS);
-    static FSDevice *makeWithD64(const class D64File &d64) throws;
-    static FSDevice *makeWithDisk(class Disk &disk) throws;
-    static FSDevice *makeWithCollection(AnyCollection &collection) throws;
-    static FSDevice *makeWithPath(const string &path) throws;
-    static FSDevice *makeWithFolder(const string &path) throws;
-    */
-    
     
     //
     // Initializing

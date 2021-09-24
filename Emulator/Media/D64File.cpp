@@ -54,31 +54,6 @@ D64File::D64File(isize tracks, bool ecc) : D64File()
     data = new u8[size]();
 }
 
-D64File *
-D64File::makeWithFileSystem(FSDevice &volume)
-{
-    D64File *d64 = nullptr;
-        
-    switch (volume.getNumBlocks() * 256) {
-                        
-        case D64_683_SECTORS: d64 = new D64File(35, false); break;
-        case D64_768_SECTORS: d64 = new D64File(40, false); break;
-        case D64_802_SECTORS: d64 = new D64File(42, false); break;
-
-        default:
-            fatalError;
-    }
-
-    ErrorCode err;
-    if (!volume.exportVolume(d64->data, d64->size, &err)) {
-
-        delete d64;
-        throw VC64Error(err);
-    }
-    
-    return d64;
-}
-
 void
 D64File::init(isize tracks, bool ecc)
 {

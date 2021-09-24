@@ -18,7 +18,7 @@ public:
     static bool isCompatible(const string &name);
     static bool isCompatible(std::istream &stream);
     
-    static T64File *makeWithFileSystem(class FSDevice &fs);
+    // static T64File *makeWithFileSystem(class FSDevice &fs);
 
     
     //
@@ -29,7 +29,7 @@ public:
     T64File(isize capacity) : AnyCollection(capacity) { }
     T64File(const string &path) throws { init(path); }
     T64File(const u8 *buf, isize len) throws { init(buf, len); }
-    T64File(FSDevice &fs) throws { init(fs); }
+    T64File(class FSDevice &fs) throws { init(fs); }
     
 private:
     

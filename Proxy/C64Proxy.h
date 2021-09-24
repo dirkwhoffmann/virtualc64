@@ -694,11 +694,11 @@
 @end
 
 @protocol MakeWithFileSystem
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)fs exception:(ExceptionWrapper *)ex;;
++ (instancetype)makeWithFileSystem:(FSDeviceProxy *)fs exception:(ExceptionWrapper *)ex;
 @end
 
 @protocol MakeWithCollection
-+ (instancetype)makeWithCollection:(AnyCollectionProxy *)collection exception:(ExceptionWrapper *)ex;;
++ (instancetype)makeWithCollection:(AnyCollectionProxy *)collection exception:(ExceptionWrapper *)ex;
 @end
 
 @protocol MakeWithD64
