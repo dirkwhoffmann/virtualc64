@@ -60,7 +60,7 @@ private:
 
 public:
 
-    // Resets everything to factory settings
+    // Reverts everything to factory settings
     void prepare(class C64 &c64, C64Model model);
     
     // Creates the test image and exits the emulator
