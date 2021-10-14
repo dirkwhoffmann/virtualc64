@@ -463,7 +463,7 @@ CPUDebugger::disassembleInstr(const RecordedInstruction &instr, long *len) const
         }
         case ADDR_RELATIVE:
         {
-            u16 value = instr.pc + 2 + (i8)instr.byte2;
+            u16 value = (u16)(instr.pc + 2 + (i8)instr.byte2);
             hex ? sprint16x(operand, value) : sprint16d(operand, value);
             break;
         }

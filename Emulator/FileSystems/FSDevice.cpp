@@ -615,7 +615,7 @@ FSDevice::makeFile(PETName<16> name, FSDirEntry *dir, const u8 *buf, isize cnt)
  
     // Store the size of the last data chunk inside the sector link
     assert(ptr->data[0] == 0);
-    ptr->data[1] = (cnt % 254) + 1;
+    ptr->data[1] = (u8)((cnt % 254) + 1);
     
     // Write directory entry
     dir->init(name, blockList[0], numBlocks);
