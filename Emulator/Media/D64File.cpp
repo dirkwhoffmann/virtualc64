@@ -97,10 +97,8 @@ D64File::getName() const
 }
 
 void
-D64File::readFromStream(std::istream &stream)
+D64File::finalizeRead()
 {
-    AnyFile::readFromStream(stream);
-    
     isize numSectors;
     bool errorCodes;
  
@@ -157,7 +155,7 @@ D64File::readFromStream(std::istream &stream)
         
     // Copy error codes
     if (errorCodes) {
-        memcpy(errors, data + (numSectors * 256), numSectors);
+        std::memcpy(errors, data + (numSectors * 256), numSectors);
     }
 }
 

@@ -65,7 +65,7 @@ public:
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_D64; }
     PETName<16> getName() const override;
-    void readFromStream(std::istream &stream) throws override;
+    void finalizeRead() throws override;
 
         
     //

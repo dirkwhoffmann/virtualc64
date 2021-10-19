@@ -122,7 +122,8 @@ protected:
 
     virtual bool isCompatiblePath(const string &path) = 0;
     virtual bool isCompatibleStream(std::istream &stream) = 0;
-    virtual void readFromStream(std::istream &stream) throws;
+    
+    void readFromStream(std::istream &stream) throws;
     void readFromFile(const string &path) throws;
     void readFromBuffer(const u8 *buf, isize len) throws;
 
