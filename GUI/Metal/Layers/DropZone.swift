@@ -28,6 +28,7 @@ class DropZone: Layer {
     
     var hideAll = false
     var enabled = [false, false, false, false]
+    var inUse = [false, false, false, false]
     var inside = [false, false, false, false]
     var currentAlpha = [0.0, 0.0, 0.0, 0.0]
     var targetAlpha = [unselected, unselected, unselected, unselected]
@@ -48,9 +49,14 @@ class DropZone: Layer {
 
     private func setType(_ type: FileType) {
     
-        let connected8 = renderer.parent.c64.drive8.isConnected()
-        let connected9 = renderer.parent.c64.drive9.isConnected()
+        let connected8 = c64.drive8.isConnected()
+        let connected9 = c64.drive9.isConnected()
 
+        inUse[0] = c64.drive8.hasDisk()
+        inUse[1] = c64.drive9.hasDisk()
+        inUse[2] = c64.expansionport.cartridgeAttached()
+        inUse[3] = c64.datasette.hasTape
+        
         switch type {
         
         case .T64, .P00, .PRG, .FOLDER, .D64, .G64:
@@ -124,7 +130,8 @@ class DropZone: Layer {
             if !isIn && inside[i] {
 
                 inside[i] = false
-                zones[i].image = NSImage(named: "dropZone\(i)Empty")
+                let suffix = inUse[i] ? "InUse" : "Empty"
+                zones[i].image = NSImage(named: "dropZone\(i)\(suffix)")
                 targetAlpha[i] = DropZone.unselected
             }
         }
