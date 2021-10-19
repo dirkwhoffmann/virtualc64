@@ -47,6 +47,23 @@ class DropZone: Layer {
         resize()
     }
 
+    private func image(zone: Int) -> NSImage {
+
+        var suffix = "Disabled"
+
+        if enabled[zone] {
+            
+            switch zone {
+            case 0: suffix = c64.drive8.hasDisk() ? "InUse" : "Empty"
+            case 1: suffix = c64.drive9.hasDisk() ? "InUse" : "Empty"
+            case 2: suffix = c64.expansionport.cartridgeAttached() ? "InUse" : "Empty"
+            case 3: suffix = c64.datasette.hasTape ? "InUse" : "Empty"
+            default: fatalError()
+            }
+        }
+        return NSImage(named: "dropZone\(zone)\(suffix)")!
+    }
+    
     private func setType(_ type: FileType) {
     
         let connected8 = c64.drive8.isConnected()
@@ -74,8 +91,7 @@ class DropZone: Layer {
         
         for i in 0...3 {
             
-            let imgZone = enabled[i] ? "dropZone\(i)Empty" : "dropZone\(i)Disabled"
-            zones[i].image = NSImage(named: imgZone)
+            zones[i].image = image(zone: i)
         }
         
         // Hide all drop zones if none is enabled
@@ -130,8 +146,7 @@ class DropZone: Layer {
             if !isIn && inside[i] {
 
                 inside[i] = false
-                let suffix = inUse[i] ? "InUse" : "Empty"
-                zones[i].image = NSImage(named: "dropZone\(i)\(suffix)")
+                zones[i].image = image(zone: i)
                 targetAlpha[i] = DropZone.unselected
             }
         }
