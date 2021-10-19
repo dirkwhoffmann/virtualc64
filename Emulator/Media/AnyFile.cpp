@@ -164,7 +164,7 @@ void
 AnyFile::flash(u8 *buffer, isize offset) const
 {
     assert(buffer);
-    memcpy(buffer + offset, data, size);
+    std::memcpy(buffer + offset, data, size);
 }
 
 void
@@ -183,9 +183,7 @@ AnyFile::readFromStream(std::istream &stream)
 
     // Read data
     stream.read((char *)data, size);
-    
-    // Fix known inconsistencies
-    repair();
+    finalizeRead();
 }
 
 void
@@ -197,8 +195,9 @@ AnyFile::readFromFile(const string  &path)
         throw VC64Error(ERROR_FILE_CANT_READ);
     }
     
-    readFromStream(stream);
     this->path = string(path);
+
+    readFromStream(stream);
 }
 
 void
@@ -206,8 +205,14 @@ AnyFile::readFromBuffer(const u8 *buf, isize len)
 {
     assert(buf);
 
-    std::istringstream stream(string((const char *)buf, len));
-    readFromStream(stream);
+    // Allocate memory
+    size = len;
+    assert(data == nullptr);
+    data = new u8[size];
+
+    // Copy data
+    std::memcpy(data, buf, size);
+    finalizeRead();
 }
 
 void
@@ -232,5 +237,5 @@ void
 AnyFile::writeToBuffer(u8 *buf)
 {
     assert(buf);
-    memcpy(buf, data, size);
+    std::memcpy(buf, data, size);
 }

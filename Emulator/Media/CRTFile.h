@@ -64,7 +64,7 @@ public:
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_CRT; }
     PETName<16> getName() const override;
-    void readFromStream(std::istream &stream) throws override;
+    void finalizeRead() override;
 
     
     //
@@ -112,11 +112,12 @@ public:
 
 
     //
-    // Debugging, scanning and repairing a CRT file
+    // Debugging and repairing
     //
 
     // Prints some information about this cartridge
     void dump() const;
     
-    void repair() override;
+    // Fixes known inconsistencies of common CRT files
+    void repair();
 };

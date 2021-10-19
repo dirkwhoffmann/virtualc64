@@ -87,6 +87,5 @@ public:
     bool isCompatiblePath(const string &path) override { return isCompatible(path); }
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return romFileType; }
-    void readFromStream(std::istream &stream) throws override;
-    void repair() override;
+    void finalizeRead() override;
 };

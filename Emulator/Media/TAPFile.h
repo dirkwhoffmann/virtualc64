@@ -49,7 +49,8 @@ public:
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_TAP; }
     PETName<16> getName() const override;
-    
+    void finalizeRead() override;
+
     
     //
     // Reading
@@ -69,11 +70,4 @@ public:
     
     // Reads the next pulse and advances the file pointer
     isize read();
-    
-
-    //
-    // Repairing
-    //
-    
-    void repair() override;
 };

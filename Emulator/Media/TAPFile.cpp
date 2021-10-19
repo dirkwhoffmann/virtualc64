@@ -91,7 +91,7 @@ TAPFile::read()
 }
 
 void
-TAPFile::repair()
+TAPFile::finalizeRead()
 {
     isize length = LO_LO_HI_HI(data[0x10], data[0x11], data[0x12], data[0x13]);
     isize header = 0x14;

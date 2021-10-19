@@ -513,21 +513,16 @@ RomFile::revision(RomIdentifier rev)
 }
 
 void
-RomFile::readFromStream(std::istream &stream)
+RomFile::finalizeRead()
 {
+    // Deterrmine the ROM type
     romFileType =
-    isBasicRomStream(stream) ? FILETYPE_BASIC_ROM :
-    isCharRomStream(stream) ? FILETYPE_CHAR_ROM :
-    isKernalRomStream(stream) ? FILETYPE_KERNAL_ROM :
-    isVC1541RomStream(stream) ? FILETYPE_VC1541_ROM :
+    isBasicRomBuffer(data, size) ? FILETYPE_BASIC_ROM :
+    isCharRomBuffer(data, size) ? FILETYPE_CHAR_ROM :
+    isKernalRomBuffer(data, size) ? FILETYPE_KERNAL_ROM :
+    isVC1541RomBuffer(data, size) ? FILETYPE_VC1541_ROM :
     FILETYPE_UNKNOWN;
-    
-    AnyFile::readFromStream(stream);
-}
 
-void
-RomFile::repair()
-{
     // Count the number of 0xFF bytes at the beginning of the file
     isize pads = 0; for (; data[pads] == 0xFF; pads++);
     

@@ -48,11 +48,11 @@ private:
     // Methods from AnyFile
     //
     
-    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
-    bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_T64; }
     PETName<16> getName() const override;
-        
+    bool isCompatiblePath(const string &path) override { return isCompatible(path); }
+    bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
+    void finalizeRead() override;
 
     //
     // Methods from AnyCollection
@@ -71,25 +71,11 @@ private:
     
     
     //
-    // Scanning and repairing
+    // Scanning
     //
     
 public:
     
     // Checks if the header contains information at the specified location
     bool directoryItemIsPresent(isize n);
-
-    /* This methods eliminates the following inconsistencies:
-     *
-     *   - number of files:
-     *     Some archives state falsely in their header that zero files are
-     *     present. This value will be fixed.
-     *
-     *   - end loading address:
-     *     Archives that are created with CONVC64 often contain a value of
-     *     0xC3C6, which is wrong (e.g., paradrd.t64). This value will be
-     *     changed such that getByte() will read until the end of the physical
-     *     file.
-    */
-    void repair() override;
 };

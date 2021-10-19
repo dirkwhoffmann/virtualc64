@@ -230,8 +230,21 @@ T64File::directoryItemIsPresent(isize item)
 }
 
 void
-T64File::repair()
+T64File::finalizeRead()
 {
+    /* This methods eliminates the following inconsistencies:
+     *
+     *   - number of files:
+     *     Some archives state falsely in their header that zero files are
+     *     present. This value will be fixed.
+     *
+     *   - end loading address:
+     *     Archives that are created with CONVC64 often contain a value of
+     *     0xC3C6, which is wrong (e.g., paradrd.t64). This value will be
+     *     changed such that getByte() will read until the end of the physical
+     *     file.
+     */
+    
     isize i, n;
     isize noOfItems = collectionCount();
 

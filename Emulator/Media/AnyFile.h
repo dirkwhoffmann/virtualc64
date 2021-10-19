@@ -110,6 +110,7 @@ public:
     //
 
     // Copies the file contents into a buffer starting at the provided offset
+    // DEPRECATED
     void flash(u8 *buf, isize offset = 0) const;
 
     
@@ -127,20 +128,14 @@ protected:
 
 public:
     
-    virtual void writeToStream(std::ostream &stream) throws;
+    void writeToStream(std::ostream &stream) throws;
     void writeToFile(const string &path) throws;
     void writeToBuffer(u8 *buf) throws;
 
 
-    //
-    // Repairing
-    //
+private:
     
-public:
-    
-    /* This function is called in the default implementation of readFromStream.
-     * It can be overwritten to fix known inconsistencies in certain media
-     * files.
-     */
-    virtual void repair() { };    
+    // Delegation methods
+    virtual void finalizeRead() throws { };
+    virtual void finalizeWrite() throws { };
 };

@@ -32,11 +32,13 @@ CRTFile::getName() const
 }
 
 void
-CRTFile::readFromStream(std::istream &stream)
+CRTFile::finalizeRead()
 {
-    AnyFile::readFromStream(stream);
     if constexpr (CRT_DEBUG) dump();
             
+    // Fix known inconsistencies
+    repair();
+
     // Load chip packets
     u8 *ptr = data + headerSize();
     for (numberOfChips = 0; ptr < data + size; numberOfChips++) {
