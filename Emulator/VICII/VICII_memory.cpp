@@ -505,6 +505,7 @@ VICII::poke(u16 addr, u8 value)
             lowerComparisonVal = lowerComparisonValue();
             
             rasterIrqLine = (u16)((rasterIrqLine & 0x00FF) | ((value & 0x80) << 1));
+            checkForRasterIrq();
             break;
             
         case 0x12: // RASTER_COUNTER
