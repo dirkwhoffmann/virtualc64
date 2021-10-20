@@ -830,84 +830,94 @@
 
 @implementation DiskProxy
 
+- (Drive *)drive
+{
+    return (Drive *)obj;
+}
+
 - (Disk *)disk
 {
-    return (Disk *)obj;
+    return [self drive]->disk.get();
 }
 
 - (BOOL)writeProtected
 {
-    return [self disk]->isWriteProtected();
+    return [self disk] ? [self disk]->isWriteProtected() : false;
 }
 
 - (void)setWriteProtected:(BOOL)b
 {
-    [self disk]->setWriteProtection(b);
+    if ([self disk]) { [self disk]->setWriteProtection(b); }
 }
 
 - (void)toggleWriteProtection
 {
-    [self disk]->toggleWriteProtection();
+    if ([self disk]) { [self disk]->toggleWriteProtection(); }
 }
 
 - (NSInteger)nonemptyHalftracks
 {
-    return [self disk]->nonemptyHalftracks();
+    return [self disk] ? [self disk]->nonemptyHalftracks() : 0;
 }
 
 - (void)analyzeTrack:(Track)t
 {
-    [self disk]->analyzeTrack(t);
+    if ([self disk]) { [self disk]->analyzeTrack(t); }
 }
 
 - (void)analyzeHalftrack:(Halftrack)ht
 {
-    [self disk]->analyzeHalftrack(ht);
+    if ([self disk]) { [self disk]->analyzeHalftrack(ht); }
 }
 
 - (NSInteger)numErrors
 {
-    return [self disk]->numErrors();
+    return [self disk] ? [self disk]->numErrors() : 0;
 }
 
 - (NSString *)errorMessage:(NSInteger)nr
 {
-    string s = [self disk]->errorMessage((unsigned)nr);
+    string s = [self disk] ? [self disk]->errorMessage((unsigned)nr) : "";
     return [NSString stringWithUTF8String:s.c_str()];
 }
 
 - (NSInteger)firstErroneousBit:(NSInteger)nr
 {
-    return [self disk]->firstErroneousBit((unsigned)nr);
+    return [self disk] ? [self disk]->firstErroneousBit((unsigned)nr) : 0;
 }
 
 - (NSInteger)lastErroneousBit:(NSInteger)nr
 {
-    return [self disk]->lastErroneousBit((unsigned)nr);
+    return [self disk] ? [self disk]->lastErroneousBit((unsigned)nr) : 0;
 }
 
 - (SectorInfo)sectorInfo:(Sector)s
 {
+    assert([self disk]);
     return [self disk]->sectorLayout(s);
 }
 
 - (const char *)trackBitsAsString
 {
+    assert([self disk]);
     return [self disk]->trackBitsAsString();
 }
 
 - (const char *)diskNameAsString
 {
+    assert([self disk]);
     return [self disk]->diskNameAsString();
 }
 
 - (const char *)sectorHeaderBytesAsString:(Sector)nr hex:(BOOL)hex
 {
+    assert([self disk]);
     return [self disk]->sectorHeaderBytesAsString(nr, hex);
 }
 
 - (const char *)sectorDataBytesAsString:(Sector)nr hex:(BOOL)hex
 {
+    assert([self disk]);
     return [self disk]->sectorDataBytesAsString(nr, hex);
 }
 
@@ -939,7 +949,7 @@
     if ([self initWith:drive]) {
         via1 = [[VIAProxy alloc] initWith:&drive->via1];
         via2 = [[VIAProxy alloc] initWith:&drive->via2];
-        disk = [[DiskProxy alloc] initWith:&drive->disk];
+        disk = [[DiskProxy alloc] initWith:drive];
     }
     return self;
 }
@@ -1839,7 +1849,8 @@
 
 + (instancetype)makeWithDisk:(DiskProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    try { return [self make: new FSDevice(*(Disk *)proxy->obj)]; }
+    Drive *drv = (Drive *)proxy->obj;
+    try { return [self make: new FSDevice(*drv->disk)]; }
     catch (VC64Error &err) { [ex save:err]; return nil; }
 }
 

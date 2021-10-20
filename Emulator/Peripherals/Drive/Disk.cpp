@@ -809,6 +809,7 @@ Disk::encode(const FSDevice &fs, bool alignTracks)
 
     // Do some consistency checking
     for (Halftrack ht = 1; ht <= highestHalftrack; ht++) {
+        assert(length.halftrack[ht] >= 0);
         assert(length.halftrack[ht] <= sizeof(data.halftrack[ht]) * 8);
     }
 }
