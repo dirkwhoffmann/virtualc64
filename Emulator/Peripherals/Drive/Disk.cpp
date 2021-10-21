@@ -361,28 +361,32 @@ Disk::nonemptyHalftracks() const
 }
 
 u16
-Disk::lengthOfHalftrack(Halftrack ht) const
-{
-    assert(isHalftrackNumber(ht));
-    return length.halftrack[ht];
-}
-
-u16
 Disk::lengthOfTrack(Track t) const
 {
     assert(isTrackNumber(t));
     return length.track[t][0];
 }
 
+u16
+Disk::lengthOfHalftrack(Halftrack ht) const
+{
+    assert(isHalftrackNumber(ht));
+    return length.halftrack[ht];
+}
 
-//
-// Analyzing the disk
-//
+void
+Disk::analyzeTrack(Track t)
+{
+    assert(isTrackNumber(t));
+    analyzeHalftrack(2 * t - 1);
+}
 
 void
 Disk::analyzeHalftrack(Halftrack ht)
 {
     assert(isHalftrackNumber(ht));
+    
+    // TrackInfo trackInfo = { };
     
     u16 len = length.halftrack[ht];
 
@@ -390,20 +394,20 @@ Disk::analyzeHalftrack(Halftrack ht)
     errorStartIndex.clear();
     errorEndIndex.clear();
     
-    // The result of the analysis is stored in variable trackInfo.
-    memset(&trackInfo, 0, sizeof(trackInfo));
+    // The result of the analysis is stored in variable trackInfo
+    // memset(&trackInfo, 0, sizeof(trackInfo));
     trackInfo.length = len;
     
-    // Setup working buffer (two copies of the track, each bit represented by one byte).
+    // Setup working buffer (two copies of the track, each bit represented by one byte)
     for (isize i = 0; i < maxBytesOnTrack; i++)
         trackInfo.byte[i] = bitExpansion[data.halftrack[ht][i]];
     std::memcpy(trackInfo.bit + len, trackInfo.bit, len);
     
-    // Indicates where the sector headers blocks and the sectors data blocks start.
+    // Indicates where the sector headers blocks and the sectors data blocks start
     u8 sync[sizeof(trackInfo.bit)];
     std::memset(sync, 0, sizeof(sync));
     
-    // Scan for SYNC sequences and decode the byte that follows.
+    // Scan for SYNC sequences and decode the byte that follows
     isize noOfOnes = 0;
     long stop = (long)(2 * len - 10);
     for (long i = 0; i < stop; i++) {
@@ -467,9 +471,14 @@ Disk::analyzeHalftrack(Halftrack ht)
         }
     }
     
-    // Check integrity of all sector blocks
-    // For each sector ...
+    analyzeSectorBlocks(ht, trackInfo);
+}
+
+void
+Disk::analyzeSectorBlocks(Halftrack ht, TrackInfo &trackInfo)
+{
     Track t = (ht + 1) / 2;
+    
     for (Sector s = 0; s < trackDefaults[t].sectors; s++) {
         
         SectorInfo *info = &trackInfo.sectorInfo[s];
@@ -482,13 +491,13 @@ Disk::analyzeHalftrack(Halftrack ht)
         }
         
         if (hasHeader) {
-            analyzeSectorHeaderBlock(info->headerBegin);
+            analyzeSectorHeaderBlock(info->headerBegin, trackInfo);
         } else {
             log(0, 0, "Sector %d has no header block.\n", s);
         }
         
         if (hasData) {
-            analyzeSectorDataBlock(info->dataBegin);
+            analyzeSectorDataBlock(info->dataBegin, trackInfo);
         } else {
             log(0, 0, "Sector %d has no data block.\n", s);
         }
@@ -496,14 +505,7 @@ Disk::analyzeHalftrack(Halftrack ht)
 }
 
 void
-Disk::analyzeTrack(Track t)
-{
-    assert(isTrackNumber(t));
-    analyzeHalftrack(2 * t - 1);
-}
-
-void
-Disk::analyzeSectorHeaderBlock(isize offset)
+Disk::analyzeSectorHeaderBlock(isize offset, TrackInfo &trackInfo)
 {
     // The first byte must be 0x08 (indicating a header block)
     assert(decodeGcr(trackInfo.bit + offset) == 0x08);
@@ -521,7 +523,7 @@ Disk::analyzeSectorHeaderBlock(isize offset)
 }
 
 void
-Disk::analyzeSectorDataBlock(isize offset)
+Disk::analyzeSectorDataBlock(isize offset, TrackInfo &trackInfo)
 {
     // The first byte must be 0x07 (indicating a header block)
     assert(decodeGcr(trackInfo.bit + offset) == 0x07);

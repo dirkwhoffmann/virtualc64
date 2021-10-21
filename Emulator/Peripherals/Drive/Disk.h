@@ -360,20 +360,21 @@ public:
 public:
     
     // Returns the length of a halftrack in bits
-    u16 lengthOfHalftrack(Halftrack ht) const;
     u16 lengthOfTrack(Track t) const;
+    u16 lengthOfHalftrack(Halftrack ht) const;
     
     /* Analyzes the sector layout. The functions determines the start and end
      * offsets of all sectors and writes them into variable trackLayout.
      */
-    void analyzeHalftrack(Halftrack ht);
     void analyzeTrack(Track t);
+    void analyzeHalftrack(Halftrack ht);
     
 private:
     
-    // Checks the integrity of a sector header or sector data block
-    void analyzeSectorHeaderBlock(isize offset);
-    void analyzeSectorDataBlock(isize offset);
+    // Checks the integrity of the sector block structure
+    void analyzeSectorBlocks(Halftrack ht, TrackInfo &trackInfo);
+    void analyzeSectorHeaderBlock(isize offset, TrackInfo &trackInfo);
+    void analyzeSectorDataBlock(isize offset, TrackInfo &trackInfo);
 
     // Writes an error message into the error log
     void log(isize begin, isize length, const char *fmt, ...);
