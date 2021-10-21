@@ -11,8 +11,6 @@ extension ConfigurationController {
 
     func refreshRomTab() {
         
-        track()
-
         let poweredOff         = c64.poweredOff
         
         let basicIdentifier    = c64.romIdentifier(.BASIC)

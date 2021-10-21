@@ -25,8 +25,6 @@ extension PreferencesController {
             return pad?.property(key: key) ?? "-"
         }
 
-        track()
-
         // Let us notify when the device is pulled
         pad?.notify = true
         
@@ -79,9 +77,7 @@ extension PreferencesController {
     }
 
     func refreshDeviceEvents(events: [GamePadAction]) {
-    
-        track()
-        
+            
         var activity = "", activity2 = ""
         
         func add(_ str: String) {
@@ -104,7 +100,6 @@ extension PreferencesController {
     
     func selectDevicesTab() {
         
-        track()
         devActivity.stringValue = ""
         devActivity2.stringValue = ""
         refreshDevicesTab()

@@ -10,9 +10,7 @@
 extension PreferencesController {
     
     func refreshControlsTab() {
-        
-        track()
-        
+                
         func refreshKey(map: Int, dir: GamePadAction, button: NSButton, txt: NSTextField) {
             
             var keyDesc = ""
@@ -80,7 +78,6 @@ extension PreferencesController {
     
     func selectControlsTab() {
 
-        track()
         refreshControlsTab()
     }
     

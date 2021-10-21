@@ -19,9 +19,7 @@ class KeyViewItem: NSCollectionViewItem {
 extension PreferencesController {
         
     func refreshKeyboardTab() {
-            
-        track()
-        
+                    
         // Set up reference and image caches
         if keyView[0] == nil {
             for nr in 0 ... 65 {
@@ -90,7 +88,6 @@ extension PreferencesController {
         
     func selectKeyboardTab() {
 
-        track()
         refreshKeyboardTab()
     }
     

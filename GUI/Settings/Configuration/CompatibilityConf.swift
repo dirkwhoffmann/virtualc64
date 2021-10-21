@@ -10,9 +10,7 @@
 extension ConfigurationController {
 
     func refreshCompatibilityTab() {
-                        
-        track()
-        
+                                
         // Power saving
         comDrivePowerSave.state = config.drivePowerSave ? .on : .off
         comViciiPowerSave.state = config.viciiPowerSave ? .on : .off
