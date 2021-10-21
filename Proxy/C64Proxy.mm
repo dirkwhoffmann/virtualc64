@@ -942,7 +942,7 @@
 
 @implementation DriveProxy
 
-@synthesize via1, via2, disk;
+@synthesize via1, via2;
 
 - (instancetype)initWithVC1541:(Drive *)drive
 {    
@@ -957,6 +957,11 @@
 - (Drive *)drive
 {
     return (Drive *)obj;
+}
+
+- (DiskProxy *)disk
+{
+    return [self drive]->hasDisk() ? disk : NULL;
 }
 
 - (DriveID)id
