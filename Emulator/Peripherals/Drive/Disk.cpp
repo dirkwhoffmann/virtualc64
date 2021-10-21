@@ -439,39 +439,42 @@ Disk::analyzeHalftrack(Halftrack ht)
         }
     }
     if (startOffset == len) {
+        
         log(0, len, "This track contains no sector header block.");
         return;
-    }
+
+    } else {
     
-    // Compute offsets for all sectors
-    u8 sector = UINT8_MAX;
-    for (isize i = startOffset; i < startOffset + len; i++) {
-        
-        if (sync[i] == 0x08) {
+        // Compute offsets for all sectors
+        u8 sector = UINT8_MAX;
+        for (isize i = startOffset; i < startOffset + len; i++) {
             
-            sector = decodeGcr(trackInfo.bit + i + 20);
-            
-            if (isSectorNumber(sector)) {
-                if (trackInfo.sectorInfo[sector].headerEnd != 0)
-                    break; // We've seen this sector already, so we are done.
-                trackInfo.sectorInfo[sector].headerBegin = i;
-                trackInfo.sectorInfo[sector].headerEnd = i + headerBlockSize;
-            } else {
-                log(i + 20, 10, "Header block at index %d contains an invalid sector number (%d).", i, sector);
-            }
-        
-        } else if (sync[i] == 0x07) {
-            
-            if (isSectorNumber(sector)) {
-                trackInfo.sectorInfo[sector].dataBegin = i;
-                trackInfo.sectorInfo[sector].dataEnd = i + dataBlockSize;
-            } else {
-                log(i + 20, 10, "Data block at index %d contains an invalid sector number (%d).", i, sector);
+            if (sync[i] == 0x08) {
+                
+                sector = decodeGcr(trackInfo.bit + i + 20);
+                
+                if (isSectorNumber(sector)) {
+                    if (trackInfo.sectorInfo[sector].headerEnd != 0)
+                        break; // We've seen this sector already, so we are done.
+                    trackInfo.sectorInfo[sector].headerBegin = i;
+                    trackInfo.sectorInfo[sector].headerEnd = i + headerBlockSize;
+                } else {
+                    log(i + 20, 10, "Header block at index %d contains an invalid sector number (%d).", i, sector);
+                }
+                
+            } else if (sync[i] == 0x07) {
+                
+                if (isSectorNumber(sector)) {
+                    trackInfo.sectorInfo[sector].dataBegin = i;
+                    trackInfo.sectorInfo[sector].dataEnd = i + dataBlockSize;
+                } else {
+                    log(i + 20, 10, "Data block at index %d contains an invalid sector number (%d).", i, sector);
+                }
             }
         }
-    }
-    
-    analyzeSectorBlocks(ht, trackInfo);
+
+        analyzeSectorBlocks(ht, trackInfo);
+    }    
 }
 
 void
