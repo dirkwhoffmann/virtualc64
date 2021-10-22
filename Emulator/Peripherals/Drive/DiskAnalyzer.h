@@ -16,6 +16,8 @@
 
 class DiskAnalyzer: public C64Object {
   
+    friend class Disk;
+    
     // Maps a byte to an expanded 64 bit representation
     u64 bitExpansion[256];
 

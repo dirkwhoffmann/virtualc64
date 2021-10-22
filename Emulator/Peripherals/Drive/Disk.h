@@ -123,28 +123,6 @@ public:
 
     
     //
-    // Debug information
-    //
-    
-private:
-    
-    // Track layout as determined by analyzeTrack
-    TrackInfo trackInfo = { };
-
-    // Error log created by analyzeTrack
-    std::vector<string> errorLog;
-
-    // Stores the start offset of the erroneous bit sequence
-    std::vector<isize> errorStartIndex;
-
-    // Stores the end offset of the erroneous bit sequence
-    std::vector<isize> errorEndIndex;
-
-    // Textual representation of track data
-    char text[maxBitsOnTrack + 1] = { };
-    
-    
-    //
     // Class functions
     //
     
@@ -364,6 +342,9 @@ public:
     u16 lengthOfTrack(Track t) const;
     u16 lengthOfHalftrack(Halftrack ht) const;
     
+    
+#if 0
+    
     /* Analyzes the sector layout. The functions determines the start and end
      * offsets of all sectors and writes them into variable trackLayout.
      */
@@ -379,7 +360,7 @@ private:
 
     // Writes an error message into the error log
     void log(isize begin, isize length, const char *fmt, ...);
-    
+
 public:
     
     // Returns a sector layout from variable trackInfo
@@ -415,6 +396,7 @@ private:
     // Returns a textual representation
     const char *sectorBytesAsString(u8 *buffer, isize length, bool hex);
     
+#endif
     
     //
     // Decoding disk data
@@ -431,9 +413,9 @@ public:
  
 private:
     
-    isize decodeDisk(u8 *dest, isize numTracks);
-    isize decodeTrack(Track t, u8 *dest);
-    isize decodeSector(isize offset, u8 *dest);
+    isize decodeDisk(u8 *dest, isize numTracks, class DiskAnalyzer &analyzer);
+    isize decodeTrack(Track t, u8 *dest, class DiskAnalyzer &analyzer);
+    isize decodeSector(isize offset, u8 *dest, class DiskAnalyzer &analyzer);
 
 
     //
