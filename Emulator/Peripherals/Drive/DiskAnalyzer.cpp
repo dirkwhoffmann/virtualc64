@@ -11,9 +11,12 @@
 #include "DiskAnalyzer.h"
 #include "Disk.h"
 
-DiskAnalyzer::DiskAnalyzer(Disk *disk) : disk(disk)
+DiskAnalyzer::DiskAnalyzer(Disk *disk)
 {
     msg("DiskAnalyzer::DiskAnalyzer\n");
+    
+    this->disk = new Disk();
+    *this->disk = *disk;
     
     /* Create the bit expansion table. The table maps a byte to an expanded
      * 64 bit representation. This lookup table is utilized to quickly inflate
@@ -45,6 +48,7 @@ DiskAnalyzer::DiskAnalyzer(Disk *disk) : disk(disk)
 DiskAnalyzer::~DiskAnalyzer()
 {
     msg("DiskAnalyzer::~DiskAnalyzer\n");
+    delete disk;
 }
 
 u16

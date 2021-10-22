@@ -28,7 +28,7 @@ extension PreferencesController {
                 pressedKeyImage[nr]?.pressed()
                 mappedKeyImage[nr] = keyImage[nr]?.copy() as? NSImage
                 mappedKeyImage[nr]?.mapped()
-                keyView[nr] = window!.contentView!.viewWithTag(nr + 100) as? RecordButton
+                keyView[nr] = keyBox.contentView!.viewWithTag(nr + 100) as? RecordButton
                 keyView[nr]!.image = keyImage[nr]
             }
         }
