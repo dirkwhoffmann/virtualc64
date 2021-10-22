@@ -252,11 +252,11 @@ union DiskLength
 {
     struct
     {
-        u16 _pad;
-        u16 halftrack[85];
+        isize _pad;
+        isize halftrack[85];
     };
     
-    u16 track[43][2];
+    isize track[43][2];
 
     template <class W>
     void operator<<(W& worker)

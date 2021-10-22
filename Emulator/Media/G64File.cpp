@@ -82,8 +82,8 @@ G64File::init(Disk &disk)
         
         if (!empty[ht]) {
 
-            u16 numDataBytes = disk.lengthOfHalftrack(ht) / 8;
-            u16 numFillBytes = maxBytesOnTrack - numDataBytes;
+            auto numDataBytes = disk.lengthOfHalftrack(ht) / 8;
+            auto numFillBytes = maxBytesOnTrack - numDataBytes;
 
             if (disk.lengthOfHalftrack(ht) % 8 != 0) {
                 warn("Size of halftrack %zd is not a multiple of 8\n", ht);

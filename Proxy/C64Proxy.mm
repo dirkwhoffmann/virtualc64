@@ -1091,12 +1091,12 @@
     return [self drive]->getHalftrack();
 }
 
-- (u16)sizeOfHalftrack:(Halftrack)ht
+- (NSInteger)sizeOfHalftrack:(Halftrack)ht
 {
     return [self drive]->sizeOfHalftrack(ht);
 }
 
-- (u16)sizeOfCurrentHalftrack
+- (NSInteger)sizeOfCurrentHalftrack
 {
     return [self drive]->sizeOfCurrentHalftrack();
 }

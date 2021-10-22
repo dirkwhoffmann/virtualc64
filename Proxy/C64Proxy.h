@@ -533,8 +533,8 @@
 
 - (Track)track;
 - (Halftrack)halftrack;
-- (u16)sizeOfHalftrack:(Halftrack)ht;
-- (u16)sizeOfCurrentHalftrack;
+- (NSInteger)sizeOfHalftrack:(Halftrack)ht;
+- (NSInteger)sizeOfCurrentHalftrack;
 - (NSInteger)offset;
 - (u8)readBitFromHead;
 

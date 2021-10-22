@@ -426,9 +426,9 @@ public:
     Track getTrack() const { return (halftrack + 1) / 2; }
         
     // Returns the number of bits in a halftrack
-    u16 sizeOfHalftrack(Halftrack ht) {
+    isize sizeOfHalftrack(Halftrack ht) {
         return hasDisk() ? disk->lengthOfHalftrack(ht) : 0; }
-    u16 sizeOfCurrentHalftrack() { return sizeOfHalftrack(halftrack); }
+    isize sizeOfCurrentHalftrack() { return sizeOfHalftrack(halftrack); }
 
     // Returns the position of the drive head inside the current track
     HeadPos getOffset() const { return offset; }

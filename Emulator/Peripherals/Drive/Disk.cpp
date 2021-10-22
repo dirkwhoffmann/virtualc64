@@ -270,7 +270,7 @@ Disk::isValidHeadPos(Halftrack ht, HeadPos pos) const
 HeadPos
 Disk::wrap(Halftrack ht, HeadPos pos) const
 {
-    u16 len = length.halftrack[ht];
+    auto len = length.halftrack[ht];
     return pos < 0 ? pos + len : pos >= len ? pos - len : pos;
 }
 
@@ -342,14 +342,14 @@ Disk::nonemptyHalftracks() const
     return result;
 }
 
-u16
+isize
 Disk::lengthOfTrack(Track t) const
 {
     assert(isTrackNumber(t));
     return length.track[t][0];
 }
 
-u16
+isize
 Disk::lengthOfHalftrack(Halftrack ht) const
 {
     assert(isHalftrackNumber(ht));
@@ -548,7 +548,7 @@ Disk::encode(const FSDevice &fs, bool alignTracks)
     // Do some consistency checking
     for (Halftrack ht = 1; ht <= highestHalftrack; ht++) {
         assert(length.halftrack[ht] >= 0);
-        assert(length.halftrack[ht] <= sizeof(data.halftrack[ht]) * 8);
+        assert(length.halftrack[ht] <= isizeof(data.halftrack[ht]) * 8);
     }
 }
 

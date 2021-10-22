@@ -293,8 +293,8 @@ public:
     isize nonemptyHalftracks() const;
 
     // Returns the length of a halftrack in bits
-    u16 lengthOfTrack(Track t) const;
-    u16 lengthOfHalftrack(Halftrack ht) const;
+    isize lengthOfTrack(Track t) const;
+    isize lengthOfHalftrack(Halftrack ht) const;
 
     
     //
