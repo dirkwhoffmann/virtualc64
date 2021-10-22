@@ -114,12 +114,9 @@ extension Inspector {
         selectedHalftrack = nr
         
         if halftrack != nil && analyzer != nil {
-                        
-            // Read track data
-            analyzer!.analyzeHalftrack(halftrack!)
-                        
+                                                
             // Warn if this track contains errors
-            let trackIsValid = analyzer!.numErrors() == 0
+            let trackIsValid = analyzer!.numErrors(halftrack!) == 0
             drvWarningText.isHidden = trackIsValid
             drvWarningButton.isHidden = trackIsValid
             

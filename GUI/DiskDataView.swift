@@ -60,8 +60,9 @@ class DiskDataView: NSScrollView {
                 
                 var gcr = ""
                 if analyzer != nil, let ht = halftrack {
-//                if  halftrack != nil && analyzer != nil {
 
+                    track("Displaying ht \(ht)")
+                    
                     if inspector.rawGcr || sector == nil {
                         
                         // Show the raw GCR stream
@@ -96,36 +97,7 @@ class DiskDataView: NSScrollView {
             }
         }
     }
-    
-    /*
-    func markHead() {
-        
-        unmarkHead()
-        headPosition = NSRange(location: Int(inspector.drive.offset()), length: 1)
-        storage?.addAttr(.backgroundColor, value: NSColor.red, range: headPosition)
-    }
-    
-    func unmarkHead() {
-        
-        storage?.remAttr(.backgroundColor, range: headPosition)
-        headPosition = nil
-    }
 
-    func scrollToHead() {
-        
-        if !drive.hasDisk() { return }
-        
-        // Jump to current track
-        let current = drive.halftrack()
-        inspector.setSelectedHalftrack(Int(current))
-        inspector.setSelectedSector(-1)
-
-        // Highlight drive position inside the current track
-        let range = NSRange(location: Int(drive.offset()), length: 1)
-        textView?.scrollRangeToVisible(range)
-    }
-    */
-    
     func markSectors() {
 
         // Only proceed if there is anything to display
@@ -134,8 +106,8 @@ class DiskDataView: NSScrollView {
         // Only proceed if the GCR view is active
         if !inspector.rawGcr { return }
 
-        // TODO: Get this information from the analyzer
-        let length = Int(inspector.drive.size(ofHalftrack: halftrack!))
+        // Determine the track size
+        let length = analyzer?.length(ofHalftrack: halftrack!) ?? 0
         if length == 0 { return }
         
         let info = analyzer!.sectorInfo(halftrack!, sector: sector!)

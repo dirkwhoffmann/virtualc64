@@ -31,13 +31,13 @@ class DiskAnalyzer: public C64Object {
     TrackInfo trackInfo = { };
 
     // Error log created by analyzeTrack
-    std::vector<string> errorLog;
+    std::vector<string> errorLog[85];
 
     // Stores the start offset of the erroneous bit sequence
-    std::vector<isize> errorStartIndex;
+    std::vector<isize> errorStartIndex[85];
 
     // Stores the end offset of the erroneous bit sequence
-    std::vector<isize> errorEndIndex;
+    std::vector<isize> errorEndIndex[85];
 
     // Textual representation of track data
     char text[maxBitsOnTrack + 1] = { };
@@ -81,10 +81,10 @@ public:
     isize lengthOfTrack(Track t) const;
     isize lengthOfHalftrack(Halftrack ht) const;
     
+private:
+    
     // Analyzes the whole disk, a single track, or a single sector
     void analyzeDisk();
-    void analyzeTrackOld(Track t);
-    void analyzeHalftrackOld(Halftrack ht);
     TrackInfo analyzeTrack(Track t);
     TrackInfo analyzeHalftrack(Halftrack ht);
 
@@ -96,7 +96,7 @@ private:
     void analyzeSectorDataBlock(Halftrack ht, isize offset, TrackInfo &trackInfo);
 
     // Writes an error message into the error log
-    void log(isize begin, isize length, const char *fmt, ...);
+    void log(Halftrack ht, isize begin, isize length, const char *fmt, ...);
     
 public:
     
@@ -104,16 +104,16 @@ public:
     const SectorInfo &sectorLayout(Halftrack ht, Sector nr);
     
     // Returns the number of entries in the error log
-    isize numErrors() { return errorLog.size(); }
+    isize numErrors(Halftrack ht) { return errorLog[ht].size(); }
     
     // Reads an error message from the error log
-    string errorMessage(isize nr) const { return errorLog.at(nr); }
+    string errorMessage(Halftrack ht, isize nr) const { return errorLog[ht].at(nr); }
     
     // Reads the error begin index from the error log
-    isize firstErroneousBit(isize nr) const { return errorStartIndex.at(nr); }
+    isize firstErroneousBit(Halftrack ht, isize nr) const { return errorStartIndex[ht].at(nr); }
     
     // Reads the error end index from the error log
-    isize lastErroneousBit(isize nr) const { return errorEndIndex.at(nr); }
+    isize lastErroneousBit(Halftrack ht, isize nr) const { return errorEndIndex[ht].at(nr); }
     
     // Returns a textual representation of the disk name
     const char *diskNameAsString();

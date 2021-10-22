@@ -415,9 +415,6 @@ Disk::decodeHalfrack(Halftrack ht, u8 *dest, DiskAnalyzer &analyzer)
     isize numBytes = 0;
     isize numSectors = numberOfSectorsInHalftrack(ht);
 
-    // Gather sector information
-    analyzer.analyzeHalftrackOld(ht);
-
     // For each sector ...
     for (Sector s = 0; s < numSectors; s++) {
         

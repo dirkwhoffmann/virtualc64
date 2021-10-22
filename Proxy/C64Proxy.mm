@@ -895,35 +895,25 @@
     return [self analyzer]->lengthOfHalftrack(ht);
 }
 
-- (void)analyzeTrack:(Track)t
+- (NSInteger)numErrors:(Halftrack)ht
 {
-    [self analyzer]->analyzeTrackOld(t);
+    return [self analyzer]->numErrors(ht);
 }
 
-- (void)analyzeHalftrack:(Halftrack)ht
+- (NSString *)errorMessage:(Halftrack)ht nr:(NSInteger)nr
 {
-    [self analyzer]->analyzeHalftrackOld(ht);
-}
-
-- (NSInteger)numErrors
-{
-    return [self analyzer]->numErrors();
-}
-
-- (NSString *)errorMessage:(NSInteger)nr
-{
-    string s = [self analyzer]->errorMessage((unsigned)nr);
+    string s = [self analyzer]->errorMessage(ht, nr);
     return [NSString stringWithUTF8String:s.c_str()];
 }
 
-- (NSInteger)firstErroneousBit:(NSInteger)nr
+- (NSInteger)firstErroneousBit:(Halftrack)ht nr:(NSInteger)nr
 {
-    return [self analyzer]->firstErroneousBit((unsigned)nr);
+    return [self analyzer]->firstErroneousBit(ht, nr);
 }
 
-- (NSInteger)lastErroneousBit:(NSInteger)nr
+- (NSInteger)lastErroneousBit:(Halftrack)ht nr:(NSInteger)nr
 {
-    return [self analyzer]->lastErroneousBit((unsigned)nr);
+    return [self analyzer]->lastErroneousBit(ht, nr);
 }
 
 - (SectorInfo)sectorInfo:(Halftrack)ht sector:(Sector)s

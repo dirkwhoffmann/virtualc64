@@ -40,7 +40,11 @@ extension DiskErrorController: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         
-        return analyzer?.numErrors() ?? 0
+        if let ht = parent.halftrack {
+            return analyzer?.numErrors(ht) ?? 0
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
@@ -51,7 +55,11 @@ extension DiskErrorController: NSTableViewDataSource {
             return row + 1
             
         case "description":
-            return analyzer?.errorMessage(row) ?? ""
+            if let ht = parent.halftrack {
+                return analyzer?.errorMessage(ht, nr: row) ?? ""
+            } else {
+                return ""
+            }
             
         default:
             fatalError()

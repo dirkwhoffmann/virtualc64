@@ -585,19 +585,16 @@
 - (NSInteger)lengthOfTrack:(Track)t;
 - (NSInteger)lengthOfHalftrack:(Halftrack)ht;
 
-- (void)analyzeTrack:(Track)t;
-- (void)analyzeHalftrack:(Halftrack)ht;
-
 - (SectorInfo)sectorInfo:(Halftrack)ht sector:(Sector)s;
 - (const char *)diskNameAsString;
 - (const char *)trackBitsAsString:(Halftrack)ht;
 - (const char *)sectorHeaderBytesAsString:(Halftrack)ht sector:(Sector)s hex:(BOOL)hex;
 - (const char *)sectorDataBytesAsString:(Halftrack)ht sector:(Sector)s hex:(BOOL)hex;
 
-- (NSInteger)numErrors;
-- (NSString *)errorMessage:(NSInteger)nr;
-- (NSInteger)firstErroneousBit:(NSInteger)nr;
-- (NSInteger)lastErroneousBit:(NSInteger)nr;
+- (NSInteger)numErrors:(Halftrack)ht;
+- (NSString *)errorMessage:(Halftrack)ht nr:(NSInteger)nr;
+- (NSInteger)firstErroneousBit:(Halftrack)ht nr:(NSInteger)nr;
+- (NSInteger)lastErroneousBit:(Halftrack)ht nr:(NSInteger)nr;
 
 @end
 
