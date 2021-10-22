@@ -12,8 +12,6 @@
 #include "Aliases.h"
 #include "DiskTypes.h"
 
-/* Information about a single sector as gathered by analyzeSector()
- */
 typedef struct
 {
     isize headerBegin;
@@ -23,14 +21,15 @@ typedef struct
 }
 SectorInfo;
 
-/* Information about a single track as gathered by analyzeTrack().
- * For faster access, the the track data is stored as a byte stream. Each byte
- * represents a single bit and is either 0 or 1. The stored sequence is
- * repeated twice to avoid the need of wrapping around.
- */
 typedef struct
 {
-    isize length;                        // Length of the track in bits
-    SectorInfo sectorInfo[22];           // Sector layout data
+    isize length;
+    SectorInfo sectorInfo[22];
 }
 TrackInfo;
+
+typedef struct
+{
+    TrackInfo trackInfo[85];
+}
+DiskInfo;

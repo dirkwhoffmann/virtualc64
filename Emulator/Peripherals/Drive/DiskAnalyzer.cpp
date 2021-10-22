@@ -37,7 +37,7 @@ DiskAnalyzer::DiskAnalyzer(const Disk &disk)
 {
     msg("DiskAnalyzer::DiskAnalyzer\n");
             
-    // Copy the GCR stream
+    // Extract the GCR encoded bit stream from the disk
     for (Halftrack ht = 1; ht < 85; ht++) {
 
         length[ht] = disk.length.halftrack[ht];
@@ -52,6 +52,9 @@ DiskAnalyzer::DiskAnalyzer(const Disk &disk)
         assert(length[ht] <= maxBitsOnTrack);
         std::memcpy(data[ht] + length[ht], data[ht], length[ht]);
     }
+    
+    // Analyze the bit stream
+    analyzeDisk();
 }
 
 DiskAnalyzer::~DiskAnalyzer()
@@ -76,16 +79,42 @@ DiskAnalyzer::lengthOfHalftrack(Halftrack ht) const
     return length[ht];
 }
 
-void
-DiskAnalyzer::analyzeTrack(Track t)
+void DiskAnalyzer::analyzeDisk()
 {
-    assert(isTrackNumber(t));
-    analyzeHalftrack(2 * t - 1);
+    msg("Analyzing disk...\n");
+    
+    for (isize ht = 1; ht < 85; ht++) {
+        diskInfo.trackInfo[ht] = analyzeHalftrack(ht);
+    }
+
+    msg("done\n");
 }
 
 void
+DiskAnalyzer::analyzeTrackOld(Track t)
+{
+    assert(isTrackNumber(t));
+    analyzeHalftrackOld(2 * t - 1);
+}
+
+TrackInfo
+DiskAnalyzer::analyzeTrack(Track t)
+{
+    assert(isTrackNumber(t));
+    return analyzeHalftrack(2 * t - 1);
+}
+
+void
+DiskAnalyzer::analyzeHalftrackOld(Halftrack ht)
+{
+    trackInfo = analyzeHalftrack(ht);
+}
+
+TrackInfo
 DiskAnalyzer::analyzeHalftrack(Halftrack ht)
 {
+    TrackInfo trackInfo = {};
+    
     auto len = lengthOfHalftrack(ht);
 
     errorLog.clear();
@@ -93,7 +122,7 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
     errorEndIndex.clear();
     
     // The result of the analysis is stored in variable trackInfo
-    memset(&trackInfo, 0, sizeof(trackInfo));
+    memset(&trackInfo, 0, sizeof(trackInfo)); // NOT NECESSARY
     trackInfo.length = len;
         
     // Indicates where the sector headers blocks and the sectors data blocks start
@@ -135,7 +164,7 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
     if (startOffset == len) {
         
         log(0, len, "This track contains no sector header block.");
-        return;
+        return trackInfo;
 
     } else {
     
@@ -169,6 +198,7 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
     }
 
     analyzeSectorBlocks(ht, trackInfo);
+    return trackInfo;
 }
 
 void
@@ -237,6 +267,15 @@ DiskAnalyzer::analyzeSectorDataBlock(Halftrack ht, isize offset, TrackInfo &trac
     }
 }
 
+const SectorInfo &
+DiskAnalyzer::sectorLayout(Halftrack ht, Sector nr) {
+
+    assert(isHalftrackNumber(ht));
+    assert(isSectorNumber(nr));
+    
+    return diskInfo.trackInfo[ht].sectorInfo[nr];
+}
+
 void
 DiskAnalyzer::log(isize begin, isize length, const char *fmt, ...)
 {
@@ -255,7 +294,7 @@ DiskAnalyzer::log(isize begin, isize length, const char *fmt, ...)
 const char *
 DiskAnalyzer::diskNameAsString()
 {
-    analyzeTrack(18);
+    analyzeTrackOld(18);
     
     isize i;
     isize offset = trackInfo.sectorInfo[0].dataBegin + (0x90 * 10);

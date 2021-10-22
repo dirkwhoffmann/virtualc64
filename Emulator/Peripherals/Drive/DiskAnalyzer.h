@@ -23,11 +23,11 @@ class DiskAnalyzer: public C64Object {
     
     // Disk data (each halftrack repeated twice, one byte for each bit on disk)
     u8 *data[85];
+        
+    // Result of the analysis
+    DiskInfo diskInfo = { };
     
-    // The disk under inspection
-    // class Disk *disk;
-    
-    // Track layout as determined by analyzeTrack
+    // Track layout as determined by analyzeTrack (DEPRECATED)
     TrackInfo trackInfo = { };
 
     // Error log created by analyzeTrack
@@ -81,12 +81,13 @@ public:
     isize lengthOfTrack(Track t) const;
     isize lengthOfHalftrack(Halftrack ht) const;
     
-    /* Analyzes the sector layout. The functions determines the start and end
-     * offsets of all sectors and writes them into variable trackLayout.
-     */
-    void analyzeTrack(Track t);
-    void analyzeHalftrack(Halftrack ht);
-    
+    // Analyzes the whole disk, a single track, or a single sector
+    void analyzeDisk();
+    void analyzeTrackOld(Track t);
+    void analyzeHalftrackOld(Halftrack ht);
+    TrackInfo analyzeTrack(Track t);
+    TrackInfo analyzeHalftrack(Halftrack ht);
+
 private:
     
     // Checks the integrity of the sector block structure
@@ -99,9 +100,8 @@ private:
     
 public:
     
-    // Returns a sector layout from variable trackInfo
-    SectorInfo sectorLayout(Sector nr) {
-        assert(isSectorNumber(nr)); return trackInfo.sectorInfo[nr]; }
+    // Returns the layout of a certain track
+    const SectorInfo &sectorLayout(Halftrack ht, Sector nr);
     
     // Returns the number of entries in the error log
     isize numErrors() { return errorLog.size(); }

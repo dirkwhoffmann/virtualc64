@@ -897,12 +897,12 @@
 
 - (void)analyzeTrack:(Track)t
 {
-    [self analyzer]->analyzeTrack(t);
+    [self analyzer]->analyzeTrackOld(t);
 }
 
 - (void)analyzeHalftrack:(Halftrack)ht
 {
-    [self analyzer]->analyzeHalftrack(ht);
+    [self analyzer]->analyzeHalftrackOld(ht);
 }
 
 - (NSInteger)numErrors
@@ -926,9 +926,9 @@
     return [self analyzer]->lastErroneousBit((unsigned)nr);
 }
 
-- (SectorInfo)sectorInfo:(Sector)s
+- (SectorInfo)sectorInfo:(Halftrack)ht sector:(Sector)s
 {
-    return [self analyzer]->sectorLayout(s);
+    return [self analyzer]->sectorLayout(ht, s);
 }
 
 - (const char *)trackBitsAsString:(Halftrack)ht

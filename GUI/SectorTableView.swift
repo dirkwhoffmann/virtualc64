@@ -40,7 +40,7 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
             
             var row = 0
             for i in 0 ... Int(highestSector) {
-                let info = analyzer!.sectorInfo(Sector(i))
+                let info = analyzer!.sectorInfo(halftrack!, sector: Sector(i))
                 if info.headerBegin != info.headerEnd {
                     sectorForRow[row] = i
                     row += 1

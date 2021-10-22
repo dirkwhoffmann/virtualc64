@@ -138,7 +138,7 @@ class DiskDataView: NSScrollView {
         let length = Int(inspector.drive.size(ofHalftrack: halftrack!))
         if length == 0 { return }
         
-        let info = analyzer!.sectorInfo(sector!)
+        let info = analyzer!.sectorInfo(halftrack!, sector: sector!)
         let hLeft = info.headerBegin % (length + 1)
         let hRight = info.headerEnd % (length + 1)
         let dLeft = info.dataBegin % (length + 1)

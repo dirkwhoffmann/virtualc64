@@ -402,19 +402,29 @@ Disk::decodeDisk(u8 *dest, isize numTracks, DiskAnalyzer &analyzer)
 isize
 Disk::decodeTrack(Track t, u8 *dest, DiskAnalyzer &analyzer)
 {
+    assert(isTrackNumber(t));
+    
+    return decodeHalfrack(2 * t - 1, dest, analyzer);
+}
+
+isize
+Disk::decodeHalfrack(Halftrack ht, u8 *dest, DiskAnalyzer &analyzer)
+{
+    assert(isHalftrackNumber(ht));
+    
     isize numBytes = 0;
-    isize numSectors = numberOfSectorsInTrack(t);
+    isize numSectors = numberOfSectorsInHalftrack(ht);
 
     // Gather sector information
-    analyzer.analyzeTrack(t);
+    analyzer.analyzeHalftrackOld(ht);
 
     // For each sector ...
     for (Sector s = 0; s < numSectors; s++) {
         
         trace(GCR_DEBUG, "   Decoding sector %zd\n", s);
-        SectorInfo info = analyzer.sectorLayout(s);
+        SectorInfo info = analyzer.sectorLayout(ht, s);
         if (info.dataBegin != info.dataEnd) {
-            numBytes += decodeSector(t, info.dataBegin, dest + (dest ? numBytes : 0), analyzer);
+            numBytes += decodeSector(ht, info.dataBegin, dest + (dest ? numBytes : 0), analyzer);
         } else {
 
             // The decoder failed to decode this sector.
@@ -426,10 +436,8 @@ Disk::decodeTrack(Track t, u8 *dest, DiskAnalyzer &analyzer)
 }
 
 isize
-Disk::decodeSector(Track t, isize offset, u8 *dest, DiskAnalyzer &analyzer)
+Disk::decodeSector(Halftrack ht, isize offset, u8 *dest, DiskAnalyzer &analyzer)
 {
-    Halftrack ht = 2 * t - 1;
-    
     // The first byte must be 0x07 (indicating a data block)
     assert(decodeGcr(analyzer.data[ht] + offset) == 0x07);
     offset += 10;

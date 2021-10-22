@@ -588,7 +588,7 @@
 - (void)analyzeTrack:(Track)t;
 - (void)analyzeHalftrack:(Halftrack)ht;
 
-- (SectorInfo)sectorInfo:(Sector)s;
+- (SectorInfo)sectorInfo:(Halftrack)ht sector:(Sector)s;
 - (const char *)diskNameAsString;
 - (const char *)trackBitsAsString:(Halftrack)ht;
 - (const char *)sectorHeaderBytesAsString:(Halftrack)ht sector:(Sector)s hex:(BOOL)hex;
