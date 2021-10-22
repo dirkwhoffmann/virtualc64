@@ -18,6 +18,9 @@ class DiskAnalyzer: public C64Object {
   
     friend class Disk;
     
+    // Length for each halftrack
+    isize length[85];
+    
     // Disk data (each halftrack repeated twice, one byte for each bit on disk)
     u8 *data[85];
     
@@ -25,7 +28,7 @@ class DiskAnalyzer: public C64Object {
     u64 bitExpansion[256];
 
     // The disk under inspection
-    class Disk *disk;
+    // class Disk *disk;
     
     // Track layout as determined by analyzeTrack
     TrackInfo trackInfo = { };
@@ -42,6 +45,15 @@ class DiskAnalyzer: public C64Object {
     // Textual representation of track data
     char text[maxBitsOnTrack + 1] = { };
 
+    
+    //
+    // Class methods
+    //
+    
+    // Decodes a GCR-encoded nibble or byte
+    u8 decodeGcrNibble(u8 *gcrBits);
+    u8 decodeGcr(u8 *gcrBits);
+    
     
     //
     // Initializing
@@ -69,8 +81,8 @@ private:
 public:
     
     // Returns the length of a halftrack in bits
-    u16 lengthOfTrack(Track t) const;
-    u16 lengthOfHalftrack(Halftrack ht) const;
+    isize lengthOfTrack(Track t) const;
+    isize lengthOfHalftrack(Halftrack ht) const;
     
     /* Analyzes the sector layout. The functions determines the start and end
      * offsets of all sectors and writes them into variable trackLayout.

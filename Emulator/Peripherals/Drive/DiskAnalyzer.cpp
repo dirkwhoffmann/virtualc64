@@ -11,16 +11,39 @@
 #include "DiskAnalyzer.h"
 #include "Disk.h"
 
+u8
+DiskAnalyzer::decodeGcrNibble(u8 *gcr)
+{
+    assert(gcr);
+    
+    auto codeword = gcr[0] << 4 | gcr[1] << 3 | gcr[2] << 2 | gcr[3] << 1 | gcr[4];
+    assert(codeword < 32);
+    
+    return Disk::invgcr[codeword];
+}
+
+u8
+DiskAnalyzer::decodeGcr(u8 *gcr)
+{
+    assert(gcr);
+    
+    u8 nibble1 = decodeGcrNibble(gcr);
+    u8 nibble2 = decodeGcrNibble(gcr + 5);
+
+    return (u8)(nibble1 << 4 | nibble2);
+}
+
 DiskAnalyzer::DiskAnalyzer(Disk *disk)
 {
     msg("DiskAnalyzer::DiskAnalyzer\n");
     
-    this->disk = new Disk();
-    *this->disk = *disk;
+    // this->disk = new Disk();
+    // *this->disk = *disk;
         
     // Copy the GCR stream
     for (Halftrack ht = 1; ht < 85; ht++) {
 
+        length[ht] = disk->lengthOfHalftrack(ht);
         data[ht] = new u8[2 * maxBitsOnTrack]();
         
         for (isize i = 0, j = 0; i < maxBytesOnTrack; i++) {
@@ -64,23 +87,23 @@ DiskAnalyzer::DiskAnalyzer(Disk *disk)
 DiskAnalyzer::~DiskAnalyzer()
 {
     msg("DiskAnalyzer::~DiskAnalyzer\n");
-    delete disk;
+    // delete disk;
     
     for (isize ht = 0; ht < 85; ht++) delete [] data[ht];
 }
 
-u16
+isize
 DiskAnalyzer::lengthOfTrack(Track t) const
 {
     assert(isTrackNumber(t));
-    return disk->length.track[t][0];
+    return length[2 * t - 1];
 }
 
-u16
+isize
 DiskAnalyzer::lengthOfHalftrack(Halftrack ht) const
 {
     assert(isHalftrackNumber(ht));
-    return disk->length.halftrack[ht];
+    return length[ht];
 }
 
 void
@@ -93,9 +116,7 @@ DiskAnalyzer::analyzeTrack(Track t)
 void
 DiskAnalyzer::analyzeHalftrack(Halftrack ht)
 {
-    assert(isHalftrackNumber(ht));
-    
-    u16 len = disk->length.halftrack[ht];
+    auto len = lengthOfHalftrack(ht);
 
     errorLog.clear();
     errorStartIndex.clear();
@@ -129,7 +150,7 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
             // <--- SYNC ---><-- sync[i] -->
             // 11111 .... 1110
             //               ^ <- We are at offset i which is here
-            sync[i] = disk->decodeGcr(data[ht] + i);
+            sync[i] = decodeGcr(data[ht] + i);
             
             if (sync[i] == 0x08) {
                 trace(GCR_DEBUG, "Sector header block found at offset %ld\n", i);
@@ -162,7 +183,7 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
             
             if (sync[i] == 0x08) {
                 
-                sector = disk->decodeGcr(data[ht] + i + 20);
+                sector = decodeGcr(data[ht] + i + 20);
 
                 if (isSectorNumber(sector)) {
                     if (trackInfo.sectorInfo[sector].headerEnd != 0)
@@ -222,17 +243,17 @@ void
 DiskAnalyzer::analyzeSectorHeaderBlock(Halftrack ht, isize offset, TrackInfo &trackInfo)
 {
     // The first byte must be 0x08 (indicating a header block)
-    assert(disk->decodeGcr(data[ht] + offset) == 0x08);
+    assert(decodeGcr(data[ht] + offset) == 0x08);
     offset += 10;
     
-    u8 s = disk->decodeGcr(data[ht] + offset + 10);
-    u8 t = disk->decodeGcr(data[ht] + offset + 20);
-    u8 id2 = disk->decodeGcr(data[ht] + offset + 30);
-    u8 id1 = disk->decodeGcr(data[ht] + offset + 40);
+    u8 s = decodeGcr(data[ht] + offset + 10);
+    u8 t = decodeGcr(data[ht] + offset + 20);
+    u8 id2 = decodeGcr(data[ht] + offset + 30);
+    u8 id1 = decodeGcr(data[ht] + offset + 40);
 
     u8 checksum = id1 ^ id2 ^ t ^ s;
 
-    if (checksum != disk->decodeGcr(data[ht] + offset)) {
+    if (checksum != decodeGcr(data[ht] + offset)) {
         log(offset, 10, "Header block at index %d contains an invalid checksum.\n", offset);
     }
 }
@@ -241,15 +262,15 @@ void
 DiskAnalyzer::analyzeSectorDataBlock(Halftrack ht, isize offset, TrackInfo &trackInfo)
 {
     // The first byte must be 0x07 (indicating a header block)
-    assert(disk->decodeGcr(data[ht] + offset) == 0x07);
+    assert(decodeGcr(data[ht] + offset) == 0x07);
     offset += 10;
     
     u8 checksum = 0;
     for (isize i = 0; i < 256; i++, offset += 10) {
-        checksum ^= disk->decodeGcr(data[ht] + offset);
+        checksum ^= decodeGcr(data[ht] + offset);
     }
     
-    if (checksum != disk->decodeGcr(data[ht] + offset)) {
+    if (checksum != decodeGcr(data[ht] + offset)) {
         log(offset, 10, "Data block at index %d contains an invalid checksum.\n", offset);
     }
 }
@@ -278,7 +299,7 @@ DiskAnalyzer::diskNameAsString()
     isize offset = trackInfo.sectorInfo[0].dataBegin + (0x90 * 10);
     
     for (i = 0; i < 255; i++, offset += 10) {
-        u8 value = disk->decodeGcr(data[18] + offset);
+        u8 value = decodeGcr(data[18] + offset);
         if (value == 0xA0)
             break;
         text[i] = value;
@@ -329,7 +350,7 @@ DiskAnalyzer::sectorBytesAsString(u8 *buffer, isize length, bool hex)
     
     for (isize i = 0; i < length; i++, gcrOffset += 10) {
 
-        u8 value = disk->decodeGcr(buffer + gcrOffset);
+        u8 value = decodeGcr(buffer + gcrOffset);
 
         if (hex) {
             util::sprint8x(text + strOffset, value);

@@ -71,7 +71,7 @@ const Disk::TrackDefaults Disk::trackDefaults[43] = {
     { 17, 0, 6250, 6250 * 8, 785, 0.830 }  // Track 42
 };
 
-u64 Disk::bitExpansion[256];
+// u64 Disk::bitExpansion[256];
 
 isize
 Disk::numberOfSectorsInTrack(Track t)
@@ -114,6 +114,7 @@ Disk::Disk()
      * Endian architecture to work. If you compile the emulator on a Big Endian
      * architecture, the byte order needs to be reversed.
      */
+    /*
     for (isize i = 0; i < 256; i++) {
         
         bitExpansion[i] = 0;
@@ -127,6 +128,7 @@ Disk::Disk()
         if (i & 0x02) bitExpansion[i] |= 0x0001000000000000;
         if (i & 0x01) bitExpansion[i] |= 0x0100000000000000;
     }
+    */
     
     clearDisk();
 }

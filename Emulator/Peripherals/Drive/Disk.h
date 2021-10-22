@@ -60,8 +60,6 @@ public:
         DRIVE_NOT_READY_ERRROR = 0xF
     }
     DiskErrorCode;
-
-private:
     
     /* GCR encoding table. Maps 4 data bits to 5 GCR bits.
      */
@@ -93,12 +91,14 @@ private:
      *
      *     Example: 0110 ... -> 00000000 00000001 0000001 00000000 ...
      */
-    static u64 bitExpansion[256];
+    // [[deprecated]] static u64 bitExpansion[256];
     
     
     //
     // Disk properties
     //
+    
+private:
     
     // Write protection mark
     bool writeProtected = false;
