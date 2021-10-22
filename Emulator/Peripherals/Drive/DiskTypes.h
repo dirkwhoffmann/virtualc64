@@ -160,6 +160,53 @@ struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
 };
 #endif
 
+enum_long(DISK_ERROR_CODE)
+{
+    DISK_OK                            = 0x1,
+    HEADER_BLOCK_NOT_FOUND_ERROR       = 0x2,
+    NO_SYNC_SEQUENCE_ERROR             = 0x3,
+    DATA_BLOCK_NOT_FOUND_ERROR         = 0x4,
+    DATA_BLOCK_CHECKSUM_ERROR          = 0x5,
+    WRITE_VERIFY_ERROR_ON_FORMAT_ERROR = 0x6,
+    WRITE_VERIFY_ERROR                 = 0x7,
+    WRITE_PROTECT_ON_ERROR             = 0x8,
+    HEADER_BLOCK_CHECKSUM_ERROR        = 0x9,
+    WRITE_ERROR                        = 0xA,
+    DISK_ID_MISMATCH_ERROR             = 0xB,
+    DRIVE_NOT_READY_ERRROR             = 0xF
+};
+typedef DISK_ERROR_CODE DiskErrorCode;
+
+#ifdef __cplusplus
+struct DiskErrorCodeEnum : util::Reflection<DiskErrorCodeEnum, DiskErrorCode> {
+    
+    static long min() { return 0; }
+    static long max() { return DRIVE_NOT_READY_ERRROR; }
+    static bool isValid(long value) { return value >= min() && value <= max(); }
+    
+    static const char *prefix() { return ""; }
+    static const char *key(DiskErrorCode value)
+    {
+        switch (value) {
+                
+            case DISK_OK:                            return "DISK_OK";
+            case HEADER_BLOCK_NOT_FOUND_ERROR:       return "HEADER_BLOCK_NOT_FOUND_ERROR";
+            case NO_SYNC_SEQUENCE_ERROR:             return "NO_SYNC_SEQUENCE_ERROR";
+            case DATA_BLOCK_NOT_FOUND_ERROR:         return "DATA_BLOCK_NOT_FOUND_ERROR";
+            case DATA_BLOCK_CHECKSUM_ERROR:          return "DATA_BLOCK_CHECKSUM_ERROR";
+            case WRITE_VERIFY_ERROR_ON_FORMAT_ERROR: return "WRITE_VERIFY_ERROR_ON_FORMAT_ERROR";
+            case WRITE_VERIFY_ERROR:                 return "WRITE_VERIFY_ERROR";
+            case WRITE_PROTECT_ON_ERROR:             return "WRITE_PROTECT_ON_ERROR";
+            case HEADER_BLOCK_CHECKSUM_ERROR:        return "HEADER_BLOCK_CHECKSUM_ERROR";
+            case WRITE_ERROR:                        return "WRITE_ERROR";
+            case DISK_ID_MISMATCH_ERROR:             return "DISK_ID_MISMATCH_ERROR";
+            case DRIVE_NOT_READY_ERRROR:             return "DRIVE_NOT_READY_ERRROR";
+        }
+        return "???";
+    }
+};
+#endif
+
 
 //
 // Structures
@@ -220,3 +267,15 @@ union DiskLength
     }
 };
 #endif
+
+// Disk parameters of a standard floppy disk
+typedef struct
+{
+    u8  sectors;          // Typical number of sectors in this track
+    u8  speedZone;        // Default speed zone for this track
+    u16 lengthInBytes;    // Typical track size in bits
+    u16 lengthInBits;     // Typical track size in bits
+    Sector firstSectorNr; // Logical number of first sector in track
+    double stagger;       // Relative position of first bit (from Hoxs64)
+}
+TrackDefaults;

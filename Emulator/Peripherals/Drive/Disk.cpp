@@ -14,7 +14,7 @@
 
 #include <stdarg.h>
 
-const Disk::TrackDefaults Disk::trackDefaults[43] = {
+const TrackDefaults Disk::trackDefaults[43] = {
     
     { 0, 0, 0, 0, 0, 0 }, // Padding
     
@@ -237,6 +237,7 @@ Disk::encodeGcr(u8 *values, isize length, Track t, HeadPos offset)
     }
 }
 
+/*
 u8
 Disk::decodeGcrNibble(u8 *gcr)
 {
@@ -258,6 +259,7 @@ Disk::decodeGcr(u8 *gcr)
 
     return (u8)(nibble1 << 4 | nibble2);
 }
+*/
 
 bool
 Disk::isValidHeadPos(Halftrack ht, HeadPos pos) const

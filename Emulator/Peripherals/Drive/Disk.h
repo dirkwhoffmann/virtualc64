@@ -27,44 +27,9 @@ public:
     // Constants and lookup tables
     //
     
-    // Disk parameters of a standard floppy disk
-    typedef struct
-    {
-        
-        u8  sectors;          // Typical number of sectors in this track
-        u8  speedZone;        // Default speed zone for this track
-        u16 lengthInBytes;    // Typical track size in bits
-        u16 lengthInBits;     // Typical track size in bits
-        Sector firstSectorNr; // Logical number of first sector in track
-        double stagger;       // Relative position of first bit (from Hoxs64)
-    }
-    TrackDefaults;
-    
     static const TrackDefaults trackDefaults[43];
  
-    
-    /* Disk error codes. Some D64 files contain an error code for each sector.
-     * If possible, these errors are reproduced during disk encoding.
-     */
-    typedef enum
-    {
-        DISK_OK = 0x1,
-        HEADER_BLOCK_NOT_FOUND_ERROR = 0x2,
-        NO_SYNC_SEQUENCE_ERROR = 0x3,
-        DATA_BLOCK_NOT_FOUND_ERROR = 0x4,
-        DATA_BLOCK_CHECKSUM_ERROR = 0x5,
-        WRITE_VERIFY_ERROR_ON_FORMAT_ERROR = 0x6,
-        WRITE_VERIFY_ERROR = 0x7,
-        WRITE_PROTECT_ON_ERROR = 0x8,
-        HEADER_BLOCK_CHECKSUM_ERROR = 0x9,
-        WRITE_ERROR = 0xA,
-        DISK_ID_MISMATCH_ERROR = 0xB,
-        DRIVE_NOT_READY_ERRROR = 0xF
-    }
-    DiskErrorCode;
-    
-    /* GCR encoding table. Maps 4 data bits to 5 GCR bits.
-     */
+    // GCR encoding table. Maps 4 data bits to 5 GCR bits.
     static constexpr u8 gcr[16] = {
         
         0x0a, 0x0b, 0x12, 0x13, /*  0 -  3 */
@@ -73,9 +38,7 @@ public:
         0x0d, 0x1d, 0x1e, 0x15  /* 12 - 15 */
     };
     
-    /* Inverse GCR encoding table. Maps 5 GCR bits to 4 data bits. Invalid
-     * patterns are marked with 255.
-     */
+    // Inverse GCR encoding table. Maps 5 GCR bits to 4 data bits.
     static constexpr u8 invgcr[32] = {
         
         255, 255, 255, 255, /* 0x00 - 0x03 */
@@ -98,9 +61,7 @@ private:
     // Write protection mark
     bool writeProtected = false;
     
-    /* Indicates whether data has been written. Depending on this flag, the GUI
-     * shows a warning dialog before a disk gets ejected.
-     */
+    // Indicates whether data has been written (data would be lost on eject)
     bool modified = false;
     
     
@@ -228,12 +189,12 @@ public:
     /* Decodes a nibble (4 bit) from a previously encoded GCR bitstream.
      * Returns 0xFF, if no valid GCR sequence is found.
      */
-    [[deprecated]] u8 decodeGcrNibble(u8 *gcrBits);
+    // [[deprecated]] u8 decodeGcrNibble(u8 *gcrBits);
 
     /* Decodes a byte (8 bit) form a previously encoded GCR bitstream. Returns
      * an unpredictable result if invalid GCR sequences are found.
      */
-    [[deprecated]] u8 decodeGcr(u8 *gcrBits);
+    // [[deprecated]] u8 decodeGcr(u8 *gcrBits);
 
     
     //
@@ -314,11 +275,16 @@ public:
     // Clears a single halftrack
     void clearHalftrack(Halftrack ht); 
 
-    /* Reverts to a factory-new disk. All disk data gets erased and the copy
-     * protection mark removed.
-     */
+    // Reverts to a factory-fresh disk
     void clearDisk();
     
+    
+    //
+    // Analyzing the disk
+    //
+
+public:
+
     /* Checks whether a track or halftrack is cleared. Avoid calling these
      * methods frequently, because they scan the whole track.
      */
@@ -326,16 +292,10 @@ public:
     bool halftrackIsEmpty(Halftrack ht) const;
     isize nonemptyHalftracks() const;
 
-    
-    //
-    // Analyzing the disk (REMOVE AFTER MOVING TO DiskAnalyzer)
-    //
-
-public:
-    
     // Returns the length of a halftrack in bits
     u16 lengthOfTrack(Track t) const;
     u16 lengthOfHalftrack(Halftrack ht) const;
+
     
     //
     // Decoding disk data

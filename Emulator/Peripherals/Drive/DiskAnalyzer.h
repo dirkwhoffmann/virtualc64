@@ -16,7 +16,7 @@
 
 class DiskAnalyzer: public C64Object {
   
-    friend class Disk;
+    // friend class Disk;
     
     // Lengths of all halftracks
     isize length[85];
