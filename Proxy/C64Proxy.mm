@@ -994,6 +994,26 @@
     return YES;
 }
 
+- (const char *)trackBitsAsString
+{
+    return [self analyzer]->trackBitsAsString();
+}
+
+- (const char *)diskNameAsString
+{
+    return [self analyzer]->diskNameAsString();
+}
+
+- (const char *)sectorHeaderBytesAsString:(Sector)nr hex:(BOOL)hex
+{
+    return [self analyzer]->sectorHeaderBytesAsString(nr, hex);
+}
+
+- (const char *)sectorDataBytesAsString:(Sector)nr hex:(BOOL)hex
+{
+    return [self analyzer]->sectorDataBytesAsString(nr, hex);
+}
+
 @end
 
 //

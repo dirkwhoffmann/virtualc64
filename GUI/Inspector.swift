@@ -297,6 +297,7 @@ class Inspector: DialogController {
     var memInfo: MemInfo!
     var vicInfo: VICIIInfo!
     var sprInfo: SpriteInfo!
+    var analyzer: DiskAnalyzerProxy?
     
     var isRunning = true
     
@@ -493,7 +494,11 @@ extension Inspector: NSTabViewDelegate {
     
     func updateInspectionTarget() {
         
+        track()
+        
         if let id = panel.selectedTabViewItem?.label {
+        
+            track("id = \(id)")
             
             switch id {
                 
@@ -502,6 +507,7 @@ extension Inspector: NSTabViewDelegate {
             case "CIA":     parent.c64.inspectionTarget = .CIA
             case "VICII":   parent.c64.inspectionTarget = .VIC
             case "SID":     parent.c64.inspectionTarget = .SID
+            case "Disk":    analyzeDisk()
             default:        break
             }
             

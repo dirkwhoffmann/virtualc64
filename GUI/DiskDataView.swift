@@ -12,9 +12,10 @@ class DiskDataView: NSScrollView {
     @IBOutlet weak var inspector: Inspector!
    
     // Shortcuts
-    var c64: C64Proxy { return inspector.parent.c64 }
-    var drive: DriveProxy { return inspector.drive }
-    var disk: DiskProxy { return drive.disk }
+    // var c64: C64Proxy { return inspector.parent.c64 }
+    // var drive: DriveProxy { return inspector.drive }
+    // var disk: DiskProxy { return drive.disk }
+    var analyzer: DiskAnalyzerProxy? { return inspector.analyzer }
     var halftrack: Halftrack? { return inspector.halftrack }
     var sector: Sector? { return inspector.sector }
     var textView: NSTextView? { return documentView as? NSTextView }
@@ -58,19 +59,19 @@ class DiskDataView: NSScrollView {
             if dataIsDirty {
                 
                 var gcr = ""
-                if  halftrack != nil && drive.hasDisk() {
+                if  halftrack != nil && analyzer != nil {
 
                     if inspector.rawGcr || sector == nil {
                         
                         // Show the raw GCR stream
-                        gcr = String(cString: disk.trackBitsAsString())
+                        gcr = String(cString: analyzer!.trackBitsAsString())
                         
                     } else {
                         
                         // Show the decoded GCR data of the currently selected sector
-                        gcr = String(cString: disk.sectorHeaderBytes(asString: sector!, hex: hex))
+                        gcr = String(cString: analyzer!.sectorHeaderBytes(asString: sector!, hex: hex))
                         gcr.append("\n\n")
-                        gcr.append(String(cString: disk.sectorDataBytes(asString: sector!, hex: hex)))
+                        gcr.append(String(cString: analyzer!.sectorDataBytes(asString: sector!, hex: hex)))
                     }
                 }
                 
@@ -97,19 +98,24 @@ class DiskDataView: NSScrollView {
     
     func markHead() {
         
+        /*
         unmarkHead()
-        headPosition = NSRange(location: Int(drive.offset()), length: 1)
+        headPosition = NSRange(location: Int(inspector.drive.offset()), length: 1)
         storage?.addAttr(.backgroundColor, value: NSColor.red, range: headPosition)
+        */
     }
     
     func unmarkHead() {
         
+        /*
         storage?.remAttr(.backgroundColor, range: headPosition)
         headPosition = nil
+        */
     }
 
     func scrollToHead() {
         
+        /*
         if !drive.hasDisk() { return }
         
         // Jump to current track
@@ -120,16 +126,22 @@ class DiskDataView: NSScrollView {
         // Highlight drive position inside the current track
         let range = NSRange(location: Int(drive.offset()), length: 1)
         textView?.scrollRangeToVisible(range)
+        */
     }
             
     func markSectors() {
-        
-        if !inspector.rawGcr || sector == nil || halftrack == nil { return }
 
-        let length = Int(drive.size(ofHalftrack: halftrack!))
+        // Only proceed if there is anything to display
+        if sector == nil || halftrack == nil || analyzer == nil { return }
+
+        // Only proceed if the GCR view is active
+        if !inspector.rawGcr { return }
+
+        // TODO: Get this information from the analyzer
+        let length = Int(inspector.drive.size(ofHalftrack: halftrack!))
         if length == 0 { return }
-
-        let info = drive.disk.sectorInfo(sector!)
+        
+        let info = analyzer!.sectorInfo(sector!)
         let hLeft = info.headerBegin % (length + 1)
         let hRight = info.headerEnd % (length + 1)
         let dLeft = info.dataBegin % (length + 1)

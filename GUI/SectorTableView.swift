@@ -11,10 +11,8 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
     
     @IBOutlet weak var inspector: Inspector!
    
-    var c64: C64Proxy { return inspector.parent.c64 }
-    var drive: DriveProxy { return inspector.drive }
     var halftrack: Halftrack? { return inspector.halftrack }
-    // var sector: Sector? { return inspector.sec }
+    var analyzer: DiskAnalyzerProxy? { return inspector.analyzer }
     
     //
     // Data cache
@@ -38,16 +36,18 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
         // Map row numbers to sector numbers
         sectorForRow = [:]
         
-        if halftrack != 0 {
+        if halftrack != nil && analyzer != nil {
+            
             var row = 0
             for i in 0 ... Int(highestSector) {
-                let info = drive.disk.sectorInfo(Sector(i))
+                let info = analyzer!.sectorInfo(Sector(i))
                 if info.headerBegin != info.headerEnd {
                     sectorForRow[row] = i
                     row += 1
                 }
             }
         }
+        
         isDirty = false
     }
     

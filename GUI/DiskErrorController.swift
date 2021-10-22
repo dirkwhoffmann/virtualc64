@@ -10,7 +10,8 @@
 class DiskErrorController: NSWindowController {
     
     var parent: Inspector!
-
+    var analyzer: DiskAnalyzerProxy? { return parent.analyzer }
+    
     @IBOutlet weak var title: NSTextField!
     @IBOutlet weak var log: NSTableView!
 
@@ -39,7 +40,7 @@ extension DiskErrorController: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         
-        return parent.drive.disk.numErrors()
+        return analyzer?.numErrors() ?? 0
     }
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
@@ -50,7 +51,7 @@ extension DiskErrorController: NSTableViewDataSource {
             return row + 1
             
         case "description":
-            return parent.drive.disk.errorMessage(row)
+            return analyzer?.errorMessage(row) ?? ""
             
         default:
             fatalError()

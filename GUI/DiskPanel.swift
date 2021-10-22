@@ -44,11 +44,24 @@ extension Inspector {
         }
     }
     
+    func analyzeDisk() {
+    
+        if let disk = drive.disk {
+
+            track("Analyzing disk")
+            analyzer = DiskAnalyzerProxy(disk: disk)
+
+        } else {
+            track("Can't analyze disk (no disk present)")
+            analyzer = nil
+        }
+    }
+    
     func refreshDisk(count: Int = 0, full: Bool = false) {
         
         if full {
                         
-            if !drive.hasDisk() {
+            if analyzer == nil {
                 selectedHalftrack = -1
                 selectedSector = -1
                 drvNoDiskText.isHidden = false
@@ -72,6 +85,9 @@ extension Inspector {
         
         selectedHalftrack = -1
         selectedSector = -1
+        
+        // Reanalyze the disk
+        analyzeDisk()
         
         // Force sub views to update
         drvSectorTableView.isDirty = true
@@ -97,13 +113,13 @@ extension Inspector {
         if selectedHalftrack == nr { return }
         selectedHalftrack = nr
         
-        if halftrack != nil && drive.hasDisk() {
+        if halftrack != nil && analyzer != nil {
                         
             // Read track data
-            drive.disk.analyzeHalftrack(halftrack!)
+            analyzer!.analyzeHalftrack(halftrack!)
                         
             // Warn if this track contains errors
-            let trackIsValid = drive.disk.numErrors() == 0
+            let trackIsValid = analyzer!.numErrors() == 0
             drvWarningText.isHidden = trackIsValid
             drvWarningButton.isHidden = trackIsValid
             
@@ -112,6 +128,7 @@ extension Inspector {
             drvDiskDataView.dataIsDirty = true
             drvDiskDataView.sectionMarksAreDirty = true
         }
+        
         fullRefresh()
     }
     
@@ -162,7 +179,7 @@ extension Inspector {
     
     @IBAction func drvWarningAction(_ sender: NSButton!) {
         
-        track("Warning")
+        track()
         
         let nibName = NSNib.Name("DiskErrors")
         let controller = DiskErrorController(windowNibName: nibName)

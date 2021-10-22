@@ -601,6 +601,10 @@
 - (NSInteger)firstErroneousBit:(NSInteger)nr;
 - (NSInteger)lastErroneousBit:(NSInteger)nr;
 - (SectorInfo)sectorInfo:(Sector)s;
+- (const char *)diskNameAsString;
+- (const char *)trackBitsAsString;
+- (const char *)sectorHeaderBytesAsString:(Sector)nr hex:(BOOL)hex;
+- (const char *)sectorDataBytesAsString:(Sector)nr hex:(BOOL)hex;
 
 @property (readonly) BOOL test;
 

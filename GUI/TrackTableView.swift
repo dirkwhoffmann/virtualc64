@@ -11,9 +11,8 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
     
     @IBOutlet weak var inspector: Inspector!
    
-    var c64: C64Proxy { return inspector.parent.c64 }
-    var drive: DriveProxy { return inspector.drive }
     var halftrack: Int { return inspector.selectedHalftrack }
+    var analyzer: DiskAnalyzerProxy? { return inspector.analyzer }
 
     // Number of items in the table view (0 if no disk is present)
     var numItems = 0
@@ -34,8 +33,11 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
     
     func cache() {
         
-        numItems = Int(showHalftracks ? highestHalftrack : highestTrack)
-        if !drive.hasDisk() { numItems = 0}
+        if analyzer != nil {
+            numItems = Int(showHalftracks ? highestHalftrack : highestTrack)
+        } else {
+            numItems = 0
+        }
     }
     
     func refresh(count: Int = 0, full: Bool = false) {
