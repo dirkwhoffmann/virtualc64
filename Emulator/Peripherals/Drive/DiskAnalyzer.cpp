@@ -62,7 +62,7 @@ DiskAnalyzer::~DiskAnalyzer()
     msg("DiskAnalyzer::~DiskAnalyzer\n");
     // delete disk;
     
-    for (isize ht = 0; ht < 85; ht++) delete [] data[ht];
+    for (isize ht = 1; ht < 85; ht++) delete [] data[ht];
 }
 
 isize
@@ -317,6 +317,8 @@ DiskAnalyzer::diskNameAsString()
 const char *
 DiskAnalyzer::trackBitsAsString(Halftrack ht)
 {
+    assert(isHalftrackNumber(ht));
+
     isize i, l;
 
     for (i = 0, l = lengthOfHalftrack(ht); i < l; i++) {
@@ -333,18 +335,26 @@ DiskAnalyzer::trackBitsAsString(Halftrack ht)
 const char *
 DiskAnalyzer::sectorHeaderBytesAsString(Halftrack ht, Sector nr, bool hex)
 {
+    assert(isHalftrackNumber(ht));
     assert(isSectorNumber(nr));
-    isize begin = trackInfo.sectorInfo[nr].headerBegin;
-    isize end = trackInfo.sectorInfo[nr].headerEnd;
+    
+    auto info = diskInfo.trackInfo[ht].sectorInfo[nr];
+    
+    isize begin = info.headerBegin;
+    isize end = info.headerEnd;
     return (begin == end) ? "" : sectorBytesAsString(data[ht] + begin, 10, hex);
 }
 
 const char *
 DiskAnalyzer::sectorDataBytesAsString(Halftrack ht, Sector nr, bool hex)
 {
+    assert(isHalftrackNumber(ht));
     assert(isSectorNumber(nr));
-    isize begin = trackInfo.sectorInfo[nr].dataBegin;
-    isize end = trackInfo.sectorInfo[nr].dataEnd;
+    
+    auto info = diskInfo.trackInfo[ht].sectorInfo[nr];
+
+    isize begin = info.dataBegin;
+    isize end = info.dataEnd;
     return (begin == end) ? "" : sectorBytesAsString(data[ht] + begin, 256, hex);
 }
 

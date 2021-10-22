@@ -27,9 +27,6 @@ class DiskAnalyzer: public C64Object {
     // Result of the analysis
     DiskInfo diskInfo = { };
     
-    // Track layout as determined by analyzeTrack (DEPRECATED)
-    TrackInfo trackInfo = { };
-
     // Error log created by analyzeTrack
     std::vector<string> errorLog[85];
 
