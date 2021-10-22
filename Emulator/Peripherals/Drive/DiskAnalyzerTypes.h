@@ -30,13 +30,7 @@ SectorInfo;
  */
 typedef struct
 {
-    isize length;                       // Length of the track in bits
-    
-    union {
-        u8 bit[2 * maxBitsOnTrack];      // Track data (bit access)
-        u64 byte[2 * maxBytesOnTrack];   // Track data (byte access)
-    };
-    
+    isize length;                        // Length of the track in bits
     SectorInfo sectorInfo[22];           // Sector layout data
 }
 TrackInfo;

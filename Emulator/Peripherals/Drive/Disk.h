@@ -359,7 +359,7 @@ private:
     
     isize decodeDisk(u8 *dest, isize numTracks, class DiskAnalyzer &analyzer);
     isize decodeTrack(Track t, u8 *dest, class DiskAnalyzer &analyzer);
-    isize decodeSector(isize offset, u8 *dest, class DiskAnalyzer &analyzer);
+    isize decodeSector(Track t, isize offset, u8 *dest, class DiskAnalyzer &analyzer);
 
 
     //

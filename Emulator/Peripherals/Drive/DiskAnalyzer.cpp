@@ -106,10 +106,12 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
     trackInfo.length = len;
     
     // Setup working buffer (two copies of the track, each bit represented by one byte)
+    /*
     for (isize i = 0; i < maxBytesOnTrack; i++) {
         trackInfo.byte[i] = bitExpansion[disk->data.halftrack[ht][i]];
     }
     std::memcpy(trackInfo.bit + len, trackInfo.bit, len);
+    */
     
     // Indicates where the sector headers blocks and the sectors data blocks start
     u8 sync[2 * maxBitsOnTrack];
@@ -121,15 +123,13 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
     long stop = (long)(2 * len - 10);
     for (long i = 0; i < stop; i++) {
         
-        assert(trackInfo.bit[i] == data[ht][i]);
-        assert(trackInfo.bit[i] <= 1);
-        if (trackInfo.bit[i] == 0 && noOfOnes >= 10) {
+        assert(data[ht][i] == 0 || data[ht][i] == 1);
+        if (data[ht][i] == 0 && noOfOnes >= 10) {
             
             // <--- SYNC ---><-- sync[i] -->
             // 11111 .... 1110
             //               ^ <- We are at offset i which is here
-            sync[i] = disk->decodeGcr(trackInfo.bit + i);
-            assert(sync[i] = disk->decodeGcr(data[ht] + i));
+            sync[i] = disk->decodeGcr(data[ht] + i);
             
             if (sync[i] == 0x08) {
                 trace(GCR_DEBUG, "Sector header block found at offset %ld\n", i);
@@ -139,8 +139,7 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
                 log(i, 10, "Invalid sector ID %02X at index %d. Should be 0x07 or 0x08.", sync[i], i);
             }
         }
-        assert(data[ht][i] == trackInfo.bit[i]);
-        noOfOnes = trackInfo.bit[i] ? (noOfOnes + 1) : 0;
+        noOfOnes = data[ht][i] ? (noOfOnes + 1) : 0;
     }
     
     // Lookup first sector header block
@@ -163,8 +162,7 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
             
             if (sync[i] == 0x08) {
                 
-                sector = disk->decodeGcr(trackInfo.bit + i + 20);
-                assert(sector == disk->decodeGcr(data[ht] + i + 20));
+                sector = disk->decodeGcr(data[ht] + i + 20);
 
                 if (isSectorNumber(sector)) {
                     if (trackInfo.sectorInfo[sector].headerEnd != 0)
@@ -225,22 +223,16 @@ DiskAnalyzer::analyzeSectorHeaderBlock(Halftrack ht, isize offset, TrackInfo &tr
 {
     // The first byte must be 0x08 (indicating a header block)
     assert(disk->decodeGcr(data[ht] + offset) == 0x08);
-    assert(disk->decodeGcr(trackInfo.bit + offset) == 0x08);
     offset += 10;
     
-    u8 s = disk->decodeGcr(trackInfo.bit + offset + 10);
-    u8 t = disk->decodeGcr(trackInfo.bit + offset + 20);
-    u8 id2 = disk->decodeGcr(trackInfo.bit + offset + 30);
-    u8 id1 = disk->decodeGcr(trackInfo.bit + offset + 40);
-    assert(s == disk->decodeGcr(data[ht] + offset + 10));
-    assert(t == disk->decodeGcr(data[ht] + offset + 20));
-    assert(id2 == disk->decodeGcr(data[ht] + offset + 30));
-    assert(id1 == disk->decodeGcr(data[ht] + offset + 40));
+    u8 s = disk->decodeGcr(data[ht] + offset + 10);
+    u8 t = disk->decodeGcr(data[ht] + offset + 20);
+    u8 id2 = disk->decodeGcr(data[ht] + offset + 30);
+    u8 id1 = disk->decodeGcr(data[ht] + offset + 40);
 
     u8 checksum = id1 ^ id2 ^ t ^ s;
 
-    assert(checksum == disk->decodeGcr(data[ht] + offset));
-    if (checksum != disk->decodeGcr(trackInfo.bit + offset)) {
+    if (checksum != disk->decodeGcr(data[ht] + offset)) {
         log(offset, 10, "Header block at index %d contains an invalid checksum.\n", offset);
     }
 }
@@ -250,16 +242,14 @@ DiskAnalyzer::analyzeSectorDataBlock(Halftrack ht, isize offset, TrackInfo &trac
 {
     // The first byte must be 0x07 (indicating a header block)
     assert(disk->decodeGcr(data[ht] + offset) == 0x07);
-    assert(disk->decodeGcr(trackInfo.bit + offset) == 0x07);
     offset += 10;
     
     u8 checksum = 0;
     for (isize i = 0; i < 256; i++, offset += 10) {
-        assert(disk->decodeGcr(trackInfo.bit + offset) == disk->decodeGcr(data[ht] + offset));
-        checksum ^= disk->decodeGcr(trackInfo.bit + offset);
+        checksum ^= disk->decodeGcr(data[ht] + offset);
     }
     
-    if (checksum != disk->decodeGcr(trackInfo.bit + offset)) {
+    if (checksum != disk->decodeGcr(data[ht] + offset)) {
         log(offset, 10, "Data block at index %d contains an invalid checksum.\n", offset);
     }
 }
@@ -288,7 +278,7 @@ DiskAnalyzer::diskNameAsString()
     isize offset = trackInfo.sectorInfo[0].dataBegin + (0x90 * 10);
     
     for (i = 0; i < 255; i++, offset += 10) {
-        u8 value = disk->decodeGcr(trackInfo.bit + offset);
+        u8 value = disk->decodeGcr(data[18] + offset);
         if (value == 0xA0)
             break;
         text[i] = value;
@@ -303,7 +293,7 @@ DiskAnalyzer::trackBitsAsString(Halftrack ht)
 {
     isize i;
     for (i = 0; i < trackInfo.length; i++) {
-        if (trackInfo.bit[i]) {
+        if (data[ht][i]) {
             text[i] = '1';
         } else {
             text[i] = '0';
@@ -319,7 +309,7 @@ DiskAnalyzer::sectorHeaderBytesAsString(Halftrack ht, Sector nr, bool hex)
     assert(isSectorNumber(nr));
     isize begin = trackInfo.sectorInfo[nr].headerBegin;
     isize end = trackInfo.sectorInfo[nr].headerEnd;
-    return (begin == end) ? "" : sectorBytesAsString(trackInfo.bit + begin, 10, hex);
+    return (begin == end) ? "" : sectorBytesAsString(data[ht] + begin, 10, hex);
 }
 
 const char *
@@ -328,7 +318,7 @@ DiskAnalyzer::sectorDataBytesAsString(Halftrack ht, Sector nr, bool hex)
     assert(isSectorNumber(nr));
     isize begin = trackInfo.sectorInfo[nr].dataBegin;
     isize end = trackInfo.sectorInfo[nr].dataEnd;
-    return (begin == end) ? "" : sectorBytesAsString(trackInfo.bit + begin, 256, hex);
+    return (begin == end) ? "" : sectorBytesAsString(data[ht] + begin, 256, hex);
 }
 
 const char *

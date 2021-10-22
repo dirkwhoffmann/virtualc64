@@ -434,7 +434,7 @@ Disk::decodeTrack(Track t, u8 *dest, DiskAnalyzer &analyzer)
         trace(GCR_DEBUG, "   Decoding sector %zd\n", s);
         SectorInfo info = analyzer.sectorLayout(s);
         if (info.dataBegin != info.dataEnd) {
-            numBytes += decodeSector(info.dataBegin, dest + (dest ? numBytes : 0), analyzer);
+            numBytes += decodeSector(t, info.dataBegin, dest + (dest ? numBytes : 0), analyzer);
         } else {
 
             // The decoder failed to decode this sector.
@@ -446,15 +446,17 @@ Disk::decodeTrack(Track t, u8 *dest, DiskAnalyzer &analyzer)
 }
 
 isize
-Disk::decodeSector(isize offset, u8 *dest, DiskAnalyzer &analyzer)
+Disk::decodeSector(Track t, isize offset, u8 *dest, DiskAnalyzer &analyzer)
 {
+    Halftrack ht = 2 * t - 1;
+    
     // The first byte must be 0x07 (indicating a data block)
-    assert(decodeGcr(analyzer.trackInfo.bit + offset) == 0x07);
+    assert(decodeGcr(analyzer.data[ht] + offset) == 0x07);
     offset += 10;
     
     if (dest) {
         for (isize i = 0; i < 256; i++) {
-            dest[i] = decodeGcr(analyzer.trackInfo.bit + offset);
+            dest[i] = decodeGcr(analyzer.data[ht] + offset);
             offset += 10;
         }
     }
