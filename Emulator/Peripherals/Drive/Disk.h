@@ -15,6 +15,8 @@
 #include "SubComponent.h"
 #include "PETName.h"
 
+class DiskAnalyzer;
+
 class Disk : public C64Object {
     
     friend class Drive;
@@ -226,12 +228,12 @@ public:
     /* Decodes a nibble (4 bit) from a previously encoded GCR bitstream.
      * Returns 0xFF, if no valid GCR sequence is found.
      */
-    u8 decodeGcrNibble(u8 *gcrBits);
+    [[deprecated]] u8 decodeGcrNibble(u8 *gcrBits);
 
     /* Decodes a byte (8 bit) form a previously encoded GCR bitstream. Returns
      * an unpredictable result if invalid GCR sequences are found.
      */
-    u8 decodeGcr(u8 *gcrBits);
+    [[deprecated]] u8 decodeGcr(u8 *gcrBits);
 
     
     //
@@ -350,10 +352,10 @@ public:
  
 private:
     
-    isize decodeDisk(u8 *dest, isize numTracks, class DiskAnalyzer &analyzer);
-    isize decodeTrack(Track t, u8 *dest, class DiskAnalyzer &analyzer);
-    isize decodeHalfrack(Halftrack ht, u8 *dest, class DiskAnalyzer &analyzer);
-    isize decodeSector(Halftrack ht, isize offset, u8 *dest, class DiskAnalyzer &analyzer);
+    isize decodeDisk(u8 *dest, isize numTracks, DiskAnalyzer &analyzer);
+    isize decodeTrack(Track t, u8 *dest, DiskAnalyzer &analyzer);
+    isize decodeHalfrack(Halftrack ht, u8 *dest, DiskAnalyzer &analyzer);
+    isize decodeSector(Halftrack ht, isize offset, u8 *dest, DiskAnalyzer &analyzer);
 
 
     //

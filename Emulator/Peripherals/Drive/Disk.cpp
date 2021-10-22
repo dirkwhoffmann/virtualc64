@@ -436,12 +436,12 @@ isize
 Disk::decodeSector(Halftrack ht, isize offset, u8 *dest, DiskAnalyzer &analyzer)
 {
     // The first byte must be 0x07 (indicating a data block)
-    assert(decodeGcr(analyzer.data[ht] + offset) == 0x07);
+    assert(analyzer.decodeGcr(ht, offset) == 0x07);
     offset += 10;
     
     if (dest) {
         for (isize i = 0; i < 256; i++) {
-            dest[i] = decodeGcr(analyzer.data[ht] + offset);
+            dest[i] = analyzer.decodeGcr(ht, offset);
             offset += 10;
         }
     }

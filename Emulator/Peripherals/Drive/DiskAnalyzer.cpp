@@ -11,6 +11,7 @@
 #include "DiskAnalyzer.h"
 #include "Disk.h"
 
+/*
 u8
 DiskAnalyzer::decodeGcrNibble(u8 *gcr)
 {
@@ -32,6 +33,7 @@ DiskAnalyzer::decodeGcr(u8 *gcr)
 
     return (u8)(nibble1 << 4 | nibble2);
 }
+*/
 
 DiskAnalyzer::DiskAnalyzer(const Disk &disk)
 {
@@ -60,7 +62,6 @@ DiskAnalyzer::DiskAnalyzer(const Disk &disk)
 DiskAnalyzer::~DiskAnalyzer()
 {
     msg("DiskAnalyzer::~DiskAnalyzer\n");
-    // delete disk;
     
     for (isize ht = 1; ht < 85; ht++) delete [] data[ht];
 }
@@ -77,6 +78,26 @@ DiskAnalyzer::lengthOfHalftrack(Halftrack ht) const
 {
     assert(isHalftrackNumber(ht));
     return length[ht];
+}
+
+u8
+DiskAnalyzer::decodeGcrNibble(Halftrack ht, isize offset)
+{
+    auto gcr = data[ht] + offset;
+
+    auto codeword = gcr[0] << 4 | gcr[1] << 3 | gcr[2] << 2 | gcr[3] << 1 | gcr[4];
+    assert(codeword < 32);
+    
+    return Disk::invgcr[codeword];
+}
+
+u8
+DiskAnalyzer::decodeGcr(Halftrack ht, isize offset)
+{
+    u8 nibble1 = decodeGcrNibble(ht, offset);
+    u8 nibble2 = decodeGcrNibble(ht, offset + 5);
+
+    return (u8)(nibble1 << 4 | nibble2);
 }
 
 void DiskAnalyzer::analyzeDisk()
@@ -118,25 +139,18 @@ TrackInfo
 DiskAnalyzer::analyzeHalftrack(Halftrack ht)
 {
     TrackInfo trackInfo = {};
-    
-    auto len = lengthOfHalftrack(ht);
+    trackInfo.length = lengthOfHalftrack(ht);
 
-    errorLog[ht].clear();
-    errorStartIndex[ht].clear();
-    errorEndIndex[ht].clear();
-    
-    // The result of the analysis is stored in variable trackInfo
-    memset(&trackInfo, 0, sizeof(trackInfo)); // NOT NECESSARY
-    trackInfo.length = len;
-        
+    assert(errorLog[ht].empty());
+    assert(errorStartIndex[ht].empty());
+    assert(errorEndIndex[ht].empty());
+            
     // Indicates where the sector headers blocks and the sectors data blocks start
-    u8 sync[2 * maxBitsOnTrack];
-    
-    std::memset(sync, 0, sizeof(sync));
-    
+    u8 sync[2 * maxBitsOnTrack] = { };
+        
     // Scan for SYNC sequences and decode the byte that follows
     isize noOfOnes = 0;
-    long stop = (long)(2 * len - 10);
+    long stop = (long)(2 * trackInfo.length - 10);
     for (long i = 0; i < stop; i++) {
         
         assert(data[ht][i] == 0 || data[ht][i] == 1);
@@ -145,7 +159,7 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
             // <--- SYNC ---><-- sync[i] -->
             // 11111 .... 1110
             //               ^ <- We are at offset i which is here
-            sync[i] = decodeGcr(data[ht] + i);
+            sync[i] = decodeGcr(ht, i);
             
             if (sync[i] == 0x08) {
                 trace(GCR_DEBUG, "Sector header block found at offset %ld\n", i);
@@ -160,29 +174,29 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
     
     // Lookup first sector header block
     isize startOffset;
-    for (startOffset = 0; startOffset < len; startOffset++) {
+    for (startOffset = 0; startOffset < trackInfo.length; startOffset++) {
         if (sync[startOffset] == 0x08) {
             break;
         }
     }
-    if (startOffset == len) {
+    if (startOffset == trackInfo.length) {
         
-        log(ht, 0, len, "This track contains no sector header block.");
+        log(ht, 0, trackInfo.length, "This track contains no sector header block.");
         return trackInfo;
 
     } else {
     
-        // Compute offsets for all sectors
+        // Compute offsets to all sectors
         u8 sector = UINT8_MAX;
-        for (isize i = startOffset; i < startOffset + len; i++) {
+        for (isize i = startOffset; i < startOffset + trackInfo.length; i++) {
             
             if (sync[i] == 0x08) {
                 
-                sector = decodeGcr(data[ht] + i + 20);
+                sector = decodeGcr(ht, i + 20);
 
                 if (isSectorNumber(sector)) {
                     if (trackInfo.sectorInfo[sector].headerEnd != 0)
-                        break; // We've seen this sector already, so we are done.
+                        break; // We've seen this sector already, so we are done
                     trackInfo.sectorInfo[sector].headerBegin = i;
                     trackInfo.sectorInfo[sector].headerEnd = i + headerBlockSize;
                 } else {
@@ -212,9 +226,9 @@ DiskAnalyzer::analyzeSectorBlocks(Halftrack ht, TrackInfo &trackInfo)
     
     for (Sector s = 0; s < Disk::trackDefaults[t].sectors; s++) {
         
-        SectorInfo *info = &trackInfo.sectorInfo[s];
-        bool hasHeader = info->headerBegin != info->headerEnd;
-        bool hasData = info->dataBegin != info->dataEnd;
+        const SectorInfo &info = trackInfo.sectorInfo[s];
+        bool hasHeader = info.headerBegin != info.headerEnd;
+        bool hasData = info.dataBegin != info.dataEnd;
 
         if (!hasHeader && !hasData) {
             log(ht, 0, 0, "Sector %d is missing.\n", s);
@@ -222,13 +236,13 @@ DiskAnalyzer::analyzeSectorBlocks(Halftrack ht, TrackInfo &trackInfo)
         }
         
         if (hasHeader) {
-            analyzeSectorHeaderBlock(ht, info->headerBegin, trackInfo);
+            analyzeSectorHeaderBlock(ht, info.headerBegin, trackInfo);
         } else {
             log(ht, 0, 0, "Sector %d has no header block.\n", s);
         }
         
         if (hasData) {
-            analyzeSectorDataBlock(ht, info->dataBegin, trackInfo);
+            analyzeSectorDataBlock(ht, info.dataBegin, trackInfo);
         } else {
             log(ht, 0, 0, "Sector %d has no data block.\n", s);
         }
@@ -239,17 +253,17 @@ void
 DiskAnalyzer::analyzeSectorHeaderBlock(Halftrack ht, isize offset, TrackInfo &trackInfo)
 {
     // The first byte must be 0x08 (indicating a header block)
-    assert(decodeGcr(data[ht] + offset) == 0x08);
+    assert(decodeGcr(ht, offset) == 0x08);
     offset += 10;
     
-    u8 s = decodeGcr(data[ht] + offset + 10);
-    u8 t = decodeGcr(data[ht] + offset + 20);
-    u8 id2 = decodeGcr(data[ht] + offset + 30);
-    u8 id1 = decodeGcr(data[ht] + offset + 40);
+    u8 s = decodeGcr(ht, offset + 10);
+    u8 t = decodeGcr(ht, offset + 20);
+    u8 id2 = decodeGcr(ht, offset + 30);
+    u8 id1 = decodeGcr(ht, offset + 40);
 
     u8 checksum = id1 ^ id2 ^ t ^ s;
 
-    if (checksum != decodeGcr(data[ht] + offset)) {
+    if (checksum != decodeGcr(ht, offset)) {
         log(ht, offset, 10, "Header block at index %d contains an invalid checksum.\n", offset);
     }
 }
@@ -258,15 +272,15 @@ void
 DiskAnalyzer::analyzeSectorDataBlock(Halftrack ht, isize offset, TrackInfo &trackInfo)
 {
     // The first byte must be 0x07 (indicating a header block)
-    assert(decodeGcr(data[ht] + offset) == 0x07);
+    assert(decodeGcr(ht, offset) == 0x07);
     offset += 10;
     
     u8 checksum = 0;
     for (isize i = 0; i < 256; i++, offset += 10) {
-        checksum ^= decodeGcr(data[ht] + offset);
+        checksum ^= decodeGcr(ht, offset);
     }
     
-    if (checksum != decodeGcr(data[ht] + offset)) {
+    if (checksum != decodeGcr(ht, offset)) {
         log(ht, offset, 10, "Data block at index %d contains an invalid checksum.\n", offset);
     }
 }
@@ -304,7 +318,7 @@ DiskAnalyzer::diskNameAsString()
     isize offset = info.dataBegin + (0x90 * 10);
     
     for (i = 0; i < 255; i++, offset += 10) {
-        u8 value = decodeGcr(data[18] + offset);
+        u8 value = decodeGcr(18, offset);
         if (value == 0xA0)
             break;
         text[i] = value;
@@ -342,7 +356,7 @@ DiskAnalyzer::sectorHeaderBytesAsString(Halftrack ht, Sector nr, bool hex)
     
     isize begin = info.headerBegin;
     isize end = info.headerEnd;
-    return (begin == end) ? "" : sectorBytesAsString(data[ht] + begin, 10, hex);
+    return (begin == end) ? "" : sectorBytesAsString(ht, begin, 10, hex);
 }
 
 const char *
@@ -355,18 +369,18 @@ DiskAnalyzer::sectorDataBytesAsString(Halftrack ht, Sector nr, bool hex)
 
     isize begin = info.dataBegin;
     isize end = info.dataEnd;
-    return (begin == end) ? "" : sectorBytesAsString(data[ht] + begin, 256, hex);
+    return (begin == end) ? "" : sectorBytesAsString(ht, begin, 256, hex);
 }
 
 const char *
-DiskAnalyzer::sectorBytesAsString(u8 *buffer, isize length, bool hex)
+DiskAnalyzer::sectorBytesAsString(Halftrack ht, isize offset, isize length, bool hex)
 {
     isize gcrOffset = 0;
     isize strOffset = 0;
     
     for (isize i = 0; i < length; i++, gcrOffset += 10) {
 
-        u8 value = decodeGcr(buffer + gcrOffset);
+        u8 value = decodeGcr(ht, offset + gcrOffset);
 
         if (hex) {
             util::sprint8x(text + strOffset, value);

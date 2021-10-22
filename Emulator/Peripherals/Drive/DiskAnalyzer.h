@@ -18,10 +18,10 @@ class DiskAnalyzer: public C64Object {
   
     friend class Disk;
     
-    // Length for each halftrack
+    // Lengths of all halftracks
     isize length[85];
     
-    // Disk data (each halftrack repeated twice, one byte for each bit on disk)
+    // Data of all halftracks (repeated twice, one byte for each bit on disk)
     u8 *data[85];
         
     // Result of the analysis
@@ -39,16 +39,7 @@ class DiskAnalyzer: public C64Object {
     // Textual representation of track data
     char text[maxBitsOnTrack + 1] = { };
 
-    
-    //
-    // Class methods
-    //
-    
-    // Decodes a GCR-encoded nibble or byte
-    u8 decodeGcrNibble(u8 *gcrBits);
-    u8 decodeGcr(u8 *gcrBits);
-    
-    
+
     //
     // Initializing
     //
@@ -78,17 +69,23 @@ public:
     isize lengthOfTrack(Track t) const;
     isize lengthOfHalftrack(Halftrack ht) const;
     
-private:
-    
-    // Analyzes the whole disk, a single track, or a single sector
-    void analyzeDisk();
-    TrackInfo analyzeTrack(Track t);
-    TrackInfo analyzeHalftrack(Halftrack ht);
+    // Decodes a GCR-encoded nibble or byte
+    u8 decodeGcrNibble(Halftrack ht, isize offset);
+    u8 decodeGcr(Halftrack ht, isize offset);
 
 private:
     
-    // Checks the integrity of the sector block structure
+    // Analyzes the whole disk
+    void analyzeDisk();
+    
+    // Analyzes a certain track or halftrack
+    TrackInfo analyzeTrack(Track t);
+    TrackInfo analyzeHalftrack(Halftrack ht);
+
+    // Analyzes all sectors of a certain track
     void analyzeSectorBlocks(Halftrack ht, TrackInfo &trackInfo);
+
+    // Analyzes a single sector header block or sector data block
     void analyzeSectorHeaderBlock(Halftrack ht, isize offset, TrackInfo &trackInfo);
     void analyzeSectorDataBlock(Halftrack ht, isize offset, TrackInfo &trackInfo);
 
@@ -127,5 +124,5 @@ public:
 private:
     
     // Returns a textual representation
-    const char *sectorBytesAsString(u8 *buffer, isize length, bool hex);
+    const char *sectorBytesAsString(Halftrack ht, isize offset, isize length, bool hex);
 };
