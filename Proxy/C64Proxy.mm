@@ -873,8 +873,7 @@
     NSLog(@"DiskAnalyzerProxy::initWithDisk");
     
     if (!(self = [super init])) return self;
-    
-    obj = new DiskAnalyzer([disk disk]);
+    obj = new DiskAnalyzer(*[disk disk]);
     
     return self;
 }

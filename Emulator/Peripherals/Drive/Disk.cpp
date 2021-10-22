@@ -71,8 +71,6 @@ const Disk::TrackDefaults Disk::trackDefaults[43] = {
     { 17, 0, 6250, 6250 * 8, 785, 0.830 }  // Track 42
 };
 
-// u64 Disk::bitExpansion[256];
-
 isize
 Disk::numberOfSectorsInTrack(Track t)
 {
@@ -110,26 +108,6 @@ Disk::isValidHalftrackSectorPair(Halftrack ht, Sector s)
 
 Disk::Disk()
 {    
-    /* Create the bit expansion table. Note that this table expects a Little
-     * Endian architecture to work. If you compile the emulator on a Big Endian
-     * architecture, the byte order needs to be reversed.
-     */
-    /*
-    for (isize i = 0; i < 256; i++) {
-        
-        bitExpansion[i] = 0;
-        
-        if (i & 0x80) bitExpansion[i] |= 0x0000000000000001;
-        if (i & 0x40) bitExpansion[i] |= 0x0000000000000100;
-        if (i & 0x20) bitExpansion[i] |= 0x0000000000010000;
-        if (i & 0x10) bitExpansion[i] |= 0x0000000001000000;
-        if (i & 0x08) bitExpansion[i] |= 0x0000000100000000;
-        if (i & 0x04) bitExpansion[i] |= 0x0000010000000000;
-        if (i & 0x02) bitExpansion[i] |= 0x0001000000000000;
-        if (i & 0x01) bitExpansion[i] |= 0x0100000000000000;
-    }
-    */
-    
     clearDisk();
 }
 
@@ -385,7 +363,7 @@ isize
 Disk::decodeDisk(u8 *dest)
 {
     // Analyze the GCR bit stream
-    DiskAnalyzer analyzer(this);
+    DiskAnalyzer analyzer(*this);
     
     // Determine highest non-empty track
     Track t = 42;

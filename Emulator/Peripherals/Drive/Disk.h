@@ -86,14 +86,7 @@ public:
         255,  13,  14, 255  /* 0x1C - 0x1F */
     };
 
-    /* Maps a byte to an expanded 64 bit representation. This lookup table is
-     * utilized to quickly inflate a bit stream into a byte stream.
-     *
-     *     Example: 0110 ... -> 00000000 00000001 0000001 00000000 ...
-     */
-    // [[deprecated]] static u64 bitExpansion[256];
-    
-    
+
     //
     // Disk properties
     //

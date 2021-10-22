@@ -24,9 +24,6 @@ class DiskAnalyzer: public C64Object {
     // Disk data (each halftrack repeated twice, one byte for each bit on disk)
     u8 *data[85];
     
-    // Maps a byte to an expanded 64 bit representation (DEPRECATED)
-    u64 bitExpansion[256];
-
     // The disk under inspection
     // class Disk *disk;
     
@@ -61,7 +58,7 @@ class DiskAnalyzer: public C64Object {
     
 public:
 
-    DiskAnalyzer(class Disk *disk);
+    DiskAnalyzer(const class Disk &disk);
     ~DiskAnalyzer();
     
     

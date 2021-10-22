@@ -33,54 +33,24 @@ DiskAnalyzer::decodeGcr(u8 *gcr)
     return (u8)(nibble1 << 4 | nibble2);
 }
 
-DiskAnalyzer::DiskAnalyzer(Disk *disk)
+DiskAnalyzer::DiskAnalyzer(const Disk &disk)
 {
     msg("DiskAnalyzer::DiskAnalyzer\n");
-    
-    // this->disk = new Disk();
-    // *this->disk = *disk;
-        
+            
     // Copy the GCR stream
     for (Halftrack ht = 1; ht < 85; ht++) {
 
-        length[ht] = disk->lengthOfHalftrack(ht);
+        length[ht] = disk.length.halftrack[ht];
         data[ht] = new u8[2 * maxBitsOnTrack]();
         
         for (isize i = 0, j = 0; i < maxBytesOnTrack; i++) {
 
-            auto byte = disk->data.halftrack[ht][i];
+            auto byte = disk.data.halftrack[ht][i];
             for (isize k = 7; k >= 0; k--) data[ht][j++] = !!GET_BIT(byte, k);
         }
         
-        auto len = disk->length.halftrack[ht];
-        assert(len <= maxBitsOnTrack);
-        std::memcpy(data[ht] + len, data[ht], len);
-    }
-    
-    /* Create the bit expansion table. The table maps a byte to an expanded
-     * 64 bit representation. This lookup table is utilized to quickly inflate
-     * a bit stream into a byte stream.
-     *
-     *     Example: 0110 ... -> 00000000 00000001 0000001 00000000 ...
-     *
-     * Note that this table expects a Little Endian architecture to work. If
-     * you compile the emulator on a Big Endian architecture, the byte order
-     * needs to be reversed.
-     *
-     * TODO: GET RID OF THIS TABLE
-     */
-    for (isize i = 0; i < 256; i++) {
-        
-        bitExpansion[i] = 0;
-        
-        if (i & 0x80) bitExpansion[i] |= 0x0000000000000001;
-        if (i & 0x40) bitExpansion[i] |= 0x0000000000000100;
-        if (i & 0x20) bitExpansion[i] |= 0x0000000000010000;
-        if (i & 0x10) bitExpansion[i] |= 0x0000000001000000;
-        if (i & 0x08) bitExpansion[i] |= 0x0000000100000000;
-        if (i & 0x04) bitExpansion[i] |= 0x0000010000000000;
-        if (i & 0x02) bitExpansion[i] |= 0x0001000000000000;
-        if (i & 0x01) bitExpansion[i] |= 0x0100000000000000;
+        assert(length[ht] <= maxBitsOnTrack);
+        std::memcpy(data[ht] + length[ht], data[ht], length[ht]);
     }
 }
 
@@ -125,15 +95,7 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
     // The result of the analysis is stored in variable trackInfo
     memset(&trackInfo, 0, sizeof(trackInfo));
     trackInfo.length = len;
-    
-    // Setup working buffer (two copies of the track, each bit represented by one byte)
-    /*
-    for (isize i = 0; i < maxBytesOnTrack; i++) {
-        trackInfo.byte[i] = bitExpansion[disk->data.halftrack[ht][i]];
-    }
-    std::memcpy(trackInfo.bit + len, trackInfo.bit, len);
-    */
-    
+        
     // Indicates where the sector headers blocks and the sectors data blocks start
     u8 sync[2 * maxBitsOnTrack];
     
