@@ -932,9 +932,9 @@
     return [self analyzer]->sectorLayout(s);
 }
 
-- (const char *)trackBitsAsString
+- (const char *)trackBitsAsString:(Halftrack)ht
 {
-    return [self analyzer]->trackBitsAsString();
+    return [self analyzer]->trackBitsAsString(ht);
 }
 
 - (const char *)diskNameAsString
@@ -942,14 +942,14 @@
     return [self analyzer]->diskNameAsString();
 }
 
-- (const char *)sectorHeaderBytesAsString:(Sector)nr hex:(BOOL)hex
+- (const char *)sectorHeaderBytesAsString:(Halftrack)ht sector:(Sector)nr hex:(BOOL)hex
 {
-    return [self analyzer]->sectorHeaderBytesAsString(nr, hex);
+    return [self analyzer]->sectorHeaderBytesAsString(ht, nr, hex);
 }
 
-- (const char *)sectorDataBytesAsString:(Sector)nr hex:(BOOL)hex
+- (const char *)sectorDataBytesAsString:(Halftrack)ht sector:(Sector)nr hex:(BOOL)hex
 {
-    return [self analyzer]->sectorDataBytesAsString(nr, hex);
+    return [self analyzer]->sectorDataBytesAsString(ht, nr, hex);
 }
 
 @end

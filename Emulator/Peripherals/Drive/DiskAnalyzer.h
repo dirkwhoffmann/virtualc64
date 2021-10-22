@@ -18,7 +18,10 @@ class DiskAnalyzer: public C64Object {
   
     friend class Disk;
     
-    // Maps a byte to an expanded 64 bit representation
+    // Disk data (each halftrack repeated twice, one byte for each bit on disk)
+    u8 *data[85];
+    
+    // Maps a byte to an expanded 64 bit representation (DEPRECATED)
     u64 bitExpansion[256];
 
     // The disk under inspection
@@ -79,8 +82,8 @@ private:
     
     // Checks the integrity of the sector block structure
     void analyzeSectorBlocks(Halftrack ht, TrackInfo &trackInfo);
-    void analyzeSectorHeaderBlock(isize offset, TrackInfo &trackInfo);
-    void analyzeSectorDataBlock(isize offset, TrackInfo &trackInfo);
+    void analyzeSectorHeaderBlock(Halftrack ht, isize offset, TrackInfo &trackInfo);
+    void analyzeSectorDataBlock(Halftrack ht, isize offset, TrackInfo &trackInfo);
 
     // Writes an error message into the error log
     void log(isize begin, isize length, const char *fmt, ...);
@@ -107,13 +110,13 @@ public:
     const char *diskNameAsString();
     
     // Returns a textual representation of the data stored in trackInfo
-    const char *trackBitsAsString();
+    const char *trackBitsAsString(Halftrack ht);
 
     // Returns a textual representation of the data stored in trackInfo
-    const char *sectorHeaderBytesAsString(Sector nr, bool hex);
+    const char *sectorHeaderBytesAsString(Halftrack ht, Sector nr, bool hex);
 
     // Returns a textual representation of the data stored in trackInfo
-    const char *sectorDataBytesAsString(Sector nr, bool hex);
+    const char *sectorDataBytesAsString(Halftrack ht, Sector nr, bool hex);
 
 private:
     

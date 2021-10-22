@@ -590,9 +590,9 @@
 
 - (SectorInfo)sectorInfo:(Sector)s;
 - (const char *)diskNameAsString;
-- (const char *)trackBitsAsString;
-- (const char *)sectorHeaderBytesAsString:(Sector)s hex:(BOOL)hex;
-- (const char *)sectorDataBytesAsString:(Sector)s hex:(BOOL)hex;
+- (const char *)trackBitsAsString:(Halftrack)ht;
+- (const char *)sectorHeaderBytesAsString:(Halftrack)ht sector:(Sector)s hex:(BOOL)hex;
+- (const char *)sectorDataBytesAsString:(Halftrack)ht sector:(Sector)s hex:(BOOL)hex;
 
 - (NSInteger)numErrors;
 - (NSString *)errorMessage:(NSInteger)nr;

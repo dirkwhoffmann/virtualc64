@@ -59,19 +59,20 @@ class DiskDataView: NSScrollView {
             if dataIsDirty {
                 
                 var gcr = ""
-                if  halftrack != nil && analyzer != nil {
+                if analyzer != nil, let ht = halftrack {
+//                if  halftrack != nil && analyzer != nil {
 
                     if inspector.rawGcr || sector == nil {
                         
                         // Show the raw GCR stream
-                        gcr = String(cString: analyzer!.trackBitsAsString())
+                        gcr = String(cString: analyzer!.trackBits(asString: ht))
                         
                     } else {
                         
                         // Show the decoded GCR data of the currently selected sector
-                        gcr = String(cString: analyzer!.sectorHeaderBytes(asString: sector!, hex: hex))
+                        gcr = String(cString: analyzer!.sectorHeaderBytes(asString: ht, sector: sector!, hex: hex))
                         gcr.append("\n\n")
-                        gcr.append(String(cString: analyzer!.sectorDataBytes(asString: sector!, hex: hex)))
+                        gcr.append(String(cString: analyzer!.sectorDataBytes(asString: ht, sector: sector!, hex: hex)))
                     }
                 }
                 

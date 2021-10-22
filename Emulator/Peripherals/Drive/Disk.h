@@ -342,62 +342,6 @@ public:
     u16 lengthOfTrack(Track t) const;
     u16 lengthOfHalftrack(Halftrack ht) const;
     
-    
-#if 0
-    
-    /* Analyzes the sector layout. The functions determines the start and end
-     * offsets of all sectors and writes them into variable trackLayout.
-     */
-    void analyzeTrack(Track t);
-    void analyzeHalftrack(Halftrack ht);
-    
-private:
-    
-    // Checks the integrity of the sector block structure
-    void analyzeSectorBlocks(Halftrack ht, TrackInfo &trackInfo);
-    void analyzeSectorHeaderBlock(isize offset, TrackInfo &trackInfo);
-    void analyzeSectorDataBlock(isize offset, TrackInfo &trackInfo);
-
-    // Writes an error message into the error log
-    void log(isize begin, isize length, const char *fmt, ...);
-
-public:
-    
-    // Returns a sector layout from variable trackInfo
-    SectorInfo sectorLayout(Sector nr) {
-        assert(isSectorNumber(nr)); return trackInfo.sectorInfo[nr]; }
-    
-    // Returns the number of entries in the error log
-    isize numErrors() { return errorLog.size(); }
-    
-    // Reads an error message from the error log
-    string errorMessage(isize nr) const { return errorLog.at(nr); }
-    
-    // Reads the error begin index from the error log
-    isize firstErroneousBit(isize nr) const { return errorStartIndex.at(nr); }
-    
-    // Reads the error end index from the error log
-    isize lastErroneousBit(isize nr) const { return errorEndIndex.at(nr); }
-    
-    // Returns a textual representation of the disk name
-    const char *diskNameAsString();
-    
-    // Returns a textual representation of the data stored in trackInfo
-    const char *trackBitsAsString();
-
-    // Returns a textual representation of the data stored in trackInfo
-    const char *sectorHeaderBytesAsString(Sector nr, bool hex);
-
-    // Returns a textual representation of the data stored in trackInfo
-    const char *sectorDataBytesAsString(Sector nr, bool hex);
-
-private:
-    
-    // Returns a textual representation
-    const char *sectorBytesAsString(u8 *buffer, isize length, bool hex);
-    
-#endif
-    
     //
     // Decoding disk data
     //
