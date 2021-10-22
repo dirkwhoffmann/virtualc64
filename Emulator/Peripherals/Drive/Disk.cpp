@@ -395,7 +395,7 @@ Disk::analyzeHalftrack(Halftrack ht)
     errorEndIndex.clear();
     
     // The result of the analysis is stored in variable trackInfo
-    // memset(&trackInfo, 0, sizeof(trackInfo));
+    memset(&trackInfo, 0, sizeof(trackInfo));
     trackInfo.length = len;
     
     // Setup working buffer (two copies of the track, each bit represented by one byte)
@@ -472,9 +472,9 @@ Disk::analyzeHalftrack(Halftrack ht)
                 }
             }
         }
+    }
 
-        analyzeSectorBlocks(ht, trackInfo);
-    }    
+    analyzeSectorBlocks(ht, trackInfo);
 }
 
 void

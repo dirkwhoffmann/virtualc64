@@ -192,6 +192,13 @@ class ExportDialog: DialogController {
         // Get the disk from the specified drive
         disk = c64.drive(nr).disk
         
+        if let analyzer = DiskAnalyzerProxy.init(disk: disk) {
+            let t = analyzer.test
+            track("test = \(t)")
+        } else {
+            track("DiskAnalyzerProxy.init failed")
+        }
+        
         // Try to extract the file system
         if disk != nil { volume = try? FSDeviceProxy.make(disk: disk!) }
         

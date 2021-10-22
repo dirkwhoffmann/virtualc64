@@ -585,6 +585,19 @@
 @end
 
 //
+// DiskAnalyzer
+//
+
+@interface DiskAnalyzerProxy : Proxy { }
+
+- (instancetype) initWithDisk:(DiskProxy *)disk;
+- (void)dealloc;
+
+@property (readonly) BOOL test;
+
+@end
+
+//
 // Datasette
 //
 

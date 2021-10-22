@@ -10,6 +10,7 @@
 #pragma once
 
 #include "DiskTypes.h"
+#include "DiskAnalyzerTypes.h"
 #include "FSTypes.h"
 #include "SubComponent.h"
 #include "PETName.h"

@@ -13,6 +13,7 @@
 #include "SubComponent.h"
 #include "CPU.h"
 #include "Disk.h"
+#include "DiskAnalyzer.h"
 #include "DriveMemory.h"
 #include "VIA.h"
 #include "PIA.h"

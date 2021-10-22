@@ -924,6 +924,48 @@
 @end
 
 //
+// DiskAnalyzer
+//
+
+@implementation DiskAnalyzerProxy
+
+/*
+- (instancetype) init
+{
+    NSLog(@"DiskAnalyzerProxy::init");
+    
+    if (!(self = [super init])) return self;    
+    return self;
+}
+*/
+
+- (instancetype) initWithDisk:(DiskProxy *)disk
+{
+    NSLog(@"DiskAnalyzerProxy::initWithDisk");
+    
+    if (!(self = [super init])) return self;
+    
+    obj = new DiskAnalyzer([disk disk]);
+    
+    return self;
+}
+
+- (void)dealloc
+{
+    NSLog(@"DiskAnalyzerProxy::dealloc");
+    
+    if (obj) delete (DiskAnalyzer *)obj;
+}
+
+- (BOOL)test
+{
+    NSLog(@"DiskAnalyzerProxy::test");
+    return YES;
+}
+
+@end
+
+//
 // VIA
 //
 
