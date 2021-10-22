@@ -855,72 +855,6 @@
     if ([self disk]) { [self disk]->toggleWriteProtection(); }
 }
 
-- (NSInteger)nonemptyHalftracks
-{
-    return [self disk] ? [self disk]->nonemptyHalftracks() : 0;
-}
-
-- (void)analyzeTrack:(Track)t
-{
-    if ([self disk]) { [self disk]->analyzeTrack(t); }
-}
-
-- (void)analyzeHalftrack:(Halftrack)ht
-{
-    if ([self disk]) { [self disk]->analyzeHalftrack(ht); }
-}
-
-- (NSInteger)numErrors
-{
-    return [self disk] ? [self disk]->numErrors() : 0;
-}
-
-- (NSString *)errorMessage:(NSInteger)nr
-{
-    string s = [self disk] ? [self disk]->errorMessage((unsigned)nr) : "";
-    return [NSString stringWithUTF8String:s.c_str()];
-}
-
-- (NSInteger)firstErroneousBit:(NSInteger)nr
-{
-    return [self disk] ? [self disk]->firstErroneousBit((unsigned)nr) : 0;
-}
-
-- (NSInteger)lastErroneousBit:(NSInteger)nr
-{
-    return [self disk] ? [self disk]->lastErroneousBit((unsigned)nr) : 0;
-}
-
-- (SectorInfo)sectorInfo:(Sector)s
-{
-    assert([self disk]);
-    return [self disk]->sectorLayout(s);
-}
-
-- (const char *)trackBitsAsString
-{
-    assert([self disk]);
-    return [self disk]->trackBitsAsString();
-}
-
-- (const char *)diskNameAsString
-{
-    assert([self disk]);
-    return [self disk]->diskNameAsString();
-}
-
-- (const char *)sectorHeaderBytesAsString:(Sector)nr hex:(BOOL)hex
-{
-    assert([self disk]);
-    return [self disk]->sectorHeaderBytesAsString(nr, hex);
-}
-
-- (const char *)sectorDataBytesAsString:(Sector)nr hex:(BOOL)hex
-{
-    assert([self disk]);
-    return [self disk]->sectorDataBytesAsString(nr, hex);
-}
-
 @end
 
 //
@@ -950,6 +884,16 @@
     NSLog(@"DiskAnalyzerProxy::dealloc");
     
     if (obj) delete (DiskAnalyzer *)obj;
+}
+
+- (NSInteger)lengthOfTrack:(Track)t
+{
+    return [self analyzer]->lengthOfTrack(t);
+}
+
+- (NSInteger)lengthOfHalftrack:(Halftrack)ht
+{
+    return [self analyzer]->lengthOfHalftrack(ht);
 }
 
 - (void)analyzeTrack:(Track)t
@@ -986,12 +930,6 @@
 - (SectorInfo)sectorInfo:(Sector)s
 {
     return [self analyzer]->sectorLayout(s);
-}
-
-- (BOOL)test
-{
-    NSLog(@"DiskAnalyzerProxy::test");
-    return YES;
 }
 
 - (const char *)trackBitsAsString

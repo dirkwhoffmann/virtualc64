@@ -22,7 +22,7 @@ class DiskDataView: NSScrollView {
     var storage: NSTextStorage? { return textView?.textStorage }
     
     // Highlighted head position
-    var headPosition: NSRange?
+    // var headPosition: NSRange?
 
     // Highlighted bit sequences (sector header)
     var firstHeaderRange: NSRange?
@@ -96,26 +96,22 @@ class DiskDataView: NSScrollView {
         }
     }
     
+    /*
     func markHead() {
         
-        /*
         unmarkHead()
         headPosition = NSRange(location: Int(inspector.drive.offset()), length: 1)
         storage?.addAttr(.backgroundColor, value: NSColor.red, range: headPosition)
-        */
     }
     
     func unmarkHead() {
         
-        /*
         storage?.remAttr(.backgroundColor, range: headPosition)
         headPosition = nil
-        */
     }
 
     func scrollToHead() {
         
-        /*
         if !drive.hasDisk() { return }
         
         // Jump to current track
@@ -126,9 +122,9 @@ class DiskDataView: NSScrollView {
         // Highlight drive position inside the current track
         let range = NSRange(location: Int(drive.offset()), length: 1)
         textView?.scrollRangeToVisible(range)
-        */
     }
-            
+    */
+    
     func markSectors() {
 
         // Only proceed if there is anything to display

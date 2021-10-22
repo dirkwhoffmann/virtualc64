@@ -159,6 +159,7 @@ extension Inspector {
         setRawGcr(sender.selectedSegment == 0)
     }
 
+    /*
     @IBAction func drvSeekAction(_ sender: NSButton!) {
                 
         if sender.integerValue == 1 {
@@ -169,7 +170,8 @@ extension Inspector {
             drvDiskDataView.unmarkHead()
         }
     }
-
+    */
+    
     @IBAction func drvHalftracksAction(_ sender: NSButton!) {
         
         track("Halftracks \(sender.state)")

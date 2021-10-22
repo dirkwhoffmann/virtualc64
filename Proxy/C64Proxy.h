@@ -570,18 +570,6 @@
 - (BOOL)writeProtected;
 - (void)setWriteProtected:(BOOL)b;
 - (void)toggleWriteProtection;
-- (NSInteger)nonemptyHalftracks;
-- (void)analyzeTrack:(Track)t;
-- (void)analyzeHalftrack:(Halftrack)ht;
-- (NSInteger)numErrors;
-- (NSString *)errorMessage:(NSInteger)nr;
-- (NSInteger)firstErroneousBit:(NSInteger)nr;
-- (NSInteger)lastErroneousBit:(NSInteger)nr;
-- (SectorInfo)sectorInfo:(Sector)s;
-- (const char *)diskNameAsString;
-- (const char *)trackBitsAsString;
-- (const char *)sectorHeaderBytesAsString:(Sector)nr hex:(BOOL)hex;
-- (const char *)sectorDataBytesAsString:(Sector)nr hex:(BOOL)hex;
 
 @end
 
@@ -594,19 +582,22 @@
 - (instancetype) initWithDisk:(DiskProxy *)disk;
 - (void)dealloc;
 
+- (NSInteger)lengthOfTrack:(Track)t;
+- (NSInteger)lengthOfHalftrack:(Halftrack)ht;
+
 - (void)analyzeTrack:(Track)t;
 - (void)analyzeHalftrack:(Halftrack)ht;
+
+- (SectorInfo)sectorInfo:(Sector)s;
+- (const char *)diskNameAsString;
+- (const char *)trackBitsAsString;
+- (const char *)sectorHeaderBytesAsString:(Sector)s hex:(BOOL)hex;
+- (const char *)sectorDataBytesAsString:(Sector)s hex:(BOOL)hex;
+
 - (NSInteger)numErrors;
 - (NSString *)errorMessage:(NSInteger)nr;
 - (NSInteger)firstErroneousBit:(NSInteger)nr;
 - (NSInteger)lastErroneousBit:(NSInteger)nr;
-- (SectorInfo)sectorInfo:(Sector)s;
-- (const char *)diskNameAsString;
-- (const char *)trackBitsAsString;
-- (const char *)sectorHeaderBytesAsString:(Sector)nr hex:(BOOL)hex;
-- (const char *)sectorDataBytesAsString:(Sector)nr hex:(BOOL)hex;
-
-@property (readonly) BOOL test;
 
 @end
 
