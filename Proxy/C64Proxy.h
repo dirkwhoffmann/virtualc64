@@ -14,6 +14,7 @@
 #include "ControlPortTypes.h"
 #include "CPUTypes.h"
 #include "DiskTypes.h"
+#include "DiskAnalyzerTypes.h"
 #include "DriveTypes.h"
 #include "ErrorTypes.h"
 #include "ExpansionPortTypes.h"
@@ -592,6 +593,14 @@
 
 - (instancetype) initWithDisk:(DiskProxy *)disk;
 - (void)dealloc;
+
+- (void)analyzeTrack:(Track)t;
+- (void)analyzeHalftrack:(Halftrack)ht;
+- (NSInteger)numErrors;
+- (NSString *)errorMessage:(NSInteger)nr;
+- (NSInteger)firstErroneousBit:(NSInteger)nr;
+- (NSInteger)lastErroneousBit:(NSInteger)nr;
+- (SectorInfo)sectorInfo:(Sector)s;
 
 @property (readonly) BOOL test;
 

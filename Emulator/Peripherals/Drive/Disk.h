@@ -88,8 +88,8 @@ private:
         255,  13,  14, 255  /* 0x1C - 0x1F */
     };
 
-    /* Maps a byte to an expanded 64 bit representation. This method is used to
-     * quickly inflate a bit stream into a byte stream.
+    /* Maps a byte to an expanded 64 bit representation. This lookup table is
+     * utilized to quickly inflate a bit stream into a byte stream.
      *
      *     Example: 0110 ... -> 00000000 00000001 0000001 00000000 ...
      */
@@ -355,7 +355,7 @@ public:
 
     
     //
-    // Analyzing the disk
+    // Analyzing the disk (REMOVE AFTER MOVING TO DiskAnalyzer)
     //
 
 public:

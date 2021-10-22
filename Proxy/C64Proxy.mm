@@ -929,15 +929,10 @@
 
 @implementation DiskAnalyzerProxy
 
-/*
-- (instancetype) init
+- (DiskAnalyzer *)analyzer
 {
-    NSLog(@"DiskAnalyzerProxy::init");
-    
-    if (!(self = [super init])) return self;    
-    return self;
+    return (DiskAnalyzer *)obj;
 }
-*/
 
 - (instancetype) initWithDisk:(DiskProxy *)disk
 {
@@ -955,6 +950,42 @@
     NSLog(@"DiskAnalyzerProxy::dealloc");
     
     if (obj) delete (DiskAnalyzer *)obj;
+}
+
+- (void)analyzeTrack:(Track)t
+{
+    [self analyzer]->analyzeTrack(t);
+}
+
+- (void)analyzeHalftrack:(Halftrack)ht
+{
+    [self analyzer]->analyzeHalftrack(ht);
+}
+
+- (NSInteger)numErrors
+{
+    return [self analyzer]->numErrors();
+}
+
+- (NSString *)errorMessage:(NSInteger)nr
+{
+    string s = [self analyzer]->errorMessage((unsigned)nr);
+    return [NSString stringWithUTF8String:s.c_str()];
+}
+
+- (NSInteger)firstErroneousBit:(NSInteger)nr
+{
+    return [self analyzer]->firstErroneousBit((unsigned)nr);
+}
+
+- (NSInteger)lastErroneousBit:(NSInteger)nr
+{
+    return [self analyzer]->lastErroneousBit((unsigned)nr);
+}
+
+- (SectorInfo)sectorInfo:(Sector)s
+{
+    return [self analyzer]->sectorLayout(s);
 }
 
 - (BOOL)test

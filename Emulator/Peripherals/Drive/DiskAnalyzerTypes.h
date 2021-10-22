@@ -10,4 +10,33 @@
 #pragma once
 
 #include "Aliases.h"
-#include "Reflection.h"
+#include "DiskTypes.h"
+
+/* Information about a single sector as gathered by analyzeSector()
+ */
+typedef struct
+{
+    isize headerBegin;
+    isize headerEnd;
+    isize dataBegin;
+    isize dataEnd;
+}
+SectorInfo;
+
+/* Information about a single track as gathered by analyzeTrack().
+ * For faster access, the the track data is stored as a byte stream. Each byte
+ * represents a single bit and is either 0 or 1. The stored sequence is
+ * repeated twice to avoid the need of wrapping around.
+ */
+typedef struct
+{
+    isize length;                       // Length of the track in bits
+    
+    union {
+        u8 bit[2 * maxBitsOnTrack];      // Track data (bit access)
+        u64 byte[2 * maxBytesOnTrack];   // Track data (byte access)
+    };
+    
+    SectorInfo sectorInfo[22];           // Sector layout data
+}
+TrackInfo;
