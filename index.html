@@ -20,23 +20,106 @@
 		.emulator_view {
 			width: 100%;
 		}
+		#vc64web{
+			border-radius: 10px;
+		}
 
 		#player_container {
-			background-color: white;
+			background-color: gray;
+			border-radius: 10px;
+		}
+		#player_container div:last-child {
+			margin-left: 5px;
+			margin-right: 5px;
 		}
 
 		.player_icon_btn {
 			background-color: transparent;
-			color: black;
+			color: #eeeeee;
 			margin-right: 15px;
 			cursor: grab;
 		}
+		[player="on"] .style1 {
+			background-color: #555555;
+			color: #999999;
+			animation: go_dark 2s ease-out;
+		}
+		[player="off"] .style1 {
+			animation: go_light 1s ease-in;
+		}
+		[player="on"] a {
+			color: #cccccc;
+			animation: a_go_dark 2s ease-out;
+		}
+		[player="off"] a {
+			animation: a_go_light 1s ease-in;
+		}
+		@keyframes a_go_dark {
+			0% {
+				color: #448DBC;
+			}
+			100% {
+				color: #cccccc;
+			}
+		} 
+		@keyframes a_go_light {
+			0% {
+				color: #cccccc;
+			}
+			100% {
+				color: #448DBC;
+			}
+		}
+		@keyframes go_dark {
+			0% {
+				background-color: #ffffff;
+				color: #474747;
+			}
+			100% {
+				background-color: #555555;
+				color: #999999;
+			}
+		} 
+		@keyframes go_light {
+			0% {
+				background-color: #555555;
+				color: #999999;
+			}
+			100% {
+				background-color: #ffffff;
+				color: #474747;
+			}
+			
+		} 
 	</style>
+	<script>
+		function switch_cinema_display(){
+			var observer= new MutationObserver(function(mutations){
+				let player_on=false;
+				for(var mutation of mutations)
+				{
+					for(var node of mutation.addedNodes)
+					{
+						if(node.id=="player_container")
+						{
+							player_on=true;
+							break;
+						}
+					};	
+				}
+				document.body.setAttribute("player",player_on?"on":"off");
+			});
+			var emulator_views=document.querySelectorAll(".emulator_view");
+			for(emulator_view of emulator_views)
+				observer.observe(emulator_view, { childList:true});
+		}
+	</script>
+
 	<!-- web emulator view stuff end-->
 
 </head>
 
-<body class="is-preload">
+<body class="is-preload" onload="switch_cinema_display()">
 	<div id="page-wrapper">
 
 		<!-- Header -->
