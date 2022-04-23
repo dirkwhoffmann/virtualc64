@@ -27,9 +27,13 @@
 #include "sid.h"
 #include <math.h>
 
+/*
 #ifndef round
 #define round(x) (x>=0.0?floor(x+0.5):ceil(x-0.5))
 #endif
+*/
+// DIRK
+#define resid_round(x) (x>=0.0?floor(x+0.5):ceil(x-0.5))
 
 namespace reSID
 {
@@ -649,7 +653,7 @@ bool SID::set_sampling_parameters(double clock_freq, sampling_method method,
       double Kaiser = fabs(temp) <= 1 ? I0(beta*sqrt(1 - temp*temp))/I0beta : 0;
       double sincwt = fabs(wt) >= 1e-6 ? sin(wt)/wt : 1;
       double val = (1 << FIR_SHIFT)*filter_scale*f_samples_per_cycle*wc/pi*sincwt*Kaiser;
-      fir[fir_offset + j] = (short)round(val);
+      fir[fir_offset + j] = (short)resid_round(val);
     }
   }
 

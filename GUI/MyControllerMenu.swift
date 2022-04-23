@@ -151,7 +151,7 @@ extension MyController: NSMenuItemValidation {
             return title != ""
             
         case #selector(MyController.setSwitchDummyAction(_:)):
-            return c64.expansionport.hasSwitch()
+            return c64.expansionport.hasSwitch
             
         case #selector(MyController.setSwitchNeutralAction(_:)):
             let title = c64.expansionport.switchDescription(0)

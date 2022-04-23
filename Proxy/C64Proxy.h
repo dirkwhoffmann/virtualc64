@@ -460,7 +460,7 @@
 - (void)pressButton:(NSInteger)nr;
 - (void)releaseButton:(NSInteger)nr;
 
-- (BOOL)hasSwitch;
+@property (readonly) BOOL hasSwitch;
 - (NSInteger)switchPosition;
 - (NSString *)switchDescription:(NSInteger)pos;
 - (NSString *)currentSwitchDescription;

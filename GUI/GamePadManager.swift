@@ -7,6 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+// swiftlint:disable empty_enum_arguments
+
 struct InputDevice {
     
     static let none = -1
