@@ -10,7 +10,7 @@
 #include "config.h"
 #include "Snapshot.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 Thumbnail *
 Thumbnail::makeWithC64(const C64 &c64, isize dx, isize dy)
@@ -82,6 +82,18 @@ Snapshot::Snapshot(C64 &c64): Snapshot(c64.size())
     c64.save(getData());
 }
 
+void
+Snapshot::finalizeRead()
+{
+	if constexpr (FORCE_SNAP_TOO_OLD) throw VC64Error(ERROR_SNAP_TOO_OLD);
+	if constexpr (FORCE_SNAP_TOO_NEW) throw VC64Error(ERROR_SNAP_TOO_NEW);
+	if constexpr (FORCE_SNAP_IS_BETA) throw VC64Error(ERROR_SNAP_IS_BETA);
+
+	if (isTooOld()) throw VC64Error(ERROR_SNAP_TOO_OLD);
+	if (isTooNew()) throw VC64Error(ERROR_SNAP_TOO_NEW);
+	if (isBeta() && !betaRelease) throw VC64Error(ERROR_SNAP_IS_BETA);
+}
+
 bool
 Snapshot::isTooOld() const
 {
@@ -106,6 +118,14 @@ Snapshot::isTooNew() const
     if (header->minor < SNP_MINOR) return false;
 
     return header->subminor > SNP_SUBMINOR;
+}
+
+bool
+Snapshot::isBeta() const
+{
+	auto header = getHeader();
+
+	return header->beta != 0;
 }
 
 void

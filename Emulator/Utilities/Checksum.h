@@ -14,16 +14,16 @@
 namespace util {
 
 // Returns the FNV-1a seed value
-inline u32 fnv_1a_init32() { return 0x811c9dc5; }
-inline u64 fnv_1a_init64() { return 0xcbf29ce484222325; }
+inline u32 fnvInit32() { return 0x811c9dc5; }
+inline u64 fnvInit64() { return 0xcbf29ce484222325; }
 
 // Performs a single iteration of the FNV-1a hash algorithm
-u32 fnv_1a_it32(u32 prv, u32 val);
-u64 fnv_1a_it64(u64 prv, u64 val);
+u32 fnvIt32(u32 prv, u32 val);
+u64 fnvIt64(u64 prv, u64 val);
 
 // Computes a FNV-1a checksum for a given buffer
-u32 fnv_1a_32(const u8 *addr, isize size);
-u64 fnv_1a_64(const u8 *addr, isize size);
+u32 fnv32(const u8 *addr, isize size);
+u64 fnv64(const u8 *addr, isize size);
 
 // Computes a CRC checksum for a given buffer
 u16 crc16(const u8 *addr, isize size);

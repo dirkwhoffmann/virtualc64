@@ -10,7 +10,7 @@
 #include "config.h"
 #include "Muxer.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 #include <algorithm>
 #include <cmath>

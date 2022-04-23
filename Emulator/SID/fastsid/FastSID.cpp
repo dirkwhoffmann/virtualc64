@@ -31,7 +31,7 @@
 #include "config.h"
 #include "FastSID.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 #include <cmath>
 

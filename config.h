@@ -120,13 +120,15 @@ static const int REC_DEBUG       = 0; // Screen recorder
 // Forced error conditions
 //
 
-static const int FORCE_ROM_MISSING      = 0;
-static const int FORCE_MEGA64_MISMATCH  = 0;
-static const int FORCE_CRT_UNKNOWN      = 0;
-static const int FORCE_CRT_UNSUPPORTED  = 0;
-static const int FORCE_SNAPSHOT_TOO_OLD = 0;
-static const int FORCE_SNAPSHOT_TOO_NEW = 0;
-static const int FORCE_RECORDING_ERROR  = 0;
+static const int FORCE_ROM_MISSING     			= 0;
+static const int FORCE_MEGA64_MISMATCH  		= 0;
+static const int FORCE_SNAP_TOO_OLD             = 0;
+static const int FORCE_SNAP_TOO_NEW             = 0;
+static const int FORCE_SNAP_IS_BETA             = 0;
+static const int FORCE_SNAP_CORRUPTED           = 0;
+static const int FORCE_CRT_UNKNOWN      		= 0;
+static const int FORCE_CRT_UNSUPPORTED  		= 0;
+static const int FORCE_RECORDING_ERROR  		= 0;
 
 
 #ifdef RELEASEBUILD

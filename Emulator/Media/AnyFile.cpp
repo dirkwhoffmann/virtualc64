@@ -141,7 +141,7 @@ AnyFile::type(const string &path)
 u64
 AnyFile::fnv() const
 {
-    return data ? util::fnv_1a_64(data, size) : 0;
+    return data ? util::fnv64(data, size) : 0;
 }
 
 void

@@ -10,7 +10,7 @@
 #include "config.h"
 #include "Mouse.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 #include <cmath>
 
 Mouse::Mouse(C64 &ref, ControlPort& pref) : SubComponent(ref), port(pref)
@@ -21,14 +21,6 @@ Mouse::Mouse(C64 &ref, ControlPort& pref) : SubComponent(ref), port(pref)
         &mouse1351,
         &mouseNeos
     };
-
-    /*
-    config.model = MOUSE_C1350;
-    config.shakeDetection = true;
-    config.velocity = 100;
-
-    updateScalingFactors();
-    */
 }
 
 void Mouse::_reset(bool hard)

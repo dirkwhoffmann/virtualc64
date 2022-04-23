@@ -10,6 +10,7 @@
 #pragma once
 
 #include "Macros.h"
+#include "MemUtils.h"
 
 namespace util {
 

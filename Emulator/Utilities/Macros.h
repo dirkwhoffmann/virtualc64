@@ -96,6 +96,7 @@
 //
 
 // Reads a value in big-endian format
+/*
 #define R8BE(a)  (*(u8 *)(a))
 #define R16BE(a) HI_LO(*(u8 *)(a), *(u8 *)((a)+1))
 #define R32BE(a) HI_HI_LO_LO(*(u8 *)(a), *(u8 *)((a)+1), *(u8 *)((a)+2), *(u8 *)((a)+3))
@@ -112,7 +113,8 @@
 #define W8BE_ALIGNED(a,v)  { *(u8 *)(a) = (u8)(v); }
 #define W16BE_ALIGNED(a,v) { *(u16 *)(a) = ntohs((u16)v); }
 #define W32BE_ALIGNED(a,v) { *(u32 *)(a) = ntohl((u32)v); }
-
+*/
+ 
 
 //
 // Performing overflow-prone arithmetic

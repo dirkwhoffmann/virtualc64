@@ -10,7 +10,7 @@
 #include "config.h"
 #include "ReSID.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 ReSID::ReSID(C64 &ref, int n) : SubComponent(ref), nr(n)
 {

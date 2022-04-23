@@ -10,7 +10,7 @@
 #include "config.h"
 #include "ParCable.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 ParCable::ParCable(C64& ref) : SubComponent(ref)
 {

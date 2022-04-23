@@ -10,7 +10,7 @@
 #include "config.h"
 #include "Joystick.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 Joystick::Joystick(C64& ref, ControlPort& pref) : SubComponent(ref), port(pref)
 {

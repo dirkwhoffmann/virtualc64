@@ -18,7 +18,7 @@
 		5003382B266F7F3C00D5456E /* VICII_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5003382A266F7F3C00D5456E /* VICII_table.cpp */; };
 		5007E1E826A70170000E7344 /* ParCable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5007E1E626A70170000E7344 /* ParCable.cpp */; };
 		5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5009CF3224C0B8EF00F674FF /* Preferences.swift */; };
-		500E34142615BF5E006A38DA /* IO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34122615BF5E006A38DA /* IO.cpp */; };
+		500E34142615BF5E006A38DA /* IOUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34122615BF5E006A38DA /* IOUtils.cpp */; };
 		500E34172615C40D006A38DA /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34152615C40D006A38DA /* Parser.cpp */; };
 		500EA6C724B09037009AA7D7 /* SubComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EA6C524B09037009AA7D7 /* SubComponent.cpp */; };
 		50133B97200D4EED00167227 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50133B96200D4EED00167227 /* MetalView.swift */; };
@@ -198,6 +198,7 @@
 		50AA3EC12616F62500C96EDB /* MemUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA3EC02616F62500C96EDB /* MemUtils.cpp */; };
 		50AB70762721B8EE004ABB2B /* DiskAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AB70742721B8EE004ABB2B /* DiskAnalyzer.cpp */; };
 		50ACF4DB256EB43B003B5690 /* PowerSupply.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACF4D9256EB43B003B5690 /* PowerSupply.cpp */; };
+		50AD303C28141F0B00D9A7A6 /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD303A28141F0B00D9A7A6 /* Buffer.cpp */; };
 		50AE19392632B787005A5898 /* Script.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE19372632B787005A5898 /* Script.cpp */; };
 		50AE193C2633E9B0005A5898 /* RegressionTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE193A2633E9B0005A5898 /* RegressionTester.cpp */; };
 		50AEEE7326305625001DED20 /* C64Key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AEEE7126305625001DED20 /* C64Key.cpp */; };
@@ -313,8 +314,8 @@
 		5007E1E926A7029A000E7344 /* ParCableTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParCableTypes.h; sourceTree = "<group>"; };
 		5009CF3224C0B8EF00F674FF /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		500C7C43259FC09B00F5CC1F /* Error.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Error.h; sourceTree = "<group>"; };
-		500E34122615BF5E006A38DA /* IO.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IO.cpp; sourceTree = "<group>"; };
-		500E34132615BF5E006A38DA /* IO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IO.h; sourceTree = "<group>"; };
+		500E34122615BF5E006A38DA /* IOUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IOUtils.cpp; sourceTree = "<group>"; };
+		500E34132615BF5E006A38DA /* IOUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOUtils.h; sourceTree = "<group>"; };
 		500E34152615C40D006A38DA /* Parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Parser.cpp; sourceTree = "<group>"; };
 		500E34162615C40D006A38DA /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
 		500EA6C524B09037009AA7D7 /* SubComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SubComponent.cpp; sourceTree = "<group>"; };
@@ -640,6 +641,8 @@
 		50AB70772721B92D004ABB2B /* DiskAnalyzerTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskAnalyzerTypes.h; sourceTree = "<group>"; };
 		50ACF4D9256EB43B003B5690 /* PowerSupply.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PowerSupply.cpp; sourceTree = "<group>"; };
 		50ACF4DA256EB43B003B5690 /* PowerSupply.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerSupply.h; sourceTree = "<group>"; };
+		50AD303A28141F0B00D9A7A6 /* Buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Buffer.cpp; sourceTree = "<group>"; };
+		50AD303B28141F0B00D9A7A6 /* Buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffer.h; sourceTree = "<group>"; };
 		50AE19372632B787005A5898 /* Script.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Script.cpp; sourceTree = "<group>"; };
 		50AE19382632B787005A5898 /* Script.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Script.h; sourceTree = "<group>"; };
 		50AE193A2633E9B0005A5898 /* RegressionTester.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RegressionTester.cpp; sourceTree = "<group>"; };
@@ -910,6 +913,8 @@
 				500FAA63261376C50062488E /* Types.h */,
 				500FAA64261377050062488E /* Macros.h */,
 				50E806BE25A1C2B800F08732 /* Reflection.h */,
+				50AD303B28141F0B00D9A7A6 /* Buffer.h */,
+				50AD303A28141F0B00D9A7A6 /* Buffer.cpp */,
 				50AA3EC2261718D700C96EDB /* RingBuffer.h */,
 				5093D6A824B19E9200BDF924 /* Serialization.h */,
 				504C42F024AF29AB00E69CAE /* TimeDelayed.h */,
@@ -923,8 +928,8 @@
 				50AA3EC02616F62500C96EDB /* MemUtils.cpp */,
 				5055D5B626158ABC005D3DA6 /* Checksum.h */,
 				5055D5B526158ABC005D3DA6 /* Checksum.cpp */,
-				500E34132615BF5E006A38DA /* IO.h */,
-				500E34122615BF5E006A38DA /* IO.cpp */,
+				500E34132615BF5E006A38DA /* IOUtils.h */,
+				500E34122615BF5E006A38DA /* IOUtils.cpp */,
 				500E34162615C40D006A38DA /* Parser.h */,
 				500E34152615C40D006A38DA /* Parser.cpp */,
 			);
@@ -1695,6 +1700,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				504C438A24AF29AC00E69CAE /* Mouse1350.cpp in Sources */,
+				50AD303C28141F0B00D9A7A6 /* Buffer.cpp in Sources */,
 				504C436824AF29AC00E69CAE /* ActionReplay.cpp in Sources */,
 				5098C57B2658CF9800E05EFC /* ExportVideoDialog.swift in Sources */,
 				50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */,
@@ -1808,7 +1814,7 @@
 				503C1DD324FCD1BF00D91141 /* SnapshotDialog.swift in Sources */,
 				50D5F88024F4F12F0062EF13 /* TrackTableView.swift in Sources */,
 				50BE4B6024E7F8A1008F39C9 /* Date.swift in Sources */,
-				500E34142615BF5E006A38DA /* IO.cpp in Sources */,
+				500E34142615BF5E006A38DA /* IOUtils.cpp in Sources */,
 				504C435C24AF29AC00E69CAE /* Westermann.cpp in Sources */,
 				504C439524AF29AC00E69CAE /* envelope.cc in Sources */,
 				50B7E26C2813F8C400A405A3 /* TextStorage.cpp in Sources */,

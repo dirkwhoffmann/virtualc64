@@ -10,7 +10,7 @@
 #include "config.h"
 #include "VICII.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 #define SPR0 0x01
 #define SPR1 0x02

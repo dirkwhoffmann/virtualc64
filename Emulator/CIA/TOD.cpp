@@ -11,7 +11,7 @@
 #include "TOD.h"
 #include "CIA.h"
 #include "CPU.h"
-#include "IO.h"
+#include "IOUtils.h"
 #include "PowerSupply.h"
 
 TOD::TOD(C64 &ref, CIA &ciaref) : SubComponent(ref), cia(ciaref)

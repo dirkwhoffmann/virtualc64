@@ -11,7 +11,7 @@
 #include "DriveMemory.h"
 #include "C64.h"
 #include "Checksum.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 DriveMemory::DriveMemory(C64 &ref, Drive &dref) : SubComponent(ref), drive(dref)
 {
@@ -105,7 +105,7 @@ DriveMemory::romFNV64() const
     isize size = romSize();
     isize offset = romAddr() & 0x7FFF;
     
-    return size ? util::fnv_1a_64(rom + offset, size) : 0;
+    return size ? util::fnv64(rom + offset, size) : 0;
 }
 
 void

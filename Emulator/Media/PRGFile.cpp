@@ -10,7 +10,7 @@
 #include "config.h"
 #include "PRGFile.h"
 #include "FSDevice.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 bool
 PRGFile::isCompatible(const string &path)

@@ -9,7 +9,7 @@
 
 #include "config.h"
 #include "TAPFile.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 bool
 TAPFile::isCompatible(const string &path)

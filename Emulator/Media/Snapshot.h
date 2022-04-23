@@ -41,7 +41,8 @@ struct SnapshotHeader {
     u8 major;
     u8 minor;
     u8 subminor;
-    
+	u8 beta;
+	
     // Preview image
     Thumbnail screenshot;
 };
@@ -79,10 +80,11 @@ public:
     // Methods from AnyFile
     //
       
+	FileType type() const override { return FILETYPE_SNAPSHOT; }
     bool isCompatiblePath(const string &path) override { return isCompatible(path); }
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
-    FileType type() const override { return FILETYPE_SNAPSHOT; }
-    
+	void finalizeRead() throws override;
+	
     
     //
     // Accessing
@@ -91,6 +93,7 @@ public:
     // Checks the snapshot version number
     bool isTooOld() const;
     bool isTooNew() const;
+	bool isBeta() const;
     bool matches() { return !isTooOld() && !isTooNew(); }
 
     // Returns a pointer to the snapshot header

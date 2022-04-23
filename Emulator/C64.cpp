@@ -10,7 +10,7 @@
 #include "config.h"
 #include "C64.h"
 #include "Checksum.h"
-#include "IO.h"
+#include "IOUtils.h"
 #include <algorithm>
 
 // Perform some consistency checks
@@ -1055,28 +1055,34 @@ C64::latestUserSnapshot()
 void
 C64::loadSnapshot(const Snapshot &snapshot)
 {
-    // Check if this snapshot is compatible with the emulator
-    if (snapshot.isTooOld() || FORCE_SNAPSHOT_TOO_OLD) {
-        throw VC64Error(ERROR_SNP_TOO_OLD);
-    }
-    if (snapshot.isTooNew() || FORCE_SNAPSHOT_TOO_NEW) {
-        throw VC64Error(ERROR_SNP_TOO_NEW);
-    }
+	{   SUSPENDED
+		
+		try {
+        
+			// Restore the saved state
+			load(snapshot.getData());
+			
+			// Clear the keyboard matrix to avoid constantly pressed keys
+			keyboard.releaseAll();
+			
+			// Print some debug info if requested
+			if constexpr (SNP_DEBUG) dump();
     
-    suspended {
-        
-        // Restore the saved state
-        load(snapshot.getData());
-        
-        // Clear the keyboard matrix to avoid constantly pressed keys
-        keyboard.releaseAll();
-        
-        // Print some debug info if requested
-        if constexpr (SNP_DEBUG) dump();
-    }
-    
-    // Inform the GUI
-    msgQueue.put(MSG_SNAPSHOT_RESTORED);
+		} catch (VC64Error &error) {
+			
+			/* If we reach this point, the emulator has been put into an
+			 * inconsistent state due to corrupted snapshot data. We cannot
+			 * continue emulation, because it would likely crash the
+			 * application. Because we cannot revert to the old state either,
+			 * we perform a hard reset to eliminate the inconsistency.
+			 */
+			hardReset();
+			throw error;
+		}
+	}
+	
+	// Inform the GUI
+	msgQueue.put(MSG_SNAPSHOT_RESTORED);
 }
 
 u32
@@ -1103,9 +1109,9 @@ C64::romFNV64(RomType type) const
     
     switch (type) {
             
-        case ROM_TYPE_BASIC:  return util::fnv_1a_64(mem.rom + 0xA000, 0x2000);
-        case ROM_TYPE_CHAR:   return util::fnv_1a_64(mem.rom + 0xD000, 0x1000);
-        case ROM_TYPE_KERNAL: return util::fnv_1a_64(mem.rom + 0xE000, 0x2000);
+        case ROM_TYPE_BASIC:  return util::fnv64(mem.rom + 0xA000, 0x2000);
+        case ROM_TYPE_CHAR:   return util::fnv64(mem.rom + 0xD000, 0x1000);
+        case ROM_TYPE_KERNAL: return util::fnv64(mem.rom + 0xE000, 0x2000);
         case ROM_TYPE_VC1541: return drive8.mem.romFNV64();
         
         default:

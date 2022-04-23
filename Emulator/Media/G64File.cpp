@@ -10,7 +10,7 @@
 #include "config.h"
 #include "G64File.h"
 #include "Disk.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 bool
 G64File::isCompatible(const string &path)

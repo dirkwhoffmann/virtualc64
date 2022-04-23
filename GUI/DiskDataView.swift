@@ -21,9 +21,6 @@ class DiskDataView: NSScrollView {
     var textView: NSTextView? { return documentView as? NSTextView }
     var storage: NSTextStorage? { return textView?.textStorage }
     
-    // Highlighted head position
-    // var headPosition: NSRange?
-
     // Highlighted bit sequences (sector header)
     var firstHeaderRange: NSRange?
     var secondHeaderRange: NSRange?

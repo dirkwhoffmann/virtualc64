@@ -10,7 +10,7 @@
 #include "config.h"
 #include "CPU.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 template <typename M>
 CPU<M>::CPU(C64& ref, M& memref) : SubComponent(ref), mem(memref)

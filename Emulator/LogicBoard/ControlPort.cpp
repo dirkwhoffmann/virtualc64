@@ -10,7 +10,7 @@
 #include "config.h"
 #include "ControlPort.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 ControlPort::ControlPort(C64 &ref, PortId id) : SubComponent(ref), nr(id)
 {

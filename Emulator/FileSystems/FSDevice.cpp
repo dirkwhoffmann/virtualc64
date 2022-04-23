@@ -10,7 +10,7 @@
 #include "config.h"
 #include "FSDevice.h"
 #include "Disk.h"
-#include "IO.h"
+#include "IOUtils.h"
 #include "Folder.h"
 #include "PRGFile.h"
 #include "P00File.h"
