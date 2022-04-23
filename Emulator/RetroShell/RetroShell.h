@@ -9,11 +9,12 @@
 
 #pragma once
 
+#include "RetroShellTypes.h"
 #include "SubComponent.h"
 #include "Interpreter.h"
-#include "IO.h"
+#include "TextStorage.h"
 #include <sstream>
-#include <iostream>
+#include <fstream>
 
 class RetroShell : public SubComponent {
 
