@@ -27,9 +27,9 @@ typedef MEMACCESS MemAccess;
 #ifdef __cplusplus
 struct MemAccessEnum : util::Reflection<MemAccessEnum, MemAccess> {
     
-    static long min() { return 0; }
-    static long max() { return MEMACCESS_S; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = MEMACCESS_S;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "MEMACCESS"; }
     static const char *key(MemAccess value)

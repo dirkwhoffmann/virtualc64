@@ -34,9 +34,9 @@ typedef M_TYPE MemoryType;
 #ifdef __cplusplus
 struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
     
-    static long min() { return 1; }
-    static long max() { return M_NONE; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 1;
+    static constexpr long maxVal = M_NONE;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "M"; }
     static const char *key(MemoryType value)
@@ -72,9 +72,9 @@ typedef RAM_PATTERN RamPattern;
 #ifdef __cplusplus
 struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
     
-    static long min() { return 0; }
-    static long max() { return RAM_PATTERN_RANDOM; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = RAM_PATTERN_RANDOM;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "RAM_PATTERN"; }
     static const char *key(RamPattern value)

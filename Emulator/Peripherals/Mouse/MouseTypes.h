@@ -27,9 +27,9 @@ typedef MOUSE_MODEL MouseModel;
 #ifdef __cplusplus
 struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
     
-    static long min() { return 0; }
-    static long max() { return MOUSE_NEOS; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = MOUSE_NEOS;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "DISK_TYPE"; }
     static const char *key(MouseModel value)
@@ -56,9 +56,9 @@ typedef PORT_ID PortId;
 #ifdef __cplusplus
 struct PortIdEnum : util::Reflection<PortIdEnum, PortId> {
     
-    static long min() { return 0; }
-    static long max() { return PORT_TWO; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = PORT_TWO;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "PORT"; }
     static const char *key(PortId value)

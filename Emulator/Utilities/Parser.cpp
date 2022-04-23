@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#include "config.h"
 #include "Parser.h"
 
 namespace util {
@@ -26,7 +27,7 @@ parseNum(string& token)
     long result;
     
     try { result = stol(token, nullptr, 0); }
-    catch (std::exception& err) { throw ParseNumError(token); }
+    catch (std::exception&) { throw ParseNumError(token); }
 
     return result;
 }

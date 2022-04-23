@@ -73,9 +73,9 @@ typedef ERROR_CODE ErrorCode;
 #ifdef __cplusplus
 struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
     
-    static long min() { return 0; }
-    static long max() { return ERROR_FS_EXPECTED_MAX; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = ERROR_FS_EXPECTED_MAX;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
         
     static const char *prefix() { return "ERROR"; }
     static const char *key(ErrorCode value)

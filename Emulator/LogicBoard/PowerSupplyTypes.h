@@ -28,9 +28,9 @@ typedef GRID PowerGrid;
 #ifdef __cplusplus
 struct PowerGridEnum : util::Reflection<PowerGridEnum, PowerGrid> {
     
-    static long min() { return 0; }
-    static long max() { return GRID_UNSTABLE_60HZ; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = GRID_UNSTABLE_60HZ;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "GRID"; }
     static const char *key(PowerGrid value)

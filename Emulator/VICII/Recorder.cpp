@@ -14,6 +14,8 @@
 #include "Muxer.h"
 #include "VICII.h"
 
+#include <unistd.h>
+
 bool
 Recorder::hasFFmpeg() const
 {

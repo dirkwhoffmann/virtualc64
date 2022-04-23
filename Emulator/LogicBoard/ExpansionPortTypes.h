@@ -28,9 +28,9 @@ typedef CRTMODE CRTMode;
 #ifdef __cplusplus
 struct CRTModeEnum : util::Reflection<CRTModeEnum, CRTMode> {
     
-    static long min() { return 0; }
-    static long max() { return CRTMODE_OFF; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = CRTMODE_OFF;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "CRTMODE"; }
     static const char *key(CRTMode value)

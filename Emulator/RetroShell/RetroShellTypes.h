@@ -35,9 +35,9 @@ typedef RETRO_SHELL_KEY RetroShellKey;
 #ifdef __cplusplus
 struct RetroShellKeyEnum : util::Reflection<RetroShellKeyEnum, RetroShellKey>
 {
-	static long minVal() { return 0; }
-	static long maxVal() { return RSKEY_CR; }
-	static bool isValid(auto val) { return val >= minVal() && val <= maxVal(); }
+	static constexpr long minVal = 0;
+	static constexpr long maxVal = RSKEY_CR;
+	static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
 	
 	static const char *prefix() { return "RSKEY"; }
 	static const char *key(RetroShellKey value)

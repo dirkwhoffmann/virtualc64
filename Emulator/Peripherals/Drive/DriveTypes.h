@@ -27,9 +27,9 @@ typedef DRIVE_ID DriveID;
 #ifdef __cplusplus
 struct DriveIDEnum : util::Reflection<DriveIDEnum, DriveID> {
     
-    static long min() { return DRIVE8; }
-    static long max() { return DRIVE9; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+    static constexpr long minVal = DRIVE8;
+    static constexpr long maxVal = DRIVE9;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return ""; }
     static const char *key(DriveID value)
@@ -55,9 +55,9 @@ typedef DRIVE_TYPE DriveType;
 #ifdef __cplusplus
 struct DriveTypeEnum : util::Reflection<DriveTypeEnum, DriveType> {
     
-    static long min() { return 0; }
-    static long max() { return DRIVE_VC1541II; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = DRIVE_VC1541II;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "DRIVE"; }
     static const char *key(DriveType value)
@@ -84,9 +84,9 @@ typedef DRVRAM DriveRam;
 #ifdef __cplusplus
 struct DriveRamEnum : util::Reflection<DriveRamEnum, DriveRam> {
     
-    static long min() { return 0; }
-    static long max() { return DRVRAM_6000_7FFF; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = DRVRAM_6000_7FFF;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "DRVRAM"; }
     static const char *key(DriveType value)
@@ -117,9 +117,9 @@ typedef DRVMEM_TYPE DrvMemType;
 #ifdef __cplusplus
 struct DrvMemTypeEnum : util::Reflection<DrvMemTypeEnum, DrvMemType> {
     
-    static long min() { return 0; }
-    static long max() { return DRVMEM_PIA; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = DRVMEM_PIA;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "DRVMEM"; }
     static const char *key(DrvMemType value)
@@ -151,9 +151,9 @@ typedef DISK_INSERTION_STATUS InsertionStatus;
 #ifdef __cplusplus
 struct InsertionStatusEnum : util::Reflection<InsertionStatusEnum, InsertionStatus> {
     
-    static long min() { return 0; }
-    static long max() { return DISK_PARTIALLY_EJECTED; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = DISK_PARTIALLY_EJECTED;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "DISK"; }
     static const char *key(InsertionStatus value)

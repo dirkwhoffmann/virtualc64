@@ -27,9 +27,9 @@ typedef CPDEVICE ControlPortDevice;
 #ifdef __cplusplus
 struct ControlPortDeviceEnum : util::Reflection<ControlPortDeviceEnum, ControlPortDevice> {
     
-    static long min() { return 0; }
-    static long max() { return CPDEVICE_JOYSTICK; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = CPDEVICE_JOYSTICK;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "CPDEVICE"; }
     static const char *key(ControlPortDevice value)

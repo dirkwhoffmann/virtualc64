@@ -36,31 +36,31 @@ template<typename T> T bigEndian(T x);
 template<>
 inline uint16_t bigEndian(uint16_t x)
  {
-	if constexpr (std::endian::native == std::endian::big) {
-		return x;
-	} else {
-		return SWAP16(x);
-	}
+    if constexpr (std::endian::native == std::endian::big) {
+        return x;
+    } else {
+        return SWAP16(x);
+    }
 }
 
 template<>
 inline uint32_t bigEndian(uint32_t x)
  {
-	if constexpr (std::endian::native == std::endian::big) {
-		return x;
-	} else {
-		return SWAP32(x);
-	}
+    if constexpr (std::endian::native == std::endian::big) {
+        return x;
+    } else {
+        return SWAP32(x);
+    }
 }
 
 template<>
 inline uint64_t bigEndian(uint64_t x)
 {
-	if constexpr (std::endian::native == std::endian::big) {
-		return x;
-	} else {
-		return SWAP64(x);
-	}
+    if constexpr (std::endian::native == std::endian::big) {
+        return x;
+    } else {
+        return SWAP64(x);
+    }
 }
 
 //

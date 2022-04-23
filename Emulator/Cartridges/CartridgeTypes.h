@@ -105,9 +105,9 @@ typedef CRT_TYPE CartridgeType;
 #ifdef __cplusplus
 struct CartridgeTypeEnum : util::Reflection<CartridgeTypeEnum, CartridgeType> {
     
-    static long min() { return 0; }
-    static long max() { return CRT_NONE; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = CRT_NONE;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "CRT"; }
     static const char *key(CartridgeType value)
@@ -219,9 +219,9 @@ typedef FLASH_STATE FlashState;
 #ifdef __cplusplus
 struct FlashStateEnum : util::Reflection<FlashStateEnum, FlashState> {
     
-    static long min() { return 0; }
-    static long max() { return FLASH_SECTOR_ERASE_SUSPEND; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = FLASH_SECTOR_ERASE_SUSPEND;
+	static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "FLASH"; }
     static const char *key(FlashState value)

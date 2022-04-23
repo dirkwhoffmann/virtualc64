@@ -112,9 +112,9 @@ typedef DISK_TYPE DiskType;
 #ifdef __cplusplus
 struct DiskTypeEnum : util::Reflection<DiskTypeEnum, DiskType> {
     
-    static long min() { return 0; }
-    static long max() { return DISK_TYPE_DS_SD; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = DISK_TYPE_DS_SD;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "DISK_TYPE"; }
     static const char *key(DiskType value)
@@ -141,9 +141,9 @@ typedef CBM_FILE_TYPE CBMFileType;
 #ifdef __cplusplus
 struct CBMFileTypeEnum : util::Reflection<CBMFileTypeEnum, CBMFileType> {
     
-    static long min() { return 0; }
-    static long max() { return CBM_FILE_REL; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = CBM_FILE_REL;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "CBM"; }
     static const char *key(CBMFileType value)
@@ -180,9 +180,9 @@ typedef DISK_ERROR_CODE DiskErrorCode;
 #ifdef __cplusplus
 struct DiskErrorCodeEnum : util::Reflection<DiskErrorCodeEnum, DiskErrorCode> {
     
-    static long min() { return 0; }
-    static long max() { return DRIVE_NOT_READY_ERRROR; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = DRIVE_NOT_READY_ERRROR;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return ""; }
     static const char *key(DiskErrorCode value)
