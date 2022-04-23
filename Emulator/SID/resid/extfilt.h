@@ -167,4 +167,3 @@ int ExternalFilter::output()
 } // namespace reSID
 
 #endif // not RESID_EXTFILT_H
-

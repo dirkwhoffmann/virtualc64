@@ -407,11 +407,18 @@ SID::State SID::read_state()
 void SID::write_state(const State& state)
 {
   int i;
+  sampling_method tmp;
 
+  /* HACK: remember sampling mode and set it to resampling incase it was fast,
+           else the write() call will not work correctly */
+  tmp = sampling;
+  if (unlikely(sampling == SAMPLE_FAST) && (sid_model == MOS8580)) {
+    sampling = SAMPLE_RESAMPLE;
+  }
   for (i = 0; i <= 0x18; i++) {
     write(i, state.sid_register[i]);
-    write(); // DIRK
   }
+  sampling = tmp;   /* restore original mode */
 
   bus_value = state.bus_value;
   bus_value_ttl = state.bus_value_ttl;
