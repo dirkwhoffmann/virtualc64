@@ -37,7 +37,6 @@
 		501E427F20D975AD000BB48D /* IconPRG.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427A20D975AD000BB48D /* IconPRG.icns */; };
 		501E428020D975AD000BB48D /* IconVirtualC64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427B20D975AD000BB48D /* IconVirtualC64.icns */; };
 		5020434C1EE71B47006C3FD3 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */; };
 		50300AEE258B2C5400D261E3 /* FSDirEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50300AEC258B2C5400D261E3 /* FSDirEntry.cpp */; };
 		5031D59C200B81D20088C802 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5031D59B200B81D20088C802 /* Animation.swift */; };
 		5036E0B7261AEF000048E66A /* Interpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0AF261AEF000048E66A /* Interpreter.cpp */; };
@@ -204,7 +203,6 @@
 		50AEEE7326305625001DED20 /* C64Key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AEEE7126305625001DED20 /* C64Key.cpp */; };
 		50AF2F8226AFFE9A002DC43B /* PIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AF2F8026AFFE9A002DC43B /* PIA.cpp */; };
 		50B165AE25B06A03009B576D /* TextureToolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B165AD25B06A03009B576D /* TextureToolbox.swift */; };
-		50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */; };
 		50B1A61D25A2368D00201A2C /* DeviceDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1A61C25A2368D00201A2C /* DeviceDatabase.swift */; };
 		50B1A61F25A2386F00201A2C /* HIDExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1A61E25A2386F00201A2C /* HIDExtensions.swift */; };
 		50B485F924F96E9400844133 /* ImportDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B485F824F96E9400844133 /* ImportDialog.xib */; };
@@ -338,7 +336,6 @@
 		501E427920D975AD000BB48D /* IconT64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconT64.icns; sourceTree = "<group>"; };
 		501E427A20D975AD000BB48D /* IconPRG.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconPRG.icns; sourceTree = "<group>"; };
 		501E427B20D975AD000BB48D /* IconVirtualC64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconVirtualC64.icns; sourceTree = "<group>"; };
-		5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTravelTouchBar.swift; sourceTree = "<group>"; };
 		5026118D259CACB60066E754 /* PETName.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PETName.h; sourceTree = "<group>"; };
 		50300AEC258B2C5400D261E3 /* FSDirEntry.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDirEntry.cpp; sourceTree = "<group>"; };
 		50300AED258B2C5400D261E3 /* FSDirEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSDirEntry.h; sourceTree = "<group>"; };
@@ -653,7 +650,6 @@
 		50AFE0D32616E93A00D71E75 /* C64ComponentTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64ComponentTypes.h; sourceTree = "<group>"; };
 		50B165AD25B06A03009B576D /* TextureToolbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureToolbox.swift; sourceTree = "<group>"; };
 		50B171051EE6AB840019E8D4 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
-		50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyControllerTouchBar.swift; sourceTree = "<group>"; };
 		50B1A61525A2028B00201A2C /* MemoryTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemoryTypes.h; sourceTree = "<group>"; };
 		50B1A61625A203B100201A2C /* ControlPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ControlPortTypes.h; sourceTree = "<group>"; };
 		50B1A61725A205D500201A2C /* DriveTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DriveTypes.h; sourceTree = "<group>"; };
@@ -831,7 +827,6 @@
 				501B80C225B1702500C90284 /* MyDocumentController.swift */,
 				50E9B92C201F299500065A89 /* MyController.swift */,
 				50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */,
-				50B171061EE6AB840019E8D4 /* MyControllerTouchBar.swift */,
 				50D3091D24C5CE1A00B92563 /* MyControllerStatusBar.swift */,
 				505184DD24F23484002C6124 /* MyControllerSnapshots.swift */,
 				507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */,
@@ -843,7 +838,6 @@
 				50C12A4221C6B634007EFAF6 /* Settings */,
 				5038CA9820B6C2D8000D9193 /* Inspector */,
 				50FE5B342039B392006CE7C7 /* Peripherals */,
-				50B4B6071EEFE77400D56499 /* TouchBar */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1502,14 +1496,6 @@
 			path = LogicBoard;
 			sourceTree = "<group>";
 		};
-		50B4B6071EEFE77400D56499 /* TouchBar */ = {
-			isa = PBXGroup;
-			children = (
-				5022FB761EED87B800415BBD /* TimeTravelTouchBar.swift */,
-			);
-			name = TouchBar;
-			sourceTree = "<group>";
-		};
 		50BE4B5624E7F786008F39C9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -1730,7 +1716,6 @@
 				504C438124AF29AC00E69CAE /* CPUInstructions.cpp in Sources */,
 				50D2A6A0210F20F700F13D43 /* VirtualKeyboardController.swift in Sources */,
 				504C439E24AF29AC00E69CAE /* ReSID.cpp in Sources */,
-				50B171071EE6AB840019E8D4 /* MyControllerTouchBar.swift in Sources */,
 				50D5F88624F52A300062EF13 /* DiskDataView.swift in Sources */,
 				504C439B24AF29AC00E69CAE /* extfilt.cc in Sources */,
 				508081EC2511206D0084B060 /* StructuredBasic.cpp in Sources */,
@@ -1911,7 +1896,6 @@
 				508081E925110FFE0084B060 /* Dinamic.cpp in Sources */,
 				504C43A324AF29AC00E69CAE /* ProcessorPort.cpp in Sources */,
 				50BE4B5E24E7F864008F39C9 /* DispatchTime.swift in Sources */,
-				5022FB771EED87B800415BBD /* TimeTravelTouchBar.swift in Sources */,
 				50EAFFEA24B2600D00024CD2 /* MyToolbar.swift in Sources */,
 				504C438E24AF29AC00E69CAE /* VICII_colors.cpp in Sources */,
 				5018BFB124B48DC400551848 /* Renderer.swift in Sources */,

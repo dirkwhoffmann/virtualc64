@@ -35,13 +35,7 @@ class ImportDialog: DialogController {
     var screenshots: [Screenshot] = []
     
     // Custom font
-    var monofont: NSFont {
-        if #available(OSX 10.15, *) {
-            return NSFont.monospacedSystemFont(ofSize: 13.0, weight: .semibold)
-        } else {
-            return NSFont.monospacedDigitSystemFont(ofSize: 13.0, weight: .semibold)
-        }
-    }
+	var monofont: NSFont { return NSFont.monospaced(ofSize: 13.0, weight: .semibold) }
     
     var titleString = "???"
     var subtitle1String = "???"
