@@ -46,8 +46,12 @@ class MyDocument: NSDocument {
         // Register standard user defaults
         UserDefaults.registerUserDefaults()
         
+		track("Creating proxy")
+		
         // Create an emulator instance
         c64 = C64Proxy()
+		
+		track("Proxy created")
     }
      
     override open func makeWindowControllers() {

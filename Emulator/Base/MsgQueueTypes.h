@@ -115,6 +115,7 @@ enum_long(MSG_TYPE)
     
     // Console
     MSG_CLOSE_CONSOLE,
+	MSG_UPDATE_CONSOLE,
     
     // Debugging
     MSG_DMA_DEBUG_ON,
@@ -216,6 +217,7 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_RECORDING_ABORTED:    return "MSG_RECORDING_ABORTED";
                 
             case MSG_CLOSE_CONSOLE:        return "CLOSE_CONSOLE";
+			case MSG_UPDATE_CONSOLE:        return "UPDATE_CONSOLE";
                 
             case MSG_DMA_DEBUG_ON:         return "DMA_DEBUG_ON";
             case MSG_DMA_DEBUG_OFF:        return "DMA_DEBUG_OFF";

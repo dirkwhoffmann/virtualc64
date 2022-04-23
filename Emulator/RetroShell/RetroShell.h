@@ -21,48 +21,50 @@ class RetroShell : public SubComponent {
     // Interpreter for commands typed into the console window
     Interpreter interpreter;
     
-    //
-    // Text storage
-    //
-    
-    // The text storage
-    std::vector<string> storage;
-    string all;
-    
-    // The input history buffer
-    std::vector<string> input;
+	
+	//
+	// Text storage
+	//
+	
+	// The text storage
+	TextStorage storage;
+ 
+	// History buffer storing old input strings and cursor positions
+	std::vector<std::pair<string,isize>> history;
+	
+	// The currently active input string
+	isize ipos = 0;
+		
+	
+	//
+	// User input
+	//
+	
+	// Input line
+	string input;
+	
+	// Input prompt
+	string prompt = "vc64% ";
 
-    // Input prompt
-    string prompt = "vc64% ";
-    
-    // The current cursor position
-    isize cpos = 0;
+	// Cursor position
+	isize cursor = 0;
+	
+	// Indicates if TAB was the most recently pressed key
+	bool tabPressed = false;
+	
 
-    // The minimum cursor position in this row
-    isize cposMin = 0;
-    
-    // The currently active input string
-    isize ipos = 0;
+	//
+	// Scripts
+	//
+	
+	// The currently processed script
+	std::stringstream script;
+	
+	// The script line counter (first line = 1)
+	isize scriptLine = 0;
 
-    // Indicates if TAB was the most recently pressed key
-    bool tabPressed = false;
-    
-    // DEPRECATED
-    bool isDirty = false;
-    
-    // Wake up cycle for interrupted scripts
-    Cycle wakeUp = INT64_MAX;
-    
-    
-    //
-    // Script processing
-    //
-    
-    // The currently processed script
-    std::stringstream script;
-    
-    // The script line counter (first line = 1)
-    isize scriptLine = 0;
+	// Wake up cycle for interrupted scripts
+	Cycle wakeUp = INT64_MAX;
     
     
     //
@@ -73,109 +75,123 @@ public:
     
     RetroShell(C64& ref);
         
-    const char *getDescription() const override { return "RetroShell"; }
+	
+	//
+	// Methods from AmigaObject
+	//
+	
+private:
+	
+	const char *getDescription() const override { return "RetroShell"; }
+	void _dump(dump::Category category, std::ostream& os) const override { }
 
-    void _reset(bool hard) override { }
-    
-    
-    //
-    // Serializing
-    //
 
+	//
+	// Methods from AmigaComponent
+	//
+	
 private:
 
+	void _initialize() override;
+    void _reset(bool hard) override { }
+    
     isize _size() override { return 0; }
     isize _load(const u8 *buffer) override {return 0; }
     isize _save(u8 *buffer) override { return 0; }
 
-    
-    //
-    // Managing user input
-    //
+	
+	//
+	// Working with the text storage
+	//
 
 public:
+	
+	// Returns the prompt
+	string getPrompt() { return prompt; }
+	
+	// Returns the contents of the whole storage as a single C string
+	const char *text();
+		
+	// Moves the cursor forward to a certain column
+	void tab(isize pos);
+
+	// Prints a message
+	RetroShell &operator<<(char value);
+	RetroShell &operator<<(const string &value);
+	RetroShell &operator<<(int value);
+	RetroShell &operator<<(long value);
+	RetroShell &operator<<(std::stringstream &stream);
+	
+	// Assigns an additional output stream
+	void setStream(std::ostream &os);
+	   
+private:
+	
+	// Marks the text storage as dirty
+	void needsDisplay();
+	
+	// Clears the console window
+	void clear();
+	
+	// Prints a help line
+	void printHelp();
+	
     
-    void pressUp();
-    void pressDown();
-    void pressLeft();
-    void pressRight();
-    void pressHome();
-    void pressEnd();
-    void pressTab();
-    void pressBackspace();
-    void pressDelete();
-    void pressReturn();
-    void pressKey(char c);
-
-
-    //
-    // Working with the text storage
-    //
+	//
+	// Managing user input
+	//
 
 public:
-    
-    const char *text();
-    
-    // Returns a reference to the text storage
-    const std::vector<string> &getStorage() { return storage; }
-    
-    // Returns the cursor position (relative to the line end)
-    isize cposAbs() { return cpos; }
-    isize cposRel();
 
-    // Prints a message
-    RetroShell &operator<<(char value);
-    RetroShell &operator<<(const string &value);
-    RetroShell &operator<<(int value);
-    RetroShell &operator<<(long value);
+	// Returns the size of the current user-input string
+	isize inputLength() { return (isize)input.length(); }
+	
+	// Presses a key or a series of keys
+	void press(RetroShellKey key);
+	void press(char c);
+	void press(const string &s);
+	
+	// Returns the cursor position relative to the line end
+	isize cursorRel();
 
-    // Moves the cursor forward to a certain column
-    void tab(isize hpos);
+	
+	//
+	// Working with the history buffer
+	//
 
-    // Prints the input prompt
-    void printPrompt();
+public:
+	
+	isize historyLength() { return (isize)history.size(); }
+	
+    
+	//
+	// Executing commands
+	//
+	
+public:
+	
+	// Main entry point for executing commands that were typed in by the user
+	void execUserCommand(const string &command);
+
+	// Executes a command
+	void exec(const string &command) throws;
+
+	// Executes a shell script
+	void execScript(std::ifstream &fs) throws;
+	void execScript(const string &contents) throws;
+
+	// Continues a previously interrupted script
+	void continueScript() throws;
 
 private:
 
-    // Returns a reference to the last line in the text storage
-    string &lastLine() { return storage.back(); }
-    
-    // Returns a reference to the last line in the input history buffer
-    string &lastInput() { return input.back(); }
+	// Prints a textual description of an error in the console
+	void describe(const std::exception &exception);
 
-    // Clears the console window
-    void clear();
-    
-    // Prints a help line
-    void printHelp();
-    
-    // Shortens the text storage if it grows too large
-    void shorten();
-    
-    // Clears the current line
-    void clearLine() { *this << '\r'; }
-    
-    
-    //
-    // Executing commands
-    //
-    
-public:
-    
-    // Executes a user command
-    void exec(const string &command) throws;
-    
-    // Executes a user script
-    void execScript(std::ifstream &fs) throws;
-    void execScript(const string &contents) throws;
+	// Prints help messages for a given command string
+	void help(const string &command);
+	
 
-    // Continues a previously interrupted script
-    void continueScript() throws;
-    
-    // Prints a textual description of an error in the console
-    void describe(const std::exception &exception);
-
-    
     //
     // Command handlers
     //

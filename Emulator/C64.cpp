@@ -73,6 +73,12 @@ C64::C64()
     // Set up the initial state
     C64Component::initialize();
     C64Component::reset(true);
+	
+	// Initialize the sync timer
+	targetTime = util::Time::now();
+	
+	// Start the thread and enter the main function
+	thread = std::thread(&Thread::main, this);
 }
 
 C64::~C64()

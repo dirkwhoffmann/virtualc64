@@ -206,11 +206,6 @@
 - (void)stepInto;
 - (void)stepOver;
 
-/*
-@property (readonly) NSInteger breakpointPC;
-@property (readonly) NSInteger watchpointPC;
-*/
-
 - (BOOL)hasRom:(RomType)type;
 - (BOOL)hasMega65Rom:(RomType)type;
 
@@ -673,7 +668,7 @@
 
 @interface RetroShellProxy : Proxy { }
 
-@property (readonly) NSInteger cposRel;
+@property (readonly) NSInteger cursorRel;
 
 - (NSString *)getText;
 - (void)pressUp;
