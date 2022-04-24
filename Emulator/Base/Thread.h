@@ -147,8 +147,8 @@ protected:
     // Counters
     isize loopCounter = 0;
     isize suspendCounter = 0;
-
-    // Synchronization variables
+    
+    // Time stamps for adjusting the execution speed
     util::Time delay = util::Time(1000000000 / 50);
     util::Time targetTime;
             
@@ -224,7 +224,7 @@ public:
     void suspend() override;
     void resume() override;
 
-    void powerOn(bool blocking = true) throws;
+    void powerOn(bool blocking = true);
     void powerOff(bool blocking = true);
     void run(bool blocking = true) throws;
     void pause(bool blocking = true);
@@ -238,7 +238,7 @@ public:
     void debugOn(isize source = 0);
     void debugOff(isize source = 0);
 
-private:
+protected:
 
     void changeStateTo(ExecutionState requestedState, bool blocking);
     void changeWarpTo(u8 value, bool blocking = true);

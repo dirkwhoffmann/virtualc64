@@ -17,6 +17,12 @@ enum_long(ERROR_CODE)
     ERROR_OK,
     ERROR_UNKNOWN,
 
+    // Emulator state
+    ERROR_POWERED_OFF,
+    ERROR_POWERED_ON,
+    ERROR_DEBUG_OFF,
+    ERROR_RUNNING,
+
     // Configuration
     ERROR_OPT_UNSUPPORTED,
     ERROR_OPT_INVARG,
@@ -89,7 +95,12 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
                 
             case ERROR_OK:                   return "OK";
             case ERROR_UNKNOWN:              return "UNKNOWN";
-                
+
+            case ERROR_POWERED_OFF:          return "POWERED_OFF";
+            case ERROR_POWERED_ON:           return "POWERED_ON";
+            case ERROR_DEBUG_OFF:            return "DEBUG_OFF";
+            case ERROR_RUNNING:              return "RUNNING";
+
             case ERROR_OPT_UNSUPPORTED:      return "OPT_UNSUPPORTED";
             case ERROR_OPT_INVARG:           return "OPT_INV_ARG";
             case ERROR_OPT_LOCKED:           return "OPT_LOCKED";

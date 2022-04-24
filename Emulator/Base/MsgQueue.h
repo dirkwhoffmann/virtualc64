@@ -33,19 +33,24 @@ class MsgQueue : public SubComponent {
     
     
     //
-    // Methods from C64Component
+    // Methods from C64Object
     //
     
-public:
+private:
         
     const char *getDescription() const override { return "MsgQueue"; }
+    void _dump(Category category, std::ostream& os) const override { }
+
+
+    //
+    // Methods from C64Component
+    //
 
 private:
-    
+
     void _reset(bool hard) override { };
-    
     isize _size() override { return 0; }
-    u64 _checksum() override {  return 0; }
+    u64 _checksum() override { return 0; }
     isize _load(const u8 *buffer) override { return 0; }
     isize _save(u8 *buffer) override { return 0; }
     

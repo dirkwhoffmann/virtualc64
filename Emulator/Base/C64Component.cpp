@@ -115,8 +115,8 @@ isize
 C64Component::save(u8 *buffer)
 {
     u8 *ptr = buffer;
-
-    // Call delegation method
+    
+    // Call the delegate
     ptr += willSaveToBuffer(ptr);
 
     // Save internal state of all subcomponents
@@ -126,11 +126,11 @@ C64Component::save(u8 *buffer)
 
     // Save the checksum for this component
     util::write64(ptr, _checksum());
-
-    // Save internal state of this component
+    
+    // Save the internal state of this component
     ptr += _save(ptr);
 
-    // Call delegation method
+    // Call the delegate
     ptr += didSaveToBuffer(ptr);
     isize result = (isize)(ptr - buffer);
     

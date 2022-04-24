@@ -14,7 +14,7 @@
 
 Thread::Thread()
 {
- 
+
 }
 
 Thread::~Thread()
@@ -102,9 +102,9 @@ Thread::main()
                 case SyncMode::Pulsed: execute<SyncMode::Pulsed>(); break;
             }
         }
-        
-        if (!warpMode || isPaused()) {
-
+                
+        if (!warpMode || !isRunning()) {
+            
             switch (mode) {
                 case SyncMode::Periodic: sleep<SyncMode::Periodic>(); break;
                 case SyncMode::Pulsed: sleep<SyncMode::Pulsed>(); break;
@@ -112,19 +112,17 @@ Thread::main()
         }
         
         // Are we requested to enter or exit warp mode?
-        while (newWarpMode != warpMode) {
+        if (newWarpMode != warpMode) {
             
             C64Component::warpOnOff(newWarpMode);
             warpMode = newWarpMode;
-            break;
         }
 
         // Are we requested to enter or exit warp mode?
-        while (newDebugMode != debugMode) {
+        if (newDebugMode != debugMode) {
             
             C64Component::debugOnOff(newDebugMode);
             debugMode = newDebugMode;
-            break;
         }
 
         // Are we requested to change state?
@@ -220,9 +218,6 @@ Thread::powerOn(bool blocking)
     
     if (isPoweredOff()) {
         
-        // Throw an exception if the emulator is not ready to power on
-        isReady();
-
         // Request a state change and wait until the new state has been reached
         changeStateTo(EXEC_PAUSED, blocking);
     }
@@ -250,10 +245,10 @@ Thread::run(bool blocking)
 
     // Never call this function inside the emulator thread
     assert(!isEmulatorThread());
-    
-    if (!isRunning()) {
         
-        // Throw an exception if the emulator is not ready to power on
+    if (!isRunning()) {
+
+        // Throw an exception if the emulator is not ready to run
         isReady();
         
         // Request a state change and wait until the new state has been reached
@@ -279,7 +274,10 @@ Thread::pause(bool blocking)
 void
 Thread::halt(bool blocking)
 {
+    assert(!isEmulatorThread());
+    
     changeStateTo(EXEC_HALTED, blocking);
+    join();
 }
 
 void
@@ -316,7 +314,7 @@ void
 Thread::changeStateTo(ExecutionState requestedState, bool blocking)
 {
     newState = requestedState;
-    if (blocking) while (state != newState) { };
+    if (blocking) while (state != requestedState) { };
 }
 
 void
@@ -336,7 +334,7 @@ Thread::changeDebugTo(u8 value, bool blocking)
 void
 Thread::wakeUp()
 {
-    if (mode == SyncMode::Pulsed) wakeUp();
+    if (mode == SyncMode::Pulsed) util::Wakeable::wakeUp();
 }
 
 void

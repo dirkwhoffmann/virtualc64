@@ -19,6 +19,22 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
         case ERROR_OK:
             fatalError;
 
+        case ERROR_POWERED_OFF:
+            description = "The emulator is powered off.";
+            break;
+
+        case ERROR_POWERED_ON:
+            description = "The emulator is powered on.";
+            break;
+
+        case ERROR_DEBUG_OFF:
+            description = "Debug mode is switched off.";
+            break;
+
+        case ERROR_RUNNING:
+            description = "The emulator is running.";
+            break;
+
         case ERROR_OPT_UNSUPPORTED:
             description = "This option is not supported yet.";
             break;
