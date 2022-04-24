@@ -21,9 +21,6 @@ class DiskDataView: NSScrollView {
     var textView: NSTextView? { return documentView as? NSTextView }
     var storage: NSTextStorage? { return textView?.textStorage }
     
-    // Highlighted head position
-    // var headPosition: NSRange?
-
     // Highlighted bit sequences (sector header)
     var firstHeaderRange: NSRange?
     var secondHeaderRange: NSRange?
@@ -40,14 +37,8 @@ class DiskDataView: NSScrollView {
     var hex = true { didSet { if hex != oldValue { dataIsDirty = true } } }
 
     // Display font
-    var font: NSFont {
-        if #available(OSX 10.15, *) {
-            return NSFont.monospacedSystemFont(ofSize: 10.0, weight: .semibold)
-        } else {
-            return NSFont.monospacedDigitSystemFont(ofSize: 10.0, weight: .semibold)
-        }
-    }
-    
+	var font: NSFont { return NSFont.monospaced(ofSize: 10.0, weight: .semibold) }
+	    
     override func awakeFromNib() {
 
     }

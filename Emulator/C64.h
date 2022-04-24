@@ -165,6 +165,19 @@ private:
     i64 durationOfOneCycle;
     i64 nativeDurationOfOneCycle;
         
+	
+	//
+	// Static methods
+	//
+	
+public:
+	
+	// Returns a version string for this release
+	static string version();
+
+	// Returns a build number string for this release
+	static string build();
+
     
     //
     // Initializing

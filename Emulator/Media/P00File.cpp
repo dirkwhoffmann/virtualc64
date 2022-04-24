@@ -10,7 +10,7 @@
 #include "config.h"
 #include "P00File.h"
 #include "FSDevice.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 bool
 P00File::isCompatible(const string &path)

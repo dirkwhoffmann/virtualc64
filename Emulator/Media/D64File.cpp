@@ -9,7 +9,7 @@
 
 #include "config.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 #include "MemUtils.h"
 
 bool

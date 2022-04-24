@@ -12,7 +12,7 @@
 #include "DiskAnalyzerTypes.h"
 #include "DiskTypes.h"
 #include "C64Object.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 class DiskAnalyzer: public C64Object {
   

@@ -40,10 +40,12 @@ enum_long(ERROR_CODE)
     ERROR_ROM_DRIVE_MISSING,
     ERROR_ROM_MEGA65_MISMATCH,
     
-    // Snapshots
-    ERROR_SNP_TOO_OLD,
-    ERROR_SNP_TOO_NEW,
-
+	// Snapshots
+	ERROR_SNAP_TOO_OLD,
+	ERROR_SNAP_TOO_NEW,
+	ERROR_SNAP_IS_BETA,
+	ERROR_SNAP_CORRUPTED,
+	
     // Drives
     ERROR_DRV_UNCONNECTED,
     
@@ -71,9 +73,9 @@ typedef ERROR_CODE ErrorCode;
 #ifdef __cplusplus
 struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
     
-    static long min() { return 0; }
-    static long max() { return ERROR_FS_EXPECTED_MAX; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = ERROR_FS_EXPECTED_MAX;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
         
     static const char *prefix() { return "ERROR"; }
     static const char *key(ErrorCode value)
@@ -102,15 +104,17 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
             case ERROR_ROM_DRIVE_MISSING:    return "ROM_DRIVE_MISSING";
             case ERROR_ROM_MEGA65_MISMATCH:  return "ROM_MEGA65_MISMATCH";
                 
-            case ERROR_SNP_TOO_OLD:          return "SNP_TOO_OLD";
-            case ERROR_SNP_TOO_NEW:          return "SNP_TOO_NEW";
-
+            case ERROR_SNAP_TOO_OLD:         return "SNAP_TOO_OLD";
+            case ERROR_SNAP_TOO_NEW:         return "SNAP_TOO_NEW";
+			case ERROR_SNAP_IS_BETA:		 return "SNAP_IS_BETA";
+			case ERROR_SNAP_CORRUPTED:		 return "SNAP_CORRUPTED";
+				
             case ERROR_DRV_UNCONNECTED:      return "DRV_UNCONNECTED";
 
             case ERROR_CRT_UNKNOWN:          return "ERROR_CRT_UNKNOWN";
             case ERROR_CRT_UNSUPPORTED:      return "CRT_UNSUPPORTED";
             case ERROR_CRT_TOO_MANY_PACKETS: return "CRT_TOO_MANY_PACKETS";
-            case ERROR_CRT_CORRUPTED_PACKET: return "CRT_CORRUPTED_PACKET";
+			case ERROR_CRT_CORRUPTED_PACKET: return "CRT_CORRUPTED_PACKET";
                 
             case ERROR_FS_UNSUPPORTED:       return "FS_UNSUPPORTED";
             case ERROR_FS_WRONG_CAPACITY:    return "FS_WRONG_CAPACITY";

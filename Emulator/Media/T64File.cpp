@@ -10,7 +10,7 @@
 #include "config.h"
 #include "T64File.h"
 #include "FSDevice.h"
-#include "IO.h"
+#include "IOUtils.h"
 #include "Macros.h"
 
 bool

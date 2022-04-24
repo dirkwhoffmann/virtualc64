@@ -10,7 +10,7 @@
 #include "config.h"
 #include "CPUDebugger.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 using util::sprint8x;
 using util::sprint8d;

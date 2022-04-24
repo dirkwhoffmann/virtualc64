@@ -28,10 +28,10 @@ template <class T, typename E> struct Reflection {
         
         std::map <string,long> result;
                 
-        for (isize i = T::min(); i <= T::max(); i++) {
+        for (isize i = T::minVal; i <= T::maxVal; i++) {
             if (T::isValid(i)) result.insert(std::make_pair(key(i), i));
         }
-        
+
         return result;
     }
 

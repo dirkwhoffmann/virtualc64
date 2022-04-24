@@ -14,11 +14,7 @@
 
 Thread::Thread()
 {
-    // Initialize the sync timer
-    targetTime = util::Time::now();
-    
-    // Start the thread and enter the main function
-    thread = std::thread(&Thread::main, this);
+ 
 }
 
 Thread::~Thread()

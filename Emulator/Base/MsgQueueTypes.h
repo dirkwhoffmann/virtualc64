@@ -115,6 +115,7 @@ enum_long(MSG_TYPE)
     
     // Console
     MSG_CLOSE_CONSOLE,
+	MSG_UPDATE_CONSOLE,
     
     // Debugging
     MSG_DMA_DEBUG_ON,
@@ -127,9 +128,9 @@ typedef MSG_TYPE MsgType;
 #ifdef __cplusplus
 struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
     
-    static long min() { return 0; }
-    static long max() { return MSG_DMA_DEBUG_OFF; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = MSG_DMA_DEBUG_OFF;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "MSG"; }
     static const char *key(MsgType value)
@@ -216,6 +217,7 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_RECORDING_ABORTED:    return "MSG_RECORDING_ABORTED";
                 
             case MSG_CLOSE_CONSOLE:        return "CLOSE_CONSOLE";
+			case MSG_UPDATE_CONSOLE:        return "UPDATE_CONSOLE";
                 
             case MSG_DMA_DEBUG_ON:         return "DMA_DEBUG_ON";
             case MSG_DMA_DEBUG_OFF:        return "DMA_DEBUG_OFF";

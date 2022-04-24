@@ -7,29 +7,15 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "IO.h"
+#include "config.h"
+#include "IOUtils.h"
+#include <assert.h>
 #include <vector>
 #include <fstream>
 #include <algorithm>
-#include <assert.h>
+#include <iomanip>
 
 namespace util {
-
-string
-lowercased(const string& s)
-{
-    string result;
-    for (auto c : s) { result += (char)std::tolower(c); }
-    return result;
-}
-
-string
-uppercased(const string& s)
-{
-    string result;
-    for (auto c : s) { result += (char)std::toupper(c); }
-    return result;
-}
 
 string
 extractPath(const string &s)
@@ -103,6 +89,29 @@ isAbsolutePath(const string &path)
     return !path.empty() && path.front() == '/';
 }
 
+string makeAbsolutePath(const string &path)
+{
+    if (isAbsolutePath(path)) {
+        return path;
+    } else {
+        return appendPath(std::filesystem::current_path().string(), path);
+    }
+}
+
+string
+makeUniquePath(const string &path)
+{
+    auto prefix = stripSuffix(path);
+    auto suffix = "." + extractSuffix(path);
+    
+    string index = "";
+    for (isize nr = 2; util::fileExists(prefix + index + suffix); nr++) {
+        index = std::to_string(nr);
+    }
+
+    return prefix + index + suffix;
+}
+
 bool
 fileExists(const string &path)
 {
@@ -112,28 +121,46 @@ fileExists(const string &path)
 bool
 isDirectory(const string &path)
 {
-    struct stat fileProperties;
+    try {
+        
+        const auto &entry = fs::directory_entry(path);
+        return entry.is_directory();
     
-    if (stat(path.c_str(), &fileProperties) != 0)
+    } catch (...) {
+        
         return false;
+    }
+}
+
+bool
+createDirectory(const string &path)
+{
+    try {
+        
+        return fs::create_directory(fs::path(path));
     
-    return S_ISDIR(fileProperties.st_mode);
+    } catch (...) {
+        
+        return false;
+    }
 }
 
 isize
 numDirectoryItems(const string &path)
 {
-    isize count = 0;
+    isize result = 0;
     
-    if (DIR *dir = opendir(path.c_str())) {
+    try {
         
-        struct dirent *dp;
-        while ((dp = readdir(dir))) {
-            if (dp->d_name[0] != '.') count++;
+        for (const auto &entry : fs::directory_iterator(path)) {
+            
+            const auto &name = entry.path().filename().string();
+            if (name[0] != '.') result++;
         }
-    }
+        
+    } catch (...) { }
     
-    return count;
+    return result;
 }
 
 std::vector<string>
@@ -150,19 +177,19 @@ files(const string &path, std::vector <string> &suffixes)
 {
     std::vector<string> result;
     
-    if (DIR *dir = opendir(path.c_str())) {
+    try {
         
-        struct dirent *dp;
-        while ((dp = readdir(dir))) {
+        for (const auto &entry : fs::directory_iterator(path)) {
             
-            string name = dp->d_name;
+            const auto &name = entry.path().filename().string();
             string suffix = lowercased(extractSuffix(name));
             
             if (std::find(suffixes.begin(), suffixes.end(), suffix) != suffixes.end()) {
                 result.push_back(name);
             }
         }
-    }
+        
+    } catch (...) { }
     
     return result;
 }
@@ -187,8 +214,7 @@ matchingStreamHeader(std::istream &is, const u8 *header, isize len, isize offset
     
     for (isize i = 0; i < len; i++) {
         
-        int c = is.get();
-        if (c != (int)header[i]) {
+        if (is.get() != (int)header[i]) {
             is.seekg(0, std::ios::beg);
             return false;
         }
@@ -200,7 +226,7 @@ matchingStreamHeader(std::istream &is, const u8 *header, isize len, isize offset
 bool
 matchingStreamHeader(std::istream &is, const string &header, isize offset)
 {
-    return matchingStreamHeader(is, (u8 *)header.c_str(), header.length(), offset);
+    return matchingStreamHeader(is, (u8 *)header.c_str(), (isize)header.length(), offset);
 }
 
 bool
@@ -215,29 +241,6 @@ matchingBufferHeader(const u8 *buffer, const u8 *header, isize len, isize offset
     }
 
     return true;
-}
-
-bool
-loadFile(const string &path, u8 **bufptr, isize *size)
-{
-    assert(bufptr); assert(size);
-
-    std::ifstream stream(path);
-    if (!stream.is_open()) return false;
-    
-    auto len = streamLength(stream);
-    u8 *buf = new u8[len];
-    stream.read((char *)buf, len);
-    
-    *bufptr = buf;
-    *size = len;
-    return true;
-}
-
-bool
-loadFile(const string &path, const string &name, u8 **bufptr, isize *size)
-{
-    return loadFile(path + "/" + name, bufptr, size);
 }
 
 isize
@@ -339,7 +342,8 @@ hex::operator()(std::ostream &os) const
 
 std::ostream &
 tab::operator()(std::ostream &os) const {
-    os << std::setw(pads) << std::right << std::setfill(' ') << str << " : ";
+    os << std::setw(pads) << std::right << std::setfill(' ') << str;
+    os << (str.empty() ? "   " : " : ");
     return os;
 }
 

@@ -10,7 +10,7 @@
 #include "config.h"
 #include "Drive.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 Drive::Drive(DriveID id, C64 &ref) : SubComponent(ref), deviceNr(id)
 {

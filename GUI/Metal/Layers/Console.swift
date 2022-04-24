@@ -48,33 +48,33 @@ class Console: Layer {
         resize()
     }
 
-    override func update(frames: Int64) {
-        
-        super.update(frames: frames)
+	override func update(frames: Int64) {
+		
+		super.update(frames: frames)
 
-        if isDirty {
-            
-            if let text = c64.retroShell.getText() {
-                
-                let cursorColor = NSColor(r: 255, g: 255, b: 255, a: 128)
-                let monoFont = NSFont.monospaced(ofSize: 14, weight: .medium)
-                let cpos = c64.retroShell.cposRel
-                
-                let attr = [
-                    NSAttributedString.Key.foregroundColor: NSColor.white,
-                    NSAttributedString.Key.font: monoFont
-                ]
-                let string = NSMutableAttributedString(string: text, attributes: attr)
-                string.addAttribute(.backgroundColor,
-                                    value: cursorColor,
-                                    range: NSRange(location: string.length - 1 - cpos, length: 1))
-                textView.textStorage?.setAttributedString(string)
-            }
-            
-            textView.scrollToEndOfDocument(self)
-            isDirty = false
-        }
-    }
+		if isDirty {
+			
+			if let text = c64.retroShell.getText() {
+				
+				let cursorColor = NSColor(r: 255, g: 255, b: 255, a: 128)
+				let monoFont = NSFont.monospaced(ofSize: 14, weight: .medium)
+				let cpos = c64.retroShell.cursorRel - 1
+				
+				let attr = [
+					NSAttributedString.Key.foregroundColor: NSColor.white,
+					NSAttributedString.Key.font: monoFont
+				]
+				let string = NSMutableAttributedString(string: text, attributes: attr)
+				string.addAttribute(.backgroundColor,
+									value: cursorColor,
+									range: NSRange(location: string.length + cpos, length: 1))
+				textView.textStorage?.setAttributedString(string)
+			}
+			
+			textView.scrollToEndOfDocument(self)
+			isDirty = false
+		}
+	}
         
     override func alphaDidChange() {
                 

@@ -9,10 +9,12 @@
 
 #include "config.h"
 #include "Recorder.h"
-#include "IO.h"
+#include "IOUtils.h"
 #include "MsgQueue.h"
 #include "Muxer.h"
 #include "VICII.h"
+
+#include <unistd.h>
 
 bool
 Recorder::hasFFmpeg() const

@@ -10,7 +10,7 @@
 #include "config.h"
 #include "C64Memory.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 #include <random>
 

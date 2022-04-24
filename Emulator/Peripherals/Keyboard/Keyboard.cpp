@@ -11,7 +11,7 @@
 #include "Keyboard.h"
 #include "C64.h"
 #include "C64Key.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 void 
 Keyboard::_reset(bool hard) 

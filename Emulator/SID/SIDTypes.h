@@ -26,9 +26,9 @@ typedef SIDREV SIDRevision;
 #ifdef __cplusplus
 struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
     
-    static long min() { return 0; }
-    static long max() { return MOS_8580; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = MOS_8580;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return nullptr; }
     static const char *key(SIDRevision value)
@@ -53,9 +53,9 @@ typedef SIDENGINE SIDEngine;
 #ifdef __cplusplus
 struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
     
-    static long min() { return 0; }
-    static long max() { return SIDENGINE_RESID; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = SIDENGINE_RESID;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "SIDENGINE"; }
     static const char *key(SIDEngine value)
@@ -83,9 +83,9 @@ typedef SAMPLING SamplingMethod;
 #ifdef __cplusplus
 struct SamplingMethodEnum : util::Reflection<SamplingMethodEnum, SamplingMethod> {
     
-    static long min() { return 0; }
-    static long max() { return SAMPLING_RESAMPLE_FASTMEM; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = SAMPLING_RESAMPLE_FASTMEM;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "SAMPLING"; }
     static const char *key(SamplingMethod value)

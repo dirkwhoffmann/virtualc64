@@ -45,17 +45,16 @@ public:
     void resume() override;
 };
 
-class AutoResume {
+struct AutoResume {
 
-    C64Component *comp;
-    
-public:
-
-    bool active = true;
-
-    AutoResume(C64Component *c) : comp(c) { comp->suspend(); }
-    ~AutoResume() { comp->resume(); }
+	bool active = true;
+	C64Component *c;
+	AutoResume(C64Component *c) : c(c) { c->suspend(); }
+	~AutoResume() { c->resume(); }
 };
 
+// DEPRECATED
 #define suspended \
 for (AutoResume _ar(this); _ar.active; _ar.active = false)
+
+#define SUSPENDED AutoResume _ar(this);

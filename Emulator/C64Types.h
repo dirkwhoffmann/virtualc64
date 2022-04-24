@@ -30,9 +30,9 @@ typedef C64_MODEL C64Model;
 #ifdef __cplusplus
 struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
     
-    static long min() { return 0; }
-    static long max() { return C64_MODEL_NTSC_OLD; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = C64_MODEL_NTSC_OLD;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "C64_MODEL"; }
     static const char *key(C64Model value)
@@ -63,9 +63,9 @@ typedef ROM_TYPE RomType;
 #ifdef __cplusplus
 struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
     
-    static long min() { return 0; }
-    static long max() { return ROM_TYPE_VC1541; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = ROM_TYPE_VC1541;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "ROM_TYPE"; }
     static const char *key(RomType value)
@@ -96,9 +96,9 @@ typedef INSPECTION_TARGET InspectionTarget;
 #ifdef __cplusplus
 struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionTarget> {
     
-    static long min() { return 0; }
-    static long max() { return INSPECTION_SID; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = INSPECTION_SID;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "INSPECTION"; }
     static const char *key(InspectionTarget value)

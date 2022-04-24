@@ -9,7 +9,7 @@
 
 #include "config.h"
 #include "FlashRom.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 const char *
 FlashRom::getStateAsString(FlashState state)

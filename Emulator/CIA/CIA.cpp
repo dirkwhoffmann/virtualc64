@@ -10,7 +10,7 @@
 #include "config.h"
 #include "CIA.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 CIA::CIA(C64 &ref) : SubComponent(ref)
 {    

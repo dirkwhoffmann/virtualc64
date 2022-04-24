@@ -63,4 +63,3 @@ void ExternalFilter::reset()
 }
 
 } // namespace reSID
-

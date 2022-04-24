@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#include "config.h"
 #include "Checksum.h"
 #include "Macros.h"
 
@@ -14,41 +15,41 @@ namespace util {
 
 u32
 NO_SANITIZE("unsigned-integer-overflow")
-fnv_1a_it32(u32 prv, u32 val)
+fnvIt32(u32 prv, u32 val)
 {
     return (prv ^ val) * 0x1000193;
 }
- 
+
 u64
 NO_SANITIZE("unsigned-integer-overflow")
-fnv_1a_it64(u64 prv, u64 val)
+fnvIt64(u64 prv, u64 val)
 {
     return (prv ^ val) * 0x100000001b3;
 }
 
 u32
-fnv_1a_32(const u8 *addr, isize size)
+fnv32(const u8 *addr, isize size)
 {
     if (addr == nullptr || size == 0) return 0;
 
-    u32 hash = fnv_1a_init32();
+    u32 hash = fnvInit32();
 
     for (isize i = 0; i < size; i++) {
-        hash = fnv_1a_it32(hash, (u32)addr[i]);
+        hash = fnvIt32(hash, (u32)addr[i]);
     }
 
     return hash;
 }
 
 u64
-fnv_1a_64(const u8 *addr, isize size)
+fnv64(const u8 *addr, isize size)
 {
     if (addr == nullptr || size == 0) return 0;
     
-    u64 hash = fnv_1a_init64();
+    u64 hash = fnvInit64();
     
     for (isize i = 0; i < size; i++) {
-        hash = fnv_1a_it64(hash, (u64)addr[i]);
+        hash = fnvIt64(hash, (u64)addr[i]);
     }
     
     return hash;
@@ -79,8 +80,8 @@ crc32(const u8 *addr, isize size)
     for(u32 i = 0; i < 256; i++) table[i] = crc32forByte(i);
 
     // Compute CRC-32 checksum
-     for(isize i = 0; i < size; i++)
-       result = table[(u8)result ^ addr[i]] ^ result >> 8;
+    for(isize i = 0; i < size; i++)
+        result = table[(u8)result ^ addr[i]] ^ result >> 8;
 
     return result;
 }

@@ -10,7 +10,7 @@
 #include "config.h"
 #include "RomFile.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 const RomSignature RomFile::signatures[] = {
    

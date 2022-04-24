@@ -169,7 +169,7 @@ void WaveformGenerator::writePW_HI(reg8 pw_hi)
   pulse_output = (accumulator >> 12) >= pw ? 0xfff : 0x000;
 }
 
-static bool do_pre_writeback(reg8 waveform_prev, reg8 waveform, bool is6581)
+bool do_pre_writeback(reg8 waveform_prev, reg8 waveform, bool is6581)
 {
     // no writeback without combined waveforms
     if (likely(waveform_prev <= 0x8))
@@ -177,8 +177,12 @@ static bool do_pre_writeback(reg8 waveform_prev, reg8 waveform, bool is6581)
     // This need more investigation
     if (waveform == 8)
         return false;
-    if (waveform_prev == 0xc)
-        return false;
+    if (waveform_prev == 0xc) {
+        if (is6581)
+            return false;
+        else if ((waveform != 0x9) && (waveform != 0xe))
+            return false;
+    }
     // What's happening here?
     if (is6581 &&
             ((((waveform_prev & 0x3) == 0x1) && ((waveform & 0x3) == 0x2))
@@ -322,4 +326,3 @@ void WaveformGenerator::reset()
 }
 
 } // namespace reSID
-

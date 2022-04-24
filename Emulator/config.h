@@ -17,11 +17,13 @@
 #define VER_MAJOR 4
 #define VER_MINOR 5
 #define VER_SUBMINOR 0
+#define VER_BETA 1
 
 // Snapshot version number
 #define SNP_MAJOR 4
 #define SNP_MINOR 5
 #define SNP_SUBMINOR 0
+#define SNP_BETA 1
 
 // Uncomment these settings in a release build
 // #define RELEASEBUILD
@@ -118,20 +120,32 @@ static const int REC_DEBUG       = 0; // Screen recorder
 // Forced error conditions
 //
 
-static const int FORCE_ROM_MISSING      = 0;
-static const int FORCE_MEGA64_MISMATCH  = 0;
-static const int FORCE_CRT_UNKNOWN      = 0;
-static const int FORCE_CRT_UNSUPPORTED  = 0;
-static const int FORCE_SNAPSHOT_TOO_OLD = 0;
-static const int FORCE_SNAPSHOT_TOO_NEW = 0;
-static const int FORCE_RECORDING_ERROR  = 0;
+static const int FORCE_ROM_MISSING     			= 0;
+static const int FORCE_MEGA64_MISMATCH  		= 0;
+static const int FORCE_SNAP_TOO_OLD             = 0;
+static const int FORCE_SNAP_TOO_NEW             = 0;
+static const int FORCE_SNAP_IS_BETA             = 0;
+static const int FORCE_SNAP_CORRUPTED           = 0;
+static const int FORCE_CRT_UNKNOWN      		= 0;
+static const int FORCE_CRT_UNSUPPORTED  		= 0;
+static const int FORCE_RECORDING_ERROR  		= 0;
 
 
 #ifdef RELEASEBUILD
-static const int releaseBuild = 1;
+#ifndef NDEBUG
 #define NDEBUG
+#endif
+static const bool releaseBuild = 1;
+static const bool debugBuild = 0;
 #else
-static const int releaseBuild = 0;
+static const bool releaseBuild = 0;
+static const bool debugBuild = 1;
+#endif
+
+#if VER_BETA == 0
+static const bool betaRelease = 0;
+#else
+static const bool betaRelease = 1;
 #endif
 
 #include <assert.h>

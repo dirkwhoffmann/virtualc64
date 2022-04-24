@@ -46,10 +46,14 @@ class MyDocument: NSDocument {
         // Register standard user defaults
         UserDefaults.registerUserDefaults()
         
+        track("Creating proxy")
+
         // Create an emulator instance
         c64 = C64Proxy()
+
+        track("Proxy created")
     }
-     
+
     override open func makeWindowControllers() {
         
         track()
@@ -63,23 +67,23 @@ class MyDocument: NSDocument {
     //
     // Creating attachments
     //
-        
+
     func createAttachment(from url: URL) throws {
         
         let types: [FileType] =
-            [ .SNAPSHOT, .SCRIPT, .CRT, .T64, .P00, .PRG, .FOLDER, .D64, .G64, .TAP ]
+        [ .SNAPSHOT, .SCRIPT, .CRT, .T64, .P00, .PRG, .FOLDER, .D64, .G64, .TAP ]
         
         try createAttachment(from: url, allowedTypes: types)
     }
     
     func createAttachment(from url: URL, allowedTypes: [FileType]) throws {
-                
+
         attachment = try createFileProxy(url: url, allowedTypes: allowedTypes)
         myAppDelegate.noteNewRecentlyUsedURL(url)
         
         track("Attachment created successfully")
     }
-        
+
     fileprivate
     func createFileProxy(url: URL, allowedTypes: [FileType]) throws -> AnyFileProxy? {
         
@@ -90,16 +94,16 @@ class MyDocument: NSDocument {
 
         // Iterate through all allowed file types
         for type in allowedTypes {
-                        
+
             do {
                 switch type {
-                
+
                 case .SNAPSHOT:
                     return try Proxy.make(url: newUrl) as SnapshotProxy
-                    
+
                 case .SCRIPT:
                     return try Proxy.make(url: newUrl) as ScriptProxy
-                    
+
                 case .CRT:
                     return try Proxy.make(url: newUrl) as CRTFileProxy
                     
@@ -166,7 +170,7 @@ class MyDocument: NSDocument {
         // Try to insert the attachment as a disk in drive 8
         try mountAttachment(drive: .DRIVE8)
     }
-        
+
     func mountAttachment(drive id: DriveID) throws {
 
         let drive = c64.drive(id)
@@ -196,7 +200,7 @@ class MyDocument: NSDocument {
             }
         }
     }
-            
+
     func runImportDialog() {
         
         let name = NSNib.Name("ImportDialog")
@@ -240,7 +244,7 @@ class MyDocument: NSDocument {
     //
     
     override func write(to url: URL, ofType typeName: String) throws {
-            
+
         track()
         
         if typeName == "VC64" {
@@ -261,7 +265,7 @@ class MyDocument: NSDocument {
     //
     // Exporting disks
     //
-        
+
     func export(drive id: DriveID, to url: URL) throws {
         
         track("drive: \(id.rawValue) to: \(url)")
@@ -271,13 +275,13 @@ class MyDocument: NSDocument {
         
         drive.setModifiedDisk(false)
     }
- 
+
     func export(disk: DiskProxy, to url: URL) throws {
 
         track("disk: \(disk) to: \(url)")
         
         if url.c64FileType == .G64 {
-         
+
             let g64 = try Proxy.make(disk: disk) as G64FileProxy
             try export(file: g64, to: url)
 
@@ -301,9 +305,9 @@ class MyDocument: NSDocument {
         track("fs: \(fs) to: \(url)")
 
         var file: AnyFileProxy?
-                
+
         switch url.c64FileType {
-        
+
         case .D64:
             file = try Proxy.make(fs: fs) as D64FileProxy
             
@@ -341,7 +345,7 @@ class MyDocument: NSDocument {
     
     @discardableResult
     func setBootDiskID(_ id: UInt64) -> Bool {
-                
+        
         if bootDiskID == 0 {
             
             bootDiskID = id

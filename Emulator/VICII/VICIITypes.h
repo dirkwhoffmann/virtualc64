@@ -96,9 +96,9 @@ typedef VICII_REV VICIIRevision;
 #ifdef __cplusplus
 struct VICIIRevisionEnum : util::Reflection<VICIIRevisionEnum, VICIIRevision> {
     
-    static long min() { return 0; }
-    static long max() { return VICII_NTSC_8562; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = VICII_NTSC_8562;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "VICII"; }
     static const char *key(VICIIRevision value)
@@ -132,9 +132,9 @@ typedef VICII_SPEED VICIISpeed;
 #ifdef __cplusplus
 struct VICIISpeedEnum : util::Reflection<VICIISpeedEnum, VICIISpeed> {
     
-    static long min() { return 0; }
-    static long max() { return VICII_TRUE_120; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = VICII_TRUE_120;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "VICII"; }
     static const char *key(VICIIRevision value)
@@ -164,9 +164,9 @@ typedef GLUE_LOGIC GlueLogic;
 #ifdef __cplusplus
 struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
     
-    static long min() { return 0; }
-    static long max() { return GLUE_LOGIC_IC; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = GLUE_LOGIC_IC;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "GLUE_LOGIC"; }
     static const char *key(GlueLogic value)
@@ -195,9 +195,9 @@ typedef PALETTE Palette;
 #ifdef __cplusplus
 struct PaletteEnum : util::Reflection<PaletteEnum, Palette> {
     
-    static long min() { return 0; }
-    static long max() { return PALETTE_SEPIA; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = PALETTE_SEPIA;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "PALETTE"; }
     static const char *key(Palette value)
@@ -228,9 +228,9 @@ typedef SCREEN_GEOMETRY ScreenGeometry;
 #ifdef __cplusplus
 struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry> {
     
-    static long min() { return 1; }
-    static long max() { return SCREEN_GEOMETRY_24_38; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 1;
+    static constexpr long maxVal = SCREEN_GEOMETRY_24_38;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "SCREEN_GEOMETRY"; }
     static const char *key(ScreenGeometry value)
@@ -263,9 +263,9 @@ typedef DISPLAY_MODE DisplayMode;
 #ifdef __cplusplus
 struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
     
-    static long min() { return 0; }
-    static long max() { return DISPLAY_MODE_INV_MULTICOL_BITMAP; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = DISPLAY_MODE_INV_MULTICOL_BITMAP;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "DISPLAY_MODE"; }
     static const char *key(DisplayMode value)
@@ -303,9 +303,9 @@ typedef COLSRC ColorSource;
 #ifdef __cplusplus
 struct ColorSourceEnum : util::Reflection<ColorSourceEnum, ColorSource> {
     
-    static long min() { return 0; }
-    static long max() { return COLSRC_ZERO; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = COLSRC_ZERO;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "COLSRC"; }
     static const char *key(Palette value)

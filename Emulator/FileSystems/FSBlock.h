@@ -10,8 +10,11 @@
 #pragma once
 
 #include "FSTypes.h"
+#include "Buffer.h"
 #include "C64Object.h"
 #include "PETName.h"
+
+using util::Buffer;
 
 class FSBlock : C64Object {
     

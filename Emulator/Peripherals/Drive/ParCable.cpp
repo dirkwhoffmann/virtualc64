@@ -10,7 +10,7 @@
 #include "config.h"
 #include "ParCable.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 ParCable::ParCable(C64& ref) : SubComponent(ref)
 {
@@ -72,7 +72,7 @@ ParCable::c64Handshake()
 void
 ParCable::c64Handshake(Drive &drive)
 {
-    trace(PAR_DEBUG, "c64Handshake(%lld)\n", drive.getDeviceNr());
+    trace(PAR_DEBUG, "c64Handshake(%ld)\n", drive.getDeviceNr());
     
     switch (drive.getParCableType()) {
             

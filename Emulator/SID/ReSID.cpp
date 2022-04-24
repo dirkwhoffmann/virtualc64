@@ -10,7 +10,7 @@
 #include "config.h"
 #include "ReSID.h"
 #include "C64.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 ReSID::ReSID(C64 &ref, int n) : SubComponent(ref), nr(n)
 {
@@ -238,7 +238,7 @@ ReSID::setSamplingMethod(SamplingMethod value)
             value = SAMPLING_INTERPOLATE;
             break;
         default:
-            warn("Unknown sampling method: %lld\n", value);
+            warn("Unknown sampling method: %ld\n", value);
     }
 
     samplingMethod = value;

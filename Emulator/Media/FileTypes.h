@@ -39,9 +39,9 @@ typedef FILETYPE FileType;
 #ifdef __cplusplus
 struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
     
-    static long min() { return 0; }
-    static long max() { return FILETYPE_VC1541_ROM; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = FILETYPE_VC1541_ROM;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "FILETYPE"; }
     static const char *key(FileType value)
@@ -78,9 +78,9 @@ typedef TAP_VERSION TAPVersion;
 #ifdef __cplusplus
 struct TAPVersionEnum : util::Reflection<TAPVersionEnum, TAPVersion> {
     
-    static long min() { return 0; }
-    static long max() { return TAP_VERSION_ADVANCED; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+	static constexpr long minVal = 0;
+    static constexpr long maxVal = TAP_VERSION_ADVANCED;
+    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "TAP_VERSION"; }
     static const char *key(TAPVersion value)

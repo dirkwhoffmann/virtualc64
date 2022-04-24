@@ -48,18 +48,8 @@ public:
 
 class Wakeable
 {
-#ifdef USE_CONDITION_VARIABLE
-    
-    std::mutex condMutex;
-    std::condition_variable cond;
-    bool condFlag = false;
-    
-#else
-    
     std::promise<int> promise;
     std::future<int> future = promise.get_future();
-
-#endif
     
 public:
 

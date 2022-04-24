@@ -10,22 +10,24 @@
 #pragma once
 
 #include "Types.h"
-#include <dirent.h>
+#include "StringUtils.h"
+
 #include <fcntl.h>
+#include <filesystem>
+#include <fstream>
 #include <istream>
+#include <iostream>
+#include <sstream>
 #include <sys/stat.h>
-#include <unistd.h>
 #include <vector>
+
+namespace fs = std::filesystem;
 
 namespace util {
 
 //
 // Handling file names
 //
-
-// Changes the capitalization of a string
-string lowercased(const string& s);
-string uppercased(const string& s);
 
 // Extracts a certain component from a path
 string extractPath(const string &path);
@@ -37,11 +39,15 @@ string stripPath(const string &path);
 string stripName(const string &path);
 string stripSuffix(const string &path);
 
-// Concatinates two path segments
+// Concatenates two path segments
 string appendPath(const string &path, const string &path2);
 
-// Checks if a string starts with '/'
+// Checks or creates an absolute path
 bool isAbsolutePath(const string &path);
+string makeAbsolutePath(const string &path);
+
+// Makes a file name unique if a file with the provided name already exists
+string makeUniquePath(const string &path);
 
 
 //
@@ -57,6 +63,9 @@ bool fileExists(const string &path);
 // Checks if a path points to a directory
 bool isDirectory(const string &path);
 
+// Creates a directory
+bool createDirectory(const string &path);
+
 // Returns the number of files in a directory
 isize numDirectoryItems(const string &path);
 
@@ -68,11 +77,6 @@ std::vector<string> files(const string &path, std::vector <string> &suffixes);
 bool matchingStreamHeader(std::istream &is, const u8 *header, isize len, isize offset = 0);
 bool matchingStreamHeader(std::istream &is, const string &header, isize offset = 0);
 bool matchingBufferHeader(const u8 *buffer, const u8 *header, isize len, isize offset = 0);
-
-// Loads a file from disk
-bool loadFile(const string &path, u8 **bufptr, isize *size);
-bool loadFile(const string &path, const string &name, u8 **bufptr, isize *size);
-
 
 //
 // Pretty printing

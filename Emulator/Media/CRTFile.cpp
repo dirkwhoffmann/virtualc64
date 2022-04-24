@@ -11,7 +11,7 @@
 #include "CRTFile.h"
 #include "Cartridge.h"
 #include "Checksum.h"
-#include "IO.h"
+#include "IOUtils.h"
 
 bool
 CRTFile::isCompatible(const string &path)
@@ -103,7 +103,7 @@ CRTFile::repair()
     // Individual errors
     //
     
-    switch (util::fnv_1a_64(data, size)) {
+    switch (util::fnv64(data, size)) {
 
         case 0xb2a479a5a2ee6cd5: // Mikro Assembler
 
