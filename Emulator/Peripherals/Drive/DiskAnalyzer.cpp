@@ -11,29 +11,7 @@
 #include "DiskAnalyzer.h"
 #include "Disk.h"
 
-/*
-u8
-DiskAnalyzer::decodeGcrNibble(u8 *gcr)
-{
-    assert(gcr);
-    
-    auto codeword = gcr[0] << 4 | gcr[1] << 3 | gcr[2] << 2 | gcr[3] << 1 | gcr[4];
-    assert(codeword < 32);
-    
-    return Disk::invgcr[codeword];
-}
-
-u8
-DiskAnalyzer::decodeGcr(u8 *gcr)
-{
-    assert(gcr);
-    
-    u8 nibble1 = decodeGcrNibble(gcr);
-    u8 nibble2 = decodeGcrNibble(gcr + 5);
-
-    return (u8)(nibble1 << 4 | nibble2);
-}
-*/
+#include <stdarg.h>
 
 DiskAnalyzer::DiskAnalyzer(const Disk &disk)
 {
@@ -111,29 +89,12 @@ void DiskAnalyzer::analyzeDisk()
     msg("done\n");
 }
 
-/*
-void
-DiskAnalyzer::analyzeTrackOld(Track t)
-{
-    assert(isTrackNumber(t));
-    analyzeHalftrackOld(2 * t - 1);
-}
-*/
-
 TrackInfo
 DiskAnalyzer::analyzeTrack(Track t)
 {
     assert(isTrackNumber(t));
     return analyzeHalftrack(2 * t - 1);
 }
-
-/*
-void
-DiskAnalyzer::analyzeHalftrackOld(Halftrack ht)
-{
-    trackInfo = analyzeHalftrack(ht);
-}
-*/
 
 TrackInfo
 DiskAnalyzer::analyzeHalftrack(Halftrack ht)
