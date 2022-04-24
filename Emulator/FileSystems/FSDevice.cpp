@@ -789,7 +789,7 @@ FSDevice::importDirectory(const string &path, DIR *dir)
     
     while ((item = readdir(dir))) {
         
-        // Skip '.', '..' and all hidden files
+        // Skip all hidden files
         if (item->d_name[0] == '.') continue;
         
         // Assemble file name
@@ -799,16 +799,16 @@ FSDevice::importDirectory(const string &path, DIR *dir)
         msg("importDirectory: Processing %s (%s)\n", name.c_str(), full.c_str());
 
         if (item->d_type == DT_DIR) continue;
-        
-        u8 *buf; long len;
-        if (util::loadFile(full, &buf, &len)) {
-            
+
+        // Add file
+        Buffer<u8> buffer(full);
+        if (buffer) {
+
             PETName<16> pet = PETName<16>(util::stripSuffix(name));
-            if (!makeFile(pet, buf, len)) {
+            if (!makeFile(pet, buffer.ptr, buffer.size)) {
                 warn("Failed to import file %s\n", name.c_str());
                 result = false;
             }
-            delete[] buf;
         }
     }
     return result;

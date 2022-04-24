@@ -19,7 +19,7 @@ fnvIt32(u32 prv, u32 val)
 {
     return (prv ^ val) * 0x1000193;
 }
- 
+
 u64
 NO_SANITIZE("unsigned-integer-overflow")
 fnvIt64(u64 prv, u64 val)
@@ -80,8 +80,8 @@ crc32(const u8 *addr, isize size)
     for(u32 i = 0; i < 256; i++) table[i] = crc32forByte(i);
 
     // Compute CRC-32 checksum
-     for(isize i = 0; i < size; i++)
-       result = table[(u8)result ^ addr[i]] ^ result >> 8;
+    for(isize i = 0; i < size; i++)
+        result = table[(u8)result ^ addr[i]] ^ result >> 8;
 
     return result;
 }

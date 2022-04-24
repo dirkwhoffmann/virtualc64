@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------------
-// This file is part of VirtualC64
+// This file is part of vAmiga
 //
 // Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de
 // Licensed under the GNU General Public License v3
@@ -74,4 +74,3 @@ string byteCountAsString(isize bytes);
 string fillLevelAsString(double percentage);
 
 }
-

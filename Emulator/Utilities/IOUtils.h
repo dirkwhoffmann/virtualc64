@@ -39,10 +39,10 @@ string stripPath(const string &path);
 string stripName(const string &path);
 string stripSuffix(const string &path);
 
-// Concatinates two path segments
+// Concatenates two path segments
 string appendPath(const string &path, const string &path2);
 
-// Checks if a string starts with '/'
+// Checks or creates an absolute path
 bool isAbsolutePath(const string &path);
 string makeAbsolutePath(const string &path);
 
@@ -77,11 +77,6 @@ std::vector<string> files(const string &path, std::vector <string> &suffixes);
 bool matchingStreamHeader(std::istream &is, const u8 *header, isize len, isize offset = 0);
 bool matchingStreamHeader(std::istream &is, const string &header, isize offset = 0);
 bool matchingBufferHeader(const u8 *buffer, const u8 *header, isize len, isize offset = 0);
-
-// Loads a file from disk
-bool loadFile(const string &path, u8 **bufptr, isize *size);
-bool loadFile(const string &path, const string &name, u8 **bufptr, isize *size);
-
 
 //
 // Pretty printing

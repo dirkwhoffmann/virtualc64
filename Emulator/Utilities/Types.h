@@ -54,6 +54,16 @@ typedef size_t             usize;
 
 
 //
+// Optionals
+//
+
+#ifdef __cplusplus
+#include <optional>
+using std::optional;
+#endif
+
+
+//
 // Enumerations
 //
 

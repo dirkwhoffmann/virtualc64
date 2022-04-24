@@ -200,13 +200,13 @@ template <class T, isize capacity> struct RingBuffer
         r = next(r);
         return elements[oldr];
     }
-
+    
     const T& read(T fallback)
     {
         if (isEmpty()) write(fallback);
         return read();
     }
-	
+
     void write(T element)
     {
         assert(!isFull());
@@ -270,7 +270,7 @@ struct SortedRingBuffer : public RingBuffer<T, capacity>
 
             // Exit the loop once we've found the correct position
             if (key > keys[p]) break;
-
+            
             // Otherwise, swap elements
             std::swap(this->elements[oldw], this->elements[p]);
             std::swap(keys[oldw], keys[p]);

@@ -11,7 +11,7 @@
 #include "Parser.h"
 
 namespace util {
-    
+
 bool
 parseBool(string& token)
 {

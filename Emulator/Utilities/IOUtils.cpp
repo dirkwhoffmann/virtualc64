@@ -243,29 +243,6 @@ matchingBufferHeader(const u8 *buffer, const u8 *header, isize len, isize offset
     return true;
 }
 
-bool
-loadFile(const string &path, u8 **bufptr, isize *size)
-{
-    assert(bufptr); assert(size);
-
-    std::ifstream stream(path);
-    if (!stream.is_open()) return false;
-    
-    auto len = streamLength(stream);
-    u8 *buf = new u8[len];
-    stream.read((char *)buf, len);
-    
-    *bufptr = buf;
-    *size = len;
-    return true;
-}
-
-bool
-loadFile(const string &path, const string &name, u8 **bufptr, isize *size)
-{
-    return loadFile(path + "/" + name, bufptr, size);
-}
-
 isize
 streamLength(std::istream &stream)
 {
