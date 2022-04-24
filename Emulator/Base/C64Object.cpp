@@ -11,6 +11,9 @@
 #include "C64Object.h"
 #include <iostream>
 
+bool
+C64Object::verbose = true;
+
 void
 C64Object::prefix() const
 {

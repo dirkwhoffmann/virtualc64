@@ -17,13 +17,39 @@
 #include <vector>
 #include <iostream>
 
+// DEPRECATED
 #define synchronized \
 for (util::AutoMutex _am(mutex); _am.active; _am.active = false)
-    
-class C64Component : public C64Object {
+
+/* The following macro can be utilized to prevent multiple threads to enter the
+ * same code block. It mimics the behaviour of the well known Java construct
+ * 'synchronized(this) { }'. To secure a code-block, use the following syntax:
+ * { SYNCHRONIZED <commands> }
+ */
+#define SYNCHRONIZED util::AutoMutex _am(mutex);
+
+// Variant for static methods
+#define STATIC_SYNCHRONIZED static std::mutex m; std::lock_guard<std::mutex> lock(m);
+
+struct NoCopy
+{
+    NoCopy() { };
+    NoCopy(NoCopy const&) = delete;
+};
+
+struct NoAssign
+{
+    NoAssign() { };
+    NoAssign& operator=(NoAssign const&) = delete;
+};
+
+class C64Component : public C64Object, NoCopy, NoAssign {
         
 protected:
     
+    // Set to false to silence all debug messages for this component
+    bool verbose = true;
+
     // Sub components
     std::vector<C64Component *> subComponents;
             
@@ -55,11 +81,62 @@ public:
      */
     void reset(bool hard);
     virtual void _reset(bool hard) = 0;
-    
+
+
+    //
+    // Controlling the state (see Thread class for details)
+    //
+
+public:
+
+    virtual bool isPoweredOff() const = 0;
+    virtual bool isPoweredOn() const = 0;
+    virtual bool isPaused() const = 0;
+    virtual bool isRunning() const = 0;
+    virtual bool isSuspended() const = 0;
+    virtual bool isHalted() const = 0;
+
+    virtual void suspend() = 0;
+    virtual void resume() = 0;
+
+    // Throws an exception if the emulator is not ready to power on
+    virtual void isReady() const throws;
+
+protected:
+
+    void powerOn();
+    void powerOff();
+    void run();
+    void pause();
+    void halt();
+    void warpOn();
+    void warpOff();
+    void debugOn();
+    void debugOff();
+
+    void powerOnOff(bool value) { value ? powerOn() : powerOff(); }
+    void warpOnOff(bool value) { value ? warpOn() : warpOff(); }
+    void debugOnOff(bool value) { value ? debugOn() : debugOff(); }
+
+private:
+
+    virtual void _isReady() const throws { }
+    virtual void _powerOn() { }
+    virtual void _powerOff() { }
+    virtual void _run() { }
+    virtual void _pause() { }
+    virtual void _halt() { }
+    virtual void _warpOn() { }
+    virtual void _warpOff() { }
+    virtual void _debugOn() { }
+    virtual void _debugOff() { }
+
     
     //
     // Configuring
     //
+            
+public:
         
     // Initializes all configuration items with their default values
     virtual void resetConfig() { };
@@ -68,7 +145,9 @@ public:
     //
     // Analyzing
     //
-    
+
+public:
+
     /* Collects information about the component and it's subcomponents. Many
      * components contain an info variable of a class specific type (e.g.,
      * CPUInfo, MemoryInfo, ...). These variables contain the information shown
@@ -115,82 +194,42 @@ public:
      * override these methods to add custom behavior if not all elements can be
      * processed by the default implementation.
      */
-    virtual isize willLoadFromBuffer(const u8 *buf) { return 0; }
-    virtual isize didLoadFromBuffer(const u8 *buf) { return 0; }
-    virtual isize willSaveToBuffer(const u8 *buf) {return 0; }
+    virtual isize willLoadFromBuffer(const u8 *buf) throws { return 0; }
+    virtual isize didLoadFromBuffer(const u8 *buf) throws { return 0; }
+    virtual isize willSaveToBuffer(u8 *buf) {return 0; }
     virtual isize didSaveToBuffer(u8 *buf) { return 0; }
-    
-    
-    //
-    // Controlling the state (see Thread class for details)
-    //
-    
-public:
-    
-    virtual bool isPoweredOff() const = 0;
-    virtual bool isPoweredOn() const = 0;
-    virtual bool isPaused() const = 0;
-    virtual bool isRunning() const = 0;
-    
-    virtual void suspend() = 0;
-    virtual void resume() = 0;
-
-    // Throws an exception if the emulator is not ready to power on
-    void isReady() const throws;
-
-protected:
-        
-    void powerOn();
-    void powerOff();
-    void run();
-    void pause();
-    void halt();
-    void warpOn();
-    void warpOff();
-    void debugOn();
-    void debugOff();
-    
-    void powerOnOff(bool value) { value ? powerOn() : powerOff(); }
-    void warpOnOff(bool value) { value ? warpOn() : warpOff(); }
-    void debugOnOff(bool value) { value ? debugOn() : debugOff(); }
-
-    virtual void _isReady() const throws { }
-    virtual void _powerOn() { }
-    virtual void _powerOff() { }
-    virtual void _run() { }
-    virtual void _pause() { }
-    virtual void _halt() { }
-    virtual void _warpOn() { }
-    virtual void _warpOff() { }
-    virtual void _debugOn() { }
-    virtual void _debugOff() { }
 };
 
 //
-// Standard implementations of _reset, _load, and _save
+// Standard implementations of _reset, _size, _checksum, _load, and _save
 //
+
+#define RESET_SNAPSHOT_ITEMS(hard) \
+util::SerResetter resetter; \
+applyToResetItems(resetter, hard);
 
 #define COMPUTE_SNAPSHOT_SIZE \
 util::SerCounter counter; \
 applyToPersistentItems(counter); \
 applyToResetItems(counter); \
 return counter.count;
-    
-#define RESET_SNAPSHOT_ITEMS(hard) \
-util::SerResetter resetter; \
-applyToResetItems(resetter, hard); \
-debug(SNP_DEBUG, "Resetted (%s)\n", hard ? "hard" : "soft"); \
-    
+
+#define COMPUTE_SNAPSHOT_CHECKSUM \
+util::SerChecker checker; \
+applyToPersistentItems(checker); \
+applyToResetItems(checker); \
+return checker.hash;
+
 #define LOAD_SNAPSHOT_ITEMS \
 util::SerReader reader(buffer); \
 applyToPersistentItems(reader); \
 applyToResetItems(reader); \
 debug(SNP_DEBUG, "Recreated from %zu bytes\n", reader.ptr - buffer); \
-return reader.ptr - buffer;
-    
+return (isize)(reader.ptr - buffer);
+
 #define SAVE_SNAPSHOT_ITEMS \
 util::SerWriter writer(buffer); \
 applyToPersistentItems(writer); \
 applyToResetItems(writer); \
 debug(SNP_DEBUG, "Serialized to %zu bytes\n", writer.ptr - buffer); \
-return writer.ptr - buffer;
+return (isize)(writer.ptr - buffer);

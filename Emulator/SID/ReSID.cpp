@@ -160,7 +160,7 @@ ReSID::didLoadFromBuffer(const u8 *buffer)
 }
  
 isize
-ReSID::willSaveToBuffer(const u8 *buffer)
+ReSID::willSaveToBuffer(u8 *buffer)
 {
     st = sid->read_state();
     return 0;

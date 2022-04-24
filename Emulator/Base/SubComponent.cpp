@@ -61,6 +61,18 @@ SubComponent::isRunning() const
     return c64.isRunning();
 }
 
+bool
+SubComponent::isSuspended() const
+{
+    return c64.isSuspended();
+}
+
+bool
+SubComponent::isHalted() const
+{
+    return c64.isHalted();
+}
+
 void
 SubComponent::suspend()
 {

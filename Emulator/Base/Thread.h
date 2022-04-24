@@ -14,32 +14,29 @@
 #include "Chrono.h"
 #include "Concurrency.h"
 
-/* This class manages the emulator thread that runs side by side to the
- * graphical user interface. The thread exists during the lifetime of the
- * emulator instance, but does not have to be active all the time. The
- * behavior of the thread is controlled by it's internal state. Four possible
- * states are distinguished:
+/* This class manages the emulator thread that runs side by side with the GUI.
+ * The thread exists during the lifetime of the emulator instance, but may not
+ * execute the emulator all the time. The exact behavior is controlled by the
+ * internal state. Five states are distinguished:
  *
  *        Off: The emulator is turned off
  *     Paused: The emulator is turned on, but not running
  *    Running: The emulator is turned on and running
+ *  Suspended: The emulator is paused for a very short period of time
  *     Halted: The emulator is shutting down
  *
- *         -----------------------------------------------
- *        |                     run()                     |
- *        |                                               V
- *    ---------   powerOn()   ---------     run()     ---------
- *   |   Off   |------------>| Paused  |------------>| Running |
- *   |         |<------------|         |<------------|         |
- *    ---------   powerOff()  ---------    pause()    ---------
- *        ^                                               |
- *        |                   powerOff()                  |
- *         -----------------------------------------------
+ *   ---------  powerOn   ---------    run     ---------  suspend   ---------
+ *  |   Off   |--------->| Paused  |--------->| Running |--------->|Suspended|
+ *  |         |<---------|         |<---------|         |<---------|         |
+ *   ---------  powerOff  ---------   pause    ---------   resume   ---------
+ *       ^                                         |
+ *       |                   powerOff()            |
+ *        -----------------------------------------
  *
- *     isPoweredOff()         isPaused()          isRunning()
- *   |----------------||-------------------||------------------|
- *                     |---------------------------------------|
- *                                    isPoweredOn()
+ *   isPoweredOff          isPaused             isRunning        isSuspended
+ *  |-------------||---------------------||--------------------||------------|
+ *                 |---------------------------------------------------------|
+ *                                       isPoweredOn
  *
  * State changes are triggered by the following functions:
  *
@@ -48,18 +45,32 @@
  * powerOn()  | off       | paused    | _powerOn()
  *            | paused    | paused    | none
  *            | running   | running   | none
+ *            | suspended | ---       | Error
  * ------------------------------------------------------------------------
  * powerOff() | off       | off       | none
  *            | paused    | off       | _powerOff()
  *            | running   | off       | _powerOff() + _pause()
+ *            | suspended | ---       | Error
  * ------------------------------------------------------------------------
- * run()      | off       | running   | _powerOn() + _run()
+ * run()      | off       | ---       | Error
  *            | paused    | running   | _run()
  *            | running   | running   | none
+ *            | suspended | ---       | Error
  * ------------------------------------------------------------------------
  * pause()    | off       | off       | none
  *            | paused    | paused    | none
  *            | running   | paused    | _pause()
+ *            | suspended | ---       | Error
+ * ------------------------------------------------------------------------
+ * suspend()  | off       | ---       | Error
+ *            | paused    | ---       | Error
+ *            | running   | suspended | none
+ *            | suspended | suspended | none
+ * ------------------------------------------------------------------------
+ * resume()   | off       | ---       | Error
+ *            | paused    | ---       | Error
+ *            | running   | ---       | Error
+ *            | suspended | running   | none
  * ------------------------------------------------------------------------
  * halt()     | --        | halted    | _halt()
  *
@@ -67,10 +78,32 @@
  * started which executes the thread's main() function. This function executes
  * a loop which periodically calls function execute(). After each iteration,
  * the thread is put to sleep to synchronize timing. Two synchronization modes
- * are supported: Periodic or Pulsed. In periodic mode, the thread is put to
+ * are offered: Periodic or Pulsed. In periodic mode, the thread is put to
  * sleep for a certain amout of time and wakes up automatically. The second
  * mode puts the thread to sleep indefinitely and waits for an external signal
  * (a call to wakeUp()) to continue.
+ *
+ * The Thread class provides a suspend-resume mechanism for pausing the thread
+ * temporarily. This functionality is utilized frequently by the GUI to carry
+ * out atomic operations that cannot be performed while the emulator is running.
+ * To pause the emulator temporarily, the critical code section can be embedded
+ * in a suspend/resume block like so:
+ *
+ *       suspend();
+ *       do something with the internal state;
+ *       resume();
+ *
+ * It it safe to nest multiple suspend/resume blocks, but it is essential
+ * that each call to suspend() is followed by a call to resume(). As a result,
+ * the critical code section must not be exited in the middle, e.g., by
+ * throwing an exception. It is therefore recommended to use the SUSPENDED
+ * macro which is exit-safe. It is used in the following way:
+ *
+ *    {  SUSPENDED
+ *
+ *       Do something with the internal state;
+ *       return or throw an exceptions as you like;
+ *    }
  *
  * To speed up emulation (e.g., during disk accesses), the emulator may be put
  * into warp mode. In this mode, timing synchronization is disabled causing the
@@ -82,12 +115,14 @@
  * Similar to warp mode, the emulator may be put into debug mode. This mode is
  * enabled when the GUI debugger is opend and disabled when the debugger is
  * closed. In debug mode, several time-consuming tasks are performed that are
- * usually left out. E.g., the CPU checks for breakpoints and records the
- * executed instruction in it's trace buffer.
+ * usually left out. E.g., the CPU records the callstack and tracks all
+ * executed instructions in a trace buffer.
  */
 
 class Thread : public C64Component, util::Wakeable {
-    
+
+protected:
+
     friend class C64;
     
     // The thread object
@@ -115,7 +150,7 @@ class Thread : public C64Component, util::Wakeable {
     
     // Counters
     isize loopCounter = 0;
-//    isize suspendCounter = 0;
+    isize suspendCounter = 0;
 
     // Synchronization variables
     util::Time delay = util::Time(1000000000 / 50);
@@ -187,8 +222,13 @@ public:
     
     bool isPoweredOn() const override { return state != EXEC_OFF; }
     bool isPoweredOff() const override { return state == EXEC_OFF; }
-    bool isRunning() const override { return state == EXEC_RUNNING; }
     bool isPaused() const override { return state == EXEC_PAUSED; }
+    bool isRunning() const override { return state == EXEC_RUNNING; }
+    bool isSuspended() const override { return state == EXEC_SUSPENDED; }
+    bool isHalted() const override { return state == EXEC_HALTED; }
+
+    void suspend() override;
+    void resume() override;
 
     void powerOn(bool blocking = true) throws;
     void powerOff(bool blocking = true);
@@ -225,3 +265,17 @@ private:
     // Wait until the thread has terminated
     void join() { if (thread.joinable()) thread.join(); }
 };
+
+struct AutoResume {
+
+    bool active = true;
+    C64Component *c;
+    AutoResume(C64Component *c) : c(c) { c->suspend(); }
+    ~AutoResume() { c->resume(); }
+};
+
+// DEPRECATED
+#define suspended \
+for (AutoResume _ar(this); _ar.active; _ar.active = false)
+
+#define SUSPENDED AutoResume _ar(this);

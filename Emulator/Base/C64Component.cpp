@@ -13,8 +13,16 @@
 void
 C64Component::initialize()
 {
-    for (C64Component *c : subComponents) { c->initialize(); }
-    _initialize();
+    try {
+
+        for (C64Component *c : subComponents) { c->initialize(); }
+        _initialize();
+
+    } catch (std::exception &e) {
+
+        warn("Failed to initialize: %s\n", e.what());
+        fatalError;
+    }
 }
 
 void

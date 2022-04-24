@@ -21,9 +21,9 @@
  * |  C64Component  |
  * ------------------
  *         |
- *         |   ------------------   ---------------------   ----------------
- *         |-->|     Thread     |-->| SuspendableThread |-->|     C64      |
- *         |   ------------------   ---------------------   ----------------
+ *         |   ------------------   ----------------
+ *         |-->|     Thread     |-->|    Amiga     |
+ *         |   ------------------   ----------------
  *         |   ------------------
  *         |-->|  SubComponent  |
  *             ------------------
@@ -39,9 +39,7 @@
  * execution of certain code components.
  *
  * Thread adds the ability to run the component asynchroneously. It implements
- * the emulator's state model (off, paused, running). SuspendableThread extends
- * the Thread class with the suspend/resume mechanism which can be utilized to
- * pause the emulator temporarily.
+ * the emulator's state model (off, paused, running).
  */
 
 namespace dump {
@@ -60,7 +58,11 @@ enum Category : usize {
 }
 
 class C64Object {
-                             
+
+protected:
+
+    static bool verbose;
+
     //
     // Initializing
     //
@@ -87,6 +89,7 @@ public:
  *
  *   - msg    Information message   (Shows up in all builds)
  *   - warn   Warning message       (Shows up in all builds)
+ *   - fatal  Error message + Exit  (Shows up in all builds)
  *   - debug  Debug message         (Shows up in debug builds, only)
  *   - plain  Plain debug message   (Shows up in debug builds, only)
  *   - trace  Detailed debug output (Shows up in debug builds, only)
@@ -95,8 +98,10 @@ public:
  * messages are prefixed by a more detailed string description produced by the
  * prefix() function.
  *
- * Debug, plain, and trace messages are accompanied by an optional 'verbose'
- * parameter. If 0 is passed in, no output will be generated.
+ * Debug, plain, and trace messages are accompanied by an optional 'enable'
+ * parameter. If 0 is passed in, no output will be generated. In addition,
+ * variable 'verbose' is checked which is set to true by default. By setting
+ * this variable to false, debug output can be silenced temporarily.
  *
  * Sidenote: In previous releases the printing macros were implemented in form
  * of variadic functions. Although this might seem to be superior at first
@@ -111,25 +116,28 @@ fprintf(stderr, format, ##__VA_ARGS__);
 #define warn(format, ...) \
 fprintf(stderr, "Warning: " format, ##__VA_ARGS__);
 
+#define fatal(format, ...) \
+{ fprintf(stderr, "Fatal: " format, ##__VA_ARGS__); exit(1); }
+
 #ifndef NDEBUG
 
-#define debug(verbose, format, ...) \
-if constexpr (verbose) { \
-fprintf(stderr, "%s:%d " format, getDescription(), __LINE__, ##__VA_ARGS__); }
+#define debug(enable, format, ...) \
+if constexpr (enable) { if (verbose) { \
+fprintf(stderr, "%s:%d " format, getDescription(), __LINE__, ##__VA_ARGS__); }}
 
-#define plain(verbose, format, ...) \
-if constexpr (verbose) { \
-fprintf(stderr, format, ##__VA_ARGS__); }
+#define plain(enable, format, ...) \
+if constexpr (enable) { if (verbose) { \
+fprintf(stderr, format, ##__VA_ARGS__); }}
 
-#define trace(verbose, format, ...) \
-if constexpr (verbose) { \
+#define trace(enable, format, ...) \
+if constexpr (enable) { if (verbose) { \
 prefix(); \
-fprintf(stderr, "%s:%d " format, getDescription(), __LINE__, ##__VA_ARGS__); }
+fprintf(stderr, "%s:%d " format, getDescription(), __LINE__, ##__VA_ARGS__); }}
 
 #else
 
-#define debug(verbose, format, ...)
-#define plain(verbose, format, ...)
-#define trace(verbose, format, ...)
+#define debug(enable, format, ...)
+#define plain(enable, format, ...)
+#define trace(enable, format, ...)
 
 #endif

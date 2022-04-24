@@ -349,3 +349,29 @@ Thread::wakeUp()
 {
     if (mode == SyncMode::Pulsed) wakeUp();
 }
+
+void
+Thread::suspend()
+{
+    debug(RUN_DEBUG, "Suspending (%ld)...\n", suspendCounter);
+
+    if (suspendCounter || isRunning()) {
+
+        suspendCounter++;
+        assert(state == EXEC_RUNNING || state == EXEC_SUSPENDED);
+        changeStateTo(EXEC_SUSPENDED, true);
+    }
+}
+
+void
+Thread::resume()
+{
+    debug(RUN_DEBUG, "Resuming (%ld)...\n", suspendCounter);
+
+    if (suspendCounter && --suspendCounter == 0) {
+
+        assert(state == EXEC_SUSPENDED);
+        changeStateTo(EXEC_RUNNING, true);
+        run();
+    }
+}

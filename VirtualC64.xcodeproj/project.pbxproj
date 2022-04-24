@@ -189,7 +189,6 @@
 		50A22A252618723200C9FB1E /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A242618723200C9FB1E /* Canvas.swift */; };
 		50A22A2A2618725200C9FB1E /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A292618725200C9FB1E /* Console.swift */; };
 		50A22A2F2618845800C9FB1E /* TextureRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A22A2E2618845800C9FB1E /* TextureRect.swift */; };
-		50A3278A26C2DBD800B96AB2 /* SuspendableThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A3278826C2DBD800B96AB2 /* SuspendableThread.cpp */; };
 		50A519411B8DA230006771E2 /* drive_click.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519401B8DA230006771E2 /* drive_click.aiff */; };
 		50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */; };
 		50A9A088250DE90900723D32 /* PageFox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A9A086250DE90900723D32 /* PageFox.cpp */; };
@@ -624,8 +623,6 @@
 		50A22A2E2618845800C9FB1E /* TextureRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureRect.swift; sourceTree = "<group>"; };
 		50A2D7AE24AF944500671F38 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		50A2D7B024AF94B400671F38 /* Aliases.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Aliases.h; sourceTree = "<group>"; };
-		50A3278826C2DBD800B96AB2 /* SuspendableThread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SuspendableThread.cpp; sourceTree = "<group>"; };
-		50A3278926C2DBD800B96AB2 /* SuspendableThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SuspendableThread.h; sourceTree = "<group>"; };
 		50A519401B8DA230006771E2 /* drive_click.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = drive_click.aiff; sourceTree = "<group>"; };
 		50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = drive_snatch_uae.aiff; sourceTree = "<group>"; };
 		50A9A086250DE90900723D32 /* PageFox.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PageFox.cpp; sourceTree = "<group>"; };
@@ -1479,8 +1476,6 @@
 				50461BBF26B522A50019CEDF /* ThreadTypes.h */,
 				50461BBD26B522450019CEDF /* Thread.h */,
 				50461BBC26B522450019CEDF /* Thread.cpp */,
-				50A3278926C2DBD800B96AB2 /* SuspendableThread.h */,
-				50A3278826C2DBD800B96AB2 /* SuspendableThread.cpp */,
 				50E806C025A1DE9200F08732 /* MsgQueueTypes.h */,
 				504C42F424AF29AB00E69CAE /* MsgQueue.h */,
 				504C42F124AF29AB00E69CAE /* MsgQueue.cpp */,
@@ -1879,7 +1874,6 @@
 				5098C57F2658E1F400E05EFC /* DragAndDropImageView.swift in Sources */,
 				504C437224AF29AC00E69CAE /* FlashRom.cpp in Sources */,
 				50DBB3D12641101E006F45E6 /* DmaDebugger.cpp in Sources */,
-				50A3278A26C2DBD800B96AB2 /* SuspendableThread.cpp in Sources */,
 				504C43A024AF29AC00E69CAE /* FastVoice.cpp in Sources */,
 				50BE4B7224E81266008F39C9 /* CIARegs.cpp in Sources */,
 				50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */,

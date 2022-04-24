@@ -7,7 +7,6 @@ C64Component.cpp
 #Properties.cpp
 SubComponent.cpp
 Thread.cpp
-SuspendableThread.cpp
 MsgQueue.cpp
 RegressionTester.cpp
 
