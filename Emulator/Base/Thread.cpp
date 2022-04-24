@@ -26,7 +26,6 @@ Thread::~Thread()
 template <> void
 Thread::execute <Thread::SyncMode::Periodic> ()
 {
-    // Call the execution function
     loadClock.go();
     execute();
     loadClock.stop();
@@ -35,7 +34,6 @@ Thread::execute <Thread::SyncMode::Periodic> ()
 template <> void
 Thread::execute <Thread::SyncMode::Pulsed> ()
 {
-    // Call the execution function
     loadClock.go();
     execute();
     loadClock.stop();

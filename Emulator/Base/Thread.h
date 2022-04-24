@@ -262,7 +262,6 @@ private:
 
 struct AutoResume {
 
-    // bool active = true;
     C64Component *c;
     AutoResume(C64Component *c) : c(c) { c->suspend(); }
     ~AutoResume() { c->resume(); }

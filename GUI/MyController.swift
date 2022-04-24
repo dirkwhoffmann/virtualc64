@@ -236,15 +236,15 @@ extension MyController {
         // Convert 'self' to a void pointer
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
         
-        c64.setListener(myself) { (ptr, type, data) in
-            
+        c64.setListener(myself) { (ptr, type, data1, data2) in
+
             // Convert void pointer back to 'self'
             let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()
-            
+
             // Process message in the main thread
             DispatchQueue.main.async {
                 let mType = MsgType(rawValue: type)
-                myself.processMessage(Message(type: mType!, data: data))
+                myself.processMessage(Message(type: mType!, data1: data1, data2: data2))
             }
         }
     }
@@ -302,12 +302,17 @@ extension MyController {
     }
 
 	func processMessage(_ msg: Message) {
-		
-		var driveNr: Int { return msg.data & 0xFF }
+
+        var word1: Int { return (Int(msg.data1) >> 16) & 0xFFFF }
+        var word2: Int { return Int(msg.data1) & 0xFFFF }
+        var word3: Int { return (Int(msg.data2) >> 16) & 0xFFFF }
+        var word4: Int { return Int(msg.data2) & 0xFFFF }
+
+		var driveNr: Int { return Int(msg.data1) & 0xFF }
 		var driveId: DriveID { return DriveID(rawValue: driveNr)! }
-		var halftrack: Int { return (msg.data >> 8) & 0xFF; }
-		var vol: Int { return (msg.data >> 16) & 0xFF; }
-		var pan: Int { return (msg.data >> 24) & 0xFF; }
+		var halftrack: Int { return (Int(msg.data1) >> 8) & 0xFF; }
+		var vol: Int { return (Int(msg.data1) >> 16) & 0xFF; }
+		var pan: Int { return (Int(msg.data1) >> 24) & 0xFF; }
 		
 		// Only proceed if the proxy object is still alive
 		if c64 == nil { return }
@@ -392,10 +397,10 @@ extension MyController {
 			break
 			
 		case .BREAKPOINT_REACHED:
-			inspector?.signalBreakPoint(pc: msg.data)
+			inspector?.signalBreakPoint(pc: Int(msg.data1))
 			
 		case .WATCHPOINT_REACHED:
-			inspector?.signalWatchPoint(pc: msg.data)
+			inspector?.signalWatchPoint(pc: Int(msg.data1))
 			
 		case .CPU_JAMMED:
 			refreshStatusBar()
@@ -454,7 +459,7 @@ extension MyController {
 			break
 			
 		case .VC1530_TAPE:
-			if msg.data == 1 {
+			if msg.data1 == 1 {
 				mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
 			}
 			refreshStatusBar()

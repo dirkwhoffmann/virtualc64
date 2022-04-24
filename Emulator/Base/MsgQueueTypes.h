@@ -237,7 +237,8 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
 typedef struct
 {
     MsgType type;
-    long data;
+    u32 data1;
+    u32 data2;
 }
 Message;
 
@@ -246,4 +247,4 @@ Message;
 // Signatures
 //
 
-typedef void Callback(const void *, long, long);
+typedef void Callback(const void *, long, u32, u32);
