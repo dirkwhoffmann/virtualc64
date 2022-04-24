@@ -98,7 +98,7 @@ public:
     const SectorInfo &sectorLayout(Halftrack ht, Sector nr);
     
     // Returns the number of entries in the error log
-    isize numErrors(Halftrack ht) { return errorLog[ht].size(); }
+    isize numErrors(Halftrack ht) { return isize(errorLog[ht].size()); }
     
     // Reads an error message from the error log
     string errorMessage(Halftrack ht, isize nr) const { return errorLog[ht].at(nr); }

@@ -237,8 +237,15 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
 typedef struct
 {
     MsgType type;
-    u32 data1;
-    u32 data2;
+
+    /* The payload of a message consists of up to four (signed) 32-bit values.
+     * We avoid the usage of 64-bit types inside this structure to make it
+     * easily processable by JavaScript (web ports).
+     */
+    i32 data1;
+    i32 data2;
+    i32 data3;
+    i32 data4;
 }
 Message;
 
@@ -247,4 +254,4 @@ Message;
 // Signatures
 //
 
-typedef void Callback(const void *, long, u32, u32);
+typedef void Callback(const void *, long, i32, i32, i32, i32);

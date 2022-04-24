@@ -20,34 +20,33 @@ MsgQueue::setListener(const void *listener, Callback *callback)
 
         // Send all pending messages
         while (!queue.isEmpty()) {
+
             Message &msg = queue.read();
-            callback(listener, msg.type, msg.data1, msg.data2);
+            callback(listener,
+                     msg.type, msg.data1, msg.data2, msg.data3, msg.data4);
         }
+        
         put(MSG_REGISTER);
     }
 }
 
 void
-MsgQueue::put(MsgType type, isize data1, isize data2)
+MsgQueue::put(MsgType type, isize d1, isize d2, isize d3, isize d4)
 {
     {   SYNCHRONIZED
 
-        auto payload1 = u32(data1);
-        auto payload2 = u32(data2);
+        auto i1 = i32(d1);
+        auto i2 = i32(d2);
+        auto i3 = i32(d3);
+        auto i4 = i32(d4);
 
         debug(QUEUE_DEBUG,
-              "%s [%u:%u]\n", MsgTypeEnum::key(type), payload1, payload2);
+              "%s [%d:%d:%d:%d]\n", MsgTypeEnum::key(type), i1, i2, i3, i4);
 
         // Send the message immediately if a lister has been registered
-        if (listener) { callback(listener, type, payload1, payload2); return; }
+        if (listener) { callback(listener, type, i1, i2, i3, i4); return; }
 
         // Otherwise, store it in the ring buffer
-        Message msg = { type, payload1, payload2 }; queue.write(msg);
+        Message msg = { type, i1, i2, i3, i4 }; queue.write(msg);
     }
-}
-
-void
-MsgQueue::put(MsgType type, u16 val1, u16 val2, u16 val3, u16 val4)
-{
-    put(type, HI_W_LO_W(val1,val2), HI_W_LO_W(val3,val4));
 }

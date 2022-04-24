@@ -236,15 +236,15 @@ extension MyController {
         // Convert 'self' to a void pointer
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
         
-        c64.setListener(myself) { (ptr, type, data1, data2) in
+        c64.setListener(myself) { (ptr, type, d1, d2, d3, d4) in
 
             // Convert void pointer back to 'self'
             let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()
 
             // Process message in the main thread
             DispatchQueue.main.async {
-                let mType = MsgType(rawValue: type)
-                myself.processMessage(Message(type: mType!, data1: data1, data2: data2))
+                myself.processMessage(Message(type: MsgType(rawValue: type)!,
+                                              data1: d1, data2: d2, data3: d3, data4: d4))
             }
         }
     }
@@ -303,16 +303,16 @@ extension MyController {
 
 	func processMessage(_ msg: Message) {
 
-        var word1: Int { return (Int(msg.data1) >> 16) & 0xFFFF }
-        var word2: Int { return Int(msg.data1) & 0xFFFF }
-        var word3: Int { return (Int(msg.data2) >> 16) & 0xFFFF }
-        var word4: Int { return Int(msg.data2) & 0xFFFF }
+        var data1: Int { return Int(msg.data1) }
+        var data2: Int { return Int(msg.data2) }
+        var data3: Int { return Int(msg.data3) }
+        var data4: Int { return Int(msg.data4) }
 
-		var driveNr: Int { return Int(msg.data1) & 0xFF }
+		var driveNr: Int { return data1 }
 		var driveId: DriveID { return DriveID(rawValue: driveNr)! }
-		var halftrack: Int { return (Int(msg.data1) >> 8) & 0xFF; }
-		var vol: Int { return (Int(msg.data1) >> 16) & 0xFF; }
-		var pan: Int { return (Int(msg.data1) >> 24) & 0xFF; }
+        var halftrack: Int { return data2; }
+		var vol: Int { return data3; }
+		var pan: Int { return data4; }
 		
 		// Only proceed if the proxy object is still alive
 		if c64 == nil { return }
