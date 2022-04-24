@@ -95,7 +95,7 @@ C64::prefix() const
 void
 C64::reset(bool hard)
 {
-    suspended {
+    {   SUSPENDED
         
         // Execute the standard reset routine
         C64Component::reset(hard);
@@ -498,7 +498,7 @@ C64::configure(C64Model model)
 {
     assert_enum(C64Model, model);
     
-    suspended {
+    {   SUSPENDED
         
         switch(model) {
                 
@@ -1011,13 +1011,17 @@ C64::endFrame()
 void
 C64::setFlag(u32 flag)
 {
-    synchronized { flags |= flag; }
+    SYNCHRONIZED
+
+    flags |= flag;
 }
 
 void
 C64::clearFlag(u32 flag)
 {
-    synchronized { flags &= ~flag; }
+    SYNCHRONIZED
+
+    flags &= ~flag;
 }
 
 void
@@ -1444,7 +1448,7 @@ C64::saveRom(RomType type, const string &path)
 void
 C64::flash(const AnyFile &file)
 {
-    suspended {
+    {   SUSPENDED
         
         switch (file.type()) {
                 
@@ -1482,7 +1486,7 @@ C64::flash(const AnyCollection &file, isize nr)
     u64 size = (u64)file.itemSize(nr);
     if (size <= 2) return;
     
-    suspended {
+    {   SUSPENDED
         
         switch (file.type()) {
                 
@@ -1514,7 +1518,7 @@ C64::flash(const FSDevice &fs, isize nr)
         return;
     }
     
-    suspended {
+    {   SUSPENDED
         
         size = std::min(size - 2, (u64)(0x10000 - addr));
         fs.copyFile(nr, mem.ram + addr, size, 2);

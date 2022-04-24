@@ -139,7 +139,7 @@ Expert::pressButton(isize nr)
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr).c_str());
     
-    suspended {
+    {   SUSPENDED
         
         switch (nr) {
                 

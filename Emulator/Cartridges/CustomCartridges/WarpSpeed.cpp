@@ -63,5 +63,8 @@ WarpSpeed::pressButton(isize nr)
 {
     assert(nr <= numButtons());
 
-    suspended { c64.softReset(); }
+    {   SUSPENDED
+
+        c64.softReset();
+    }
 }

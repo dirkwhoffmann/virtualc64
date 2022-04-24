@@ -27,7 +27,7 @@ TOD::getDescription() const
 void
 TOD::_inspect() const
 {
-    synchronized {
+    {   SYNCHRONIZED
         
         info.time = tod;
         info.latch = latch;

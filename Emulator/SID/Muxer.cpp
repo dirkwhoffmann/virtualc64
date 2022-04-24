@@ -165,17 +165,20 @@ Muxer::setConfigItem(Option option, i64 value)
     switch (option) {
                         
         case OPT_SID_POWER_SAVE:
-            
-            suspended { config.powerSave = value; }
+        {
+            {   SUSPENDED
+
+                config.powerSave = value;
+            }
             return;
-            
+        }
         case OPT_SID_REVISION:
-            
+        {
             if (!SIDRevisionEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INVARG, SIDRevisionEnum::keyList());
             }
             
-            suspended {
+            {   SUSPENDED
                 
                 config.revision = (SIDRevision)value;
                 for (int i = 0; i < 4; i++) {
@@ -184,10 +187,10 @@ Muxer::setConfigItem(Option option, i64 value)
                 }
             }
             return;
-            
+        }
         case OPT_SID_FILTER:
-            
-            suspended {
+        {
+            {   SUSPENDED
                 
                 config.filter = value;
                 for (int i = 0; i < 4; i++) {
@@ -196,26 +199,26 @@ Muxer::setConfigItem(Option option, i64 value)
                 }
             }
             return;
-            
+        }
         case OPT_SID_ENGINE:
-            
+        {
             if (!SIDEngineEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INVARG, SIDEngineEnum::keyList());
             }
 
-            suspended {
+            {   SUSPENDED
 
                 config.engine = (SIDEngine)value;
             }
             return;
-            
+        }
         case OPT_SID_SAMPLING:
-            
+        {
             if (!SamplingMethodEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INVARG, SamplingMethodEnum::keyList());
             }
 
-            suspended {
+            {   SUSPENDED
                 
                 config.sampling = (SamplingMethod)value;
                 for (int i = 0; i < 4; i++) {
@@ -224,7 +227,7 @@ Muxer::setConfigItem(Option option, i64 value)
                 }
             }
             return;
-            
+        }
         case OPT_AUDVOLL:
             
             config.volL = std::clamp(value, 0LL, 100LL);
@@ -258,7 +261,7 @@ Muxer::setConfigItem(Option option, long id, i64 value)
     switch (option) {
                      
         case OPT_SID_ENABLE:
-
+        {
             assert(id >= 0 && id <= 3);
 
             if (id == 0 && value == false) {
@@ -270,7 +273,7 @@ Muxer::setConfigItem(Option option, long id, i64 value)
                 return;
             }
             
-            suspended {
+            {   SUSPENDED
                 
                 REPLACE_BIT(config.enabled, id, value);
                 clearSampleBuffer(id);
@@ -281,9 +284,9 @@ Muxer::setConfigItem(Option option, long id, i64 value)
                 }
             }
             return;
-            
+        }
         case OPT_SID_ADDRESS:
-
+        {
             assert(id >= 0 && id <= 3);
 
             if (id == 0 && value != 0xD400) {
@@ -299,13 +302,13 @@ Muxer::setConfigItem(Option option, long id, i64 value)
                 return;
             }
             
-            suspended {
+            {   SUSPENDED
                 
                 config.address[id] = (u16)value;
                 clearSampleBuffer(id);
             }
             return;
-            
+        }
         case OPT_AUDVOL:
             
             assert(id >= 0 && id <= 3);

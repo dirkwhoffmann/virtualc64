@@ -142,7 +142,7 @@ Datasette::tapeDuration(isize pos)
 void
 Datasette::insertTape(TAPFile &file)
 {
-    suspended {
+    {   SUSPENDED
                 
         // Allocate pulse buffer
         isize numPulses = file.numPulses();
@@ -172,7 +172,7 @@ Datasette::ejectTape()
     // Only proceed if a tape is present
     if (!hasTape()) return;
 
-    suspended {
+    {   SUSPENDED
         
         debug(TAP_DEBUG, "Ejecting tape...\n");
         

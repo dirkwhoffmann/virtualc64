@@ -170,7 +170,7 @@ C64Memory::setConfigItem(Option option, i64 value)
 void
 C64Memory::_inspect() const
 {
-    synchronized {
+    {   SYNCHRONIZED
         
         info.exrom = expansionport.getExromLine();
         info.game = expansionport.getGameLine();

@@ -219,11 +219,9 @@ VICII::setConfigItem(Option option, i64 value)
             if (!PaletteEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INVARG, PaletteEnum::keyList());
             }
-            
-            suspended {
-                config.palette = (Palette)value;
-                updatePalette();
-            }
+
+            config.palette = (Palette)value;
+            updatePalette();
             return;
             
         case OPT_BRIGHTNESS:
@@ -295,7 +293,7 @@ VICII::setRevision(VICIIRevision revision)
 {
     assert_enum(VICIIRevision, revision);
     
-    suspended {
+    {   SUSPENDED
         
         if (isPoweredOn()) {
             
@@ -339,7 +337,7 @@ VICII::setRevision(VICIIRevision revision)
 void
 VICII::setSpeed(VICIISpeed speed)
 {
-    suspended {
+    {   SUSPENDED
         
         config.speed = speed;
         
@@ -353,7 +351,7 @@ VICII::setSpeed(VICIISpeed speed)
 void
 VICII::_inspect() const
 {
-    synchronized {
+    {   SYNCHRONIZED
         
         u8 ctrl1 = reg.current.ctrl1;
         u8 ctrl2 = reg.current.ctrl2;
@@ -552,9 +550,10 @@ VICII::clearStats()
 SpriteInfo
 VICII::getSpriteInfo(int nr)
 {
-    SpriteInfo result;
-    synchronized { result = spriteInfo[nr]; }
-    return result;
+    {   SYNCHRONIZED
+
+        return spriteInfo[nr];
+    }
 }
 
 void

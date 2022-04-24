@@ -75,7 +75,7 @@ ReSID::setClockFrequency(u32 frequency)
 void
 ReSID::_inspect() const
 {
-    synchronized {
+    {   SYNCHRONIZED
         
         reSID::SID::State state = sid->read_state();
         u8 *reg = (u8 *)state.sid_register;
@@ -180,8 +180,11 @@ ReSID::setRevision(SIDRevision revision)
 
     assert(revision == 0 || revision == 1);
     model = revision;
-    
-    suspended { sid->set_chip_model((reSID::chip_model)revision); }
+
+    {   SUSPENDED
+
+        sid->set_chip_model((reSID::chip_model)revision);
+    }
         
     assert((SIDRevision)sid->sid_model == revision);
     trace(SID_DEBUG, "Emulating SID revision %s.\n", SIDRevisionEnum::key(revision));
@@ -205,8 +208,11 @@ ReSID::setAudioFilter(bool value)
     assert(!isRunning());
 
     emulateFilter = value;
-    
-    suspended { sid->enable_filter(value); }
+
+    {   SUSPENDED
+
+        sid->enable_filter(value);
+    }
     
     trace(SID_DEBUG, "%s audio filter emulation.\n", value ? "Enabling" : "Disabling");
 }
@@ -242,8 +248,9 @@ ReSID::setSamplingMethod(SamplingMethod value)
     }
 
     samplingMethod = value;
-    
-    suspended {
+
+    {   SUSPENDED
+
         sid->set_sampling_parameters((double)clockFrequency,
                                      (reSID::sampling_method)samplingMethod,
                                      (double)sampleRate);

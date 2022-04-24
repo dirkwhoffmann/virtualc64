@@ -51,7 +51,7 @@ CPU<M>::_reset(bool hard)
 template <typename M> void
 CPU<M>::_inspect() const
 {    
-    synchronized {
+    {   SYNCHRONIZED
         
         info.cycle = cycle;
         info.reg = reg;

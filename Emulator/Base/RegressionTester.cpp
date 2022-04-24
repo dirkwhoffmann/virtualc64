@@ -79,7 +79,7 @@ RegressionTester::dumpTexture(C64 &c64, const string &filename)
 void
 RegressionTester::dumpTexture(C64 &c64, std::ostream& os)
 {
-    suspended {
+    {   SUSPENDED
         
         auto buffer = (u32 *) c64.vic.stableEmuTexture();
         

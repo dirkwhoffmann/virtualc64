@@ -234,7 +234,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
     assert(c);
     assert(c->isSupported());
     
-    suspended {
+    {   SUSPENDED
         
         // Remove old cartridge (if any) and assign new one
         detachCartridge();
@@ -281,7 +281,7 @@ ExpansionPort::attachCartridge(CRTFile *file, bool reset)
     Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, *file);
         
     // Attach cartridge to the expansion port
-    suspended {
+    {   SUSPENDED
         
         attachCartridge(cartridge);
         if (reset) c64.hardReset();
@@ -300,7 +300,7 @@ ExpansionPort::attachIsepicCartridge()
 void
 ExpansionPort::detachCartridge()
 {
-    suspended {
+    {   SUSPENDED
         
         if (cartridge) {
             
@@ -318,7 +318,7 @@ ExpansionPort::detachCartridge()
 void
 ExpansionPort::detachCartridgeAndReset()
 {
-    suspended {
+    {   SUSPENDED
         
         detachCartridge();
         c64.hardReset();

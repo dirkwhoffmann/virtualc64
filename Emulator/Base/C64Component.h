@@ -13,22 +13,19 @@
 #include "C64Object.h"
 #include "Serialization.h"
 #include "Concurrency.h"
-
 #include <vector>
-#include <iostream>
-
-// DEPRECATED
-#define synchronized \
-for (util::AutoMutex _am(mutex); _am.active; _am.active = false)
 
 /* The following macro can be utilized to prevent multiple threads to enter the
  * same code block. It mimics the behaviour of the well known Java construct
  * 'synchronized(this) { }'. To secure a code-block, use the following syntax:
- * { SYNCHRONIZED <commands> }
+ *
+ *     { SYNCHRONIZED <commands> }
+ *
+ * To prevent concurrent execution of a single static function, use:
+ *
+ *     { STATIC_SYNCHRONIZED <commands> }
  */
 #define SYNCHRONIZED util::AutoMutex _am(mutex);
-
-// Variant for static methods
 #define STATIC_SYNCHRONIZED static std::mutex m; std::lock_guard<std::mutex> lock(m);
 
 struct NoCopy
@@ -65,9 +62,7 @@ protected:
     //
     
 public:
-    
-    virtual ~C64Component() { };
-    
+
     /* Initializes the component and it's subcomponents. The initialization
      * procedure is initiated once, in the constructor of the C64 class. By
      * default, a component enters it's initial configuration. Custom actions
@@ -166,11 +161,12 @@ public:
      * cached values in order to return up-to-date results.
      */
     template<class T> T getInfo(T &cachedValues) const {
-        
-        if (!isRunning()) inspect();
-        
-        synchronized { return cachedValues; }
-        unreachable;
+
+        {   SYNCHRONIZED
+
+            if (!isRunning()) inspect();
+            return cachedValues;
+        }
     }
         
     

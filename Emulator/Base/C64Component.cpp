@@ -10,7 +10,6 @@
 #include "config.h"
 #include "C64Component.h"
 #include "Checksum.h"
-// #include "Serialization.h"
 
 void
 C64Component::initialize()

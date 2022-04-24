@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "ActionReplay.h"
 #include "C64.h"
 
 //
@@ -63,7 +64,7 @@ ActionReplay3::pressButton(isize nr)
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr).c_str());
     
-    suspended {
+    {   SUSPENDED
         
         switch (nr) {
                 
@@ -93,7 +94,7 @@ ActionReplay3::releaseButton(isize nr)
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr).c_str());
     
-    suspended {
+    {   SUSPENDED
         
         switch (nr) {
                 
@@ -221,7 +222,7 @@ ActionReplay::pressButton(isize nr)
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr).c_str());
     
-    suspended {
+    {   SUSPENDED
         
         switch (nr) {
                 
@@ -249,7 +250,7 @@ ActionReplay::releaseButton(isize nr)
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr).c_str());
     
-    suspended {
+    {   SUSPENDED
         
         switch (nr) {
                 

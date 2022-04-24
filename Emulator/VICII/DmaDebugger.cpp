@@ -105,8 +105,8 @@ DmaDebugger::setConfigItem(Option option, i64 value)
     switch (option) {
             
         case OPT_DMA_DEBUG_ENABLE:
-                     
-            suspended {
+        {
+            {   SUSPENDED
                 
                 config.dmaDebug = value;
                 vic.resetDmaTextures();
@@ -115,7 +115,7 @@ DmaDebugger::setConfigItem(Option option, i64 value)
                 msgQueue.put(value ? MSG_DMA_DEBUG_ON : MSG_DMA_DEBUG_OFF);
             }
             return;
-
+        }
         case OPT_DMA_DEBUG_MODE:
             
             if (!DmaDisplayModeEnum::isValid(value)) {

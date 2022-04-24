@@ -35,7 +35,7 @@
  * C64Component defines the base functionality of all hardware components. It
  * comprises functions for initializing, configuring, and serializing the
  * object, as well as functions for powering up and down, running and
- * pausing. Furthermore, a 'synchronized' macro is provided to prevent mutual
+ * pausing. Furthermore, a 'SYNCHRONIZED' macro is provided to prevent mutual
  * execution of certain code components.
  *
  * Thread adds the ability to run the component asynchroneously. It implements

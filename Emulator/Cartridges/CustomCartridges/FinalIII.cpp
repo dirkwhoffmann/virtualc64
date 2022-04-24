@@ -127,7 +127,7 @@ FinalIII::pressButton(isize nr)
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr).c_str());
     
-    suspended {
+    {   SUSPENDED
         
         switch (nr) {
                 
@@ -151,7 +151,7 @@ FinalIII::releaseButton(isize nr)
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr).c_str());
     
-    suspended {
+    {   SUSPENDED
         
         switch (nr) {
                 

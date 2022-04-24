@@ -13,7 +13,7 @@
 void
 MsgQueue::setListener(const void *listener, Callback *callback)
 {
-    synchronized {
+    {   SYNCHRONIZED
         
         this->listener = listener;
         this->callback = callback;
@@ -30,7 +30,7 @@ MsgQueue::setListener(const void *listener, Callback *callback)
 void
 MsgQueue::put(MsgType type, long data)
 {
-    synchronized {
+    {   SYNCHRONIZED
         
         debug(QUEUE_DEBUG, "%s [%ld]\n", MsgTypeEnum::key(type), data);
         

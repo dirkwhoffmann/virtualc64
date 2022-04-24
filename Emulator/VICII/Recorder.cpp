@@ -38,12 +38,15 @@ void
 Recorder::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
-    
-    os << tab("FFmpeg path") << ffmpegPath() << std::endl;
-    os << tab("Installed") << bol(hasFFmpeg()) << std::endl;
-    os << tab("Video pipe") << bol(videoPipe != -1) << std::endl;
-    os << tab("Audio pipe") << bol(audioPipe != -1) << std::endl;
-    os << tab("Recording") << bol(isRecording()) << std::endl;
+
+    if (category == Category::State) {
+
+        os << tab("FFmpeg path") << ffmpegPath() << std::endl;
+        os << tab("Installed") << bol(hasFFmpeg()) << std::endl;
+        os << tab("Video pipe") << bol(videoPipe != -1) << std::endl;
+        os << tab("Audio pipe") << bol(audioPipe != -1) << std::endl;
+        os << tab("Recording") << bol(isRecording()) << std::endl;
+    }
 }
     
 util::Time
@@ -58,7 +61,7 @@ Recorder::startRecording(int x1, int y1, int x2, int y2,
                          long aspectX,
                          long aspectY)
 {
-    synchronized {
+    {   SYNCHRONIZED
         
         debug(REC_DEBUG, "startRecording(%d,%d,%d,%d,%ld,%ld,%ld)\n",
               x1, y1, x2, y2, bitRate, aspectX, aspectY);
@@ -90,7 +93,7 @@ Recorder::startRecording(int x1, int y1, int x2, int y2,
         if (mkfifo(audioPipePath().c_str(), 0666) == -1) return false;
         
         debug(REC_DEBUG, "Pipes created\n");
-        dump();
+        dump(Category::State);
                 
         //
         // Assemble the command line arguments for the video encoder
@@ -201,7 +204,7 @@ Recorder::stopRecording()
 {
     debug(REC_DEBUG, "stopRecording()\n");
 
-    synchronized {
+    {   SYNCHRONIZED
         
         if (isRecording()) {
             state = State::finalize;
@@ -256,7 +259,7 @@ Recorder::vsyncHandler()
     // Quick-exit if the recorder is not active
     if (state == State::wait) return;
     
-    synchronized {
+    {   SYNCHRONIZED
         
         switch (state) {
                 

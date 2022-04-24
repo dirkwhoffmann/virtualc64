@@ -146,7 +146,7 @@ Keyboard::getRowValues(u8 columnMask, u8 thresholdMask)
 void
 Keyboard::press(C64Key key)
 {
-    synchronized {
+    {   SYNCHRONIZED
 
         abortAutoTyping();
         _press(key);
@@ -156,7 +156,7 @@ Keyboard::press(C64Key key)
 void
 Keyboard::pressRestore()
 {
-    synchronized {
+    {   SYNCHRONIZED
         
         abortAutoTyping();
         _pressRestore();        
@@ -166,19 +166,19 @@ Keyboard::pressRestore()
 void
 Keyboard::release(C64Key key)
 {
-    synchronized { _release(key); }
+    SYNCHRONIZED _release(key);
 }
 
 void
 Keyboard::releaseRestore()
 {
-    synchronized { _releaseRestore(); }
+    SYNCHRONIZED _releaseRestore();
 }
 
 void
 Keyboard::releaseAll()
 {
-    synchronized { _releaseAll(); }
+    SYNCHRONIZED _releaseAll();
 }
 
 void
@@ -307,7 +307,7 @@ Keyboard::autoType(const string &text)
 void
 Keyboard::scheduleKeyPress(C64Key key, i64 delay)
 {
-    synchronized { _scheduleKeyAction(KeyAction::Action::press, key, delay); }
+    SYNCHRONIZED _scheduleKeyAction(KeyAction::Action::press, key, delay);
 }
 
 void
@@ -324,7 +324,7 @@ Keyboard::scheduleKeyPress(char c, i64 delay)
 void
 Keyboard::scheduleKeyRelease(C64Key key, i64 delay)
 {
-    synchronized { _scheduleKeyAction(KeyAction::Action::release, key, delay); }
+    SYNCHRONIZED _scheduleKeyAction(KeyAction::Action::release, key, delay);
 }
 
 void
@@ -341,9 +341,7 @@ Keyboard::scheduleKeyRelease(char c, i64 delay)
 void
 Keyboard::scheduleKeyReleaseAll(i64 delay)
 {
-    synchronized {
-        _scheduleKeyAction(KeyAction::Action::releaseAll, C64Key(0), delay);
-    }
+    SYNCHRONIZED _scheduleKeyAction(KeyAction::Action::releaseAll, C64Key(0), delay);
 }
 
 void
@@ -373,42 +371,41 @@ Keyboard::vsyncHandler()
     // Only take action when the timer fires
     if (delay == 0) {
         
+        SYNCHRONIZED
+
         // Process all pending auto-typing events
-        synchronized {
-                        
-            while (delay == 0 && !actions.empty()) {
-                
-                KeyAction &action = actions.front();
-                actions.pop();
-                
-                // trace(KBD_DEBUG, "%d: key (%d,%d) next: %lld\n",
-                //       action.type, action.row, action.col, action.delay);
-                
-                // Process event
-                switch (action.type) {
-                        
-                    case KeyAction::Action::press:
-                        
-                        debug(KBD_DEBUG, "Pressing %zd\n", action.key.nr);
-                        _press(action.key);
-                        break;
-                        
-                    case KeyAction::Action::release:
-                        
-                        debug(KBD_DEBUG, "Releasing %zd\n", action.key.nr);
-                        _release(action.key);
-                        break;
-                        
-                    case KeyAction::Action::releaseAll:
-                        
-                        debug(KBD_DEBUG, "Releasing all\n");
-                        _releaseAll();
-                        break;
-                }
-                
-                // Schedule next event
-                delay = actions.empty() ? INT64_MAX : actions.front().delay;
+        while (delay == 0 && !actions.empty()) {
+
+            KeyAction &action = actions.front();
+            actions.pop();
+
+            // trace(KBD_DEBUG, "%d: key (%d,%d) next: %lld\n",
+            //       action.type, action.row, action.col, action.delay);
+
+            // Process event
+            switch (action.type) {
+
+                case KeyAction::Action::press:
+
+                    debug(KBD_DEBUG, "Pressing %zd\n", action.key.nr);
+                    _press(action.key);
+                    break;
+
+                case KeyAction::Action::release:
+
+                    debug(KBD_DEBUG, "Releasing %zd\n", action.key.nr);
+                    _release(action.key);
+                    break;
+
+                case KeyAction::Action::releaseAll:
+
+                    debug(KBD_DEBUG, "Releasing all\n");
+                    _releaseAll();
+                    break;
             }
+
+            // Schedule next event
+            delay = actions.empty() ? INT64_MAX : actions.front().delay;
         }
     }
     delay--;

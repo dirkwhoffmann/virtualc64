@@ -203,8 +203,8 @@ public:
     
     void setSyncDelay(util::Time newDelay);
     void setMode(SyncMode newMode);
-    void setWarpLock(bool value);
-    void setDebugLock(bool value);
+    [[deprecated]] void setWarpLock(bool value);
+    [[deprecated]] void setDebugLock(bool value);
 
     
     //
@@ -268,14 +268,10 @@ private:
 
 struct AutoResume {
 
-    bool active = true;
+    // bool active = true;
     C64Component *c;
     AutoResume(C64Component *c) : c(c) { c->suspend(); }
     ~AutoResume() { c->resume(); }
 };
-
-// DEPRECATED
-#define suspended \
-for (AutoResume _ar(this); _ar.active; _ar.active = false)
 
 #define SUSPENDED AutoResume _ar(this);

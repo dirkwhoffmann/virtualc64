@@ -134,14 +134,14 @@ Drive::setConfigItem(Option option, i64 value)
     switch (option) {
 
         case OPT_DRV_AUTO_CONFIG:
-
-            suspended {
+        {
+            {   SUSPENDED
                 
                 config.autoConfig = value;
                 if (value) autoConfigure();
             }
             return;
-
+        }
         case OPT_DRV_TYPE:
 
             if (!DriveTypeEnum::isValid(value)) {
@@ -152,64 +152,64 @@ Drive::setConfigItem(Option option, i64 value)
             return;
 
         case OPT_DRV_RAM:
-
+        {
             if (!DriveRamEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INVARG, DriveRamEnum::keyList());
             }
             
-            suspended {
+            {   SUSPENDED
                 
                 config.ram = (DriveRam)value;
                 mem.updateBankMap();
             }
             return;
-
+        }
         case OPT_DRV_PARCABLE:
-
+        {
             if (!ParCableTypeEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INVARG, ParCableTypeEnum::keyList());
             }
             
-            suspended {
+            {   SUSPENDED
 
                 config.parCable = (ParCableType)value;
                 mem.updateBankMap();
             }
             return;
-
+        }
         case OPT_DRV_CONNECT:
-
+        {
             if (value && !c64.hasRom(ROM_TYPE_VC1541)) {
                 throw VC64Error(ERROR_ROM_DRIVE_MISSING);
             }
             
-            suspended {
+            {   SUSPENDED
 
                 config.connected = value;
                 reset(true);
             }
             msgQueue.put(value ? MSG_DRIVE_CONNECT : MSG_DRIVE_DISCONNECT, deviceNr);
             return;
-
+        }
         case OPT_DRV_POWER_SWITCH:
-
-            suspended {
+        {
+            {   SUSPENDED
                 
                 config.switchedOn = value;
                 reset(true);
             }
             msgQueue.put(value ? MSG_DRIVE_POWER_ON : MSG_DRIVE_POWER_OFF, deviceNr);
             return;
-
+        }
         case OPT_DRV_POWER_SAVE:
-
-            suspended {
+        {
+            {   SUSPENDED
                 
                 config.powerSave = value;
                 wakeUp();
             }
             return;
-
+        }
         case OPT_DRV_EJECT_DELAY:
 
             config.ejectDelay = value;
@@ -775,7 +775,7 @@ Drive::insertDisk(std::unique_ptr<Disk> disk)
 {
     debug(DSKCHG_DEBUG, "insertDisk\n");
 
-    suspended {
+    {   SUSPENDED
         
         if (!diskToInsert) {
             
@@ -829,7 +829,7 @@ Drive::ejectDisk()
 {
     debug(DSKCHG_DEBUG, "ejectDisk()\n");
 
-    suspended {
+    {   SUSPENDED
         
         if (insertionStatus == DISK_FULLY_INSERTED && !diskToInsert) {
             

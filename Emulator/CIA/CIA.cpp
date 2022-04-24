@@ -95,7 +95,7 @@ CIA::setConfigItem(Option option, i64 value)
 void
 CIA::_inspect() const
 {
-    synchronized {
+    {   SYNCHRONIZED
         
         info.portA.port = computePA();
         info.portA.reg = PRA;

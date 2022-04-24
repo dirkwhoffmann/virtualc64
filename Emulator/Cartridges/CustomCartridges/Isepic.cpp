@@ -127,7 +127,7 @@ Isepic::getSwitchDescription(isize pos) const
 void
 Isepic::setSwitch(isize pos)
 {
-    suspended {
+    {   SUSPENDED
         
         bool oldVisible = cartIsVisible();
         Cartridge::setSwitch(pos);
