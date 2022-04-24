@@ -49,6 +49,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/FileSystems
 ${CMAKE_CURRENT_SOURCE_DIR}/LogicBoard
 ${CMAKE_CURRENT_SOURCE_DIR}/Media
 ${CMAKE_CURRENT_SOURCE_DIR}/Memory
+${CMAKE_CURRENT_SOURCE_DIR}/Misc
+${CMAKE_CURRENT_SOURCE_DIR}/Misc/RegressionTester
 ${CMAKE_CURRENT_SOURCE_DIR}/Peripherals
 ${CMAKE_CURRENT_SOURCE_DIR}/Peripherals/Drive
 ${CMAKE_CURRENT_SOURCE_DIR}/Peripherals/Datasette
@@ -72,6 +74,7 @@ add_subdirectory(FileSystems)
 add_subdirectory(LogicBoard)
 add_subdirectory(Media)
 add_subdirectory(Memory)
+add_subdirectory(Misc)
 add_subdirectory(Peripherals)
 add_subdirectory(RetroShell)
 add_subdirectory(SID)

@@ -733,6 +733,8 @@
 		50E9B92E201FA92C00065A89 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		50EAFFE924B2600D00024CD2 /* MyToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyToolbar.swift; sourceTree = "<group>"; };
 		50ED5BF712DD99C000596417 /* Speedometer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Speedometer.swift; sourceTree = "<group>"; };
+		50EF22322815927D00440C4D /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50EF22342815929500440C4D /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50F062E0258DD0A3009A6B21 /* ExportDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportDialog.xib; sourceTree = "<group>"; };
 		50F062E2258DE564009A6B21 /* TypeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeExtensions.swift; sourceTree = "<group>"; };
 		50F0EB7825CC33B3002D0D72 /* GameKiller.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameKiller.cpp; sourceTree = "<group>"; };
@@ -1014,6 +1016,7 @@
 				504C42C624AF29AB00E69CAE /* Media */,
 				5080501C2587A177004FE1F5 /* FileSystems */,
 				5036E0AD261AEF000048E66A /* RetroShell */,
+				50EF22312815925100440C4D /* Misc */,
 			);
 			path = Emulator;
 			sourceTree = "<group>";
@@ -1479,8 +1482,6 @@
 				50E806C025A1DE9200F08732 /* MsgQueueTypes.h */,
 				504C42F424AF29AB00E69CAE /* MsgQueue.h */,
 				504C42F124AF29AB00E69CAE /* MsgQueue.cpp */,
-				50AE193B2633E9B0005A5898 /* RegressionTester.h */,
-				50AE193A2633E9B0005A5898 /* RegressionTester.cpp */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1554,6 +1555,25 @@
 				507E7A9D24FB864E00AB433C /* ScreenshotDialog.xib */,
 			);
 			path = "XIB files";
+			sourceTree = "<group>";
+		};
+		50EF22302815922300440C4D /* RegressionTester */ = {
+			isa = PBXGroup;
+			children = (
+				50EF22342815929500440C4D /* CMakeLists.txt */,
+				50AE193B2633E9B0005A5898 /* RegressionTester.h */,
+				50AE193A2633E9B0005A5898 /* RegressionTester.cpp */,
+			);
+			path = RegressionTester;
+			sourceTree = "<group>";
+		};
+		50EF22312815925100440C4D /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				50EF22322815927D00440C4D /* CMakeLists.txt */,
+				50EF22302815922300440C4D /* RegressionTester */,
+			);
+			path = Misc;
 			sourceTree = "<group>";
 		};
 		50FE5B342039B392006CE7C7 /* Peripherals */ = {
