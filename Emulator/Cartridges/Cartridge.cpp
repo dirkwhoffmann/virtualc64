@@ -150,7 +150,7 @@ Cartridge::makeWithCRTFile(C64 &c64, CRTFile &file)
         cart->loadChip(i, file);
     }
     
-    if constexpr (CRT_DEBUG) cart->dump();
+    if constexpr (CRT_DEBUG) cart->dump(Category::State);
     return cart;
 }
 

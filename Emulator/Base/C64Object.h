@@ -70,8 +70,6 @@ public:
     // Prints debug information about this component
     void dump(Category category, std::ostream& ss) const;
     void dump(Category category) const;
-    void dump(std::ostream& ss) const;
-    void dump() const;
     virtual void _dump(Category category, std::ostream& ss) const { };
 };
 

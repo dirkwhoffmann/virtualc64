@@ -31,15 +31,3 @@ C64Object::dump(Category category) const
 {
     dump(category, std::cout);
 }
-
-void
-C64Object::dump(std::ostream& ss) const
-{
-    dump((Category)(-1), ss);
-}
-
-void
-C64Object::dump() const
-{
-    dump((Category)(-1));
-}
