@@ -22,11 +22,11 @@ ProcessorPort::_reset(bool hard)
 };
 
 void
-ProcessorPort::_dump(dump::Category category, std::ostream& os) const
+ProcessorPort::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category & dump::State) {
+    if (category == Category::State) {
         
         os << tab("Port");
         os << hex(port) << std::endl;

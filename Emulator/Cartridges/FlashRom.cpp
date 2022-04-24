@@ -68,11 +68,11 @@ FlashRom::_reset(bool hard)
 }
 
 void
-FlashRom::_dump(dump::Category category, std::ostream& os) const
+FlashRom::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category & dump::State) {
+    if (category == Category::State) {
         
         os << tab("state");
         os << dec(state) << std::endl;

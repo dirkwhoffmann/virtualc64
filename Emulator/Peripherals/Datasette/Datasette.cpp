@@ -50,11 +50,11 @@ Datasette::_reset(bool hard)
 }
 
 void
-Datasette::_dump(dump::Category category, std::ostream& os) const
+Datasette::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
-    if (category & dump::State) {
+    if (category == Category::State) {
         
         os << tab("TAP type");
         os << dec(type) << std::endl;

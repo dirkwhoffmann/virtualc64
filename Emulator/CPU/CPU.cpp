@@ -80,11 +80,11 @@ CPU<M>::_debugOff()
 }
 
 template <typename M> void
-CPU<M>::_dump(dump::Category category, std::ostream& os) const
+CPU<M>::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
-    if (category & dump::Registers) {
+    if (category == Category::Registers) {
 
         os << tab("PC") << hex(reg.pc) << std::endl;
         os << tab("SP") << hex(reg.sp) << std::endl;
@@ -102,7 +102,7 @@ CPU<M>::_dump(dump::Category category, std::ostream& os) const
         os << std::endl;
     }
     
-    if (category & dump::State) {
+    if (category == Category::State) {
     
         os << tab("Cycle");
         os << dec(cycle) << std::endl;
@@ -226,7 +226,7 @@ CPU<M>::setRDY(bool value)
 
 template         CPU<C64Memory>::CPU(C64& ref, C64Memory& memref);
 template CPUInfo CPU<C64Memory>::getInfo() const;
-template void    CPU<C64Memory>::_dump(dump::Category category, std::ostream& os) const;
+template void    CPU<C64Memory>::_dump(Category category, std::ostream& os) const;
 template void    CPU<C64Memory>::_debugOn();
 template void    CPU<C64Memory>::_debugOff();
 template void    CPU<C64Memory>::_reset(bool hard);
@@ -243,7 +243,7 @@ template void    CPU<C64Memory>::setRDY(bool value);
 
 template         CPU<DriveMemory>::CPU(C64& ref, DriveMemory& memref);
 template CPUInfo CPU<DriveMemory>::getInfo() const;
-template void    CPU<DriveMemory>::_dump(dump::Category category, std::ostream& os) const;
+template void    CPU<DriveMemory>::_dump(Category category, std::ostream& os) const;
 template void    CPU<DriveMemory>::_debugOn();
 template void    CPU<DriveMemory>::_debugOff();
 template void    CPU<DriveMemory>::_reset(bool hard);

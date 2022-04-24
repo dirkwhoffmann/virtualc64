@@ -132,8 +132,8 @@ public:
 private:
     
     const char *getDescription() const override { return "Muxer"; }
-    void _dump(dump::Category category, std::ostream& os) const override;
-    void _dump(dump::Category category, std::ostream& os, isize nr) const;
+    void _dump(Category category, std::ostream& os) const override;
+    void _dump(Category category, std::ostream& os, isize nr) const;
 
     
     //

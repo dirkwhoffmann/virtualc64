@@ -45,11 +45,11 @@ TOD::_reset(bool hard)
 }
 
 void
-TOD::_dump(dump::Category category, std::ostream& os) const
+TOD::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category & dump::State) {
+    if (category == Category::State) {
         
         os << tab("Time of Day");
         os << hex(tod.hour)   << ":" << hex(tod.min)     << ":";

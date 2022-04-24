@@ -34,11 +34,11 @@ IEC::_reset(bool hard)
 }
 
 void
-IEC::_dump(dump::Category category, std::ostream& os) const
+IEC::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category & dump::State) {
+    if (category == Category::State) {
         
         os << tab("VIA1::DDRB (Drive8)");
         os << hex(drive8.via1.getDDRB()) << std::endl;

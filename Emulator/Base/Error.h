@@ -19,6 +19,7 @@
 struct VC64Error : public util::Exception
 {
     VC64Error(ErrorCode code, const string &s);
+    VC64Error(ErrorCode code, long v) : VC64Error(code, std::to_string(v)) { };
     VC64Error(ErrorCode code) : VC64Error(code, "") { }
 
     const char *what() const throw() override;

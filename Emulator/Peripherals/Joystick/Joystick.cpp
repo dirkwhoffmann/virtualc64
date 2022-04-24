@@ -87,11 +87,11 @@ Joystick::setConfigItem(Option option, i64 value)
 }
 
 void
-Joystick::_dump(dump::Category category, std::ostream& os) const
+Joystick::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
-    if (category & dump::Config) {
+    if (category == Category::Config) {
         
         os << tab("Joystick nr") << dec(port.nr) << std::endl;
         os << tab("Auto fire") << bol(config.autofire) << std::endl;
@@ -99,7 +99,7 @@ Joystick::_dump(dump::Category category, std::ostream& os) const
         os << tab("Auto fire delay") << dec(config.autofireDelay) << std::endl;
     }
 
-    if (category & dump::State) {
+    if (category == Category::State) {
         
         os << tab("Joystick nr") << dec(port.nr) << std::endl;
         os << tab("Button") << bol(button) << std::endl;

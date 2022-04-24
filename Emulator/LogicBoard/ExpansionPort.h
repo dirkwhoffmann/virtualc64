@@ -56,7 +56,7 @@ public:
     //
 
     const char *getDescription() const override { return "ExpansionPort"; }
-    void _dump(dump::Category category, std::ostream& os) const override;
+    void _dump(Category category, std::ostream& os) const override;
 
     
     //

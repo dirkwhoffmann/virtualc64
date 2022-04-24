@@ -23,11 +23,11 @@ ParCable::_reset(bool hard)
 }
             
 void
-ParCable::_dump(dump::Category category, std::ostream& os) const
+ParCable::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
-    if (category & dump::State) {
+    if (category == Category::State) {
         
         os << tab("Cable value");
         os << hex(getValue()) << std::endl;

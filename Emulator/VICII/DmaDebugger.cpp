@@ -169,11 +169,11 @@ DmaDebugger::setConfigItem(Option option, long id, i64 value)
 }
 
 void
-DmaDebugger::_dump(dump::Category category, std::ostream& os) const
+DmaDebugger::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category & dump::Config) {
+    if (category == Category::Config) {
         
         os << tab("Enabled");
         os << bol(config.dmaDebug) << std::endl;

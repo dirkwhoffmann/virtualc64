@@ -15,11 +15,16 @@
 enum_long(ERROR_CODE)
 {
     ERROR_OK,
+    ERROR_UNKNOWN,
 
     // Configuration
     ERROR_OPT_UNSUPPORTED,
     ERROR_OPT_INVARG,
     ERROR_OPT_LOCKED,
+
+    // Property storage
+    ERROR_INVALID_KEY,
+    ERROR_SYNTAX,
     
     // Memory
     ERROR_OUT_OF_MEMORY,
@@ -83,10 +88,14 @@ struct ErrorCodeEnum : util::Reflection<ErrorCodeEnum, ErrorCode> {
         switch (value) {
                 
             case ERROR_OK:                   return "OK";
+            case ERROR_UNKNOWN:              return "UNKNOWN";
                 
             case ERROR_OPT_UNSUPPORTED:      return "OPT_UNSUPPORTED";
             case ERROR_OPT_INVARG:           return "OPT_INV_ARG";
             case ERROR_OPT_LOCKED:           return "OPT_LOCKED";
+
+            case ERROR_INVALID_KEY:          return "INVALID_KEY";
+            case ERROR_SYNTAX:               return "SYNTAX";
 
             case ERROR_OUT_OF_MEMORY:        return "OUT_OF_MEMORY";
                 

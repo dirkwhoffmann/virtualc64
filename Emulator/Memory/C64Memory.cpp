@@ -188,17 +188,17 @@ C64Memory::_inspect() const
 }
 
 void
-C64Memory::_dump(dump::Category category, std::ostream& os) const
+C64Memory::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category & dump::Config) {
+    if (category == Category::Config) {
         
         os << tab("Ram pattern");
         os << RamPatternEnum::key(config.ramPattern) << std::endl;
     }
     
-    if (category & dump::State) {
+    if (category == Category::State) {
         
         os << tab("Basic ROM");
         os << bol(c64.hasRom(ROM_TYPE_BASIC)) << std::endl;

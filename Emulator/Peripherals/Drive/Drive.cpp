@@ -320,11 +320,11 @@ Drive::autoConfigure()
 }
 
 void
-Drive::_dump(dump::Category category, std::ostream& os) const
+Drive::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category & dump::Config) {
+    if (category == Category::Config) {
     
         os << tab("Auto config");
         os << bol(config.autoConfig) << std::endl;
@@ -351,10 +351,10 @@ Drive::_dump(dump::Category category, std::ostream& os) const
         os << tab("Eject volume");
         os << dec(config.ejectVolume) << std::endl;
         
-        mem.C64Component::_dump(dump::BankMap, os);
+        mem.C64Component::_dump(Category::BankMap, os);
     }
     
-    if (category & dump::State) {
+    if (category == Category::State) {
          
         os << tab("Idle");
         os << bol(isIdle()) << std::endl;
@@ -372,15 +372,15 @@ Drive::_dump(dump::Category category, std::ostream& os) const
         os << bol(readMode()) << std::endl;
     }
     
-    if (category & dump::BankMap) {
+    if (category == Category::BankMap) {
 
-        mem.dump(dump::BankMap, os);
+        mem.dump(Category::BankMap, os);
     }
     
-    if (category & dump::Disk) {
+    if (category == Category::Disk) {
         
         if (hasDisk()) {
-            disk->dump(dump::State, os);
+            disk->dump(Category::State, os);
         } else {
             os << "No disk";
         }

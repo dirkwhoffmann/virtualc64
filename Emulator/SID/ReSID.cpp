@@ -106,7 +106,7 @@ ReSID::_inspect() const
 }
 
 void
-ReSID::_dump(dump::Category category, std::ostream& os) const
+ReSID::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
@@ -118,7 +118,7 @@ ReSID::_dump(dump::Category category, std::ostream& os) const
     ft == FASTSID_HIGH_PASS ? "HIGH_PASS" :
     ft == FASTSID_BAND_PASS ? "BAND_PASS" : "???";
     
-    if (category & dump::State) {
+    if (category == Category::State) {
    
         os << tab("Chip");
         os << "ReSID " << dec(nr) << std::endl;
@@ -142,7 +142,7 @@ ReSID::_dump(dump::Category category, std::ostream& os) const
         os << hex((u8)(reg[0x17] & 0x0F));
     }
     
-    if (category & dump::Registers) {
+    if (category == Category::Registers) {
    
         for (isize i = 0; i <= 0x1C; i++) {
    

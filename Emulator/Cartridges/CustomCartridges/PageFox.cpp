@@ -23,11 +23,11 @@ PageFox::_reset(bool hard)
 }
 
 void
-PageFox::_dump(dump::Category category, std::ostream& os) const
+PageFox::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category & dump::State) {
+    if (category == Category::State) {
     
         os << tab("bankSelect()") << hex(bankSelect()) << std::endl;
         os << tab("chipSelect()") << hex(chipSelect()) << std::endl;

@@ -448,11 +448,11 @@ Muxer::_warpOff()
 }
 
 void
-Muxer::_dump(dump::Category category, std::ostream& os) const
+Muxer::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category & dump::Config) {
+    if (category == Category::Config) {
         
         os << tab("Chip revision");
         os << SIDRevisionEnum::key(config.revision) << std::endl;
@@ -490,7 +490,7 @@ Muxer::_dump(dump::Category category, std::ostream& os) const
 }
 
 void
-Muxer::_dump(dump::Category category, std::ostream& os, isize nr) const
+Muxer::_dump(Category category, std::ostream& os, isize nr) const
 {
     switch (config.engine) {
             

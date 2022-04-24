@@ -135,11 +135,11 @@ CIA::_inspect() const
 }
 
 void
-CIA::_dump(dump::Category category, std::ostream& os) const
+CIA::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category & dump::Config) {
+    if (category == Category::Config) {
     
         os << tab("Revision");
         os << CIARevisionEnum::key(config.revision) << std::endl;
@@ -147,7 +147,7 @@ CIA::_dump(dump::Category category, std::ostream& os) const
         os << bol(config.timerBBug) << std::endl;
     }
     
-    if (category & dump::State) {
+    if (category == Category::State) {
         
         os << tab("Sleeping") << bol(sleeping) << std::endl;
         os << tab("Tiredness") << dec(tiredness) << std::endl;
@@ -157,7 +157,7 @@ CIA::_dump(dump::Category category, std::ostream& os) const
         os << tab("INT") << dec(INT) << std::endl;
     }
     
-    if (category & dump::Registers) {
+    if (category == Category::Registers) {
         
         os << tab("Counter A") << dec(counterA) << std::endl;
         os << tab("Latch A") << dec(latchA) << std::endl;

@@ -31,6 +31,14 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
             description = "This option is locked because the C64 is powered on.";
             break;
 
+        case ERROR_INVALID_KEY:
+            description = "Invalid key: " + s;
+            break;
+
+        case ERROR_SYNTAX:
+            description = "Syntax error in line " + s;
+            break;
+
         case ERROR_OUT_OF_MEMORY:
             description = "Out of memory.";
             break;

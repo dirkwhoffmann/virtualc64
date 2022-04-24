@@ -42,20 +42,10 @@
  * the emulator's state model (off, paused, running).
  */
 
-namespace dump {
-enum Category : usize {
-    
-    Config    = 0b000000001,
-    State     = 0b000000010,
-    Registers = 0b000000100,
-    Events    = 0b000001000,
-    Checksums = 0b000010000,
-    Dma       = 0b000100000,
-    BankMap   = 0b001000000,
-    Layout    = 0b010000000,
-    Disk      = 0b100000000
+enum class Category
+{
+    BankMap, Checksum, Config, Disk, Dma, Events, Layout, Registers, State
 };
-}
 
 class C64Object {
 
@@ -78,11 +68,11 @@ public:
     virtual void prefix() const;
     
     // Prints debug information about this component
-    void dump(dump::Category category, std::ostream& ss) const;
-    void dump(dump::Category category) const;
+    void dump(Category category, std::ostream& ss) const;
+    void dump(Category category) const;
     void dump(std::ostream& ss) const;
     void dump() const;
-    virtual void _dump(dump::Category category, std::ostream& ss) const { };
+    virtual void _dump(Category category, std::ostream& ss) const { };
 };
 
 /* This file provides several macros for printing messages:

@@ -173,11 +173,11 @@ Disk::init(util::SerReader &reader)
 }
 
 void
-Disk::_dump(dump::Category category, std::ostream& os) const
+Disk::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category & dump::State) {
+    if (category == Category::State) {
 
         auto checksum = util::fnv32((const u8 *)data.track, sizeof(data.track));
 
@@ -186,7 +186,7 @@ Disk::_dump(dump::Category category, std::ostream& os) const
         os << tab("Checksum") << hex(checksum) << std::endl;
     }
 
-    if (category & dump::Layout) {
+    if (category == Category::Layout) {
 
         for (Halftrack ht = 1; ht <= highestHalftrack; ht++) {
             

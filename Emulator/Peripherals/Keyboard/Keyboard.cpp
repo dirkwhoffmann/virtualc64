@@ -23,11 +23,11 @@ Keyboard::_reset(bool hard)
 }
 
 void
-Keyboard::_dump(dump::Category category, std::ostream& os) const
+Keyboard::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category & dump::State) {
+    if (category == Category::State) {
         
         for (int i = 0; i < 8; i++) {
             

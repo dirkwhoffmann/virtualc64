@@ -32,11 +32,11 @@ Expert::_reset(bool hard)
 }
 
 void
-Expert::_dump(dump::Category category, std::ostream& os) const
+Expert::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category & dump::State) {
+    if (category == Category::State) {
     
         u16 nmi = LO_HI(peekRAM(0x1FFA), peekRAM(0x1FFB));
         u16 irq = LO_HI(peekRAM(0x1FFE), peekRAM(0x1FFF));

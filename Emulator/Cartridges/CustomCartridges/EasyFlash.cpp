@@ -43,13 +43,13 @@ EasyFlash::_reset(bool hard)
 }
 
 void
-EasyFlash::_dump(dump::Category category, std::ostream& os) const
+EasyFlash::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
     Cartridge::_dump(category, os);
     
-    if (category & dump::State) {
+    if (category == Category::State) {
         
         os << tab("EasyFlash bank");
         os << dec(bank);

@@ -159,7 +159,7 @@ FastSID::setClockFrequency(u32 frequency)
 }
 
 void
-FastSID::_dump(dump::Category category, std::ostream& os) const
+FastSID::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
@@ -169,7 +169,7 @@ FastSID::_dump(dump::Category category, std::ostream& os) const
     ft == FASTSID_HIGH_PASS ? "HIGH_PASS" :
     ft == FASTSID_BAND_PASS ? "BAND_PASS" : "???";
     
-    if (category & dump::State) {
+    if (category == Category::State) {
 
         os << tab("Chip");
         os << "FastSID " << dec(nr) << std::endl;
@@ -193,7 +193,7 @@ FastSID::_dump(dump::Category category, std::ostream& os) const
         os << hex((u8)(sidreg[0x17] & 0x0F));
     }
     
-    if (category & dump::Registers) {
+    if (category == Category::Registers) {
    
         for (isize i = 0; i < 0x1C; i++) {
             

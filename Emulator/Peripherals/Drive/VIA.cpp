@@ -39,14 +39,14 @@ VIA6522::prefix() const
 }
 
 void
-VIA6522::_dump(dump::Category category, std::ostream& os) const
+VIA6522::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
     u16 t1Latch = LO_HI(t1_latch_lo, t1_latch_hi);
     u16 t2Latch = LO_HI(t2_latch_lo, 0);
     
-    if (category & dump::State) {
+    if (category == Category::State) {
         
         os << tab("Input reg (IRA)");
         os << hex(ira) << std::endl;

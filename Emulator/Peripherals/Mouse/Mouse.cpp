@@ -91,11 +91,11 @@ Mouse::updateScalingFactors()
 }
 
 void
-Mouse::_dump(dump::Category category, std::ostream& os) const
+Mouse::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
-    if (category & dump::Config) {
+    if (category == Category::Config) {
         
         os << tab("Mouse nr") << dec(port.nr) << std::endl;
         os << tab("Model") << MouseModelEnum::key(config.model) << std::endl;
@@ -103,7 +103,7 @@ Mouse::_dump(dump::Category category, std::ostream& os) const
         os << tab("Velocity") << config.velocity << std::endl;
     }
 
-    if (category & dump::State) {
+    if (category == Category::State) {
         
         os << tab("Mouse nr") << dec(port.nr) << std::endl;
         os << tab("targetX") << targetX << std::endl;

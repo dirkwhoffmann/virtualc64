@@ -437,7 +437,7 @@ RetroShell::help(const string &command)
 }
 
 void
-RetroShell::dump(C64Component &component, dump::Category category)
+RetroShell::dump(C64Component &component, Category category)
 {
 	std::stringstream ss; string line;
 	

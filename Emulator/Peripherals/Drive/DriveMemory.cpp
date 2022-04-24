@@ -30,11 +30,11 @@ DriveMemory::_reset(bool hard)
 }
 
 void
-DriveMemory::_dump(dump::Category category, std::ostream& os) const
+DriveMemory::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category & dump::BankMap) {
+    if (category == Category::BankMap) {
         
         DrvMemType oldsrc = usage[0];
         isize oldi = 0;
@@ -51,7 +51,7 @@ DriveMemory::_dump(dump::Category category, std::ostream& os) const
         }
     }
     
-    if (category & dump::State) {
+    if (category == Category::State) {
         
         os << tab("Drive ROM");
         os << bol(c64.hasRom(ROM_TYPE_VC1541)) << std::endl;

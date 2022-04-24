@@ -83,7 +83,7 @@ public:
 private:
 	
 	const char *getDescription() const override { return "RetroShell"; }
-	void _dump(dump::Category category, std::ostream& os) const override { }
+	void _dump(Category category, std::ostream& os) const override { }
 
 
 	//
@@ -210,7 +210,7 @@ public:
 
 private:
     
-    void dump(C64Component &component, dump::Category category);
+    void dump(C64Component &component, Category category);
     
     
     //

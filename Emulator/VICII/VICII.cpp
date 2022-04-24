@@ -418,11 +418,11 @@ VICII::_inspect() const
 }
 
 void
-VICII::_dump(dump::Category category, std::ostream& os) const
+VICII::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category & dump::Config) {
+    if (category == Category::Config) {
 
         os << tab("Chip model");
         os << VICIIRevisionEnum::key(config.revision) << std::endl;
@@ -448,7 +448,7 @@ VICII::_dump(dump::Category category, std::ostream& os) const
         os << bol(config.checkSBCollisions) << std::endl;
     }
 
-    if (category & dump::Registers) {
+    if (category == Category::Registers) {
         
         string addr[8] = {
             "$D000 - $D007", "$D008 - $D00F", "$D010 - $D017", "$D018 - $D01F",
@@ -463,7 +463,7 @@ VICII::_dump(dump::Category category, std::ostream& os) const
         }
     }
     
-    if (category & dump::State) {
+    if (category == Category::State) {
         
         /*
         u8 ctrl1 = reg.current.ctrl1;

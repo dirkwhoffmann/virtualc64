@@ -84,11 +84,11 @@ ExpansionPort::_save(u8 *buffer)
 }
 
 void
-ExpansionPort::_dump(dump::Category category, std::ostream& os) const
+ExpansionPort::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category & dump::State) {
+    if (category == Category::State) {
         
         os << tab("Game line");
         os << bol(gameLine) << std::endl;
