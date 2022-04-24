@@ -193,7 +193,7 @@ extension MyController {
             // Let the C64 throw an exception if it is not ready to power on
             try c64.isReady()
             
-            // Switch on and launch the emulator thread
+            // Start emulation
             try c64.run()
 
         } catch {

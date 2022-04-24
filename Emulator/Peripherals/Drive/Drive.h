@@ -295,6 +295,7 @@ private:
     }
     
     isize _size() override;
+    u64 _checksum() override;
     isize _load(const u8 *buffer) override;
     isize _save(u8 *buffer) override;
 

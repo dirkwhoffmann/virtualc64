@@ -785,6 +785,24 @@ C64::_debugOff()
     // vic.updateVicFunctionTable();
 }
 
+isize
+C64::load(const u8 *buffer)
+{
+    auto result = C64Component::load(buffer);
+    C64Component::didLoad();
+
+    return result;
+}
+
+isize
+C64::save(u8 *buffer)
+{
+    auto result = C64Component::save(buffer);
+    C64Component::didSave();
+
+    return result;
+}
+
 void
 C64::inspect()
 {

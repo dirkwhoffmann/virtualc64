@@ -131,61 +131,58 @@ Thread::main()
 
         // Are we requested to change state?
         while (newState != state) {
-            
+
             if (state == EXEC_OFF && newState == EXEC_PAUSED) {
-                
+
                 C64Component::powerOn();
-                state = newState;
-                break;
-            }
+                state = EXEC_PAUSED;
 
-            if (state == EXEC_OFF && newState == EXEC_RUNNING) {
-                
+            } else if (state == EXEC_OFF && newState == EXEC_RUNNING) {
+
                 C64Component::powerOn();
-                C64Component::run();
-                state = newState;
-                break;
-            }
+                state = EXEC_PAUSED;
 
-            if (state == EXEC_PAUSED && newState == EXEC_OFF) {
-                
+            } else if (state == EXEC_PAUSED && newState == EXEC_OFF) {
+
                 C64Component::powerOff();
-                state = newState;
-                break;
-            }
+                state = EXEC_OFF;
 
-            if (state == EXEC_PAUSED && newState == EXEC_RUNNING) {
-                
+            } else if (state == EXEC_PAUSED && newState == EXEC_RUNNING) {
+
                 C64Component::run();
-                state = newState;
-                break;
-            }
+                state = EXEC_RUNNING;
 
-            if (state == EXEC_RUNNING && newState == EXEC_OFF) {
-                
-                C64Component::pause();
-                C64Component::powerOff();
-                state = newState;
-                break;
-            }
+            } else if (state == EXEC_RUNNING && newState == EXEC_OFF) {
 
-            if (state == EXEC_RUNNING && newState == EXEC_PAUSED) {
-                
                 C64Component::pause();
-                state = newState;
-                break;
-            }
-            
-            if (newState == EXEC_HALTED) {
-                
+                state = EXEC_PAUSED;
+
+            } else if (state == EXEC_RUNNING && newState == EXEC_PAUSED) {
+
+                C64Component::pause();
+                state = EXEC_PAUSED;
+
+            } else if (state == EXEC_RUNNING && newState == EXEC_SUSPENDED) {
+
+                state = EXEC_SUSPENDED;
+
+            } else if (state == EXEC_SUSPENDED && newState == EXEC_RUNNING) {
+
+                state = EXEC_RUNNING;
+
+            } else if (newState == EXEC_HALTED) {
+
                 C64Component::halt();
-                state = newState;
+                state = EXEC_HALTED;
                 return;
+
+            } else {
+
+                // Invalid state transition
+                fatalError;
             }
-            
-            // Invalid state transition
-            fatalError;
-            break;
+
+            debug(RUN_DEBUG, "Changed state to %s\n", ExecutionStateEnum::key(state));
         }
         
         // Compute the CPU load once in a while

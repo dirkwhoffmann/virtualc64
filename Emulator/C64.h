@@ -273,8 +273,16 @@ private:
             << ultimax;
         }
     }
+
+public:
+
+    isize load(const u8 *buffer) override;
+    isize save(u8 *buffer) override;
+
+private:
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }
+    u64 _checksum() override { COMPUTE_SNAPSHOT_CHECKSUM }
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
 

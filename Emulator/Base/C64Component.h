@@ -181,14 +181,22 @@ public:
     // Returns the size of the internal state in bytes
     isize size();
     virtual isize _size() = 0;
+
+    // Computes a checksum for this component
+    u64 checksum();
+    virtual u64 _checksum() = 0;
     
     // Loads the internal state from a memory buffer
-    isize load(const u8 *buf);
+    virtual isize load(const u8 *buf) throws;
     virtual isize _load(const u8 *buf) = 0;
-    
+    virtual void didLoad();
+    virtual void _didLoad() { };
+
     // Saves the internal state to a memory buffer
-    isize save(u8 *buf);
+    virtual isize save(u8 *buf);
     virtual isize _save(u8 *buf) = 0;
+    virtual void didSave();
+    virtual void _didSave() { };
     
     /* Delegation methods called inside load() or save(). Some components
      * override these methods to add custom behavior if not all elements can be

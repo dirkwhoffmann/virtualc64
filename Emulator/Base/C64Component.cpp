@@ -9,6 +9,8 @@
 
 #include "config.h"
 #include "C64Component.h"
+#include "Checksum.h"
+// #include "Serialization.h"
 
 void
 C64Component::initialize()
@@ -43,16 +45,35 @@ isize
 C64Component::size()
 {
     isize result = _size();
+
+    // Add 8 bytes for the checksum
+    result += 8;
+
     for (C64Component *c : subComponents) { result += c->size(); }
+    return result;
+}
+
+u64
+C64Component::checksum()
+{
+    u64 result = _checksum();
+
+    // Compute checksums for all subcomponents
+    for (C64Component *c : subComponents) {
+        result = util::fnvIt64(result, c->checksum());
+    }
+
     return result;
 }
 
 isize
 C64Component::load(const u8 *buffer)
-{    
+{
+    assert(!isRunning());
+
     const u8 *ptr = buffer;
 
-    // Call delegation method
+    // Call the delegate
     ptr += willLoadFromBuffer(ptr);
 
     // Load internal state of all subcomponents
@@ -60,18 +81,35 @@ C64Component::load(const u8 *buffer)
         ptr += c->load(ptr);
     }
 
+    // Load the checksum for this component
+    auto hash = util::read64(ptr);
+
     // Load internal state of this component
     ptr += _load(ptr);
 
-    // Call delegation method
+    // Call the delegate
     ptr += didLoadFromBuffer(ptr);
     isize result = (isize)(ptr - buffer);
-    
-    // Verify that the number of written bytes matches the snapshot size
-    trace(SNP_DEBUG, "Loaded %zd bytes (expected %zd)\n", result, size());
-    assert(result == size());
 
+    // Check integrity
+    if (hash != _checksum() || FORCE_SNAP_CORRUPTED) {
+        throw VC64Error(ERROR_SNAP_CORRUPTED);
+    }
+
+    trace(SNP_DEBUG, "Loaded %ld bytes (expected %ld)\n", result, size());
     return result;
+}
+
+void
+C64Component::didLoad()
+{
+    assert(!isRunning());
+
+    for (C64Component *c : subComponents) {
+        c->didLoad();
+    }
+
+    _didLoad();
 }
 
 isize
@@ -87,6 +125,9 @@ C64Component::save(u8 *buffer)
         ptr += c->save(ptr);
     }
 
+    // Save the checksum for this component
+    util::write64(ptr, _checksum());
+
     // Save internal state of this component
     ptr += _save(ptr);
 
@@ -94,11 +135,20 @@ C64Component::save(u8 *buffer)
     ptr += didSaveToBuffer(ptr);
     isize result = (isize)(ptr - buffer);
     
-    // Verify that the number of written bytes matches the snapshot size
-    trace(SNP_DEBUG, "Saved %zd bytes (expected %zd)\n", result, size());
+    debug(SNP_DEBUG, "Saved %ld bytes (expected %ld)\n", result, size());
     assert(result == size());
 
     return result;
+}
+
+void
+C64Component::didSave()
+{
+    for (C64Component *c : subComponents) {
+        c->didSave();
+    }
+
+    _didSave();
 }
 
 void

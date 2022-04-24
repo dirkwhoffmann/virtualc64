@@ -182,7 +182,7 @@ RetroShell::exec <Token::c64, Token::config> (Arguments &argv, long param)
 template <> void
 RetroShell::exec <Token::c64, Token::power, Token::on> (Arguments &argv, long param)
 {
-    c64.powerOn();
+    c64.run();
 }
 
 template <> void
