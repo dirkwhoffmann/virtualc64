@@ -40,14 +40,14 @@ typedef signed char        i8;
 typedef signed short       i16;
 typedef signed int         i32;
 typedef signed long long   i64;
-typedef ssize_t            isize;
+typedef signed long        isize;
 
 // Unsigned integers
 typedef unsigned char      u8;
 typedef unsigned short     u16;
 typedef unsigned int       u32;
 typedef unsigned long long u64;
-typedef size_t             usize;
+typedef unsigned long      usize;
 
 // Signed alternative for the sizeof keyword
 #define isizeof(x) (isize)(sizeof(x))
@@ -72,9 +72,8 @@ using std::optional;
  * Swift side and one for the C side. Please note that the type mapping for
  * enum_long differs on both sides. On the Swift side, enums of this type are
  * mapped to 'long enums' to make them accessible via the Swift standard type
- * 'Int'. On the C side all enums are mapped to 'enum-less long longs'. This
- * makes them easily serializable and ensures they have the same size on
- * 32-bit and 64-bit architectures.
+ * 'Int'. On the C side all enums are mapped to 'enum-less longs' to make them
+ * easily serializable.
  */
 
 #if defined(__SWIFT__)
@@ -94,7 +93,7 @@ enum _name : _type
 typedef _type _name; \
 enum : _type
 
-#define enum_long(_name) enum_generic(_name, long long)
+#define enum_long(_name) enum_generic(_name, long)
 #define enum_i8(_name) enum_generic(_name, i8)
 
 #endif

@@ -244,7 +244,7 @@ C64::getConfigItem(Option option, long id) const
 void
 C64::configure(Option option, i64 value)
 {
-    debug(CNF_DEBUG, "configure(%lld, %lld)\n", option, value);
+    debug(CNF_DEBUG, "configure(%ld, %lld)\n", option, value);
 
     // The following options do not send a message to the GUI
     static std::vector<Option> quiet = {
@@ -384,7 +384,7 @@ C64::configure(Option option, i64 value)
 void
 C64::configure(Option option, long id, i64 value)
 {
-    debug(CNF_DEBUG, "configure(%lld, %ld, %lld)\n", option, id, value);
+    debug(CNF_DEBUG, "configure(%ld, %ld, %lld)\n", option, id, value);
 
     // Check if this option has been locked for debugging
     value = overrideOption(option, value);

@@ -192,7 +192,7 @@ Mouse::trigger(GamePadAction event)
 {
     assert_enum(GamePadAction, event);
 
-    debug(PRT_DEBUG, "trigger(%lld)\n", event);
+    debug(PRT_DEBUG, "trigger(%ld)\n", event);
     
     switch (event) {
 
