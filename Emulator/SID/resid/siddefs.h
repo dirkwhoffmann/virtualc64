@@ -42,8 +42,12 @@ const bool false = 0;
 #endif
 
 // Branch prediction macros, lifted off the Linux kernel.
-#define likely(x)      __builtin_expect(!!(x), 1)
-#define unlikely(x)    __builtin_expect(!!(x), 0)
+// #define likely(x)      __builtin_expect(!!(x), 1)
+// #define unlikely(x)    __builtin_expect(!!(x), 0)
+#ifndef likely
+#define likely(x)   (x)
+#define unlikely(x) (x)
+#endif
 
 namespace reSID {
 
