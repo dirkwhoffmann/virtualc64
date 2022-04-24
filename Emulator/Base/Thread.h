@@ -137,17 +137,13 @@ protected:
     volatile ExecutionState newState = EXEC_OFF;
 
     // The current warp state and a change request
-    volatile bool warpMode = false;
-    volatile bool newWarpMode = false;
+    volatile u8 warpMode = 0;
+    volatile u8 newWarpMode = 0;
 
     // The current debug state and a change request
-    volatile bool debugMode = false;
-    volatile bool newDebugMode = false;
+    volatile u8 debugMode = 0;
+    volatile u8 newDebugMode = 0;
 
-    // Indicates if warp mode or debug mode is locked
-    bool warpLock = false;
-    bool debugLock = false;
-    
     // Counters
     isize loopCounter = 0;
     isize suspendCounter = 0;
@@ -203,8 +199,6 @@ public:
     
     void setSyncDelay(util::Time newDelay);
     void setMode(SyncMode newMode);
-    [[deprecated]] void setWarpLock(bool value);
-    [[deprecated]] void setDebugLock(bool value);
 
     
     //
@@ -236,19 +230,19 @@ public:
     void pause(bool blocking = true);
     void halt(bool blocking = true);
     
-    bool inWarpMode() const { return warpMode; }
-    void warpOn(bool blocking = true);
-    void warpOff(bool blocking = true);
+    bool inWarpMode() const { return warpMode != 0; }
+    void warpOn(isize source = 0);
+    void warpOff(isize source = 0);
 
-    bool inDebugMode() const { return debugMode; }
-    void debugOn(bool blocking = true);
-    void debugOff(bool blocking = true);
+    bool inDebugMode() const { return debugMode != 0; }
+    void debugOn(isize source = 0);
+    void debugOff(isize source = 0);
 
 private:
 
     void changeStateTo(ExecutionState requestedState, bool blocking);
-    void changeWarpTo(bool value, bool blocking);
-    void changeDebugTo(bool value, bool blocking);
+    void changeWarpTo(u8 value, bool blocking = true);
+    void changeDebugTo(u8 value, bool blocking = true);
     
     
     //
