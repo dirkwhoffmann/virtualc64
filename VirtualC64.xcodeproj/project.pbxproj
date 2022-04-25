@@ -231,6 +231,8 @@
 		50C9B3C51F879A3900EA35C6 /* GamePadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */; };
 		50CCC30A256FAC870052619A /* Concurrency.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CCC308256FAC870052619A /* Concurrency.cpp */; };
 		50CCE179259DFD7800481E7F /* DevicesPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CCE178259DFD7800481E7F /* DevicesPrefs.swift */; };
+		50CD3695281681D000E40BFC /* NamedPipe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3693281681D000E40BFC /* NamedPipe.cpp */; };
+		50CD3698281681E800E40BFC /* FFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3696281681E700E40BFC /* FFmpeg.cpp */; };
 		50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */; };
 		50D197E021606DEC008BC551 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 50D197DF21606DEC008BC551 /* dsa_pub.pem */; };
 		50D20B752508F6D70088E8F2 /* VICII_cycles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D20B742508F6D70088E8F2 /* VICII_cycles.cpp */; };
@@ -691,6 +693,11 @@
 		50CCC308256FAC870052619A /* Concurrency.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Concurrency.cpp; sourceTree = "<group>"; };
 		50CCC309256FAC870052619A /* Concurrency.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Concurrency.h; sourceTree = "<group>"; };
 		50CCE178259DFD7800481E7F /* DevicesPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesPrefs.swift; sourceTree = "<group>"; };
+		50CD3692281681A300E40BFC /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		50CD3693281681D000E40BFC /* NamedPipe.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NamedPipe.cpp; sourceTree = "<group>"; };
+		50CD3694281681D000E40BFC /* NamedPipe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NamedPipe.h; sourceTree = "<group>"; };
+		50CD3696281681E700E40BFC /* FFmpeg.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FFmpeg.cpp; sourceTree = "<group>"; };
+		50CD3697281681E700E40BFC /* FFmpeg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFmpeg.h; sourceTree = "<group>"; };
 		50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerMenu.swift; sourceTree = "<group>"; };
 		50D197DF21606DEC008BC551 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		50D20B742508F6D70088E8F2 /* VICII_cycles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_cycles.cpp; sourceTree = "<group>"; };
@@ -1195,8 +1202,7 @@
 				50DBB3D22641107E006F45E6 /* DmaDebuggerTypes.h */,
 				50DBB3D02641101E006F45E6 /* DmaDebugger.h */,
 				50DBB3CF2641101E006F45E6 /* DmaDebugger.cpp */,
-				5044A03A2657A7A800C551C6 /* Recorder.h */,
-				5044A0392657A7A800C551C6 /* Recorder.cpp */,
+				50CD36912816817500E40BFC /* Recorder */,
 			);
 			path = VICII;
 			sourceTree = "<group>";
@@ -1557,6 +1563,20 @@
 			path = "XIB files";
 			sourceTree = "<group>";
 		};
+		50CD36912816817500E40BFC /* Recorder */ = {
+			isa = PBXGroup;
+			children = (
+				50CD3692281681A300E40BFC /* CMakeLists.txt */,
+				50CD3694281681D000E40BFC /* NamedPipe.h */,
+				50CD3693281681D000E40BFC /* NamedPipe.cpp */,
+				50CD3697281681E700E40BFC /* FFmpeg.h */,
+				50CD3696281681E700E40BFC /* FFmpeg.cpp */,
+				5044A03A2657A7A800C551C6 /* Recorder.h */,
+				5044A0392657A7A800C551C6 /* Recorder.cpp */,
+			);
+			path = Recorder;
+			sourceTree = "<group>";
+		};
 		50EF22302815922300440C4D /* RegressionTester */ = {
 			isa = PBXGroup;
 			children = (
@@ -1835,6 +1855,7 @@
 				504C435C24AF29AC00E69CAE /* Westermann.cpp in Sources */,
 				504C439524AF29AC00E69CAE /* envelope.cc in Sources */,
 				50B7E26C2813F8C400A405A3 /* TextStorage.cpp in Sources */,
+				50CD3698281681E800E40BFC /* FFmpeg.cpp in Sources */,
 				504C437324AF29AC00E69CAE /* RomFile.cpp in Sources */,
 				504C437E24AF29AC00E69CAE /* TAPFile.cpp in Sources */,
 				50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */,
@@ -1864,6 +1885,7 @@
 				504C438F24AF29AC00E69CAE /* VICII_debug.cpp in Sources */,
 				505F8FE92582435E0066ACE4 /* PeripheralsConf.swift in Sources */,
 				50AF2F8226AFFE9A002DC43B /* PIA.cpp in Sources */,
+				50CD3695281681D000E40BFC /* NamedPipe.cpp in Sources */,
 				50D3092824C71B0A00B92563 /* Monitor.swift in Sources */,
 				504C436C24AF29AC00E69CAE /* Isepic.cpp in Sources */,
 				50AB70762721B8EE004ABB2B /* DiskAnalyzer.cpp in Sources */,

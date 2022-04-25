@@ -7,28 +7,29 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "Constants.h"
-#include "C64Types.h"
-#include "CartridgeTypes.h"
-#include "CIATypes.h"
-#include "ControlPortTypes.h"
-#include "CPUTypes.h"
-#include "DiskTypes.h"
-#include "DiskAnalyzerTypes.h"
-#include "DriveTypes.h"
-#include "ErrorTypes.h"
-#include "ExpansionPortTypes.h"
-#include "FileTypes.h"
-#include "FSTypes.h"
-#include "C64ComponentTypes.h"
-#include "JoystickTypes.h"
-#include "MemoryTypes.h"
-#include "MouseTypes.h"
-#include "MsgQueueTypes.h"
-#include "ParCableTypes.h"
-#include "PowerSupplyTypes.h"
-#include "SIDTypes.h"
-#include "VICIITypes.h"
+#import "Constants.h"
+#import "config.h"
+#import "C64Types.h"
+#import "CartridgeTypes.h"
+#import "CIATypes.h"
+#import "ControlPortTypes.h"
+#import "CPUTypes.h"
+#import "DiskTypes.h"
+#import "DiskAnalyzerTypes.h"
+#import "DriveTypes.h"
+#import "ErrorTypes.h"
+#import "ExpansionPortTypes.h"
+#import "FileTypes.h"
+#import "FSTypes.h"
+#import "C64ComponentTypes.h"
+#import "JoystickTypes.h"
+#import "MemoryTypes.h"
+#import "MouseTypes.h"
+#import "MsgQueueTypes.h"
+#import "ParCableTypes.h"
+#import "PowerSupplyTypes.h"
+#import "SIDTypes.h"
+#import "VICIITypes.h"
 
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
@@ -645,6 +646,8 @@
 
 @interface RecorderProxy : Proxy { }
 
+@property NSString *path;
+- (NSString *)findFFmpeg:(NSInteger)nr;
 @property (readonly) BOOL hasFFmpeg;
 @property (readonly) BOOL recording;
 @property (readonly) double duration;
@@ -652,12 +655,14 @@
 @property (readonly) NSInteger bitRate;
 @property (readonly) NSInteger sampleRate;
 
-- (BOOL)startRecording:(NSRect)rect
-               bitRate:(NSInteger)rate
-               aspectX:(NSInteger)aspectX
-               aspectY:(NSInteger)aspectY;
+- (void)startRecording:(NSRect)rect
+bitRate:(NSInteger)rate
+aspectX:(NSInteger)aspectX
+aspectY:(NSInteger)aspectY
+exception:(ExceptionWrapper *)ex;
 - (void)stopRecording;
 - (BOOL)exportAs:(NSString *)path;
+
 
 @end
 

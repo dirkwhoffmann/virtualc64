@@ -59,24 +59,12 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
             description = "Out of memory.";
             break;
 
-        case ERROR_FILE_NOT_FOUND:
-            description = "File \"" + s + "\" not found.";
+        case ERROR_DIR_NOT_FOUND:
+            description = "Folder \"" + s + "\" not found.";
             break;
-            
-        case ERROR_FILE_TYPE_MISMATCH:
-            description = "The file content and the file type do not match.";
-            break;
-            
-        case ERROR_FILE_CANT_READ:
-            description = "Failed to read from file \"" + s + "\".";
-            break;
-            
-        case ERROR_FILE_CANT_WRITE:
-            description = "Failed to write to file \"" + s + "\".";
-            break;
-            
-        case ERROR_FILE_CANT_CREATE:
-            description = "Failed to create file \"" + s + "\".";
+
+        case ERROR_DIR_ACCESS_DENIED:
+            description = "Unable to access folder \"" + s + "\". Permission denied.";
             break;
 
         case ERROR_DIR_CANT_CREATE:
@@ -85,6 +73,42 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
 
         case ERROR_DIR_NOT_EMPTY:
             description = "Directory \"" + s + "\" is not empty.";
+            break;
+
+        case ERROR_FILE_NOT_FOUND:
+            description = "File \"" + s + "\" not found.";
+            break;
+
+        case ERROR_FILE_EXISTS:
+            description = "File \"" + s + "\" already exists.";
+            break;
+
+        case ERROR_FILE_IS_DIRECTORY:
+            if (s.empty()) {
+                description = "The selected file is a directory.";
+            } else {
+                description = "File \"" + s + "\" is a directory.";
+            }
+            break;
+
+        case ERROR_FILE_ACCESS_DENIED:
+            description = "Unable to access file \"" + s + "\". Permission denied.";
+            break;
+
+        case ERROR_FILE_TYPE_MISMATCH:
+            description = "The file content and the file type do not match.";
+            break;
+
+        case ERROR_FILE_CANT_READ:
+            description = "Failed to read from file \"" + s + "\".";
+            break;
+
+        case ERROR_FILE_CANT_WRITE:
+            description = "Failed to write to file \"" + s + "\".";
+            break;
+
+        case ERROR_FILE_CANT_CREATE:
+            description = "Failed to create file \"" + s + "\".";
             break;
 
         case ERROR_ROM_BASIC_MISSING:
@@ -105,6 +129,10 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
 
         case ERROR_ROM_MEGA65_MISMATCH:
             description = "Mega65 Rom revisions do not match.";
+            break;
+
+        case ERROR_REC_LAUNCH:
+            description = s;
             break;
 
         case ERROR_SNAP_TOO_OLD:

@@ -37,6 +37,13 @@ class Preferences {
     }
     
     // Screen captures
+    var ffmpegPath = "" {
+        didSet {
+            for amiga in myAppDelegate.proxies {
+                amiga.recorder.path = ffmpegPath
+            }
+        }
+    }
     var captureSource = GeneralDefaults.std.captureSource
     var bitRate = 512 {
         didSet {
@@ -71,10 +78,10 @@ class Preferences {
     }
     
     // Misc
-    var driveEjectUnasked = GeneralDefaults.std.driveEjectUnasked
-    var closeWithoutAsking = GeneralDefaults.std.closeWithoutAsking
-    var pauseInBackground = GeneralDefaults.std.pauseInBackground
-    
+    var ejectWithoutAsking = false
+    var closeWithoutAsking = false
+    var pauseInBackground = false
+
     //
     // Controls
     //
@@ -156,7 +163,7 @@ class Preferences {
         warpModeIntValue = defaults.integer(forKey: Keys.Gen.warpMode)
         
         // Misc
-        driveEjectUnasked = defaults.bool(forKey: Keys.Gen.driveEjectUnasked)
+        ejectWithoutAsking = defaults.bool(forKey: Keys.Gen.driveEjectUnasked)
         pauseInBackground = defaults.bool(forKey: Keys.Gen.pauseInBackground)
         closeWithoutAsking = defaults.bool(forKey: Keys.Gen.closeWithoutAsking)
     }
@@ -187,7 +194,7 @@ class Preferences {
         defaults.set(warpModeIntValue, forKey: Keys.Gen.warpMode)
         
         // Misc
-        defaults.set(driveEjectUnasked, forKey: Keys.Gen.driveEjectUnasked)
+        defaults.set(ejectWithoutAsking, forKey: Keys.Gen.driveEjectUnasked)
         defaults.set(pauseInBackground, forKey: Keys.Gen.pauseInBackground)
         defaults.set(closeWithoutAsking, forKey: Keys.Gen.closeWithoutAsking)
     }

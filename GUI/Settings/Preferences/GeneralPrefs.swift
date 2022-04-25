@@ -49,7 +49,7 @@ extension PreferencesController {
         genWarpMode.selectItem(withTag: pref.warpModeIntValue)
         
         // Miscellaneous
-        genEjectUnasked.state = pref.driveEjectUnasked ? .on : .off
+        genEjectUnasked.state = pref.ejectWithoutAsking ? .on : .off
         genPauseInBackground.state = pref.pauseInBackground ? .on : .off
         genCloseWithoutAskingButton.state = pref.closeWithoutAsking ? .on : .off
     }
@@ -158,7 +158,7 @@ extension PreferencesController {
     
     @IBAction func genEjectWithoutAskingAction(_ sender: NSButton!) {
         
-        pref.driveEjectUnasked = (sender.state == .on)
+        pref.ejectWithoutAsking = (sender.state == .on)
         refresh()
     }
 

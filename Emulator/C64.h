@@ -465,4 +465,17 @@ public:
     void flash(const AnyFile &file) throws;
     void flash(const AnyCollection &file, isize item) throws;
     void flash(const FSDevice &fs, isize item) throws;
+
+    
+    //
+    // Miscellaneous
+    //
+
+public:
+
+    // Returns a path to a temporary folder
+    static fs::path tmp() throws;
+
+    // Assembles a path to a temporary file
+    static fs::path tmp(const string &name, bool unique = false) throws;
 };

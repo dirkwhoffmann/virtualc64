@@ -1264,9 +1264,33 @@
     return (Recorder *)obj;
 }
 
+- (NSString *)path
+{
+    auto path = FFmpeg::getExecPath();
+    return @(path.c_str());
+}
+
+- (void)setPath:(NSString *)path
+{
+    if ([path length] == 0) {
+        FFmpeg::setExecPath("");
+    } else {
+        FFmpeg::setExecPath(string([path fileSystemRepresentation]));
+    }
+}
+
+- (NSString *)findFFmpeg:(NSInteger)nr
+{
+    if (nr < (NSInteger)FFmpeg::paths.size()) {
+        return @(FFmpeg::paths[nr].c_str());
+    } else {
+        return nil;
+    }
+}
+
 - (BOOL)hasFFmpeg
 {
-    return [self recorder]->hasFFmpeg();
+    return FFmpeg::available();
 }
 
 - (BOOL)recording
@@ -1294,20 +1318,19 @@
     return [self recorder]->getSampleRate();
 }
 
-- (BOOL)startRecording:(NSRect)rect
+- (void)startRecording:(NSRect)rect
                bitRate:(NSInteger)rate
                aspectX:(NSInteger)aspectX
                aspectY:(NSInteger)aspectY
+             exception:(ExceptionWrapper *)ex
 {
-    int x1 = (int)rect.origin.x;
-    int y1 = (int)rect.origin.y;
-    int x2 = x1 + (int)rect.size.width;
-    int y2 = y1 + (int)rect.size.height;
-    
-    return [self recorder]->startRecording(x1, y1, x2, y2,
-                                           rate,
-                                           aspectX,
-                                           aspectY);
+    auto x1 = isize(rect.origin.x);
+    auto y1 = isize(rect.origin.y);
+    auto x2 = isize(x1 + (int)rect.size.width);
+    auto y2 = isize(y1 + (int)rect.size.height);
+
+    try { return [self recorder]->startRecording(x1, y1, x2, y2, rate, aspectX, aspectY); }
+    catch (VC64Error &error) { [ex save:error]; }
 }
 
 - (void)stopRecording

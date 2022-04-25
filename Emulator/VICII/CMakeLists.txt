@@ -12,3 +12,5 @@ DmaDebugger.cpp
 Recorder.cpp
 
 )
+
+add_subdirectory(Recorder)

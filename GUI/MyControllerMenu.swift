@@ -368,34 +368,39 @@ extension MyController: NSMenuItemValidation {
     }
         
     @IBAction func captureScreenAction(_ sender: Any!) {
-        
-        track("Recording = \(c64.recorder.recording)")
-        
+
         if c64.recorder.recording {
             
             c64.recorder.stopRecording()
             exportVideoAction(self)
             return
         }
-        
+
         if !c64.recorder.hasFFmpeg {
-            showMissingFFmpegAlert()
+
+            if pref.ffmpegPath != "" {
+                showAlert(.noFFmpegFound(exec: pref.ffmpegPath))
+            } else {
+                showAlert(.noFFmpegInstalled)
+            }
             return
         }
-        
+
         var rect: CGRect
         if pref.captureSource == 0 {
             rect = renderer.canvas.visible
         } else {
             rect = renderer.canvas.entire
         }
-                
-        let success = c64.recorder.startRecording(rect,
-                                                  bitRate: pref.bitRate,
-                                                  aspectX: pref.aspectX,
-                                                  aspectY: pref.aspectY)
-        if !success {
-            showFailedToLaunchFFmpegAlert()
+
+        do {
+            try c64.recorder.startRecording(rect: rect,
+                                            rate: pref.bitRate,
+                                            ax: pref.aspectX,
+                                            ay: pref.aspectY)
+        } catch {
+
+            showAlert(.cantRecord, error: error)
         }
     }
     

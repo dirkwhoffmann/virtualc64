@@ -137,6 +137,7 @@ struct Keys {
         static let screenshotTarget       = "VC64_GEN_ScreenshotTarget"
         
         // Screen captures
+        static let ffmpegPath             = "VC64_GEN_ffmpegPath"
         static let captureSource          = "VC64_GEN_Source"
         static let bitRate                = "VC64_GEN_BitRate"
         static let aspectX                = "VC64_GEN_AspectX"
@@ -178,10 +179,10 @@ struct GeneralDefaults {
     let warpMode: WarpMode
     
     // Miscellaneous
-    let driveEjectUnasked: Bool
-    let pauseInBackground: Bool
+    let ejectWithoutAsking: Bool
     let closeWithoutAsking: Bool
-    
+    let pauseInBackground: Bool
+
     //
     // Schemes
     //
@@ -203,9 +204,9 @@ struct GeneralDefaults {
         
         warpMode: .auto,
         
-        driveEjectUnasked: false,
-        pauseInBackground: false,
-        closeWithoutAsking: false
+        ejectWithoutAsking: false,
+        closeWithoutAsking: false,
+        pauseInBackground: false
     )
 }
 
@@ -231,7 +232,7 @@ extension UserDefaults {
             
             Keys.Gen.warpMode: Int(defaults.warpMode.rawValue),
 
-            Keys.Gen.driveEjectUnasked: defaults.driveEjectUnasked,
+            Keys.Gen.driveEjectUnasked: defaults.ejectWithoutAsking,
             Keys.Gen.pauseInBackground: defaults.pauseInBackground,
             Keys.Gen.closeWithoutAsking: defaults.closeWithoutAsking
         ]

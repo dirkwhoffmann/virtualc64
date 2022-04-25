@@ -129,6 +129,7 @@ static const int FORCE_SNAP_CORRUPTED           = 0;
 static const int FORCE_CRT_UNKNOWN      		= 0;
 static const int FORCE_CRT_UNSUPPORTED  		= 0;
 static const int FORCE_RECORDING_ERROR  		= 0;
+static const int FORCE_NO_FFMPEG                = 0;
 
 
 #ifdef RELEASEBUILD

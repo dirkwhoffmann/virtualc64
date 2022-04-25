@@ -1526,3 +1526,51 @@ C64::flash(const FSDevice &fs, isize nr)
     
     msgQueue.put(MSG_FILE_FLASHED);
 }
+
+fs::path
+C64::tmp()
+{
+    STATIC_SYNCHRONIZED
+
+    static fs::path base;
+
+    if (base.empty()) {
+
+        // Use /tmp as default folder for temporary files
+        base = "/tmp";
+
+        // Open a file to see if we have write permissions
+        std::ofstream logfile(base / "vAmiga.log");
+
+        // If /tmp is not accessible, use a different directory
+        if (!logfile.is_open()) {
+
+            base = fs::temp_directory_path();
+            logfile.open(base / "vAmiga.log");
+
+            if (!logfile.is_open()) {
+
+                throw VC64Error(ERROR_DIR_NOT_FOUND);
+            }
+        }
+
+        logfile.close();
+        fs::remove(base / "vAmiga.log");
+    }
+
+    return base;
+}
+
+fs::path
+C64::tmp(const string &name, bool unique)
+{
+    STATIC_SYNCHRONIZED
+
+    auto base = tmp();
+    auto result = base / name;
+
+    // Make the file name unique if requested
+    if (unique) result = fs::path(util::makeUniquePath(result.string()));
+
+    return result;
+}
