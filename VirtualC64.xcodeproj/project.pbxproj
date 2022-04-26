@@ -833,32 +833,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5000474112DCECBA0098D890 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				501B80C225B1702500C90284 /* MyDocumentController.swift */,
-				50E9B92C201F299500065A89 /* MyController.swift */,
-				50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */,
-				50D3091D24C5CE1A00B92563 /* MyControllerStatusBar.swift */,
-				505184DD24F23484002C6124 /* MyControllerSnapshots.swift */,
-				507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */,
-				50EAFFE924B2600D00024CD2 /* MyToolbar.swift */,
-				50ED5BF712DD99C000596417 /* Speedometer.swift */,
-				50E9B92E201FA92C00065A89 /* Alerts.swift */,
-				5081AB621EF29E6400D6F616 /* MacAudio.swift */,
-				5002FA7921C264C100DA4BBC /* Dialogs */,
-				50C12A4221C6B634007EFAF6 /* Settings */,
-				5038CA9820B6C2D8000D9193 /* Inspector */,
-				50FE5B342039B392006CE7C7 /* Peripherals */,
-			);
-			name = Controllers;
-			sourceTree = "<group>";
-		};
 		5002FA7921C264C100DA4BBC /* Dialogs */ = {
 			isa = PBXGroup;
 			children = (
-				507E7A9F24FB881500AB433C /* ScreenshotDialog.swift */,
 				50763276202989D300575110 /* DialogController.swift */,
+				50CD36992817BA6600E40BFC /* Monitor */,
+				5038CA9820B6C2D8000D9193 /* Inspector */,
+				50769B8824BB1B38006FE743 /* Preferences */,
+				50769B8724BB1A7A006FE743 /* Configuration */,
+				507E7A9F24FB881500AB433C /* ScreenshotDialog.swift */,
 				50B485FA24F9911600844133 /* ImportDialog.swift */,
 				5080501725873EC9004FE1F5 /* ExportDialog.swift */,
 				5098C57A2658CF9800E05EFC /* ExportVideoDialog.swift */,
@@ -946,13 +929,21 @@
 		50176C6D0A6F7357009E80BD /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				5018AF65202EDD2000B4C886 /* Defaults.swift */,
 				506D3DCD20223E5E009742CF /* MyAppDelegate.swift */,
 				506D3DCF20224BF4009742CF /* MyDocument.swift */,
 				50BF77D120309A2A006E000F /* WindowDelegate.swift */,
-				505184E124F23CBF002C6124 /* Foundation */,
-				50BE4B5624E7F786008F39C9 /* Extensions */,
+				501B80C225B1702500C90284 /* MyDocumentController.swift */,
+				50E9B92C201F299500065A89 /* MyController.swift */,
+				50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */,
+				50D3091D24C5CE1A00B92563 /* MyControllerStatusBar.swift */,
+				505184DD24F23484002C6124 /* MyControllerSnapshots.swift */,
+				507CFDAF2013E765007FED87 /* MyControllerCartridges.swift */,
+				50EAFFE924B2600D00024CD2 /* MyToolbar.swift */,
+				505184E124F23CBF002C6124 /* System */,
 				506CE96621998C4500B70A3A /* Metal */,
-				5000474112DCECBA0098D890 /* Controllers */,
+				5002FA7921C264C100DA4BBC /* Dialogs */,
+				50FE5B342039B392006CE7C7 /* Peripherals */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -979,7 +970,6 @@
 		5038CA9820B6C2D8000D9193 /* Inspector */ = {
 			isa = PBXGroup;
 			children = (
-				50D3092724C71B0A00B92563 /* Monitor.swift */,
 				50D3092324C7152700B92563 /* Inspector.swift */,
 				5038CA8E20B6C263000D9193 /* CPUPanel.swift */,
 				5038CA9020B6C281000D9193 /* MemoryPanel.swift */,
@@ -1000,6 +990,7 @@
 				506D4D0C20B331A00093C5C6 /* MyFormatter.swift */,
 			);
 			name = Inspector;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		504C428D24AF29AB00E69CAE /* Emulator */ = {
@@ -1325,15 +1316,19 @@
 			path = CIA;
 			sourceTree = "<group>";
 		};
-		505184E124F23CBF002C6124 /* Foundation */ = {
+		505184E124F23CBF002C6124 /* System */ = {
 			isa = PBXGroup;
 			children = (
+				50ED5BF712DD99C000596417 /* Speedometer.swift */,
+				50E9B92E201FA92C00065A89 /* Alerts.swift */,
+				5081AB621EF29E6400D6F616 /* MacAudio.swift */,
 				5052A7C025A0AC0700E62EDD /* Errors.swift */,
 				50DBB44A2025CE5700489271 /* Utils.swift */,
 				507E7AA124FB897D00AB433C /* Screenshot.swift */,
 				505184DF24F23CB6002C6124 /* Storage.swift */,
+				50BE4B5624E7F786008F39C9 /* Extensions */,
 			);
-			name = Foundation;
+			name = System;
 			sourceTree = "<group>";
 		};
 		5051A1501B8842F100CBFB5A /* Sounds */ = {
@@ -1532,16 +1527,6 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
-		50C12A4221C6B634007EFAF6 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				5018AF65202EDD2000B4C886 /* Defaults.swift */,
-				50769B8824BB1B38006FE743 /* Preferences */,
-				50769B8724BB1A7A006FE743 /* Configuration */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
 		50C4F055202D8B37004C5F21 /* XIB files */ = {
 			isa = PBXGroup;
 			children = (
@@ -1575,6 +1560,14 @@
 				5044A0392657A7A800C551C6 /* Recorder.cpp */,
 			);
 			path = Recorder;
+			sourceTree = "<group>";
+		};
+		50CD36992817BA6600E40BFC /* Monitor */ = {
+			isa = PBXGroup;
+			children = (
+				50D3092724C71B0A00B92563 /* Monitor.swift */,
+			);
+			path = Monitor;
 			sourceTree = "<group>";
 		};
 		50EF22302815922300440C4D /* RegressionTester */ = {
