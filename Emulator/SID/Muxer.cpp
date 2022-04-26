@@ -85,21 +85,35 @@ Muxer::getDefaultConfig()
 void
 Muxer::resetConfig()
 {
-    SIDConfig defaults = getDefaultConfig();
-    
-    setConfigItem(OPT_SID_REVISION, defaults.revision);
-    setConfigItem(OPT_SID_FILTER, defaults.filter);
-    setConfigItem(OPT_SID_ENGINE, defaults.engine);
-    setConfigItem(OPT_SID_SAMPLING, defaults.sampling);
-    setConfigItem(OPT_AUDVOLL, defaults.volL);
-    setConfigItem(OPT_AUDVOLR, defaults.volR);
+    assert(isPoweredOff());
+    auto &defaults = c64.defaults;
 
-    for (isize i = 0; i < 4; i++) {
-        
-        setConfigItem(OPT_SID_ENABLE, i, GET_BIT(defaults.enabled, i));
-        setConfigItem(OPT_SID_ADDRESS, i, defaults.address[i]);
-        setConfigItem(OPT_AUDVOL, i, defaults.vol[i]);
-        setConfigItem(OPT_AUDPAN, i, defaults.pan[i]);
+    std::vector <Option> options = {
+
+        OPT_SID_REVISION,
+        OPT_SID_FILTER,
+        OPT_SID_ENGINE,
+        OPT_SID_SAMPLING,
+        OPT_AUDVOLL,
+        OPT_AUDVOLR
+    };
+
+    for (auto &option : options) {
+        setConfigItem(option, defaults.get(option));
+    }
+
+    std::vector <Option> moreOptions = {
+
+        OPT_SID_ENABLE,
+        OPT_SID_ADDRESS,
+        OPT_AUDVOL,
+        OPT_AUDPAN
+    };
+
+    for (auto &option : moreOptions) {
+        for (isize i = 0; i < 4; i++) {
+            setConfigItem(option, i, defaults.get(option, i));
+        }
     }
 }
 

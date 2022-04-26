@@ -10,7 +10,21 @@
 extension PreferencesController {
     
     func refreshGeneralTab() {
-                                
+
+        // Initialize combo boxes
+        if genFFmpegPath.tag == 0 {
+
+            genFFmpegPath.tag = 1
+
+            for i in 0...5 {
+                if let path = c64.recorder.findFFmpeg(i) {
+                    genFFmpegPath.addItem(withObjectValue: path)
+                } else {
+                    break
+                }
+            }
+        }
+
         // Snapshots
         genAutoSnapshots.state = pref.autoSnapshots ? .on : .off
         genSnapshotInterval.integerValue = pref.snapshotInterval
@@ -22,24 +36,16 @@ extension PreferencesController {
         
         // Screen captures
         let hasFFmpeg = c64.recorder.hasFFmpeg
-        genCaptureSource.selectItem(withTag: pref.captureSource)
+        genFFmpegPath.stringValue = c64.recorder.path
+        genFFmpegPath.textColor = hasFFmpeg ? .textColor : .warningColor
+        genSource.selectItem(withTag: pref.captureSource)
         genBitRate.stringValue = "\(pref.bitRate)"
         genAspectX.integerValue = pref.aspectX
         genAspectY.integerValue = pref.aspectY
-        genCaptureSource.isEnabled = hasFFmpeg
+        genSource.isEnabled = hasFFmpeg
         genBitRate.isEnabled = hasFFmpeg
         genAspectX.isEnabled = hasFFmpeg
         genAspectY.isEnabled = hasFFmpeg
-        
-        if hasFFmpeg {
-            genFFmpegIcon.isHidden = false
-            genFFmpegPath.textColor = .textColor
-            genFFmpegPath.stringValue = "/usr/local/bin/ffmpeg"
-        } else {
-            genFFmpegIcon.isHidden = true
-            genFFmpegPath.textColor = .warningColor
-            genFFmpegPath.stringValue = "Requires /usr/local/bin/ffmpeg"
-        }
 
         // Fullscreen
         genAspectRatioButton.state = pref.keepAspectRatio ? .on : .off
@@ -50,8 +56,8 @@ extension PreferencesController {
         
         // Miscellaneous
         genEjectUnasked.state = pref.ejectWithoutAsking ? .on : .off
-        genPauseInBackground.state = pref.pauseInBackground ? .on : .off
         genCloseWithoutAskingButton.state = pref.closeWithoutAsking ? .on : .off
+        genPauseInBackground.state = pref.pauseInBackground ? .on : .off
     }
     
     func selectGeneralTab() {
@@ -96,6 +102,20 @@ extension PreferencesController {
     //
     // Action methods (Screen captures)
     //
+
+    @IBAction func genPathAction(_ sender: NSComboBox!) {
+
+        let path = sender.stringValue
+        pref.ffmpegPath = path
+        refresh()
+
+        // Display a warning if the recorder is inaccessible
+        let fm = FileManager.default
+        if fm.fileExists(atPath: path), !fm.isExecutableFile(atPath: path) {
+
+            parent.showAlert(.recorderSandboxed(exec: path), window: window)
+        }
+    }
     
     @IBAction func genCaptureSourceAction(_ sender: NSPopUpButton!) {
         

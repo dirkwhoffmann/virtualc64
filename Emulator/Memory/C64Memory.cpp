@@ -131,9 +131,17 @@ C64Memory::getDefaultConfig()
 void
 C64Memory::resetConfig()
 {
-    MemConfig defaults = getDefaultConfig();
-    
-    setConfigItem(OPT_RAM_PATTERN, defaults.ramPattern);
+    assert(isPoweredOff());
+    auto &defaults = c64.defaults;
+
+    std::vector <Option> options = {
+
+        OPT_RAM_PATTERN
+    };
+
+    for (auto &option : options) {
+        setConfigItem(option, defaults.get(option));
+    }
 }
 
 i64

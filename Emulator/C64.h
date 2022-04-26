@@ -10,6 +10,7 @@
 #pragma once
 
 #include "C64Types.h"
+#include "Defaults.h"
 #include "MsgQueue.h"
 #include "Thread.h"
 
@@ -73,7 +74,10 @@ class C64 : public Thread {
     //
     
 public:
-    
+
+    // User settings
+    static Defaults defaults;
+
     // Core components
     C64Memory mem = C64Memory(*this);
     C64CPU cpu = C64CPU(*this, mem);

@@ -23,6 +23,8 @@ static_assert(sizeof(u16) == 2, "u16 size mismatch");
 static_assert(sizeof(u32) == 4, "u32 size mismatch");
 static_assert(sizeof(u64) == 8, "u64 size mismatch");
 
+Defaults C64::defaults;
+
 string
 C64::version()
 {

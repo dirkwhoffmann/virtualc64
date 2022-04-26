@@ -34,9 +34,19 @@ void Mouse::_reset(bool hard)
 void
 Mouse::resetConfig()
 {
-    setConfigItem(OPT_MOUSE_MODEL, MOUSE_C1350);
-    setConfigItem(OPT_SHAKE_DETECTION, true);
-    setConfigItem(OPT_MOUSE_VELOCITY, 100);
+    assert(isPoweredOff());
+    auto &defaults = c64.defaults;
+
+    std::vector <Option> options = {
+
+        OPT_MOUSE_MODEL,
+        OPT_SHAKE_DETECTION,
+        OPT_MOUSE_VELOCITY
+    };
+
+    for (auto &option : options) {
+        setConfigItem(option, defaults.get(option));
+    }
 }
 
 i64

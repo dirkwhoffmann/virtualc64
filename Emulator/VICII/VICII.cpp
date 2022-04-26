@@ -144,23 +144,28 @@ VICII::getDefaultConfig()
 void
 VICII::resetConfig()
 {
-    VICIIConfig defaults = getDefaultConfig();
-    
-    setConfigItem(OPT_VIC_REVISION, defaults.revision);
-    setConfigItem(OPT_VIC_SPEED, defaults.speed);
-    setConfigItem(OPT_VIC_POWER_SAVE, defaults.powerSave);
-    setConfigItem(OPT_GRAY_DOT_BUG, defaults.grayDotBug);
-    setConfigItem(OPT_GLUE_LOGIC, defaults.glueLogic);
+    assert(isPoweredOff());
+    auto &defaults = c64.defaults;
 
-    setConfigItem(OPT_PALETTE, defaults.palette);
-    setConfigItem(OPT_BRIGHTNESS, defaults.brightness);
-    setConfigItem(OPT_CONTRAST, defaults.contrast);
-    setConfigItem(OPT_SATURATION, defaults.saturation);
+    std::vector <Option> options = {
 
-    setConfigItem(OPT_HIDE_SPRITES, defaults.hideSprites);
-    
-    setConfigItem(OPT_SB_COLLISIONS, defaults.checkSSCollisions);
-    setConfigItem(OPT_SS_COLLISIONS, defaults.checkSBCollisions);
+        OPT_VIC_REVISION,
+        OPT_VIC_SPEED,
+        OPT_VIC_POWER_SAVE,
+        OPT_GRAY_DOT_BUG,
+        OPT_GLUE_LOGIC,
+        OPT_PALETTE,
+        OPT_BRIGHTNESS,
+        OPT_CONTRAST,
+        OPT_SATURATION,
+        OPT_HIDE_SPRITES,
+        OPT_SB_COLLISIONS,
+        OPT_SS_COLLISIONS
+    };
+
+    for (auto &option : options) {
+        setConfigItem(option, defaults.get(option));
+    }
 }
 
 i64

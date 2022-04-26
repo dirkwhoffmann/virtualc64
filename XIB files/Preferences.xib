@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19162" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19162"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -71,16 +71,15 @@
                 <outlet property="genAspectY" destination="4fm-pa-gQe" id="dUh-sc-lXD"/>
                 <outlet property="genAutoSnapshots" destination="DON-RP-HPW" id="bQG-hM-4dz"/>
                 <outlet property="genBitRate" destination="ZeS-T8-TJB" id="a9o-aW-NW2"/>
-                <outlet property="genCaptureSource" destination="8JD-Fd-oxj" id="eaL-3f-PGX"/>
                 <outlet property="genCloseWithoutAskingButton" destination="f7R-rS-Csv" id="Htu-GY-zf4"/>
                 <outlet property="genEjectUnasked" destination="TCJ-4m-Fvr" id="2tQ-by-wbz"/>
                 <outlet property="genExitOnEscButton" destination="8tU-em-5LP" id="yfd-1d-BGx"/>
-                <outlet property="genFFmpegIcon" destination="9SS-xX-aAn" id="ran-he-4pJ"/>
-                <outlet property="genFFmpegPath" destination="EBC-gI-OhK" id="dZI-zs-R9g"/>
+                <outlet property="genFFmpegPath" destination="8yU-AN-8vz" id="FkG-S6-uy4"/>
                 <outlet property="genPauseInBackground" destination="UxY-mR-8ll" id="qPU-uQ-Fnx"/>
                 <outlet property="genScreenshotSourcePopup" destination="UhB-rO-Fiw" id="j4T-T7-esc"/>
                 <outlet property="genScreenshotTargetPopup" destination="LXm-7Y-K8D" id="tjb-Sp-IsE"/>
                 <outlet property="genSnapshotInterval" destination="ITl-Yu-WOZ" id="hfk-Lq-dZd"/>
+                <outlet property="genSource" destination="8JD-Fd-oxj" id="eaL-3f-PGX"/>
                 <outlet property="genWarpMode" destination="YaP-a1-P0K" id="vrS-Wr-jID"/>
                 <outlet property="keyBox" destination="FmQ-sb-BjR" id="MgX-Dg-0CW"/>
                 <outlet property="keyMapText" destination="fCj-zh-fKC" id="1Oe-cc-kEt"/>
@@ -272,7 +271,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TCJ-4m-Fvr">
-                                            <rect key="frame" x="316" y="197" width="274" height="25"/>
+                                            <rect key="frame" x="316" y="193" width="274" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Eject unsaved disks without asking" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="rRj-oV-ir5">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -337,7 +336,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D2B-Jp-9bV">
-                                            <rect key="frame" x="316" y="229" width="143" height="20"/>
+                                            <rect key="frame" x="316" y="225" width="143" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Miscellaneous" id="jLu-Ya-Lit">
                                                 <font key="font" metaFont="systemBold"/>
@@ -346,7 +345,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UxY-mR-8ll">
-                                            <rect key="frame" x="316" y="162" width="249" height="25"/>
+                                            <rect key="frame" x="316" y="163" width="249" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Pause emulation while in background" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="klv-D6-Mfn">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -357,7 +356,7 @@ DQ
                                             </connections>
                                         </button>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f7R-rS-Csv">
-                                            <rect key="frame" x="316" y="130" width="274" height="25"/>
+                                            <rect key="frame" x="316" y="133" width="274" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Close unsaved documents without asking" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Qjv-dJ-EaJ">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -407,7 +406,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EfJ-dO-J7w">
-                                            <rect key="frame" x="20" y="168" width="61" height="18"/>
+                                            <rect key="frame" x="20" y="166" width="61" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Source:" id="cck-sS-M60">
                                                 <font key="font" metaFont="system"/>
@@ -416,7 +415,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WOL-aD-aPz">
-                                            <rect key="frame" x="22" y="197" width="61" height="18"/>
+                                            <rect key="frame" x="22" y="196" width="61" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Engine:" id="dkK-pH-Glh">
                                                 <font key="font" metaFont="system"/>
@@ -425,7 +424,7 @@ DQ
                                             </textFieldCell>
                                         </textField>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8JD-Fd-oxj">
-                                            <rect key="frame" x="84" y="163" width="206" height="26"/>
+                                            <rect key="frame" x="84" y="161" width="206" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Visible Texture" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="9T6-c0-hmY" id="1qP-RM-j9C">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -517,7 +516,7 @@ DQ
                                             </connections>
                                         </comboBox>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y3M-Lu-iY7">
-                                            <rect key="frame" x="177" y="138" width="28" height="16"/>
+                                            <rect key="frame" x="177" y="137" width="28" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="kBit" id="xsp-2c-LJw">
                                                 <font key="font" usesAppearanceFont="YES"/>
@@ -525,23 +524,18 @@ DQ
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EBC-gI-OhK">
-                                            <rect key="frame" x="85" y="199" width="211" height="16"/>
+                                        <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8yU-AN-8vz">
+                                            <rect key="frame" x="87" y="192" width="202" height="25"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="/usr/local/bin/ffmpeg" id="ZOw-yT-hYd">
+                                            <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="fND-2R-qkC">
                                                 <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9SS-xX-aAn">
-                                            <rect key="frame" x="268" y="197" width="18" height="18"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="FFmpegIcon" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="UvI-95-MQc">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                        </button>
+                                            </comboBoxCell>
+                                            <connections>
+                                                <action selector="genPathAction:" target="-2" id="O0B-CZ-bch"/>
+                                            </connections>
+                                        </comboBox>
                                     </subviews>
                                 </view>
                             </tabViewItem>
@@ -2241,7 +2235,6 @@ DQ
         </window>
     </objects>
     <resources>
-        <image name="FFmpegIcon" width="480" height="480"/>
         <image name="gamepad" width="316" height="151"/>
         <image name="instructions3Template" width="214" height="296"/>
         <image name="instructions4Template" width="214" height="296"/>

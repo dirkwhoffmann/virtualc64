@@ -45,26 +45,33 @@ DmaDebugger::getDefaultConfig()
 void
 DmaDebugger::resetConfig()
 {
-    DmaDebuggerConfig defaults = getDefaultConfig();
-    
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, defaults.dmaDebug);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 0, defaults.dmaChannel[0]);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 1, defaults.dmaChannel[1]);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 2, defaults.dmaChannel[2]);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 3, defaults.dmaChannel[3]);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 4, defaults.dmaChannel[4]);
-    setConfigItem(OPT_DMA_DEBUG_ENABLE, 5, defaults.dmaChannel[5]);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 0, defaults.dmaColor[0]);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 1, defaults.dmaColor[1]);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 2, defaults.dmaColor[2]);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 3, defaults.dmaColor[3]);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 4, defaults.dmaColor[4]);
-    setConfigItem(OPT_DMA_DEBUG_COLOR, 5, defaults.dmaColor[5]);
-    setConfigItem(OPT_DMA_DEBUG_MODE, defaults.dmaDisplayMode);
-    setConfigItem(OPT_DMA_DEBUG_OPACITY, defaults.dmaOpacity);
-    
-    setConfigItem(OPT_CUT_LAYERS, defaults.cutLayers);
-    setConfigItem(OPT_CUT_OPACITY, defaults.cutOpacity);
+    assert(isPoweredOff());
+    auto &defaults = c64.defaults;
+
+    std::vector <Option> options = {
+
+        OPT_DMA_DEBUG_ENABLE,
+        OPT_DMA_DEBUG_MODE,
+        OPT_DMA_DEBUG_OPACITY,
+        OPT_CUT_LAYERS,
+        OPT_CUT_OPACITY,
+    };
+
+    for (auto &option : options) {
+        setConfigItem(option, defaults.get(option));
+    }
+
+    std::vector <Option> moreOptions = {
+
+        OPT_DMA_DEBUG_ENABLE,
+        OPT_DMA_DEBUG_COLOR
+    };
+
+    for (auto &option : moreOptions) {
+        for (isize i = 0; i < 6; i++) {
+            setConfigItem(option, defaults.get(option, i), i);
+        }
+    }
 }
 
 i64

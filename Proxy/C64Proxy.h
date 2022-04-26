@@ -47,6 +47,7 @@
 @class CRTFileProxy;
 @class D64FileProxy;
 @class DatasetteProxy;
+@class DefaultsProxy;
 @class DiskProxy;
 @class DmaDebuggerProxy;
 @class DriveProxy;
@@ -117,6 +118,7 @@
     ControlPortProxy *port2;
     CPUProxy *cpu;
     DatasetteProxy *datasette;
+    DefaultsProxy *defaults;
     DmaDebuggerProxy *dmaDebugger;
     DriveProxy *drive8;
     DriveProxy *drive9;
@@ -154,6 +156,8 @@
 @property (readonly, strong) RetroShellProxy *retroShell;
 @property (readonly, strong) SIDProxy *sid;
 @property (readonly, strong) VICProxy *vic;
+
+@property (class, readonly, strong) DefaultsProxy *defaults;
 
 - (void)dealloc;
 - (void)kill;
@@ -227,6 +231,34 @@
 
 - (void)flash:(AnyFileProxy *)container exception:(ExceptionWrapper *)ex;
 - (void)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
+
+@end
+
+
+//
+// Defaults
+//
+
+@interface DefaultsProxy : Proxy { }
+
+- (void)load:(NSURL *)url exception:(ExceptionWrapper *)ex;
+- (void)save:(NSURL *)url exception:(ExceptionWrapper *)ex;
+
+- (void)register:(NSString *)key value:(NSString *)value;
+
+- (NSString *)getString:(NSString *)key;
+- (NSInteger)getInt:(NSString *)key;
+- (NSInteger)getOpt:(Option)option;
+- (NSInteger)getOpt:(Option)option nr:(NSInteger)nr;
+
+- (void)setKey:(NSString *)key value:(NSString *)value;
+- (void)setOpt:(Option)option value:(NSInteger)value;
+- (void)setOpt:(Option)option nr:(NSInteger)nr value:(NSInteger)value;
+
+- (void)removeAll;
+- (void)removeKey:(NSString *)key;
+- (void)remove:(Option)option;
+- (void)remove:(Option) option nr:(NSInteger)nr;
 
 @end
 

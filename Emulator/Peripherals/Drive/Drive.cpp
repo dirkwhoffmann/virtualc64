@@ -80,26 +80,41 @@ Drive::getDefaultConfig()
 void
 Drive::resetConfig()
 {
-    DriveConfig defaults = getDefaultConfig();
+    assert(isPoweredOff());
+    auto &defaults = c64.defaults;
 
-    setConfigItem(OPT_DRV_AUTO_CONFIG, defaults.autoConfig);
+    std::vector <Option> options = {
 
-    setConfigItem(OPT_DRV_TYPE, defaults.type);
-    setConfigItem(OPT_DRV_RAM, defaults.ram);
-    setConfigItem(OPT_DRV_PARCABLE, defaults.parCable);
-    try { setConfigItem(OPT_DRV_CONNECT, deviceNr == DRIVE8); } catch (...) { }
-    setConfigItem(OPT_DRV_POWER_SWITCH, defaults.switchedOn);
-    setConfigItem(OPT_DRV_POWER_SAVE, defaults.powerSave);
+        OPT_DRV_AUTO_CONFIG,
+        OPT_DRV_TYPE,
+        OPT_DRV_RAM,
+        OPT_DRV_PARCABLE,
+        OPT_DRV_CONNECT,
+        OPT_DRV_POWER_SWITCH,
+        OPT_DRV_POWER_SAVE,
+        OPT_DRV_EJECT_DELAY,
+        OPT_DRV_SWAP_DELAY,
+        OPT_DRV_INSERT_DELAY,
+        OPT_DRV_PAN,
+        OPT_DRV_POWER_VOL,
+        OPT_DRV_STEP_VOL,
+        OPT_DRV_INSERT_VOL,
+        OPT_DRV_EJECT_VOL
+    };
 
-    setConfigItem(OPT_DRV_EJECT_DELAY, defaults.ejectDelay);
-    setConfigItem(OPT_DRV_SWAP_DELAY, defaults.swapDelay);
-    setConfigItem(OPT_DRV_INSERT_DELAY, defaults.insertDelay);
-    
-    setConfigItem(OPT_DRV_PAN, defaults.pan);
-    setConfigItem(OPT_DRV_POWER_VOL, defaults.powerVolume);
-    setConfigItem(OPT_DRV_STEP_VOL, defaults.stepVolume);
-    setConfigItem(OPT_DRV_INSERT_VOL, defaults.insertVolume);
-    setConfigItem(OPT_DRV_EJECT_VOL, defaults.ejectVolume);
+    for (auto &option : options) {
+
+        if (option == OPT_DRV_CONNECT && !canConnect()) {
+
+            setConfigItem(option, false);
+            setConfigItem(option, false);
+
+        } else {
+
+            setConfigItem(option, defaults.get(option, deviceNr));
+            setConfigItem(option, defaults.get(option, deviceNr));
+        }
+    }
 }
 
 i64
@@ -179,7 +194,7 @@ Drive::setConfigItem(Option option, i64 value)
         }
         case OPT_DRV_CONNECT:
         {
-            if (value && !c64.hasRom(ROM_TYPE_VC1541)) {
+            if (value && !canConnect()) {
                 throw VC64Error(ERROR_ROM_DRIVE_MISSING);
             }
             
@@ -317,6 +332,12 @@ Drive::autoConfigure()
             
             debug( CNF_DEBUG, "AutoConfig: Rom not recognized\n");
     }
+}
+
+bool
+Drive::canConnect()
+{
+    return c64.hasRom(ROM_TYPE_VC1541);
 }
 
 void

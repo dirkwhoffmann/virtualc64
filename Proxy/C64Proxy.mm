@@ -74,6 +74,92 @@
 @end
 
 //
+// Defaults
+//
+
+@implementation DefaultsProxy
+
+- (Defaults *)props
+{
+    return (Defaults *)obj;
+}
+
+- (void)load:(NSURL *)url exception:(ExceptionWrapper *)ex
+{
+    try { return [self props]->load([url fileSystemRepresentation]); }
+    catch (VC64Error &error) { [ex save:error]; }
+}
+
+- (void)save:(NSURL *)url exception:(ExceptionWrapper *)ex
+{
+    try { return [self props]->save([url fileSystemRepresentation]); }
+    catch (VC64Error &error) { [ex save:error]; }
+}
+
+- (void)register:(NSString *)key value:(NSString *)value
+{
+    [self props]->setFallback(string([key UTF8String]), string([value UTF8String]));
+}
+
+- (NSString *)getString:(NSString *)key
+{
+    auto result = [self props]->getString([key UTF8String]);
+    return @(result.c_str());
+}
+
+- (NSInteger)getInt:(NSString *)key
+{
+    return [self props]->getInt([key UTF8String]);
+}
+
+- (NSInteger)getOpt:(Option)option
+{
+    return [self props]->get(option);
+}
+
+- (NSInteger)getOpt:(Option)option nr:(NSInteger)nr
+{
+    return [self props]->get(option, nr);
+}
+
+- (void)setKey:(NSString *)key value:(NSString *)value
+{
+    [self props]->setString(string([key UTF8String]), string([value UTF8String]));
+}
+
+- (void)setOpt:(Option)option value:(NSInteger)value
+{
+    [self props]->set(option, value);
+}
+
+- (void)setOpt:(Option)option nr:(NSInteger)nr value:(NSInteger)value
+{
+    [self props]->set(option, nr, value);
+}
+
+- (void)removeAll
+{
+    [self props]->remove();
+}
+
+- (void)removeKey:(NSString *)key
+{
+    [self props]->remove(string([key UTF8String]));
+}
+
+- (void)remove:(Option)option
+{
+    [self props]->remove(option);
+}
+
+- (void)remove:(Option) option nr:(NSInteger)nr
+{
+    [self props]->remove(option, nr);
+}
+
+@end
+
+//
 // Guards (Breakpoints, Watchpoints)
 //
 
@@ -2187,6 +2273,11 @@
 - (C64 *)c64
 {
     return (C64 *)obj;
+}
+
++ (DefaultsProxy *) defaults
+{
+    return [[DefaultsProxy alloc] initWith:&C64::defaults];
 }
 
 - (void)dealloc

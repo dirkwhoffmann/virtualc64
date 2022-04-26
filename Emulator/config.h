@@ -55,8 +55,9 @@
 //
 
 // General
-static const int CNF_DEBUG       = 0; // Configuration
 static const int XFILES          = 0; // Report paranormal activity
+static const int CNF_DEBUG       = 0; // Configuration
+static const int DEF_DEBUG       = 0; // User defaults
 
 // Runloop
 static const int RUN_DEBUG       = 0; // Run loop, component states, timing

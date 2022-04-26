@@ -36,9 +36,19 @@ Joystick::_reset(bool hard)
 void
 Joystick::resetConfig()
 {
-    setConfigItem(OPT_AUTOFIRE, false);
-    setConfigItem(OPT_AUTOFIRE_BULLETS, -3);
-    setConfigItem(OPT_AUTOFIRE_DELAY, 125);
+    assert(isPoweredOff());
+    auto &defaults = c64.defaults;
+
+    std::vector <Option> options = {
+
+        OPT_AUTOFIRE,
+        OPT_AUTOFIRE_BULLETS,
+        OPT_AUTOFIRE_DELAY
+    };
+
+    for (auto &option : options) {
+        setConfigItem(option, defaults.get(option));
+    }
 }
 
 i64

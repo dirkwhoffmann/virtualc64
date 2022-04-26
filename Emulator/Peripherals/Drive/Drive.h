@@ -81,7 +81,6 @@ public:
     
     // The currently inserted disk (if any)
     std::unique_ptr<Disk> disk;
-    // Disk disk = Disk(c64);
     
 
     //
@@ -315,7 +314,8 @@ public:
 
     // Updates the current configuration according to the installed ROM
     void autoConfigure();
-    
+
+    bool canConnect();
     bool hasParCable() { return config.parCable != PAR_CABLE_NONE; }
     ParCableType getParCableType() const { return config.parCable; }
 

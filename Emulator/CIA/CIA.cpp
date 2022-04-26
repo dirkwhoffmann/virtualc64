@@ -49,10 +49,18 @@ CIA::getDefaultConfig()
 void
 CIA::resetConfig()
 {
-    CIAConfig defaults = getDefaultConfig();
-    
-    setConfigItem(OPT_CIA_REVISION, defaults.revision);
-    setConfigItem(OPT_TIMER_B_BUG, defaults.timerBBug);
+    assert(isPoweredOff());
+    auto &defaults = c64.defaults;
+
+    std::vector <Option> options = {
+
+        OPT_CIA_REVISION,
+        OPT_TIMER_B_BUG
+    };
+
+    for (auto &option : options) {
+        setConfigItem(option, defaults.get(option));
+    }
 }
 
 i64

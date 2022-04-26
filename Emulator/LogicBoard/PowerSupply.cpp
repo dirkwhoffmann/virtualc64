@@ -35,9 +35,17 @@ PowerSupply::getDefaultConfig()
 void
 PowerSupply::resetConfig()
 {
-    PowerSupplyConfig defaults = getDefaultConfig();
-    
-    setConfigItem(OPT_POWER_GRID, defaults.powerGrid);
+    assert(isPoweredOff());
+    auto &defaults = c64.defaults;
+
+    std::vector <Option> options = {
+
+        OPT_POWER_GRID
+    };
+
+    for (auto &option : options) {
+        setConfigItem(option, defaults.get(option));
+    }
 }
 
 i64
