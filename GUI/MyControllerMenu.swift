@@ -38,11 +38,6 @@ extension MyController: NSMenuItemValidation {
         switch item.action {
             
         // Machine menu
-        case #selector(MyController.importConfigAction(_:)),
-             #selector(MyController.exportConfigAction(_:)),
-             #selector(MyController.resetConfigAction(_:)):
-            return !powered
-            
         case #selector(MyController.captureScreenAction(_:)):
             item.title = recording ? "Stop Recording" : "Record Screen"
             return true
@@ -195,76 +190,32 @@ extension MyController: NSMenuItemValidation {
         
         if myAppDelegate.prefController == nil {
             myAppDelegate.prefController =
-                PreferencesController.make(parent: self,
-                                           nibName: NSNib.Name("Preferences"))
+            PreferencesController.make(parent: self,
+                                       nibName: NSNib.Name("Preferences"))
         }
         myAppDelegate.prefController?.showWindow(self)
     }
     
-    func importPrefs(_ prefixes: [String]) {
-        
-        track("Importing user defaults with prefixes \(prefixes)")
-        
-        let panel = NSOpenPanel()
-        panel.prompt = "Import"
-        panel.allowedFileTypes = ["vc64conf"]
-        
-        panel.beginSheetModal(for: window!, completionHandler: { result in
-            if result == .OK {
-                if let url = panel.url {
-                    self.loadUserDefaults(url: url, prefixes: prefixes)
-                }
-            }
-        })
-    }
-    
-    func exportPrefs(_ prefixes: [String]) {
-        
-        track("Exporting user defaults with prefixes \(prefixes)")
-        
-        let panel = NSSavePanel()
-        panel.prompt = "Export"
-        panel.allowedFileTypes = ["vc64conf"]
-        
-        panel.beginSheetModal(for: window!, completionHandler: { result in
-            if result == .OK {
-                if let url = panel.url {
-                    track()
-                    self.saveUserDefaults(url: url, prefixes: prefixes)
-                }
-            }
-        })
-    }
-    
-    @IBAction func importConfigAction(_ sender: Any!) {
-        
-        importPrefs(["VC64_ROM", "VC64_HW", "VC64_VID"])
-    }
-    
-    @IBAction func exportConfigAction(_ sender: Any!) {
-        
-        exportPrefs(["VC64_ROM", "VC64_HW", "VC64_VID"])
-    }
-    
-    @IBAction func resetConfigAction(_ sender: Any!) {
-               
-        track()
+    @IBAction func factorySettingsAction(_ sender: Any!) {
 
-        UserDefaults.resetHardwareUserDefaults()
-        UserDefaults.resetPeripheralsUserDefaults()
-        UserDefaults.resetAudioUserDefaults()
-        UserDefaults.resetVideoUserDefaults()
-        UserDefaults.resetRomUserDefaults()
+        let defaults = C64Proxy.defaults!
 
-        c64.suspend()
-        config.loadRomUserDefaults()
-        config.loadHardwareUserDefaults()
-        config.loadPeripheralsUserDefaults()
-        config.loadAudioUserDefaults()
-        config.loadVideoUserDefaults()
-        c64.resume()
+        // Power off the emulator if the user doesn't object
+        if !askToPowerOff() { return }
+
+        // Wipe out all settings
+        defaults.removeAll()
+        defaults.save()
+
+        // Apply new settings
+        config.applyUserDefaults()
+        pref.applyUserDefaults()
+
+        // Power on
+        try? c64.powerOn()
+        try? c64.run()
     }
-    
+
     //
     // Action methods (File menu)
     //

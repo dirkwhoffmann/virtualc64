@@ -108,6 +108,26 @@ C64::reset(bool hard)
 }
 
 void
+C64::_initialize()
+{
+    C64Component::_initialize();
+
+    auto load = [&](const string &path) {
+
+        msg("Trying to load Rom from %s...\n", path.c_str());
+
+        try { loadRom(path); } catch (std::exception& e) {
+            warn("Error: %s\n", e.what());
+        }
+    };
+
+    if (auto path = C64::defaults.getString("BASIC_PATH");  path != "") load(path);
+    if (auto path = C64::defaults.getString("CHAR_PATH");   path != "") load(path);
+    if (auto path = C64::defaults.getString("KERNAL_PATH"); path != "") load(path);
+    if (auto path = C64::defaults.getString("VC1541_PATH"); path != "") load(path);
+}
+
+void
 C64::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)
@@ -839,6 +859,11 @@ C64::_dump(Category category, std::ostream& os) const
         os << tab("Ultimax mode") << bol(getUltimax()) << std::endl;
         os << tab("Warp mode") << bol(inWarpMode()) << std::endl;
         os << tab("Debug mode") << bol(debugMode) << std::endl;
+    }
+
+    if (category == Category::Defaults) {
+
+        defaults.dump(category, os);
     }
 }
 

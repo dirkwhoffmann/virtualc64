@@ -96,12 +96,10 @@ Defaults::Defaults()
     setFallback(OPT_SHAKE_DETECTION, true);
     setFallback(OPT_MOUSE_VELOCITY, 100);
 
-    setFallback("ROM_PATH", "");
-    setFallback("EXT_PATH", "");
-    setFallback("HD0_PATH", "");
-    setFallback("HD1_PATH", "");
-    setFallback("HD2_PATH", "");
-    setFallback("HD3_PATH", "");
+    setFallback("BASIC_PATH", "");
+    setFallback("CHAR_PATH", "");
+    setFallback("KERNAL_PATH", "");
+    setFallback("VC1541_PATH", "");
 }
 
 void

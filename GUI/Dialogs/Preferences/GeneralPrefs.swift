@@ -203,11 +203,14 @@ extension PreferencesController {
     
     @IBAction func genPresetAction(_ sender: NSPopUpButton!) {
         
-        track()
         assert(sender.selectedTag() == 0)
-        
-        UserDefaults.resetGeneralUserDefaults()
-        pref.loadGeneralUserDefaults()
+
+        // Revert to standard settings
+        C64Proxy.defaults.removeGeneralUserDefaults()
+
+        // Apply the new settings
+        pref.applyGeneralUserDefaults()
+
         refresh()
     }
 }

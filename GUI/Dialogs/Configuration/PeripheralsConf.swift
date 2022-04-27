@@ -125,11 +125,19 @@ extension ConfigurationController {
     }
     
     @IBAction func perPresetAction(_ sender: NSPopUpButton!) {
-    
-        config.loadPeripheralsDefaults(PeripheralsDefaults.std)
+
+        c64.suspend()
+
+        // Revert to standard settings
+        C64Proxy.defaults.removePeripheralsUserDefaults()
+
+        // Update the configuration
+        config.applyPeripheralsUserDefaults()
+
+        c64.resume()
         refresh()
     }
-    
+
     @IBAction func perDefaultsAction(_ sender: NSButton!) {
         
         track()

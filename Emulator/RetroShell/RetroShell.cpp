@@ -21,8 +21,8 @@ RetroShell::RetroShell(C64& ref) : SubComponent(ref), interpreter(ref)
 void
 RetroShell::_initialize()
 {
-	printf("RetroShell::_initialize\n");
-	
+    C64Component::_initialize();
+
 	// Initialize the text storage
 	clear();
 

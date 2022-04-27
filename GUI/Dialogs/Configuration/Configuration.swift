@@ -155,13 +155,13 @@ class Configuration {
         set { c64.configure(.DRV_POWER_SWITCH, drive: .DRIVE9, enable: newValue )}
     }
 
-    var blankDiskFormat = PeripheralsDefaults.std.blankDiskFormat
+    var blankDiskFormat = DOSType.NODOS
     var blankDiskFormatIntValue: Int {
         get { return Int(blankDiskFormat.rawValue) }
         set { blankDiskFormat = DOSType(rawValue: newValue) ?? .NODOS }
     }
 
-    var gameDevice1 = PeripheralsDefaults.std.gameDevice1 {
+    var gameDevice1 = -1 {
         didSet {
             
             // Try to connect the device (may disconnect the other device)
@@ -177,7 +177,7 @@ class Configuration {
         }
     }
     
-    var gameDevice2 = PeripheralsDefaults.std.gameDevice2 {
+    var gameDevice2 = -2 {
         didSet {
             
             // Try to connect the device (may disconnect the other device)
@@ -202,9 +202,14 @@ class Configuration {
     // Compatibility
     //
 
-    var drivePowerSave: Bool {
-        get { return c64.getConfig(.DRV_POWER_SAVE, id: 8) != 0 }
-        set { c64.configure(.DRV_POWER_SAVE, enable: newValue) }
+    var drive8PowerSave: Bool {
+        get { return c64.getConfig(.DRV_POWER_SAVE, drive: .DRIVE8) != 0 }
+        set { c64.configure(.DRV_POWER_SAVE, drive: .DRIVE8, enable: newValue) }
+    }
+
+    var drive9PowerSave: Bool {
+        get { return c64.getConfig(.DRV_POWER_SAVE, drive: .DRIVE9) != 0 }
+        set { c64.configure(.DRV_POWER_SAVE, drive: .DRIVE9, enable: newValue) }
     }
 
     var viciiPowerSave: Bool {
@@ -344,82 +349,82 @@ class Configuration {
         get { c64.getConfig(.SATURATION) }
         set { c64.configure(.SATURATION, value: newValue) }
     }
-    var hCenter = VideoDefaults.tft.hCenter {
+    var hCenter: Float = 0 {
         didSet { renderer.canvas.updateTextureRect() }
     }
-    var vCenter = VideoDefaults.tft.vCenter {
+    var vCenter: Float = 0 {
         didSet { renderer.canvas.updateTextureRect() }
     }
-    var hZoom = VideoDefaults.tft.hZoom {
+    var hZoom: Float = 0 {
         didSet { renderer.canvas.updateTextureRect() }
     }
-    var vZoom = VideoDefaults.tft.vZoom {
+    var vZoom: Float = 0 {
         didSet { renderer.canvas.updateTextureRect() }
     }
-    var upscaler = VideoDefaults.tft.upscaler {
+    var upscaler: Int = 0 {
         didSet {
             if !ressourceManager.selectUpscaler(upscaler) { upscaler = oldValue }
         }
     }
-    var blur = VideoDefaults.tft.blur {
-        didSet { renderer.shaderOptions.blur = blur }
+    var blur: Int = 0 {
+        didSet { renderer.shaderOptions.blur = Int32(blur) }
     }
-    var blurRadius = VideoDefaults.tft.blurRadius {
+    var blurRadius: Float = 0 {
         didSet { renderer.shaderOptions.blurRadius = blurRadius }
     }
-    var bloom = VideoDefaults.tft.bloom {
+    var bloom: Int = 0 {
         didSet {
             renderer.shaderOptions.bloom = Int32(bloom)
             if !ressourceManager.selectBloomFilter(bloom) { bloom = oldValue }
         }
     }
-    var bloomRadiusR = VideoDefaults.tft.bloomRadiusR {
+    var bloomRadiusR: Float = 0 {
         didSet { renderer.shaderOptions.bloomRadiusR = bloomRadiusR }
     }
-    var bloomRadiusG = VideoDefaults.tft.bloomRadiusG {
+    var bloomRadiusG: Float = 0 {
         didSet { renderer.shaderOptions.bloomRadiusG = bloomRadiusG }
     }
-    var bloomRadiusB = VideoDefaults.tft.bloomRadiusB {
+    var bloomRadiusB: Float = 0 {
         didSet { renderer.shaderOptions.bloomRadiusB = bloomRadiusB }
     }
-    var bloomBrightness = VideoDefaults.tft.bloomBrightness {
+    var bloomBrightness: Float = 0 {
         didSet { renderer.shaderOptions.bloomBrightness = bloomBrightness }
     }
-    var bloomWeight = VideoDefaults.tft.bloomWeight {
+    var bloomWeight: Float = 0 {
         didSet { renderer.shaderOptions.bloomWeight = bloomWeight }
     }
-    var dotMask = VideoDefaults.tft.dotMask {
+    var dotMask: Int = 0 {
         didSet {
             renderer.shaderOptions.dotMask = Int32(dotMask)
             ressourceManager.buildDotMasks()
             if !ressourceManager.selectDotMask(dotMask) { dotMask = oldValue }
         }
     }
-    var dotMaskBrightness = VideoDefaults.tft.dotMaskBrightness {
+    var dotMaskBrightness: Float = 0 {
         didSet {
             renderer.shaderOptions.dotMaskBrightness = dotMaskBrightness
             ressourceManager.buildDotMasks()
         }
     }
-    var scanlines = VideoDefaults.tft.scanlines {
+    var scanlines: Int = 0 {
         didSet {
             renderer.shaderOptions.scanlines = Int32(scanlines)
             if !ressourceManager.selectScanlineFilter(scanlines) { scanlines = oldValue }
         }
     }
-    var scanlineBrightness = VideoDefaults.tft.scanlineBrightness {
+    var scanlineBrightness: Float = 0 {
         didSet { renderer.shaderOptions.scanlineBrightness = scanlineBrightness }
     }
-    var scanlineWeight = VideoDefaults.tft.scanlineWeight {
+    var scanlineWeight: Float = 0 {
         didSet { renderer.shaderOptions.scanlineWeight = scanlineWeight }
     }
-    var disalignment = VideoDefaults.tft.disalignment {
-        didSet { renderer.shaderOptions.disalignment = disalignment }
+    var disalignment: Int = 0 {
+        didSet { renderer.shaderOptions.disalignment = Int32(disalignment) }
     }
-    var disalignmentH = VideoDefaults.tft.disalignmentH {
+    var disalignmentH: Float = 0 {
         didSet { renderer.shaderOptions.disalignmentH = disalignmentH }
     }
-    var disalignmentV = VideoDefaults.tft.disalignmentV {
+    var disalignmentV: Float = 0 {
         didSet { renderer.shaderOptions.disalignmentV = disalignmentV }
     }
     
@@ -485,7 +490,8 @@ class Configuration {
     //
     // Hardware
     //
-    
+
+    /*
     func loadHardwareDefaults(_ defaults: HardwareDefaults) {
         
         c64.suspend()
@@ -572,11 +578,13 @@ class Configuration {
 
         defaults.set(ramPattern, forKey: Keys.Hwd.ramPattern)
     }
+    */
     
     //
     // Peripherals
     //
-    
+
+    /*
     func loadPeripheralsDefaults(_ defaults: PeripheralsDefaults) {
         
         c64.suspend()
@@ -651,11 +659,13 @@ class Configuration {
         
         defaults.set(mouseModel, forKey: Keys.Per.mouseModel)
     }
-    
+    */
+
     //
     // Compatibility
     //
-    
+
+    /*
     func loadCompatibilityDefaults(_ defaults: CompatibilityDefaults) {
                  
         drivePowerSave = defaults.drivePowerSave
@@ -689,11 +699,13 @@ class Configuration {
         defaults.set(ssCollisions, forKey: Keys.Com.ssCollisions)
         defaults.set(sbCollisions, forKey: Keys.Com.sbCollisions)
     }
-    
+    */
+
     //
     // Audio
     //
-    
+
+    /*
     func loadAudioDefaults(_ defaults: AudioDefaults) {
         
         c64.suspend()
@@ -779,11 +791,13 @@ class Configuration {
         defaults.set(insertVolume, forKey: Keys.Aud.insertVolume)
         defaults.set(ejectVolume, forKey: Keys.Aud.ejectVolume)
     }
-    
+    */
+
     //
     // Video
     //
-    
+
+    /*
     func loadColorDefaults(_ defaults: VideoDefaults) {
         
         c64.suspend()
@@ -907,4 +921,5 @@ class Configuration {
         defaults.set(disalignmentH, forKey: Keys.Vid.disalignmentH)
         defaults.set(disalignmentV, forKey: Keys.Vid.disalignmentV)
     }
+    */
 }

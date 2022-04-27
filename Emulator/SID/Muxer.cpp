@@ -342,11 +342,8 @@ Muxer::setConfigItem(Option option, long id, i64 value)
             
             assert(id >= 0 && id <= 3);
 
-            config.pan[id] = std::clamp(value, 0LL, 200LL);
-            
-            if (value <= 50) pan[id] = (50 + value) / 100.0f;
-            else if (value <= 150) pan[id] = (150 - value) / 100.0f;
-            else if (value <= 200) pan[id] = (value - 150) / 100.0f;
+            config.pan[id] = value;
+            pan[id] = float(0.5 * (sin(config.pan[id] * M_PI / 200.0) + 1));
             return;
 
         default:

@@ -168,12 +168,6 @@ RetroShell::exec <Token::screenshot> (Arguments &argv, long param)
 //
 
 template <> void
-RetroShell::exec <Token::c64, Token::inspect> (Arguments &argv, long param)
-{
-    dump(c64, Category::State);
-}
-
-template <> void
 RetroShell::exec <Token::c64, Token::config> (Arguments &argv, long param)
 {
     dump(c64, Category::Config);
@@ -216,6 +210,18 @@ RetroShell::exec <Token::c64, Token::init> (Arguments &argv, long param)
     
     c64.revertToFactorySettings();
     c64.configure(model);
+}
+
+template <> void
+RetroShell::exec <Token::c64, Token::inspect, Token::state> (Arguments &argv, long param)
+{
+    dump(c64, Category::State);
+}
+
+template <> void
+RetroShell::exec <Token::c64, Token::inspect, Token::defaults> (Arguments &argv, long param)
+{
+    dump(c64, Category::Defaults);
 }
 
 

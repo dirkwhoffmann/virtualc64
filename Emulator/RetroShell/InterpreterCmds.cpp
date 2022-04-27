@@ -113,8 +113,15 @@ Interpreter::registerInstructions()
              &RetroShell::exec <Token::c64, Token::reset>);
     
     root.add({"c64", "inspect"},
-             "command", "Displays the component state",
-             &RetroShell::exec <Token::c64, Token::inspect>);
+             "command", "Displays the component state");
+
+    root.add({"c64", "inspect", "state"},
+             "command", "Displays the current state",
+             &RetroShell::exec <Token::c64, Token::inspect, Token::state>);
+
+    root.add({"c64", "inspect", "defaults"},
+             "command", "Displays the user defaults storage",
+             &RetroShell::exec <Token::c64, Token::inspect, Token::defaults>);
 
     root.add({"c64", "init"},
              "command", "Initializes the emulator with factory settings",

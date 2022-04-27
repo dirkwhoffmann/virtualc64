@@ -1407,8 +1407,8 @@
 			children = (
 				50769B8924BB1B87006FE743 /* Configuration.swift */,
 				506A724921C0341900DA0AC3 /* ConfigurationController.swift */,
-				505D492721C155DD00A7C575 /* RomConf.swift */,
 				506D54CB2032255A0026D8B4 /* RomDropView.swift */,
+				505D492721C155DD00A7C575 /* RomConf.swift */,
 				5002FA7A21C2650600DA4BBC /* HardwareConf.swift */,
 				505F8FE82582435E0066ACE4 /* PeripheralsConf.swift */,
 				50033828266E47B400D5456E /* CompatibilityConf.swift */,

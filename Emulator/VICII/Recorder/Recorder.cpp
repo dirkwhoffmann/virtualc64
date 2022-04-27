@@ -19,6 +19,8 @@ Recorder::Recorder(C64& ref) : SubComponent(ref)
 void
 Recorder::_initialize()
 {
+    C64Component::_initialize();
+
     FFmpeg::init();
 }
 

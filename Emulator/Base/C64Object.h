@@ -44,7 +44,7 @@
 
 enum class Category
 {
-    BankMap, Checksum, Config, Disk, Dma, Events, Layout, Registers, State
+    BankMap, Checksum, Config, Defaults, Disk, Dma, Events, Layout, Registers, State
 };
 
 class C64Object {

@@ -200,7 +200,8 @@ public:
     void softReset() { reset(false); }
 
 private:
-    
+
+    void _initialize() override;
     void _reset(bool hard) override;
 
     

@@ -167,11 +167,15 @@ extension PreferencesController {
 
     @IBAction func kbPresetAction(_ sender: NSPopUpButton!) {
         
-        track()
-        assert(sender.selectedTag() == 0)
+        c64.suspend()
 
-        UserDefaults.resetKeyMapUserDefaults()
-        pref.loadKeyboardUserDefaults()
+        // Revert to standard settings
+        C64Proxy.defaults.removeKeyboardUserDefaults()
+
+        // Update the configuration
+        pref.applyKeyboardUserDefaults()
+
+        c64.resume()
         refresh()
     }
 }

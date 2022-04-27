@@ -27,7 +27,13 @@ extension ConfigurationController {
     func refreshVideoTab() {
         
         let renderer = parent.renderer!
-        
+
+        // Geometry
+        vidHCenter.floatValue = config.hCenter * 1000
+        vidVCenter.floatValue = config.vCenter * 1000
+        vidHZoom.floatValue = config.hZoom * 1000
+        vidVZoom.floatValue = config.vZoom * 1000
+
         // Video
         vidUpscalerPopUp.selectItem(withTag: config.upscaler)
         vidPalettePopUp.selectItem(withTag: config.palette)
@@ -70,12 +76,6 @@ extension ConfigurationController {
         vidMisalignmentXSlider.isEnabled = config.disalignment > 0
         vidMisalignmentYSlider.floatValue = config.disalignmentV
         vidMisalignmentYSlider.isEnabled = config.disalignment > 0
-
-        // Geometry
-        vidHCenter.floatValue = config.hCenter * 1000
-        vidVCenter.floatValue = config.vCenter * 1000
-        vidHZoom.floatValue = config.hZoom * 1000
-        vidVZoom.floatValue = config.vZoom * 1000
 
         // Power button
         vidPowerButton.isHidden = !bootable
@@ -148,7 +148,7 @@ extension ConfigurationController {
     
     @IBAction func vidBlurAction(_ sender: NSPopUpButton!) {
         
-        config.blur = Int32(sender.selectedTag())
+        config.blur = sender.selectedTag()
         refresh()
     }
     
@@ -226,7 +226,7 @@ extension ConfigurationController {
     
     @IBAction func vidDisalignmentAction(_ sender: NSPopUpButton!) {
         
-        config.disalignment = Int32(sender.selectedTag())
+        config.disalignment = sender.selectedTag()
         refresh()
     }
     
@@ -275,13 +275,37 @@ extension ConfigurationController {
     //
         
     @IBAction func vidPresetAction(_ sender: NSPopUpButton!) {
-        
-        UserDefaults.resetVideoUserDefaults()
-        
+
+        // Revert to standard settings
+        C64Proxy.defaults.removeVideoUserDefaults()
+
+        // Update the configuration
+        config.applyVideoUserDefaults()
+
+        // Override some options
         switch sender.selectedTag() {
-        case 0: config.loadVideoDefaults(VideoDefaults.tft)
-        case 1: config.loadVideoDefaults(VideoDefaults.crt)
-        default: fatalError()
+
+        case 1: // CRT appearance
+
+            config.blur = 1
+            config.blurRadius = 1.5
+            config.bloom = 1
+            config.bloomRadiusR = 1.0
+            config.bloomRadiusG = 1.0
+            config.bloomRadiusB = 1.0
+            config.bloomBrightness = 0.4
+            config.bloomWeight = 1.21
+            config.dotMask = 1
+            config.dotMaskBrightness = 0.5
+            config.scanlines = 2
+            config.scanlineBrightness = 0.55
+            config.scanlineWeight = 0.11
+            config.disalignment = 0
+            config.disalignmentH = 0.001
+            config.disalignmentV = 0.001
+
+        default:
+            break
         }
         
         updatePalettePreviewImages()

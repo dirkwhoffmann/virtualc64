@@ -58,7 +58,7 @@ extension PreferencesController {
         conAutofire.state = pref.autofire ? .on : .off
         conAutofireCease.state = pref.autofireBullets > 0 ? .on : .off
         conAutofireBullets.integerValue = Int(pref.autofireBullets.magnitude)
-        conAutofireFrequency.floatValue = pref.autofireFrequency
+        conAutofireFrequency.doubleValue = pref.autofireFrequency
         conAutofireCease.isEnabled = conAutofire.state == .on
         conAutofireCeaseText.textColor = conAutofire.state == .on ? .controlTextColor : .disabledControlTextColor
         conAutofireBullets.isEnabled = conAutofire.state == .on
@@ -164,7 +164,7 @@ extension PreferencesController {
     
     @IBAction func conAutofireFrequencyAction(_ sender: NSSlider!) {
         
-        pref.autofireFrequency = sender.floatValue
+        pref.autofireFrequency = sender.doubleValue
         refresh()
     }
             
@@ -215,11 +215,14 @@ extension PreferencesController {
     
     @IBAction func conPresetAction(_ sender: NSPopUpButton!) {
         
-        track()
+        track()        
         assert(sender.selectedTag() == 0)
-        
-        UserDefaults.resetControlsUserDefaults()
-        pref.loadControlsUserDefaults()
+
+        // Revert to standard settings
+        C64Proxy.defaults.removeControlsUserDefaults()
+
+        // Apply the new settings
+        pref.applyControlsUserDefaults()
         refresh()
     }
 }

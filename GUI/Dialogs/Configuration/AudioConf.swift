@@ -152,11 +152,38 @@ extension ConfigurationController {
     
     @IBAction func audPresetAction(_ sender: NSPopUpButton!) {
                 
+        c64.suspend()
+
+        // Revert to standard settings
+        C64Proxy.defaults.removeAudioUserDefaults()
+
+        // Update the configuration
+        config.applyAudioUserDefaults()
+
+        // Override some options
         switch sender.selectedTag() {
-        case 0: config.loadAudioDefaults(AudioDefaults.mono)
-        case 1: config.loadAudioDefaults(AudioDefaults.stereo)
-        default: fatalError()
+
+        case 0: // Mono
+            config.pan0 = 0
+            config.pan1 = 0
+            config.pan2 = 0
+            config.pan3 = 0
+            config.drive8Pan = 0
+            config.drive9Pan = 0
+
+        case 1: // Stereo
+            config.pan0 = 100
+            config.pan1 = 300
+            config.pan2 = 300
+            config.pan3 = 100
+            config.drive8Pan = 100
+            config.drive9Pan = 300
+
+        default:
+            fatalError()
         }
+
+        c64.resume()
         refresh()
     }
     

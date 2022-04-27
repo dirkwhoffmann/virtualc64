@@ -64,7 +64,7 @@ extension Renderer {
         
         shaderOptions = ShaderOptions(
             
-            blur: config.blur,
+            blur: Int32(config.blur),
             blurRadius: config.blurRadius,
             bloom: Int32(config.bloom),
             bloomRadiusR: config.bloomRadiusR,
@@ -77,7 +77,7 @@ extension Renderer {
             scanlines: Int32(config.scanlines),
             scanlineBrightness: config.scanlineBrightness,
             scanlineWeight: config.scanlineWeight,
-            disalignment: config.disalignment,
+            disalignment: Int32(config.disalignment),
             disalignmentH: config.disalignmentH,
             disalignmentV: config.disalignmentV
         )

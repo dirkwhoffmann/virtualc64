@@ -384,6 +384,27 @@ extension MyDocument {
         let drives = [c64.drive8!, c64.drive9!]
         return proceedWithUnsavedFloppyDisks(drives: drives)
     }
+
+    func askToPowerOff() -> Bool {
+        if c64.poweredOn {
+
+            let alert = NSAlert()
+
+            alert.alertStyle = .informational
+            alert.icon = NSImage(named: "powerSwitch")
+            alert.messageText = "The emulator must be powered off to perform this operation."
+            alert.informativeText = "Your changes will be lost if you proceed."
+            alert.addButton(withTitle: "Proceed")
+            alert.addButton(withTitle: "Cancel")
+
+            if alert.runSheet(for: windowForSheet!) == .alertFirstButtonReturn {
+                c64.powerOff()
+            } else {
+                return false
+            }
+        }
+        return true
+    }
 }
 
 extension MyController {
@@ -394,5 +415,9 @@ extension MyController {
 
     func proceedWithUnsavedFloppyDisks() -> Bool {
         return mydocument.proceedWithUnsavedFloppyDisks()
+    }
+
+    func askToPowerOff() -> Bool {
+        return mydocument.askToPowerOff()
     }
 }

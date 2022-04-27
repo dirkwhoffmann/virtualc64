@@ -21,7 +21,7 @@ class Preferences {
     //
 
     // Snapshots
-    var autoSnapshots = GeneralDefaults.std.autoSnapshots {
+    var autoSnapshots = false {
         didSet { for c in myAppDelegate.controllers { c.validateSnapshotTimer() } }
     }
     var snapshotInterval = 0 {
@@ -29,8 +29,8 @@ class Preferences {
     }
 
     // Screenshots
-    var screenshotSource = GeneralDefaults.std.screenshotSource
-    var screenshotTarget = GeneralDefaults.std.screenshotTarget
+    var screenshotSource = 0
+    var screenshotTarget = NSBitmapImageRep.FileType.png
     var screenshotTargetIntValue: Int {
         get { return Int(screenshotTarget.rawValue) }
         set { screenshotTarget = NSBitmapImageRep.FileType(rawValue: UInt(newValue))! }
@@ -44,7 +44,7 @@ class Preferences {
             }
         }
     }
-    var captureSource = GeneralDefaults.std.captureSource
+    var captureSource = 0
     var bitRate = 512 {
         didSet {
             if bitRate < 64 { bitRate = 64 }
@@ -65,11 +65,11 @@ class Preferences {
     }
     
     // Fullscreen
-    var keepAspectRatio = GeneralDefaults.std.keepAspectRatio
-    var exitOnEsc = GeneralDefaults.std.exitOnEsc
+    var keepAspectRatio = false
+    var exitOnEsc = false
 
     // Warp mode
-    var warpMode = GeneralDefaults.std.warpMode {
+    var warpMode = WarpMode.off {
         didSet { for c in myAppDelegate.controllers { c.updateWarp() } }
     }
     var warpModeIntValue: Int {
@@ -87,27 +87,25 @@ class Preferences {
     //
     
     // Emulation keys
-    var keyMaps = [ ControlsDefaults.std.mouseKeyMap,
-                    ControlsDefaults.std.joyKeyMap1,
-                    ControlsDefaults.std.joyKeyMap2 ]
-    
+    var keyMaps: [[MacKey: Int]] = [ [:], [:], [:] ]
+
     // Joystick
-    var disconnectJoyKeys = ControlsDefaults.std.disconnectJoyKeys
-    var autofire = ControlsDefaults.std.autofire {
+    var disconnectJoyKeys = false
+    var autofire = false {
         didSet {
             for c64 in myAppDelegate.proxies {
                 c64.configure(.AUTOFIRE, enable: autofire)
             }
         }
     }
-    var autofireBullets = ControlsDefaults.std.autofireBullets {
+    var autofireBullets = 0 {
         didSet {
             for c64 in myAppDelegate.proxies {
                 c64.configure(.AUTOFIRE_BULLETS, value: autofireBullets)
             }
         }
     }
-    var autofireFrequency = ControlsDefaults.std.autofireFrequency {
+    var autofireFrequency = 1.0 {
         didSet {
             let autofireDelay = Int(50.0 / autofireFrequency)
             for c64 in myAppDelegate.proxies {
@@ -117,13 +115,13 @@ class Preferences {
     }
     
     // Mouse
-    var retainMouseKeyComb = ControlsDefaults.std.retainMouseKeyComb
-    var retainMouseWithKeys = ControlsDefaults.std.retainMouseWithKeys
-    var retainMouseByClick = ControlsDefaults.std.retainMouseByClick
-    var retainMouseByEntering = ControlsDefaults.std.retainMouseByEntering
-    var releaseMouseKeyComb = ControlsDefaults.std.retainMouseKeyComb
-    var releaseMouseWithKeys = ControlsDefaults.std.releaseMouseWithKeys
-    var releaseMouseByShaking = ControlsDefaults.std.releaseMouseByShaking
+    var retainMouseKeyComb = 0
+    var retainMouseWithKeys = false
+    var retainMouseByClick = false
+    var retainMouseByEntering = false
+    var releaseMouseKeyComb = 0
+    var releaseMouseWithKeys = false
+    var releaseMouseByShaking = false
 
     //
     // Keyboard
@@ -136,7 +134,8 @@ class Preferences {
     //
     // General
     //
-    
+
+    /*
     func loadGeneralUserDefaults() {
         
         let defaults = UserDefaults.standard
@@ -163,7 +162,7 @@ class Preferences {
         warpModeIntValue = defaults.integer(forKey: Keys.Gen.warpMode)
         
         // Misc
-        ejectWithoutAsking = defaults.bool(forKey: Keys.Gen.driveEjectUnasked)
+        ejectWithoutAsking = defaults.bool(forKey: Keys.Gen.ejectWithoutAsking)
         pauseInBackground = defaults.bool(forKey: Keys.Gen.pauseInBackground)
         closeWithoutAsking = defaults.bool(forKey: Keys.Gen.closeWithoutAsking)
     }
@@ -198,11 +197,13 @@ class Preferences {
         defaults.set(pauseInBackground, forKey: Keys.Gen.pauseInBackground)
         defaults.set(closeWithoutAsking, forKey: Keys.Gen.closeWithoutAsking)
     }
-    
+    */
+
     //
     // Controls
     //
-    
+
+    /*
     func loadControlsUserDefaults() {
         
         let defaults = UserDefaults.standard
@@ -227,7 +228,7 @@ class Preferences {
         releaseMouseWithKeys = defaults.bool(forKey: Keys.Con.releaseMouseWithKeys)
         releaseMouseByShaking = defaults.bool(forKey: Keys.Con.releaseMouseByShaking)
     }
-    
+
     func saveControlsUserDefaults() {
         
         let defaults = UserDefaults.standard
@@ -252,11 +253,13 @@ class Preferences {
         defaults.set(releaseMouseWithKeys, forKey: Keys.Con.releaseMouseWithKeys)
         defaults.set(releaseMouseByShaking, forKey: Keys.Con.releaseMouseByShaking)
     }
+    */
     
     //
     // Devices
     //
-        
+
+    /*
     func loadDevicesUserDefaults() {
         
     }
@@ -264,11 +267,13 @@ class Preferences {
     func saveDevicesUserDefaults() {
         
     }
-
+    */
+    
     //
     // Keyboard
     //
-    
+
+    /*
     func loadKeyboardUserDefaults() {
         
         let defaults = UserDefaults.standard
@@ -292,4 +297,5 @@ class Preferences {
         defaults.encode(keyMap, forKey: Keys.Kbd.keyMap)
         defaults.set(mapKeysByPosition, forKey: Keys.Kbd.mapKeysByPosition)
     }
+    */
 }

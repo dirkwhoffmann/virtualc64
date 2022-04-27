@@ -160,7 +160,9 @@ extension MyController {
     }
 
     override open func windowDidLoad() {
-         
+
+        log()
+
         // Show the mouse
         hideMouse = false
         
@@ -176,13 +178,14 @@ extension MyController {
         renderer = Renderer(view: metal,
                             device: MTLCreateSystemDefaultDevice()!,
                             controller: self)
-        
+
+        // Apply all GUI related user defaults
+        pref.applyUserDefaults()
+        config.applyUserDefaults()
+
         // Setup window
         configureWindow()
-        
-        // Load user defaults
-        loadUserDefaults()
-        
+
         // Enable message processing
         registerAsListener()
                 

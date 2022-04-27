@@ -17,30 +17,21 @@
 
 enum class Token
 {
-    none,
-    
-    // Components
-    c64, cia, controlport, cpu, datasette, drive, expansion, fastsid, keyboard,
-    memory, monitor, mouse, parcable, resid, sid, vicii,
-
-    // Commands
-    about, attach, audiate, autosync, clear, close, config, connect, disconnect,
-    dmadebugger, dsksync, easteregg, eject, flash, hide, init, insert, inspect,
-    list, load, lock, off, on, open, pause, power, press, regression, release,
-    reset, rewind, run, save, screenshot, set, setup, show, source, type, wait,
-    
-    // Categories
-    checksums, devices, events, registers, state, disk,
-    
-    // Keys
-    accuracy, autofire, bankmap, brightness, bullets, caccesses, chip,
-    contrast, counter, cutout, defaultbb, defaultfs, delay, device, engine,
-    filename, filter, frame, gaccesses, gluelogic, graydotbug, iaccesses, idle,
-    joystick, keyset, left, model, newdisk, paccesses, palette, pan, poll,
-    raccesses, raminitpattern, revision, right, rom, saccesses, sampling,
-    saturation, sbcollisions, searchpath, shakedetector, shiftlock, slow,
-    slowramdelay, slowrammirror, speed, sscollisions, step, to, tod, timerbbug,
-    unmappingtype, velocity, volume
+    about, accuracy, attach, audiate, autofire, autosync, bankmap, brightness,
+    bullets, c64, caccesses, checksums, chip, cia, clear, close, config,
+    connect, contrast, controlport, counter, cpu, cutout, datasette, defaultbb,
+    defaultfs, defaults, delay, device, devices, disconnect, disk, dmadebugger,
+    drive, dsksync, easteregg, eject, engine, events, expansion, fastsid,
+    filename, filter, flash, frame, gaccesses, gluelogic, graydotbug, hide,
+    iaccesses, idle, init, insert, inspect, joystick, keyboard, keyset, left,
+    list, load, lock, memory, model, monitor, mouse, newdisk, none, off, on,
+    open, paccesses, palette, pan, parcable, pause, poll, power, press,
+    raccesses, raminitpattern, registers, regression, release, reset, resid,
+    revision, rewind, right, rom, run, saccesses, sampling, saturation, save,
+    sbcollisions, screenshot, searchpath, set, setup, shakedetector, shiftlock,
+    show, sid, slow, slowramdelay, slowrammirror, source, speed, sscollisions,
+    state, step, to, tod, timerbbug, type, unmappingtype, velocity, vicii,
+    volume, wait
 };
 
 struct TooFewArgumentsError : public util::ParseError {

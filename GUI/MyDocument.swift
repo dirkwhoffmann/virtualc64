@@ -33,25 +33,27 @@ class MyDocument: NSDocument {
     //
     
     override init() {
-        
+
+        log()
+
         super.init()
-        
+
         // Check for Metal support
         if MTLCreateSystemDefaultDevice() == nil {
-            showNoMetalSupportAlert()
+
+            showAlert(.noMetalSupport)
             NSApp.terminate(self)
             return
         }
-        
-        // Register standard user defaults
-        UserDefaults.registerUserDefaults()
-        
-        track("Creating proxy")
+
+        // Register all GUI related user defaults
+        C64Proxy.defaults.registerUserDefaults()
+
+        // Load the user default settings
+        C64Proxy.defaults.load()
 
         // Create an emulator instance
         c64 = C64Proxy()
-
-        track("Proxy created")
     }
 
     override open func makeWindowControllers() {

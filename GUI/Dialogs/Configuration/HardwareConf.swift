@@ -157,19 +157,80 @@ extension ConfigurationController {
     }
 
     @IBAction func hwPresetAction(_ sender: NSPopUpButton!) {
-        
+
+        c64.suspend()
+
+        // Revert to standard settings
+        C64Proxy.defaults.removePeripheralsUserDefaults()
+
+        // Update the configuration
+        config.applyPeripheralsUserDefaults()
+
+        // Override some options
         switch sender.selectedTag() {
-        case 0: config.loadHardwareDefaults(HardwareDefaults.C64_PAL)
-        case 1: config.loadHardwareDefaults(HardwareDefaults.C64_II_PAL)
-        case 2: config.loadHardwareDefaults(HardwareDefaults.C64_OLD_PAL)
-        case 3: config.loadHardwareDefaults(HardwareDefaults.C64_NTSC)
-        case 4: config.loadHardwareDefaults(HardwareDefaults.C64_II_NTSC)
-        case 5: config.loadHardwareDefaults(HardwareDefaults.C64_OLD_NTSC)
-        default: fatalError()
+
+        case 0: // C64_PAL
+            config.vicRevision = VICIIRevision.PAL_6569_R3.rawValue
+            config.vicGrayDotBug = false
+            config.ciaRevision = CIARevision.MOS_6526.rawValue
+            config.ciaTimerBBug = true
+            config.sidRevision = SIDRevision.MOS_6581.rawValue
+            config.glueLogic = GlueLogic.DISCRETE.rawValue
+            config.powerGrid = PowerGrid.STABLE_50HZ.rawValue
+
+        case 1: // C64_II_PAL
+            config.vicRevision = VICIIRevision.PAL_8565.rawValue
+            config.vicGrayDotBug = true
+            config.ciaRevision = CIARevision.MOS_8521.rawValue
+            config.ciaTimerBBug = false
+            config.sidRevision = SIDRevision.MOS_8580.rawValue
+            config.glueLogic = GlueLogic.IC.rawValue
+            config.powerGrid = PowerGrid.STABLE_50HZ.rawValue
+
+        case 2: // C64_OLD_PAL
+            config.vicRevision = VICIIRevision.PAL_6569_R1.rawValue
+            config.vicGrayDotBug = false
+            config.ciaRevision = CIARevision.MOS_6526.rawValue
+            config.ciaTimerBBug = true
+            config.sidRevision = SIDRevision.MOS_6581.rawValue
+            config.glueLogic = GlueLogic.DISCRETE.rawValue
+            config.powerGrid = PowerGrid.STABLE_50HZ.rawValue
+
+        case 3: // C64_NTSC
+            config.vicRevision = VICIIRevision.NTSC_6567.rawValue
+            config.vicGrayDotBug = false
+            config.ciaRevision = CIARevision.MOS_6526.rawValue
+            config.ciaTimerBBug = false
+            config.sidRevision = SIDRevision.MOS_6581.rawValue
+            config.glueLogic = GlueLogic.DISCRETE.rawValue
+            config.powerGrid = PowerGrid.STABLE_60HZ.rawValue
+
+        case 4: // C64_II_NTSC
+            config.vicRevision = VICIIRevision.NTSC_8562.rawValue
+            config.vicGrayDotBug = true
+            config.ciaRevision = CIARevision.MOS_8521.rawValue
+            config.ciaTimerBBug = true
+            config.sidRevision = SIDRevision.MOS_8580.rawValue
+            config.glueLogic = GlueLogic.IC.rawValue
+            config.powerGrid = PowerGrid.STABLE_60HZ.rawValue
+
+        case 5: // C64_OLD_NTSC
+            config.vicRevision = VICIIRevision.NTSC_6567_R56A.rawValue
+            config.vicGrayDotBug = false
+            config.ciaRevision = CIARevision.MOS_6526.rawValue
+            config.ciaTimerBBug = false
+            config.sidRevision = SIDRevision.MOS_6581.rawValue
+            config.glueLogic = GlueLogic.DISCRETE.rawValue
+            config.powerGrid = PowerGrid.STABLE_60HZ.rawValue
+
+        default:
+            fatalError()
         }
+
+        c64.resume()
         refresh()
     }
-    
+
     @IBAction func hwDefaultsAction(_ sender: NSButton!) {
         
         track()
