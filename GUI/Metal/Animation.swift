@@ -16,36 +16,40 @@ struct AnimationType {
     static let texture = 4
 }
 
-class AnimatedFloat {
+struct AnimatedFloat {
 
     var current: Float
     var delta = Float(0.0)
     var steps = 1 { didSet { delta = (target - current) / Float(steps) } }
     var target: Float { didSet { delta = (target - current) / Float(steps) } }
-
+    var animates: Bool { return current != target }
+    var clamped: Float { return current < 0.0 ? 0.0 : current > 1.0 ? 1.0 : current }
+    
     init(current: Float = 0.0, target: Float = 0.0) {
 
         self.current = current
         self.target = target
     }
 
-    convenience init(_ value: Float) {
+    init(_ value: Float) {
 
         self.init(current: value, target: value)
     }
 
-    func set(_ value: Float) {
+    mutating func set(_ value: Float) {
 
-        current = value
-        target = value
+        self.current = value
+        self.target = value
     }
 
-    func animates() -> Bool {
-
-        return current != target
+    mutating func set(from: Float, to: Float, steps: Int) {
+            
+        self.current = from
+        self.target = to
+        self.steps = steps
     }
-
-    func move() {
+    
+    mutating func move() {
 
         if abs(current - target) < abs(delta) {
             current = target
@@ -58,19 +62,19 @@ class AnimatedFloat {
 extension Renderer {
     
     func animate() {
-
+                
         // Geometry animations
         if (animates & AnimationType.geometry) != 0 {
-            
+                        
             angleX.move()
             angleY.move()
             angleZ.move()
-            var cont = angleX.animates() || angleY.animates() || angleZ.animates()
-            
+            var cont = angleX.animates || angleY.animates || angleZ.animates
+                    
             shiftX.move()
             shiftY.move()
             shiftZ.move()
-            cont = cont || shiftX.animates() || shiftY.animates() || shiftZ.animates()
+            cont = cont || shiftX.animates || shiftY.animates || shiftZ.animates
             
             // Check if animation has terminated
             if !cont {
@@ -79,17 +83,17 @@ extension Renderer {
                 angleY.set(0)
                 angleZ.set(0)
             }
-            
+        
             buildMatrices3D()
         }
         
         // Color animations
         if (animates & AnimationType.color) != 0 {
-                        
+
             white.move()
-            
-            let cont = white.animates()
-            
+         
+            let cont = white.animates
+         
             if !cont {
                 animates -= AnimationType.color
             }
@@ -102,9 +106,9 @@ extension Renderer {
             cutoutY1.move()
             cutoutX2.move()
             cutoutY2.move()
-            let cont = cutoutX1.animates() || cutoutY1.animates() || cutoutX2.animates() || cutoutY2.animates()
             
-            // Update texture cutout
+            let cont = cutoutX1.animates || cutoutY1.animates || cutoutX2.animates || cutoutY2.animates
+            
             let x = CGFloat(cutoutX1.current)
             let y = CGFloat(cutoutY1.current)
             let w = CGFloat(cutoutX2.current - cutoutX1.current)
@@ -112,7 +116,7 @@ extension Renderer {
             
             // Update texture cutout
             canvas.textureRect = CGRect(x: x, y: y, width: w, height: h)
-            
+         
             if !cont {
                 animates -= AnimationType.texture
             }
@@ -122,10 +126,8 @@ extension Renderer {
     //
     // Texture animations
     //
-    
-    func zoomTextureIn(steps: Int = 30) {
 
-        track("Zooming texture in...")
+    func zoomTextureIn(steps: Int = 30) {
 
         let target = canvas.visibleNormalized
         
@@ -143,8 +145,6 @@ extension Renderer {
     }
 
     func zoomTextureOut(steps: Int = 30) {
-
-        track("Zooming texture out...")
         
         let current = canvas.textureRect
         let target = canvas.entireNormalized
@@ -166,93 +166,83 @@ extension Renderer {
 
         animates |= AnimationType.texture
     }
-    
+
     //
     // Geometry animations
     //
-    
+
     func zoomIn(steps: Int = 60) {
-        
-        track("Zooming in...")
-        
+
         shiftZ.current = 6.0
         shiftZ.target = 0.0
         angleX.target = 0.0
         angleY.target = 0.0
         angleZ.target = 0.0
-        
+
         shiftZ.steps = steps
         angleX.steps = steps
         angleY.steps = steps
         angleZ.steps = steps
-        
+
         animates |= AnimationType.geometry
     }
-    
+
     func zoomOut(steps: Int = 40) {
-        
-        track("Zooming out...")
-        
+
         shiftZ.target = 6.0
         angleX.target = 0.0
         angleY.target = 0.0
         angleZ.target = 0.0
-        
+
         shiftZ.steps = steps
         angleX.steps = steps
         angleY.steps = steps
         angleZ.steps = steps
-        
+
         animates |= AnimationType.geometry
     }
-    
+
     func rotate(x: Float = 0.0, y: Float = 0.0, z: Float = 0.0) {
-        
-        track("Rotating x: \(x) y: \(y) z: \(z)...")
-        
+
         angleX.target = x
         angleY.target = y
         angleZ.target = z
-        
+
         let steps = 60
         angleX.steps = steps
         angleY.steps = steps
         angleZ.steps = steps
-        
+
         animates |= AnimationType.geometry
     }
-    
+
     func rotateRight() { rotate(y: -90) }
     func rotateLeft() { rotate(y: 90) }
     func rotateDown() { rotate(x: 90) }
     func rotateUp() { rotate(x: -90) }
-    
+
     func scroll(steps: Int = 120) {
-        
-        track("Scrolling...")
-        
+
         shiftY.current = -1.5
         shiftY.target = 0
         angleX.target = 0.0
         angleY.target = 0.0
         angleZ.target = 0.0
-        
+
         shiftY.steps = steps
         angleX.steps = steps
         angleY.steps = steps
         angleZ.steps = steps
-        
+
         animates |= AnimationType.geometry
     }
-    
+
     func snapToFront() {
-        
-        track("Snapping to front...")
-        
+
         shiftZ.current = -0.05
         shiftZ.target = 0
         shiftZ.steps = 10
-        
+
         animates |= AnimationType.geometry
     }
     
@@ -261,9 +251,7 @@ extension Renderer {
     //
     
     func flash() {
-        
-        track("Flashing...")
-        
+                
         white.current = 1.0
         white.target = 0.0
         white.steps = 20

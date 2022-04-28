@@ -17,7 +17,7 @@ class Layer: NSObject {
     var c64: C64Proxy { return renderer.parent.c64 }
     
     // Alpha channel of this layer
-    var alpha: AnimatedFloat = AnimatedFloat()
+    var alpha: AnimatedFloat = AnimatedFloat(0.0)
 
     //
     // Initializing
@@ -36,7 +36,7 @@ class Layer: NSObject {
     var isVisible: Bool { return alpha.current > 0.0 }
     var isOpaque: Bool { return alpha.current == 1.0 }
     var isTransparent: Bool { return alpha.current < 1.0 }
-    var isAnimating: Bool { return alpha.animates() }
+    var isAnimating: Bool { return alpha.animates }
     var isFadingIn: Bool { return alpha.target > alpha.current }
     var isFadingOut: Bool { return alpha.target < alpha.current }
     
@@ -56,12 +56,18 @@ class Layer: NSObject {
     
     func update(frames: Int64) {
         
-        if alpha.animates() {
+        if alpha.animates {
 
             alpha.move()
             alphaDidChange()
+            
+            if !alpha.animates {
+                isVisible ? layerDidOpen() : layerDidClose()
+            }
         }
     }
-
+    
     func alphaDidChange() { }
+    func layerDidOpen() { }
+    func layerDidClose() { }
 }
