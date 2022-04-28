@@ -57,12 +57,194 @@ class MyDocument: NSDocument {
 
     override open func makeWindowControllers() {
         
-        track()
+        log()
         
-        let nibName = NSNib.Name("MyDocument")
-        let controller = MyController(windowNibName: nibName)
+        let controller = MyController(windowNibName: "MyDocument")
         controller.c64 = c64
         self.addWindowController(controller)
+    }
+
+    //
+    // Creating file proxys
+    //
+
+    func createFileProxy(from url: URL, allowedTypes: [FileType]) throws -> AnyFileProxy? {
+
+        log("Reading file \(url.lastPathComponent)")
+
+        // If the provided URL points to compressed file, decompress it first
+        let newUrl = url.unpacked(maxSize: 2048 * 1024)
+
+        // Iterate through all allowed file types
+        for type in allowedTypes {
+
+            do {
+                switch type {
+
+                case .SNAPSHOT:
+                    return try Proxy.make(url: newUrl) as SnapshotProxy
+
+                case .SCRIPT:
+                    return try Proxy.make(url: newUrl) as ScriptProxy
+
+                case .CRT:
+                    return try Proxy.make(url: newUrl) as CRTFileProxy
+
+                case .D64:
+                    return try Proxy.make(url: newUrl) as D64FileProxy
+
+                case .T64:
+                    return try Proxy.make(url: newUrl) as T64FileProxy
+
+                case .PRG:
+                    return try Proxy.make(url: newUrl) as PRGFileProxy
+
+                case .P00:
+                    return try Proxy.make(url: newUrl) as P00FileProxy
+
+                case .G64:
+                    return try Proxy.make(url: newUrl) as G64FileProxy
+
+                case .TAP:
+                    return try Proxy.make(url: newUrl) as TAPFileProxy
+
+                case .FOLDER:
+                    return try Proxy.make(folder: newUrl) as FolderProxy
+
+                default:
+                    fatalError()
+                }
+
+            } catch let error as VC64Error {
+                if error.errorCode != .FILE_TYPE_MISMATCH {
+                    throw error
+                }
+            }
+        }
+
+        // None of the allowed types matched the file
+        throw VC64Error(.FILE_TYPE_MISMATCH,
+                      "The type of this file is not known to the emulator.")
+    }
+
+    //
+    // Loading
+    //
+
+    override open func read(from url: URL, ofType typeName: String) throws {
+
+        log()
+
+        let types: [FileType] =
+        [ .SNAPSHOT, .SCRIPT, .D64, .T64, .PRG, .P00, .G64, .TAP, .FOLDER ]
+
+        do {
+
+            try addMedia(url: url, allowedTypes: types)
+
+        } catch let error as VC64Error {
+
+            throw NSError(error: error)
+        }
+    }
+
+    override open func revert(toContentsOf url: URL, ofType typeName: String) throws {
+
+        log()
+
+        do {
+            let proxy = try createFileProxy(from: url, allowedTypes: [.SNAPSHOT])
+            if let snapshot = proxy as? SnapshotProxy {
+                try processSnapshotFile(snapshot)
+            }
+
+        } catch let error as VC64Error {
+
+            throw NSError(error: error)
+        }
+    }
+
+    //
+    // Saving
+    //
+
+    override func write(to url: URL, ofType typeName: String) throws {
+
+        track()
+
+        if typeName == "VC64" {
+
+            if let snapshot = SnapshotProxy.make(withC64: c64) {
+
+                do {
+                    try snapshot.writeToFile(url: url)
+
+                } catch let error as VC64Error {
+
+                    throw NSError(error: error)
+                }
+            }
+        }
+    }
+
+    //
+    // Handling media files
+    //
+
+    func addMedia(url: URL,
+                  allowedTypes types: [FileType],
+                  drive id: DriveID = .DRIVE8,
+                  force: Bool = false,
+                  remember: Bool = true) throws {
+
+        let fileProxy = try createFileProxy(from: url, allowedTypes: types)
+
+        if let proxy = fileProxy as? SnapshotProxy {
+
+            try processSnapshotFile(proxy)
+        }
+        if let proxy = fileProxy as? ScriptProxy {
+
+            parent.renderer.console.runScript(script: proxy)
+        }
+        if let proxy = fileProxy as? CRTFileProxy {
+
+            try c64.expansionport.attachCartridge(proxy, reset: true)
+        }
+        if let proxy = fileProxy as? TAPFileProxy {
+
+            c64.datasette.insertTape(proxy)
+        }
+        if let proxy = fileProxy as? D64FileProxy {
+
+            if proceedWithUnexportedDisk(drive: id) {
+
+                c64.drive(id).insertD64(proxy, protected: false)
+                if remember { myAppDelegate.noteNewRecentlyInsertedDiskURL(url) }
+            }
+        }
+        if let proxy = fileProxy as? G64FileProxy {
+
+            if proceedWithUnexportedDisk(drive: id) {
+
+                c64.drive(id).insertG64(proxy, protected: false)
+                if remember { myAppDelegate.noteNewRecentlyInsertedDiskURL(url) }
+            }
+        }
+        if let proxy = fileProxy as? AnyCollectionProxy {
+
+            if proceedWithUnexportedDisk(drive: id) {
+
+                c64.drive(id).insertCollection(proxy, protected: false)
+                if remember { myAppDelegate.noteNewRecentlyInsertedDiskURL(url) }
+            }
+        }
+    }
+
+    func processSnapshotFile(_ proxy: SnapshotProxy, force: Bool = false) throws {
+
+        try c64.flash(proxy)
+        snapshots.append(proxy)
     }
 
     //
@@ -209,59 +391,6 @@ class MyDocument: NSDocument {
         controller?.showSheet()
     }
 
-    //
-    // Loading
-    //
-    
-    override open func read(from url: URL, ofType typeName: String) throws {
-        
-        track()
-        
-        do {
-            try createAttachment(from: url)
-            
-        } catch let error as VC64Error {
-            
-            error.cantOpen(url: url)
-        }
-    }
-    
-    override open func revert(toContentsOf url: URL, ofType typeName: String) throws {
-        
-        track()
-        
-        do {
-            try createAttachment(from: url)
-            try mountAttachment()
-            
-        } catch let error as VC64Error {
-            
-            error.cantOpen(url: url)
-        }
-    }
-    
-    //
-    // Saving
-    //
-    
-    override func write(to url: URL, ofType typeName: String) throws {
-
-        track()
-        
-        if typeName == "VC64" {
-            
-            // Take snapshot
-            if let snapshot = SnapshotProxy.make(withC64: c64) {
-
-                // Write to data buffer
-                do {
-                    try snapshot.writeToFile(url: url)
-                } catch {
-                    throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-                }
-            }
-        }
-    }
 
     //
     // Exporting disks
