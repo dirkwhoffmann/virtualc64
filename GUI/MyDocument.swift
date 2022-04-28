@@ -8,7 +8,9 @@
 // -----------------------------------------------------------------------------
 
 class MyDocument: NSDocument {
-    
+
+    var pref: Preferences { return myAppDelegate.pref }
+
     // The window controller for this document
     var parent: MyController { return windowControllers.first as! MyController }
 
@@ -24,10 +26,7 @@ class MyDocument: NSDocument {
     
     // Snapshots
     private(set) var snapshots = ManagedArray<SnapshotProxy>(capacity: 32)
-    
-    // Fingerprint of the first media file used after reset
-    var bootDiskID = UInt64(0)
-    
+
     //
     // Initializing
     //
@@ -206,7 +205,7 @@ class MyDocument: NSDocument {
     func runImportDialog() {
         
         let name = NSNib.Name("ImportDialog")
-        let controller = ImportDialog.make(parent: parent, nibName: name)
+        let controller = ImportDialog(with: parent, nibName: name)
         controller?.showSheet()
     }
 
@@ -334,25 +333,5 @@ class MyDocument: NSDocument {
     func export(file: AnyFileProxy, to url: URL) throws {
         
         try file.writeToFile(url: url)
-    }
-
-    //
-    // Screenshots
-    //
-    
-    func deleteBootDiskID() {
-        
-        bootDiskID = 0
-    }
-    
-    @discardableResult
-    func setBootDiskID(_ id: UInt64) -> Bool {
-        
-        if bootDiskID == 0 {
-            
-            bootDiskID = id
-            return true
-        }
-        return false
     }
 }

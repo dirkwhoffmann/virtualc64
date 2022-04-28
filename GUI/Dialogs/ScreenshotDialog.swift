@@ -21,9 +21,6 @@ class ScreenshotDialog: DialogController {
     @IBOutlet weak var text1: NSTextField!
     @IBOutlet weak var text2: NSTextField!
 
-    // Fingerprint of linked media file
-    var checksum = UInt64(0)
-    
     // Screenshot storage
     var screenshots: [Screenshot] = []
     
@@ -39,27 +36,27 @@ class ScreenshotDialog: DialogController {
 
     func loadScreenshots() {
 
-        track("Seeking screenshots for disk with id \(checksum)")
-        
-        for url in Screenshot.collectFiles(forDisk: checksum) {
+        log(level: 2)
+
+        for url in Screenshot.allFiles {
             if let screenshot = Screenshot(fromUrl: url) {
                 screenshots.append(screenshot)
             }
         }
-        
-        track("\(screenshots.count) screenshots loaded")
+
+        log("\(screenshots.count) screenshots loaded", level: 2)
     }
     
     func saveScreenshots() throws {
         
-        track("Saving screenshots to disk (\(checksum))")
-                
-        Screenshot.deleteFolder(forDisk: checksum)
+        log(level: 2)
+
+        Screenshot.deleteFolder()
         for n in 0 ..< screenshots.count {
-            try? screenshots[n].save(id: checksum)
+            try? screenshots[n].save()
         }
 
-        track("All screenshots saved")
+        log("All screenshots saved", level: 2)
     }
     
     override func sheetWillShow() {
@@ -162,8 +159,8 @@ class ScreenshotDialog: DialogController {
 
     @IBAction func finderAction(_ sender: NSButton!) {
         
-        if let url = Screenshot.folder(forDisk: checksum) {
-            
+        if let url = Screenshot.folder {
+
             NSWorkspace.shared.open(url)
         }
     }
@@ -211,7 +208,6 @@ extension ScreenshotDialog: iCarouselDataSource, iCarouselDelegate {
     
     func carouselCurrentItemIndexDidChange(_ carousel: iCarousel) {
         
-        track()
         updateLabels()
     }
 }

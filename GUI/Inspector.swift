@@ -478,9 +478,9 @@ class Inspector: DialogController {
     }
 }
 
-extension Inspector: NSWindowDelegate {
+extension Inspector {
     
-    func windowWillClose(_ notification: Notification) {
+    override func windowWillClose(_ notification: Notification) {
         
         track("Closing inspector")
         

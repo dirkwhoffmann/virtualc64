@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-class VirtualKeyboardController: DialogController, NSWindowDelegate {
+class VirtualKeyboardController: DialogController {
 
     var keyboard: KeyboardProxy { return c64.keyboard }
     
@@ -33,12 +33,14 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
      * it is opened as a seperate window, it is set to false.
      */
     var autoClose = true
-    
+
+    /*
     static func make(parent: MyController) -> VirtualKeyboardController? {
 
         return make(parent: parent, nibName: NSNib.Name("VirtualKeyboard"))
     }
-    
+    */
+
     func showSheet() {
         
         autoClose = true
@@ -73,12 +75,7 @@ class VirtualKeyboardController: DialogController, NSWindowDelegate {
         track()
         refresh()
     }
-    
-    func windowWillClose(_ notification: Notification) {
-    
-        track()
-    }
-    
+
     func windowDidBecomeMain(_ notification: Notification) {
         
         track()

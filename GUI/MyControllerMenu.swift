@@ -190,8 +190,7 @@ extension MyController: NSMenuItemValidation {
         
         if myAppDelegate.prefController == nil {
             myAppDelegate.prefController =
-            PreferencesController.make(parent: self,
-                                       nibName: NSNib.Name("Preferences"))
+            PreferencesController(with: self, nibName: "Preferences")
         }
         myAppDelegate.prefController?.showWindow(self)
     }
@@ -223,8 +222,7 @@ extension MyController: NSMenuItemValidation {
     func openConfigurator(tab: String = "") {
         
         if configurator == nil {
-            let name = NSNib.Name("Configuration")
-            configurator = ConfigurationController.make(parent: self, nibName: name)
+            configurator = ConfigurationController(with: self, nibName: "Configuration")
         }
         configurator?.showSheet(tab: tab)
     }
@@ -237,7 +235,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction func inspectorAction(_ sender: Any!) {
         
         if inspector == nil {
-            inspector = Inspector.make(parent: self, nibName: "Inspector")
+            inspector = Inspector(with: self, nibName: "Inspector")
         }
         inspector?.showWindow(self)
     }
@@ -245,7 +243,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction func monitorAction(_ sender: Any!) {
         
         if monitor == nil {
-            monitor = Monitor.make(parent: self, nibName: "Monitor")
+            monitor = Monitor(with: self, nibName: "Monitor")
         }
         monitor?.showWindow(self)
     }
@@ -278,7 +276,7 @@ extension MyController: NSMenuItemValidation {
         track()
         if snapshotBrowser == nil {
             let name = NSNib.Name("SnapshotDialog")
-            snapshotBrowser = SnapshotDialog.make(parent: self, nibName: name)
+            snapshotBrowser = SnapshotDialog(with: self, nibName: name)
         }
         snapshotBrowser?.showSheet()
     }
@@ -292,7 +290,8 @@ extension MyController: NSMenuItemValidation {
         
         // Take screenshot
         guard let screen = renderer.canvas.screenshot(source: format) else {
-            track("Failed to create screenshot")
+
+            log(warning: "Failed to create screenshot")
             return
         }
 
@@ -300,24 +299,20 @@ extension MyController: NSMenuItemValidation {
         let screenshot = Screenshot(screen: screen, format: pref.screenshotTarget)
 
         // Save to disk
-        try? screenshot.save(id: mydocument.bootDiskID)
+        try? screenshot.save()
         
         // Create a visual effect
         renderer.flash()
     }
     
     @IBAction func browseScreenshotsAction(_ sender: Any!) {
-        
-        track()
-        
+
         if screenshotBrowser == nil {
-            let name = NSNib.Name("ScreenshotDialog")
-            screenshotBrowser = ScreenshotDialog.make(parent: self, nibName: name)
+            screenshotBrowser = ScreenshotDialog(with: self, nibName: "ScreenshotDialog")
         }
-        screenshotBrowser?.checksum = mydocument.bootDiskID
         screenshotBrowser?.showSheet()
     }
-        
+
     @IBAction func captureScreenAction(_ sender: Any!) {
 
         if c64.recorder.recording {
@@ -360,7 +355,7 @@ extension MyController: NSMenuItemValidation {
         track()
         
         let name = NSNib.Name("ExportVideoDialog")
-        let exporter = ExportVideoDialog.make(parent: self, nibName: name)
+        let exporter = ExportVideoDialog(with: self, nibName: name)
         
         exporter?.showSheet()
     }
@@ -475,7 +470,7 @@ extension MyController: NSMenuItemValidation {
         
         if virtualKeyboard == nil {
             let name = NSNib.Name("VirtualKeyboard")
-            virtualKeyboard = VirtualKeyboardController.make(parent: self, nibName: name)
+            virtualKeyboard = VirtualKeyboardController(with: self, nibName: name)
         }
         if virtualKeyboard?.window?.isVisible == true {
             track("Virtual keyboard already open")
@@ -710,7 +705,7 @@ extension MyController: NSMenuItemValidation {
         let drive = DriveID(rawValue: sender.tag)!
         
         let nibName = NSNib.Name("ExportDialog")
-        let exportPanel = ExportDialog.make(parent: self, nibName: nibName)
+        let exportPanel = ExportDialog(with: self, nibName: nibName)
         exportPanel?.showSheet(forDrive: drive)
     }
      

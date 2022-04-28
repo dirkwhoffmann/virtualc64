@@ -358,8 +358,6 @@ extension MyController {
 			inspector?.step()
 			
 		case .RESET:
-			mydocument.deleteBootDiskID()
-			mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
 			updateWarp()
 			inspector?.reset()
 			
@@ -418,7 +416,6 @@ extension MyController {
 			
 		case .DISK_INSERT:
 			macAudio.playInsertSound(volume: vol, pan: pan)
-			mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
 			refreshStatusBarDiskIcons(drive: driveId)
 			inspector?.fullRefresh()
 			
@@ -428,8 +425,8 @@ extension MyController {
 			inspector?.fullRefresh()
 			
 		case .FILE_FLASHED:
-			mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
-			
+            break
+
 		case .DISK_PROTECT,
 				.DISK_SAVED,
 				.DISK_UNSAVED,
@@ -462,9 +459,6 @@ extension MyController {
 			break
 			
 		case .VC1530_TAPE:
-			if msg.data1 == 1 {
-				mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
-			}
 			refreshStatusBar()
 			
 		case .VC1530_PLAY:
@@ -477,7 +471,6 @@ extension MyController {
 			refreshStatusBar()
 			
 		case .CRT_ATTACHED:
-			mydocument.setBootDiskID(mydocument.attachment?.fnv ?? 0)
 			refreshStatusBar()
 			
 		case .CRT_DETACHED:

@@ -9,74 +9,73 @@
 
 class DialogWindow: NSWindow {
 
-    // Delegation method for ESC and Cmd+.
+    // Delegation method for ESC and Cmd+
     override func cancelOperation(_ sender: Any?) {
-                
+
         if let controller = delegate as? DialogController {
             controller.cancelAction(sender)
         }
     }
 }
 
-/* Base class for all auxiliary windows.
- * The class extends NSWindowController by a reference to the controller
- * of the connected emulator window (parent) and a reference to the parents
- * proxy object. It also provides some wrappers around showing and hiding the
- * window.
+/* Base class for all auxiliary windows. The class extends NSWindowController
+ * by a reference to the controller of the connected emulator window (parent)
+ * and a reference to the parents proxy object. It also provides some wrappers
+ * around showing and hiding the window.
  */
 protocol DialogControllerDelegate: AnyObject {
-    
+
     // Called before beginSheet() is called
     func sheetWillShow()
-    
+
     // Called after beginSheet() has beed called
     func sheetDidShow()
-    
+
     // Called after the completion handler has been executed
     func cleanup()
 }
 
-class DialogController: NSWindowController {
+class DialogController: NSWindowController, DialogControllerDelegate {
     
     var parent: MyController!
     var c64: C64Proxy!
-    
+
+    // List of open windows or sheets (to make ARC happy)
+    static var active: [DialogController] = []
+
     // Remembers whether awakeFromNib has been called
     var awake = false
-    
-    static func make(parent: MyController, nibName: NSNib.Name) -> Self? {
-        
-        track()
-        
-        let controller = Self(windowNibName: nibName)
-        controller.parent = parent
-        controller.c64 = parent.c64
-        
-        return controller
+
+    convenience init?(with controller: MyController, nibName: NSNib.Name) {
+
+        self.init(windowNibName: nibName)
+
+        parent = controller
+        c64 = parent.c64
+    }
+
+    func register() {
+
+        DialogController.active.append(self)
+        log("Register: \(DialogController.active)", level: 2)
+    }
+
+    func unregister() {
+
+        DialogController.active = DialogController.active.filter {$0 != self}
+        log("Unregister: \(DialogController.active)", level: 2)
     }
 
     override func windowWillLoad() {
-        track()
     }
     
     override func windowDidLoad() {
-        track()
-    }
-    
-    override func showWindow(_ sender: Any?) {
-
-        super.showWindow(sender)
-
-        if awake {
-            sheetWillShow()
-            sheetDidShow()
-        }
     }
     
     override func awakeFromNib() {
-        
-        track()
+
         awake = true
+        window?.delegate = self
         sheetWillShow()
     }
     
@@ -91,41 +90,52 @@ class DialogController: NSWindowController {
     func cleanup() {
         
     }
-    
+
+    func showWindow(completionHandler handler:(() -> Void)? = nil) {
+
+        register()
+        if awake { sheetWillShow() }
+
+        showWindow(self)
+    }
+
     func showSheet(completionHandler handler:(() -> Void)? = nil) {
         
+        register()
         if awake { sheetWillShow() }
-        
+
         parent.window?.beginSheet(window!, completionHandler: { result in
-            if result == NSApplication.ModalResponse.OK {
-                
-                handler?()
-                self.cleanup()
-            }
+
+            handler?()
+            self.cleanup()
         })
-        
+
         sheetDidShow()
     }
     
     func hideSheet() {
-        
+
         if let win = window {
-            win.orderOut(self)
             parent.window?.endSheet(win, returnCode: .cancel)
         }
+        unregister()
     }
- 
-    // Default action method for OK
+
     @IBAction func okAction(_ sender: Any!) {
-        
-        track()
+
         hideSheet()
     }
-    
-    // Default action method for Cancel
+
     @IBAction func cancelAction(_ sender: Any!) {
-        
-        track()
+
         hideSheet()
+    }
+}
+
+extension DialogController: NSWindowDelegate {
+
+    func windowWillClose(_ notification: Notification) {
+
+        unregister()
     }
 }

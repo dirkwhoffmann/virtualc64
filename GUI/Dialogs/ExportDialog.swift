@@ -660,7 +660,7 @@ class ExportDialog: DialogController {
 // Extensions
 //
 
-extension ExportDialog: NSWindowDelegate {
+extension ExportDialog {
     
     func windowDidResize(_ notification: Notification) {
         

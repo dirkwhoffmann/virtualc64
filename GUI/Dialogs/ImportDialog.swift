@@ -19,7 +19,6 @@ class ImportDialog: DialogController {
     @IBOutlet weak var drive9: NSButton!
     @IBOutlet weak var flash: NSPopUpButton!
     @IBOutlet weak var flashLabel: NSTextField!
-    @IBOutlet weak var carousel: iCarousel!
 
     // Proxy objects (created from the attachment when the sheet opens)
     var g64: G64FileProxy?
@@ -31,9 +30,7 @@ class ImportDialog: DialogController {
     var type: FileType!
     var writeProtect: Bool { return checkbox.state == .on }
     var autoRun: Bool { return checkbox.state == .on }
-    
-    var screenshots: [Screenshot] = []
-    
+
     // Custom font
 	var monofont: NSFont { return NSFont.monospaced(ofSize: 13.0, weight: .semibold) }
     
@@ -45,12 +42,7 @@ class ImportDialog: DialogController {
     
     // Shortcuts
     var myDocument: MyDocument { return parent.mydocument! }
-    var numItems: Int { return carousel.numberOfItems }
-    var currentItem: Int { return carousel.currentItemIndex }
-    var centerItem: Int { return numItems / 2 }
-    var lastItem: Int { return numItems - 1 }
-    var empty: Bool { return numItems == 0 }
-    
+
     override func showSheet(completionHandler handler:(() -> Void)? = nil) {
                     
         track()
@@ -146,17 +138,7 @@ class ImportDialog: DialogController {
         default:
             fatalError()
         }
-        
-        // Load screenshots (if any)
-        let fnv = myDocument.attachment!.fnv
-        if fnv != 0 {
-            for url in Screenshot.collectFiles(forDisk: fnv) {
-                if let screenshot = Screenshot(fromUrl: url) {
-                    screenshots.append(screenshot)
-                }
-            }
-        }
-        
+
         if volume != nil {
             track("Volume created successfully")
             volume?.info()
@@ -169,9 +151,7 @@ class ImportDialog: DialogController {
     override public func awakeFromNib() {
         
         super.awakeFromNib()
-        window?.makeFirstResponder(carousel)
         refresh()
-        updateCarousel(goto: centerItem, animated: false)
     }
     
     override func windowDidLoad() {
@@ -217,19 +197,6 @@ class ImportDialog: DialogController {
             drive9.keyEquivalent = ""
             drive9.isHidden = false
         }
-
-        if empty {
-
-            setHeight(222)
-            
-        } else {
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.carousel.type = iCarouselType.coverFlow
-                self.carousel.isHidden = false
-                self.carousel.scrollToItem(at: self.centerItem, animated: false)
-            }
-        }
     }
     
     func setUpFlashItems() -> Int {
@@ -265,29 +232,10 @@ class ImportDialog: DialogController {
         flash.autoenablesItems = false
         return flash.numberOfItems
     }
-    
-    func setHeight(_ newHeight: CGFloat) {
-        
-        var rect = window!.frame
-        rect.origin.y += rect.size.height - newHeight
-        rect.size.height = newHeight
-        
-        window?.setFrame(rect, display: true)
-        refresh()
-    }
 
     func refresh() {
         
         icon.image = myDocument.attachment?.icon(protected: writeProtect)
-    }
-
-    func updateCarousel(goto item: Int = -1, animated: Bool = false) {
-        
-        carousel.reloadData()
-        if item != -1 {
-            self.carousel.scrollToItem(at: item, animated: animated)
-        }
-        carousel.layOutItemViews()
     }
 
     //
@@ -355,7 +303,7 @@ class ImportDialog: DialogController {
      }
 }
 
-extension ImportDialog: NSWindowDelegate {
+extension ImportDialog {
     
     func windowDidResize(_ notification: Notification) {
         
@@ -371,26 +319,4 @@ extension ImportDialog: NSWindowDelegate {
         
         track()
      }
-}
-
-//
-// iCarousel data source and delegate
-//
-
-extension ImportDialog: iCarouselDataSource, iCarouselDelegate {
-    
-    func numberOfItems(in carousel: iCarousel) -> Int {
-        
-        return screenshots.count
-    }
-    
-    func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: NSView?) -> NSView {
-        
-        let h = carousel.frame.height - 10
-        let w = h * 4 / 3
-        let itemView = NSImageView(frame: CGRect(x: 0, y: 0, width: w, height: h))
-        
-        itemView.image = screenshots[index].screen?.roundCorners()
-        return itemView
-    }
 }

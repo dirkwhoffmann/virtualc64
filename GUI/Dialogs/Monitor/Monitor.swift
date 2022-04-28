@@ -213,9 +213,9 @@ class Monitor: DialogController {
     }
 }
 
-extension Monitor: NSWindowDelegate {
+extension Monitor {
 
-    func windowWillClose(_ notification: Notification) {
+    override func windowWillClose(_ notification: Notification) {
 
         track("Closing monitor")
     }

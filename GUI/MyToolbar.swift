@@ -105,7 +105,8 @@ class MyToolbar: NSToolbar {
     @IBAction func keyboardAction(_ sender: Any!) {
         
         if parent.virtualKeyboard == nil {
-            parent.virtualKeyboard = VirtualKeyboardController.make(parent: parent)
+            parent.virtualKeyboard =
+            VirtualKeyboardController(with: parent, nibName: "VirtualKeyboard")
         }
         if parent.virtualKeyboard?.window?.isVisible == false {
             parent.virtualKeyboard?.showSheet()
