@@ -144,24 +144,28 @@ FileSystem::init(const string &path)
         printDirectory();
         return;
     }
+
     if (D64File::isCompatible(path)) {
     
         auto file = D64File(path);
         init(file);
         return;
     }
+
     if (T64File::isCompatible(path)) {
         
         auto file = T64File(path);
         init(file);
         return;
     }
+
     if (PRGFile::isCompatible(path)) {
         
         auto file = PRGFile(path);
         init(file);
         return;
     }
+
     if (P00File::isCompatible(path)) {
         
         auto file = P00File(path);
@@ -758,51 +762,45 @@ FileSystem::importVolume(const u8 *src, isize size, ErrorCode *err)
     return true;
 }
 
-bool
+void
 FileSystem::importDirectory(const string &path)
 {
-    if (DIR *dir = opendir(path.c_str())) {
-        
-        bool result = importDirectory(path, dir);
-        closedir(dir);
-        return result;
-    }
+    fs::directory_entry dir;
 
-    warn("Error opening directory %s\n", path.c_str());
-    return false;
+    try { dir = fs::directory_entry(path); }
+    catch (...) { throw VC64Error(ERROR_FILE_CANT_READ); }
+
+    importDirectory(dir);
 }
 
-bool
-FileSystem::importDirectory(const string &path, DIR *dir)
+void
+FileSystem::importDirectory(const fs::directory_entry &dir)
 {
-    struct dirent *item;
-    bool result = true;
+    for (const auto& entry : fs::directory_iterator(dir)) {
 
-    while ((item = readdir(dir))) {
+        const auto path = entry.path().string();
+        const auto name = entry.path().filename().string();
 
         // Skip all hidden files
-        if (item->d_name[0] == '.') continue;
-        
-        // Assemble file name
-        string name = string(item->d_name);
-        string full = path + "/" + name;
-        
-        msg("importDirectory: Processing %s (%s)\n", name.c_str(), full.c_str());
+        if (name[0] == '.') continue;
 
-        if (item->d_type == DT_DIR) continue;
+        debug(FS_DEBUG, "Importing %s\n", path.c_str());
 
-        // Add file
-        Buffer<u8> buffer(full);
-        if (buffer) {
+        if (entry.is_regular_file()) {
 
-            PETName<16> pet = PETName<16>(util::stripSuffix(name));
-            if (!makeFile(pet, buffer.ptr, buffer.size)) {
-                warn("Failed to import file %s\n", name.c_str());
-                result = false;
+            // Read file
+            Buffer<u8> buffer(path);
+            if (buffer) {
+
+                // Add file
+                PETName<16> pet = PETName<16>(util::stripSuffix(name));
+                if (!makeFile(pet, buffer.ptr, buffer.size)) {
+
+                    throw VC64Error(ERROR_FS_CANT_IMPORT);
+                }
             }
         }
     }
-    return result;
 }
 
 bool

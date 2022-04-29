@@ -14,8 +14,7 @@
 #include "FSDirEntry.h"
 #include "D64File.h"
 #include "AnyCollection.h"
-
-#include <dirent.h>
+#include "IOUtils.h"
 #include <vector>
 
 class FileSystem : C64Object {
@@ -270,8 +269,8 @@ public:
     bool importVolume(const u8 *src, isize size, ErrorCode *err);
     
     // Imports a folder from the host file system
-    bool importDirectory(const string &path);
-    bool importDirectory(const string &path, DIR *dir);
+    void importDirectory(const string &path) throws;
+    void importDirectory(const fs::directory_entry &dir) throws;
 
     // Exports the volume to a buffer
     bool exportVolume(u8 *dst, isize size, ErrorCode *err = nullptr);
