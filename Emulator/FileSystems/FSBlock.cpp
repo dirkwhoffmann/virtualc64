@@ -58,12 +58,12 @@ FSBlock::writeBAM(PETName<16> &name)
         u8 *p = data + 4 * k;
 
         if (k == 18) {
-            
-            p[0] = 0;    // No free blocks on the directory track
-            p[1] = 0x00;
-            p[2] = 0x00;
-            p[3] = 0x00;
-            
+
+            p[0] = 17;      // 17 out of 19 blocks are free
+            p[1] = 0xFC;    // Mark first two blocks as allocated
+            p[2] = 0xFF;
+            p[3] = 0x07;
+
         } else {
             
             p[0] = (u8)device.layout.numSectors(k);
@@ -84,7 +84,7 @@ FSBlock::writeBAM(PETName<16> &name)
     data[0xA2] = 0x56;
     data[0xA3] = 0x54;
     
-    // AUsually $A0
+    // Usually $A0
     data[0xA4] = 0xA0;
     
     // DOS type
