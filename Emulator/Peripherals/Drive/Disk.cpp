@@ -394,7 +394,7 @@ Disk::decodeDisk(u8 *dest, isize numTracks, DiskAnalyzer &analyzer)
         if (trackIsEmpty(t))
             break;
         
-       trace(GCR_DEBUG, "Decoding track %zd %s\n", t, dest ? "" : "(test run)");
+       trace(GCR_DEBUG, "Decoding track %ld %s\n", t, dest ? "" : "(test run)");
         numBytes += decodeTrack(t, dest + (dest ? numBytes : 0), analyzer);
     }
     
@@ -420,7 +420,7 @@ Disk::decodeHalfrack(Halftrack ht, u8 *dest, DiskAnalyzer &analyzer)
     // For each sector ...
     for (Sector s = 0; s < numSectors; s++) {
         
-        trace(GCR_DEBUG, "   Decoding sector %zd\n", s);
+        trace(GCR_DEBUG, "   Decoding sector %ld\n", s);
         SectorInfo info = analyzer.sectorLayout(ht, s);
         if (info.dataBegin != info.dataEnd) {
             numBytes += decodeSector(ht, info.dataBegin, dest + (dest ? numBytes : 0), analyzer);
@@ -474,10 +474,10 @@ Disk::encodeG64(const G64File &a)
         }
         
         if (size > 7928) {
-            warn("Halftrack %zd has %zd bytes. Must be less than 7928\n", ht, size);
+            warn("Halftrack %ld has %ld bytes. Must be less than 7928\n", ht, size);
             continue;
         }
-        trace(GCR_DEBUG, "  Encoding halftrack %zd (%zd bytes)\n", ht, size);
+        trace(GCR_DEBUG, "  Encoding halftrack %ld (%ld bytes)\n", ht, size);
         length.halftrack[ht] = (u16)(8 * size);
         
         a.copyHalftrack(ht, data.halftrack[ht]);
@@ -523,7 +523,7 @@ Disk::encode(const FileSystem &fs, bool alignTracks)
     
     isize numTracks = fs.getNumTracks();
 
-    trace(GCR_DEBUG, "Encoding disk with %zd tracks\n", numTracks);
+    trace(GCR_DEBUG, "Encoding disk with %ld tracks\n", numTracks);
 
     // Wipe out track data
     clearDisk();
@@ -556,7 +556,7 @@ isize
 Disk::encodeTrack(const FileSystem &fs, Track t, isize gap, HeadPos start)
 {
     assert(isTrackNumber(t));
-    trace(GCR_DEBUG, "Encoding track %zd\n", t);
+    trace(GCR_DEBUG, "Encoding track %ld\n", t);
 
     isize totalEncodedBits = 0;
     
@@ -581,7 +581,7 @@ Disk::encodeSector(const FileSystem &fs, Track t, Sector s, HeadPos start, isize
     HeadPos offset = start;
     u8 errorCode = fs.getErrorCode(ts);
         
-    trace(GCR_DEBUG, "  Encoding track/sector %zd/%zd\n", t, s);
+    trace(GCR_DEBUG, "  Encoding track/sector %ld/%ld\n", t, s);
     
     // Get disk id and compute checksum
     u8 id1 = fs.diskId1();

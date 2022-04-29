@@ -30,7 +30,7 @@ struct PowerGridEnum : util::Reflection<PowerGridEnum, PowerGrid> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = GRID_UNSTABLE_60HZ;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "GRID"; }
     static const char *key(PowerGrid value)

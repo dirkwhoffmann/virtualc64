@@ -39,7 +39,7 @@ struct GamePadActionEnum : util::Reflection<GamePadActionEnum, GamePadAction> {
     
     static long min() { return 0; }
     static long max() { return RELEASE_RIGHT; }
-    static bool isValid(long value) { return value >= min() && value <= max(); }
+    static bool isValid(auto value) { return value >= min() && value <= max(); }
     
     static const char *prefix() { return nullptr; }
     static const char *key(GamePadAction value)

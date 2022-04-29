@@ -36,7 +36,7 @@ struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
     
 	static constexpr long minVal = 1;
     static constexpr long maxVal = M_NONE;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "M"; }
     static const char *key(MemoryType value)
@@ -74,7 +74,7 @@ struct RamPatternEnum : util::Reflection<RamPatternEnum, RamPattern> {
     
     static constexpr long minVal = 0;
     static constexpr long maxVal = RAM_PATTERN_RANDOM;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "RAM_PATTERN"; }
     static const char *key(RamPattern value)

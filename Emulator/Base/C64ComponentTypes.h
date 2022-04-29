@@ -104,7 +104,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
     
     static constexpr long minVal = 0;
     static constexpr long maxVal = OPT_DRV_EJECT_VOL;
-	static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+	static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "OPT"; }
     static const char *key(Option value)

@@ -57,7 +57,7 @@ struct CPURevisionEnum : util::Reflection<CPURevisionEnum, CPURevision> {
     
     static constexpr long minVal = 0;
     static constexpr long maxVal = MOS_6502;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return nullptr; }
     static const char *key(CPURevision value)
@@ -85,7 +85,7 @@ struct BreakpointTypeEnum : util::Reflection<BreakpointTypeEnum, BreakpointType>
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = BPTYPE_SOFT;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "BPTYPE"; }
     static const char *key(BreakpointType value)

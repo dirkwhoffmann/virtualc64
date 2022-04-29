@@ -41,7 +41,7 @@ struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = FILETYPE_VC1541_ROM;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "FILETYPE"; }
     static const char *key(FileType value)
@@ -81,7 +81,7 @@ struct TAPVersionEnum : util::Reflection<TAPVersionEnum, TAPVersion> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = TAP_VERSION_ADVANCED;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "TAP_VERSION"; }
     static const char *key(TAPVersion value)

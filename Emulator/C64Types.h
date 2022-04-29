@@ -32,7 +32,7 @@ struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
     
     static constexpr long minVal = 0;
     static constexpr long maxVal = C64_MODEL_NTSC_OLD;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "C64_MODEL"; }
     static const char *key(C64Model value)
@@ -65,7 +65,7 @@ struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
     
     static constexpr long minVal = 0;
     static constexpr long maxVal = ROM_TYPE_VC1541;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "ROM_TYPE"; }
     static const char *key(RomType value)
@@ -98,7 +98,7 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
     
     static constexpr long minVal = 0;
     static constexpr long maxVal = INSPECTION_SID;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "INSPECTION"; }
     static const char *key(InspectionTarget value)

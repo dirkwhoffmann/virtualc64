@@ -148,7 +148,7 @@ Datasette::insertTape(TAPFile &file)
         isize numPulses = file.numPulses();
         alloc(numPulses);
         
-        debug(TAP_DEBUG, "Inserting tape (%zd pulses)...\n", numPulses);
+        debug(TAP_DEBUG, "Inserting tape (%ld pulses)...\n", numPulses);
         
         // Read pulses
         file.seek(0);

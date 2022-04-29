@@ -29,7 +29,7 @@ struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = MOUSE_NEOS;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "DISK_TYPE"; }
     static const char *key(MouseModel value)
@@ -58,7 +58,7 @@ struct PortIdEnum : util::Reflection<PortIdEnum, PortId> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = PORT_TWO;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "PORT"; }
     static const char *key(PortId value)

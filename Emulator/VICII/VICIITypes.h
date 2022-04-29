@@ -98,7 +98,7 @@ struct VICIIRevisionEnum : util::Reflection<VICIIRevisionEnum, VICIIRevision> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = VICII_NTSC_8562;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "VICII"; }
     static const char *key(VICIIRevision value)
@@ -134,7 +134,7 @@ struct VICIISpeedEnum : util::Reflection<VICIISpeedEnum, VICIISpeed> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = VICII_TRUE_120;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "VICII"; }
     static const char *key(VICIIRevision value)
@@ -166,7 +166,7 @@ struct GlueLogicEnum : util::Reflection<GlueLogicEnum, GlueLogic> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = GLUE_LOGIC_IC;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "GLUE_LOGIC"; }
     static const char *key(GlueLogic value)
@@ -197,7 +197,7 @@ struct PaletteEnum : util::Reflection<PaletteEnum, Palette> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = PALETTE_SEPIA;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "PALETTE"; }
     static const char *key(Palette value)
@@ -230,7 +230,7 @@ struct ScreenGeometryEnum : util::Reflection<ScreenGeometryEnum, ScreenGeometry>
     
 	static constexpr long minVal = 1;
     static constexpr long maxVal = SCREEN_GEOMETRY_24_38;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "SCREEN_GEOMETRY"; }
     static const char *key(ScreenGeometry value)
@@ -265,7 +265,7 @@ struct DisplayModeEnum : util::Reflection<DisplayModeEnum, DisplayMode> {
     
     static constexpr long minVal = 0;
     static constexpr long maxVal = DISPLAY_MODE_INV_MULTICOL_BITMAP;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "DISPLAY_MODE"; }
     static const char *key(DisplayMode value)
@@ -305,7 +305,7 @@ struct ColorSourceEnum : util::Reflection<ColorSourceEnum, ColorSource> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = COLSRC_ZERO;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "COLSRC"; }
     static const char *key(Palette value)

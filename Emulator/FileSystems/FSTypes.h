@@ -28,7 +28,7 @@ struct DOSTypeEnum : util::Reflection<DOSTypeEnum, DOSType> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = DOS_TYPE_CBM;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "DOS_TYPE"; }
     static const char *key(DOSType value)
@@ -58,7 +58,7 @@ struct FSFileTypeEnum : util::Reflection<FSFileTypeEnum, FSFileType> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = FS_FILETYPE_REL;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "FS_FILETYPE"; }
     static const char *key(FSFileType value)
@@ -90,7 +90,7 @@ struct FSBlockTypeEnum : util::Reflection<FSBlockTypeEnum, FSBlockType> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = FS_BLOCKTYPE_DATA;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "FS_BLOCKTYPE"; }
     static const char *key(FSBlockType value)
@@ -139,7 +139,7 @@ struct FSUsageEnum : util::Reflection<FSUsageEnum, FSUsage> {
     
 	static constexpr long minVal = 0;
     static constexpr long maxVal = FS_USAGE_DATA;
-    static bool isValid(long value) { return value >= minVal && value <= maxVal; }
+    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "FS_USAGE"; }
     static const char *key(FSUsage value) { return "???"; }

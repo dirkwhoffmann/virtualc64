@@ -461,8 +461,8 @@ Drive::_load(const u8 *buffer)
     }
 
     // Compute the number of read bytes and return
-    result = (isize)(reader.ptr - buffer);
-    trace(SNP_DEBUG, "Recreated from %zd bytes\n", result);
+    result = isize(reader.ptr - buffer);
+    trace(SNP_DEBUG, "Recreated from %ld bytes\n", result);
     return result;
 }
 
@@ -483,8 +483,8 @@ Drive::_save(u8 *buffer)
     if (hasDisk()) disk->applyToPersistentItems(writer);
     
     // Compute the number of written bytes and return
-    result = (isize)(writer.ptr - buffer);
-    trace(SNP_DEBUG, "Serialized to %zd bytes\n", result);
+    result = isize(writer.ptr - buffer);
+    trace(SNP_DEBUG, "Serialized to %ld bytes\n", result);
     return result;
 }
 
@@ -658,7 +658,7 @@ Drive::setZone(isize value)
     assert(value < 4);
     
     if (value != zone) {
-        trace(DRV_DEBUG, "Switching zone: %zd --> %zd\n", zone, value);
+        trace(DRV_DEBUG, "Switching zone: %ld --> %ld\n", zone, value);
         zone = value;
     }
 }
@@ -744,7 +744,7 @@ Drive::moveHeadUp()
             offset = 0;
         }
         
-        trace(DRV_DEBUG, "Moving head up to halftrack %zd (track %2.1f) (offset %zd)\n",
+        trace(DRV_DEBUG, "Moving head up to halftrack %ld (track %2.1f) (offset %ld)\n",
               halftrack, (halftrack + 1) / 2.0, offset);
     }
        
@@ -769,7 +769,7 @@ Drive::moveHeadDown()
             offset = 0;
         }
         
-        trace(DRV_DEBUG, "Moving head down to halftrack %zd (track %2.1f)\n",
+        trace(DRV_DEBUG, "Moving head down to halftrack %ld (track %2.1f)\n",
               halftrack, (halftrack + 1) / 2.0);
     }
 

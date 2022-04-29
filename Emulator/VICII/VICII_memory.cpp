@@ -498,7 +498,7 @@ VICII::poke(u16 addr, u8 value)
             if (c64.scanline == 0x30 && (value & 0x10))
                 DENwasSetInLine30 = true;
             
-            if ((badLine = badLineCondition())) {
+            if (badLine = badLineCondition(); badLine) {
                 delay |= VICSetDisplayState;
             }
             upperComparisonVal = upperComparisonValue();

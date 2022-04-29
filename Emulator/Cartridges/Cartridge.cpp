@@ -443,11 +443,11 @@ Cartridge::loadChip(isize nr, const CRTFile &crt)
     
     // Perform some consistency checks
     if (start < 0x8000) {
-        warn("Ignoring chip %zd: Start address too low (%04X)\n", nr, start);
+        warn("Ignoring chip %ld: Start address too low (%04X)\n", nr, start);
         return;
     }
     if (0x10000 - start < size) {
-        warn("Ignoring chip %zd: Invalid size (start: %04X size: %04X)/n", nr, start, size);
+        warn("Ignoring chip %ld: Invalid size (start: %04X size: %04X)/n", nr, start, size);
         return;
     }
     
@@ -464,16 +464,16 @@ Cartridge::loadChip(isize nr, const CRTFile &crt)
             break;
             
         case 1: // RAM
-            warn("Ignoring chip %zd, because it has type RAM.\n", nr);
+            warn("Ignoring chip %ld, because it has type RAM.\n", nr);
             return;
             
         case 2: // Flash ROM
-            warn("Chip %zd is a Flash Rom. Creating a Rom instead.\n", nr);
+            warn("Chip %ld is a Flash Rom. Creating a Rom instead.\n", nr);
             packet[nr] = new CartridgeRom(c64, size, start, crt.chipData(nr));
             break;
             
         default:
-            warn("Ignoring chip %zd, because it has unknown type %d.\n", nr, type);
+            warn("Ignoring chip %ld, because it has unknown type %d.\n", nr, type);
             return;
     }
     

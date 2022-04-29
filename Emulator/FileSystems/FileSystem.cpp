@@ -27,7 +27,7 @@ FileSystem::~FileSystem()
 void
 FileSystem::init(isize capacity)
 {
-    debug(FS_DEBUG, "Creating device with %zd blocks\n", capacity);
+    debug(FS_DEBUG, "Creating device with %ld blocks\n", capacity);
 
     // Initialize the block storage
     blocks.reserve(capacity);
@@ -189,7 +189,7 @@ FileSystem::dump() const
     
     for (isize i = 0; i < blocksSize; i++)  {
         
-        msg("\nBlock %zu (%zd):", i, blocks[i]->nr);
+        msg("\nBlock %ld (%ld):", i, blocks[i]->nr);
         msg(" %s\n", FSBlockTypeEnum::key(blocks[i]->type()));
         
         blocks[i]->dump();
@@ -824,7 +824,7 @@ FileSystem::exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode
     
     isize count = last - first + 1;
     
-    debug(FS_DEBUG, "Exporting %zd blocks (%zd - %zd)\n", count, first, last);
+    debug(FS_DEBUG, "Exporting %ld blocks (%ld - %ld)\n", count, first, last);
 
     // Only proceed if the source buffer contains the right amount of data
     if (count * 256 != size) {

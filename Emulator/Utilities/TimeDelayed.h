@@ -108,7 +108,6 @@ public:
     T current() const { return pipeline[0]; }
     
     // Reads a value from the pipeline with the standard delay
-    // T delayed() { return pipeline[MAX(0, timeStamp - *clock + delay)]; }
     T delayed() const {
         i64 offset = timeStamp - *clock + delay;
         if (likely(offset <= 0)) {

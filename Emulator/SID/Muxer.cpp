@@ -786,7 +786,7 @@ Muxer::executeUntil(Cycle targetCycle)
     cycles += consumedCycles;
     
     debug(SID_EXEC,
-          "target: %lld missing: %zd consumed: %zd reached: %lld still missing: %lld\n",
+          "target: %lld missing: %ld consumed: %ld reached: %lld still missing: %lld\n",
           targetCycle, missingCycles, consumedCycles, cycles, targetCycle - cycles);
 }
 

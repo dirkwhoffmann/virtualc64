@@ -184,7 +184,7 @@ Keyboard::releaseAll()
 void
 Keyboard::_press(C64Key key)
 {
-    debug(KBD_DEBUG, "_press(%zd)\n", key.nr);
+    debug(KBD_DEBUG, "_press(%ld)\n", key.nr);
 
     assert(key.nr < 66);
 
@@ -217,7 +217,7 @@ Keyboard::_pressRestore()
 void
 Keyboard::_release(C64Key key)
 {
-    debug(KBD_DEBUG, "_release(%zd)\n", key.nr);
+    debug(KBD_DEBUG, "_release(%ld)\n", key.nr);
 
     assert(key.nr < 66);
     
@@ -359,7 +359,7 @@ Keyboard::abortAutoTyping()
 void
 Keyboard::_scheduleKeyAction(KeyAction::Action type, C64Key key, i64 delay)
 {
-    debug(KBD_DEBUG, "Recording %d %zd %lld\n", (int)type, key.nr, delay);
+    debug(KBD_DEBUG, "Recording %ld %ld %lld\n", isize(type), key.nr, delay);
 
     if (actions.empty()) this->delay = delay;
     actions.push(KeyAction(type, key.nr, delay));
@@ -387,13 +387,13 @@ Keyboard::vsyncHandler()
 
                 case KeyAction::Action::press:
 
-                    debug(KBD_DEBUG, "Pressing %zd\n", action.key.nr);
+                    debug(KBD_DEBUG, "Pressing %ld\n", action.key.nr);
                     _press(action.key);
                     break;
 
                 case KeyAction::Action::release:
 
-                    debug(KBD_DEBUG, "Releasing %zd\n", action.key.nr);
+                    debug(KBD_DEBUG, "Releasing %ld\n", action.key.nr);
                     _release(action.key);
                     break;
 

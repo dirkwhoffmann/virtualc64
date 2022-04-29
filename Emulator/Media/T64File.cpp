@@ -260,7 +260,7 @@ T64File::finalizeRead()
         isize noOfItemsStatedInHeader = collectionCount();
         if (noOfItems != noOfItemsStatedInHeader) {
             
-            warn("T64: Changing number of items from %zd to %zd.\n",
+            warn("T64: Changing number of items from %ld to %ld.\n",
                   noOfItemsStatedInHeader, noOfItems);
             
             data[0x24] = LO_BYTE(noOfItems);
@@ -302,7 +302,7 @@ T64File::finalizeRead()
             // Let's assume that the rest of the file data belongs to this file ...
             isize fixedEndAddrInMemory = startAddrInMemory + (size - startAddrInContainer);
 
-            warn("T64: Changing end address of item %zd from %04zX to %04zX.\n",
+            warn("T64: Changing end address of item %ld from %04zX to %04zX.\n",
                  i, endAddrInMemory, fixedEndAddrInMemory);
 
             data[n] = LO_BYTE(fixedEndAddrInMemory);
