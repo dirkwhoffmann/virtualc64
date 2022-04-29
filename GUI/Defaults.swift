@@ -17,12 +17,17 @@ import Carbon.HIToolbox
 
 extension DefaultsProxy {
 
-    func load(url: URL) throws {
+    func resetSearchPaths() {
 
         set("BASIC_PATH", UserDefaults.basicRomUrl!.path)
         set("CHAR_PATH", UserDefaults.charRomUrl!.path)
         set("KERNAL_PATH", UserDefaults.kernalRomUrl!.path)
         set("VC1541_PATH", UserDefaults.vc1541RomUrl!.path)
+    }
+
+    func load(url: URL) throws {
+
+        resetSearchPaths()
 
         let exception = ExceptionWrapper()
         load(url, exception: exception)

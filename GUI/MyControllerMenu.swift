@@ -202,8 +202,9 @@ extension MyController: NSMenuItemValidation {
         // Power off the emulator if the user doesn't object
         if !askToPowerOff() { return }
 
-        // Wipe out all settings
+        // Reset settings
         defaults.removeAll()
+        defaults.resetSearchPaths()
         defaults.save()
 
         // Apply new settings
