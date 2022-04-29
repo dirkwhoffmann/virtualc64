@@ -184,7 +184,6 @@ class DropZone: Layer {
 
             if let n = metal.dropZone {
 
-                log()
                 switch type {
 
                 case .SNAPSHOT, .SCRIPT:

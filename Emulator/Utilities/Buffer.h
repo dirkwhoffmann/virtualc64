@@ -28,7 +28,7 @@ template <class T> struct Allocator {
     // Queries the buffer state
     isize bytesize() const { return size * sizeof(T); }
     bool empty() const { return size == 0; }
-    explicit operator bool() const { return empty(); }
+    explicit operator bool() const { return !empty(); }
     
     // Initializers
     void alloc(isize elements);

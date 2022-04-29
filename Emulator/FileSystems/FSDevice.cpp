@@ -132,7 +132,7 @@ FSDevice::init(const string &path)
     if (Folder::isCompatible(path)) {
     
         // Create the device
-        init(DISK_TYPE_SS_SD);
+        init(DISK_TYPE_SS_SD, DOS_TYPE_NODOS);
         
         // Write BAM
         auto name = PETName<16>(util::extractName(path));
@@ -140,7 +140,7 @@ FSDevice::init(const string &path)
         
         // Import the folder
         importDirectory(path);
-        
+
         printDirectory();
         return;
     }
@@ -196,7 +196,7 @@ void
 FSDevice::printDirectory()
 {
     scanDirectory();
-    
+
     for (auto &item : dir) {
         msg("%3llu \"%-16s\" %s (%5llu bytes)\n",
             fileBlocks(item),
@@ -772,23 +772,14 @@ FSDevice::importDirectory(const string &path)
     return false;
 }
 
-/*
-bool
-FSDevice::importDirectory(const char *path)
-{
-    assert(path);
-    return importDirectory(string(path));
-}
-*/
-
 bool
 FSDevice::importDirectory(const string &path, DIR *dir)
 {
     struct dirent *item;
     bool result = true;
-    
+
     while ((item = readdir(dir))) {
-        
+
         // Skip all hidden files
         if (item->d_name[0] == '.') continue;
         
