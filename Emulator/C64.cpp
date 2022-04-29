@@ -211,7 +211,7 @@ C64::getConfigItem(Option option, long id) const
     
     switch (option) {
             
-        case OPT_DMA_DEBUG_ENABLE:
+        case OPT_DMA_DEBUG_CHANNEL:
         case OPT_DMA_DEBUG_COLOR:
             
             return vic.dmaDebugger.getConfigItem(option, id);
@@ -314,7 +314,6 @@ C64::configure(Option option, i64 value)
         case OPT_CUT_OPACITY:
         case OPT_DMA_DEBUG_ENABLE:
         case OPT_DMA_DEBUG_MODE:
-        case OPT_DMA_DEBUG_COLOR:
         case OPT_DMA_DEBUG_OPACITY:
 
             vic.dmaDebugger.setConfigItem(option, value);
@@ -430,7 +429,7 @@ C64::configure(Option option, long id, i64 value)
     switch (option) {
             
                         
-        case OPT_DMA_DEBUG_ENABLE:
+        case OPT_DMA_DEBUG_CHANNEL:
         case OPT_DMA_DEBUG_COLOR:
             
             vic.dmaDebugger.setConfigItem(option, id, value);
@@ -1536,7 +1535,7 @@ C64::flash(const AnyCollection &file, isize nr)
 }
 
 void
-C64::flash(const FSDevice &fs, isize nr)
+C64::flash(const FileSystem &fs, isize nr)
 {
     u16 addr = fs.loadAddr(nr);
     u64 size = fs.fileSize(nr);

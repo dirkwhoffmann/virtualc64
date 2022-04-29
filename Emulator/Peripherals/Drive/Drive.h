@@ -396,7 +396,7 @@ public:
     void insertD64(const D64File &d64, bool wp);
     void insertG64(const G64File &g64, bool wp);
     void insertCollection(AnyCollection &archive, bool wp) throws;
-    void insertFileSystem(const class FSDevice &device, bool wp);
+    void insertFileSystem(const class FileSystem &device, bool wp);
     void ejectDisk();
 
 

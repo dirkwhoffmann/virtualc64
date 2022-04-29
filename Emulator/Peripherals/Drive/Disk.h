@@ -106,7 +106,7 @@ public:
     Disk();
     Disk(const string &path, bool wp = false) { init(path, wp); } throws
     Disk(DOSType type, PETName<16> name, bool wp = false) { init(type, name, wp); } throws
-    Disk(const class FSDevice &device, bool wp = false) { init(device, wp); } throws
+    Disk(const class FileSystem &device, bool wp = false) { init(device, wp); } throws
     Disk(const G64File &g64, bool wp = false) { init(g64, wp); } throws
     Disk(const D64File &d64, bool wp = false) { init(d64, wp); } throws
     Disk(AnyCollection &archive, bool wp = false) { init(archive, wp); } throws
@@ -116,7 +116,7 @@ private:
     
     void init(const string &path, bool wp) throws;
     void init(DOSType type, PETName<16> name, bool wp);
-    void init(const class FSDevice &device, bool wp);
+    void init(const class FileSystem &device, bool wp);
     void init(const G64File &g64, bool wp);
     void init(const D64File &d64, bool wp) throws;
     void init(AnyCollection &archive, bool wp) throws;
@@ -331,7 +331,7 @@ public:
      * and data blocks, checksums and gaps. If alignTracks is true, the first
      * sector always starts at the beginning of a track.
      */
-    void encode(const FSDevice &fs, bool alignTracks = false);
+    void encode(const FileSystem &fs, bool alignTracks = false);
     
 private:
     
@@ -343,13 +343,13 @@ private:
      * follwowing sectors with odd sector numbers. The number of written bits
      * is returned.
      */
-    isize encodeTrack(const FSDevice &fs, Track t, isize gap, HeadPos start);
+    isize encodeTrack(const FileSystem &fs, Track t, isize gap, HeadPos start);
     
     /* Encode a single sector. This function translates the logical byte
      * sequence of a single sector into the native VC1541 byte representation.
      * The sector is closed by 'gap' tail gap bytes. The number of written bits
      * is returned.
      */
-    isize encodeSector(const FSDevice &fs, Track t, Sector sector, HeadPos start, isize gap);
+    isize encodeSector(const FileSystem &fs, Track t, Sector sector, HeadPos start, isize gap);
 };
  

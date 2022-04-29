@@ -121,7 +121,7 @@ Disk::init(const string &path, bool wp)
         return;
     }
     
-    auto fs = FSDevice(path);
+    auto fs = FileSystem(path);
     init(fs, wp);
 }
 
@@ -132,14 +132,14 @@ Disk::init(DOSType type, PETName<16> name, bool wp)
     
     if (type == DOS_TYPE_CBM) {
         
-        auto fs = FSDevice(DISK_TYPE_SS_SD, DOS_TYPE_CBM);
+        auto fs = FileSystem(DISK_TYPE_SS_SD, DOS_TYPE_CBM);
         fs.setName(name);
         init(fs, wp);
     }
 }
 
 void
-Disk::init(const FSDevice &fs, bool wp)
+Disk::init(const FileSystem &fs, bool wp)
 {
     encode(fs);
     setWriteProtection(wp);
@@ -155,14 +155,14 @@ Disk::init(const G64File &g64, bool wp)
 void
 Disk::init(const D64File &d64, bool wp)
 {
-    auto fs = FSDevice(d64);
+    auto fs = FileSystem(d64);
     init(fs, wp);
 }
 
 void
 Disk::init(AnyCollection &collection, bool wp)
 {
-    auto fs = FSDevice(collection);
+    auto fs = FileSystem(collection);
     init(fs, wp);
 }
 
@@ -485,7 +485,7 @@ Disk::encodeG64(const G64File &a)
 }
 
 void
-Disk::encode(const FSDevice &fs, bool alignTracks)
+Disk::encode(const FileSystem &fs, bool alignTracks)
 {    
     // 64COPY (fails on VICE test drive/skew)
     /*
@@ -553,7 +553,7 @@ Disk::encode(const FSDevice &fs, bool alignTracks)
 }
 
 isize
-Disk::encodeTrack(const FSDevice &fs, Track t, isize gap, HeadPos start)
+Disk::encodeTrack(const FileSystem &fs, Track t, isize gap, HeadPos start)
 {
     assert(isTrackNumber(t));
     trace(GCR_DEBUG, "Encoding track %zd\n", t);
@@ -572,7 +572,7 @@ Disk::encodeTrack(const FSDevice &fs, Track t, isize gap, HeadPos start)
 }
 
 isize
-Disk::encodeSector(const FSDevice &fs, Track t, Sector s, HeadPos start, isize tailGap)
+Disk::encodeSector(const FileSystem &fs, Track t, Sector s, HeadPos start, isize tailGap)
 {
     assert(isValidTrackSectorPair(t, s));
     

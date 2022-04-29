@@ -39,13 +39,13 @@ public:
     D64File(isize tracks, bool ecc);
     D64File(const string &path) : D64File() throws { init(path); }
     D64File(const u8 *buf, isize len) : D64File() throws { init(buf, len); }
-    D64File(class FSDevice &fs) : D64File() throws { init(fs); }
+    D64File(class FileSystem &fs) : D64File() throws { init(fs); }
     
 private:
     
     using AnyFile::init;
     void init(isize tracks, bool ecc);
-    void init(FSDevice &fs) throws;
+    void init(FileSystem &fs) throws;
     
     
     //

@@ -9,7 +9,7 @@
 
 #include "config.h"
 #include "PRGFile.h"
-#include "FSDevice.h"
+#include "FileSystem.h"
 #include "IOUtils.h"
 
 bool
@@ -26,7 +26,7 @@ PRGFile::isCompatible(std::istream &stream)
 }
 
 void
-PRGFile::init(FSDevice &fs)
+PRGFile::init(FileSystem &fs)
 {
     isize item = 0;
     isize itemSize = fs.fileSize(item);

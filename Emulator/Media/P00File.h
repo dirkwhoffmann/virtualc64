@@ -27,12 +27,12 @@ public:
     P00File(isize capacity) : AnyCollection(capacity) { }
     P00File(const string &path) throws { init(path); }
     P00File(const u8 *buf, isize len) throws { init(buf, len); }
-    P00File(class FSDevice &fs) throws { init(fs); }
+    P00File(class FileSystem &fs) throws { init(fs); }
     
 private:
     
     using AnyFile::init;
-    void init(FSDevice &fs) throws;
+    void init(FileSystem &fs) throws;
     
     
     //

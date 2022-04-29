@@ -13,7 +13,7 @@
 
 class Folder : public AnyCollection {
     
-    class FSDevice *fs = nullptr;
+    class FileSystem *fs = nullptr;
             
 public:
         
@@ -72,5 +72,5 @@ public:
     // Accessing
     //
     
-    FSDevice *getFS() { return fs; }
+    FileSystem *getFS() { return fs; }
 };

@@ -1154,7 +1154,7 @@
 
 - (void)insertFileSystem:(FSDeviceProxy *)proxy protected:(BOOL)wp
 {
-    [self drive]->insertFileSystem(*(FSDevice *)proxy->obj, wp);
+    [self drive]->insertFileSystem(*(FileSystem *)proxy->obj, wp);
 }
 
 - (void)insertNewDisk:(DOSType)fsType
@@ -1835,7 +1835,7 @@
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    try { return [self make: new T64File(*(FSDevice *)proxy->obj)]; }
+    try { return [self make: new T64File(*(FileSystem *)proxy->obj)]; }
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
@@ -1866,7 +1866,7 @@
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    try { return [self make: new PRGFile(*(FSDevice *)proxy->obj)]; }
+    try { return [self make: new PRGFile(*(FileSystem *)proxy->obj)]; }
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
@@ -1897,7 +1897,7 @@
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    try { return [self make: new P00File(*(FSDevice *)proxy->obj)]; }
+    try { return [self make: new P00File(*(FileSystem *)proxy->obj)]; }
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
@@ -1933,7 +1933,7 @@
 
 + (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    try { return [self make: new D64File(*(FSDevice *)proxy->obj)]; }
+    try { return [self make: new D64File(*(FileSystem *)proxy->obj)]; }
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
@@ -1976,7 +1976,7 @@
 
 @implementation FSDeviceProxy
 
-+ (instancetype)make:(FSDevice *)fs
++ (instancetype)make:(FileSystem *)fs
 {
     return fs ? [[self alloc] initWith: fs] : nil;
 }
@@ -1984,25 +1984,25 @@
 + (instancetype)makeWithDisk:(DiskProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     Drive *drv = (Drive *)proxy->obj;
-    try { return [self make: new FSDevice(*drv->disk)]; }
+    try { return [self make: new FileSystem(*drv->disk)]; }
     catch (VC64Error &err) { [ex save:err]; return nil; }
 }
 
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    try { return [self make: new FSDevice(*(AnyCollection *)proxy->obj)]; }
+    try { return [self make: new FileSystem(*(AnyCollection *)proxy->obj)]; }
     catch (VC64Error &err) { [ex save:err]; return nil; }
 }
 
 + (instancetype)makeWithD64:(D64FileProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    try { return [self make: new FSDevice(*(D64File *)proxy->obj)]; }
+    try { return [self make: new FileSystem(*(D64File *)proxy->obj)]; }
     catch (VC64Error &err) { [ex save:err]; return nil; }
 }
 
-- (FSDevice *)fs
+- (FileSystem *)fs
 {
-    return (FSDevice *)obj;
+    return (FileSystem *)obj;
 }
 
 - (DOSType)dos
@@ -2692,7 +2692,7 @@
 
 - (void)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex
 {
-    try { [self c64]->flash(*(FSDevice *)proxy->obj, (unsigned)nr); }
+    try { [self c64]->flash(*(FileSystem *)proxy->obj, (unsigned)nr); }
     catch (VC64Error &error) { [ex save:error]; }
 }
 

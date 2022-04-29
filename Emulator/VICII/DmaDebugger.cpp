@@ -63,13 +63,13 @@ DmaDebugger::resetConfig()
 
     std::vector <Option> moreOptions = {
 
-        OPT_DMA_DEBUG_ENABLE,
+        OPT_DMA_DEBUG_CHANNEL,
         OPT_DMA_DEBUG_COLOR
     };
 
     for (auto &option : moreOptions) {
         for (isize i = 0; i < 6; i++) {
-            setConfigItem(option, defaults.get(option, i), i);
+            setConfigItem(option, i, defaults.get(option, i));
         }
     }
 }
@@ -98,8 +98,8 @@ DmaDebugger::getConfigItem(Option option, long id) const
     
     switch (option) {
             
-        case OPT_DMA_DEBUG_ENABLE: return config.dmaChannel[id];
-        case OPT_DMA_DEBUG_COLOR:  return config.dmaColor[id];
+        case OPT_DMA_DEBUG_CHANNEL: return config.dmaChannel[id];
+        case OPT_DMA_DEBUG_COLOR:   return config.dmaColor[id];
             
         default:
             fatalError;
@@ -160,7 +160,7 @@ DmaDebugger::setConfigItem(Option option, long id, i64 value)
     
     switch (option) {
             
-        case OPT_DMA_DEBUG_ENABLE:
+        case OPT_DMA_DEBUG_CHANNEL:
             
             config.dmaChannel[access] = value;
             return;

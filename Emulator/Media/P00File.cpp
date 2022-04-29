@@ -9,7 +9,7 @@
 
 #include "config.h"
 #include "P00File.h"
-#include "FSDevice.h"
+#include "FileSystem.h"
 #include "IOUtils.h"
 
 bool
@@ -29,7 +29,7 @@ P00File::isCompatible(std::istream &stream)
 }
  
 void
-P00File::init(FSDevice &fs)
+P00File::init(FileSystem &fs)
 {
     isize item = 0;
     isize itemSize = fs.fileSize(item);

@@ -519,73 +519,73 @@ RetroShell::exec <Token::dmadebugger, Token::close> (Arguments& argv, long param
 template <> void
 RetroShell::exec <Token::dmadebugger, Token::show, Token::raccesses> (Arguments& argv, long param)
 {
-    c64.configure(OPT_DMA_DEBUG_ENABLE, 0, true);
+    c64.configure(OPT_DMA_DEBUG_CHANNEL, 0, true);
 }
 
 template <> void
 RetroShell::exec <Token::dmadebugger, Token::show, Token::iaccesses> (Arguments& argv, long param)
 {
-    c64.configure(OPT_DMA_DEBUG_ENABLE, 1, true);
+    c64.configure(OPT_DMA_DEBUG_CHANNEL, 1, true);
 }
 
 template <> void
 RetroShell::exec <Token::dmadebugger, Token::show, Token::caccesses> (Arguments& argv, long param)
 {
-    c64.configure(OPT_DMA_DEBUG_ENABLE, 2, true);
+    c64.configure(OPT_DMA_DEBUG_CHANNEL, 2, true);
 }
 
 template <> void
 RetroShell::exec <Token::dmadebugger, Token::show, Token::gaccesses> (Arguments& argv, long param)
 {
-    c64.configure(OPT_DMA_DEBUG_ENABLE, 3, true);
+    c64.configure(OPT_DMA_DEBUG_CHANNEL, 3, true);
 }
 
 template <> void
 RetroShell::exec <Token::dmadebugger, Token::show, Token::paccesses> (Arguments& argv, long param)
 {
-    c64.configure(OPT_DMA_DEBUG_ENABLE, 4, true);
+    c64.configure(OPT_DMA_DEBUG_CHANNEL, 4, true);
 }
 
 template <> void
 RetroShell::exec <Token::dmadebugger, Token::show, Token::saccesses> (Arguments& argv, long param)
 {
-    c64.configure(OPT_DMA_DEBUG_ENABLE, 5, true);
+    c64.configure(OPT_DMA_DEBUG_CHANNEL, 5, true);
 }
 
 template <> void
 RetroShell::exec <Token::dmadebugger, Token::hide, Token::raccesses> (Arguments& argv, long param)
 {
-    c64.configure(OPT_DMA_DEBUG_ENABLE, 0, false);
+    c64.configure(OPT_DMA_DEBUG_CHANNEL, 0, false);
 }
 
 template <> void
 RetroShell::exec <Token::dmadebugger, Token::hide, Token::iaccesses> (Arguments& argv, long param)
 {
-    c64.configure(OPT_DMA_DEBUG_ENABLE, 1, false);
+    c64.configure(OPT_DMA_DEBUG_CHANNEL, 1, false);
 }
 
 template <> void
 RetroShell::exec <Token::dmadebugger, Token::hide, Token::caccesses> (Arguments& argv, long param)
 {
-    c64.configure(OPT_DMA_DEBUG_ENABLE, 2, false);
+    c64.configure(OPT_DMA_DEBUG_CHANNEL, 2, false);
 }
 
 template <> void
 RetroShell::exec <Token::dmadebugger, Token::hide, Token::gaccesses> (Arguments& argv, long param)
 {
-    c64.configure(OPT_DMA_DEBUG_ENABLE, 3, false);
+    c64.configure(OPT_DMA_DEBUG_CHANNEL, 3, false);
 }
 
 template <> void
 RetroShell::exec <Token::dmadebugger, Token::hide, Token::paccesses> (Arguments& argv, long param)
 {
-    c64.configure(OPT_DMA_DEBUG_ENABLE, 4, false);
+    c64.configure(OPT_DMA_DEBUG_CHANNEL, 4, false);
 }
 
 template <> void
 RetroShell::exec <Token::dmadebugger, Token::hide, Token::saccesses> (Arguments& argv, long param)
 {
-    c64.configure(OPT_DMA_DEBUG_ENABLE, 5, false);
+    c64.configure(OPT_DMA_DEBUG_CHANNEL, 5, false);
 }
 
 

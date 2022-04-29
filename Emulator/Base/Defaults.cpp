@@ -33,20 +33,20 @@ Defaults::Defaults()
     setFallback(OPT_SS_COLLISIONS, true);
 
     setFallback(OPT_DMA_DEBUG_ENABLE, false);
-    setFallback(OPT_DMA_DEBUG_ENABLE, 0, true);
-    setFallback(OPT_DMA_DEBUG_ENABLE, 1, true);
-    setFallback(OPT_DMA_DEBUG_ENABLE, 2, true);
-    setFallback(OPT_DMA_DEBUG_ENABLE, 3, true);
-    setFallback(OPT_DMA_DEBUG_ENABLE, 4, true);
-    setFallback(OPT_DMA_DEBUG_ENABLE, 5, true);
+    setFallback(OPT_DMA_DEBUG_MODE, DMA_DISPLAY_MODE_FG_LAYER);
+    setFallback(OPT_DMA_DEBUG_OPACITY, 0x80);
+    setFallback(OPT_DMA_DEBUG_CHANNEL, 0, true);
+    setFallback(OPT_DMA_DEBUG_CHANNEL, 1, true);
+    setFallback(OPT_DMA_DEBUG_CHANNEL, 2, true);
+    setFallback(OPT_DMA_DEBUG_CHANNEL, 3, true);
+    setFallback(OPT_DMA_DEBUG_CHANNEL, 4, true);
+    setFallback(OPT_DMA_DEBUG_CHANNEL, 5, true);
     setFallback(OPT_DMA_DEBUG_COLOR, 0, GpuColor(0xFF, 0x00, 0x00).abgr);
     setFallback(OPT_DMA_DEBUG_COLOR, 1, GpuColor(0xFF, 0xC0, 0x00).abgr);
     setFallback(OPT_DMA_DEBUG_COLOR, 2, GpuColor(0xFF, 0xFF, 0x00).abgr);
     setFallback(OPT_DMA_DEBUG_COLOR, 3, GpuColor(0x00, 0xFF, 0xFF).abgr);
     setFallback(OPT_DMA_DEBUG_COLOR, 4, GpuColor(0x00, 0xFF, 0x00).abgr);
     setFallback(OPT_DMA_DEBUG_COLOR, 5, GpuColor(0x00, 0x80, 0xFF).abgr);
-    setFallback(OPT_DMA_DEBUG_MODE, DMA_DISPLAY_MODE_FG_LAYER);
-    setFallback(OPT_DMA_DEBUG_OPACITY, 0x80);
     setFallback(OPT_CUT_LAYERS, 0xFF);
     setFallback(OPT_CUT_OPACITY, 0xFF);
 

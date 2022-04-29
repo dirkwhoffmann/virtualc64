@@ -820,7 +820,7 @@ Drive::insertNewDisk(DOSType fsType, PETName<16> name)
 }
 
 void
-Drive::insertFileSystem(const FSDevice &device, bool wp)
+Drive::insertFileSystem(const FileSystem &device, bool wp)
 {
     insertDisk(std::make_unique<Disk>(device, wp));
 }

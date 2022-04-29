@@ -210,8 +210,7 @@ extension MyController: NSMenuItemValidation {
         config.applyUserDefaults()
         pref.applyUserDefaults()
 
-        // Power on
-        try? c64.powerOn()
+        // Relaunch the emulator
         try? c64.run()
     }
 

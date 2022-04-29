@@ -19,7 +19,7 @@ using util::Buffer;
 class FSBlock : C64Object {
     
     // The device this block belongs to
-    class FSDevice &device;
+    class FileSystem &device;
     
 public:
     
@@ -42,7 +42,7 @@ public:
 
 public:
     
-    FSBlock(FSDevice& _device, u32 _nr);
+    FSBlock(FileSystem& _device, u32 _nr);
     virtual ~FSBlock() { }
     const char *getDescription() const override { return "FSBlock"; }
 

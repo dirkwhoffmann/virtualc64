@@ -53,7 +53,7 @@
 #include "RomFile.h"
 #include "TAPFile.h"
 #include "CRTFile.h"
-#include "FSDevice.h"
+#include "FileSystem.h"
 
 
 /* A complete virtual C64. This class is the most prominent one of all. To run
@@ -469,7 +469,7 @@ public:
     // Flashes a single file into memory
     void flash(const AnyFile &file) throws;
     void flash(const AnyCollection &file, isize item) throws;
-    void flash(const FSDevice &fs, isize item) throws;
+    void flash(const FileSystem &fs, isize item) throws;
 
     
     //

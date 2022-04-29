@@ -9,10 +9,10 @@
 
 #include "config.h"
 #include "FSBlock.h"
-#include "FSDevice.h"
+#include "FileSystem.h"
 #include "MemUtils.h"
 
-FSBlock::FSBlock(FSDevice& _device, u32 _nr) : device(_device), nr(_nr)
+FSBlock::FSBlock(FileSystem& _device, u32 _nr) : device(_device), nr(_nr)
 {
     memset(data, 0, sizeof(data));
 }

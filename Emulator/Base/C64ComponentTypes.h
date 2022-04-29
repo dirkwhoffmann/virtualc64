@@ -38,9 +38,10 @@ enum_long(OPT)
     // DMA Debugger
     OPT_DMA_DEBUG_ENABLE,
     OPT_DMA_DEBUG_MODE,
-    OPT_DMA_DEBUG_COLOR,
     OPT_DMA_DEBUG_OPACITY,
-    
+    OPT_DMA_DEBUG_CHANNEL,
+    OPT_DMA_DEBUG_COLOR,
+
     // Power supply
     OPT_POWER_GRID,
     
@@ -124,10 +125,11 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_SS_COLLISIONS:       return "SS_COLLISIONS";
             case OPT_SB_COLLISIONS:       return "SB_COLLISIONS";
 
-            case OPT_DMA_DEBUG_ENABLE:    return "DMA_DEBUG";
-            case OPT_DMA_DEBUG_MODE:      return "DMA_CHANNEL_R";
-            case OPT_DMA_DEBUG_COLOR:     return "DMA_CHANNEL_I";
-            case OPT_DMA_DEBUG_OPACITY:   return "DMA_CHANNEL_C";
+            case OPT_DMA_DEBUG_ENABLE:    return "DMA_DEBUG_ENABLE";
+            case OPT_DMA_DEBUG_MODE:      return "DMA_DEBUG_MODE";
+            case OPT_DMA_DEBUG_OPACITY:   return "DMA_DEBUG_OPACITY";
+            case OPT_DMA_DEBUG_CHANNEL:   return "DMA_DEBUG_CHANNEL";
+            case OPT_DMA_DEBUG_COLOR:     return "DMA_DEBUG_COLOR";
 
             case OPT_POWER_GRID:          return "POWER_GRID";
 

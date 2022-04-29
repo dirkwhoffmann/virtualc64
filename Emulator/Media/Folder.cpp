@@ -22,7 +22,7 @@ Folder::init(const string &path)
 {
     if (!isCompatiblePath(path)) throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
     
-    fs = new FSDevice(path);
+    fs = new FileSystem(path);
 }
 
 PETName<16>

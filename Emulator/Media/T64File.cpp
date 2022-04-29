@@ -9,7 +9,7 @@
 
 #include "config.h"
 #include "T64File.h"
-#include "FSDevice.h"
+#include "FileSystem.h"
 #include "IOUtils.h"
 #include "Macros.h"
 
@@ -38,7 +38,7 @@ T64File::isCompatible(std::istream &stream)
 }
 
 void
-T64File::init(class FSDevice &fs)
+T64File::init(class FileSystem &fs)
 {
     // Analyze the file system
     isize numFiles = fs.numFiles();

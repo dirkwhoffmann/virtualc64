@@ -31,12 +31,12 @@ public:
     PRGFile(isize capacity) : AnyCollection(capacity) { }
     PRGFile(const string &path) throws { init(path); }
     PRGFile(const u8 *buf, isize len) throws { init(buf, len); }
-    PRGFile(class FSDevice &fs) throws { init(fs); }
+    PRGFile(class FileSystem &fs) throws { init(fs); }
     
 private:
     
     using AnyFile::init;
-    void init(FSDevice &fs) throws;
+    void init(FileSystem &fs) throws;
     
     
     //

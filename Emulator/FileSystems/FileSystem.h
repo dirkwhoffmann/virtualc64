@@ -18,7 +18,7 @@
 #include <dirent.h>
 #include <vector>
 
-class FSDevice : C64Object {
+class FileSystem : C64Object {
     
     friend class FSBlock;
         
@@ -40,14 +40,14 @@ public:
     
 public:
 
-    FSDevice(isize capacity) { init(capacity); }
-    FSDevice(FSDeviceDescriptor &layout) { init(layout); }
-    FSDevice(DiskType type, DOSType vType) { init(type, vType); }
-    FSDevice(const class D64File &d64) throws { init(d64); }
-    FSDevice(class Disk &disk) throws { init(disk); }
-    FSDevice(AnyCollection &collection) throws { init(collection); }
-    FSDevice(const string &path) throws { init(path); }
-    ~FSDevice();
+    FileSystem(isize capacity) { init(capacity); }
+    FileSystem(FSDeviceDescriptor &layout) { init(layout); }
+    FileSystem(DiskType type, DOSType vType) { init(type, vType); }
+    FileSystem(const class D64File &d64) throws { init(d64); }
+    FileSystem(class Disk &disk) throws { init(disk); }
+    FileSystem(AnyCollection &collection) throws { init(collection); }
+    FileSystem(const string &path) throws { init(path); }
+    ~FileSystem();
     
 private:
     

@@ -29,12 +29,12 @@ public:
     T64File(isize capacity) : AnyCollection(capacity) { }
     T64File(const string &path) throws { init(path); }
     T64File(const u8 *buf, isize len) throws { init(buf, len); }
-    T64File(class FSDevice &fs) throws { init(fs); }
+    T64File(class FileSystem &fs) throws { init(fs); }
     
 private:
     
     using AnyFile::init;
-    void init(FSDevice &fs) throws;
+    void init(FileSystem &fs) throws;
 
     
     //
