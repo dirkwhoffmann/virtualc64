@@ -510,21 +510,21 @@ Cartridge::bankIn(isize nr)
         
         bankInROML(nr, 0x2000, 0); // chip covers ROML and (part of) ROMH
         bankInROMH(nr, packet[nr]->size - 0x2000, 0x2000);
-        // trace(CRT_DEBUG, "Banked in chip %d in ROML and ROMH\n", nr);
+        debug(CRT_DEBUG, "Banked in chip %ld in ROML and ROMH\n", nr);
     
     } else if (packet[nr]->mapsToL()) {
         
         bankInROML(nr, packet[nr]->size, 0); // chip covers (part of) ROML
-        // trace(CRT_DEBUG, "Banked in chip %d in ROML\n", nr);
+        debug(CRT_DEBUG, "Banked in chip %ld in ROML\n", nr);
         
     } else if (packet[nr]->mapsToH()) {
         
         bankInROMH(nr, packet[nr]->size, 0); // chip covers (part of) ROMH
-        // trace(CRT_DEBUG, "Banked in chip %d to ROMH\n", nr);
+        debug(CRT_DEBUG, "Banked in chip %ld to ROMH\n", nr);
         
     } else {
 
-        warn("Cannot map chip %zd. Invalid start address.\n", nr);
+        warn("Cannot map chip %ld. Invalid start address.\n", nr);
     }
 }
 

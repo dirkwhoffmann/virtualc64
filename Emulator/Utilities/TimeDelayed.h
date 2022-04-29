@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "Macros.h"
 #include <algorithm>
 
 template <class T, isize delay> class TimeDelayed {
@@ -110,7 +111,7 @@ public:
     // T delayed() { return pipeline[MAX(0, timeStamp - *clock + delay)]; }
     T delayed() const {
         i64 offset = timeStamp - *clock + delay;
-        if (__builtin_expect(offset <= 0, 1)) {
+        if (likely(offset <= 0)) {
             return pipeline[0];
         } else {
             return pipeline[offset];
