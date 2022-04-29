@@ -1,7 +1,7 @@
 target_sources(vc64Core PRIVATE
 
 FSDescriptors.cpp
-FSDevice.cpp
+FileSystem.cpp
 FSBlock.cpp
 FSDirEntry.cpp
 

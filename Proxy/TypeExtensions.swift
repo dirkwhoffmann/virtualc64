@@ -14,13 +14,26 @@ extension FileType {
     }
 
     static var all: [FileType] {
-        return [ .SNAPSHOT, .SCRIPT, .CRT, .T64, .PRG, .P00, .D64, .G64, .TAP, BASIC_ROM, .CHAR_ROM, .KERNAL_ROM, .VC1541_ROM, .FOLDER ]
+        return [
+            .SNAPSHOT, .SCRIPT,
+            .CRT,
+            .T64, .PRG, .P00,
+            .D64, .G64,
+            .TAP,
+            .BASIC_ROM, .CHAR_ROM, .KERNAL_ROM, .VC1541_ROM,
+            .FOLDER
+        ]
     }
 
     static var draggable: [FileType] {
-        return [ .SNAPSHOT, .SCRIPT, .CRT, .T64, .PRG, .P00, .D64, .G64, .TAP, .FOLDER ]
+        return [
+            .SNAPSHOT, .SCRIPT,
+            .CRT, .T64, .PRG, .P00,
+            .D64, .G64,
+            .TAP,
+            .FOLDER
+        ]
     }
-
 }
 
 extension DOSType: CustomStringConvertible {
