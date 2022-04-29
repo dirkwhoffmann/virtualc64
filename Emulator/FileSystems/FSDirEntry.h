@@ -36,8 +36,11 @@ struct FSDirEntry
     bool isEmpty() const; 
     
     // Returns the name of this file
-    PETName<16> getName() { return PETName<16>(fileName); }
-        
+    PETName<16> getName() const { return PETName<16>(fileName); }
+
+    // Return the name of this file with certain symbols escaped
+    string getFileSystemRepresentation() const;
+
     // Returns the file type of this file
     FSFileType getFileType() const;
     

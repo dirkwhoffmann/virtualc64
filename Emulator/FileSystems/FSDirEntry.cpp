@@ -73,6 +73,24 @@ FSDirEntry::isHidden() const
     return typeString() == "";
 }
 
+string
+FSDirEntry::getFileSystemRepresentation() const
+{
+    auto name = getName().str();
+    string illegal = "#%&{}\\<>*?/ $!'\":@+`|=";
+    string result;
+
+    for (const auto c: name) {
+
+        if (illegal.find(c) != std::string::npos) {
+            result += "%" + util::hexstr<2>(c);
+        } else {
+            result += c;
+        }
+    }
+    return result;
+}
+
 FSFileType
 FSDirEntry::getFileType() const
 {

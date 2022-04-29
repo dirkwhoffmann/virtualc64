@@ -877,7 +877,7 @@ FileSystem::exportDirectory(const string &path)
 void
 FileSystem::exportFile(FSDirEntry *entry, const string &path)
 {
-    string name = path + "/" + entry->getName().str();
+    string name = path + "/" + entry->getFileSystemRepresentation();
     debug(FS_DEBUG, "Exporting file to %s\n", name.c_str());
 
     std::ofstream stream(name);
