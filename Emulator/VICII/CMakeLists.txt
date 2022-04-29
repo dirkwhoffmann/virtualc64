@@ -9,7 +9,6 @@ VICII_cycles.cpp
 VICII_table.cpp
 VICII_debug.cpp
 DmaDebugger.cpp
-Recorder.cpp
 
 )
 
