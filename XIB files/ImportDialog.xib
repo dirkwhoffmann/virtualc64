@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ImportDialog" customModule="VirtualC64" customModuleProvider="target">
             <connections>
-                <outlet property="carousel" destination="d40-ks-3p2" id="GCT-Tj-ZN1"/>
                 <outlet property="checkbox" destination="oeR-54-N6t" id="gMv-4Q-q6a"/>
                 <outlet property="drive8" destination="K0H-ck-D9u" id="I6r-Gz-1Jl"/>
                 <outlet property="drive9" destination="Bb8-0w-z8z" id="2gu-WZ-6lO"/>
@@ -27,14 +26,14 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="607" height="446"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1536" height="935"/>
+            <rect key="contentRect" x="196" y="240" width="607" height="190"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1095"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="607" height="446"/>
+                <rect key="frame" x="0.0" y="0.0" width="607" height="190"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zhB-nc-MY8">
-                        <rect key="frame" x="148" y="404" width="440" height="19"/>
+                        <rect key="frame" x="148" y="148" width="440" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Lorem ipsum dolor sit ame" id="8gK-JJ-0E9">
                             <font key="font" metaFont="systemBold"/>
@@ -43,11 +42,11 @@
                         </textFieldCell>
                     </textField>
                     <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="26c-Od-cQE">
-                        <rect key="frame" x="150" y="400" width="437" height="5"/>
+                        <rect key="frame" x="150" y="144" width="437" height="5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     </box>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KEC-fO-FB0">
-                        <rect key="frame" x="148" y="380" width="440" height="14"/>
+                        <rect key="frame" x="148" y="124" width="440" height="14"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="consetetur sadipscing elitr, sed diam nonumy" id="xc4-Cc-e7x">
                             <font key="font" metaFont="smallSystem"/>
@@ -80,14 +79,6 @@ DQ
                             <action selector="checkboxAction:" target="-2" id="nKn-kX-e09"/>
                         </connections>
                     </button>
-                    <customView hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d40-ks-3p2" customClass="iCarousel">
-                        <rect key="frame" x="20" y="78" width="566" height="205"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
-                        <connections>
-                            <outlet property="dataSource" destination="-2" id="YVR-Ta-zTl"/>
-                            <outlet property="delegate" destination="-2" id="Yah-Nt-aHp"/>
-                        </connections>
-                    </customView>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ifd-4g-485">
                         <rect key="frame" x="14" y="13" width="92" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -103,12 +94,12 @@ Gw
                         </connections>
                     </button>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nmp-Du-NLl" userLabel="Icon">
-                        <rect key="frame" x="20" y="314" width="112" height="112"/>
+                        <rect key="frame" x="20" y="58" width="112" height="112"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="disk2" id="bZY-0u-DX6"/>
                     </imageView>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gQr-Ht-9gj">
-                        <rect key="frame" x="148" y="363" width="440" height="14"/>
+                        <rect key="frame" x="148" y="107" width="440" height="14"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="consetetur sadipscing elitr, sed diam nonumy" id="EJE-EM-QGA">
                             <font key="font" metaFont="smallSystem"/>
@@ -126,7 +117,7 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="191-k6-iy6">
-                        <rect key="frame" x="148" y="346" width="440" height="14"/>
+                        <rect key="frame" x="148" y="90" width="440" height="14"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="consetetur sadipscing elitr, sed diam nonumy" id="aBR-Vz-Ypd">
                             <font key="font" metaFont="smallSystem"/>
@@ -163,7 +154,7 @@ Gw
                     </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="138.5" y="147"/>
+            <point key="canvasLocation" x="138.5" y="19"/>
         </window>
     </objects>
     <resources>

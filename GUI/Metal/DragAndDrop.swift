@@ -8,21 +8,21 @@
 // -----------------------------------------------------------------------------
 
 extension NSPasteboard.PasteboardType {
-    static let compatibleFileURL = NSPasteboard.PasteboardType(kUTTypeFileURL as String)
+
+    static let compatibleFileURL =
+    NSPasteboard.PasteboardType(kUTTypeFileURL as String)
 }
 
 public extension MetalView {
-    
-    // Returns a list of supported drag and drop types
+
+    func setupDragAndDrop() {
+
+        registerForDraggedTypes(acceptedTypes())
+    }
+
     func acceptedTypes() -> [NSPasteboard.PasteboardType] {
         
         return [.compatibleFileURL, .string, .fileContents]
-    }
-
-    // Registers the supported drag and drop types
-    func setupDragAndDrop() {
-    
-        registerForDraggedTypes(acceptedTypes())
     }
 
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
@@ -31,6 +31,10 @@ public extension MetalView {
         guard let type = pasteBoard.availableType(from: acceptedTypes()) else {
             return NSDragOperation()
         }
+
+        dropZone = nil
+        dropUrl = nil
+        dropType = nil
         
         switch type {
             
@@ -45,10 +49,10 @@ public extension MetalView {
             if let url = NSURL(from: pasteBoard) as URL? {
             
                 // Unpack the file if it is compressed
-                draggedUrl = url.unpacked(maxSize: 2048 * 1024)
+                dropUrl = url.unpacked(maxSize: 2048 * 1024)
                 
                 // Analyze the file type
-                let type = AnyFileProxy.type(of: draggedUrl)
+                let type = AnyFileProxy.type(of: dropUrl)
 
                 // Open the drop zone layer
                 parent.renderer.dropZone.open(type: type, delay: 0.25)
@@ -79,107 +83,67 @@ public extension MetalView {
     }
     
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        
+
         let pasteBoard = sender.draggingPasteboard
-        
-        guard
-            let type = pasteBoard.availableType(from: acceptedTypes()),
-            let document = parent.mydocument
-        else { return false }
-        
-        switch type {
-            
-        case .string:
-            
-            // Type text on virtual keyboard
-            guard let text = pasteBoard.string(forType: .string) else {
-                return false
+
+        if let type = pasteBoard.availableType(from: acceptedTypes()) {
+
+            switch type {
+
+            case .string:
+                return performStringDrag(sender)
+
+            case .compatibleFileURL:
+                return performUrlDrag(sender)
+
+            default:
+                break
             }
-            parent.keyboard.type(text)
-            return true
-            
-        case .fileContents:
-            
-            // Check if we got another virtual machine dragged in
-            let fileWrapper = pasteBoard.readFileWrapper()
-            let fileData = fileWrapper?.regularFileContents
-            let length = fileData!.count
-            let nsData = fileData! as NSData
-            let rawPtr = nsData.bytes
-            
-            let snapshot: SnapshotProxy? = try? Proxy.make(buffer: rawPtr, length: length)
-            if snapshot == nil { return false }
-            
-            if document.proceedWithUnexportedDisk() {
-                DispatchQueue.main.async {
-                    try? self.parent.c64.flash(snapshot!)
-                }
-                return true
-            }
-            
-        case .compatibleFileURL:
-            
-            if let url = draggedUrl {
-                
-                // Check if the file is a snapshot or a script
-                do {
-                    let types: [FileType] = [ .SNAPSHOT, .SCRIPT ]
-                    try document.createAttachment(from: url, allowedTypes: types)
-                    try document.mountAttachment()
-                    return true
-                } catch { }
-
-                do {
-                    // Check drop zone for drive 8
-                    if parent.renderer.dropZone.isInside(sender, zone: 0) {
-
-                        let types: [FileType] = [ .T64, .P00, .PRG, .D64, .G64 ]
-                        try document.createAttachment(from: url, allowedTypes: types)
-                        try document.mountAttachment(drive: .DRIVE8)
-                        return true
-                    }
-                    // Check drop zone for drive 9
-                    if parent.renderer.dropZone.isInside(sender, zone: 1) {
-
-                        let types: [FileType] = [ .T64, .P00, .PRG, .D64, .G64 ]
-                        try document.createAttachment(from: url, allowedTypes: types)
-                        try document.mountAttachment(drive: .DRIVE9)
-                        return true
-                    }
-                    // Check drop zone for the expansion port
-                    if parent.renderer.dropZone.isInside(sender, zone: 2) {
-
-                        let types: [FileType] = [ .CRT ]
-                        try document.createAttachment(from: url, allowedTypes: types)
-                        try document.mountAttachment()
-                        return true
-                    }
-                    // Check drop zone for the datasette
-                    if parent.renderer.dropZone.isInside(sender, zone: 3) {
-
-                        let types: [FileType] = [ .TAP ]
-                        try document.createAttachment(from: url, allowedTypes: types)
-                        try document.mountAttachment()
-                        return true
-                    }
-                    
-                    // Run the import dialog
-                    try document.createAttachment(from: url)
-                    document.runImportDialog()
-                    return true
-                    
-                } catch {
-                    (error as? VC64Error)?.cantOpen(url: url, async: true)
-                }
-            }
-            
-        default:
-            break
         }
 
         return false
     }
-    
+
+    func performStringDrag(_ sender: NSDraggingInfo) -> Bool {
+
+        let pasteBoard = sender.draggingPasteboard
+
+        // Type text on virtual keyboard
+        guard let text = pasteBoard.string(forType: .string) else {
+            return false
+        }
+        parent.keyboard.type(text)
+        return true
+    }
+
+    func performUrlDrag(_ sender: NSDraggingInfo) -> Bool {
+
+        // Only proceed if an URL is given
+        if dropUrl == nil { return false }
+
+        // Only proceed if a file type can be derived
+        guard let type = FileType(url: dropUrl) else { return false }
+
+        // Only proceed if a draggable type is given
+        if !FileType.draggable.contains(type) { return false }
+
+        // Check all drop zones
+        var zone: Int?
+        for i in 0...3 {
+            if renderer.dropZone.isInside(sender, zone: i) {
+                if renderer.dropZone.enabled[i] {
+                    zone = i
+                } else {
+                    return false
+                }
+            }
+        }
+
+        dropZone = zone
+        dropType = type
+        return true
+    }
+
     override func concludeDragOperation(_ sender: NSDraggingInfo?) {
     }
 }

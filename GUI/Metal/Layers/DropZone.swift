@@ -15,6 +15,8 @@ class DropZone: Layer {
     
     var window: NSWindow { return controller.window! }
     var contentView: NSView { return window.contentView! }
+    var metal: MetalView { return controller.metal! }
+    var mydocument: MyDocument { return controller.mydocument! }
         
     var zones = [NSImageView(), NSImageView(), NSImageView(), NSImageView()]
     var ul = [NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0),
@@ -115,14 +117,14 @@ class DropZone: Layer {
 
         assert(i >= 0 && i <= 3)
         
-        if !enabled[i] { return false }
+        // if !enabled[i] { return false }
         
         let x = sender.draggingLocation.x
         let y = sender.draggingLocation.y
 
         return x > ul[i].x && x < lr[i].x && y > ul[i].y && y < lr[i].y
     }
-    
+
     func draggingUpdated(_ sender: NSDraggingInfo) {
                    
         if hideAll { return }
@@ -170,7 +172,50 @@ class DropZone: Layer {
         
         resize()
     }
-    
+
+    override func layerDidClose() {
+
+        log()
+
+        guard let url = metal.dropUrl else { return }
+        guard let type = metal.dropType else { return }
+
+        do {
+
+            if let n = metal.dropZone {
+
+                log()
+                switch type {
+
+                case .SNAPSHOT, .SCRIPT:
+
+                    try mydocument.addMedia(url: url,
+                                            allowedTypes: [type])
+
+                case .CRT, .T64, .P00, .PRG, .FOLDER, .D64, .G64, .TAP:
+
+                    let drive: DriveID = n == 0 ? .DRIVE8 : .DRIVE9
+                    try mydocument.addMedia(url: url,
+                                            allowedTypes: [type], drive: drive)
+
+                default:
+                    fatalError()
+                }
+
+            } else {
+
+                // Run the import dialog
+                log()
+                try mydocument.createAttachment(from: url)
+                mydocument.runImportDialog()
+            }
+
+        } catch {
+
+            controller.showAlert(.cantOpen(url: url), error: error, async: true)
+        }
+    }
+
     func updateAlpha() {
             
         for i in 0...3 {

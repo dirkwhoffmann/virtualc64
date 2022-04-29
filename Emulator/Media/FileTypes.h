@@ -49,7 +49,8 @@ struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
         switch (value) {
                 
             case FILETYPE_UNKNOWN:    return "UNKNOWN";
-            case FILETYPE_SNAPSHOT:   return "V64";
+            case FILETYPE_SNAPSHOT:   return "SNAPSHOT";
+            case FILETYPE_SCRIPT:     return "SCRIPT";
             case FILETYPE_CRT:        return "CRT";
             case FILETYPE_T64:        return "T64";
             case FILETYPE_PRG:        return "PRG";
@@ -58,10 +59,10 @@ struct FileTypeEnum : util::Reflection<FileTypeEnum, FileType> {
             case FILETYPE_D64:        return "D64";
             case FILETYPE_G64:        return "G64";
             case FILETYPE_TAP:        return "TAP";
-            case FILETYPE_BASIC_ROM:  return "ROM";
-            case FILETYPE_CHAR_ROM:   return "ROM";
-            case FILETYPE_KERNAL_ROM: return "ROM";
-            case FILETYPE_VC1541_ROM: return "ROM";
+            case FILETYPE_BASIC_ROM:  return "BASIC_ROM";
+            case FILETYPE_CHAR_ROM:   return "CHAR_ROM";
+            case FILETYPE_KERNAL_ROM: return "KERNAL_ROM";
+            case FILETYPE_VC1541_ROM: return "VC1541_ROM";
         }
         return "???";
     }

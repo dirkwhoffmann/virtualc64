@@ -197,42 +197,51 @@ class MyDocument: NSDocument {
                   force: Bool = false,
                   remember: Bool = true) throws {
 
-        let fileProxy = try createFileProxy(from: url, allowedTypes: types)
+        log("url = \(url) types = \(types)")
 
-        if let proxy = fileProxy as? SnapshotProxy {
+        let proxy = try createFileProxy(from: url, allowedTypes: types)
 
+        if let proxy = proxy as? SnapshotProxy {
+
+            log("Snapshot")
             try processSnapshotFile(proxy)
         }
-        if let proxy = fileProxy as? ScriptProxy {
+        if let proxy = proxy as? ScriptProxy {
 
+            log("Script")
             parent.renderer.console.runScript(script: proxy)
         }
-        if let proxy = fileProxy as? CRTFileProxy {
+        if let proxy = proxy as? CRTFileProxy {
 
+            log("CRT")
             try c64.expansionport.attachCartridge(proxy, reset: true)
         }
-        if let proxy = fileProxy as? TAPFileProxy {
+        if let proxy = proxy as? TAPFileProxy {
 
+            log()
             c64.datasette.insertTape(proxy)
         }
-        if let proxy = fileProxy as? D64FileProxy {
+        if let proxy = proxy as? D64FileProxy {
 
+            log("D64")
             if proceedWithUnexportedDisk(drive: id) {
 
                 c64.drive(id).insertD64(proxy, protected: false)
                 if remember { myAppDelegate.noteNewRecentlyInsertedDiskURL(url) }
             }
         }
-        if let proxy = fileProxy as? G64FileProxy {
+        if let proxy = proxy as? G64FileProxy {
 
+            log("G64")
             if proceedWithUnexportedDisk(drive: id) {
 
                 c64.drive(id).insertG64(proxy, protected: false)
                 if remember { myAppDelegate.noteNewRecentlyInsertedDiskURL(url) }
             }
         }
-        if let proxy = fileProxy as? AnyCollectionProxy {
+        if let proxy = proxy as? AnyCollectionProxy {
 
+            log("T64, PRG, P00")
             if proceedWithUnexportedDisk(drive: id) {
 
                 c64.drive(id).insertCollection(proxy, protected: false)
@@ -390,7 +399,6 @@ class MyDocument: NSDocument {
         let controller = ImportDialog(with: parent, nibName: name)
         controller?.showSheet()
     }
-
 
     //
     // Exporting disks

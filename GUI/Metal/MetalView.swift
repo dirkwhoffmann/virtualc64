@@ -11,6 +11,8 @@ public class MetalView: MTKView {
     
     @IBOutlet weak var parent: MyController!
     
+    var myDocument: MyDocument { return parent.mydocument! }
+    var renderer: Renderer { return parent.renderer }
     var prefs: Preferences { return parent.pref }
     
     // Reference to the first mouse (internal, always connected)
@@ -29,9 +31,14 @@ public class MetalView: MTKView {
         
     // Time stamp needed to detect a shaking mouse
     var lastShake = DispatchTime(uptimeNanoseconds: 0)
-    
+
+    // Temporary storage of the properties of a dragged in file
+    var dropZone: Int?
+    var dropUrl: URL?
+    var dropType: FileType?
+
     // When a file is dragged in, it's URL is stored in this variable
-    var draggedUrl: URL?
+    // var draggedUrl: URL?
     
     required public init(coder: NSCoder) {
     
