@@ -16,7 +16,7 @@
 // Constants
 //
 
-/* The VC1541 can move the drive head to 85 distinct positions (1 .. 85). Odd
+/* The VC1541 can move the drive head to 84 distinct positions (1 .. 84). Odd
  * numbers correspond to "full tracks" and even numbers to "half tracks". The
  * full tracks between 1 and 70 correspond to the 35 tracks that are used by
  * VC1541 DOS. The Rom code always moves the drive head by two positions. When
@@ -45,7 +45,7 @@ static const isize highestSector = 20;
 
 static inline bool isTrackNumber(isize nr) { return 1 <= nr && nr <= highestTrack; }
 static inline bool isHalftrackNumber(isize nr) { return 1 <= nr && nr <= highestHalftrack; }
-static inline bool isSectorNumber(isize nr) { return nr <= highestSector; }
+static inline bool isSectorNumber(isize nr) { return nr >= 0 && nr <= highestSector; }
 
 /* Maximum number of bits and bytes stored on a single track. Each track can
  * store a maximum of 7928 bytes (63424 bits). The exact number depends on the

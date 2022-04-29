@@ -57,7 +57,8 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
     func scrollToRow() {
         
         if halftrack > 0 {
-            let row = Int(halftrack) - 1
+
+            let row = showHalftracks ? halftrack - 1 : halftrack / 2
             selectRowIndexes([row], byExtendingSelection: false)
             scrollRowToVisible(row)
         }
@@ -72,20 +73,30 @@ extension TrackTableView: NSTableViewDataSource {
     }
         
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-        
-        // Display mode 1: Full tracks, only
-        if !showHalftracks { return "Track \(row + 1)" }
-        
-        // Display mode 2: Full tracks + half tracks
-        let fulltrack = (row + 1) / 2
-        return row % 2 == 0 ? "Track \(fulltrack)" : "Halftrack \(fulltrack).5"
+
+        if showHalftracks {
+
+            let halftrack = row + 1
+            let fulltrack = (halftrack + 1) / 2
+            return row % 2 == 0 ? "Track \(fulltrack)" : "Track \(fulltrack).5"
+
+        } else {
+
+            let fulltrack = row + 1
+            return "Track \(fulltrack)"
+        }
     }
     
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-                
-        let halftrack = showHalftracks ? row + 1 : 2 * row + 1
+
         inspector.setSelectedSector(-1)
-        inspector.setSelectedHalftrack(halftrack)
+
+        if showHalftracks {
+            inspector.setSelectedHalftrack(row + 1)
+        } else {
+            inspector.setSelectedTrack(row + 1)
+        }
+
         return true
     }
 }

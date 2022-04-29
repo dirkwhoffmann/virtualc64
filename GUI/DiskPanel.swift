@@ -29,7 +29,7 @@ extension NSTextStorage {
 extension Inspector {
     
     var halftrack: Halftrack? {
-        if selectedHalftrack >= 0 && isHalftrackNumber(selectedHalftrack) {
+        if isHalftrackNumber(selectedHalftrack) {
             return Halftrack(selectedHalftrack)
         } else {
             return nil
@@ -37,7 +37,7 @@ extension Inspector {
     }
     
     var sector: Sector? {
-        if selectedSector >= 0 && isSectorNumber(selectedSector) {
+        if isSectorNumber(selectedSector) {
             return Sector(selectedSector)
         } else {
             return nil
@@ -109,7 +109,7 @@ extension Inspector {
     }
     
     func setSelectedHalftrack(_ nr: Int) {
-        
+
         if selectedHalftrack == nr { return }
         selectedHalftrack = nr
         
@@ -128,7 +128,12 @@ extension Inspector {
         
         fullRefresh()
     }
-    
+
+    func setSelectedTrack(_ nr: Int) {
+
+        setSelectedHalftrack(2 * nr - 1)
+    }
+
     func setSelectedSector(_ nr: Int) {
             
         if selectedSector == nr { return }
@@ -155,19 +160,6 @@ extension Inspector {
         
         setRawGcr(sender.selectedSegment == 0)
     }
-
-    /*
-    @IBAction func drvSeekAction(_ sender: NSButton!) {
-                
-        if sender.integerValue == 1 {
-            drvDiskDataView.scrollToHead()
-            drvTrackTableView.scrollToRow()
-            drvDiskDataView.markHead()
-        } else {
-            drvDiskDataView.unmarkHead()
-        }
-    }
-    */
     
     @IBAction func drvHalftracksAction(_ sender: NSButton!) {
         
