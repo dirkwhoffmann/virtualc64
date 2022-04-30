@@ -1219,7 +1219,7 @@ VICII::beginScanline(u16 line)
     if (line == 0x30) DENwasSetInLine30 = DENbit();
 
     // Check if this line is a DMA line (bad line) (value might change later)
-    if ((badLine = badLineCondition())) delay |= VICSetDisplayState;
+    if ((badLine = badLineCondition()) == true) delay |= VICSetDisplayState;
     
     // Reset the pixel buffer offset
     bufferoffset = 0;

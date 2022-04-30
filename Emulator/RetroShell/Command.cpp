@@ -50,11 +50,11 @@ Command *
 Command::seek(const std::vector<string> &tokens)
 {
     Command *result = this;
-    
+
     for (auto &it : tokens) {
-        if (!(result = result->seek(it))) return nullptr;
+        if ((result = result->seek(it)) == nullptr) break;
     }
-    
+
     return result;
 }
 
