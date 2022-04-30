@@ -940,6 +940,9 @@ AnyCollectionProxy <MakeWithFolder> { }
 + (instancetype)makeWithDisk:(DiskProxy *)disk exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)collection exception:(ExceptionWrapper *)ex;
 
+@property (readonly) NSString *name;
+@property (readonly) NSString *capacityString;
+@property (readonly) NSString *fillLevelString;
 @property (readonly) DOSType dos;
 @property (readonly) NSInteger numCyls;
 @property (readonly) NSInteger numHeads;
@@ -947,8 +950,8 @@ AnyCollectionProxy <MakeWithFolder> { }
 - (NSInteger)numSectors:(NSInteger)track;
 @property (readonly) NSInteger numBlocks;
 
-@property (readonly) NSInteger numFreeBlocks;
-@property (readonly) NSInteger numUsedBlocks;
+@property (readonly) NSInteger freeBlocks;
+@property (readonly) NSInteger usedBlocks;
 @property (readonly) NSInteger numFiles;
 
 - (NSInteger)cylNr:(NSInteger)t;

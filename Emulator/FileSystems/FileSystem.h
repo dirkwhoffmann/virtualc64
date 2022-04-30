@@ -103,10 +103,14 @@ public:
     isize getNumTracks() const { return layout.numTracks(); }
     isize getNumSectors(Track track) const { return layout.numSectors(track); }
     isize getNumBlocks() const { return layout.numBlocks(); }
+    isize getNumBytes() const { return getNumBlocks() * 256; }
 
-    // Returns the number of free or used blocks
-    isize numFreeBlocks() const;
-    isize numUsedBlocks() const;
+    // Reports usage information
+    isize freeBlocks() const;
+    isize usedBlocks() const;
+    isize freeBytes() const { return freeBlocks() * 256; }
+    isize usedBytes() const { return usedBlocks() * 256; }
+    double fillLevel() const { return double(100) * usedBlocks() / getNumBlocks(); }
 
     // Returns the number of stored files (run a directory scan first!)
     isize numFiles() const { return isize(dir.size()); }

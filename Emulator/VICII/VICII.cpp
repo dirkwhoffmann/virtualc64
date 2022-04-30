@@ -202,7 +202,7 @@ VICII::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INVARG, VICIIRevisionEnum::keyList());
             }
             
-            setRevision((VICIIRevision)value);
+            setRevision(VICIIRevision(value));
             return;
 
         case OPT_VIC_SPEED:
@@ -211,12 +211,12 @@ VICII::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INVARG, VICIISpeedEnum::keyList());
             }
             
-            setSpeed((VICIISpeed)value);
+            setSpeed(VICIISpeed(value));
             return;
 
         case OPT_VIC_POWER_SAVE:
             
-            config.powerSave = value;
+            config.powerSave = bool(value);
             return;
             
         case OPT_PALETTE:
@@ -225,7 +225,7 @@ VICII::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INVARG, PaletteEnum::keyList());
             }
 
-            config.palette = (Palette)value;
+            config.palette = Palette(value);
             updatePalette();
             return;
             
@@ -235,7 +235,7 @@ VICII::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INVARG, "Expected 0...100");
             }
 
-            config.brightness = value;
+            config.brightness = isize(value);
             updatePalette();
             return;
             
@@ -245,7 +245,7 @@ VICII::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INVARG, "Expected 0...100");
             }
 
-            config.contrast = value;
+            config.contrast = isize(value);
             updatePalette();
             return;
 
@@ -255,28 +255,28 @@ VICII::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INVARG, "Expected 0...100");
             }
 
-            config.saturation = value;
+            config.saturation = isize(value);
             updatePalette();
             return;
 
         case OPT_GRAY_DOT_BUG:
             
-            config.grayDotBug = value;
+            config.grayDotBug = bool(value);
             return;
             
         case OPT_HIDE_SPRITES:
             
-            config.hideSprites = value;
+            config.hideSprites = bool(value);
             return;
             
         case OPT_SS_COLLISIONS:
             
-            config.checkSSCollisions = value;
+            config.checkSSCollisions = bool(value);
             return;
 
         case OPT_SB_COLLISIONS:
             
-            config.checkSBCollisions = value;
+            config.checkSBCollisions = bool(value);
             return;
 
         case OPT_GLUE_LOGIC:
@@ -285,7 +285,7 @@ VICII::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INVARG, GlueLogicEnum::keyList());
             }
             
-            config.glueLogic = (GlueLogic)value;
+            config.glueLogic = GlueLogic(value);
             return;
             
         default:
@@ -858,7 +858,7 @@ VICII::badLineCondition() const
      */
     return
     (yCounter >= 0x30 && yCounter <= 0xf7) && /* [1] */
-    (yCounter & 0x07) == (reg.current.ctrl1 & 0x07) && /* [2] */
+    (yCounter & 0x07) == (u32(reg.current.ctrl1) & 0x07) && /* [2] */
     DENwasSetInLine30; /* [3] */
 }
 

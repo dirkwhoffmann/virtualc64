@@ -37,7 +37,6 @@ class VolumeInspector: DialogController {
 
     @IBOutlet weak var previewScrollView: NSScrollView!
     @IBOutlet weak var previewTable: NSTableView!
-    @IBOutlet weak var blockText: NSTextField!
     @IBOutlet weak var blockField: NSTextField!
     @IBOutlet weak var blockStepper: NSStepper!
     @IBOutlet weak var info1: NSTextField!
@@ -74,7 +73,6 @@ class VolumeInspector: DialogController {
     // Block preview
     var blockNr = 0
 
-    /*
     let palette: [FSBlockType: NSColor] = [
 
         .UNKNOWN: Palette.white,
@@ -82,18 +80,11 @@ class VolumeInspector: DialogController {
         .DIR: Palette.yellow,
         .DATA: Palette.green
     ]
-    */
 
     var layoutImage: NSImage? {
 
         return createImage(colorize: { (x: Int) -> NSColor in
-            switch vol.getDisplayType(x) {
-            case .UNKNOWN: return Palette.white
-            case .BAM: return Palette.red
-            case .DIR: return Palette.yellow
-            case .DATA: return Palette.green
-            default: fatalError()
-            }
+            return palette[vol.getDisplayType(x)]!
         })
     }
 
@@ -150,44 +141,14 @@ class VolumeInspector: DialogController {
     // Starting up
     //
 
-    /*
-    func show(diskDrive nr: Int) throws {
+    func show(diskDrive nr: DriveID) throws {
 
-        let dfn = amiga.df(nr)!
-        let adf = try ADFFileProxy.make(with: dfn)
+        let drive = c64.drive(nr)
+        vol = try FileSystemProxy.make(withDisk: drive.disk)
+        /*
+        let d64 = try ADFFileProxy.make(with: dfn)
         vol = try FileSystemProxy.make(withADF: adf)
-
-        showWindow()
-    }
-
-    func show(hardDrive nr: Int) throws {
-
-        var partition: Int?
-
-        if amiga.hd(nr)!.partitions == 1 {
-
-            // Analyze the first partition
-            partition = 0
-
-        } else {
-
-            // Ask the user to select a partition
-            let panel = PartitionSelector(with: parent, nibName: "PartitionSelector")
-            panel?.showSheet(hardDrive: nr, completionHandler: {
-                partition = panel?.userSelection
-            })
-        }
-
-        if partition != nil {
-            try show(hardDrive: nr, partition: partition!)
-        }
-    }
-
-    func show(hardDrive nr: Int, partition: Int) throws {
-
-        let hdn = amiga.hd(nr)!
-        let hdf = try HDFFileProxy.make(with: hdn)
-        vol = try FileSystemProxy.make(withHDF: hdf, partition: partition)
+        */
 
         showWindow()
     }
@@ -235,7 +196,6 @@ class VolumeInspector: DialogController {
     func update() {
 
         updateVolumeInfo()
-        updateVirusInfo()
         updateDiagnoseInfo()
 
         // Update elements
@@ -252,14 +212,9 @@ class VolumeInspector: DialogController {
     func updateLayoutImage() {
 
         let size = NSSize(width: 16, height: 16)
-        bootBlockButton.image = NSImage(color: palette[.BOOT_BLOCK]!, size: size)
-        rootBlockButton.image = NSImage(color: palette[.ROOT_BLOCK]!, size: size)
-        bmBlockButton.image = NSImage(color: palette[.BITMAP_BLOCK]!, size: size)
-        bmExtBlockButton.image = NSImage(color: palette[.BITMAP_EXT_BLOCK]!, size: size)
-        fileListBlockButton.image = NSImage(color: palette[.FILELIST_BLOCK]!, size: size)
-        fileHeaderBlockButton.image = NSImage(color: palette[.FILEHEADER_BLOCK]!, size: size)
-        userDirBlockButton.image = NSImage(color: palette[.USERDIR_BLOCK]!, size: size)
-        dataBlockButton.image = NSImage(color: palette[.DATA_BLOCK_OFS]!, size: size)
+        bamButton.image = NSImage(color: palette[.BAM]!, size: size)
+        dirButton.image = NSImage(color: palette[.DIR]!, size: size)
+        dataButton.image = NSImage(color: palette[.DATA]!, size: size)
         blockImageButton.image = layoutImage
     }
 
@@ -275,30 +230,11 @@ class VolumeInspector: DialogController {
 
         title.stringValue = vol.dos.description
         nameInfo.stringValue = vol.name
-        bootblockInfo.stringValue = vol.bootBlockName
-        creationInfo.stringValue = vol.creationDate
-        modificationInfo.stringValue = vol.modificationDate
+        idInfo.stringValue = "Ipsum lorem"
+        dosInfo.stringValue = "Ipsum lorem"
         capacityInfo.stringValue = vol.capacityString
         blocksInfo.integerValue = vol.numBlocks
         usageInfo.stringValue = "\(vol.usedBlocks) (" + vol.fillLevelString + ")"
-    }
-
-    func updateVirusInfo() {
-
-        if vol.hasVirus {
-
-            virus.isHidden = false
-            virusInfo.stringValue = "Positive"
-            virusInfo.textColor = .warningColor
-            bootblockInfo.textColor = .warningColor
-
-        } else {
-
-            virus.isHidden = true
-            virusInfo.stringValue = "Passed - No findings"
-            virusInfo.textColor = .secondaryLabelColor
-            bootblockInfo.textColor = .secondaryLabelColor
-        }
     }
 
     func updateDiagnoseInfo() {
@@ -374,6 +310,7 @@ class VolumeInspector: DialogController {
         setBlock(sender.integerValue)
     }
 
+    /*
     @IBAction func blockTypeAction(_ sender: NSButton!) {
 
         var type = FSBlockType(rawValue: sender.tag)!
@@ -409,6 +346,7 @@ class VolumeInspector: DialogController {
         updateDiagnoseImage()
         update()
     }
+    */
 
     @IBAction func clickAction(_ sender: NSTableView!) {
 
@@ -433,6 +371,8 @@ extension VolumeInspector: NSTableViewDataSource {
         return 512 / 16
     }
 
+    /*
+
     func tableView(_ tableView: NSTableView,
                    objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
 
@@ -453,6 +393,7 @@ extension VolumeInspector: NSTableViewDataSource {
         }
         fatalError()
     }
+    */
 }
 
 extension VolumeInspector: NSTableViewDelegate {
@@ -482,7 +423,6 @@ extension VolumeInspector: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
         return false
     }
-    */
 }
 
 /*

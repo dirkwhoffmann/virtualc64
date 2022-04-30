@@ -419,7 +419,7 @@ class ExportDialog: DialogController {
         if volume != nil {
             
             let num = volume!.numFiles
-            let free = volume!.numUsedBlocks
+            let free = volume!.usedBlocks
             
             let files = num == 1 ? "file" : "files"
             text = "\(num) \(files), \(free) blocks used"

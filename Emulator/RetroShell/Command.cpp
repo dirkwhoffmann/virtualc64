@@ -112,7 +112,7 @@ Command::autoComplete(const string& token)
     if (!matches.empty()) {
 
         const Command *first = matches.front();
-        for (usize i = token.size(); i < first->token.size(); i++) {
+        for (auto i = token.size(); i < first->token.size(); i++) {
             
             for (auto m: matches) {
                 if (m->token.size() <= i || m->token[i] != first->token[i]) {

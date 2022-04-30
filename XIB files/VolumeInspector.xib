@@ -6,14 +6,43 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-2" userLabel="File's Owner" customClass="VolumeInspector" customModule="VirtualC64" customModuleProvider="target">
+            <connections>
+                <outlet property="bamButton" destination="769-uP-llK" id="2vp-P4-qnb"/>
+                <outlet property="blockField" destination="uoH-RO-NeS" id="j9z-SK-afz"/>
+                <outlet property="blockImageButton" destination="dS9-fa-lHu" id="JxA-6o-iQs"/>
+                <outlet property="blockSlider" destination="FGB-6L-HXT" id="gge-qr-DLw"/>
+                <outlet property="blockStepper" destination="irz-mK-nXW" id="5U9-8x-ZbB"/>
+                <outlet property="blocksInfo" destination="B04-Bb-tHn" id="ANk-3h-Pbu"/>
+                <outlet property="capacityInfo" destination="2ol-1R-0pf" id="wlN-Bp-4Ys"/>
+                <outlet property="dataButton" destination="M5h-1R-idS" id="KKb-yv-nK5"/>
+                <outlet property="diagnoseFailButton" destination="gDr-hN-Ges" id="JbV-xR-1nK"/>
+                <outlet property="diagnoseImageButton" destination="ter-n8-3Qa" id="waf-Ur-zTE"/>
+                <outlet property="diagnoseInfo" destination="tOg-Jb-d2l" id="sNJ-h9-c8f"/>
+                <outlet property="diagnoseNextButton" destination="O8b-wQ-8XE" id="y9x-qc-IoL"/>
+                <outlet property="diagnoseNextInfo" destination="UMO-eT-jwa" id="iMS-bA-rR2"/>
+                <outlet property="diagnosePassButton" destination="Bek-hZ-1pG" id="fyl-AC-Uce"/>
+                <outlet property="diagnoseSlider" destination="L9S-7p-pGT" id="fGw-ky-GMy"/>
+                <outlet property="diagnoseStrictButton" destination="ZEt-ME-rLR" id="Q5Z-j9-JDi"/>
+                <outlet property="dirButton" destination="gYu-7f-Hgt" id="Te6-wf-w12"/>
+                <outlet property="dosInfo" destination="ync-Oz-lks" id="jlR-iu-uXo"/>
+                <outlet property="icon" destination="Lfw-Ab-BK3" id="kAQ-kb-DN7"/>
+                <outlet property="idInfo" destination="T1D-zN-bKh" id="Quv-Jl-4z2"/>
+                <outlet property="info1" destination="elC-PW-2T6" id="A6Q-5w-L3R"/>
+                <outlet property="info2" destination="vuq-NF-XPk" id="C35-7p-wS3"/>
+                <outlet property="nameInfo" destination="J4v-rv-4yS" id="Za2-FL-AQo"/>
+                <outlet property="previewTable" destination="bOj-np-3lM" id="JvD-HL-y81"/>
+                <outlet property="title" destination="L5T-n4-sxP" id="Xid-Ny-sdX"/>
+                <outlet property="usageInfo" destination="Bzo-hq-4Wf" id="eWP-Jf-lMw"/>
+            </connections>
+        </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="731" height="554"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1095"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1536" height="935"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="731" height="554"/>
                 <autoresizingMask key="autoresizingMask"/>

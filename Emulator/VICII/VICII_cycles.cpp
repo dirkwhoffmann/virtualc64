@@ -25,8 +25,8 @@
  *                   |  Phi2.4 BA logic
  */
 
-#define PAL if (flags & PAL_CYCLE)
-#define NTSC if (flags & NTSC_CYCLE)
+#define PAL if constexpr (flags & PAL_CYCLE)
+#define NTSC if constexpr (flags & NTSC_CYCLE)
 
 template <u16 flags> void
 VICII::cycle1()

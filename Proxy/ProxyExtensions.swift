@@ -301,7 +301,16 @@ extension CRTFileProxy {
 }
 
 extension FileSystemProxy {
-    
+
+    static func make(withDisk disk: DiskProxy) throws -> FileSystemProxy {
+
+        let exception = ExceptionWrapper()
+        let result = FileSystemProxy.make(withDisk: disk, exception: exception)
+        if exception.errorCode != .OK { throw VC64Error(exception) }
+
+        return result!
+    }
+
     func icon(protected: Bool) -> NSImage {
                         
         let name = "disk2" + (protected ? "_protected" : "")
@@ -318,7 +327,7 @@ extension FileSystemProxy {
         let num = numFiles
         let files = num == 1 ? "file" : "files"
         
-        return "\(num) \(files), \(numUsedBlocks) blocks used"
+        return "\(num) \(files), \(usedBlocks) blocks used"
     }
 }
     

@@ -1976,6 +1976,11 @@
 
 @implementation FileSystemProxy
 
+- (FileSystem *)fs
+{
+    return (FileSystem *)obj;
+}
+
 + (instancetype)make:(FileSystem *)fs
 {
     return fs ? [[self alloc] initWith: fs] : nil;
@@ -2000,9 +2005,22 @@
     catch (VC64Error &err) { [ex save:err]; return nil; }
 }
 
-- (FileSystem *)fs
+- (NSString *)name
 {
-    return (FileSystem *)obj;
+    auto str = [self fs]->getName();
+    return @(str.c_str());
+}
+
+- (NSString *)capacityString
+{
+    auto str = util::byteCountAsString([self fs]->getNumBytes());
+    return @(str.c_str());
+}
+
+- (NSString *)fillLevelString
+{
+    auto str = util::fillLevelAsString([self fs]->fillLevel());
+    return @(str.c_str());
 }
 
 - (DOSType)dos
@@ -2035,14 +2053,14 @@
     return [self fs]->getNumBlocks();
 }
 
-- (NSInteger)numFreeBlocks
+- (NSInteger)freeBlocks
 {
-    return [self fs]->numFreeBlocks();
+    return [self fs]->freeBlocks();
 }
 
-- (NSInteger)numUsedBlocks
+- (NSInteger)usedBlocks
 {
-    return [self fs]->numUsedBlocks();
+    return [self fs]->usedBlocks();
 }
 
 - (NSInteger)numFiles

@@ -900,10 +900,10 @@ Muxer::mixMultiSID(isize numSamples)
         
         float ch0, ch1, ch2, ch3, l, r;
         
-        ch0 = (float)sidStream[0].read()    * vol[0];
-        ch1 = (float)sidStream[1].read(0.0) * vol[1];
-        ch2 = (float)sidStream[2].read(0.0) * vol[2];
-        ch3 = (float)sidStream[3].read(0.0) * vol[3];
+        ch0 = (float)sidStream[0].read()  * vol[0];
+        ch1 = (float)sidStream[1].read(0) * vol[1];
+        ch2 = (float)sidStream[2].read(0) * vol[2];
+        ch3 = (float)sidStream[3].read(0) * vol[3];
 
         // Compute left channel output
         l =

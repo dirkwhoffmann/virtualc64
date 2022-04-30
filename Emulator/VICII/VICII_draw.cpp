@@ -288,12 +288,14 @@ VICII::drawCanvasPixel(u8 pixel, u8 mode, u8 d016)
     if (generateMulticolorPixel) {
 
         // Only update every other cycle
-        if (sr.mcFlop) sr.colorbits = (sr.data >> 6) >> !multicolorDisplayMode;
-        
+        // if (sr.mcFlop) sr.colorbits = (sr.data >> 6) >> !multicolorDisplayMode;
+        if (sr.mcFlop) sr.colorbits = (sr.data >> 6) >> (multicolorDisplayMode ? 0 : 1);
+
     } else {
         
         // Update every cycle
-        sr.colorbits = (u8)((sr.data >> 7) << multicolorDisplayMode);
+        // sr.colorbits = (u8)((sr.data >> 7) << multicolorDisplayMode);
+        sr.colorbits = (u8)((sr.data >> 7) << (multicolorDisplayMode ? 1 : 0));
     }
     sr.data <<= 1;
     sr.mcFlop = !sr.mcFlop;

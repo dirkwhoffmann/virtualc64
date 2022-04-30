@@ -212,7 +212,7 @@ FileSystem::printDirectory()
 }
 
 isize
-FileSystem::numFreeBlocks() const
+FileSystem::freeBlocks() const
 {
     isize result = 0;
     isize blocksSize = isize(blocks.size());
@@ -225,7 +225,7 @@ FileSystem::numFreeBlocks() const
 }
 
 isize
-FileSystem::numUsedBlocks() const
+FileSystem::usedBlocks() const
 {
     isize result = 0;
     isize blocksSize = isize(blocks.size());
