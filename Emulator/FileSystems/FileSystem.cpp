@@ -940,15 +940,19 @@ FileSystem::getDisplayType(isize column)
         // Setup block priorities
         i8 pri[12];
         pri[FS_BLOCKTYPE_UNKNOWN]   = 0;
-        pri[FS_BLOCKTYPE_BAM]       = 3;
-        pri[FS_BLOCKTYPE_DIR]       = 2;
-        pri[FS_BLOCKTYPE_DATA]      = 1;
+        pri[FS_BLOCKTYPE_EMPTY]     = 1;
+        pri[FS_BLOCKTYPE_BAM]       = 4;
+        pri[FS_BLOCKTYPE_DIR]       = 3;
+        pri[FS_BLOCKTYPE_DATA]      = 2;
 
+        // Analyze blocks
         for (isize i = 0; i < getNumBlocks(); i++) {
 
+            auto type = isFree(i) ? FS_BLOCKTYPE_EMPTY : blocks[i]->type();
+
             auto pos = i * (width - 1) / (getNumBlocks() - 1);
-            if (pri[cache[pos]] < pri[blocks[i]->type()]) {
-                cache[pos] = blocks[i]->type();
+            if (pri[cache[pos]] < pri[type]) {
+                cache[pos] = type;
             }
         }
 

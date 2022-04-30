@@ -79,6 +79,7 @@ struct FSFileTypeEnum : util::Reflection<FSFileTypeEnum, FSFileType> {
 enum_long(FS_BLOCKTYPE)
 {
     FS_BLOCKTYPE_UNKNOWN,
+    FS_BLOCKTYPE_EMPTY,
     FS_BLOCKTYPE_BAM,
     FS_BLOCKTYPE_DIR,
     FS_BLOCKTYPE_DATA
@@ -98,6 +99,7 @@ struct FSBlockTypeEnum : util::Reflection<FSBlockTypeEnum, FSBlockType> {
         switch (value) {
                 
             case FS_BLOCKTYPE_UNKNOWN:  return "UNKNOWN";
+            case FS_BLOCKTYPE_EMPTY:    return "EMPTY";
             case FS_BLOCKTYPE_BAM:      return "BAM";
             case FS_BLOCKTYPE_DIR:      return "DIR";
             case FS_BLOCKTYPE_DATA:     return "DATA";

@@ -2183,6 +2183,11 @@
     [self fs]->info();
 }
 
+- (BOOL)isFree:(NSInteger)blockNr
+{
+    return [self fs]->isFree(blockNr);
+}
+
 - (NSString *)fileName:(NSInteger)nr
 {
     return @([self fs]->fileName((unsigned)nr).c_str());

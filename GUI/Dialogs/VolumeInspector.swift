@@ -76,6 +76,7 @@ class VolumeInspector: DialogController {
     let palette: [FSBlockType: NSColor] = [
 
         .UNKNOWN: Palette.white,
+        .EMPTY: Palette.gray,
         .BAM: Palette.red,
         .DIR: Palette.yellow,
         .DATA: Palette.green

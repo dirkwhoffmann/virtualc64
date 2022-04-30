@@ -980,6 +980,8 @@ AnyCollectionProxy <MakeWithFolder> { }
 
 - (void)info;
 
+- (BOOL)isFree:(NSInteger)blockNr;
+
 - (NSString *)fileName:(NSInteger)nr;
 - (FSFileType)fileType:(NSInteger)nr;
 - (NSInteger)fileSize:(NSInteger)nr;

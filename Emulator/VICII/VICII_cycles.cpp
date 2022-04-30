@@ -875,7 +875,7 @@ VICII::sAccess3()
         dataBusPhi2 = memAccess(spritePtr[sprite] | mc[sprite]);
         mc[sprite] = (mc[sprite] + 1) & 0x3F;
 
-        if constexpr (flags & DEBUG_CYCLE) {
+        if constexpr (bool(flags & DEBUG_CYCLE)) {
             dmaDebugger.visualizeDma(bufferoffset, dataBusPhi2, MEMACCESS_S);
         }
     }
