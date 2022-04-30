@@ -86,7 +86,7 @@ P00File::itemName(isize nr) const
     return PETName<16>(data + 0x08, padChar);
 }
 
-u64
+isize
 P00File::itemSize(isize nr) const
 {
     assert(nr == 0);
@@ -94,7 +94,7 @@ P00File::itemSize(isize nr) const
 }
 
 u8
-P00File::readByte(isize nr, u64 pos) const
+P00File::readByte(isize nr, isize pos) const
 {
     assert(nr == 0);
     assert(pos < itemSize(nr));

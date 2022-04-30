@@ -43,14 +43,14 @@ Folder::itemName(isize nr) const
     return fs->fileName(nr);
 }
 
-u64
+isize
 Folder::itemSize(isize nr) const
 {
     return fs->fileSize(nr);
 }
 
 u8
-Folder::readByte(isize nr, u64 pos) const
+Folder::readByte(isize nr, isize pos) const
 {
     u8 result;
     fs->copyFile(nr, &result, 1, pos);

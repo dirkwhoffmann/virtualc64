@@ -2145,7 +2145,7 @@
 
 - (NSInteger)readByte:(NSInteger)block offset:(NSInteger)offset
 {
-    return [self fs]->readByte((u32)block, (u32)offset);
+    return [self fs]->readByte((u32)block, offset);
 }
 
 - (void)exportDirectory:(NSString *)path exception:(ExceptionWrapper *)e

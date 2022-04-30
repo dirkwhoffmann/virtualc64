@@ -269,8 +269,8 @@ Cartridge::_load(const u8 *buffer)
         for (isize i = 0; i < ramCapacity; i++) externalRam[i] = util::read8(reader.ptr);
     }
 
-    trace(SNP_DEBUG, "Recreated from %ld bytes\n", reader.ptr - buffer);
-    return reader.ptr - buffer;
+    trace(SNP_DEBUG, "Recreated from %ld bytes\n", isize(reader.ptr - buffer));
+    return isize(reader.ptr - buffer);
 }
 
 isize
@@ -294,8 +294,8 @@ Cartridge::_save(u8 *buffer)
         }
     }
     
-    trace(SNP_DEBUG, "Serialized %ld bytes\n", writer.ptr - buffer);
-    return writer.ptr - buffer;
+    trace(SNP_DEBUG, "Serialized %ld bytes\n", isize(writer.ptr - buffer));
+    return isize(writer.ptr - buffer);
 }
 
 u8

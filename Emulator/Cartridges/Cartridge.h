@@ -77,7 +77,7 @@ private:
     u8 *externalRam = nullptr;
     
     // RAM capacity in bytes
-    i64 ramCapacity = 0;
+    isize ramCapacity = 0;
     
     // Indicates whether RAM data is preserved during a reset
     bool battery = false;

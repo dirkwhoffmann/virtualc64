@@ -1508,8 +1508,8 @@ C64::flash(const AnyFile &file)
 void
 C64::flash(const AnyCollection &file, isize nr)
 {
-    u16 addr = (u16)file.itemLoadAddr(nr);
-    u64 size = (u64)file.itemSize(nr);
+    auto addr = (u16)file.itemLoadAddr(nr);
+    auto size = file.itemSize(nr);
     if (size <= 2) return;
     
     {   SUSPENDED
@@ -1521,8 +1521,8 @@ C64::flash(const AnyCollection &file, isize nr)
             case FILETYPE_P00:
             case FILETYPE_PRG:
             case FILETYPE_FOLDER:
-                
-                size = std::min(size - 2, (u64)(0x10000 - addr));
+
+                size = std::min(size - 2, isize(0x10000 - addr));
                 file.copyItem(nr, mem.ram + addr, size, 2);
                 break;
                 

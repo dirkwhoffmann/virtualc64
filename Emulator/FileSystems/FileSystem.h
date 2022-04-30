@@ -235,23 +235,23 @@ public:
     FSErrorReport check(bool strict);
 
     // Checks a single byte in a certain block
-    ErrorCode check(u32 blockNr, u32 pos, u8 *expected, bool strict);
+    ErrorCode check(isize blockNr, u32 pos, u8 *expected, bool strict);
     
     // Returns the position in the corrupted block list (0 = OK)
-    u32 getCorrupted(u32 blockNr) const;
+    isize getCorrupted(isize blockNr) const;
 
     // Checks if a certain block is corrupted
-    bool isCorrupted(u32 blockNr) const { return getCorrupted(blockNr) != 0; }
+    bool isCorrupted(isize blockNr) const { return getCorrupted(blockNr) != 0; }
 
     // Returns the number of the next or previous corrupted block
-    u32 nextCorrupted(u32 blockNr) const;
-    u32 prevCorrupted(u32 blockNr) const;
+    isize nextCorrupted(isize blockNr) const;
+    isize prevCorrupted(isize blockNr) const;
 
     // Checks if a certain block is the n-th corrupted block
-    bool isCorrupted(u32 blockNr, u32 n) const;
+    bool isCorrupted(isize blockNr, isize n) const;
 
     // Returns the number of the the n-th corrupted block
-    u32 seekCorruptedBlock(u32 n) const;
+    isize seekCorruptedBlock(isize n) const;
 
     
     //
@@ -261,8 +261,8 @@ public:
 public:
         
     // Reads a single byte from a block
-    u8 readByte(Block block, u32 offset) const;
-    u8 readByte(TSLink ts, u32 offset) const { return readByte(layout.blockNr(ts), offset); }
+    u8 readByte(Block block, isize offset) const;
+    u8 readByte(TSLink ts, isize offset) const { return readByte(layout.blockNr(ts), offset); }
 
     // Imports the volume from a buffer
     void importVolume(const u8 *src, isize size) throws;

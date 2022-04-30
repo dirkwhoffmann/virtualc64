@@ -77,7 +77,7 @@ string
 FSDirEntry::getFileSystemRepresentation() const
 {
     auto name = getName().str();
-    string illegal = "#%&{}\\<>*?/ $!'\":@+`|=";
+    string illegal = "#%&{}\\<>*?/$!'\":@+`|=";
     string result;
 
     for (const auto c: name) {

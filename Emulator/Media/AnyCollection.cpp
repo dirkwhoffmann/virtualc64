@@ -11,13 +11,13 @@
 #include "AnyCollection.h"
 
 u16
-AnyCollection::readWordBE(isize nr, u64 pos) const
+AnyCollection::readWordBE(isize nr, isize pos) const
 {
     return HI_LO(readByte(nr, pos), readByte(nr, pos + 1));
 }
 
 u16
-AnyCollection::readWordLE(isize nr, u64 pos) const
+AnyCollection::readWordLE(isize nr, isize pos) const
 {
     return LO_HI(readByte(nr, pos), readByte(nr, pos + 1));
 }

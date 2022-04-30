@@ -172,17 +172,17 @@ T64File::itemName(isize nr) const
     return PETName<16>(data + 0x50 + nr * 0x20).stripped(' ');
 }
 
-u64
+isize
 T64File::itemSize(isize nr) const
 {
     assert(nr < collectionCount());
     
     // Return the number of data bytes plus 2 (for the loading address header)
-    return (u64)(memEnd(nr) - memStart(nr) + 2);
+    return isize(memEnd(nr) - memStart(nr) + 2);
 }
 
 u8
-T64File::readByte(isize nr, u64 pos) const
+T64File::readByte(isize nr, isize pos) const
 {
     assert(nr < collectionCount());
     assert(pos < itemSize(nr));

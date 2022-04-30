@@ -646,11 +646,11 @@ CIA::wakeUp(Cycle targetCycle)
         
         if (feed & CIACountA0) {
             assert(counterA >= missedCycles);
-            counterA -= missedCycles;
+            counterA -= u16(missedCycles);
         }
         if (feed & CIACountB0) {
             assert(counterB >= missedCycles);
-            counterB -= missedCycles;
+            counterB -= u16(missedCycles);
         }
         
         idleCycles += missedCycles;

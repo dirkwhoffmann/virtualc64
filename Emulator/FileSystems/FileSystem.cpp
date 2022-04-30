@@ -34,7 +34,7 @@ FileSystem::init(isize capacity)
     blocks.assign(capacity, 0);
     
     // Create all blocks
-    for (u32 i = 0; i < capacity; i++) blocks[i] = new FSBlock(*this, i);
+    for (isize i = 0; i < capacity; i++) blocks[i] = new FSBlock(*this, u32(i));
 }
 
 void
@@ -114,7 +114,7 @@ FileSystem::init(AnyCollection &collection)
     for (isize i = 0; i < numberOfItems; i++) {
         
         // Serialize item into a buffer
-        u64 size = collection.itemSize(i);
+        auto size = collection.itemSize(i);
         u8 *buffer = new u8[size];
         collection.copyItem(i, buffer, size);
         
@@ -662,23 +662,23 @@ FileSystem::check(bool strict)
 }
 
 ErrorCode
-FileSystem::check(u32 blockNr, u32 pos, u8 *expected, bool strict)
+FileSystem::check(isize blockNr, u32 pos, u8 *expected, bool strict)
 {
     return blocks[blockNr]->check(pos, expected, strict);
 }
 
-u32
-FileSystem::getCorrupted(u32 blockNr) const
+isize
+FileSystem::getCorrupted(isize blockNr) const
 {
     return blockPtr(blockNr) ? blocks[blockNr]->corrupted : 0;
 }
 
 bool
-FileSystem::isCorrupted(u32 blockNr, u32 n) const
+FileSystem::isCorrupted(isize blockNr, isize n) const
 {
-    isize numBlocks = blocks.size();
+    auto numBlocks = isize(blocks.size());
     
-    for (u32 i = 0, cnt = 0; i < numBlocks; i++) {
+    for (isize i = 0, cnt = 0; i < numBlocks; i++) {
         
         if (isCorrupted(i)) {
             cnt++;
@@ -688,30 +688,30 @@ FileSystem::isCorrupted(u32 blockNr, u32 n) const
     return false;
 }
 
-u32
-FileSystem::nextCorrupted(u32 blockNr) const
+isize
+FileSystem::nextCorrupted(isize blockNr) const
 {
-    isize numBlocks = blocks.size();
+    auto numBlocks = isize(blocks.size());
     
-    for (u32 i = blockNr + 1; i < numBlocks; i++) {
+    for (isize i = blockNr + 1; i < numBlocks; i++) {
         if (isCorrupted(i)) return i;
     }
     return blockNr;
 }
 
-u32
-FileSystem::prevCorrupted(u32 blockNr) const
+isize
+FileSystem::prevCorrupted(isize blockNr) const
 {
-    isize numBlocks = blocks.size();
+    auto numBlocks = isize(blocks.size());
     
-    for (u32 i = blockNr - 1; i < numBlocks; i--) {
+    for (isize i = blockNr - 1; i < numBlocks; i--) {
         if (isCorrupted(i)) return i;
     }
     return blockNr;
 }
 
 u8
-FileSystem::readByte(Block block, u32 offset) const
+FileSystem::readByte(Block block, isize offset) const
 {
     assert(offset < 256);
     assert(block < (Block)blocks.size());

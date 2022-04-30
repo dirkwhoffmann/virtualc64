@@ -495,9 +495,9 @@ VICII::poke(u16 addr, u8 value)
             
             // Check the DEN bit. If it gets set somehwere in line 30, a bad
             // line conditions occurs.
-            if (c64.scanline == 0x30 && (value & 0x10))
+            if (c64.scanline == 0x30 && (value & 0x10)) {
                 DENwasSetInLine30 = true;
-            
+            }
             if (badLine = badLineCondition(); badLine) {
                 delay |= VICSetDisplayState;
             }
