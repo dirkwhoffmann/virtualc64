@@ -47,5 +47,5 @@ public:
     u16 itemLoadAddr(isize nr) const;
 
     // Copies an item into a buffer
-    virtual void copyItem(isize nr, u8 *buf, u64 len, u64 offset = 0) const;
+    virtual void copyItem(isize nr, u8 *buf, isize len, isize offset = 0) const;
 };

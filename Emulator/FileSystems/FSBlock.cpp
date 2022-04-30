@@ -161,7 +161,7 @@ FSBlock::itemType(u32 byte) const
             fatalError;
     }
     
-    return FS_USAGE_UNKNOWN;
+    // return FS_USAGE_UNKNOWN;
 }
 
 ErrorCode

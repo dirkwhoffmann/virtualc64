@@ -202,17 +202,20 @@ FileSystem::printDirectory()
     scanDirectory();
 
     for (auto &item : dir) {
-        msg("%3llu \"%-16s\" %s (%5llu bytes)\n",
+
+        msg("%3ld \"%-16s\" %s (%5ld bytes)\n",
             fileBlocks(item),
-            item->getName().c_str(), item->typeString().c_str(), fileSize(item));
+            item->getName().c_str(),
+            item->typeString().c_str(),
+            fileSize(item));
     }
 }
 
-i32
+isize
 FileSystem::numFreeBlocks() const
 {
-    u32 result = 0;
-    isize blocksSize = (isize)blocks.size();
+    isize result = 0;
+    isize blocksSize = isize(blocks.size());
     
     for (isize i = 0; i < blocksSize; i++) {
         if (isFree((Block)i)) result++;
@@ -221,11 +224,11 @@ FileSystem::numFreeBlocks() const
     return result;
 }
 
-i32
+isize
 FileSystem::numUsedBlocks() const
 {
-    u32 result = 0;
-    isize blocksSize = (isize)blocks.size();
+    isize result = 0;
+    isize blocksSize = isize(blocks.size());
     
     for (isize i = 0; i < blocksSize; i++) {
         if (!isFree((Block)i)) result++;
@@ -428,14 +431,14 @@ FileSystem::fileType(FSDirEntry *entry) const
     return entry->getFileType();
 }
 
-u64
+isize
 FileSystem::fileSize(isize nr) const
 {
     assert(nr < numFiles());
     return fileSize(dir[nr]);
 }
 
-u64
+isize
 FileSystem::fileSize(FSDirEntry *entry) const
 {
     assert(entry);
@@ -464,14 +467,14 @@ FileSystem::fileSize(FSDirEntry *entry) const
     return size;
 }
 
-u64
+isize
 FileSystem::fileBlocks(isize nr) const
 {
     assert(nr < numFiles());
     return fileBlocks(dir[nr]);
 }
 
-u64
+isize
 FileSystem::fileBlocks(FSDirEntry *entry) const
 {
     assert(entry);
@@ -633,10 +636,10 @@ FileSystem::check(bool strict)
     FSErrorReport result;
 
     long total = 0, min = LONG_MAX, max = 0;
-    isize numBlocks = blocks.size();
+    auto numBlocks = isize(blocks.size());
     
     // Analyze all blocks
-    for (u32 i = 0; i < numBlocks; i++) {
+    for (isize i = 0; i < numBlocks; i++) {
 
         if (blocks[i]->check(strict) > 0) {
             min = std::min(min, (long)i);
@@ -736,7 +739,7 @@ FileSystem::importVolume(const u8 *src, isize size, ErrorCode *err)
 
     // Only proceed if the buffer size matches
     if ((isize)blocks.size() * 256 > size) {
-        warn("BUFFER SIZE MISMATCH (%lu %lu)\n", blocks.size(), blocks.size() * 256);
+        warn("BUFFER SIZE MISMATCH (%zu %zu)\n", blocks.size(), blocks.size() * 256);
         if (err) *err = ERROR_FS_WRONG_CAPACITY;
         return false;
     }
@@ -836,7 +839,7 @@ FileSystem::exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode
     memset(dst, 0, size);
     
     // Export all blocks
-    for (u32 i = 0; i < count; i++) {
+    for (isize i = 0; i < count; i++) {
         
         blocks[first + i]->exportBlock(dst + i * 256);
     }
@@ -869,7 +872,7 @@ FileSystem::exportDirectory(const string &path)
         exportFile(entry, path);
     }
     
-    msg("Exported %lu items", dir.size());
+    msg("Exported %zu items", dir.size());
 }
 
 void

@@ -10,3 +10,7 @@ add_library(resid
   wave.cc
   version.cc
 )
+
+if(MSVC)
+  target_compile_options(resid PUBLIC /wd5055)
+endif()

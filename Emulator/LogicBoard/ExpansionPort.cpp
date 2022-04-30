@@ -63,8 +63,8 @@ ExpansionPort::_load(const u8 *buffer)
         reader.ptr += cartridge->load(reader.ptr);
     }
     
-    trace(SNP_DEBUG, "Recreated from %ld bytes\n", reader.ptr - buffer);
-    return reader.ptr - buffer;
+    debug(SNP_DEBUG, "Recreated from %ld bytes\n", isize(reader.ptr - buffer));
+    return isize(reader.ptr - buffer);
 }
 
 isize
@@ -79,8 +79,8 @@ ExpansionPort::_save(u8 *buffer)
         writer.ptr += cartridge->save(writer.ptr);
     }
     
-    trace(SNP_DEBUG, "Serialized to %ld bytes\n", writer.ptr - buffer); \
-    return writer.ptr - buffer;
+    debug(SNP_DEBUG, "Serialized to %ld bytes\n", isize(writer.ptr - buffer));
+    return isize(writer.ptr - buffer);
 }
 
 void

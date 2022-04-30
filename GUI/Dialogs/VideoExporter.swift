@@ -108,4 +108,3 @@ extension VideoExporter: NSFilePromiseProviderDelegate {
         }
     }
 }
-

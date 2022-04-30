@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-class SnapshotDialog: DialogController {
+class SnapshotViewer: DialogController {
     
     var now: Date!
     
@@ -220,7 +220,7 @@ class SnapshotDialog: DialogController {
 // iCarousel data source and delegate
 //
 
-extension SnapshotDialog: iCarouselDataSource, iCarouselDelegate {
+extension SnapshotViewer: iCarouselDataSource, iCarouselDelegate {
     
     func numberOfItems(in carousel: iCarousel) -> Int {
                 

@@ -66,7 +66,7 @@ public:
     PETName<16> itemName(isize nr) const override;
     isize itemSize(isize nr) const override;
     u8 readByte(isize nr, isize pos) const override;
-    void copyItem(isize nr, u8 *buf, u64 len, u64 offset) const override;
+    void copyItem(isize nr, u8 *buf, isize len, isize offset) const override;
     
     //
     // Accessing

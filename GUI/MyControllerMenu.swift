@@ -275,8 +275,7 @@ extension MyController: NSMenuItemValidation {
         
         track()
         if snapshotBrowser == nil {
-            let name = NSNib.Name("SnapshotDialog")
-            snapshotBrowser = SnapshotDialog(with: self, nibName: name)
+            snapshotBrowser = SnapshotViewer(with: self, nibName: "SnapshotViewer")
         }
         snapshotBrowser?.showSheet()
     }
@@ -308,7 +307,7 @@ extension MyController: NSMenuItemValidation {
     @IBAction func browseScreenshotsAction(_ sender: Any!) {
 
         if screenshotBrowser == nil {
-            screenshotBrowser = ScreenshotDialog(with: self, nibName: "ScreenshotDialog")
+            screenshotBrowser = ScreenshotViewer(with: self, nibName: "ScreenshotViewer")
         }
         screenshotBrowser?.showSheet()
     }

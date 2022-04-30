@@ -85,11 +85,11 @@ PETName<16>
 AnyFile::getName() const
 {
     auto idx = path.rfind('/');
-    isize start = idx != string::npos ? idx + 1 : 0;
-    
+    auto start = idx != string::npos ? idx + 1 : 0;
+
     idx = path.rfind('.');
-    isize len = idx != string::npos ? idx - start : string::npos;
-    
+    auto len = idx != string::npos ? idx - start : string::npos;
+
     return PETName<16>(path.substr(start, len));
 }
 
@@ -177,9 +177,8 @@ AnyFile::readFromStream(std::istream &stream)
     stream.seekg(0, std::ios::beg);
 
     // Allocate memory
-    assert(data == nullptr);
-    data = new u8[fsize]();
-    size = fsize;
+    data = new u8[isize(fsize)]();
+    size = isize(fsize);
 
     // Read data
     stream.read((char *)data, size);

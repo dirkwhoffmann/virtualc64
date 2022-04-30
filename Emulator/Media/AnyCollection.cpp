@@ -29,7 +29,7 @@ AnyCollection::itemLoadAddr(isize nr) const
 }
 
 void
-AnyCollection::copyItem(isize nr, u8 *buf, u64 len, u64 offset) const
+AnyCollection::copyItem(isize nr, u8 *buf, isize len, isize offset) const
 {
-    for (u64 i = 0; i < len; i++) buf[i] = readByte(nr, i + offset);
+    for (isize i = 0; i < len; i++) buf[i] = readByte(nr, i + offset);
 }

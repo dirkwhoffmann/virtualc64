@@ -58,7 +58,7 @@ Folder::readByte(isize nr, isize pos) const
 }
 
 void
-Folder::copyItem(isize nr, u8 *buf, u64 len, u64 offset) const
+Folder::copyItem(isize nr, u8 *buf, isize len, isize offset) const
 {
     fs->copyFile(nr, buf, len, offset);
 }

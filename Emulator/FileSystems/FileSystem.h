@@ -105,11 +105,11 @@ public:
     isize getNumBlocks() const { return layout.numBlocks(); }
 
     // Returns the number of free or used blocks
-    i32 numFreeBlocks() const;
-    i32 numUsedBlocks() const;
+    isize numFreeBlocks() const;
+    isize numUsedBlocks() const;
 
     // Returns the number of stored files (run a directory scan first!)
-    i32 numFiles() const { return (u32)dir.size(); }
+    isize numFiles() const { return isize(dir.size()); }
     
     
     //
@@ -191,12 +191,12 @@ public:
     FSFileType fileType(FSDirEntry *entry) const;
     
     // Returns the precise size of a file in bytes
-    u64 fileSize(isize nr) const;
-    u64 fileSize(FSDirEntry *entry) const;
+    isize fileSize(isize nr) const;
+    isize fileSize(FSDirEntry *entry) const;
     
     // Returns the size of a file in blocks (read from the BAM)
-    u64 fileBlocks(isize nr) const;
-    u64 fileBlocks(FSDirEntry *entry) const;
+    isize fileBlocks(isize nr) const;
+    isize fileBlocks(FSDirEntry *entry) const;
 
     // Returns the load address of a file
     u16 loadAddr(isize nr) const;

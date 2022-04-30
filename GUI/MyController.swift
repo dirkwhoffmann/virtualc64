@@ -38,8 +38,8 @@ class MyController: NSWindowController, MessageReceiver {
     var configurator: ConfigurationController?
 
     // Snapshot and screenshot browsers
-    var snapshotBrowser: SnapshotDialog?
-    var screenshotBrowser: ScreenshotDialog?
+    var snapshotBrowser: SnapshotViewer?
+    var screenshotBrowser: ScreenshotViewer?
 
     // The current emulator configuration
     var config: Configuration!
