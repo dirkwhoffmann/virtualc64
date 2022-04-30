@@ -145,10 +145,6 @@ class VolumeInspector: DialogController {
 
         let drive = c64.drive(nr)
         vol = try FileSystemProxy.make(withDisk: drive.disk)
-        /*
-        let d64 = try ADFFileProxy.make(with: dfn)
-        vol = try FileSystemProxy.make(withADF: adf)
-        */
 
         showWindow()
     }
@@ -230,8 +226,8 @@ class VolumeInspector: DialogController {
 
         title.stringValue = vol.dos.description
         nameInfo.stringValue = vol.name
-        idInfo.stringValue = "Ipsum lorem"
-        dosInfo.stringValue = "Ipsum lorem"
+        idInfo.stringValue = vol.idString
+        dosInfo.stringValue = vol.dos == .CBM ? "CBM" : "Unknown"
         capacityInfo.stringValue = vol.capacityString
         blocksInfo.integerValue = vol.numBlocks
         usageInfo.stringValue = "\(vol.usedBlocks) (" + vol.fillLevelString + ")"
@@ -310,14 +306,9 @@ class VolumeInspector: DialogController {
         setBlock(sender.integerValue)
     }
 
-    /*
     @IBAction func blockTypeAction(_ sender: NSButton!) {
 
-        var type = FSBlockType(rawValue: sender.tag)!
-
-        // Make sure we search the correct data block type
-        if type == .DATA_BLOCK_OFS && vol.isFFS { type = .DATA_BLOCK_FFS }
-        if type == .DATA_BLOCK_FFS && vol.isOFS { type = .DATA_BLOCK_OFS }
+        let type = FSBlockType(rawValue: sender.tag)!
 
         // Goto the next block of the requested type
         let nextBlock = vol.nextBlock(of: type, after: blockNr)
@@ -346,7 +337,6 @@ class VolumeInspector: DialogController {
         updateDiagnoseImage()
         update()
     }
-    */
 
     @IBAction func clickAction(_ sender: NSTableView!) {
 

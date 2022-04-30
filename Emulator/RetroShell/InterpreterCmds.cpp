@@ -169,8 +169,10 @@ Interpreter::registerInstructions()
     root.add({"drive9"},
              "component", "Floppy drive 9");
 
-    for (const string &drive : {"drive8", "drive9"} ) {
-        
+    for (isize i = 0; i < 2; i++) {
+
+        string drive = (i == 0) ? "drive8" : "drive9";
+
         root.add({drive, "config"},
                  "command", "Displays the current configuration",
                  &RetroShell::exec <Token::drive, Token::config>);
@@ -261,8 +263,10 @@ Interpreter::registerInstructions()
     root.add({"cia2"},
              "component", "Complex Interface Adapter 2");
 
-    for (const string &cia : {"cia1","cia2"} ) {
-        
+    for (isize i = 0; i < 2; i++) {
+
+        string cia = (i == 0) ? "cia1" : "cia1";
+
         root.add({cia, "config"},
                  "command", "Displays the current configuration",
                  &RetroShell::exec <Token::cia, Token::config>);
@@ -548,9 +552,11 @@ Interpreter::registerInstructions()
     
     root.add({"controlport2"},
              "component", "Control port 2");
-    
-    for (const string &port : {"controlport1", "controlport2"} ) {
-        
+
+    for (isize i = 0; i < 2; i++) {
+
+        string port = (i == 0) ? "controlport1" : "controlport2";
+
         root.add({port, "inspect"},
                  "command", "Displays the internal state",
                  &RetroShell::exec <Token::controlport, Token::inspect>);

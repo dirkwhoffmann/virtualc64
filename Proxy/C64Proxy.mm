@@ -2011,6 +2011,12 @@
     return @(str.c_str());
 }
 
+- (NSString *)idString
+{
+    auto str = [self fs]->getID();
+    return @(str.c_str());
+}
+
 - (NSString *)capacityString
 {
     auto str = util::byteCountAsString([self fs]->getNumBytes());

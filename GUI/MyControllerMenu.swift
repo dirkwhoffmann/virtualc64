@@ -68,9 +68,11 @@ extension MyController: NSMenuItemValidation {
         // Drive menu
         case #selector(MyController.insertRecentDiskAction(_:)):
             return validateURLlist(myAppDelegate.recentlyInsertedDiskURLs, image: smallDisk)
-            
+
         case  #selector(MyController.ejectDiskAction(_:)),
-              #selector(MyController.exportDiskAction(_:)):
+            #selector(MyController.exportDiskAction(_:)),
+            #selector(MyController.inspectDiskAction(_:)),
+            #selector(MyController.inspectVolumeAction(_:)):
             return drive.hasDisk()
             
         case #selector(MyController.exportRecentDiskDummyAction8(_:)):
@@ -703,7 +705,29 @@ extension MyController: NSMenuItemValidation {
         let exportPanel = ExportDialog(with: self, nibName: nibName)
         exportPanel?.showSheet(forDrive: drive)
     }
-     
+
+    @IBAction func inspectDiskAction(_ sender: NSMenuItem!) {
+
+        /*
+        let panel = DiskInspector(with: self, nibName: "DiskInspector")
+        panel?.show(drive: sender.tag)
+        */
+    }
+
+    @IBAction func inspectVolumeAction(_ sender: NSMenuItem!) {
+
+        let panel = VolumeInspector(with: self, nibName: "VolumeInspector")
+
+        do {
+
+            try panel?.show(diskDrive: DriveID(rawValue: sender.tag)!)
+
+        } catch {
+
+            showAlert(.cantDecode, error: error, window: window)
+        }
+    }
+
     @IBAction func writeProtectAction(_ sender: NSMenuItem!) {
         
         let drive = DriveID(rawValue: sender.tag)!

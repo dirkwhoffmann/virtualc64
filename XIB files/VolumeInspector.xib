@@ -34,6 +34,7 @@
                 <outlet property="previewTable" destination="bOj-np-3lM" id="JvD-HL-y81"/>
                 <outlet property="title" destination="L5T-n4-sxP" id="Xid-Ny-sdX"/>
                 <outlet property="usageInfo" destination="Bzo-hq-4Wf" id="eWP-Jf-lMw"/>
+                <outlet property="window" destination="QvC-M9-y7g" id="dzA-hH-2Ng"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -614,6 +615,9 @@
                     </textField>
                 </subviews>
             </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="nDl-c0-WvD"/>
+            </connections>
             <point key="canvasLocation" x="138.5" y="123"/>
         </window>
     </objects>

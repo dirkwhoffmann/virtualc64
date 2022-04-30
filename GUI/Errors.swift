@@ -11,7 +11,7 @@
 // Logging / Debugging
 //
 
-let logLevel = releaseBuild ? 0 : 1
+let logLevel = 2 // releaseBuild ? 0 : 1
 
 public func log(_ msg: String = "", level: Int = 1,
                 path: String = #file, function: String = #function, line: Int = #line) {

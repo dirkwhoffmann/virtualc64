@@ -298,6 +298,20 @@ FileSystem::setName(PETName<16> name)
     name.write(bam->data + 0x90);
 }
 
+PETName<2>
+FileSystem::getID() const
+{
+    FSBlock *bam = bamPtr();
+    return PETName<2>(bam->data + 0xA2);
+}
+
+void
+FileSystem::setID(PETName<2> name)
+{
+    FSBlock *bam = bamPtr();
+    name.write(bam->data + 0xA2);
+}
+
 bool
 FileSystem::isFree(TSLink ts) const
 {

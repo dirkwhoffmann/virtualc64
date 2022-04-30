@@ -93,10 +93,14 @@ public:
     PETName<16> getName() const;
     void setName(PETName<16> name);
 
+    // Gets or sets the disk ID
+    PETName<2> getID() const;
+    void setID(PETName<2> name);
+
     // Returns the first or second disk ID character
     u8 diskId1() const { return bamPtr()->data[0xA2]; }
     u8 diskId2() const { return bamPtr()->data[0xA3]; }
-    
+
     // Reports layout information
     isize getNumCyls() const { return layout.numCyls; }
     isize getNumHeads() const { return layout.numHeads; }

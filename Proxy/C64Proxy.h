@@ -941,6 +941,7 @@ AnyCollectionProxy <MakeWithFolder> { }
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)collection exception:(ExceptionWrapper *)ex;
 
 @property (readonly) NSString *name;
+@property (readonly) NSString *idString;
 @property (readonly) NSString *capacityString;
 @property (readonly) NSString *fillLevelString;
 @property (readonly) DOSType dos;
