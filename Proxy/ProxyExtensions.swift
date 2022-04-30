@@ -39,7 +39,7 @@ extension Proxy {
         return obj!
     }
     
-    static func make<T: MakeWithFileSystem>(fs: FSDeviceProxy) throws -> T {
+    static func make<T: MakeWithFileSystem>(fs: FileSystemProxy) throws -> T {
         
         let exception = ExceptionWrapper()
         let obj = T.make(withFileSystem: fs, exception: exception)
@@ -113,7 +113,7 @@ extension C64Proxy {
         if exception.errorCode != .OK { throw VC64Error(exception) }
     }
     
-    func flash(_ proxy: FSDeviceProxy, item: Int) throws {
+    func flash(_ proxy: FileSystemProxy, item: Int) throws {
 
         let exception = ExceptionWrapper()
         flash(proxy, item: item, exception: exception)
@@ -141,7 +141,7 @@ extension AnyFileProxy {
     }
 }
 
-extension FSDeviceProxy {
+extension FileSystemProxy {
         
     func exportDirectory(url: URL) throws {
             
@@ -300,7 +300,7 @@ extension CRTFileProxy {
     }
 }
 
-extension FSDeviceProxy {
+extension FileSystemProxy {
     
     func icon(protected: Bool) -> NSImage {
                         

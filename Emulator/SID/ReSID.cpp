@@ -262,7 +262,7 @@ ReSID::setSamplingMethod(SamplingMethod value)
 u8
 ReSID::peek(u16 addr)
 {	
-    return sid->read(addr);
+    return u8(sid->read(addr));
 }
 
 void 
@@ -271,7 +271,7 @@ ReSID::poke(u16 addr, u8 value)
     sid->write(addr, value);
 }
 
-i64
+isize
 ReSID::executeCycles(isize numCycles, SampleStream &stream)
 {
     short buf[2049];
@@ -302,7 +302,7 @@ ReSID::executeCycles(isize numCycles, SampleStream &stream)
     return samples;
 }
 
-i64
+isize
 ReSID::executeCycles(isize numCycles)
 {
     return executeCycles(numCycles, muxer.sidStream[nr]);

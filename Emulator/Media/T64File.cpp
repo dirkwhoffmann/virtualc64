@@ -130,8 +130,8 @@ T64File::init(class FileSystem &fs)
         ptr += 4;
         
         // File name (16 bytes)
-        PETName<16> name = fs.fileName(n);
-        name.write(ptr);
+        PETName<16> fileName = fs.fileName(n);
+        fileName.write(ptr);
         ptr += 16;
     }
     
@@ -302,7 +302,7 @@ T64File::finalizeRead()
             // Let's assume that the rest of the file data belongs to this file ...
             isize fixedEndAddrInMemory = startAddrInMemory + (size - startAddrInContainer);
 
-            warn("T64: Changing end address of item %ld from %04zX to %04zX.\n",
+            warn("T64: Changing end address of item %ld from %04lX to %04lX.\n",
                  i, endAddrInMemory, fixedEndAddrInMemory);
 
             data[n] = LO_BYTE(fixedEndAddrInMemory);

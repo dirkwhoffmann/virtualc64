@@ -56,8 +56,8 @@ Mouse1350::execute(i64 targetX, i64 targetY)
     
     controlPort = 0xFF;
     
-    double deltaX = (mouseX - latchedX[0]);
-    double deltaY = (latchedY[0] - mouseY);
+    double deltaX = double(mouseX - latchedX[0]);
+    double deltaY = double(latchedY[0] - mouseY);
     double absDeltaX = abs(deltaX);
     double absDeltaY = abs(deltaY);
     double max = (absDeltaX > absDeltaY) ? absDeltaX : absDeltaY;

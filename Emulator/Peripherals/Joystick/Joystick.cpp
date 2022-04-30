@@ -72,7 +72,7 @@ Joystick::setConfigItem(Option option, i64 value)
             
         case OPT_AUTOFIRE:
             
-            config.autofire = (bool)value;
+            config.autofire = bool(value);
             
             // Release button immediately if autofire-mode is switches off
             if (value == false) button = false;
@@ -80,7 +80,7 @@ Joystick::setConfigItem(Option option, i64 value)
 
         case OPT_AUTOFIRE_BULLETS:
             
-            config.autofireBullets = value;
+            config.autofireBullets = isize(value);
             
             // Update the bullet counter if we're currently firing
             if (bulletCounter > 0) reload();
@@ -88,7 +88,7 @@ Joystick::setConfigItem(Option option, i64 value)
 
         case OPT_AUTOFIRE_DELAY:
             
-            config.autofireDelay = value;
+            config.autofireDelay = isize(value);
             return;
 
         default:

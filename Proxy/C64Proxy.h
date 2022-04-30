@@ -52,7 +52,7 @@
 @class DmaDebuggerProxy;
 @class DriveProxy;
 @class ExpansionPortProxy;
-@class FSDeviceProxy;
+@class FileSystemProxy;
 @class G64FileProxy;
 @class GuardsProxy;
 @class IECProxy;
@@ -230,7 +230,7 @@
 - (NSString *)romRevision:(RomType)type;
 
 - (void)flash:(AnyFileProxy *)container exception:(ExceptionWrapper *)ex;
-- (void)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
+- (void)flash:(FileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
 
 @end
 
@@ -556,7 +556,7 @@
 - (void)insertD64:(D64FileProxy *)proxy protected:(BOOL)wp;
 - (void)insertG64:(G64FileProxy *)proxy protected:(BOOL)wp;
 - (void)insertCollection:(AnyCollectionProxy *)proxy protected:(BOOL)wp;
-- (void)insertFileSystem:(FSDeviceProxy *)proxy protected:(BOOL)wp;
+- (void)insertFileSystem:(FileSystemProxy *)proxy protected:(BOOL)wp;
 - (void)ejectDisk;
 
 - (Track)track;
@@ -740,7 +740,7 @@ exception:(ExceptionWrapper *)ex;
 @end
 
 @protocol MakeWithFileSystem
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)fs exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithFileSystem:(FileSystemProxy *)fs exception:(ExceptionWrapper *)ex;
 @end
 
 @protocol MakeWithCollection
@@ -861,7 +861,7 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex;
 
 @end
 
@@ -874,7 +874,7 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex;
 
 @end
 
@@ -887,7 +887,7 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex;
 
 @end
 
@@ -900,7 +900,7 @@ AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex;
 
 @end
 
@@ -926,15 +926,15 @@ AnyCollectionProxy <MakeWithFolder> { }
 
 + (instancetype)makeWithFolder:(NSString *)path exception:(ExceptionWrapper *)ex;
 
-@property (readonly) FSDeviceProxy *fileSystem;
+@property (readonly) FileSystemProxy *fileSystem;
 
 @end
 
 //
-// FSDevice
+// FileSystem
 //
 
-@interface FSDeviceProxy : Proxy <MakeWithDisk, MakeWithCollection, MakeWithD64> { }
+@interface FileSystemProxy : Proxy <MakeWithDisk, MakeWithCollection, MakeWithD64> { }
 
 + (instancetype)makeWithD64:(D64FileProxy *)d64 exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithDisk:(DiskProxy *)disk exception:(ExceptionWrapper *)ex;
@@ -980,5 +980,10 @@ AnyCollectionProxy <MakeWithFolder> { }
 - (FSFileType)fileType:(NSInteger)nr;
 - (NSInteger)fileSize:(NSInteger)nr;
 - (NSInteger)fileBlocks:(NSInteger)nr;
+
+- (FSBlockType)getDisplayType:(NSInteger)column;
+- (NSInteger)diagnoseImageSlice:(NSInteger)column;
+- (NSInteger)nextBlockOfType:(FSBlockType)type after:(NSInteger)after;
+- (NSInteger)nextCorruptedBlock:(NSInteger)after;
 
 @end

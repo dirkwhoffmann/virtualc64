@@ -69,10 +69,10 @@ private:
     double sampleRate = 44100.0;
         
     // Stores for how many cycles FastSID was executed so far
-    u64 executedCycles;
+    i64 executedCycles;
 
     // Stores how many sound samples were computed so far
-    u64 computedSamples;
+    i64 computedSamples;
 
     // Switches filter emulation on or off
     bool emulateFilter = true;
@@ -214,8 +214,8 @@ public:
      * samples are written into the provided ring buffer. The fuction returns
      * the number of written audio samples.
      */
-    i64 executeCycles(isize numCycles, SampleStream &stream);
-    i64 executeCycles(isize numCycles);
+    isize executeCycles(isize numCycles, SampleStream &stream);
+    isize executeCycles(isize numCycles);
     
 private:
     

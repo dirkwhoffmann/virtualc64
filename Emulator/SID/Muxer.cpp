@@ -182,7 +182,7 @@ Muxer::setConfigItem(Option option, i64 value)
         {
             {   SUSPENDED
 
-                config.powerSave = value;
+                config.powerSave = bool(value);
             }
             return;
         }
@@ -194,10 +194,10 @@ Muxer::setConfigItem(Option option, i64 value)
             
             {   SUSPENDED
                 
-                config.revision = (SIDRevision)value;
+                config.revision = SIDRevision(value);
                 for (int i = 0; i < 4; i++) {
-                    resid[i].setRevision(value);
-                    fastsid[i].setRevision(value);
+                    resid[i].setRevision(SIDRevision(value));
+                    fastsid[i].setRevision(SIDRevision(value));
                 }
             }
             return;
@@ -206,10 +206,10 @@ Muxer::setConfigItem(Option option, i64 value)
         {
             {   SUSPENDED
                 
-                config.filter = value;
+                config.filter = bool(value);
                 for (int i = 0; i < 4; i++) {
-                    resid[i].setAudioFilter(value);
-                    fastsid[i].setAudioFilter(value);
+                    resid[i].setAudioFilter(bool(value));
+                    fastsid[i].setAudioFilter(bool(value));
                 }
             }
             return;
@@ -222,7 +222,7 @@ Muxer::setConfigItem(Option option, i64 value)
 
             {   SUSPENDED
 
-                config.engine = (SIDEngine)value;
+                config.engine = SIDEngine(value);
             }
             return;
         }
@@ -234,9 +234,9 @@ Muxer::setConfigItem(Option option, i64 value)
 
             {   SUSPENDED
                 
-                config.sampling = (SamplingMethod)value;
+                config.sampling = SamplingMethod(value);
                 for (int i = 0; i < 4; i++) {
-                    resid[i].setSamplingMethod(value);
+                    resid[i].setSamplingMethod(SamplingMethod(value));
                     // Note: fastSID has no such option
                 }
             }
@@ -780,7 +780,7 @@ Muxer::executeUntil(Cycle targetCycle)
         }
     }
     
-    isize missingCycles  = targetCycle - cycles;
+    isize missingCycles  = isize(targetCycle - cycles);
     isize consumedCycles = executeCycles(missingCycles);
 
     cycles += consumedCycles;

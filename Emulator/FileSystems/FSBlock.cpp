@@ -160,8 +160,6 @@ FSBlock::itemType(u32 byte) const
         default:
             fatalError;
     }
-    
-    // return FS_USAGE_UNKNOWN;
 }
 
 ErrorCode
@@ -223,8 +221,6 @@ FSBlock::check(u32 byte, u8 *expected, bool strict) const
         default:
             fatalError;
     }
-    
-    return ERROR_OK;
 }
 
 isize

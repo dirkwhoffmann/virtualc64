@@ -236,7 +236,10 @@ public:
 
     // Checks a single byte in a certain block
     ErrorCode check(isize blockNr, u32 pos, u8 *expected, bool strict);
-    
+
+    // Checks if the block with the given number is part of the volume
+    bool isBlockNumber(isize nr) const { return nr >= 0 && nr < getNumBlocks(); }
+
     // Returns the position in the corrupted block list (0 = OK)
     isize getCorrupted(isize blockNr) const;
 
@@ -284,4 +287,20 @@ public:
     void exportFile(FSDirEntry *item, const string &path) throws;
     void exportFile(FSDirEntry *entry, std::ofstream &stream) throws;
 
+
+    //
+    // GUI helper functions
+    //
+
+    // Determines how the layout image should look like in a certain column
+    FSBlockType getDisplayType(isize column);
+
+    // Determines how the diagnose image should look like in a certain column
+    isize diagnoseImageSlice(isize column);
+
+    // Searches the block list for a block of a specific type
+    isize nextBlockOfType(FSBlockType type, isize after);
+
+    // Searches the block list for a corrupted block
+    isize nextCorruptedBlock(isize after);
 };

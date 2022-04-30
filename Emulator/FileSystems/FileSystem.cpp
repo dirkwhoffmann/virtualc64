@@ -443,7 +443,7 @@ FileSystem::fileSize(FSDirEntry *entry) const
 {
     assert(entry);
     
-    u64 size = 0;
+    isize size = 0;
     std::set<Block> visited;
 
     // Start at the first data block
@@ -906,4 +906,119 @@ FileSystem::exportFile(FSDirEntry *entry, std::ofstream &stream)
         
         b = next;
     }
+}
+
+FSBlockType
+FileSystem::getDisplayType(isize column)
+{
+    static constexpr isize width = 1760;
+
+    assert(column >= 0 && column < width);
+
+    static FSBlockType cache[width] = { };
+
+    // Cache values when the type of the first column is requested
+    if (column == 0) {
+
+        // Start from scratch
+        for (isize i = 0; i < width; i++) cache[i] = FS_BLOCKTYPE_UNKNOWN;
+
+        // Setup block priorities
+        i8 pri[12];
+        pri[FS_BLOCKTYPE_UNKNOWN]   = 0;
+        pri[FS_BLOCKTYPE_BAM]       = 3;
+        pri[FS_BLOCKTYPE_DIR]       = 2;
+        pri[FS_BLOCKTYPE_DATA]      = 1;
+
+        for (isize i = 0; i < getNumBlocks(); i++) {
+
+            auto pos = i * (width - 1) / (getNumBlocks() - 1);
+            if (pri[cache[pos]] < pri[blocks[i]->type()]) {
+                cache[pos] = blocks[i]->type();
+            }
+        }
+
+        // Fill gaps
+        for (isize pos = 1; pos < width; pos++) {
+
+            if (cache[pos] == FS_BLOCKTYPE_UNKNOWN) {
+                cache[pos] = cache[pos - 1];
+            }
+        }
+    }
+
+    return cache[column];
+}
+
+FSBlockType
+FileSystem::diagnoseImageSlice(isize column)
+{
+    static constexpr isize width = 1760;
+
+    assert(column >= 0 && column < width);
+
+    static i8 cache[width] = { };
+
+    // Cache values when the type of the first column is requested
+    if (column == 0) {
+
+        // Start from scratch
+        for (isize i = 0; i < width; i++) cache[i] = -1;
+
+        // Compute values
+        for (isize i = 0; i < getNumBlocks(); i++) {
+
+            auto pos = i * width / (getNumBlocks() - 1);
+            if (blocks[i]->corrupted) {
+                cache[pos] = 2;
+            } else if (blocks[i]->type() == FS_BLOCKTYPE_UNKNOWN) {
+                cache[pos] = 0;
+            } else {
+                cache[pos] = 1;
+            }
+        }
+
+        // Fill gaps
+        for (isize pos = 1; pos < width; pos++) {
+
+            if (cache[pos] == -1) {
+                cache[pos] = cache[pos - 1];
+            }
+        }
+    }
+
+    assert(cache[column] >= 0 && cache[column] <= 2);
+    return cache[column];
+}
+
+isize
+FileSystem::nextBlockOfType(FSBlockType type, isize after)
+{
+    assert(isBlockNumber(after));
+
+    isize result = after;
+
+    do {
+        result = (result + 1) % getNumBlocks();
+        if (blocks[result]->type() == type) return result;
+
+    } while (result != after);
+
+    return -1;
+}
+
+isize
+FileSystem::nextCorruptedBlock(isize after)
+{
+    assert(isBlockNumber(after));
+
+    isize result = after;
+
+    do {
+        result = (result + 1) % getNumBlocks();
+        if (blocks[result]->corrupted) return result;
+
+    } while (result != after);
+
+    return -1;
 }

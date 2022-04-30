@@ -53,7 +53,7 @@ class ExportDialog: DialogController {
     var driveID: DriveID?
     var drive: DriveProxy? { return driveID == nil ? nil : c64.drive(driveID!) }
     var disk: DiskProxy?
-    var volume: FSDeviceProxy?
+    var volume: FileSystemProxy?
 
     var errorReport: FSErrorReport?
     
@@ -193,20 +193,12 @@ class ExportDialog: DialogController {
         disk = c64.drive(nr).disk
                 
         // Try to extract the file system
-        if disk != nil { volume = try? FSDeviceProxy.make(disk: disk!) }
+        if disk != nil { volume = try? FileSystemProxy.make(disk: disk!) }
         
         // volume?.printDirectory()
                         
         super.showSheet(completionHandler: handler)
     }
-
-    /*
-    func showSheet(forVolume vol: FSDeviceProxy) {
-        
-        volume = vol
-        super.showSheet()
-    }
-    */
     
     override public func awakeFromNib() {
         

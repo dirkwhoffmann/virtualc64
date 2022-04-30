@@ -88,7 +88,10 @@ Interpreter::exec(const string& userInput, bool verbose)
 {
     // Split the command string
     Arguments tokens = split(userInput);
-        
+
+    // Skip empty lines
+    if (tokens.empty()) return;
+
     // Remove the 'try' keyword
     if (tokens.front() == "try") tokens.erase(tokens.begin());
 
@@ -115,7 +118,7 @@ Interpreter::exec(const Arguments &argv, bool verbose)
     Command *current = &root, *next;
     Arguments args = argv;
 
-    while (!args.empty() && ((next = current->seek(args.front())))) {
+    while (!args.empty() && ((next = current->seek(args.front())) != nullptr)) {
         
         current = current->seek(args.front());
         args.erase(args.begin());

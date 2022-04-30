@@ -11,29 +11,20 @@ import Darwin
 
 class VolumeInspector: DialogController {
 
-    /*
     @IBOutlet weak var icon: NSImageView!
-    @IBOutlet weak var virus: NSImageView!
     @IBOutlet weak var title: NSTextField!
     @IBOutlet weak var nameInfo: NSTextField!
-    @IBOutlet weak var creationInfo: NSTextField!
-    @IBOutlet weak var modificationInfo: NSTextField!
-    @IBOutlet weak var bootblockInfo: NSTextField!
+    @IBOutlet weak var idInfo: NSTextField!
+    @IBOutlet weak var dosInfo: NSTextField!
     @IBOutlet weak var capacityInfo: NSTextField!
     @IBOutlet weak var blocksInfo: NSTextField!
     @IBOutlet weak var usageInfo: NSTextField!
-    @IBOutlet weak var virusInfo: NSTextField!
 
     @IBOutlet weak var blockImageButton: NSButton!
     @IBOutlet weak var blockSlider: NSSlider!
-    @IBOutlet weak var bootBlockButton: NSButton!
-    @IBOutlet weak var rootBlockButton: NSButton!
-    @IBOutlet weak var bmBlockButton: NSButton!
-    @IBOutlet weak var bmExtBlockButton: NSButton!
-    @IBOutlet weak var fileHeaderBlockButton: NSButton!
-    @IBOutlet weak var fileListBlockButton: NSButton!
-    @IBOutlet weak var userDirBlockButton: NSButton!
-    @IBOutlet weak var dataBlockButton: NSButton!
+    @IBOutlet weak var bamButton: NSButton!
+    @IBOutlet weak var dirButton: NSButton!
+    @IBOutlet weak var dataButton: NSButton!
 
     @IBOutlet weak var diagnoseImageButton: NSButton!
     @IBOutlet weak var diagnoseSlider: NSSlider!
@@ -42,13 +33,13 @@ class VolumeInspector: DialogController {
     @IBOutlet weak var diagnoseFailButton: NSButton!
     @IBOutlet weak var diagnoseNextButton: NSButton!
     @IBOutlet weak var diagnoseNextInfo: NSTextField!
+    @IBOutlet weak var diagnoseStrictButton: NSButton!
 
     @IBOutlet weak var previewScrollView: NSScrollView!
     @IBOutlet weak var previewTable: NSTableView!
     @IBOutlet weak var blockText: NSTextField!
     @IBOutlet weak var blockField: NSTextField!
     @IBOutlet weak var blockStepper: NSStepper!
-    @IBOutlet weak var strictButton: NSButton!
     @IBOutlet weak var info1: NSTextField!
     @IBOutlet weak var info2: NSTextField!
 
@@ -78,41 +69,29 @@ class VolumeInspector: DialogController {
     var selection: Int?
     var selectedRow: Int? { return selection == nil ? nil : selection! / 16 }
     var selectedCol: Int? { return selection == nil ? nil : selection! % 16 }
-    var strict: Bool { return strictButton.state == .on }
+    var strict: Bool { return diagnoseStrictButton.state == .on }
 
     // Block preview
     var blockNr = 0
 
+    /*
     let palette: [FSBlockType: NSColor] = [
 
-        .UNKNOWN_BLOCK: NSColor.white,
-        .EMPTY_BLOCK: NSColor.gray,
-        .BOOT_BLOCK: Palette.orange,
-        .ROOT_BLOCK: Palette.red,
-        .BITMAP_BLOCK: Palette.purple,
-        .BITMAP_EXT_BLOCK: Palette.pink,
-        .USERDIR_BLOCK: Palette.yellow,
-        .FILEHEADER_BLOCK: Palette.blue,
-        .FILELIST_BLOCK: Palette.cyan,
-        .DATA_BLOCK_OFS: Palette.green,
-        .DATA_BLOCK_FFS: Palette.green
+        .UNKNOWN: Palette.white,
+        .BAM: Palette.red,
+        .DIR: Palette.yellow,
+        .DATA: Palette.green
     ]
+    */
 
     var layoutImage: NSImage? {
 
         return createImage(colorize: { (x: Int) -> NSColor in
             switch vol.getDisplayType(x) {
-            case .UNKNOWN_BLOCK: return Palette.white
-            case .EMPTY_BLOCK: return NSColor.gray
-            case .BOOT_BLOCK: return Palette.orange
-            case .ROOT_BLOCK: return Palette.red
-            case .BITMAP_BLOCK: return Palette.purple
-            case .BITMAP_EXT_BLOCK: return Palette.pink
-            case .USERDIR_BLOCK: return Palette.yellow
-            case .FILEHEADER_BLOCK: return Palette.blue
-            case .FILELIST_BLOCK: return Palette.cyan
-            case .DATA_BLOCK_OFS: return Palette.green
-            case .DATA_BLOCK_FFS: return Palette.green
+            case .UNKNOWN: return Palette.white
+            case .BAM: return Palette.red
+            case .DIR: return Palette.yellow
+            case .DATA: return Palette.green
             default: fatalError()
             }
         })
@@ -171,6 +150,7 @@ class VolumeInspector: DialogController {
     // Starting up
     //
 
+    /*
     func show(diskDrive nr: Int) throws {
 
         let dfn = amiga.df(nr)!

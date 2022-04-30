@@ -152,7 +152,7 @@ Drive::setConfigItem(Option option, i64 value)
         {
             {   SUSPENDED
                 
-                config.autoConfig = value;
+                config.autoConfig = bool(value);
                 if (value) autoConfigure();
             }
             return;
@@ -163,7 +163,7 @@ Drive::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INVARG, DriveTypeEnum::keyList());
             }
             
-            config.type = (DriveType)value;
+            config.type = DriveType(value);
             return;
 
         case OPT_DRV_RAM:
@@ -174,7 +174,7 @@ Drive::setConfigItem(Option option, i64 value)
             
             {   SUSPENDED
                 
-                config.ram = (DriveRam)value;
+                config.ram = DriveRam(value);
                 mem.updateBankMap();
             }
             return;
@@ -187,7 +187,7 @@ Drive::setConfigItem(Option option, i64 value)
             
             {   SUSPENDED
 
-                config.parCable = (ParCableType)value;
+                config.parCable = ParCableType(value);
                 mem.updateBankMap();
             }
             return;
@@ -200,7 +200,7 @@ Drive::setConfigItem(Option option, i64 value)
             
             {   SUSPENDED
 
-                config.connected = value;
+                config.connected = bool(value);
                 reset(true);
             }
             msgQueue.put(value ? MSG_DRIVE_CONNECT : MSG_DRIVE_DISCONNECT, deviceNr);
@@ -210,7 +210,7 @@ Drive::setConfigItem(Option option, i64 value)
         {
             {   SUSPENDED
                 
-                config.switchedOn = value;
+                config.switchedOn = bool(value);
                 reset(true);
             }
             msgQueue.put(value ? MSG_DRIVE_POWER_ON : MSG_DRIVE_POWER_OFF, deviceNr);
@@ -220,53 +220,53 @@ Drive::setConfigItem(Option option, i64 value)
         {
             {   SUSPENDED
                 
-                config.powerSave = value;
+                config.powerSave = bool(value);
                 wakeUp();
             }
             return;
         }
         case OPT_DRV_EJECT_DELAY:
 
-            config.ejectDelay = value;
+            config.ejectDelay = isize(value);
             return;
 
         case OPT_DRV_SWAP_DELAY:
 
-            config.swapDelay = value;
+            config.swapDelay = isize(value);
             return;
 
         case OPT_DRV_INSERT_DELAY:
 
-            config.insertDelay = value;
+            config.insertDelay = isize(value);
             return;
 
         case OPT_DRV_PAN:
 
-            config.pan = (i16)value;
+            config.pan = i16(value);
             return;
 
         case OPT_DRV_POWER_VOL:
 
             value = std::clamp(value, 0LL, 100LL);
-            config.powerVolume = (u8)value;
+            config.powerVolume = u8(value);
             return;
 
         case OPT_DRV_STEP_VOL:
 
             value = std::clamp(value, 0LL, 100LL);
-            config.stepVolume = (u8)value;
+            config.stepVolume = u8(value);
             return;
 
         case OPT_DRV_EJECT_VOL:
 
             value = std::clamp(value, 0LL, 100LL);
-            config.ejectVolume = (u8)value;
+            config.ejectVolume = u8(value);
             return;
 
         case OPT_DRV_INSERT_VOL:
 
             value = std::clamp(value, 0LL, 100LL);
-            config.insertVolume = (u8)value;
+            config.insertVolume = u8(value);
             return;
 
         default:

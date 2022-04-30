@@ -859,7 +859,7 @@ VIA6522::sleep()
 void
 VIA6522::wakeUp()
 {
-    u64 idleCycles = idleCounter;
+    auto idleCycles = idleCounter;
     
     // Make up for missed cycles
     if (idleCycles) {
@@ -867,7 +867,7 @@ VIA6522::wakeUp()
             assert((delay & (VIACountA0)) != 0);
             assert((feed & (VIACountA0)) != 0);
             assert(t1 > idleCycles);
-            t1 -= idleCycles;
+            t1 -= u16(idleCycles);
         } else {
             assert((delay & (VIACountA0)) == 0);
             assert((feed & (VIACountA0)) == 0);
@@ -876,7 +876,7 @@ VIA6522::wakeUp()
             assert((delay & (VIACountB0)) != 0);
             assert((feed & (VIACountB0)) != 0);
             assert(t2 > idleCycles);
-            t2 -= idleCycles;
+            t2 -= u16(idleCycles);
         } else {
             assert((delay & (VIACountB0)) == 0);
             assert((feed & (VIACountB0)) == 0);

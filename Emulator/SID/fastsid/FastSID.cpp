@@ -385,7 +385,7 @@ FastSID::poke(u16 addr, u8 value)
     latchedDataBus = value;
 }
 
-i64
+isize
 FastSID::executeCycles(isize numCycles, SampleStream &stream)
 {
     isize buflength = stream.cap();
@@ -397,7 +397,7 @@ FastSID::executeCycles(isize numCycles, SampleStream &stream)
     isize shouldHave = (isize)(executedCycles * samplesPerCycle);
     
     // How many sound samples are missing?
-    isize samples = shouldHave - computedSamples;
+    isize samples = isize(shouldHave - computedSamples);
     computedSamples = shouldHave;
     
     // Do some consistency checking
@@ -420,7 +420,7 @@ FastSID::executeCycles(isize numCycles, SampleStream &stream)
     return samples;
 }
 
-i64
+isize
 FastSID::executeCycles(isize numCycles)
 {
     return executeCycles(numCycles, muxer.sidStream[nr]);

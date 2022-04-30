@@ -1152,7 +1152,7 @@
     [self drive]->insertCollection(*(AnyCollection *)proxy->obj, wp);
 }
 
-- (void)insertFileSystem:(FSDeviceProxy *)proxy protected:(BOOL)wp
+- (void)insertFileSystem:(FileSystemProxy *)proxy protected:(BOOL)wp
 {
     [self drive]->insertFileSystem(*(FileSystem *)proxy->obj, wp);
 }
@@ -1833,7 +1833,7 @@
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex
++ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     try { return [self make: new T64File(*(FileSystem *)proxy->obj)]; }
     catch (VC64Error &error) { [ex save:error]; return nil; }
@@ -1864,7 +1864,7 @@
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex
++ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     try { return [self make: new PRGFile(*(FileSystem *)proxy->obj)]; }
     catch (VC64Error &error) { [ex save:error]; return nil; }
@@ -1895,7 +1895,7 @@
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex
++ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     try { return [self make: new P00File(*(FileSystem *)proxy->obj)]; }
     catch (VC64Error &error) { [ex save:error]; return nil; }
@@ -1931,7 +1931,7 @@
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
-+ (instancetype)makeWithFileSystem:(FSDeviceProxy *)proxy exception:(ExceptionWrapper *)ex
++ (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex
 {
     try { return [self make: new D64File(*(FileSystem *)proxy->obj)]; }
     catch (VC64Error &error) { [ex save:error]; return nil; }
@@ -1971,10 +1971,10 @@
 @end
 
 //
-// FSDevice
+// FileSystem
 //
 
-@implementation FSDeviceProxy
+@implementation FileSystemProxy
 
 + (instancetype)make:(FileSystem *)fs
 {
@@ -2179,6 +2179,26 @@
     return [self fs]->fileBlocks((unsigned)nr);
 }
 
+- (FSBlockType)getDisplayType:(NSInteger)column
+{
+    return [self fs]->getDisplayType(column);
+}
+
+- (NSInteger)diagnoseImageSlice:(NSInteger)column
+{
+    return [self fs]->diagnoseImageSlice(column);
+}
+
+- (NSInteger)nextBlockOfType:(FSBlockType)type after:(NSInteger)after
+{
+    return [self fs]->nextBlockOfType(type, after);
+}
+
+- (NSInteger)nextCorruptedBlock:(NSInteger)after
+{
+    return [self fs]->nextCorruptedBlock(after);
+}
+
 @end
 
 //
@@ -2203,9 +2223,9 @@
     return (Folder *)obj;
 }
 
-- (FSDeviceProxy *)fileSystem
+- (FileSystemProxy *)fileSystem
 {
-    return [FSDeviceProxy make:[self folder]->getFS()];
+    return [FileSystemProxy make:[self folder]->getFS()];
 }
 
 @end
@@ -2690,7 +2710,7 @@
     catch (VC64Error &error) { [ex save:error]; }
 }
 
-- (void)flash:(FSDeviceProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex
+- (void)flash:(FileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex
 {
     try { [self c64]->flash(*(FileSystem *)proxy->obj, (unsigned)nr); }
     catch (VC64Error &error) { [ex save:error]; }

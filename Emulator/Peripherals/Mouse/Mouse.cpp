@@ -70,13 +70,13 @@ Mouse::setConfigItem(Option option, i64 value)
             
         case OPT_MOUSE_MODEL:
             
-            config.model = (MouseModel)value;
+            config.model = MouseModel(value);
             _reset(true);
             return;
             
         case OPT_SHAKE_DETECTION:
             
-            config.shakeDetection = value;
+            config.shakeDetection = bool(value);
             return;
             
         case OPT_MOUSE_VELOCITY:
@@ -84,7 +84,7 @@ Mouse::setConfigItem(Option option, i64 value)
             if (value < 0 || value > 255) {
                 throw VC64Error(ERROR_OPT_INVARG, "0 ... 255");
             }
-            config.velocity= value;
+            config.velocity = isize(value);
             updateScalingFactors();
             return;
 

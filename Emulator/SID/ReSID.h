@@ -190,6 +190,6 @@ public:
      * samples are written into the provided ring buffer. The fuction returns
      * the number of written audio samples.
      */
-    i64 executeCycles(isize numCycles, SampleStream &stream);
-    i64 executeCycles(isize numCycles);
+    isize executeCycles(isize numCycles, SampleStream &stream);
+    isize executeCycles(isize numCycles);
 };

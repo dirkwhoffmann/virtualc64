@@ -425,12 +425,12 @@ class MyDocument: NSDocument {
 
         } else {
             
-            let fs = try Proxy.make(disk: disk) as FSDeviceProxy
+            let fs = try Proxy.make(disk: disk) as FileSystemProxy
             try export(fs: fs, to: url)
         }
     }
     
-    func export(fs: FSDeviceProxy, to url: URL) throws {
+    func export(fs: FileSystemProxy, to url: URL) throws {
 
         func showMultipleFilesAlert(format: String) {
 

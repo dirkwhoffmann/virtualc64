@@ -83,6 +83,6 @@ typedef struct
 {
     MouseModel model;
     bool shakeDetection;
-    long velocity;
+    isize velocity;
 }
 MouseConfig;
