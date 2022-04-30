@@ -736,6 +736,16 @@ FileSystem::readByte(Block block, isize offset) const
     return blocks[block]->data[offset];
 }
 
+string
+FileSystem::ascii(Block nr, isize offset, isize len) const
+{
+    assert(isBlockNumber(nr));
+    assert(offset + len <= 256);
+
+    return util::createAscii(blocks[nr]->data + offset, len);
+    // return string(len, '.');
+}
+
 void
 FileSystem::importVolume(const u8 *src, isize size)
 {

@@ -275,6 +275,9 @@ public:
     u8 readByte(Block block, isize offset) const;
     u8 readByte(TSLink ts, isize offset) const { return readByte(layout.blockNr(ts), offset); }
 
+    // Returns a portion of the block as an ASCII dump
+    string ascii(Block nr, isize offset, isize len) const;
+
     // Imports the volume from a buffer
     void importVolume(const u8 *src, isize size) throws;
     bool importVolume(const u8 *src, isize size, ErrorCode *err);

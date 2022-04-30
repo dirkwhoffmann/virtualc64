@@ -143,10 +143,10 @@ extension AnyFileProxy {
 
 extension FileSystemProxy {
         
-    func exportDirectory(url: URL) throws {
+    func export(url: URL) throws {
             
         let exception = ExceptionWrapper()
-        exportDirectory(url.path, exception: exception)
+        export(url.path, exception: exception)
         if exception.errorCode != .OK { throw VC64Error(exception) }
     }
 }

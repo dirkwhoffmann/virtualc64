@@ -359,10 +359,8 @@ extension VolumeInspector: NSTableViewDataSource {
 
     func numberOfRows(in tableView: NSTableView) -> Int {
 
-        return 512 / 16
+        return 256 / 16
     }
-
-    /*
 
     func tableView(_ tableView: NSTableView,
                    objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
@@ -384,7 +382,6 @@ extension VolumeInspector: NSTableViewDataSource {
         }
         fatalError()
     }
-    */
 }
 
 extension VolumeInspector: NSTableViewDelegate {
@@ -416,7 +413,6 @@ extension VolumeInspector: NSTableViewDelegate {
     }
 }
 
-/*
 extension VolumeInspector: NSTabViewDelegate {
 
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
@@ -424,4 +420,3 @@ extension VolumeInspector: NSTabViewDelegate {
         update()
     }
 }
-*/

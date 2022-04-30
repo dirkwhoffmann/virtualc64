@@ -2172,7 +2172,12 @@
     return [self fs]->readByte((u32)block, offset);
 }
 
-- (void)exportDirectory:(NSString *)path exception:(ExceptionWrapper *)e
+- (NSString *)ascii:(NSInteger)block offset:(NSInteger)offset length:(NSInteger)len
+{
+    return @([self fs]->ascii(Block(block), offset, len).c_str());
+}
+
+- (void)export:(NSString *)path exception:(ExceptionWrapper *)e
 {
     try { [self fs]->exportDirectory([path fileSystemRepresentation]); }
     catch (VC64Error &error) { [e save:error]; }

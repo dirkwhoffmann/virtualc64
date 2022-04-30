@@ -1072,7 +1072,7 @@ VICII::pAccess(isize sprite)
     dataBusPhi1 = memAccess((u16)(VM13VM12VM11VM10() << 6 | 0x03F8 | sprite));
     spritePtr[sprite] = (u16)(dataBusPhi1 << 6);
     
-    if constexpr (flags & DEBUG_CYCLE) {
+    if constexpr (bool(flags & DEBUG_CYCLE)) {
         dmaDebugger.visualizeDma(bufferoffset, dataBusPhi1, MEMACCESS_P);
     }
 }

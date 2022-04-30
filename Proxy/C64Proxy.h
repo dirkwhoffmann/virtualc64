@@ -976,7 +976,8 @@ AnyCollectionProxy <MakeWithFolder> { }
 - (void)printDirectory;
 
 - (NSInteger)readByte:(NSInteger)block offset:(NSInteger)offset;
-- (void)exportDirectory:(NSString *)path exception:(ExceptionWrapper *)ex;
+- (NSString *)ascii:(NSInteger)block offset:(NSInteger)offset length:(NSInteger)len;
+- (void)export:(NSString *)path exception:(ExceptionWrapper *)ex;
 
 - (void)info;
 

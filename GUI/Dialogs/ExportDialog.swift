@@ -534,7 +534,7 @@ class ExportDialog: DialogController {
     func exportToDirectory(url: URL) {
         
         do {
-            try volume!.exportDirectory(url: url)
+            try volume!.export(url: url)
             hideSheet()
 
         } catch let error as VC64Error {
