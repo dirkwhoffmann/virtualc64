@@ -43,7 +43,7 @@ extension DOSType: CustomStringConvertible {
         switch self {
         
         case .NODOS:  return "No File System"
-        case .CBM:    return "Commodore File System (CBM DOS 2.6)"
+        case .CBM:    return "Commodore File System"
             
         default:      fatalError()
         }

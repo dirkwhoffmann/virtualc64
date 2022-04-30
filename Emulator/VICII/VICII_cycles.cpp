@@ -826,7 +826,7 @@ VICII::sAccess1()
             
             dataBusPhi2 = memAccess(spritePtr[sprite] | mc[sprite]);
             
-            if constexpr (flags & DEBUG_CYCLE) {
+            if constexpr (bool(flags & DEBUG_CYCLE)) {
                 dmaDebugger.visualizeDma(bufferoffset, dataBusPhi2, MEMACCESS_S);
             }
         }
@@ -851,7 +851,7 @@ VICII::sAccess2()
         dataBusPhi1 = memAccess(spritePtr[sprite] | mc[sprite]);
         mc[sprite] = (mc[sprite] + 1) & 0x3F;
         
-        if constexpr (flags & DEBUG_CYCLE) {
+        if constexpr (bool(flags & DEBUG_CYCLE)) {
             dmaDebugger.visualizeDma(bufferoffset, dataBusPhi1, MEMACCESS_S);
         }
 
@@ -888,7 +888,7 @@ VICII::rAccess()
 {
     dataBusPhi1 = memAccess(0x3F00 | refreshCounter--);
     
-    if constexpr (flags & DEBUG_CYCLE) {
+    if constexpr (bool(flags & DEBUG_CYCLE)) {
         dmaDebugger.visualizeDma(bufferoffset, dataBusPhi1, MEMACCESS_R);
     }
 }
@@ -898,7 +898,7 @@ VICII::iAccess()
 {
     dataBusPhi1 = memAccess(0x3FFF);
     
-    if constexpr (flags & DEBUG_CYCLE) {
+    if constexpr (bool(flags & DEBUG_CYCLE)) {
         dmaDebugger.visualizeDma(bufferoffset, dataBusPhi1, MEMACCESS_I);
     }
 }
@@ -916,7 +916,7 @@ VICII::cAccess()
         videoMatrix[vmli] = dataBusPhi2;
         colorLine[vmli] = mem.colorRam[vc] & 0x0F;
         
-        if constexpr (flags & DEBUG_CYCLE) {
+        if constexpr (bool(flags & DEBUG_CYCLE)) {
             dmaDebugger.visualizeDma(bufferoffset, dataBusPhi2, MEMACCESS_C);
         }
     }
@@ -997,7 +997,7 @@ VICII::gAccess()
         gAccessResult.write(dataBusPhi1);
     }
     
-    if constexpr (flags & DEBUG_CYCLE) {
+    if constexpr (bool(flags & DEBUG_CYCLE)) {
         dmaDebugger.visualizeDma(bufferoffset, dataBusPhi1, MEMACCESS_G);
     }
 }

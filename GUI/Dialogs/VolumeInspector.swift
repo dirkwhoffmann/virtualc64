@@ -228,7 +228,7 @@ class VolumeInspector: DialogController {
         title.stringValue = vol.dos.description
         nameInfo.stringValue = vol.name
         idInfo.stringValue = vol.idString
-        dosInfo.stringValue = vol.dos == .CBM ? "CBM" : "Unknown"
+        dosInfo.stringValue = vol.dos == .CBM ? "CBM DOS 2.6" : "Unknown"
         capacityInfo.stringValue = vol.capacityString
         blocksInfo.integerValue = vol.numBlocks
         usageInfo.stringValue = "\(vol.usedBlocks) (" + vol.fillLevelString + ")"
