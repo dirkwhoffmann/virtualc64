@@ -9,14 +9,15 @@
 
 import Cocoa
 
-class DragDropImageView: NSImageView, NSDraggingSource {
+class DragImageView: NSImageView, NSDraggingSource {
 
-    // Last mouse down event
+    @IBOutlet weak var exporter: NSFilePromiseProviderDelegate!
+
     var mouseDownEvent: NSEvent?
 
     override init(frame frameRect: NSRect) {
         
-        track()
+        log(level: 2)
 
         super.init(frame: frameRect)
         isEditable = true
@@ -24,7 +25,7 @@ class DragDropImageView: NSImageView, NSDraggingSource {
 
     required init?(coder: NSCoder) {
 
-        track()
+        log(level: 2)
 
         super.init(coder: coder)
         isEditable = true
@@ -52,10 +53,11 @@ class DragDropImageView: NSImageView, NSDraggingSource {
 
     override func mouseDown(with theEvent: NSEvent) {
         
-        track()
+        log(level: 2)
         
         // Create a file promise provider
-        let provider = NSFilePromiseProvider(fileType: "public.data", delegate: self)
+        let provider = NSFilePromiseProvider(fileType: "public.data",
+                                             delegate: exporter)
         
         // Embed the provider into a dragging item
         let draggingItem = NSDraggingItem(pasteboardWriter: provider)
@@ -63,32 +65,5 @@ class DragDropImageView: NSImageView, NSDraggingSource {
         
         // Write the dragging item into the pasteboard
         beginDraggingSession(with: [draggingItem], event: theEvent, source: self)
-    }
-}
-
-extension DragDropImageView: NSFilePromiseProviderDelegate {
-   
-    func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, fileNameForType fileType: String) -> String {
-        
-        return "virtualc64.mp4"
-    }
-    
-    func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, writePromiseTo url: URL, completionHandler: @escaping (Error?) -> Void) {
-        
-        track("\(url)")
-
-        let source = URL(fileURLWithPath: "/tmp/virtualc64.mp4")
-        
-        do {
-            if FileManager.default.fileExists(atPath: url.path) {
-                try FileManager.default.removeItem(at: url)
-            }
-            try FileManager.default.copyItem(at: source, to: url)
-            completionHandler(nil)
-            
-        } catch let error {
-            print("Failed to copy \(source) to \(url): \(error)")
-            completionHandler(error)
-        }
     }
 }

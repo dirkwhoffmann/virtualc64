@@ -228,7 +228,7 @@ class PreferencesController: DialogController {
         pref.saveDevicesUserDefaults()
         pref.saveKeyboardUserDefaults()
         myAppDelegate.database.save()
-        hideSheet()
+        close()
     }
 }
 

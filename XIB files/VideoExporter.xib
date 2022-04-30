@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="ExportVideoDialog" customModule="VirtualC64" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="VideoExporter" customModule="VirtualC64" customModuleProvider="target">
             <connections>
                 <outlet property="bitRate" destination="M46-8C-bJl" id="dLj-qg-KKB"/>
                 <outlet property="cancelButton" destination="zGf-cK-YR2" id="vhL-jA-30P"/>
@@ -133,10 +133,13 @@
                             <rect key="frame" x="3" y="3" width="110" height="110"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <imageView hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dVw-zY-6nY" customClass="DragDropImageView" customModule="VirtualC64" customModuleProvider="target">
+                                <imageView hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dVw-zY-6nY" customClass="DragImageView" customModule="VirtualC64" customModuleProvider="target">
                                     <rect key="frame" x="19" y="19" width="72" height="72"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" imageScaling="proportionallyDown" image="mp4" id="R0C-fy-TZA"/>
+                                    <connections>
+                                        <outlet property="exporter" destination="-2" id="AHk-5f-7qw"/>
+                                    </connections>
                                 </imageView>
                             </subviews>
                         </view>

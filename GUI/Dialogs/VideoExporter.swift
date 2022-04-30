@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-class ExportVideoDialog: DialogController {
+class VideoExporter: DialogController {
 
     @IBOutlet weak var text: NSTextField!
     @IBOutlet weak var duration: NSTextField!
@@ -22,7 +22,9 @@ class ExportVideoDialog: DialogController {
 
     var panel: NSSavePanel!
 
-    let path = "/tmp/virtualc64.mp4"
+    var name: String { return "virtualc64.mp4" }
+    var tmp: URL { return URL(fileURLWithPath: NSTemporaryDirectory()) }
+    var path: URL { return tmp.appendingPathComponent(name); }
 
     override func showSheet(completionHandler handler: (() -> Void)? = nil) {
             
@@ -40,12 +42,12 @@ class ExportVideoDialog: DialogController {
             self.text.isHidden = false
         }
 
-        if c64.recorder.export(as: path) {
+        if c64.recorder.export(as: path.absoluteString) {
                         
             text.stringValue = "MPEG-4 Video Stream"
             icon.isHidden = false
             exportButton.isHidden = false
-            sizeOnDisk.stringValue = URL(fileURLWithPath: path).fileSizeString
+            sizeOnDisk.stringValue = path.fileSizeString
             duration.stringValue = String(format: "%.1f sec", c64.recorder.duration)
             frameRate.stringValue = "\(c64.recorder.frameRate) Hz"
             bitRate.stringValue = "\(c64.recorder.bitRate) kHz"
@@ -72,17 +74,38 @@ class ExportVideoDialog: DialogController {
         
         // Run panel as sheet
         if let win = window {
-            track()
+
             panel.beginSheetModal(for: win, completionHandler: { result in
                 if result == .OK {
-                    track()
                     if let url = self.panel.url {
-                        track("url = \(url)")
-                        let source = URL(fileURLWithPath: self.path)
-                        FileManager.copy(from: source, to: url)
+                        FileManager.copy(from: self.path, to: url)
                     }
                 }
             })
         }
     }
 }
+
+extension VideoExporter: NSFilePromiseProviderDelegate {
+
+    func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, fileNameForType fileType: String) -> String {
+
+        return name
+    }
+
+    func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, writePromiseTo url: URL, completionHandler: @escaping (Error?) -> Void) {
+
+        do {
+            if FileManager.default.fileExists(atPath: url.path) {
+                try FileManager.default.removeItem(at: url)
+            }
+            try FileManager.default.copyItem(at: path, to: url)
+            completionHandler(nil)
+
+        } catch let error {
+            print("Failed to copy \(path) to \(url): \(error)")
+            completionHandler(error)
+        }
+    }
+}
+

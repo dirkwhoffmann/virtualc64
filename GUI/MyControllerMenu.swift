@@ -351,12 +351,8 @@ extension MyController: NSMenuItemValidation {
     }
     
     @IBAction func exportVideoAction(_ sender: Any!) {
-        
-        track()
-        
-        let name = NSNib.Name("ExportVideoDialog")
-        let exporter = ExportVideoDialog(with: self, nibName: name)
-        
+
+        let exporter = VideoExporter(with: self, nibName: "VideoExporter")
         exporter?.showSheet()
     }
     

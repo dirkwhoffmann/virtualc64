@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+/*
 class KeyViewItem: NSCollectionViewItem {
     
     override func viewDidLoad() {
@@ -15,6 +16,7 @@ class KeyViewItem: NSCollectionViewItem {
         view.wantsLayer = true
     }
 }
+*/
 
 extension PreferencesController {
         
