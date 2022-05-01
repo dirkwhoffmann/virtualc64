@@ -155,12 +155,6 @@ class Configuration {
         set { c64.configure(.DRV_POWER_SWITCH, drive: .DRIVE9, enable: newValue )}
     }
 
-    var blankDiskFormat = DOSType.NODOS
-    var blankDiskFormatIntValue: Int {
-        get { return Int(blankDiskFormat.rawValue) }
-        set { blankDiskFormat = DOSType(rawValue: newValue) ?? .NODOS }
-    }
-
     var gameDevice1 = -1 {
         didSet {
             

@@ -67,7 +67,6 @@
                 <outlet property="kernalSubsubtitle" destination="DhW-S3-d80" id="WI0-BK-0QC"/>
                 <outlet property="kernalSubtitle" destination="olG-Cx-dQe" id="lv4-Xh-rQf"/>
                 <outlet property="kernalTitle" destination="Ia2-ZC-hac" id="8Lh-Qv-742"/>
-                <outlet property="perBlankDiskFormat" destination="B1x-zx-JIE" id="w9e-3M-tw6"/>
                 <outlet property="perControlPort1" destination="b6D-Q1-nEc" id="zjf-rI-nwW"/>
                 <outlet property="perControlPort2" destination="fSD-jP-oYR" id="C3r-1N-gIj"/>
                 <outlet property="perDrive8AutoConf" destination="15f-au-qxk" id="zoS-ze-GEU"/>
@@ -130,7 +129,7 @@
             <windowStyleMask key="styleMask" titled="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="646" height="486"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1095"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1536" height="935"/>
             <value key="minSize" type="size" width="646" height="486"/>
             <value key="maxSize" type="size" width="646" height="486"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
@@ -1156,24 +1155,6 @@ Gw
                                                 <action selector="perDriveTypeAction:" target="-2" id="U3D-5o-zTP"/>
                                             </connections>
                                         </popUpButton>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cCI-Nx-3jr">
-                                            <rect key="frame" x="10" y="234" width="143" height="20"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Blank Disks" id="Fm4-Am-isD">
-                                                <font key="font" metaFont="systemBold"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ofc-1l-lfD">
-                                            <rect key="frame" x="10" y="204" width="95" height="20"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="File system: " id="Ttm-Il-Mag">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aZc-fI-zmc">
                                             <rect key="frame" x="278" y="286" width="132" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
@@ -1183,27 +1164,6 @@ Gw
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B1x-zx-JIE">
-                                            <rect key="frame" x="108" y="201" width="182" height="26"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Unformatted" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="p9q-1T-9qk" id="36q-Bf-XTm">
-                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="menu"/>
-                                                <menu key="menu" title="OtherViews" autoenablesItems="NO" id="MiT-LN-YyN">
-                                                    <items>
-                                                        <menuItem title="Unformatted" state="on" id="p9q-1T-9qk">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                        <menuItem title="Formatted" tag="1" id="8ei-qW-zT0">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                    </items>
-                                                </menu>
-                                            </popUpButtonCell>
-                                            <connections>
-                                                <action selector="perBlankDiskFormatAction:" target="-2" id="K2f-ci-QWh"/>
-                                            </connections>
-                                        </popUpButton>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Idw-Y9-NPG">
                                             <rect key="frame" x="412" y="140" width="182" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>

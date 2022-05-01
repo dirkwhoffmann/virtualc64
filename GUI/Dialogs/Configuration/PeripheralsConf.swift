@@ -35,9 +35,6 @@ extension ConfigurationController {
         perDrive9Ram.isEnabled = enable9
         perDrive9Cable.isEnabled = enable9
 
-        // Disk
-        perBlankDiskFormat.selectItem(withTag: config.blankDiskFormatIntValue)
-
         // Ports
         parent.gamePadManager.refresh(popup: perControlPort1, hide: true)
         parent.gamePadManager.refresh(popup: perControlPort2, hide: true)
@@ -98,13 +95,6 @@ extension ConfigurationController {
         case 9: config.drive9ParCable = sender.selectedTag()
         default: fatalError()
         }
-        refresh()
-    }
-
-    @IBAction func perBlankDiskFormatAction(_ sender: NSPopUpButton!) {
-        
-        let tag = sender.selectedTag()
-        config.blankDiskFormatIntValue = tag
         refresh()
     }
 

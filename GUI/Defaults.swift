@@ -788,9 +788,6 @@ extension Keys {
         // Ports
         static let gameDevice1      = "Peripherals.ControlPort1"
         static let gameDevice2      = "Peripherals.ControlPort2"
-
-        // Blank disks
-        static let blankDiskFormat  = "Peripherals.BlankDiskFormat"
     }
 }
 
@@ -803,9 +800,6 @@ extension DefaultsProxy {
         // Port assignments
         register(Keys.Per.gameDevice1, -1)
         register(Keys.Per.gameDevice2, -1)
-
-        // Blank disks
-        register(Keys.Per.blankDiskFormat, DOSType.CBM.rawValue)
     }
 
     func removePeripheralsUserDefaults() {
@@ -819,7 +813,6 @@ extension DefaultsProxy {
         remove(.DRV_RAM, D8D9)
         remove(.DRV_PARCABLE, D8D9)
         remove(.DRV_AUTO_CONFIG, D8D9)
-        removeKey(Keys.Per.blankDiskFormat)
         removeKey(Keys.Per.gameDevice1)
         removeKey(Keys.Per.gameDevice2)
     }
@@ -847,8 +840,6 @@ extension Configuration {
         defaults.set(.DRV_RAM, D9, drive8Ram)
         defaults.set(.DRV_PARCABLE, D9, drive8ParCable)
         defaults.set(.DRV_AUTO_CONFIG, D9, drive8AutoConf)
-
-        defaults.set(Keys.Per.blankDiskFormat, blankDiskFormatIntValue)
 
         defaults.set(Keys.Per.gameDevice1, gameDevice1)
         defaults.set(Keys.Per.gameDevice2, gameDevice2)
@@ -880,8 +871,6 @@ extension Configuration {
         drive9Ram = defaults.get(.DRV_RAM, D9)
         drive9ParCable = defaults.get(.DRV_PARCABLE, D9)
         drive9AutoConf = defaults.get(.DRV_AUTO_CONFIG, D9) != 0
-
-        blankDiskFormatIntValue = defaults.int(Keys.Per.blankDiskFormat)
 
         gameDevice1 = defaults.int(Keys.Per.gameDevice1)
         gameDevice2 = defaults.int(Keys.Per.gameDevice2)
