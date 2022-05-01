@@ -272,26 +272,6 @@ class Inspector: DialogController {
     @IBOutlet weak var sidAudioBufferLevelText: NSTextField!
     @IBOutlet weak var sidBufferUnderflows: NSTextField!
     @IBOutlet weak var sidBufferOverflows: NSTextField!
-    
-    // Drive panel
-    /*
-    @IBOutlet weak var drvDriveSel: NSSegmentedControl!
-    @IBOutlet weak var drvGcrBytesSel: NSSegmentedControl!
-    @IBOutlet weak var drvTrackTableView: TrackTableView!
-    @IBOutlet weak var drvSectorTableView: SectorTableView!
-    @IBOutlet weak var drvDiskDataView: DiskDataView!
-    @IBOutlet weak var drvSeekButton: NSButton!
-    @IBOutlet weak var drvHalftracksButton: NSButton!
-    @IBOutlet weak var drvNoDiskText: NSTextField!
-    @IBOutlet weak var drvWarningText: NSTextField!
-    @IBOutlet weak var drvWarningButton: NSButton!
-
-    var selectedDrive = DriveID.DRIVE8
-    var drive: DriveProxy { return selectedDrive == .DRIVE8 ? c64.drive8 : c64.drive9 }
-    var rawGcr = true
-    var selectedHalftrack = -1
-    var selectedSector = -1
-    */
 
     // Cached state of all C64 components
     var cpuInfo: CPUInfo!
@@ -299,7 +279,6 @@ class Inspector: DialogController {
     var memInfo: MemInfo!
     var vicInfo: VICIIInfo!
     var sprInfo: SpriteInfo!
-    // var analyzer: DiskAnalyzerProxy?
     
     var isRunning = true
     
@@ -322,12 +301,6 @@ class Inspector: DialogController {
         super.showWindow(self)
         c64.debugMode = true
         updateInspectionTarget()
-
-        /*
-        drvWarningText.isHidden = true
-        drvWarningButton.isHidden = true
-        drvGcrBytesSel.isHidden = true
-        */
     }
         
     func fullRefresh() {

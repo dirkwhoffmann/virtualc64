@@ -24,14 +24,13 @@ class DiskErrorController: NSWindowController {
             title.stringValue = "\(count) errors have been found"
         }
     }
-    
+
     func cleanup() {
-        track()
+
     }
-    
+
     @IBAction func errorOkAction(_ sender: NSButton!) {
         
-        track()
         window!.orderOut(self)
     }
 }

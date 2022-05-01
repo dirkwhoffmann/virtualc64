@@ -55,8 +55,6 @@ class DiskDataView: NSScrollView {
         var gcr = ""
         if analyzer != nil, let ht = halftrack {
 
-            log("Displaying ht \(ht)")
-
             if inspector.showGcr || sector == nil {
 
                 // Show the raw GCR stream

@@ -80,13 +80,9 @@ DiskAnalyzer::decodeGcr(Halftrack ht, isize offset)
 
 void DiskAnalyzer::analyzeDisk()
 {
-    msg("Analyzing disk...\n");
-    
     for (isize ht = 1; ht < 85; ht++) {
         diskInfo.trackInfo[ht] = analyzeHalftrack(ht);
     }
-
-    msg("done\n");
 }
 
 TrackInfo

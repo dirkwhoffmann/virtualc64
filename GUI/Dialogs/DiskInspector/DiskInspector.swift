@@ -170,8 +170,6 @@ class DiskInspector: DialogController {
 
     @IBAction func drvWarningAction(_ sender: NSButton!) {
 
-        track()
-
         let controller = DiskErrorController(windowNibName: "DiskErrors")
         controller.parent = self
 
