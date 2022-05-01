@@ -411,7 +411,7 @@
                         </tableHeaderView>
                     </scrollView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="elC-PW-2T6">
-                        <rect key="frame" x="141" y="250" width="184" height="16"/>
+                        <rect key="frame" x="141" y="250" width="290" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Lorem ipsum dolor sit amet" id="vO8-7O-lIQ">
                             <font key="font" metaFont="system"/>
@@ -638,7 +638,7 @@
                         </tabViewItems>
                     </tabView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vuq-NF-XPk">
-                        <rect key="frame" x="350" y="249" width="363" height="16"/>
+                        <rect key="frame" x="435" y="249" width="278" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Lorem ipsum dolor dolor" id="ESh-i7-nCy">
                             <font key="font" metaFont="system"/>

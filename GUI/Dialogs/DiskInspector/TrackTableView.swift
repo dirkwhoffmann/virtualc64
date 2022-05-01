@@ -9,7 +9,7 @@
 
 class TrackTableView: NSTableView, NSTableViewDelegate {
     
-    @IBOutlet weak var inspector: Inspector!
+    @IBOutlet weak var inspector: DiskInspector!
    
     var halftrack: Int { return inspector.selectedHalftrack }
     var analyzer: DiskAnalyzerProxy? { return inspector.analyzer }

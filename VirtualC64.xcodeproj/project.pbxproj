@@ -861,7 +861,7 @@
 				507E7A9F24FB881500AB433C /* ScreenshotViewer.swift */,
 				503C1DD224FCD1BF00D91141 /* SnapshotViewer.swift */,
 				5058A91D281D107A00C223C9 /* DiskExporter.swift */,
-				5058A91F281D109F00C223C9 /* DiskInspector.swift */,
+				500F7CC4281E58DA003F1A7C /* DiskInspector */,
 				5058A921281D10B100C223C9 /* VolumeInspector.swift */,
 				5058A923281D10C600C223C9 /* FloppyCreator.swift */,
 				50B485FA24F9911600844133 /* ImportDialog.swift */,
@@ -913,6 +913,18 @@
 				504C434424AF29AC00E69CAE /* Keyboard.cpp */,
 			);
 			path = Keyboard;
+			sourceTree = "<group>";
+		};
+		500F7CC4281E58DA003F1A7C /* DiskInspector */ = {
+			isa = PBXGroup;
+			children = (
+				5058A91F281D109F00C223C9 /* DiskInspector.swift */,
+				50D5F88924F5573D0062EF13 /* DiskErrorController.swift */,
+				50D5F88524F52A300062EF13 /* DiskDataView.swift */,
+				50D5F87F24F4F12F0062EF13 /* TrackTableView.swift */,
+				50D5F88324F4FE9C0062EF13 /* SectorTableView.swift */,
+			);
+			path = DiskInspector;
 			sourceTree = "<group>";
 		};
 		500FAA62261376980062488E /* Utilities */ = {
@@ -998,14 +1010,10 @@
 				5038CA9420B6C2AC000D9193 /* VICPanel.swift */,
 				5038CA9620B6C2BE000D9193 /* SIDPanel.swift */,
 				50D5F88124F4F2E90062EF13 /* DiskPanel.swift */,
-				50D5F88924F5573D0062EF13 /* DiskErrorController.swift */,
 				507A499B24C8D64700DBF984 /* InstrTableView.swift */,
 				507A499D24C8D65700DBF984 /* TraceTableView.swift */,
 				507A499F24C8D66A00DBF984 /* GuardTableView.swift */,
 				507A49A124C8D71400DBF984 /* BankTableView.swift */,
-				50D5F87F24F4F12F0062EF13 /* TrackTableView.swift */,
-				50D5F88324F4FE9C0062EF13 /* SectorTableView.swift */,
-				50D5F88524F52A300062EF13 /* DiskDataView.swift */,
 				507887CB20B1858B00941F7E /* MemTableView.swift */,
 				5015F36520B546A30024B4AA /* WaveformView.swift */,
 				506D4D0C20B331A00093C5C6 /* MyFormatter.swift */,

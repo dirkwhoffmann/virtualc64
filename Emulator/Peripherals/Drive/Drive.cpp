@@ -776,8 +776,22 @@ Drive::moveHeadDown()
     msgQueue.put(MSG_DRIVE_STEP, deviceNr, halftrack, config.stepVolume, config.pan);
 }
 
+bool
+Drive::hasDisk() const
+{
+    return insertionStatus == DISK_FULLY_INSERTED;
+}
+
+bool
+Drive::hasPartiallyRemovedDisk() const
+{
+    return
+    insertionStatus == DISK_PARTIALLY_INSERTED ||
+    insertionStatus == DISK_PARTIALLY_EJECTED;
+}
+
 void
-Drive::setModifiedDisk(bool value)
+Drive::setModificationFlag(bool value)
 {
     if (hasDisk()) disk->setModified(value);
     msgQueue.put(value ? MSG_DISK_UNSAVED : MSG_DISK_SAVED, deviceNr);

@@ -9,7 +9,7 @@
 
 class DiskErrorController: NSWindowController {
     
-    var parent: Inspector!
+    var parent: DiskInspector!
     var analyzer: DiskAnalyzerProxy? { return parent.analyzer }
     
     @IBOutlet weak var title: NSTextField!

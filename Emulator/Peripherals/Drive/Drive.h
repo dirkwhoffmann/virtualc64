@@ -356,16 +356,17 @@ public:
     //
 
 public:
-    
-    // Checks if a disk is present
-    bool hasDisk() const { return insertionStatus == DISK_FULLY_INSERTED; }
-    bool hasPartiallyRemovedDisk() const {
-        return insertionStatus == DISK_PARTIALLY_INSERTED || insertionStatus == DISK_PARTIALLY_EJECTED; }
-    bool hasWriteProtectedDisk() const { return hasDisk() && disk->isWriteProtected(); }
 
-    // Gets or sets the modification status
+    // Checks whether the drive contains a disk of a certain kind
+    bool hasDisk() const;
+    bool hasPartiallyRemovedDisk() const;
+    bool hasProtectedDisk() const { return hasDisk() && disk->isWriteProtected(); }
     bool hasModifiedDisk() const { return hasDisk() && disk->isModified(); }
-    void setModifiedDisk(bool value);
+    bool hasUnmodifiedDisk() const { return hasDisk() && !hasModifiedDisk(); }
+    bool hasUnprotectedDisk() const { return hasDisk() && !hasProtectedDisk(); }
+
+    // Changes the modification state
+    void setModificationFlag(bool value);
  
     /* Returns the current state of the write protection barrier. If the light
      * barrier is blocked, the drive head is unable to modify bits on disk.
@@ -378,7 +379,7 @@ public:
         return
         (cpu.cycle < 1500000)
         || hasPartiallyRemovedDisk()
-        || hasWriteProtectedDisk();
+        || hasProtectedDisk();
     }
 
     /* Requests the emulator to inserts or eject a disk. Background: Many C64

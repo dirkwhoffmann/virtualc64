@@ -357,7 +357,7 @@ class ExportDialog: DialogController {
     
     func updateDiskIcon() {
         
-        let wp = drive!.hasWriteProtectedDisk()
+        let wp = drive!.hasProtectedDisk
         diskIcon.image = AnyFileProxy.diskIcon(protected: wp)
     }
     

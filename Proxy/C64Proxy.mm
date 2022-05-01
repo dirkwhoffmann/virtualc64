@@ -1122,19 +1122,29 @@
     return [self drive]->hasDisk();
 }
 
-- (BOOL)hasWriteProtectedDisk
-{
-    return [self drive]->hasWriteProtectedDisk();
-}
-
 - (BOOL)hasModifiedDisk
 {
     return [self drive]->hasModifiedDisk();
 }
 
+- (BOOL)hasProtectedDisk
+{
+    return [self drive]->hasProtectedDisk();
+}
+
+- (BOOL)hasUnmodifiedDisk
+{
+    return [self drive]->hasUnmodifiedDisk();
+}
+
+- (BOOL)hasUnprotectedDisk
+{
+    return [self drive]->hasUnprotectedDisk();
+}
+
 - (void)setModifiedDisk:(BOOL)b
 {
-    [self drive]->setModifiedDisk(b);
+    [self drive]->setModificationFlag(b);
 }
 
 - (void)insertD64:(D64FileProxy *)proxy protected:(BOOL)wp

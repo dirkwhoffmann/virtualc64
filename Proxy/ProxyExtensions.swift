@@ -231,7 +231,7 @@ public extension DriveProxy {
     }
 
     var icon: NSImage {
-        return hasModifiedDisk() ? DriveProxy.diskUnsaved : DriveProxy.diskSaved
+        return hasModifiedDisk ? DriveProxy.diskUnsaved : DriveProxy.diskSaved
     }
 }
 

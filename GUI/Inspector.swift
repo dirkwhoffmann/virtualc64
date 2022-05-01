@@ -274,6 +274,7 @@ class Inspector: DialogController {
     @IBOutlet weak var sidBufferOverflows: NSTextField!
     
     // Drive panel
+    /*
     @IBOutlet weak var drvDriveSel: NSSegmentedControl!
     @IBOutlet weak var drvGcrBytesSel: NSSegmentedControl!
     @IBOutlet weak var drvTrackTableView: TrackTableView!
@@ -290,6 +291,7 @@ class Inspector: DialogController {
     var rawGcr = true
     var selectedHalftrack = -1
     var selectedSector = -1
+    */
 
     // Cached state of all C64 components
     var cpuInfo: CPUInfo!
@@ -297,7 +299,7 @@ class Inspector: DialogController {
     var memInfo: MemInfo!
     var vicInfo: VICIIInfo!
     var sprInfo: SpriteInfo!
-    var analyzer: DiskAnalyzerProxy?
+    // var analyzer: DiskAnalyzerProxy?
     
     var isRunning = true
     
@@ -320,10 +322,12 @@ class Inspector: DialogController {
         super.showWindow(self)
         c64.debugMode = true
         updateInspectionTarget()
-        
+
+        /*
         drvWarningText.isHidden = true
         drvWarningButton.isHidden = true
         drvGcrBytesSel.isHidden = true
+        */
     }
         
     func fullRefresh() {
@@ -368,7 +372,7 @@ class Inspector: DialogController {
             case "Memory": refreshMemory(count: count, full: full)
             case "VICII": refreshVIC(count: count, full: full)
             case "SID": refreshSID(count: count, full: full)
-            case "Disk": refreshDisk(count: count, full: full)
+            // case "Disk": refreshDisk(count: count, full: full)
             default: break
             }
         }
@@ -507,7 +511,7 @@ extension Inspector: NSTabViewDelegate {
             case "CIA":     parent.c64.inspectionTarget = .CIA
             case "VICII":   parent.c64.inspectionTarget = .VIC
             case "SID":     parent.c64.inspectionTarget = .SID
-            case "Disk":    analyzeDisk()
+            // case "Disk":    analyzeDisk()
             default:        break
             }
             

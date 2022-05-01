@@ -547,10 +547,16 @@
 - (BOOL)readMode;
 - (BOOL)writeMode;
 
+@property (readonly) BOOL hasDisk;
+@property (readonly) BOOL hasModifiedDisk;
+@property (readonly) BOOL hasProtectedDisk;
+@property (readonly) BOOL hasUnmodifiedDisk;
+@property (readonly) BOOL hasUnprotectedDisk;
+
 - (BOOL)redLED;
-- (BOOL)hasDisk;
-- (BOOL)hasWriteProtectedDisk;
-- (BOOL)hasModifiedDisk;
+// - (BOOL)hasDisk;
+// - (BOOL)hasWriteProtectedDisk;
+// - (BOOL)hasModifiedDisk;
 - (void)setModifiedDisk:(BOOL)b;
 - (void)insertNewDisk:(DOSType)fstype;
 - (void)insertD64:(D64FileProxy *)proxy protected:(BOOL)wp;

@@ -56,8 +56,8 @@ class DropZone: Layer {
         if enabled[zone] {
             
             switch zone {
-            case 0: suffix = c64.drive8.hasDisk() ? "InUse" : "Empty"
-            case 1: suffix = c64.drive9.hasDisk() ? "InUse" : "Empty"
+            case 0: suffix = c64.drive8.hasDisk ? "InUse" : "Empty"
+            case 1: suffix = c64.drive9.hasDisk ? "InUse" : "Empty"
             case 2: suffix = c64.expansionport.cartridgeAttached() ? "InUse" : "Empty"
             case 3: suffix = c64.datasette.hasTape ? "InUse" : "Empty"
             default: fatalError()
@@ -71,8 +71,8 @@ class DropZone: Layer {
         let connected8 = c64.drive8.isConnected()
         let connected9 = c64.drive9.isConnected()
 
-        inUse[0] = c64.drive8.hasDisk()
-        inUse[1] = c64.drive9.hasDisk()
+        inUse[0] = c64.drive8.hasDisk
+        inUse[1] = c64.drive9.hasDisk
         inUse[2] = c64.expansionport.cartridgeAttached()
         inUse[3] = c64.datasette.hasTape
         

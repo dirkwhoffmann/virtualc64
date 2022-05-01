@@ -135,10 +135,10 @@ extension MyController {
 
         if drive == .DRIVE8 {
             diskIcon8.image = c64.drive8.icon
-            diskIcon8.isHidden = !c64.drive8.isConnected() || !c64.drive8.hasDisk() || !statusBar
+            diskIcon8.isHidden = !c64.drive8.isConnected() || !c64.drive8.hasDisk || !statusBar
         } else {
             diskIcon9.image = c64.drive9.icon
-            diskIcon9.isHidden = !c64.drive9.isConnected() || !c64.drive9.hasDisk() || !statusBar
+            diskIcon9.isHidden = !c64.drive9.isConnected() || !c64.drive9.hasDisk || !statusBar
         }
     }
     

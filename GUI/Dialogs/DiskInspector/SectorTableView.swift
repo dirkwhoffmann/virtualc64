@@ -9,7 +9,7 @@
 
 class SectorTableView: NSTableView, NSTableViewDelegate {
     
-    @IBOutlet weak var inspector: Inspector!
+    @IBOutlet weak var inspector: DiskInspector!
    
     var halftrack: Halftrack? { return inspector.halftrack }
     var analyzer: DiskAnalyzerProxy? { return inspector.analyzer }

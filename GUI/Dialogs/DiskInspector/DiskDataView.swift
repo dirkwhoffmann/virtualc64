@@ -9,18 +9,21 @@
 
 class DiskDataView: NSScrollView {
     
-    @IBOutlet weak var inspector: Inspector!
+    @IBOutlet weak var inspector: DiskInspector!
    
     // Shortcuts
-    // var c64: C64Proxy { return inspector.parent.c64 }
-    // var drive: DriveProxy { return inspector.drive }
-    // var disk: DiskProxy { return drive.disk }
+    var c64: C64Proxy { return inspector.parent.c64 }
+    var drive: DriveProxy { return inspector.drive }
+    var disk: DiskProxy { return drive.disk }
     var analyzer: DiskAnalyzerProxy? { return inspector.analyzer }
     var halftrack: Halftrack? { return inspector.halftrack }
     var sector: Sector? { return inspector.sector }
     var textView: NSTextView? { return documentView as? NSTextView }
     var storage: NSTextStorage? { return textView?.textStorage }
-    
+
+    // Highlighted head position
+    var headPosition: NSRange?
+
     // Highlighted bit sequences (sector header)
     var firstHeaderRange: NSRange?
     var secondHeaderRange: NSRange?
@@ -87,6 +90,33 @@ class DiskDataView: NSScrollView {
                 sectionMarksAreDirty = false
             }
         }
+    }
+
+    func markHead() {
+
+        unmarkHead()
+        headPosition = NSRange.init(location: Int(drive.offset()), length: 1)
+        storage?.addAttr(.backgroundColor, value: NSColor.red, range: headPosition)
+    }
+
+    func unmarkHead() {
+
+        storage?.remAttr(.backgroundColor, range: headPosition)
+        headPosition = nil
+    }
+
+    func scrollToHead() {
+
+        if !drive.hasDisk { return }
+
+        // Jump to current track
+        let current = drive.halftrack()
+        inspector.setSelectedHalftrack(Int(current))
+        inspector.setSelectedSector(-1)
+
+        // Highlight drive position inside the current track
+        let range = NSRange.init(location: Int(drive.offset()), length: 1)
+        textView?.scrollRangeToVisible(range)
     }
 
     func markSectors() {

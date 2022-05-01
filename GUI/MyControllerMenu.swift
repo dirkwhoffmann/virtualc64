@@ -73,13 +73,13 @@ extension MyController: NSMenuItemValidation {
             #selector(MyController.exportDiskAction(_:)),
             #selector(MyController.inspectDiskAction(_:)),
             #selector(MyController.inspectVolumeAction(_:)):
-            return drive.hasDisk()
+            return drive.hasDisk
             
         case #selector(MyController.exportRecentDiskDummyAction8(_:)):
-            return c64.drive8.hasDisk()
+            return c64.drive8.hasDisk
             
         case #selector(MyController.exportRecentDiskDummyAction9(_:)):
-            return c64.drive9.hasDisk()
+            return c64.drive9.hasDisk
                         
         case #selector(MyController.exportRecentDiskAction(_:)):
             switch item.tag {
@@ -89,8 +89,8 @@ extension MyController: NSMenuItemValidation {
             }
             
         case #selector(MyController.writeProtectAction(_:)):
-            item.state = drive.hasWriteProtectedDisk() ? .on : .off
-            return drive.hasDisk()
+            item.state = drive.hasProtectedDisk ? .on : .off
+            return drive.hasDisk
             
         case #selector(MyController.drivePowerAction(_:)):
             track()
@@ -708,6 +708,16 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func inspectDiskAction(_ sender: NSMenuItem!) {
 
+        do {
+
+            let panel = DiskInspector(with: self, nibName: "DiskInspector")
+            try panel?.show(diskDrive: DriveID(rawValue: sender.tag)!)
+
+        } catch {
+
+            showAlert(.cantDecode, error: error, window: window)
+        }
+
         /*
         let panel = DiskInspector(with: self, nibName: "DiskInspector")
         panel?.show(drive: sender.tag)
@@ -716,10 +726,9 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func inspectVolumeAction(_ sender: NSMenuItem!) {
 
-        let panel = VolumeInspector(with: self, nibName: "VolumeInspector")
-
         do {
 
+            let panel = VolumeInspector(with: self, nibName: "VolumeInspector")
             try panel?.show(diskDrive: DriveID(rawValue: sender.tag)!)
 
         } catch {

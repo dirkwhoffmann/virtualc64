@@ -98,8 +98,8 @@ extension MyDocument {
         }
         
         let modified = (drive == .DRIVE8) ?
-            c64.drive8.hasModifiedDisk() :
-            c64.drive9.hasModifiedDisk()
+            c64.drive8.hasModifiedDisk :
+            c64.drive9.hasModifiedDisk
 
         if modified {
             return showDiskIsUnexportedAlert(drive: drive) == .alertFirstButtonReturn
@@ -116,8 +116,8 @@ extension MyDocument {
             }
         }
         
-        let modified1 = c64.drive8.hasModifiedDisk()
-        let modified2 = c64.drive9.hasModifiedDisk()
+        let modified1 = c64.drive8.hasModifiedDisk
+        let modified2 = c64.drive9.hasModifiedDisk
         
         if modified1 && modified2 {
             return showDiskIsUnexportedAlert() == .alertFirstButtonReturn
