@@ -19,7 +19,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="540" height="255"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1792" height="1095"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1536" height="935"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="540" height="255"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -90,7 +90,7 @@ DQ
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="description" width="449" minWidth="10" maxWidth="3.4028234663852886e+38" id="vfl-bd-GfB" userLabel="Description">
+                                        <tableColumn identifier="description" width="420" minWidth="10" maxWidth="3.4028234663852886e+38" id="vfl-bd-GfB" userLabel="Description">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Description">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

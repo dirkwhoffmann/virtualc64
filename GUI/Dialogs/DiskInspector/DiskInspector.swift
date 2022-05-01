@@ -28,40 +28,35 @@ extension NSTextStorage {
 
 class DiskInspector: DialogController {
 
-    @IBOutlet weak var drvGcrBytesSel: NSSegmentedControl!
-    @IBOutlet weak var drvTrackTableView: TrackTableView!
-    @IBOutlet weak var drvSectorTableView: SectorTableView!
-    @IBOutlet weak var drvDiskDataView: DiskDataView!
-    @IBOutlet weak var drvSeekButton: NSButton!
-    @IBOutlet weak var drvHalftracksButton: NSButton!
-    @IBOutlet weak var drvNoDiskText: NSTextField!
-    @IBOutlet weak var drvWarningText: NSTextField!
-    @IBOutlet weak var drvWarningButton: NSButton!
+    @IBOutlet weak var trackPopup: NSPopUpButton!
+    @IBOutlet weak var sectorPopup: NSPopUpButton!
+    @IBOutlet weak var formatPopup: NSPopUpButton!
+    @IBOutlet weak var trackTableView: TrackTableView!
+    @IBOutlet weak var sectorTableView: SectorTableView!
+    @IBOutlet weak var diskDataView: DiskDataView!
+    @IBOutlet weak var warningText: NSTextField!
+    @IBOutlet weak var warningButton: NSButton!
 
     var analyzer: DiskAnalyzerProxy?
 
-    var selectedDrive = DriveID.DRIVE8
-    var drive: DriveProxy { return selectedDrive == .DRIVE8 ? c64.drive8 : c64.drive9 }
-    var rawGcr = true
+    var drive: DriveProxy!
+
+    var showTracks: Bool { return trackPopup.selectedTag() == 0 }
+    var showHalftracks: Bool { return trackPopup.selectedTag() == 1 }
+    var showGcr: Bool { return formatPopup.selectedTag() == 0 }
+    var showBytes: Bool { return formatPopup.selectedTag() == 1 }
+
     var selectedHalftrack = -1
-    var selectedSector = -1
-    var hex = true
-    
     var halftrack: Halftrack? {
-        if isHalftrackNumber(selectedHalftrack) {
-            return Halftrack(selectedHalftrack)
-        } else {
-            return nil
-        }
+        return isHalftrackNumber(selectedHalftrack) ? Halftrack(selectedHalftrack) : nil
     }
 
+    var selectedSector = -1
     var sector: Sector? {
-        if isSectorNumber(selectedSector) {
-            return Sector(selectedSector)
-        } else {
-            return nil
-        }
+        return isSectorNumber(selectedSector) ? Sector(selectedSector) : nil
     }
+
+    var hex = true
 
     //
     // Starting up
@@ -71,7 +66,7 @@ class DiskInspector: DialogController {
 
         log()
 
-        selectedDrive = nr
+        drive = nr == .DRIVE8 ? c64.drive8 : c64.drive9
         showWindow()
     }
 
@@ -79,49 +74,47 @@ class DiskInspector: DialogController {
 
         log()
 
-        drvWarningText.isHidden = true
-        drvWarningButton.isHidden = true
-        drvGcrBytesSel.isHidden = true
+        warningText.isHidden = true
+        warningButton.isHidden = true
+        trackPopup.autoenablesItems = false
+        sectorPopup.autoenablesItems = false
+        formatPopup.autoenablesItems = false
         analyzeDisk()
-        fullRefresh()
+
+        refresh()
     }
 
-    /*
-    override func showWindow(_ sender: Any?) {
+    func refresh() {
 
-        super.showWindow(self)
-
-        drvWarningText.isHidden = true
-        drvWarningButton.isHidden = true
-        drvGcrBytesSel.isHidden = true
-
-        analyzeDisk()
-    }
-    */
-
-    func fullRefresh() {
-
-        refreshDisk(full: true)
-    }
-
-    func refreshDisk(count: Int = 0, full: Bool = false) {
-
-        if full {
-
-            if analyzer == nil {
-                selectedHalftrack = -1
-                selectedSector = -1
-                drvNoDiskText.isHidden = false
-            } else {
-                drvNoDiskText.isHidden = true
-            }
-
-            // Refresh sub views
-            drvDiskDataView.hex = hex
-            drvTrackTableView.refresh(count: count, full: full)
-            drvSectorTableView.refresh(count: count, full: full)
-            drvDiskDataView.refresh(count: count, full: full)
+        if analyzer == nil {
+            selectedHalftrack = -1
+            selectedSector = -1
         }
+
+        // Warn if this track contains errors
+        if let ht = halftrack {
+            let trackIsValid = analyzer!.numErrors(ht) == 0
+            warningText.isHidden = trackIsValid
+            warningButton.isHidden = trackIsValid
+        }
+
+        // Grey out some choices
+        if sector != nil {
+            formatPopup.item(at: 1)!.isEnabled = true
+        } else {
+            formatPopup.item(at: 1)!.isEnabled = false
+            formatPopup.selectItem(at: 0)
+        }
+
+        // Refresh sub views
+        diskDataView.hex = hex
+        trackTableView.refresh()
+        sectorTableView.isDirty = true
+        sectorTableView.refresh()
+        diskDataView.refresh()
+
+        // Grey out more some choices
+        sectorPopup.item(at: 0)!.isEnabled = sectorTableView.numberOfRows > 0
     }
 
     func analyzeDisk() {
@@ -137,109 +130,42 @@ class DiskInspector: DialogController {
         }
     }
 
-    /*
-    func setSelectedDrive(_ id: DriveID) {
-
-        if selectedDrive == id { return }
-        selectedDrive = id
-        drvDriveSel.selectSegment(withTag: id == .DRIVE8 ? 0 : 1)
-
-        selectedHalftrack = -1
-        selectedSector = -1
-
-        // Reanalyze the disk
-        analyzeDisk()
-
-        // Force sub views to update
-        drvSectorTableView.isDirty = true
-        drvDiskDataView.dataIsDirty = true
-        drvDiskDataView.sectionMarksAreDirty = true
-        fullRefresh()
-    }
-    */
-
-    func setRawGcr(_ value: Bool) {
-
-        if rawGcr == value { return }
-        rawGcr = value
-        drvGcrBytesSel.selectSegment(withTag: value ? 0 : 1)
-
-        // Force sub views to update
-        drvDiskDataView.dataIsDirty = true
-        drvDiskDataView.sectionMarksAreDirty = true
-        fullRefresh()
-    }
-
-    func setSelectedHalftrack(_ nr: Int) {
-
-        if selectedHalftrack == nr { return }
-        selectedHalftrack = nr
-
-        if halftrack != nil && analyzer != nil {
-
-            // Warn if this track contains errors
-            let trackIsValid = analyzer!.numErrors(halftrack!) == 0
-            drvWarningText.isHidden = trackIsValid
-            drvWarningButton.isHidden = trackIsValid
-
-            // Force sub views to update
-            drvSectorTableView.isDirty = true
-            drvDiskDataView.dataIsDirty = true
-            drvDiskDataView.sectionMarksAreDirty = true
-        }
-
-        fullRefresh()
-    }
-
     func setSelectedTrack(_ nr: Int) {
 
         setSelectedHalftrack(2 * nr - 1)
     }
 
+    func setSelectedHalftrack(_ nr: Int) {
+
+        if selectedHalftrack != nr {
+
+            selectedHalftrack = nr
+            refresh()
+        }
+    }
+
     func setSelectedSector(_ nr: Int) {
 
-        if selectedSector == nr { return }
-        selectedSector = nr
+        if selectedSector != nr {
 
-        // Blend GCR / Byte selector in or out
-        drvGcrBytesSel.isHidden = selectedSector < 0
-
-        // Force the data view to update
-        if rawGcr {
-            drvDiskDataView.sectionMarksAreDirty = true
-        } else {
-            drvDiskDataView.dataIsDirty = true
-        }
-        fullRefresh()
-    }
-
-    /*
-    @IBAction func drvDriveAction(_ sender: NSSegmentedControl!) {
-
-        setSelectedDrive(sender.selectedSegment == 0 ? .DRIVE8 : .DRIVE9)
-    }
-    */
-
-    @IBAction func drvGcrBytesAction(_ sender: NSSegmentedControl!) {
-
-        setRawGcr(sender.selectedSegment == 0)
-    }
-
-    @IBAction func drvSeekAction(_ sender: NSButton!) {
-
-        if sender.integerValue == 1 {
-            drvDiskDataView.scrollToHead()
-            drvTrackTableView.scrollToRow()
-            drvDiskDataView.markHead()
-        } else {
-            drvDiskDataView.unmarkHead()
+            selectedSector = nr
+            refresh()
         }
     }
 
-    @IBAction func drvHalftracksAction(_ sender: NSButton!) {
+    @IBAction func trackPopupAction(_ sender: NSPopUpButton!) {
 
-        drvTrackTableView.showHalftracks = sender.state == .on
-        fullRefresh()
+        refresh()
+    }
+
+    @IBAction func sectorPopupAction(_ sender: NSPopUpButton!) {
+
+        refresh()
+    }
+
+    @IBAction func formatPopupAction(_ sender: NSPopUpButton!) {
+
+        refresh()
     }
 
     @IBAction func drvWarningAction(_ sender: NSButton!) {

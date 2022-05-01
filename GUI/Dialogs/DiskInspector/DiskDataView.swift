@@ -12,9 +12,11 @@ class DiskDataView: NSScrollView {
     @IBOutlet weak var inspector: DiskInspector!
    
     // Shortcuts
+    /*
     var c64: C64Proxy { return inspector.parent.c64 }
     var drive: DriveProxy { return inspector.drive }
     var disk: DiskProxy { return drive.disk }
+    */
     var analyzer: DiskAnalyzerProxy? { return inspector.analyzer }
     var halftrack: Halftrack? { return inspector.halftrack }
     var sector: Sector? { return inspector.sector }
@@ -31,13 +33,9 @@ class DiskDataView: NSScrollView {
     // Highlighted bit sequences (sector data)
     var firstDataSectorRange: NSRange?
     var secondDataSectorRange: NSRange?
-    
-    // Indicates which elements needs an update
-    var dataIsDirty = false
-    var sectionMarksAreDirty = false
-    
+
     // Display format in byte view
-    var hex = true { didSet { if hex != oldValue { dataIsDirty = true } } }
+    var hex = true
 
     // Display font
 	var font: NSFont { return NSFont.monospaced(ofSize: 10.0, weight: .semibold) }
@@ -45,87 +43,69 @@ class DiskDataView: NSScrollView {
     override func awakeFromNib() {
 
     }
-     
-    func refresh(count: Int = 0, full: Bool = false) {
-        
-        if full {
-            
-            if dataIsDirty {
-                
-                var gcr = ""
-                if analyzer != nil, let ht = halftrack {
 
-                    track("Displaying ht \(ht)")
-                    
-                    if inspector.rawGcr || sector == nil {
-                        
-                        // Show the raw GCR stream
-                        gcr = String(cString: analyzer!.trackBits(asString: ht))
-                        
-                    } else {
-                        
-                        // Show the decoded GCR data of the currently selected sector
-                        gcr = String(cString: analyzer!.sectorHeaderBytes(asString: ht, sector: sector!, hex: hex))
-                        gcr.append("\n\n")
-                        gcr.append(String(cString: analyzer!.sectorDataBytes(asString: ht, sector: sector!, hex: hex)))
-                    }
-                }
-                
-                // Remove old sector markers
-                unmarkSectors()
-                
-                // Update text storage
-                let textStorage = NSTextStorage(string: gcr)
-                textStorage.font = font
-                textStorage.foregroundColor = .textColor
-                textView?.layoutManager?.replaceTextStorage(textStorage)
-                
-                dataIsDirty = false
-            }
-            
-            if sectionMarksAreDirty {
-                
-                unmarkSectors()
-                markSectors()
-                sectionMarksAreDirty = false
+    func refresh() {
+
+        refreshData()
+        refreshSectionMarks()
+    }
+
+    func refreshData() {
+
+        var gcr = ""
+        if analyzer != nil, let ht = halftrack {
+
+            log("Displaying ht \(ht)")
+
+            if inspector.showGcr || sector == nil {
+
+                // Show the raw GCR stream
+                gcr = String(cString: analyzer!.trackBits(asString: ht))
+
+            } else {
+
+                // Show the decoded GCR data of the currently selected sector
+                gcr = String(cString: analyzer!.sectorHeaderBytes(asString: ht, sector: sector!, hex: hex))
+                gcr.append("\n\n")
+                gcr.append(String(cString: analyzer!.sectorDataBytes(asString: ht, sector: sector!, hex: hex)))
             }
         }
+
+        // Remove old sector markers
+        unmarkSectors()
+
+        // Update text storage
+        let textStorage = NSTextStorage(string: gcr)
+        textStorage.font = font
+        textStorage.foregroundColor = .textColor
+        textView?.layoutManager?.replaceTextStorage(textStorage)
     }
 
-    func markHead() {
+    func refreshSectionMarks() {
 
-        unmarkHead()
-        headPosition = NSRange.init(location: Int(drive.offset()), length: 1)
-        storage?.addAttr(.backgroundColor, value: NSColor.red, range: headPosition)
+        unmarkSectors()
+        markSectors()
     }
 
-    func unmarkHead() {
+    func unmarkSectors() {
 
-        storage?.remAttr(.backgroundColor, range: headPosition)
-        headPosition = nil
-    }
-
-    func scrollToHead() {
-
-        if !drive.hasDisk { return }
-
-        // Jump to current track
-        let current = drive.halftrack()
-        inspector.setSelectedHalftrack(Int(current))
-        inspector.setSelectedSector(-1)
-
-        // Highlight drive position inside the current track
-        let range = NSRange.init(location: Int(drive.offset()), length: 1)
-        textView?.scrollRangeToVisible(range)
+        storage?.remAttr(.foregroundColor, range: firstHeaderRange)
+        storage?.remAttr(.foregroundColor, range: secondHeaderRange)
+        storage?.remAttr(.foregroundColor, range: firstDataSectorRange)
+        storage?.remAttr(.foregroundColor, range: secondDataSectorRange)
+        firstHeaderRange = nil
+        secondHeaderRange = nil
+        firstDataSectorRange = nil
+        secondDataSectorRange = nil
     }
 
     func markSectors() {
 
+        // Only proceed if the GCR view is active
+        if !inspector.showGcr { return }
+
         // Only proceed if there is anything to display
         if sector == nil || halftrack == nil || analyzer == nil { return }
-
-        // Only proceed if the GCR view is active
-        if !inspector.rawGcr { return }
 
         // Determine the track size
         let length = analyzer?.length(ofHalftrack: halftrack!) ?? 0
@@ -169,18 +149,6 @@ class DiskDataView: NSScrollView {
         scrollToFirstMarkedRange()
     }
 
-    func unmarkSectors() {
-        
-        storage?.remAttr(.foregroundColor, range: firstHeaderRange)
-        storage?.remAttr(.foregroundColor, range: secondHeaderRange)
-        storage?.remAttr(.foregroundColor, range: firstDataSectorRange)
-        storage?.remAttr(.foregroundColor, range: secondDataSectorRange)
-        firstHeaderRange = nil
-        secondHeaderRange = nil
-        firstDataSectorRange = nil
-        secondDataSectorRange = nil
-    }
-    
     func scrollToFirstMarkedRange() {
         
         if firstHeaderRange != nil {

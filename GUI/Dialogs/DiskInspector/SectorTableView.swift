@@ -51,18 +51,15 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
         isDirty = false
     }
     
-    func refresh(count: Int = 0, full: Bool = false) {
+    func refresh() {
+
+        // Update cached data if neccessary
+        if isDirty { cache() }
         
-        if full {
-            
-            // Update cached data if neccessary
-            if isDirty { cache() }
-            
-            // Unselect all items if no sector is selected
-            selectRowIndexes([], byExtendingSelection: false)
-            
-            reloadData()
-        }
+        // Unselect all items if no sector is selected
+        selectRowIndexes([], byExtendingSelection: false)
+
+        reloadData()
     }
 }
 

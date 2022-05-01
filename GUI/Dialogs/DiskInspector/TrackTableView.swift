@@ -18,7 +18,7 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
     var numItems = 0
     
     // Indicates if halftracks should be shown, too
-    var showHalftracks = false
+    var showHalftracks: Bool { return inspector.showHalftracks }
     
     override func awakeFromNib() {
 
@@ -40,17 +40,15 @@ class TrackTableView: NSTableView, NSTableViewDelegate {
         }
     }
     
-    func refresh(count: Int = 0, full: Bool = false) {
-        
-        if full {
+    func refresh() {
 
-            // Update cached data
-            cache()
-            
-            // Select the correct row
-            let rows: IndexSet = halftrack <= 0 ? [] : [Int(halftrack) - 1]
-            selectRowIndexes(rows, byExtendingSelection: false)
-        }
+        // Update cached data
+        cache()
+
+        // Select the correct row
+        let rows: IndexSet = halftrack <= 0 ? [] : [Int(halftrack) - 1]
+        selectRowIndexes(rows, byExtendingSelection: false)
+
         reloadData()
     }
     
