@@ -16,21 +16,21 @@ extension ConfigurationController {
             
         // Drive
         perDrive8Connect.state = config.drive8Connected ? .on : .off
-        perDrive8AutoConf.state = config.drive8AutoConf ? .on : .off
+        perDrive8Config.selectItem(withTag: config.drive8AutoConf ? 0 : 1)
         perDrive8Type.selectItem(withTag: config.drive8Type)
         perDrive8Ram.selectItem(withTag: config.drive8Ram)
         perDrive8Cable.selectItem(withTag: config.drive8ParCable)
-        perDrive8AutoConf.isEnabled = config.drive8Connected
+        perDrive8Config.isEnabled = config.drive8Connected
         perDrive8Type.isEnabled = enable8
         perDrive8Ram.isEnabled = enable8
         perDrive8Cable.isEnabled = enable8
 
         perDrive9Connect.state = config.drive9Connected ? .on : .off
-        perDrive9AutoConf.state = config.drive9AutoConf ? .on : .off
+        perDrive9Config.selectItem(withTag: config.drive9AutoConf ? 0 : 1)
         perDrive9Type.selectItem(withTag: config.drive9Type)
         perDrive9Ram.selectItem(withTag: config.drive9Ram)
         perDrive9Cable.selectItem(withTag: config.drive9ParCable)
-        perDrive9AutoConf.isEnabled = config.drive9Connected
+        perDrive9Config.isEnabled = config.drive9Connected
         perDrive9Type.isEnabled = enable9
         perDrive9Ram.isEnabled = enable9
         perDrive9Cable.isEnabled = enable9
@@ -58,11 +58,11 @@ extension ConfigurationController {
         refresh()
     }
 
-    @IBAction func perDriveAutoConfAction(_ sender: NSButton!) {
+    @IBAction func perDriveConfigAction(_ sender: NSPopUpButton!) {
         
         switch sender.tag {
-        case 8: config.drive8AutoConf = sender.state == .on
-        case 9: config.drive9AutoConf = sender.state == .on
+        case 8: config.drive8AutoConf = sender.selectedTag() == 0
+        case 9: config.drive9AutoConf = sender.selectedTag() == 0
         default: fatalError()
         }
         refresh()

@@ -69,13 +69,13 @@
                 <outlet property="kernalTitle" destination="Ia2-ZC-hac" id="8Lh-Qv-742"/>
                 <outlet property="perControlPort1" destination="b6D-Q1-nEc" id="zjf-rI-nwW"/>
                 <outlet property="perControlPort2" destination="fSD-jP-oYR" id="C3r-1N-gIj"/>
-                <outlet property="perDrive8AutoConf" destination="15f-au-qxk" id="zoS-ze-GEU"/>
                 <outlet property="perDrive8Cable" destination="7wr-sA-0lx" id="swW-D3-FCW"/>
+                <outlet property="perDrive8Config" destination="mzX-Jx-UaP" id="ScE-cm-NN3"/>
                 <outlet property="perDrive8Connect" destination="HQg-wa-r7J" id="5Ic-jP-N7q"/>
                 <outlet property="perDrive8Ram" destination="IWF-UI-eEy" id="eIT-Cv-wpr"/>
                 <outlet property="perDrive8Type" destination="79P-Fp-S8o" id="oCn-Pb-ylL"/>
-                <outlet property="perDrive9AutoConf" destination="Rso-lc-1zb" id="HR8-I4-TE9"/>
                 <outlet property="perDrive9Cable" destination="7F1-cx-LV1" id="YYC-Vi-JcA"/>
+                <outlet property="perDrive9Config" destination="lI9-Kn-Ogu" id="eLc-pZ-xbM"/>
                 <outlet property="perDrive9Connect" destination="g5y-Rl-Rzu" id="JBA-Cg-pgx"/>
                 <outlet property="perDrive9Ram" destination="oxp-Ya-eAU" id="1ir-UN-bN6"/>
                 <outlet property="perDrive9Type" destination="MGa-JQ-gnG" id="TdR-gw-V03"/>
@@ -941,17 +941,8 @@ Gw
                                     <rect key="frame" x="10" y="33" width="600" height="424"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sSD-De-vnL">
-                                            <rect key="frame" x="10" y="385" width="114" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Floppy Drive 8" id="zj1-mt-fyd">
-                                                <font key="font" metaFont="systemBold"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="79P-Fp-S8o">
-                                            <rect key="frame" x="108" y="343" width="182" height="26"/>
+                                            <rect key="frame" x="110" y="321" width="182" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="VC1541" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="PGO-Dg-3KN" id="cXt-XE-afw">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -972,6 +963,27 @@ Gw
                                             </popUpButtonCell>
                                             <connections>
                                                 <action selector="perDriveTypeAction:" target="-2" id="F6D-YS-VzC"/>
+                                            </connections>
+                                        </popUpButton>
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="mzX-Jx-UaP">
+                                            <rect key="frame" x="110" y="350" width="182" height="26"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <popUpButtonCell key="cell" type="push" title="Derive from Rom" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="XNu-Rw-0Ol" id="30I-KM-SLT">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="menu"/>
+                                                <menu key="menu" title="OtherViews" id="T1U-n9-O6R">
+                                                    <items>
+                                                        <menuItem title="Derive from Rom" state="on" id="XNu-Rw-0Ol">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="Custom" tag="1" id="SGn-iT-Huw">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="perDriveConfigAction:" target="-2" id="jXm-wx-lpC"/>
                                             </connections>
                                         </popUpButton>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cQT-uF-1iB">
@@ -1038,8 +1050,231 @@ Gw
                                                 </connections>
                                             </buttonCell>
                                         </button>
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="MGa-JQ-gnG">
+                                            <rect key="frame" x="109" y="148" width="182" height="26"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <popUpButtonCell key="cell" type="push" title="VC1541" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="KOv-Ea-gHL" id="RRu-3v-QA5">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="menu"/>
+                                                <menu key="menu" title="OtherViews" id="HcJ-0s-Rp1">
+                                                    <items>
+                                                        <menuItem title="VC1541" state="on" id="KOv-Ea-gHL">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="VC1541C" tag="1" id="y7j-Sl-U8F">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="VC1541 II" tag="2" id="YFx-eU-F3H">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="perDriveTypeAction:" target="-2" id="U3D-5o-zTP"/>
+                                            </connections>
+                                        </popUpButton>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aZc-fI-zmc">
+                                            <rect key="frame" x="5" y="91" width="102" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Parallel Cable:" id="Fw3-rs-fk4">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="7F1-cx-LV1">
+                                            <rect key="frame" x="109" y="87" width="182" height="26"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="Z5k-Qu-gjU" id="kUG-ZU-Kp9">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="menu"/>
+                                                <menu key="menu" title="OtherViews" autoenablesItems="NO" id="p0f-yM-g5n">
+                                                    <items>
+                                                        <menuItem title="None" state="on" id="Z5k-Qu-gjU">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="Standard" tag="1" id="LGp-rc-p9E">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="Dolphin DOS 3" tag="2" id="5FU-ih-opp">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="perDriveCableAction:" target="-2" id="weH-6H-fF9"/>
+                                            </connections>
+                                        </popUpButton>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0I3-TN-Y77">
+                                            <rect key="frame" x="11" y="154" width="95" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Type:" id="Y6E-N3-Yn2">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rWZ-pD-Dqi">
+                                            <rect key="frame" x="5" y="124" width="102" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Extra RAM:" id="b74-KG-ez8">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="oxp-Ya-eAU">
+                                            <rect key="frame" x="109" y="118" width="182" height="25"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="kNz-7d-0FF" id="wUS-mF-LAZ">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="menu"/>
+                                                <menu key="menu" id="hr0-98-Mad">
+                                                    <items>
+                                                        <menuItem title="None" state="on" id="kNz-7d-0FF"/>
+                                                        <menuItem title="$8000 - $9FFF" tag="1" id="XyY-2U-JUy"/>
+                                                        <menuItem title="$6000 - $7FFF" tag="2" id="CaD-jc-fv4"/>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="perDriveRamAction:" target="-2" id="t4P-lW-unx"/>
+                                            </connections>
+                                        </popUpButton>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xMc-wW-9Bz">
+                                            <rect key="frame" x="5" y="266" width="104" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Parallel Cable:" id="gJQ-l7-leZ">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="7wr-sA-0lx">
+                                            <rect key="frame" x="110" y="262" width="182" height="26"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="Npu-iA-dbb" id="EWH-rV-W7Z">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="menu"/>
+                                                <menu key="menu" title="OtherViews" autoenablesItems="NO" id="bne-EA-99P">
+                                                    <items>
+                                                        <menuItem title="None" state="on" id="Npu-iA-dbb">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="Standard" tag="1" id="0GS-4d-vSR">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="Dolphin DOS 3" tag="2" id="Xaf-uT-CGy">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="perDriveCableAction:" target="-2" id="sgr-4d-KZ1"/>
+                                            </connections>
+                                        </popUpButton>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aom-cd-GVD">
+                                            <rect key="frame" x="11" y="299" width="97" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Extra RAM:" id="9e5-FX-DNN">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="IWF-UI-eEy">
+                                            <rect key="frame" x="110" y="293" width="182" height="25"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="H5n-rG-pB1" id="hge-o2-L4x">
+                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="menu"/>
+                                                <menu key="menu" id="hGC-hU-6Oh">
+                                                    <items>
+                                                        <menuItem title="None" state="on" id="H5n-rG-pB1"/>
+                                                        <menuItem title="$8000 - $9FFF " tag="1" id="Iap-JQ-5Y4"/>
+                                                        <menuItem title="$6000 - $7FFF" tag="2" id="bDL-NO-QQN"/>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="perDriveRamAction:" target="-2" id="F5q-QY-jKz"/>
+                                            </connections>
+                                        </popUpButton>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zPx-X3-apa">
+                                            <rect key="frame" x="12" y="327" width="95" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Type:" id="pAO-FP-loP">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pyv-5W-xKr">
+                                            <rect key="frame" x="13" y="356" width="95" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Configuration:" id="Q0l-0h-ka5">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="HQg-wa-r7J">
+                                            <rect key="frame" x="15" y="385" width="119" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Floppy Drive 8" bezelStyle="regularSquare" imagePosition="right" alignment="left" state="on" inset="2" id="W3K-c3-dGA">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="systemBold"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="perDriveConnectAction:" target="-2" id="5bD-A8-x7T"/>
+                                            </connections>
+                                        </button>
+                                        <button fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="g5y-Rl-Rzu">
+                                            <rect key="frame" x="16" y="209" width="119" height="24"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Floppy Drive 9  " bezelStyle="regularSquare" imagePosition="right" alignment="left" state="on" inset="2" id="2tE-dP-AGC">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="systemBold"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="perDriveConnectAction:" target="-2" id="Svh-jv-ZoP"/>
+                                            </connections>
+                                        </button>
+                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="lI9-Kn-Ogu">
+                                            <rect key="frame" x="110" y="177" width="182" height="26"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <popUpButtonCell key="cell" type="push" title="Derive from Rom" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="UoL-hN-xli" id="rEn-9t-Sfs">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="menu"/>
+                                                <menu key="menu" title="OtherViews" id="1Al-pn-VZG">
+                                                    <items>
+                                                        <menuItem title="Derive from Rom" state="on" id="UoL-hN-xli">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                        <menuItem title="Custom" tag="1" id="icy-eO-ADE">
+                                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                                        </menuItem>
+                                                    </items>
+                                                </menu>
+                                            </popUpButtonCell>
+                                            <connections>
+                                                <action selector="perDriveConfigAction:" target="-2" id="nLT-DG-0y1"/>
+                                            </connections>
+                                        </popUpButton>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EbN-hk-jSf">
+                                            <rect key="frame" x="13" y="183" width="95" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Configuration:" id="jE5-Ox-8tg">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="fSD-jP-oYR">
-                                            <rect key="frame" x="412" y="169" width="182" height="26"/>
+                                            <rect key="frame" x="413" y="323" width="182" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="No device" bezelStyle="rounded" imagePosition="right" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="8UE-0C-Sra" id="L0B-zx-S7U">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1072,7 +1307,7 @@ Gw
                                             </connections>
                                         </popUpButton>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="b6D-Q1-nEc">
-                                            <rect key="frame" x="412" y="199" width="182" height="26"/>
+                                            <rect key="frame" x="413" y="353" width="182" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="No device" bezelStyle="rounded" imagePosition="right" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="EWU-Bu-oXA" id="v7g-x1-iPU">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1105,7 +1340,7 @@ Gw
                                             </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bnQ-pH-sMz">
-                                            <rect key="frame" x="351" y="174" width="59" height="18"/>
+                                            <rect key="frame" x="352" y="328" width="59" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Port 2:" id="8L4-Fe-5hS">
                                                 <font key="font" metaFont="system"/>
@@ -1114,7 +1349,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xlY-0Z-30n">
-                                            <rect key="frame" x="351" y="203" width="59" height="18"/>
+                                            <rect key="frame" x="352" y="357" width="59" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Port 1:" id="dNh-ug-8Z4">
                                                 <font key="font" metaFont="system"/>
@@ -1123,7 +1358,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LuX-xi-SVL">
-                                            <rect key="frame" x="313" y="237" width="114" height="17"/>
+                                            <rect key="frame" x="316" y="386" width="114" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Control Ports" id="eob-Th-QIE">
                                                 <font key="font" metaFont="systemBold"/>
@@ -1131,41 +1366,8 @@ Gw
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="MGa-JQ-gnG">
-                                            <rect key="frame" x="412" y="343" width="182" height="26"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="VC1541" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="KOv-Ea-gHL" id="RRu-3v-QA5">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="menu"/>
-                                                <menu key="menu" title="OtherViews" id="HcJ-0s-Rp1">
-                                                    <items>
-                                                        <menuItem title="VC1541" state="on" id="KOv-Ea-gHL">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                        <menuItem title="VC1541C" tag="1" id="y7j-Sl-U8F">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                        <menuItem title="VC1541 II" tag="2" id="YFx-eU-F3H">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                    </items>
-                                                </menu>
-                                            </popUpButtonCell>
-                                            <connections>
-                                                <action selector="perDriveTypeAction:" target="-2" id="U3D-5o-zTP"/>
-                                            </connections>
-                                        </popUpButton>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aZc-fI-zmc">
-                                            <rect key="frame" x="278" y="286" width="132" height="20"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Parallel Cable:" id="Fw3-rs-fk4">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Idw-Y9-NPG">
-                                            <rect key="frame" x="412" y="140" width="182" height="26"/>
+                                            <rect key="frame" x="413" y="294" width="182" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="Commodore 1350" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="GfH-mi-wwg" id="Lt2-JC-Q0A">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1188,32 +1390,8 @@ Gw
                                                 <action selector="perMouseModelAction:" target="-2" id="oI7-wj-iXc"/>
                                             </connections>
                                         </popUpButton>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="7F1-cx-LV1">
-                                            <rect key="frame" x="412" y="282" width="182" height="26"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="Z5k-Qu-gjU" id="kUG-ZU-Kp9">
-                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="menu"/>
-                                                <menu key="menu" title="OtherViews" autoenablesItems="NO" id="p0f-yM-g5n">
-                                                    <items>
-                                                        <menuItem title="None" state="on" id="Z5k-Qu-gjU">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                        <menuItem title="Standard" tag="1" id="LGp-rc-p9E">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                        <menuItem title="Dolphin DOS 3" tag="2" id="5FU-ih-opp">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                    </items>
-                                                </menu>
-                                            </popUpButtonCell>
-                                            <connections>
-                                                <action selector="perDriveCableAction:" target="-2" id="weH-6H-fF9"/>
-                                            </connections>
-                                        </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fUB-eZ-Kx2">
-                                            <rect key="frame" x="315" y="146" width="95" height="17"/>
+                                            <rect key="frame" x="316" y="300" width="95" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Mouse Model:" id="qrL-R8-MEg">
                                                 <font key="font" metaFont="system"/>
@@ -1221,164 +1399,6 @@ Gw
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0I3-TN-Y77">
-                                            <rect key="frame" x="314" y="349" width="95" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Type:" id="Y6E-N3-Yn2">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rWZ-pD-Dqi">
-                                            <rect key="frame" x="292" y="319" width="118" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Extra RAM:" id="b74-KG-ez8">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="oxp-Ya-eAU">
-                                            <rect key="frame" x="412" y="313" width="182" height="25"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="kNz-7d-0FF" id="wUS-mF-LAZ">
-                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="menu"/>
-                                                <menu key="menu" id="hr0-98-Mad">
-                                                    <items>
-                                                        <menuItem title="None" state="on" id="kNz-7d-0FF"/>
-                                                        <menuItem title="$8000 - $9FFF" tag="1" id="XyY-2U-JUy"/>
-                                                        <menuItem title="$6000 - $7FFF" tag="2" id="CaD-jc-fv4"/>
-                                                    </items>
-                                                </menu>
-                                            </popUpButtonCell>
-                                            <connections>
-                                                <action selector="perDriveRamAction:" target="-2" id="t4P-lW-unx"/>
-                                            </connections>
-                                        </popUpButton>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xMc-wW-9Bz">
-                                            <rect key="frame" x="-2" y="288" width="109" height="20"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Parallel Cable:" id="gJQ-l7-leZ">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="7wr-sA-0lx">
-                                            <rect key="frame" x="108" y="284" width="182" height="26"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="Npu-iA-dbb" id="EWH-rV-W7Z">
-                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="menu"/>
-                                                <menu key="menu" title="OtherViews" autoenablesItems="NO" id="bne-EA-99P">
-                                                    <items>
-                                                        <menuItem title="None" state="on" id="Npu-iA-dbb">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                        <menuItem title="Standard" tag="1" id="0GS-4d-vSR">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                        <menuItem title="Dolphin DOS 3" tag="2" id="Xaf-uT-CGy">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                    </items>
-                                                </menu>
-                                            </popUpButtonCell>
-                                            <connections>
-                                                <action selector="perDriveCableAction:" target="-2" id="sgr-4d-KZ1"/>
-                                            </connections>
-                                        </popUpButton>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aom-cd-GVD">
-                                            <rect key="frame" x="-2" y="321" width="108" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Extra RAM:" id="9e5-FX-DNN">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <popUpButton verticalHuggingPriority="750" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="IWF-UI-eEy">
-                                            <rect key="frame" x="108" y="315" width="182" height="25"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="H5n-rG-pB1" id="hge-o2-L4x">
-                                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="menu"/>
-                                                <menu key="menu" id="hGC-hU-6Oh">
-                                                    <items>
-                                                        <menuItem title="None" state="on" id="H5n-rG-pB1"/>
-                                                        <menuItem title="$8000 - $9FFF " tag="1" id="Iap-JQ-5Y4"/>
-                                                        <menuItem title="$6000 - $7FFF" tag="2" id="bDL-NO-QQN"/>
-                                                    </items>
-                                                </menu>
-                                            </popUpButtonCell>
-                                            <connections>
-                                                <action selector="perDriveRamAction:" target="-2" id="F5q-QY-jKz"/>
-                                            </connections>
-                                        </popUpButton>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zPx-X3-apa">
-                                            <rect key="frame" x="10" y="349" width="95" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Type:" id="pAO-FP-loP">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <button fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="15f-au-qxk">
-                                            <rect key="frame" x="167" y="385" width="118" height="18"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="Auto-configure" bezelStyle="regularSquare" imagePosition="right" alignment="right" state="on" inset="2" id="jva-qh-Taw">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="perDriveAutoConfAction:" target="-2" id="Tvj-Ud-7zR"/>
-                                            </connections>
-                                        </button>
-                                        <button fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="Rso-lc-1zb">
-                                            <rect key="frame" x="471" y="383" width="118" height="18"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="Auto-configure" bezelStyle="regularSquare" imagePosition="right" alignment="right" state="on" inset="2" id="i59-ow-pEt">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="perDriveAutoConfAction:" target="-2" id="1bI-8G-x3g"/>
-                                            </connections>
-                                        </button>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0RV-1K-UAJ">
-                                            <rect key="frame" x="313" y="384" width="114" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Floppy Drive 9" id="ROP-Eg-o5I">
-                                                <font key="font" metaFont="systemBold"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <button fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="g5y-Rl-Rzu">
-                                            <rect key="frame" x="416" y="380" width="85" height="24"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="2tE-dP-AGC">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="perDriveConnectAction:" target="-2" id="Svh-jv-ZoP"/>
-                                            </connections>
-                                        </button>
-                                        <button fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="HQg-wa-r7J">
-                                            <rect key="frame" x="113" y="385" width="76" height="18"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="W3K-c3-dGA">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="perDriveConnectAction:" target="-2" id="5bD-A8-x7T"/>
-                                            </connections>
-                                        </button>
                                     </subviews>
                                 </view>
                             </tabViewItem>
