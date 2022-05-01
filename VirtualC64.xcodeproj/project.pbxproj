@@ -21,6 +21,7 @@
 		500E34142615BF5E006A38DA /* IOUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34122615BF5E006A38DA /* IOUtils.cpp */; };
 		500E34172615C40D006A38DA /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34152615C40D006A38DA /* Parser.cpp */; };
 		500EA6C724B09037009AA7D7 /* SubComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EA6C524B09037009AA7D7 /* SubComponent.cpp */; };
+		500F7CC6281EAB64003F1A7C /* DiskCreator.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500F7CC5281EAB64003F1A7C /* DiskCreator.xib */; };
 		50133B97200D4EED00167227 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50133B96200D4EED00167227 /* MetalView.swift */; };
 		5015F36620B546A30024B4AA /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5015F36520B546A30024B4AA /* WaveformView.swift */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
@@ -151,7 +152,7 @@
 		5058A91E281D107A00C223C9 /* DiskExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058A91D281D107A00C223C9 /* DiskExporter.swift */; };
 		5058A920281D109F00C223C9 /* DiskInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058A91F281D109F00C223C9 /* DiskInspector.swift */; };
 		5058A922281D10B100C223C9 /* VolumeInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058A921281D10B100C223C9 /* VolumeInspector.swift */; };
-		5058A924281D10C600C223C9 /* FloppyCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058A923281D10C600C223C9 /* FloppyCreator.swift */; };
+		5058A924281D10C600C223C9 /* DiskCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5058A923281D10C600C223C9 /* DiskCreator.swift */; };
 		505D492821C155DD00A7C575 /* RomConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505D492721C155DD00A7C575 /* RomConf.swift */; };
 		505F8FE72580BD780066ACE4 /* AudioConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F8FE62580BD780066ACE4 /* AudioConf.swift */; };
 		505F8FE92582435E0066ACE4 /* PeripheralsConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505F8FE82582435E0066ACE4 /* PeripheralsConf.swift */; };
@@ -327,6 +328,7 @@
 		500E34162615C40D006A38DA /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
 		500EA6C524B09037009AA7D7 /* SubComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SubComponent.cpp; sourceTree = "<group>"; };
 		500EA6C624B09037009AA7D7 /* SubComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubComponent.h; sourceTree = "<group>"; };
+		500F7CC5281EAB64003F1A7C /* DiskCreator.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskCreator.xib; sourceTree = "<group>"; };
 		500FAA63261376C50062488E /* Types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
 		500FAA64261377050062488E /* Macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 		50133B96200D4EED00167227 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
@@ -563,7 +565,7 @@
 		5058A91D281D107A00C223C9 /* DiskExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DiskExporter.swift; path = GUI/Dialogs/DiskExporter.swift; sourceTree = SOURCE_ROOT; };
 		5058A91F281D109F00C223C9 /* DiskInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskInspector.swift; sourceTree = "<group>"; };
 		5058A921281D10B100C223C9 /* VolumeInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeInspector.swift; sourceTree = "<group>"; };
-		5058A923281D10C600C223C9 /* FloppyCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloppyCreator.swift; sourceTree = "<group>"; };
+		5058A923281D10C600C223C9 /* DiskCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskCreator.swift; sourceTree = "<group>"; };
 		505D492721C155DD00A7C575 /* RomConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomConf.swift; sourceTree = "<group>"; };
 		505F8FE62580BD780066ACE4 /* AudioConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioConf.swift; sourceTree = "<group>"; };
 		505F8FE82582435E0066ACE4 /* PeripheralsConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralsConf.swift; sourceTree = "<group>"; };
@@ -861,7 +863,7 @@
 				5058A91D281D107A00C223C9 /* DiskExporter.swift */,
 				500F7CC4281E58DA003F1A7C /* DiskInspector */,
 				5058A921281D10B100C223C9 /* VolumeInspector.swift */,
-				5058A923281D10C600C223C9 /* FloppyCreator.swift */,
+				5058A923281D10C600C223C9 /* DiskCreator.swift */,
 				50B485FA24F9911600844133 /* ImportDialog.swift */,
 				5080501725873EC9004FE1F5 /* ExportDialog.swift */,
 				5098C57A2658CF9800E05EFC /* VideoExporter.swift */,
@@ -1566,6 +1568,7 @@
 				50D3092524C71AD300B92563 /* Monitor.xib */,
 				503C1DD024FC10F400D91141 /* SnapshotViewer.xib */,
 				507E7A9D24FB864E00AB433C /* ScreenshotViewer.xib */,
+				500F7CC5281EAB64003F1A7C /* DiskCreator.xib */,
 				5058A919281D041400C223C9 /* DiskExporter.xib */,
 				5058A917281D03D200C223C9 /* DiskInspector.xib */,
 				50D5F88724F556270062EF13 /* DiskErrors.xib */,
@@ -1704,6 +1707,7 @@
 				503C1DD124FC10F400D91141 /* SnapshotViewer.xib in Resources */,
 				50A0B48D24C1CAEB00FF0B0B /* Preferences.xib in Resources */,
 				50D3092624C71AD300B92563 /* Monitor.xib in Resources */,
+				500F7CC6281EAB64003F1A7C /* DiskCreator.xib in Resources */,
 				501E2C1225B2DDED00B9C9C0 /* AppIcon.icns in Resources */,
 				5098C57D2658D4DC00E05EFC /* VideoExporter.xib in Resources */,
 				50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */,
@@ -1986,7 +1990,7 @@
 				504C438524AF29AC00E69CAE /* MsgQueue.cpp in Sources */,
 				504C435D24AF29AC00E69CAE /* EasyFlash.cpp in Sources */,
 				504C435A24AF29AC00E69CAE /* WarpSpeed.cpp in Sources */,
-				5058A924281D10C600C223C9 /* FloppyCreator.swift in Sources */,
+				5058A924281D10C600C223C9 /* DiskCreator.swift in Sources */,
 				50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */,
 				50D3092424C7152700B92563 /* Inspector.swift in Sources */,
 				504C438C24AF29AC00E69CAE /* VICII_draw.cpp in Sources */,

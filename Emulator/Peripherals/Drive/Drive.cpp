@@ -732,7 +732,8 @@ Drive::moveHeadUp()
     if (halftrack < 84) {
 
         if (hasDisk()) {
-            
+
+            assert(disk->lengthOfHalftrack(halftrack) != 0);
             float pos = (float)offset / (float)disk->lengthOfHalftrack(halftrack);
             halftrack++;
             offset = (HeadPos)(pos * disk->lengthOfHalftrack(halftrack));
@@ -758,6 +759,7 @@ Drive::moveHeadDown()
         
         if (hasDisk()) {
 
+            assert(disk->lengthOfHalftrack(halftrack) != 0);
             float pos = (float)offset / (float)disk->lengthOfHalftrack(halftrack);
             halftrack--;
             offset = (HeadPos)(pos * disk->lengthOfHalftrack(halftrack));
@@ -818,13 +820,6 @@ Drive::insertDisk(std::unique_ptr<Disk> disk)
             diskChangeCounter = 1;
         }
     }
-}
-
-void
-Drive::insertNewDisk(DOSType fsType)
-{
-    PETName<16> name = PETName<16>("NEW DISK");
-    insertNewDisk(fsType, name);
 }
 
 void

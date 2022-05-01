@@ -1167,9 +1167,9 @@
     [self drive]->insertFileSystem(*(FileSystem *)proxy->obj, wp);
 }
 
-- (void)insertNewDisk:(DOSType)fsType
+- (void)insertNewDisk:(DOSType)fsType name:(NSString *)name
 {
-    [self drive]->insertNewDisk(fsType);
+    [self drive]->insertNewDisk(fsType, PETName<16>([name UTF8String]));
 }
 
 - (void)ejectDisk

@@ -392,7 +392,6 @@ public:
      */
     void insertDisk(const string &path, bool wp) throws;
     void insertDisk(std::unique_ptr<Disk> disk);
-    void insertNewDisk(DOSType fstype);
     void insertNewDisk(DOSType fstype, PETName<16> name);
     void insertD64(const D64File &d64, bool wp);
     void insertG64(const G64File &g64, bool wp);

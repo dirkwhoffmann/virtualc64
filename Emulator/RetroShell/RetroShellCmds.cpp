@@ -312,7 +312,7 @@ RetroShell::exec <Token::drive, Token::insert, Token::newdisk> (Arguments& argv,
 
     auto type = util::parseEnum <DOSTypeEnum> (argv.front());
     auto &drive = param ? drive9 : drive8;
-    drive.insertNewDisk(type);
+    drive.insertNewDisk(type, PETName<16>("NEW DISK"));
 }
 
 template <> void

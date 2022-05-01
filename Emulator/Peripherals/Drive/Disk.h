@@ -105,9 +105,9 @@ public:
     
     Disk();
     Disk(const string &path, bool wp = false) { init(path, wp); } throws
-    Disk(DOSType type, PETName<16> name, bool wp = false) { init(type, name, wp); } throws
-    Disk(const class FileSystem &device, bool wp = false) { init(device, wp); } throws
-    Disk(const G64File &g64, bool wp = false) { init(g64, wp); } throws
+    Disk(DOSType type, PETName<16> name, bool wp = false) { init(type, name, wp); }
+    Disk(const class FileSystem &device, bool wp = false) { init(device, wp); }
+    Disk(const G64File &g64, bool wp = false) { init(g64, wp); }
     Disk(const D64File &d64, bool wp = false) { init(d64, wp); } throws
     Disk(AnyCollection &archive, bool wp = false) { init(archive, wp); } throws
     Disk(util::SerReader &reader) throws { init(reader); }

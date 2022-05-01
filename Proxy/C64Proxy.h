@@ -554,11 +554,8 @@
 @property (readonly) BOOL hasUnprotectedDisk;
 
 - (BOOL)redLED;
-// - (BOOL)hasDisk;
-// - (BOOL)hasWriteProtectedDisk;
-// - (BOOL)hasModifiedDisk;
 - (void)setModifiedDisk:(BOOL)b;
-- (void)insertNewDisk:(DOSType)fstype;
+- (void)insertNewDisk:(DOSType)fstype name:(NSString *)name;
 - (void)insertD64:(D64FileProxy *)proxy protected:(BOOL)wp;
 - (void)insertG64:(G64FileProxy *)proxy protected:(BOOL)wp;
 - (void)insertCollection:(AnyCollectionProxy *)proxy protected:(BOOL)wp;

@@ -135,12 +135,17 @@ Disk::init(DOSType type, PETName<16> name, bool wp)
         auto fs = FileSystem(DISK_TYPE_SS_SD, DOS_TYPE_CBM);
         fs.setName(name);
         init(fs, wp);
+
+    } else {
+
+        clearDisk();
     }
 }
 
 void
 Disk::init(const FileSystem &fs, bool wp)
 {
+    clearDisk();
     encode(fs);
     setWriteProtection(wp);
 }
@@ -148,6 +153,7 @@ Disk::init(const FileSystem &fs, bool wp)
 void
 Disk::init(const G64File &g64, bool wp)
 {
+    clearDisk();
     encodeG64(g64);
     setWriteProtection(wp);
 }
@@ -237,34 +243,10 @@ Disk::encodeGcr(u8 *values, isize length, Track t, HeadPos offset)
     }
 }
 
-/*
-u8
-Disk::decodeGcrNibble(u8 *gcr)
-{
-    assert(gcr);
-    
-    auto codeword = gcr[0] << 4 | gcr[1] << 3 | gcr[2] << 2 | gcr[3] << 1 | gcr[4];
-    assert(codeword < 32);
-    
-    return invgcr[codeword];
-}
-
-u8
-Disk::decodeGcr(u8 *gcr)
-{
-    assert(gcr);
-    
-    u8 nibble1 = decodeGcrNibble(gcr);
-    u8 nibble2 = decodeGcrNibble(gcr + 5);
-
-    return (u8)(nibble1 << 4 | nibble2);
-}
-*/
-
 bool
 Disk::isValidHeadPos(Halftrack ht, HeadPos pos) const
 {
-    return isHalftrackNumber(ht) && pos < length.halftrack[ht];
+    return isHalftrackNumber(ht) && pos >= 0 && pos < length.halftrack[ht];
 }
 
 HeadPos

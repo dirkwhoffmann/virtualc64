@@ -573,10 +573,15 @@ extension MyController: NSMenuItemValidation {
     //
 
     @IBAction func newDiskAction(_ sender: NSMenuItem!) {
-        
+
         let drive = c64.drive(sender)
-        
-        drive.insertNewDisk(config.blankDiskFormat)
+
+        // Ask the user if a modified hard drive should be detached
+        if !proceedWithUnsavedFloppyDisk(drive: drive) { return }
+
+        let panel = DiskCreator(with: self, nibName: "DiskCreator")
+        panel?.showSheet(forDrive: drive.id)
+
         myAppDelegate.clearRecentlyExportedDiskURLs(drive: drive.id)
     }
     
