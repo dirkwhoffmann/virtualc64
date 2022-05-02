@@ -11,12 +11,14 @@ import Darwin
 
 class DiskCreator: DialogController {
 
-    @IBOutlet weak var diskIcon: NSImageView!
-
+    @IBOutlet weak var icon: NSImageView!
     @IBOutlet weak var capacity: NSPopUpButton!
     @IBOutlet weak var fileSystem: NSPopUpButton!
     @IBOutlet weak var nameLabel: NSTextField!
     @IBOutlet weak var nameField: NSTextField!
+
+    var dos: DOSType { return fileSystem.selectedTag() == 1 ? .CBM : .NODOS }
+    var name: String { return nameField.stringValue }
 
     var nr = DriveID.DRIVE8
     var diskType: String!
@@ -94,14 +96,31 @@ class DiskCreator: DialogController {
 
     @IBAction func insertAction(_ sender: Any!) {
 
-        let dos: DOSType =
-        fileSystem.selectedTag() == 1 ? .CBM : .NODOS
-
-        let name = nameField.stringValue
-        log("Dos = \(dos) Name = \(name)")
-
         drive?.insertNewDisk(dos, name: name)
         myAppDelegate.clearRecentlyExportedDiskURLs(drive: nr)
         hideSheet()
+    }
+}
+
+extension DiskCreator: NSFilePromiseProviderDelegate {
+
+    func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, fileNameForType fileType: String) -> String {
+
+        return "Empty.d64"
+    }
+
+    func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, writePromiseTo url: URL, completionHandler: @escaping (Error?) -> Void) {
+
+        if let fs = FileSystemProxy.make(withDiskType: .SS_SD, dosType: dos) {
+
+            do {
+                fs.name = name
+                let d64 = try D64FileProxy.make(fs: fs) as D64FileProxy
+                try d64.writeToFile(url: url)
+            } catch {
+                log("filePromiseProvider: Can't export file to \(url)")
+            }
+        }
+        completionHandler(nil)
     }
 }

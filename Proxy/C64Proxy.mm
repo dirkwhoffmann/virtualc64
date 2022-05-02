@@ -2015,10 +2015,21 @@
     catch (VC64Error &err) { [ex save:err]; return nil; }
 }
 
++ (instancetype)makeWithDiskType:(DiskType)diskType dosType:(DOSType)dosType
+{
+    return [self make: new FileSystem(diskType, dosType)];
+}
+
 - (NSString *)name
 {
     auto str = [self fs]->getName();
     return @(str.c_str());
+}
+
+- (void)setName:(NSString *)name
+{
+    auto str = string([name UTF8String]);
+    [self fs]->setName(PETName<16>(str));
 }
 
 - (NSString *)idString

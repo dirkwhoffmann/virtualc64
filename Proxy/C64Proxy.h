@@ -942,8 +942,9 @@ AnyCollectionProxy <MakeWithFolder> { }
 + (instancetype)makeWithD64:(D64FileProxy *)d64 exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithDisk:(DiskProxy *)disk exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithCollection:(AnyCollectionProxy *)collection exception:(ExceptionWrapper *)ex;
++ (instancetype)makeWithDiskType:(DiskType)diskType dosType:(DOSType)dosType;
 
-@property (readonly) NSString *name;
+@property NSString *name;
 @property (readonly) NSString *idString;
 @property (readonly) NSString *capacityString;
 @property (readonly) NSString *fillLevelString;
