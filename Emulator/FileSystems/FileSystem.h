@@ -294,7 +294,7 @@ public:
     bool exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode *err = nullptr);
 
     // Exports all files or a single file to a folder in the host file system
-    void exportDirectory(const string &path) throws;
+    void exportDirectory(const string &path, bool createDir = true) throws;
     void exportFile(FSDirEntry *item, const string &path) throws;
     void exportFile(FSDirEntry *entry, std::ofstream &stream) throws;
 

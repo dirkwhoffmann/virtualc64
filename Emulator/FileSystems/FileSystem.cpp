@@ -875,12 +875,22 @@ FileSystem::exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode
 }
 
 void
-FileSystem::exportDirectory(const string &path)
+FileSystem::exportDirectory(const string &path, bool createDir)
 {
-    isize numItems = util::numDirectoryItems(path);
+    // Try to create the directory if it doesn't exist
+    if (!util::isDirectory(path) && createDir && !util::createDirectory(path)) {
+        throw VC64Error(ERROR_DIR_CANT_CREATE);
+    }
+
+    // Only proceed if the directory exists
+    if (!util::isDirectory(path)) {
+        throw VC64Error(ERROR_DIR_NOT_FOUND);
+    }
 
     // Only proceed if path points to an empty directory
-    if (numItems != 0) throw VC64Error(ERROR_DIR_NOT_EMPTY);
+    if (util::numDirectoryItems(path) != 0) {
+        throw VC64Error(ERROR_DIR_NOT_EMPTY, path);
+    }
     
     // Rescan the directory to get the directory cache up to date
     scanDirectory();

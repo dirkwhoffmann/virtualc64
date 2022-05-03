@@ -60,27 +60,51 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
             break;
 
         case ERROR_DIR_NOT_FOUND:
-            description = "Folder \"" + s + "\" not found.";
+            if (s.empty()) {
+                description = "Folder not found.";
+            } else {
+                description = "Folder \"" + s + "\" not found.";
+            }
             break;
 
         case ERROR_DIR_ACCESS_DENIED:
-            description = "Unable to access folder \"" + s + "\". Permission denied.";
+            if (s.empty()) {
+                description = "Unable to access folder. Permission denied.";
+            } else {
+                description = "Unable to access folder \"" + s + "\". Permission denied.";
+            }
             break;
 
         case ERROR_DIR_CANT_CREATE:
-            description = "Failed to create directory \"" + s + "\".";
+            if (s.empty()) {
+                description = "Failed to create directory.";
+            } else {
+                description = "Failed to create directory \"" + s + "\".";
+            }
             break;
 
         case ERROR_DIR_NOT_EMPTY:
-            description = "Directory \"" + s + "\" is not empty.";
+            if (s.empty()) {
+                description = "Directory is not empty.";
+            } else {
+                description = "Directory \"" + s + "\" is not empty.";
+            }
             break;
 
         case ERROR_FILE_NOT_FOUND:
-            description = "File \"" + s + "\" not found.";
+            if (s.empty()) {
+                description = "File not found.";
+            } else {
+                description = "File \"" + s + "\" not found.";
+            }
             break;
 
         case ERROR_FILE_EXISTS:
-            description = "File \"" + s + "\" already exists.";
+            if (s.empty()) {
+                description = "File already exists.";
+            } else {
+                description = "File \"" + s + "\" already exists.";
+            }
             break;
 
         case ERROR_FILE_IS_DIRECTORY:
@@ -92,7 +116,11 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
             break;
 
         case ERROR_FILE_ACCESS_DENIED:
-            description = "Unable to access file \"" + s + "\". Permission denied.";
+            if (s.empty()) {
+                description = "Unable to access file. Permission denied.";
+            } else {
+                description = "Unable to access file \"" + s + "\". Permission denied.";
+            }
             break;
 
         case ERROR_FILE_TYPE_MISMATCH:
@@ -100,15 +128,27 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
             break;
 
         case ERROR_FILE_CANT_READ:
-            description = "Failed to read from file \"" + s + "\".";
+            if (s.empty()) {
+                description = "Failed to read from file.";
+            } else {
+                description = "Failed to read from file \"" + s + "\".";
+            }
             break;
 
         case ERROR_FILE_CANT_WRITE:
-            description = "Failed to write to file \"" + s + "\".";
+            if (s.empty()) {
+                description = "Failed to write to file.";
+            } else {
+                description = "Failed to write to file \"" + s + "\".";
+            }
             break;
 
         case ERROR_FILE_CANT_CREATE:
-            description = "Failed to create file \"" + s + "\".";
+            if (s.empty()) {
+                description = "Failed to create file.";
+            } else {
+                description = "Failed to create file \"" + s + "\".";
+            }
             break;
 
         case ERROR_ROM_BASIC_MISSING:

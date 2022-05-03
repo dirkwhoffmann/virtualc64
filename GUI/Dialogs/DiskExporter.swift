@@ -82,7 +82,7 @@ class DiskExporter: DialogController {
 
             formatPopup.addItem(withTitle: title)
             formatPopup.lastItem?.tag = tag
-            formatPopup.isEnabled = enabled
+            formatPopup.lastItem?.isEnabled = enabled
         }
 
         formatPopup.autoenablesItems = false
@@ -124,10 +124,10 @@ class DiskExporter: DialogController {
 
         switch formatPopup.selectedTag() {
 
-        case Format.d64: icon.image = d64?.icon(protected: wp)
-        case Format.t64: icon.image = t64?.icon(protected: wp)
-        case Format.prg: icon.image = prg?.icon(protected: wp)
-        case Format.vol: icon.image = vol?.icon(protected: wp)
+        case Format.d64: log("D64"); icon.image = d64?.icon(protected: wp)
+        case Format.t64: log("T64"); icon.image = t64?.icon(protected: wp)
+        case Format.prg: log("PRG"); icon.image = prg?.icon(protected: wp)
+        case Format.vol: log("VOL"); icon.image = NSImage(named: "NSFolder")
 
         default:
             fatalError()
@@ -188,8 +188,9 @@ class DiskExporter: DialogController {
         savePanel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK {
                 if let url = self.savePanel.url {
-                    self.export(url: url)
-                }
+                    if self.export(url: url) {
+                        self.hideSheet()
+                    }                }
             }
         })
     }
@@ -206,13 +207,16 @@ class DiskExporter: DialogController {
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK {
                 if let url = self.openPanel.url {
-                    self.export(url: url)
+                    if self.export(url: url) {
+                        self.hideSheet()
+                    }
                 }
             }
         })
     }
 
-    func export(url: URL) {
+    @discardableResult
+    func export(url: URL) -> Bool {
 
         do {
 
@@ -245,13 +249,13 @@ class DiskExporter: DialogController {
             drive.markDiskAsUnmodified()
             myAppDelegate.noteNewRecentlyExportedDiskURL(url, drive: drive.id)
 
-            hideSheet()
-
         } catch {
             parent.showAlert(.cantExport(url: url), error: error, async: true, window: window)
+            return false
         }
 
         parent.refreshStatusBar()
+        return true
     }
 }
 
