@@ -18,9 +18,7 @@ extension Inspector {
     }
     
     func refreshVIC(count: Int = 0, full: Bool = false) {
-        
-        track()
-        
+
         cacheVIC()
         
         if full {
@@ -46,28 +44,11 @@ extension Inspector {
             sprX.assignFormatter(fmt9)
             sprY.assignFormatter(fmt8)
         }
-                
-        if c64.running {
 
-            // If the emulator is running, it is likely that the VIC state has
-            // been captured while the emualtion thread is waiting. As a result,
-            // the displayed values for rasterlines and rasterline cycles do not
-            // seem distributed randomly. To make the debugger output look
-            // realistic, we fake the output...
-            
-            vicScanline.integerValue = (vicScanline.integerValue + 173) % 263
-            vicRasterCycle.integerValue = (vicRasterCycle.integerValue + 17) % 64
-            vicYCounter.integerValue = (vicYCounter.integerValue + 173) % 263
-            vicXCounter.integerValue = (vicXCounter.integerValue + 136) % 512
-
-        } else {
-
-            vicScanline.integerValue = Int(vicInfo.scanline)
-            vicRasterCycle.integerValue = Int(vicInfo.rasterCycle)
-            vicYCounter.integerValue = Int(vicInfo.yCounter)
-            vicXCounter.integerValue = Int(vicInfo.xCounter)
-        }
-        
+        vicScanline.integerValue = Int(vicInfo.scanline)
+        vicRasterCycle.integerValue = Int(vicInfo.rasterCycle)
+        vicYCounter.integerValue = Int(vicInfo.yCounter)
+        vicXCounter.integerValue = Int(vicInfo.xCounter)
         vicVC.integerValue = Int(vicInfo.vc)
         vicVCBase.integerValue = Int(vicInfo.vcBase)
         vicRC.integerValue = Int(vicInfo.rc)

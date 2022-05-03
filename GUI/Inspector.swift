@@ -334,7 +334,7 @@ class Inspector: DialogController {
             }
         }
         
-        c64.inspect()
+        // c64.inspect()
         
         if let id = panel.selectedTabViewItem?.label {
             
@@ -381,9 +381,7 @@ class Inspector: DialogController {
     }
 
     func step() {
-        
-        track()
-        
+
         message.stringValue = ""
         cpuInstrView.breakpointPC = -1
         cpuInstrView.watchpointPC = -1
@@ -400,9 +398,7 @@ class Inspector: DialogController {
     }
 
     func signalBreakPoint(pc: Int) {
-    
-        track("pc = \(pc)")
-        
+
         message.stringValue = String(format: "Breakpoint reached")
         cpuInstrView.breakpointPC = pc
         scrollToPC()
@@ -417,25 +413,21 @@ class Inspector: DialogController {
 
     @IBAction func refreshAction(_ sender: NSButton!) {
 
-        track()
         refresh()
     }
 
     @IBAction func stopAndGoAction(_ sender: NSButton!) {
 
-        track()
         c64.stopAndGo()
     }
     
     @IBAction func stepIntoAction(_ sender: NSButton!) {
 
-        track()
         c64.stepInto()
     }
     
     @IBAction func stepOverAction(_ sender: NSButton!) {
 
-        track()
         c64.stepOver()
     }
     
@@ -457,9 +449,7 @@ class Inspector: DialogController {
 extension Inspector {
     
     override func windowWillClose(_ notification: Notification) {
-        
-        track("Closing inspector")
-        
+                
         // Leave debug mode
         c64?.debugMode = false
         c64?.inspectionTarget = .NONE
@@ -469,12 +459,10 @@ extension Inspector {
 extension Inspector: NSTabViewDelegate {
     
     func updateInspectionTarget() {
-        
-        track()
-        
+
         if let id = panel.selectedTabViewItem?.label {
         
-            track("id = \(id)")
+            log("Switching inspection target to \(id)")
             
             switch id {
                 
@@ -483,7 +471,6 @@ extension Inspector: NSTabViewDelegate {
             case "CIA":     parent.c64.inspectionTarget = .CIA
             case "VICII":   parent.c64.inspectionTarget = .VIC
             case "SID":     parent.c64.inspectionTarget = .SID
-            // case "Disk":    analyzeDisk()
             default:        break
             }
             

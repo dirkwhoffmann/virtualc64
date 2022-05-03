@@ -139,12 +139,6 @@ C64::_reset(bool hard)
     rasterCycle = 1;
 }
 
-InspectionTarget
-C64::getInspectionTarget() const
-{
-    return inspectionTarget;
-}
-
 void
 C64::setInspectionTarget(InspectionTarget target)
 {
@@ -664,11 +658,13 @@ C64::execute()
         }
         
         // Are we requested to update the debugger info structs?
+        /*
         if (flags & RL::INSPECT) {
             clearFlag(RL::INSPECT);
             inspect();
         }
-        
+        */
+
         // Did we reach a breakpoint?
         if (flags & RL::BREAKPOINT) {
             clearFlag(RL::BREAKPOINT);
@@ -732,9 +728,9 @@ C64::_powerOn()
     
     // Perform a reset
     hardReset();
-            
+
     // Update the recorded debug information
-    inspect();
+    inspect(INSPECTION_C64);
 
     msgQueue.put(MSG_POWER_ON);
 }
@@ -744,7 +740,9 @@ C64::_powerOff()
 {
     debug(RUN_DEBUG, "_powerOff\n");
 
-    inspect();
+    // Update the recorded debug information for all components
+    inspect(INSPECTION_C64);
+
     msgQueue.put(MSG_POWER_OFF);
 }
 
@@ -764,7 +762,9 @@ C64::_pause()
     // Finish the current instruction to reach a clean state
     finishInstruction();
     
-    inspect();
+    // Update the recorded debug information for all components
+    inspect(INSPECTION_C64);
+
     msgQueue.put(MSG_PAUSE);
 }
 
@@ -825,9 +825,12 @@ C64::save(u8 *buffer)
 }
 
 void
-C64::inspect()
+C64::inspect(InspectionTarget target)
 {
-    switch(inspectionTarget) {
+    // Never call this function from outside if the emulator is running
+    assert(!isRunning() || isEmulatorThread());
+
+    switch(target) {
             
         case INSPECTION_C64: C64Component::inspect(); break;
         case INSPECTION_CPU: cpu.inspect(); break;
@@ -838,6 +841,17 @@ C64::inspect()
             
         default:
             break;
+    }
+}
+
+void
+C64::autoInspect()
+{
+    // This function is called periodically by the CPU in debug mode
+    if (inspectionCounter-- == 0) {
+
+        inspect();
+        inspectionCounter = 25000;
     }
 }
 

@@ -3189,6 +3189,9 @@ template <> void CPU<C64Memory>::done() {
     
         // Check if a breakpoint has been reached
         if (debugger.breakpointMatches(reg.pc)) c64.signalBreakpoint();
+
+        // Perform an inspection from time to time
+        c64.autoInspect();
     }
     
     reg.pc0 = reg.pc;

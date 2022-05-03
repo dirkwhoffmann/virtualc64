@@ -68,6 +68,9 @@ class C64 : public Thread {
     // The component which is currently observed by the debugger
     InspectionTarget inspectionTarget;
 
+    // Counter used to trigger an auto-inspection
+    isize inspectionCounter = 0;
+    
 
     //
     // Sub components
@@ -240,13 +243,16 @@ private:
     
 public:
        
-    void inspect();
-    InspectionTarget getInspectionTarget() const;
+    void inspect() { inspect(inspectionTarget); }
+    void autoInspect();
+    InspectionTarget getInspectionTarget() const { return inspectionTarget; }
     void setInspectionTarget(InspectionTarget target);
     void removeInspectionTarget() { setInspectionTarget(INSPECTION_NONE); }
-        
+
 private:
-    
+
+    void inspect(InspectionTarget target);
+
     void _dump(Category category, std::ostream& os) const override;
     
     
