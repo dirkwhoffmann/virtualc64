@@ -6,7 +6,18 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-2" userLabel="File's Owner" customClass="DiskExporter" customModule="VirtualC64" customModuleProvider="target">
+            <connections>
+                <outlet property="exportButton" destination="V7R-6n-evw" id="s26-rB-hwt"/>
+                <outlet property="formatPopup" destination="qmG-6y-n5Q" id="WVF-LE-GbQ"/>
+                <outlet property="icon" destination="FX8-ws-V06" id="eML-hD-qwu"/>
+                <outlet property="info1" destination="6no-Iy-7Tq" id="Unp-iM-gFI"/>
+                <outlet property="info2" destination="Ma7-hT-XbV" id="w5Y-Ct-Nbp"/>
+                <outlet property="info3" destination="Ptn-bo-c0v" id="BUY-9t-b17"/>
+                <outlet property="title" destination="EDb-Hw-4l8" id="xZJ-IP-eia"/>
+                <outlet property="window" destination="QvC-M9-y7g" id="nUQ-Zm-UcX"/>
+            </connections>
+        </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Export Disk" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
@@ -19,7 +30,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EDb-Hw-4l8">
-                        <rect key="frame" x="151" y="179" width="346" height="19"/>
+                        <rect key="frame" x="151" y="179" width="311" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Commodore Floppy Disk" id="6Il-Wl-OK7">
                             <font key="font" metaFont="system"/>
@@ -45,7 +56,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ma7-hT-XbV">
-                        <rect key="frame" x="151" y="140" width="311" height="14"/>
+                        <rect key="frame" x="151" y="139" width="311" height="14"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr" id="aqU-qi-fUC">
                             <font key="font" metaFont="label" size="11"/>
@@ -81,6 +92,9 @@
 DQ
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="exportAction:" target="-2" id="Fr6-AD-OzK"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iem-6K-vwS">
                         <rect key="frame" x="13" y="16" width="92" height="32"/>
@@ -94,7 +108,7 @@ Gw
                         </buttonCell>
                     </button>
                     <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qmG-6y-n5Q">
-                        <rect key="frame" x="204" y="94" width="128" height="26"/>
+                        <rect key="frame" x="204" y="86" width="128" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <popUpButtonCell key="cell" type="push" title="Lorem ipsum" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="y82-93-ahM" id="U2r-Y1-y1Y">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -105,9 +119,12 @@ Gw
                                 </items>
                             </menu>
                         </popUpButtonCell>
+                        <connections>
+                            <action selector="formatAction:" target="-2" id="Ze8-v6-nbZ"/>
+                        </connections>
                     </popUpButton>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="beF-dr-xeW">
-                        <rect key="frame" x="151" y="100" width="52" height="17"/>
+                        <rect key="frame" x="151" y="92" width="52" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Format:" id="Qje-37-vkl">
                             <font key="font" metaFont="system"/>
@@ -115,8 +132,20 @@ Gw
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ptn-bo-c0v">
+                        <rect key="frame" x="151" y="121" width="311" height="14"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Lorem ipsum dolor sit amet, consetetur sadipscing elitr" id="qX9-PY-mj7">
+                            <font key="font" metaFont="label" size="11"/>
+                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="tDU-qa-RjE"/>
+            </connections>
             <point key="canvasLocation" x="54.5" y="111"/>
         </window>
     </objects>

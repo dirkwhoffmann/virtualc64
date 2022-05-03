@@ -321,13 +321,22 @@ extension FileSystemProxy {
 
         return "Single sided, single density disk with \(numTracks) tracks"
     }
-    
+
+    var dosInfo: String {
+
+        return dos.description
+    }
+
+    var usageInfo: String {
+
+        return "\(numBlocks) blocks, \(usedBlocks) blocks used"
+    }
+
     var filesInfo: String {
         
         let num = numFiles
         let files = num == 1 ? "file" : "files"
-        
-        return "\(num) \(files), \(usedBlocks) blocks used"
+        return "\(num) \(files)"
     }
 }
     

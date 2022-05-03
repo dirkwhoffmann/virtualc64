@@ -706,9 +706,9 @@ extension MyController: NSMenuItemValidation {
 
         let drive = DriveID(rawValue: sender.tag)!
         
-        let nibName = NSNib.Name("ExportDialog")
-        let exportPanel = ExportDialog(with: self, nibName: nibName)
-        exportPanel?.showSheet(forDrive: drive)
+        let nibName = NSNib.Name("DiskExporter")
+        let exportPanel = DiskExporter(with: self, nibName: nibName)
+        exportPanel?.showSheet(diskDrive: drive)
     }
 
     @IBAction func inspectDiskAction(_ sender: NSMenuItem!) {

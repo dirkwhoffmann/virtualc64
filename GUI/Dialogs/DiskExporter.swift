@@ -23,6 +23,7 @@ class DiskExporter: DialogController {
     @IBOutlet weak var title: NSTextField!
     @IBOutlet weak var info1: NSTextField!
     @IBOutlet weak var info2: NSTextField!
+    @IBOutlet weak var info3: NSTextField!
     @IBOutlet weak var formatPopup: NSPopUpButton!
     @IBOutlet weak var exportButton: NSButton!
 
@@ -64,8 +65,11 @@ class DiskExporter: DialogController {
                 // Try to run the T64 encoder
                 t64 = try? T64FileProxy.make(fs: vol!)
 
-                // Try to run the PRG encoder
-                prg = try? T64FileProxy.make(fs: vol!)
+                if vol!.numFiles > 0 {
+
+                    // Try to run the PRG encoder
+                    prg = try? T64FileProxy.make(fs: vol!)
+                }
             }
         }
 
@@ -142,7 +146,8 @@ class DiskExporter: DialogController {
     func updateInfo() {
 
         info1.stringValue = vol?.layoutInfo ?? ""
-        info2.stringValue = vol?.filesInfo ?? "No compatible file system"
+        info2.stringValue = vol?.dosInfo ?? "No compatible file system"
+        info3.stringValue = vol?.usageInfo ?? ""
     }
 
     //
