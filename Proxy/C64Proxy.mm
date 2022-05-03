@@ -1142,10 +1142,34 @@
     return [self drive]->hasUnprotectedDisk();
 }
 
-- (void)setModifiedDisk:(BOOL)b
+- (void)setModificationFlag:(BOOL)value
 {
-    [self drive]->setModificationFlag(b);
+    [self drive]->setModificationFlag(value);
 }
+
+/*
+- (void)setProtectionFlag:(BOOL)value
+{
+    [self drive]->setProtectionFlag(value);
+}
+*/
+
+- (void)markDiskAsModified
+{
+    [self drive]->markDiskAsModified();
+}
+
+- (void)markDiskAsUnmodified
+{
+    [self drive]->markDiskAsUnmodified();
+}
+
+/*
+- (void)toggleWriteProtection
+{
+    [self drive]->toggleWriteProtection();
+}
+*/
 
 - (void)insertD64:(D64FileProxy *)proxy protected:(BOOL)wp
 {

@@ -829,6 +829,7 @@ C64::inspect()
 {
     switch(inspectionTarget) {
             
+        case INSPECTION_C64: C64Component::inspect(); break;
         case INSPECTION_CPU: cpu.inspect(); break;
         case INSPECTION_MEM: mem.inspect(); break;
         case INSPECTION_CIA: cia1.inspect(); cia2.inspect(); break;

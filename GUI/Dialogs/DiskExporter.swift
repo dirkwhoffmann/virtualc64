@@ -14,8 +14,7 @@ class DiskExporter: DialogController {
         static let d64 = 0
         static let t64 = 1
         static let prg = 2
-        static let p00 = 3
-        static let vol = 4
+        static let vol = 3
     }
 
     var myDocument: MyDocument { return parent.mydocument! }
@@ -34,13 +33,16 @@ class DiskExporter: DialogController {
     var openPanel: NSOpenPanel!
 
     // Reference to the export drive
-    var drive: DriveProxy?
+    var drive: DriveProxy!
 
     // The disk to export
     var disk: DiskProxy?
 
-    // Result of the file system decoder
-    var volume: FileSystemProxy?
+    // Results of the different decoders
+    var d64: D64FileProxy?
+    var t64: T64FileProxy?
+    var prg: PRGFileProxy?
+    var vol: FileSystemProxy?
 
     func showSheet(diskDrive nr: DriveID) {
 
@@ -49,28 +51,42 @@ class DiskExporter: DialogController {
         // Get the disk from the specified drive
         disk = drive?.disk
 
-        // Try to extract the file system
-        if disk != nil { volume = try? FileSystemProxy.make(disk: disk!) }
+        if disk != nil {
+
+            // Try to extract the file system
+            vol = try? FileSystemProxy.make(disk: disk!)
+
+            if vol != nil {
+
+                // Try to run the D64 encoder
+                d64 = try? D64FileProxy.make(fs: vol!)
+
+                // Try to run the T64 encoder
+                t64 = try? T64FileProxy.make(fs: vol!)
+
+                // Try to run the PRG encoder
+                prg = try? T64FileProxy.make(fs: vol!)
+            }
+        }
 
         super.showSheet()
     }
 
     func updateFormatPopup() {
 
-        func addItem(_ title: String, tag: Int) {
+        func addItem(_ title: String, tag: Int, enabled: Bool) {
 
             formatPopup.addItem(withTitle: title)
             formatPopup.lastItem?.tag = tag
-            formatPopup.isEnabled = volume != nil
+            formatPopup.isEnabled = enabled
         }
 
         formatPopup.autoenablesItems = false
         formatPopup.removeAllItems()
-        addItem("D64", tag: Format.d64)
-        addItem("T64", tag: Format.t64)
-        addItem("PRG", tag: Format.prg)
-        addItem("P00", tag: Format.p00)
-        addItem("Folder", tag: Format.vol)
+        addItem("D64", tag: Format.d64, enabled: d64 != nil)
+        addItem("T64", tag: Format.t64, enabled: t64 != nil)
+        addItem("PRG", tag: Format.prg, enabled: prg != nil)
+        addItem("Folder", tag: Format.vol, enabled: vol != nil)
     }
 
     override public func awakeFromNib() {
@@ -100,62 +116,33 @@ class DiskExporter: DialogController {
 
     func updateIcon() {
 
-    /*
+        let wp = drive!.hasProtectedDisk
+
         switch formatPopup.selectedTag() {
 
-        case Format.vol:
-
-            icon.image = NSImage(named: "NSFolder")
-
-        default:
-
-            let wp = drive!.hasProtectedDisk
-        TODO: GET DISK ICON FROM PROXY
-            icon.image =
-            adf?.icon(protected: wp) ??
-            img?.icon(protected: wp) ??
-            ext?.icon(protected: wp) ?? nil
-
-        case Format.vol:
-
-            icon.image = NSImage(named: "NSFolder")
+        case Format.d64: icon.image = d64?.icon(protected: wp)
+        case Format.t64: icon.image = t64?.icon(protected: wp)
+        case Format.prg: icon.image = prg?.icon(protected: wp)
+        case Format.vol: icon.image = vol?.icon(protected: wp)
 
         default:
-
-            icon.image = nil
+            fatalError()
         }
 
         if icon.image == nil {
             icon.image = NSImage(named: "biohazard")
         }
-     */
     }
 
     func updateTitleText() {
 
-        /*
-        title.stringValue =
-        hdf != nil ? "Amiga Hard Drive" :
-        adf != nil ? "Amiga Floppy Disk" :
-        ext != nil ? "Extended Amiga Disk" :
-        img != nil ? "PC Disk" : "Unrecognized device"
-         */
+        title.stringValue = "Commodore Floppy Disk"
     }
 
     func updateInfo() {
 
-        /*
-        if adf != nil {
-            info1.stringValue = adf!.typeInfo + ", " + adf!.layoutInfo
-        } else {
-            info1.stringValue = ""
-        }
-        if vol != nil {
-            info2.stringValue = vol!.dos.description
-        } else {
-            info2.stringValue = "No compatible file system"
-        }
-        */
+        info1.stringValue = vol?.layoutInfo ?? ""
+        info2.stringValue = vol?.filesInfo ?? "No compatible file system"
     }
 
     //
@@ -174,7 +161,6 @@ class DiskExporter: DialogController {
         case Format.d64: openExportToFilePanel(allowedTypes: ["d64", "D64"])
         case Format.t64: openExportToFilePanel(allowedTypes: ["t64", "T64"])
         case Format.prg: openExportToFilePanel(allowedTypes: ["prg", "PRG"])
-        case Format.p00: openExportToFilePanel(allowedTypes: ["p00", "P00"])
         case Format.vol: openExportToFolderPanel()
 
         default: fatalError()
@@ -223,7 +209,6 @@ class DiskExporter: DialogController {
 
     func export(url: URL) {
 
-        /*
         do {
 
             switch formatPopup.selectedTag() {
@@ -231,22 +216,17 @@ class DiskExporter: DialogController {
             case Format.d64:
 
                 log("Exporting D64")
-                try parent.mydocument.export(fileProxy: adf!, to: url)
+                try parent.mydocument.export(file: d64!, to: url)
 
-            case Format.ext:
+            case Format.t64:
 
-                log("Exporting Extended ADF")
-                try parent.mydocument.export(fileProxy: ext!, to: url)
+                log("Exporting T64")
+                try parent.mydocument.export(file: t64!, to: url)
 
-            case Format.img:
+            case Format.prg:
 
-                log("Exporting IMG")
-                try parent.mydocument.export(fileProxy: img!, to: url)
-
-            case Format.ima:
-
-                log("Exporting IMA")
-                try parent.mydocument.export(fileProxy: img!, to: url)
+                log("Exporting PRG")
+                try parent.mydocument.export(file: prg!, to: url)
 
             case Format.vol:
 
@@ -257,15 +237,14 @@ class DiskExporter: DialogController {
                 fatalError()
             }
 
-            dfn!.markDiskAsUnmodified()
-            myAppDelegate.noteNewRecentlyExportedDiskURL(url, df: dfn!.nr)
+            drive.markDiskAsUnmodified()
+            myAppDelegate.noteNewRecentlyExportedDiskURL(url, drive: drive.id)
 
             hideSheet()
 
         } catch {
             parent.showAlert(.cantExport(url: url), error: error, async: true, window: window)
         }
-        */
 
         parent.refreshStatusBar()
     }
@@ -286,7 +265,6 @@ extension DiskExporter: NSFilePromiseProviderDelegate {
         case Format.d64: name = "Untitled.d64"
         case Format.t64: name = "Untitled.t64"
         case Format.prg: name = "Untitled.prg"
-        case Format.p00: name = "Untitled.p00"
         case Format.vol: name = "Untitled"
 
         default: fatalError()

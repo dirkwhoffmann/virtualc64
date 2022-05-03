@@ -345,7 +345,6 @@ class Inspector: DialogController {
             case "Memory": refreshMemory(count: count, full: full)
             case "VICII": refreshVIC(count: count, full: full)
             case "SID": refreshSID(count: count, full: full)
-            // case "Disk": refreshDisk(count: count, full: full)
             default: break
             }
         }

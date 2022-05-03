@@ -85,6 +85,7 @@ struct RomTypeEnum : util::Reflection<RomTypeEnum, RomType> {
 enum_long(INSPECTION_TARGET)
 {
     INSPECTION_NONE,
+    INSPECTION_C64,
     INSPECTION_CPU,
     INSPECTION_CIA,
     INSPECTION_MEM,
@@ -106,6 +107,7 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
         switch (value) {
                 
             case INSPECTION_NONE:  return "NONE";
+            case INSPECTION_C64:   return "C64";
             case INSPECTION_CPU:   return "CPU";
             case INSPECTION_CIA:   return "CIA";
             case INSPECTION_MEM:   return "MEM";

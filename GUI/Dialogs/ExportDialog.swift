@@ -501,7 +501,7 @@ class ExportDialog: DialogController {
         do {
             try parent.mydocument.export(drive: driveID!, to: url)
             myAppDelegate.noteNewRecentlyExportedDiskURL(url, drive: driveID!)
-            drive?.setModifiedDisk(false)
+            drive?.markDiskAsUnmodified()
             hideSheet()
 
         } catch let error as VC64Error {

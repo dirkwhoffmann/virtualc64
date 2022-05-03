@@ -367,7 +367,9 @@ public:
 
     // Changes the modification state
     void setModificationFlag(bool value);
- 
+    void markDiskAsModified() { setModificationFlag(true); }
+    void markDiskAsUnmodified() { setModificationFlag(false); }
+
     /* Returns the current state of the write protection barrier. If the light
      * barrier is blocked, the drive head is unable to modify bits on disk.
      * Note: We block the write barrier on power up for about 1.5 sec, because
