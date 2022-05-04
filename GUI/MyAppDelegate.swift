@@ -27,14 +27,17 @@ var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
     // Information provider for connected HID devices
     var database = DeviceDatabase()
     
-    // The list of recently inserted media URLs
-    var recentlyInsertedDiskURLs: [URL] = []
+    // List of recently inserted floppy disks (all drives share the same list)
+    var insertedFloppyDisks: [URL] = []
     
-    // The list of recently exported media URLs
-    var recentlyExportedDisk8URLs: [URL] = []
-    var recentlyExportedDisk9URLs: [URL] = []
-    var recentlyInsertedTapeURLs: [URL] = []
-    var recentlyAttachedCartridgeURLs: [URL] = []
+    // List of recently exported floppy disks (one list for each drive)
+    var exportedFloppyDisks: [[URL]] = [[URL]](repeating: [URL](), count: 2)
+
+    // List of recently inserted tapes
+    var insertedTapes: [URL] = []
+
+    // List of recently attached cartridges
+    var attachedCartridges: [URL] = []
 
     override init() {
         
@@ -44,16 +47,16 @@ var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
     
     public func applicationDidFinishLaunching(_ aNotification: Notification) {
         
-        track()        
+        log()
     }
     
     public func applicationWillTerminate(_ aNotification: Notification) {
         
-        track()
+        log()
     }
     
     //
-    // Handling the lists of recently used URLs
+    // Handling lists of recently used URLs
     //
     
     func noteRecentlyUsedURL(_ url: URL, to list: inout [URL], size: Int) {
@@ -73,60 +76,48 @@ var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
     }
     
     func noteNewRecentlyInsertedDiskURL(_ url: URL) {
-        noteRecentlyUsedURL(url, to: &recentlyInsertedDiskURLs, size: 10)
+        noteRecentlyUsedURL(url, to: &insertedFloppyDisks, size: 10)
     }
     
     func getRecentlyInsertedDiskURL(_ pos: Int) -> URL? {
-        return getRecentlyUsedURL(pos, from: recentlyInsertedDiskURLs)
+        return getRecentlyUsedURL(pos, from: insertedFloppyDisks)
     }
     
     func noteNewRecentlyExportedDiskURL(_ url: URL, drive: DriveID) {
         
         precondition(drive == .DRIVE8 || drive == .DRIVE9)
-        
-        if drive == .DRIVE8 {
-            noteRecentlyUsedURL(url, to: &recentlyExportedDisk8URLs, size: 1)
-        } else {
-            noteRecentlyUsedURL(url, to: &recentlyExportedDisk9URLs, size: 1)
-        }
+        let n = drive == .DRIVE8 ? 0 : 1
+        noteRecentlyUsedURL(url, to: &exportedFloppyDisks[n], size: 1)
     }
     
     func getRecentlyExportedDiskURL(_ pos: Int, drive: DriveID) -> URL? {
         
         precondition(drive == .DRIVE8 || drive == .DRIVE9)
-
-        if drive == .DRIVE8 {
-            return getRecentlyUsedURL(pos, from: recentlyExportedDisk8URLs)
-        } else {
-            return getRecentlyUsedURL(pos, from: recentlyExportedDisk9URLs)
-        }
+        let n = drive == .DRIVE8 ? 0 : 1
+        return getRecentlyUsedURL(pos, from: exportedFloppyDisks[n])
     }
     
     func clearRecentlyExportedDiskURLs(drive: DriveID) {
         
         precondition(drive == .DRIVE8 || drive == .DRIVE9)
-
-        if drive == .DRIVE8 {
-            recentlyExportedDisk8URLs = []
-        } else {
-            recentlyExportedDisk9URLs = []
-        }
+        let n = drive == .DRIVE8 ? 0 : 1
+        exportedFloppyDisks[n] = [URL]()
     }
     
     func noteNewRecentlyInsertedTapeURL(_ url: URL) {
-        noteRecentlyUsedURL(url, to: &recentlyInsertedTapeURLs, size: 10)
+        noteRecentlyUsedURL(url, to: &insertedTapes, size: 10)
     }
     
     func getRecentlyInsertedTapeURL(_ pos: Int) -> URL? {
-        return getRecentlyUsedURL(pos, from: recentlyInsertedTapeURLs)
+        return getRecentlyUsedURL(pos, from: insertedTapes)
     }
     
     func noteNewRecentlyAtachedCartridgeURL(_ url: URL) {
-        noteRecentlyUsedURL(url, to: &recentlyAttachedCartridgeURLs, size: 10)
+        noteRecentlyUsedURL(url, to: &attachedCartridges, size: 10)
     }
     
     func getRecentlyAtachedCartridgeURL(_ pos: Int) -> URL? {
-        return getRecentlyUsedURL(pos, from: recentlyAttachedCartridgeURLs)
+        return getRecentlyUsedURL(pos, from: attachedCartridges)
     }
     
     func noteNewRecentlyUsedURL(_ url: URL) {

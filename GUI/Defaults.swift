@@ -181,7 +181,6 @@ extension DefaultsProxy {
 
         if let jsonString = getString(key) {
 
-            log("Decoding jsonString '\(jsonString)'")
             if let data = Data(base64Encoded: jsonString) {
 
                 if let decoded = try? JSONDecoder().decode(T.self, from: data) {

@@ -22,6 +22,7 @@ class MyDocument: NSDocument {
      * attachment is present, e.g., a D64 archive, it is automatically attached
      * to the emulator.
      */
+    @available(*, deprecated)
     var attachment: AnyFileProxy?
     
     // Snapshots

@@ -67,7 +67,7 @@ extension MyController: NSMenuItemValidation {
             
         // Drive menu
         case #selector(MyController.insertRecentDiskAction(_:)):
-            return validateURLlist(myAppDelegate.recentlyInsertedDiskURLs, image: smallDisk)
+            return validateURLlist(myAppDelegate.insertedFloppyDisks, image: smallDisk)
 
         case  #selector(MyController.ejectDiskAction(_:)),
             #selector(MyController.exportDiskAction(_:)),
@@ -83,8 +83,8 @@ extension MyController: NSMenuItemValidation {
                         
         case #selector(MyController.exportRecentDiskAction(_:)):
             switch item.tag {
-            case 8: return validateURLlist(myAppDelegate.recentlyExportedDisk8URLs, image: smallDisk)
-            case 9: return validateURLlist(myAppDelegate.recentlyExportedDisk9URLs, image: smallDisk)
+            case 8: return validateURLlist(myAppDelegate.exportedFloppyDisks[0], image: smallDisk)
+            case 9: return validateURLlist(myAppDelegate.exportedFloppyDisks[1], image: smallDisk)
             default: fatalError()
             }
             
@@ -99,7 +99,7 @@ extension MyController: NSMenuItemValidation {
             
         // Tape menu
         case #selector(MyController.insertRecentTapeAction(_:)):
-            return validateURLlist(myAppDelegate.recentlyInsertedTapeURLs, image: smallTape)
+            return validateURLlist(myAppDelegate.insertedTapes, image: smallTape)
             
         case #selector(MyController.ejectTapeAction(_:)):
             return c64.datasette.hasTape
@@ -113,7 +113,7 @@ extension MyController: NSMenuItemValidation {
             
         // Cartridge menu
         case #selector(MyController.attachRecentCartridgeAction(_:)):
-            return validateURLlist(myAppDelegate.recentlyAttachedCartridgeURLs, image: smallCart)
+            return validateURLlist(myAppDelegate.attachedCartridges, image: smallCart)
             
         case #selector(MyController.attachGeoRamDummyAction(_:)):
             item.state = (c64.expansionport.cartridgeType() == .GEO_RAM) ? .on : .off
@@ -674,7 +674,7 @@ extension MyController: NSMenuItemValidation {
     }
     
     @IBAction func clearRecentlyInsertedDisksAction(_ sender: Any!) {
-        myAppDelegate.recentlyInsertedDiskURLs = []
+        myAppDelegate.insertedFloppyDisks = []
     }
 
     @IBAction func clearRecentlyExportedDisksAction(_ sender: NSMenuItem!) {
@@ -684,11 +684,11 @@ extension MyController: NSMenuItemValidation {
     }
 
     @IBAction func clearRecentlyInsertedTapesAction(_ sender: Any!) {
-        myAppDelegate.recentlyInsertedTapeURLs = []
+        myAppDelegate.insertedTapes = []
     }
     
     @IBAction func clearRecentlyAttachedCartridgesAction(_ sender: Any!) {
-        myAppDelegate.recentlyAttachedCartridgeURLs = []
+        myAppDelegate.attachedCartridges = []
     }
     
     @IBAction func ejectDiskAction(_ sender: NSMenuItem!) {
