@@ -249,9 +249,7 @@ extension MyController {
     //
     
     @IBAction func drivePowerButtonAction(_ sender: NSButton!) {
-        
-        track()
-        
+
         switch sender.tag {
         case 8: drivePowerAction(drive: .DRIVE8)
         case 9: drivePowerAction(drive: .DRIVE9)
@@ -260,9 +258,7 @@ extension MyController {
     }
     
     @IBAction func warpAction(_ sender: Any!) {
-        
-        track()
-        
+                
         switch pref.warpMode {
         case .auto: pref.warpMode = .off
         case .off: pref.warpMode = .on

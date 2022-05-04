@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-class Speedometer: NSObject {
+class Speedometer {
     
     // Current emulation speed in MHz
     private var _mhz = 0.0
@@ -24,12 +24,12 @@ class Speedometer: NSObject {
     private var latchedTimestamp: Double
     
     // Value of the master clock in the previous update
-    private var latchedCycle: Int64 = Int64.max
+    private var latchedCycle = Int64.max
     
     // Frame count in the previous update
-    private var latchedFrame: Int64 = Int64.max
+    private var latchedFrame = Int64.max
     
-    override init() {
+    init() {
 
         latchedTimestamp = Date().timeIntervalSince1970
     }

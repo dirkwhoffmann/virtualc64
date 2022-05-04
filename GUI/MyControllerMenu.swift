@@ -588,11 +588,10 @@ extension MyController: NSMenuItemValidation {
     @IBAction func insertDiskAction(_ sender: NSMenuItem!) {
         
         let id = DriveID(rawValue: sender.tag)!
-        
+        let drive = c64.drive(sender)
+
         // Ask user to continue if the current disk contains modified data
-        if !proceedWithUnexportedDisk(drive: id) {
-            return
-        }
+        if !proceedWithUnsavedFloppyDisk(drive: drive) { return }
         
         let openPanel = NSOpenPanel()
         openPanel.allowsMultipleSelection = false
@@ -631,7 +630,7 @@ extension MyController: NSMenuItemValidation {
             try mydocument.createAttachment(from: url, allowedTypes: types)
 
             // Ask the user if an unsafed disk should be replaced
-            if !proceedWithUnexportedDisk(drive: drive) { return }
+            if !proceedWithUnsavedFloppyDisk(drive: c64.drive(drive)) { return }
             
             // Insert the disk
             try mydocument.mountAttachment(drive: drive)
@@ -695,7 +694,7 @@ extension MyController: NSMenuItemValidation {
         
         let drive = c64.drive(sender)
         
-        if proceedWithUnexportedDisk(drive: drive.id) {
+        if proceedWithUnsavedFloppyDisk(drive: drive) {
             
             drive.ejectDisk()
             myAppDelegate.clearRecentlyExportedDiskURLs(drive: drive.id)

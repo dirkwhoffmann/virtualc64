@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-import Foundation
+// import Foundation
 
 extension MyController {
                 
@@ -19,7 +19,7 @@ extension MyController {
     func validateSnapshotTimer() {
         
         snapshotTimer?.invalidate()
-        if pref.snapshotInterval > 0 {
+        if pref.autoSnapshots && pref.snapshotInterval > 0 {
             
             snapshotTimer =
                 Timer.scheduledTimer(timeInterval: TimeInterval(pref.snapshotInterval),

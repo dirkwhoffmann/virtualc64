@@ -258,7 +258,7 @@
     return (CPU<C64Memory> *)obj;
 }
 
-- (CPUInfo)getInfo
+- (CPUInfo)info
 {
     return [self cpu]->getInfo();
 }

@@ -11,7 +11,7 @@
 // Logging / Debugging
 //
 
-let logLevel = 2 // releaseBuild ? 0 : 1
+let logLevel = releaseBuild ? 0 : 1
 
 public func log(_ msg: String = "", level: Int = 1,
                 path: String = #file, function: String = #function, line: Int = #line) {
@@ -55,7 +55,7 @@ class VC64Error: Error {
         self.what = what
     }
 
-    // DEPRECATED
+    @available(*, deprecated)
     static func alert(_ msg1: String, _ msg2: String, style: NSAlert.Style,
                       async: Bool = false, icon: String?) {
         
@@ -77,25 +77,30 @@ class VC64Error: Error {
         }
     }
 
+    @available(*, deprecated)
     static func informational(_ msg1: String, _ msg2: String,
                               async: Bool = false, icon: String? = nil) {
         alert(msg1, msg2, style: .informational, async: async, icon: icon)
     }
 
+    @available(*, deprecated)
     static func warning(_ msg1: String, _ msg2: String,
                         async: Bool = false, icon: String? = nil) {
         alert(msg1, msg2, style: .warning, async: async, icon: icon)
     }
-    
+
+    @available(*, deprecated)
     static func critical(_ msg1: String, _ msg2: String,
                          async: Bool = false, icon: String? = nil) {
         alert(msg1, msg2, style: .critical, async: async, icon: icon)
     }
 
+    @available(*, deprecated)
     func warning(_ msg: String, async: Bool = false, icon: String? = nil) {
         VC64Error.warning(msg, what, async: async, icon: icon)
     }
 
+    @available(*, deprecated)
     func critical(_ msg: String, async: Bool = false, icon: String? = nil) {
         VC64Error.warning(msg, what, async: async, icon: icon)
     }
@@ -386,6 +391,7 @@ extension MyDocument {
     }
 
     func askToPowerOff() -> Bool {
+
         if c64.poweredOn {
 
             let alert = NSAlert()

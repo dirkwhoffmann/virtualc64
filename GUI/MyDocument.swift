@@ -200,6 +200,7 @@ class MyDocument: NSDocument {
 
         log("url = \(url) types = \(types)")
 
+        let drive = c64.drive(id)
         let proxy = try createFileProxy(from: url, allowedTypes: types)
 
         if let proxy = proxy as? SnapshotProxy {
@@ -225,7 +226,7 @@ class MyDocument: NSDocument {
         if let proxy = proxy as? D64FileProxy {
 
             log("D64")
-            if force || proceedWithUnexportedDisk(drive: id) {
+            if force || proceedWithUnsavedFloppyDisk(drive: drive) {
 
                 c64.drive(id).insertD64(proxy, protected: false)
                 if remember { myAppDelegate.noteNewRecentlyInsertedDiskURL(url) }
@@ -234,7 +235,7 @@ class MyDocument: NSDocument {
         if let proxy = proxy as? G64FileProxy {
 
             log("G64")
-            if force || proceedWithUnexportedDisk(drive: id) {
+            if force || proceedWithUnsavedFloppyDisk(drive: drive) {
 
                 c64.drive(id).insertG64(proxy, protected: false)
                 if remember { myAppDelegate.noteNewRecentlyInsertedDiskURL(url) }
@@ -243,7 +244,7 @@ class MyDocument: NSDocument {
         if let proxy = proxy as? AnyCollectionProxy {
 
             log("T64, PRG, P00")
-            if force || proceedWithUnexportedDisk(drive: id) {
+            if force || proceedWithUnsavedFloppyDisk(drive: drive) {
 
                 c64.drive(id).insertCollection(proxy, protected: false)
                 if remember { myAppDelegate.noteNewRecentlyInsertedDiskURL(url) }
@@ -374,7 +375,7 @@ class MyDocument: NSDocument {
         
         if let proxy = attachment as? D64FileProxy {
 
-            if proceedWithUnexportedDisk(drive: id) {
+            if proceedWithUnsavedFloppyDisk(drive: drive) {
                 
                 drive.insertD64(proxy, protected: false)
                 return
@@ -382,7 +383,7 @@ class MyDocument: NSDocument {
         }
         if let proxy = attachment as? G64FileProxy {
             
-            if proceedWithUnexportedDisk(drive: id) {
+            if proceedWithUnsavedFloppyDisk(drive: drive) {
                 
                 drive.insertG64(proxy, protected: false)
                 return
@@ -390,7 +391,7 @@ class MyDocument: NSDocument {
         }
         if let proxy = attachment as? AnyCollectionProxy {
             
-            if proceedWithUnexportedDisk(drive: id) {
+            if proceedWithUnsavedFloppyDisk(drive: drive) {
                 
                 drive.insertCollection(proxy, protected: false)
                 return

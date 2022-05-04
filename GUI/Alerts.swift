@@ -47,7 +47,8 @@ extension NSError {
 }
 
 extension MyDocument {
-    
+
+    /*
     func showNoMetalSupportAlert() {
         
         let alert = NSAlert()
@@ -58,7 +59,9 @@ extension MyDocument {
         alert.addButton(withTitle: "Exit")
         alert.runModal()
     }
-    
+    */
+
+    /*
     @discardableResult
     func showDiskIsUnexportedAlert(drive: DriveID) -> NSApplication.ModalResponse {
        
@@ -73,7 +76,7 @@ extension MyDocument {
         alert.addButton(withTitle: "Cancel")
         return alert.runModal()
     }
-    
+
     @discardableResult
     func showDiskIsUnexportedAlert() -> NSApplication.ModalResponse {
         
@@ -86,7 +89,8 @@ extension MyDocument {
         alert.addButton(withTitle: "Cancel")
         return alert.runModal()
     }
-    
+    */
+    /*
     func proceedWithUnexportedDisk(drive: DriveID) -> Bool {
         
         precondition(drive == .DRIVE8 || drive == .DRIVE9)
@@ -129,10 +133,12 @@ extension MyDocument {
             return true
         }
     }
+    */
 }
 
 extension MyController {
-            
+
+    /*
     func proceedWithUnexportedDisk(drive: DriveID) -> Bool {
         return mydocument.proceedWithUnexportedDisk(drive: drive)
     }
@@ -140,7 +146,8 @@ extension MyController {
     func proceedWithUnexportedDisk() -> Bool {
         return mydocument.proceedWithUnexportedDisk()
     }
-    
+    */
+
     func showMissingFFmpegAlert() {
 
         let alert = NSAlert()
