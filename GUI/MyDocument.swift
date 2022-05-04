@@ -83,34 +83,34 @@ class MyDocument: NSDocument {
                 switch type {
 
                 case .SNAPSHOT:
-                    return try Proxy.make(url: newUrl) as SnapshotProxy
+                    return try SnapshotProxy.make(with: newUrl)
 
                 case .SCRIPT:
-                    return try Proxy.make(url: newUrl) as ScriptProxy
+                    return try ScriptProxy.make(with: newUrl)
 
                 case .CRT:
-                    return try Proxy.make(url: newUrl) as CRTFileProxy
+                    return try CRTFileProxy.make(with: newUrl)
 
                 case .D64:
-                    return try Proxy.make(url: newUrl) as D64FileProxy
+                    return try D64FileProxy.make(with: newUrl)
 
                 case .T64:
-                    return try Proxy.make(url: newUrl) as T64FileProxy
+                    return try T64FileProxy.make(with: newUrl)
 
                 case .PRG:
-                    return try Proxy.make(url: newUrl) as PRGFileProxy
+                    return try PRGFileProxy.make(with: newUrl)
 
                 case .P00:
-                    return try Proxy.make(url: newUrl) as P00FileProxy
+                    return try P00FileProxy.make(with: newUrl)
 
                 case .G64:
-                    return try Proxy.make(url: newUrl) as G64FileProxy
+                    return try G64FileProxy.make(with: newUrl)
 
                 case .TAP:
-                    return try Proxy.make(url: newUrl) as TAPFileProxy
+                    return try TAPFileProxy.make(with: newUrl)
 
                 case .FOLDER:
-                    return try Proxy.make(folder: newUrl) as FolderProxy
+                    return try FolderProxy.make(with: newUrl)
 
                 default:
                     fatalError()
@@ -292,34 +292,34 @@ class MyDocument: NSDocument {
                 switch type {
 
                 case .SNAPSHOT:
-                    return try Proxy.make(url: newUrl) as SnapshotProxy
+                    return try SnapshotProxy.make(with: newUrl)
 
                 case .SCRIPT:
-                    return try Proxy.make(url: newUrl) as ScriptProxy
+                    return try ScriptProxy.make(with: newUrl)
 
                 case .CRT:
-                    return try Proxy.make(url: newUrl) as CRTFileProxy
+                    return try CRTFileProxy.make(with: newUrl)
                     
                 case .D64:
-                    return try Proxy.make(url: newUrl) as D64FileProxy
+                    return try D64FileProxy.make(with: newUrl)
                     
                 case .T64:
-                    return try Proxy.make(url: newUrl) as T64FileProxy
+                    return try T64FileProxy.make(with: newUrl)
                     
                 case .PRG:
-                    return try Proxy.make(url: newUrl) as PRGFileProxy
+                    return try PRGFileProxy.make(with: newUrl)
                     
                 case .P00:
-                    return try Proxy.make(url: newUrl) as P00FileProxy
+                    return try P00FileProxy.make(with: newUrl)
                     
                 case .G64:
-                    return try Proxy.make(url: newUrl) as G64FileProxy
+                    return try G64FileProxy.make(with: newUrl)
                     
                 case .TAP:
-                    return try Proxy.make(url: newUrl) as TAPFileProxy
+                    return try TAPFileProxy.make(with: newUrl)
                     
                 case .FOLDER:
-                    return try Proxy.make(folder: newUrl) as FolderProxy
+                    return try FolderProxy.make(with: newUrl)
                     
                 default:
                     fatalError()
@@ -421,12 +421,12 @@ class MyDocument: NSDocument {
         
         if url.c64FileType == .G64 {
 
-            let g64 = try Proxy.make(disk: disk) as G64FileProxy
+            let g64 = try G64FileProxy.make(with: disk)
             try export(file: g64, to: url)
 
         } else {
             
-            let fs = try Proxy.make(disk: disk) as FileSystemProxy
+            let fs = try FileSystemProxy.make(with: disk)
             try export(fs: fs, to: url)
         }
     }
@@ -448,18 +448,18 @@ class MyDocument: NSDocument {
         switch url.c64FileType {
 
         case .D64:
-            file = try Proxy.make(fs: fs) as D64FileProxy
+            file = try D64FileProxy.make(with: fs)
             
         case .T64:
-            file = try Proxy.make(fs: fs) as T64FileProxy
+            file = try T64FileProxy.make(with: fs)
             
         case .PRG:
             if fs.numFiles > 1 { showMultipleFilesAlert(format: "PRG") }
-            file = try Proxy.make(fs: fs) as PRGFileProxy
+            file = try PRGFileProxy.make(with: fs)
             
         case .P00:
             if fs.numFiles > 1 { showMultipleFilesAlert(format: "P00") }
-            file = try Proxy.make(fs: fs) as P00FileProxy
+            file = try P00FileProxy.make(with: fs)
 
         default:
             throw VC64Error(ErrorCode.FILE_TYPE_MISMATCH)

@@ -433,7 +433,7 @@ class Configuration {
         func load(_ url: URL?, type: FileType) {
             
             if url != nil {
-                if let file = try? Proxy.make(url: url!) as RomFileProxy {
+                if let file = try? RomFileProxy.make(with: url!) {
                     if file.type == type { c64.loadRom(file) }
                 }
             }

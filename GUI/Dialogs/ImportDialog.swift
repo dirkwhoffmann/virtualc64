@@ -75,7 +75,7 @@ class ImportDialog: DialogController {
         case is D64FileProxy:
 
             if let d64 = myDocument.attachment as? D64FileProxy {
-                volume = try? Proxy.make(d64: d64) as FileSystemProxy
+                volume = try? FileSystemProxy.make(with: d64)
             }
                                                                             
             titleString = "Commodore 64 Floppy Disk"
@@ -94,8 +94,8 @@ class ImportDialog: DialogController {
 
         case is T64FileProxy:
             
-            if let coll = myDocument.attachment as? AnyCollectionProxy {
-                volume = try? Proxy.make(collection: coll) as FileSystemProxy
+            if let collection = myDocument.attachment as? AnyCollectionProxy {
+                volume = try? FileSystemProxy.make(with: collection)
             }
 
             titleString = "Commodore 64 Floppy Disk (from T64 file)"
@@ -105,8 +105,8 @@ class ImportDialog: DialogController {
 
         case is PRGFileProxy:
             
-            if let coll = myDocument.attachment as? AnyCollectionProxy {
-                volume = try? Proxy.make(collection: coll) as FileSystemProxy
+            if let collection = myDocument.attachment as? AnyCollectionProxy {
+                volume = try? FileSystemProxy.make(with: collection)
             }
 
             titleString = "Commodore 64 Floppy Disk (from PRG file)"
@@ -116,8 +116,8 @@ class ImportDialog: DialogController {
 
         case is P00FileProxy:
             
-            if let coll = myDocument.attachment as? AnyCollectionProxy {
-                volume = try? Proxy.make(collection: coll) as FileSystemProxy
+            if let collection = myDocument.attachment as? AnyCollectionProxy {
+                volume = try? FileSystemProxy.make(with: collection)
             }
 
             titleString = "Commodore 64 Floppy Disk (from P00 file)"

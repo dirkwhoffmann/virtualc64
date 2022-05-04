@@ -55,20 +55,20 @@ class DiskExporter: DialogController {
         if disk != nil {
 
             // Try to extract the file system
-            vol = try? FileSystemProxy.make(disk: disk!)
+            vol = try? FileSystemProxy.make(with: disk!)
 
             if vol != nil {
 
                 // Try to run the D64 encoder
-                d64 = try? D64FileProxy.make(fs: vol!)
+                d64 = try? D64FileProxy.make(with: vol!)
 
                 // Try to run the T64 encoder
-                t64 = try? T64FileProxy.make(fs: vol!)
+                t64 = try? T64FileProxy.make(with: vol!)
 
                 if vol!.numFiles > 0 {
 
                     // Try to run the PRG encoder
-                    prg = try? T64FileProxy.make(fs: vol!)
+                    prg = try? PRGFileProxy.make(with: vol!)
                 }
             }
         }
