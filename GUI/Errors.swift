@@ -137,9 +137,11 @@ extension NSError {
 
 enum Failure {
 
+    case cantAttach
     case cantDecode
     case cantExport(url: URL)
     case cantInsert
+    case cantInsertTape
     case cantOpen(url: URL)
     case cantRecord
     case cantRestore
@@ -192,6 +194,9 @@ enum Failure {
 
         switch self {
 
+        case .cantAttach:
+            return "Failed to attach cartridge."
+
         case .cantDecode:
             return "Unable to decode the file system."
 
@@ -200,6 +205,9 @@ enum Failure {
 
         case .cantInsert:
             return "Failed to insert disk."
+
+        case .cantInsertTape:
+            return "Failed to insert tape."
 
         case let .cantOpen(url):
             return "\"\(url.lastPathComponent)\" can't be opened."

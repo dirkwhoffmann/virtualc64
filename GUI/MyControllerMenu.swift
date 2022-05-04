@@ -421,10 +421,8 @@ extension MyController: NSMenuItemValidation {
 
             do {
                 try c64.run()
-            } catch let error as VC64Error {
-                error.warning("Unable to power up the emulator")
             } catch {
-                fatalError()
+                showAlert(.cantRun, error: error)
             }
         }
     }
@@ -601,8 +599,17 @@ extension MyController: NSMenuItemValidation {
         openPanel.prompt = "Insert"
         openPanel.allowedFileTypes = ["t64", "prg", "p00", "d64", "g64", "zip", "gz"]
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
+
             if result == .OK, let url = openPanel.url {
-                self.insertDiskAction(from: url, drive: id)
+
+                do {
+                    let types: [FileType] = [ .D64, .T64, .PRG, .P00, .G64 ]
+                    try self.mydocument.addMedia(url: url,
+                                                 allowedTypes: types,
+                                                 drive: id)
+                } catch {
+                    self.showAlert(.cantInsert, error: error, async: true)
+                }
             }
         })
     }
@@ -611,20 +618,34 @@ extension MyController: NSMenuItemValidation {
         
         let drive = sender.tag < 10 ? DriveID.DRIVE8 : DriveID.DRIVE9
         let slot  = sender.tag % 10
-                
+
+        insertRecentDiskAction(drive: drive, slot: slot)
+    }
+
+    func insertRecentDiskAction(drive: DriveID, slot: Int) {
+
         if let url = myAppDelegate.getRecentlyInsertedDiskURL(slot) {
-            insertDiskAction(from: url, drive: drive)
+
+            do {
+                let types: [FileType] = [ .D64, .T64, .PRG, .P00, .G64 ]
+                try self.mydocument.addMedia(url: url,
+                                             allowedTypes: types,
+                                             drive: drive)
+            } catch {
+                self.showAlert(.cantInsert, error: error)
+            }
         }
     }
-    
+
+    /*
     func insertDiskAction(from url: URL, drive: DriveID) {
-        
+
         let types = [ FileType.D64,
                       FileType.T64,
                       FileType.PRG,
                       FileType.P00,
                       FileType.G64 ]
-        
+
         do {
             // Try to create a file proxy
             try mydocument.createAttachment(from: url, allowedTypes: types)
@@ -643,6 +664,7 @@ extension MyController: NSMenuItemValidation {
             (error as? VC64Error)?.cantOpen(url: url)
         }
     }
+    */
     
     @IBAction func exportRecentDiskDummyAction8(_ sender: NSMenuItem!) {}
     @IBAction func exportRecentDiskDummyAction9(_ sender: NSMenuItem!) {}
@@ -663,11 +685,8 @@ extension MyController: NSMenuItemValidation {
             
             do {
                 try mydocument.export(drive: id, to: url)
-                
-            } catch let error as VC64Error {
-                error.warning("Cannot export disk to file \"\(url.path)\"")
             } catch {
-                fatalError()
+                showAlert(.cantExport(url: url), error: error)
             }
         }
     }
@@ -801,18 +820,9 @@ extension MyController: NSMenuItemValidation {
         let types = [ FileType.TAP ]
         
         do {
-            // Try to create a file proxy
-            try mydocument.createAttachment(from: url, allowedTypes: types)
-            
-            // Insert the tape
-            try mydocument.mountAttachment()
-            
-            // Remember the URL
-            myAppDelegate.noteNewRecentlyUsedURL(url)
-            
+            try self.mydocument.addMedia(url: url, allowedTypes: types)
         } catch {
-
-            (error as? VC64Error)?.cantOpen(url: url)
+            self.showAlert(.cantInsertTape, error: error)
         }
     }
 
@@ -850,7 +860,12 @@ extension MyController: NSMenuItemValidation {
         openPanel.allowedFileTypes = ["crt", "zip", "gz"]
         openPanel.beginSheetModal(for: window!, completionHandler: { result in
             if result == .OK, let url = openPanel.url {
-                self.attachCartridgeAction(from: url)
+
+                do {
+                    try self.mydocument.addMedia(url: url, allowedTypes: [ .CRT ])
+                } catch {
+                    self.showAlert(.cantAttach, error: error, async: true)
+                }
             }
         })
     }
@@ -860,10 +875,16 @@ extension MyController: NSMenuItemValidation {
         let slot  = sender.tag
         
         if let url = myAppDelegate.getRecentlyAtachedCartridgeURL(slot) {
-            attachCartridgeAction(from: url)
+
+            do {
+                try self.mydocument.addMedia(url: url, allowedTypes: [ .CRT ])
+            } catch {
+                self.showAlert(.cantAttach, error: error, async: true)
+            }
         }
     }
-    
+
+    /*
     func attachCartridgeAction(from url: URL) {
         
         let types = [ FileType.CRT ]
@@ -883,7 +904,8 @@ extension MyController: NSMenuItemValidation {
             (error as? VC64Error)?.cantOpen(url: url)
         }
     }
-    
+    */
+
     @IBAction func detachCartridgeAction(_ sender: Any!) {
         track()
         c64.expansionport.detachCartridgeAndReset()

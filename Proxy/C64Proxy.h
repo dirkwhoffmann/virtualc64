@@ -308,9 +308,6 @@
 - (void)setHex;
 - (void)setDec;
 
-// - (i64)cycle;
-// - (u16)pc;
-
 - (NSString *)disassembleRecordedInstr:(NSInteger)i length:(NSInteger *)len;
 - (NSString *)disassembleRecordedBytes:(NSInteger)i;
 - (NSString *)disassembleRecordedFlags:(NSInteger)i;
