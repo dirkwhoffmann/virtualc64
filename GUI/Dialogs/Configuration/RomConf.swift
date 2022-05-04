@@ -170,7 +170,13 @@ extension ConfigurationController {
 
     @IBAction func romDefaultsAction(_ sender: NSButton!) {
         
-        track()
-        config.saveRomUserDefaults()
+        do {
+
+            try config.saveRomUserDefaults()
+
+        } catch {
+
+            parent.showAlert(.cantSaveRoms, error: error, window: window)
+        }
     }
 }

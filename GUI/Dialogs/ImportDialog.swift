@@ -20,6 +20,9 @@ class ImportDialog: DialogController {
     @IBOutlet weak var flash: NSPopUpButton!
     @IBOutlet weak var flashLabel: NSTextField!
 
+    // Media file to process
+    var attachment: AnyFileProxy?
+
     // Proxy objects (created from the attachment when the sheet opens)
     var g64: G64FileProxy?
     var tap: TAPFileProxy?
@@ -43,11 +46,19 @@ class ImportDialog: DialogController {
     // Shortcuts
     var myDocument: MyDocument { return parent.mydocument! }
 
+    func show(proxy: AnyFileProxy) {
+
+        log()
+
+        attachment = proxy
+        showSheet()
+    }
+
     override func showSheet(completionHandler handler:(() -> Void)? = nil) {
                     
         track()
 
-        switch myDocument.attachment {
+        switch attachment {
              
         case is CRTFileProxy:
             

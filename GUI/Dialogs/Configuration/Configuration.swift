@@ -447,9 +447,10 @@ class Configuration {
         c64.resume()
     }
     
-    func saveRomUserDefaults() {
+    func saveRomUserDefaults() throws {
         
-        track()
+        log(level: 2)
+
         var url: URL?
         
         func save(_ type: RomType) throws {
@@ -468,14 +469,9 @@ class Configuration {
             url = UserDefaults.vc1541RomUrl; try save(.VC1541)
             
         } catch {
-            if error is VC64Error && url != nil {
-                VC64Error.warning("Failed to save Roms",
-                                  "Can't write to file \(url!.path)")
-            }
-            if error is VC64Error && url == nil {
-                VC64Error.warning("Failed to save Roms",
-                                  "Unable to access the application defaults folder")
-            }
+
+            c64.resume()
+            throw error
         }
         
         c64.resume()

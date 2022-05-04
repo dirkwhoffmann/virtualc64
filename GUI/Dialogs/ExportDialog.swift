@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+/*
 class ExportDialog: DialogController {
         
     @IBOutlet weak var diskIcon: NSImageView!
@@ -730,3 +731,4 @@ extension ExportDialog: NSTableViewDelegate {
         return false
     }
 }
+*/

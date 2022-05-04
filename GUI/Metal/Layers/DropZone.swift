@@ -175,8 +175,6 @@ class DropZone: Layer {
 
     override func layerDidClose() {
 
-        log()
-
         guard let url = metal.dropUrl else { return }
         guard let type = metal.dropType else { return }
 
@@ -202,11 +200,16 @@ class DropZone: Layer {
                 }
 
             } else {
+                
+                if let file = try mydocument.createFileProxy(from: url,
+                                                             allowedTypes: FileType.draggable) {
 
-                // Run the import dialog
-                log()
-                try mydocument.createAttachment(from: url)
-                mydocument.runImportDialog()
+                    log()
+
+                    // Run the import dialog
+                    let importer = ImportDialog(with: controller, nibName: "ImportDialog")
+                    importer?.show(proxy: file)
+                }
             }
 
         } catch {

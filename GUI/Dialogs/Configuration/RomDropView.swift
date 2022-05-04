@@ -19,7 +19,7 @@ extension NSDraggingInfo {
     }
 }
 
-class RomDropView: NSImageView {
+class DropView: NSImageView {
 
     @IBOutlet var parent: ConfigurationController!
     var c64: C64Proxy { return parent.c64 }
@@ -41,7 +41,12 @@ class RomDropView: NSImageView {
         }
         return NSDragOperation()
     }
-    
+
+    override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
+
+        return false
+    }
+
     override func draggingExited(_ sender: NSDraggingInfo?) {
 
         parent.refresh()
@@ -56,20 +61,29 @@ class RomDropView: NSImageView {
 
         parent.refresh()
     }
-    
+}
+
+class RomDropView: DropView {
+
     func performDrag(type: RomType, url: URL?) -> Bool {
-        
-        if url != nil {
-            do {
-                let rom = try RomFileProxy.make(with: url!)
-                c64.loadRom(rom)
-                return true
-            } catch {
-                let name = url!.lastPathComponent
-                (error as? VC64Error)?.warning("Cannot open Rom file \"\(name)\"")
-            }
+
+        guard let url = url?.unpacked else { return false }
+
+        do {
+
+            let rom = try RomFileProxy.make(with: url)
+            c64.loadRom(rom)
+
+            return true
+
+        } catch {
+
+            parent.parent.showAlert(.cantOpen(url: url),
+                                    error: error,
+                                    async: true,
+                                    window: parent.window)
+            return false
         }
-        return false
     }
 }
 

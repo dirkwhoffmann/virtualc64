@@ -399,12 +399,14 @@ class MyDocument: NSDocument {
         }
     }
 
+    /*
     func runImportDialog() {
         
         let name = NSNib.Name("ImportDialog")
         let controller = ImportDialog(with: parent, nibName: name)
         controller?.showSheet()
     }
+    */
 
     //
     // Exporting disks
@@ -438,12 +440,12 @@ class MyDocument: NSDocument {
     
     func export(fs: FileSystemProxy, to url: URL) throws {
 
-        func showMultipleFilesAlert(format: String) {
+        func showAlert(format: String) {
 
             let msg1 = "Only the first file will be exported."
             let msg2 = "The \(format) format is designed to store a single file."
-            
-            VC64Error.informational(msg1, msg2)
+
+            showMultipleFilesAlert(msg1: msg1, msg2: msg2)
         }
         
         track("fs: \(fs) to: \(url)")
@@ -459,11 +461,11 @@ class MyDocument: NSDocument {
             file = try T64FileProxy.make(with: fs)
             
         case .PRG:
-            if fs.numFiles > 1 { showMultipleFilesAlert(format: "PRG") }
+            if fs.numFiles > 1 { showAlert(format: "PRG") }
             file = try PRGFileProxy.make(with: fs)
             
         case .P00:
-            if fs.numFiles > 1 { showMultipleFilesAlert(format: "P00") }
+            if fs.numFiles > 1 { showAlert(format: "P00") }
             file = try P00FileProxy.make(with: fs)
 
         default:

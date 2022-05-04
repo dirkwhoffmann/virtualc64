@@ -108,11 +108,13 @@ class VC64Error: Error {
     //
     // Customized alerts
     //
-    
+
+    @available(*, deprecated)
     func cantOpen(url: URL, async: Bool = false) {
         warning("\"\(url.lastPathComponent)\" can't be opened.", async: async)
     }
-    
+
+    @available(*, deprecated)
     static func recordingAborted(async: Bool = false) {
                 
         warning("Screen recording has been aborted.",
@@ -349,6 +351,17 @@ extension MyController {
 
 extension MyDocument {
 
+    func showMultipleFilesAlert(msg1: String, msg2: String) {
+
+        let alert = NSAlert()
+        alert.alertStyle = .informational
+        alert.messageText = msg1
+        alert.informativeText = msg1
+        alert.addButton(withTitle: "OK")
+
+        alert.runSheet(for: windowForSheet!)
+    }
+
     func showIsUnsavedAlert(msg: String, icon: String) -> NSApplication.ModalResponse {
 
         let alert = NSAlert()
@@ -423,6 +436,10 @@ extension MyDocument {
 
 extension MyController {
 
+    func showMultipleFilesAlert(msg1: String, msg2: String) {
+        mydocument.showMultipleFilesAlert(msg1: msg1, msg2: msg2)
+    }
+    
     func proceedWithUnsavedFloppyDisk(drive: DriveProxy) -> Bool {
         return mydocument.proceedWithUnsavedFloppyDisk(drive: drive)
     }

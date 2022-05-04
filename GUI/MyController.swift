@@ -189,9 +189,6 @@ extension MyController {
         // Enable message processing
         registerAsListener()
                 
-        // Process attachment (if any)
-        try? mydocument.mountAttachment()
-
         do {
             // Let the C64 throw an exception if it is not ready to power on
             try c64.isReady()
@@ -514,7 +511,7 @@ extension MyController {
 			
 		case .RECORDING_ABORTED:
 			refreshStatusBar()
-			VC64Error.recordingAborted()
+            showAlert(.recorderAborted)
 			
 		case .CLOSE_CONSOLE:
 			renderer.console.close(delay: 0.25)
