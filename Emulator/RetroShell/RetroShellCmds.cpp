@@ -56,7 +56,7 @@ RetroShell::exec <Token::wait> (Arguments &argv, long param)
 {
     auto seconds = util::parseNum(argv.front());
     
-    Cycle limit = cpu.cycle + seconds * vic.getFrequency();
+    Cycle limit = cpu.clock + seconds * vic.getFrequency();
     wakeUp = limit;
     
     throw ScriptInterruption("");
@@ -75,7 +75,7 @@ RetroShell::exec <Token::regression, Token::setup> (Arguments &argv, long param)
     regressionTester.prepare(c64, model);
     
     // Pause the script to give the C64 some time to boot
-    wakeUp = cpu.cycle + 3 * vic.getFrequency();
+    wakeUp = cpu.clock + 3 * vic.getFrequency();
     throw ScriptInterruption("");
 }
 

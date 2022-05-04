@@ -138,7 +138,7 @@ CIA::_inspect() const
         
         info.idleSince = idleSince();
         info.idleTotal = idleTotal();
-        info.idlePercentage =  cpu.cycle ? (double)idleCycles / (double)cpu.cycle : 100.0;
+        info.idlePercentage =  cpu.clock ? (double)idleCycles / (double)cpu.clock : 100.0;
     }
 }
 
@@ -273,7 +273,7 @@ CIA::todInterrupt()
 void
 CIA::executeOneCycle()
 {
-    if (sleeping) wakeUp(cpu.cycle - 1);
+    if (sleeping) wakeUp(cpu.clock - 1);
     
     // Make a local copy for speed
     u64 delay = this->delay;
@@ -612,15 +612,15 @@ CIA::sleep()
     assert(!sleeping);
     
     // Determine maximum possible sleep cycle based on timer counts
-    Cycle sleepA = cpu.cycle + ((counterA > 2) ? (counterA - 1) : 0);
-    Cycle sleepB = cpu.cycle + ((counterB > 2) ? (counterB - 1) : 0);
+    Cycle sleepA = cpu.clock + ((counterA > 2) ? (counterA - 1) : 0);
+    Cycle sleepB = cpu.clock + ((counterB > 2) ? (counterB - 1) : 0);
     
     // CIAs with stopped timers can sleep forever
     if (!(feed & CIACountA0)) sleepA = INT64_MAX;
     if (!(feed & CIACountB0)) sleepB = INT64_MAX;
 
     // ZZzzz
-    sleepCycle = cpu.cycle;
+    sleepCycle = cpu.clock;
     wakeUpCycle = std::min(sleepA, sleepB);;
     tiredness = 0;
     sleeping = true;
@@ -629,7 +629,7 @@ CIA::sleep()
 void
 CIA::wakeUp()
 {
-    wakeUp(cpu.cycle);
+    wakeUp(cpu.clock);
 }
 
 void
@@ -662,7 +662,7 @@ CIA::wakeUp(Cycle targetCycle)
 Cycle
 CIA::idleSince() const
 {
-    return isAwake() ? 0 : cpu.cycle - sleepCycle;
+    return isAwake() ? 0 : cpu.clock - sleepCycle;
 }
 
 

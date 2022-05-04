@@ -26,8 +26,8 @@ VICII::VICII(C64 &ref) : SubComponent(ref), dmaDebugger(ref)
     subComponents = std::vector<C64Component *> { &dmaDebugger };
 
     // Assign reference clock to all time delayed variables
-    baLine.setClock(&cpu.cycle);
-    gAccessResult.setClock(&cpu.cycle);
+    baLine.setClock(&cpu.clock);
+    gAccessResult.setClock(&cpu.clock);
     
     // Create random background noise pattern
     const isize noiseSize = 16 * 512 * 512;

@@ -452,7 +452,7 @@ RetroShell::dump(C64Component &component, Category category)
 void
 RetroShell::vsyncHandler()
 {
-    if (cpu.cycle >= (u64)wakeUp) {
+    if (cpu.clock >= (u64)wakeUp) {
         
 		msgQueue.put(MSG_SCRIPT_WAKEUP);
 		wakeUp = INT64_MAX;

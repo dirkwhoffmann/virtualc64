@@ -53,7 +53,7 @@ CPU<M>::_inspect() const
 {    
     {   SYNCHRONIZED
         
-        info.cycle = cycle;
+        info.cycle = clock;
         info.reg = reg;
         
         info.irq = irqLine;
@@ -105,7 +105,7 @@ CPU<M>::_dump(Category category, std::ostream& os) const
     if (category == Category::State) {
     
         os << tab("Cycle");
-        os << dec(cycle) << std::endl;
+        os << dec(clock) << std::endl;
         os << tab("Rdy line");
         os << bol(rdyLine, "high", "low") << std::endl;
         os << tab("Nmi line");
@@ -210,12 +210,12 @@ CPU<M>::setRDY(bool value)
     if (rdyLine)
     {
         rdyLine = value;
-        if (!rdyLine) rdyLineDown = cycle;
+        if (!rdyLine) rdyLineDown = clock;
     }
     else
     {
         rdyLine = value;
-        if (rdyLine) rdyLineUp = cycle;
+        if (rdyLine) rdyLineUp = clock;
     }
 }
 

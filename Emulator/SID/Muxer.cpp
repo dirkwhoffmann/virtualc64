@@ -666,7 +666,7 @@ u8
 Muxer::peek(u16 addr)
 {
     // Get SIDs up to date
-    executeUntil(cpu.cycle);
+    executeUntil(cpu.clock);
  
     // Select the target SID
     isize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
@@ -747,7 +747,7 @@ Muxer::poke(u16 addr, u8 value)
     trace(SIDREG_DEBUG, "poke(%x,%x)\n", addr, value);
     
     // Get SID up to date
-    executeUntil(cpu.cycle);
+    executeUntil(cpu.clock);
  
     // Select the target SID
     isize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;

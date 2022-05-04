@@ -83,7 +83,7 @@ protected:
 public:
     
     // Elapsed clock cycles since power up
-    u64 cycle;
+    u64 clock;
                         
 private:
 
@@ -146,7 +146,7 @@ private:
      *  where the edge is detected, and stays high until the NMI has been
      *  handled."
      */
-    TimeDelayed <u8,1> edgeDetector = TimeDelayed <u8,1> (&cycle);
+    TimeDelayed <u8,1> edgeDetector = TimeDelayed <u8,1> (&clock);
     
     /* Level detector of IRQ line.
      * https://wiki.nesdev.com/w/index.php/CPU_interrupts
@@ -156,7 +156,7 @@ private:
      *  (or put another way, remaining high as long as the IRQ input is low
      *  during the preceding cycle's φ2).
      */
-    TimeDelayed <u8,1> levelDetector = TimeDelayed <u8,1> (&cycle);
+    TimeDelayed <u8,1> levelDetector = TimeDelayed <u8,1> (&clock);
     
     /* Result of the edge detector polling operation.
      * https://wiki.nesdev.com/w/index.php/CPU_interrupts
@@ -230,7 +230,7 @@ private:
     {
         if (hard) {
             
-            worker << cycle;
+            worker << clock;
         }
         
         worker

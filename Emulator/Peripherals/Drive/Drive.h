@@ -379,7 +379,7 @@ public:
      */
     bool getLightBarrier() const {
         return
-        (cpu.cycle < 1500000)
+        (cpu.clock < 1500000)
         || hasPartiallyRemovedDisk()
         || hasProtectedDisk();
     }

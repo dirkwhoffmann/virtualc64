@@ -2890,7 +2890,7 @@ CPU<M>::executeOneCycle()
              *  the VIC-II) then the & M+1 part drops off."
              */
             
-            reg.d = reg.a & reg.x & (rdyLineUp == cycle ? 0xFF : reg.adh + 1);
+            reg.d = reg.a & reg.x & (rdyLineUp == clock ? 0xFF : reg.adh + 1);
             
             /* "The other unstable condition is when the addressing/indexing
              *  causes a page boundary crossing, in that case the highbyte of
@@ -2919,7 +2919,7 @@ CPU<M>::executeOneCycle()
              *  the VIC-II) then the & M+1 part drops off."
              */
             
-            reg.d = reg.a & reg.x & (rdyLineUp == cycle ? 0xFF : reg.adh + 1);
+            reg.d = reg.a & reg.x & (rdyLineUp == clock ? 0xFF : reg.adh + 1);
             
             /* "The other unstable condition is when the addressing/indexing
              *  causes a page boundary crossing, in that case the highbyte of
@@ -2956,7 +2956,7 @@ CPU<M>::executeOneCycle()
              *  the VIC-II) then the & M+1 part drops off."
              */
             
-            reg.d = reg.x & (rdyLineUp == cycle ? 0xFF : reg.adh + 1);
+            reg.d = reg.x & (rdyLineUp == clock ? 0xFF : reg.adh + 1);
             
             /* "The other unstable condition is when the addressing/indexing
              *  causes a page boundary crossing, in that case the highbyte of
@@ -2993,7 +2993,7 @@ CPU<M>::executeOneCycle()
              *  the VIC-II) then the & M+1 part drops off."
              */
             
-            reg.d = reg.y & (rdyLineUp == cycle ? 0xFF : reg.adh + 1);
+            reg.d = reg.y & (rdyLineUp == clock ? 0xFF : reg.adh + 1);
             
             /* "The other unstable condition is when the addressing/indexing
              *  causes a page boundary crossing, in that case the highbyte of
@@ -3124,7 +3124,7 @@ CPU<M>::executeOneCycle()
              *  the VIC-II) then the & M+1 part drops off."
              */
             
-            reg.d = reg.a & reg.x & (rdyLineUp == cycle ? 0xFF : reg.adh + 1);
+            reg.d = reg.a & reg.x & (rdyLineUp == clock ? 0xFF : reg.adh + 1);
             
             /* "The other unstable condition is when the addressing/indexing
              *  causes a page boundary crossing, in that case the highbyte of

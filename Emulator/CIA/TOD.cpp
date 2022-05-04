@@ -72,7 +72,7 @@ void
 TOD::increment()
 {
     // Check if a tenth of a second has passed
-    if (stopped || cpu.cycle < (u64)nextTodTrigger) return;
+    if (stopped || cpu.clock < (u64)nextTodTrigger) return;
     
     cia.wakeUp();
     
@@ -126,7 +126,7 @@ void
 TOD::cont()
 {
     stopped = false;
-    nextTodTrigger = cpu.cycle + oscillator.todTickDelay(cia.CRA);
+    nextTodTrigger = cpu.clock + oscillator.todTickDelay(cia.CRA);
 }
 
 void

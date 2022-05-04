@@ -265,7 +265,7 @@
 
 - (i64)clock
 {
-    return (i64)[self cpu]->cycle;
+    return (i64)[self cpu]->clock;
 }
 
 - (u16)pc

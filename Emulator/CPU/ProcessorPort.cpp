@@ -61,9 +61,9 @@ ProcessorPort::read() const
     //     CPU temperature and how long the output was 1 befor the bit became
     //     an input.
     
-    u8 bit3 = (dischargeCycleBit3 > cpu.cycle) ? 0x08 : 0x00;
-    u8 bit6 = (dischargeCycleBit6 > cpu.cycle) ? 0x40 : 0x00;
-    u8 bit7 = (dischargeCycleBit7 > cpu.cycle) ? 0x80 : 0x00;
+    u8 bit3 = (dischargeCycleBit3 > cpu.clock) ? 0x08 : 0x00;
+    u8 bit6 = (dischargeCycleBit6 > cpu.clock) ? 0x40 : 0x00;
+    u8 bit7 = (dischargeCycleBit7 > cpu.clock) ? 0x80 : 0x00;
     u8 bit4 = datasette.getPlayKey() ? 0x00 : 0x10;
     u8 bits = bit7 | bit6 | bit4 | bit3 | 0x07;
 
@@ -110,9 +110,9 @@ ProcessorPort::writeDirection(u8 value)
     if (FALLING_EDGE_BIT(direction, value, 3) && GET_BIT(port, 3) != 0)
         dischargeCycleBit3 = UINT64_MAX;
     if (FALLING_EDGE_BIT(direction, value, 6) && GET_BIT(port, 6) != 0)
-        dischargeCycleBit6 = cpu.cycle + dischargeCycles;
+        dischargeCycleBit6 = cpu.clock + dischargeCycles;
     if (FALLING_EDGE_BIT(direction, value, 7) && GET_BIT(port, 7) != 0)
-        dischargeCycleBit7 = cpu.cycle + dischargeCycles;
+        dischargeCycleBit7 = cpu.clock + dischargeCycles;
     
     direction = value;
     

@@ -68,7 +68,7 @@ void
 Epyx::execute()
 {
     // Switch cartridge off when the capacitor is fully charged
-    if (cpu.cycle > cycle) {
+    if (cpu.clock > cycle) {
         expansionport.setCartridgeMode(CRTMODE_OFF);
     }
 }
@@ -80,5 +80,5 @@ Epyx::dischargeCapacitor()
     expansionport.setCartridgeMode(CRTMODE_8K);
     
     // Schedule cartridge to be switched off in about 512 CPU cycles
-    cycle = cpu.cycle + 512;
+    cycle = cpu.clock + 512;
 }

@@ -259,7 +259,7 @@ CPUDebugger::logInstruction()
 
     isize i = logCnt++ % LOG_BUFFER_CAPACITY;
     
-    logBuffer[i].cycle = cpu.cycle;
+    logBuffer[i].cycle = cpu.clock;
     logBuffer[i].pc = pc;
     logBuffer[i].sp = cpu.reg.sp;
     logBuffer[i].byte1 = opcode;

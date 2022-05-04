@@ -866,7 +866,7 @@ C64::_dump(Category category, std::ostream& os) const
         os << tab("Frames per second") << vic.getFps() << std::endl;
         os << tab("Lines per frame") << vic.getLinesPerFrame() << std::endl;
         os << tab("Cycles per scanline") << vic.getCyclesPerLine() << std::endl;
-        os << tab("Current cycle") << cpu.cycle << std::endl;
+        os << tab("Current cycle") << cpu.clock << std::endl;
         os << tab("Current frame") << frame << std::endl;
         os << tab("Current scanline") << scanline << std::endl;
         os << tab("Current scanline cycle") << dec(rasterCycle) << std::endl;
@@ -956,7 +956,7 @@ C64::executeOneCycle()
 void
 C64::_executeOneCycle()
 {
-    Cycle cycle = ++cpu.cycle;
+    Cycle cycle = ++cpu.clock;
     
     //  <---------- o2 low phase ----------->|<- o2 high phase ->|
     //                                       |                   |
@@ -1034,7 +1034,7 @@ C64::endFrame()
     vic.endFrame();
         
     // Execute remaining SID cycles
-    muxer.executeUntil(cpu.cycle);
+    muxer.executeUntil(cpu.clock);
     
     // Execute other components
     iec.execute();
