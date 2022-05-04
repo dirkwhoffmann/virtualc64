@@ -16,15 +16,7 @@ class MyDocument: NSDocument {
 
     // Gateway to the core emulator
     var c64: C64Proxy!
-    
-    /* An otional media object attached to this document. This variable is
-     * checked in mountAttachment() which is called in windowDidLoad(). If an
-     * attachment is present, e.g., a D64 archive, it is automatically attached
-     * to the emulator.
-     */
-    @available(*, deprecated)
-    var attachment: AnyFileProxy?
-    
+
     // Snapshots
     private(set) var snapshots = ManagedArray<SnapshotProxy>(capacity: 32)
 
@@ -262,24 +254,6 @@ class MyDocument: NSDocument {
     // Creating attachments
     //
 
-    @available(*, deprecated)
-    func createAttachment(from url: URL) throws {
-        
-        let types: [FileType] =
-        [ .SNAPSHOT, .SCRIPT, .CRT, .T64, .P00, .PRG, .FOLDER, .D64, .G64, .TAP ]
-        
-        try createAttachment(from: url, allowedTypes: types)
-    }
-
-    @available(*, deprecated)
-    func createAttachment(from url: URL, allowedTypes: [FileType]) throws {
-
-        attachment = try createFileProxy(url: url, allowedTypes: allowedTypes)
-        myAppDelegate.noteNewRecentlyUsedURL(url)
-        
-        track("Attachment created successfully")
-    }
-
     fileprivate
     func createFileProxy(url: URL, allowedTypes: [FileType]) throws -> AnyFileProxy? {
         
@@ -339,74 +313,6 @@ class MyDocument: NSDocument {
         throw VC64Error(.FILE_TYPE_MISMATCH,
                         "The type of this file is not known to the emulator.")
     }
-
-    @available(*, deprecated)
-    func mountAttachment() throws {
-
-        // Only proceed if an attachment is present
-        if attachment == nil { return }
-        
-        if let proxy = attachment as? SnapshotProxy {
-            try c64.flash(proxy)
-            snapshots.append(proxy)
-            return
-        }
-        if let proxy = attachment as? ScriptProxy {
-            parent.renderer.console.runScript(script: proxy)
-            return
-        }
-        if let proxy = attachment as? CRTFileProxy {
-            try c64.expansionport.attachCartridge(proxy, reset: true)
-            return
-        }
-        if let proxy = attachment as? TAPFileProxy {
-            c64.datasette.insertTape(proxy)
-            return
-        }
-        
-        // Try to insert the attachment as a disk in drive 8
-        try mountAttachment(drive: .DRIVE8)
-    }
-
-    @available(*, deprecated)
-    func mountAttachment(drive id: DriveID) throws {
-
-        let drive = c64.drive(id)
-        
-        if let proxy = attachment as? D64FileProxy {
-
-            if proceedWithUnsavedFloppyDisk(drive: drive) {
-                
-                drive.insertD64(proxy, protected: false)
-                return
-            }
-        }
-        if let proxy = attachment as? G64FileProxy {
-            
-            if proceedWithUnsavedFloppyDisk(drive: drive) {
-                
-                drive.insertG64(proxy, protected: false)
-                return
-            }
-        }
-        if let proxy = attachment as? AnyCollectionProxy {
-            
-            if proceedWithUnsavedFloppyDisk(drive: drive) {
-                
-                drive.insertCollection(proxy, protected: false)
-                return
-            }
-        }
-    }
-
-    /*
-    func runImportDialog() {
-        
-        let name = NSNib.Name("ImportDialog")
-        let controller = ImportDialog(with: parent, nibName: name)
-        controller?.showSheet()
-    }
-    */
 
     //
     // Exporting disks
