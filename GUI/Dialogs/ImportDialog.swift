@@ -62,7 +62,7 @@ class ImportDialog: DialogController {
              
         case is CRTFileProxy:
             
-            crt = myDocument.attachment as? CRTFileProxy
+            crt = attachment as? CRTFileProxy
             
             titleString = "Commodore Expansion Port Module"
             subtitle1String = crt!.packageInfo
@@ -76,7 +76,7 @@ class ImportDialog: DialogController {
             
         case is TAPFileProxy:
             
-            tap = myDocument.attachment as? TAPFileProxy
+            tap = attachment as? TAPFileProxy
             
             titleString = "Commodore Cassette Tape"
             subtitle1String = tap!.version.description
@@ -85,7 +85,7 @@ class ImportDialog: DialogController {
 
         case is D64FileProxy:
 
-            if let d64 = myDocument.attachment as? D64FileProxy {
+            if let d64 = attachment as? D64FileProxy {
                 volume = try? FileSystemProxy.make(with: d64)
             }
                                                                             
@@ -96,7 +96,7 @@ class ImportDialog: DialogController {
             
         case is G64FileProxy:
 
-            g64 = myDocument.attachment as? G64FileProxy
+            g64 = attachment as? G64FileProxy
             
             titleString = "Commodore 64 Floppy Disk"
             subtitle1String = "A bit-accurate image of a C64 diskette"
@@ -105,7 +105,7 @@ class ImportDialog: DialogController {
 
         case is T64FileProxy:
             
-            if let collection = myDocument.attachment as? AnyCollectionProxy {
+            if let collection = attachment as? AnyCollectionProxy {
                 volume = try? FileSystemProxy.make(with: collection)
             }
 
@@ -116,7 +116,7 @@ class ImportDialog: DialogController {
 
         case is PRGFileProxy:
             
-            if let collection = myDocument.attachment as? AnyCollectionProxy {
+            if let collection = attachment as? AnyCollectionProxy {
                 volume = try? FileSystemProxy.make(with: collection)
             }
 
@@ -127,7 +127,7 @@ class ImportDialog: DialogController {
 
         case is P00FileProxy:
             
-            if let collection = myDocument.attachment as? AnyCollectionProxy {
+            if let collection = attachment as? AnyCollectionProxy {
                 volume = try? FileSystemProxy.make(with: collection)
             }
 
@@ -138,7 +138,7 @@ class ImportDialog: DialogController {
 
         case is FolderProxy:
             
-            if let folder = myDocument.attachment as? FolderProxy {
+            if let folder = attachment as? FolderProxy {
                 volume = folder.fileSystem
             }
             titleString = "Disk from a file system folder"
@@ -246,7 +246,7 @@ class ImportDialog: DialogController {
 
     func refresh() {
         
-        icon.image = myDocument.attachment?.icon(protected: writeProtect)
+        icon.image = attachment?.icon(protected: writeProtect)
     }
 
     //

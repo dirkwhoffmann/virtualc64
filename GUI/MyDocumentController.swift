@@ -16,8 +16,10 @@ class MyDocumentController: NSDocumentController {
         if typeName.uppercased() != "V64" {
 
             let doc = try super.makeUntitledDocument(ofType: typeName)
+
             if let mydoc = doc as? MyDocument {
-                try? mydoc.createAttachment(from: url)
+
+                try? mydoc.addMedia(url: url, allowedTypes: FileType.all)
                 return mydoc
             }
         }
