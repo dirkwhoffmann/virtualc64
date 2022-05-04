@@ -201,15 +201,15 @@ extension MyController {
             
             if value {
                 
-                metal.shrink()
+                metal.adjustHeight(-26.0)
                 window?.setContentBorderThickness(26, for: .minY)
-                adjustWindowSize()
-                
+                adjustWindowSize(26.0)
+
             } else {
                 
-                metal.expand()
-                window?.setContentBorderThickness(0, for: .minY)
-                adjustWindowSize()
+                metal.adjustHeight(26.0)
+                window?.setContentBorderThickness(0.0, for: .minY)
+                adjustWindowSize(-26.0)
             }
             
             statusBar = value
@@ -219,7 +219,7 @@ extension MyController {
     
     func updateSpeedometer() {
         
-        speedometer.updateWith(cycle: c64.cpu.cycles, frame: renderer.frames)
+        speedometer.updateWith(cycle: c64.cpu.clock, frame: renderer.frames)
         
         switch activityType.selectedTag() {
 

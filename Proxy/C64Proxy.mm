@@ -263,7 +263,7 @@
     return [self cpu]->getInfo();
 }
 
-- (i64)cycles
+- (i64)clock
 {
     return (i64)[self cpu]->cycle;
 }

@@ -219,13 +219,13 @@ class MyDocument: NSDocument {
         }
         if let proxy = proxy as? TAPFileProxy {
 
-            log()
+            log("TAP")
             c64.datasette.insertTape(proxy)
         }
         if let proxy = proxy as? D64FileProxy {
 
             log("D64")
-            if proceedWithUnexportedDisk(drive: id) {
+            if force || proceedWithUnexportedDisk(drive: id) {
 
                 c64.drive(id).insertD64(proxy, protected: false)
                 if remember { myAppDelegate.noteNewRecentlyInsertedDiskURL(url) }
@@ -234,7 +234,7 @@ class MyDocument: NSDocument {
         if let proxy = proxy as? G64FileProxy {
 
             log("G64")
-            if proceedWithUnexportedDisk(drive: id) {
+            if force || proceedWithUnexportedDisk(drive: id) {
 
                 c64.drive(id).insertG64(proxy, protected: false)
                 if remember { myAppDelegate.noteNewRecentlyInsertedDiskURL(url) }
@@ -243,7 +243,7 @@ class MyDocument: NSDocument {
         if let proxy = proxy as? AnyCollectionProxy {
 
             log("T64, PRG, P00")
-            if proceedWithUnexportedDisk(drive: id) {
+            if force || proceedWithUnexportedDisk(drive: id) {
 
                 c64.drive(id).insertCollection(proxy, protected: false)
                 if remember { myAppDelegate.noteNewRecentlyInsertedDiskURL(url) }
@@ -261,6 +261,7 @@ class MyDocument: NSDocument {
     // Creating attachments
     //
 
+    @available(*, deprecated)
     func createAttachment(from url: URL) throws {
         
         let types: [FileType] =
@@ -268,7 +269,8 @@ class MyDocument: NSDocument {
         
         try createAttachment(from: url, allowedTypes: types)
     }
-    
+
+    @available(*, deprecated)
     func createAttachment(from url: URL, allowedTypes: [FileType]) throws {
 
         attachment = try createFileProxy(url: url, allowedTypes: allowedTypes)
@@ -337,6 +339,7 @@ class MyDocument: NSDocument {
                         "The type of this file is not known to the emulator.")
     }
 
+    @available(*, deprecated)
     func mountAttachment() throws {
 
         // Only proceed if an attachment is present
@@ -364,6 +367,7 @@ class MyDocument: NSDocument {
         try mountAttachment(drive: .DRIVE8)
     }
 
+    @available(*, deprecated)
     func mountAttachment(drive id: DriveID) throws {
 
         let drive = c64.drive(id)

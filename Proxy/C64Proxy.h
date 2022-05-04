@@ -295,9 +295,8 @@
 
 @interface CPUProxy : C64ComponentProxy { }
 
-- (CPUInfo)getInfo;
-
-@property (readonly) i64 cycles;
+@property (readonly) CPUInfo info;
+@property (readonly) i64 clock;
 @property (readonly) u16 pc;
 
 - (NSInteger)loggedInstructions;

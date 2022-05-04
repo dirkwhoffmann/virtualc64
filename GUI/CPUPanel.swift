@@ -11,7 +11,7 @@ extension Inspector {
     
     private func cacheCPU() {
 
-        cpuInfo = c64.cpu.getInfo()
+        cpuInfo = c64.cpu.info
     }
 
     func refreshCPU(count: Int = 0, full: Bool = false) {
