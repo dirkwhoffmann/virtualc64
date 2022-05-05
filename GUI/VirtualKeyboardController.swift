@@ -150,8 +150,6 @@ class VirtualKeyboardController: DialogController {
 
     @IBAction func caseSelectorAction(_ sender: NSSegmentedControl!) {
         
-        // let segment = sender.selectedSegment
-        // track("segment = \(segment)")
         refresh()
     }
 }

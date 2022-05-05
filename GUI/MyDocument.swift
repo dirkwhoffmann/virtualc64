@@ -320,7 +320,7 @@ class MyDocument: NSDocument {
 
     func export(drive id: DriveID, to url: URL) throws {
         
-        track("drive: \(id.rawValue) to: \(url)")
+        log("drive: \(id.rawValue) to: \(url)")
         
         let drive = c64.drive(id)
         try export(disk: drive.disk, to: url)
@@ -330,7 +330,7 @@ class MyDocument: NSDocument {
 
     func export(disk: DiskProxy, to url: URL) throws {
 
-        track("disk: \(disk) to: \(url)")
+        log("disk: \(disk) to: \(url)")
         
         if url.c64FileType == .G64 {
 
@@ -354,7 +354,7 @@ class MyDocument: NSDocument {
             showMultipleFilesAlert(msg1: msg1, msg2: msg2)
         }
         
-        track("fs: \(fs) to: \(url)")
+        log("fs: \(fs) to: \(url)")
 
         var file: AnyFileProxy?
 

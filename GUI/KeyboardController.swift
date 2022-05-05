@@ -65,7 +65,7 @@ class KeyboardController: NSObject {
     
     func flagsChanged(with event: NSEvent) {
                 
-        // track("ls: \(leftShift) rs: \(rightShift) lc: \(leftControl) rc: \(rightControl) lo: \(leftOption) ro: \(rightOption)")
+        // log("ls: \(leftShift) rs: \(rightShift) lc: \(leftControl) rc: \(rightControl) lo: \(leftOption) ro: \(rightOption)")
         
         // Determine the pressed or released key
         switch Int(event.keyCode) {
@@ -79,7 +79,6 @@ class KeyboardController: NSObject {
             rightShift ? keyDown(with: MacKey.rightShift) : keyUp(with: MacKey.rightShift)
             
         case kVK_Control:
-            track("kVK_Control")
             leftControl = event.modifierFlags.contains(.control) ? !leftControl : false
             leftControl ? keyDown(with: MacKey.control) : keyUp(with: MacKey.control)
             
@@ -101,9 +100,7 @@ class KeyboardController: NSObject {
     }
     
     func keyDown(with macKey: MacKey) {
-        
-        // track("\(macKey.keyCode)")
-        
+
         // Check if this key is used to emulate a game device
         if parent.gamePad1?.processKeyDownEvent(macKey: macKey) == true {
             if pref.disconnectJoyKeys { return }
@@ -146,8 +143,6 @@ class KeyboardController: NSObject {
         
     func keyUp(with macKey: MacKey) {
         
-        // track("\(macKey.keyCode)")
-
         // Check if this key is used to emulate a game device
         if parent.gamePad1?.processKeyUpEvent(macKey: macKey) == true {
             if pref.disconnectJoyKeys { return }

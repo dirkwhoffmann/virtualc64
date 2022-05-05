@@ -191,8 +191,8 @@ extension URL {
             fatalError()
         }
         
-        track("exec = \(exec)")
-        track("args = \(args)")
+        log("exec = \(exec)")
+        log("args = \(args)")
         
         if let result = FileManager.exec(launchPath: exec, arguments: args) {
             print("\(result)")
@@ -257,7 +257,7 @@ extension URL {
             [ .tiff: "tiff", .bmp: "bmp", .gif: "gif", .jpeg: "jpeg", .png: "png" ]
         
         guard let ext = extensions[format] else {
-            track("Unsupported image format: \(format)")
+            log("Unsupported image format: \(format)")
             return self
         }
         

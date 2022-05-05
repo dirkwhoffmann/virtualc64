@@ -149,7 +149,8 @@ class ImportDialog: DialogController {
         }
 
         if volume != nil {
-            track("Volume created successfully")
+
+            log("Volume created successfully")
             volume?.info()
             volume?.printDirectory()
         }
@@ -259,17 +260,15 @@ class ImportDialog: DialogController {
     @IBAction func insertAction(_ sender: NSButton!) {
         
         let drive = sender.tag == 0 ? c64.drive8! : c64.drive9!
-        
-        track("insertAction: \(sender.tag)")
 
         if volume != nil {
             
-            track("Inserting Volume (wp: \(writeProtect))")
+            log("Inserting Volume (wp: \(writeProtect))")
             drive.insertFileSystem(volume, protected: writeProtect)
         
         } else if tap != nil {
             
-            track("Inserting Tape")
+            log("Inserting Tape")
             c64.datasette.insertTape(tap)
             
             if autoRun {
@@ -279,12 +278,12 @@ class ImportDialog: DialogController {
         
         } else if crt != nil {
             
-            track("Inserting Cartridge")
+            log("Attaching Cartridge")
             try? c64.expansionport.attachCartridge(crt!, reset: true)
             
         } else if g64 != nil {
             
-            track("Inserting G64")
+            log("Inserting G64")
             drive.insertG64(g64, protected: writeProtect)
 
         } else {
@@ -298,7 +297,7 @@ class ImportDialog: DialogController {
 
     @IBAction func flashAction(_ sender: NSButton!) {
         
-        track("flashAction: \(sender.selectedTag())")
+        log("flashAction: \(sender.selectedTag())")
         
         try? parent.c64.flash(volume!, item: sender.selectedTag())
         parent.keyboard.type("RUN\n")

@@ -62,7 +62,6 @@ class InstrTableView: NSTableView {
         rowForAddr = [:]
 
         var addr = addrInFirstRow
-        // track("addrInFirstRow = \(addrInFirstRow)")
         
         for i in 0 ..< numRows {
             

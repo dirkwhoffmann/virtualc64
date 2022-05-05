@@ -209,6 +209,5 @@ extension Monitor {
 
     override func windowWillClose(_ notification: Notification) {
 
-        track("Closing monitor")
     }
 }

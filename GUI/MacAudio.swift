@@ -44,7 +44,7 @@ public class MacAudio: NSObject {
         
         // Create AudioUnit
         do { try audiounit = AUAudioUnit(componentDescription: compDesc) } catch {
-            track("Failed to create AUAudioUnit")
+            log("Failed to create AUAudioUnit")
             return
         }
         
@@ -58,7 +58,7 @@ public class MacAudio: NSObject {
         let renderFormat = AVAudioFormat(standardFormatWithSampleRate: sampleRate,
                                          channels: (stereo ? 2 : 1))
         do { try audiounit.inputBusses[0].setFormat(renderFormat!) } catch {
-            track("Failed to set render format on input bus")
+            log("Failed to set render format on input bus")
             return
         }
         
@@ -92,11 +92,11 @@ public class MacAudio: NSObject {
         
         // Allocate render resources
         do { try audiounit.allocateRenderResources() } catch {
-            track("Failed to allocate RenderResources")
+            log("Failed to allocate RenderResources")
             return nil
         }
         
-        track("Success")
+        log("Success")
     }
     
     func shutDown() {
@@ -134,7 +134,7 @@ public class MacAudio: NSObject {
         
         if !isRunning {
             do { try audiounit.startHardware() } catch {
-                track("Failed to start audio hardware")
+                log("Failed to start audio hardware")
                 return false
             }
         }
@@ -193,7 +193,7 @@ public class MacAudio: NSObject {
             
             // Lookup sound file in bundle
             guard let url = Bundle.main.url(forResource: name, withExtension: "aiff") else {
-                track("Cannot open sound file \(name)")
+                log("Cannot open sound file \(name)")
                 return
             }
             

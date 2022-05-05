@@ -32,7 +32,7 @@ extension PreferencesController {
         let vend = property(kIOHIDVendorIDKey)
         let prod = property(kIOHIDProductIDKey)
 
-        // track("\(db.custom)")
+        // log("\(db.custom)")
         
         devManufacturer.stringValue = property(kIOHIDManufacturerKey)
         devProduct.stringValue = property(kIOHIDProductKey)
@@ -117,10 +117,7 @@ extension PreferencesController {
     @IBAction func devLeftAction(_ sender: NSPopUpButton!) {
         
         let selectedTag = "\(sender.selectedTag())"
-        
-        track("tag = \(sender.tag)")
-        track("selectedTag = \(selectedTag)")
-        
+
         if let device = selectedDev {
             myAppDelegate.database.setLeft(vendorID: device.vendorID,
                                            productID: device.productID,
@@ -133,10 +130,7 @@ extension PreferencesController {
     @IBAction func devRightAction(_ sender: NSPopUpButton!) {
         
         let selectedTag = "\(sender.selectedTag())"
-        
-        track("tag = \(sender.tag)")
-        track("selectedTag = \(selectedTag)")
-        
+
         if let device = selectedDev {
             myAppDelegate.database.setRight(vendorID: device.vendorID,
                                             productID: device.productID,
@@ -149,9 +143,6 @@ extension PreferencesController {
     @IBAction func devHatSwitchAction(_ sender: NSPopUpButton!) {
         
         let selectedTag = "\(sender.selectedTag())"
-
-        track("tag = \(sender.tag)")
-        track("selectedTag = \(selectedTag)")
         
         if let device = selectedDev {
             myAppDelegate.database.setHatSwitch(vendorID: device.vendorID,

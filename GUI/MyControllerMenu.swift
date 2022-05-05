@@ -361,7 +361,7 @@ extension MyController: NSMenuItemValidation {
 
         let pasteBoard = NSPasteboard.general
         guard let text = pasteBoard.string(forType: .string) else {
-            track("Cannot paste. No text in pasteboard")
+            log("Cannot paste. No text in pasteboard")
             return
         }
         
@@ -462,9 +462,9 @@ extension MyController: NSMenuItemValidation {
             virtualKeyboard = VirtualKeyboardController(with: self, nibName: name)
         }
         if virtualKeyboard?.window?.isVisible == true {
-            track("Virtual keyboard already open")
+            log("Virtual keyboard already open")
         } else {
-            track("Opeining virtual keyboard as a window")
+            log("Opeining virtual keyboard as a window")
         }
 
         virtualKeyboard?.showWindow()
@@ -915,7 +915,6 @@ extension MyController: NSMenuItemValidation {
     }
     
     @IBAction func attachIsepicAction(_ sender: Any!) {
-        track("")
         c64.expansionport.attachIsepicCartridge()
     }
     

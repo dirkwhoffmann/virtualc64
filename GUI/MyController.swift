@@ -318,10 +318,10 @@ extension MyController {
 		switch msg.type {
 			
 		case .REGISTER:
-			track("Registered to message queue")
+			log("Registered to message queue")
 			
 		case .UNREGISTER:
-			track("Unregistered from message queue")
+			log("Unregistered from message queue")
 			
 		case .CONFIG:
 			inspector?.fullRefresh()
@@ -523,8 +523,8 @@ extension MyController {
 			renderer.zoomTextureIn()
 			
 		default:
-			track("Unknown message: \(msg)")
-			assert(false)
+			log("Unknown message: \(msg)")
+			fatalError()
 		}
 	}
 

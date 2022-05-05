@@ -179,11 +179,7 @@ extension PreferencesController {
         case 2: pref.retainMouseByEntering = (sender.state == .on)
         default: fatalError()
         }
-        
-        track("retainMouseWithKeys = \(pref.retainMouseWithKeys)")
-        track("retainMouseByClick = \(pref.retainMouseByClick)")
-        track("retainMouseByEntering = \(pref.retainMouseByEntering)")
-        
+
         refresh()
     }
     

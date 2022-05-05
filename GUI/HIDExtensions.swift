@@ -15,11 +15,11 @@ extension IOHIDDevice {
         let optionBits = IOOptionBits(kIOHIDOptionsTypeNone)
         if IOHIDDeviceOpen(self, optionBits) != kIOReturnSuccess {
             
-            track("WARNING: Cannot open HID device")
+            log("WARNING: Cannot open HID device")
             return false
         }
 
-        track("HID device opened")
+        log("HID device opened")
         return true
     }
     
@@ -29,11 +29,11 @@ extension IOHIDDevice {
         let optionBits = IOOptionBits(kIOHIDOptionsTypeNone)
         if IOHIDDeviceClose(self, optionBits) != kIOReturnSuccess {
 
-            track("WARNING: Cannot close HID device")
+            log("WARNING: Cannot close HID device")
             return false
         }
         
-        track("HID device closed")
+        log("HID device closed")
         return true
     }
     
@@ -102,7 +102,7 @@ extension IOHIDDevice {
     
     var usageDescription: String? {
         
-        track("kHIDUsage_GD_Mouse = \(kHIDUsage_GD_Mouse)")
+        // log("kHIDUsage_GD_Mouse = \(kHIDUsage_GD_Mouse)")
         
         if let usage = Int(usageKey) {
             
