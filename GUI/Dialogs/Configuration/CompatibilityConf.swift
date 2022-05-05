@@ -26,7 +26,6 @@ extension ConfigurationController {
 
     @IBAction func comDrivePowerSaveAction(_ sender: NSButton!) {
         
-        track()
         config.drive8PowerSave = sender.state == .on
         config.drive9PowerSave = sender.state == .on
         refresh()
@@ -34,28 +33,24 @@ extension ConfigurationController {
 
     @IBAction func comViciiPowerSaveAction(_ sender: NSButton!) {
         
-        track()
         config.viciiPowerSave = sender.state == .on
         refresh()
     }
 
     @IBAction func comSidPowerSaveAction(_ sender: NSButton!) {
         
-        track()
         config.sidPowerSave = sender.state == .on
         refresh()
     }
     
     @IBAction func comSsCollisionsAction(_ sender: NSButton!) {
         
-        track()
         config.ssCollisions = sender.state == .on
         refresh()
     }
 
     @IBAction func comSbCollisionsAction(_ sender: NSButton!) {
         
-        track()
         config.sbCollisions = sender.state == .on
         refresh()
     }
@@ -101,7 +96,6 @@ extension ConfigurationController {
     
     @IBAction func comDefaultsAction(_ sender: NSButton!) {
         
-        track()
         config.saveCompatibilityUserDefaults()
     }
 }

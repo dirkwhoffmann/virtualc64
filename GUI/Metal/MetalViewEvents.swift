@@ -150,7 +150,6 @@ public extension MetalView {
             case 0 where event.modifierFlags.contains([.option, .command]),
                  1 where event.modifierFlags.contains([.option, .control]):
                 
-                track()
                 retainMouse()
                 return true
                 
@@ -164,7 +163,6 @@ public extension MetalView {
             case 0 where event.modifierFlags.contains([.option, .command]),
                  1 where event.modifierFlags.contains([.option, .control]):
                 
-                track()
                 releaseMouse()
                 return true
                 

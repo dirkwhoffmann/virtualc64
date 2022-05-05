@@ -314,7 +314,6 @@ extension ConfigurationController {
     
     @IBAction func vidDefaultsAction(_ sender: NSButton!) {
         
-        track()
         config.saveVideoUserDefaults()
     }
 }

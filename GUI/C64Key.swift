@@ -424,9 +424,7 @@ extension C64Key {
     }
     
     static func initMap() {
-        
-        track()
-        
+                
         //
         // Function keys
         //

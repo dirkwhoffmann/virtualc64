@@ -55,8 +55,6 @@ class ImportDialog: DialogController {
     }
 
     override func showSheet(completionHandler handler:(() -> Void)? = nil) {
-                    
-        track()
 
         switch attachment {
              
@@ -318,16 +316,13 @@ extension ImportDialog {
     
     func windowDidResize(_ notification: Notification) {
         
-        track()
     }
     
     func windowWillStartLiveResize(_ notification: Notification) {
-         
-         track()
-     }
-     
-     func windowDidEndLiveResize(_ notification: Notification) {
+
+    }
+
+    func windowDidEndLiveResize(_ notification: Notification) {
         
-        track()
-     }
+    }
 }

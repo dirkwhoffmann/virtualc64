@@ -98,9 +98,7 @@ class Canvas: Layer {
     }
 
     func buildTextures() {
-        
-        track()
-        
+                
         // Texture usages
         let r: MTLTextureUsage = [ .shaderRead ]
         let rwt: MTLTextureUsage = [ .shaderRead, .shaderWrite, .renderTarget ]

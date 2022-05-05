@@ -67,7 +67,7 @@ class DeviceDatabase {
     
     func save() {
         
-        track()
+        log()
         
         let defaults = UserDefaults.standard
         defaults.set(custom, forKey: Keys.Dev.schemes)

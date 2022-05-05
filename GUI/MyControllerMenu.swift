@@ -93,7 +93,6 @@ extension MyController: NSMenuItemValidation {
             return drive.hasDisk
             
         case #selector(MyController.drivePowerAction(_:)):
-            track()
             item.title = drive.isSwitchedOn() ? "Switch off" : "Switch on"
             return true
             
@@ -275,7 +274,6 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func browseSnapshotsAction(_ sender: Any!) {
         
-        track()
         if snapshotBrowser == nil {
             snapshotBrowser = SnapshotViewer(with: self, nibName: "SnapshotViewer")
         }
@@ -283,9 +281,7 @@ extension MyController: NSMenuItemValidation {
     }
     
     @IBAction func takeScreenshotAction(_ sender: Any!) {
-        
-        track()
-        
+
         // Determine screenshot format
         let format = ScreenshotSource(rawValue: pref.screenshotSource)!
         
@@ -362,9 +358,7 @@ extension MyController: NSMenuItemValidation {
     //
     
     @IBAction func paste(_ sender: Any!) {
-        
-        track()
-        
+
         let pasteBoard = NSPasteboard.general
         guard let text = pasteBoard.string(forType: .string) else {
             track("Cannot paste. No text in pasteboard")
@@ -671,7 +665,7 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func exportRecentDiskAction(_ sender: NSMenuItem!) {
                 
-        track()
+        log()
 
         let drive = sender.tag < 10 ? DriveID.DRIVE8 : DriveID.DRIVE9
         let slot = sender.tag % 10
@@ -907,7 +901,6 @@ extension MyController: NSMenuItemValidation {
     */
 
     @IBAction func detachCartridgeAction(_ sender: Any!) {
-        track()
         c64.expansionport.detachCartridgeAndReset()
     }
 

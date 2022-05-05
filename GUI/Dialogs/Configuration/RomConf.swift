@@ -148,8 +148,6 @@ extension ConfigurationController {
     }
         
     @IBAction func romInstallAction(_ sender: NSButton!) {
-
-        track()
         
         let b = NSData(data: NSDataAsset(name: "basic_generic")!.data)
         let c = NSData(data: NSDataAsset(name: "chargen_openroms")!.data)

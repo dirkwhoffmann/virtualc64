@@ -31,9 +31,7 @@ extension Renderer {
     }
     
     internal func buildMetal() {
-        
-        track()
-        
+                
         // Command queue
         queue = device.makeCommandQueue()
         assert(queue != nil, "Failed to create command queue")

@@ -174,7 +174,6 @@
 		507E7A9E24FB864E00AB433C /* ScreenshotViewer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 507E7A9D24FB864E00AB433C /* ScreenshotViewer.xib */; };
 		507E7AA024FB881500AB433C /* ScreenshotViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507E7A9F24FB881500AB433C /* ScreenshotViewer.swift */; };
 		507E7AA224FB897D00AB433C /* Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507E7AA124FB897D00AB433C /* Screenshot.swift */; };
-		5080501825873EC9004FE1F5 /* ExportDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5080501725873EC9004FE1F5 /* ExportDialog.swift */; };
 		5080501B2587A16D004FE1F5 /* FSDescriptors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508050192587A16D004FE1F5 /* FSDescriptors.cpp */; };
 		508081E925110FFE0084B060 /* Dinamic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508081E725110FFE0084B060 /* Dinamic.cpp */; };
 		508081EC2511206D0084B060 /* StructuredBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508081EA2511206D0084B060 /* StructuredBasic.cpp */; };
@@ -605,7 +604,6 @@
 		507E7A9D24FB864E00AB433C /* ScreenshotViewer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScreenshotViewer.xib; sourceTree = "<group>"; };
 		507E7A9F24FB881500AB433C /* ScreenshotViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotViewer.swift; sourceTree = "<group>"; };
 		507E7AA124FB897D00AB433C /* Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screenshot.swift; sourceTree = "<group>"; };
-		5080501725873EC9004FE1F5 /* ExportDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportDialog.swift; sourceTree = "<group>"; };
 		508050192587A16D004FE1F5 /* FSDescriptors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FSDescriptors.cpp; sourceTree = "<group>"; };
 		5080501A2587A16D004FE1F5 /* FSDescriptors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSDescriptors.h; sourceTree = "<group>"; };
 		508081E725110FFE0084B060 /* Dinamic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Dinamic.cpp; sourceTree = "<group>"; };
@@ -861,7 +859,6 @@
 				5058A923281D10C600C223C9 /* DiskCreator.swift */,
 				5058A91D281D107A00C223C9 /* DiskExporter.swift */,
 				50B485FA24F9911600844133 /* ImportDialog.swift */,
-				5080501725873EC9004FE1F5 /* ExportDialog.swift */,
 				5098C57A2658CF9800E05EFC /* VideoExporter.swift */,
 				5098C57E2658E1F400E05EFC /* DragImageView.swift */,
 				50031B39206FB0FC00A1969B /* SnapshotController.swift */,
@@ -1782,7 +1779,6 @@
 				5085D89D25B848940043B15C /* Joystick.cpp in Sources */,
 				500E34172615C40D006A38DA /* Parser.cpp in Sources */,
 				504C438924AF29AC00E69CAE /* NeosMouse.cpp in Sources */,
-				5080501825873EC9004FE1F5 /* ExportDialog.swift in Sources */,
 				504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */,
 				504C439424AF29AC00E69CAE /* Muxer.cpp in Sources */,
 				506A724A21C0341900DA0AC3 /* ConfigurationController.swift in Sources */,

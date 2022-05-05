@@ -28,7 +28,6 @@ class VideoExporter: DialogController {
 
     override func showSheet(completionHandler handler: (() -> Void)? = nil) {
             
-        track()
         super.showSheet()
 
         duration.stringValue = ""
@@ -65,8 +64,6 @@ class VideoExporter: DialogController {
     }
     
     @IBAction func exportAction(_ sender: NSButton!) {
-
-        track()
         
         // Create save panel
         panel = NSSavePanel()

@@ -29,9 +29,7 @@ public class MacAudio: NSObject {
     }
     
     convenience init?(with controller: MyController) {
-        
-        track()
-        
+
         self.init()
         parent = controller
         sid = controller.c64.sid
@@ -103,7 +101,8 @@ public class MacAudio: NSObject {
     
     func shutDown() {
         
-        track()
+        log("Removing proxy...", level: 2)
+
         stopPlayback()
         sid = nil
     }
@@ -174,13 +173,10 @@ public class MacAudio: NSObject {
  
     func playEjectSound(volume: Int, pan: Int) {
         
-        track()
         playSound(name: "1541_door_open_1", volume: volume, pan: pan)
     }
     
     func playSound(name: String, volume: Int, pan: Int) {
-        
-        // track("playIntSound: \(name) \(volume) \(pan)")
 
         let p = pan <= 50 ? pan : pan <= 150 ? 100 - pan : -200 + pan
         
@@ -191,9 +187,7 @@ public class MacAudio: NSObject {
     }
     
     func playSound(name: String, volume: Float, pan: Float) {
-        
-        // track("playSound: \(name) \(volume) \(pan)")
-        
+                
         // Check for cached players for this sound file
         if audioPlayers[name] == nil {
             

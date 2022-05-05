@@ -99,14 +99,10 @@ extension PreferencesController {
     // Handles a key press event.
     // Returns true if the controller has responded to this key.
     func conKeyDown(with macKey: MacKey) -> Bool {
-        
-        track()
-        
+
         // Only proceed if a recording sessing is in progress
         if conRecordedKey == nil { return false }
-        
-        track()
-        
+
         // Record the key if it is not the ESC key
         if macKey != MacKey.escape {
             let (slot, action) = gamePadAction(for: conRecordedKey!)
@@ -215,7 +211,6 @@ extension PreferencesController {
     
     @IBAction func conPresetAction(_ sender: NSPopUpButton!) {
         
-        track()        
         assert(sender.selectedTag() == 0)
 
         // Revert to standard settings

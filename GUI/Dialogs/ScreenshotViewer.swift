@@ -65,9 +65,7 @@ class ScreenshotViewer: DialogController {
     }
     
     override func sheetDidShow() {
-  
-        track()
-        
+
         now = Date()
         
         updateLabels()
@@ -78,9 +76,7 @@ class ScreenshotViewer: DialogController {
     }
     
     func updateLabels() {
-        
-        track("count = \(screenshots.count) currentItem = \(currentItem)")
-        
+
         carousel.isHidden = false
         itemLabel.isHidden = empty
         text1.isHidden = false
@@ -166,9 +162,7 @@ class ScreenshotViewer: DialogController {
     }
     
     @IBAction override func cancelAction(_ sender: Any!) {
-        
-        track()
-                        
+                                
         hideSheet()
                 
         carousel.isHidden = true

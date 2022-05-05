@@ -130,7 +130,6 @@ extension ConfigurationController {
 
     @IBAction func perDefaultsAction(_ sender: NSButton!) {
         
-        track()
         config.savePeripheralsUserDefaults()
     }
     

@@ -41,9 +41,7 @@ class Console: Layer {
     }
 
     override func open() {
-    
-        track()
-        
+            
         super.open()
         resize()
     }

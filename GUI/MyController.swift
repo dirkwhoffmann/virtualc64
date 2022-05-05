@@ -230,9 +230,7 @@ extension MyController {
     }
     
     func registerAsListener() {
-        
-        track()
-        
+
         // Convert 'self' to a void pointer
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
         
@@ -482,7 +480,6 @@ extension MyController {
 			}
 			
 		case .SHAKING:
-			track()
 			metal.lastShake = DispatchTime(uptimeNanoseconds: 0)
 			if pref.releaseMouseByShaking {
 				metal.releaseMouse()

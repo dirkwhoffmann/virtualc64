@@ -94,8 +94,6 @@ extension PreferencesController {
     }
     
     func selectKey(nr: Int) {
-        
-        track()
 
         let oldKey = selectedKey
         
@@ -115,9 +113,7 @@ extension PreferencesController {
     }
     
     func trashKey(nr: Int) {
-        
-        track()
-        
+
         // Remove old key assignment (if any)
         for (macKey, key) in pref.keyMap where key.nr == nr {
             pref.keyMap[macKey] = nil
@@ -127,14 +123,10 @@ extension PreferencesController {
     }
     
     func mapSelectedKey(to macKey: MacKey) -> Bool {
-                
-        track()
-        
+
         // Only proceed if a key has been selected
         if selectedKey == nil { return false }
-        
-        track()
-        
+
         // Check for the ESC key
         if macKey == MacKey.escape {
             cancelAction(self)
@@ -155,7 +147,6 @@ extension PreferencesController {
     
     override func mouseDown(with event: NSEvent) {
         
-        track()
         selectedKey = nil
         refresh()
     }

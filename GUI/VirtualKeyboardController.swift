@@ -55,15 +55,12 @@ class VirtualKeyboardController: DialogController {
     
     override func windowDidLoad() {
         
-        track()
         updateImageCache()
         refresh()
     }
 
     override func sheetWillShow() {
-    
-        track()
-        
+
         // Collect references to all buttons
         for tag in 0 ... 65 {
             keyView[tag] = window!.contentView!.viewWithTag(tag) as? NSButton
@@ -72,13 +69,11 @@ class VirtualKeyboardController: DialogController {
 
     override func sheetDidShow() {
 
-        track()
         refresh()
     }
 
     func windowDidBecomeMain(_ notification: Notification) {
         
-        track()
         refresh()
     }
 
@@ -124,9 +119,7 @@ class VirtualKeyboardController: DialogController {
     }
         
     func pressKey(nr: Int) {
-        
-        track()
-        
+
         c64.keyboard.pressKey(nr)
         refresh()
 
@@ -145,9 +138,7 @@ class VirtualKeyboardController: DialogController {
     }
     
     override func mouseDown(with event: NSEvent) {
-        
-        track()
-        
+
         // If opened as a sheet, close if the user clicked inside unsued area
         if autoClose { cancelAction(self) }
     }
@@ -180,7 +171,6 @@ class KeycapButton: NSButton {
         
         if let controller = window?.delegate as? VirtualKeyboardController {
             
-            track()
             controller.refresh()
         }
     }

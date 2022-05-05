@@ -51,7 +51,6 @@ class Monitor: DialogController {
 
     override func awakeFromNib() {
         
-        track()
         super.awakeFromNib()
         refresh()
     }
@@ -116,8 +115,6 @@ class Monitor: DialogController {
     
     @IBAction func busDebugAction(_ sender: NSButton!) {
 
-        track()
-        
         c64.configure(.DMA_DEBUG_ENABLE, enable: sender.state == .on)
         refresh()
     }
@@ -135,28 +132,24 @@ class Monitor: DialogController {
 
     @IBAction func busChannelAction(_ sender: NSButton!) {
         
-        track()
         c64.configure(.DMA_DEBUG_ENABLE, id: sender.tag, enable: sender.state == .on)
         refresh()
     }
 
     @IBAction func busDisplayModeAction(_ sender: NSPopUpButton!) {
         
-        track()
         c64.configure(.DMA_DEBUG_MODE, value: sender.selectedTag())
         refresh()
     }
     
     @IBAction func busOpacityAction(_ sender: NSSlider!) {
         
-        track()
         c64.configure(.DMA_DEBUG_OPACITY, value: sender.integerValue)
         refresh()
     }
     
     @IBAction func hideSpritesAction(_ sender: NSButton!) {
         
-        track()
         config.vicHideSprites = sender.state == .on
         refresh()
     }
@@ -176,7 +169,6 @@ class Monitor: DialogController {
 
     @IBAction func cutEnableAction(_ sender: NSButton!) {
 
-        track()
         sender.state == .on ? addLayer(0x1000) : removeLayer(0x1000)
         refresh()
     }

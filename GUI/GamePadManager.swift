@@ -106,7 +106,7 @@ class GamePadManager {
     
     func shutDown() {
         
-        track()
+        log(level: 2)
         
         // Terminate communication with all connected HID devices
         for (_, pad) in gamePads { pad.device?.close() }
@@ -120,7 +120,7 @@ class GamePadManager {
     
     deinit {
         
-        track()
+        log(level: 2)
     }
     
     //
@@ -172,8 +172,8 @@ class GamePadManager {
                         device: IOHIDDevice) {
     
         lock.lock(); defer { lock.unlock() }
-        track()
-        
+
+        // log()
         // device.listProperties()
 
         // Ignore internal devices
@@ -203,9 +203,7 @@ class GamePadManager {
         
         // Create a GamePad object
         gamePads[slot] = GamePad(manager: self, device: device, type: .JOYSTICK)
-        
-        track()
-        
+
         // Register input value callback
         let hidContext = unsafeBitCast(gamePads[slot], to: UnsafeMutableRawPointer.self)
         IOHIDDeviceRegisterInputValueCallback(device,
@@ -219,8 +217,7 @@ class GamePadManager {
                           device: IOHIDDevice) {
         
         lock.lock(); defer { lock.unlock() }
-        track()
-            
+
         // Search for a matching locationID and remove device
         for (slot, pad) in gamePads where pad.locationID == device.locationID {
             gamePads[slot] = nil

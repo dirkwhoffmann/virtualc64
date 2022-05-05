@@ -138,7 +138,6 @@ extension Inspector {
     
     @IBAction func memSourceAction(_ sender: NSPopUpButton!) {
         
-        track()
         layoutIsDirty = true
         refreshMemory(full: true)
     }
@@ -224,9 +223,7 @@ extension Inspector {
     }
 
     @IBAction func memSearchAction(_ sender: NSTextField!) {
-        
-        track()
-        
+                
         let input = sender.stringValue
         let radix = hex ? 16 : 10
         let format = hex ? "%04X" : "%05d"

@@ -269,8 +269,6 @@ extension MyController {
     }
     
     @IBAction func activityTypeAction(_ sender: NSPopUpButton!) {
-
-        track()
         
         var min, max, warn, crit: Double
         

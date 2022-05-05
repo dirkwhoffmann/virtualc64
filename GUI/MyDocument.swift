@@ -163,7 +163,7 @@ class MyDocument: NSDocument {
 
     override func write(to url: URL, ofType typeName: String) throws {
 
-        track()
+        log()
 
         if typeName == "VC64" {
 
@@ -251,13 +251,13 @@ class MyDocument: NSDocument {
     }
 
     //
-    // Creating attachments
+    // Creating file proxys
     //
 
     fileprivate
     func createFileProxy(url: URL, allowedTypes: [FileType]) throws -> AnyFileProxy? {
-        
-        track("Creating proxy object from URL: \(url.lastPathComponent)")
+
+        log("Reading file \(url.lastPathComponent)")
 
         // If the provided URL points to compressed file, decompress it first
         let newUrl = url.unpacked(maxSize: 2048 * 1024)

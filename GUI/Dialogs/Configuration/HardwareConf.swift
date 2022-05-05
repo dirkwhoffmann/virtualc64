@@ -112,9 +112,7 @@ extension ConfigurationController {
     }
 
     @IBAction func hwSidEnable(_ sender: NSButton!) {
-        
-        track()
-        
+
         switch sender.tag {
         case 1: config.sidEnable1 = sender.state == .on
         case 2: config.sidEnable2 = sender.state == .on
@@ -125,9 +123,7 @@ extension ConfigurationController {
     }
 
     @IBAction func hwSidAddressAction(_ sender: NSPopUpButton!) {
-        
-        track()
-        
+
         switch sender.tag {
         case 1: config.sidAddress1 = sender.selectedTag()
         case 2: config.sidAddress2 = sender.selectedTag()
@@ -151,7 +147,6 @@ extension ConfigurationController {
 
     @IBAction func hwRamPatternAction(_ sender: NSPopUpButton!) {
         
-        track()
         config.ramPattern = sender.selectedTag()
         refresh()
     }
@@ -233,7 +228,6 @@ extension ConfigurationController {
 
     @IBAction func hwDefaultsAction(_ sender: NSButton!) {
         
-        track()
         config.saveHardwareUserDefaults()
     }
 }

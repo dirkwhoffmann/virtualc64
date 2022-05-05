@@ -14,9 +14,7 @@
 extension MakeWithBuffer {
 
     static func makeWith(buffer: UnsafeRawPointer, length: Int) throws -> Self {
-        
-        track()
-        
+                
         let exc = ExceptionWrapper()
         let obj = make(withBuffer: buffer, length: length, exception: exc)
         if exc.errorCode != .OK { throw VC64Error(exc) }

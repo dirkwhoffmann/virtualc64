@@ -231,7 +231,6 @@ class ConfigurationController: DialogController {
     
     override func sheetWillShow() {
         
-        track()
         if firstTab != "" { prefTabView?.selectTabViewItem(withIdentifier: firstTab) }
         refresh()
     }
@@ -253,9 +252,7 @@ class ConfigurationController: DialogController {
     }
     
     @IBAction func unlockAction(_ sender: Any!) {
-        
-        track()
-        
+                
         c64.powerOff()
         refresh()
     }
