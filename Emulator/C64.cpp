@@ -240,16 +240,16 @@ C64::getConfigItem(Option option, long id) const
         case OPT_SHAKE_DETECTION:
         case OPT_MOUSE_VELOCITY:
             
-            if (id == PORT_ONE) return port1.mouse.getConfigItem(option);
-            if (id == PORT_TWO) return port2.mouse.getConfigItem(option);
+            if (id == PORT_1) return port1.mouse.getConfigItem(option);
+            if (id == PORT_2) return port2.mouse.getConfigItem(option);
             fatalError;
 
         case OPT_AUTOFIRE:
         case OPT_AUTOFIRE_BULLETS:
         case OPT_AUTOFIRE_DELAY:
             
-            if (id == PORT_ONE) return port1.joystick.getConfigItem(option);
-            if (id == PORT_TWO) return port2.joystick.getConfigItem(option);
+            if (id == PORT_1) return port1.joystick.getConfigItem(option);
+            if (id == PORT_2) return port2.joystick.getConfigItem(option);
             fatalError;
 
         default:
@@ -444,8 +444,8 @@ C64::configure(Option option, long id, i64 value)
         case OPT_MOUSE_VELOCITY:
 
             switch (id) {
-                case PORT_ONE: port1.mouse.setConfigItem(option, value); break;
-                case PORT_TWO: port2.mouse.setConfigItem(option, value); break;
+                case PORT_1: port1.mouse.setConfigItem(option, value); break;
+                case PORT_2: port2.mouse.setConfigItem(option, value); break;
                 default: fatalError;
             }
             break;
@@ -455,8 +455,8 @@ C64::configure(Option option, long id, i64 value)
         case OPT_AUTOFIRE_DELAY:
 
             switch (id) {
-                case PORT_ONE: port1.joystick.setConfigItem(option, value); break;
-                case PORT_TWO: port2.joystick.setConfigItem(option, value); break;
+                case PORT_1: port1.joystick.setConfigItem(option, value); break;
+                case PORT_2: port2.joystick.setConfigItem(option, value); break;
                 default: fatalError;
             }
             break;

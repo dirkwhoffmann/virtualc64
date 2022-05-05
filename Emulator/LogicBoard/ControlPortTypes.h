@@ -13,6 +13,14 @@
 #include "Reflection.h"
 
 //
+// Constants
+//
+
+#define PORT_1  1
+#define PORT_2  2
+
+
+//
 // Enumerations
 //
 

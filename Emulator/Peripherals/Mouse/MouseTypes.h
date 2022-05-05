@@ -45,35 +45,6 @@ struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
 };
 #endif
 
-enum_long(PORT_ID)
-{
-    PORT_NONE,
-    PORT_ONE,
-    PORT_TWO
-};
-typedef PORT_ID PortId;
-
-#ifdef __cplusplus
-struct PortIdEnum : util::Reflection<PortIdEnum, PortId> {
-    
-	static constexpr long minVal = 0;
-    static constexpr long maxVal = PORT_TWO;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
-    static const char *prefix() { return "PORT"; }
-    static const char *key(PortId value)
-    {
-        switch (value) {
-                
-            case PORT_NONE:   return "NONE";
-            case PORT_ONE:    return "ONE";
-            case PORT_TWO:    return "TWO";
-        }
-        return "???";
-    }
-};
-#endif
-
 
 //
 // Structures

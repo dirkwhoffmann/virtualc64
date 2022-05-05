@@ -19,8 +19,8 @@ class ControlPort : public SubComponent {
     friend class Mouse;
     friend class Joystick;
     
-    // The represented control port
-    PortId nr;
+    // The represented control port (1 or 2)
+    isize nr;
         
     // The connected device
     ControlPortDevice device = CPDEVICE_NONE;
@@ -42,7 +42,7 @@ public:
     
 public:
  
-    ControlPort(C64 &ref, PortId id);
+    ControlPort(C64 &ref, isize id);
 
 
     //

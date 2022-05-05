@@ -12,9 +12,9 @@
 #include "C64.h"
 #include "IOUtils.h"
 
-ControlPort::ControlPort(C64 &ref, PortId id) : SubComponent(ref), nr(id)
+ControlPort::ControlPort(C64 &ref, isize nr) : SubComponent(ref), nr(nr)
 {
-    assert_enum(PortId, id);
+    assert(nr == PORT_1 || nr == PORT_2);
     
     subComponents = std::vector<C64Component *> {
         

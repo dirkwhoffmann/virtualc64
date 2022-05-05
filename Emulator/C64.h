@@ -42,7 +42,7 @@
 #include "Datasette.h"
 #include "Mouse.h"
 
-// Loading and saving
+// Media files
 #include "Snapshot.h"
 #include "T64File.h"
 #include "D64File.h"
@@ -91,8 +91,8 @@ public:
 
     // Logic board
     PowerSupply supply = PowerSupply(*this);
-    ControlPort port1 = ControlPort(*this, PORT_ONE);
-    ControlPort port2 = ControlPort(*this, PORT_TWO);
+    ControlPort port1 = ControlPort(*this, PORT_1);
+    ControlPort port2 = ControlPort(*this, PORT_2);
     ExpansionPort expansionport = ExpansionPort(*this);
     IEC iec = IEC(*this);
     
