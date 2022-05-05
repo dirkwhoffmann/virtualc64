@@ -19,8 +19,8 @@
 
 enum_long(DRIVE_ID)
 {
-    DRIVE8 = 8,
-    DRIVE9 = 9
+    DRIVE8 = 0,
+    DRIVE9 = 1
 };
 typedef DRIVE_ID DriveID;
 
