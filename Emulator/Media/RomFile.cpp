@@ -198,12 +198,14 @@ RomFile::identifier(u64 fnv)
         case 0x429EA22675CAB478: return KERNAL_DANISH_3RD;
         case 0x8C4548E2202CB366: return KERNAL_SX64;
         case 0x746EB1BC008B07E1: return KERNAL_SX64_SCAND;
+        case 0x49A7074F1E6A896F: return KERNAL_4064;
         case 0xDE7F07008B787040: return KERNAL_64_JIFFY;
         case 0xA9D2AD1A4E5F782C: return KERNAL_SX64_JIFFY;
         case 0x750617B8DE6DBA82: return KERNAL_TURBO_ROM;
         case 0x7E0A124C3F192818: return KERNAL_DATEL_V32;
         case 0x211EAC45AB03A2CA: return KERNAL_EXOS_V3;
         case 0xF2A39FF166D338AE: return KERNAL_TURBO_TAPE;
+        case 0xfd1ebd928024f8d5: return KERNEL_TURBO_250;
         case 0x7202DEA530E1C172: return KERNAL_64ER_V3;
         case 0x7E3AEFF7886684A2: return KERNAL_SPEEDDOS_PLUS;
         case 0x6E6190177D93D2BB: return KERNAL_SPEEDDOS_27;
@@ -214,7 +216,11 @@ RomFile::identifier(u64 fnv)
         case 0xA5D930343EE32459: return KERNAL_DOLPHIN_20_3;
         case 0x7D34E8277F74A321: return KERNAL_DOLPHIN_20_SLVDR;
         case 0x877E38DA5DAFEC30: return KERNAL_DOLPHIN_30;
-            
+        case 0x2d7ca552f0332aef: return KERNAL_DOLPHIN_JIFFY;
+        case 0x7D6153CE2E12474F: return KERNEL_NORLAND_30;
+        case 0x99692773DB9D7DF4: return KERNEL_SD2IEC;
+        case 0x57C8266769C5B580: return KERNAL_JAFFY;
+
         case 0x361A1EC48F04F5A4: return VC1541C_01;
         case 0xB938E2DA07F4FE40: return VC1541C_02;
         case 0x44BBA0EAC5898597: return VC1541_II_1987;
@@ -251,6 +257,7 @@ RomFile::isCommodoreRom(RomIdentifier rev)
         case KERNAL_DANISH_3RD:
         case KERNAL_SX64:
         case KERNAL_SX64_SCAND:
+        case KERNAL_4064:
         case VC1541C_01:
         case VC1541C_02:
         case VC1541_II_1987:
@@ -283,6 +290,7 @@ RomFile::isPatchedRom(RomIdentifier rev)
         case KERNAL_DATEL_V32:
         case KERNAL_EXOS_V3:
         case KERNAL_TURBO_TAPE:
+        case KERNEL_TURBO_250:
         case KERNAL_64ER_V3:
         case KERNAL_SPEEDDOS_PLUS:
         case KERNAL_SPEEDDOS_27:
@@ -293,7 +301,11 @@ RomFile::isPatchedRom(RomIdentifier rev)
         case KERNAL_DOLPHIN_20_3:
         case KERNAL_DOLPHIN_20_SLVDR:
         case KERNAL_DOLPHIN_30:
-            
+        case KERNAL_DOLPHIN_JIFFY:
+        case KERNEL_NORLAND_30:
+        case KERNEL_SD2IEC:
+        case KERNAL_JAFFY:
+
         case VC1541_II_RELOC_PATCH:
         case VC1541_II_JIFFY:
         case VC1541_II_JIFFY_V600:
@@ -342,13 +354,15 @@ RomFile::title(RomIdentifier rev)
         case KERNAL_3ST:
         case KERNAL_DANISH_3RD:
         case KERNAL_SX64:
-        case KERNAL_SX64_SCAND:       return "Kernal Rom";
+        case KERNAL_SX64_SCAND:
+        case KERNAL_4064:             return "Kernal Rom";
         case KERNAL_64_JIFFY:
         case KERNAL_SX64_JIFFY:
         case KERNAL_TURBO_ROM:
         case KERNAL_DATEL_V32:
         case KERNAL_EXOS_V3:
         case KERNAL_TURBO_TAPE:
+        case KERNEL_TURBO_250:
         case KERNAL_64ER_V3:
         case KERNAL_SPEEDDOS_PLUS:
         case KERNAL_SPEEDDOS_27:
@@ -358,7 +372,11 @@ RomFile::title(RomIdentifier rev)
         case KERNAL_DOLPHIN_20_2:
         case KERNAL_DOLPHIN_20_3:
         case KERNAL_DOLPHIN_20_SLVDR:
-        case KERNAL_DOLPHIN_30:       return "Patched Kernal Rom";
+        case KERNAL_DOLPHIN_30:
+        case KERNAL_DOLPHIN_JIFFY:
+        case KERNEL_NORLAND_30:
+        case KERNEL_SD2IEC:
+        case KERNAL_JAFFY:            return "Patched Kernal Rom";
             
         case VC1541C_01:
         case VC1541C_02:              return "VC1541C Firmware";
@@ -409,12 +427,14 @@ RomFile::subTitle(RomIdentifier rev)
         case KERNAL_DANISH_3RD:       return "Danish C64";
         case KERNAL_SX64:             return "Generic SX64";
         case KERNAL_SX64_SCAND:       return "Scandinavian SX64";
+        case KERNAL_4064:             return "PET64";
         case KERNAL_64_JIFFY:         return "JiffyDOS";
         case KERNAL_SX64_JIFFY:       return "JiffyDOS (SX64)";
         case KERNAL_TURBO_ROM:        return "Turbo Rom";
         case KERNAL_DATEL_V32:        return "Datel Rom";
         case KERNAL_EXOS_V3:          return "Exos Rom";
         case KERNAL_TURBO_TAPE:       return "Turbo Tape";
+        case KERNEL_TURBO_250:        return "Turbo 250";
         case KERNAL_64ER_V3:          return "64'er DOS V3";
         case KERNAL_SPEEDDOS_PLUS:    return "SpeedDOS Plus";
         case KERNAL_SPEEDDOS_27:      return "SpeedDOS Plus (TRIAD)";
@@ -425,7 +445,11 @@ RomFile::subTitle(RomIdentifier rev)
         case KERNAL_DOLPHIN_20_3:     return "Dolphin DOS";
         case KERNAL_DOLPHIN_20_SLVDR: return "Dolphin DOS";
         case KERNAL_DOLPHIN_30:       return "Dolphin DOS";
-            
+        case KERNAL_DOLPHIN_JIFFY:    return "JiffyDOS Dolphin Mod";
+        case KERNEL_NORLAND_30:       return "Masterom (Norland)";
+        case KERNEL_SD2IEC:           return "SD2IEC";
+        case KERNAL_JAFFY:            return "JaffyDOS";
+
         case VC1541C_01:              return "MOS 251968-01";
         case VC1541C_02:              return "MOS 251968-02";
         case VC1541_II_1987:          return "MOS 251968-03";
@@ -475,12 +499,14 @@ RomFile::revision(RomIdentifier rev)
         case KERNAL_DANISH_3RD:       return "V3";
         case KERNAL_SX64:             return "";
         case KERNAL_SX64_SCAND:       return "";
+        case KERNAL_4064:             return "V1";
         case KERNAL_64_JIFFY:         return "";
         case KERNAL_SX64_JIFFY:       return "";
         case KERNAL_TURBO_ROM:        return "V1";
         case KERNAL_DATEL_V32:        return "V3.2+";
         case KERNAL_EXOS_V3:          return "V3";
         case KERNAL_TURBO_TAPE:       return "V0.1";
+        case KERNEL_TURBO_250:        return "V1.0";
         case KERNAL_64ER_V3:          return "V3";
         case KERNAL_SPEEDDOS_PLUS:    return "";
         case KERNAL_SPEEDDOS_27:      return "V2.7 (TRIAD)";
@@ -491,8 +517,11 @@ RomFile::revision(RomIdentifier rev)
         case KERNAL_DOLPHIN_20_3:     return "V2.0 Rev 3";
         case KERNAL_DOLPHIN_20_SLVDR: return "V2.0 (SilverDream)";
         case KERNAL_DOLPHIN_30:       return "V3.0";
+        case KERNAL_DOLPHIN_JIFFY:    return "2015";
+        case KERNEL_NORLAND_30:       return "V3.0";
+        case KERNEL_SD2IEC:           return "V2.2";
+        case KERNAL_JAFFY:            return "V1.3";
 
-            
         case VC1541C_01:              return "";
         case VC1541C_02:              return "";
         case VC1541_II_1987:          return "";

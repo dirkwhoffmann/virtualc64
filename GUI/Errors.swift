@@ -32,20 +32,6 @@ public func warn(_ msg: String = "",
     debug(1, msg, path: path, function: function, line: line)
 }
 
-/*
-public func debug(_ msg: String = "",
-                  path: String = #file, function: String = #function, line: Int = #line) {
-    
-    if let file = URL(string: path)?.deletingPathExtension().lastPathComponent {
-        if msg == "" {
-            print("\(file).\(line)::\(function)")
-        } else {
-            print("\(file).\(line)::\(function): \(msg)")
-        }
-    }
-}
-*/
-
 //
 // Errors
 //
