@@ -298,6 +298,38 @@ Cartridge::_save(u8 *buffer)
     return isize(writer.ptr - buffer);
 }
 
+CartridgeInfo
+Cartridge::getInfo() const
+{
+    CartridgeInfo result = { };
+
+    result.type = getCartridgeType();
+    result.supported = isSupported();
+    result.gameLineInCrtFile = gameLineInCrtFile;
+    result.exromLineInCrtFile = exromLineInCrtFile;
+    result.numPackets = numPackets;
+
+    return result;
+}
+
+CartridgeRomInfo
+Cartridge::getRomInfo(isize nr) const
+{
+    CartridgeRomInfo result = { };
+
+    if (nr >= 0 && nr < numPackets) {
+
+        result.size = packet[nr]->size;
+        result.loadAddress = packet[nr]->loadAddress;
+
+    } else {
+
+        warn("Packet %ld does not exist\n", nr);
+    }
+
+    return result;
+}
+
 u8
 Cartridge::peek(u16 addr)
 {

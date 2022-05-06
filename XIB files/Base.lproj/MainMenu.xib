@@ -1031,6 +1031,13 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="RwF-gp-Lvh"/>
+                            <menuItem title="Inspect Cartridge..." id="PJL-CH-jQ5">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="inspectCartridgeAction:" target="-1" id="vgd-oR-bce"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="NSO-Jn-9LW"/>
                             <menuItem title="Buttons" id="4hq-fg-qHb">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Buttons" id="gIs-wR-no0">

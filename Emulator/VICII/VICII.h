@@ -735,7 +735,7 @@ private:
 public:
     
     VICIIInfo getInfo() const { return C64Component::getInfo(info); }
-    SpriteInfo getSpriteInfo(int nr);
+    SpriteInfo getSpriteInfo(isize nr);
     VICIIStats getStats() { return stats; }
     
 private:

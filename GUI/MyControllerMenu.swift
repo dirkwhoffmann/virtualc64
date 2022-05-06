@@ -126,7 +126,10 @@ extension MyController: NSMenuItemValidation {
             
         case #selector(MyController.detachCartridgeAction(_:)):
             return c64.expansionport.cartridgeAttached()
-            
+
+        case #selector(MyController.inspectCartridgeAction(_:)):
+            return c64.expansionport.cartridgeAttached()
+
         case #selector(MyController.pressButtonDummyAction(_:)):
             return c64.expansionport.numButtons() > 0
             
@@ -895,28 +898,6 @@ extension MyController: NSMenuItemValidation {
         }
     }
 
-    /*
-    func attachCartridgeAction(from url: URL) {
-        
-        let types = [ FileType.CRT ]
-        
-        do {
-            // Try to create a file proxy
-            try mydocument.createAttachment(from: url, allowedTypes: types)
-            
-            // Attach the cartridge
-            try mydocument.mountAttachment()
-            
-            // Remember the URL
-            myAppDelegate.noteNewRecentlyUsedURL(url)
-            
-        } catch {
-
-            (error as? VC64Error)?.cantOpen(url: url)
-        }
-    }
-    */
-
     @IBAction func detachCartridgeAction(_ sender: Any!) {
         c64.expansionport.detachCartridgeAndReset()
     }
@@ -990,5 +971,11 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func setSwitchDummyAction(_ sender: Any!) {
         // Dummy action method to enable menu item validation
+    }
+
+    @IBAction  func inspectCartridgeAction(_ sender: Any!) {
+
+        let panel = CartridgeInspector(with: self, nibName: "CartridgeInspector")
+        panel?.show(expansionPort: c64.expansionport)
     }
 }

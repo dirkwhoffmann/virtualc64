@@ -104,8 +104,20 @@ ExpansionPort::_dump(Category category, std::ostream& os) const
     }
 }
 
+CartridgeInfo
+ExpansionPort::getInfo() const
+{
+    return cartridge ? cartridge->getInfo() : CartridgeInfo { };
+}
+
+CartridgeRomInfo
+ExpansionPort::getRomInfo(isize nr) const
+{
+    return cartridge ? cartridge->getRomInfo(nr) : CartridgeRomInfo { };
+}
+
 CartridgeType
-ExpansionPort::getCartridgeType()
+ExpansionPort::getCartridgeType() const
 {
     return cartridge ? cartridge->getCartridgeType() : CRT_NONE;
 }

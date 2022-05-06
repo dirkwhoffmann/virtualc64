@@ -787,6 +787,16 @@
     return [self eport]->getCartridgeType();
 }
 
+- (CartridgeInfo)getInfo
+{
+    return [self eport]->getInfo();
+}
+
+- (CartridgeRomInfo)getRomInfo:(NSInteger)nr
+{
+    return [self eport]->getRomInfo(nr);
+}
+
 - (BOOL)cartridgeAttached
 {
     return [self eport]->getCartridgeAttached();

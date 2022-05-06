@@ -246,3 +246,25 @@ struct FlashStateEnum : util::Reflection<FlashStateEnum, FlashState> {
     }
 };
 #endif
+
+
+//
+// Structures
+//
+
+typedef struct
+{
+    CartridgeType type;
+    bool supported;
+    bool gameLineInCrtFile;
+    bool exromLineInCrtFile;
+    isize numPackets;
+}
+CartridgeInfo;
+
+typedef struct
+{
+    u16 size;
+    u16 loadAddress;
+}
+CartridgeRomInfo;

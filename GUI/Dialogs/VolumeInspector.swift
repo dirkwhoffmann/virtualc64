@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-import Darwin
+// import Darwin
 
 class VolumeInspector: DialogController {
 

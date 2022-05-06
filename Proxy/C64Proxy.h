@@ -472,6 +472,9 @@
 
 @interface ExpansionPortProxy : C64ComponentProxy { }
 
+- (CartridgeInfo)getInfo;
+- (CartridgeRomInfo)getRomInfo:(NSInteger)nr;
+
 - (BOOL)cartridgeAttached;
 - (CartridgeType)cartridgeType;
 - (void)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex;

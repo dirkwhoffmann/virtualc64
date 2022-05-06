@@ -93,8 +93,11 @@ private:
     //
     
 public:
-    
-    CartridgeType getCartridgeType();
+
+    CartridgeInfo getInfo() const;
+    CartridgeRomInfo getRomInfo(isize nr) const;
+
+    CartridgeType getCartridgeType() const;
 
  
     //

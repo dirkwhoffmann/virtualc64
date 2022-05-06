@@ -208,7 +208,10 @@ protected:
     //
 
 public:
-    
+
+    CartridgeInfo getInfo() const;
+    CartridgeRomInfo getRomInfo(isize nr) const;
+
     // Returns the cartridge type
     virtual CartridgeType getCartridgeType() const { return CRT_NORMAL; }
     

@@ -553,7 +553,7 @@ VICII::clearStats()
 }
 
 SpriteInfo
-VICII::getSpriteInfo(int nr)
+VICII::getSpriteInfo(isize nr)
 {
     {   SYNCHRONIZED
 
