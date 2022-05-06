@@ -461,9 +461,7 @@ extension Inspector: NSTabViewDelegate {
     func updateInspectionTarget() {
 
         if let id = panel.selectedTabViewItem?.label {
-        
-            debug("Switching inspection target to \(id)")
-            
+                    
             switch id {
                 
             case "CPU":     parent.c64.inspectionTarget = .CPU

@@ -124,10 +124,10 @@ class DiskExporter: DialogController {
 
         switch formatPopup.selectedTag() {
 
-        case Format.d64: debug("D64"); icon.image = d64?.icon(protected: wp)
-        case Format.t64: debug("T64"); icon.image = t64?.icon(protected: wp)
-        case Format.prg: debug("PRG"); icon.image = prg?.icon(protected: wp)
-        case Format.vol: debug("VOL"); icon.image = NSImage(named: "NSFolder")
+        case Format.d64: icon.image = d64?.icon(protected: wp)
+        case Format.t64: icon.image = t64?.icon(protected: wp)
+        case Format.prg: icon.image = prg?.icon(protected: wp)
+        case Format.vol: icon.image = NSImage(named: "NSFolder")
 
         default:
             fatalError()
@@ -224,22 +224,22 @@ class DiskExporter: DialogController {
 
             case Format.d64:
 
-                debug("Exporting D64")
+                debug(.media, "Exporting D64")
                 try parent.mydocument.export(file: d64!, to: url)
 
             case Format.t64:
 
-                debug("Exporting T64")
+                debug(.media, "Exporting T64")
                 try parent.mydocument.export(file: t64!, to: url)
 
             case Format.prg:
 
-                debug("Exporting PRG")
+                debug(.media, "Exporting PRG")
                 try parent.mydocument.export(file: prg!, to: url)
 
             case Format.vol:
 
-                debug("Exporting file system")
+                debug(.media, "Exporting file system")
                 try vol!.export(url: url)
 
             default:

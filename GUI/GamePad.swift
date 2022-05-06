@@ -226,7 +226,7 @@ class GamePad {
         macKey2.carbonFlags = 0
         guard let n = keyMap, let direction = prefs.keyMaps[n][macKey2] else { return [] }
                 
-        // log("keyUpEvents \(direction)")
+        debug(.keyboard, "keyUpEvents \(direction)")
         
         switch GamePadAction(rawValue: direction) {
             
@@ -324,7 +324,7 @@ class GamePad {
         let usagePage = Int(IOHIDElementGetUsagePage(element))
         let usage     = Int(IOHIDElementGetUsage(element))
                 
-        // log("usagePage = \(usagePage) usage = \(usage) value = \(intValue)")
+        debug(.hid, "usagePage = \(usagePage) usage = \(usage) value = \(intValue)")
         
         var events: [GamePadAction]?
         
@@ -426,8 +426,7 @@ class GamePad {
                 }
 
             default:
-                // log("Unknown HID usage: \(usage)")")
-                break
+                debug(.hid, "Unknown HID usage: \(usage)")
             }
         }
         

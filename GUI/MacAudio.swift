@@ -30,6 +30,8 @@ public class MacAudio: NSObject {
     
     convenience init?(with controller: MyController) {
 
+        debug(.lifetime, "Initializing audio interface")
+
         self.init()
         parent = controller
         sid = controller.c64.sid
@@ -98,8 +100,6 @@ public class MacAudio: NSObject {
             warn("Failed to allocate RenderResources")
             return nil
         }
-        
-        debug("Success")
     }
     
     func shutDown() {
@@ -137,7 +137,7 @@ public class MacAudio: NSObject {
         
         if !isRunning {
             do { try audiounit.startHardware() } catch {
-                debug("Failed to start audio hardware")
+                warn("Failed to start audio hardware")
                 return false
             }
         }
@@ -196,7 +196,7 @@ public class MacAudio: NSObject {
             
             // Lookup sound file in bundle
             guard let url = Bundle.main.url(forResource: name, withExtension: "aiff") else {
-                debug("Cannot open sound file \(name)")
+                warn("Cannot open sound file \(name)")
                 return
             }
             

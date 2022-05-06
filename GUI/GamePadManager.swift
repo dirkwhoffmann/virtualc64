@@ -140,7 +140,7 @@ class GamePadManager {
         // We support up to 5 devices
         if nr < 5 { return nr }
         
-        debug("Maximum number of devices reached.")
+        warn("Maximum number of devices reached.")
         return nil
     }
     
@@ -173,7 +173,7 @@ class GamePadManager {
     
         lock.lock(); defer { lock.unlock() }
 
-        // log()
+        debug(.hid)
         // device.listProperties()
 
         // Ignore internal devices
@@ -217,6 +217,8 @@ class GamePadManager {
                           device: IOHIDDevice) {
         
         lock.lock(); defer { lock.unlock() }
+
+        debug(.hid)
 
         // Search for a matching locationID and remove device
         for (slot, pad) in gamePads where pad.locationID == device.locationID {

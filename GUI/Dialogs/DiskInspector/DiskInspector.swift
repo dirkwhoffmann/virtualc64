@@ -64,7 +64,7 @@ class DiskInspector: DialogController {
 
     func show(diskDrive nr: Int) throws {
 
-        debug()
+        debug(.dialogs)
 
         drive = nr == DRIVE8 ? c64.drive8 : c64.drive9
         showWindow()
@@ -72,7 +72,7 @@ class DiskInspector: DialogController {
 
     override func sheetWillShow() {
 
-        debug()
+        debug(.dialogs)
 
         warningText.isHidden = true
         warningButton.isHidden = true
@@ -121,11 +121,10 @@ class DiskInspector: DialogController {
 
         if let disk = drive.disk {
 
-            debug("Analyzing disk")
             analyzer = DiskAnalyzerProxy(disk: disk)
 
         } else {
-            debug("Can't analyze disk (no disk present)")
+
             analyzer = nil
         }
     }

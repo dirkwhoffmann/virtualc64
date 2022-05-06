@@ -161,7 +161,7 @@ extension MyController {
 
     override open func windowDidLoad() {
 
-        debug()
+        debug(.lifetime)
 
         // Show the mouse
         hideMouse = false
@@ -317,10 +317,10 @@ extension MyController {
 		switch msg.type {
 			
 		case .REGISTER:
-			debug("Registered to message queue")
+            debug(.lifetime, "Registered to message queue")
 			
 		case .UNREGISTER:
-			debug("Unregistered from message queue")
+			debug(.lifetime, "Unregistered from message queue")
 			
 		case .CONFIG:
 			inspector?.fullRefresh()
@@ -522,7 +522,7 @@ extension MyController {
 			renderer.zoomTextureIn()
 			
 		default:
-			debug("Unknown message: \(msg)")
+			warn("Unknown message: \(msg)")
 			fatalError()
 		}
 	}

@@ -11,8 +11,6 @@
 // Logging / Debugging
 //
 
-let logLevel = releaseBuild ? 0 : 1
-
 public func debug(_ enable: Int, _ msg: String = "",
                   path: String = #file, function: String = #function, line: Int = #line) {
 
@@ -34,6 +32,7 @@ public func warn(_ msg: String = "",
     debug(1, msg, path: path, function: function, line: line)
 }
 
+/*
 public func debug(_ msg: String = "",
                   path: String = #file, function: String = #function, line: Int = #line) {
     
@@ -45,6 +44,7 @@ public func debug(_ msg: String = "",
         }
     }
 }
+*/
 
 //
 // Errors

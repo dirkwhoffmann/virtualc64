@@ -26,7 +26,7 @@ class MyDocument: NSDocument {
     
     override init() {
 
-        debug()
+        debug(.lifetime)
 
         super.init()
 
@@ -50,7 +50,7 @@ class MyDocument: NSDocument {
 
     override open func makeWindowControllers() {
         
-        debug()
+        debug(.lifetime)
         
         let controller = MyController(windowNibName: "MyDocument")
         controller.c64 = c64
@@ -63,7 +63,7 @@ class MyDocument: NSDocument {
 
     func createFileProxy(from url: URL, allowedTypes: [FileType]) throws -> AnyFileProxy? {
 
-        debug("Reading file \(url.lastPathComponent)")
+        debug(.media, "Reading file \(url.lastPathComponent)")
 
         // If the provided URL points to compressed file, decompress it first
         let newUrl = url.unpacked(maxSize: 2048 * 1024)
@@ -126,7 +126,7 @@ class MyDocument: NSDocument {
 
     override open func read(from url: URL, ofType typeName: String) throws {
 
-        debug()
+        debug(.media)
 
         let types: [FileType] =
         [ .SNAPSHOT, .SCRIPT, .D64, .T64, .PRG, .P00, .G64, .TAP, .FOLDER ]
@@ -143,7 +143,7 @@ class MyDocument: NSDocument {
 
     override open func revert(toContentsOf url: URL, ofType typeName: String) throws {
 
-        debug()
+        debug(.media)
 
         do {
             let proxy = try createFileProxy(from: url, allowedTypes: [.SNAPSHOT])
@@ -163,7 +163,7 @@ class MyDocument: NSDocument {
 
     override func write(to url: URL, ofType typeName: String) throws {
 
-        debug()
+        debug(.media)
 
         if typeName == "VC64" {
 
@@ -190,34 +190,34 @@ class MyDocument: NSDocument {
                   force: Bool = false,
                   remember: Bool = true) throws {
 
-        debug("url = \(url) types = \(types)")
+        debug(.media, "url = \(url) types = \(types)")
 
         let drive = c64.drive(id)
         let proxy = try createFileProxy(from: url, allowedTypes: types)
 
         if let proxy = proxy as? SnapshotProxy {
 
-            debug("Snapshot")
+            debug(.media, "Snapshot")
             try processSnapshotFile(proxy)
         }
         if let proxy = proxy as? ScriptProxy {
 
-            debug("Script")
+            debug(.media, "Script")
             parent.renderer.console.runScript(script: proxy)
         }
         if let proxy = proxy as? CRTFileProxy {
 
-            debug("CRT")
+            debug(.media, "CRT")
             try c64.expansionport.attachCartridge(proxy, reset: true)
         }
         if let proxy = proxy as? TAPFileProxy {
 
-            debug("TAP")
+            debug(.media, "TAP")
             c64.datasette.insertTape(proxy)
         }
         if let proxy = proxy as? D64FileProxy {
 
-            debug("D64")
+            debug(.media, "D64")
             if force || proceedWithUnsavedFloppyDisk(drive: drive) {
 
                 c64.drive(id).insertD64(proxy, protected: false)
@@ -226,7 +226,7 @@ class MyDocument: NSDocument {
         }
         if let proxy = proxy as? G64FileProxy {
 
-            debug("G64")
+            debug(.media, "G64")
             if force || proceedWithUnsavedFloppyDisk(drive: drive) {
 
                 c64.drive(id).insertG64(proxy, protected: false)
@@ -235,7 +235,7 @@ class MyDocument: NSDocument {
         }
         if let proxy = proxy as? AnyCollectionProxy {
 
-            debug("T64, PRG, P00")
+            debug(.media, "T64, PRG, P00")
             if force || proceedWithUnsavedFloppyDisk(drive: drive) {
 
                 c64.drive(id).insertCollection(proxy, protected: false)
@@ -249,49 +249,49 @@ class MyDocument: NSDocument {
                     force: Bool = false,
                     remember: Bool = true) throws {
 
-        debug("url = \(url) types = \(types)")
+        debug(.media, "url = \(url) types = \(types)")
 
         let proxy = try createFileProxy(from: url, allowedTypes: types)
         var volume: FileSystemProxy?
 
         if let proxy = proxy as? SnapshotProxy {
 
-            debug("Snapshot")
+            debug(.media, "Snapshot")
             try processSnapshotFile(proxy)
         }
         if let proxy = proxy as? ScriptProxy {
 
-            debug("Script")
+            debug(.media, "Script")
             parent.renderer.console.runScript(script: proxy)
         }
         if let proxy = proxy as? CRTFileProxy {
 
-            debug("CRT")
+            debug(.media, "CRT")
             try c64.expansionport.attachCartridge(proxy, reset: true)
         }
         if let proxy = proxy as? TAPFileProxy {
 
-            debug("TAP")
+            debug(.media, "TAP")
             c64.datasette.insertTape(proxy)
             parent.keyboard.type("LOAD\n")
             c64.datasette.pressPlay()
         }
         if let proxy = proxy as? D64FileProxy {
 
-            debug("D64")
+            debug(.media, "D64")
             volume = try? FileSystemProxy.make(with: proxy)
         }
 
         if let proxy = proxy as? AnyCollectionProxy {
 
-            debug("T64, PRG, P00")
+            debug(.media, "T64, PRG, P00")
             volume = try? FileSystemProxy.make(with: proxy)
         }
 
         // If a volume has been created, flash the first file
         if let volume = volume {
 
-            debug("Flashing first item...")
+            debug(.media, "Flashing first item...")
             try? parent.c64.flash(volume, item: 0)
             parent.keyboard.type("RUN\n")
             parent.renderer.rotateLeft()
@@ -311,7 +311,7 @@ class MyDocument: NSDocument {
     fileprivate
     func createFileProxy(url: URL, allowedTypes: [FileType]) throws -> AnyFileProxy? {
 
-        debug("Reading file \(url.lastPathComponent)")
+        debug(.media, "Reading file \(url.lastPathComponent)")
 
         // If the provided URL points to compressed file, decompress it first
         let newUrl = url.unpacked(maxSize: 2048 * 1024)
@@ -374,7 +374,7 @@ class MyDocument: NSDocument {
 
     func export(drive id: Int, to url: URL) throws {
         
-        debug("drive: \(id) to: \(url)")
+        debug(.media, "drive: \(id) to: \(url)")
         
         let drive = c64.drive(id)
         try export(disk: drive.disk, to: url)
@@ -384,7 +384,7 @@ class MyDocument: NSDocument {
 
     func export(disk: DiskProxy, to url: URL) throws {
 
-        debug("disk: \(disk) to: \(url)")
+        debug(.media, "disk: \(disk) to: \(url)")
         
         if url.c64FileType == .G64 {
 
@@ -408,7 +408,7 @@ class MyDocument: NSDocument {
             showMultipleFilesAlert(msg1: msg1, msg2: msg2)
         }
         
-        debug("fs: \(fs) to: \(url)")
+        debug(.media, "fs: \(fs) to: \(url)")
 
         var file: AnyFileProxy?
 

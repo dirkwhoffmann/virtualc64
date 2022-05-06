@@ -57,13 +57,13 @@ class DialogController: NSWindowController, DialogControllerDelegate {
     func register() {
 
         DialogController.active.append(self)
-        debug(.objects, "Register: \(DialogController.active)")
+        debug(.lifetime, "Register: \(DialogController.active)")
     }
 
     func unregister() {
 
         DialogController.active = DialogController.active.filter {$0 != self}
-        debug(.objects, "Unregister: \(DialogController.active)")
+        debug(.lifetime, "Unregister: \(DialogController.active)")
     }
 
     override func windowWillLoad() {

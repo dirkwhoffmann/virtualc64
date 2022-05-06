@@ -32,7 +32,7 @@ extension PreferencesController {
         let vend = property(kIOHIDVendorIDKey)
         let prod = property(kIOHIDProductIDKey)
 
-        // log("\(db.custom)")
+        debug(.hid, "\(db.custom)")
         
         devManufacturer.stringValue = property(kIOHIDManufacturerKey)
         devProduct.stringValue = property(kIOHIDProductKey)

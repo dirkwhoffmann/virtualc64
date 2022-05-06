@@ -47,12 +47,12 @@ var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
     
     public func applicationDidFinishLaunching(_ aNotification: Notification) {
         
-        debug()
+        debug(.lifetime)
     }
     
     public func applicationWillTerminate(_ aNotification: Notification) {
         
-        debug()
+        debug(.lifetime)
     }
     
     //

@@ -45,7 +45,7 @@ extension MyController: NSWindowDelegate {
 
     public func windowShouldClose(_ sender: NSWindow) -> Bool {
 
-        debug()
+        debug(.lifetime)
         if proceedWithUnsavedFloppyDisks() {
             return true
         } else {
@@ -55,7 +55,7 @@ extension MyController: NSWindowDelegate {
 
     public func windowWillClose(_ notification: Notification) {
         
-        debug()
+        debug(.lifetime)
         
         debug(.exit, "Stopping renderer...")
         renderer.halt()
@@ -90,31 +90,31 @@ extension MyController: NSWindowDelegate {
     
     public func windowWillEnterFullScreen(_ notification: Notification) {
 
-        debug()
+        debug(.lifetime)
         renderer.fullscreen = true
         showStatusBar(false)
     }
     
     public func  windowDidEnterFullScreen(_ notification: Notification) {
 
-        debug()
+        debug(.lifetime)
     }
     
     public func windowWillExitFullScreen(_ notification: Notification) {
 
-        debug()
+        debug(.lifetime)
         renderer.fullscreen = false
         showStatusBar(true)
     }
     
     public func windowDidExitFullScreen(_ notification: Notification) {
 
-        debug()
+        debug(.lifetime)
     }
     
     public func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
         
-        debug()
+        debug(.lifetime)
         let autoHideToolbar = NSApplication.PresentationOptions.autoHideToolbar
         var options = NSApplication.PresentationOptions(rawValue: autoHideToolbar.rawValue)
         options.insert(proposedOptions)

@@ -63,7 +63,7 @@ extension DefaultsProxy {
 
     func save() {
 
-        debug("Saving user defaults")
+        debug(.defaults, "Saving user defaults")
 
         do {
             let folder = try URL.appSupportFolder()
@@ -680,12 +680,9 @@ extension Preferences {
 
 extension Configuration {
 
-    /*
-    func loadRomUserDefaults() {
+    func loadRomUserDefaultss() {
 
-        debug(.defaults)
-
-        func load(_ url: URL?, type: FileType) {
+        func load(_ url: URL?, type: VirtualC64.FileType) {
 
             if url != nil {
                 if let file = try? RomFileProxy.make(with: url!) {
@@ -693,6 +690,8 @@ extension Configuration {
                 }
             }
         }
+
+        debug(.defaults)
 
         c64.suspend()
         load(UserDefaults.basicRomUrl, type: .BASIC_ROM)
@@ -702,7 +701,7 @@ extension Configuration {
         c64.resume()
     }
 
-    func saveRomUserDefaults() throws {
+    func saveRomUserDefaultss() throws {
 
         debug(.defaults)
 
@@ -731,7 +730,6 @@ extension Configuration {
 
         c64.resume()
     }
-    */
 }
 
 //

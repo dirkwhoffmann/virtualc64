@@ -85,8 +85,6 @@ extension CartridgeInspector: NSTableViewDataSource {
             return String(format: "$%04X - $%04X", addr, addr + size - 1)
 
         default:
-
-            debug("\(tableColumn!.identifier.rawValue)")
             fatalError()
         }
     }
