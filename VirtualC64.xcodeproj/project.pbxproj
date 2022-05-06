@@ -1038,8 +1038,6 @@
 		50176C6D0A6F7357009E80BD /* GUI */ = {
 			isa = PBXGroup;
 			children = (
-				50157EF62825B01D000E9DDD /* System */,
-				50C4F055202D8B37004C5F21 /* XIB files */,
 				50157EEA28256035000E9DDD /* Config.swift */,
 				5018AF65202EDD2000B4C886 /* Defaults.swift */,
 				506D3DCD20223E5E009742CF /* MyAppDelegate.swift */,
@@ -1051,9 +1049,12 @@
 				50D3091D24C5CE1A00B92563 /* MyControllerStatusBar.swift */,
 				505184DD24F23484002C6124 /* MyControllerSnapshots.swift */,
 				50EAFFE924B2600D00024CD2 /* MyToolbar.swift */,
+				50157EF62825B01D000E9DDD /* System */,
 				506CE96621998C4500B70A3A /* Metal */,
+				50A22A1E261871EC00C9FB1E /* Layers */,
 				5002FA7921C264C100DA4BBC /* Dialogs */,
 				50157EF82825B08B000E9DDD /* Peripherals */,
+				50C4F055202D8B37004C5F21 /* XIB files */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -1439,7 +1440,6 @@
 				50DEAD8E2008E615008A8761 /* Shaders.swift */,
 				50C72DE51BC7F42100F1863B /* Shaders.metal */,
 				50B165AD25B06A03009B576D /* TextureToolbox.swift */,
-				50A22A1E261871EC00C9FB1E /* Layers */,
 			);
 			path = Metal;
 			sourceTree = "<group>";
