@@ -853,7 +853,8 @@
 				50763276202989D300575110 /* DialogController.swift */,
 				5098C57E2658E1F400E05EFC /* DragImageView.swift */,
 				50CD36992817BA6600E40BFC /* Monitor */,
-				5038CA9820B6C2D8000D9193 /* Inspector */,
+				50157EF92825B0EC000E9DDD /* Inspector */,
+				5038CA9820B6C2D8000D9193 /* OldInspector */,
 				50769B8824BB1B38006FE743 /* Preferences */,
 				50769B8724BB1A7A006FE743 /* Configuration */,
 				50157EF22825AD49000E9DDD /* Captures */,
@@ -949,6 +950,8 @@
 		50157EF32825AD6D000E9DDD /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				50FE5B372039B3C5006CE7C7 /* C64Key.swift */,
+				50DF719325021FCA00953E2E /* Keycap.swift */,
 				5058A91F281D109F00C223C9 /* DiskInspector.swift */,
 				50D5F88924F5573D0062EF13 /* DiskErrorController.swift */,
 				50D5F88524F52A300062EF13 /* DiskDataView.swift */,
@@ -963,9 +966,79 @@
 			path = Media;
 			sourceTree = "<group>";
 		};
+		50157EF62825B01D000E9DDD /* System */ = {
+			isa = PBXGroup;
+			children = (
+				50ED5BF712DD99C000596417 /* Speedometer.swift */,
+				5052A7C025A0AC0700E62EDD /* Errors.swift */,
+				50E9B92E201FA92C00065A89 /* Alerts.swift */,
+				5081AB621EF29E6400D6F616 /* MacAudio.swift */,
+				50DBB44A2025CE5700489271 /* Utils.swift */,
+				507E7AA124FB897D00AB433C /* Screenshot.swift */,
+				505184DF24F23CB6002C6124 /* Storage.swift */,
+				50157EF72825B047000E9DDD /* Extensions */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		50157EF72825B047000E9DDD /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				50BE4B6B24E7FB9E008F39C9 /* CGImage.swift */,
+				50BE4B6D24E7FBE1008F39C9 /* Datatypes.swift */,
+				50BE4B5F24E7F8A1008F39C9 /* Date.swift */,
+				50BE4B5B24E7F857008F39C9 /* Data.swift */,
+				50BE4B5D24E7F864008F39C9 /* DispatchTime.swift */,
+				50BE4B5724E7F80C008F39C9 /* FileManager.swift */,
+				50BE4B6724E7FB28008F39C9 /* MTLTexture.swift */,
+				50BE4B5924E7F81B008F39C9 /* NSColor.swift */,
+				50BE4B6324E7F941008F39C9 /* NSControl.swift */,
+				50BE4B6924E7FB6C008F39C9 /* NSImage.swift */,
+				50BE4B6124E7F8DE008F39C9 /* NSTableView.swift */,
+				50BE4B6524E7F965008F39C9 /* String.swift */,
+				50BE4B5424E7F77F008F39C9 /* URL.swift */,
+				50BE4B6F24E7FC21008F39C9 /* MTLDevice.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		50157EF82825B08B000E9DDD /* Peripherals */ = {
+			isa = PBXGroup;
+			children = (
+				50B1A61E25A2386F00201A2C /* HIDExtensions.swift */,
+				50FF818E1F88D9100004548A /* GamePad.swift */,
+				50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */,
+				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
+				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
+				50FE5B352039B3B7006CE7C7 /* MacKey.swift */,
+			);
+			path = Peripherals;
+			sourceTree = "<group>";
+		};
+		50157EF92825B0EC000E9DDD /* Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				50D3092324C7152700B92563 /* Inspector.swift */,
+				5038CA8E20B6C263000D9193 /* CPUPanel.swift */,
+				5038CA9020B6C281000D9193 /* MemoryPanel.swift */,
+				5038CA9220B6C298000D9193 /* CIAPanel.swift */,
+				5038CA9420B6C2AC000D9193 /* VICPanel.swift */,
+				5038CA9620B6C2BE000D9193 /* SIDPanel.swift */,
+				507A499B24C8D64700DBF984 /* InstrTableView.swift */,
+				507A499D24C8D65700DBF984 /* TraceTableView.swift */,
+				507A499F24C8D66A00DBF984 /* GuardTableView.swift */,
+				507A49A124C8D71400DBF984 /* BankTableView.swift */,
+				507887CB20B1858B00941F7E /* MemTableView.swift */,
+				5015F36520B546A30024B4AA /* WaveformView.swift */,
+				506D4D0C20B331A00093C5C6 /* MyFormatter.swift */,
+			);
+			path = Inspector;
+			sourceTree = "<group>";
+		};
 		50176C6D0A6F7357009E80BD /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				50157EF62825B01D000E9DDD /* System */,
 				50C4F055202D8B37004C5F21 /* XIB files */,
 				50157EEA28256035000E9DDD /* Config.swift */,
 				5018AF65202EDD2000B4C886 /* Defaults.swift */,
@@ -978,10 +1051,9 @@
 				50D3091D24C5CE1A00B92563 /* MyControllerStatusBar.swift */,
 				505184DD24F23484002C6124 /* MyControllerSnapshots.swift */,
 				50EAFFE924B2600D00024CD2 /* MyToolbar.swift */,
-				505184E124F23CBF002C6124 /* System */,
 				506CE96621998C4500B70A3A /* Metal */,
 				5002FA7921C264C100DA4BBC /* Dialogs */,
-				50FE5B342039B392006CE7C7 /* Peripherals */,
+				50157EF82825B08B000E9DDD /* Peripherals */,
 			);
 			path = GUI;
 			sourceTree = "<group>";
@@ -1005,24 +1077,11 @@
 			path = RetroShell;
 			sourceTree = "<group>";
 		};
-		5038CA9820B6C2D8000D9193 /* Inspector */ = {
+		5038CA9820B6C2D8000D9193 /* OldInspector */ = {
 			isa = PBXGroup;
 			children = (
-				50D3092324C7152700B92563 /* Inspector.swift */,
-				5038CA8E20B6C263000D9193 /* CPUPanel.swift */,
-				5038CA9020B6C281000D9193 /* MemoryPanel.swift */,
-				5038CA9220B6C298000D9193 /* CIAPanel.swift */,
-				5038CA9420B6C2AC000D9193 /* VICPanel.swift */,
-				5038CA9620B6C2BE000D9193 /* SIDPanel.swift */,
-				507A499B24C8D64700DBF984 /* InstrTableView.swift */,
-				507A499D24C8D65700DBF984 /* TraceTableView.swift */,
-				507A499F24C8D66A00DBF984 /* GuardTableView.swift */,
-				507A49A124C8D71400DBF984 /* BankTableView.swift */,
-				507887CB20B1858B00941F7E /* MemTableView.swift */,
-				5015F36520B546A30024B4AA /* WaveformView.swift */,
-				506D4D0C20B331A00093C5C6 /* MyFormatter.swift */,
 			);
-			name = Inspector;
+			name = OldInspector;
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -1349,21 +1408,6 @@
 			path = CIA;
 			sourceTree = "<group>";
 		};
-		505184E124F23CBF002C6124 /* System */ = {
-			isa = PBXGroup;
-			children = (
-				50ED5BF712DD99C000596417 /* Speedometer.swift */,
-				5052A7C025A0AC0700E62EDD /* Errors.swift */,
-				50E9B92E201FA92C00065A89 /* Alerts.swift */,
-				5081AB621EF29E6400D6F616 /* MacAudio.swift */,
-				50DBB44A2025CE5700489271 /* Utils.swift */,
-				507E7AA124FB897D00AB433C /* Screenshot.swift */,
-				505184DF24F23CB6002C6124 /* Storage.swift */,
-				50BE4B5624E7F786008F39C9 /* Extensions */,
-			);
-			name = System;
-			sourceTree = "<group>";
-		};
 		5051A1501B8842F100CBFB5A /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -1541,27 +1585,6 @@
 			path = LogicBoard;
 			sourceTree = "<group>";
 		};
-		50BE4B5624E7F786008F39C9 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				50BE4B6B24E7FB9E008F39C9 /* CGImage.swift */,
-				50BE4B6D24E7FBE1008F39C9 /* Datatypes.swift */,
-				50BE4B5F24E7F8A1008F39C9 /* Date.swift */,
-				50BE4B5B24E7F857008F39C9 /* Data.swift */,
-				50BE4B5D24E7F864008F39C9 /* DispatchTime.swift */,
-				50BE4B5724E7F80C008F39C9 /* FileManager.swift */,
-				50BE4B6724E7FB28008F39C9 /* MTLTexture.swift */,
-				50BE4B5924E7F81B008F39C9 /* NSColor.swift */,
-				50BE4B6324E7F941008F39C9 /* NSControl.swift */,
-				50BE4B6924E7FB6C008F39C9 /* NSImage.swift */,
-				50BE4B6124E7F8DE008F39C9 /* NSTableView.swift */,
-				50BE4B6524E7F965008F39C9 /* String.swift */,
-				50BE4B5424E7F77F008F39C9 /* URL.swift */,
-				50BE4B6F24E7FC21008F39C9 /* MTLDevice.swift */,
-			);
-			name = Extensions;
-			sourceTree = "<group>";
-		};
 		50C4F055202D8B37004C5F21 /* XIB files */ = {
 			isa = PBXGroup;
 			children = (
@@ -1626,21 +1649,6 @@
 				50EF22302815922300440C4D /* RegressionTester */,
 			);
 			path = Misc;
-			sourceTree = "<group>";
-		};
-		50FE5B342039B392006CE7C7 /* Peripherals */ = {
-			isa = PBXGroup;
-			children = (
-				50B1A61E25A2386F00201A2C /* HIDExtensions.swift */,
-				50FF818E1F88D9100004548A /* GamePad.swift */,
-				50C9B3C41F879A3900EA35C6 /* GamePadManager.swift */,
-				50653EFB1EF8F347008AA1F2 /* KeyboardController.swift */,
-				50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */,
-				50FE5B352039B3B7006CE7C7 /* MacKey.swift */,
-				50FE5B372039B3C5006CE7C7 /* C64Key.swift */,
-				50DF719325021FCA00953E2E /* Keycap.swift */,
-			);
-			name = Peripherals;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
