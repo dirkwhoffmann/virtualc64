@@ -65,7 +65,7 @@ class KeyboardController: NSObject {
     
     func flagsChanged(with event: NSEvent) {
                 
-        debug(.keyboard,
+        debug(.events,
               "ls: \(leftShift) rs: \(rightShift) lc: \(leftControl) " +
               "rc: \(rightControl) lo: \(leftOption) ro: \(rightOption)")
         

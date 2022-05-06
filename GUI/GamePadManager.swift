@@ -106,7 +106,7 @@ class GamePadManager {
     
     func shutDown() {
         
-        debug(.exit)
+        debug(.shutdown)
         
         // Terminate communication with all connected HID devices
         for (_, pad) in gamePads { pad.device?.close() }
@@ -120,7 +120,7 @@ class GamePadManager {
     
     deinit {
         
-        debug(.exit)
+        debug(.shutdown)
     }
     
     //

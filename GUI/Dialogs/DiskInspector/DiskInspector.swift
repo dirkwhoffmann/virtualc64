@@ -64,7 +64,7 @@ class DiskInspector: DialogController {
 
     func show(diskDrive nr: Int) throws {
 
-        debug(.dialogs)
+        debug(.lifetime)
 
         drive = nr == DRIVE8 ? c64.drive8 : c64.drive9
         showWindow()
@@ -72,7 +72,7 @@ class DiskInspector: DialogController {
 
     override func sheetWillShow() {
 
-        debug(.dialogs)
+        debug(.lifetime)
 
         warningText.isHidden = true
         warningButton.isHidden = true

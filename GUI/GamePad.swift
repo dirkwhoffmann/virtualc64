@@ -226,7 +226,7 @@ class GamePad {
         macKey2.carbonFlags = 0
         guard let n = keyMap, let direction = prefs.keyMaps[n][macKey2] else { return [] }
                 
-        debug(.keyboard, "keyUpEvents \(direction)")
+        debug(.events, "keyUpEvents \(direction)")
         
         switch GamePadAction(rawValue: direction) {
             

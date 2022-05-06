@@ -104,7 +104,7 @@ public class MacAudio: NSObject {
     
     func shutDown() {
         
-        debug(.exit, "Removing proxy...")
+        debug(.shutdown, "Removing proxy...")
 
         stopPlayback()
         sid = nil

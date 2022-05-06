@@ -74,7 +74,7 @@ public extension MetalView {
             if DispatchTime.diffMilliSec(lastShake) > UInt64(500) {
                 retainMouse()
             } else {
-                debug(.mouse, "Last shake too recent")
+                debug(.events, "Last shake too recent")
             }
         }
     }

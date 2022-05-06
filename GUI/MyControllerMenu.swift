@@ -461,9 +461,9 @@ extension MyController: NSMenuItemValidation {
             virtualKeyboard = VirtualKeyboardController(with: self, nibName: name)
         }
         if virtualKeyboard?.window?.isVisible == true {
-            debug(.dialogs, "Virtual keyboard already open")
+            debug(.lifetime, "Virtual keyboard already open")
         } else {
-            debug(.dialogs, "Opeining virtual keyboard as a window")
+            debug(.lifetime, "Opeining virtual keyboard as a window")
         }
 
         virtualKeyboard?.showWindow()
