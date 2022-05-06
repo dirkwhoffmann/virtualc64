@@ -10,7 +10,8 @@
 class SectorTableView: NSTableView, NSTableViewDelegate {
     
     @IBOutlet weak var inspector: DiskInspector!
-   
+
+    var sector: Int { return inspector.selectedSector }
     var halftrack: Halftrack? { return inspector.halftrack }
     var analyzer: DiskAnalyzerProxy? { return inspector.analyzer }
     
@@ -60,6 +61,15 @@ class SectorTableView: NSTableView, NSTableViewDelegate {
         selectRowIndexes([], byExtendingSelection: false)
 
         reloadData()
+    }
+
+    func scrollToRow() {
+
+        if sector >= 0 {
+
+            selectRowIndexes([sector], byExtendingSelection: false)
+            scrollRowToVisible(sector)
+        }
     }
 }
 

@@ -82,6 +82,15 @@ class DiskInspector: DialogController {
         analyzeDisk()
 
         refresh()
+
+        if trackTableView.numberOfRows > 0 {
+            setSelectedTrack(1)
+            trackTableView.scrollToRow()
+        }
+        if sectorTableView.numberOfRows > 0 {
+            setSelectedSector(0)
+            sectorTableView.scrollToRow()
+        }
     }
 
     func refresh() {

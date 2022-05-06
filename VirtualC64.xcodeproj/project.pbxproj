@@ -854,7 +854,6 @@
 				5098C57E2658E1F400E05EFC /* DragImageView.swift */,
 				50CD36992817BA6600E40BFC /* Monitor */,
 				50157EF92825B0EC000E9DDD /* Inspector */,
-				5038CA9820B6C2D8000D9193 /* OldInspector */,
 				50769B8824BB1B38006FE743 /* Preferences */,
 				50769B8724BB1A7A006FE743 /* Configuration */,
 				50157EF22825AD49000E9DDD /* Captures */,
@@ -1076,14 +1075,6 @@
 				5036E0B5261AEF000048E66A /* InterpreterCmds.cpp */,
 			);
 			path = RetroShell;
-			sourceTree = "<group>";
-		};
-		5038CA9820B6C2D8000D9193 /* OldInspector */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = OldInspector;
-			path = ..;
 			sourceTree = "<group>";
 		};
 		504C428D24AF29AB00E69CAE /* Emulator */ = {

@@ -12,11 +12,6 @@ class DiskDataView: NSScrollView {
     @IBOutlet weak var inspector: DiskInspector!
    
     // Shortcuts
-    /*
-    var c64: C64Proxy { return inspector.parent.c64 }
-    var drive: DriveProxy { return inspector.drive }
-    var disk: DiskProxy { return drive.disk }
-    */
     var analyzer: DiskAnalyzerProxy? { return inspector.analyzer }
     var halftrack: Halftrack? { return inspector.halftrack }
     var sector: Sector? { return inspector.sector }
