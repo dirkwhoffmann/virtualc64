@@ -244,6 +244,60 @@ class MyDocument: NSDocument {
         }
     }
 
+    func flashMedia(url: URL,
+                    allowedTypes types: [FileType],
+                    force: Bool = false,
+                    remember: Bool = true) throws {
+
+        log("url = \(url) types = \(types)")
+
+        let proxy = try createFileProxy(from: url, allowedTypes: types)
+        var volume: FileSystemProxy?
+
+        if let proxy = proxy as? SnapshotProxy {
+
+            log("Snapshot")
+            try processSnapshotFile(proxy)
+        }
+        if let proxy = proxy as? ScriptProxy {
+
+            log("Script")
+            parent.renderer.console.runScript(script: proxy)
+        }
+        if let proxy = proxy as? CRTFileProxy {
+
+            log("CRT")
+            try c64.expansionport.attachCartridge(proxy, reset: true)
+        }
+        if let proxy = proxy as? TAPFileProxy {
+
+            log("TAP")
+            c64.datasette.insertTape(proxy)
+            parent.keyboard.type("LOAD\n")
+            c64.datasette.pressPlay()
+        }
+        if let proxy = proxy as? D64FileProxy {
+
+            log("D64")
+            volume = try? FileSystemProxy.make(with: proxy)
+        }
+
+        if let proxy = proxy as? AnyCollectionProxy {
+
+            log("T64, PRG, P00")
+            volume = try? FileSystemProxy.make(with: proxy)
+        }
+
+        // If a volume has been created, flash the first file
+        if let volume = volume {
+
+            log("Flashing first item...")
+            try? parent.c64.flash(volume, item: 0)
+            parent.keyboard.type("RUN\n")
+            parent.renderer.rotateLeft()
+        }
+    }
+
     func processSnapshotFile(_ proxy: SnapshotProxy, force: Bool = false) throws {
 
         try c64.flash(proxy)

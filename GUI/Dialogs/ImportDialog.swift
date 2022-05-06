@@ -7,6 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+/*
 class ImportDialog: DialogController {
             
     @IBOutlet weak var icon: NSImageView!
@@ -325,3 +326,4 @@ extension ImportDialog {
         
     }
 }
+*/

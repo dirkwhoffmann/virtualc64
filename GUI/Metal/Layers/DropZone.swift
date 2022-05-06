@@ -184,12 +184,12 @@ class DropZone: Layer {
 
                 switch type {
 
-                case .SNAPSHOT, .SCRIPT:
+                case .SNAPSHOT, .SCRIPT, .CRT, .TAP:
 
                     try mydocument.addMedia(url: url,
                                             allowedTypes: [type])
 
-                case .CRT, .T64, .P00, .PRG, .FOLDER, .D64, .G64, .TAP:
+                case .T64, .P00, .PRG, .FOLDER, .D64, .G64:
 
                     let drive = n == 0 ? DRIVE8 : DRIVE9
                     try mydocument.addMedia(url: url,
@@ -201,15 +201,18 @@ class DropZone: Layer {
 
             } else {
                 
-                if let file = try mydocument.createFileProxy(from: url,
-                                                             allowedTypes: FileType.draggable) {
+                log()
 
-                    log()
+                try? mydocument.flashMedia(url: url, allowedTypes: [type])
+                /*
+                 if let file = try mydocument.createFileProxy(from: url,
+                 allowedTypes: FileType.draggable) {
 
-                    // Run the import dialog
-                    let importer = ImportDialog(with: controller, nibName: "ImportDialog")
-                    importer?.show(proxy: file)
-                }
+                 // Run the import dialog
+                 let importer = ImportDialog(with: controller, nibName: "ImportDialog")
+                 importer?.show(proxy: file)
+                 }
+                 */
             }
 
         } catch {
