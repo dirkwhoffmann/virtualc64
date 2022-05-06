@@ -45,7 +45,7 @@ class DiskExporter: DialogController {
     var prg: PRGFileProxy?
     var vol: FileSystemProxy?
 
-    func showSheet(diskDrive nr: DriveID) {
+    func showSheet(diskDrive nr: Int) {
 
         drive = c64.drive(nr)
 

@@ -191,7 +191,7 @@ class DropZone: Layer {
 
                 case .CRT, .T64, .P00, .PRG, .FOLDER, .D64, .G64, .TAP:
 
-                    let drive: DriveID = n == 0 ? .DRIVE8 : .DRIVE9
+                    let drive = n == 0 ? DRIVE8 : DRIVE9
                     try mydocument.addMedia(url: url,
                                             allowedTypes: [type], drive: drive)
 

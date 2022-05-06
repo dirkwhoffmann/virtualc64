@@ -307,7 +307,6 @@ extension MyController {
         var data4: Int { return Int(msg.data4) }
 
 		var driveNr: Int { return data1 }
-		var driveId: DriveID { return DriveID(rawValue: driveNr)! }
         var halftrack: Int { return data2; }
 		var vol: Int { return data3; }
 		var pan: Int { return data4; }
@@ -407,16 +406,16 @@ extension MyController {
 			
 		case .DRIVE_STEP:
 			macAudio.playStepSound(volume: vol, pan: pan)
-			refreshStatusBarTracks(drive: driveId)
+			refreshStatusBarTracks(drive: driveNr)
 			
 		case .DISK_INSERT:
 			macAudio.playInsertSound(volume: vol, pan: pan)
-			refreshStatusBarDiskIcons(drive: driveId)
+			refreshStatusBarDiskIcons(drive: driveNr)
 			inspector?.fullRefresh()
 			
 		case .DISK_EJECT:
 			macAudio.playEjectSound(volume: vol, pan: pan)
-			refreshStatusBarDiskIcons(drive: driveId)
+			refreshStatusBarDiskIcons(drive: driveNr)
 			inspector?.fullRefresh()
 			
 		case .FILE_FLASHED:

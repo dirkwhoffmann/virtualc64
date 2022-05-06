@@ -313,9 +313,12 @@ extension MyDocument {
         func name(drive: DriveProxy) -> String {
 
             switch drive.id {
-            case .DRIVE8: return "Drive 8"
-            case .DRIVE9: return "Drive 9"
-            default: fatalError()
+
+            case DRIVE8: return "Drive 8"
+            case DRIVE9: return "Drive 9"
+
+            default:
+                fatalError()
             }
         }
 

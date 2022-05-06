@@ -25,7 +25,7 @@ extension MyController {
     
     var cartridgeSwitch: NSImage? {
         
-		if !c64.expansionport.hasSwitch { return nil }
+        if !c64.expansionport.hasSwitch { return nil }
         
         let pos = c64.expansionport.switchPosition()
         
@@ -35,7 +35,7 @@ extension MyController {
     }
     
     public func refreshStatusBar() {
-                        
+
         let connected8 = c64.drive8.isConnected()
         let connected9 = c64.drive9.isConnected()
         let on8 = c64.drive8.isSwitchedOn()
@@ -47,11 +47,11 @@ extension MyController {
         let warp = c64.warpMode
         
         let hasCrt = c64.expansionport.cartridgeAttached()
-            
+
         // Floppy drives
-        refreshStatusBarDriveItems(drive: .DRIVE8)
-        refreshStatusBarDriveItems(drive: .DRIVE9)
-            
+        refreshStatusBarDriveItems(drive: DRIVE8)
+        refreshStatusBarDriveItems(drive: DRIVE9)
+
         // Datasette
         refreshStatusBarDatasette()
         
@@ -89,7 +89,7 @@ extension MyController {
         }
     }
     
-    private func refreshStatusBarDriveItems(drive: DriveID) {
+    private func refreshStatusBarDriveItems(drive: Int) {
         
         refreshStatusBarLEDs(drive: drive)
         refreshStatusBarTracks(drive: drive)
@@ -97,63 +97,75 @@ extension MyController {
         refreshStatusBarDriveActivity(drive: drive)
     }
     
-    func refreshStatusBarLEDs(drive: DriveID) {
+    func refreshStatusBarLEDs(drive: Int) {
         
-        assert(drive == .DRIVE8 || drive == .DRIVE9)
-        
-        if drive == .DRIVE8 {
-            
+        switch drive {
+
+        case DRIVE8:
+
             greenLED8.image = c64.drive8.greenLedImage
             redLED8.image = c64.drive8.redLedImage
-            
-        } else {
-            
+
+        case DRIVE9:
+
             greenLED9.image = c64.drive9.greenLedImage
             redLED9.image = c64.drive9.redLedImage
+
+        default:
+            fatalError()
         }
     }
     
-    func refreshStatusBarTracks(drive: DriveID) {
+    func refreshStatusBarTracks(drive: Int) {
         
-        assert(drive == .DRIVE8 || drive == .DRIVE9)
+        switch drive {
 
-        if drive == .DRIVE8 {
+        case DRIVE8:
             
             trackNumber8.integerValue = Int((c64.drive8.halftrack() + 1) / 2)
             trackNumber8.textColor = c64.drive8.writeMode() ? .red : .secondaryLabelColor
-            
-        } else {
-            
+
+        case DRIVE9:
+
             trackNumber9.integerValue = Int((c64.drive9.halftrack() + 1) / 2)
             trackNumber9.textColor = c64.drive9.writeMode() ? .red : .secondaryLabelColor
+
+        default:
+            fatalError()
         }
     }
-    
-    func refreshStatusBarDiskIcons(drive: DriveID) {
-    
-        assert(drive == .DRIVE8 || drive == .DRIVE9)
 
-        if drive == .DRIVE8 {
+    func refreshStatusBarDiskIcons(drive: Int) {
+
+        switch drive {
+
+        case DRIVE8:
+
             diskIcon8.image = c64.drive8.icon
             diskIcon8.isHidden = !c64.drive8.isConnected() || !c64.drive8.hasDisk || !statusBar
-        } else {
+
+        case DRIVE9:
+
             diskIcon9.image = c64.drive9.icon
             diskIcon9.isHidden = !c64.drive9.isConnected() || !c64.drive9.hasDisk || !statusBar
+
+        default:
+            fatalError()
         }
     }
-    
+
     func refreshStatusBarDriveActivity() {
-        
-        refreshStatusBarDriveActivity(drive: .DRIVE8)
-        refreshStatusBarDriveActivity(drive: .DRIVE9)
+
+        refreshStatusBarDriveActivity(drive: DRIVE8)
+        refreshStatusBarDriveActivity(drive: DRIVE9)
     }
 
-    func refreshStatusBarDriveActivity(drive: DriveID) {
-        
-        assert(drive == .DRIVE8 || drive == .DRIVE9)
+    func refreshStatusBarDriveActivity(drive: Int) {
 
-        if drive == .DRIVE8 {
-            
+        switch drive {
+
+        case DRIVE8:
+
             // if c64.iec.transferring && c64.drive8.isRotating() {
             if c64.drive8.isRotating() {
                 spinning8.startAnimation(self)
@@ -162,9 +174,9 @@ extension MyController {
                 spinning8.stopAnimation(self)
                 spinning8.isHidden = true
             }
-            
-        } else {
-            
+
+        case DRIVE9:
+
             // if c64.iec.transferring && c64.drive9.isRotating() {
             if c64.drive9.isRotating() {
                 spinning9.startAnimation(self)
@@ -173,66 +185,69 @@ extension MyController {
                 spinning9.stopAnimation(self)
                 spinning9.isHidden = true
             }
+
+        default:
+            fatalError()
         }
     }
 
     func refreshStatusBarDatasette() {
-        
+
         if c64.datasette.motor && c64.datasette.playKey {
             tapeProgress.startAnimation(self)
         } else {
             tapeProgress.stopAnimation(self)
         }
-        
+
         let counter = c64.datasette.counter
         let min = counter / 60
         let sec = counter % 60
         tapeCounter.stringValue = String(format: "%02d:%02d", min, sec)
     }
-    
+
     func refreshStatusBarWarpIcon() {
-        
+
         warpIcon.image = hourglass
     }
-    
+
     func showStatusBar(_ value: Bool) {
-        
+
         if statusBar != value {
-            
+
             if value {
-                
+
                 metal.adjustHeight(-26.0)
                 window?.setContentBorderThickness(26, for: .minY)
                 adjustWindowSize(26.0)
 
             } else {
-                
+
                 metal.adjustHeight(26.0)
                 window?.setContentBorderThickness(0.0, for: .minY)
                 adjustWindowSize(-26.0)
             }
-            
+
             statusBar = value
             refreshStatusBar()
         }
     }
-    
+
     func updateSpeedometer() {
-        
+
         speedometer.updateWith(cycle: c64.cpu.clock, frame: renderer.frames)
-        
+
         switch activityType.selectedTag() {
 
         case 0:
             let mhz = speedometer.mhz
             activityBar.doubleValue = 10 * mhz
             activityInfo.stringValue = String(format: "%.2f MHz", mhz)
-            
+
         case 1:
             let cpu = c64.cpuLoad
             activityBar.integerValue = cpu
             activityInfo.stringValue = String(format: "%d%% CPU", cpu)
-            
+
         case 2:
             let fps = speedometer.fps
             activityBar.doubleValue = fps
@@ -243,37 +258,34 @@ extension MyController {
             activityInfo.stringValue = "???"
         }
     }
-    
+
     //
     // Action methods
     //
-    
+
     @IBAction func drivePowerButtonAction(_ sender: NSButton!) {
 
-        switch sender.tag {
-        case 8: drivePowerAction(drive: .DRIVE8)
-        case 9: drivePowerAction(drive: .DRIVE9)
-        default: fatalError()
-        }        
+        drivePowerAction(drive: sender.tag == 0 ? DRIVE8 : DRIVE9)
     }
-    
+
     @IBAction func warpAction(_ sender: Any!) {
-                
+
         switch pref.warpMode {
+
         case .auto: pref.warpMode = .off
         case .off: pref.warpMode = .on
         case .on: pref.warpMode = .auto
         }
-        
+
         refreshStatusBar()
     }
-    
+
     @IBAction func activityTypeAction(_ sender: NSPopUpButton!) {
-        
+
         var min, max, warn, crit: Double
-        
+
         switch sender.selectedTag() {
-        
+
         case 0: min = 0; max = 20; warn = 13; crit = 16
         case 1: min = 0; max = 100; warn = 50; crit = 75
         case 2: min = 0; max = 120; warn = 75; crit = 100
@@ -281,7 +293,7 @@ extension MyController {
         default:
             fatalError()
         }
-        
+
         activityBar.minValue = min
         activityBar.maxValue = max
         activityBar.warningValue = warn

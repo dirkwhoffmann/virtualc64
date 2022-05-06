@@ -15,7 +15,7 @@ extension MyController: NSMenuItemValidation {
         let running = c64.running
         var recording: Bool { return c64.recorder.recording }
         
-        var driveID: DriveID { return DriveID(rawValue: item.tag)! }
+        var driveID: Int { return item.tag }
         var drive: DriveProxy { return c64.drive(driveID) }
         
         func validateURLlist(_ list: [URL], image: NSImage) -> Bool {
@@ -82,11 +82,7 @@ extension MyController: NSMenuItemValidation {
             return c64.drive9.hasDisk
                         
         case #selector(MyController.exportRecentDiskAction(_:)):
-            switch item.tag {
-            case 8: return validateURLlist(myAppDelegate.exportedFloppyDisks[0], image: smallDisk)
-            case 9: return validateURLlist(myAppDelegate.exportedFloppyDisks[1], image: smallDisk)
-            default: fatalError()
-            }
+            return validateURLlist(myAppDelegate.exportedFloppyDisks[driveID], image: smallDisk)
             
         case #selector(MyController.writeProtectAction(_:)):
             item.state = drive.hasProtectedDisk ? .on : .off
@@ -579,7 +575,7 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func insertDiskAction(_ sender: NSMenuItem!) {
         
-        let id = DriveID(rawValue: sender.tag)!
+        let id = sender.tag
         let drive = c64.drive(sender)
 
         // Ask user to continue if the current disk contains modified data
@@ -610,13 +606,13 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func insertRecentDiskAction(_ sender: NSMenuItem!) {
         
-        let drive = sender.tag < 10 ? DriveID.DRIVE8 : DriveID.DRIVE9
+        let drive = sender.tag < 10 ? DRIVE8 : DRIVE9
         let slot  = sender.tag % 10
 
         insertRecentDiskAction(drive: drive, slot: slot)
     }
 
-    func insertRecentDiskAction(drive: DriveID, slot: Int) {
+    func insertRecentDiskAction(drive: Int, slot: Int) {
 
         if let url = myAppDelegate.getRecentlyInsertedDiskURL(slot) {
 
@@ -632,7 +628,7 @@ extension MyController: NSMenuItemValidation {
     }
 
     /*
-    func insertDiskAction(from url: URL, drive: DriveID) {
+    func insertDiskAction(from url: URL, drive: Int) {
 
         let types = [ FileType.D64,
                       FileType.T64,
@@ -667,13 +663,13 @@ extension MyController: NSMenuItemValidation {
                 
         log()
 
-        let drive = sender.tag < 10 ? DriveID.DRIVE8 : DriveID.DRIVE9
+        let drive = sender.tag < 10 ? DRIVE8 : DRIVE9
         let slot = sender.tag % 10
         
         exportRecentDiskAction(drive: drive, slot: slot)
     }
     
-    func exportRecentDiskAction(drive id: DriveID, slot: Int) {
+    func exportRecentDiskAction(drive id: Int, slot: Int) {
                 
         if let url = myAppDelegate.getRecentlyExportedDiskURL(slot, drive: id) {
             
@@ -691,7 +687,7 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func clearRecentlyExportedDisksAction(_ sender: NSMenuItem!) {
 
-        let drive = DriveID(rawValue: sender.tag)!
+        let drive = sender.tag
         myAppDelegate.clearRecentlyExportedDiskURLs(drive: drive)
     }
 
@@ -704,49 +700,62 @@ extension MyController: NSMenuItemValidation {
     }
     
     @IBAction func ejectDiskAction(_ sender: NSMenuItem!) {
-        
-        let drive = c64.drive(sender)
-        
+
+        ejectDiskAction(drive: sender.tag == 0 ? DRIVE8 : DRIVE9)
+    }
+
+    func ejectDiskAction(drive nr: Int) {
+
+        let drive = c64.drive(nr)
+
         if proceedWithUnsavedFloppyDisk(drive: drive) {
-            
+
             drive.ejectDisk()
-            myAppDelegate.clearRecentlyExportedDiskURLs(drive: drive.id)
+            myAppDelegate.clearRecentlyExportedDiskURLs(drive: nr)
         }
     }
-    
+
     @IBAction func exportDiskAction(_ sender: NSMenuItem!) {
 
-        let drive = DriveID(rawValue: sender.tag)!
-        
+        exportDiskAction(drive: sender.tag == 0 ? DRIVE8 : DRIVE9)
+    }
+
+    func exportDiskAction(drive nr: Int) {
+
         let nibName = NSNib.Name("DiskExporter")
         let exportPanel = DiskExporter(with: self, nibName: nibName)
-        exportPanel?.showSheet(diskDrive: drive)
+        exportPanel?.showSheet(diskDrive: nr)
     }
 
     @IBAction func inspectDiskAction(_ sender: NSMenuItem!) {
 
+        inspectDiskAction(drive: sender.tag == 0 ? DRIVE8 : DRIVE9)
+    }
+
+    func inspectDiskAction(drive nr: Int) {
+
         do {
 
             let panel = DiskInspector(with: self, nibName: "DiskInspector")
-            try panel?.show(diskDrive: DriveID(rawValue: sender.tag)!)
+            try panel?.show(diskDrive: nr)
 
         } catch {
 
             showAlert(.cantDecode, error: error, window: window)
         }
-
-        /*
-        let panel = DiskInspector(with: self, nibName: "DiskInspector")
-        panel?.show(drive: sender.tag)
-        */
     }
 
     @IBAction func inspectVolumeAction(_ sender: NSMenuItem!) {
 
+        inspectVolumeAction(drive: sender.tag == 0 ? DRIVE8 : DRIVE9)
+    }
+
+    func inspectVolumeAction(drive nr: Int) {
+
         do {
 
             let panel = VolumeInspector(with: self, nibName: "VolumeInspector")
-            try panel?.show(diskDrive: DriveID(rawValue: sender.tag)!)
+            try panel?.show(diskDrive: nr)
 
         } catch {
 
@@ -755,28 +764,36 @@ extension MyController: NSMenuItemValidation {
     }
 
     @IBAction func writeProtectAction(_ sender: NSMenuItem!) {
-        
-        let drive = DriveID(rawValue: sender.tag)!
 
-        if drive == .DRIVE8 {
-            c64.drive8.disk.toggleWriteProtection()
-        } else {
-            c64.drive9.disk.toggleWriteProtection()
+        writeProtectAction(drive: sender.tag == 0 ? DRIVE8 : DRIVE9)
+    }
+
+    func writeProtectAction(drive nr: Int) {
+
+        switch nr {
+
+        case DRIVE8: c64.drive8.disk.toggleWriteProtection()
+        case DRIVE9: c64.drive9.disk.toggleWriteProtection()
+
+        default:
+            fatalError()
         }
     }
-    
+
     @IBAction func drivePowerAction(_ sender: NSMenuItem!) {
         
-        let drive = DriveID(rawValue: sender.tag)!
-        drivePowerAction(drive: drive)
+        drivePowerAction(drive: sender.tag == 0 ? DRIVE8 : DRIVE9)
     }
     
-    func drivePowerAction(drive: DriveID) {
+    func drivePowerAction(drive nr: Int) {
                 
-        switch drive {
-        case .DRIVE8: config.drive8PowerSwitch = !config.drive8PowerSwitch
-        case .DRIVE9: config.drive9PowerSwitch = !config.drive9PowerSwitch
-        default: fatalError()
+        switch nr {
+
+        case DRIVE8: config.drive8PowerSwitch = !config.drive8PowerSwitch
+        case DRIVE9: config.drive9PowerSwitch = !config.drive9PowerSwitch
+
+        default:
+            fatalError()
         }         
     }
         

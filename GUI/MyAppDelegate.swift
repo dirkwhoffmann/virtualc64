@@ -83,24 +83,24 @@ var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
         return getRecentlyUsedURL(pos, from: insertedFloppyDisks)
     }
     
-    func noteNewRecentlyExportedDiskURL(_ url: URL, drive: DriveID) {
+    func noteNewRecentlyExportedDiskURL(_ url: URL, drive: Int) {
         
-        precondition(drive == .DRIVE8 || drive == .DRIVE9)
-        let n = drive == .DRIVE8 ? 0 : 1
+        precondition(drive == DRIVE8 || drive == DRIVE9)
+        let n = drive == DRIVE8 ? 0 : 1
         noteRecentlyUsedURL(url, to: &exportedFloppyDisks[n], size: 1)
     }
     
-    func getRecentlyExportedDiskURL(_ pos: Int, drive: DriveID) -> URL? {
+    func getRecentlyExportedDiskURL(_ pos: Int, drive: Int) -> URL? {
         
-        precondition(drive == .DRIVE8 || drive == .DRIVE9)
-        let n = drive == .DRIVE8 ? 0 : 1
+        precondition(drive == DRIVE8 || drive == DRIVE9)
+        let n = drive == DRIVE8 ? 0 : 1
         return getRecentlyUsedURL(pos, from: exportedFloppyDisks[n])
     }
     
-    func clearRecentlyExportedDiskURLs(drive: DriveID) {
+    func clearRecentlyExportedDiskURLs(drive: Int) {
         
-        precondition(drive == .DRIVE8 || drive == .DRIVE9)
-        let n = drive == .DRIVE8 ? 0 : 1
+        precondition(drive == DRIVE8 || drive == DRIVE9)
+        let n = drive == DRIVE8 ? 0 : 1
         exportedFloppyDisks[n] = [URL]()
     }
     

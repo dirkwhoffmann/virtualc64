@@ -62,11 +62,11 @@ class DiskInspector: DialogController {
     // Starting up
     //
 
-    func show(diskDrive nr: DriveID) throws {
+    func show(diskDrive nr: Int) throws {
 
         log()
 
-        drive = nr == .DRIVE8 ? c64.drive8 : c64.drive9
+        drive = nr == DRIVE8 ? c64.drive8 : c64.drive9
         showWindow()
     }
 

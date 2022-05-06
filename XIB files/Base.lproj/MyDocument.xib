@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -46,7 +46,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="800" height="640"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <button toolTip="Connect / Disconnect drive" fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="1208">
+                    <button toolTip="Connect / Disconnect drive" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1208">
                         <rect key="frame" x="8" y="5" width="17" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LEDgray" imagePosition="only" alignment="right" imageScaling="proportionallyDown" id="1709">
@@ -72,7 +72,7 @@
                         <rect key="frame" x="106" y="5" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </progressIndicator>
-                    <button toolTip="Drive LED" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="1210">
+                    <button toolTip="Drive LED" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1210">
                         <rect key="frame" x="29" y="5" width="17" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LEDgray" imagePosition="only" alignment="right" imageScaling="proportionallyDown" id="1710">
@@ -88,7 +88,7 @@
                             <font key="font" metaFont="menu" size="10"/>
                         </buttonCell>
                     </button>
-                    <button hidden="YES" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="1045">
+                    <button hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1045">
                         <rect key="frame" x="78" y="3" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="diskTemplate" imagePosition="only" alignment="right" imageScaling="proportionallyUpOrDown" id="1706">
@@ -100,7 +100,7 @@
                         <rect key="frame" x="321" y="5" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </progressIndicator>
-                    <button toolTip="Connect / Disconnect drive" fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="FWS-Ng-oe6">
+                    <button toolTip="Connect / Disconnect drive" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="FWS-Ng-oe6">
                         <rect key="frame" x="130" y="4" width="17" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LEDgray" imagePosition="only" alignment="right" imageScaling="proportionallyDown" id="i9n-Ra-mbF">
@@ -115,7 +115,7 @@
                         <rect key="frame" x="228" y="5" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </progressIndicator>
-                    <button toolTip="Drive LED" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="iKN-RM-vsV">
+                    <button toolTip="Drive LED" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="iKN-RM-vsV">
                         <rect key="frame" x="151" y="4" width="17" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LEDgray" imagePosition="only" alignment="right" imageScaling="proportionallyDown" id="v9S-no-L5h">
@@ -180,7 +180,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ndF-PV-uVn">
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="ndF-PV-uVn">
                         <rect key="frame" x="174" y="6" width="20" height="14"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="00" id="Ek0-5h-PCi">
@@ -330,7 +330,7 @@
                         <popUpButton key="view" tag="11" id="4MP-rV-xX2" userLabel="Port 2">
                             <rect key="frame" x="0.0" y="14" width="41" height="20"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">

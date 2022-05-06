@@ -1070,7 +1070,7 @@
     return [self drive]->hasDisk() ? disk : NULL;
 }
 
-- (DriveID)id
+- (NSInteger)id
 {
     return [self drive]->getDeviceNr();
 }
@@ -2554,7 +2554,7 @@
     return [self c64]->getConfigItem(opt, id);
 }
 
-- (NSInteger)getConfig:(Option)opt drive:(DriveID)id
+- (NSInteger)getConfig:(Option)opt drive:(NSInteger)id
 {
     return [self c64]->getConfigItem(opt, (long)id);
 }
@@ -2599,7 +2599,7 @@
     }
 }
 
-- (BOOL)configure:(Option)opt drive:(DriveID)id value:(NSInteger)val
+- (BOOL)configure:(Option)opt drive:(NSInteger)id value:(NSInteger)val
 {
     try {
         [self c64]->configure(opt, (long)id, val);
@@ -2609,7 +2609,7 @@
     }
 }
 
-- (BOOL)configure:(Option)opt drive:(DriveID)id enable:(BOOL)val
+- (BOOL)configure:(Option)opt drive:(NSInteger)id enable:(BOOL)val
 {
     try {
         [self c64]->configure(opt, (long)id, val ? 1 : 0);

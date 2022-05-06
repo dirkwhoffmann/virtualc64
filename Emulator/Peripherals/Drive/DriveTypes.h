@@ -14,35 +14,16 @@
 #include "ParCableTypes.h"
 
 //
-// Enumerations
+// Constants
 //
 
-enum_long(DRIVE_ID)
-{
-    DRIVE8 = 0,
-    DRIVE9 = 1
-};
-typedef DRIVE_ID DriveID;
+#define DRIVE8  0L
+#define DRIVE9  1L
 
-#ifdef __cplusplus
-struct DriveIDEnum : util::Reflection<DriveIDEnum, DriveID> {
-    
-    static constexpr long minVal = DRIVE8;
-    static constexpr long maxVal = DRIVE9;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
-    static const char *prefix() { return ""; }
-    static const char *key(DriveID value)
-    {
-        switch (value) {
-                
-            case DRIVE8:  return "DRIVE8";
-            case DRIVE9:  return "DRIVE9";
-        }
-        return "???";
-    }
-};
-#endif
+
+//
+// Enumerations
+//
 
 enum_long(DRIVE_TYPE)
 {

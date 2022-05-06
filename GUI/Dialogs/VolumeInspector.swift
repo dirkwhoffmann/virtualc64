@@ -142,7 +142,7 @@ class VolumeInspector: DialogController {
     // Starting up
     //
 
-    func show(diskDrive nr: DriveID) throws {
+    func show(diskDrive nr: Int) throws {
 
         let drive = c64.drive(nr)
         vol = try FileSystemProxy.make(withDisk: drive.disk)

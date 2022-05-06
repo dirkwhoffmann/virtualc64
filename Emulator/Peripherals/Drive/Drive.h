@@ -60,8 +60,8 @@ class Drive : public SubComponent {
         8125   // Density bits = 11: Carry pulse every 13/16 * 10^4 1/10 nsec
     };
 
-    // Device number of this disk drive (8 = first drive, 9 = second drive)
-    DriveID deviceNr;
+    // Number of this disk drive (DRIVE8 or DRIVE9)
+    isize deviceNr;
 
     // Current configuration
     DriveConfig config = { };
@@ -224,7 +224,7 @@ public:
     
 public:
     
-    Drive(DriveID id, C64 &ref);
+    Drive(isize nr, C64 &ref);
     
     
     //
@@ -327,7 +327,7 @@ public:
 public:
     
     // Returns the device number
-    DriveID getDeviceNr() const { return deviceNr; }
+    isize getDeviceNr() const { return deviceNr; }
         
     // Returns true iff the red drive LED is on
     bool getRedLED() const { return redLED; };

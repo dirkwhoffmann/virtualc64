@@ -12,7 +12,7 @@
 #include "C64.h"
 #include "IOUtils.h"
 
-Drive::Drive(DriveID id, C64 &ref) : SubComponent(ref), deviceNr(id)
+Drive::Drive(isize nr, C64 &ref) : SubComponent(ref), deviceNr(nr)
 {
     assert(deviceNr == DRIVE8 || deviceNr == DRIVE9);
 	

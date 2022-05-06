@@ -20,7 +20,7 @@ class DiskCreator: DialogController {
     var dos: DOSType { return fileSystem.selectedTag() == 1 ? .CBM : .NODOS }
     var name: String { return nameField.stringValue }
 
-    var nr = DriveID.DRIVE8
+    var nr = DRIVE8
     var diskType: String!
     var drive: DriveProxy? { c64.drive(nr) }
 
@@ -28,7 +28,7 @@ class DiskCreator: DialogController {
     // Starting up
     //
 
-    func showSheet(forDrive nr: DriveID) {
+    func showSheet(forDrive nr: Int) {
 
         self.nr = nr
         super.showSheet()

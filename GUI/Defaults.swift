@@ -805,13 +805,11 @@ extension DefaultsProxy {
 
         log(level: 2)
 
-        let D8D9 = [DriveID.DRIVE8.rawValue, DriveID.DRIVE9.rawValue]
-
-        remove(.DRV_CONNECT, D8D9)
-        remove(.DRV_TYPE, D8D9)
-        remove(.DRV_RAM, D8D9)
-        remove(.DRV_PARCABLE, D8D9)
-        remove(.DRV_AUTO_CONFIG, D8D9)
+        remove(.DRV_CONNECT, [DRIVE8, DRIVE9])
+        remove(.DRV_TYPE, [DRIVE8, DRIVE9])
+        remove(.DRV_RAM, [DRIVE8, DRIVE9])
+        remove(.DRV_PARCABLE, [DRIVE8, DRIVE9])
+        remove(.DRV_AUTO_CONFIG, [DRIVE8, DRIVE9])
         removeKey(Keys.Per.gameDevice1)
         removeKey(Keys.Per.gameDevice2)
     }
@@ -823,22 +821,20 @@ extension Configuration {
 
         log(level: 2)
         let defaults = C64Proxy.defaults!
-        let D8 = DriveID.DRIVE8.rawValue
-        let D9 = DriveID.DRIVE9.rawValue
 
         c64.suspend()
 
-        defaults.set(.DRV_CONNECT, D8, drive8Connected)
-        defaults.set(.DRV_TYPE, D8, drive8Type)
-        defaults.set(.DRV_RAM, D8, drive8Ram)
-        defaults.set(.DRV_PARCABLE, D8, drive8ParCable)
-        defaults.set(.DRV_AUTO_CONFIG, D8, drive8AutoConf)
+        defaults.set(.DRV_CONNECT, DRIVE8, drive8Connected)
+        defaults.set(.DRV_TYPE, DRIVE8, drive8Type)
+        defaults.set(.DRV_RAM, DRIVE8, drive8Ram)
+        defaults.set(.DRV_PARCABLE, DRIVE8, drive8ParCable)
+        defaults.set(.DRV_AUTO_CONFIG, DRIVE8, drive8AutoConf)
 
-        defaults.set(.DRV_CONNECT, D9, drive9Connected)
-        defaults.set(.DRV_TYPE, D9, drive8Type)
-        defaults.set(.DRV_RAM, D9, drive8Ram)
-        defaults.set(.DRV_PARCABLE, D9, drive8ParCable)
-        defaults.set(.DRV_AUTO_CONFIG, D9, drive8AutoConf)
+        defaults.set(.DRV_CONNECT, DRIVE9, drive9Connected)
+        defaults.set(.DRV_TYPE, DRIVE9, drive8Type)
+        defaults.set(.DRV_RAM, DRIVE9, drive8Ram)
+        defaults.set(.DRV_PARCABLE, DRIVE9, drive8ParCable)
+        defaults.set(.DRV_AUTO_CONFIG, DRIVE9, drive8AutoConf)
 
         defaults.set(Keys.Per.gameDevice1, gameDevice1)
         defaults.set(Keys.Per.gameDevice2, gameDevice2)
@@ -854,22 +850,20 @@ extension Configuration {
 
         log(level: 2)
         let defaults = C64Proxy.defaults!
-        let D8 = DriveID.DRIVE8.rawValue
-        let D9 = DriveID.DRIVE9.rawValue
 
         c64.suspend()
 
-        drive8Connected = defaults.get(.DRV_CONNECT, D8) != 0
-        drive8Type = defaults.get(.DRV_TYPE, D8)
-        drive8Ram = defaults.get(.DRV_RAM, D8)
-        drive8ParCable = defaults.get(.DRV_PARCABLE, D8)
-        drive8AutoConf = defaults.get(.DRV_AUTO_CONFIG, D8) != 0
+        drive8Connected = defaults.get(.DRV_CONNECT, DRIVE8) != 0
+        drive8Type = defaults.get(.DRV_TYPE, DRIVE8)
+        drive8Ram = defaults.get(.DRV_RAM, DRIVE8)
+        drive8ParCable = defaults.get(.DRV_PARCABLE, DRIVE8)
+        drive8AutoConf = defaults.get(.DRV_AUTO_CONFIG, DRIVE8) != 0
 
-        drive9Connected = defaults.get(.DRV_CONNECT, D9) != 0
-        drive9Type = defaults.get(.DRV_TYPE, D9)
-        drive9Ram = defaults.get(.DRV_RAM, D9)
-        drive9ParCable = defaults.get(.DRV_PARCABLE, D9)
-        drive9AutoConf = defaults.get(.DRV_AUTO_CONFIG, D9) != 0
+        drive9Connected = defaults.get(.DRV_CONNECT, DRIVE9) != 0
+        drive9Type = defaults.get(.DRV_TYPE, DRIVE9)
+        drive9Ram = defaults.get(.DRV_RAM, DRIVE9)
+        drive9ParCable = defaults.get(.DRV_PARCABLE, DRIVE9)
+        drive9AutoConf = defaults.get(.DRV_AUTO_CONFIG, DRIVE9) != 0
 
         gameDevice1 = defaults.int(Keys.Per.gameDevice1)
         gameDevice2 = defaults.int(Keys.Per.gameDevice2)
@@ -895,11 +889,9 @@ extension DefaultsProxy {
     func removeCompatibilityUserDefaults() {
 
         log(level: 2)
-        let D8 = DriveID.DRIVE8.rawValue
-        let D9 = DriveID.DRIVE9.rawValue
 
-        remove(.DRV_POWER_SAVE, D8)
-        remove(.DRV_POWER_SAVE, D9)
+        remove(.DRV_POWER_SAVE, DRIVE8)
+        remove(.DRV_POWER_SAVE, DRIVE9)
         remove(.VIC_POWER_SAVE)
         remove(.SID_POWER_SAVE)
         remove(.SS_COLLISIONS)
@@ -913,13 +905,11 @@ extension Configuration {
 
         log(level: 2)
         let defaults = C64Proxy.defaults!
-        let D8 = DriveID.DRIVE8.rawValue
-        let D9 = DriveID.DRIVE9.rawValue
 
         c64.suspend()
 
-        defaults.set(.DRV_POWER_SAVE, D8, drive8PowerSave)
-        defaults.set(.DRV_POWER_SAVE, D9, drive9PowerSave)
+        defaults.set(.DRV_POWER_SAVE, DRIVE8, drive8PowerSave)
+        defaults.set(.DRV_POWER_SAVE, DRIVE9, drive9PowerSave)
         defaults.set(.VIC_POWER_SAVE, viciiPowerSave)
         defaults.set(.SID_POWER_SAVE, sidPowerSave)
         defaults.set(.SS_COLLISIONS, ssCollisions)
@@ -933,13 +923,11 @@ extension Configuration {
 
         log(level: 2)
         let defaults = C64Proxy.defaults!
-        let D8 = DriveID.DRIVE8.rawValue
-        let D9 = DriveID.DRIVE9.rawValue
 
         c64.suspend()
 
-        drive8PowerSave = defaults.get(.DRV_POWER_SAVE, D8) != 0
-        drive9PowerSave = defaults.get(.DRV_POWER_SAVE, D9) != 0
+        drive8PowerSave = defaults.get(.DRV_POWER_SAVE, DRIVE8) != 0
+        drive9PowerSave = defaults.get(.DRV_POWER_SAVE, DRIVE9) != 0
         viciiPowerSave = defaults.get(.VIC_POWER_SAVE) != 0
         sidPowerSave = defaults.get(.SID_POWER_SAVE) != 0
         ssCollisions = defaults.get(.SS_COLLISIONS) != 0
@@ -965,8 +953,6 @@ extension DefaultsProxy {
 
         log(level: 2)
 
-        let D8D9 = [DriveID.DRIVE8.rawValue, DriveID.DRIVE9.rawValue]
-
         remove(.SID_ENGINE)
         remove(.SID_SAMPLING)
         remove(.SID_FILTER)
@@ -974,10 +960,10 @@ extension DefaultsProxy {
         remove(.AUDPAN, [0, 1, 2, 3])
         remove(.AUDVOLL)
         remove(.AUDVOLR)
-        remove(.DRV_STEP_VOL, D8D9)
-        remove(.DRV_INSERT_VOL, D8D9)
-        remove(.DRV_EJECT_VOL, D8D9)
-        remove(.DRV_PAN, D8D9)
+        remove(.DRV_STEP_VOL, [DRIVE8, DRIVE9])
+        remove(.DRV_INSERT_VOL, [DRIVE8, DRIVE9])
+        remove(.DRV_EJECT_VOL, [DRIVE8, DRIVE9])
+        remove(.DRV_PAN, [DRIVE8, DRIVE9])
     }
 }
 
@@ -987,8 +973,6 @@ extension Configuration {
 
         log(level: 2)
         let defaults = C64Proxy.defaults!
-        let D8 = DriveID.DRIVE8.rawValue
-        let D9 = DriveID.DRIVE9.rawValue
 
         c64.suspend()
 
@@ -1003,11 +987,11 @@ extension Configuration {
         defaults.set(.AUDVOLL, volL)
         defaults.set(.AUDVOLR, volR)
         defaults.set(.SID_SAMPLING, sidSampling)
-        defaults.set(.DRV_PAN, D8, drive8Pan)
-        defaults.set(.DRV_PAN, D9, drive9Pan)
-        defaults.set(.DRV_STEP_VOL, [D8, D9], stepVolume)
-        defaults.set(.DRV_INSERT_VOL, [D8, D9], insertVolume)
-        defaults.set(.DRV_EJECT_VOL, [D8, D9], ejectVolume)
+        defaults.set(.DRV_PAN, DRIVE8, drive8Pan)
+        defaults.set(.DRV_PAN, DRIVE9, drive9Pan)
+        defaults.set(.DRV_STEP_VOL, [DRIVE8, DRIVE9], stepVolume)
+        defaults.set(.DRV_INSERT_VOL, [DRIVE8, DRIVE9], insertVolume)
+        defaults.set(.DRV_EJECT_VOL, [DRIVE8, DRIVE9], ejectVolume)
         defaults.set(.SID_FILTER, sidFilter)
         defaults.save()
 
@@ -1018,8 +1002,6 @@ extension Configuration {
 
         log(level: 2)
         let defaults = C64Proxy.defaults!
-        let D8 = DriveID.DRIVE8.rawValue
-        let D9 = DriveID.DRIVE9.rawValue
 
         c64.suspend()
 
@@ -1033,15 +1015,15 @@ extension Configuration {
         pan2 = defaults.get(.AUDPAN, 2)
         pan3 = defaults.get(.AUDPAN, 3)
 
-        drive8Pan = defaults.get(.DRV_PAN, D8)
-        drive9Pan = defaults.get(.DRV_PAN, D9)
+        drive8Pan = defaults.get(.DRV_PAN, DRIVE8)
+        drive9Pan = defaults.get(.DRV_PAN, DRIVE9)
 
         volL = defaults.get(.AUDVOLL)
         volR = defaults.get(.AUDVOLR)
         sidSampling = defaults.get(.SID_SAMPLING)
-        stepVolume = defaults.get(.DRV_STEP_VOL, D8)
-        insertVolume = defaults.get(.DRV_INSERT_VOL, D8)
-        ejectVolume = defaults.get(.DRV_EJECT_VOL, D8)
+        stepVolume = defaults.get(.DRV_STEP_VOL, DRIVE8)
+        insertVolume = defaults.get(.DRV_INSERT_VOL, DRIVE8)
+        ejectVolume = defaults.get(.DRV_EJECT_VOL, DRIVE8)
         sidFilter = defaults.get(.SID_FILTER) != 0
 
         c64.resume()

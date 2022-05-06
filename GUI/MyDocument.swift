@@ -186,7 +186,7 @@ class MyDocument: NSDocument {
 
     func addMedia(url: URL,
                   allowedTypes types: [FileType],
-                  drive id: DriveID = .DRIVE8,
+                  drive id: Int = DRIVE8,
                   force: Bool = false,
                   remember: Bool = true) throws {
 
@@ -318,9 +318,9 @@ class MyDocument: NSDocument {
     // Exporting disks
     //
 
-    func export(drive id: DriveID, to url: URL) throws {
+    func export(drive id: Int, to url: URL) throws {
         
-        log("drive: \(id.rawValue) to: \(url)")
+        log("drive: \(id) to: \(url)")
         
         let drive = c64.drive(id)
         try export(disk: drive.disk, to: url)

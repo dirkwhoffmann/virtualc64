@@ -96,63 +96,63 @@ class Configuration {
     //
     
     var drive8Connected: Bool {
-        get { return c64.getConfig(.DRV_CONNECT, drive: .DRIVE8) != 0 }
-        set { c64.configure(.DRV_CONNECT, drive: .DRIVE8, enable: newValue ) }
+        get { return c64.getConfig(.DRV_CONNECT, drive: DRIVE8) != 0 }
+        set { c64.configure(.DRV_CONNECT, drive: DRIVE8, enable: newValue ) }
     }
     
     var drive9Connected: Bool {
-        get { return c64.getConfig(.DRV_CONNECT, drive: .DRIVE9) != 0 }
-        set { c64.configure(.DRV_CONNECT, drive: .DRIVE9, enable: newValue ) }
+        get { return c64.getConfig(.DRV_CONNECT, drive: DRIVE9) != 0 }
+        set { c64.configure(.DRV_CONNECT, drive: DRIVE9, enable: newValue ) }
     }
 
     var drive8AutoConf: Bool {
-        get { return c64.getConfig(.DRV_AUTO_CONFIG, drive: .DRIVE8) != 0 }
-        set { c64.configure(.DRV_AUTO_CONFIG, drive: .DRIVE8, enable: newValue ) }
+        get { return c64.getConfig(.DRV_AUTO_CONFIG, drive: DRIVE8) != 0 }
+        set { c64.configure(.DRV_AUTO_CONFIG, drive: DRIVE8, enable: newValue ) }
     }
     
     var drive9AutoConf: Bool {
-        get { return c64.getConfig(.DRV_AUTO_CONFIG, drive: .DRIVE9) != 0}
-        set { c64.configure(.DRV_AUTO_CONFIG, drive: .DRIVE9, enable: newValue ) }
+        get { return c64.getConfig(.DRV_AUTO_CONFIG, drive: DRIVE9) != 0}
+        set { c64.configure(.DRV_AUTO_CONFIG, drive: DRIVE9, enable: newValue ) }
     }
     
     var drive8Type: Int {
-        get { return c64.getConfig(.DRV_TYPE, drive: .DRIVE8) }
-        set { c64.configure(.DRV_TYPE, drive: .DRIVE8, value: newValue )}
+        get { return c64.getConfig(.DRV_TYPE, drive: DRIVE8) }
+        set { c64.configure(.DRV_TYPE, drive: DRIVE8, value: newValue )}
     }
     
     var drive9Type: Int {
-        get { return c64.getConfig(.DRV_TYPE, drive: .DRIVE9) }
-        set { c64.configure(.DRV_TYPE, drive: .DRIVE9, value: newValue )}
+        get { return c64.getConfig(.DRV_TYPE, drive: DRIVE9) }
+        set { c64.configure(.DRV_TYPE, drive: DRIVE9, value: newValue )}
     }
 
     var drive8Ram: Int {
-        get { return c64.getConfig(.DRV_RAM, drive: .DRIVE8) }
-        set { c64.configure(.DRV_RAM, drive: .DRIVE8, value: newValue )}
+        get { return c64.getConfig(.DRV_RAM, drive: DRIVE8) }
+        set { c64.configure(.DRV_RAM, drive: DRIVE8, value: newValue )}
     }
 
     var drive9Ram: Int {
-        get { return c64.getConfig(.DRV_RAM, drive: .DRIVE9) }
-        set { c64.configure(.DRV_RAM, drive: .DRIVE9, value: newValue )}
+        get { return c64.getConfig(.DRV_RAM, drive: DRIVE9) }
+        set { c64.configure(.DRV_RAM, drive: DRIVE9, value: newValue )}
     }
 
     var drive8ParCable: Int {
-        get { return c64.getConfig(.DRV_PARCABLE, drive: .DRIVE8) }
-        set { c64.configure(.DRV_PARCABLE, drive: .DRIVE8, value: newValue ) }
+        get { return c64.getConfig(.DRV_PARCABLE, drive: DRIVE8) }
+        set { c64.configure(.DRV_PARCABLE, drive: DRIVE8, value: newValue ) }
     }
 
     var drive9ParCable: Int {
-        get { return c64.getConfig(.DRV_PARCABLE, drive: .DRIVE9) }
-        set { c64.configure(.DRV_PARCABLE, drive: .DRIVE9, value: newValue ) }
+        get { return c64.getConfig(.DRV_PARCABLE, drive: DRIVE9) }
+        set { c64.configure(.DRV_PARCABLE, drive: DRIVE9, value: newValue ) }
     }
     
     var drive8PowerSwitch: Bool {
-        get { return c64.getConfig(.DRV_POWER_SWITCH, drive: .DRIVE8) != 0 }
-        set { c64.configure(.DRV_POWER_SWITCH, drive: .DRIVE8, enable: newValue )}
+        get { return c64.getConfig(.DRV_POWER_SWITCH, drive: DRIVE8) != 0 }
+        set { c64.configure(.DRV_POWER_SWITCH, drive: DRIVE8, enable: newValue )}
     }
     
     var drive9PowerSwitch: Bool {
-        get { return c64.getConfig(.DRV_POWER_SWITCH, drive: .DRIVE9) != 0 }
-        set { c64.configure(.DRV_POWER_SWITCH, drive: .DRIVE9, enable: newValue )}
+        get { return c64.getConfig(.DRV_POWER_SWITCH, drive: DRIVE9) != 0 }
+        set { c64.configure(.DRV_POWER_SWITCH, drive: DRIVE9, enable: newValue )}
     }
 
     var gameDevice1 = -1 {
@@ -197,13 +197,13 @@ class Configuration {
     //
 
     var drive8PowerSave: Bool {
-        get { return c64.getConfig(.DRV_POWER_SAVE, drive: .DRIVE8) != 0 }
-        set { c64.configure(.DRV_POWER_SAVE, drive: .DRIVE8, enable: newValue) }
+        get { return c64.getConfig(.DRV_POWER_SAVE, drive: DRIVE8) != 0 }
+        set { c64.configure(.DRV_POWER_SAVE, drive: DRIVE8, enable: newValue) }
     }
 
     var drive9PowerSave: Bool {
-        get { return c64.getConfig(.DRV_POWER_SAVE, drive: .DRIVE9) != 0 }
-        set { c64.configure(.DRV_POWER_SAVE, drive: .DRIVE9, enable: newValue) }
+        get { return c64.getConfig(.DRV_POWER_SAVE, drive: DRIVE9) != 0 }
+        set { c64.configure(.DRV_POWER_SAVE, drive: DRIVE9, enable: newValue) }
     }
 
     var viciiPowerSave: Bool {
@@ -303,24 +303,24 @@ class Configuration {
         set { c64.configure(.AUDVOLR, value: newValue) }
     }
     var stepVolume: Int {
-        get { return c64.getConfig(.DRV_STEP_VOL, drive: .DRIVE8) }
+        get { return c64.getConfig(.DRV_STEP_VOL, drive: DRIVE8) }
         set { c64.configure(.DRV_STEP_VOL, value: newValue) }
     }
     var insertVolume: Int {
-        get { return c64.getConfig(.DRV_INSERT_VOL, drive: .DRIVE8) }
+        get { return c64.getConfig(.DRV_INSERT_VOL, drive: DRIVE8) }
         set { c64.configure(.DRV_INSERT_VOL, value: newValue) }
     }
     var ejectVolume: Int {
-        get { return c64.getConfig(.DRV_EJECT_VOL, drive: .DRIVE8) }
+        get { return c64.getConfig(.DRV_EJECT_VOL, drive: DRIVE8) }
         set { c64.configure(.DRV_EJECT_VOL, value: newValue) }
     }
     var drive8Pan: Int {
-        get { return c64.getConfig(.DRV_PAN, drive: .DRIVE8) }
-        set { c64.configure(.DRV_PAN, drive: .DRIVE8, value: newValue) }
+        get { return c64.getConfig(.DRV_PAN, drive: DRIVE8) }
+        set { c64.configure(.DRV_PAN, drive: DRIVE8, value: newValue) }
     }
     var drive9Pan: Int {
-        get { return c64.getConfig(.DRV_PAN, drive: .DRIVE9) }
-        set { c64.configure(.DRV_PAN, drive: .DRIVE9, value: newValue) }
+        get { return c64.getConfig(.DRV_PAN, drive: DRIVE9) }
+        set { c64.configure(.DRV_PAN, drive: DRIVE9, value: newValue) }
     }
 
     //

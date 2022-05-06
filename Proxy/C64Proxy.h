@@ -196,13 +196,13 @@
 
 - (NSInteger)getConfig:(Option)opt;
 - (NSInteger)getConfig:(Option)opt id:(NSInteger)id;
-- (NSInteger)getConfig:(Option)opt drive:(DriveID)id;
+- (NSInteger)getConfig:(Option)opt drive:(NSInteger)id;
 - (BOOL)configure:(Option)opt value:(NSInteger)val;
 - (BOOL)configure:(Option)opt enable:(BOOL)val;
 - (BOOL)configure:(Option)opt id:(NSInteger)id value:(NSInteger)val;
 - (BOOL)configure:(Option)opt id:(NSInteger)id enable:(BOOL)val;
-- (BOOL)configure:(Option)opt drive:(DriveID)id value:(NSInteger)val;
-- (BOOL)configure:(Option)opt drive:(DriveID)id enable:(BOOL)val;
+- (BOOL)configure:(Option)opt drive:(NSInteger)id value:(NSInteger)val;
+- (BOOL)configure:(Option)opt drive:(NSInteger)id enable:(BOOL)val;
 - (void)configure:(C64Model)value;
 
 - (void)setListener:(const void *)sender function:(Callback *)func;
@@ -533,7 +533,7 @@
 @property (readonly) DiskProxy *disk;
 - (VIAProxy *)via:(NSInteger)num;
 
-@property (readonly) DriveID id;
+@property (readonly) NSInteger id;
 
 - (DriveConfig)getConfig;
 

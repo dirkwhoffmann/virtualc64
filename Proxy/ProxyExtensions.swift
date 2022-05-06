@@ -199,12 +199,12 @@ extension RecorderProxy {
 
 public extension C64Proxy {
     
-    func drive(_ nr: DriveID) -> DriveProxy {
+    func drive(_ nr: NSInteger) -> DriveProxy {
         
         switch nr {
             
-        case .DRIVE8: return drive8
-        case .DRIVE9: return drive9
+        case DRIVE8: return drive8
+        case DRIVE9: return drive9
         
         default:
             fatalError()
@@ -213,12 +213,12 @@ public extension C64Proxy {
     
     func drive(_ item: NSButton!) -> DriveProxy {
         
-        return drive(DriveID(rawValue: item.tag)!)
+        return drive(item.tag)
     }
     
     func drive(_ item: NSMenuItem!) -> DriveProxy {
         
-        return drive(DriveID(rawValue: item.tag)!)
+        return drive(item.tag)
     }
     
     func image(data: UnsafeMutablePointer<UInt8>?, size: NSSize) -> NSImage {
