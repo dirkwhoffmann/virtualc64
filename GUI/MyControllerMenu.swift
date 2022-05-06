@@ -287,7 +287,7 @@ extension MyController: NSMenuItemValidation {
         // Take screenshot
         guard let screen = renderer.canvas.screenshot(source: format) else {
 
-            log(warning: "Failed to create screenshot")
+            warn("Failed to create screenshot")
             return
         }
 

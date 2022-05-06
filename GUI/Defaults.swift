@@ -36,7 +36,7 @@ extension DefaultsProxy {
 
     func load() {
 
-        debug("Loading user defaults")
+        debug(.defaults, "Loading user defaults")
 
         do {
             let folder = try URL.appSupportFolder()
@@ -44,13 +44,13 @@ extension DefaultsProxy {
 
             do {
                 try load(url: path)
-                debug("Successfully loaded user defaults from file \(path)")
+                debug(.defaults, "Successfully loaded user defaults from file \(path)")
             } catch {
-                debug("Failed to load user defaults from file \(path)")
+                debug(.defaults, "Failed to load user defaults from file \(path)")
             }
 
         } catch {
-            debug("Failed to access application support folder")
+            debug(.defaults, "Failed to access application support folder")
         }
     }
 
@@ -71,13 +71,13 @@ extension DefaultsProxy {
 
             do {
                 try save(url: path)
-                debug("Successfully saved user defaults to file \(path)")
+                debug(.defaults, "Successfully saved user defaults to file \(path)")
             } catch {
-                debug("Failed to save user defaults file \(path)")
+                warn("Failed to save user defaults file \(path)")
             }
 
         } catch {
-            debug("Failed to access application support folder")
+            warn("Failed to access application support folder")
         }
     }
 
@@ -186,12 +186,12 @@ extension DefaultsProxy {
                 if let decoded = try? JSONDecoder().decode(T.self, from: data) {
                     item = decoded
                 } else {
-                    log(warning: "Failed to decode \(jsonString)")
+                    warn("Failed to decode \(jsonString)")
                 }
                 return
             }
         }
-        debug("Failed to decode jsonString")
+        warn("Failed to decode jsonString")
     }
 }
 
@@ -221,7 +221,7 @@ extension DefaultsProxy {
 
     func registerUserDefaults() {
 
-        debug("Registering user defaults")
+        debug(.defaults, "Registering user defaults")
 
         registerGeneralUserDefaults()
         registerControlsUserDefaults()
@@ -240,7 +240,7 @@ extension Preferences {
 
     func applyUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         applyGeneralUserDefaults()
         applyControlsUserDefaults()
@@ -253,7 +253,7 @@ extension Configuration {
 
     func applyUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         applyHardwareUserDefaults()
         applyPeripheralsUserDefaults()
@@ -304,7 +304,7 @@ extension DefaultsProxy {
 
     func registerGeneralUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         // Snapshots
         register(Keys.Gen.autoSnapshots, false)
@@ -336,7 +336,7 @@ extension DefaultsProxy {
 
     func removeGeneralUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         let keys = [ Keys.Gen.autoSnapshots,
                      Keys.Gen.autoSnapshotInterval,
@@ -368,7 +368,7 @@ extension Preferences {
 
     func saveGeneralUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         defaults.set(Keys.Gen.autoSnapshots, autoSnapshots)
@@ -397,7 +397,7 @@ extension Preferences {
 
     func applyGeneralUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         autoSnapshots = defaults.bool(Keys.Gen.autoSnapshots)
@@ -457,7 +457,7 @@ extension DefaultsProxy {
 
     func registerControlsUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         let emptyMap: [MacKey: Int] = [:]
 
@@ -502,7 +502,7 @@ extension DefaultsProxy {
 
     func removeControlsUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         let keys = [ Keys.Con.mouseKeyMap,
                      Keys.Con.joyKeyMap1,
@@ -529,7 +529,7 @@ extension Preferences {
 
     func saveControlsUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         defaults.encode(Keys.Con.mouseKeyMap, keyMaps[0])
@@ -554,7 +554,7 @@ extension Preferences {
 
     func applyControlsUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         defaults.decode(Keys.Con.mouseKeyMap, &keyMaps[0])
@@ -603,7 +603,7 @@ extension Preferences {
 
     func saveDevicesUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         defaults.save()
@@ -611,7 +611,7 @@ extension Preferences {
 
     func applyDevicesUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
     }
 }
 
@@ -633,7 +633,7 @@ extension DefaultsProxy {
 
     func registerKeyboardUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         // Emulation keys
         register(Keys.Kbd.keyMap, encodable: KeyboardController.standardKeyMap)
@@ -642,7 +642,7 @@ extension DefaultsProxy {
 
     func removeKeyboardUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         let keys = [ Keys.Kbd.keyMap,
                      Keys.Kbd.mapKeysByPosition ]
@@ -655,7 +655,7 @@ extension Preferences {
 
     func saveKeyboardUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         defaults.encode(Keys.Kbd.keyMap, keyMap)
@@ -666,12 +666,72 @@ extension Preferences {
 
     func applyKeyboardUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         defaults.decode(Keys.Kbd.keyMap, &keyMap)
         mapKeysByPosition = defaults.bool(Keys.Kbd.mapKeysByPosition)
     }
+}
+
+//
+// Roms
+//
+
+extension Configuration {
+
+    /*
+    func loadRomUserDefaults() {
+
+        debug(.defaults)
+
+        func load(_ url: URL?, type: FileType) {
+
+            if url != nil {
+                if let file = try? RomFileProxy.make(with: url!) {
+                    if file.type == type { c64.loadRom(file) }
+                }
+            }
+        }
+
+        c64.suspend()
+        load(UserDefaults.basicRomUrl, type: .BASIC_ROM)
+        load(UserDefaults.charRomUrl, type: .CHAR_ROM)
+        load(UserDefaults.kernalRomUrl, type: .KERNAL_ROM)
+        load(UserDefaults.vc1541RomUrl, type: .VC1541_ROM)
+        c64.resume()
+    }
+
+    func saveRomUserDefaults() throws {
+
+        debug(.defaults)
+
+        var url: URL?
+
+        func save(_ type: RomType) throws {
+
+            if url == nil { throw VC64Error(ErrorCode.FILE_CANT_WRITE) }
+            try? FileManager.default.removeItem(at: url!)
+            try c64.saveRom(type, url: url!)
+        }
+
+        c64.suspend()
+
+        do {
+            url = UserDefaults.basicRomUrl;  try save(.BASIC)
+            url = UserDefaults.charRomUrl;   try save(.CHAR)
+            url = UserDefaults.kernalRomUrl; try save(.KERNAL)
+            url = UserDefaults.vc1541RomUrl; try save(.VC1541)
+
+        } catch {
+
+            c64.resume()
+            throw error
+        }
+
+        c64.resume()
+    }
+    */
 }
 
 //
@@ -682,13 +742,13 @@ extension DefaultsProxy {
 
     func registerHardwareUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         // No GUI related items in this sections
     }
 
     func removeHardwareUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         remove(.VIC_REVISION)
         remove(.VIC_SPEED)
@@ -713,7 +773,7 @@ extension Configuration {
 
     func saveHardwareUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         c64.suspend()
@@ -746,7 +806,7 @@ extension Configuration {
 
     func applyHardwareUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         c64.suspend()
@@ -794,7 +854,7 @@ extension DefaultsProxy {
 
     func registerPeripheralsUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         // Port assignments
         register(Keys.Per.gameDevice1, -1)
@@ -803,7 +863,7 @@ extension DefaultsProxy {
 
     func removePeripheralsUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         remove(.DRV_CONNECT, [DRIVE8, DRIVE9])
         remove(.DRV_TYPE, [DRIVE8, DRIVE9])
@@ -819,7 +879,7 @@ extension Configuration {
 
     func savePeripheralsUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         c64.suspend()
@@ -848,7 +908,7 @@ extension Configuration {
 
     func applyPeripheralsUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         c64.suspend()
@@ -882,13 +942,13 @@ extension DefaultsProxy {
 
     func registerCompatibilityUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         // No GUI related items in this sections
     }
 
     func removeCompatibilityUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         remove(.DRV_POWER_SAVE, DRIVE8)
         remove(.DRV_POWER_SAVE, DRIVE9)
@@ -903,7 +963,7 @@ extension Configuration {
 
     func saveCompatibilityUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         c64.suspend()
@@ -921,7 +981,7 @@ extension Configuration {
 
     func applyCompatibilityUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         c64.suspend()
@@ -945,13 +1005,13 @@ extension DefaultsProxy {
 
     func registerAudioUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         // No GUI related items in this sections
     }
 
     func removeAudioUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         remove(.SID_ENGINE)
         remove(.SID_SAMPLING)
@@ -971,7 +1031,7 @@ extension Configuration {
 
     func saveAudioUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         c64.suspend()
@@ -1000,7 +1060,7 @@ extension Configuration {
 
     func applyAudioUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         c64.suspend()
@@ -1071,7 +1131,7 @@ extension DefaultsProxy {
 
     func registerVideoUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         registerColorUserDefaults()
         registerGeometryUserDefaults()
@@ -1080,13 +1140,13 @@ extension DefaultsProxy {
 
     func registerColorUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         // No GUI related keys in this category
     }
 
     func registerGeometryUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         register(Keys.Vid.hCenter, 0)
         register(Keys.Vid.vCenter, 0)
@@ -1096,7 +1156,7 @@ extension DefaultsProxy {
 
     func registerShaderUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         register(Keys.Vid.upscaler, 0)
         register(Keys.Vid.blur, 1)
@@ -1119,7 +1179,7 @@ extension DefaultsProxy {
 
     func removeVideoUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         removeColorUserDefaults()
         removeGeometryUserDefaults()
@@ -1128,7 +1188,7 @@ extension DefaultsProxy {
 
     func removeColorUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         remove(.PALETTE)
         remove(.BRIGHTNESS)
@@ -1138,7 +1198,7 @@ extension DefaultsProxy {
 
     func removeGeometryUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         let keys = [ Keys.Vid.hCenter,
                      Keys.Vid.vCenter,
@@ -1150,7 +1210,7 @@ extension DefaultsProxy {
 
     func removeShaderUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         let keys = [ Keys.Vid.upscaler,
                      Keys.Vid.blur,
@@ -1178,7 +1238,7 @@ extension Configuration {
 
     func saveVideoUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         saveColorUserDefaults()
         saveGeometryUserDefaults()
@@ -1187,7 +1247,7 @@ extension Configuration {
 
     func saveColorUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         c64.suspend()
@@ -1204,7 +1264,7 @@ extension Configuration {
 
     func saveGeometryUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         c64.suspend()
@@ -1221,7 +1281,7 @@ extension Configuration {
 
     func saveShaderUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         c64.suspend()
@@ -1251,7 +1311,7 @@ extension Configuration {
 
     func applyVideoUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
 
         applyColorUserDefaults()
         applyGeometryUserDefaults()
@@ -1260,7 +1320,7 @@ extension Configuration {
 
     func applyColorUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         c64.suspend()
@@ -1275,7 +1335,7 @@ extension Configuration {
 
     func applyGeometryUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         c64.suspend()
@@ -1290,7 +1350,7 @@ extension Configuration {
 
     func applyShaderUserDefaults() {
 
-        debug(level: 2)
+        debug(.defaults)
         let defaults = C64Proxy.defaults!
 
         c64.suspend()

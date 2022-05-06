@@ -57,32 +57,32 @@ extension MyController: NSWindowDelegate {
         
         debug()
         
-        debug("Stopping renderer...", level: 2)
+        debug(.exit, "Stopping renderer...")
         renderer.halt()
 
-        debug("Stopping timers...", level: 2)
+        debug(.exit, "Stopping timers...")
         snapshotTimer?.invalidate()
         snapshotTimer = nil
 
-        debug("Closing auxiliary windows...", level: 2)
+        debug(.exit, "Closing auxiliary windows...")
         inspector?.c64 = nil
         inspector?.close()
         monitor?.c64 = nil
         monitor?.close()
                         
-        debug("Shutting down the audio backend...", level: 2)
+        debug(.exit, "Shutting down the audio backend...")
         macAudio.shutDown()
         
-        debug("Disconnecting gaming devices...", level: 2)
+        debug(.exit, "Disconnecting gaming devices...")
         gamePadManager.shutDown()
         
-        debug("Shutting down the emulator...", level: 2)
+        debug(.exit, "Shutting down the emulator...")
         c64.halt()
     }
     
     func shutDown() {
         
-        debug("Removing proxy...", level: 2)
+        debug(.exit, "Removing proxy...")
         
         c64.kill()
         c64 = nil

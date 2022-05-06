@@ -13,23 +13,11 @@
 
 let logLevel = releaseBuild ? 0 : 1
 
-public func debug(_ enable: Bool, _ msg: String = "",
+public func debug(_ enable: Int, _ msg: String = "",
                   path: String = #file, function: String = #function, line: Int = #line) {
 
-    if let file = URL(string: path)?.deletingPathExtension().lastPathComponent {
-        if msg == "" {
-            print("\(file).\(line)::\(function)")
-        } else {
-            print("\(file).\(line)::\(function): \(msg)")
-        }
-    }
-}
-
-public func debug(_ msg: String = "", level: Int = 1,
-                  path: String = #file, function: String = #function, line: Int = #line) {
-
-    if level <= logLevel {
-
+    if enable > 0 {
+        
         if let file = URL(string: path)?.deletingPathExtension().lastPathComponent {
             if msg == "" {
                 print("\(file).\(line)::\(function)")
@@ -40,10 +28,22 @@ public func debug(_ msg: String = "", level: Int = 1,
     }
 }
 
-public func log(warning: String,
-                path: String = #file, function: String = #function, line: Int = #line) {
+public func warn(_ msg: String = "",
+                 path: String = #file, function: String = #function, line: Int = #line) {
 
-    debug(warning, level: logLevel, path: path, function: function, line: line)
+    debug(1, msg, path: path, function: function, line: line)
+}
+
+public func debug(_ msg: String = "",
+                  path: String = #file, function: String = #function, line: Int = #line) {
+    
+    if let file = URL(string: path)?.deletingPathExtension().lastPathComponent {
+        if msg == "" {
+            print("\(file).\(line)::\(function)")
+        } else {
+            print("\(file).\(line)::\(function): \(msg)")
+        }
+    }
 }
 
 //

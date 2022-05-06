@@ -44,7 +44,8 @@ public class MacAudio: NSObject {
         
         // Create AudioUnit
         do { try audiounit = AUAudioUnit(componentDescription: compDesc) } catch {
-            debug("Failed to create AUAudioUnit")
+
+            warn("Failed to create AUAudioUnit")
             return
         }
         
@@ -58,7 +59,8 @@ public class MacAudio: NSObject {
         let renderFormat = AVAudioFormat(standardFormatWithSampleRate: sampleRate,
                                          channels: (stereo ? 2 : 1))
         do { try audiounit.inputBusses[0].setFormat(renderFormat!) } catch {
-            debug("Failed to set render format on input bus")
+
+            warn("Failed to set render format on input bus")
             return
         }
         
@@ -92,7 +94,8 @@ public class MacAudio: NSObject {
         
         // Allocate render resources
         do { try audiounit.allocateRenderResources() } catch {
-            debug("Failed to allocate RenderResources")
+
+            warn("Failed to allocate RenderResources")
             return nil
         }
         
@@ -101,7 +104,7 @@ public class MacAudio: NSObject {
     
     func shutDown() {
         
-        debug("Removing proxy...", level: 2)
+        debug(.exit, "Removing proxy...")
 
         stopPlayback()
         sid = nil

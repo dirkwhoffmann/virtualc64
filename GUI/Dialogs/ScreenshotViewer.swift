@@ -36,7 +36,7 @@ class ScreenshotViewer: DialogController {
 
     func loadScreenshots() {
 
-        debug(level: 2)
+        debug(.shots)
 
         for url in Screenshot.allFiles {
             if let screenshot = Screenshot(fromUrl: url) {
@@ -44,19 +44,19 @@ class ScreenshotViewer: DialogController {
             }
         }
 
-        debug("\(screenshots.count) screenshots loaded", level: 2)
+        debug(.shots, "\(screenshots.count) screenshots loaded")
     }
     
     func saveScreenshots() throws {
         
-        debug(level: 2)
+        debug(.shots)
 
         Screenshot.deleteFolder()
         for n in 0 ..< screenshots.count {
             try? screenshots[n].save()
         }
 
-        debug("All screenshots saved", level: 2)
+        debug(.shots, "All screenshots saved")
     }
     
     override func sheetWillShow() {

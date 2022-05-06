@@ -423,21 +423,23 @@ class Configuration {
     }
     
     init(with controller: MyController) { parent = controller }
-    
+
     //
     // Roms
     //
-    
+
     func loadRomUserDefaults() {
-        
+
         func load(_ url: URL?, type: FileType) {
-            
+
             if url != nil {
                 if let file = try? RomFileProxy.make(with: url!) {
                     if file.type == type { c64.loadRom(file) }
                 }
             }
         }
+
+        debug(.defaults)
         
         c64.suspend()
         load(UserDefaults.basicRomUrl, type: .BASIC_ROM)
@@ -446,34 +448,34 @@ class Configuration {
         load(UserDefaults.vc1541RomUrl, type: .VC1541_ROM)
         c64.resume()
     }
-    
+
     func saveRomUserDefaults() throws {
-        
-        debug(level: 2)
+
+        debug(.defaults)
 
         var url: URL?
-        
+
         func save(_ type: RomType) throws {
-            
+
             if url == nil { throw VC64Error(ErrorCode.FILE_CANT_WRITE) }
             try? FileManager.default.removeItem(at: url!)
             try c64.saveRom(type, url: url!)
         }
-        
+
         c64.suspend()
-        
+
         do {
             url = UserDefaults.basicRomUrl;  try save(.BASIC)
             url = UserDefaults.charRomUrl;   try save(.CHAR)
             url = UserDefaults.kernalRomUrl; try save(.KERNAL)
             url = UserDefaults.vc1541RomUrl; try save(.VC1541)
-            
+
         } catch {
 
             c64.resume()
             throw error
         }
-        
+
         c64.resume()
     }
 }
