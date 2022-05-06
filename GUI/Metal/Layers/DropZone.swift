@@ -201,8 +201,12 @@ class DropZone: Layer {
 
             } else {
 
-                try? mydocument.flashMedia(url: url, allowedTypes: [type])
-
+                if let file = try mydocument.createFileProxy(from: url,
+                                                             allowedTypes: FileType.draggable) {
+                    // Run the import dialog
+                    let importer = DiskImporter(with: controller, nibName: "DiskImporter")
+                    importer?.show(proxy: file)
+                }
             }
 
         } catch {

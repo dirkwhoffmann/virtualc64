@@ -26,6 +26,8 @@
 		500F7CC6281EAB64003F1A7C /* DiskCreator.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500F7CC5281EAB64003F1A7C /* DiskCreator.xib */; };
 		50133B97200D4EED00167227 /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50133B96200D4EED00167227 /* MetalView.swift */; };
 		50157EEB28256035000E9DDD /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50157EEA28256035000E9DDD /* Config.swift */; };
+		50157EEF2825A814000E9DDD /* DiskImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50157EEE2825A814000E9DDD /* DiskImporter.swift */; };
+		50157EF12825A9F5000E9DDD /* DiskImporter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50157EF02825A9F5000E9DDD /* DiskImporter.xib */; };
 		5015F36620B546A30024B4AA /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5015F36520B546A30024B4AA /* WaveformView.swift */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
 		5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */; };
@@ -333,6 +335,8 @@
 		500FAA64261377050062488E /* Macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 		50133B96200D4EED00167227 /* MetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
 		50157EEA28256035000E9DDD /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		50157EEE2825A814000E9DDD /* DiskImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskImporter.swift; sourceTree = "<group>"; };
+		50157EF02825A9F5000E9DDD /* DiskImporter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiskImporter.xib; sourceTree = "<group>"; };
 		5015F36520B546A30024B4AA /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		50176C790A6F7357009E80BD /* C64Proxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = C64Proxy.h; sourceTree = "<group>"; };
 		50176C7A0A6F7357009E80BD /* C64Proxy.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = C64Proxy.mm; sourceTree = "<group>"; };
@@ -858,6 +862,7 @@
 				503C1DD224FCD1BF00D91141 /* SnapshotViewer.swift */,
 				500F7CC4281E58DA003F1A7C /* DiskInspector */,
 				5058A921281D10B100C223C9 /* VolumeInspector.swift */,
+				50157EEE2825A814000E9DDD /* DiskImporter.swift */,
 				5058A923281D10C600C223C9 /* DiskCreator.swift */,
 				5058A91D281D107A00C223C9 /* DiskExporter.swift */,
 				500E2D652824EC130015C46F /* CartridgeInspector.swift */,
@@ -1563,6 +1568,7 @@
 				50D3092524C71AD300B92563 /* Monitor.xib */,
 				503C1DD024FC10F400D91141 /* SnapshotViewer.xib */,
 				507E7A9D24FB864E00AB433C /* ScreenshotViewer.xib */,
+				50157EF02825A9F5000E9DDD /* DiskImporter.xib */,
 				500F7CC5281EAB64003F1A7C /* DiskCreator.xib */,
 				5058A919281D041400C223C9 /* DiskExporter.xib */,
 				500E2D632824EBE30015C46F /* CartridgeInspector.xib */,
@@ -1707,6 +1713,7 @@
 				50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */,
 				501E428020D975AD000BB48D /* IconVirtualC64.icns in Resources */,
 				50D197E021606DEC008BC551 /* dsa_pub.pem in Resources */,
+				50157EF12825A9F5000E9DDD /* DiskImporter.xib in Resources */,
 				5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */,
 				5058A91A281D041400C223C9 /* DiskExporter.xib in Resources */,
 				501E427E20D975AD000BB48D /* IconT64.icns in Resources */,
@@ -1953,6 +1960,7 @@
 				50A077F8258A18B9005ACF5B /* FileSystem.cpp in Sources */,
 				50BE4B6824E7FB28008F39C9 /* MTLTexture.swift in Sources */,
 				50A22A2A2618725200C9FB1E /* Console.swift in Sources */,
+				50157EEF2825A814000E9DDD /* DiskImporter.swift in Sources */,
 				5031D59C200B81D20088C802 /* Animation.swift in Sources */,
 				50D5F88424F4FE9C0062EF13 /* SectorTableView.swift in Sources */,
 				50B165AE25B06A03009B576D /* TextureToolbox.swift in Sources */,

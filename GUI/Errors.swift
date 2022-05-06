@@ -326,10 +326,10 @@ extension MyDocument {
             return true
         }
 
-        let names = modified.map({ name(drive: $0) }).joined(separator: ", ")
+        let names = modified.map({ name(drive: $0) }).joined(separator: " and ")
         let text = modified.count == 1 ?
-        "Drive \(names) contains an unsaved disk." :
-        "Drives \(names) contain unsaved disks."
+        "\(names) contains an unsaved disk." :
+        "\(names) contain unsaved disks."
 
         return showIsUnsavedAlert(msg: text, icon: "adf") == .alertFirstButtonReturn
     }
