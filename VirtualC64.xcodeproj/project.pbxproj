@@ -13,7 +13,6 @@
 		5002FA7F21C2653600DA4BBC /* GeneralPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002FA7E21C2653600DA4BBC /* GeneralPrefs.swift */; };
 		5002FA8121C2654B00DA4BBC /* ControlsPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002FA8021C2654B00DA4BBC /* ControlsPrefs.swift */; };
 		5002FA8321C2655800DA4BBC /* KeyboardPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */; };
-		50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50031B39206FB0FC00A1969B /* SnapshotController.swift */; };
 		50033829266E47B400D5456E /* CompatibilityConf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50033828266E47B400D5456E /* CompatibilityConf.swift */; };
 		5003382B266F7F3C00D5456E /* VICII_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5003382A266F7F3C00D5456E /* VICII_table.cpp */; };
 		5007E1E826A70170000E7344 /* ParCable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5007E1E626A70170000E7344 /* ParCable.cpp */; };
@@ -309,7 +308,6 @@
 		5002FA7E21C2653600DA4BBC /* GeneralPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrefs.swift; sourceTree = "<group>"; };
 		5002FA8021C2654B00DA4BBC /* ControlsPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsPrefs.swift; sourceTree = "<group>"; };
 		5002FA8221C2655800DA4BBC /* KeyboardPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardPrefs.swift; sourceTree = "<group>"; };
-		50031B39206FB0FC00A1969B /* SnapshotController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotController.swift; sourceTree = "<group>"; };
 		500333EB26202527008445E4 /* ExpansionPortTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExpansionPortTypes.h; sourceTree = "<group>"; };
 		500333EC2620269D008445E4 /* JoystickTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JoystickTypes.h; sourceTree = "<group>"; };
 		50033828266E47B400D5456E /* CompatibilityConf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilityConf.swift; sourceTree = "<group>"; };
@@ -567,7 +565,7 @@
 		5058A917281D03D200C223C9 /* DiskInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskInspector.xib; sourceTree = "<group>"; };
 		5058A919281D041400C223C9 /* DiskExporter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DiskExporter.xib; sourceTree = "<group>"; };
 		5058A91B281D042D00C223C9 /* VolumeInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VolumeInspector.xib; sourceTree = "<group>"; };
-		5058A91D281D107A00C223C9 /* DiskExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DiskExporter.swift; path = GUI/Dialogs/DiskExporter.swift; sourceTree = SOURCE_ROOT; };
+		5058A91D281D107A00C223C9 /* DiskExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskExporter.swift; sourceTree = "<group>"; };
 		5058A91F281D109F00C223C9 /* DiskInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskInspector.swift; sourceTree = "<group>"; };
 		5058A921281D10B100C223C9 /* VolumeInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeInspector.swift; sourceTree = "<group>"; };
 		5058A923281D10C600C223C9 /* DiskCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskCreator.swift; sourceTree = "<group>"; };
@@ -854,23 +852,13 @@
 			isa = PBXGroup;
 			children = (
 				50763276202989D300575110 /* DialogController.swift */,
+				5098C57E2658E1F400E05EFC /* DragImageView.swift */,
 				50CD36992817BA6600E40BFC /* Monitor */,
 				5038CA9820B6C2D8000D9193 /* Inspector */,
 				50769B8824BB1B38006FE743 /* Preferences */,
 				50769B8724BB1A7A006FE743 /* Configuration */,
-				507E7A9F24FB881500AB433C /* ScreenshotViewer.swift */,
-				503C1DD224FCD1BF00D91141 /* SnapshotViewer.swift */,
-				500F7CC4281E58DA003F1A7C /* DiskInspector */,
-				5058A921281D10B100C223C9 /* VolumeInspector.swift */,
-				50157EEE2825A814000E9DDD /* DiskImporter.swift */,
-				5058A923281D10C600C223C9 /* DiskCreator.swift */,
-				5058A91D281D107A00C223C9 /* DiskExporter.swift */,
-				500E2D652824EC130015C46F /* CartridgeInspector.swift */,
-				5098C57A2658CF9800E05EFC /* VideoExporter.swift */,
-				5098C57E2658E1F400E05EFC /* DragImageView.swift */,
-				50031B39206FB0FC00A1969B /* SnapshotController.swift */,
-				50B485FE24FA1D4100844133 /* iCarousel.h */,
-				50B485FC24FA1D3200844133 /* iCarousel.m */,
+				50157EF22825AD49000E9DDD /* Captures */,
+				50157EF32825AD6D000E9DDD /* Media */,
 			);
 			path = Dialogs;
 			sourceTree = "<group>";
@@ -915,18 +903,6 @@
 			path = Keyboard;
 			sourceTree = "<group>";
 		};
-		500F7CC4281E58DA003F1A7C /* DiskInspector */ = {
-			isa = PBXGroup;
-			children = (
-				5058A91F281D109F00C223C9 /* DiskInspector.swift */,
-				50D5F88924F5573D0062EF13 /* DiskErrorController.swift */,
-				50D5F88524F52A300062EF13 /* DiskDataView.swift */,
-				50D5F87F24F4F12F0062EF13 /* TrackTableView.swift */,
-				50D5F88324F4FE9C0062EF13 /* SectorTableView.swift */,
-			);
-			path = DiskInspector;
-			sourceTree = "<group>";
-		};
 		500FAA62261376980062488E /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -958,6 +934,35 @@
 			path = Utilities;
 			sourceTree = "<group>";
 			usesTabs = 0;
+		};
+		50157EF22825AD49000E9DDD /* Captures */ = {
+			isa = PBXGroup;
+			children = (
+				507E7A9F24FB881500AB433C /* ScreenshotViewer.swift */,
+				503C1DD224FCD1BF00D91141 /* SnapshotViewer.swift */,
+				5098C57A2658CF9800E05EFC /* VideoExporter.swift */,
+				50B485FE24FA1D4100844133 /* iCarousel.h */,
+				50B485FC24FA1D3200844133 /* iCarousel.m */,
+			);
+			path = Captures;
+			sourceTree = "<group>";
+		};
+		50157EF32825AD6D000E9DDD /* Media */ = {
+			isa = PBXGroup;
+			children = (
+				5058A91F281D109F00C223C9 /* DiskInspector.swift */,
+				50D5F88924F5573D0062EF13 /* DiskErrorController.swift */,
+				50D5F88524F52A300062EF13 /* DiskDataView.swift */,
+				50D5F87F24F4F12F0062EF13 /* TrackTableView.swift */,
+				50D5F88324F4FE9C0062EF13 /* SectorTableView.swift */,
+				5058A921281D10B100C223C9 /* VolumeInspector.swift */,
+				50157EEE2825A814000E9DDD /* DiskImporter.swift */,
+				5058A923281D10C600C223C9 /* DiskCreator.swift */,
+				5058A91D281D107A00C223C9 /* DiskExporter.swift */,
+				500E2D652824EC130015C46F /* CartridgeInspector.swift */,
+			);
+			path = Media;
+			sourceTree = "<group>";
 		};
 		50176C6D0A6F7357009E80BD /* GUI */ = {
 			isa = PBXGroup;
@@ -1902,7 +1907,6 @@
 				50133B97200D4EED00167227 /* MetalView.swift in Sources */,
 				504C435E24AF29AC00E69CAE /* FinalIII.cpp in Sources */,
 				50A22A2F2618845800C9FB1E /* TextureRect.swift in Sources */,
-				50031B3A206FB0FC00A1969B /* SnapshotController.swift in Sources */,
 				506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */,
 				505D492821C155DD00A7C575 /* RomConf.swift in Sources */,
 				50BE4B5A24E7F81B008F39C9 /* NSColor.swift in Sources */,
