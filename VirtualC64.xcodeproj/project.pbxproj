@@ -211,8 +211,6 @@
 		50B165AE25B06A03009B576D /* TextureToolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B165AD25B06A03009B576D /* TextureToolbox.swift */; };
 		50B1A61D25A2368D00201A2C /* DeviceDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1A61C25A2368D00201A2C /* DeviceDatabase.swift */; };
 		50B1A61F25A2386F00201A2C /* HIDExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B1A61E25A2386F00201A2C /* HIDExtensions.swift */; };
-		50B485F924F96E9400844133 /* ImportDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B485F824F96E9400844133 /* ImportDialog.xib */; };
-		50B485FB24F9911600844133 /* ImportDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B485FA24F9911600844133 /* ImportDialog.swift */; };
 		50B485FD24FA1D3200844133 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B485FC24FA1D3200844133 /* iCarousel.m */; };
 		50B579B7281436F6001D8621 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B579B5281436F6001D8621 /* StringUtils.cpp */; };
 		50B7566C2617703100CE1865 /* RessourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7566B2617703100CE1865 /* RessourceManager.swift */; };
@@ -674,8 +672,6 @@
 		50B1A61B25A20DFB00201A2C /* FSTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FSTypes.h; sourceTree = "<group>"; };
 		50B1A61C25A2368D00201A2C /* DeviceDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDatabase.swift; sourceTree = "<group>"; };
 		50B1A61E25A2386F00201A2C /* HIDExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDExtensions.swift; sourceTree = "<group>"; };
-		50B485F824F96E9400844133 /* ImportDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportDialog.xib; sourceTree = "<group>"; };
-		50B485FA24F9911600844133 /* ImportDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportDialog.swift; sourceTree = "<group>"; };
 		50B485FC24FA1D3200844133 /* iCarousel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		50B485FE24FA1D4100844133 /* iCarousel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		50B579B5281436F6001D8621 /* StringUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtils.cpp; sourceTree = "<group>"; };
@@ -863,7 +859,6 @@
 				5058A923281D10C600C223C9 /* DiskCreator.swift */,
 				5058A91D281D107A00C223C9 /* DiskExporter.swift */,
 				500E2D652824EC130015C46F /* CartridgeInspector.swift */,
-				50B485FA24F9911600844133 /* ImportDialog.swift */,
 				5098C57A2658CF9800E05EFC /* VideoExporter.swift */,
 				5098C57E2658E1F400E05EFC /* DragImageView.swift */,
 				50031B39206FB0FC00A1969B /* SnapshotController.swift */,
@@ -1574,7 +1569,6 @@
 				5098C57C2658D4DC00E05EFC /* VideoExporter.xib */,
 				50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */,
 				50F99563203AEC80004C4856 /* KeyViewItem.xib */,
-				50B485F824F96E9400844133 /* ImportDialog.xib */,
 			);
 			path = "XIB files";
 			sourceTree = "<group>";
@@ -1696,7 +1690,6 @@
 			files = (
 				506A724821C033EF00DA0AC3 /* Configuration.xib in Resources */,
 				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
-				50B485F924F96E9400844133 /* ImportDialog.xib in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */,
 				500E2D642824EBE30015C46F /* CartridgeInspector.xib in Resources */,
@@ -1973,7 +1966,6 @@
 				50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */,
 				504C439724AF29AC00E69CAE /* voice.cc in Sources */,
 				504C436224AF29AC00E69CAE /* GeoRam.cpp in Sources */,
-				50B485FB24F9911600844133 /* ImportDialog.swift in Sources */,
 				5002FA7D21C2651B00DA4BBC /* VideoConf.swift in Sources */,
 				508081E925110FFE0084B060 /* Dinamic.cpp in Sources */,
 				504C43A324AF29AC00E69CAE /* ProcessorPort.cpp in Sources */,
