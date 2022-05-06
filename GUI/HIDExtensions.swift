@@ -15,11 +15,11 @@ extension IOHIDDevice {
         let optionBits = IOOptionBits(kIOHIDOptionsTypeNone)
         if IOHIDDeviceOpen(self, optionBits) != kIOReturnSuccess {
             
-            log("WARNING: Cannot open HID device")
+            debug("WARNING: Cannot open HID device")
             return false
         }
 
-        log("HID device opened")
+        debug("HID device opened")
         return true
     }
     
@@ -29,11 +29,11 @@ extension IOHIDDevice {
         let optionBits = IOOptionBits(kIOHIDOptionsTypeNone)
         if IOHIDDeviceClose(self, optionBits) != kIOReturnSuccess {
 
-            log("WARNING: Cannot close HID device")
+            debug("WARNING: Cannot close HID device")
             return false
         }
         
-        log("HID device closed")
+        debug("HID device closed")
         return true
     }
     

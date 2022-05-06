@@ -360,7 +360,7 @@ extension MyController: NSMenuItemValidation {
 
         let pasteBoard = NSPasteboard.general
         guard let text = pasteBoard.string(forType: .string) else {
-            log("Cannot paste. No text in pasteboard")
+            debug("Cannot paste. No text in pasteboard")
             return
         }
         
@@ -461,9 +461,9 @@ extension MyController: NSMenuItemValidation {
             virtualKeyboard = VirtualKeyboardController(with: self, nibName: name)
         }
         if virtualKeyboard?.window?.isVisible == true {
-            log("Virtual keyboard already open")
+            debug("Virtual keyboard already open")
         } else {
-            log("Opeining virtual keyboard as a window")
+            debug("Opeining virtual keyboard as a window")
         }
 
         virtualKeyboard?.showWindow()
@@ -664,7 +664,7 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func exportRecentDiskAction(_ sender: NSMenuItem!) {
                 
-        log()
+        debug()
 
         let drive = sender.tag < 10 ? DRIVE8 : DRIVE9
         let slot = sender.tag % 10

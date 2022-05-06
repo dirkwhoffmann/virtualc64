@@ -86,7 +86,7 @@ extension CartridgeInspector: NSTableViewDataSource {
 
         default:
 
-            log("\(tableColumn!.identifier.rawValue)")
+            debug("\(tableColumn!.identifier.rawValue)")
             fatalError()
         }
     }

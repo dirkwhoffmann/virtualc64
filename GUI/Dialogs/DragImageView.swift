@@ -17,7 +17,7 @@ class DragImageView: NSImageView, NSDraggingSource {
 
     override init(frame frameRect: NSRect) {
         
-        log(level: 2)
+        debug(level: 2)
 
         super.init(frame: frameRect)
         isEditable = true
@@ -25,7 +25,7 @@ class DragImageView: NSImageView, NSDraggingSource {
 
     required init?(coder: NSCoder) {
 
-        log(level: 2)
+        debug(level: 2)
 
         super.init(coder: coder)
         isEditable = true
@@ -53,7 +53,7 @@ class DragImageView: NSImageView, NSDraggingSource {
 
     override func mouseDown(with theEvent: NSEvent) {
         
-        log(level: 2)
+        debug(level: 2)
         
         // Create a file promise provider
         let provider = NSFilePromiseProvider(fileType: "public.data",

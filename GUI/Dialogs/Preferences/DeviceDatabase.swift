@@ -65,12 +65,12 @@ class DeviceDatabase {
     
     func save() {
         
-        log()
+        debug()
         
         let defaults = UserDefaults.standard
         defaults.set(custom, forKey: Keys.Dev.schemes)
         
-        log("\(custom)")
+        debug("\(custom)")
     }
     
     //

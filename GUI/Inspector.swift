@@ -462,7 +462,7 @@ extension Inspector: NSTabViewDelegate {
 
         if let id = panel.selectedTabViewItem?.label {
         
-            log("Switching inspection target to \(id)")
+            debug("Switching inspection target to \(id)")
             
             switch id {
                 

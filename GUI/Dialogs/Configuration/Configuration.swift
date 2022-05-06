@@ -449,7 +449,7 @@ class Configuration {
     
     func saveRomUserDefaults() throws {
         
-        log(level: 2)
+        debug(level: 2)
 
         var url: URL?
         

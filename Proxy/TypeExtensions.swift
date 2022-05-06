@@ -134,7 +134,7 @@ extension ErrorCode {
             return String(format: "Expected a value less or equal %d", exp)
 
         default:
-            log("\(self)")
+            debug("\(self)")
             fatalError()
         }
     }

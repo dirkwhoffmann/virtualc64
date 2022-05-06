@@ -45,7 +45,7 @@ extension MyController: NSWindowDelegate {
 
     public func windowShouldClose(_ sender: NSWindow) -> Bool {
 
-        log()
+        debug()
         if proceedWithUnsavedFloppyDisks() {
             return true
         } else {
@@ -55,34 +55,34 @@ extension MyController: NSWindowDelegate {
 
     public func windowWillClose(_ notification: Notification) {
         
-        log()
+        debug()
         
-        log("Stopping renderer...", level: 2)
+        debug("Stopping renderer...", level: 2)
         renderer.halt()
 
-        log("Stopping timers...", level: 2)
+        debug("Stopping timers...", level: 2)
         snapshotTimer?.invalidate()
         snapshotTimer = nil
 
-        log("Closing auxiliary windows...", level: 2)
+        debug("Closing auxiliary windows...", level: 2)
         inspector?.c64 = nil
         inspector?.close()
         monitor?.c64 = nil
         monitor?.close()
                         
-        log("Shutting down the audio backend...", level: 2)
+        debug("Shutting down the audio backend...", level: 2)
         macAudio.shutDown()
         
-        log("Disconnecting gaming devices...", level: 2)
+        debug("Disconnecting gaming devices...", level: 2)
         gamePadManager.shutDown()
         
-        log("Shutting down the emulator...", level: 2)
+        debug("Shutting down the emulator...", level: 2)
         c64.halt()
     }
     
     func shutDown() {
         
-        log("Removing proxy...", level: 2)
+        debug("Removing proxy...", level: 2)
         
         c64.kill()
         c64 = nil
@@ -90,31 +90,31 @@ extension MyController: NSWindowDelegate {
     
     public func windowWillEnterFullScreen(_ notification: Notification) {
 
-        log()
+        debug()
         renderer.fullscreen = true
         showStatusBar(false)
     }
     
     public func  windowDidEnterFullScreen(_ notification: Notification) {
 
-        log()
+        debug()
     }
     
     public func windowWillExitFullScreen(_ notification: Notification) {
 
-        log()
+        debug()
         renderer.fullscreen = false
         showStatusBar(true)
     }
     
     public func windowDidExitFullScreen(_ notification: Notification) {
 
-        log()
+        debug()
     }
     
     public func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
         
-        log()
+        debug()
         let autoHideToolbar = NSApplication.PresentationOptions.autoHideToolbar
         var options = NSApplication.PresentationOptions(rawValue: autoHideToolbar.rawValue)
         options.insert(proposedOptions)

@@ -106,7 +106,7 @@ class GamePadManager {
     
     func shutDown() {
         
-        log(level: 2)
+        debug(level: 2)
         
         // Terminate communication with all connected HID devices
         for (_, pad) in gamePads { pad.device?.close() }
@@ -120,7 +120,7 @@ class GamePadManager {
     
     deinit {
         
-        log(level: 2)
+        debug(level: 2)
     }
     
     //
@@ -140,7 +140,7 @@ class GamePadManager {
         // We support up to 5 devices
         if nr < 5 { return nr }
         
-        log("Maximum number of devices reached.")
+        debug("Maximum number of devices reached.")
         return nil
     }
     
