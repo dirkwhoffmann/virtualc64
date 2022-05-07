@@ -18,6 +18,7 @@ class DiskExporter: DialogController {
     }
 
     var myDocument: MyDocument { return parent.mydocument! }
+    var mediaManager: MediaManager { return parent.mm }
 
     @IBOutlet weak var icon: NSImageView!
     @IBOutlet weak var title: NSTextField!
@@ -218,6 +219,8 @@ class DiskExporter: DialogController {
     @discardableResult
     func export(url: URL) -> Bool {
 
+        var rememberUrl = true
+
         do {
 
             switch formatPopup.selectedTag() {
@@ -225,31 +228,35 @@ class DiskExporter: DialogController {
             case Format.d64:
 
                 debug(.media, "Exporting D64")
-                try parent.mydocument.export(file: d64!, to: url)
+                try mediaManager.export(file: d64!, to: url)
 
             case Format.t64:
 
                 debug(.media, "Exporting T64")
-                try parent.mydocument.export(file: t64!, to: url)
+                try mediaManager.export(file: t64!, to: url)
 
             case Format.prg:
 
                 debug(.media, "Exporting PRG")
-                try parent.mydocument.export(file: prg!, to: url)
+                try mediaManager.export(file: prg!, to: url)
 
             case Format.vol:
 
                 debug(.media, "Exporting file system")
                 try vol!.export(url: url)
+                rememberUrl = false
 
             default:
                 fatalError()
             }
 
             drive.markDiskAsUnmodified()
-            parent.mm.noteNewRecentlyExportedDiskURL(url, drive: drive.id)
+            if rememberUrl {
+                parent.mm.noteNewRecentlyExportedDiskURL(url, drive: drive.id)
+            }
 
         } catch {
+
             parent.showAlert(.cantExport(url: url), error: error, async: true, window: window)
             return false
         }

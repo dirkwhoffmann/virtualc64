@@ -645,7 +645,7 @@ extension MyController: NSMenuItemValidation {
         if let url = mm.getRecentlyExportedDiskURL(slot, drive: id) {
             
             do {
-                try mydocument.export(drive: id, to: url)
+                try mm.export(drive: id, to: url)
             } catch {
                 showAlert(.cantExport(url: url), error: error)
             }
