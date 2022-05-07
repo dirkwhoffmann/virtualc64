@@ -215,12 +215,24 @@ Interpreter::registerInstructions()
     
     
     //
-    // CPU
+    // Datasette
     //
 
     root.add({"datasette"},
-             "component", "Commodore 1530 tape drive");
-    
+             "component", "Commodore tape drive");
+
+    root.add({"datasette", "config"},
+             "command", "Displays the current configuration",
+             &RetroShell::exec <Token::datasette, Token::config>);
+
+    root.add({"datasette", "connect"},
+             "command", "Connects the datasette",
+             &RetroShell::exec <Token::datasette, Token::connect>);
+
+    root.add({"datasette", "disconnect"},
+             "command", "Disconnects the datasette",
+             &RetroShell::exec <Token::datasette, Token::disconnect>);
+
     root.add({"datasette", "inspect"},
              "command", "Displays the component state",
              &RetroShell::exec <Token::datasette, Token::inspect>);

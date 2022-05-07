@@ -51,17 +51,7 @@ enum_long(OPT)
     // CIA
     OPT_CIA_REVISION,
     OPT_TIMER_B_BUG,
-    
-    // Mouse
-    OPT_MOUSE_MODEL,
-    OPT_SHAKE_DETECTION,
-    OPT_MOUSE_VELOCITY,
 
-    // Joystick
-    OPT_AUTOFIRE,
-    OPT_AUTOFIRE_BULLETS,
-    OPT_AUTOFIRE_DELAY,
-    
     // SID
     OPT_SID_ENABLE,
     OPT_SID_ADDRESS,
@@ -94,7 +84,21 @@ enum_long(OPT)
     OPT_DRV_STEP_VOL,
     OPT_DRV_INSERT_VOL,
     OPT_DRV_EJECT_VOL,
-            
+
+    // Datasette
+    OPT_DAT_MODEL,
+    OPT_DAT_CONNECT,
+
+    // Mouse
+    OPT_MOUSE_MODEL,
+    OPT_SHAKE_DETECTION,
+    OPT_MOUSE_VELOCITY,
+
+    // Joystick
+    OPT_AUTOFIRE,
+    OPT_AUTOFIRE_BULLETS,
+    OPT_AUTOFIRE_DELAY,
+
     OPT_COUNT
 };
 typedef OPT Option;
@@ -103,7 +107,7 @@ typedef OPT Option;
 struct OptionEnum : util::Reflection<OptionEnum, Option> {
     
     static constexpr long minVal = 0;
-    static constexpr long maxVal = OPT_DRV_EJECT_VOL;
+    static constexpr long maxVal = OPT_AUTOFIRE_DELAY;
 	static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "OPT"; }
@@ -137,14 +141,6 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
                 
             case OPT_CIA_REVISION:        return "CIA_REVISION";
             case OPT_TIMER_B_BUG:         return "TIMER_B_BUG";
-                
-            case OPT_MOUSE_MODEL:         return "MOUSE_MODEL";
-            case OPT_SHAKE_DETECTION:     return "SHAKE_DETECTION";
-            case OPT_MOUSE_VELOCITY:      return "MOUSE_VELOCITY";
-
-            case OPT_AUTOFIRE:            return "AUTOFIRE";
-            case OPT_AUTOFIRE_BULLETS:    return "AUTOFIRE_BULLETS";
-            case OPT_AUTOFIRE_DELAY:      return "AUTOFIRE_DELAY";
 
             case OPT_SID_ENABLE:          return "SID_ENABLE";
             case OPT_SID_ADDRESS:         return "SID_ADDRESS";
@@ -175,7 +171,18 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_DRV_STEP_VOL:        return "DRV_STEP_VOL";
             case OPT_DRV_INSERT_VOL:      return "DRV_INSERT_VOL";
             case OPT_DRV_EJECT_VOL:       return "DRV_EJECT_VOL";
-                                
+
+            case OPT_DAT_MODEL:           return "DAT_MODEL";
+            case OPT_DAT_CONNECT:         return "DAT_CONNECT";
+
+            case OPT_MOUSE_MODEL:         return "MOUSE_MODEL";
+            case OPT_SHAKE_DETECTION:     return "SHAKE_DETECTION";
+            case OPT_MOUSE_VELOCITY:      return "MOUSE_VELOCITY";
+
+            case OPT_AUTOFIRE:            return "AUTOFIRE";
+            case OPT_AUTOFIRE_BULLETS:    return "AUTOFIRE_BULLETS";
+            case OPT_AUTOFIRE_DELAY:      return "AUTOFIRE_DELAY";
+
             case OPT_COUNT:               return "???";
         }
         return "???";

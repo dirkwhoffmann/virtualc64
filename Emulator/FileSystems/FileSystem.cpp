@@ -899,14 +899,14 @@ FileSystem::exportDirectory(const string &path, bool createDir)
     for (auto const& entry : dir) {
 
         if (entry->getFileType() != FS_FILETYPE_PRG) {
-            msg("Skipping file %s\n", entry->getName().c_str());
+            debug(FS_DEBUG, "Skipping file %s\n", entry->getName().c_str());
             continue;
         }
         
         exportFile(entry, path);
     }
     
-    msg("Exported %zu items", dir.size());
+    debug(FS_DEBUG, "Exported %zu items", dir.size());
 }
 
 void

@@ -457,7 +457,12 @@ extension MyController {
 		case .DRIVE_POWER_SAVE_ON,
 				.DRIVE_POWER_SAVE_OFF:
 			break
-			
+
+        case .VC1530_CONNECT,
+                .VC1530_DISCONNECT:
+            hideOrShowDriveMenus()
+            refreshStatusBar()
+
 		case .VC1530_TAPE:
 			refreshStatusBar()
 			

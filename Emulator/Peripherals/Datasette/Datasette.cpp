@@ -54,6 +54,12 @@ Datasette::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
+    if (category == Category::Config) {
+
+        os << tab("Model") << DatasetteModelEnum::key(config.model) << std::endl;
+        os << tab("Connected") << bol(config.connected) << std::endl;
+    }
+
     if (category == Category::State) {
         
         os << tab("TAP type");
@@ -125,6 +131,57 @@ Datasette::didSaveToBuffer(u8 *buffer)
     for (isize i = 0; i < size; i++) writer << pulses[i].cycles;
         
     return (isize)(writer.ptr - buffer);
+}
+
+void
+Datasette::resetConfig()
+{
+    assert(isPoweredOff());
+    auto &defaults = c64.defaults;
+
+    std::vector <Option> options = {
+
+        OPT_DAT_MODEL,
+        OPT_DAT_CONNECT
+    };
+
+    for (auto &option : options) {
+        setConfigItem(option, defaults.get(option));
+    }
+}
+
+i64
+Datasette::getConfigItem(Option option) const
+{
+    switch (option) {
+
+        case OPT_DAT_MODEL:     return config.model;
+        case OPT_DAT_CONNECT:   return config.connected;
+
+        default:
+            fatalError;
+    }
+}
+
+void
+Datasette::setConfigItem(Option option, i64 value)
+{
+    switch (option) {
+
+        case OPT_DAT_MODEL:
+
+            config.model = DatasetteModel(value);
+            return;
+
+        case OPT_DAT_CONNECT:
+
+            config.connected = bool(value);
+            msgQueue.put(value ? MSG_VC1530_CONNECT : MSG_VC1530_DISCONNECT);
+            return;
+
+        default:
+            return;
+    }
 }
 
 util::Time
@@ -225,6 +282,9 @@ Datasette::pressPlay()
 {
     debug(TAP_DEBUG, "pressPlay\n");
 
+    // Only proceed if the device is connected
+    if (!config.connected) return;
+
     // Only proceed if a tape is present
     if (!hasTape()) return;
     
@@ -241,7 +301,10 @@ void
 Datasette::pressStop()
 {
     debug(TAP_DEBUG, "pressStop\n");
-    
+
+    // Only proceed if the device is connected
+    if (!config.connected) return;
+
     playKey = false;
     motor = false;
 
@@ -252,6 +315,9 @@ void
 Datasette::setMotor(bool value)
 {
     if (motor != value) {
+
+        // Only proceed if the device is connected
+        if (!config.connected) return;
 
         motor = value;
         

@@ -14,6 +14,7 @@
         </customObject>
         <customObject id="9vR-C0-Vqf" customClass="MyAppDelegate" customModule="VirtualC64" customModuleProvider="target">
             <connections>
+                <outlet property="datasetteMenu" destination="qM3-ZW-mhJ" id="2rz-po-AnF"/>
                 <outlet property="drive8Menu" destination="XQm-ka-Db5" id="h36-F6-8Yq"/>
                 <outlet property="drive9Menu" destination="zmi-bv-6va" id="At6-Mn-w7m"/>
             </connections>

@@ -14,7 +14,7 @@ extension ConfigurationController {
         let enable8 = config.drive8Connected && !config.drive8AutoConf
         let enable9 = config.drive9Connected && !config.drive9AutoConf
             
-        // Drive
+        // First drive
         perDrive8Connect.state = config.drive8Connected ? .on : .off
         perDrive8Config.selectItem(withTag: config.drive8AutoConf ? 0 : 1)
         perDrive8Type.selectItem(withTag: config.drive8Type)
@@ -25,6 +25,7 @@ extension ConfigurationController {
         perDrive8Ram.isEnabled = enable8
         perDrive8Cable.isEnabled = enable8
 
+        // Second drive
         perDrive9Connect.state = config.drive9Connected ? .on : .off
         perDrive9Config.selectItem(withTag: config.drive9AutoConf ? 0 : 1)
         perDrive9Type.selectItem(withTag: config.drive9Type)
@@ -34,6 +35,14 @@ extension ConfigurationController {
         perDrive9Type.isEnabled = enable9
         perDrive9Ram.isEnabled = enable9
         perDrive9Cable.isEnabled = enable9
+
+        // Datasette
+        perDatasetteModel.selectItem(withTag: config.datasetteModel)
+        perDatasetteConnect.state = config.datasetteConnected ? .on : .off
+        perDrive9Connect.state = config.drive9Connected ? .on : .off
+        perDrive9Config.selectItem(withTag: config.drive9AutoConf ? 0 : 1)
+        perDrive9Type.selectItem(withTag: config.drive9Type)
+        perDatasetteModel.isEnabled = config.datasetteConnected
 
         // Ports
         parent.gamePadManager.refresh(popup: perControlPort1, hide: true)
@@ -95,6 +104,18 @@ extension ConfigurationController {
         case 9: config.drive9ParCable = sender.selectedTag()
         default: fatalError()
         }
+        refresh()
+    }
+
+    @IBAction func perDatasetteConnectAction(_ sender: NSButton!) {
+
+        config.datasetteConnected = sender.state == .on
+        refresh()
+    }
+
+    @IBAction func perDatasetteModelAction(_ sender: NSPopUpButton!) {
+
+        config.datasetteModel = sender.selectedTag()
         refresh()
     }
 

@@ -180,6 +180,7 @@ extension MyController: NSMenuItemValidation {
         
         myAppDelegate.drive8Menu.isHidden = !config.drive8Connected
         myAppDelegate.drive9Menu.isHidden = !config.drive9Connected
+        myAppDelegate.datasetteMenu.isHidden = !config.datasetteConnected
     }
     
     //

@@ -88,6 +88,9 @@ Defaults::Defaults()
     setFallback(OPT_DRV_INSERT_VOL, {DRIVE8, DRIVE9}, 50);
     setFallback(OPT_DRV_EJECT_VOL, {DRIVE8, DRIVE9}, 50);
 
+    setFallback(OPT_DAT_MODEL, DATASETTE_C1530);
+    setFallback(OPT_DAT_CONNECT, true);
+
     setFallback(OPT_AUTOFIRE, false);
     setFallback(OPT_AUTOFIRE_BULLETS, -3);
     setFallback(OPT_AUTOFIRE_DELAY, 125);

@@ -192,6 +192,10 @@ C64::getConfigItem(Option option) const
 
         case OPT_RAM_PATTERN:
             return mem.getConfigItem(option);
+
+        case OPT_DAT_MODEL:
+        case OPT_DAT_CONNECT:
+            return datasette.getConfigItem(option);
             
         default:
             fatalError;
@@ -325,22 +329,6 @@ C64::configure(Option option, i64 value)
             cia2.setConfigItem(option, value);
             break;
 
-        case OPT_MOUSE_MODEL:
-        case OPT_SHAKE_DETECTION:
-        case OPT_MOUSE_VELOCITY:
-
-            port1.mouse.setConfigItem(option, value);
-            port2.mouse.setConfigItem(option, value);
-            break;
-
-        case OPT_AUTOFIRE:
-        case OPT_AUTOFIRE_BULLETS:
-        case OPT_AUTOFIRE_DELAY:
-            
-            port1.joystick.setConfigItem(option, value);
-            port2.joystick.setConfigItem(option, value);
-            break;
-
         case OPT_SID_ENABLE:
         case OPT_SID_ADDRESS:
 
@@ -386,7 +374,26 @@ C64::configure(Option option, i64 value)
             drive8.setConfigItem(option, value);
             drive9.setConfigItem(option, value);
             break;
+
+        case OPT_DAT_MODEL:
+        case OPT_DAT_CONNECT:
+            datasette.setConfigItem(option, value);
             
+        case OPT_MOUSE_MODEL:
+        case OPT_SHAKE_DETECTION:
+        case OPT_MOUSE_VELOCITY:
+
+            port1.mouse.setConfigItem(option, value);
+            port2.mouse.setConfigItem(option, value);
+            break;
+
+        case OPT_AUTOFIRE:
+        case OPT_AUTOFIRE_BULLETS:
+        case OPT_AUTOFIRE_DELAY:
+
+            port1.joystick.setConfigItem(option, value);
+            port2.joystick.setConfigItem(option, value);
+            break;
         default:
             fatalError;
     }

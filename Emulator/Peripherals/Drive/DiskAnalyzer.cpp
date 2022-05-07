@@ -15,8 +15,6 @@
 
 DiskAnalyzer::DiskAnalyzer(const Disk &disk)
 {
-    msg("DiskAnalyzer::DiskAnalyzer\n");
-            
     // Extract the GCR encoded bit stream from the disk
     for (Halftrack ht = 1; ht < 85; ht++) {
 
@@ -38,9 +36,7 @@ DiskAnalyzer::DiskAnalyzer(const Disk &disk)
 }
 
 DiskAnalyzer::~DiskAnalyzer()
-{
-    msg("DiskAnalyzer::~DiskAnalyzer\n");
-    
+{    
     for (isize ht = 1; ht < 85; ht++) delete [] data[ht];
 }
 

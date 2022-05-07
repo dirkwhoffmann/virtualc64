@@ -108,7 +108,7 @@ CRTFile::repair()
         case 0xb2a479a5a2ee6cd5: // Mikro Assembler
 
             // Replace invalid CRT type $00 by $1C
-            msg("Repairing broken Mikro Assembler cartridge\n");
+            debug(CRT_DEBUG, "Repairing broken Mikro Assembler cartridge\n");
             data[0x17] = 0x1C;
             break;            
     }

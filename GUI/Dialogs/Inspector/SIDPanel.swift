@@ -101,25 +101,16 @@ extension Inspector {
         sidPotY.intValue = Int32(info.potY)
         
         // Filter
-        if info.filterType & 0x10 != 0 {
-             sidFilterType.selectItem(at: 1)
-         } else if info.filterType & 0x20 != 0 {
-             sidFilterType.selectItem(at: 2)
-         } else if info.filterType & 0x40 != 0 {
-             sidFilterType.selectItem(at: 3)
-         } else {
-             sidFilterType.selectItem(at: 0)
-         }
-         sidFilterType.item(at: 0)?.state = (info.filterType == 0) ? .on : .off
-         sidFilterType.item(at: 1)?.state = (info.filterType & 0x10 != 0) ? .on : .off
-         sidFilterType.item(at: 2)?.state = (info.filterType & 0x20 != 0) ? .on : .off
-         sidFilterType.item(at: 3)?.state = (info.filterType & 0x40 != 0) ? .on : .off
-         
-         sidFilterResonance.intValue = Int32(info.filterResonance)
-         sidFilterCutoff.intValue = Int32(info.filterCutoff)
-         sidFilter1.intValue = (info.filterEnableBits & 0x01) != 0 ? 1 : 0
-         sidFilter2.intValue = (info.filterEnableBits & 0x02) != 0 ? 1 : 0
-         sidFilter3.intValue = (info.filterEnableBits & 0x04) != 0 ? 1 : 0
+        sidFilterType.item(at: 0)?.state = (info.filterType == 0) ? .on : .off
+        sidFilterType.item(at: 1)?.state = (info.filterType & 0x10 != 0) ? .on : .off
+        sidFilterType.item(at: 2)?.state = (info.filterType & 0x20 != 0) ? .on : .off
+        sidFilterType.item(at: 3)?.state = (info.filterType & 0x40 != 0) ? .on : .off
+
+        sidFilterResonance.intValue = Int32(info.filterResonance)
+        sidFilterCutoff.intValue = Int32(info.filterCutoff)
+        sidFilter1.intValue = (info.filterEnableBits & 0x01) != 0 ? 1 : 0
+        sidFilter2.intValue = (info.filterEnableBits & 0x02) != 0 ? 1 : 0
+        sidFilter3.intValue = (info.filterEnableBits & 0x04) != 0 ? 1 : 0
         
         // Audio buffer
         let stats = c64.sid.getStats()
@@ -133,23 +124,12 @@ extension Inspector {
     }
     
     func refresh(waveform: UInt8, waveformPopup popup: NSPopUpButton) {
-        
-        if waveform & 0x10 != 0 {
-             popup.selectItem(at: 1)
-         } else if waveform & 0x20 != 0 {
-             popup.selectItem(at: 2)
-         } else if waveform & 0x40 != 0 {
-             popup.selectItem(at: 3)
-         } else if waveform & 0x80 != 0 {
-             popup.selectItem(at: 4)
-         } else {
-             popup.selectItem(at: 0)
-         }
-         popup.item(at: 0)?.state = (waveform == 0) ? .on : .off
-         popup.item(at: 1)?.state = (waveform & 0x10 != 0) ? .on : .off
-         popup.item(at: 2)?.state = (waveform & 0x20 != 0) ? .on : .off
-         popup.item(at: 3)?.state = (waveform & 0x40 != 0) ? .on : .off
-         popup.item(at: 4)?.state = (waveform & 0x80 != 0) ? .on : .off
+
+        popup.item(at: 0)?.state = (waveform == 0) ? .on : .off
+        popup.item(at: 1)?.state = (waveform & 0x10 != 0) ? .on : .off
+        popup.item(at: 2)?.state = (waveform & 0x20 != 0) ? .on : .off
+        popup.item(at: 3)?.state = (waveform & 0x40 != 0) ? .on : .off
+        popup.item(at: 4)?.state = (waveform & 0x80 != 0) ? .on : .off
     }
 
     @IBAction func selectSIDAction(_ sender: Any!) {

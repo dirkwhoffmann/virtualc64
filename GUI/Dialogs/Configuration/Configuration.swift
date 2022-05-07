@@ -155,6 +155,16 @@ class Configuration {
         set { c64.configure(.DRV_POWER_SWITCH, drive: DRIVE9, enable: newValue )}
     }
 
+    var datasetteConnected: Bool {
+        get { return c64.getConfig(.DAT_CONNECT) != 0 }
+        set { c64.configure(.DAT_CONNECT, enable: newValue ) }
+    }
+
+    var datasetteModel: Int {
+        get { return c64.getConfig(.DAT_MODEL) }
+        set { c64.configure(.DAT_MODEL, value: newValue )}
+    }
+
     var gameDevice1 = -1 {
         didSet {
             

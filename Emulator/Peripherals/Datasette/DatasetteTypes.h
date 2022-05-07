@@ -16,29 +16,25 @@
 // Enumerations
 //
 
-enum_long(MOUSE_MODEL)
+enum_long(DATASETTE_MODEL)
 {
-    MOUSE_C1350,
-    MOUSE_C1351,
-    MOUSE_NEOS
+    DATASETTE_C1530
 };
-typedef MOUSE_MODEL MouseModel;
+typedef DATASETTE_MODEL DatasetteModel;
 
 #ifdef __cplusplus
-struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
-    
-	static constexpr long minVal = 0;
-    static constexpr long maxVal = MOUSE_NEOS;
+struct DatasetteModelEnum : util::Reflection<DatasetteModelEnum, DatasetteModel> {
+
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = DATASETTE_C1530;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
-    static const char *prefix() { return "MOUSE"; }
-    static const char *key(MouseModel value)
+
+    static const char *prefix() { return "DATASETTE"; }
+    static const char *key(DatasetteModel value)
     {
         switch (value) {
-                
-            case MOUSE_C1350:  return "C1350";
-            case MOUSE_C1351:  return "C1351";
-            case MOUSE_NEOS:   return "NEOS";
+
+            case DATASETTE_C1530:  return "C1530";
         }
         return "???";
     }
@@ -52,8 +48,7 @@ struct MouseModelEnum : util::Reflection<MouseModelEnum, MouseModel> {
 
 typedef struct
 {
-    MouseModel model;
-    bool shakeDetection;
-    isize velocity;
+    DatasetteModel model;
+    bool connected;
 }
-MouseConfig;
+DatasetteConfig;

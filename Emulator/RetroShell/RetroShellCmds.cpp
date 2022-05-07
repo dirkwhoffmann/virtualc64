@@ -122,7 +122,6 @@ RetroShell::exec <Token::screenshot, Token::save> (Arguments &argv, long param)
 template <> void
 RetroShell::exec <Token::screenshot> (Arguments &argv, long param)
 {
-    // std::ofstream file;
     std::vector<string> vec(argv.begin(), argv.end());
 
     auto path = vec[0];
@@ -135,17 +134,12 @@ RetroShell::exec <Token::screenshot> (Arguments &argv, long param)
     string rawFile = "/tmp/" + path + ".raw";
     string tiffFile = "/tmp/" + path + ".tiff";
 
-    // Open an output stream
-    // file.open(rawFile.c_str());
-    
     // Dump texture
     regressionTester.x1 = x1;
     regressionTester.y1 = y1;
     regressionTester.x2 = x2;
     regressionTester.y2 = y2;
     regressionTester.dumpTexture(c64, rawFile);
-    // dumpTexture(file, x1, y1, x2, y2);
-    // file.close();
     
     // Convert raw data into a TIFF file
     string cmd = "/usr/local/bin/raw2tiff";
@@ -340,6 +334,24 @@ RetroShell::exec <Token::drive, Token::inspect, Token::disk> (Arguments& argv, l
 //
 // Datasette
 //
+
+template <> void
+RetroShell::exec <Token::datasette, Token::config> (Arguments& argv, long param)
+{
+    dump(datasette, Category::Config);
+}
+
+template <> void
+RetroShell::exec <Token::datasette, Token::connect> (Arguments& argv, long param)
+{
+    c64.configure(OPT_DAT_CONNECT, true);
+}
+
+template <> void
+RetroShell::exec <Token::datasette, Token::disconnect> (Arguments& argv, long param)
+{
+    c64.configure(OPT_DAT_CONNECT, false);
+}
 
 template <> void
 RetroShell::exec <Token::datasette, Token::inspect> (Arguments& argv, long param)

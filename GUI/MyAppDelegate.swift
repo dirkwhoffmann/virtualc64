@@ -16,6 +16,7 @@ var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
            
     @IBOutlet weak var drive8Menu: NSMenuItem!
     @IBOutlet weak var drive9Menu: NSMenuItem!
+    @IBOutlet weak var datasetteMenu: NSMenuItem!
 
     // Replace the old document controller by instantiating a custom controller
     let myDocumentController = MyDocumentController()

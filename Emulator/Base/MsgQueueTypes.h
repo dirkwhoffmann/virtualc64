@@ -87,6 +87,8 @@ enum_long(MSG_TYPE)
     MSG_FILE_FLASHED,
 
     // Peripherals (Datasette)
+    MSG_VC1530_CONNECT,
+    MSG_VC1530_DISCONNECT,
     MSG_VC1530_TAPE,
     MSG_VC1530_PLAY,
     MSG_VC1530_MOTOR,
@@ -194,7 +196,9 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_DISK_UNSAVED:         return "DISK_UNSAVED";
             case MSG_DISK_PROTECT:         return "DISK_PROTECT";
             case MSG_FILE_FLASHED:         return "FILE_FLASHED";
-                
+
+            case MSG_VC1530_CONNECT:       return "VC1530_CONNECT";
+            case MSG_VC1530_DISCONNECT:    return "VC1530_DISCONNECT";
             case MSG_VC1530_TAPE:          return "VC1530_TAPE";
             case MSG_VC1530_PLAY:          return "VC1530_PLAY";
             case MSG_VC1530_MOTOR:         return "VC1530_MOTOR";
