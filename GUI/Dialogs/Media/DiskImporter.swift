@@ -7,6 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+import Foundation
+
 class DiskImporter: DialogController {
 
     @IBOutlet weak var icon: NSImageView!
@@ -20,22 +22,18 @@ class DiskImporter: DialogController {
     @IBOutlet weak var flash: NSPopUpButton!
     @IBOutlet weak var flashLabel: NSTextField!
 
+    // Dragged in URL
+    var url: URL!
+
     // Media file to process
     var file: AnyFileProxy?
 
-    // Proxy objects (created from the attachment when the sheet opens)
-    var g64: G64FileProxy?
-    var tap: TAPFileProxy?
-    var crt: CRTFileProxy?
-    var disk: DiskProxy?
+    // Extracted file system
     var volume: FileSystemProxy?
 
     var type: FileType!
     var writeProtect: Bool { return checkbox.state == .on }
     var autoRun: Bool { return checkbox.state == .on }
-
-    // Custom font
-    // var monofont: NSFont { return NSFont.monospaced(ofSize: 13.0, weight: .semibold) }
 
     var titleString = "???"
     var subtitle1String = "???"
@@ -46,11 +44,16 @@ class DiskImporter: DialogController {
     // Shortcuts
     var myDocument: MyDocument { return parent.mydocument! }
 
-    func show(proxy: AnyFileProxy) {
+    func show(url: URL) throws {
 
         debug(.lifetime)
 
-        file = proxy
+        // Load media file
+        file = try mm.createFileProxy(from: url, allowedTypes: FileType.draggable)
+
+        // Remember the URL
+        self.url = url
+
         showSheet()
     }
 
@@ -58,34 +61,28 @@ class DiskImporter: DialogController {
 
         switch file {
 
-        case is CRTFileProxy:
-
-            crt = file as? CRTFileProxy
+        case let file as CRTFileProxy:
 
             titleString = "Commodore Expansion Port Module"
-            subtitle1String = crt!.packageInfo
-            subtitle2String = crt!.lineInfo
+            subtitle1String = file.packageInfo
+            subtitle2String = file.lineInfo
             subtitle3String = ""
 
-            if !crt!.isSupported {
+            if !file.isSupported {
                 subtitle3String = "This cartridge is not supported by the emulator yet"
                 supportedCrt = false
             }
 
-        case is TAPFileProxy:
-
-            tap = file as? TAPFileProxy
+        case let file as TAPFileProxy:
 
             titleString = "Commodore Cassette Tape"
-            subtitle1String = tap!.version.description
+            subtitle1String = file.version.description
             subtitle2String = ""
             subtitle3String = ""
 
-        case is D64FileProxy:
+        case let file as D64FileProxy:
 
-            if let d64 = file as? D64FileProxy {
-                volume = try? FileSystemProxy.make(with: d64)
-            }
+            volume = try? FileSystemProxy.make(with: file)
 
             titleString = "Commodore 64 Floppy Disk"
             subtitle1String = volume?.layoutInfo ?? ""
@@ -94,51 +91,42 @@ class DiskImporter: DialogController {
 
         case is G64FileProxy:
 
-            g64 = file as? G64FileProxy
-
             titleString = "Commodore 64 Floppy Disk"
             subtitle1String = "A bit-accurate image of a C64 diskette"
             subtitle2String = ""
             subtitle3String = ""
 
-        case is T64FileProxy:
+        case let file as T64FileProxy:
 
-            if let collection = file as? AnyCollectionProxy {
-                volume = try? FileSystemProxy.make(with: collection)
-            }
+            volume = try? FileSystemProxy.make(with: file)
 
             titleString = "Commodore 64 Floppy Disk (from T64 file)"
             subtitle1String = volume?.layoutInfo ?? ""
             subtitle2String = volume?.dos.description ?? ""
             subtitle3String = volume?.filesInfo ?? ""
 
-        case is PRGFileProxy:
+        case let file as PRGFileProxy:
 
-            if let collection = file as? AnyCollectionProxy {
-                volume = try? FileSystemProxy.make(with: collection)
-            }
+            volume = try? FileSystemProxy.make(with: file)
 
             titleString = "Commodore 64 Floppy Disk (from PRG file)"
             subtitle1String = volume?.layoutInfo ?? ""
             subtitle2String = volume?.dos.description ?? ""
             subtitle3String = volume?.filesInfo ?? ""
 
-        case is P00FileProxy:
+        case let file as P00FileProxy:
 
-            if let collection = file as? AnyCollectionProxy {
-                volume = try? FileSystemProxy.make(with: collection)
-            }
+            volume = try? FileSystemProxy.make(with: file)
 
             titleString = "Commodore 64 Floppy Disk (from P00 file)"
             subtitle1String = volume?.layoutInfo ?? ""
             subtitle2String = volume?.dos.description ?? ""
             subtitle3String = volume?.filesInfo ?? ""
 
-        case is FolderProxy:
+        case let file as FolderProxy:
 
-            if let folder = file as? FolderProxy {
-                volume = folder.fileSystem
-            }
+            volume = try? FileSystemProxy.make(with: file)
+
             titleString = "Disk from a file system folder"
             subtitle1String = "Comprises all PRG files found in this directory"
             subtitle2String = ""
@@ -177,8 +165,9 @@ class DiskImporter: DialogController {
         flash.isHidden = numberOfItems == 0
         flashLabel.isHidden = numberOfItems == 0
 
-        // Configure controls
-        if tap != nil {
+        switch file {
+
+        case is TAPFileProxy:
 
             checkbox.title = "Auto load"
             drive8.isHidden = true
@@ -186,7 +175,7 @@ class DiskImporter: DialogController {
             drive9.isHidden = false
             drive9.keyEquivalent = "\r"
 
-        } else if crt != nil {
+        case is CRTFileProxy:
 
             checkbox.isHidden = true
             drive8.isHidden = true
@@ -196,7 +185,7 @@ class DiskImporter: DialogController {
             drive9.isEnabled = supportedCrt
             if !supportedCrt { subtitle3.textColor = .warningColor }
 
-        } else {
+        default:
 
             checkbox.title = "Write protect"
             drive8.isEnabled = connected8
@@ -258,36 +247,60 @@ class DiskImporter: DialogController {
 
     @IBAction func insertAction(_ sender: NSButton!) {
 
-        let drive = sender.tag == 0 ? c64.drive8! : c64.drive9!
+        do {
 
-        if volume != nil {
+            switch file {
 
-            debug(.media, "Inserting Volume (wp: \(writeProtect))")
-            drive.insertFileSystem(volume, protected: writeProtect)
+            case is FolderProxy:
 
-        } else if tap != nil {
+                debug(.media, "Inserting file system (wp: \(writeProtect))")
+                let drive = sender.tag == 0 ? c64.drive8! : c64.drive9!
+                drive.insertFileSystem(volume!, protected: writeProtect)
 
-            debug(.media, "Inserting Tape")
-            c64.datasette.insertTape(tap)
+            default:
 
-            if autoRun {
-                parent.keyboard.type("LOAD\n")
-                c64.datasette.pressPlay()
+                debug(.media, "Inserting media file \(url!) (wp: \(writeProtect))")
+
+                var options: [MediaManager.Option] = []
+
+                if autoRun { options.append(.autostart) }
+                if writeProtect { options.append(.protect) }
+                options.append(.reset)
+                options.append(.remember)
+
+                try mm.addMedia(url: url,
+                            allowedTypes: FileType.draggable,
+                            drive: sender.tag,
+                            options: options)
             }
+                /*
+            } else if tap != nil {
 
-        } else if crt != nil {
+                debug(.media, "Inserting Tape")
+                let options: [MediaManager.Option] = autoRun ? [ .autostart ] : []
+                try mm.addMedia(proxy: tap!, options: options)
 
-            debug(.media, "Attaching Cartridge")
-            try? c64.expansionport.attachCartridge(crt!, reset: true)
+            } else if crt != nil {
 
-        } else if g64 != nil {
+                debug(.media, "Attaching Cartridge")
+                let options: [MediaManager.Option] = [ .reset ]
+                try mm.addMedia(proxy: crt!, options: options)
 
-            debug(.media, "Inserting G64")
-            drive.insertG64(g64, protected: writeProtect)
+            } else if g64 != nil {
 
-        } else {
+                debug(.media, "Inserting G64")
+                let options: [MediaManager.Option] = writeProtect ? [ .protect ] : []
+                try mm.addMedia(proxy: g64!, drive: drive, options: options)
 
-            fatalError()
+            } else {
+
+                fatalError()
+            }
+                 */
+
+        } catch {
+
+            NSSound.beep()
         }
 
         parent.renderer.rotateLeft()

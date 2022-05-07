@@ -62,69 +62,6 @@ class MyDocument: NSDocument {
     }
 
     //
-    // Creating file proxys
-    //
-
-    func createFileProxy(from url: URL, allowedTypes: [FileType]) throws -> AnyFileProxy? {
-
-        debug(.media, "Reading file \(url.lastPathComponent)")
-
-        // If the provided URL points to compressed file, decompress it first
-        let newUrl = url.unpacked(maxSize: 2048 * 1024)
-
-        // Iterate through all allowed file types
-        for type in allowedTypes {
-
-            do {
-                switch type {
-
-                case .SNAPSHOT:
-                    return try SnapshotProxy.make(with: newUrl)
-
-                case .SCRIPT:
-                    return try ScriptProxy.make(with: newUrl)
-
-                case .CRT:
-                    return try CRTFileProxy.make(with: newUrl)
-
-                case .D64:
-                    return try D64FileProxy.make(with: newUrl)
-
-                case .T64:
-                    return try T64FileProxy.make(with: newUrl)
-
-                case .PRG:
-                    return try PRGFileProxy.make(with: newUrl)
-
-                case .P00:
-                    return try P00FileProxy.make(with: newUrl)
-
-                case .G64:
-                    return try G64FileProxy.make(with: newUrl)
-
-                case .TAP:
-                    return try TAPFileProxy.make(with: newUrl)
-
-                case .FOLDER:
-                    return try FolderProxy.make(with: newUrl)
-
-                default:
-                    fatalError()
-                }
-
-            } catch let error as VC64Error {
-                if error.errorCode != .FILE_TYPE_MISMATCH {
-                    throw error
-                }
-            }
-        }
-
-        // None of the allowed types matched the file
-        throw VC64Error(.FILE_TYPE_MISMATCH,
-                      "The type of this file is not known to the emulator.")
-    }
-
-    //
     // Loading
     //
 
@@ -132,12 +69,9 @@ class MyDocument: NSDocument {
 
         debug(.media)
 
-        let types: [FileType] =
-        [ .SNAPSHOT, .SCRIPT, .D64, .T64, .PRG, .P00, .G64, .TAP, .FOLDER ]
-
         do {
 
-            try addMedia(url: url, allowedTypes: types)
+            try mm.addMedia(url: url, allowedTypes: FileType.draggable)
 
         } catch let error as VC64Error {
 
@@ -150,10 +84,7 @@ class MyDocument: NSDocument {
         debug(.media)
 
         do {
-            let proxy = try createFileProxy(from: url, allowedTypes: [.SNAPSHOT])
-            if let snapshot = proxy as? SnapshotProxy {
-                try processSnapshotFile(snapshot)
-            }
+            try mm.addMedia(url: url, allowedTypes: [.SNAPSHOT])
 
         } catch let error as VC64Error {
 
@@ -182,142 +113,6 @@ class MyDocument: NSDocument {
                 }
             }
         }
-    }
-
-    //
-    // Handling media files
-    //
-
-    func addMedia(url: URL,
-                  allowedTypes types: [FileType],
-                  drive id: Int = DRIVE8,
-                  force: Bool = false,
-                  remember: Bool = true) throws {
-
-        debug(.media, "url = \(url) types = \(types)")
-
-        let drive = c64.drive(id)
-        let proxy = try createFileProxy(from: url, allowedTypes: types)
-
-        if let proxy = proxy as? SnapshotProxy {
-
-            debug(.media, "Snapshot")
-            try processSnapshotFile(proxy)
-        }
-        if let proxy = proxy as? ScriptProxy {
-
-            debug(.media, "Script")
-            parent.renderer.console.runScript(script: proxy)
-        }
-        if let proxy = proxy as? CRTFileProxy {
-
-            debug(.media, "CRT")
-            try c64.expansionport.attachCartridge(proxy, reset: true)
-            if remember { MediaManager.noteNewRecentlyAtachedCartridgeURL(url) }
-        }
-        if let proxy = proxy as? TAPFileProxy {
-
-            debug(.media, "TAP")
-            c64.datasette.insertTape(proxy)
-            if remember { MediaManager.noteNewRecentlyInsertedTapeURL(url) }
-        }
-        if let proxy = proxy as? D64FileProxy {
-
-            debug(.media, "D64")
-            if force || proceedWithUnsavedFloppyDisk(drive: drive) {
-
-                c64.drive(id).insertD64(proxy, protected: false)
-                if remember { MediaManager.noteNewRecentlyInsertedDiskURL(url) }
-            }
-        }
-        if let proxy = proxy as? G64FileProxy {
-
-            debug(.media, "G64")
-            if force || proceedWithUnsavedFloppyDisk(drive: drive) {
-
-                c64.drive(id).insertG64(proxy, protected: false)
-                if remember { MediaManager.noteNewRecentlyInsertedDiskURL(url) }
-            }
-        }
-        if let proxy = proxy as? AnyCollectionProxy {
-
-            debug(.media, "T64, PRG, P00")
-            if force || proceedWithUnsavedFloppyDisk(drive: drive) {
-
-                c64.drive(id).insertCollection(proxy, protected: false)
-                if remember { MediaManager.noteNewRecentlyInsertedDiskURL(url) }
-            }
-        }
-    }
-
-    func processSnapshotFile(_ proxy: SnapshotProxy, force: Bool = false) throws {
-
-        try c64.flash(proxy)
-        snapshots.append(proxy)
-    }
-
-    //
-    // Creating file proxys
-    //
-
-    fileprivate
-    func createFileProxy(url: URL, allowedTypes: [FileType]) throws -> AnyFileProxy? {
-
-        debug(.media, "Reading file \(url.lastPathComponent)")
-
-        // If the provided URL points to compressed file, decompress it first
-        let newUrl = url.unpacked(maxSize: 2048 * 1024)
-
-        // Iterate through all allowed file types
-        for type in allowedTypes {
-
-            do {
-                switch type {
-
-                case .SNAPSHOT:
-                    return try SnapshotProxy.make(with: newUrl)
-
-                case .SCRIPT:
-                    return try ScriptProxy.make(with: newUrl)
-
-                case .CRT:
-                    return try CRTFileProxy.make(with: newUrl)
-                    
-                case .D64:
-                    return try D64FileProxy.make(with: newUrl)
-                    
-                case .T64:
-                    return try T64FileProxy.make(with: newUrl)
-                    
-                case .PRG:
-                    return try PRGFileProxy.make(with: newUrl)
-                    
-                case .P00:
-                    return try P00FileProxy.make(with: newUrl)
-                    
-                case .G64:
-                    return try G64FileProxy.make(with: newUrl)
-                    
-                case .TAP:
-                    return try TAPFileProxy.make(with: newUrl)
-                    
-                case .FOLDER:
-                    return try FolderProxy.make(with: newUrl)
-                    
-                default:
-                    fatalError()
-                }
-                
-            } catch let error as VC64Error {
-                if error.errorCode != .FILE_TYPE_MISMATCH {
-                    throw error
-                }
-            }
-        }
-
-        // None of the allowed types matched the file
-        throw VC64Error(.FILE_TYPE_MISMATCH,
-                        "The type of this file is not known to the emulator.")
     }
 
     //

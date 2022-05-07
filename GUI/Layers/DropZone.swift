@@ -17,7 +17,8 @@ class DropZone: Layer {
     var contentView: NSView { return window.contentView! }
     var metal: MetalView { return controller.metal! }
     var mydocument: MyDocument { return controller.mydocument! }
-        
+    var mm: MediaManager { return controller.mm! }
+
     var zones = [NSImageView(), NSImageView(), NSImageView(), NSImageView()]
     var ul = [NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0),
               NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0)]
@@ -186,14 +187,12 @@ class DropZone: Layer {
 
                 case .SNAPSHOT, .SCRIPT, .CRT, .TAP:
 
-                    try mydocument.addMedia(url: url,
-                                            allowedTypes: [type])
+                    try mm.addMedia(url: url, allowedTypes: [type])
 
                 case .T64, .P00, .PRG, .FOLDER, .D64, .G64:
 
                     let drive = n == 0 ? DRIVE8 : DRIVE9
-                    try mydocument.addMedia(url: url,
-                                            allowedTypes: [type], drive: drive)
+                    try mm.addMedia(url: url, allowedTypes: [type], drive: drive)
 
                 default:
                     fatalError()
@@ -201,12 +200,17 @@ class DropZone: Layer {
 
             } else {
 
-                if let file = try mydocument.createFileProxy(from: url,
-                                                             allowedTypes: FileType.draggable) {
-                    // Run the import dialog
-                    let importer = DiskImporter(with: controller, nibName: "DiskImporter")
-                    importer?.show(proxy: file)
-                }
+                // Run the import dialog
+                let importer = DiskImporter(with: controller, nibName: "DiskImporter")
+                try importer?.show(url: url)
+
+                /*
+                let file = try mm.createFileProxy(from: url,
+                                                  allowedTypes: FileType.draggable)
+                // Run the import dialog
+                let importer = DiskImporter(with: controller, nibName: "DiskImporter")
+                importer?.show(proxy: file)
+                */
             }
 
         } catch {

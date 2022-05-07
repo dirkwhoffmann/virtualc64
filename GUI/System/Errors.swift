@@ -373,7 +373,7 @@ extension MyController {
     func showMultipleFilesAlert(msg1: String, msg2: String) {
         mydocument.showMultipleFilesAlert(msg1: msg1, msg2: msg2)
     }
-    
+
     func proceedWithUnsavedFloppyDisk(drive: DriveProxy) -> Bool {
         return mydocument.proceedWithUnsavedFloppyDisk(drive: drive)
     }
@@ -384,5 +384,20 @@ extension MyController {
 
     func askToPowerOff() -> Bool {
         return mydocument.askToPowerOff()
+    }
+}
+
+extension MediaManager {
+
+    func showMultipleFilesAlert(msg1: String, msg2: String) {
+        document.showMultipleFilesAlert(msg1: msg1, msg2: msg2)
+    }
+
+    func proceedWithUnsavedFloppyDisk(drive: DriveProxy) -> Bool {
+        document.proceedWithUnsavedFloppyDisk(drive: drive)
+    }
+
+    func proceedWithUnsavedFloppyDisks() -> Bool {
+        document.proceedWithUnsavedFloppyDisks()
     }
 }
