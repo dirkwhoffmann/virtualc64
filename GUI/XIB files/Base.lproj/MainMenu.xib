@@ -890,13 +890,13 @@ CA
                                         <menuItem title="Cartridge 1" id="XMp-BY-BB6">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="attachRecentCartridgeAction:" target="-1" id="E3f-wj-ftt"/>
+                                                <action selector="attachRecentCartridgeAction:" target="-1" id="PSd-eH-5t5"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Cartridge 2" tag="1" id="yss-Uc-ls7">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="attachRecentCartridgeAction:" target="-1" id="n9I-uL-PeI"/>
+                                                <action selector="attachRecentCartridgeAction:" target="-1" id="eWW-RY-LIy"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Cartridge 3" tag="2" id="rov-xI-M4K">

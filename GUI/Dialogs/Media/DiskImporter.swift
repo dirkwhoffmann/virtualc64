@@ -21,7 +21,7 @@ class DiskImporter: DialogController {
     @IBOutlet weak var flashLabel: NSTextField!
 
     // Media file to process
-    var attachment: AnyFileProxy?
+    var file: AnyFileProxy?
 
     // Proxy objects (created from the attachment when the sheet opens)
     var g64: G64FileProxy?
@@ -35,7 +35,7 @@ class DiskImporter: DialogController {
     var autoRun: Bool { return checkbox.state == .on }
 
     // Custom font
-    var monofont: NSFont { return NSFont.monospaced(ofSize: 13.0, weight: .semibold) }
+    // var monofont: NSFont { return NSFont.monospaced(ofSize: 13.0, weight: .semibold) }
 
     var titleString = "???"
     var subtitle1String = "???"
@@ -50,17 +50,17 @@ class DiskImporter: DialogController {
 
         debug(.lifetime)
 
-        attachment = proxy
+        file = proxy
         showSheet()
     }
 
     override func showSheet(completionHandler handler:(() -> Void)? = nil) {
 
-        switch attachment {
+        switch file {
 
         case is CRTFileProxy:
 
-            crt = attachment as? CRTFileProxy
+            crt = file as? CRTFileProxy
 
             titleString = "Commodore Expansion Port Module"
             subtitle1String = crt!.packageInfo
@@ -74,7 +74,7 @@ class DiskImporter: DialogController {
 
         case is TAPFileProxy:
 
-            tap = attachment as? TAPFileProxy
+            tap = file as? TAPFileProxy
 
             titleString = "Commodore Cassette Tape"
             subtitle1String = tap!.version.description
@@ -83,7 +83,7 @@ class DiskImporter: DialogController {
 
         case is D64FileProxy:
 
-            if let d64 = attachment as? D64FileProxy {
+            if let d64 = file as? D64FileProxy {
                 volume = try? FileSystemProxy.make(with: d64)
             }
 
@@ -94,7 +94,7 @@ class DiskImporter: DialogController {
 
         case is G64FileProxy:
 
-            g64 = attachment as? G64FileProxy
+            g64 = file as? G64FileProxy
 
             titleString = "Commodore 64 Floppy Disk"
             subtitle1String = "A bit-accurate image of a C64 diskette"
@@ -103,7 +103,7 @@ class DiskImporter: DialogController {
 
         case is T64FileProxy:
 
-            if let collection = attachment as? AnyCollectionProxy {
+            if let collection = file as? AnyCollectionProxy {
                 volume = try? FileSystemProxy.make(with: collection)
             }
 
@@ -114,7 +114,7 @@ class DiskImporter: DialogController {
 
         case is PRGFileProxy:
 
-            if let collection = attachment as? AnyCollectionProxy {
+            if let collection = file as? AnyCollectionProxy {
                 volume = try? FileSystemProxy.make(with: collection)
             }
 
@@ -125,7 +125,7 @@ class DiskImporter: DialogController {
 
         case is P00FileProxy:
 
-            if let collection = attachment as? AnyCollectionProxy {
+            if let collection = file as? AnyCollectionProxy {
                 volume = try? FileSystemProxy.make(with: collection)
             }
 
@@ -136,7 +136,7 @@ class DiskImporter: DialogController {
 
         case is FolderProxy:
 
-            if let folder = attachment as? FolderProxy {
+            if let folder = file as? FolderProxy {
                 volume = folder.fileSystem
             }
             titleString = "Disk from a file system folder"
@@ -213,7 +213,7 @@ class DiskImporter: DialogController {
         guard let v = volume else { return 0 }
 
         flash.removeAllItems()
-        flash.font = monofont
+        flash.font = .monospaced(ofSize: 13.0, weight: .semibold)
 
         var seen: [String] = []
         var item = 0
@@ -244,7 +244,7 @@ class DiskImporter: DialogController {
 
     func refresh() {
 
-        icon.image = attachment?.icon(protected: writeProtect)
+        icon.image = file?.icon(protected: writeProtect)
     }
 
     //

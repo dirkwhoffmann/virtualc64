@@ -17,7 +17,7 @@ class MyDocument: NSDocument {
     // Gateway to the core emulator
     var c64: C64Proxy!
 
-    // Snapshots
+    // Snapshot storage
     private(set) var snapshots = ManagedArray<SnapshotProxy>(capacity: 32)
 
     //
@@ -51,7 +51,8 @@ class MyDocument: NSDocument {
     override open func makeWindowControllers() {
         
         debug(.lifetime)
-        
+
+        // Create the window controller
         let controller = MyController(windowNibName: "MyDocument")
         controller.c64 = c64
         self.addWindowController(controller)
@@ -209,11 +210,13 @@ class MyDocument: NSDocument {
 
             debug(.media, "CRT")
             try c64.expansionport.attachCartridge(proxy, reset: true)
+            if remember { myAppDelegate.noteNewRecentlyAtachedCartridgeURL(url) }
         }
         if let proxy = proxy as? TAPFileProxy {
 
             debug(.media, "TAP")
             c64.datasette.insertTape(proxy)
+            if remember { myAppDelegate.noteNewRecentlyInsertedTapeURL(url) }
         }
         if let proxy = proxy as? D64FileProxy {
 
@@ -244,6 +247,7 @@ class MyDocument: NSDocument {
         }
     }
 
+    /*
     func flashMedia(url: URL,
                     allowedTypes types: [FileType],
                     force: Bool = false,
@@ -297,6 +301,7 @@ class MyDocument: NSDocument {
             parent.renderer.rotateLeft()
         }
     }
+    */
 
     func processSnapshotFile(_ proxy: SnapshotProxy, force: Bool = false) throws {
 

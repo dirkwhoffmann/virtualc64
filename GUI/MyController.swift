@@ -27,7 +27,10 @@ class MyController: NSWindowController, MessageReceiver {
     
     // C64 proxy (bridge between the Swift frontend and the C++ backend)
     var c64: C64Proxy!
-    
+
+    // Media manager (handles the import and export of media files)
+    var mm: MediaManager!
+
     // Inspector panel of this emulator instance
     var inspector: Inspector?
     
@@ -169,6 +172,9 @@ extension MyController {
         // Create keyboard controller
         keyboard = KeyboardController(parent: self)
         assert(keyboard != nil, "Failed to create keyboard controller")
+
+        // Create the media manager
+        mm = MediaManager(with: self)
 
         // Create game pad manager
         gamePadManager = GamePadManager(parent: self)

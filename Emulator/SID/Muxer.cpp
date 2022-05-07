@@ -498,8 +498,6 @@ Muxer::_dump(Category category, std::ostream& os) const
         os << config.volL << std::endl;
         os << tab("Volume R");
         os << config.volR << std::endl;
-        // os << tab("isMuted()");
-        // os << bol(isMuted()) << std::endl;
     }
 }
 
@@ -515,40 +513,6 @@ Muxer::_dump(Category category, std::ostream& os, isize nr) const
             fatalError;
     }
 }
-
-/*
-void
-Muxer::_dump(SIDInfo &info, VoiceInfo (&vinfo)[3]) const
-{
-    u8 ft = info.filterType;
-    msg("        Volume: %d\n", info.volume);
-    msg("   Filter type: %s\n",
-        (ft == FASTSID_LOW_PASS) ? "LOW PASS" :
-        (ft == FASTSID_HIGH_PASS) ? "HIGH PASS" :
-        (ft == FASTSID_BAND_PASS) ? "BAND PASS" : "NONE");
-    msg("Filter cut off: %d\n\n", info.filterCutoff);
-    msg("Filter resonance: %d\n\n", info.filterResonance);
-    msg("Filter enable bits: %d\n\n", info.filterEnableBits);
-
-    for (isize i = 0; i < 3; i++) {
-        // VoiceInfo vinfo = getVoiceInfo(i);
-        u8 wf = vinfo[i].waveform;
-        msg("Voice %d:       Frequency: %d\n", i, vinfo[i].frequency);
-        msg("             Pulse width: %d\n", vinfo[i].pulseWidth);
-        msg("                Waveform: %s\n",
-            (wf == FASTSID_NOISE) ? "NOISE" :
-            (wf == FASTSID_PULSE) ? "PULSE" :
-            (wf == FASTSID_SAW) ? "SAW" :
-            (wf == FASTSID_TRIANGLE) ? "TRIANGLE" : "NONE");
-        msg("         Ring modulation: %s\n", vinfo[i].ringMod ? "yes" : "no");
-        msg("               Hard sync: %s\n", vinfo[i].hardSync ? "yes" : "no");
-        msg("             Attack rate: %d\n", vinfo[i].attackRate);
-        msg("              Decay rate: %d\n", vinfo[i].decayRate);
-        msg("            Sustain rate: %d\n", vinfo[i].sustainRate);
-        msg("            Release rate: %d\n", vinfo[i].releaseRate);
-    }
-}
-*/
 
 SIDStats
 Muxer::getStats()

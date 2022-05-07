@@ -21,7 +21,7 @@ extension MyController: NSMenuItemValidation {
         func validateURLlist(_ list: [URL], image: NSImage) -> Bool {
             
             let slot = item.tag % 10
-            
+
             if let url = myAppDelegate.getRecentlyUsedURL(slot, from: list) {
                 item.title = url.lastPathComponent
                 item.isHidden = false
@@ -882,7 +882,7 @@ extension MyController: NSMenuItemValidation {
         })
     }
     
-    @IBAction func attachRecentCartridgeAction(_ sender: NSMenuItem!) throws {
+    @IBAction func attachRecentCartridgeAction(_ sender: NSMenuItem!) {
         
         let slot  = sender.tag
         
