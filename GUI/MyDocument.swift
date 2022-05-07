@@ -14,6 +14,9 @@ class MyDocument: NSDocument {
     // The window controller for this document
     var parent: MyController { return windowControllers.first as! MyController }
 
+    // The media manager for this document
+    var mm: MediaManager { return parent.mm }
+
     // Gateway to the core emulator
     var c64: C64Proxy!
 
@@ -210,13 +213,13 @@ class MyDocument: NSDocument {
 
             debug(.media, "CRT")
             try c64.expansionport.attachCartridge(proxy, reset: true)
-            if remember { myAppDelegate.noteNewRecentlyAtachedCartridgeURL(url) }
+            if remember { MediaManager.noteNewRecentlyAtachedCartridgeURL(url) }
         }
         if let proxy = proxy as? TAPFileProxy {
 
             debug(.media, "TAP")
             c64.datasette.insertTape(proxy)
-            if remember { myAppDelegate.noteNewRecentlyInsertedTapeURL(url) }
+            if remember { MediaManager.noteNewRecentlyInsertedTapeURL(url) }
         }
         if let proxy = proxy as? D64FileProxy {
 
@@ -224,7 +227,7 @@ class MyDocument: NSDocument {
             if force || proceedWithUnsavedFloppyDisk(drive: drive) {
 
                 c64.drive(id).insertD64(proxy, protected: false)
-                if remember { myAppDelegate.noteNewRecentlyInsertedDiskURL(url) }
+                if remember { MediaManager.noteNewRecentlyInsertedDiskURL(url) }
             }
         }
         if let proxy = proxy as? G64FileProxy {
@@ -233,7 +236,7 @@ class MyDocument: NSDocument {
             if force || proceedWithUnsavedFloppyDisk(drive: drive) {
 
                 c64.drive(id).insertG64(proxy, protected: false)
-                if remember { myAppDelegate.noteNewRecentlyInsertedDiskURL(url) }
+                if remember { MediaManager.noteNewRecentlyInsertedDiskURL(url) }
             }
         }
         if let proxy = proxy as? AnyCollectionProxy {
@@ -242,66 +245,10 @@ class MyDocument: NSDocument {
             if force || proceedWithUnsavedFloppyDisk(drive: drive) {
 
                 c64.drive(id).insertCollection(proxy, protected: false)
-                if remember { myAppDelegate.noteNewRecentlyInsertedDiskURL(url) }
+                if remember { MediaManager.noteNewRecentlyInsertedDiskURL(url) }
             }
         }
     }
-
-    /*
-    func flashMedia(url: URL,
-                    allowedTypes types: [FileType],
-                    force: Bool = false,
-                    remember: Bool = true) throws {
-
-        debug(.media, "url = \(url) types = \(types)")
-
-        let proxy = try createFileProxy(from: url, allowedTypes: types)
-        var volume: FileSystemProxy?
-
-        if let proxy = proxy as? SnapshotProxy {
-
-            debug(.media, "Snapshot")
-            try processSnapshotFile(proxy)
-        }
-        if let proxy = proxy as? ScriptProxy {
-
-            debug(.media, "Script")
-            parent.renderer.console.runScript(script: proxy)
-        }
-        if let proxy = proxy as? CRTFileProxy {
-
-            debug(.media, "CRT")
-            try c64.expansionport.attachCartridge(proxy, reset: true)
-        }
-        if let proxy = proxy as? TAPFileProxy {
-
-            debug(.media, "TAP")
-            c64.datasette.insertTape(proxy)
-            parent.keyboard.type("LOAD\n")
-            c64.datasette.pressPlay()
-        }
-        if let proxy = proxy as? D64FileProxy {
-
-            debug(.media, "D64")
-            volume = try? FileSystemProxy.make(with: proxy)
-        }
-
-        if let proxy = proxy as? AnyCollectionProxy {
-
-            debug(.media, "T64, PRG, P00")
-            volume = try? FileSystemProxy.make(with: proxy)
-        }
-
-        // If a volume has been created, flash the first file
-        if let volume = volume {
-
-            debug(.media, "Flashing first item...")
-            try? parent.c64.flash(volume, item: 0)
-            parent.keyboard.type("RUN\n")
-            parent.renderer.rotateLeft()
-        }
-    }
-    */
 
     func processSnapshotFile(_ proxy: SnapshotProxy, force: Bool = false) throws {
 

@@ -27,18 +27,6 @@ var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
     // Information provider for connected HID devices
     var database = DeviceDatabase()
     
-    // List of recently inserted floppy disks (all drives share the same list)
-    var insertedFloppyDisks: [URL] = []
-    
-    // List of recently exported floppy disks (one list for each drive)
-    var exportedFloppyDisks: [[URL]] = [[URL]](repeating: [URL](), count: 2)
-
-    // List of recently inserted tapes
-    var insertedTapes: [URL] = []
-
-    // List of recently attached cartridges
-    var attachedCartridges: [URL] = []
-
     override init() {
         
         super.init()
@@ -53,89 +41,6 @@ var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
     public func applicationWillTerminate(_ aNotification: Notification) {
         
         debug(.lifetime)
-    }
-    
-    //
-    // Handling lists of recently used URLs
-    //
-    
-    func noteRecentlyUsedURL(_ url: URL, to list: inout [URL], size: Int) {
-        
-        if !list.contains(url) {
-            
-            // Shorten the list if it is too large
-            if list.count == size { list.remove(at: size - 1) }
-            
-            // Add new item at the beginning
-            list.insert(url, at: 0)
-        }
-    }
-    
-    func getRecentlyUsedURL(_ pos: Int, from list: [URL]) -> URL? {
-        return (pos < list.count) ? list[pos] : nil
-    }
-    
-    func noteNewRecentlyInsertedDiskURL(_ url: URL) {
-        noteRecentlyUsedURL(url, to: &insertedFloppyDisks, size: 10)
-    }
-    
-    func getRecentlyInsertedDiskURL(_ pos: Int) -> URL? {
-        return getRecentlyUsedURL(pos, from: insertedFloppyDisks)
-    }
-    
-    func noteNewRecentlyExportedDiskURL(_ url: URL, drive: Int) {
-        
-        precondition(drive == DRIVE8 || drive == DRIVE9)
-        let n = drive == DRIVE8 ? 0 : 1
-        noteRecentlyUsedURL(url, to: &exportedFloppyDisks[n], size: 1)
-    }
-    
-    func getRecentlyExportedDiskURL(_ pos: Int, drive: Int) -> URL? {
-        
-        precondition(drive == DRIVE8 || drive == DRIVE9)
-        let n = drive == DRIVE8 ? 0 : 1
-        return getRecentlyUsedURL(pos, from: exportedFloppyDisks[n])
-    }
-    
-    func clearRecentlyExportedDiskURLs(drive: Int) {
-        
-        precondition(drive == DRIVE8 || drive == DRIVE9)
-        let n = drive == DRIVE8 ? 0 : 1
-        exportedFloppyDisks[n] = [URL]()
-    }
-    
-    func noteNewRecentlyInsertedTapeURL(_ url: URL) {
-        noteRecentlyUsedURL(url, to: &insertedTapes, size: 10)
-    }
-    
-    func getRecentlyInsertedTapeURL(_ pos: Int) -> URL? {
-        return getRecentlyUsedURL(pos, from: insertedTapes)
-    }
-    
-    func noteNewRecentlyAtachedCartridgeURL(_ url: URL) {
-        noteRecentlyUsedURL(url, to: &attachedCartridges, size: 10)
-    }
-    
-    func getRecentlyAtachedCartridgeURL(_ pos: Int) -> URL? {
-        return getRecentlyUsedURL(pos, from: attachedCartridges)
-    }
-    
-    func noteNewRecentlyUsedURL(_ url: URL) {
-        
-        switch url.pathExtension.uppercased() {
-            
-        case "D64", "T64", "G64", "PRG", "P00":
-            noteNewRecentlyInsertedDiskURL(url)
-            
-        case "TAP":
-            noteNewRecentlyInsertedTapeURL(url)
-            
-        case "CRT":
-            noteNewRecentlyAtachedCartridgeURL(url)
-            
-        default:
-            break
-        }
     }
 }
 

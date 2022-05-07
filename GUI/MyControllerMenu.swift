@@ -22,7 +22,7 @@ extension MyController: NSMenuItemValidation {
             
             let slot = item.tag % 10
 
-            if let url = myAppDelegate.getRecentlyUsedURL(slot, from: list) {
+            if let url = MediaManager.getRecentlyUsedURL(slot, from: list) {
                 item.title = url.lastPathComponent
                 item.isHidden = false
                 item.image = image
@@ -67,7 +67,7 @@ extension MyController: NSMenuItemValidation {
             
         // Drive menu
         case #selector(MyController.insertRecentDiskAction(_:)):
-            return validateURLlist(myAppDelegate.insertedFloppyDisks, image: smallDisk)
+            return validateURLlist(MediaManager.insertedFloppyDisks, image: smallDisk)
 
         case  #selector(MyController.ejectDiskAction(_:)),
             #selector(MyController.exportDiskAction(_:)),
@@ -82,7 +82,7 @@ extension MyController: NSMenuItemValidation {
             return c64.drive9.hasDisk
                         
         case #selector(MyController.exportRecentDiskAction(_:)):
-            return validateURLlist(myAppDelegate.exportedFloppyDisks[driveID], image: smallDisk)
+            return validateURLlist(mm.exportedFloppyDisks[driveID], image: smallDisk)
             
         case #selector(MyController.writeProtectAction(_:)):
             item.state = drive.hasProtectedDisk ? .on : .off
@@ -94,7 +94,7 @@ extension MyController: NSMenuItemValidation {
             
         // Tape menu
         case #selector(MyController.insertRecentTapeAction(_:)):
-            return validateURLlist(myAppDelegate.insertedTapes, image: smallTape)
+            return validateURLlist(MediaManager.insertedTapes, image: smallTape)
             
         case #selector(MyController.ejectTapeAction(_:)):
             return c64.datasette.hasTape
@@ -108,7 +108,7 @@ extension MyController: NSMenuItemValidation {
             
         // Cartridge menu
         case #selector(MyController.attachRecentCartridgeAction(_:)):
-            return validateURLlist(myAppDelegate.attachedCartridges, image: smallCart)
+            return validateURLlist(MediaManager.attachedCartridges, image: smallCart)
             
         case #selector(MyController.attachGeoRamDummyAction(_:)):
             item.state = (c64.expansionport.cartridgeType() == .GEO_RAM) ? .on : .off
@@ -573,7 +573,7 @@ extension MyController: NSMenuItemValidation {
         let panel = DiskCreator(with: self, nibName: "DiskCreator")
         panel?.showSheet(forDrive: drive.id)
 
-        myAppDelegate.clearRecentlyExportedDiskURLs(drive: drive.id)
+        mm.clearRecentlyExportedDiskURLs(drive: drive.id)
     }
     
     @IBAction func insertDiskAction(_ sender: NSMenuItem!) {
@@ -617,7 +617,7 @@ extension MyController: NSMenuItemValidation {
 
     func insertRecentDiskAction(drive: Int, slot: Int) {
 
-        if let url = myAppDelegate.getRecentlyInsertedDiskURL(slot) {
+        if let url = MediaManager.getRecentlyInsertedDiskURL(slot) {
 
             do {
                 let types: [FileType] = [ .D64, .T64, .PRG, .P00, .G64 ]
@@ -630,35 +630,6 @@ extension MyController: NSMenuItemValidation {
         }
     }
 
-    /*
-    func insertDiskAction(from url: URL, drive: Int) {
-
-        let types = [ FileType.D64,
-                      FileType.T64,
-                      FileType.PRG,
-                      FileType.P00,
-                      FileType.G64 ]
-
-        do {
-            // Try to create a file proxy
-            try mydocument.createAttachment(from: url, allowedTypes: types)
-
-            // Ask the user if an unsafed disk should be replaced
-            if !proceedWithUnsavedFloppyDisk(drive: c64.drive(drive)) { return }
-            
-            // Insert the disk
-            try mydocument.mountAttachment(drive: drive)
-                        
-            // Remember the URL
-            myAppDelegate.noteNewRecentlyUsedURL(url)
-            
-        } catch {
-            
-            (error as? VC64Error)?.cantOpen(url: url)
-        }
-    }
-    */
-    
     @IBAction func exportRecentDiskDummyAction8(_ sender: NSMenuItem!) {}
     @IBAction func exportRecentDiskDummyAction9(_ sender: NSMenuItem!) {}
 
@@ -672,7 +643,7 @@ extension MyController: NSMenuItemValidation {
     
     func exportRecentDiskAction(drive id: Int, slot: Int) {
                 
-        if let url = myAppDelegate.getRecentlyExportedDiskURL(slot, drive: id) {
+        if let url = mm.getRecentlyExportedDiskURL(slot, drive: id) {
             
             do {
                 try mydocument.export(drive: id, to: url)
@@ -683,21 +654,21 @@ extension MyController: NSMenuItemValidation {
     }
     
     @IBAction func clearRecentlyInsertedDisksAction(_ sender: Any!) {
-        myAppDelegate.insertedFloppyDisks = []
+        MediaManager.insertedFloppyDisks = []
     }
 
     @IBAction func clearRecentlyExportedDisksAction(_ sender: NSMenuItem!) {
 
         let drive = sender.tag
-        myAppDelegate.clearRecentlyExportedDiskURLs(drive: drive)
+        mm.clearRecentlyExportedDiskURLs(drive: drive)
     }
 
     @IBAction func clearRecentlyInsertedTapesAction(_ sender: Any!) {
-        myAppDelegate.insertedTapes = []
+        MediaManager.insertedTapes = []
     }
     
     @IBAction func clearRecentlyAttachedCartridgesAction(_ sender: Any!) {
-        myAppDelegate.attachedCartridges = []
+        MediaManager.attachedCartridges = []
     }
     
     @IBAction func ejectDiskAction(_ sender: NSMenuItem!) {
@@ -712,7 +683,7 @@ extension MyController: NSMenuItemValidation {
         if proceedWithUnsavedFloppyDisk(drive: drive) {
 
             drive.ejectDisk()
-            myAppDelegate.clearRecentlyExportedDiskURLs(drive: nr)
+            mm.clearRecentlyExportedDiskURLs(drive: nr)
         }
     }
 
@@ -822,7 +793,7 @@ extension MyController: NSMenuItemValidation {
         
         let slot  = sender.tag
         
-        if let url = myAppDelegate.getRecentlyInsertedTapeURL(slot) {
+        if let url = MediaManager.getRecentlyInsertedTapeURL(slot) {
             insertTapeAction(from: url)
         }
     }
@@ -886,7 +857,7 @@ extension MyController: NSMenuItemValidation {
         
         let slot  = sender.tag
         
-        if let url = myAppDelegate.getRecentlyAtachedCartridgeURL(slot) {
+        if let url = MediaManager.getRecentlyAtachedCartridgeURL(slot) {
 
             do {
                 try self.mydocument.addMedia(url: url, allowedTypes: [ .CRT ])

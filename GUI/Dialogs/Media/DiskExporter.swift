@@ -247,7 +247,7 @@ class DiskExporter: DialogController {
             }
 
             drive.markDiskAsUnmodified()
-            myAppDelegate.noteNewRecentlyExportedDiskURL(url, drive: drive.id)
+            parent.mm.noteNewRecentlyExportedDiskURL(url, drive: drive.id)
 
         } catch {
             parent.showAlert(.cantExport(url: url), error: error, async: true, window: window)
