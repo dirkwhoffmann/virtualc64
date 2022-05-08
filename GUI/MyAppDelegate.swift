@@ -27,7 +27,10 @@ var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
     
     // Information provider for connected HID devices
     var database = DeviceDatabase()
-    
+
+    // User activity token obtained in applicationDidFinishLaunching()
+    var token: NSObjectProtocol!
+
     override init() {
         
         super.init()
@@ -37,11 +40,16 @@ var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
     public func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         debug(.lifetime)
+
+        token = ProcessInfo.processInfo.beginActivity(options: [ .userInitiated ],
+                                                      reason: "Running VirtualC64")
     }
     
     public func applicationWillTerminate(_ aNotification: Notification) {
         
         debug(.lifetime)
+
+        ProcessInfo.processInfo.endActivity(token)
     }
 }
 
