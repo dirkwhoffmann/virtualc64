@@ -236,6 +236,12 @@ RetroShell::exec <Token::memory, Token::set, Token::raminitpattern> (Arguments& 
 }
 
 template <> void
+RetroShell::exec <Token::memory, Token::set, Token::saveroms> (Arguments& argv, long param)
+{
+    c64.configure(OPT_SAVE_ROMS, util::parseBool(argv.front()));
+}
+
+template <> void
 RetroShell::exec <Token::memory, Token::load> (Arguments& argv, long param)
 {
     c64.loadRom(argv.front());

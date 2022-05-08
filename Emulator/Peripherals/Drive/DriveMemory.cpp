@@ -29,6 +29,62 @@ DriveMemory::_reset(bool hard)
     }
 }
 
+isize
+DriveMemory::_size()
+{
+    util::SerCounter counter;
+    bool saveRoms = mem.getConfig().saveRoms;
+
+    applyToPersistentItems(counter);
+    applyToResetItems(counter);
+
+    counter << saveRoms;
+    if (saveRoms) applyToRoms(counter);
+
+    return counter.count;
+}
+
+u64
+DriveMemory::_checksum()
+{
+    util::SerChecker checker;
+
+    applyToPersistentItems(checker);
+    applyToResetItems(checker);
+
+    return checker.hash;
+}
+
+isize
+DriveMemory::_load(const u8 *buffer)
+{
+    util::SerReader reader(buffer);
+    bool saveRoms;
+
+    reader << saveRoms;
+    applyToPersistentItems(reader);
+    applyToResetItems(reader);
+    if (saveRoms) applyToRoms(reader);
+
+    debug(SNP_DEBUG, "Recreated from %zu bytes\n", reader.ptr - buffer); \
+    return (isize)(reader.ptr - buffer);
+}
+
+isize
+DriveMemory::_save(u8 *buffer)
+{
+    util::SerWriter writer(buffer);
+    bool saveRoms = mem.getConfig().saveRoms;
+
+    writer << saveRoms;
+    applyToPersistentItems(writer);
+    applyToResetItems(writer);
+    if (saveRoms) applyToRoms(writer);
+
+    debug(SNP_DEBUG, "Serialized to %zu bytes\n", writer.ptr - buffer);
+    return (isize)(writer.ptr - buffer);
+}
+
 void
 DriveMemory::_dump(Category category, std::ostream& os) const
 {

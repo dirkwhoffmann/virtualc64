@@ -145,7 +145,11 @@ Interpreter::registerInstructions()
     root.add({"memory", "set", "raminit"},
              "key", "Determines how Ram is initialized on startup",
              &RetroShell::exec <Token::memory, Token::set, Token::raminitpattern>, 1);
-    
+
+    root.add({"memory", "set", "saveroms"},
+             "key", "Save Roms to snapshot files",
+             &RetroShell::exec <Token::memory, Token::set, Token::saveroms>, 1);
+
     root.add({"memory", "load"},
              "command", "Installs a Rom image",
              &RetroShell::exec <Token::memory, Token::load>, 1);

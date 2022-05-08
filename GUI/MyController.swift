@@ -60,7 +60,7 @@ class MyController: NSWindowController, MessageReceiver {
 
     // Virtual keyboard
     var virtualKeyboard: VirtualKeyboardController?
-        
+
     // Snapshot timers
     var snapshotTimer: Timer?
     
@@ -78,10 +78,10 @@ class MyController: NSWindowController, MessageReceiver {
     // The flags are utilized, e.g., to alter behaviour when a key on the
     // TouchBar is pressed.
     var modifierFlags: NSEvent.ModifierFlags = .init(rawValue: 0)
-        
+
     // Indicates if the mouse is currently hidden
     var hideMouse = false
-        
+
     // Indicates if a status bar is shown
     var statusBar = true
     
@@ -90,10 +90,10 @@ class MyController: NSWindowController, MessageReceiver {
     var smallDisk = NSImage(named: "diskTemplate")!.resize(size: iconSize)
     var smallTape = NSImage(named: "tapeTemplate")!.resize(size: iconSize)
     var smallCart = NSImage(named: "crtTemplate")!.resize(size: iconSize)
-        
+
     // Remembers the running state for the pauseInBackground feature
     var pauseInBackgroundSavedState = false
-            
+
     //
     // Outlets
     //
@@ -102,7 +102,7 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var metal: MetalView!
     
     var renderer: Renderer!
-        
+
     // Status bar
     @IBOutlet weak var greenLED8: NSButton!
     @IBOutlet weak var greenLED9: NSButton!
@@ -136,7 +136,7 @@ extension MyController {
 
     // Provides the undo manager
     override open var undoManager: UndoManager? { return metal.undoManager }
-     
+
     // Indicates if the emulator needs saving
     var needsSaving: Bool {
         get {
@@ -156,7 +156,7 @@ extension MyController {
     //
 
     override open func awakeFromNib() {
-                
+
         mydocument = document as? MyDocument
         config = Configuration(with: self)
         macAudio = MacAudio(with: self)
@@ -194,7 +194,7 @@ extension MyController {
 
         // Enable message processing
         registerAsListener()
-                
+
         do {
             // Let the C64 throw an exception if it is not ready to power on
             try c64.isReady()
@@ -219,7 +219,7 @@ extension MyController {
     }
     
     func configureWindow() {
-    
+
         // Add status bar
         window?.autorecalculatesContentBorderThickness(for: .minY)
         window?.setContentBorderThickness(32.0, for: .minY)
@@ -258,7 +258,7 @@ extension MyController {
     //
     
     func timerFunc() {
- 
+
         animationCounter += 1
 
         // Animate the inspector
@@ -273,7 +273,7 @@ extension MyController {
                 crtIcon.needsDisplay = true
             }
         }
-                
+
         // Do less frequently...
         if (animationCounter % 4) == 0 {
             
@@ -305,238 +305,237 @@ extension MyController {
         if warp != c64.warpMode {  c64.warpMode = warp }
     }
 
-	func processMessage(_ msg: Message) {
+    func processMessage(_ msg: Message) {
 
         var data1: Int { return Int(msg.data1) }
         var data2: Int { return Int(msg.data2) }
         var data3: Int { return Int(msg.data3) }
         var data4: Int { return Int(msg.data4) }
 
-		var driveNr: Int { return data1 }
+        var driveNr: Int { return data1 }
         var halftrack: Int { return data2; }
-		var vol: Int { return data3; }
-		var pan: Int { return data4; }
-		
-		// Only proceed if the proxy object is still alive
-		if c64 == nil { return }
-		
-		switch msg.type {
-			
-		case .REGISTER:
+        var vol: Int { return data3; }
+        var pan: Int { return data4; }
+
+        // Only proceed if the proxy object is still alive
+        if c64 == nil { return }
+
+        switch msg.type {
+
+        case .REGISTER:
             debug(.lifetime, "Registered to message queue")
-			
-		case .UNREGISTER:
-			debug(.lifetime, "Unregistered from message queue")
-			
-		case .CONFIG:
-			inspector?.fullRefresh()
-			refreshStatusBar()
-			
-		case .POWER_ON:
-			renderer.canvas.open(delay: 2)
-			virtualKeyboard = nil
-			toolbar.updateToolbar()
-			inspector?.powerOn()
-			
-		case .POWER_OFF:
-			toolbar.updateToolbar()
-			inspector?.powerOff()
-			
-		case .RUN:
-			needsSaving = true
-			toolbar.updateToolbar()
-			inspector?.run()
-			refreshStatusBar()
-			
-		case .PAUSE:
-			toolbar.updateToolbar()
-			inspector?.pause()
-			refreshStatusBar()
-			
-		case .STEP:
-			needsSaving = true
-			inspector?.step()
-			
-		case .RESET:
-			updateWarp()
-			inspector?.reset()
-			
-		case .HALT:
-			shutDown()
-			
-		case .MUTE_ON:
-			muted = true
-			refreshStatusBar()
-			
-		case .MUTE_OFF:
-			muted = false
-			refreshStatusBar()
-			
-		case .WARP_ON,
-				.WARP_OFF:
-			refreshStatusBar()
-			
-		case .SCRIPT_DONE,
-				.SCRIPT_PAUSE,
-				.SCRIPT_ABORT:
-			renderer.console.isDirty = true
-			
-		case .SCRIPT_WAKEUP:
-			c64.continueScript()
-			renderer.console.isDirty = true
-			
-		case .BASIC_ROM_LOADED,
-				.CHAR_ROM_LOADED,
-				.KERNAL_ROM_LOADED,
-				.DRIVE_ROM_LOADED:
-			break
-			
-		case .ROM_MISSING:
-			break
-			
-		case .CPU_OK:
-			break
-			
-		case .BREAKPOINT_REACHED:
-			inspector?.signalBreakPoint(pc: Int(msg.data1))
-			
-		case .WATCHPOINT_REACHED:
-			inspector?.signalWatchPoint(pc: Int(msg.data1))
-			
-		case .CPU_JAMMED:
-			refreshStatusBar()
-			
-		case .PAL,
-				.NTSC:
-			renderer.canvas.updateTextureRect()
-			
-		case .DRIVE_STEP:
-			macAudio.playStepSound(volume: vol, pan: pan)
-			refreshStatusBarTracks(drive: driveNr)
-			
-		case .DISK_INSERT:
-			macAudio.playInsertSound(volume: vol, pan: pan)
-			refreshStatusBarDiskIcons(drive: driveNr)
-			inspector?.fullRefresh()
-			
-		case .DISK_EJECT:
-			macAudio.playEjectSound(volume: vol, pan: pan)
-			refreshStatusBarDiskIcons(drive: driveNr)
-			inspector?.fullRefresh()
-			
-		case .FILE_FLASHED:
+
+        case .UNREGISTER:
+            debug(.lifetime, "Unregistered from message queue")
+
+        case .CONFIG:
+            inspector?.fullRefresh()
+            refreshStatusBar()
+
+        case .POWER_ON:
+            renderer.canvas.open(delay: 2)
+            virtualKeyboard = nil
+            toolbar.updateToolbar()
+            inspector?.powerOn()
+
+        case .POWER_OFF:
+            toolbar.updateToolbar()
+            inspector?.powerOff()
+
+        case .RUN:
+            needsSaving = true
+            toolbar.updateToolbar()
+            inspector?.run()
+            refreshStatusBar()
+
+        case .PAUSE:
+            toolbar.updateToolbar()
+            inspector?.pause()
+            refreshStatusBar()
+
+        case .STEP:
+            needsSaving = true
+            inspector?.step()
+
+        case .RESET:
+            updateWarp()
+            inspector?.reset()
+
+        case .HALT:
+            shutDown()
+
+        case .MUTE_ON:
+            muted = true
+            refreshStatusBar()
+
+        case .MUTE_OFF:
+            muted = false
+            refreshStatusBar()
+
+        case .WARP_ON,
+                .WARP_OFF:
+            refreshStatusBar()
+
+        case .SCRIPT_DONE,
+                .SCRIPT_PAUSE,
+                .SCRIPT_ABORT:
+            renderer.console.isDirty = true
+
+        case .SCRIPT_WAKEUP:
+            c64.continueScript()
+            renderer.console.isDirty = true
+
+        case .BASIC_ROM_LOADED,
+                .CHAR_ROM_LOADED,
+                .KERNAL_ROM_LOADED,
+                .DRIVE_ROM_LOADED:
             break
 
-		case .DISK_PROTECT,
-				.DISK_SAVED,
-				.DISK_UNSAVED,
-				.DRIVE_LED_ON,
-				.DRIVE_LED_OFF:
-			refreshStatusBar()
-			
-		case .IEC_BUS_BUSY,
-				.IEC_BUS_IDLE:
-			updateWarp()
-			refreshStatusBarDriveActivity()
-			
-		case .DRIVE_MOTOR_ON,
-				.DRIVE_MOTOR_OFF:
-			refreshStatusBarDriveActivity()
-			
-		case .DRIVE_CONNECT,
-				.DRIVE_DISCONNECT,
-				.DRIVE_POWER_OFF:
-			hideOrShowDriveMenus()
-			refreshStatusBar()
-			
-		case .DRIVE_POWER_ON:
-			macAudio.playPowerSound(volume: vol, pan: pan)
-			hideOrShowDriveMenus()
-			refreshStatusBar()
-			
-		case .DRIVE_POWER_SAVE_ON,
-				.DRIVE_POWER_SAVE_OFF:
-			break
+        case .ROM_MISSING:
+            break
+
+        case .CPU_OK:
+            break
+
+        case .BREAKPOINT_REACHED:
+            inspector?.signalBreakPoint(pc: Int(msg.data1))
+
+        case .WATCHPOINT_REACHED:
+            inspector?.signalWatchPoint(pc: Int(msg.data1))
+
+        case .CPU_JAMMED:
+            refreshStatusBar()
+
+        case .PAL, .NTSC:
+            renderer.canvas.updateTextureRect()
+
+        case .DRIVE_STEP:
+            macAudio.playStepSound(volume: vol, pan: pan)
+            refreshStatusBarTracks(drive: driveNr)
+
+        case .DISK_INSERT:
+            macAudio.playInsertSound(volume: vol, pan: pan)
+            refreshStatusBarDiskIcons(drive: driveNr)
+            inspector?.fullRefresh()
+
+        case .DISK_EJECT:
+            macAudio.playEjectSound(volume: vol, pan: pan)
+            refreshStatusBarDiskIcons(drive: driveNr)
+            inspector?.fullRefresh()
+
+        case .FILE_FLASHED:
+            break
+
+        case .DISK_PROTECT,
+                .DISK_SAVED,
+                .DISK_UNSAVED,
+                .DRIVE_LED_ON,
+                .DRIVE_LED_OFF:
+            refreshStatusBar()
+
+        case .IEC_BUS_BUSY,
+                .IEC_BUS_IDLE:
+            updateWarp()
+            refreshStatusBarDriveActivity()
+
+        case .DRIVE_MOTOR_ON,
+                .DRIVE_MOTOR_OFF:
+            refreshStatusBarDriveActivity()
+
+        case .DRIVE_CONNECT,
+                .DRIVE_DISCONNECT,
+                .DRIVE_POWER_OFF:
+            hideOrShowDriveMenus()
+            refreshStatusBar()
+
+        case .DRIVE_POWER_ON:
+            macAudio.playPowerSound(volume: vol, pan: pan)
+            hideOrShowDriveMenus()
+            refreshStatusBar()
+
+        case .DRIVE_POWER_SAVE_ON,
+                .DRIVE_POWER_SAVE_OFF:
+            break
 
         case .VC1530_CONNECT,
                 .VC1530_DISCONNECT:
             hideOrShowDriveMenus()
             refreshStatusBar()
 
-		case .VC1530_TAPE:
-			refreshStatusBar()
-			
-		case .VC1530_PLAY:
-			refreshStatusBar()
-			
-		case .VC1530_MOTOR:
-			refreshStatusBar()
-			
-		case .VC1530_COUNTER:
-			refreshStatusBar()
-			
-		case .CRT_ATTACHED:
-			refreshStatusBar()
-			
-		case .CRT_DETACHED:
-			refreshStatusBar()
-			
-		case .CART_SWITCH:
-			break
-			
-		case .KB_AUTO_RELEASE:
-			if virtualKeyboard?.window?.isVisible == true {
-				virtualKeyboard!.refresh()
-			}
-			
-		case .SHAKING:
-			metal.lastShake = DispatchTime(uptimeNanoseconds: 0)
-			if pref.releaseMouseByShaking {
-				metal.releaseMouse()
-			}
-			
-		case .AUTO_SNAPSHOT_TAKEN:
-			mydocument.snapshots.append(c64.latestAutoSnapshot)
-			
-		case .USER_SNAPSHOT_TAKEN:
-			mydocument.snapshots.append(c64.latestUserSnapshot)
-			renderer.flash()
-			
-		case .SNAPSHOT_RESTORED:
-			renderer.rotateRight()
-			renderer.canvas.updateTextureRect()
-			refreshStatusBar()
-			hideOrShowDriveMenus()
-			
-		case .RECORDING_STARTED:
-			window?.backgroundColor = .recordingColor
-			refreshStatusBar()
-			
-		case .RECORDING_STOPPED:
-			window?.backgroundColor = .windowBackgroundColor
-			refreshStatusBar()
-			
-		case .RECORDING_ABORTED:
-			refreshStatusBar()
+        case .VC1530_TAPE:
+            refreshStatusBar()
+
+        case .VC1530_PLAY:
+            refreshStatusBar()
+
+        case .VC1530_MOTOR:
+            refreshStatusBar()
+
+        case .VC1530_COUNTER:
+            refreshStatusBar()
+
+        case .CRT_ATTACHED:
+            refreshStatusBar()
+
+        case .CRT_DETACHED:
+            refreshStatusBar()
+
+        case .CART_SWITCH:
+            break
+
+        case .KB_AUTO_RELEASE:
+            if virtualKeyboard?.window?.isVisible == true {
+                virtualKeyboard!.refresh()
+            }
+
+        case .SHAKING:
+            metal.lastShake = DispatchTime(uptimeNanoseconds: 0)
+            if pref.releaseMouseByShaking {
+                metal.releaseMouse()
+            }
+
+        case .AUTO_SNAPSHOT_TAKEN:
+            mydocument.snapshots.append(c64.latestAutoSnapshot)
+
+        case .USER_SNAPSHOT_TAKEN:
+            mydocument.snapshots.append(c64.latestUserSnapshot)
+            renderer.flash()
+
+        case .SNAPSHOT_RESTORED:
+            renderer.rotateRight()
+            renderer.canvas.updateTextureRect()
+            refreshStatusBar()
+            hideOrShowDriveMenus()
+
+        case .RECORDING_STARTED:
+            window?.backgroundColor = .recordingColor
+            refreshStatusBar()
+
+        case .RECORDING_STOPPED:
+            window?.backgroundColor = .windowBackgroundColor
+            refreshStatusBar()
+
+        case .RECORDING_ABORTED:
+            refreshStatusBar()
             showAlert(.recorderAborted)
-			
-		case .CLOSE_CONSOLE:
-			renderer.console.close(delay: 0.25)
-			
-		case .UPDATE_CONSOLE:
-			renderer.console.isDirty = true
-			
-		case .DMA_DEBUG_ON:
-			renderer.zoomTextureOut()
-			
-		case .DMA_DEBUG_OFF:
-			renderer.zoomTextureIn()
-			
-		default:
-			warn("Unknown message: \(msg)")
-			fatalError()
-		}
-	}
+
+        case .CLOSE_CONSOLE:
+            renderer.console.close(delay: 0.25)
+
+        case .UPDATE_CONSOLE:
+            renderer.console.isDirty = true
+
+        case .DMA_DEBUG_ON:
+            renderer.zoomTextureOut()
+
+        case .DMA_DEBUG_OFF:
+            renderer.zoomTextureIn()
+
+        default:
+            warn("Unknown message: \(msg)")
+            fatalError()
+        }
+    }
 
     //
     // Keyboard events

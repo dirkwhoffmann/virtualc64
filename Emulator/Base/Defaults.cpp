@@ -68,7 +68,8 @@ Defaults::Defaults()
     setFallback(OPT_AUDPAN, {0, 1, 2, 3}, 0);
 
     setFallback(OPT_RAM_PATTERN, RAM_PATTERN_VICE);
-
+    setFallback(OPT_SAVE_ROMS, true);
+    
     setFallback(OPT_DRV_AUTO_CONFIG, {DRIVE8, DRIVE9}, true);
     setFallback(OPT_DRV_TYPE, {DRIVE8, DRIVE9}, DRIVE_VC1541II);
     setFallback(OPT_DRV_RAM, {DRIVE8, DRIVE9}, DRVRAM_NONE);

@@ -28,10 +28,10 @@ enum class Token
     open, paccesses, palette, pan, parcable, pause, poll, power, press,
     raccesses, raminitpattern, registers, regression, release, reset, resid,
     revision, rewind, right, rom, run, saccesses, sampling, saturation, save,
-    sbcollisions, screenshot, searchpath, set, setup, shakedetector, shiftlock,
-    show, sid, slow, slowramdelay, slowrammirror, source, speed, sscollisions,
-    state, step, to, tod, timerbbug, type, unmappingtype, velocity, vicii,
-    volume, wait
+    saveroms, sbcollisions, screenshot, searchpath, set, setup, shakedetector,
+    shiftlock, show, sid, slow, slowramdelay, slowrammirror, source, speed,
+    sscollisions, state, step, to, tod, timerbbug, type, unmappingtype,
+    velocity, vicii, volume, wait
 };
 
 struct TooFewArgumentsError : public util::ParseError {

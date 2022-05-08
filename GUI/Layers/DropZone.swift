@@ -200,17 +200,17 @@ class DropZone: Layer {
 
             } else {
 
-                // Run the import dialog
-                let importer = DiskImporter(with: controller, nibName: "DiskImporter")
-                try importer?.show(url: url)
+                switch type {
 
-                /*
-                let file = try mm.createFileProxy(from: url,
-                                                  allowedTypes: FileType.draggable)
-                // Run the import dialog
-                let importer = DiskImporter(with: controller, nibName: "DiskImporter")
-                importer?.show(proxy: file)
-                */
+                case .SNAPSHOT, .SCRIPT:
+
+                    try mm.addMedia(url: url, allowedTypes: [type])
+
+                default:
+
+                    let importer = DiskImporter(with: controller, nibName: "DiskImporter")
+                    try importer?.show(url: url)
+                }
             }
 
         } catch {

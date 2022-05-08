@@ -191,6 +191,7 @@ C64::getConfigItem(Option option) const
             return muxer.getConfigItem(option);
 
         case OPT_RAM_PATTERN:
+        case OPT_SAVE_ROMS:
             return mem.getConfigItem(option);
 
         case OPT_DAT_MODEL:
@@ -351,7 +352,8 @@ C64::configure(Option option, i64 value)
             break;
             
         case OPT_RAM_PATTERN:
-            
+        case OPT_SAVE_ROMS:
+
             mem.setConfigItem(option, value);
             break;
 
