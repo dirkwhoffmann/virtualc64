@@ -42,7 +42,7 @@ class WaveformView: NSView {
         super.draw(dirtyRect)
         
         let context = NSGraphicsContext.current?.cgContext
-        
+
         NSColor.clear.set()
         context?.fill(dirtyRect)
         

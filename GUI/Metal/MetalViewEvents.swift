@@ -121,7 +121,7 @@ public extension MetalView {
         if !gotMouse { return }
         
         let dx = event.deltaX
-        let dy = -event.deltaY
+        let dy = event.deltaY
         
         // Make coordinate independent of window size
         let scaleX = (256.0 * 400.0) / frame.width

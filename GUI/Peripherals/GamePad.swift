@@ -477,20 +477,7 @@ class GamePad {
         if port == 1 { c64.port1.mouse.setDxDy(delta) }
         if port == 2 { c64.port2.mouse.setDxDy(delta) }
     }
-    
-    /*
-    func processMouseEvents(xy: NSPoint) {
-
-        let c64 = manager.parent.c64!
         
-        // Check for a shaking mouse
-        c64.port1.mouse.detectShake(xy)
-        
-        if port == 1 { c64.port1.mouse.setXY(xy) }
-        if port == 2 { c64.port2.mouse.setXY(xy) }
-    }
-    */
-    
     func processKeyDownEvent(macKey: MacKey) -> Bool {
 
         // Only proceed if a keymap is present

@@ -1034,3 +1034,49 @@ Muxer::copyInterleaved(float *target, isize n)
     
     stream.unlock();
 }
+
+float
+Muxer::draw(u32 *buffer, isize width, isize height, float maxAmp, u32 color) const
+{
+    isize dw = stream.cap() / width;
+    float newHighestAmplitude = 0.001f;
+
+    // Clear buffer
+    for (isize i = 0; i < width * height; i++) {
+        buffer[i] = color & 0xFFFFFF;
+    }
+
+    // Draw waveform
+    for (isize w = 0; w < width; w++) {
+
+        u32 *ptr = buffer + width * height / 2 + w;
+
+        // Read samples from ringbuffer
+        auto pair = stream.current(w * dw);
+        float sampleL = abs(pair.left);
+        float sampleR = abs(pair.right);
+
+        if (sampleL == 0 && sampleR == 0) {
+
+            // Draw some noise to make it look sexy
+            *ptr = color;
+            if (rand() % 2) *(ptr + width) = color;
+            if (rand() % 2) *(ptr - width) = color;
+
+        } else {
+
+            // Remember the highest amplitude
+            if (sampleL > newHighestAmplitude) newHighestAmplitude = sampleL;
+            if (sampleR > newHighestAmplitude) newHighestAmplitude = sampleR;
+
+            // Scale the sample
+            isize scaledL = std::min(isize(sampleL * height / maxAmp), height / 2);
+            isize scaledR = std::min(isize(sampleR * height / maxAmp), height / 2);
+
+            // Draw vertical lines
+            for (isize j = 0; j < scaledL; j++) *(ptr - j * width) = color;
+            for (isize j = 0; j < scaledR; j++) *(ptr + j * width) = color;
+        }
+    }
+    return newHighestAmplitude;
+}

@@ -158,7 +158,7 @@ Mouse::setDxDy(double dx, double dy)
     debug(PRT_DEBUG, "setDxDy(%f,%f)\n", dx, dy);
 
     targetX += dx * scaleX;
-    targetY += dy * scaleY;
+    targetY -= dy * scaleY;
     
     port.device = CPDEVICE_MOUSE;
 }

@@ -600,6 +600,20 @@
     [self bridge]->rampDown();
 }
 
+- (float)drawWaveform:(u32 *)buffer w:(NSInteger)w h:(NSInteger)h scale:(float)s color:(u32)c
+{
+    return [self bridge]->draw(buffer, w, h, s, c);
+}
+
+- (float)drawWaveform:(u32 *)buffer size:(NSSize)size scale:(float)s color:(u32)c
+{
+    return [self drawWaveform:buffer
+                            w:(NSInteger)size.width
+                            h:(NSInteger)size.height
+                        scale:s
+                        color:c];
+}
+
 @end
 
 //
