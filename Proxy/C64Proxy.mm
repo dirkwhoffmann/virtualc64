@@ -602,7 +602,7 @@
 
 - (float)drawWaveform:(u32 *)buffer w:(NSInteger)w h:(NSInteger)h scale:(float)s color:(u32)c
 {
-    return [self bridge]->draw(buffer, w, h, s, c);
+    return [self bridge]->draw(buffer, w, h, s, c, 0);
 }
 
 - (float)drawWaveform:(u32 *)buffer size:(NSSize)size scale:(float)s color:(u32)c

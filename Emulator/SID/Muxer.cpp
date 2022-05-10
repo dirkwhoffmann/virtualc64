@@ -1036,27 +1036,50 @@ Muxer::copyInterleaved(float *target, isize n)
 }
 
 float
-Muxer::draw(u32 *buffer, isize width, isize height, float maxAmp, u32 color) const
+Muxer::draw(u32 *buffer, isize width, isize height,
+            float maxAmp, u32 color, isize sid) const
 {
-    isize dw = stream.cap() / width;
-    float newHighestAmplitude = 0.001f;
+    auto samples = new float[width][2];
+    isize hheight = height / 2;
+    float newMaxAmp = 0.001f, dw;
+
+    // Gather data
+    switch (sid) {
+
+        case 0: case 1: case 2: case 3:
+
+            dw = sidStream[sid].cap() / float(width);
+
+            for (isize w = 0; w < width; w++) {
+
+                auto sample = sidStream[sid].current(isize(w * dw));
+                samples[w][0] = float(abs(sample));
+                samples[w][1] = float(abs(sample));
+            }
+            break;
+
+        default:
+
+            dw = stream.cap() / float(width);
+
+            for (isize w = 0; w < width; w++) {
+
+                auto sample = stream.current(isize(w * dw));
+                samples[w][0] = abs(sample.left);
+                samples[w][1] = abs(sample.right);
+            }
+            break;
+    }
 
     // Clear buffer
-    for (isize i = 0; i < width * height; i++) {
-        buffer[i] = color & 0xFFFFFF;
-    }
+    for (isize i = 0; i < width * height; i++) buffer[i] = 0;
 
     // Draw waveform
     for (isize w = 0; w < width; w++) {
 
-        u32 *ptr = buffer + width * height / 2 + w;
+        u32 *ptr = buffer + width * hheight + w;
 
-        // Read samples from ringbuffer
-        auto pair = stream.current(w * dw);
-        float sampleL = abs(pair.left);
-        float sampleR = abs(pair.right);
-
-        if (sampleL == 0 && sampleR == 0) {
+        if (samples[w][0] == 0 && samples[w][1] == 0) {
 
             // Draw some noise to make it look sexy
             *ptr = color;
@@ -1066,17 +1089,19 @@ Muxer::draw(u32 *buffer, isize width, isize height, float maxAmp, u32 color) con
         } else {
 
             // Remember the highest amplitude
-            if (sampleL > newHighestAmplitude) newHighestAmplitude = sampleL;
-            if (sampleR > newHighestAmplitude) newHighestAmplitude = sampleR;
+            if (samples[w][0] > newMaxAmp) newMaxAmp = samples[w][0];
+            if (samples[w][1] > newMaxAmp) newMaxAmp = samples[w][1];
 
             // Scale the sample
-            isize scaledL = std::min(isize(sampleL * height / maxAmp), height / 2);
-            isize scaledR = std::min(isize(sampleR * height / maxAmp), height / 2);
+            isize scaledL = std::min(isize(samples[w][0] * hheight / maxAmp), hheight);
+            isize scaledR = std::min(isize(samples[w][1] * hheight / maxAmp), hheight);
 
             // Draw vertical lines
             for (isize j = 0; j < scaledL; j++) *(ptr - j * width) = color;
             for (isize j = 0; j < scaledR; j++) *(ptr + j * width) = color;
         }
     }
-    return newHighestAmplitude;
+
+    delete[] samples;
+    return newMaxAmp;
 }

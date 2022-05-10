@@ -166,6 +166,7 @@
                 <outlet property="sidWaveform1" destination="BH2-LB-Ult" id="RAG-Pr-8Ws"/>
                 <outlet property="sidWaveform2" destination="jld-zp-pwn" id="PcW-Lv-6N9"/>
                 <outlet property="sidWaveform3" destination="1YE-cM-kPU" id="8uH-Ad-imf"/>
+                <outlet property="sidWaveformImageView" destination="ndh-ZM-l08" id="YBl-2x-aeh"/>
                 <outlet property="sidWaveformView" destination="B0D-dJ-qqW" id="YlQ-iW-nXp"/>
                 <outlet property="sprColor" destination="Gb7-FF-sPF" id="LSk-qd-NlI"/>
                 <outlet property="sprEnabled" destination="fzO-yE-qRr" id="Y7h-Fs-tjX"/>
@@ -3383,7 +3384,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B0D-dJ-qqW" customClass="WaveformView" customModule="VirtualC64" customModuleProvider="target">
-                                                        <rect key="frame" x="11" y="10" width="354" height="117"/>
+                                                        <rect key="frame" x="11" y="10" width="171" height="117"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <connections>
                                                             <outlet property="inspector" destination="-2" id="BsR-Gy-ejT"/>
@@ -3449,6 +3450,14 @@
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
+                                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ndh-ZM-l08" customClass="WaveformImageView" customModule="VirtualC64" customModuleProvider="target">
+                                                        <rect key="frame" x="202" y="10" width="172" height="117"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="biohazard" id="fdN-mc-Kp8"/>
+                                                        <connections>
+                                                            <outlet property="inspector" destination="-2" id="cfO-fo-kyw"/>
+                                                        </connections>
+                                                    </imageView>
                                                 </subviews>
                                             </view>
                                         </box>
@@ -4031,6 +4040,7 @@
         </window>
     </objects>
     <resources>
+        <image name="biohazard" width="276" height="277"/>
         <image name="pauseTemplate" width="36" height="36"/>
         <image name="stepIntoTemplate" width="177" height="177"/>
         <image name="stepOverTemplate" width="177" height="176"/>

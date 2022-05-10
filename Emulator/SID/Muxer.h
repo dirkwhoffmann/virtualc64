@@ -94,7 +94,7 @@ private:
 
     // Panning factors
     float pan[4] = { 0, 0, 0, 0 };
-        
+
 public:
         
 
@@ -338,10 +338,13 @@ public:
     // Visualizing the waveform
     //
 
+public:
+
     /* Plots a graphical representation of the waveform. Returns the highest
      * amplitute that was found in the ringbuffer. To implement auto-scaling,
      * pass the returned value as parameter maxAmp in the next call to this
      * function.
      */
-    float draw(u32 *buffer, isize width, isize height, float maxAmp, u32 color) const;
+    float draw(u32 *buffer, isize width, isize height,
+               float maxAmp, u32 color, isize sid = -1) const;
 };

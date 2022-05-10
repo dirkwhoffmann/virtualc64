@@ -121,6 +121,7 @@ extension Inspector {
         sidBufferOverflows.intValue = Int32(stats.bufferOverflows)
         
         sidWaveformView.update()
+        sidWaveformImageView.update()
     }
     
     func refresh(waveform: UInt8, waveformPopup popup: NSPopUpButton) {
