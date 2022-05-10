@@ -27,7 +27,6 @@
 		50157EEB28256035000E9DDD /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50157EEA28256035000E9DDD /* Config.swift */; };
 		50157EEF2825A814000E9DDD /* DiskImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50157EEE2825A814000E9DDD /* DiskImporter.swift */; };
 		50157EF12825A9F5000E9DDD /* DiskImporter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50157EF02825A9F5000E9DDD /* DiskImporter.xib */; };
-		5015F36620B546A30024B4AA /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5015F36520B546A30024B4AA /* WaveformView.swift */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
 		5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */; };
 		5018AF66202EDD2000B4C886 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018AF65202EDD2000B4C886 /* Defaults.swift */; };
@@ -337,7 +336,6 @@
 		50157EEA28256035000E9DDD /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		50157EEE2825A814000E9DDD /* DiskImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskImporter.swift; sourceTree = "<group>"; };
 		50157EF02825A9F5000E9DDD /* DiskImporter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiskImporter.xib; sourceTree = "<group>"; };
-		5015F36520B546A30024B4AA /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		50176C790A6F7357009E80BD /* C64Proxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = C64Proxy.h; sourceTree = "<group>"; };
 		50176C7A0A6F7357009E80BD /* C64Proxy.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = C64Proxy.mm; sourceTree = "<group>"; };
 		5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "C64_Pro_Mono-STYLE.ttf"; sourceTree = "<group>"; };
@@ -1033,7 +1031,6 @@
 				507A499F24C8D66A00DBF984 /* GuardTableView.swift */,
 				507A49A124C8D71400DBF984 /* BankTableView.swift */,
 				507887CB20B1858B00941F7E /* MemTableView.swift */,
-				5015F36520B546A30024B4AA /* WaveformView.swift */,
 				50FBB62C28294C29001366F9 /* WaveformImageView.swift */,
 				506D4D0C20B331A00093C5C6 /* MyFormatter.swift */,
 			);
@@ -1946,7 +1943,6 @@
 				504C436D24AF29AC00E69CAE /* Rex.cpp in Sources */,
 				5058A920281D109F00C223C9 /* DiskInspector.swift in Sources */,
 				504C436424AF29AC00E69CAE /* Expert.cpp in Sources */,
-				5015F36620B546A30024B4AA /* WaveformView.swift in Sources */,
 				504C436724AF29AC00E69CAE /* MagicDesk.cpp in Sources */,
 				50033829266E47B400D5456E /* CompatibilityConf.swift in Sources */,
 				50B485FD24FA1D3200844133 /* iCarousel.m in Sources */,
