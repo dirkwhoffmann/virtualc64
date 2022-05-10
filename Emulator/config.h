@@ -26,7 +26,7 @@
 #define SNP_BETA 1
 
 // Uncomment these settings in a release build
-// #define RELEASEBUILD
+#define RELEASEBUILD
 
 
 //

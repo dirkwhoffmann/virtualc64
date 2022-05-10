@@ -17,7 +17,6 @@ class WaveformView: NSImageView {
     var running: Bool { return inspector.c64.running }
 
     // Waveform size
-    // var size = NSSize(width: 400, height: 200)
     var size: NSSize!
     var wordCount: Int { return Int(size.width) * Int(size.height) }
 

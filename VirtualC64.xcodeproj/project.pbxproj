@@ -768,6 +768,7 @@
 		50F420C9250BA3460043DE56 /* Colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
 		50F99563203AEC80004C4856 /* KeyViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyViewItem.xib; sourceTree = "<group>"; };
 		50FBB62C28294C29001366F9 /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
+		50FBB62F282A51FB001366F9 /* VirtualC64.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VirtualC64.entitlements; sourceTree = "<group>"; };
 		50FE5B352039B3B7006CE7C7 /* MacKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacKey.swift; sourceTree = "<group>"; };
 		50FE5B372039B3C5006CE7C7 /* C64Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C64Key.swift; sourceTree = "<group>"; };
 		50FF1FCA26BAB3DA0061E5CE /* DropZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropZone.swift; sourceTree = "<group>"; };
@@ -1443,6 +1444,7 @@
 		5070D72124AF2EB1005862D0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				50FBB62F282A51FB001366F9 /* VirtualC64.entitlements */,
 				503E198F20C42C6D007E91F1 /* Assets.xcassets */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
 				5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */,
@@ -1680,7 +1682,9 @@
 				LastUpgradeCheck = 1220;
 				TargetAttributes = {
 					8D15AC270486D014006FF6A4 = {
+						DevelopmentTeam = 3NG65ZLYW7;
 						LastSwiftMigration = 1020;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -2054,9 +2058,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "compiler-default";
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_ENTITLEMENTS = Resources/VirtualC64.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 220510;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 3NG65ZLYW7;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2069,8 +2078,9 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 4.5b1;
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VirtualC64;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.dirkwhoffmann.VC64-1";
 				PRODUCT_NAME = VirtualC64;
 				SWIFT_OBJC_BRIDGING_HEADER = "Proxy/Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -2085,9 +2095,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CLANG_CXX_LIBRARY = "compiler-default";
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_ENTITLEMENTS = Resources/VirtualC64.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 220510;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 3NG65ZLYW7;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2101,8 +2116,9 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				LLVM_LTO = YES_THIN;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 4.5b1;
 				OTHER_LDFLAGS = "-Wl,-rpath,@loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = de.dirkwhoffmann.VirtualC64;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.dirkwhoffmann.VC64-1";
 				PRODUCT_NAME = VirtualC64;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OBJC_BRIDGING_HEADER = "Proxy/Bridging-Header.h";
@@ -2151,7 +2167,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2227,7 +2243,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
