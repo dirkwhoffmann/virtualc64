@@ -17,7 +17,8 @@ class WaveformImageView: NSImageView {
     var running: Bool { return inspector.c64.running }
 
     // Waveform size
-    var size = NSSize(width: 320, height: 200)
+    // var size = NSSize(width: 400, height: 200)
+    var size: NSSize!
     var wordCount: Int { return Int(size.width) * Int(size.height) }
 
     // Waveform buffer
@@ -30,17 +31,21 @@ class WaveformImageView: NSImageView {
     let color = UInt32(NSColor.gray.usingColorSpace(.sRGB)!.gpuColor)
 
     required init?(coder decoder: NSCoder) {
+
         super.init(coder: decoder)
-        buffer = UnsafeMutablePointer<UInt32>.allocate(capacity: wordCount)
     }
 
     required override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
     }
 
-    // Restarts the auto scaling mechanism
-    func initAutoScaler() {
-        maxAmp = 0.001
+    override func awakeFromNib() {
+
+        let w = inspector.sidWaveformImageView.visibleRect.width
+        let h = inspector.sidWaveformImageView.visibleRect.height
+
+        size = NSSize(width: w, height: h)
+        buffer = UnsafeMutablePointer<UInt32>.allocate(capacity: wordCount)
     }
 
     func update() {
@@ -50,7 +55,12 @@ class WaveformImageView: NSImageView {
 
     override func draw(_ dirtyRect: NSRect) {
 
-        maxAmp = sid.drawWaveform(buffer, size: size, scale: maxAmp, color: color)
+        var source = -1
+        if inspector.sidWaveformSource.selectedTag() == 1 {
+            source = inspector.selectedSID
+        }
+
+        maxAmp = sid.drawWaveform(buffer, size: size, scale: maxAmp, color: color, source: source)
         image = NSImage.make(data: buffer, rect: CGSize(width: size.width, height: size.height))
         super.draw(dirtyRect)
     }

@@ -9,7 +9,7 @@
 
 extension Inspector {
     
-    private var selectedSID: Int { return sidSelector.indexOfSelectedItem }
+    var selectedSID: Int { return sidSelector.indexOfSelectedItem }
 
     func refreshSID(count: Int = 0, full: Bool = false) {
         
@@ -120,7 +120,6 @@ extension Inspector {
         sidBufferUnderflows.intValue = Int32(stats.bufferUnderflows)
         sidBufferOverflows.intValue = Int32(stats.bufferOverflows)
         
-        sidWaveformView.update()
         sidWaveformImageView.update()
     }
     

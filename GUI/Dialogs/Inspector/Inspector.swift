@@ -267,8 +267,8 @@ class Inspector: DialogController {
     @IBOutlet weak var sidFilter2: NSButton!
     @IBOutlet weak var sidFilter3: NSButton!
     
-    @IBOutlet weak var sidWaveformView: WaveformView!
     @IBOutlet weak var sidWaveformImageView: WaveformImageView!
+    @IBOutlet weak var sidWaveformSource: NSPopUpButton!
     @IBOutlet weak var sidAudioBufferLevel: NSLevelIndicator!
     @IBOutlet weak var sidAudioBufferLevelText: NSTextField!
     @IBOutlet weak var sidBufferUnderflows: NSTextField!
