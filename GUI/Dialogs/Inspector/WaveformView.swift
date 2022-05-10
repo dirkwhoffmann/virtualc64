@@ -9,7 +9,7 @@
 
 import Foundation
 
-class WaveformImageView: NSImageView {
+class WaveformView: NSImageView {
 
     @IBOutlet weak var inspector: Inspector!
 
@@ -41,8 +41,8 @@ class WaveformImageView: NSImageView {
 
     override func awakeFromNib() {
 
-        let w = inspector.sidWaveformImageView.visibleRect.width
-        let h = inspector.sidWaveformImageView.visibleRect.height
+        let w = inspector.sidWaveformView.visibleRect.width
+        let h = inspector.sidWaveformView.visibleRect.height
 
         size = NSSize(width: w, height: h)
         buffer = UnsafeMutablePointer<UInt32>.allocate(capacity: wordCount)
