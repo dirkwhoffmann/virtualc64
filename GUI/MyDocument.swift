@@ -15,7 +15,7 @@ class MyDocument: NSDocument {
     var parent: MyController { return windowControllers.first as! MyController }
 
     // The media manager for this document
-    var mm: MediaManager { return parent.mm }
+    var mm: MediaManager!
 
     // Gateway to the core emulator
     var c64: C64Proxy!
@@ -40,6 +40,9 @@ class MyDocument: NSDocument {
             NSApp.terminate(self)
             return
         }
+        
+        // Create the media manager
+        mm = MediaManager(with: self)
 
         // Register all GUI related user defaults
         C64Proxy.defaults.registerUserDefaults()

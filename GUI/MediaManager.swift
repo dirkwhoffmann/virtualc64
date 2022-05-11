@@ -22,9 +22,9 @@ class MediaManager {
     }
 
     // References to other objects
-    var controller: MyController!
     var document: MyDocument!
-    var c64: C64Proxy!
+    var c64: C64Proxy { return document.c64 }
+    var controller: MyController { return document.parent }
 
     // Computed references
     var console: Console { return controller.renderer.console }
@@ -45,13 +45,10 @@ class MediaManager {
     // Initializing
     //
 
-    init(with controller: MyController) {
+    init(with document: MyDocument) {
 
         debug(.lifetime, "Creating media manager")
-        
-        self.controller = controller
-        self.document = controller.mydocument
-        self.c64 = controller.c64
+        self.document = document
     }
 
     //

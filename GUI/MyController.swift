@@ -173,9 +173,6 @@ extension MyController {
         keyboard = KeyboardController(parent: self)
         assert(keyboard != nil, "Failed to create keyboard controller")
 
-        // Create the media manager
-        mm = MediaManager(with: self)
-
         // Create game pad manager
         gamePadManager = GamePadManager(parent: self)
         assert(gamePadManager != nil, "Failed to create game pad manager")
