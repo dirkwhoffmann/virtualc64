@@ -47,7 +47,8 @@ class DeviceDatabase {
              "1356":
                 ["616": [:],                    // Sony DualShock 3
                  "1476": [:],                   // Sony DualShock 4
-                 "2508": [:]],                  // Sony Dualshock 4 (2nd Gen)
+                 "2508": [:],                   // Sony Dualshock 4 (2nd Gen)
+                 "3302": [:]],                  // Sony DualSense
              "1848":
                 ["8727": [:]],                  // Competition Pro SL-650212
              "3853":
