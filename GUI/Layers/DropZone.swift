@@ -17,7 +17,7 @@ class DropZone: Layer {
     var contentView: NSView { return window.contentView! }
     var metal: MetalView { return controller.metal! }
     var mydocument: MyDocument { return controller.mydocument! }
-    var mm: MediaManager { return controller.mm! }
+    var mm: MediaManager { return controller.mm }
 
     var zones = [NSImageView(), NSImageView(), NSImageView(), NSImageView()]
     var ul = [NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0),

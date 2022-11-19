@@ -29,7 +29,7 @@ class MyController: NSWindowController, MessageReceiver {
     var c64: C64Proxy!
 
     // Media manager (handles the import and export of media files)
-    var mm: MediaManager!
+    var mm: MediaManager { return mydocument.mm }
 
     // Inspector panel of this emulator instance
     var inspector: Inspector?

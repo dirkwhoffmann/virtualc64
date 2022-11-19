@@ -39,7 +39,7 @@ class DialogController: NSWindowController, DialogControllerDelegate {
     
     var parent: MyController!
     var c64: C64Proxy!
-    var mm: MediaManager { return parent.mm }
+    var mm: MediaManager { return parent.mydocument.mm }
 
     // List of open windows or sheets (to make ARC happy)
     static var active: [DialogController] = []

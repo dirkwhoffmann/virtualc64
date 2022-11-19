@@ -18,7 +18,6 @@ class DiskExporter: DialogController {
     }
 
     var myDocument: MyDocument { return parent.mydocument! }
-    var mediaManager: MediaManager { return parent.mm }
 
     @IBOutlet weak var icon: NSImageView!
     @IBOutlet weak var title: NSTextField!
@@ -228,17 +227,17 @@ class DiskExporter: DialogController {
             case Format.d64:
 
                 debug(.media, "Exporting D64")
-                try mediaManager.export(file: d64!, to: url)
+                try mm.export(file: d64!, to: url)
 
             case Format.t64:
 
                 debug(.media, "Exporting T64")
-                try mediaManager.export(file: t64!, to: url)
+                try mm.export(file: t64!, to: url)
 
             case Format.prg:
 
                 debug(.media, "Exporting PRG")
-                try mediaManager.export(file: prg!, to: url)
+                try mm.export(file: prg!, to: url)
 
             case Format.vol:
 
@@ -252,7 +251,7 @@ class DiskExporter: DialogController {
 
             drive.markDiskAsUnmodified()
             if rememberUrl {
-                parent.mm.noteNewRecentlyExportedDiskURL(url, drive: drive.id)
+                mm.noteNewRecentlyExportedDiskURL(url, drive: drive.id)
             }
 
         } catch {

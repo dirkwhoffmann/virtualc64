@@ -1236,7 +1236,7 @@ C64::romSubTitle(u64 fnv) const
     if (rev != ROM_UNKNOWN) return RomFile::subTitle(rev);
     
     static char str[32];
-    sprintf(str, "FNV %llx", fnv);
+    snprintf(str, sizeof(str), "FNV %llx", fnv);
     return str;
 }
 
