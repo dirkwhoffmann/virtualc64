@@ -339,7 +339,7 @@ class KeyboardController: NSObject {
             }
 
             // Set the initial delay for the first key (in frames)
-            var delay = Int(seconds / 50.0)
+            var delay = Int(seconds * 50.0)
 
             // Record events
             for c in truncated.lowercased() {

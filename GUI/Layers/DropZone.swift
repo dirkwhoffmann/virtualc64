@@ -206,6 +206,10 @@ class DropZone: Layer {
 
                     try mm.addMedia(url: url, allowedTypes: [type])
 
+                case .PRG:
+
+                    try mm.addMedia(url: url, allowedTypes: [type], options: [.flash])
+                    
                 default:
 
                     let importer = DiskImporter(with: controller, nibName: "DiskImporter")
