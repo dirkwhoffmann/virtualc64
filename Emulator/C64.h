@@ -194,10 +194,28 @@ public:
     
     C64();
     ~C64();
-    
-    const char *getDescription() const override { return "C64"; }
+
+
+    //
+    // Methods from C64Object
+    //
+
+public:
+
     void prefix() const override;
 
+private:
+
+    const char *getDescription() const override { return "C64"; }
+    void _dump(Category category, std::ostream& os) const override;
+
+
+    //
+    // Methods from C64Component
+    //
+
+public:
+    
     void reset(bool hard);
     void hardReset() { reset(true); }
     void softReset() { reset(false); }
@@ -253,8 +271,6 @@ private:
 
     void inspect(InspectionTarget target);
 
-    void _dump(Category category, std::ostream& os) const override;
-    
     
     //
     // Serializing
@@ -297,6 +313,21 @@ private:
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
 
+
+    //
+    // Methods from Thread
+    //
+
+private:
+
+    SyncMode getSyncMode() const override;
+    void execute() override;
+    // util::Time getDelay() const override;
+
+public:
+
+    double refreshRate() const override;
+
     
     //
     // Controlling
@@ -319,11 +350,6 @@ private:
     //
     // Running the emulator
     //
-    
-private:
-    
-    // Main execution method (from Thread class)
-    void execute() override;
 
 public:
 

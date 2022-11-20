@@ -33,6 +33,7 @@
 // Build settings
 //
 
+
 #if defined(__clang__)
 #pragma GCC diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #pragma GCC diagnostic ignored "-Wgnu-anonymous-struct"
@@ -45,9 +46,6 @@
 //
 
 #define OVERRIDES { }
-
-// Uncomment to fallback to an older style thread messaging mechanism
-// #define USE_CONDITION_VARIABLE
 
 
 //

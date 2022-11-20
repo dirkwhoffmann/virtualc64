@@ -13,15 +13,24 @@
 namespace util {
 
 void
-Wakeable::waitForWakeUp()
+Wakeable::waitForWakeUp(Time timeout)
 {
-    (void)future.get();
+    auto now = std::chrono::system_clock::now();
+    auto delay = std::chrono::nanoseconds(timeout.asNanoseconds());
+
+    std::unique_lock<std::mutex> lock(condMutex);
+    condVar.wait_until(lock, now + delay, [this]{ return ready; });
+    ready = false;
 }
 
 void
 Wakeable::wakeUp()
 {
-    promise.set_value(true);
+    {
+        std::lock_guard<std::mutex> lock(condMutex);
+        ready = true;
+    }
+    condVar.notify_one();
 }
 
 }

@@ -130,8 +130,7 @@ protected:
 
     // The current synchronization mode
     enum class SyncMode { Periodic, Pulsed };
-    volatile SyncMode mode = SyncMode::Periodic;
-    
+
     // The current thread state and a change request
     volatile ExecutionState state = EXEC_OFF;
     volatile ExecutionState newState = EXEC_OFF;
@@ -148,8 +147,7 @@ protected:
     isize loopCounter = 0;
     isize suspendCounter = 0;
     
-    // Time stamps for adjusting the execution speed
-    util::Time delay = util::Time(1000000000 / 50);
+    // Time stamps for adjusting execution speed
     util::Time targetTime;
             
     // Clocks for measuring the CPU load
@@ -187,24 +185,19 @@ private:
     // The code to be executed in each iteration (implemented by the subclass)
     virtual void execute() = 0;
 
+    // Target frame rate of this thread (provided by the subclass)
+    virtual double refreshRate() const = 0;
+
     // Returns true if this functions is called from within the emulator thread
     bool isEmulatorThread() { return std::this_thread::get_id() == thread.get_id(); }
 
     
     //
-    // Configuring
+    // Analyzing
     //
 
 public:
-    
-    void setSyncDelay(util::Time newDelay);
-    void setMode(SyncMode newMode);
 
-    
-    //
-    // Analyzing
-    //
-    
     double getCpuLoad() { return cpuLoad; }
     
     
@@ -250,7 +243,10 @@ protected:
     //
 
 public:
-    
+
+    // Provides the current sync mode
+    virtual SyncMode getSyncMode() const = 0;
+
     // Awakes the thread if it runs in pulse mode
     void wakeUp();
 

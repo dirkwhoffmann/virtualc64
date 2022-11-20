@@ -625,7 +625,7 @@ C64::updateClockFrequency(VICIIRevision rev, VICIISpeed speed)
 {
     durationOfOneCycle = 10000000000 / VICII::getFrequency(rev, speed);
     nativeDurationOfOneCycle = 10000000000 / VICII::getNativeFrequency(rev);
-    setSyncDelay(VICII::getFrameDelay(rev, speed));
+    // setSyncDelay(VICII::getFrameDelay(rev, speed));
 }
 
 i64
@@ -640,6 +640,13 @@ C64::overrideOption(Option option, i64 value)
     }
 
     return value;
+}
+
+C64::SyncMode
+C64::getSyncMode() const
+{
+    return SyncMode::Periodic;
+    // TODO: return config.vsync ? SyncMode::Pulsed : SyncMode::Periodic;
 }
 
 void
@@ -708,6 +715,19 @@ C64::execute()
         }
                     
         assert(flags == 0);
+    }
+}
+
+double
+C64::refreshRate() const
+{
+    switch (getSyncMode()) {
+
+        case SyncMode::Pulsed:      return 60.0; // TODO: host.refreshRate;
+        case SyncMode::Periodic:    return vic.getFps();
+
+        default:
+            fatalError;
     }
 }
 

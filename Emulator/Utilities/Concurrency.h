@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "Chrono.h"
 #include <thread>
 #include <future>
 
@@ -48,12 +49,15 @@ public:
 
 class Wakeable
 {
-    std::promise<int> promise;
-    std::future<int> future = promise.get_future();
-    
+    static constexpr auto timeout = std::chrono::milliseconds(100);
+
+    std::mutex condMutex;
+    std::condition_variable condVar;
+    bool ready = false;
+
 public:
 
-    void waitForWakeUp();
+    void waitForWakeUp(Time timeout);
     void wakeUp();
 };
 

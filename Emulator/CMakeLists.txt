@@ -35,6 +35,8 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 else()
   target_compile_options(vc64Core PUBLIC -Wall -Werror)
   target_compile_options(vc64Core PUBLIC -Wno-unused-parameter)
+  target_compile_options(vAmigaCore PUBLIC -Wno-gnu-anonymous-struct)
+  target_compile_options(vAmigaCore PUBLIC -Wno-nested-anon-types)
 endif()
 
 # Add include paths
