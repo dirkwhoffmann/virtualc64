@@ -27,9 +27,9 @@ FFmpeg::init()
 
         add("/Applications/ffmpeg");
         add("/usr/bin/ffmpeg");
+        add("/usr/local/bin/ffmpeg");
         add("/opt/bin/ffmpeg");
-        // add("/usr/local/bin/ffmpeg");
-        // add("/opt/homebrew/bin/ffmpeg");
+        add("/opt/homebrew/bin/ffmpeg");
 
         // Use the first entry as the default executable
         if (!paths.empty()) exec = paths[0];
