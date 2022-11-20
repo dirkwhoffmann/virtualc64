@@ -294,21 +294,9 @@ class MediaManager {
                 drive!.insertG64(proxy, protected: options.contains(.protect))
             }
 
-        case let proxy as PRGFileProxy:
-            debug(.media, "PRG")
-            if proceedUnsaved {
-
-                if let volume = try? FileSystemProxy.make(with: proxy) {
-
-                    try? c64.flash(volume, item: 0)
-                    controller.keyboard.type("RUN\n", initialDelay: 6.0)
-                    controller.renderer.rotateLeft()
-                }
-            }
-
         case let proxy as AnyCollectionProxy:
 
-            debug(.media, "T64, P00")
+            debug(.media, "T64, PRG, P00")
             if proceedUnsaved {
                 drive!.insertCollection(proxy, protected: options.contains(.protect))
             }

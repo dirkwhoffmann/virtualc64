@@ -46,11 +46,11 @@ extension DefaultsProxy {
                 try load(url: path)
                 debug(.defaults, "Successfully loaded user defaults from file \(path)")
             } catch {
-                debug(.defaults, "Failed to load user defaults from file \(path)")
+                warn("Failed to load user defaults from file \(path)")
             }
 
         } catch {
-            debug(.defaults, "Failed to access application support folder")
+            warn("Failed to access application support folder")
         }
     }
 
@@ -207,8 +207,19 @@ extension UserDefaults {
         return folder?.appendingPathComponent(name)
     }
 
-    static var basicRomUrl:  URL? { return romUrl(name: "basic.bin") }
-    static var charRomUrl:   URL? { return romUrl(name: "char.bin") }
+    static func romUrl(fingerprint: Int) -> URL? {
+
+        return romUrl(name: String(format: "%08x", fingerprint) + ".rom")
+    }
+
+    static func mediaUrl(name: String) -> URL? {
+
+        let folder = try? URL.appSupportFolder("Media")
+        return folder?.appendingPathComponent(name)
+    }
+
+    static var basicRomUrl: URL? { return romUrl(name: "basic.bin") }
+    static var charRomUrl: URL? { return romUrl(name: "char.bin") }
     static var kernalRomUrl: URL? { return romUrl(name: "kernal.bin") }
     static var vc1541RomUrl: URL? { return romUrl(name: "vc1541.bin") }
 }
@@ -240,7 +251,7 @@ extension Preferences {
 
     func applyUserDefaults() {
 
-        debug(.defaults)
+        debug(.defaults, "Applying user defaults")
 
         applyGeneralUserDefaults()
         applyControlsUserDefaults()
