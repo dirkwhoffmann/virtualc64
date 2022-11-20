@@ -11,11 +11,11 @@
 // Logging / Debugging
 //
 
-public func debug(_ enable: Int, _ msg: String = "",
-                  path: String = #file, function: String = #function, line: Int = #line) {
+public func log(_ enable: Int, _ msg: String = "",
+                path: String = #file, function: String = #function, line: Int = #line) {
 
     if enable > 0 {
-        
+
         if let file = URL(string: path)?.deletingPathExtension().lastPathComponent {
             if msg == "" {
                 print("\(file).\(line)::\(function)")
@@ -26,10 +26,16 @@ public func debug(_ enable: Int, _ msg: String = "",
     }
 }
 
+public func debug(_ enable: Int, _ msg: String = "",
+                  path: String = #file, function: String = #function, line: Int = #line) {
+
+    if !releaseBuild { log(enable, msg, path: path, function: function, line: line) }
+}
+
 public func warn(_ msg: String = "",
                  path: String = #file, function: String = #function, line: Int = #line) {
 
-    debug(1, msg, path: path, function: function, line: line)
+    log(1, "Warning: " + msg, path: path, function: function, line: line)
 }
 
 //

@@ -138,7 +138,7 @@ class GamePadManager {
         // We support up to 5 devices
         if nr < 5 { return nr }
         
-        warn("Maximum number of devices reached.")
+        warn("Maximum number of devices reached")
         return nil
     }
     
