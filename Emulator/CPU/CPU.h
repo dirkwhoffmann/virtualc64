@@ -36,7 +36,7 @@ class CPU : public SubComponent {
 protected:
     
     // Reference to the connected memory
-    MEMTYPE &mem;
+    MEMTYPE &memref;
 
 public:
 
@@ -329,7 +329,17 @@ public:
     u8 getPWithClearedB() const;
     void setP(u8 p);
     void setPWithoutB(u8 p);
-    
+
+
+    //
+    // Accessing memory
+    //
+
+private:
+
+    u8 read(u16 addr);
+    void write(u16 addr, u8 value);
+
 private:
     
     //

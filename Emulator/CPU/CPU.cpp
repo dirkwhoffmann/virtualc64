@@ -13,7 +13,7 @@
 #include "IOUtils.h"
 
 template <typename M>
-CPU<M>::CPU(C64& ref, M& memref) : SubComponent(ref), mem(memref)
+CPU<M>::CPU(C64& ref, M& memref) : SubComponent(ref), memref(memref)
 {
     subComponents = std::vector<C64Component *> {
         
@@ -121,9 +121,9 @@ CPU<M>::_dump(Category category, std::ostream& os) const
         os << tab("doIrq");
         os << bol(doIrq) << std::endl;
         os << tab("IRQ routine");
-        os << hex(HI_W_LO_W(mem.spypeek(0xFFFF), mem.spypeek(0xFFFE))) << std::endl;
+        os << hex(HI_W_LO_W(memref.spypeek(0xFFFF), memref.spypeek(0xFFFE))) << std::endl;
         os << tab("NMI routine");
-        os << hex(HI_W_LO_W(mem.spypeek(0xFFFB), mem.spypeek(0xFFFA))) << std::endl;
+        os << hex(HI_W_LO_W(memref.spypeek(0xFFFB), memref.spypeek(0xFFFA))) << std::endl;
     }
 }
 
@@ -167,6 +167,26 @@ CPU<M>::setPWithoutB(u8 p)
     reg.sr.i = (p & I_FLAG);
     reg.sr.z = (p & Z_FLAG);
     reg.sr.c = (p & C_FLAG);
+}
+
+template <typename M> u8
+CPU<M>::read(u16 addr)
+{
+    if (model() == MOS_6510) {
+        return memref.peek(addr);
+    } else {
+        return drive8.mem.peek(addr);
+    }
+}
+
+template <typename M> void
+CPU<M>::write(u16 addr, u8 value)
+{
+    if (model() == MOS_6510) {
+        memref.poke(addr, value);
+    } else {
+        drive8.mem.poke(addr, value);
+    }
 }
 
 template <typename M> void
