@@ -206,6 +206,7 @@ private:
     // Methods from C64Object
     //
 
+    const char *getDescription() const override { return "CPU"; } // TODO
     void _dump(Category category, std::ostream& os) const override;
 
     
@@ -408,6 +409,7 @@ private:
 // C64 CPU
 //
 
+/*
 class C64CPU : public CPU<C64Memory> {
             
 public:
@@ -444,3 +446,4 @@ private:
 
     const char *getDescription() const override { return "DriveCPU"; }    
 };
+*/

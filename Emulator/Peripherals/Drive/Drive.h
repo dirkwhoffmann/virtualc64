@@ -74,7 +74,7 @@ class Drive : public SubComponent {
 public:
     
 	DriveMemory mem = DriveMemory(c64, *this);
-    DriveCPU cpu = DriveCPU(c64, mem);
+    CPU<DriveMemory> cpu = CPU<DriveMemory>(c64, mem);
     VIA1 via1 = VIA1(c64, *this);
     VIA2 via2 = VIA2(c64, *this);
     PiaDolphin pia = PiaDolphin(c64, *this);
