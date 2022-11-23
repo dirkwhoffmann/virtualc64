@@ -172,43 +172,43 @@ CPU<C>::setPWithoutB(u8 p)
 template <CPURevision C> u8
 CPU<C>::peek(u16 addr)
 {
-    return model() == MOS_6510 ?  mem.peek(addr) : drive8.mem.peek(addr);
+    return C == MOS_6510 ?  mem.peek(addr) : drive8.mem.peek(addr);
 }
 
 template <CPURevision C> u8
 CPU<C>::peekZP(u8 addr)
 {
-    return model() == MOS_6510 ?  mem.peekZP(addr) : drive8.mem.peekZP(addr);
+    return C == MOS_6510 ?  mem.peekZP(addr) : drive8.mem.peekZP(addr);
 }
 
 template <CPURevision C> u8
 CPU<C>::peekStack(u8 sp)
 {
-    return model() == MOS_6510 ?  mem.peekStack(sp) : drive8.mem.peekStack(sp);
+    return C == MOS_6510 ?  mem.peekStack(sp) : drive8.mem.peekStack(sp);
 }
 
 template <CPURevision C> u8
 CPU<C>::spypeek(u16 addr) const
 {
-    return model() == MOS_6510 ?  mem.spypeek(addr) : drive8.mem.spypeek(addr);
+    return C == MOS_6510 ?  mem.spypeek(addr) : drive8.mem.spypeek(addr);
 }
 
 template <CPURevision C> void
 CPU<C>::poke(u16 addr, u8 value)
 {
-    model() == MOS_6510 ? mem.poke(addr, value) :  drive8.mem.poke(addr, value);
+    C == MOS_6510 ? mem.poke(addr, value) :  drive8.mem.poke(addr, value);
 }
 
 template <CPURevision C> void
 CPU<C>::pokeZP(u8 addr, u8 value)
 {
-    model() == MOS_6510 ? mem.pokeZP(addr, value) :  drive8.mem.pokeZP(addr, value);
+    C == MOS_6510 ? mem.pokeZP(addr, value) :  drive8.mem.pokeZP(addr, value);
 }
 
 template <CPURevision C> void
 CPU<C>::pokeStack(u8 addr, u8 value)
 {
-    model() == MOS_6510 ? mem.pokeStack(addr, value) :  drive8.mem.pokeStack(addr, value);
+    C == MOS_6510 ? mem.pokeStack(addr, value) :  drive8.mem.pokeStack(addr, value);
 }
 
 template <CPURevision C> void
