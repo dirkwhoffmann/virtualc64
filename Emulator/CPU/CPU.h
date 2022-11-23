@@ -18,7 +18,7 @@
 
 class Memory;
 
-template <typename MEMTYPE>
+template <CPURevision C>
 class CPU : public SubComponent {
         
     friend class CPUDebugger;
@@ -33,11 +33,6 @@ class CPU : public SubComponent {
     // Sub components
     //
         
-protected:
-    
-    // Reference to the connected memory
-    MEMTYPE &memref;
-
 public:
 
     // Processor Port
@@ -186,7 +181,7 @@ private:
     
 public:
     
-    CPU(C64& ref, MEMTYPE& memref);
+    CPU(C64& ref);
     
 private:
     
@@ -403,47 +398,3 @@ private:
     // Called after the last microcycle has been completed
     void done();
 };
-
-
-//
-// C64 CPU
-//
-
-/*
-class C64CPU : public CPU<C64Memory> {
-            
-public:
-    
-    C64CPU(C64& ref, C64Memory& memref) : CPU(ref, memref) { }
-
-    
-    //
-    // Methods from C64Object
-    //
-
-private:
-
-    const char *getDescription() const override { return "CPU"; }
-};
-
-
-//
-// Drive CPU
-//
-
-class DriveCPU : public CPU<DriveMemory> {
-        
-public:
-    
-    DriveCPU(C64& ref, DriveMemory &memref) : CPU(ref, memref) { }
-    
-    
-    //
-    // Methods from C64Object
-    //
-
-private:
-
-    const char *getDescription() const override { return "DriveCPU"; }    
-};
-*/

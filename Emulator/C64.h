@@ -83,7 +83,7 @@ public:
 
     // Core components
     C64Memory mem = C64Memory(*this);
-    CPU<C64Memory> cpu = CPU<C64Memory>(*this, mem);
+    CPU<MOS_6510> cpu = CPU<MOS_6510>(*this);
     CIA1 cia1 = CIA1(*this);
     CIA2 cia2 = CIA2(*this);
     VICII vic = VICII(*this);

@@ -45,7 +45,7 @@ public:
 protected:
 
     // Reference to the connected CPU
-    class CPU<C64Memory> &cpu;
+    class CPU<MOS_6510> &cpu;
 
     // Capacity of the guards array
     long capacity = 1;
@@ -66,7 +66,7 @@ protected:
     
 public:
     
-    Guards(CPU<C64Memory>& ref) : cpu(ref) { }
+    Guards(CPU<MOS_6510>& ref) : cpu(ref) { }
     
     
     //
@@ -124,7 +124,7 @@ class Breakpoints : public Guards {
     
 public:
     
-    Breakpoints(CPU<C64Memory>& ref) : Guards(ref) { }
+    Breakpoints(CPU<MOS_6510>& ref) : Guards(ref) { }
     void setNeedsCheck(bool value) override;
 };
 
@@ -132,14 +132,14 @@ class Watchpoints : public Guards {
     
 public:
     
-    Watchpoints(CPU<C64Memory>& ref) : Guards(ref) { }
+    Watchpoints(CPU<MOS_6510>& ref) : Guards(ref) { }
     void setNeedsCheck(bool value) override;
 };
 
 class CPUDebugger : public SubComponent {
     
-    friend class CPU<C64Memory>;
-    friend class CPU<DriveMemory>;
+    friend class CPU<MOS_6510>;
+    friend class CPU<MOS_6502>;
 
     // Textual representation for each opcode (used by the disassembler)
     const char *mnemonic[256];

@@ -12,8 +12,8 @@
 #include "C64.h"
 #include "IOUtils.h"
 
-template <typename M>
-CPU<M>::CPU(C64& ref, M& memref) : SubComponent(ref), memref(memref)
+template <CPURevision C>
+CPU<C>::CPU(C64& ref) : SubComponent(ref)
 {
     subComponents = std::vector<C64Component *> {
         
@@ -25,17 +25,17 @@ CPU<M>::CPU(C64& ref, M& memref) : SubComponent(ref), memref(memref)
 	registerInstructions();
 }
 
-template<> CPURevision CPU<C64Memory>::model() const { return MOS_6510; }
-template<> CPURevision CPU<DriveMemory>::model() const { return MOS_6502; }
+template<> CPURevision CPU<MOS_6510>::model() const { return MOS_6510; }
+template<> CPURevision CPU<MOS_6502>::model() const { return MOS_6502; }
 
-template<> bool CPU<C64Memory>::isC64CPU() const { return true; }
-template<> bool CPU<DriveMemory>::isC64CPU() const { return false; }
+template<> bool CPU<MOS_6510>::isC64CPU() const { return true; }
+template<> bool CPU<MOS_6502>::isC64CPU() const { return false; }
 
-template<> bool CPU<C64Memory>::isDriveCPU() const { return false; }
-template<> bool CPU<DriveMemory>::isDriveCPU() const { return true; }
+template<> bool CPU<MOS_6510>::isDriveCPU() const { return false; }
+template<> bool CPU<MOS_6502>::isDriveCPU() const { return true; }
 
-template <typename M> void
-CPU<M>::_reset(bool hard)
+template <CPURevision C> void
+CPU<C>::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)
     
@@ -48,8 +48,8 @@ CPU<M>::_reset(bool hard)
     assert(edgeDetector.isClear());
 }
 
-template <typename M> void
-CPU<M>::_inspect() const
+template <CPURevision C> void
+CPU<C>::_inspect() const
 {    
     {   SYNCHRONIZED
         
@@ -66,21 +66,21 @@ CPU<M>::_inspect() const
     }
 }
 
-template <typename M> void
-CPU<M>::_debugOn()
+template <CPURevision C> void
+CPU<C>::_debugOn()
 {
     // We only allow the C64 CPU to run in debug mode
     if (isC64CPU()) { debugMode = true; }
 }
 
-template <typename M> void
-CPU<M>::_debugOff()
+template <CPURevision C> void
+CPU<C>::_debugOff()
 {
     debugMode = false;
 }
 
-template <typename M> void
-CPU<M>::_dump(Category category, std::ostream& os) const
+template <CPURevision C> void
+CPU<C>::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
@@ -127,8 +127,8 @@ CPU<M>::_dump(Category category, std::ostream& os) const
     }
 }
 
-template <typename M> u8
-CPU<M>::getP() const
+template <CPURevision C> u8
+CPU<C>::getP() const
 {
     u8 result = 0b00100000;
     
@@ -144,21 +144,21 @@ CPU<M>::getP() const
     return result;
 }
 
-template <typename M> u8
-CPU<M>::getPWithClearedB() const
+template <CPURevision C> u8
+CPU<C>::getPWithClearedB() const
 {
     return getP() & ~B_FLAG;
 }
 
-template <typename M> void
-CPU<M>::setP(u8 p)
+template <CPURevision C> void
+CPU<C>::setP(u8 p)
 {
     setPWithoutB(p);
     reg.sr.b = (p & B_FLAG);
 }
 
-template <typename M> void
-CPU<M>::setPWithoutB(u8 p)
+template <CPURevision C> void
+CPU<C>::setPWithoutB(u8 p)
 {
     reg.sr.n = (p & N_FLAG);
     reg.sr.v = (p & V_FLAG);
@@ -169,50 +169,50 @@ CPU<M>::setPWithoutB(u8 p)
     reg.sr.c = (p & C_FLAG);
 }
 
-template <typename M> u8
-CPU<M>::peek(u16 addr)
+template <CPURevision C> u8
+CPU<C>::peek(u16 addr)
 {
     return model() == MOS_6510 ?  mem.peek(addr) : drive8.mem.peek(addr);
 }
 
-template <typename M> u8
-CPU<M>::peekZP(u8 addr)
+template <CPURevision C> u8
+CPU<C>::peekZP(u8 addr)
 {
     return model() == MOS_6510 ?  mem.peekZP(addr) : drive8.mem.peekZP(addr);
 }
 
-template <typename M> u8
-CPU<M>::peekStack(u8 sp)
+template <CPURevision C> u8
+CPU<C>::peekStack(u8 sp)
 {
     return model() == MOS_6510 ?  mem.peekStack(sp) : drive8.mem.peekStack(sp);
 }
 
-template <typename M> u8
-CPU<M>::spypeek(u16 addr) const
+template <CPURevision C> u8
+CPU<C>::spypeek(u16 addr) const
 {
     return model() == MOS_6510 ?  mem.spypeek(addr) : drive8.mem.spypeek(addr);
 }
 
-template <typename M> void
-CPU<M>::poke(u16 addr, u8 value)
+template <CPURevision C> void
+CPU<C>::poke(u16 addr, u8 value)
 {
     model() == MOS_6510 ? mem.poke(addr, value) :  drive8.mem.poke(addr, value);
 }
 
-template <typename M> void
-CPU<M>::pokeZP(u8 addr, u8 value)
+template <CPURevision C> void
+CPU<C>::pokeZP(u8 addr, u8 value)
 {
     model() == MOS_6510 ? mem.pokeZP(addr, value) :  drive8.mem.pokeZP(addr, value);
 }
 
-template <typename M> void
-CPU<M>::pokeStack(u8 addr, u8 value)
+template <CPURevision C> void
+CPU<C>::pokeStack(u8 addr, u8 value)
 {
     model() == MOS_6510 ? mem.pokeStack(addr, value) :  drive8.mem.pokeStack(addr, value);
 }
 
-template <typename M> void
-CPU<M>::pullDownNmiLine(IntSource bit)
+template <CPURevision C> void
+CPU<C>::pullDownNmiLine(IntSource bit)
 {
     assert(bit != 0);
     
@@ -224,14 +224,14 @@ CPU<M>::pullDownNmiLine(IntSource bit)
     nmiLine |= bit;
 }
 
-template <typename M> void
-CPU<M>::releaseNmiLine(IntSource source)
+template <CPURevision C> void
+CPU<C>::releaseNmiLine(IntSource source)
 {
     nmiLine &= ~source;
 }
 
-template <typename M> void
-CPU<M>::pullDownIrqLine(IntSource source)
+template <CPURevision C> void
+CPU<C>::pullDownIrqLine(IntSource source)
 {
 	assert(source != 0);
     
@@ -239,15 +239,15 @@ CPU<M>::pullDownIrqLine(IntSource source)
     levelDetector.write(irqLine);
 }
 
-template <typename M> void
-CPU<M>::releaseIrqLine(IntSource source)
+template <CPURevision C> void
+CPU<C>::releaseIrqLine(IntSource source)
 {
     irqLine &= ~source;
     levelDetector.write(irqLine);
 }
 
-template <typename M> void
-CPU<M>::setRDY(bool value)
+template <CPURevision C> void
+CPU<C>::setRDY(bool value)
 {
     if (rdyLine)
     {
@@ -266,52 +266,52 @@ CPU<M>::setRDY(bool value)
 // Template instantiations
 //
 
-template         CPU<C64Memory>::CPU(C64& ref, C64Memory& memref);
-template CPUInfo CPU<C64Memory>::getInfo() const;
-template void    CPU<C64Memory>::_dump(Category category, std::ostream& os) const;
-template void    CPU<C64Memory>::_debugOn();
-template void    CPU<C64Memory>::_debugOff();
-template void    CPU<C64Memory>::_reset(bool hard);
-template void    CPU<C64Memory>::_inspect() const;
-template u8      CPU<C64Memory>::getP() const;
-template u8      CPU<C64Memory>::getPWithClearedB() const;
-template void    CPU<C64Memory>::setP(u8 p);
-template void    CPU<C64Memory>::setPWithoutB(u8 p);
-template void    CPU<C64Memory>::pullDownNmiLine(IntSource source);
-template void    CPU<C64Memory>::releaseNmiLine(IntSource source);
-template void    CPU<C64Memory>::pullDownIrqLine(IntSource source);
-template void    CPU<C64Memory>::releaseIrqLine(IntSource source);
-template void    CPU<C64Memory>::setRDY(bool value);
+template         CPU<MOS_6510>::CPU(C64& ref);
+template CPUInfo CPU<MOS_6510>::getInfo() const;
+template void    CPU<MOS_6510>::_dump(Category category, std::ostream& os) const;
+template void    CPU<MOS_6510>::_debugOn();
+template void    CPU<MOS_6510>::_debugOff();
+template void    CPU<MOS_6510>::_reset(bool hard);
+template void    CPU<MOS_6510>::_inspect() const;
+template u8      CPU<MOS_6510>::getP() const;
+template u8      CPU<MOS_6510>::getPWithClearedB() const;
+template void    CPU<MOS_6510>::setP(u8 p);
+template void    CPU<MOS_6510>::setPWithoutB(u8 p);
+template void    CPU<MOS_6510>::pullDownNmiLine(IntSource source);
+template void    CPU<MOS_6510>::releaseNmiLine(IntSource source);
+template void    CPU<MOS_6510>::pullDownIrqLine(IntSource source);
+template void    CPU<MOS_6510>::releaseIrqLine(IntSource source);
+template void    CPU<MOS_6510>::setRDY(bool value);
 
-template u8      CPU<C64Memory>::peek(u16 addr);
-template u8      CPU<C64Memory>::peekZP(u8 addr);
-template u8      CPU<C64Memory>::peekStack(u8 sp);
-template u8      CPU<C64Memory>::spypeek(u16 addr) const;
-template void    CPU<C64Memory>::poke(u16 addr, u8 value);
-template void    CPU<C64Memory>::pokeZP(u8 addr, u8 value);
-template void    CPU<C64Memory>::pokeStack(u8 sp, u8 value);
+template u8      CPU<MOS_6510>::peek(u16 addr);
+template u8      CPU<MOS_6510>::peekZP(u8 addr);
+template u8      CPU<MOS_6510>::peekStack(u8 sp);
+template u8      CPU<MOS_6510>::spypeek(u16 addr) const;
+template void    CPU<MOS_6510>::poke(u16 addr, u8 value);
+template void    CPU<MOS_6510>::pokeZP(u8 addr, u8 value);
+template void    CPU<MOS_6510>::pokeStack(u8 sp, u8 value);
 
-template         CPU<DriveMemory>::CPU(C64& ref, DriveMemory& memref);
-template CPUInfo CPU<DriveMemory>::getInfo() const;
-template void    CPU<DriveMemory>::_dump(Category category, std::ostream& os) const;
-template void    CPU<DriveMemory>::_debugOn();
-template void    CPU<DriveMemory>::_debugOff();
-template void    CPU<DriveMemory>::_reset(bool hard);
-template void    CPU<DriveMemory>::_inspect() const;
-template u8      CPU<DriveMemory>::getP() const;
-template u8      CPU<DriveMemory>::getPWithClearedB() const;
-template void    CPU<DriveMemory>::setP(u8 p);
-template void    CPU<DriveMemory>::setPWithoutB(u8 p);
-template void    CPU<DriveMemory>::pullDownNmiLine(IntSource source);
-template void    CPU<DriveMemory>::releaseNmiLine(IntSource source);
-template void    CPU<DriveMemory>::pullDownIrqLine(IntSource source);
-template void    CPU<DriveMemory>::releaseIrqLine(IntSource source);
-template void    CPU<DriveMemory>::setRDY(bool value);
+template         CPU<MOS_6502>::CPU(C64& ref);
+template CPUInfo CPU<MOS_6502>::getInfo() const;
+template void    CPU<MOS_6502>::_dump(Category category, std::ostream& os) const;
+template void    CPU<MOS_6502>::_debugOn();
+template void    CPU<MOS_6502>::_debugOff();
+template void    CPU<MOS_6502>::_reset(bool hard);
+template void    CPU<MOS_6502>::_inspect() const;
+template u8      CPU<MOS_6502>::getP() const;
+template u8      CPU<MOS_6502>::getPWithClearedB() const;
+template void    CPU<MOS_6502>::setP(u8 p);
+template void    CPU<MOS_6502>::setPWithoutB(u8 p);
+template void    CPU<MOS_6502>::pullDownNmiLine(IntSource source);
+template void    CPU<MOS_6502>::releaseNmiLine(IntSource source);
+template void    CPU<MOS_6502>::pullDownIrqLine(IntSource source);
+template void    CPU<MOS_6502>::releaseIrqLine(IntSource source);
+template void    CPU<MOS_6502>::setRDY(bool value);
 
-template u8      CPU<DriveMemory>::peek(u16 addr);
-template u8      CPU<DriveMemory>::peekZP(u8 addr);
-template u8      CPU<DriveMemory>::peekStack(u8 sp);
-template u8      CPU<DriveMemory>::spypeek(u16 addr) const;
-template void    CPU<DriveMemory>::poke(u16 addr, u8 value);
-template void    CPU<DriveMemory>::pokeZP(u8 addr, u8 value);
-template void    CPU<DriveMemory>::pokeStack(u8 sp, u8 value);
+template u8      CPU<MOS_6502>::peek(u16 addr);
+template u8      CPU<MOS_6502>::peekZP(u8 addr);
+template u8      CPU<MOS_6502>::peekStack(u8 sp);
+template u8      CPU<MOS_6502>::spypeek(u16 addr) const;
+template void    CPU<MOS_6502>::poke(u16 addr, u8 value);
+template void    CPU<MOS_6502>::pokeZP(u8 addr, u8 value);
+template void    CPU<MOS_6502>::pokeStack(u8 sp, u8 value);

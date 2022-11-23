@@ -253,9 +253,9 @@
 
 @implementation CPUProxy
 
-- (CPU<C64Memory> *)cpu
+- (CPU<MOS_6510> *)cpu
 {
-    return (CPU<C64Memory> *)obj;
+    return (CPU<MOS_6510> *)obj;
 }
 
 - (CPUInfo)info

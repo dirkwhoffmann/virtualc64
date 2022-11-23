@@ -11,8 +11,8 @@
 #include "CPU.h"
 #include "C64.h"
 
-template <typename M> void
-CPU<M>::adc(u8 op)
+template <CPURevision C> void
+CPU<C>::adc(u8 op)
 {
     if (getD())
         adc_bcd(op);
@@ -20,8 +20,8 @@ CPU<M>::adc(u8 op)
         adc_binary(op);
 }
 
-template <typename M> void
-CPU<M>::adc_binary(u8 op)
+template <CPURevision C> void
+CPU<C>::adc_binary(u8 op)
 {
     u16 sum = reg.a + op + (getC() ? 1 : 0);
     
@@ -30,8 +30,8 @@ CPU<M>::adc_binary(u8 op)
     loadA((u8)sum);
 }
 
-template <typename M> void
-CPU<M>::adc_bcd(u8 op)
+template <CPURevision C> void
+CPU<C>::adc_bcd(u8 op)
 {
     u16 sum       = reg.a + op + (getC() ? 1 : 0);
     u8  highDigit = (reg.a >> 4) + (op >> 4);
@@ -63,8 +63,8 @@ CPU<M>::adc_bcd(u8 op)
     reg.a = (u8)((highDigit << 4) | lowDigit);
 }
 
-template <typename M> void
-CPU<M>::cmp(u8 op1, u8 op2)
+template <CPURevision C> void
+CPU<C>::cmp(u8 op1, u8 op2)
 {
     u8 tmp = op1 - op2;
     
@@ -73,8 +73,8 @@ CPU<M>::cmp(u8 op1, u8 op2)
     setZ(tmp == 0);
 }
 
-template <typename M> void
-CPU<M>::sbc(u8 op)
+template <CPURevision C> void
+CPU<C>::sbc(u8 op)
 {
     if (getD())
         sbc_bcd(op);
@@ -82,8 +82,8 @@ CPU<M>::sbc(u8 op)
         sbc_binary(op);
 }
 
-template <typename M> void
-CPU<M>::sbc_binary(u8 op)
+template <CPURevision C> void
+CPU<C>::sbc_binary(u8 op)
 {
     u16 sum = reg.a - op - (getC() ? 0 : 1);
     
@@ -92,8 +92,8 @@ CPU<M>::sbc_binary(u8 op)
     loadA((u8)sum);
 }
 
-template <typename M> void
-CPU<M>::sbc_bcd(u8 op)
+template <CPURevision C> void
+CPU<C>::sbc_bcd(u8 op)
 {
     u16 sum       = reg.a - op - (getC() ? 0 : 1);
     u8  highDigit = (reg.a >> 4) - (op >> 4);
@@ -117,8 +117,8 @@ CPU<M>::sbc_bcd(u8 op)
     reg.a = (u8)((highDigit << 4) | (lowDigit & 0x0f));
 }
 
-template <typename M> void
-CPU<M>::registerCallback(u8 opcode, const char *mnemonic,
+template <CPURevision C> void
+CPU<C>::registerCallback(u8 opcode, const char *mnemonic,
                       AddressingMode mode, MicroInstruction mInstr)
 {
     // Table is write once!
@@ -127,8 +127,8 @@ CPU<M>::registerCallback(u8 opcode, const char *mnemonic,
     debugger.registerInstruction(opcode, mnemonic, mode);
 }
 
-template <typename M> void
-CPU<M>::registerInstructions()
+template <CPURevision C> void
+CPU<C>::registerInstructions()
 {
     for (isize i = 0; i < 256; i++) {
         registerCallback((u8)i, "???", ADDR_IMPLIED, JAM);
@@ -137,8 +137,8 @@ CPU<M>::registerInstructions()
     registerIllegalInstructions();
 }
 
-template <typename M> void
-CPU<M>::registerLegalInstructions()
+template <CPURevision C> void
+CPU<C>::registerLegalInstructions()
 {
     registerCallback(0x69, "ADC", ADDR_IMMEDIATE, ADC_imm);
     registerCallback(0x65, "ADC", ADDR_ZERO_PAGE, ADC_zpg);
@@ -325,8 +325,8 @@ CPU<M>::registerLegalInstructions()
     registerCallback(0x98, "TYA", ADDR_IMPLIED, TYA);
 }
 
-template <typename M> void
-CPU<M>::registerIllegalInstructions()
+template <CPURevision C> void
+CPU<C>::registerIllegalInstructions()
 {
     registerCallback(0x93, "SHA*", ADDR_INDIRECT_Y, SHA_ind_y);
     registerCallback(0x9F, "SHA*", ADDR_ABSOLUTE_Y, SHA_abs_y);
@@ -441,8 +441,8 @@ CPU<M>::registerIllegalInstructions()
     registerCallback(0x9B, "TAS*", ADDR_ABSOLUTE_Y, TAS_abs_y);
 }
 
-template <typename M> void
-CPU<M>::executeOneCycle()
+template <CPURevision C> void
+CPU<C>::executeOneCycle()
 {
     u8 instr;
     
@@ -3180,7 +3180,7 @@ CPU<M>::executeOneCycle()
     }
 }
 
-template <> void CPU<C64Memory>::done() {
+template <> void CPU<MOS_6510>::done() {
 
     if (debugMode) {
 
@@ -3198,7 +3198,7 @@ template <> void CPU<C64Memory>::done() {
     next = fetch;
 }
 
-template <> void CPU<DriveMemory>::done() {
+template <> void CPU<MOS_6502>::done() {
     
     reg.pc0 = reg.pc;
     next = fetch;
@@ -3207,7 +3207,7 @@ template <> void CPU<DriveMemory>::done() {
 
 void done();
 
-template void CPU<C64Memory>::registerInstructions();
-template void CPU<C64Memory>::executeOneCycle();
-template void CPU<DriveMemory>::registerInstructions();
-template void CPU<DriveMemory>::executeOneCycle();
+template void CPU<MOS_6510>::registerInstructions();
+template void CPU<MOS_6510>::executeOneCycle();
+template void CPU<MOS_6502>::registerInstructions();
+template void CPU<MOS_6502>::executeOneCycle();
