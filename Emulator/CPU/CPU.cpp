@@ -17,8 +17,7 @@ CPU<C>::CPU(C64& ref) : SubComponent(ref)
 {
     subComponents = std::vector<C64Component *> {
         
-        &pport,
-        &debugger
+        &pport
     };
     
 	// Establish callback for each instruction

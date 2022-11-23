@@ -37,10 +37,6 @@ public:
 class Guards {
 
     friend class CPUDebugger;
-
-public:
-    
-    virtual ~Guards() { };
     
 protected:
 
@@ -61,14 +57,15 @@ protected:
     
     
     //
-    // Initializing
+    // Constructing
     //
-    
+
 public:
-    
+
     Guards(CPU<MOS_6510>& ref) : cpu(ref) { }
-    
-    
+    virtual ~Guards();
+
+
     //
     // Inspecting the guard list
     //
@@ -136,10 +133,13 @@ public:
     void setNeedsCheck(bool value) override;
 };
 
-class CPUDebugger : public SubComponent {
+class CPUDebugger {
     
     friend class CPU<MOS_6510>;
     friend class CPU<MOS_6502>;
+
+    // Reference to the connected CPU
+    class CPU<MOS_6510> &cpu;
 
     // Textual representation for each opcode (used by the disassembler)
     const char *mnemonic[256];
@@ -193,47 +193,15 @@ public:
     
 public:
     
-    CPUDebugger(C64 &ref) : SubComponent(ref) { };
+    CPUDebugger(CPU<MOS_6510>& ref) : cpu(ref) { };
+    void reset();
+
 
 private:
     
     void registerInstruction(u8 opcode, const char *mnemonic, AddressingMode mode);
 
     
-    //
-    // Methods from C64Object
-    //
-
-private:
-    
-    const char *getDescription() const override { return "CPUDebugger"; }
-
-    
-    //
-    // Methods from C64Component
-    //
-
-private:
-    
-    void _reset(bool hard) override;
-    void _powerOn() override;
-
-    template <class T>
-    void applyToPersistentItems(T& worker)
-    {
-    }
-    
-    template <class T>
-    void applyToResetItems(T& worker, bool hard = true)
-    {
-    }
-    
-    isize _size() override { COMPUTE_SNAPSHOT_SIZE }
-    u64 _checksum() override { COMPUTE_SNAPSHOT_CHECKSUM }
-    isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-
-
     //
     // Working with breakpoints and watchpoints
     //

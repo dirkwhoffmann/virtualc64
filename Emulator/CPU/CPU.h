@@ -39,7 +39,7 @@ public:
     ProcessorPort pport = ProcessorPort(c64);
     
     // CPU debugger
-    CPUDebugger debugger = CPUDebugger(c64);
+    CPUDebugger debugger = CPUDebugger(cpu);
     
 
     //
