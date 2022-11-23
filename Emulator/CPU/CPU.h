@@ -337,8 +337,19 @@ public:
 
 private:
 
-    u8 read(u16 addr);
-    void write(u16 addr, u8 value);
+    u8 peek(u16 addr);
+    u8 peekZP(u8 addr);
+    u8 peekStack(u8 sp);
+
+    void peekIdle(u16 addr) { (void)peek(addr); }
+    void peekZPIdle(u8 addr) { (void)peekZP(addr); }
+    void peekStackIdle(u8 sp) { (void)peekStack(sp); }
+
+    u8 spypeek(u16 addr) const;
+
+    void poke(u16 addr, u8 value);
+    void pokeZP(u8 addr, u8 value);
+    void pokeStack(u8 sp, u8 value);
 
 private:
     
