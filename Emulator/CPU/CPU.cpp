@@ -121,9 +121,9 @@ CPU<M>::_dump(Category category, std::ostream& os) const
         os << tab("doIrq");
         os << bol(doIrq) << std::endl;
         os << tab("IRQ routine");
-        os << hex(HI_W_LO_W(memref.spypeek(0xFFFF), memref.spypeek(0xFFFE))) << std::endl;
+        os << hex(HI_W_LO_W(spypeek(0xFFFF), spypeek(0xFFFE))) << std::endl;
         os << tab("NMI routine");
-        os << hex(HI_W_LO_W(memref.spypeek(0xFFFB), memref.spypeek(0xFFFA))) << std::endl;
+        os << hex(HI_W_LO_W(spypeek(0xFFFB), spypeek(0xFFFA))) << std::endl;
     }
 }
 
