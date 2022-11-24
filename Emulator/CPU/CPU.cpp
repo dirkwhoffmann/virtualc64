@@ -24,14 +24,20 @@ CPU<C>::CPU(C64& ref) : SubComponent(ref)
 	registerInstructions();
 }
 
-template<> CPURevision CPU<MOS_6510>::model() const { return MOS_6510; }
-template<> CPURevision CPU<MOS_6502>::model() const { return MOS_6502; }
+template <CPURevision C>
+CPU<C>::CPU(CPURevision cpuModel, C64& ref) : CPU(ref)
+{
+    setModel(cpuModel);
+}
 
-template<> bool CPU<MOS_6510>::isC64CPU() const { return true; }
-template<> bool CPU<MOS_6502>::isC64CPU() const { return false; }
+template <CPURevision C> void
+CPU<C>::setModel(CPURevision cpuModel)
+{
+    this->cpuModel = cpuModel;
+}
 
-template<> bool CPU<MOS_6510>::isDriveCPU() const { return false; }
-template<> bool CPU<MOS_6502>::isDriveCPU() const { return true; }
+template<CPURevision C> bool CPU<C>::isC64CPU() const { return cpuModel == MOS_6510; }
+template<CPURevision C> bool CPU<C>::isDriveCPU() const { return !isC64CPU(); }
 
 template <CPURevision C> void
 CPU<C>::_reset(bool hard)

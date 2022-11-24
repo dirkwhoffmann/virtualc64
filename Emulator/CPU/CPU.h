@@ -28,7 +28,17 @@ class CPU : public SubComponent {
     // Result of the latest inspection
     mutable CPUInfo info = { };
         
-    
+
+    //
+    // Configuration
+    //
+
+protected:
+
+    // Emulated CPU model
+    CPURevision cpuModel = MOS_6510;
+
+
     //
     // Sub components
     //
@@ -48,7 +58,7 @@ public:
     
 public:
     
-    CPURevision model() const;
+    // CPURevision model() const;
     bool isC64CPU() const;
     bool isDriveCPU() const;
 
@@ -182,6 +192,7 @@ private:
 public:
     
     CPU(C64& ref);
+    CPU(CPURevision cpuModel, C64& ref);
     
 private:
     
@@ -196,6 +207,17 @@ private:
                           AddressingMode mode,
                           MicroInstruction mInstr);
     
+
+
+    //
+    // Configuring
+    //
+
+public:
+
+    // Selects the emulated CPU model
+    void setModel(CPURevision cpuModel);
+
 
     //
     // Methods from C64Object
