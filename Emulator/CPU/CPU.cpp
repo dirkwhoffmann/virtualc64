@@ -151,26 +151,40 @@ CPU::nmiDidTrigger()
 template <CPURevision C> u8
 Peddle::peek(u16 addr)
 {
-    return
-    cpuModel == MOS_6510 ?
-    mem.peek(addr) :
-    id == 1 ? drive8.mem.peek(addr) : drive9.mem.peek(addr);
+    switch (C) {
+
+        case MOS_6510: return mem.peek(addr);
+        case MOS_6502: return id == 1 ? drive8.mem.peek(addr) : drive9.mem.peek(addr);
+
+        default:
+            fatalError;
+    }
 }
 
 template <CPURevision C> u8
 Peddle::peekZP(u8 addr)
 {
-    return cpuModel == MOS_6510 ?
-    mem.peekZP(addr) :
-    id == 1 ? drive8.mem.peekZP(addr) : drive9.mem.peekZP(addr);
+    switch (C) {
+
+        case MOS_6510: return mem.peekZP(addr);
+        case MOS_6502: return id == 1 ? drive8.mem.peekZP(addr) : drive9.mem.peekZP(addr);
+
+        default:
+            fatalError;
+    }
 }
 
 template <CPURevision C> u8
 Peddle::peekStack(u8 sp)
 {
-    return cpuModel == MOS_6510 ?
-    mem.peekStack(sp) :
-    id == 1 ? drive8.mem.peekStack(sp) : drive9.mem.peekStack(sp);
+    switch (C) {
+
+        case MOS_6510: return mem.peekStack(sp);
+        case MOS_6502: return id == 1 ? drive8.mem.peekStack(sp) : drive9.mem.peekStack(sp);
+
+        default:
+            fatalError;
+    }
 }
 
 u8
@@ -189,33 +203,53 @@ Peddle::spypeek(u16 addr) const
 template <CPURevision C> u8
 Peddle::spypeek(u16 addr) const
 {
-    return cpuModel == MOS_6510 ?
-    mem.spypeek(addr) :
-    id == 1 ? drive8.mem.spypeek(addr) : drive9.mem.spypeek(addr);
+    switch (C) {
+
+        case MOS_6510: return mem.spypeek(addr);
+        case MOS_6502: return id == 1 ? drive8.mem.spypeek(addr) : drive9.mem.spypeek(addr);
+
+        default:
+            fatalError;
+    }
 }
 
 template <CPURevision C> void
 Peddle::poke(u16 addr, u8 value)
 {
-    cpuModel == MOS_6510 ?
-    mem.poke(addr, value) :
-    id == 1 ? drive8.mem.poke(addr, value) : drive9.mem.poke(addr, value);
+    switch (C) {
+
+        case MOS_6510: mem.poke(addr, value); break;
+        case MOS_6502: id == 1 ? drive8.mem.poke(addr, value) : drive9.mem.poke(addr, value); break;
+
+        default:
+            fatalError;
+    }
 }
 
 template <CPURevision C> void
 Peddle::pokeZP(u8 addr, u8 value)
 {
-    cpuModel == MOS_6510 ?
-    mem.pokeZP(addr, value) :
-    id == 1 ? drive8.mem.pokeZP(addr, value) : drive9.mem.pokeZP(addr, value);
+    switch (C) {
+
+        case MOS_6510: mem.pokeZP(addr, value); break;
+        case MOS_6502: id == 1 ? drive8.mem.pokeZP(addr, value) : drive9.mem.pokeZP(addr, value); break;
+
+        default:
+            fatalError;
+    }
 }
 
 template <CPURevision C> void
 Peddle::pokeStack(u8 addr, u8 value)
 {
-    cpuModel == MOS_6510 ?
-    mem.pokeStack(addr, value) :
-    id == 1 ? drive8.mem.pokeStack(addr, value) : drive9.mem.pokeStack(addr, value);
+    switch (C) {
+
+        case MOS_6510: mem.pokeStack(addr, value); break;
+        case MOS_6502: id == 1 ? drive8.mem.pokeStack(addr, value) : drive9.mem.pokeStack(addr, value); break;
+
+        default:
+            fatalError;
+    }
 }
 
 template u8 Peddle::peek<MOS_6502>(u16 addr);
