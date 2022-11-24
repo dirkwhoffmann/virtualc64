@@ -108,70 +108,19 @@ typedef enum
 }
 AddressingMode;
 
-
-//
-// Structures
-//
-
-/*
-typedef struct
-{
-    bool n;               // Negative flag
-    bool v;               // Overflow flag
-    bool b;               // Break flag
-    bool d;               // Decimal flag
-    bool i;               // Interrupt flag
-    bool z;               // Zero flag
-    bool c;               // Carry flag
-}
-StatusRegister;
-    
-typedef struct
-{
-    u16 pc;   // Program counter
-    u16 pc0;  // Frozen program counter (beginning of current instruction)
-    
-    u8 sp;    // Stack pointer
-
-    u8 a;     // Accumulator
-    u8 x;     // First index register
-    u8 y;     // Second index register
-
-    u8 adl;   // Address data (low byte)
-    u8 adh;   // Address data (high byte)
-    u8 idl;   // Input data latch (indirect addressing modes)
-    u8 d;     // Data buffer
-    
-    bool ovl; // Overflow indicator (page boundary crossings)
-
-    StatusRegister sr;
-}
-Registers;
-
 typedef struct
 {
     u64 cycle;
-    
-    u8 byte1;
-    u8 byte2;
-    u8 byte3;
-    
-    u16 pc;
+
+    // Registers reg; // DEPRECATED
+
+    u16 pc0;
     u8 sp;
     u8 a;
     u8 x;
     u8 y;
-    u8 flags;
-}
-RecordedInstruction;
-*/
+    u8 sr;
 
-typedef struct
-{
-    u64 cycle;
-
-    Registers reg;
-    
     u8 irq;
     u8 nmi;
     bool rdy;

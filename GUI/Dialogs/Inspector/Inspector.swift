@@ -353,7 +353,7 @@ class Inspector: DialogController {
     
     func scrollToPC() {
 
-        cpuInstrView.jumpTo(addr: Int(cpuInfo.reg.pc0))
+        cpuInstrView.jumpTo(addr: Int(cpuInfo.pc0))
     }
 
     func powerOn() {

@@ -55,6 +55,16 @@ Peddle::setPWithoutB(u8 p)
     reg.sr.c = (p & C_FLAG);
 }
 
+u8
+Peddle::getSr() const
+{
+    auto flags =
+    reg.sr.n << 7 | reg.sr.v << 6 |
+    reg.sr.b << 4 | reg.sr.d << 3 | reg.sr.i << 2 | reg.sr.z << 1 | reg.sr.c << 0;
+
+    return (u8)flags;
+}
+
 void
 Peddle::adc(u8 op)
 {

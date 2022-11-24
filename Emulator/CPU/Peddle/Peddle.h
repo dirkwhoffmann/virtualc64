@@ -247,6 +247,8 @@ public:
     void setP(u8 p);
     void setPWithoutB(u8 p);
 
+    u8 getSr() const;
+
 
     //
     // Accessing memory

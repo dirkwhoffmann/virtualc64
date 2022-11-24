@@ -28,19 +28,19 @@ extension Inspector {
             cpuPortDir.assignFormatter(fmt8)
         }
 
-        cpuPc.integerValue = Int(cpuInfo.reg.pc0)
-        cpuSp.integerValue = Int(cpuInfo.reg.sp)
-        cpuA.integerValue = Int(cpuInfo.reg.a)
-        cpuX.integerValue = Int(cpuInfo.reg.x)
-        cpuY.integerValue = Int(cpuInfo.reg.y)
+        cpuPc.integerValue = Int(cpuInfo.pc0)
+        cpuSp.integerValue = Int(cpuInfo.sp)
+        cpuA.integerValue = Int(cpuInfo.a)
+        cpuX.integerValue = Int(cpuInfo.x)
+        cpuY.integerValue = Int(cpuInfo.y)
         
-        cpuN.state = cpuInfo.reg.sr.n ? .on : .off
-        cpuV.state = cpuInfo.reg.sr.v ? .on : .off
-        cpuB.state = cpuInfo.reg.sr.b ? .on : .off
-        cpuD.state = cpuInfo.reg.sr.d ? .on : .off
-        cpuI.state = cpuInfo.reg.sr.i ? .on : .off
-        cpuZ.state = cpuInfo.reg.sr.z ? .on : .off
-        cpuC.state = cpuInfo.reg.sr.c ? .on : .off
+        cpuN.state = (cpuInfo.sr & 0x80) != 0 ? .on : .off
+        cpuV.state = (cpuInfo.sr & 0x40) != 0 ? .on : .off
+        cpuB.state = (cpuInfo.sr & 0x10) != 0 ? .on : .off
+        cpuD.state = (cpuInfo.sr & 0x08) != 0 ? .on : .off
+        cpuI.state = (cpuInfo.sr & 0x04) != 0 ? .on : .off
+        cpuZ.state = (cpuInfo.sr & 0x02) != 0 ? .on : .off
+        cpuC.state = (cpuInfo.sr & 0x01) != 0 ? .on : .off
 
         cpuIrq.state = (cpuInfo.irq != 0) ? .on : .off
         cpuIrqCIA.state = (cpuInfo.irq & UInt8(INTSRC_CIA)) != 0 ? .on : .off
@@ -55,7 +55,7 @@ extension Inspector {
         cpuPortReg.integerValue = Int(cpuInfo.processorPort)
         cpuPortDir.integerValue = Int(cpuInfo.processorPortDir)
 
-        cpuInstrView.refresh(count: count, full: full, addr: Int(cpuInfo.reg.pc0))
+        cpuInstrView.refresh(count: count, full: full, addr: Int(cpuInfo.pc0))
         cpuTraceView.refresh(count: count, full: full)
         cpuBreakView.refresh(count: count, full: full)
         cpuWatchView.refresh(count: count, full: full)
@@ -70,7 +70,7 @@ extension Inspector {
     @IBAction func cpuGotoAction(_ sender: NSSearchField!) {
 
         if sender.stringValue == "" {
-            cpuInstrView.jumpTo(addr: Int(cpuInfo.reg.pc0))
+            cpuInstrView.jumpTo(addr: Int(cpuInfo.pc0))
         } else if let addr = Int(sender.stringValue, radix: 16) {
             cpuInstrView.jumpTo(addr: addr)
         } else {

@@ -59,8 +59,14 @@ CPU::_inspect() const
     {   SYNCHRONIZED
         
         info.cycle = clock;
-        info.reg = reg;
-        
+
+        info.pc0 = reg.pc0;
+        info.sp = reg.sp;
+        info.a = reg.a;
+        info.x = reg.x;
+        info.y = reg.y;
+        info.sr = getSr();
+
         info.irq = irqLine;
         info.nmi = nmiLine;
         info.rdy = rdyLine;
