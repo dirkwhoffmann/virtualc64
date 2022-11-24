@@ -104,7 +104,7 @@ private:
     
 public:
 
-    Registers reg;
+    // Registers reg;
             
 private:
         
@@ -324,6 +324,7 @@ public:
     void incPCL(u8 offset = 1) { setPCL(LO_BYTE(reg.pc) + offset); }
     void incPCH(u8 offset = 1) { setPCH(HI_BYTE(reg.pc) + offset); }
 
+    /*
     bool getN() const { return reg.sr.n; }
     void setN(bool value) { reg.sr.n = value; }
     
@@ -344,7 +345,8 @@ public:
     
     bool getC() const { return reg.sr.c; }
     void setC(bool value) { reg.sr.c = value; }
-    
+    */
+
     u8 getP() const;
     u8 getPWithClearedB() const;
     void setP(u8 p);
@@ -371,12 +373,13 @@ private:
     void pokeZP(u8 addr, u8 value);
     void pokeStack(u8 sp, u8 value);
 
-private:
-    
+
     //
     // Operating the Arithmetical Logical Unit (ALU)
     //
-    
+/*
+private:
+
     void adc(u8 op);
     void adc_binary(u8 op);
     void adc_bcd(u8 op);
@@ -384,7 +387,7 @@ private:
     void sbc_binary(u8 op);
     void sbc_bcd(u8 op);
     void cmp(u8 op1, u8 op2);
-    
+*/
 
     //
     // Handling interrupts

@@ -12,7 +12,7 @@
 #include "C64.h"
 
 void
-CPU::adc(u8 op)
+Peddle::adc(u8 op)
 {
     if (getD())
         adc_bcd(op);
@@ -21,7 +21,7 @@ CPU::adc(u8 op)
 }
 
 void
-CPU::adc_binary(u8 op)
+Peddle::adc_binary(u8 op)
 {
     u16 sum = reg.a + op + (getC() ? 1 : 0);
     
@@ -31,14 +31,15 @@ CPU::adc_binary(u8 op)
 }
 
 void
-CPU::adc_bcd(u8 op)
+Peddle::adc_bcd(u8 op)
 {
     u16 sum       = reg.a + op + (getC() ? 1 : 0);
     u8  highDigit = (reg.a >> 4) + (op >> 4);
     u8  lowDigit  = (reg.a & 0x0F) + (op & 0x0F) + (getC() ? 1 : 0);
     
-    // Check for overflow conditions
-    // If an overflow occurs on a BCD digit, it needs to be fixed by adding the pseudo-tetrade 0110 (=6)
+    /* Check for overflow conditions. If an overflow occurs on a BCD digit, it
+     * needs to be fixed by adding the pseudo-tetrade 0110 (= 6)
+     */
     if (lowDigit > 9) {
         lowDigit = lowDigit + 6;
     }
@@ -64,7 +65,7 @@ CPU::adc_bcd(u8 op)
 }
 
 void
-CPU::cmp(u8 op1, u8 op2)
+Peddle::cmp(u8 op1, u8 op2)
 {
     u8 tmp = op1 - op2;
     
@@ -74,7 +75,7 @@ CPU::cmp(u8 op1, u8 op2)
 }
 
 void
-CPU::sbc(u8 op)
+Peddle::sbc(u8 op)
 {
     if (getD())
         sbc_bcd(op);
@@ -83,7 +84,7 @@ CPU::sbc(u8 op)
 }
 
 void
-CPU::sbc_binary(u8 op)
+Peddle::sbc_binary(u8 op)
 {
     u16 sum = reg.a - op - (getC() ? 0 : 1);
     
@@ -93,7 +94,7 @@ CPU::sbc_binary(u8 op)
 }
 
 void
-CPU::sbc_bcd(u8 op)
+Peddle::sbc_bcd(u8 op)
 {
     u16 sum       = reg.a - op - (getC() ? 0 : 1);
     u8  highDigit = (reg.a >> 4) - (op >> 4);
