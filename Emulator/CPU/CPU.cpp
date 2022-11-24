@@ -148,7 +148,7 @@ CPU::nmiDidTrigger()
     }
 }
 
-u8
+template <CPURevision C> u8
 Peddle::peek(u16 addr)
 {
     return
@@ -157,7 +157,7 @@ Peddle::peek(u16 addr)
     id == 1 ? drive8.mem.peek(addr) : drive9.mem.peek(addr);
 }
 
-u8
+template <CPURevision C> u8
 Peddle::peekZP(u8 addr)
 {
     return cpuModel == MOS_6510 ?
@@ -165,7 +165,7 @@ Peddle::peekZP(u8 addr)
     id == 1 ? drive8.mem.peekZP(addr) : drive9.mem.peekZP(addr);
 }
 
-u8
+template <CPURevision C> u8
 Peddle::peekStack(u8 sp)
 {
     return cpuModel == MOS_6510 ?
@@ -176,12 +176,25 @@ Peddle::peekStack(u8 sp)
 u8
 Peddle::spypeek(u16 addr) const
 {
+    switch (cpuModel) {
+
+        case MOS_6502: return spypeek<MOS_6502>(addr);
+        case MOS_6510: return spypeek<MOS_6510>(addr);
+
+        default:
+            fatalError;
+    }
+}
+
+template <CPURevision C> u8
+Peddle::spypeek(u16 addr) const
+{
     return cpuModel == MOS_6510 ?
     mem.spypeek(addr) :
     id == 1 ? drive8.mem.spypeek(addr) : drive9.mem.spypeek(addr);
 }
 
-void
+template <CPURevision C> void
 Peddle::poke(u16 addr, u8 value)
 {
     cpuModel == MOS_6510 ?
@@ -189,7 +202,7 @@ Peddle::poke(u16 addr, u8 value)
     id == 1 ? drive8.mem.poke(addr, value) : drive9.mem.poke(addr, value);
 }
 
-void
+template <CPURevision C> void
 Peddle::pokeZP(u8 addr, u8 value)
 {
     cpuModel == MOS_6510 ?
@@ -197,10 +210,32 @@ Peddle::pokeZP(u8 addr, u8 value)
     id == 1 ? drive8.mem.pokeZP(addr, value) : drive9.mem.pokeZP(addr, value);
 }
 
-void
+template <CPURevision C> void
 Peddle::pokeStack(u8 addr, u8 value)
 {
     cpuModel == MOS_6510 ?
     mem.pokeStack(addr, value) :
     id == 1 ? drive8.mem.pokeStack(addr, value) : drive9.mem.pokeStack(addr, value);
 }
+
+template u8 Peddle::peek<MOS_6502>(u16 addr);
+template u8 Peddle::peekZP<MOS_6502>(u8 addr);
+template u8 Peddle::peekStack<MOS_6502>(u8 sp);
+template u8 Peddle::spypeek<MOS_6502>(u16 addr) const;
+template void Peddle::peekIdle<MOS_6502>(u16 addr);
+template void Peddle::peekZPIdle<MOS_6502>(u8 addr);
+template void Peddle::peekStackIdle<MOS_6502>(u8 sp);
+template void Peddle::poke<MOS_6502>(u16 addr, u8 value);
+template void Peddle::pokeZP<MOS_6502>(u8 addr, u8 value);
+template void Peddle::pokeStack<MOS_6502>(u8 sp, u8 value);
+
+template u8 Peddle::peek<MOS_6510>(u16 addr);
+template u8 Peddle::peekZP<MOS_6510>(u8 addr);
+template u8 Peddle::peekStack<MOS_6510>(u8 sp);
+template u8 Peddle::spypeek<MOS_6510>(u16 addr) const;
+template void Peddle::peekIdle<MOS_6510>(u16 addr);
+template void Peddle::peekZPIdle<MOS_6510>(u8 addr);
+template void Peddle::peekStackIdle<MOS_6510>(u8 sp);
+template void Peddle::poke<MOS_6510>(u16 addr, u8 value);
+template void Peddle::pokeZP<MOS_6510>(u8 addr, u8 value);
+template void Peddle::pokeStack<MOS_6510>(u8 sp, u8 value);

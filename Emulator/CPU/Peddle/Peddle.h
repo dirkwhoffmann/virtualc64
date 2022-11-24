@@ -252,19 +252,20 @@ public:
 
 protected:
 
-    u8 peek(u16 addr);
-    u8 peekZP(u8 addr);
-    u8 peekStack(u8 sp);
-
-    void peekIdle(u16 addr) { (void)peek(addr); }
-    void peekZPIdle(u8 addr) { (void)peekZP(addr); }
-    void peekStackIdle(u8 sp) { (void)peekStack(sp); }
+    template <CPURevision C> u8 peek(u16 addr);
+    template <CPURevision C> u8 peekZP(u8 addr);
+    template <CPURevision C> u8 peekStack(u8 sp);
 
     u8 spypeek(u16 addr) const;
+    template <CPURevision C> u8 spypeek(u16 addr) const;
 
-    void poke(u16 addr, u8 value);
-    void pokeZP(u8 addr, u8 value);
-    void pokeStack(u8 sp, u8 value);
+    template <CPURevision C> void peekIdle(u16 addr) { (void)peek<C>(addr); }
+    template <CPURevision C> void peekZPIdle(u8 addr) { (void)peekZP<C>(addr); }
+    template <CPURevision C> void peekStackIdle(u8 sp) { (void)peekStack<C>(sp); }
+
+    template <CPURevision C> void poke(u16 addr, u8 value);
+    template <CPURevision C> void pokeZP(u8 addr, u8 value);
+    template <CPURevision C> void pokeStack(u8 sp, u8 value);
 
 
     //
@@ -322,9 +323,10 @@ public:
 
     // Executes the next micro instruction
     void executeOneCycle();
+    template <CPURevision C> void executeOneCycle();
 
 protected:
 
     // Called after the last microcycle has been completed
-    void done();
+    template <CPURevision C> void done();
 };

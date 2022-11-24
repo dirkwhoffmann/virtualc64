@@ -31,12 +31,14 @@
 // Enumerations
 //
 
+/*
 enum_long(CPUREV)
 {
     MOS_6510,
     MOS_6502
 };
 typedef CPUREV CPURevision;
+*/
 
 #ifdef __cplusplus
 struct CPURevisionEnum : util::Reflection<CPURevisionEnum, CPURevision> {

@@ -37,6 +37,18 @@ typedef u8 IntSource;
 
 
 //
+// Enumerations
+//
+
+enum_long(CPUREV)
+{
+    MOS_6510,
+    MOS_6502
+};
+typedef CPUREV CPURevision;
+
+
+//
 // Structures
 //
 

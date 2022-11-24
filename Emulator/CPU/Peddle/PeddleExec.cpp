@@ -487,6 +487,19 @@ Peddle::registerIllegalInstructions()
 void
 Peddle::executeOneCycle()
 {
+    switch (cpuModel) {
+
+        case MOS_6502: executeOneCycle<MOS_6502>(); break;
+        case MOS_6510: executeOneCycle<MOS_6510>(); break;
+
+        default:
+            fatalError;
+    }
+}
+
+template <CPURevision C> void
+Peddle::executeOneCycle()
+{
     u8 instr;
     
     switch (next) {
@@ -561,7 +574,7 @@ Peddle::executeOneCycle()
             
         case irq_5:
             
-            poke(0x100+(reg.sp--), getPWithClearedB());
+            poke<C>(0x100+(reg.sp--), getPWithClearedB());
             CONTINUE
             
         case irq_6:
@@ -599,7 +612,7 @@ Peddle::executeOneCycle()
             
         case nmi_5:
             
-            poke(0x100+(reg.sp--), getPWithClearedB());
+            poke<C>(0x100+(reg.sp--), getPWithClearedB());
             CONTINUE
             
         case nmi_6:
@@ -3215,7 +3228,7 @@ Peddle::executeOneCycle()
     }
 }
 
-void
+template <CPURevision C> void
 Peddle::done() {
 
     if (debugMode) {
