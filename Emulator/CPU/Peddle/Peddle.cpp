@@ -23,3 +23,59 @@ Peddle::~Peddle()
 {
 
 }
+
+void
+Peddle::setModel(CPURevision cpuModel)
+{
+    this->cpuModel = cpuModel;
+}
+
+void
+Peddle::pullDownNmiLine(IntSource bit)
+{
+    assert(bit != 0);
+
+    // Check for falling edge on physical line
+    if (!nmiLine) {
+        edgeDetector.write(1);
+    }
+
+    nmiLine |= bit;
+}
+
+void
+Peddle::releaseNmiLine(IntSource source)
+{
+    nmiLine &= ~source;
+}
+
+void
+Peddle::pullDownIrqLine(IntSource source)
+{
+    assert(source != 0);
+
+    irqLine |= source;
+    levelDetector.write(irqLine);
+}
+
+void
+Peddle::releaseIrqLine(IntSource source)
+{
+    irqLine &= ~source;
+    levelDetector.write(irqLine);
+}
+
+void
+Peddle::setRDY(bool value)
+{
+    if (rdyLine)
+    {
+        rdyLine = value;
+        if (!rdyLine) rdyLineDown = clock;
+    }
+    else
+    {
+        rdyLine = value;
+        if (rdyLine) rdyLineUp = clock;
+    }
+}

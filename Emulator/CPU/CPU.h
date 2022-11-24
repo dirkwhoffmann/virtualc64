@@ -83,7 +83,7 @@ private:
 public:
 
     // Selects the emulated CPU model
-    void setModel(CPURevision cpuModel);
+    // void setModel(CPURevision cpuModel);
 
 
     //
@@ -166,57 +166,6 @@ public:
     CPUInfo getInfo() const { return C64Component::getInfo(info); }
 
     
-    //
-    // Accessing properties
-    //
-
-public:
-    
-    /* Returns the frozen program counter.
-     * Variable pc0 matches the value of the program counter when the CPU
-     * starts to execute an instruction. In contrast to the real program
-     * counter, the value isn't changed until the CPU starts to process the
-     * next instruction. In other words: This value always contains the start
-     * address of the currently executed command, even if some microcycles of
-     * the command have already been computed.
-     */
-    u16 getPC0() const { return reg.pc0; }
-    
-    void jumpToAddress(u16 addr) { reg.pc0 = reg.pc = addr; next = fetch; }
-    void setPCL(u8 lo) { reg.pc = (u16)((reg.pc & 0xff00) | lo); }
-    void setPCH(u8 hi) { reg.pc = (u16)((reg.pc & 0x00ff) | hi << 8); }
-    void incPC(u8 offset = 1) { reg.pc += offset; }
-    void incPCL(u8 offset = 1) { setPCL(LO_BYTE(reg.pc) + offset); }
-    void incPCH(u8 offset = 1) { setPCH(HI_BYTE(reg.pc) + offset); }
-
-    /*
-    bool getN() const { return reg.sr.n; }
-    void setN(bool value) { reg.sr.n = value; }
-    
-    bool getV() const { return reg.sr.v; }
-    void setV(bool value) { reg.sr.v = value; }
-    
-    bool getB() const { return reg.sr.b; }
-    void setB(bool value) { reg.sr.b = value; }
-    
-    bool getD() const { return reg.sr.d; }
-    void setD(bool value) { reg.sr.d = value; }
-    
-    bool getI() const { return reg.sr.i; }
-    void setI(bool value) { reg.sr.i = value; }
-    
-    bool getZ() const { return reg.sr.z; }
-    void setZ(bool value) { reg.sr.z = value; }
-    
-    bool getC() const { return reg.sr.c; }
-    void setC(bool value) { reg.sr.c = value; }
-
-    u8 getP() const;
-    u8 getPWithClearedB() const;
-    void setP(u8 p);
-    void setPWithoutB(u8 p);
-     */
-
 
     //
     // Accessing memory
@@ -237,22 +186,6 @@ private:
     void poke(u16 addr, u8 value);
     void pokeZP(u8 addr, u8 value);
     void pokeStack(u8 sp, u8 value);
-
-
-    //
-    // Handling interrupts
-    //
-    
-public:
-    
-    // Pulls down or releases an interrupt line
-    void pullDownNmiLine(IntSource source);
-    void releaseNmiLine(IntSource source);
-    void pullDownIrqLine(IntSource source);
-    void releaseIrqLine(IntSource source);
-        
-    // Sets the RDY line
-    void setRDY(bool value);
     
         
     //
