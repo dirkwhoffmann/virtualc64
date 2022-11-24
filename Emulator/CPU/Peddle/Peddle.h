@@ -268,6 +268,16 @@ protected:
 
 
     //
+    // Delegation methods
+    //
+
+    virtual void irqWillTrigger() { }
+    virtual void irqDidTrigger() { }
+    virtual void nmiWillTrigger() { }
+    virtual void nmiDidTrigger() { }
+
+
+    //
     // Handling interrupts
     //
 
@@ -311,10 +321,10 @@ public:
     bool inFetchPhase() const { return next == fetch; }
 
     // Executes the next micro instruction
-    // void executeOneCycle();
+    void executeOneCycle();
 
-private:
+protected:
 
     // Called after the last microcycle has been completed
-    // void done();
+    void done();
 };

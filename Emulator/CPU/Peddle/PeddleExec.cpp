@@ -485,7 +485,7 @@ Peddle::registerIllegalInstructions()
 }
 
 void
-CPU::executeOneCycle()
+Peddle::executeOneCycle()
 {
     u8 instr;
     
@@ -495,12 +495,8 @@ CPU::executeOneCycle()
                         
             // Check interrupt lines
             if (unlikely(doNmi)) {
-                
-                if (isC64CPU()) {
-                    expansionport.nmiWillTrigger();
-                }
-                
-                trace(IRQ_DEBUG, "NMI (source = %02X)\n", nmiLine);
+
+                nmiWillTrigger();
                 IDLE_FETCH
                 edgeDetector.clear();
                 next = nmi_2;
@@ -509,8 +505,8 @@ CPU::executeOneCycle()
                 return;
                 
             } else if (unlikely(doIrq)) {
-                
-                trace(IRQ_DEBUG, "IRQ (source = %02X)\n", irqLine);
+
+                irqWillTrigger();
                 IDLE_FETCH
                 next = irq_2;
                 doIrq = false;
@@ -579,7 +575,7 @@ CPU::executeOneCycle()
             
             READ_FROM(0xFFFF)
             setPCH(reg.d);
-            trace(IRQ_DEBUG, "Jumping to IRQ vector $%04x\n", reg.pc);
+            irqDidTrigger();
             DONE
             
         //
@@ -617,11 +613,7 @@ CPU::executeOneCycle()
 
             READ_FROM(0xFFFB)
             setPCH(reg.d);
-            trace(IRQ_DEBUG, "Jumping to NMI vector $%04x\n", reg.pc);
-
-            if (isC64CPU()) {
-                expansionport.nmiDidTrigger();
-            }
+            nmiDidTrigger();
             DONE
 
         //
@@ -3224,7 +3216,7 @@ CPU::executeOneCycle()
 }
 
 void
-CPU::done() {
+Peddle::done() {
 
     if (debugMode) {
 

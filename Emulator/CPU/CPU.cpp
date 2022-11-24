@@ -121,6 +121,22 @@ CPU::_dump(Category category, std::ostream& os) const
     }
 }
 
+void
+CPU::nmiWillTrigger()
+{
+    if (isC64CPU()) {
+        expansionport.nmiWillTrigger();
+    }
+}
+
+void
+CPU::nmiDidTrigger()
+{
+    if (isC64CPU()) {
+        expansionport.nmiDidTrigger();
+    }
+}
+
 u8
 Peddle::peek(u16 addr)
 {

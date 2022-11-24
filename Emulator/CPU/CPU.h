@@ -130,7 +130,15 @@ private:
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
 
-    
+
+    //
+    // Methods from Peddle
+    //
+
+    virtual void nmiWillTrigger() override;
+    virtual void nmiDidTrigger() override;
+
+
     //
     // Analyzing
     //
@@ -154,10 +162,10 @@ public:
     // bool inFetchPhase() const { return next == fetch; }
 
     // Executes the next micro instruction
-    void executeOneCycle();
+    // void executeOneCycle();
 
 private:
 
     // Called after the last microcycle has been completed
-    void done();
+    // void done();
 };
