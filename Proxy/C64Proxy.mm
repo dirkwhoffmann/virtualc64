@@ -14,6 +14,8 @@
 #import "VirtualC64-Swift.h"
 #import "Script.h"
 
+using namespace peddle;
+
 //
 // Exception wrapper
 //

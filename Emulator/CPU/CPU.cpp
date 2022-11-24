@@ -148,6 +148,8 @@ CPU::nmiDidTrigger()
     }
 }
 
+namespace peddle {
+
 template <CPURevision C> u8
 Peddle::peek(u16 addr)
 {
@@ -273,3 +275,5 @@ template void Peddle::peekStackIdle<MOS_6510>(u8 sp);
 template void Peddle::poke<MOS_6510>(u16 addr, u8 value);
 template void Peddle::pokeZP<MOS_6510>(u8 addr, u8 value);
 template void Peddle::pokeStack<MOS_6510>(u8 sp, u8 value);
+
+}

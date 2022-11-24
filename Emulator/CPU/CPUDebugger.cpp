@@ -17,6 +17,8 @@ using util::sprint8d;
 using util::sprint16x;
 using util::sprint16d;
 
+namespace peddle {
+
 //
 // Guard
 //
@@ -226,7 +228,7 @@ CPUDebugger::breakpointMatches(u32 addr)
     }
 
     if (!breakpoints.eval(addr)) return false;
-        
+
     breakpointPC = cpu.reg.pc;
     return true;
 }
@@ -379,12 +381,12 @@ const char *
 CPUDebugger::disassembleBytes(u16 addr) const
 {
     RecordedInstruction instr;
-     
-     instr.byte1 = cpu.spypeek(addr);
-     instr.byte2 = cpu.spypeek(addr + 1);
-     instr.byte3 = cpu.spypeek(addr + 2);
-     
-     return disassembleBytes(instr);
+
+    instr.byte1 = cpu.spypeek(addr);
+    instr.byte2 = cpu.spypeek(addr + 1);
+    instr.byte3 = cpu.spypeek(addr + 2);
+
+    return disassembleBytes(instr);
 }
 
 const char *
@@ -428,10 +430,10 @@ template <bool hex> const char *
 CPUDebugger::disassembleInstr(const RecordedInstruction &instr, long *len) const
 {
     static char result[16];
-        
+
     u8 opcode = instr.byte1;
     if (len) *len = getLengthOfInstruction(opcode);
-        
+
     // Convert command
     char operand[6];
     switch (addressingMode[opcode]) {
@@ -593,4 +595,6 @@ CPUDebugger::disassembleRecordedFlags(const RecordedInstruction &instr) const
     result[8] = 0;
     
     return result;
+}
+
 }

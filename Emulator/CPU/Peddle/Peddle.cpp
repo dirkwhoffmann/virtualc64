@@ -7,6 +7,8 @@
 
 #include "Peddle.h"
 
+namespace peddle {
+
 Peddle::Peddle(C64 &ref) : SubComponent(ref)
 {
     static isize counter = 0;
@@ -81,4 +83,6 @@ Peddle::setRDY(bool value)
         rdyLine = value;
         if (rdyLine) rdyLineUp = clock;
     }
+}
+
 }

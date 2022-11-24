@@ -16,7 +16,7 @@
 
 // class Memory;
 
-class CPU : public Peddle {
+class CPU : public peddle::Peddle {
 
     // Result of the latest inspection
     mutable CPUInfo info = { };

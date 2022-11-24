@@ -11,6 +11,8 @@
 
 #include "CPUTypes.h"
 
+namespace peddle {
+
 // Base structure for a single breakpoint or watchpoint
 struct Guard {
     
@@ -142,9 +144,9 @@ class CPUDebugger {
 
     // Textual representation for each opcode (used by the disassembler)
     const char *mnemonic[256];
-     
+
     // Adressing mode of each opcode (used by the disassembler)
-     AddressingMode addressingMode[256];
+    AddressingMode addressingMode[256];
     
 public:
     
@@ -179,7 +181,7 @@ private:
      * UINT64_MAX - 1.
      */
     u64 softStop = UINT64_MAX - 1;
-        
+
 public:
     
     // Number format used by the disassembler
@@ -221,7 +223,7 @@ public:
     //
     // Working with the instruction log
     //
-        
+
     // Returns the number of logged instructions
     isize loggedInstructions() const;
     
@@ -258,7 +260,7 @@ public:
     //
     // Running the disassembler
     //
-        
+
     // Disassembles a previously recorded instruction
     const char *disassembleRecordedInstr(int i, long *len) const;
     const char *disassembleRecordedBytes(int i) const;
@@ -284,3 +286,5 @@ private:
     template <bool hex>
     const char *disassembleInstr(const RecordedInstruction &instr, long *len) const;
 };
+
+}

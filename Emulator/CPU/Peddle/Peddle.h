@@ -13,6 +13,8 @@
 #include "CPUInstructions.h"
 #include "TimeDelayed.h"
 
+namespace peddle {
+
 class Peddle : public SubComponent {
 
     friend class CPUDebugger;
@@ -330,3 +332,5 @@ protected:
     // Called after the last microcycle has been completed
     template <CPURevision C> void done();
 };
+
+}

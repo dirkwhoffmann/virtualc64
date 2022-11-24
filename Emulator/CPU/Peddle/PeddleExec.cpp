@@ -11,6 +11,8 @@
 #include "CPU.h"
 #include "C64.h"
 
+namespace peddle {
+
 u8
 Peddle::getP() const
 {
@@ -162,7 +164,7 @@ Peddle::sbc_bcd(u8 op)
 
 void
 Peddle::registerCallback(u8 opcode, const char *mnemonic,
-                      AddressingMode mode, MicroInstruction mInstr)
+                         AddressingMode mode, MicroInstruction mInstr)
 {
     // Table is write once!
     assert(mInstr == JAM || actionFunc[opcode] == JAM);
@@ -505,7 +507,7 @@ Peddle::executeOneCycle()
     switch (next) {
             
         case fetch:
-                        
+
             // Check interrupt lines
             if (unlikely(doNmi)) {
 
@@ -531,9 +533,9 @@ Peddle::executeOneCycle()
             next = actionFunc[instr];
             return;
             
-        //
-        // Illegal instructions
-        //
+            //
+            // Illegal instructions
+            //
             
         case JAM:
             
@@ -544,9 +546,9 @@ Peddle::executeOneCycle()
             POLL_INT
             DONE
 
-        //
-        // IRQ handling
-        //
+            //
+            // IRQ handling
+            //
             
         case irq_2:
             
@@ -591,10 +593,10 @@ Peddle::executeOneCycle()
             irqDidTrigger();
             DONE
             
-        //
-        // NMI handling
-        // 
-        
+            //
+            // NMI handling
+            //
+
         case nmi_2:
 
             IDLE_READ_IMPLIED
@@ -629,28 +631,28 @@ Peddle::executeOneCycle()
             nmiDidTrigger();
             DONE
 
-        //
-        // Adressing mode: Immediate (shared behavior)
-        //
+            //
+            // Adressing mode: Immediate (shared behavior)
+            //
 
         case BRK: case RTI: case RTS:
             
             IDLE_READ_IMMEDIATE
             CONTINUE
             
-        //
-        // Adressing mode: Implied (shared behavior)
-        //
+            //
+            // Adressing mode: Implied (shared behavior)
+            //
 
         case PHA: case PHP: case PLA: case PLP:
             
             IDLE_READ_IMPLIED
             CONTINUE
             
-        //
-        // Adressing mode: Zero-Page  (shared behavior)
-        //
-        
+            //
+            // Adressing mode: Zero-Page  (shared behavior)
+            //
+
         case ADC_zpg: case AND_zpg: case ASL_zpg: case BIT_zpg:
         case CMP_zpg: case CPX_zpg: case CPY_zpg: case DEC_zpg:
         case EOR_zpg: case INC_zpg: case LDA_zpg: case LDX_zpg:
@@ -670,9 +672,9 @@ Peddle::executeOneCycle()
             READ_FROM_ZERO_PAGE
             CONTINUE
             
-        //
-        // Adressing mode: Zero-Page Indexed (shared behavior)
-        //
+            //
+            // Adressing mode: Zero-Page Indexed (shared behavior)
+            //
             
         case ADC_zpg_x: case AND_zpg_x: case ASL_zpg_x: case CMP_zpg_x:
         case DEC_zpg_x: case EOR_zpg_x: case INC_zpg_x: case LDA_zpg_x:
@@ -680,12 +682,12 @@ Peddle::executeOneCycle()
         case ROL_zpg_x: case ROR_zpg_x: case SBC_zpg_x: case STA_zpg_x:
         case STY_zpg_x: case DCP_zpg_x: case ISC_zpg_x: case RLA_zpg_x:
         case RRA_zpg_x: case SLO_zpg_x: case SRE_zpg_x:
-          
+
         case LDX_zpg_y: case STX_zpg_y: case LAX_zpg_y: case SAX_zpg_y:
             
             FETCH_ADDR_LO
             CONTINUE
-           
+
         case ADC_zpg_x_2: case AND_zpg_x_2: case ASL_zpg_x_2: case CMP_zpg_x_2:
         case DEC_zpg_x_2: case EOR_zpg_x_2: case INC_zpg_x_2: case LDA_zpg_x_2:
         case LDY_zpg_x_2: case LSR_zpg_x_2: case NOP_zpg_x_2: case ORA_zpg_x_2:
@@ -696,13 +698,13 @@ Peddle::executeOneCycle()
             READ_FROM_ZERO_PAGE
             ADD_INDEX_X
             CONTINUE
-        
+
         case LDX_zpg_y_2: case LAX_zpg_y_2: case STX_zpg_y_2: case SAX_zpg_y_2:
             
             READ_FROM_ZERO_PAGE
             ADD_INDEX_Y
             CONTINUE
-           
+
         case ASL_zpg_x_3: case DEC_zpg_x_3: case INC_zpg_x_3: case LSR_zpg_x_3:
         case ROL_zpg_x_3: case ROR_zpg_x_3: case DCP_zpg_x_3: case ISC_zpg_x_3:
         case RLA_zpg_x_3: case RRA_zpg_x_3: case SLO_zpg_x_3: case SRE_zpg_x_3:
@@ -711,9 +713,9 @@ Peddle::executeOneCycle()
             CONTINUE
             
             
-        //
-        // Adressing mode: Absolute (shared behavior)
-        //
+            //
+            // Adressing mode: Absolute (shared behavior)
+            //
             
         case ADC_abs: case AND_abs: case ASL_abs: case BIT_abs:
         case CMP_abs: case CPX_abs: case CPY_abs: case DEC_abs:
@@ -726,7 +728,7 @@ Peddle::executeOneCycle()
             
             FETCH_ADDR_LO
             CONTINUE
-           
+
         case ADC_abs_2: case AND_abs_2: case ASL_abs_2: case BIT_abs_2:
         case CMP_abs_2: case CPX_abs_2: case CPY_abs_2: case DEC_abs_2:
         case EOR_abs_2: case INC_abs_2: case LDA_abs_2: case LDX_abs_2:
@@ -746,9 +748,9 @@ Peddle::executeOneCycle()
             READ_FROM_ADDRESS
             CONTINUE
             
-        //
-        // Adressing mode: Absolute Indexed (shared behavior)
-        //
+            //
+            // Adressing mode: Absolute Indexed (shared behavior)
+            //
             
         case ADC_abs_x: case AND_abs_x: case ASL_abs_x: case CMP_abs_x:
         case DEC_abs_x: case EOR_abs_x: case INC_abs_x: case LDA_abs_x:
@@ -793,7 +795,7 @@ Peddle::executeOneCycle()
         case ROL_abs_x_3: case ROR_abs_x_3: case DCP_abs_x_3: case ISC_abs_x_3:
         case RLA_abs_x_3: case RRA_abs_x_3: case STA_abs_x_3: case SLO_abs_x_3:
         case SRE_abs_x_3:
-        
+
         case LSR_abs_y_3: case STA_abs_y_3: case DCP_abs_y_3: case ISC_abs_y_3:
         case RLA_abs_y_3: case RRA_abs_y_3: case SLO_abs_y_3: case SRE_abs_y_3:
             
@@ -811,10 +813,10 @@ Peddle::executeOneCycle()
             READ_FROM_ADDRESS
             CONTINUE
             
-        //
-        // Adressing mode: Indexed Indirect (shared behavior)
-        //
-    
+            //
+            // Adressing mode: Indexed Indirect (shared behavior)
+            //
+
         case ADC_ind_x: case AND_ind_x: case ASL_ind_x: case CMP_ind_x:
         case DEC_ind_x: case EOR_ind_x: case INC_ind_x: case LDA_ind_x:
         case LDX_ind_x: case LDY_ind_x: case LSR_ind_x: case ORA_ind_x:
@@ -863,9 +865,9 @@ Peddle::executeOneCycle()
             READ_FROM_ADDRESS
             CONTINUE
             
-        //
-        // Adressing mode: Indirect Indexed (shared behavior)
-        //
+            //
+            // Adressing mode: Indirect Indexed (shared behavior)
+            //
             
         case ADC_ind_y: case AND_ind_y: case CMP_ind_y: case EOR_ind_y:
         case LDA_ind_y: case LDX_ind_y: case LDY_ind_y: case LSR_ind_y:
@@ -875,7 +877,7 @@ Peddle::executeOneCycle()
             
             FETCH_POINTER_ADDR
             CONTINUE
-           
+
         case ADC_ind_y_2: case AND_ind_y_2: case CMP_ind_y_2: case EOR_ind_y_2:
         case LDA_ind_y_2: case LDX_ind_y_2: case LDY_ind_y_2: case LSR_ind_y_2:
         case ORA_ind_y_2: case SBC_ind_y_2: case STA_ind_y_2: case DCP_ind_y_2:
@@ -894,7 +896,7 @@ Peddle::executeOneCycle()
             FETCH_ADDR_HI_INDIRECT
             ADD_INDEX_Y
             CONTINUE
-        
+
         case LSR_ind_y_4: case STA_ind_y_4: case DCP_ind_y_4: case ISC_ind_y_4:
         case RLA_ind_y_4: case RRA_ind_y_4: case SLO_ind_y_4: case SRE_ind_y_4:
             
@@ -908,9 +910,9 @@ Peddle::executeOneCycle()
             READ_FROM_ADDRESS
             CONTINUE
             
-        //
-        // Adressing mode: Relative (shared behavior)
-        //
+            //
+            // Adressing mode: Relative (shared behavior)
+            //
             
         case BCC_rel_2: case BCS_rel_2: case BEQ_rel_2: case BMI_rel_2:
         case BNE_rel_2: case BPL_rel_2: case BVC_rel_2: case BVS_rel_2:
@@ -939,12 +941,12 @@ Peddle::executeOneCycle()
             DONE
             
             
-        // Instruction: ADC
-        //
-        // Operation:   A,C := A+M+C
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - /
+            // Instruction: ADC
+            //
+            // Operation:   A,C := A+M+C
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - /
 
         case ADC_imm:
 
@@ -987,12 +989,12 @@ Peddle::executeOneCycle()
             DONE
             
             
-        // Instruction: AND
-        //
-        // Operation:   A := A AND M
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: AND
+            //
+            // Operation:   A := A AND M
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
 
         case AND_imm:
             
@@ -1035,15 +1037,15 @@ Peddle::executeOneCycle()
             DONE
             
             
-        // Instruction: ASL
-        //
-        // Operation:   C <- (A|M << 1) <- 0
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - -
-    
-        #define DO_ASL_ACC setC(reg.a & 0x80); loadA((u8)(reg.a << 1));
-        #define DO_ASL setC(reg.d & 0x80); reg.d = (u8)(reg.d << 1);
+            // Instruction: ASL
+            //
+            // Operation:   C <- (A|M << 1) <- 0
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - -
+
+#define DO_ASL_ACC setC(reg.a & 0x80); loadA((u8)(reg.a << 1));
+#define DO_ASL setC(reg.d & 0x80); reg.d = (u8)(reg.d << 1);
 
         case ASL_acc:
             
@@ -1058,7 +1060,7 @@ Peddle::executeOneCycle()
             WRITE_TO_ZERO_PAGE
             DO_ASL
             CONTINUE
-           
+
         case ASL_abs_4:
         case ASL_abs_x_5:
         case ASL_ind_x_6:
@@ -1083,13 +1085,13 @@ Peddle::executeOneCycle()
             DONE
             
             
-        // Instruction: BCC
-        //
-        // Operation:   Branch on C = 0
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
-    
+            // Instruction: BCC
+            //
+            // Operation:   Branch on C = 0
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
+
         case BCC_rel:
             
             READ_IMMEDIATE
@@ -1102,12 +1104,12 @@ Peddle::executeOneCycle()
             }
             
             
-        // Instruction: BCS
-        //
-        // Operation:   Branch on C = 1
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: BCS
+            //
+            // Operation:   Branch on C = 1
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
 
         case BCS_rel:
             
@@ -1120,13 +1122,13 @@ Peddle::executeOneCycle()
                 DONE
             }
             
-        
-        // Instruction: BEQ
-        //
-        // Operation:   Branch on Z = 1
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+
+            // Instruction: BEQ
+            //
+            // Operation:   Branch on Z = 1
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
             
         case BEQ_rel:
             
@@ -1140,12 +1142,12 @@ Peddle::executeOneCycle()
             }
             
             
-        // Instruction: BIT
-        //
-        // Operation:   A AND M, N := M7, V := M6
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - /
+            // Instruction: BIT
+            //
+            // Operation:   A AND M, N := M7, V := M6
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - /
             
         case BIT_zpg_2:
             
@@ -1166,12 +1168,12 @@ Peddle::executeOneCycle()
             DONE
 
             
-        // Instruction: BMI
-        //
-        // Operation:   Branch on N = 1
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: BMI
+            //
+            // Operation:   Branch on N = 1
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
 
         case BMI_rel:
             
@@ -1185,12 +1187,12 @@ Peddle::executeOneCycle()
             }
 
             
-        // Instruction: BNE
-        //
-        // Operation:   Branch on Z = 0
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: BNE
+            //
+            // Operation:   Branch on Z = 0
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
             
         case BNE_rel:
             
@@ -1204,12 +1206,12 @@ Peddle::executeOneCycle()
             }
 
 
-        // Instruction: BPL
-        //
-        // Operation:   Branch on N = 0
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: BPL
+            //
+            // Operation:   Branch on N = 0
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
 
         case BPL_rel:
             
@@ -1223,12 +1225,12 @@ Peddle::executeOneCycle()
             }
 
 
-        // Instruction: BRK
-        //
-        // Operation:   Forced Interrupt (Break)
-        //
-        // Flags:       N Z C I D V    B
-        //              - - - 1 - -    1
+            // Instruction: BRK
+            //
+            // Operation:   Forced Interrupt (Break)
+            //
+            // Flags:       N Z C I D V    B
+            //              - - - 1 - -    1
             
         case BRK_2:
             
@@ -1237,13 +1239,13 @@ Peddle::executeOneCycle()
             CONTINUE
             
         case BRK_3:
-        
+
             PUSH_PCL
             
             // Check for interrupt hijacking
             // If there is a positive edge on the NMI line, ...
             if (edgeDetector.current()) {
-            
+
                 // ... jump to the NMI vector instead of the IRQ vector.
                 edgeDetector.clear();
                 next = BRK_nmi_4;
@@ -1271,8 +1273,8 @@ Peddle::executeOneCycle()
             setPCH(reg.d);
             POLL_INT
             doNmi = false; // Only the level detector is polled here. This is
-                           // the reason why only IRQs can be triggered right
-                           // after a BRK command, but not NMIs.
+            // the reason why only IRQs can be triggered right
+            // after a BRK command, but not NMIs.
             DONE
             
         case BRK_nmi_4:
@@ -1295,18 +1297,18 @@ Peddle::executeOneCycle()
             DONE
 
             
-        // Instruction: BVC
-        //
-        // Operation:   Branch on V = 0
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: BVC
+            //
+            // Operation:   Branch on V = 0
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
 
         case BVC_rel:
             
             READ_IMMEDIATE
             POLL_INT
-    
+
             if (!getV()) {
                 CONTINUE
             } else {
@@ -1314,12 +1316,12 @@ Peddle::executeOneCycle()
             }
 
 
-        // Instruction: BVS
-        //
-        // Operation:   Branch on V = 1
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: BVS
+            //
+            // Operation:   Branch on V = 1
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
 
         case BVS_rel:
             
@@ -1333,12 +1335,12 @@ Peddle::executeOneCycle()
             }
 
 
-        // Instruction: CLC
-        //
-        // Operation:   C := 0
-        //
-        // Flags:       N Z C I D V
-        //              - - 0 - - -
+            // Instruction: CLC
+            //
+            // Operation:   C := 0
+            //
+            // Flags:       N Z C I D V
+            //              - - 0 - - -
 
         case CLC:
             
@@ -1348,12 +1350,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: CLD
-        //
-        // Operation:   D := 0
-        //
-        // Flags:       N Z C I D V
-        //              - - - - 0 -
+            // Instruction: CLD
+            //
+            // Operation:   D := 0
+            //
+            // Flags:       N Z C I D V
+            //              - - - - 0 -
 
         case CLD:
             
@@ -1363,12 +1365,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: CLI
-        //
-        // Operation:   I := 0
-        //
-        // Flags:       N Z C I D V
-        //              - - - 0 - -
+            // Instruction: CLI
+            //
+            // Operation:   I := 0
+            //
+            // Flags:       N Z C I D V
+            //              - - - 0 - -
 
         case CLI:
             
@@ -1378,12 +1380,12 @@ Peddle::executeOneCycle()
             DONE
             
             
-        // Instruction: CLV
-        //
-        // Operation:   V := 0
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - 0
+            // Instruction: CLV
+            //
+            // Operation:   V := 0
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - 0
 
         case CLV:
             
@@ -1393,12 +1395,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: CMP
-        //
-        // Operation:   A-M
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - -
+            // Instruction: CMP
+            //
+            // Operation:   A-M
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - -
 
         case CMP_imm:
             
@@ -1441,12 +1443,12 @@ Peddle::executeOneCycle()
             DONE
 
             
-        // Instruction: CPX
-        //
-        // Operation:   X-M
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - -
+            // Instruction: CPX
+            //
+            // Operation:   X-M
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - -
 
         case CPX_imm:
             
@@ -1470,12 +1472,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: CPY
-        //
-        // Operation:   Y-M
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - -
+            // Instruction: CPY
+            //
+            // Operation:   Y-M
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - -
 
         case CPY_imm:
             
@@ -1499,14 +1501,14 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: DEC
-        //
-        // Operation:   M := : M - 1
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: DEC
+            //
+            // Operation:   M := : M - 1
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
             
-        #define DO_DEC reg.d--;
+#define DO_DEC reg.d--;
             
         case DEC_zpg_3:
         case DEC_zpg_x_4:
@@ -1539,12 +1541,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: DEX
-        //
-        // Operation:   X := X - 1
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: DEX
+            //
+            // Operation:   X := X - 1
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
 
         case DEX:
             
@@ -1554,12 +1556,12 @@ Peddle::executeOneCycle()
             DONE
             
             
-        // Instruction: DEY
-        //
-        // Operation:   Y := Y - 1
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: DEY
+            //
+            // Operation:   Y := Y - 1
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
 
         case DEY:
             
@@ -1569,14 +1571,14 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: EOR
-        //
-        // Operation:   A := A XOR M
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: EOR
+            //
+            // Operation:   A := A XOR M
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
 
-        #define DO_EOR loadA(reg.a ^ reg.d);
+#define DO_EOR loadA(reg.a ^ reg.d);
             
         case EOR_imm:
             
@@ -1619,14 +1621,14 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: INC
-        //
-        // Operation:   M := M + 1
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: INC
+            //
+            // Operation:   M := M + 1
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
             
-        #define DO_INC reg.d++;
+#define DO_INC reg.d++;
             
         case INC_zpg_3:
         case INC_zpg_x_4:
@@ -1641,7 +1643,7 @@ Peddle::executeOneCycle()
             WRITE_TO_ZERO_PAGE_AND_SET_FLAGS
             POLL_INT
             DONE
-          
+
         case INC_abs_4:
         case INC_abs_x_5:
         case INC_ind_x_6:
@@ -1659,12 +1661,12 @@ Peddle::executeOneCycle()
             DONE
             
 
-        // Instruction: INX
-        //
-        // Operation:   X := X + 1
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: INX
+            //
+            // Operation:   X := X + 1
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
 
         case INX:
             
@@ -1674,12 +1676,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: INY
-        //
-        // Operation:   Y := Y + 1
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: INY
+            //
+            // Operation:   Y := Y + 1
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
 
         case INY:
             
@@ -1689,13 +1691,13 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: JMP
-        //
-        // Operation:   PC := Operand
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
-          
+            // Instruction: JMP
+            //
+            // Operation:   PC := Operand
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
+
         case JMP_abs:
             
             FETCH_ADDR_LO
@@ -1733,12 +1735,12 @@ Peddle::executeOneCycle()
             DONE
 
             
-        // Instruction: JSR
-        //
-        // Operation:   PC to stack, PC := Operand
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: JSR
+            //
+            // Operation:   PC to stack, PC := Operand
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
             
         case JSR:
             
@@ -1768,12 +1770,12 @@ Peddle::executeOneCycle()
             DONE
 
             
-        // Instruction: LDA
-        //
-        // Operation:   A := M
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: LDA
+            //
+            // Operation:   A := M
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
 
         case LDA_imm:
             
@@ -1789,7 +1791,7 @@ Peddle::executeOneCycle()
             loadA(reg.d);
             POLL_INT
             DONE
-          
+
         case LDA_abs_x_3:
         case LDA_abs_y_3:
         case LDA_ind_y_4:
@@ -1816,12 +1818,12 @@ Peddle::executeOneCycle()
             DONE
 
             
-        // Instruction: LDX
-        //
-        // Operation:   X := M
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: LDX
+            //
+            // Operation:   X := M
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
 
         case LDX_imm:
             
@@ -1862,13 +1864,13 @@ Peddle::executeOneCycle()
             DONE
             
             
-        // Instruction: LDY
-        //
-        // Operation:   Y := M
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
- 
+            // Instruction: LDY
+            //
+            // Operation:   Y := M
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
+
         case LDY_imm:
             
             READ_IMMEDIATE
@@ -1908,12 +1910,12 @@ Peddle::executeOneCycle()
             DONE
             
 
-        // Instruction: LSR
-        //
-        // Operation:   0 -> (A|M >> 1) -> C
-        //
-        // Flags:       N Z C I D V
-        //              0 / / - - -
+            // Instruction: LSR
+            //
+            // Operation:   0 -> (A|M >> 1) -> C
+            //
+            // Flags:       N Z C I D V
+            //              0 / / - - -
 
         case LSR_acc:
             
@@ -1956,13 +1958,13 @@ Peddle::executeOneCycle()
             POLL_INT
             DONE
             
- 
-        // Instruction: NOP
-        //
-        // Operation:   No operation
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+
+            // Instruction: NOP
+            //
+            // Operation:   No operation
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
 
         case NOP:
             
@@ -2002,12 +2004,12 @@ Peddle::executeOneCycle()
             DONE
             
 
-        // Instruction: ORA
-        //
-        // Operation:   A := A v M
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: ORA
+            //
+            // Operation:   A := A v M
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
 
         case ORA_imm:
             
@@ -2050,12 +2052,12 @@ Peddle::executeOneCycle()
             DONE
             
             
-        // Instruction: PHA
-        //
-        // Operation:   A to stack
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: PHA
+            //
+            // Operation:   A to stack
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
             
         case PHA_2:
             
@@ -2064,12 +2066,12 @@ Peddle::executeOneCycle()
             DONE
 
             
-        // Instruction: PHA
-        //
-        // Operation:   P to stack
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: PHA
+            //
+            // Operation:   P to stack
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
             
         case PHP_2:
             
@@ -2078,12 +2080,12 @@ Peddle::executeOneCycle()
             DONE
 
             
-        // Instruction: PLA
-        //
-        // Operation:   Stack to A
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: PLA
+            //
+            // Operation:   Stack to A
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
             
         case PLA_2:
             
@@ -2097,12 +2099,12 @@ Peddle::executeOneCycle()
             DONE
 
             
-        // Instruction: PLP
-        //
-        // Operation:   Stack to p
-        //
-        // Flags:       N Z C I D V
-        //              / / / / / /
+            // Instruction: PLP
+            //
+            // Operation:   Stack to p
+            //
+            // Flags:       N Z C I D V
+            //              / / / / / /
             
         case PLP_2:
 
@@ -2117,17 +2119,17 @@ Peddle::executeOneCycle()
             DONE
 
             
-        // Instruction: ROL
-        //
-        //              -----------------------
-        //              |                     |
-        // Operation:   ---(A|M << 1) <- C <---
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - -
-         
-        #define DO_ROL_ACC { u8 c = !!getC(); setC(reg.a & 0x80); loadA((u8)(reg.a << 1 | c)); }
-        #define DO_ROL { u8 c = !!getC(); setC(reg.d & 0x80); reg.d = (u8)(reg.d << 1 | c); }
+            // Instruction: ROL
+            //
+            //              -----------------------
+            //              |                     |
+            // Operation:   ---(A|M << 1) <- C <---
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - -
+
+#define DO_ROL_ACC { u8 c = !!getC(); setC(reg.a & 0x80); loadA((u8)(reg.a << 1 | c)); }
+#define DO_ROL { u8 c = !!getC(); setC(reg.d & 0x80); reg.d = (u8)(reg.d << 1 | c); }
 
         case ROL_acc:
             
@@ -2167,17 +2169,17 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: ROR
-        //
-        //              -----------------------
-        //              |                     |
-        // Operation:   --->(A|M >> 1) -> C ---
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - -
-    
-        #define DO_ROR_ACC { u8 c = !!getC(); setC(reg.a & 0x1); loadA((u8)(reg.a >> 1 | c << 7)); }
-        #define DO_ROR { u8 c = !!getC(); setC(reg.d & 0x1); reg.d = (u8)(reg.d >> 1 | c << 7); }
+            // Instruction: ROR
+            //
+            //              -----------------------
+            //              |                     |
+            // Operation:   --->(A|M >> 1) -> C ---
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - -
+
+#define DO_ROR_ACC { u8 c = !!getC(); setC(reg.a & 0x1); loadA((u8)(reg.a >> 1 | c << 7)); }
+#define DO_ROR { u8 c = !!getC(); setC(reg.d & 0x1); reg.d = (u8)(reg.d >> 1 | c << 7); }
             
         case ROR_acc:
             
@@ -2217,12 +2219,12 @@ Peddle::executeOneCycle()
             DONE
 
             
-        // Instruction: RTI
-        //
-        // Operation:   P from Stack, PC from Stack
-        //
-        // Flags:       N Z C I D V
-        //              / / / / / /
+            // Instruction: RTI
+            //
+            // Operation:   P from Stack, PC from Stack
+            //
+            // Flags:       N Z C I D V
+            //              / / / / / /
             
         case RTI_2:
             
@@ -2249,12 +2251,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: RTS
-        //
-        // Operation:   PC from Stack
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: RTS
+            //
+            // Operation:   PC from Stack
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
             
         case RTS_2:
             
@@ -2280,13 +2282,13 @@ Peddle::executeOneCycle()
             DONE
 
             
-        // Instruction: SBC
-        //
-        // Operation:   A := A - M - (~C)
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - /
-  
+            // Instruction: SBC
+            //
+            // Operation:   A := A - M - (~C)
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - /
+
         case SBC_imm:
             
             READ_IMMEDIATE
@@ -2328,12 +2330,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: SEC
-        //
-        // Operation:   C := 1
-        //
-        // Flags:       N Z C I D V
-        //              - - 1 - - -
+            // Instruction: SEC
+            //
+            // Operation:   C := 1
+            //
+            // Flags:       N Z C I D V
+            //              - - 1 - - -
 
         case SEC:
             
@@ -2343,12 +2345,12 @@ Peddle::executeOneCycle()
             DONE
 
             
-        // Instruction: SED
-        //
-        // Operation:   D := 1
-        //
-        // Flags:       N Z C I D V
-        //              - - - - 1 -
+            // Instruction: SED
+            //
+            // Operation:   D := 1
+            //
+            // Flags:       N Z C I D V
+            //              - - - - 1 -
 
         case SED:
             
@@ -2358,12 +2360,12 @@ Peddle::executeOneCycle()
             DONE
 
             
-        // Instruction: SEI
-        //
-        // Operation:   I := 1
-        //
-        // Flags:       N Z C I D V
-        //              - - - 1 - -
+            // Instruction: SEI
+            //
+            // Operation:   I := 1
+            //
+            // Flags:       N Z C I D V
+            //              - - - 1 - -
 
         case SEI:
             
@@ -2379,12 +2381,12 @@ Peddle::executeOneCycle()
             DONE
             
 
-        // Instruction: STA
-        //
-        // Operation:   M := A
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: STA
+            //
+            // Operation:   M := A
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
             
         case STA_zpg_2:
         case STA_zpg_x_3:
@@ -2412,12 +2414,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: STX
-        //
-        // Operation:   M := X
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: STX
+            //
+            // Operation:   M := X
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
             
         case STX_zpg_2:
         case STX_zpg_y_3:
@@ -2435,12 +2437,12 @@ Peddle::executeOneCycle()
             DONE
 
             
-        // Instruction: STY
-        //
-        // Operation:   M := Y
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: STY
+            //
+            // Operation:   M := Y
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
             
         case STY_zpg_2:
         case STY_zpg_x_3:
@@ -2458,12 +2460,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: TAX
-        //
-        // Operation:   X := A
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: TAX
+            //
+            // Operation:   X := A
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
 
         case TAX:
             
@@ -2473,12 +2475,12 @@ Peddle::executeOneCycle()
             DONE
 
             
-        // Instruction: TAY
-        //
-        // Operation:   Y := A
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: TAY
+            //
+            // Operation:   Y := A
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
 
         case TAY:
             
@@ -2488,12 +2490,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: TSX
-        //
-        // Operation:   X := Stack pointer
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: TSX
+            //
+            // Operation:   X := Stack pointer
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
 
         case TSX:
             
@@ -2503,12 +2505,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: TXA
-        //
-        // Operation:   A := X
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: TXA
+            //
+            // Operation:   A := X
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
 
         case TXA:
             
@@ -2518,12 +2520,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: TXS
-        //
-        // Operation:   Stack pointer := X
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: TXS
+            //
+            // Operation:   Stack pointer := X
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
 
         case TXS:
             
@@ -2532,13 +2534,13 @@ Peddle::executeOneCycle()
             POLL_INT
             DONE
 
- 
-        // Instruction: TYA
-        //
-        // Operation:   A := Y
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+
+            // Instruction: TYA
+            //
+            // Operation:   A := Y
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
 
         case TYA:
             
@@ -2548,17 +2550,17 @@ Peddle::executeOneCycle()
             DONE
 
             
-        //
-        // Illegal instructions
-        //
-        
+            //
+            // Illegal instructions
+            //
+
             
-        // Instruction: ALR
-        //
-        // Operation:   AND, followed by LSR
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - -
+            // Instruction: ALR
+            //
+            // Operation:   AND, followed by LSR
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - -
 
         case ALR_imm:
             
@@ -2570,12 +2572,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: ANC
-        //
-        // Operation:   A := A & op,   N flag is copied to C
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - -
+            // Instruction: ANC
+            //
+            // Operation:   A := A & op,   N flag is copied to C
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - -
 
         case ANC_imm:
             
@@ -2585,13 +2587,13 @@ Peddle::executeOneCycle()
             POLL_INT
             DONE
 
- 
-        // Instruction: ARR
-        //
-        // Operation:   AND, followed by ROR
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - /
+
+            // Instruction: ARR
+            //
+            // Operation:   AND, followed by ROR
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - /
 
         case ARR_imm:
         {
@@ -2627,12 +2629,12 @@ Peddle::executeOneCycle()
         }
 
 
-        // Instruction: AXS
-        //
-        // Operation:   X = (A & X) - op
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - -
+            // Instruction: AXS
+            //
+            // Operation:   X = (A & X) - op
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - -
 
         case AXS_imm:
         {
@@ -2648,12 +2650,12 @@ Peddle::executeOneCycle()
         }
 
 
-        // Instruction: DCP
-        //
-        // Operation:   DEC followed by CMP
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - -
+            // Instruction: DCP
+            //
+            // Operation:   DEC followed by CMP
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - -
             
         case DCP_zpg_3:
         case DCP_zpg_x_4:
@@ -2690,14 +2692,14 @@ Peddle::executeOneCycle()
             cmp(reg.a, reg.d);
             POLL_INT
             DONE
-       
 
-        // Instruction: ISC
-        //
-        // Operation:   INC followed by SBC
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - /
+
+            // Instruction: ISC
+            //
+            // Operation:   INC followed by SBC
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - /
             
         case ISC_zpg_3:
         case ISC_zpg_x_4:
@@ -2736,12 +2738,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: LAS
-        //
-        // Operation:   SP,X,A = op & SP
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: LAS
+            //
+            // Operation:   SP,X,A = op & SP
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
             
         case LAS_abs_y_3:
             
@@ -2769,12 +2771,12 @@ Peddle::executeOneCycle()
             DONE
 
             
-        // Instruction: LAX
-        //
-        // Operation:   LDA, followed by LDX
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: LAX
+            //
+            // Operation:   LDA, followed by LDX
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
             
         case LAX_zpg_2:
         case LAX_zpg_y_3:
@@ -2809,14 +2811,14 @@ Peddle::executeOneCycle()
             loadX(reg.d);
             POLL_INT
             DONE
-          
+
             
-        // Instruction: RLA
-        //
-        // Operation:   ROL, followed by AND
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - -
+            // Instruction: RLA
+            //
+            // Operation:   ROL, followed by AND
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - -
             
         case RLA_zpg_3:
         case RLA_zpg_x_4:
@@ -2854,12 +2856,12 @@ Peddle::executeOneCycle()
             POLL_INT
             DONE
 
-        // Instruction: RRA
-        //
-        // Operation:   ROR, followed by ADC
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - /
+            // Instruction: RRA
+            //
+            // Operation:   ROR, followed by ADC
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - /
             
         case RRA_zpg_3:
         case RRA_zpg_x_4:
@@ -2896,14 +2898,14 @@ Peddle::executeOneCycle()
             adc(reg.d);
             POLL_INT
             DONE
-        
+
             
-        // Instruction: SAX
-        //
-        // Operation:   Mem := A & X
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: SAX
+            //
+            // Operation:   Mem := A & X
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
             
         case SAX_zpg_2:
         case SAX_zpg_y_3:
@@ -2922,12 +2924,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: SHA
-        //
-        // Operation:   Mem := A & X & (M + 1)
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: SHA
+            //
+            // Operation:   Mem := A & X & (M + 1)
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
             
         case SHA_abs_y_3:
             
@@ -2988,13 +2990,13 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: SHX
-        //
-        // Operation:   Mem := X & (HI_BYTE(op) + 1)
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
-       
+            // Instruction: SHX
+            //
+            // Operation:   Mem := X & (HI_BYTE(op) + 1)
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
+
         case SHX_abs_y_3:
             
             IDLE_READ_FROM_ADDRESS
@@ -3017,7 +3019,7 @@ Peddle::executeOneCycle()
             }
             
             CONTINUE
-           
+
         case SHX_abs_y_4:
             
             WRITE_TO_ADDRESS
@@ -3025,12 +3027,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: SHY
-        //
-        // Operation:   Mem := Y & (HI_BYTE(op) + 1)
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: SHY
+            //
+            // Operation:   Mem := Y & (HI_BYTE(op) + 1)
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
             
         case SHY_abs_x_3:
             
@@ -3062,14 +3064,14 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: SLO (ASO)
-        //
-        // Operation:   ASL memory location, followed by OR on accumulator
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - -
+            // Instruction: SLO (ASO)
+            //
+            // Operation:   ASL memory location, followed by OR on accumulator
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - -
 
-        #define DO_SLO setC(reg.d & 128); reg.d <<= 1;
+#define DO_SLO setC(reg.d & 128); reg.d <<= 1;
 
         case SLO_zpg_3:
         case SLO_zpg_x_4:
@@ -3108,14 +3110,14 @@ Peddle::executeOneCycle()
             DONE
             
 
-        // Instruction: SRE (LSE)
-        //
-        // Operation:   LSR, followed by EOR
-        //
-        // Flags:       N Z C I D V
-        //              / / / - - -
+            // Instruction: SRE (LSE)
+            //
+            // Operation:   LSR, followed by EOR
+            //
+            // Flags:       N Z C I D V
+            //              / / / - - -
 
-        #define DO_SRE setC(reg.d & 1); reg.d >>= 1;
+#define DO_SRE setC(reg.d & 1); reg.d >>= 1;
 
         case SRE_zpg_3:
         case SRE_zpg_x_4:
@@ -3154,12 +3156,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: TAS (SHS)
-        //
-        // Operation:   SP := A & X,  Mem := SP & (HI_BYTE(op) + 1)
-        //
-        // Flags:       N Z C I D V
-        //              - - - - - -
+            // Instruction: TAS (SHS)
+            //
+            // Operation:   SP := A & X,  Mem := SP & (HI_BYTE(op) + 1)
+            //
+            // Flags:       N Z C I D V
+            //              - - - - - -
             
         case TAS_abs_y_3:
             
@@ -3192,12 +3194,12 @@ Peddle::executeOneCycle()
             POLL_INT
             DONE
 
-        // Instruction: ANE
-        //
-        // Operation:   A = X & op & (A | 0xEE) (taken from Frodo)
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: ANE
+            //
+            // Operation:   A = X & op & (A | 0xEE) (taken from Frodo)
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
 
         case ANE_imm:
             
@@ -3207,12 +3209,12 @@ Peddle::executeOneCycle()
             DONE
 
 
-        // Instruction: LXA
-        //
-        // Operation:   A = X = op & (A | 0xEE) (taken from Frodo)
-        //
-        // Flags:       N Z C I D V
-        //              / / - - - -
+            // Instruction: LXA
+            //
+            // Operation:   A = X = op & (A | 0xEE) (taken from Frodo)
+            //
+            // Flags:       N Z C I D V
+            //              / / - - - -
 
         case LXA_imm:
             
@@ -3235,7 +3237,7 @@ Peddle::done() {
 
         // Record the instruction
         debugger.logInstruction();
-    
+
         // Check if a breakpoint has been reached
         if (debugger.breakpointMatches(reg.pc)) c64.signalBreakpoint();
 
@@ -3248,3 +3250,5 @@ Peddle::done() {
 }
 
 void done();
+
+}
