@@ -9,7 +9,14 @@
 
 Peddle::Peddle(C64 &ref) : SubComponent(ref)
 {
+    static isize counter = 0;
 
+    /* Assign a unique ID to this CPU, starting at 0. The ID is not needed for
+     * emulation. It is merely provided to allow the client code to easily
+     * distinguish between different CPU instances. For instance, VirtualC64
+     * uses it to distinguish the CPUs of the attached floppy drives.
+     */
+    id = counter++;
 }
 
 Peddle::~Peddle()

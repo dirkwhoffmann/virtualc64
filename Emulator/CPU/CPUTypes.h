@@ -11,27 +11,13 @@
 
 #include "Aliases.h"
 #include "Reflection.h"
-
-//
-// Constants
-//
-
-#define LOG_BUFFER_CAPACITY 256
-
-#define C_FLAG 0x01
-#define Z_FLAG 0x02
-#define I_FLAG 0x04
-#define D_FLAG 0x08
-#define B_FLAG 0x10
-#define V_FLAG 0x40
-#define N_FLAG 0x80
-
+#include "PeddleTypes.h"
 
 //
 // Bit fields
 //
 
-typedef u8 IntSource;
+// typedef u8 IntSource;
 
 #define INTSRC_CIA  0b00000001
 #define INTSRC_VIC  0b00000010
@@ -125,6 +111,7 @@ AddressingMode;
 // Structures
 //
 
+/*
 typedef struct
 {
     bool n;               // Negative flag
@@ -175,6 +162,7 @@ typedef struct
     u8 flags;
 }
 RecordedInstruction;
+*/
 
 typedef struct
 {

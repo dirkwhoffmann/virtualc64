@@ -14,10 +14,6 @@
 
 CPU::CPU(C64& ref) : Peddle(ref)
 {
-    // Assign a unique ID to this CPU
-    static isize counter = 0;
-    id = counter++;
-
     subComponents = std::vector<C64Component *> {
         
         &pport
