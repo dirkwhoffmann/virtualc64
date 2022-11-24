@@ -15,6 +15,10 @@
 template <CPURevision C>
 CPU<C>::CPU(C64& ref) : SubComponent(ref)
 {
+    // Assign a unique ID to this CPU
+    static isize counter = 0;
+    id = counter++;
+
     subComponents = std::vector<C64Component *> {
         
         &pport
@@ -177,43 +181,58 @@ CPU<C>::setPWithoutB(u8 p)
 template <CPURevision C> u8
 CPU<C>::peek(u16 addr)
 {
-    return C == MOS_6510 ?  mem.peek(addr) : drive8.mem.peek(addr);
+    return
+    cpuModel == MOS_6510 ?
+    mem.peek(addr) :
+    id == 0 ? drive8.mem.peek(addr) : drive9.mem.peek(addr);
 }
 
 template <CPURevision C> u8
 CPU<C>::peekZP(u8 addr)
 {
-    return C == MOS_6510 ?  mem.peekZP(addr) : drive8.mem.peekZP(addr);
+    return cpuModel == MOS_6510 ?
+    mem.peekZP(addr) :
+    id == 0 ? drive8.mem.peekZP(addr) : drive9.mem.peekZP(addr);
 }
 
 template <CPURevision C> u8
 CPU<C>::peekStack(u8 sp)
 {
-    return C == MOS_6510 ?  mem.peekStack(sp) : drive8.mem.peekStack(sp);
+    return cpuModel == MOS_6510 ?
+    mem.peekStack(sp) :
+    id == 0 ? drive8.mem.peekStack(sp) : drive9.mem.peekStack(sp);
 }
 
 template <CPURevision C> u8
 CPU<C>::spypeek(u16 addr) const
 {
-    return C == MOS_6510 ?  mem.spypeek(addr) : drive8.mem.spypeek(addr);
+    return cpuModel == MOS_6510 ?
+    mem.spypeek(addr) :
+    id == 0 ? drive8.mem.spypeek(addr) : drive9.mem.spypeek(addr);
 }
 
 template <CPURevision C> void
 CPU<C>::poke(u16 addr, u8 value)
 {
-    C == MOS_6510 ? mem.poke(addr, value) :  drive8.mem.poke(addr, value);
+    cpuModel == MOS_6510 ?
+    mem.poke(addr, value) :
+    id == 0 ? drive8.mem.poke(addr, value) : drive9.mem.poke(addr, value);
 }
 
 template <CPURevision C> void
 CPU<C>::pokeZP(u8 addr, u8 value)
 {
-    C == MOS_6510 ? mem.pokeZP(addr, value) :  drive8.mem.pokeZP(addr, value);
+    cpuModel == MOS_6510 ?
+    mem.pokeZP(addr, value) :
+    id == 0 ? drive8.mem.pokeZP(addr, value) : drive9.mem.pokeZP(addr, value);
 }
 
 template <CPURevision C> void
 CPU<C>::pokeStack(u8 addr, u8 value)
 {
-    C == MOS_6510 ? mem.pokeStack(addr, value) :  drive8.mem.pokeStack(addr, value);
+    cpuModel == MOS_6510 ?
+    mem.pokeStack(addr, value) :
+    id == 0 ? drive8.mem.pokeStack(addr, value) : drive9.mem.pokeStack(addr, value);
 }
 
 template <CPURevision C> void
@@ -272,6 +291,7 @@ CPU<C>::setRDY(bool value)
 //
 
 template         CPU<MOS_6510>::CPU(C64& ref);
+template         CPU<MOS_6510>::CPU(CPURevision, C64& ref);
 template CPUInfo CPU<MOS_6510>::getInfo() const;
 template void    CPU<MOS_6510>::_dump(Category category, std::ostream& os) const;
 template void    CPU<MOS_6510>::_debugOn();
@@ -297,6 +317,7 @@ template void    CPU<MOS_6510>::pokeZP(u8 addr, u8 value);
 template void    CPU<MOS_6510>::pokeStack(u8 sp, u8 value);
 
 template         CPU<MOS_6502>::CPU(C64& ref);
+template         CPU<MOS_6502>::CPU(CPURevision, C64& ref);
 template CPUInfo CPU<MOS_6502>::getInfo() const;
 template void    CPU<MOS_6502>::_dump(Category category, std::ostream& os) const;
 template void    CPU<MOS_6502>::_debugOn();

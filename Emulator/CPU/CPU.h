@@ -35,6 +35,9 @@ class CPU : public SubComponent {
 
 protected:
 
+    // Instance counter (to easily distinguish different CPUs)
+    isize id;
+
     // Emulated CPU model
     CPURevision cpuModel = MOS_6510;
 
