@@ -11,6 +11,48 @@
 #include "CPU.h"
 #include "C64.h"
 
+u8
+Peddle::getP() const
+{
+    u8 result = 0b00100000;
+
+    if (reg.sr.n) result |= N_FLAG;
+    if (reg.sr.v) result |= V_FLAG;
+
+    if (reg.sr.b) result |= B_FLAG;
+    if (reg.sr.d) result |= D_FLAG;
+    if (reg.sr.i) result |= I_FLAG;
+    if (reg.sr.z) result |= Z_FLAG;
+    if (reg.sr.c) result |= C_FLAG;
+
+    return result;
+}
+
+u8
+Peddle::getPWithClearedB() const
+{
+    return getP() & ~B_FLAG;
+}
+
+void
+Peddle::setP(u8 p)
+{
+    setPWithoutB(p);
+    reg.sr.b = (p & B_FLAG);
+}
+
+void
+Peddle::setPWithoutB(u8 p)
+{
+    reg.sr.n = (p & N_FLAG);
+    reg.sr.v = (p & V_FLAG);
+
+    reg.sr.d = (p & D_FLAG);
+    reg.sr.i = (p & I_FLAG);
+    reg.sr.z = (p & Z_FLAG);
+    reg.sr.c = (p & C_FLAG);
+}
+
 void
 Peddle::adc(u8 op)
 {

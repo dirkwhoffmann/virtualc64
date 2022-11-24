@@ -27,20 +27,7 @@ class CPU : public Peddle {
             
     // Result of the latest inspection
     mutable CPUInfo info = { };
-        
-/*
-    //
-    // Configuration
-    //
 
-protected:
-
-    // Instance counter (to easily distinguish different CPUs)
-    isize id;
-
-    // Emulated CPU model
-    CPURevision cpuModel = MOS_6510;
-*/
 
     //
     // Sub components
@@ -64,128 +51,6 @@ public:
     bool isC64CPU() const;
     bool isDriveCPU() const;
 
-    
-    //
-    // Lookup tables
-    //
-    
-protected:
-
-    /* Mapping from opcodes to microinstructions. This array stores the tags
-     * of the second microcycle which is microcycle cycle following the fetch
-     * phase.
-     */
-    MicroInstruction actionFunc[256];
-                
-    
-    //
-    // Internal state
-    //
-    
-    /* Debug mode. In debug mode, the CPU checks for breakpoints and records
-     * executed instruction in the log buffer.
-     */
-    bool debugMode;
-    
-public:
-    
-    // Elapsed clock cycles since power up
-    u64 clock;
-                        
-private:
-
-    // The next microinstruction to be executed
-    MicroInstruction next;
-        
-    
-    //
-    // Registers
-    //
-    
-public:
-
-    // Registers reg;
-            
-private:
-        
-    //
-    // Ports
-    //
-    
-public:
-    
-    /* Ready line (RDY)
-     * If this line is low, the CPU freezes on the next read access. RDY is
-     * pulled down by VICII to perform longer lasting read operations.
-     */
-    bool rdyLine;
-    
-private:
-    
-    // Cycle of the most recent rising edge of the RDY line
-    u64 rdyLineUp;
-    
-    // Cycle of the most recent falling edge of the RDY line
-    u64 rdyLineDown;
-    
-public:
-    
-    /* Interrupt lines
-     * Usally both variables equal 0 which means that the two interrupt lines
-     * are high. When an external component requests an interrupt, the NMI or
-     * the IRQ line is pulled low. In that case, the corresponding variable is
-     * set to a positive value which indicates the interrupt source. The
-     * variables are used in form of bit fields since both interrupt lines are
-     * driven by multiple sources.
-     */
-    u8 nmiLine;
-    u8 irqLine;
-    
-private:
-    
-    /* Edge detector (NMI line)
-     * https://wiki.nesdev.com/w/index.php/CPU_interrupts
-     * "The NMI input is connected to an edge detector. This edge detector polls
-     *  the status of the NMI line during φ2 of each CPU cycle (i.e., during the
-     *  second half of each cycle) and raises an internal signal if the input
-     *  goes from being high during one cycle to being low during the next. The
-     *  internal signal goes high during φ1 of the cycle that follows the one
-     *  where the edge is detected, and stays high until the NMI has been
-     *  handled."
-     */
-    TimeDelayed <u8,1> edgeDetector = TimeDelayed <u8,1> (&clock);
-    
-    /* Level detector of IRQ line.
-     * https://wiki.nesdev.com/w/index.php/CPU_interrupts
-     * "The IRQ input is connected to a level detector. If a low level is
-     *  detected on the IRQ input during φ2 of a cycle, an internal signal is
-     *  raised during φ1 the following cycle, remaining high for that cycle only
-     *  (or put another way, remaining high as long as the IRQ input is low
-     *  during the preceding cycle's φ2).
-     */
-    TimeDelayed <u8,1> levelDetector = TimeDelayed <u8,1> (&clock);
-    
-    /* Result of the edge detector polling operation.
-     * https://wiki.nesdev.com/w/index.php/CPU_interrupts
-     * "The output from the edge detector and level detector are polled at
-     *  certain points to detect pending interrupts. For most instructions, this
-     *  polling happens during the final cycle of the instruction, before the
-     *  opcode fetch for the next instruction. If the polling operation detects
-     *  that an interrupt has been asserted, the next "instruction" executed
-     *  is the interrupt sequence. Many references will claim that interrupts
-     *  are polled during the last cycle of an instruction, but this is true
-     *  only when talking about the output from the edge and level detectors."
-     */
-    bool doNmi;
-    
-    /* Result of the level detector polling operation.
-     * https://wiki.nesdev.com/w/index.php/CPU_interrupts
-     * "If both an NMI and an IRQ are pending at the end of an instruction, the
-     *  NMI will be handled and the pending status of the IRQ forgotten (though
-     *  it's likely to be detected again during later polling)."
-     */
-    bool doIrq;
-    
     
     //
     // Initializing
@@ -345,12 +210,12 @@ public:
     
     bool getC() const { return reg.sr.c; }
     void setC(bool value) { reg.sr.c = value; }
-    */
 
     u8 getP() const;
     u8 getPWithClearedB() const;
     void setP(u8 p);
     void setPWithoutB(u8 p);
+     */
 
 
     //
@@ -373,21 +238,6 @@ private:
     void pokeZP(u8 addr, u8 value);
     void pokeStack(u8 sp, u8 value);
 
-
-    //
-    // Operating the Arithmetical Logical Unit (ALU)
-    //
-/*
-private:
-
-    void adc(u8 op);
-    void adc_binary(u8 op);
-    void adc_bcd(u8 op);
-    void sbc(u8 op);
-    void sbc_binary(u8 op);
-    void sbc_bcd(u8 op);
-    void cmp(u8 op1, u8 op2);
-*/
 
     //
     // Handling interrupts
