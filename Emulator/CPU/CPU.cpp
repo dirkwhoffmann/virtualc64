@@ -25,8 +25,19 @@ CPU::CPU(CPURevision cpuModel, C64& ref) : CPU(ref)
     setModel(cpuModel);
 }
 
-bool CPU::isC64CPU() const { return cpuModel == MOS_6510; }
-bool CPU::isDriveCPU() const { return !isC64CPU(); }
+const char *
+CPU::getDescription() const
+{
+    switch (id) {
+
+        case 0: return "CPU";
+        case 1: return "CPU(8)";
+        case 2: return "CPU(9)";
+
+        default:
+            return "???";
+    }
+}
 
 void
 CPU::_reset(bool hard)

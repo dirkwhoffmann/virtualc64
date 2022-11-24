@@ -12,41 +12,19 @@
 #include "CPUTypes.h"
 #include "Peddle.h"
 #include "SubComponent.h"
-#include "CPUDebugger.h"
-#include "CPUInstructions.h"
 #include "ProcessorPort.h"
-#include "TimeDelayed.h"
 
-class Memory;
+// class Memory;
 
 class CPU : public Peddle {
-        
-    friend class CPUDebugger;
-    friend class Breakpoints;
-    friend class Watchpoints;
-            
+
     // Result of the latest inspection
     mutable CPUInfo info = { };
 
-
-    //
-    // Sub components
-    //
-        
 public:
 
     // Processor Port
     ProcessorPort pport = ProcessorPort(c64);
-
-
-    //
-    // Chip properties
-    //
-    
-public:
-    
-    bool isC64CPU() const;
-    bool isDriveCPU() const;
 
     
     //
@@ -58,6 +36,10 @@ public:
     CPU(C64& ref);
     CPU(CPURevision cpuModel, C64& ref);
 
+    bool isC64CPU() const { return cpuModel == MOS_6510; }
+    bool isDriveCPU() const { return cpuModel == MOS_6502; }
+    bool isDriveCPU(isize nr) const { return isDriveCPU() && id == nr + 1; }
+
 
     //
     // Methods from C64Object
@@ -65,7 +47,7 @@ public:
 
 private:
 
-    const char *getDescription() const override { return "CPU"; } // TODO
+    const char *getDescription() const override;
     void _dump(Category category, std::ostream& os) const override;
 
     
@@ -147,25 +129,4 @@ public:
     
     // Returns the result of the latest inspection
     CPUInfo getInfo() const { return C64Component::getInfo(info); }
-
-
-    //
-    // Executing the device
-    //
-    
-public:
-
-    // Returns true if the CPU is jammed
-    // bool isJammed() const { return next == JAM || next == JAM_2; }
-    
-    // Returns true if the next cycle marks the beginning of an instruction
-    // bool inFetchPhase() const { return next == fetch; }
-
-    // Executes the next micro instruction
-    // void executeOneCycle();
-
-private:
-
-    // Called after the last microcycle has been completed
-    // void done();
 };
