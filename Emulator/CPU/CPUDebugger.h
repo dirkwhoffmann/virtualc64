@@ -10,7 +10,6 @@
 #pragma once
 
 #include "CPUTypes.h"
-#include "SubComponent.h"
 
 // Base structure for a single breakpoint or watchpoint
 struct Guard {

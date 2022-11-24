@@ -12,7 +12,7 @@
 #include "C64.h"
 #include "IOUtils.h"
 
-CPU::CPU(C64& ref) : SubComponent(ref)
+CPU::CPU(C64& ref) : Peddle(ref)
 {
     // Assign a unique ID to this CPU
     static isize counter = 0;

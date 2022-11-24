@@ -13,7 +13,7 @@
 
 /* The MOS 6510 CPU contains a processor port register and a data direction
  * register. The latter indicates if a port pin is configured as input or
- * output. In the C64, the register serves multiple pursposes. Firstly, it is
+ * output. In the C64, the register serves multiple purposes. Firstly, it is
  * used for bank switching, i.e. it decides if ROM, RAM, or IO is visible in
  * certain memory regions. Secondly, it is used to communicate with the
  * datasette.

@@ -10,6 +10,7 @@
 #pragma once
 
 #include "CPUTypes.h"
+#include "Peddle.h"
 #include "SubComponent.h"
 #include "CPUDebugger.h"
 #include "CPUInstructions.h"
@@ -18,7 +19,7 @@
 
 class Memory;
 
-class CPU : public SubComponent {
+class CPU : public Peddle {
         
     friend class CPUDebugger;
     friend class Breakpoints;
@@ -27,7 +28,7 @@ class CPU : public SubComponent {
     // Result of the latest inspection
     mutable CPUInfo info = { };
         
-
+/*
     //
     // Configuration
     //
@@ -39,7 +40,7 @@ protected:
 
     // Emulated CPU model
     CPURevision cpuModel = MOS_6510;
-
+*/
 
     //
     // Sub components
@@ -60,7 +61,6 @@ public:
     
 public:
     
-    // CPURevision model() const;
     bool isC64CPU() const;
     bool isDriveCPU() const;
 

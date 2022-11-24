@@ -202,6 +202,7 @@
 		50A519431B8DA360006771E2 /* drive_snatch_uae.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 50A519421B8DA360006771E2 /* drive_snatch_uae.aiff */; };
 		50A9A088250DE90900723D32 /* PageFox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A9A086250DE90900723D32 /* PageFox.cpp */; };
 		50AA3EC12616F62500C96EDB /* MemUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA3EC02616F62500C96EDB /* MemUtils.cpp */; };
+		50AA48B2292F8EC30084401D /* Peddle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA48B0292F8EC30084401D /* Peddle.cpp */; };
 		50AB70762721B8EE004ABB2B /* DiskAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AB70742721B8EE004ABB2B /* DiskAnalyzer.cpp */; };
 		50ACF4DB256EB43B003B5690 /* PowerSupply.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACF4D9256EB43B003B5690 /* PowerSupply.cpp */; };
 		50AD303C28141F0B00D9A7A6 /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD303A28141F0B00D9A7A6 /* Buffer.cpp */; };
@@ -649,6 +650,10 @@
 		50AA3EBF2616F60800C96EDB /* MemUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemUtils.h; sourceTree = "<group>"; };
 		50AA3EC02616F62500C96EDB /* MemUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MemUtils.cpp; sourceTree = "<group>"; };
 		50AA3EC2261718D700C96EDB /* RingBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RingBuffer.h; sourceTree = "<group>"; };
+		50AA48B0292F8EC30084401D /* Peddle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Peddle.cpp; sourceTree = "<group>"; };
+		50AA48B1292F8EC30084401D /* Peddle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Peddle.h; sourceTree = "<group>"; };
+		50AA48B3292F8F080084401D /* PeddleTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleTypes.h; sourceTree = "<group>"; };
+		50AA48B4292F8F1A0084401D /* PeddleConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleConfig.h; sourceTree = "<group>"; };
 		50AB70742721B8EE004ABB2B /* DiskAnalyzer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DiskAnalyzer.cpp; sourceTree = "<group>"; };
 		50AB70752721B8EE004ABB2B /* DiskAnalyzer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskAnalyzer.h; sourceTree = "<group>"; };
 		50AB70772721B92D004ABB2B /* DiskAnalyzerTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiskAnalyzerTypes.h; sourceTree = "<group>"; };
@@ -1247,6 +1252,7 @@
 				504C433F24AF29AC00E69CAE /* ProcessorPort.cpp */,
 				50995F2924DBCDE400F40713 /* CPUDebugger.h */,
 				50995F2824DBCDE400F40713 /* CPUDebugger.cpp */,
+				50AA48B5292F8F350084401D /* Peddle */,
 			);
 			path = CPU;
 			sourceTree = "<group>";
@@ -1562,6 +1568,17 @@
 				50CD369A2817D69000E40BFC /* Defaults.cpp */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		50AA48B5292F8F350084401D /* Peddle */ = {
+			isa = PBXGroup;
+			children = (
+				50AA48B3292F8F080084401D /* PeddleTypes.h */,
+				50AA48B1292F8EC30084401D /* Peddle.h */,
+				50AA48B0292F8EC30084401D /* Peddle.cpp */,
+				50AA48B4292F8F1A0084401D /* PeddleConfig.h */,
+			);
+			path = Peddle;
 			sourceTree = "<group>";
 		};
 		50ACF4DC256EB451003B5690 /* LogicBoard */ = {
@@ -1954,6 +1971,7 @@
 				50BE4B7024E7FC21008F39C9 /* MTLDevice.swift in Sources */,
 				5055D5B726158ABC005D3DA6 /* Checksum.cpp in Sources */,
 				504C439F24AF29AC00E69CAE /* FastSID.cpp in Sources */,
+				50AA48B2292F8EC30084401D /* Peddle.cpp in Sources */,
 				50ACF4DB256EB43B003B5690 /* PowerSupply.cpp in Sources */,
 				504C43A624AF29AC00E69CAE /* Disk.cpp in Sources */,
 				504C43A224AF29AC00E69CAE /* ControlPort.cpp in Sources */,
