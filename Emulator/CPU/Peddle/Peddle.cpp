@@ -17,6 +17,9 @@ Peddle::Peddle(C64 &ref) : SubComponent(ref)
      * uses it to distinguish the CPUs of the attached floppy drives.
      */
     id = counter++;
+
+    // Initialize the microinstruction lookup table
+    registerInstructions();
 }
 
 Peddle::~Peddle()

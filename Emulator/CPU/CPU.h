@@ -37,10 +37,7 @@ public:
 
     // Processor Port
     ProcessorPort pport = ProcessorPort(c64);
-    
-    // CPU debugger
-    CPUDebugger debugger = CPUDebugger(cpu);
-    
+
 
     //
     // Chip properties
@@ -60,35 +57,13 @@ public:
     
     CPU(C64& ref);
     CPU(CPURevision cpuModel, C64& ref);
-    
-private:
-    
-    // Registers the instruction set
-    void registerInstructions();
-    void registerLegalInstructions();
-    void registerIllegalInstructions();
-    
-    // Registers a single instruction
-    void registerCallback(u8 opcode,
-                          const char *mnemonic,
-                          AddressingMode mode,
-                          MicroInstruction mInstr);
-    
-
-
-    //
-    // Configuring
-    //
-
-public:
-
-    // Selects the emulated CPU model
-    // void setModel(CPURevision cpuModel);
 
 
     //
     // Methods from C64Object
     //
+
+private:
 
     const char *getDescription() const override { return "CPU"; } // TODO
     void _dump(Category category, std::ostream& os) const override;

@@ -17,10 +17,7 @@ CPU::CPU(C64& ref) : Peddle(ref)
     subComponents = std::vector<C64Component *> {
         
         &pport
-    };
-    
-	// Establish callback for each instruction
-	registerInstructions();
+    };    
 }
 
 CPU::CPU(CPURevision cpuModel, C64& ref) : CPU(ref)

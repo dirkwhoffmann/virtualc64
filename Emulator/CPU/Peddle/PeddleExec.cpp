@@ -161,7 +161,7 @@ Peddle::sbc_bcd(u8 op)
 }
 
 void
-CPU::registerCallback(u8 opcode, const char *mnemonic,
+Peddle::registerCallback(u8 opcode, const char *mnemonic,
                       AddressingMode mode, MicroInstruction mInstr)
 {
     // Table is write once!
@@ -171,7 +171,7 @@ CPU::registerCallback(u8 opcode, const char *mnemonic,
 }
 
 void
-CPU::registerInstructions()
+Peddle::registerInstructions()
 {
     for (isize i = 0; i < 256; i++) {
         registerCallback((u8)i, "???", ADDR_IMPLIED, JAM);
@@ -181,7 +181,7 @@ CPU::registerInstructions()
 }
 
 void
-CPU::registerLegalInstructions()
+Peddle::registerLegalInstructions()
 {
     registerCallback(0x69, "ADC", ADDR_IMMEDIATE, ADC_imm);
     registerCallback(0x65, "ADC", ADDR_ZERO_PAGE, ADC_zpg);
@@ -369,7 +369,7 @@ CPU::registerLegalInstructions()
 }
 
 void
-CPU::registerIllegalInstructions()
+Peddle::registerIllegalInstructions()
 {
     registerCallback(0x93, "SHA*", ADDR_INDIRECT_Y, SHA_ind_y);
     registerCallback(0x9F, "SHA*", ADDR_ABSOLUTE_Y, SHA_abs_y);

@@ -175,18 +175,16 @@ public:
 private:
 
     // Registers the instruction set
-/*
     void registerInstructions();
     void registerLegalInstructions();
     void registerIllegalInstructions();
-*/
+
     // Registers a single instruction
-/*
     void registerCallback(u8 opcode,
                           const char *mnemonic,
                           AddressingMode mode,
                           MicroInstruction mInstr);
-*/
+
 
     //
     // Configuring
