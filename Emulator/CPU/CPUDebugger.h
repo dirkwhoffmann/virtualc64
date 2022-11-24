@@ -41,7 +41,7 @@ class Guards {
 protected:
 
     // Reference to the connected CPU
-    class CPU<MOS_6510> &cpu;
+    class CPU &cpu;
 
     // Capacity of the guards array
     long capacity = 1;
@@ -62,7 +62,7 @@ protected:
 
 public:
 
-    Guards(CPU<MOS_6510>& ref) : cpu(ref) { }
+    Guards(CPU& ref) : cpu(ref) { }
     virtual ~Guards();
 
 
@@ -121,7 +121,7 @@ class Breakpoints : public Guards {
     
 public:
     
-    Breakpoints(CPU<MOS_6510>& ref) : Guards(ref) { }
+    Breakpoints(CPU& ref) : Guards(ref) { }
     void setNeedsCheck(bool value) override;
 };
 
@@ -129,17 +129,16 @@ class Watchpoints : public Guards {
     
 public:
     
-    Watchpoints(CPU<MOS_6510>& ref) : Guards(ref) { }
+    Watchpoints(CPU& ref) : Guards(ref) { }
     void setNeedsCheck(bool value) override;
 };
 
 class CPUDebugger {
     
-    friend class CPU<MOS_6510>;
-    friend class CPU<MOS_6502>;
+    friend class CPU;
 
     // Reference to the connected CPU
-    class CPU<MOS_6510> &cpu;
+    class CPU &cpu;
 
     // Textual representation for each opcode (used by the disassembler)
     const char *mnemonic[256];
@@ -193,7 +192,7 @@ public:
     
 public:
     
-    CPUDebugger(CPU<MOS_6510>& ref) : cpu(ref) { };
+    CPUDebugger(CPU& ref) : cpu(ref) { };
     void reset();
 
 

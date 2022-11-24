@@ -18,7 +18,6 @@
 
 class Memory;
 
-template <CPURevision C>
 class CPU : public SubComponent {
         
     friend class CPUDebugger;

@@ -15,7 +15,7 @@
 class C64;
 class C64Memory;
 class DriveMemory;
-template <CPURevision C> class CPU;
+class CPU;
 class ProcessorPort;
 class VICII;
 class CIA1;
@@ -63,7 +63,7 @@ protected:
     CIA2 &cia2;
     ControlPort &port1;
     ControlPort &port2;
-    CPU<MOS_6510> &cpu;
+    CPU &cpu;
     Datasette &datasette;
     Drive &drive8;
     Drive &drive9;

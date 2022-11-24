@@ -12,8 +12,7 @@
 #include "C64.h"
 #include "IOUtils.h"
 
-template <CPURevision C>
-CPU<C>::CPU(C64& ref) : SubComponent(ref)
+CPU::CPU(C64& ref) : SubComponent(ref)
 {
     // Assign a unique ID to this CPU
     static isize counter = 0;
@@ -28,23 +27,22 @@ CPU<C>::CPU(C64& ref) : SubComponent(ref)
 	registerInstructions();
 }
 
-template <CPURevision C>
-CPU<C>::CPU(CPURevision cpuModel, C64& ref) : CPU(ref)
+CPU::CPU(CPURevision cpuModel, C64& ref) : CPU(ref)
 {
     setModel(cpuModel);
 }
 
-template <CPURevision C> void
-CPU<C>::setModel(CPURevision cpuModel)
+void
+CPU::setModel(CPURevision cpuModel)
 {
     this->cpuModel = cpuModel;
 }
 
-template<CPURevision C> bool CPU<C>::isC64CPU() const { return cpuModel == MOS_6510; }
-template<CPURevision C> bool CPU<C>::isDriveCPU() const { return !isC64CPU(); }
+bool CPU::isC64CPU() const { return cpuModel == MOS_6510; }
+bool CPU::isDriveCPU() const { return !isC64CPU(); }
 
-template <CPURevision C> void
-CPU<C>::_reset(bool hard)
+void
+CPU::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)
     
@@ -57,8 +55,8 @@ CPU<C>::_reset(bool hard)
     assert(edgeDetector.isClear());
 }
 
-template <CPURevision C> void
-CPU<C>::_inspect() const
+void
+CPU::_inspect() const
 {    
     {   SYNCHRONIZED
         
@@ -75,21 +73,21 @@ CPU<C>::_inspect() const
     }
 }
 
-template <CPURevision C> void
-CPU<C>::_debugOn()
+void
+CPU::_debugOn()
 {
     // We only allow the C64 CPU to run in debug mode
     if (isC64CPU()) { debugMode = true; }
 }
 
-template <CPURevision C> void
-CPU<C>::_debugOff()
+void
+CPU::_debugOff()
 {
     debugMode = false;
 }
 
-template <CPURevision C> void
-CPU<C>::_dump(Category category, std::ostream& os) const
+void
+CPU::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
@@ -136,8 +134,8 @@ CPU<C>::_dump(Category category, std::ostream& os) const
     }
 }
 
-template <CPURevision C> u8
-CPU<C>::getP() const
+u8
+CPU::getP() const
 {
     u8 result = 0b00100000;
     
@@ -153,21 +151,21 @@ CPU<C>::getP() const
     return result;
 }
 
-template <CPURevision C> u8
-CPU<C>::getPWithClearedB() const
+u8
+CPU::getPWithClearedB() const
 {
     return getP() & ~B_FLAG;
 }
 
-template <CPURevision C> void
-CPU<C>::setP(u8 p)
+void
+CPU::setP(u8 p)
 {
     setPWithoutB(p);
     reg.sr.b = (p & B_FLAG);
 }
 
-template <CPURevision C> void
-CPU<C>::setPWithoutB(u8 p)
+void
+CPU::setPWithoutB(u8 p)
 {
     reg.sr.n = (p & N_FLAG);
     reg.sr.v = (p & V_FLAG);
@@ -178,65 +176,65 @@ CPU<C>::setPWithoutB(u8 p)
     reg.sr.c = (p & C_FLAG);
 }
 
-template <CPURevision C> u8
-CPU<C>::peek(u16 addr)
+u8
+CPU::peek(u16 addr)
 {
     return
     cpuModel == MOS_6510 ?
     mem.peek(addr) :
-    id == 0 ? drive8.mem.peek(addr) : drive9.mem.peek(addr);
+    id == 1 ? drive8.mem.peek(addr) : drive9.mem.peek(addr);
 }
 
-template <CPURevision C> u8
-CPU<C>::peekZP(u8 addr)
+u8
+CPU::peekZP(u8 addr)
 {
     return cpuModel == MOS_6510 ?
     mem.peekZP(addr) :
-    id == 0 ? drive8.mem.peekZP(addr) : drive9.mem.peekZP(addr);
+    id == 1 ? drive8.mem.peekZP(addr) : drive9.mem.peekZP(addr);
 }
 
-template <CPURevision C> u8
-CPU<C>::peekStack(u8 sp)
+u8
+CPU::peekStack(u8 sp)
 {
     return cpuModel == MOS_6510 ?
     mem.peekStack(sp) :
-    id == 0 ? drive8.mem.peekStack(sp) : drive9.mem.peekStack(sp);
+    id == 1 ? drive8.mem.peekStack(sp) : drive9.mem.peekStack(sp);
 }
 
-template <CPURevision C> u8
-CPU<C>::spypeek(u16 addr) const
+u8
+CPU::spypeek(u16 addr) const
 {
     return cpuModel == MOS_6510 ?
     mem.spypeek(addr) :
-    id == 0 ? drive8.mem.spypeek(addr) : drive9.mem.spypeek(addr);
+    id == 1 ? drive8.mem.spypeek(addr) : drive9.mem.spypeek(addr);
 }
 
-template <CPURevision C> void
-CPU<C>::poke(u16 addr, u8 value)
+void
+CPU::poke(u16 addr, u8 value)
 {
     cpuModel == MOS_6510 ?
     mem.poke(addr, value) :
-    id == 0 ? drive8.mem.poke(addr, value) : drive9.mem.poke(addr, value);
+    id == 1 ? drive8.mem.poke(addr, value) : drive9.mem.poke(addr, value);
 }
 
-template <CPURevision C> void
-CPU<C>::pokeZP(u8 addr, u8 value)
+void
+CPU::pokeZP(u8 addr, u8 value)
 {
     cpuModel == MOS_6510 ?
     mem.pokeZP(addr, value) :
-    id == 0 ? drive8.mem.pokeZP(addr, value) : drive9.mem.pokeZP(addr, value);
+    id == 1 ? drive8.mem.pokeZP(addr, value) : drive9.mem.pokeZP(addr, value);
 }
 
-template <CPURevision C> void
-CPU<C>::pokeStack(u8 addr, u8 value)
+void
+CPU::pokeStack(u8 addr, u8 value)
 {
     cpuModel == MOS_6510 ?
     mem.pokeStack(addr, value) :
-    id == 0 ? drive8.mem.pokeStack(addr, value) : drive9.mem.pokeStack(addr, value);
+    id == 1 ? drive8.mem.pokeStack(addr, value) : drive9.mem.pokeStack(addr, value);
 }
 
-template <CPURevision C> void
-CPU<C>::pullDownNmiLine(IntSource bit)
+void
+CPU::pullDownNmiLine(IntSource bit)
 {
     assert(bit != 0);
     
@@ -248,14 +246,14 @@ CPU<C>::pullDownNmiLine(IntSource bit)
     nmiLine |= bit;
 }
 
-template <CPURevision C> void
-CPU<C>::releaseNmiLine(IntSource source)
+void
+CPU::releaseNmiLine(IntSource source)
 {
     nmiLine &= ~source;
 }
 
-template <CPURevision C> void
-CPU<C>::pullDownIrqLine(IntSource source)
+void
+CPU::pullDownIrqLine(IntSource source)
 {
 	assert(source != 0);
     
@@ -263,15 +261,15 @@ CPU<C>::pullDownIrqLine(IntSource source)
     levelDetector.write(irqLine);
 }
 
-template <CPURevision C> void
-CPU<C>::releaseIrqLine(IntSource source)
+void
+CPU::releaseIrqLine(IntSource source)
 {
     irqLine &= ~source;
     levelDetector.write(irqLine);
 }
 
-template <CPURevision C> void
-CPU<C>::setRDY(bool value)
+void
+CPU::setRDY(bool value)
 {
     if (rdyLine)
     {
@@ -290,6 +288,7 @@ CPU<C>::setRDY(bool value)
 // Template instantiations
 //
 
+/*
 template         CPU<MOS_6510>::CPU(C64& ref);
 template         CPU<MOS_6510>::CPU(CPURevision, C64& ref);
 template CPUInfo CPU<MOS_6510>::getInfo() const;
@@ -341,3 +340,4 @@ template u8      CPU<MOS_6502>::spypeek(u16 addr) const;
 template void    CPU<MOS_6502>::poke(u16 addr, u8 value);
 template void    CPU<MOS_6502>::pokeZP(u8 addr, u8 value);
 template void    CPU<MOS_6502>::pokeStack(u8 sp, u8 value);
+*/
