@@ -33,6 +33,16 @@ protected:
 
 
     //
+    // Sub components
+    //
+
+public:
+
+    // CPU debugger
+    CPUDebugger debugger = CPUDebugger(*this);
+
+
+    //
     // Lookup tables
     //
 
@@ -189,7 +199,7 @@ public:
 
 
     //
-    // Accessing properties
+    // Accessing registers and flags
     //
 
 public:
@@ -239,6 +249,27 @@ public:
 
 
     //
+    // Accessing memory
+    //
+
+protected:
+
+    u8 peek(u16 addr);
+    u8 peekZP(u8 addr);
+    u8 peekStack(u8 sp);
+
+    void peekIdle(u16 addr) { (void)peek(addr); }
+    void peekZPIdle(u8 addr) { (void)peekZP(addr); }
+    void peekStackIdle(u8 sp) { (void)peekStack(sp); }
+
+    u8 spypeek(u16 addr) const;
+
+    void poke(u16 addr, u8 value);
+    void pokeZP(u8 addr, u8 value);
+    void pokeStack(u8 sp, u8 value);
+
+
+    //
     // Handling interrupts
     //
 
@@ -268,4 +299,24 @@ protected:
     void sbc_bcd(u8 op);
     void cmp(u8 op1, u8 op2);
 
+
+    //
+    // Executing the device
+    //
+
+public:
+
+    // Returns true if the CPU is jammed
+    bool isJammed() const { return next == JAM || next == JAM_2; }
+
+    // Returns true if the next cycle marks the beginning of an instruction
+    bool inFetchPhase() const { return next == fetch; }
+
+    // Executes the next micro instruction
+    // void executeOneCycle();
+
+private:
+
+    // Called after the last microcycle has been completed
+    // void done();
 };

@@ -165,29 +165,7 @@ public:
     // Returns the result of the latest inspection
     CPUInfo getInfo() const { return C64Component::getInfo(info); }
 
-    
 
-    //
-    // Accessing memory
-    //
-
-private:
-
-    u8 peek(u16 addr);
-    u8 peekZP(u8 addr);
-    u8 peekStack(u8 sp);
-
-    void peekIdle(u16 addr) { (void)peek(addr); }
-    void peekZPIdle(u8 addr) { (void)peekZP(addr); }
-    void peekStackIdle(u8 sp) { (void)peekStack(sp); }
-
-    u8 spypeek(u16 addr) const;
-
-    void poke(u16 addr, u8 value);
-    void pokeZP(u8 addr, u8 value);
-    void pokeStack(u8 sp, u8 value);
-    
-        
     //
     // Executing the device
     //
@@ -195,10 +173,10 @@ private:
 public:
 
     // Returns true if the CPU is jammed
-    bool isJammed() const { return next == JAM || next == JAM_2; }
+    // bool isJammed() const { return next == JAM || next == JAM_2; }
     
     // Returns true if the next cycle marks the beginning of an instruction
-    bool inFetchPhase() const { return next == fetch; }
+    // bool inFetchPhase() const { return next == fetch; }
 
     // Executes the next micro instruction
     void executeOneCycle();

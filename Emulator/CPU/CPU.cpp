@@ -125,7 +125,7 @@ CPU::_dump(Category category, std::ostream& os) const
 }
 
 u8
-CPU::peek(u16 addr)
+Peddle::peek(u16 addr)
 {
     return
     cpuModel == MOS_6510 ?
@@ -134,7 +134,7 @@ CPU::peek(u16 addr)
 }
 
 u8
-CPU::peekZP(u8 addr)
+Peddle::peekZP(u8 addr)
 {
     return cpuModel == MOS_6510 ?
     mem.peekZP(addr) :
@@ -142,7 +142,7 @@ CPU::peekZP(u8 addr)
 }
 
 u8
-CPU::peekStack(u8 sp)
+Peddle::peekStack(u8 sp)
 {
     return cpuModel == MOS_6510 ?
     mem.peekStack(sp) :
@@ -150,7 +150,7 @@ CPU::peekStack(u8 sp)
 }
 
 u8
-CPU::spypeek(u16 addr) const
+Peddle::spypeek(u16 addr) const
 {
     return cpuModel == MOS_6510 ?
     mem.spypeek(addr) :
@@ -158,7 +158,7 @@ CPU::spypeek(u16 addr) const
 }
 
 void
-CPU::poke(u16 addr, u8 value)
+Peddle::poke(u16 addr, u8 value)
 {
     cpuModel == MOS_6510 ?
     mem.poke(addr, value) :
@@ -166,7 +166,7 @@ CPU::poke(u16 addr, u8 value)
 }
 
 void
-CPU::pokeZP(u8 addr, u8 value)
+Peddle::pokeZP(u8 addr, u8 value)
 {
     cpuModel == MOS_6510 ?
     mem.pokeZP(addr, value) :
@@ -174,7 +174,7 @@ CPU::pokeZP(u8 addr, u8 value)
 }
 
 void
-CPU::pokeStack(u8 addr, u8 value)
+Peddle::pokeStack(u8 addr, u8 value)
 {
     cpuModel == MOS_6510 ?
     mem.pokeStack(addr, value) :

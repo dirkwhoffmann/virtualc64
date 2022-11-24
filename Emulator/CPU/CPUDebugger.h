@@ -40,7 +40,7 @@ class Guards {
 protected:
 
     // Reference to the connected CPU
-    class CPU &cpu;
+    class Peddle &cpu;
 
     // Capacity of the guards array
     long capacity = 1;
@@ -61,7 +61,7 @@ protected:
 
 public:
 
-    Guards(CPU& ref) : cpu(ref) { }
+    Guards(Peddle& ref) : cpu(ref) { }
     virtual ~Guards();
 
 
@@ -120,7 +120,7 @@ class Breakpoints : public Guards {
     
 public:
     
-    Breakpoints(CPU& ref) : Guards(ref) { }
+    Breakpoints(Peddle& ref) : Guards(ref) { }
     void setNeedsCheck(bool value) override;
 };
 
@@ -128,16 +128,17 @@ class Watchpoints : public Guards {
     
 public:
     
-    Watchpoints(CPU& ref) : Guards(ref) { }
+    Watchpoints(Peddle& ref) : Guards(ref) { }
     void setNeedsCheck(bool value) override;
 };
 
 class CPUDebugger {
     
+    friend class Peddle;
     friend class CPU;
-
+    
     // Reference to the connected CPU
-    class CPU &cpu;
+    class Peddle &cpu;
 
     // Textual representation for each opcode (used by the disassembler)
     const char *mnemonic[256];
@@ -191,7 +192,7 @@ public:
     
 public:
     
-    CPUDebugger(CPU& ref) : cpu(ref) { };
+    CPUDebugger(Peddle& ref) : cpu(ref) { };
     void reset();
 
 
