@@ -285,7 +285,7 @@ Keyboard::isPressed(C64Key key) const
 bool
 Keyboard::restoreIsPressed() const
 {
-    return cpu.nmiLine & INTSRC_KBD;
+    return cpu.getNmiLine() & INTSRC_KBD;
 }
 
 void

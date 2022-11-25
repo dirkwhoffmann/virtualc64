@@ -159,7 +159,7 @@ Expert::pressButton(isize nr)
                  * surely not accurate, but it forces an NMI a trigger,
                  * regardless of the current value of the NMI line.
                  */
-                u8 oldLine = cpu.nmiLine;
+                u8 oldLine = cpu.getNmiLine();
                 u8 newLine = oldLine | INTSRC_EXP;
                 
                 cpu.releaseNmiLine((IntSource)0xFF);

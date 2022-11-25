@@ -1015,7 +1015,7 @@ C64::_executeOneCycle()
     if (iec.isDirtyC64Side) iec.updateIecLinesC64Side();
     
     // Second clock phase (o2 high)
-    cpu.executeOneCycle<MOS_6510>();
+    cpu.execute<MOS_6510>();
     if (drive8.needsEmulation) drive8.execute(nativeDurationOfOneCycle);
     if (drive9.needsEmulation) drive9.execute(nativeDurationOfOneCycle);
     datasette.execute();

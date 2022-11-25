@@ -17,7 +17,7 @@ namespace peddle {
 
 class Peddle : public SubComponent {
 
-    friend class CPUDebugger;
+    friend class Debugger;
     friend class Breakpoints;
     friend class Watchpoints;
 
@@ -27,11 +27,11 @@ class Peddle : public SubComponent {
 
 protected:
 
-    // Instance counter (to easily distinguish different CPUs)
-    isize id;
-
-    // Emulated CPU model
+    // The emulated CPU model
     CPURevision cpuModel = MOS_6510;
+
+    // Instance counter (to distinguish different CPU instances)
+    isize id;
 
 
     //
@@ -41,7 +41,7 @@ protected:
 public:
 
     // CPU debugger
-    CPUDebugger debugger = CPUDebugger(*this);
+    Debugger debugger = Debugger(*this);
 
 
     //
@@ -51,7 +51,7 @@ public:
 protected:
 
     /* Mapping from opcodes to microinstructions. This array stores the tags
-     * of the second microcycle which is microcycle cycle following the fetch
+     * of the second microcycle which is the microcycle following the fetch
      * phase.
      */
     MicroInstruction actionFunc[256];
@@ -90,10 +90,7 @@ public:
 
 public:
 
-    /* Ready line (RDY)
-     * If this line is low, the CPU freezes on the next read access. RDY is
-     * pulled down by VICII to perform longer lasting read operations.
-     */
+    // Ready line (RDY). If pulled low, the CPU freezes on the next read access
     bool rdyLine;
 
 protected:
@@ -104,9 +101,10 @@ protected:
     // Cycle of the most recent falling edge of the RDY line
     u64 rdyLineDown;
 
-public:
+// public:
 
     /* Interrupt lines
+     *
      * Usally both variables equal 0 which means that the two interrupt lines
      * are high. When an external component requests an interrupt, the NMI or
      * the IRQ line is pulled low. In that case, the corresponding variable is
@@ -324,13 +322,19 @@ private:
 
 public:
 
-    // Pulls down or releases an interrupt line
+    // Pulls down an interrupt line
     void pullDownNmiLine(IntSource source);
-    void releaseNmiLine(IntSource source);
     void pullDownIrqLine(IntSource source);
+
+    // Releases an interrupt line
+    void releaseNmiLine(IntSource source);
     void releaseIrqLine(IntSource source);
 
-    // Sets the RDY line
+    // Checks the status of an interrupt line
+    IntSource getNmiLine() const { return nmiLine; }
+    IntSource getIrqLine() const { return irqLine; }
+
+    // Sets the value on the RDY line
     void setRDY(bool value);
 
 
@@ -350,7 +354,7 @@ protected:
 
 
     //
-    // Executing the device
+    // Running the CPU
     //
 
 public:
@@ -362,8 +366,8 @@ public:
     bool inFetchPhase() const { return next == fetch; }
 
     // Executes the next micro instruction
-    void executeOneCycle();
-    template <CPURevision C> void executeOneCycle();
+    void execute();
+    template <CPURevision C> void execute();
 
 protected:
 

@@ -481,7 +481,7 @@ private:
     void reloadTimerA(u64 *delay);
     void reloadTimerB(u64 *delay);
     
-    // Triggers an interrupt (invoked inside executeOneCycle())
+    // Triggers an interrupt (invoked inside execute())
     void triggerTimerIrq(u64 *delay);
     void triggerTodIrq(u64 *delay);
     void triggerSerialIrq(u64 *delay);

@@ -37,7 +37,7 @@ public:
 // Base class for a collection of guards
 class Guards {
 
-    friend class CPUDebugger;
+    friend class Debugger;
     
 protected:
 
@@ -134,7 +134,7 @@ public:
     void setNeedsCheck(bool value) override;
 };
 
-class CPUDebugger {
+class Debugger {
     
     friend class Peddle;
     friend class CPU;
@@ -194,7 +194,7 @@ public:
     
 public:
     
-    CPUDebugger(Peddle& ref) : cpu(ref) { };
+    Debugger(Peddle& ref) : cpu(ref) { };
     void reset();
 
 

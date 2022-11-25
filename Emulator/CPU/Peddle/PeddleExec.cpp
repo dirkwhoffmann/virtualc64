@@ -494,12 +494,12 @@ Peddle::registerIllegalInstructions()
 }
 
 void
-Peddle::executeOneCycle()
+Peddle::execute()
 {
     switch (cpuModel) {
 
-        case MOS_6502: executeOneCycle<MOS_6502>(); break;
-        case MOS_6510: executeOneCycle<MOS_6510>(); break;
+        case MOS_6502: execute<MOS_6502>(); break;
+        case MOS_6510: execute<MOS_6510>(); break;
 
         default:
             fatalError;
@@ -507,7 +507,7 @@ Peddle::executeOneCycle()
 }
 
 template <CPURevision C> void
-Peddle::executeOneCycle()
+Peddle::execute()
 {
     u8 instr;
     
