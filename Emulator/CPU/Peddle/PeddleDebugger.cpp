@@ -8,15 +8,62 @@
 // -----------------------------------------------------------------------------
 
 #include "PeddleConfig.h"
-#include "PeddleDebugger.h"
-#include "C64.h"
-
-using util::sprint8x;
-using util::sprint8d;
-using util::sprint16x;
-using util::sprint16d;
+#include "Peddle.h"
 
 namespace peddle {
+
+//
+// Printing
+//
+
+static void
+sprint8d(char *s, u8 value)
+{
+    for (int i = 2; i >= 0; i--) {
+
+        u8 digit = value % 10;
+        s[i] = '0' + digit;
+        value /= 10;
+    }
+    s[3] = 0;
+}
+
+static void
+sprint8x(char *s, u8 value)
+{
+    for (int i = 1; i >= 0; i--) {
+
+        u8 digit = value % 16;
+        s[i] = (digit <= 9) ? ('0' + digit) : ('A' + digit - 10);
+        value /= 16;
+    }
+    s[2] = 0;
+}
+
+static void
+sprint16d(char *s, u16 value)
+{
+    for (int i = 4; i >= 0; i--) {
+
+        u8 digit = value % 10;
+        s[i] = '0' + digit;
+        value /= 10;
+    }
+    s[5] = 0;
+}
+
+static void
+sprint16x(char *s, u16 value)
+{
+    for (int i = 3; i >= 0; i--) {
+
+        u8 digit = value % 16;
+        s[i] = (digit <= 9) ? ('0' + digit) : ('A' + digit - 10);
+        value /= 16;
+    }
+    s[4] = 0;
+}
+
 
 //
 // Guard

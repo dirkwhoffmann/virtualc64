@@ -114,8 +114,8 @@ public:
      * variables are used in form of bit fields since both interrupt lines are
      * driven by multiple sources.
      */
-    u8 nmiLine;
-    u8 irqLine;
+    IntSource nmiLine;
+    IntSource irqLine;
 
 protected:
 

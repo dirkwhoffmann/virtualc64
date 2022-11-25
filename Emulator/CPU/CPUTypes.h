@@ -17,8 +17,6 @@
 // Bit fields
 //
 
-// typedef u8 IntSource;
-
 #define INTSRC_CIA  0b00000001
 #define INTSRC_VIC  0b00000010
 #define INTSRC_VIA1 0b00000100
@@ -35,7 +33,7 @@
 struct CPURevisionEnum : util::Reflection<CPURevisionEnum, peddle::CPURevision> {
     
     static constexpr long minVal = 0;
-    static constexpr long maxVal = peddle::MOS_6502;
+    static constexpr long maxVal = peddle::MOS_6510;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return nullptr; }
@@ -43,42 +41,19 @@ struct CPURevisionEnum : util::Reflection<CPURevisionEnum, peddle::CPURevision> 
     {
         switch (value) {
                 
-            case peddle::MOS_6510:  return "MOS_6510";
             case peddle::MOS_6502:  return "MOS_6502";
+            case peddle::MOS_6507:  return "MOS_6507";
+            case peddle::MOS_6510:  return "MOS_6510";
         }
         return "???";
     }
 };
 #endif
 
-enum_long(BPTYPE)
-{
-    BPTYPE_NONE,
-    BPTYPE_HARD,
-    BPTYPE_SOFT
-};
-typedef BPTYPE BreakpointType;
 
-#ifdef __cplusplus
-struct BreakpointTypeEnum : util::Reflection<BreakpointTypeEnum, BreakpointType> {
-    
-	static constexpr long minVal = 0;
-    static constexpr long maxVal = BPTYPE_SOFT;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
-    static const char *prefix() { return "BPTYPE"; }
-    static const char *key(BreakpointType value)
-    {
-        switch (value) {
-                
-            case BPTYPE_NONE:   return "NONE";
-            case BPTYPE_HARD:   return "HARD";
-            case BPTYPE_SOFT:   return "SOFT";
-        }
-        return "???";
-    }
-};
-#endif
+//
+// Structures
+//
 
 typedef struct
 {

@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
+#include "PeddleConfig.h"
 #include "CPU.h"
 #include "C64.h"
 #include "IOUtils.h"
@@ -199,10 +200,12 @@ namespace peddle {
 template <CPURevision C> u8
 Peddle::peek(u16 addr)
 {
-    if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches(addr)) {
-        c64.signalWatchpoint();
+    if constexpr (ENABLE_WATCHPOINTS) {
+        if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches(addr)) {
+            c64.signalWatchpoint();
+        }
     }
-
+    
     switch (C) {
 
         case MOS_6510: return mem.peek(addr);
@@ -216,8 +219,10 @@ Peddle::peek(u16 addr)
 template <CPURevision C> u8
 Peddle::peekZP(u8 addr)
 {
-    if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches(addr)) {
-        c64.signalWatchpoint();
+    if constexpr (ENABLE_WATCHPOINTS) {
+        if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches(addr)) {
+            c64.signalWatchpoint();
+        }
     }
 
     switch (C) {
@@ -233,8 +238,10 @@ Peddle::peekZP(u8 addr)
 template <CPURevision C> u8
 Peddle::peekStack(u8 sp)
 {
-    if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches((u16)sp + 0x100)) {
-        c64.signalWatchpoint();
+    if constexpr (ENABLE_WATCHPOINTS) {
+        if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches((u16)sp + 0x100)) {
+            c64.signalWatchpoint();
+        }
     }
 
     switch (C) {
@@ -276,8 +283,10 @@ Peddle::spypeek(u16 addr) const
 template <CPURevision C> void
 Peddle::poke(u16 addr, u8 value)
 {
-    if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches(addr)) {
-        c64.signalWatchpoint();
+    if constexpr (ENABLE_WATCHPOINTS) {
+        if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches(addr)) {
+            c64.signalWatchpoint();
+        }
     }
 
     switch (C) {
@@ -293,8 +302,10 @@ Peddle::poke(u16 addr, u8 value)
 template <CPURevision C> void
 Peddle::pokeZP(u8 addr, u8 value)
 {
-    if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches(addr)) {
-        c64.signalWatchpoint();
+    if constexpr (ENABLE_WATCHPOINTS) {
+        if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches(addr)) {
+            c64.signalWatchpoint();
+        }
     }
 
     switch (C) {
@@ -310,8 +321,10 @@ Peddle::pokeZP(u8 addr, u8 value)
 template <CPURevision C> void
 Peddle::pokeStack(u8 addr, u8 value)
 {
-    if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches((u16)addr + 0x100)) {
-        c64.signalWatchpoint();
+    if constexpr (ENABLE_WATCHPOINTS) {
+        if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches((u16)addr + 0x100)) {
+            c64.signalWatchpoint();
+        }
     }
 
     switch (C) {

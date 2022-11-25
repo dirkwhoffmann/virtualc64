@@ -1572,10 +1572,10 @@
 		50AA48B5292F8F350084401D /* Peddle */ = {
 			isa = PBXGroup;
 			children = (
+				50AA48B4292F8F1A0084401D /* PeddleConfig.h */,
 				50AA48B3292F8F080084401D /* PeddleTypes.h */,
 				50AA48B1292F8EC30084401D /* Peddle.h */,
 				50AA48B0292F8EC30084401D /* Peddle.cpp */,
-				50AA48B4292F8F1A0084401D /* PeddleConfig.h */,
 				509280CE2930A1B6006E1966 /* PeddleUtils.h */,
 				509280CD2930A1B6006E1966 /* PeddleUtils.cpp */,
 				504C42E724AF29AB00E69CAE /* PeddleExec.h */,
