@@ -14,6 +14,10 @@
 #include <optional>
 */
 
+#ifdef __cplusplus
+namespace peddle {
+#endif
+
 //
 // Constants
 //
@@ -102,3 +106,7 @@ typedef struct
     u8 flags;
 }
 RecordedInstruction;
+
+#ifdef __cplusplus
+}
+#endif

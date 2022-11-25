@@ -14,7 +14,7 @@
 #include "SubComponent.h"
 #include "ProcessorPort.h"
 
-// class Memory;
+using namespace peddle;
 
 class CPU : public peddle::Peddle {
 

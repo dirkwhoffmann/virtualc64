@@ -9,6 +9,8 @@
 
 #pragma once
 
+namespace peddle {
+
 enum_long(MICRO_INSTRUCTION) {
     
     fetch,
@@ -384,6 +386,8 @@ pokeZP<C>(reg.adl, reg.d); setN(reg.d & 0x80); setZ(reg.d == 0);
 #define POLL_NMI doNmi = edgeDetector.delayed();
 #define POLL_INT POLL_IRQ POLL_NMI
 #define POLL_INT_AGAIN doIrq |= (levelDetector.delayed() != 0 && !getI()); \
-                       doNmi |= (edgeDetector.delayed() != 0);
+doNmi |= (edgeDetector.delayed() != 0);
 #define CONTINUE next = (MicroInstruction)((int)next+1); return;
 #define DONE     done<C>(); return;
+
+}

@@ -187,7 +187,7 @@
 		5098C57B2658CF9800E05EFC /* VideoExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5098C57A2658CF9800E05EFC /* VideoExporter.swift */; };
 		5098C57D2658D4DC00E05EFC /* VideoExporter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5098C57C2658D4DC00E05EFC /* VideoExporter.xib */; };
 		5098C57F2658E1F400E05EFC /* DragImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5098C57E2658E1F400E05EFC /* DragImageView.swift */; };
-		50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50995F2824DBCDE400F40713 /* CPUDebugger.cpp */; };
+		50995F2A24DBCDE400F40713 /* PeddleDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50995F2824DBCDE400F40713 /* PeddleDebugger.cpp */; };
 		50A077F8258A18B9005ACF5B /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077F6258A18B9005ACF5B /* FileSystem.cpp */; };
 		50A077FE258A1ADF005ACF5B /* FSBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077FC258A1ADF005ACF5B /* FSBlock.cpp */; };
 		50A0B48D24C1CAEB00FF0B0B /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50A0B48C24C1CAEB00FF0B0B /* Preferences.xib */; };
@@ -453,7 +453,7 @@
 		504C42DF24AF29AB00E69CAE /* T64File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = T64File.h; sourceTree = "<group>"; };
 		504C42E124AF29AB00E69CAE /* C64Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64Memory.cpp; sourceTree = "<group>"; };
 		504C42E424AF29AB00E69CAE /* C64Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Memory.h; sourceTree = "<group>"; };
-		504C42E724AF29AB00E69CAE /* CPUInstructions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUInstructions.h; sourceTree = "<group>"; };
+		504C42E724AF29AB00E69CAE /* PeddleExec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeddleExec.h; sourceTree = "<group>"; };
 		504C42E824AF29AB00E69CAE /* CPU.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPU.h; sourceTree = "<group>"; };
 		504C42E924AF29AB00E69CAE /* CPU.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CPU.cpp; sourceTree = "<group>"; };
 		504C42EA24AF29AB00E69CAE /* PeddleExec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PeddleExec.cpp; sourceTree = "<group>"; };
@@ -626,8 +626,8 @@
 		5098C57A2658CF9800E05EFC /* VideoExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExporter.swift; sourceTree = "<group>"; };
 		5098C57C2658D4DC00E05EFC /* VideoExporter.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoExporter.xib; sourceTree = "<group>"; };
 		5098C57E2658E1F400E05EFC /* DragImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragImageView.swift; sourceTree = "<group>"; };
-		50995F2824DBCDE400F40713 /* CPUDebugger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPUDebugger.cpp; sourceTree = "<group>"; };
-		50995F2924DBCDE400F40713 /* CPUDebugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUDebugger.h; sourceTree = "<group>"; };
+		50995F2824DBCDE400F40713 /* PeddleDebugger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PeddleDebugger.cpp; sourceTree = "<group>"; };
+		50995F2924DBCDE400F40713 /* PeddleDebugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleDebugger.h; sourceTree = "<group>"; };
 		509995C826F72F3B009B68F3 /* TODTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TODTypes.h; sourceTree = "<group>"; };
 		50A077F6258A18B9005ACF5B /* FileSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystem.cpp; sourceTree = "<group>"; };
 		50A077F7258A18B9005ACF5B /* FileSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileSystem.h; sourceTree = "<group>"; };
@@ -1248,8 +1248,6 @@
 				504C42E924AF29AB00E69CAE /* CPU.cpp */,
 				504C433D24AF29AC00E69CAE /* ProcessorPort.h */,
 				504C433F24AF29AC00E69CAE /* ProcessorPort.cpp */,
-				50995F2924DBCDE400F40713 /* CPUDebugger.h */,
-				50995F2824DBCDE400F40713 /* CPUDebugger.cpp */,
 				50AA48B5292F8F350084401D /* Peddle */,
 			);
 			path = CPU;
@@ -1575,8 +1573,10 @@
 				50AA48B1292F8EC30084401D /* Peddle.h */,
 				50AA48B0292F8EC30084401D /* Peddle.cpp */,
 				50AA48B4292F8F1A0084401D /* PeddleConfig.h */,
-				504C42E724AF29AB00E69CAE /* CPUInstructions.h */,
+				504C42E724AF29AB00E69CAE /* PeddleExec.h */,
 				504C42EA24AF29AB00E69CAE /* PeddleExec.cpp */,
+				50995F2924DBCDE400F40713 /* PeddleDebugger.h */,
+				50995F2824DBCDE400F40713 /* PeddleDebugger.cpp */,
 			);
 			path = Peddle;
 			sourceTree = "<group>";
@@ -2006,7 +2006,7 @@
 				50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */,
 				507E7AA024FB881500AB433C /* ScreenshotViewer.swift in Sources */,
 				50F420CA250BA3460043DE56 /* Colors.cpp in Sources */,
-				50995F2A24DBCDE400F40713 /* CPUDebugger.cpp in Sources */,
+				50995F2A24DBCDE400F40713 /* PeddleDebugger.cpp in Sources */,
 				504C439724AF29AC00E69CAE /* voice.cc in Sources */,
 				504C436224AF29AC00E69CAE /* GeoRam.cpp in Sources */,
 				5002FA7D21C2651B00DA4BBC /* VideoConf.swift in Sources */,

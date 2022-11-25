@@ -8,9 +8,9 @@
 #pragma once
 
 #include "PeddleTypes.h"
-#include "CPUDebugger.h"
+#include "PeddleDebugger.h"
 #include "SubComponent.h"
-#include "CPUInstructions.h"
+#include "PeddleExec.h"
 #include "TimeDelayed.h"
 
 namespace peddle {

@@ -8,7 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "CPUDebugger.h"
+#include "PeddleDebugger.h"
 #include "C64.h"
 #include "IOUtils.h"
 
