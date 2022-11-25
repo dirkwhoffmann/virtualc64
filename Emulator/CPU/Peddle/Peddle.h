@@ -271,12 +271,12 @@ private:
     template <CPURevision C> u8 peekZP(u8 addr);
     template <CPURevision C> u8 peekStack(u8 sp);
 
-    u8 spypeek(u16 addr) const;
+    // u8 spypeek(u16 addr) const;
     template <CPURevision C> u8 spypeek(u16 addr) const;
 
-    template <CPURevision C> void peekIdle(u16 addr) { (void)peek<C>(addr); }
-    template <CPURevision C> void peekZPIdle(u8 addr) { (void)peekZP<C>(addr); }
-    template <CPURevision C> void peekStackIdle(u8 sp) { (void)peekStack<C>(sp); }
+    template <CPURevision C> void peekIdle(u16 addr);
+    template <CPURevision C> void peekZPIdle(u8 addr);
+    template <CPURevision C> void peekStackIdle(u8 sp);
 
     template <CPURevision C> void poke(u16 addr, u8 value);
     template <CPURevision C> void pokeZP(u8 addr, u8 value);

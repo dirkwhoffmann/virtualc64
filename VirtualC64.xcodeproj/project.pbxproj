@@ -96,7 +96,6 @@
 		504C437E24AF29AC00E69CAE /* TAPFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42DB24AF29AB00E69CAE /* TAPFile.cpp */; };
 		504C437F24AF29AC00E69CAE /* C64Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42E124AF29AB00E69CAE /* C64Memory.cpp */; };
 		504C438024AF29AC00E69CAE /* CPU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42E924AF29AB00E69CAE /* CPU.cpp */; };
-		504C438124AF29AC00E69CAE /* PeddleExec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42EA24AF29AB00E69CAE /* PeddleExec.cpp */; };
 		504C438224AF29AC00E69CAE /* C64Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42ED24AF29AB00E69CAE /* C64Object.cpp */; };
 		504C438324AF29AC00E69CAE /* C64Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42EE24AF29AB00E69CAE /* C64Component.cpp */; };
 		504C438524AF29AC00E69CAE /* MsgQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F124AF29AB00E69CAE /* MsgQueue.cpp */; };
@@ -1830,7 +1829,6 @@
 				504C435924AF29AC00E69CAE /* Ocean.cpp in Sources */,
 				504C439424AF29AC00E69CAE /* Muxer.cpp in Sources */,
 				506A724A21C0341900DA0AC3 /* ConfigurationController.swift in Sources */,
-				504C438124AF29AC00E69CAE /* PeddleExec.cpp in Sources */,
 				50D2A6A0210F20F700F13D43 /* VirtualKeyboardController.swift in Sources */,
 				504C439E24AF29AC00E69CAE /* ReSID.cpp in Sources */,
 				50D5F88624F52A300062EF13 /* DiskDataView.swift in Sources */,

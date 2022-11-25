@@ -245,6 +245,7 @@ CPU::instructionDidFinish()
 
 namespace peddle {
 
+/*
 template <CPURevision C> u8
 Peddle::peek(u16 addr)
 {
@@ -384,8 +385,10 @@ Peddle::pokeStack(u8 addr, u8 value)
             fatalError;
     }
 }
+*/
 
-template u8 Peddle::peek<MOS_6502>(u16 addr);
+/*
+// template u8 Peddle::peek<MOS_6502>(u16 addr);
 template u8 Peddle::peekZP<MOS_6502>(u8 addr);
 template u8 Peddle::peekStack<MOS_6502>(u8 sp);
 template u8 Peddle::spypeek<MOS_6502>(u16 addr) const;
@@ -396,7 +399,7 @@ template void Peddle::poke<MOS_6502>(u16 addr, u8 value);
 template void Peddle::pokeZP<MOS_6502>(u8 addr, u8 value);
 template void Peddle::pokeStack<MOS_6502>(u8 sp, u8 value);
 
-template u8 Peddle::peek<MOS_6510>(u16 addr);
+// template u8 Peddle::peek<MOS_6510>(u16 addr);
 template u8 Peddle::peekZP<MOS_6510>(u8 addr);
 template u8 Peddle::peekStack<MOS_6510>(u8 sp);
 template u8 Peddle::spypeek<MOS_6510>(u16 addr) const;
@@ -406,5 +409,6 @@ template void Peddle::peekStackIdle<MOS_6510>(u8 sp);
 template void Peddle::poke<MOS_6510>(u16 addr, u8 value);
 template void Peddle::pokeZP<MOS_6510>(u8 addr, u8 value);
 template void Peddle::pokeStack<MOS_6510>(u8 sp, u8 value);
+*/
 
 }

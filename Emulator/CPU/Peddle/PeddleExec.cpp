@@ -10,8 +10,6 @@
 #include "PeddleConfig.h"
 #include "Peddle.h"
 
-namespace peddle {
-
 u8
 Peddle::getP() const
 {
@@ -3258,6 +3256,4 @@ Peddle::done() {
 
     reg.pc0 = reg.pc;
     next = fetch;
-}
-
 }

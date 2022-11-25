@@ -327,7 +327,6 @@ if (likely(rdyLine)) reg.adh = peek<C>((u16)reg.idl++); else return;
 #define IDLE_FETCH \
 if (likely(rdyLine)) peekIdle<C>(reg.pc); else return;
 
-
 #define READ_RELATIVE \
 if (likely(rdyLine)) reg.d = peek<C>(reg.pc); else return;
 #define READ_IMMEDIATE \
@@ -389,5 +388,6 @@ pokeZP<C>(reg.adl, reg.d); setN(reg.d & 0x80); setZ(reg.d == 0);
 doNmi |= (edgeDetector.delayed() != 0);
 #define CONTINUE next = (MicroInstruction)((int)next+1); return;
 #define DONE     done<C>(); return;
+
 
 }

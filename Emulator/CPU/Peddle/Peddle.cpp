@@ -36,6 +36,90 @@ Peddle::setModel(CPURevision cpuModel)
     this->cpuModel = cpuModel;
 }
 
+#define CHECK_WATCHPOINT \
+if constexpr (ENABLE_WATCHPOINTS) { \
+if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches(addr)) { \
+watchpointReached(addr); \
+}}
+
+template <CPURevision C> u8
+Peddle::peek(u16 addr)
+{
+    CHECK_WATCHPOINT
+    return read8(addr); // TODO: Apply address bus mask
+}
+
+template <CPURevision C> u8
+Peddle::peekZP(u8 addr)
+{
+    CHECK_WATCHPOINT
+    return read8(addr);
+}
+
+template <CPURevision C> u8
+Peddle::peekStack(u8 addr)
+{
+    CHECK_WATCHPOINT
+    return read8(u16(addr) + 0x100);
+}
+
+template <CPURevision C> u8
+Peddle::spypeek(u16 addr) const
+{
+    return read8(addr);
+}
+
+template <CPURevision C> void
+Peddle::peekIdle(u16 addr)
+{
+    if (EMULATE_IDLE_ACCESSES) {
+
+        CHECK_WATCHPOINT
+        (void)read8(addr);
+    }
+}
+
+template <CPURevision C> void
+Peddle::peekZPIdle(u8 addr)
+{
+    if (EMULATE_IDLE_ACCESSES) {
+
+        CHECK_WATCHPOINT
+        (void)read8(u16(addr));
+    }
+}
+
+template <CPURevision C> void
+Peddle::peekStackIdle(u8 addr)
+{
+    if (EMULATE_IDLE_ACCESSES) {
+
+        CHECK_WATCHPOINT
+        (void)read8(u16(addr) + 0x100);
+    }
+}
+
+template <CPURevision C> void
+Peddle::poke(u16 addr, u8 value)
+{
+    CHECK_WATCHPOINT
+    write8(addr, value);
+}
+
+template <CPURevision C> void
+Peddle::pokeZP(u8 addr, u8 value)
+{
+    CHECK_WATCHPOINT
+    write8(u16(addr), value);
+}
+
+template <CPURevision C> void
+Peddle::pokeStack(u8 addr, u8 value)
+{
+    CHECK_WATCHPOINT
+    write8(u16(addr) + 0x100, value);
+}
+
 void
 Peddle::pullDownNmiLine(IntSource bit)
 {
@@ -86,4 +170,5 @@ Peddle::setRDY(bool value)
     }
 }
 
+#include "PeddleExec.cpp"
 }
