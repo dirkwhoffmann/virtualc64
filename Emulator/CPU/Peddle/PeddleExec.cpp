@@ -50,16 +50,6 @@ Peddle::setPWithoutB(u8 p)
     reg.sr.c = (p & C_FLAG);
 }
 
-u8
-Peddle::getSr() const
-{
-    auto flags =
-    reg.sr.n << 7 | reg.sr.v << 6 |
-    reg.sr.b << 4 | reg.sr.d << 3 | reg.sr.i << 2 | reg.sr.z << 1 | reg.sr.c << 0;
-
-    return (u8)flags;
-}
-
 void
 Peddle::adc(u8 op)
 {
@@ -493,6 +483,46 @@ Peddle::registerIllegalInstructions()
 }
 
 void
+Peddle::reset()
+{
+    switch (cpuModel) {
+
+        case MOS_6502: reset<MOS_6502>(); break;
+        case MOS_6507: reset<MOS_6507>(); break;
+        case MOS_6510: reset<MOS_6510>(); break;
+        case MOS_8502: reset<MOS_8502>(); break;
+
+        default:
+            fatalError;
+    }
+}
+
+template <CPURevision C> void
+Peddle::reset()
+{
+    clock = 0;
+    flags = 0;
+    next = fetch;
+    reg = { };
+    rdyLine = true;
+    rdyLineUp = 0;
+    rdyLineDown = 0;
+    nmiLine = 0;
+    irqLine = 0;
+    edgeDetector.reset(0);
+    levelDetector.reset(0);
+    doNmi = false;
+    doIrq = false;
+
+    setB(1);
+    setI(1);
+
+    reg.pc = reg.pc0 = read16Reset(0xFFFC & addrMask<C>());
+
+    debugger.reset();
+}
+
+void
 Peddle::execute()
 {
     switch (cpuModel) {
@@ -500,6 +530,7 @@ Peddle::execute()
         case MOS_6502: execute<MOS_6502>(); break;
         case MOS_6507: execute<MOS_6507>(); break;
         case MOS_6510: execute<MOS_6510>(); break;
+        case MOS_8502: execute<MOS_8502>(); break;
 
         default:
             fatalError;
@@ -3245,6 +3276,7 @@ Peddle::execute(int count)
         case MOS_6502: execute<MOS_6502>(count); break;
         case MOS_6507: execute<MOS_6507>(count); break;
         case MOS_6510: execute<MOS_6510>(count); break;
+        case MOS_8502: execute<MOS_8502>(count); break;
 
         default:
             fatalError;
@@ -3265,6 +3297,7 @@ Peddle::executeInstruction()
         case MOS_6502: executeInstruction<MOS_6502>(); break;
         case MOS_6507: executeInstruction<MOS_6507>(); break;
         case MOS_6510: executeInstruction<MOS_6510>(); break;
+        case MOS_8502: executeInstruction<MOS_8502>(); break;
 
         default:
             fatalError;
@@ -3289,6 +3322,7 @@ Peddle::executeInstruction(int count)
         case MOS_6502: executeInstruction<MOS_6502>(count); break;
         case MOS_6507: executeInstruction<MOS_6507>(count); break;
         case MOS_6510: executeInstruction<MOS_6510>(count); break;
+        case MOS_8502: executeInstruction<MOS_8502>(count); break;
 
         default:
             fatalError;
@@ -3309,6 +3343,7 @@ Peddle::finishInstruction()
         case MOS_6502: finishInstruction<MOS_6502>(); break;
         case MOS_6507: finishInstruction<MOS_6507>(); break;
         case MOS_6510: finishInstruction<MOS_6510>(); break;
+        case MOS_8502: finishInstruction<MOS_8502>(); break;
 
         default:
             fatalError;

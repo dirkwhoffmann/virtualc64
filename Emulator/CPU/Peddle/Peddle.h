@@ -88,20 +88,16 @@ public:
     // Ports
     //
 
-public:
+protected:
 
     // Ready line (RDY). If pulled low, the CPU freezes on the next read access
     bool rdyLine;
-
-protected:
 
     // Cycle of the most recent rising edge of the RDY line
     u64 rdyLineUp;
 
     // Cycle of the most recent falling edge of the RDY line
     u64 rdyLineDown;
-
-// public:
 
     /* Interrupt lines
      *
@@ -114,8 +110,6 @@ protected:
      */
     IntSource nmiLine;
     IntSource irqLine;
-
-protected:
 
     /* Edge detector (NMI line)
      * https://wiki.nesdev.com/w/index.php/CPU_interrupts
@@ -200,12 +194,12 @@ public:
 
 public:
 
+    // Informs whether the selected CPU model has a processor port
+    u16 hasProcessorPort() const;
+    template <CPURevision C> u16 hasProcessorPort() const;
+
     // Returns the address bus mask for this CPU model
     u16 addrMask() const;
-
-protected:
-
-    // The addrMask core routine
     template <CPURevision C> u16 addrMask() const;
 
 
@@ -254,11 +248,10 @@ public:
     void setC(bool value) { reg.sr.c = value; }
 
     u8 getP() const;
-    u8 getPWithClearedB() const;
     void setP(u8 p);
-    void setPWithoutB(u8 p);
 
-    u8 getSr() const;
+    u8 getPWithClearedB() const;
+    void setPWithoutB(u8 p);
 
 
     //
@@ -290,7 +283,7 @@ protected:
     virtual u8 read8(u16 addr) const = 0;
 
     // Special variants used by the reset routine and the disassembler
-    virtual u8 read8Reset(u16 addr) const { return read8(addr); }
+    virtual u16 read16Reset(u16 addr) const { return u16(read8(addr) | read8(addr + 1) << 8); }
     virtual u8 read8Dasm(u16 addr) const { return read8(addr); }
 
     // Writes a byte into memory
@@ -364,6 +357,10 @@ public:
 
     // Returns true if the next cycle marks the beginning of an instruction
     bool inFetchPhase() const { return next == fetch; }
+
+    // Performs a hard reset (power up)
+    void reset();
+    template <CPURevision C> void reset();
 
     // Exexutes the CPU for a single cycle
     void execute();

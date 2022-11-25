@@ -44,12 +44,9 @@ void
 CPU::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)
-    
-    setB(1);
-    setI(1);
-	rdyLine = true;
-	next = fetch;
-    
+
+    Peddle::reset();
+
     assert(levelDetector.isClear());
     assert(edgeDetector.isClear());
 }
@@ -66,7 +63,7 @@ CPU::_inspect() const
         info.a = reg.a;
         info.x = reg.x;
         info.y = reg.y;
-        info.sr = getSr();
+        info.sr = getP();
 
         info.irq = irqLine;
         info.nmi = nmiLine;
@@ -168,10 +165,10 @@ CPU::read8(u16 addr) const
     }
 }
 
-u8
-CPU::read8Reset(u16 addr) const
+u16
+CPU::read16Reset(u16 addr) const
 {
-    return read8(addr);
+    return mem.resetVector();
 }
 
 u8
@@ -244,171 +241,5 @@ CPU::instructionLogged()
 }
 
 namespace peddle {
-
-/*
-template <CPURevision C> u8
-Peddle::peek(u16 addr)
-{
-    if constexpr (ENABLE_WATCHPOINTS) {
-        if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches(addr)) {
-            c64.signalWatchpoint();
-        }
-    }
-    
-    switch (C) {
-
-        case MOS_6510: return mem.peek(addr);
-        case MOS_6502: return id == 1 ? drive8.mem.peek(addr) : drive9.mem.peek(addr);
-
-        default:
-            fatalError;
-    }
-}
-
-template <CPURevision C> u8
-Peddle::peekZP(u8 addr)
-{
-    if constexpr (ENABLE_WATCHPOINTS) {
-        if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches(addr)) {
-            c64.signalWatchpoint();
-        }
-    }
-
-    switch (C) {
-
-        case MOS_6510: return mem.peekZP(addr);
-        case MOS_6502: return id == 1 ? drive8.mem.peekZP(addr) : drive9.mem.peekZP(addr);
-
-        default:
-            fatalError;
-    }
-}
-
-template <CPURevision C> u8
-Peddle::peekStack(u8 sp)
-{
-    if constexpr (ENABLE_WATCHPOINTS) {
-        if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches((u16)sp + 0x100)) {
-            c64.signalWatchpoint();
-        }
-    }
-
-    switch (C) {
-
-        case MOS_6510: return mem.peekStack(sp);
-        case MOS_6502: return id == 1 ? drive8.mem.peekStack(sp) : drive9.mem.peekStack(sp);
-
-        default:
-            fatalError;
-    }
-}
-
-u8
-Peddle::spypeek(u16 addr) const
-{
-    switch (cpuModel) {
-
-        case MOS_6502: return spypeek<MOS_6502>(addr);
-        case MOS_6510: return spypeek<MOS_6510>(addr);
-
-        default:
-            fatalError;
-    }
-}
-
-template <CPURevision C> u8
-Peddle::spypeek(u16 addr) const
-{
-    switch (C) {
-
-        case MOS_6510: return mem.spypeek(addr);
-        case MOS_6502: return id == 1 ? drive8.mem.spypeek(addr) : drive9.mem.spypeek(addr);
-
-        default:
-            fatalError;
-    }
-}
-
-template <CPURevision C> void
-Peddle::poke(u16 addr, u8 value)
-{
-    if constexpr (ENABLE_WATCHPOINTS) {
-        if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches(addr)) {
-            c64.signalWatchpoint();
-        }
-    }
-
-    switch (C) {
-
-        case MOS_6510: mem.poke(addr, value); break;
-        case MOS_6502: id == 1 ? drive8.mem.poke(addr, value) : drive9.mem.poke(addr, value); break;
-
-        default:
-            fatalError;
-    }
-}
-
-template <CPURevision C> void
-Peddle::pokeZP(u8 addr, u8 value)
-{
-    if constexpr (ENABLE_WATCHPOINTS) {
-        if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches(addr)) {
-            c64.signalWatchpoint();
-        }
-    }
-
-    switch (C) {
-
-        case MOS_6510: mem.pokeZP(addr, value); break;
-        case MOS_6502: id == 1 ? drive8.mem.pokeZP(addr, value) : drive9.mem.pokeZP(addr, value); break;
-
-        default:
-            fatalError;
-    }
-}
-
-template <CPURevision C> void
-Peddle::pokeStack(u8 addr, u8 value)
-{
-    if constexpr (ENABLE_WATCHPOINTS) {
-        if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches((u16)addr + 0x100)) {
-            c64.signalWatchpoint();
-        }
-    }
-
-    switch (C) {
-
-        case MOS_6510: mem.pokeStack(addr, value); break;
-        case MOS_6502: id == 1 ? drive8.mem.pokeStack(addr, value) : drive9.mem.pokeStack(addr, value); break;
-
-        default:
-            fatalError;
-    }
-}
-*/
-
-/*
-// template u8 Peddle::peek<MOS_6502>(u16 addr);
-template u8 Peddle::peekZP<MOS_6502>(u8 addr);
-template u8 Peddle::peekStack<MOS_6502>(u8 sp);
-template u8 Peddle::spypeek<MOS_6502>(u16 addr) const;
-template void Peddle::peekIdle<MOS_6502>(u16 addr);
-template void Peddle::peekZPIdle<MOS_6502>(u8 addr);
-template void Peddle::peekStackIdle<MOS_6502>(u8 sp);
-template void Peddle::poke<MOS_6502>(u16 addr, u8 value);
-template void Peddle::pokeZP<MOS_6502>(u8 addr, u8 value);
-template void Peddle::pokeStack<MOS_6502>(u8 sp, u8 value);
-
-// template u8 Peddle::peek<MOS_6510>(u16 addr);
-template u8 Peddle::peekZP<MOS_6510>(u8 addr);
-template u8 Peddle::peekStack<MOS_6510>(u8 sp);
-template u8 Peddle::spypeek<MOS_6510>(u16 addr) const;
-template void Peddle::peekIdle<MOS_6510>(u16 addr);
-template void Peddle::peekZPIdle<MOS_6510>(u8 addr);
-template void Peddle::peekStackIdle<MOS_6510>(u8 sp);
-template void Peddle::poke<MOS_6510>(u16 addr, u8 value);
-template void Peddle::pokeZP<MOS_6510>(u8 addr, u8 value);
-template void Peddle::pokeStack<MOS_6510>(u8 sp, u8 value);
-*/
 
 }

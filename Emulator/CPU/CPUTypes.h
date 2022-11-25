@@ -33,7 +33,7 @@
 struct CPURevisionEnum : util::Reflection<CPURevisionEnum, peddle::CPURevision> {
     
     static constexpr long minVal = 0;
-    static constexpr long maxVal = peddle::MOS_6510;
+    static constexpr long maxVal = peddle::MOS_8502;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return nullptr; }
@@ -44,6 +44,7 @@ struct CPURevisionEnum : util::Reflection<CPURevisionEnum, peddle::CPURevision> 
             case peddle::MOS_6502:  return "MOS_6502";
             case peddle::MOS_6507:  return "MOS_6507";
             case peddle::MOS_6510:  return "MOS_6510";
+            case peddle::MOS_8502:  return "MOS_8502";
         }
         return "???";
     }

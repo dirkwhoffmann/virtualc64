@@ -63,9 +63,10 @@ static constexpr int CPU_CHECK_CP           = (1 << 3);
 
 enum_long(CPUREV)
 {
-    MOS_6502,
-    MOS_6507,
-    MOS_6510,
+    MOS_6502,       // PET 2001, VC 20, Atari 800, Apple I/II, BBC Micro
+    MOS_6507,       // Atari 2600
+    MOS_6510,       // C64
+    MOS_8502        // C128
 };
 typedef CPUREV CPURevision;
 

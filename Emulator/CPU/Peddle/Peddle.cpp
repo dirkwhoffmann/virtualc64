@@ -37,6 +37,28 @@ Peddle::setModel(CPURevision cpuModel)
 }
 
 u16
+Peddle::hasProcessorPort() const
+{
+    switch (cpuModel) {
+
+        case MOS_6502:  return hasProcessorPort<MOS_6502>();
+        case MOS_6507:  return hasProcessorPort<MOS_6507>();
+        case MOS_6510:  return hasProcessorPort<MOS_6510>();
+        case MOS_8502:  return hasProcessorPort<MOS_8502>();
+
+        default:
+            fatalError;
+    }
+
+}
+
+template <CPURevision C> u16
+Peddle::hasProcessorPort() const
+{
+    return C == MOS_6510 || C == MOS_8502;
+}
+
+u16
 Peddle::addrMask() const
 {
     switch (cpuModel) {
@@ -44,6 +66,7 @@ Peddle::addrMask() const
         case MOS_6502:  return addrMask<MOS_6502>();
         case MOS_6507:  return addrMask<MOS_6507>();
         case MOS_6510:  return addrMask<MOS_6510>();
+        case MOS_8502:  return addrMask<MOS_8502>();
 
         default:
             fatalError;
@@ -55,12 +78,8 @@ Peddle::addrMask() const
 {
     switch (C) {
 
-        case MOS_6502:  return 0xFFFF;
         case MOS_6507:  return 0x1FFF;
-        case MOS_6510:  return 0xFFFF;
-
-        default:
-            fatalError;
+        default:        return 0xFFFF;
     }
 }
 

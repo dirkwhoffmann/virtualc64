@@ -131,10 +131,7 @@ void
 C64::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)
-                
-    // Initialize the program counter
-    cpu.reg.pc = mem.resetVector();
-    
+                    
     flags = 0;
     rasterCycle = 1;
 }
