@@ -148,9 +148,57 @@ CPU::_dump(Category category, std::ostream& os) const
         os << tab("doIrq");
         os << bol(doIrq) << std::endl;
         os << tab("IRQ routine");
-        os << hex(HI_W_LO_W(spypeek(0xFFFF), spypeek(0xFFFE))) << std::endl;
+        os << hex(HI_W_LO_W(read8Dasm(0xFFFF), read8Dasm(0xFFFE))) << std::endl;
         os << tab("NMI routine");
-        os << hex(HI_W_LO_W(spypeek(0xFFFB), spypeek(0xFFFA))) << std::endl;
+        os << hex(HI_W_LO_W(read8Dasm(0xFFFB), read8Dasm(0xFFFA))) << std::endl;
+    }
+}
+
+u8
+CPU::read8(u16 addr) const
+{
+    switch (id) {
+
+        case 0: return mem.peek(addr);
+        case 1: return drive8.mem.peek(addr);
+        case 2: return drive9.mem.peek(addr);
+
+        default:
+            fatalError;
+    }
+}
+
+u8
+CPU::read8Reset(u16 addr) const
+{
+    return read8(addr);
+}
+
+u8
+CPU::read8Dasm(u16 addr) const
+{
+    switch (id) {
+
+        case 0: return mem.spypeek(addr);
+        case 1: return drive8.mem.spypeek(addr);
+        case 2: return drive9.mem.spypeek(addr);
+
+        default:
+            fatalError;
+    }
+}
+
+void
+CPU::write8(u16 addr, u8 val) const
+{
+    switch (id) {
+
+        case 0: mem.poke(addr, val); break;
+        case 1: drive8.mem.poke(addr, val); break;
+        case 2: drive9.mem.poke(addr, val); break;
+
+        default:
+            fatalError;
     }
 }
 

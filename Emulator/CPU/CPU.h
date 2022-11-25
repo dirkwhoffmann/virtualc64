@@ -118,6 +118,12 @@ private:
     // Methods from Peddle
     //
 
+    virtual u8 read8(u16 addr) const override;
+    virtual u8 read8Reset(u16 addr) const override;
+    virtual u8 read8Dasm(u16 addr) const override;
+    virtual void write8(u16 addr, u8 val) const override;
+
+
     virtual void nmiWillTrigger() override;
     virtual void nmiDidTrigger() override;
     virtual void cpuDidJam() override;

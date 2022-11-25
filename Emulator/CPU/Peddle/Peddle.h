@@ -254,6 +254,19 @@ public:
 
 protected:
 
+    // Reads a byte from memory
+    virtual u8 read8(u16 addr) const = 0;
+
+    // Special variants used by the reset routine and the disassembler
+    virtual u8 read8Reset(u16 addr) const { return read8(addr); }
+    virtual u8 read8Dasm(u16 addr) const { return read8(addr); }
+
+    // Writes a byte into memory
+    virtual void write8(u16 addr, u8 val) const = 0;
+
+private:
+
+    // Wrapper functions
     template <CPURevision C> u8 peek(u16 addr);
     template <CPURevision C> u8 peekZP(u8 addr);
     template <CPURevision C> u8 peekStack(u8 sp);
