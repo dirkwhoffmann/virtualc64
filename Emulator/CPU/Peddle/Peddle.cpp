@@ -91,12 +91,6 @@ Peddle::peekStack(u8 addr)
     return read8(u16(addr) + 0x100);
 }
 
-template <CPURevision C> u8
-Peddle::spypeek(u16 addr) const
-{
-    return read8(addr & addrMask<C>());
-}
-
 template <CPURevision C> void
 Peddle::peekIdle(u16 addr)
 {

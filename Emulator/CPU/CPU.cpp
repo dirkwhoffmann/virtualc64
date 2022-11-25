@@ -237,7 +237,7 @@ CPU::cpuDidJam()
 }
 
 void
-CPU::instructionDidFinish()
+CPU::instructionLogged()
 {
     // Perform an inspection from time to time
     c64.autoInspect();

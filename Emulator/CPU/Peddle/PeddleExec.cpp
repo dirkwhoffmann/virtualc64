@@ -17,7 +17,6 @@ Peddle::getP() const
 
     if (reg.sr.n) result |= N_FLAG;
     if (reg.sr.v) result |= V_FLAG;
-
     if (reg.sr.b) result |= B_FLAG;
     if (reg.sr.d) result |= D_FLAG;
     if (reg.sr.i) result |= I_FLAG;
@@ -45,7 +44,6 @@ Peddle::setPWithoutB(u8 p)
 {
     reg.sr.n = (p & N_FLAG);
     reg.sr.v = (p & V_FLAG);
-
     reg.sr.d = (p & D_FLAG);
     reg.sr.i = (p & I_FLAG);
     reg.sr.z = (p & Z_FLAG);
@@ -66,13 +64,13 @@ void
 Peddle::adc(u8 op)
 {
     if (getD())
-        adc_bcd(op);
+        adcBcd(op);
     else
-        adc_binary(op);
+        adcBinary(op);
 }
 
 void
-Peddle::adc_binary(u8 op)
+Peddle::adcBinary(u8 op)
 {
     u16 sum = reg.a + op + (getC() ? 1 : 0);
     
@@ -82,7 +80,7 @@ Peddle::adc_binary(u8 op)
 }
 
 void
-Peddle::adc_bcd(u8 op)
+Peddle::adcBcd(u8 op)
 {
     u16 sum       = reg.a + op + (getC() ? 1 : 0);
     u8  highDigit = (reg.a >> 4) + (op >> 4);
@@ -129,13 +127,13 @@ void
 Peddle::sbc(u8 op)
 {
     if (getD())
-        sbc_bcd(op);
+        sbcBcd(op);
     else
-        sbc_binary(op);
+        sbcBinary(op);
 }
 
 void
-Peddle::sbc_binary(u8 op)
+Peddle::sbcBinary(u8 op)
 {
     u16 sum = reg.a - op - (getC() ? 0 : 1);
     
@@ -145,14 +143,15 @@ Peddle::sbc_binary(u8 op)
 }
 
 void
-Peddle::sbc_bcd(u8 op)
+Peddle::sbcBcd(u8 op)
 {
     u16 sum       = reg.a - op - (getC() ? 0 : 1);
     u8  highDigit = (reg.a >> 4) - (op >> 4);
     u8  lowDigit  = (reg.a & 0x0F) - (op & 0x0F) - (getC() ? 0 : 1);
     
-    // Check for underflow conditions
-    // If an overflow occurs on a BCD digit, it needs to be fixed by subtracting the pseudo-tetrade 0110 (=6)
+    /* Check for underflow conditions. If an overflow occurs on a BCD digit,
+     * it needs to be fixed by subtracting the pseudo-tetrade 0110 (=6)
+     */
     if (lowDigit & 0x10) {
         lowDigit = lowDigit - 6;
         highDigit--;
@@ -499,6 +498,7 @@ Peddle::execute()
     switch (cpuModel) {
 
         case MOS_6502: execute<MOS_6502>(); break;
+        case MOS_6507: execute<MOS_6507>(); break;
         case MOS_6510: execute<MOS_6510>(); break;
 
         default:
@@ -3237,6 +3237,90 @@ Peddle::execute()
     }
 }
 
+void
+Peddle::execute(int count)
+{
+    switch (cpuModel) {
+
+        case MOS_6502: execute<MOS_6502>(count); break;
+        case MOS_6507: execute<MOS_6507>(count); break;
+        case MOS_6510: execute<MOS_6510>(count); break;
+
+        default:
+            fatalError;
+    }
+}
+
+template <CPURevision C> void
+Peddle::execute(int count)
+{
+    for (int j = 0; j < count; j++) { execute<C>(); }
+}
+
+void
+Peddle::executeInstruction()
+{
+    switch (cpuModel) {
+
+        case MOS_6502: executeInstruction<MOS_6502>(); break;
+        case MOS_6507: executeInstruction<MOS_6507>(); break;
+        case MOS_6510: executeInstruction<MOS_6510>(); break;
+
+        default:
+            fatalError;
+    }
+}
+
+template <CPURevision C> void
+Peddle::executeInstruction()
+{
+    // Execute a singe cycle
+    execute<C>();
+
+    // Execute more cycles until we reach the fetch phase
+    finishInstruction<C>();
+}
+
+void
+Peddle::executeInstruction(int count)
+{
+    switch (cpuModel) {
+
+        case MOS_6502: executeInstruction<MOS_6502>(count); break;
+        case MOS_6507: executeInstruction<MOS_6507>(count); break;
+        case MOS_6510: executeInstruction<MOS_6510>(count); break;
+
+        default:
+            fatalError;
+    }
+}
+
+template <CPURevision C> void
+Peddle::executeInstruction(int count)
+{
+    for (int j = 0; j < count; j++) { executeInstruction<C>(); }
+}
+
+void
+Peddle::finishInstruction()
+{
+    switch (cpuModel) {
+
+        case MOS_6502: finishInstruction<MOS_6502>(); break;
+        case MOS_6507: finishInstruction<MOS_6507>(); break;
+        case MOS_6510: finishInstruction<MOS_6510>(); break;
+
+        default:
+            fatalError;
+    }
+}
+
+template <CPURevision C> void
+Peddle::finishInstruction()
+{
+    while (!inFetchPhase()) execute<C>();
+}
+
 template <CPURevision C> void
 Peddle::done() {
 
@@ -3245,7 +3329,7 @@ Peddle::done() {
         if (flags & CPU_LOG_INSTRUCTION) {
 
             debugger.logInstruction();
-            instructionDidFinish();
+            instructionLogged();
         }
 
         if ((flags & CPU_CHECK_BP) && debugger.breakpointMatches(reg.pc)) {

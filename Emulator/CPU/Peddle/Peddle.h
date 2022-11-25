@@ -262,7 +262,26 @@ public:
 
 
     //
-    // Accessing memory
+    // High-level memory interface
+    //
+
+private:
+
+    template <CPURevision C> u8 peek(u16 addr);
+    template <CPURevision C> u8 peekZP(u8 addr);
+    template <CPURevision C> u8 peekStack(u8 sp);
+
+    template <CPURevision C> void peekIdle(u16 addr);
+    template <CPURevision C> void peekZPIdle(u8 addr);
+    template <CPURevision C> void peekStackIdle(u8 sp);
+
+    template <CPURevision C> void poke(u16 addr, u8 value);
+    template <CPURevision C> void pokeZP(u8 addr, u8 value);
+    template <CPURevision C> void pokeStack(u8 sp, u8 value);
+
+
+    //
+    // Low-level memory interface
     //
 
 protected:
@@ -276,24 +295,6 @@ protected:
 
     // Writes a byte into memory
     virtual void write8(u16 addr, u8 val) const = 0;
-
-private:
-
-    // Wrapper functions
-    template <CPURevision C> u8 peek(u16 addr);
-    template <CPURevision C> u8 peekZP(u8 addr);
-    template <CPURevision C> u8 peekStack(u8 sp);
-
-    // u8 spypeek(u16 addr) const;
-    template <CPURevision C> u8 spypeek(u16 addr) const;
-
-    template <CPURevision C> void peekIdle(u16 addr);
-    template <CPURevision C> void peekZPIdle(u8 addr);
-    template <CPURevision C> void peekStackIdle(u8 sp);
-
-    template <CPURevision C> void poke(u16 addr, u8 value);
-    template <CPURevision C> void pokeZP(u8 addr, u8 value);
-    template <CPURevision C> void pokeStack(u8 sp, u8 value);
 
 
     //
@@ -312,8 +313,7 @@ private:
     // Debugger delegates
     virtual void breakpointReached(u16 addr) { };
     virtual void watchpointReached(u16 addr) { };
-
-    virtual void instructionDidFinish() { }
+    virtual void instructionLogged() { }
 
     
     //
@@ -345,11 +345,11 @@ public:
 protected:
 
     void adc(u8 op);
-    void adc_binary(u8 op);
-    void adc_bcd(u8 op);
+    void adcBinary(u8 op);
+    void adcBcd(u8 op);
     void sbc(u8 op);
-    void sbc_binary(u8 op);
-    void sbc_bcd(u8 op);
+    void sbcBinary(u8 op);
+    void sbcBcd(u8 op);
     void cmp(u8 op1, u8 op2);
 
 
@@ -365,9 +365,25 @@ public:
     // Returns true if the next cycle marks the beginning of an instruction
     bool inFetchPhase() const { return next == fetch; }
 
-    // Executes the next micro instruction
+    // Exexutes the CPU for a single cycle
     void execute();
     template <CPURevision C> void execute();
+
+    // Executes the CPU for the specified number of cycles
+    void execute(int count);
+    template <CPURevision C> void execute(int count);
+
+    // Executes the CPU for a single instruction
+    void executeInstruction();
+    template <CPURevision C> void executeInstruction();
+
+    // Executes the CPU for the specified number of instructions
+    void executeInstruction(int count);
+    template <CPURevision C> void executeInstruction(int count);
+
+    // Executes the CPU until the fetch phase is reached
+    void finishInstruction();
+    template <CPURevision C> void finishInstruction();
 
 protected:
 
