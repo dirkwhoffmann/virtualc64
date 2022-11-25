@@ -7,10 +7,10 @@
 
 #pragma once
 
-#include "PeddleTypes.h"
 #include "PeddleDebugger.h"
 #include "SubComponent.h"
 #include "PeddleExec.h"
+#include "PeddleUtils.h"
 #include "TimeDelayed.h"
 
 namespace peddle {
@@ -280,8 +280,10 @@ protected:
     virtual void irqDidTrigger() { }
     virtual void nmiWillTrigger() { }
     virtual void nmiDidTrigger() { }
+    virtual void cpuDidJam() { }
+    virtual void instructionDidFinish() { }
 
-
+    
     //
     // Handling interrupts
     //

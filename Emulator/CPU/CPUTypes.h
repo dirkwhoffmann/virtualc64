@@ -80,30 +80,9 @@ struct BreakpointTypeEnum : util::Reflection<BreakpointTypeEnum, BreakpointType>
 };
 #endif
 
-typedef enum
-{
-    ADDR_IMPLIED,
-    ADDR_ACCUMULATOR,
-    ADDR_IMMEDIATE,
-    ADDR_ZERO_PAGE,
-    ADDR_ZERO_PAGE_X,
-    ADDR_ZERO_PAGE_Y,
-    ADDR_ABSOLUTE,
-    ADDR_ABSOLUTE_X,
-    ADDR_ABSOLUTE_Y,
-    ADDR_INDIRECT_X,
-    ADDR_INDIRECT_Y,
-    ADDR_RELATIVE,
-    ADDR_DIRECT,
-    ADDR_INDIRECT
-}
-AddressingMode;
-
 typedef struct
 {
     u64 cycle;
-
-    // Registers reg; // DEPRECATED
 
     u16 pc0;
     u8 sp;

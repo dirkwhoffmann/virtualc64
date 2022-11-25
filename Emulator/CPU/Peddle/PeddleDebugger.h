@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "CPUTypes.h"
+#include "PeddleTypes.h"
 
 namespace peddle {
 

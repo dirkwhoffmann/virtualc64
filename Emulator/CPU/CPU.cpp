@@ -154,6 +154,25 @@ CPU::nmiDidTrigger()
     }
 }
 
+void
+CPU::cpuDidJam()
+{
+    c64.signalJammed();
+}
+
+void
+CPU::instructionDidFinish()
+{
+    // Record the instruction
+    debugger.logInstruction();
+
+    // Check if a breakpoint has been reached
+    if (debugger.breakpointMatches(reg.pc)) c64.signalBreakpoint();
+
+    // Perform an inspection from time to time
+    c64.autoInspect();
+}
+
 namespace peddle {
 
 template <CPURevision C> u8

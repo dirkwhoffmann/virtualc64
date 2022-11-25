@@ -119,6 +119,8 @@ private:
 
     virtual void nmiWillTrigger() override;
     virtual void nmiDidTrigger() override;
+    virtual void cpuDidJam() override;
+    virtual void instructionDidFinish() override;
 
 
     //

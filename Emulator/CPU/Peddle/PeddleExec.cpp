@@ -7,9 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "config.h"
-#include "CPU.h"
-#include "C64.h"
+#include "PeddleConfig.h"
+#include "Peddle.h"
 
 namespace peddle {
 
@@ -548,8 +547,8 @@ Peddle::executeOneCycle()
             //
             
         case JAM:
-            
-            c64.signalJammed();
+
+            cpuDidJam();
             CONTINUE
 
         case JAM_2:
@@ -3245,14 +3244,7 @@ Peddle::done() {
 
     if (debugMode) {
 
-        // Record the instruction
-        debugger.logInstruction();
-
-        // Check if a breakpoint has been reached
-        if (debugger.breakpointMatches(reg.pc)) c64.signalBreakpoint();
-
-        // Perform an inspection from time to time
-        c64.autoInspect();
+        instructionDidFinish();
     }
     
     reg.pc0 = reg.pc;

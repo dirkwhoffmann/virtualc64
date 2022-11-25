@@ -5,6 +5,5 @@
 // Published under the terms of the MIT License
 // -----------------------------------------------------------------------------
 
-#pragma once
-
-#include "config.h"
+#include "PeddleConfig.h"
+#include "PeddleUtils.h"

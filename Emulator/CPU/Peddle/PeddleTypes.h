@@ -7,12 +7,7 @@
 
 #pragma once
 
-#include "Aliases.h"
-/*
-#include <cstdint>
-#include <string>
-#include <optional>
-*/
+#include "Types.h"
 
 #ifdef __cplusplus
 namespace peddle {
@@ -22,15 +17,16 @@ namespace peddle {
 // Constants
 //
 
-#define LOG_BUFFER_CAPACITY 256
-
-#define C_FLAG 0x01
-#define Z_FLAG 0x02
-#define I_FLAG 0x04
-#define D_FLAG 0x08
-#define B_FLAG 0x10
-#define V_FLAG 0x40
-#define N_FLAG 0x80
+#ifdef __cplusplus
+static constexpr isize LOG_BUFFER_CAPACITY = 256;
+static constexpr isize C_FLAG = 0x01;
+static constexpr isize Z_FLAG = 0x02;
+static constexpr isize I_FLAG = 0x04;
+static constexpr isize D_FLAG = 0x08;
+static constexpr isize B_FLAG = 0x10;
+static constexpr isize V_FLAG = 0x40;
+static constexpr isize N_FLAG = 0x80;
+#endif
 
 
 //
@@ -50,6 +46,25 @@ enum_long(CPUREV)
     MOS_6502
 };
 typedef CPUREV CPURevision;
+
+typedef enum
+{
+    ADDR_IMPLIED,
+    ADDR_ACCUMULATOR,
+    ADDR_IMMEDIATE,
+    ADDR_ZERO_PAGE,
+    ADDR_ZERO_PAGE_X,
+    ADDR_ZERO_PAGE_Y,
+    ADDR_ABSOLUTE,
+    ADDR_ABSOLUTE_X,
+    ADDR_ABSOLUTE_Y,
+    ADDR_INDIRECT_X,
+    ADDR_INDIRECT_Y,
+    ADDR_RELATIVE,
+    ADDR_DIRECT,
+    ADDR_INDIRECT
+}
+AddressingMode;
 
 
 //

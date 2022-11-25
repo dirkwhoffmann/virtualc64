@@ -7,10 +7,9 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#include "config.h"
+#include "PeddleConfig.h"
 #include "PeddleDebugger.h"
 #include "C64.h"
-#include "IOUtils.h"
 
 using util::sprint8x;
 using util::sprint8d;
