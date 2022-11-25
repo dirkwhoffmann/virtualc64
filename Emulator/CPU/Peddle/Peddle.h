@@ -71,11 +71,6 @@ protected:
     // State flags
     isize flags;
 
-    /* Debug mode. In debug mode, the CPU checks for breakpoints and records
-     * executed instruction in the log buffer. TODO: REPLACE BY flags
-     */
-    bool debugMode;
-
     // The next microinstruction to be executed
     MicroInstruction next;
 

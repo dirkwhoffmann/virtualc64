@@ -14,11 +14,6 @@
 
 #include <random>
 
-#define CHECK_WATCHPOINT(x) \
-if (checkWatchpoints && cpu.debugger.watchpointMatches(x)) { \
-c64.signalWatchpoint(); \
-}
-
 C64Memory::C64Memory(C64 &ref) : SubComponent(ref)
 {    		
     memset(rom, 0, sizeof(rom));
@@ -372,8 +367,6 @@ C64Memory::updatePeekPokeLookupTables()
 u8
 C64Memory::peek(u16 addr, MemoryType source)
 {
-    CHECK_WATCHPOINT(addr)
-    
     switch(source) {
             
         case M_RAM:
@@ -427,8 +420,6 @@ C64Memory::peek(u16 addr, bool gameLine, bool exromLine)
 u8
 C64Memory::peekZP(u8 addr)
 {
-    CHECK_WATCHPOINT(addr)
-    
     if (likely(addr >= 0x02)) {
         return ram[addr];
     } else if (addr == 0x00) {
@@ -441,16 +432,12 @@ C64Memory::peekZP(u8 addr)
 u8
 C64Memory::peekStack(u8 sp)
 {
-    CHECK_WATCHPOINT(sp)
-    
     return ram[0x100 + sp];
 }
 
 u8
 C64Memory::peekIO(u16 addr)
 {
-    CHECK_WATCHPOINT(addr)
-    
     assert(addr >= 0xD000 && addr <= 0xDFFF);
     
     switch ((addr >> 8) & 0xF) {
@@ -603,8 +590,6 @@ C64Memory::spypeekColor(u16 addr) const
 void
 C64Memory::poke(u16 addr, u8 value, MemoryType target)
 {
-    CHECK_WATCHPOINT(addr)
-    
     switch(target) {
             
         case M_RAM:
@@ -659,8 +644,6 @@ C64Memory::poke(u16 addr, u8 value, bool gameLine, bool exromLine)
 void
 C64Memory::pokeZP(u8 addr, u8 value)
 {
-    CHECK_WATCHPOINT(addr)
-    
     if (likely(addr >= 0x02)) {
         ram[addr] = value;
     } else if (addr == 0x00) {
@@ -673,16 +656,12 @@ C64Memory::pokeZP(u8 addr, u8 value)
 void
 C64Memory::pokeStack(u8 sp, u8 value)
 {
-    CHECK_WATCHPOINT(sp)
-    
     ram[0x100 + sp] = value;
 }
 
 void
 C64Memory::pokeIO(u16 addr, u8 value)
 {
-    CHECK_WATCHPOINT(addr)
-    
     assert(addr >= 0xD000 && addr <= 0xDFFF);
     
     switch ((addr >> 8) & 0xF) {
