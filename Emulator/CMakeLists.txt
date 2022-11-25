@@ -35,8 +35,8 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 else()
   target_compile_options(vc64Core PUBLIC -Wall -Werror)
   target_compile_options(vc64Core PUBLIC -Wno-unused-parameter)
-  target_compile_options(vAmigaCore PUBLIC -Wno-gnu-anonymous-struct)
-  target_compile_options(vAmigaCore PUBLIC -Wno-nested-anon-types)
+  target_compile_options(vc64Core PUBLIC -Wno-gnu-anonymous-struct)
+  target_compile_options(vc64Core PUBLIC -Wno-nested-anon-types)
 endif()
 
 # Add include paths
@@ -48,6 +48,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/Cartridges
 ${CMAKE_CURRENT_SOURCE_DIR}/Cartridges/CustomCartridges
 ${CMAKE_CURRENT_SOURCE_DIR}/CIA
 ${CMAKE_CURRENT_SOURCE_DIR}/CPU
+${CMAKE_CURRENT_SOURCE_DIR}/CPU/Peddle
 ${CMAKE_CURRENT_SOURCE_DIR}/FileSystems
 ${CMAKE_CURRENT_SOURCE_DIR}/LogicBoard
 ${CMAKE_CURRENT_SOURCE_DIR}/Media

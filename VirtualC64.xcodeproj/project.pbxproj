@@ -623,6 +623,7 @@
 		50891C002652380A0004AC1B /* VICII_sprites.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_sprites.cpp; sourceTree = "<group>"; };
 		509280CD2930A1B6006E1966 /* PeddleUtils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PeddleUtils.cpp; sourceTree = "<group>"; };
 		509280CE2930A1B6006E1966 /* PeddleUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeddleUtils.h; sourceTree = "<group>"; };
+		509280D029312C00006E1966 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5092A5B0200BC4B70037754D /* DragAndDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
 		5093D6A824B19E9200BDF924 /* Serialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Serialization.h; sourceTree = "<group>"; };
 		5098C57A2658CF9800E05EFC /* VideoExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExporter.swift; sourceTree = "<group>"; };
@@ -1571,6 +1572,7 @@
 		50AA48B5292F8F350084401D /* Peddle */ = {
 			isa = PBXGroup;
 			children = (
+				509280D029312C00006E1966 /* CMakeLists.txt */,
 				50AA48B4292F8F1A0084401D /* PeddleConfig.h */,
 				50AA48B3292F8F080084401D /* PeddleTypes.h */,
 				50AA48B1292F8EC30084401D /* Peddle.h */,
