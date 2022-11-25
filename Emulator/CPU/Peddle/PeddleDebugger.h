@@ -137,7 +137,6 @@ public:
 class Debugger {
     
     friend class Peddle;
-    friend class CPU;
     
     // Reference to the connected CPU
     class Peddle &cpu;
