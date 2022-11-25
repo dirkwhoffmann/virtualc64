@@ -82,7 +82,7 @@ protected:
 public:
 
     Registers reg;
-    
+
 
     //
     // Ports
@@ -153,8 +153,8 @@ protected:
      *  it's likely to be detected again during later polling)."
      */
     bool doIrq;
-    
-    
+
+
     //
     // Constructing
     //
@@ -290,6 +290,22 @@ protected:
     virtual void write8(u16 addr, u8 val) const = 0;
 
 
+    //
+    // Accessing the processor port
+    //
+
+    // Reads from the port register or the port direction register
+    virtual u8 readPort() const;
+    virtual u8 readPortDir() const;
+
+    // Writes into the port register or the port direction register
+    virtual void writePort(u8 val);
+    virtual void writePortDir(u8 val);
+
+    // Data provider for the external port bits
+    virtual u8 externalPortBits() const { return 0; }
+
+    
     //
     // Delegation methods
     //

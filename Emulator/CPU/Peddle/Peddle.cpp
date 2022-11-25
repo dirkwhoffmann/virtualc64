@@ -161,6 +161,30 @@ Peddle::pokeStack(u8 addr, u8 value)
     write8(u16(addr) + 0x100, value);
 }
 
+u8
+Peddle::readPort() const
+{
+    return (reg.pport.data & reg.pport.direction) | (externalPortBits() & ~reg.pport.direction);
+}
+
+u8
+Peddle::readPortDir() const
+{
+    return reg.pport.direction;
+}
+
+void
+Peddle::writePort(u8 val)
+{
+    reg.pport.data = val;
+}
+
+void
+Peddle::writePortDir(u8 val)
+{
+    reg.pport.direction = val;
+}
+
 void
 Peddle::pullDownNmiLine(IntSource bit)
 {

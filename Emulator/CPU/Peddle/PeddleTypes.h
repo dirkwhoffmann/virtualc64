@@ -96,15 +96,22 @@ AddressingMode;
 
 typedef struct
 {
-    bool n;               // Negative flag
-    bool v;               // Overflow flag
-    bool b;               // Break flag
-    bool d;               // Decimal flag
-    bool i;               // Interrupt flag
-    bool z;               // Zero flag
-    bool c;               // Carry flag
+    bool n;                 // Negative flag
+    bool v;                 // Overflow flag
+    bool b;                 // Break flag
+    bool d;                 // Decimal flag
+    bool i;                 // Interrupt flag
+    bool z;                 // Zero flag
+    bool c;                 // Carry flag
 }
 StatusRegister;
+
+typedef struct
+{
+    u8 data;                // Processor port register
+    u8 direction;           // Processor port direction register
+}
+PPort;
 
 typedef struct
 {
@@ -125,6 +132,7 @@ typedef struct
     bool ovl; // Overflow indicator (page boundary crossings)
 
     StatusRegister sr;
+    PPort pport;
 }
 Registers;
 
