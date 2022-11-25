@@ -44,6 +44,9 @@ ProcessorPort::_dump(Category category, std::ostream& os) const
 u8
 ProcessorPort::read() const
 {
+    return cpu.readPort();
+
+    /*
     // If the port bits are configured as inputs and no datasette is attached,
     // the following values are returned:
     //
@@ -68,17 +71,22 @@ ProcessorPort::read() const
     u8 bits = bit7 | bit6 | bit4 | bit3 | 0x07;
 
     return (port & direction) | (bits & ~direction);
+    */
 }
 
 u8
 ProcessorPort::readDirection() const
 {
-    return direction;
+    return cpu.readPortDir();
+//     return direction;
 }
 
 void
 ProcessorPort::write(u8 value)
-{    
+{
+    cpu.writePort(value);
+
+    /*
     port = value;
     
     // Check for datasette motor bit
@@ -91,11 +99,14 @@ ProcessorPort::write(u8 value)
     
     // Switch memory banks
     mem.updatePeekPokeLookupTables();
+    */
 }
 
 void
 ProcessorPort::writeDirection(u8 value)
 {
+    cpu.writePortDir(value);
+    /*
     u64 dischargeCycles = 350000; // VICE value
     // u64 dischargeCycles = 246312; // Hoxs64 value
 
@@ -121,4 +132,5 @@ ProcessorPort::writeDirection(u8 value)
     
     // Switch memory banks
     mem.updatePeekPokeLookupTables();
+    */
 }

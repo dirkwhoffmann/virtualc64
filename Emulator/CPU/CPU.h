@@ -23,8 +23,28 @@ class CPU : public peddle::Peddle {
 
 public:
 
-    // Processor Port
+    // Processor Port (DEPRECATED)
     ProcessorPort pport = ProcessorPort(c64);
+
+    /* Processor port
+     *
+     * Clock cycle when floating bit values reach zero.
+     * Bit 3, 6, and 7 of the processor need special attention. When the
+     * direction of these bits is changed from output to input, there will be
+     * no external signal driving them. As a result, these bits will be in a
+     * floating state and act as capacitors. They will discharge slowly and
+     * eventually reach zero. These variables are used to indicate when the
+     * zero level is reached. All three variables are queried in readPort() and
+     * comply to the following rules:
+     *
+     *    dischargeCycleBit > current cycle => bit reads as 1
+     *                                         (if configured as input)
+     *    otherwise                         => bit reads as 0
+     *                                         (if configured as input)
+     */
+    u64 dischargeCycleBit3;
+    u64 dischargeCycleBit6;
+    u64 dischargeCycleBit7;
 
     
     //
@@ -105,7 +125,11 @@ private:
         >> edgeDetector
         >> levelDetector
         << doNmi
-        << doIrq;
+        << doIrq
+
+        << dischargeCycleBit3
+        << dischargeCycleBit6
+        << dischargeCycleBit7;
     }
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }
@@ -118,11 +142,16 @@ private:
     // Methods from Peddle
     //
 
+public:
+
     virtual u8 read8(u16 addr) const override;
     virtual u16 read16Reset(u16 addr) const override;
     virtual u8 read8Dasm(u16 addr) const override;
     virtual void write8(u16 addr, u8 val) const override;
 
+    virtual void writePort(u8 val) override;
+    virtual void writePortDir(u8 val) override;
+    virtual u8 externalPortBits() const override;
 
     virtual void nmiWillTrigger() override;
     virtual void nmiDidTrigger() override;

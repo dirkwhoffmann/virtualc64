@@ -294,6 +294,8 @@ protected:
     // Accessing the processor port
     //
 
+public:
+
     // Reads from the port register or the port direction register
     virtual u8 readPort() const;
     virtual u8 readPortDir() const;
@@ -302,6 +304,8 @@ protected:
     virtual void writePort(u8 val);
     virtual void writePortDir(u8 val);
 
+protected:
+    
     // Data provider for the external port bits
     virtual u8 externalPortBits() const { return 0; }
 
@@ -309,6 +313,8 @@ protected:
     //
     // Delegation methods
     //
+
+protected:
 
     // State delegates
     virtual void cpuDidJam() { }
