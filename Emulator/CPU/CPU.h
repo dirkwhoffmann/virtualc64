@@ -76,7 +76,8 @@ private:
         }
         
         worker
-        
+
+        << flags
         << next
         << reg.a
         << reg.x
@@ -121,6 +122,8 @@ private:
     virtual void nmiDidTrigger() override;
     virtual void cpuDidJam() override;
     virtual void instructionDidFinish() override;
+    virtual void breakpointReached(u16 addr) override;
+    virtual void watchpointReached(u16 addr) override;
 
 
     //

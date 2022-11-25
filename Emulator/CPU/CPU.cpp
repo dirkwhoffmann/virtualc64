@@ -80,14 +80,18 @@ CPU::_inspect() const
 void
 CPU::_debugOn()
 {
-    // We only allow the C64 CPU to run in debug mode
-    if (isC64CPU()) { debugMode = true; }
+    // We only allow the C64 CPU to enter debug mode
+    if (!isC64CPU()) return;
+
+    debug(RUN_DEBUG, "Enabling debug mode\n");
+    debugger.enableLogging();
 }
 
 void
 CPU::_debugOff()
 {
-    debugMode = false;
+    debug(RUN_DEBUG, "Disabling debug mode\n");
+    debugger.disableLogging();
 }
 
 void
@@ -114,9 +118,20 @@ CPU::_dump(Category category, std::ostream& os) const
     }
     
     if (category == Category::State) {
-    
+
+        auto append = [&](const string &s1, const string &s2) {
+            return s1.empty() ? s2 : s1 + ", " + s2;
+        };
+
+        string str = "";
+        if (flags & CPU_LOG_INSTRUCTION) str = append(str, "LOG_INSTRUCTION");
+        if (flags & CPU_CHECK_BP) str = append(str, "CHECK_BP");
+        if (flags & CPU_CHECK_WP) str = append(str, "CHECK_WP");
+
         os << tab("Cycle");
         os << dec(clock) << std::endl;
+        os << tab("Flags");
+        os << (str.empty() ? "-" : str) << std::endl;
         os << tab("Rdy line");
         os << bol(rdyLine, "high", "low") << std::endl;
         os << tab("Nmi line");
@@ -155,6 +170,18 @@ CPU::nmiDidTrigger()
 }
 
 void
+CPU::breakpointReached(u16 addr)
+{
+    c64.signalBreakpoint();
+}
+
+void
+CPU::watchpointReached(u16 addr)
+{
+
+}
+
+void
 CPU::cpuDidJam()
 {
     c64.signalJammed();
@@ -163,12 +190,6 @@ CPU::cpuDidJam()
 void
 CPU::instructionDidFinish()
 {
-    // Record the instruction
-    debugger.logInstruction();
-
-    // Check if a breakpoint has been reached
-    if (debugger.breakpointMatches(reg.pc)) c64.signalBreakpoint();
-
     // Perform an inspection from time to time
     c64.autoInspect();
 }

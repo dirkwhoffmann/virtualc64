@@ -61,17 +61,20 @@ protected:
     // Internal state
     //
 
-    /* Debug mode. In debug mode, the CPU checks for breakpoints and records
-     * executed instruction in the log buffer.
-     */
-    bool debugMode;
-
 public:
 
     // Elapsed clock cycles since power up
     u64 clock;
 
 protected:
+
+    // State flags
+    isize flags;
+
+    /* Debug mode. In debug mode, the CPU checks for breakpoints and records
+     * executed instruction in the log buffer. TODO: REPLACE BY flags
+     */
+    bool debugMode;
 
     // The next microinstruction to be executed
     MicroInstruction next;
@@ -276,11 +279,19 @@ protected:
     // Delegation methods
     //
 
+    // State delegates
+    virtual void cpuDidJam() { }
+
+    // Exception delegates
     virtual void irqWillTrigger() { }
     virtual void irqDidTrigger() { }
     virtual void nmiWillTrigger() { }
     virtual void nmiDidTrigger() { }
-    virtual void cpuDidJam() { }
+
+    // Debugger delegates
+    virtual void breakpointReached(u16 addr) { };
+    virtual void watchpointReached(u16 addr) { };
+
     virtual void instructionDidFinish() { }
 
     

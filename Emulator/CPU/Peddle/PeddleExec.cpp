@@ -3242,15 +3242,22 @@ Peddle::executeOneCycle()
 template <CPURevision C> void
 Peddle::done() {
 
-    if (debugMode) {
+    if (flags) {
 
-        instructionDidFinish();
+        if (flags & CPU_LOG_INSTRUCTION) {
+
+            debugger.logInstruction();
+            instructionDidFinish();
+        }
+
+        if ((flags & CPU_CHECK_BP) && debugger.breakpointMatches(reg.pc)) {
+
+            breakpointReached(reg.pc);
+        }
     }
-    
+
     reg.pc0 = reg.pc;
     next = fetch;
 }
-
-void done();
 
 }

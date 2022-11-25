@@ -35,6 +35,23 @@ static constexpr isize N_FLAG = 0x80;
 
 typedef u8 IntSource;
 
+/* State flags
+*
+ * CPU_LOG_INSTRUCTION:
+ *     This flag is set if instruction logging is enabled. If set, the
+ *     CPU records the current register contents in a log buffer.
+*
+ * CPU_CHECK_BP, CPU_CHECK_WP, CPU_CHECK_CP:
+ *    These flags indicate whether the CPU should check for breakpoints,
+ *    watchpoints, or catchpoints.
+ */
+#ifdef __cplusplus
+static constexpr int CPU_LOG_INSTRUCTION    = (1 << 0);
+static constexpr int CPU_CHECK_BP           = (1 << 1);
+static constexpr int CPU_CHECK_WP           = (1 << 2);
+static constexpr int CPU_CHECK_CP           = (1 << 3);
+#endif
+
 
 //
 // Enumerations

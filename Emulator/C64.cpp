@@ -780,6 +780,9 @@ C64::_run()
 {
     debug(RUN_DEBUG, "_run\n");
 
+    // Enable or disable CPU debugging
+    debugMode ? cpu.debugger.enableLogging() : cpu.debugger.disableLogging();
+
     msgQueue.put(MSG_RUN);
 }
 

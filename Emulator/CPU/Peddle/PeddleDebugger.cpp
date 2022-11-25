@@ -174,17 +174,31 @@ Guards::eval(u32 addr)
 void
 Breakpoints::setNeedsCheck(bool value)
 {
+    if (value) {
+        cpu.flags |= CPU_CHECK_BP;
+    } else {
+        cpu.flags &= ~CPU_CHECK_BP;
+    }
+    /*
     if (value || cpu.c64.inDebugMode()) {
         cpu.debugMode = true;
     } else {
         cpu.debugMode = false;
     }
+    */
 }
 
 void
 Watchpoints::setNeedsCheck(bool value)
 {
+    if (value) {
+        cpu.flags |= CPU_CHECK_WP;
+    } else {
+        cpu.flags &= ~CPU_CHECK_WP;
+    }
+    /*
     cpu.mem.checkWatchpoints = value;
+    */
 }
 
 //
@@ -239,6 +253,18 @@ CPUDebugger::watchpointMatches(u32 addr)
     
     watchpointPC = cpu.reg.pc0;
     return true;
+}
+
+void
+CPUDebugger::enableLogging()
+{
+    cpu.flags |= CPU_LOG_INSTRUCTION;
+}
+
+void
+CPUDebugger::disableLogging()
+{
+    cpu.flags &= ~CPU_LOG_INSTRUCTION;
 }
 
 isize

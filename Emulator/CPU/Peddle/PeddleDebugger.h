@@ -108,7 +108,7 @@ public:
     void setEnableAt(u32 addr, bool val);
     void enableAt(u32 addr) { setEnableAt(addr, true); }
     void disableAt(u32 addr) { setEnableAt(addr, false); }
-    
+
     //
     // Checking a guard
     //
@@ -223,6 +223,10 @@ public:
     //
     // Working with the instruction log
     //
+
+    // Turns instruction logging on or off
+    void enableLogging();
+    void disableLogging();
 
     // Returns the number of logged instructions
     isize loggedInstructions() const;
