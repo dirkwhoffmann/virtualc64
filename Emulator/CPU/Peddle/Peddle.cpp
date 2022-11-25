@@ -36,6 +36,34 @@ Peddle::setModel(CPURevision cpuModel)
     this->cpuModel = cpuModel;
 }
 
+u16
+Peddle::addrMask() const
+{
+    switch (cpuModel) {
+
+        case MOS_6502:  return addrMask<MOS_6502>();
+        case MOS_6507:  return addrMask<MOS_6507>();
+        case MOS_6510:  return addrMask<MOS_6510>();
+
+        default:
+            fatalError;
+    }
+}
+
+template <CPURevision C> u16
+Peddle::addrMask() const
+{
+    switch (C) {
+
+        case MOS_6502:  return 0xFFFF;
+        case MOS_6507:  return 0x1FFF;
+        case MOS_6510:  return 0xFFFF;
+
+        default:
+            fatalError;
+    }
+}
+
 #define CHECK_WATCHPOINT \
 if constexpr (ENABLE_WATCHPOINTS) { \
 if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches(addr)) { \
@@ -46,14 +74,14 @@ template <CPURevision C> u8
 Peddle::peek(u16 addr)
 {
     CHECK_WATCHPOINT
-    return read8(addr); // TODO: Apply address bus mask
+    return read8(addr & addrMask<C>());
 }
 
 template <CPURevision C> u8
 Peddle::peekZP(u8 addr)
 {
     CHECK_WATCHPOINT
-    return read8(addr);
+    return read8(addr & addrMask<C>());
 }
 
 template <CPURevision C> u8
@@ -66,7 +94,7 @@ Peddle::peekStack(u8 addr)
 template <CPURevision C> u8
 Peddle::spypeek(u16 addr) const
 {
-    return read8(addr);
+    return read8(addr & addrMask<C>());
 }
 
 template <CPURevision C> void
@@ -75,7 +103,7 @@ Peddle::peekIdle(u16 addr)
     if (EMULATE_IDLE_ACCESSES) {
 
         CHECK_WATCHPOINT
-        (void)read8(addr);
+        (void)read8(addr & addrMask<C>());
     }
 }
 
@@ -103,7 +131,7 @@ template <CPURevision C> void
 Peddle::poke(u16 addr, u8 value)
 {
     CHECK_WATCHPOINT
-    write8(addr, value);
+    write8(addr & addrMask<C>(), value);
 }
 
 template <CPURevision C> void

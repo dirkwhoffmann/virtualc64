@@ -197,6 +197,21 @@ public:
 
 
     //
+    // Querying CPU properties
+    //
+
+public:
+
+    // Returns the address bus mask for this CPU model
+    u16 addrMask() const;
+
+protected:
+
+    // The addrMask core routine
+    template <CPURevision C> u16 addrMask() const;
+
+
+    //
     // Accessing registers and flags
     //
 
