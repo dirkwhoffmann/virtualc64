@@ -146,8 +146,8 @@ private:
 
 public:
 
-    virtual u8 read8(u16 addr) override;
-    virtual void write8(u16 addr, u8 val) override;
+    virtual u8 read(u16 addr) override;
+    virtual void write(u16 addr, u8 val) override;
     virtual u16 readResetVector() override;
     virtual u8 readDasm(u16 addr) const override;
 

@@ -164,7 +164,7 @@ CPU::_dump(Category category, std::ostream& os) const
 }
 
 u8
-CPU::read8(u16 addr)
+CPU::read(u16 addr)
 {
     switch (id) {
 
@@ -198,7 +198,7 @@ CPU::readDasm(u16 addr) const
 }
 
 void
-CPU::write8(u16 addr, u8 val)
+CPU::write(u16 addr, u8 val)
 {
     switch (id) {
 

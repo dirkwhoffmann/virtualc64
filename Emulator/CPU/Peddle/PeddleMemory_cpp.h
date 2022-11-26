@@ -12,7 +12,7 @@ watchpointReached(addr); \
 }}
 
 template <CPURevision C> u8
-Peddle::peek(u16 addr)
+Peddle::read(u16 addr)
 {
     CHECK_WATCHPOINT
 
@@ -20,11 +20,11 @@ Peddle::peek(u16 addr)
 
         if (addr < 2) return addr ? readPort() : readPortDir();
     }
-    return read8(addr & addrMask<C>());
+    return read(addr & addrMask<C>());
 }
 
 template <CPURevision C> u8
-Peddle::peekZP(u8 addr)
+Peddle::readZeroPage(u8 addr)
 {
     CHECK_WATCHPOINT
 
@@ -32,18 +32,18 @@ Peddle::peekZP(u8 addr)
 
         if (addr < 2) return addr ? readPort() : readPortDir();
     }
-    return read8(addr & addrMask<C>());
+    return read(addr & addrMask<C>());
 }
 
 template <CPURevision C> u8
-Peddle::peekStack(u8 addr)
+Peddle::readStack(u8 addr)
 {
     CHECK_WATCHPOINT
-    return read8(u16(addr) + 0x100);
+    return read(u16(addr) + 0x100);
 }
 
 template <CPURevision C> void
-Peddle::peekIdle(u16 addr)
+Peddle::readIdle(u16 addr)
 {
     if (EMULATE_IDLE_ACCESSES) {
 
@@ -53,12 +53,12 @@ Peddle::peekIdle(u16 addr)
 
             if (addr < 2) return addr ? (void)readPort() : (void)readPortDir();
         }
-        (void)read8(addr & addrMask<C>());
+        (void)read(addr & addrMask<C>());
     }
 }
 
 template <CPURevision C> void
-Peddle::peekZPIdle(u8 addr)
+Peddle::readZeroPageIdle(u8 addr)
 {
     if (EMULATE_IDLE_ACCESSES) {
 
@@ -68,22 +68,22 @@ Peddle::peekZPIdle(u8 addr)
 
             if (addr < 2) return addr ? (void)readPort() : (void)readPortDir();
         }
-        (void)read8(u16(addr));
+        (void)read(u16(addr));
     }
 }
 
 template <CPURevision C> void
-Peddle::peekStackIdle(u8 addr)
+Peddle::readStackIdle(u8 addr)
 {
     if (EMULATE_IDLE_ACCESSES) {
 
         CHECK_WATCHPOINT
-        (void)read8(u16(addr) + 0x100);
+        (void)read(u16(addr) + 0x100);
     }
 }
 
 template <CPURevision C> void
-Peddle::poke(u16 addr, u8 val)
+Peddle::write(u16 addr, u8 val)
 {
     CHECK_WATCHPOINT
 
@@ -91,11 +91,11 @@ Peddle::poke(u16 addr, u8 val)
 
         if (addr < 2) { addr ? writePort(val) : writePortDir(val); return; }
     }
-    write8(addr & addrMask<C>(), val);
+    write(addr & addrMask<C>(), val);
 }
 
 template <CPURevision C> void
-Peddle::pokeZP(u8 addr, u8 val)
+Peddle::writeZeroPage(u8 addr, u8 val)
 {
     CHECK_WATCHPOINT
 
@@ -103,28 +103,28 @@ Peddle::pokeZP(u8 addr, u8 val)
 
         if (addr < 2) { addr ? writePort(val) : writePortDir(val); return; }
     }
-    write8(u16(addr), val);
+    write(u16(addr), val);
 }
 
 template <CPURevision C> void
-Peddle::pokeStack(u8 addr, u8 val)
+Peddle::writeStack(u8 addr, u8 val)
 {
     CHECK_WATCHPOINT
-    write8(u16(addr) + 0x100, val);
+    write(u16(addr) + 0x100, val);
 }
 
 template <CPURevision C> u16
 Peddle::readResetVector()
 {
     u16 addr = 0xFFFC & addrMask<C>();
-    return u16(peek<C>(addr) | peek<C>(addr + 1) << 8);
+    return u16(read<C>(addr) | read<C>(addr + 1) << 8);
 }
 
 u16
 Peddle::readResetVector()
 {
     u16 addr = 0xFFFC & addrMask();
-    return u16(read8(addr) | read8(addr + 1) << 8);
+    return u16(read(addr) | read(addr + 1) << 8);
 }
 
 template <CPURevision C> u16

@@ -328,17 +328,17 @@ public:
 
 private:
 
-    template <CPURevision C> u8 peek(u16 addr);
-    template <CPURevision C> u8 peekZP(u8 addr);
-    template <CPURevision C> u8 peekStack(u8 sp);
+    template <CPURevision C> u8 read(u16 addr);
+    template <CPURevision C> u8 readZeroPage(u8 addr);
+    template <CPURevision C> u8 readStack(u8 sp);
 
-    template <CPURevision C> void peekIdle(u16 addr);
-    template <CPURevision C> void peekZPIdle(u8 addr);
-    template <CPURevision C> void peekStackIdle(u8 sp);
+    template <CPURevision C> void readIdle(u16 addr);
+    template <CPURevision C> void readZeroPageIdle(u8 addr);
+    template <CPURevision C> void readStackIdle(u8 sp);
 
-    template <CPURevision C> void poke(u16 addr, u8 value);
-    template <CPURevision C> void pokeZP(u8 addr, u8 value);
-    template <CPURevision C> void pokeStack(u8 sp, u8 value);
+    template <CPURevision C> void write(u16 addr, u8 value);
+    template <CPURevision C> void writeZeroPage(u8 addr, u8 value);
+    template <CPURevision C> void writeStack(u8 sp, u8 value);
 
     template <CPURevision C> u16 readDasm(u16 addr) const;
     template <CPURevision C> u16 readResetVector();
@@ -350,9 +350,9 @@ private:
 
 protected:
 
-    virtual u8 read8(u16 addr) = 0;
-    virtual void write8(u16 addr, u8 val) = 0;
-    virtual u8 readDasm(u16 addr) const = 0;
+    virtual u8 read(u16 addr) { return 0; }
+    virtual void write(u16 addr, u8 val) { };
+    virtual u8 readDasm(u16 addr) const { return 0; }
     virtual u16 readResetVector();
 
 
