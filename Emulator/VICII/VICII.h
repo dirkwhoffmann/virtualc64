@@ -450,7 +450,7 @@ private:
      * multiple sources (wired AND) and this variable indicates which sources
      * are holding the line low.
      */
-    TimeDelayed <u16,3> baLine = TimeDelayed <u16,3> ();
+    util::TimeDelayed <u16,3> baLine = util::TimeDelayed <u16,3> ();
     
     /* Start address of the currently selected memory bank. There are four
      * banks in total since the VICII chip can only 'see' 16 KB of memory at
@@ -470,7 +470,7 @@ private:
     u16 bankAddr;
     
     // Result of the lastest g-access
-    TimeDelayed <u32,2> gAccessResult = TimeDelayed <u32,2> ();
+    util::TimeDelayed <u32,2> gAccessResult = util::TimeDelayed <u32,2> ();
     
  
     //

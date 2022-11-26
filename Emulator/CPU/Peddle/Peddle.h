@@ -13,6 +13,8 @@
 #include "PeddleUtils.h"
 #include "TimeDelayed.h"
 
+using util::TimeDelayed;
+
 namespace peddle {
 
 class Peddle : public SubComponent {
