@@ -229,7 +229,7 @@ Peddle::reset()
 
     reg = { };
     reg.pport.data = 0xFF;
-    reg.pc = reg.pc0 = read16Reset(0xFFFC & addrMask<C>());
+    reg.pc = reg.pc0 = readResetVector<C>();
 
     setB(1);
     setI(1);

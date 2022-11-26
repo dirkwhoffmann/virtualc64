@@ -143,9 +143,9 @@ CPU::_dump(Category category, std::ostream& os) const
         os << tab("doIrq");
         os << bol(doIrq) << std::endl;
         os << tab("IRQ routine");
-        os << hex(HI_W_LO_W(read8Dasm(0xFFFF), read8Dasm(0xFFFE))) << std::endl;
+        os << hex(HI_W_LO_W(readDasm(0xFFFF), readDasm(0xFFFE))) << std::endl;
         os << tab("NMI routine");
-        os << hex(HI_W_LO_W(read8Dasm(0xFFFB), read8Dasm(0xFFFA))) << std::endl;
+        os << hex(HI_W_LO_W(readDasm(0xFFFB), readDasm(0xFFFA))) << std::endl;
 
         if (hasProcessorPort()) {
 
@@ -164,7 +164,7 @@ CPU::_dump(Category category, std::ostream& os) const
 }
 
 u8
-CPU::read8(u16 addr) const
+CPU::read8(u16 addr)
 {
     switch (id) {
 
@@ -178,13 +178,13 @@ CPU::read8(u16 addr) const
 }
 
 u16
-CPU::read16Reset(u16 addr) const
+CPU::readResetVector()
 {
     return mem.resetVector();
 }
 
 u8
-CPU::read8Dasm(u16 addr) const
+CPU::readDasm(u16 addr) const
 {
     switch (id) {
 
@@ -198,7 +198,7 @@ CPU::read8Dasm(u16 addr) const
 }
 
 void
-CPU::write8(u16 addr, u8 val) const
+CPU::write8(u16 addr, u8 val)
 {
     switch (id) {
 
@@ -304,19 +304,19 @@ CPU::nmiDidTrigger()
 }
 
 void
-CPU::breakpointReached(u16 addr)
+CPU::breakpointReached(u16 addr) const
 {
     c64.signalBreakpoint();
 }
 
 void
-CPU::watchpointReached(u16 addr)
+CPU::watchpointReached(u16 addr) const
 {
-
+    c64.signalWatchpoint();
 }
 
 void
-CPU::instructionLogged()
+CPU::instructionLogged() const
 {
     // Perform an inspection from time to time
     c64.autoInspect();

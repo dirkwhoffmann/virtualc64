@@ -146,10 +146,10 @@ private:
 
 public:
 
-    virtual u8 read8(u16 addr) const override;
-    virtual u16 read16Reset(u16 addr) const override;
-    virtual u8 read8Dasm(u16 addr) const override;
-    virtual void write8(u16 addr, u8 val) const override;
+    virtual u8 read8(u16 addr) override;
+    virtual void write8(u16 addr, u8 val) override;
+    virtual u16 readResetVector() override;
+    virtual u8 readDasm(u16 addr) const override;
 
     virtual void writePort(u8 val) override;
     virtual void writePortDir(u8 val) override;
@@ -158,9 +158,9 @@ public:
     virtual void cpuDidJam() override;
     virtual void nmiWillTrigger() override;
     virtual void nmiDidTrigger() override;
-    virtual void breakpointReached(u16 addr) override;
-    virtual void watchpointReached(u16 addr) override;
-    virtual void instructionLogged() override;
+    virtual void breakpointReached(u16 addr) const override;
+    virtual void watchpointReached(u16 addr) const override;
+    virtual void instructionLogged() const override;
 
 
     //

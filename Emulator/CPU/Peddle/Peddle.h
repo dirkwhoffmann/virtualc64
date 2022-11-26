@@ -340,22 +340,20 @@ private:
     template <CPURevision C> void pokeZP(u8 addr, u8 value);
     template <CPURevision C> void pokeStack(u8 sp, u8 value);
 
+    template <CPURevision C> u16 readDasm(u16 addr) const;
+    template <CPURevision C> u16 readResetVector();
 
+    
     //
     // Interfacing with the memory (low-level interface)
     //
 
 protected:
 
-    // Reads a byte from memory
-    virtual u8 read8(u16 addr) const = 0;
-
-    // Special variants used by the reset routine and the disassembler
-    virtual u16 read16Reset(u16 addr) const { return u16(read8(addr) | read8(addr + 1) << 8); }
-    virtual u8 read8Dasm(u16 addr) const { return read8(addr); }
-
-    // Writes a byte into memory
-    virtual void write8(u16 addr, u8 val) const = 0;
+    virtual u8 read8(u16 addr) = 0;
+    virtual void write8(u16 addr, u8 val) = 0;
+    virtual u8 readDasm(u16 addr) const = 0;
+    virtual u16 readResetVector();
 
 
     //
@@ -394,9 +392,9 @@ protected:
     virtual void nmiDidTrigger() { }
 
     // Debugger delegates
-    virtual void breakpointReached(u16 addr) { };
-    virtual void watchpointReached(u16 addr) { };
-    virtual void instructionLogged() { }
+    virtual void breakpointReached(u16 addr) const { };
+    virtual void watchpointReached(u16 addr) const { };
+    virtual void instructionLogged() const { }
 
 
     //

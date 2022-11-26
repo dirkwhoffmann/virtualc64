@@ -113,6 +113,26 @@ Peddle::pokeStack(u8 addr, u8 val)
     write8(u16(addr) + 0x100, val);
 }
 
+template <CPURevision C> u16
+Peddle::readResetVector()
+{
+    u16 addr = 0xFFFC & addrMask<C>();
+    return u16(peek<C>(addr) | peek<C>(addr + 1) << 8);
+}
+
+u16
+Peddle::readResetVector()
+{
+    u16 addr = 0xFFFC & addrMask();
+    return u16(read8(addr) | read8(addr + 1) << 8);
+}
+
+template <CPURevision C> u16
+Peddle::readDasm(u16 addr) const
+{
+    return readDasm(addr & addrMask<C>());
+}
+
 u8
 Peddle::readPort() const
 {

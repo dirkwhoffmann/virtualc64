@@ -322,7 +322,7 @@ void
 Debugger::logInstruction()
 {
     u16 pc = cpu.getPC0();
-    u8 opcode = cpu.read8Dasm(pc);
+    u8 opcode = cpu.readDasm(pc);
     isize length = getLengthOfInstruction(opcode);
 
     isize i = logCnt++ % LOG_BUFFER_CAPACITY;
@@ -331,8 +331,8 @@ Debugger::logInstruction()
     logBuffer[i].pc = pc;
     logBuffer[i].sp = cpu.reg.sp;
     logBuffer[i].byte1 = opcode;
-    logBuffer[i].byte2 = length > 1 ? cpu.read8Dasm(pc + 1) : 0;
-    logBuffer[i].byte3 = length > 2 ? cpu.read8Dasm(pc + 2) : 0;
+    logBuffer[i].byte2 = length > 1 ? cpu.readDasm(pc + 1) : 0;
+    logBuffer[i].byte3 = length > 2 ? cpu.readDasm(pc + 2) : 0;
     logBuffer[i].a = cpu.reg.a;
     logBuffer[i].x = cpu.reg.x;
     logBuffer[i].y = cpu.reg.y;
@@ -395,7 +395,7 @@ Debugger::getLengthOfInstruction(u8 opcode) const
 isize
 Debugger::getLengthOfInstructionAtAddress(u16 addr) const
 {
-    return getLengthOfInstruction(cpu.read8Dasm(addr));
+    return getLengthOfInstruction(cpu.readDasm(addr));
 }
 
 isize
@@ -440,9 +440,9 @@ Debugger::disassembleInstr(u16 addr, long *len) const
     RecordedInstruction instr;
     
     instr.pc = addr;
-    instr.byte1 = cpu.read8Dasm(addr);
-    instr.byte2 = cpu.read8Dasm(addr + 1);
-    instr.byte3 = cpu.read8Dasm(addr + 2);
+    instr.byte1 = cpu.readDasm(addr);
+    instr.byte2 = cpu.readDasm(addr + 1);
+    instr.byte3 = cpu.readDasm(addr + 2);
     
     return disassembleInstr(instr, len);
 }
@@ -452,9 +452,9 @@ Debugger::disassembleBytes(u16 addr) const
 {
     RecordedInstruction instr;
 
-    instr.byte1 = cpu.read8Dasm(addr);
-    instr.byte2 = cpu.read8Dasm(addr + 1);
-    instr.byte3 = cpu.read8Dasm(addr + 2);
+    instr.byte1 = cpu.readDasm(addr);
+    instr.byte2 = cpu.readDasm(addr + 1);
+    instr.byte3 = cpu.readDasm(addr + 2);
 
     return disassembleBytes(instr);
 }
