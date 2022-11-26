@@ -6,10 +6,12 @@
 // -----------------------------------------------------------------------------
 
 #define CHECK_WATCHPOINT \
-if constexpr (ENABLE_WATCHPOINTS) { \
+if constexpr (PEDDLE_ENABLE_WATCHPOINTS) { \
 if ((flags & CPU_CHECK_WP) && debugger.watchpointMatches(addr)) { \
 watchpointReached(addr); \
 }}
+
+#if PEDDLE_SIMPLE_MEMORY_API == true
 
 template <CPURevision C> u8
 Peddle::read(u16 addr)
@@ -45,7 +47,7 @@ Peddle::readStack(u8 addr)
 template <CPURevision C> void
 Peddle::readIdle(u16 addr)
 {
-    if (EMULATE_IDLE_ACCESSES) {
+    if (PEDDLE_EMULATE_IDLE_ACCESSES) {
 
         CHECK_WATCHPOINT
 
@@ -60,7 +62,7 @@ Peddle::readIdle(u16 addr)
 template <CPURevision C> void
 Peddle::readZeroPageIdle(u8 addr)
 {
-    if (EMULATE_IDLE_ACCESSES) {
+    if (PEDDLE_EMULATE_IDLE_ACCESSES) {
 
         CHECK_WATCHPOINT
 
@@ -75,7 +77,7 @@ Peddle::readZeroPageIdle(u8 addr)
 template <CPURevision C> void
 Peddle::readStackIdle(u8 addr)
 {
-    if (EMULATE_IDLE_ACCESSES) {
+    if (PEDDLE_EMULATE_IDLE_ACCESSES) {
 
         CHECK_WATCHPOINT
         (void)read(u16(addr) + 0x100);
@@ -119,6 +121,8 @@ Peddle::readResetVector()
     u16 addr = 0xFFFC & addrMask<C>();
     return u16(read<C>(addr) | read<C>(addr + 1) << 8);
 }
+
+#endif
 
 u16
 Peddle::readResetVector()

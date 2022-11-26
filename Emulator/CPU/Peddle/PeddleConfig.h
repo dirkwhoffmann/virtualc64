@@ -9,9 +9,7 @@
 
 #include "config.h"
 
-namespace peddle {
-
-/* Set to true to emulate idle memory accesses.
+/* Idle memory accesses
  *
  * The 65xx CPU is designed to perform a memory access in every clock cycle.
  * The access also takes place when the CPU is busy with an internal operation.
@@ -22,9 +20,9 @@ namespace peddle {
  *
  * Enable to improve accuracy, disable to gain speed.
  */
-static constexpr bool EMULATE_IDLE_ACCESSES = true;
+#define PEDDLE_EMULATE_IDLE_ACCESSES true
 
-/* Set to true to enable watchpoint support.
+/* Watchpoint support
  *
  * By setting a watchpoint, the emulator can be asked to monitor certain memory
  * locations and signal the client when one of these locations is accessed.
@@ -35,6 +33,23 @@ static constexpr bool EMULATE_IDLE_ACCESSES = true;
  *
  * Enable to perform watchpoint checks, disable to gain speed.
  */
-static constexpr bool ENABLE_WATCHPOINTS = true;
+#define PEDDLE_ENABLE_WATCHPOINTS true
 
-}
+/* Memory API
+ *
+ * Peddle offers two interfaces to interact with the connected memory. The
+ * "simple" API requires only a very few functions to be implemented, namely:
+ *
+ *       read : Reads a byte from memory
+ *      write : Writes a byte to memory
+ *   readDasm : Reads a byte without causing side-effects
+ *
+ * In this mode, the higher-level API, which is used inside the instruction
+ * handlers, is synthesized automatically. Alternatively, Peddle offers you
+ * to implement the high-level API by yourself. This is done, e.g., by
+ * VirtualC64 to speed up emulation.
+ *
+ * Enable to simplify usage, disable to gain speed.
+ */
+
+#define PEDDLE_SIMPLE_MEMORY_API true
