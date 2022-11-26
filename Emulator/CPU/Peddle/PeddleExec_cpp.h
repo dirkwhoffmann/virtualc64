@@ -66,13 +66,15 @@ writeZeroPage<C>(reg.adl, reg.d); setN(reg.d & 0x80); setZ(reg.d == 0);
 #define ADD_INDEX_X_INDIRECT reg.idl += reg.x;
 #define ADD_INDEX_Y_INDIRECT reg.idl += reg.y;
 
+#define SET_PCL(lo) reg.pc = (u16)((reg.pc & 0xff00) | (lo));
+#define SET_PCH(hi) reg.pc = (u16)((reg.pc & 0x00ff) | (hi) << 8);
 #define PUSH_PCL writeStack<C>(reg.sp--, LO_BYTE(reg.pc));
 #define PUSH_PCH writeStack<C>(reg.sp--, HI_BYTE(reg.pc));
 #define PUSH_P writeStack<C>(reg.sp--, getP());
 #define PUSH_P_WITH_B_SET writeStack<C>(reg.sp--, getP() | B_FLAG);
 #define PUSH_A writeStack<C>(reg.sp--, reg.a);
-#define PULL_PCL if (likely(rdyLine)) { setPCL(readStack<C>(reg.sp)); } else return;
-#define PULL_PCH if (likely(rdyLine)) { setPCH(readStack<C>(reg.sp)); } else return;
+#define PULL_PCL if (likely(rdyLine)) { SET_PCL(readStack<C>(reg.sp)); } else return;
+#define PULL_PCH if (likely(rdyLine)) { SET_PCH(readStack<C>(reg.sp)); } else return;
 #define PULL_P if (likely(rdyLine)) { setPWithoutB(readStack<C>(reg.sp)); } else return;
 #define PULL_A if (likely(rdyLine)) { loadA(readStack<C>(reg.sp)); } else return;
 #define IDLE_PULL if (likely(rdyLine)) { readStackIdle<C>(reg.sp); } else return;
@@ -335,14 +337,14 @@ Peddle::execute()
         case irq_6:
             
             READ_FROM(0xFFFE)
-            setPCL(reg.d);
+            SET_PCL(reg.d);
             setI(1);
             CONTINUE
             
         case irq_7:
             
             READ_FROM(0xFFFF)
-            setPCH(reg.d);
+            SET_PCH(reg.d);
             irqDidTrigger();
             DONE
             
@@ -373,14 +375,14 @@ Peddle::execute()
         case nmi_6:
             
             READ_FROM(0xFFFA)
-            setPCL(reg.d);
+            SET_PCL(reg.d);
             setI(1);
             CONTINUE
             
         case nmi_7:
 
             READ_FROM(0xFFFB)
-            setPCH(reg.d);
+            SET_PCH(reg.d);
             nmiDidTrigger();
             DONE
 
@@ -1016,14 +1018,14 @@ Peddle::execute()
         case BRK_5:
             
             READ_FROM(0xFFFE);
-            setPCL(reg.d);
+            SET_PCL(reg.d);
             setI(1);
             CONTINUE
             
         case BRK_6:
             
             READ_FROM(0xFFFF);
-            setPCH(reg.d);
+            SET_PCH(reg.d);
             POLL_INT
             doNmi = false; // Only the level detector is polled here. This is
             // the reason why only IRQs can be triggered right
@@ -1038,14 +1040,14 @@ Peddle::execute()
         case BRK_nmi_5:
             
             READ_FROM(0xFFFA);
-            setPCL(reg.d);
+            SET_PCL(reg.d);
             setI(1);
             CONTINUE
             
         case BRK_nmi_6:
             
             READ_FROM(0xFFFB);
-            setPCH(reg.d);
+            SET_PCH(reg.d);
             POLL_INT
             DONE
 
@@ -1476,14 +1478,14 @@ Peddle::execute()
         case JMP_abs_ind_3:
             
             READ_FROM_ADDRESS
-            setPCL(reg.d);
+            SET_PCL(reg.d);
             reg.adl++;
             CONTINUE
             
         case JMP_abs_ind_4:
             
             READ_FROM_ADDRESS
-            setPCH(reg.d);
+            SET_PCH(reg.d);
             POLL_INT
             DONE
 

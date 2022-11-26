@@ -288,13 +288,6 @@ public:
      */
     u16 getPC0() const { return reg.pc0; }
 
-    void jumpToAddress(u16 addr) { reg.pc0 = reg.pc = addr; next = fetch; }
-    void setPCL(u8 lo) { reg.pc = (u16)((reg.pc & 0xff00) | lo); }
-    void setPCH(u8 hi) { reg.pc = (u16)((reg.pc & 0x00ff) | hi << 8); }
-    void incPC(u8 offset = 1) { reg.pc += offset; }
-    void incPCL(u8 offset = 1) { setPCL(LO_BYTE(reg.pc) + offset); }
-    void incPCH(u8 offset = 1) { setPCH(HI_BYTE(reg.pc) + offset); }
-
     bool getN() const { return reg.sr.n; }
     void setN(bool value) { reg.sr.n = value; }
 
@@ -319,6 +312,8 @@ public:
     u8 getP() const;
     void setP(u8 p);
 
+private:
+    
     u8 getPWithClearedB() const;
     void setPWithoutB(u8 p);
 

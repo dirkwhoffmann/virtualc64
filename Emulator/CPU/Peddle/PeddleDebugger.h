@@ -8,6 +8,7 @@
 #pragma once
 
 #include "PeddleTypes.h"
+#include "PeddleUtils.h"
 
 namespace peddle {
 

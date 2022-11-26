@@ -8,6 +8,8 @@
 #include "PeddleConfig.h"
 #include "Peddle.h"
 
+#include <cassert>
+
 namespace peddle {
 
 //
