@@ -9,6 +9,8 @@
 
 #pragma once
 
+#if 0
+
 #include "SubComponent.h"
 
 /* The MOS 6510 CPU contains a processor port register and a data direction
@@ -111,3 +113,5 @@ public:
     bool getHiram() const { return read() & 0x2; }
     bool getCharen() const { return read() & 0x4; }
 };
+
+#endif

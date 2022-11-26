@@ -7,6 +7,8 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+#if 0
+
 #include "config.h"
 #include "ProcessorPort.h"
 #include "C64.h"
@@ -134,3 +136,5 @@ ProcessorPort::writeDirection(u8 value)
     mem.updatePeekPokeLookupTables();
     */
 }
+
+#endif

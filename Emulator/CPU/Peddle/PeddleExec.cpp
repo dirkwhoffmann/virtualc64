@@ -503,7 +503,6 @@ Peddle::reset()
     clock = 0;
     flags = 0;
     next = fetch;
-    reg = { };
     rdyLine = true;
     rdyLineUp = 0;
     rdyLineDown = 0;
@@ -514,10 +513,12 @@ Peddle::reset()
     doNmi = false;
     doIrq = false;
 
+    reg = { };
+    reg.pport.data = 0xFF;
+    reg.pc = reg.pc0 = read16Reset(0xFFFC & addrMask<C>());
+
     setB(1);
     setI(1);
-
-    reg.pc = reg.pc0 = read16Reset(0xFFFC & addrMask<C>());
 
     debugger.reset();
 }

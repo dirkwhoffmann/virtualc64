@@ -24,7 +24,7 @@ class CPU : public peddle::Peddle {
 public:
 
     // Processor Port (DEPRECATED)
-    ProcessorPort pport = ProcessorPort(c64);
+    // ProcessorPort pport = ProcessorPort(c64);
 
     /* Processor port
      *
@@ -169,4 +169,15 @@ public:
     
     // Returns the result of the latest inspection
     CPUInfo getInfo() const { return C64Component::getInfo(info); }
+
+
+    //
+    // Interpreting the processor port values
+    //
+
+public:
+    
+    bool getLoram() const { return readPort() & 0x1; }
+    bool getHiram() const { return readPort() & 0x2; }
+    bool getCharen() const { return readPort() & 0x4; }
 };

@@ -15,10 +15,12 @@
 
 CPU::CPU(C64& ref) : Peddle(ref)
 {
+    /*
     subComponents = std::vector<C64Component *> {
         
         &pport
-    };    
+    };
+    */
 }
 
 CPU::CPU(CPURevision cpuModel, C64& ref) : CPU(ref)
@@ -46,6 +48,7 @@ CPU::_reset(bool hard)
     RESET_SNAPSHOT_ITEMS(hard)
 
     Peddle::reset();
+    mem.updatePeekPokeLookupTables();
 
     assert(levelDetector.isClear());
     assert(edgeDetector.isClear());
@@ -70,8 +73,8 @@ CPU::_inspect() const
         info.rdy = rdyLine;
         info.jammed = isJammed();
         
-        info.processorPort = pport.read();
-        info.processorPortDir = pport.readDirection();
+        info.processorPort = readPort(); //  pport.read();
+        info.processorPortDir = readPortDir(); // reg.ppor pport.readDirection();
     }
 }
 
@@ -148,6 +151,20 @@ CPU::_dump(Category category, std::ostream& os) const
         os << hex(HI_W_LO_W(read8Dasm(0xFFFF), read8Dasm(0xFFFE))) << std::endl;
         os << tab("NMI routine");
         os << hex(HI_W_LO_W(read8Dasm(0xFFFB), read8Dasm(0xFFFA))) << std::endl;
+
+        if (hasProcessorPort()) {
+
+            os << tab("Port");
+            os << hex(reg.pport.data) << std::endl;
+            os << tab("Direction");
+            os << hex(reg.pport.direction) << std::endl;
+            os << tab("Bit 3 discharge cycle");
+            os << hex(dischargeCycleBit3) << std::endl;
+            os << tab("Bit 6 discharge cycle");
+            os << hex(dischargeCycleBit6) << std::endl;
+            os << tab("Bit 7 discharge cycle");
+            os << hex(dischargeCycleBit7) << std::endl;
+        }
     }
 }
 
