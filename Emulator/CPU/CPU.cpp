@@ -154,16 +154,16 @@ CPU::_dump(Category category, std::ostream& os) const
 
         if (hasProcessorPort()) {
 
-            os << tab("Port");
+            os << tab("Processor port");
             os << hex(reg.pport.data) << std::endl;
-            os << tab("Direction");
+            os << tab("Direction bits");
             os << hex(reg.pport.direction) << std::endl;
             os << tab("Bit 3 discharge cycle");
-            os << hex(dischargeCycleBit3) << std::endl;
+            os << dec(dischargeCycleBit3) << std::endl;
             os << tab("Bit 6 discharge cycle");
-            os << hex(dischargeCycleBit6) << std::endl;
+            os << dec(dischargeCycleBit6) << std::endl;
             os << tab("Bit 7 discharge cycle");
-            os << hex(dischargeCycleBit7) << std::endl;
+            os << dec(dischargeCycleBit7) << std::endl;
         }
     }
 }
@@ -236,26 +236,30 @@ CPU::writePort(u8 val)
 void
 CPU::writePortDir(u8 val)
 {
+    /* Discharging times for bit 3, 6, and 7 as seen in other emulators. In
+     * reality, the discharge delay depend on both CPU temperature and how
+     * long the output was 1 befor the bit became an input.
+     */
+    static constexpr i64 dischargeCyclesVICE = 350000;
+    static constexpr i64 dischargeCyclesHOXS = 246312;
+
     auto port = reg.pport.data;
     auto direction = reg.pport.direction;
-    u64 dischargeCycles = 350000; // VICE
-    // u64 dischargeCycles = 246312; // Hoxs64
 
-    // Check floating status of bits 3, 6, and 7.
-
-    // If bits 3, 6, and 7 are configured as outputs, they are not floating
+    // If bits 3, 6, or 7 are configured as outputs, they are not floating
     if (GET_BIT(val, 3)) dischargeCycleBit3 = 0;
     if (GET_BIT(val, 6)) dischargeCycleBit6 = 0;
     if (GET_BIT(val, 7)) dischargeCycleBit7 = 0;
 
-    // If bits 3, 6, and 7 change from output to input, they become floating
+    // If bits 3, 6, or 7 change from output to input, they become floating
     if (FALLING_EDGE_BIT(direction, val, 3) && GET_BIT(port, 3) != 0)
         dischargeCycleBit3 = UINT64_MAX;
     if (FALLING_EDGE_BIT(direction, val, 6) && GET_BIT(port, 6) != 0)
-        dischargeCycleBit6 = cpu.clock + dischargeCycles;
+        dischargeCycleBit6 = cpu.clock + dischargeCyclesVICE;
     if (FALLING_EDGE_BIT(direction, val, 7) && GET_BIT(port, 7) != 0)
-        dischargeCycleBit7 = cpu.clock + dischargeCycles;
+        dischargeCycleBit7 = cpu.clock + dischargeCyclesVICE;
 
+    // Update the port register
     Peddle::writePortDir(val);
 
     // When writing to the direction register, the last VICII byte appears
@@ -268,26 +272,22 @@ CPU::writePortDir(u8 val)
 u8
 CPU::externalPortBits() const
 {
-    // If the port bits are configured as inputs and no datasette is attached,
-    // the following values are returned:
-    //
-    //     Bit 0:  1 (bit is driven by a pull-up resistor)
-    //     Bit 1:  1 (bit is driven by a pull-up resistor)
-    //     Bit 2:  1 (bit is driven by a pull-up resistor)
-    //     ??? Bit 3:  Eventually 0 (acts a a capacitor)
-    //     Bit 3:  0 (bit is driven by a pull-down resistor)
-    //     Bit 4:  1 (bit is driven by a pull-up resistor)
-    //     Bit 5:  0 (bit is driven by a pull-down resistor)
-    //     Bit 6:  Eventually 0 (acts a a capacitor)
-    //     Bit 7:  Eventually 0 (acts a a capacitor)
-    //
-    //     In reality, discharging times for bits 3, 6, and 7 depend on both
-    //     CPU temperature and how long the output was 1 befor the bit became
-    //     an input.
-
-    u8 bit3 = (dischargeCycleBit3 > cpu.clock) ? 0x08 : 0x00;
-    u8 bit6 = (dischargeCycleBit6 > cpu.clock) ? 0x40 : 0x00;
-    u8 bit7 = (dischargeCycleBit7 > cpu.clock) ? 0x80 : 0x00;
+    /* If the port bits are configured as inputs and no datasette is attached,
+     * the following values are returned:
+     *
+     *     Bit 0:  1 (bit is driven by a pull-up resistor)
+     *     Bit 1:  1 (bit is driven by a pull-up resistor)
+     *     Bit 2:  1 (bit is driven by a pull-up resistor)
+     * ??? Bit 3:  Eventually 0 (acts a a capacitor)
+     * ??? Bit 3:  0 (bit is driven by a pull-down resistor)
+     *     Bit 4:  1 (bit is driven by a pull-up resistor)
+     *     Bit 5:  0 (bit is driven by a pull-down resistor)
+     *     Bit 6:  Eventually 0 (acts a a capacitor)
+     *     Bit 7:  Eventually 0 (acts a a capacitor)
+     */
+    u8 bit3 = (dischargeCycleBit3 > i64(cpu.clock)) ? 0x08 : 0x00;
+    u8 bit6 = (dischargeCycleBit6 > i64(cpu.clock)) ? 0x40 : 0x00;
+    u8 bit7 = (dischargeCycleBit7 > i64(cpu.clock)) ? 0x80 : 0x00;
     u8 bit4 = datasette.getPlayKey() ? 0x00 : 0x10;
 
     return bit7 | bit6 | bit4 | bit3 | 0x07;

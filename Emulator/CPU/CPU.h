@@ -24,23 +24,23 @@ public:
 
     /* Processor port
      *
-     * Clock cycle when floating bit values reach zero.
-     * Bit 3, 6, and 7 of the processor need special attention. When the
-     * direction of these bits is changed from output to input, there will be
-     * no external signal driving them. As a result, these bits will be in a
-     * floating state and act as capacitors. They will discharge slowly and
-     * eventually reach zero. These variables are used to indicate when the
-     * zero level is reached. All three variables are queried in readPort() and
-     * comply to the following rules:
+     * Clock cycles when floating bit values reach zero. Bit 3, 6, and 7 of the
+     * processor port need special attention. When the direction of these bits
+     * is changed from output to input, there will be no external signal driving
+     * them. As a result, these bits will be in a floating state and act as
+     * capacitors. They will discharge slowly and eventually reach zero. These
+     * variables are used to indicate when the zero level is reached. All three
+     * variables are queried in externalPortBits() and comply to the following
+     * rules:
      *
      *    dischargeCycleBit > current cycle => bit reads as 1
      *                                         (if configured as input)
      *    otherwise                         => bit reads as 0
      *                                         (if configured as input)
      */
-    u64 dischargeCycleBit3;
-    u64 dischargeCycleBit6;
-    u64 dischargeCycleBit7;
+    i64 dischargeCycleBit3;
+    i64 dischargeCycleBit6;
+    i64 dischargeCycleBit7;
 
     
     //
