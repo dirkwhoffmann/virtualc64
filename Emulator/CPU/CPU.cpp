@@ -15,12 +15,7 @@
 
 CPU::CPU(C64& ref) : Peddle(ref)
 {
-    /*
-    subComponents = std::vector<C64Component *> {
-        
-        &pport
-    };
-    */
+
 }
 
 CPU::CPU(CPURevision cpuModel, C64& ref) : CPU(ref)
@@ -221,7 +216,7 @@ CPU::writePort(u8 val)
 {
     Peddle::writePort(val);
 
-    // Check for datasette motor bit
+    // Check the motor bit of the datasette
     if (reg.pport.direction & 0x20) {
         datasette.setMotor((val & 0x20) == 0);
     }
@@ -236,13 +231,6 @@ CPU::writePort(u8 val)
 void
 CPU::writePortDir(u8 val)
 {
-    /* Discharging times for bit 3, 6, and 7 as seen in other emulators. In
-     * reality, the discharge delay depend on both CPU temperature and how
-     * long the output was 1 befor the bit became an input.
-     */
-    static constexpr i64 dischargeCyclesVICE = 350000;
-    static constexpr i64 dischargeCyclesHOXS = 246312;
-
     auto port = reg.pport.data;
     auto direction = reg.pport.direction;
 
@@ -294,6 +282,12 @@ CPU::externalPortBits() const
 }
 
 void
+CPU::cpuDidJam()
+{
+    c64.signalJammed();
+}
+
+void
 CPU::nmiWillTrigger()
 {
     if (isC64CPU()) {
@@ -319,12 +313,6 @@ void
 CPU::watchpointReached(u16 addr)
 {
 
-}
-
-void
-CPU::cpuDidJam()
-{
-    c64.signalJammed();
 }
 
 void

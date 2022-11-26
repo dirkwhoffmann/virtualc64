@@ -15,7 +15,7 @@
 
 using namespace peddle;
 
-class CPU : public peddle::Peddle {
+class CPU : public Peddle {
 
     // Result of the latest inspection
     mutable CPUInfo info = { };
@@ -24,9 +24,9 @@ public:
 
     /* Processor port
      *
-     * Clock cycles when floating bit values reach zero. Bit 3, 6, and 7 of the
+     * Clock cycles when floating pins reach zero. Bit 3, 6, and 7 of the
      * processor port need special attention. When the direction of these bits
-     * is changed from output to input, there will be no external signal driving
+     * changes from output to input, there will be no external signal driving
      * them. As a result, these bits will be in a floating state and act as
      * capacitors. They will discharge slowly and eventually reach zero. These
      * variables are used to indicate when the zero level is reached. All three
@@ -42,7 +42,14 @@ public:
     i64 dischargeCycleBit6;
     i64 dischargeCycleBit7;
 
-    
+    /* Discharging times for bit 3, 6, and 7 as seen in other emulators. In
+     * reality, the discharge delay depend on both CPU temperature and how
+     * long the output was 1 befor the bit became an input.
+     */
+    static constexpr i64 dischargeCyclesVICE = 350000;
+    static constexpr i64 dischargeCyclesHOXS = 246312;
+
+
     //
     // Initializing
     //
@@ -122,7 +129,6 @@ private:
         >> levelDetector
         << doNmi
         << doIrq
-
         << dischargeCycleBit3
         << dischargeCycleBit6
         << dischargeCycleBit7;
@@ -149,12 +155,12 @@ public:
     virtual void writePortDir(u8 val) override;
     virtual u8 externalPortBits() const override;
 
+    virtual void cpuDidJam() override;
     virtual void nmiWillTrigger() override;
     virtual void nmiDidTrigger() override;
-    virtual void cpuDidJam() override;
-    virtual void instructionLogged() override;
     virtual void breakpointReached(u16 addr) override;
     virtual void watchpointReached(u16 addr) override;
+    virtual void instructionLogged() override;
 
 
     //
@@ -168,7 +174,7 @@ public:
 
 
     //
-    // Interpreting the processor port values
+    // Interpreting processor port bits
     //
 
 public:

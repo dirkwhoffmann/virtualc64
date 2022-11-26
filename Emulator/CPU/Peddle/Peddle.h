@@ -164,6 +164,11 @@ public:
     Peddle(C64 &ref);
     virtual ~Peddle();
 
+
+    //
+    // Initializing (PeddleInit_cpp)
+    //
+
 private:
 
     // Registers the instruction set
@@ -179,7 +184,7 @@ private:
 
 
     //
-    // Configuring
+    // Configuring the CPU
     //
 
 public:
@@ -189,7 +194,7 @@ public:
 
 
     //
-    // Querying CPU properties
+    // Querying CPU properties and the CPU state
     //
 
 public:
@@ -201,6 +206,70 @@ public:
     // Returns the address bus mask for this CPU model
     u16 addrMask() const;
     template <CPURevision C> u16 addrMask() const;
+
+    // Returns true if the CPU is jammed
+    bool isJammed() const { return next == JAM || next == JAM_2; }
+
+    // Returns true if the next cycle marks the beginning of an instruction
+    bool inFetchPhase() const { return next == fetch; }
+
+
+    //
+    // Running the CPU (PeddleExec_cpp)
+    //
+
+public:
+
+    // Performs a hard reset (power up)
+    void reset();
+    template <CPURevision C> void reset();
+
+    // Exexutes the CPU for a single cycle
+    void execute();
+    template <CPURevision C> void execute();
+
+    // Executes the CPU for the specified number of cycles
+    void execute(int count);
+    template <CPURevision C> void execute(int count);
+
+    // Executes the CPU for a single instruction
+    void executeInstruction();
+    template <CPURevision C> void executeInstruction();
+
+    // Executes the CPU for the specified number of instructions
+    void executeInstruction(int count);
+    template <CPURevision C> void executeInstruction(int count);
+
+    // Executes the CPU until the fetch phase is reached
+    void finishInstruction();
+    template <CPURevision C> void finishInstruction();
+
+protected:
+
+    // Called after the last microcycle has been completed
+    template <CPURevision C> void done();
+
+
+    //
+    // Handling interrupts
+    //
+
+public:
+
+    // Pulls down an interrupt line
+    void pullDownNmiLine(IntSource source);
+    void pullDownIrqLine(IntSource source);
+
+    // Releases an interrupt line
+    void releaseNmiLine(IntSource source);
+    void releaseIrqLine(IntSource source);
+
+    // Checks the status of an interrupt line
+    IntSource getNmiLine() const { return nmiLine; }
+    IntSource getIrqLine() const { return irqLine; }
+
+    // Sets the value on the RDY line
+    void setRDY(bool value);
 
 
     //
@@ -255,7 +324,7 @@ public:
 
 
     //
-    // High-level memory interface
+    // Interfacing with the memory (high-level interface)
     //
 
 private:
@@ -274,7 +343,7 @@ private:
 
 
     //
-    // Low-level memory interface
+    // Interfacing with the memory (low-level interface)
     //
 
 protected:
@@ -298,11 +367,11 @@ public:
 
     // Reads from the port register or the port direction register
     virtual u8 readPort() const;
-    virtual u8 readPortDir() const;
+    virtual u8 readPortDir() const { return reg.pport.direction; }
 
     // Writes into the port register or the port direction register
-    virtual void writePort(u8 val);
-    virtual void writePortDir(u8 val);
+    virtual void writePort(u8 val) { reg.pport.data = val; }
+    virtual void writePortDir(u8 val) { reg.pport.direction = val; }
 
 protected:
     
@@ -330,34 +399,12 @@ protected:
     virtual void watchpointReached(u16 addr) { };
     virtual void instructionLogged() { }
 
-    
-    //
-    // Handling interrupts
-    //
-
-public:
-
-    // Pulls down an interrupt line
-    void pullDownNmiLine(IntSource source);
-    void pullDownIrqLine(IntSource source);
-
-    // Releases an interrupt line
-    void releaseNmiLine(IntSource source);
-    void releaseIrqLine(IntSource source);
-
-    // Checks the status of an interrupt line
-    IntSource getNmiLine() const { return nmiLine; }
-    IntSource getIrqLine() const { return irqLine; }
-
-    // Sets the value on the RDY line
-    void setRDY(bool value);
-
 
     //
     // Operating the Arithmetical Logical Unit (ALU)
     //
 
-protected:
+private:
 
     void adc(u8 op);
     void adcBinary(u8 op);
@@ -366,48 +413,6 @@ protected:
     void sbcBinary(u8 op);
     void sbcBcd(u8 op);
     void cmp(u8 op1, u8 op2);
-
-
-    //
-    // Running the CPU
-    //
-
-public:
-
-    // Returns true if the CPU is jammed
-    bool isJammed() const { return next == JAM || next == JAM_2; }
-
-    // Returns true if the next cycle marks the beginning of an instruction
-    bool inFetchPhase() const { return next == fetch; }
-
-    // Performs a hard reset (power up)
-    void reset();
-    template <CPURevision C> void reset();
-
-    // Exexutes the CPU for a single cycle
-    void execute();
-    template <CPURevision C> void execute();
-
-    // Executes the CPU for the specified number of cycles
-    void execute(int count);
-    template <CPURevision C> void execute(int count);
-
-    // Executes the CPU for a single instruction
-    void executeInstruction();
-    template <CPURevision C> void executeInstruction();
-
-    // Executes the CPU for the specified number of instructions
-    void executeInstruction(int count);
-    template <CPURevision C> void executeInstruction(int count);
-
-    // Executes the CPU until the fetch phase is reached
-    void finishInstruction();
-    template <CPURevision C> void finishInstruction();
-
-protected:
-
-    // Called after the last microcycle has been completed
-    template <CPURevision C> void done();
 };
 
 }
