@@ -163,55 +163,6 @@ CPU::_dump(Category category, std::ostream& os) const
     }
 }
 
-
-u8
-CPU::read(u16 addr)
-{
-    switch (id) {
-
-        case 0: return mem.peek(addr);
-        case 1: return drive8.mem.peek(addr);
-        case 2: return drive9.mem.peek(addr);
-
-        default:
-            fatalError;
-    }
-}
-
-u16
-CPU::readResetVector()
-{
-    return mem.resetVector();
-}
-
-u8
-CPU::readDasm(u16 addr) const
-{
-    switch (id) {
-
-        case 0: return mem.spypeek(addr);
-        case 1: return drive8.mem.spypeek(addr);
-        case 2: return drive9.mem.spypeek(addr);
-
-        default:
-            fatalError;
-    }
-}
-
-void
-CPU::write(u16 addr, u8 val)
-{
-    switch (id) {
-
-        case 0: mem.poke(addr, val); break;
-        case 1: drive8.mem.poke(addr, val); break;
-        case 2: drive9.mem.poke(addr, val); break;
-
-        default:
-            fatalError;
-    }
-}
-
 void
 CPU::writePort(u8 val)
 {
@@ -324,8 +275,56 @@ CPU::instructionLogged() const
 }
 
 //
-// Custom memory interface implementation (to speed up emulation)
+// Memory API
 //
+
+u8
+CPU::read(u16 addr)
+{
+    switch (id) {
+
+        case 0: return mem.peek(addr);
+        case 1: return drive8.mem.peek(addr);
+        case 2: return drive9.mem.peek(addr);
+
+        default:
+            fatalError;
+    }
+}
+
+void
+CPU::write(u16 addr, u8 val)
+{
+    switch (id) {
+
+        case 0: mem.poke(addr, val); break;
+        case 1: drive8.mem.poke(addr, val); break;
+        case 2: drive9.mem.poke(addr, val); break;
+
+        default:
+            fatalError;
+    }
+}
+
+u8
+CPU::readDasm(u16 addr) const
+{
+    switch (id) {
+
+        case 0: return mem.spypeek(addr);
+        case 1: return drive8.mem.spypeek(addr);
+        case 2: return drive9.mem.spypeek(addr);
+
+        default:
+            fatalError;
+    }
+}
+
+u16
+CPU::readResetVector()
+{
+    return mem.resetVector();
+}
 
 #if PEDDLE_SIMPLE_MEMORY_API == false
 

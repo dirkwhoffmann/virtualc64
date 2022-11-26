@@ -224,13 +224,6 @@ Breakpoints::setNeedsCheck(bool value)
     } else {
         cpu.flags &= ~CPU_CHECK_BP;
     }
-    /*
-    if (value || cpu.c64.inDebugMode()) {
-        cpu.debugMode = true;
-    } else {
-        cpu.debugMode = false;
-    }
-    */
 }
 
 void
@@ -241,9 +234,6 @@ Watchpoints::setNeedsCheck(bool value)
     } else {
         cpu.flags &= ~CPU_CHECK_WP;
     }
-    /*
-    cpu.mem.checkWatchpoints = value;
-    */
 }
 
 //

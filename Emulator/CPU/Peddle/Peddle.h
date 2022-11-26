@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "PeddleConfig.h"
 #include "PeddleDebugger.h"
 #include "SubComponent.h"
 #include "PeddleUtils.h"

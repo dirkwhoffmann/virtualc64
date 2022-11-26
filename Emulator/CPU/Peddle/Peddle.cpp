@@ -5,7 +5,6 @@
 // Published under the terms of the MIT License
 // -----------------------------------------------------------------------------
 
-#include "PeddleConfig.h"
 #include "Peddle.h"
 
 namespace peddle {
@@ -57,6 +56,10 @@ Peddle::hasProcessorPort() const
 {
     return C == MOS_6510 || C == MOS_8502;
 }
+template u16 Peddle::hasProcessorPort<MOS_6502>() const;
+template u16 Peddle::hasProcessorPort<MOS_6507>() const;
+template u16 Peddle::hasProcessorPort<MOS_6510>() const;
+template u16 Peddle::hasProcessorPort<MOS_8502>() const;
 
 u16
 Peddle::addrMask() const
@@ -82,6 +85,10 @@ Peddle::addrMask() const
         default:        return 0xFFFF;
     }
 }
+template u16 Peddle::addrMask<MOS_6502>() const;
+template u16 Peddle::addrMask<MOS_6507>() const;
+template u16 Peddle::addrMask<MOS_6510>() const;
+template u16 Peddle::addrMask<MOS_8502>() const;
 
 void
 Peddle::pullDownNmiLine(IntSource bit)

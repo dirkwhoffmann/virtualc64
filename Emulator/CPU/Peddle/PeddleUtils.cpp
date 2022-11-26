@@ -5,5 +5,4 @@
 // Published under the terms of the MIT License
 // -----------------------------------------------------------------------------
 
-#include "PeddleConfig.h"
-#include "PeddleUtils.h"
+#include "Peddle.h"
