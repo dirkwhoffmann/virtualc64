@@ -454,7 +454,6 @@
 		504C42DF24AF29AB00E69CAE /* T64File.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = T64File.h; sourceTree = "<group>"; };
 		504C42E124AF29AB00E69CAE /* C64Memory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = C64Memory.cpp; sourceTree = "<group>"; };
 		504C42E424AF29AB00E69CAE /* C64Memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Memory.h; sourceTree = "<group>"; };
-		504C42E724AF29AB00E69CAE /* PeddleExec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeddleExec.h; sourceTree = "<group>"; };
 		504C42E824AF29AB00E69CAE /* CPU.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPU.h; sourceTree = "<group>"; };
 		504C42E924AF29AB00E69CAE /* CPU.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CPU.cpp; sourceTree = "<group>"; };
 		504C42EA24AF29AB00E69CAE /* PeddleExec_cpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeddleExec_cpp.h; sourceTree = "<group>"; };
@@ -1577,7 +1576,6 @@
 				509280CE2930A1B6006E1966 /* PeddleUtils.h */,
 				509280CD2930A1B6006E1966 /* PeddleUtils.cpp */,
 				5044C5D02931F94800F4A413 /* PeddleInit_cpp.h */,
-				504C42E724AF29AB00E69CAE /* PeddleExec.h */,
 				504C42EA24AF29AB00E69CAE /* PeddleExec_cpp.h */,
 				5044C5D12931FA5F00F4A413 /* PeddleMemory_cpp.h */,
 				50995F2924DBCDE400F40713 /* PeddleDebugger.h */,
