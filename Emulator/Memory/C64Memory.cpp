@@ -392,10 +392,8 @@ C64Memory::peek(u16 addr, MemoryType source)
             
             if (likely(addr >= 0x02)) {
                 return ram[addr];
-            } else if (addr == 0x00) {
-                return cpu.readPortDir();
             } else {
-                return cpu.readPort();
+                return addr ? cpu.readPort() : cpu.readPortDir();
             }
             
         case M_NONE:
@@ -422,10 +420,8 @@ C64Memory::peekZP(u8 addr)
 {
     if (likely(addr >= 0x02)) {
         return ram[addr];
-    } else if (addr == 0x00) {
-        return cpu.readPortDir();
     } else {
-        return cpu.readPort();
+        return addr ? cpu.readPort() : cpu.readPortDir();
     }
 }
 
@@ -515,10 +511,8 @@ C64Memory::spypeek(u16 addr, MemoryType source) const
             
             if (addr >= 0x02) {
                 return ram[addr];
-            } else if (addr == 0x00) {
-                return cpu.readPortDir();
             } else {
-                return cpu.readPort();
+                return addr ? cpu.readPort() : cpu.readPortDir();
             }
             
         case M_NONE:

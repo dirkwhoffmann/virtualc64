@@ -73,8 +73,8 @@ CPU::_inspect() const
         info.rdy = rdyLine;
         info.jammed = isJammed();
         
-        info.processorPort = readPort(); //  pport.read();
-        info.processorPortDir = readPortDir(); // reg.ppor pport.readDirection();
+        info.processorPort = readPort();
+        info.processorPortDir = readPortDir();
     }
 }
 

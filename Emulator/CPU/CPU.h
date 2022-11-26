@@ -12,7 +12,6 @@
 #include "CPUTypes.h"
 #include "Peddle.h"
 #include "SubComponent.h"
-#include "ProcessorPort.h"
 
 using namespace peddle;
 
@@ -22,9 +21,6 @@ class CPU : public peddle::Peddle {
     mutable CPUInfo info = { };
 
 public:
-
-    // Processor Port (DEPRECATED)
-    // ProcessorPort pport = ProcessorPort(c64);
 
     /* Processor port
      *
