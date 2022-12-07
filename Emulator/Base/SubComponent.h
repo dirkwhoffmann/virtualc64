@@ -51,10 +51,6 @@ class CRTFile;
 class RomFile;
 class Snapshot;
 
-}
-
-using namespace vc64;
-
 /* This class extends the C64Component class with references to all components
  * that are part of the C64 class.
  */
@@ -103,3 +99,5 @@ public:
     
     void prefix() const override;
 };
+
+}

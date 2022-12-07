@@ -11,6 +11,8 @@
 #include "C64Component.h"
 #include "Checksum.h"
 
+namespace vc64 {
+
 void
 C64Component::initialize()
 {
@@ -218,4 +220,6 @@ C64Component::debugOff()
 {
     for (auto c : subComponents) { c->debugOff(); }
     _debugOff();
+}
+
 }

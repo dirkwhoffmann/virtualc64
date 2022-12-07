@@ -12,6 +12,8 @@
 #include "ErrorTypes.h"
 #include "Exception.h"
 
+namespace vc64 {
+
 //
 // VCError
 //
@@ -24,3 +26,5 @@ struct VC64Error : public util::Exception
 
     const char *what() const throw() override;
 };
+
+}

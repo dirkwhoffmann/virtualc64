@@ -11,6 +11,8 @@
 #include "C64Object.h"
 #include <iostream>
 
+namespace vc64 {
+
 bool
 C64Object::verbose = true;
 
@@ -30,4 +32,6 @@ void
 C64Object::dump(Category category) const
 {
     dump(category, std::cout);
+}
+
 }

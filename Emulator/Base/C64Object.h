@@ -11,6 +11,8 @@
 
 #include "Error.h"
 
+namespace vc64 {
+
 /* Object model:
  *
  * ------------------
@@ -129,3 +131,5 @@ fprintf(stderr, "%s:%d " format, getDescription(), __LINE__, ##__VA_ARGS__); }}
 #define trace(enable, format, ...)
 
 #endif
+
+}

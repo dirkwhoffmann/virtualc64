@@ -10,6 +10,8 @@
 #include "config.h"
 #include "Colors.h"
 
+namespace vc64 {
+
 RgbColor::RgbColor(const GpuColor &c)
 {
     r = (c.abgr & 0xFF) / 255.0;
@@ -54,7 +56,7 @@ RgbColor::mix(RgbColor additive, double weight1, double weight2)
     double newR = r * weight1 + additive.r * weight2;
     double newG = g * weight1 + additive.g * weight2;
     double newB = b * weight1 + additive.b * weight2;
-        
+
     return RgbColor(newR, newG, newB);
 }
 
@@ -128,4 +130,6 @@ GpuColor::mix(const RgbColor &color, double weight1, double weight2)
 {
     RgbColor mixedColor = RgbColor(*this).mix(color, weight1, weight2);
     return GpuColor(mixedColor);
+}
+
 }

@@ -14,6 +14,8 @@
 #include "Chrono.h"
 #include "Concurrency.h"
 
+namespace vc64 {
+
 /* This class manages the emulator thread that runs side by side with the GUI.
  * The thread exists during the lifetime of the emulator instance, but may not
  * execute the emulator all the time. The exact behavior is controlled by the
@@ -149,7 +151,7 @@ protected:
     
     // Time stamps for adjusting execution speed
     util::Time targetTime;
-            
+
     // Clocks for measuring the CPU load
     util::Clock nonstopClock;
     util::Clock loadClock;
@@ -264,3 +266,5 @@ struct AutoResume {
 };
 
 #define SUSPENDED AutoResume _ar(this);
+
+}

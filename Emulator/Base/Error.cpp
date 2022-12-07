@@ -10,6 +10,8 @@
 #include "config.h"
 #include "Error.h"
 
+namespace vc64 {
+
 VC64Error::VC64Error(ErrorCode code, const string &s)
 {
     data = code;
@@ -185,16 +187,16 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
             description += " and is incompatible with this release.";
             break;
 
-		case ERROR_SNAP_IS_BETA:
-			description = "The snapshot was created with a beta version of VirtualC64";
-			description += " and is incompatible with this release.";
-			break;
+        case ERROR_SNAP_IS_BETA:
+            description = "The snapshot was created with a beta version of VirtualC64";
+            description += " and is incompatible with this release.";
+            break;
 
-		case ERROR_SNAP_CORRUPTED:
-			description = "The snapshot data is corrupted and has put the";
-			description += " emulator into an inconsistent state.";
-			break;
-			
+        case ERROR_SNAP_CORRUPTED:
+            description = "The snapshot data is corrupted and has put the";
+            description += " emulator into an inconsistent state.";
+            break;
+
         case ERROR_DRV_UNCONNECTED:
             description = "Drive is unconnected.";
             break;
@@ -239,14 +241,16 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
             description = "Unable to import.";
             break;
 
-    default:
+        default:
             description = "Error code " + std::to_string(code) + " (" + ErrorCodeEnum::key(code) + ").";
             break;
     }
 }
-            
+
 const char *
 VC64Error::what() const throw()
 {
     return description.c_str();
+}
+
 }

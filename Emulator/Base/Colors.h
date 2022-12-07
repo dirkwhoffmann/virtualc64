@@ -11,6 +11,8 @@
 
 #include "Aliases.h"
 
+namespace vc64 {
+
 struct RgbColor {
 
     double r;
@@ -83,3 +85,5 @@ struct GpuColor {
     GpuColor tint(double weight) { return mix(RgbColor::white, weight); }
     GpuColor shade(double weight) { return mix(RgbColor::black, weight); }
 };
+
+}

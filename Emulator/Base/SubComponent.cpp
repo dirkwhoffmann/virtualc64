@@ -11,6 +11,8 @@
 #include "SubComponent.h"
 #include "C64.h"
 
+namespace vc64 {
+
 SubComponent::SubComponent(C64& ref) :
 
 c64(ref),
@@ -89,4 +91,6 @@ void
 SubComponent::prefix() const
 {
     c64.prefix();
+}
+
 }

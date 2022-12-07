@@ -15,6 +15,8 @@
 #include "Concurrency.h"
 #include <vector>
 
+namespace vc64 {
+
 /* The following macro can be utilized to prevent multiple threads to enter the
  * same code block. It mimics the behaviour of the well known Java construct
  * 'synchronized(this) { }'. To secure a code-block, use the following syntax:
@@ -41,7 +43,7 @@ struct NoAssign
 };
 
 class C64Component : public C64Object, NoCopy, NoAssign {
-        
+
 protected:
     
     // Set to false to silence all debug messages for this component
@@ -49,7 +51,7 @@ protected:
 
     // Sub components
     std::vector<C64Component *> subComponents;
-            
+
     /* Mutex for implementing the 'synchronized' macro. The macro can be used
      * to prevent multiple threads to enter the same code block. It mimics the
      * behaviour of the well known Java construct 'synchronized(this) { }'.
@@ -130,9 +132,9 @@ private:
     //
     // Configuring
     //
-            
+
 public:
-        
+
     // Initializes all configuration items with their default values
     virtual void resetConfig() { };
 
@@ -168,7 +170,7 @@ public:
             return cachedValues;
         }
     }
-        
+
     
     //
     // Serializing
@@ -237,3 +239,5 @@ applyToPersistentItems(writer); \
 applyToResetItems(writer); \
 debug(SNP_DEBUG, "Serialized to %zu bytes\n", writer.ptr - buffer); \
 return (isize)(writer.ptr - buffer);
+
+}
