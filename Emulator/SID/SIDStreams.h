@@ -13,6 +13,8 @@
 #include "RingBuffer.h"
 #include "Volume.h"
 
+namespace vc64 {
+
 typedef util::RingBuffer<short, 2048> SampleStream;
 
 typedef struct { float left; float right; } SamplePair;
@@ -38,7 +40,7 @@ public:
     
     // Adds a sample to the ring buffer
     void add(float l, float r) { this->write(SamplePair {l,r} ); }
-        
+
     // Puts the write pointer somewhat ahead of the read pointer
     void alignWritePtr();
 
@@ -55,3 +57,5 @@ public:
     void copyStereo(float *left, float *right, isize n, Volume &volL, Volume &volR);
     void copyInterleaved(float *buffer, isize n, Volume &volL, Volume &volR);
 };
+
+}

@@ -14,7 +14,7 @@
 #include "SIDStreams.h"
 #include "resid/sid.h"
 
-using namespace vc64;
+namespace vc64 {
 
 /* This class is a wrapper around the third-party reSID library.
  *
@@ -41,7 +41,7 @@ class ReSID : public SubComponent {
     // Result of the latest inspection
     mutable SIDInfo info = { };
     mutable VoiceInfo voiceInfo[3] = { };
-        
+
 private:
     
     // ReSID state
@@ -69,8 +69,8 @@ private:
     
 public:
     
-	ReSID(C64 &ref, int n);
-	~ReSID();
+    ReSID(C64 &ref, int n);
+    ~ReSID();
     
     
     //
@@ -94,7 +94,7 @@ private:
     void applyToPersistentItems(T& worker)
     {
         worker
-                
+
         << st.sid_register
         << st.bus_value
         << st.bus_value_ttl
@@ -180,18 +180,20 @@ private:
 public:
 
     // Reads or writes a SID register
-	u8 peek(u16 addr);
-	void poke(u16 addr, u8 value);
-	
+    u8 peek(u16 addr);
+    void poke(u16 addr, u8 value);
+
     
     //
     // Emulating
     //
     
-	/* Runs SID for the specified amount of CPU cycles. The generated sound
+    /* Runs SID for the specified amount of CPU cycles. The generated sound
      * samples are written into the provided ring buffer. The fuction returns
      * the number of written audio samples.
      */
     isize executeCycles(isize numCycles, SampleStream &stream);
     isize executeCycles(isize numCycles);
 };
+
+}

@@ -21,11 +21,11 @@ class CPU;
 class VICII;
 class CIA1;
 class CIA2;
+class Muxer;
+class SIDStream;
 
 }
 
-class Muxer;
-class SIDStream;
 class Keyboard;
 namespace vc64 {
 class ControlPort;

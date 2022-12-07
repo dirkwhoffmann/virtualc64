@@ -12,6 +12,8 @@
 #include "C64.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 ReSID::ReSID(C64 &ref, int n) : SubComponent(ref), nr(n)
 {
     model = MOS_6581;
@@ -119,7 +121,7 @@ ReSID::_dump(Category category, std::ostream& os) const
     ft == FASTSID_BAND_PASS ? "BAND_PASS" : "???";
     
     if (category == Category::State) {
-   
+
         os << tab("Chip");
         os << "ReSID " << dec(nr) << std::endl;
         os << tab("Model");
@@ -143,9 +145,9 @@ ReSID::_dump(Category category, std::ostream& os) const
     }
     
     if (category == Category::Registers) {
-   
+
         for (isize i = 0; i <= 0x1C; i++) {
-   
+
             os << "  " << hex((u8)i) << ": " << hex(reg[i]);
             if ((i + 1) % 8 == 0) os << std::endl;
         }
@@ -158,7 +160,7 @@ ReSID::didLoadFromBuffer(const u8 *buffer)
     sid->write_state(st);
     return 0;
 }
- 
+
 isize
 ReSID::willSaveToBuffer(u8 *buffer)
 {
@@ -185,7 +187,7 @@ ReSID::setRevision(SIDRevision revision)
 
         sid->set_chip_model((reSID::chip_model)revision);
     }
-        
+
     assert((SIDRevision)sid->sid_model == revision);
     trace(SID_DEBUG, "Emulating SID revision %s.\n", SIDRevisionEnum::key(revision));
 }
@@ -306,4 +308,6 @@ isize
 ReSID::executeCycles(isize numCycles)
 {
     return executeCycles(numCycles, muxer.sidStream[nr]);
+}
+
 }

@@ -15,6 +15,8 @@
 #include <algorithm>
 #include <cmath>
 
+namespace vc64 {
+
 Muxer::Muxer(C64 &ref) : SubComponent(ref)
 {        
     subComponents = std::vector<C64Component *> {
@@ -28,11 +30,11 @@ Muxer::Muxer(C64 &ref) : SubComponent(ref)
         &fastsid[2],
         &fastsid[3]
     };
-        
+
     for (int i = 0; i < 4; i++) {
         resid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
         fastsid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
-    }    
+    }
 }
 
 void
@@ -165,7 +167,7 @@ Muxer::getConfigItem(Option option, long id) const
 
         case OPT_AUDPAN:
             return config.pan[id];
-                        
+
         default:
             fatalError;
     }
@@ -175,9 +177,9 @@ void
 Muxer::setConfigItem(Option option, i64 value)
 {
     bool wasMuted = isMuted();
-        
+
     switch (option) {
-                        
+
         case OPT_SID_POWER_SAVE:
         {
             {   SUSPENDED
@@ -273,7 +275,7 @@ Muxer::setConfigItem(Option option, long id, i64 value)
     bool wasMuted = isMuted();
 
     switch (option) {
-                     
+
         case OPT_SID_ENABLE:
         {
             assert(id >= 0 && id <= 3);
@@ -418,7 +420,7 @@ Muxer::setSampleRate(double rate)
     for (int i = 0; i < 4; i++) {
         resid[i].setSampleRate(rate);
         fastsid[i].setSampleRate(rate);
-    }    
+    }
 }
 
 isize
@@ -508,7 +510,7 @@ Muxer::_dump(Category category, std::ostream& os, isize nr) const
             
         case SIDENGINE_FASTSID: fastsid[nr].dump(category, os); break;
         case SIDENGINE_RESID:   resid[nr].dump(category, os); break;
-        
+
         default:
             fatalError;
     }
@@ -553,12 +555,12 @@ VoiceInfo
 Muxer::getVoiceInfo(isize nr, isize voice)
 {
     assert(nr >= 0 && nr <= 3);
-        
+
     switch (config.engine) {
             
         case SIDENGINE_FASTSID: return fastsid[nr].getVoiceInfo(voice);
         case SIDENGINE_RESID:   return resid[nr].getVoiceInfo(voice);
-        
+
         default:
             fatalError;
     }
@@ -573,7 +575,7 @@ Muxer::getSID(isize nr)
             
         case SIDENGINE_FASTSID: return fastsid[nr];
         case SIDENGINE_RESID:   return resid[nr];
-        
+
         default:
             fatalError;
     }
@@ -583,7 +585,7 @@ void
 Muxer::rampUp()
 {
     trace(AUDBUF_DEBUG, "rampUp()\n");
-          
+
     const isize steps = 20000;
     volL.fadeIn(steps);
     volR.fadeIn(steps);
@@ -601,7 +603,7 @@ Muxer::rampUpFromZero()
 
     rampUp();
 }
- 
+
 void
 Muxer::rampDown()
 {
@@ -631,7 +633,7 @@ Muxer::peek(u16 addr)
 {
     // Get SIDs up to date
     executeUntil(cpu.clock);
- 
+
     // Select the target SID
     isize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
 
@@ -712,7 +714,7 @@ Muxer::poke(u16 addr, u8 value)
     
     // Get SID up to date
     executeUntil(cpu.clock);
- 
+
     // Select the target SID
     isize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
 
@@ -730,7 +732,7 @@ Muxer::executeUntil(Cycle targetCycle)
     
     // Skip sample synthesis in power-safe mode
     if (volL.current == 0 && volR.current == 0 && config.powerSave) {
-    
+
         /* https://sourceforge.net/p/vice-emu/bugs/1374/
          *
          * Due to a bug in reSID, pending register writes are dropped if we
@@ -845,7 +847,7 @@ Muxer::mixSingleSID(isize numSamples)
     }
     stream.unlock();
 }
-        
+
 void
 Muxer::mixMultiSID(isize numSamples)
 {
@@ -1104,4 +1106,6 @@ Muxer::draw(u32 *buffer, isize width, isize height,
 
     delete[] samples;
     return newMaxAmp;
+}
+
 }

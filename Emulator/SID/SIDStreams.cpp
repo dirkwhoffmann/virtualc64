@@ -10,6 +10,8 @@
 #include "config.h"
 #include "Muxer.h"
 
+namespace vc64 {
+
 void
 StereoStream::alignWritePtr()
 {
@@ -33,7 +35,7 @@ StereoStream::copyMono(float *buffer, isize n, Volume &volL, Volume &volR)
     } else {
         
         for (isize i = 0; i < n; i++) {
-                            
+
             SamplePair pair = read();
             *buffer++ = (pair.left + pair.right) * volL.current;
         }
@@ -50,7 +52,7 @@ StereoStream::copyStereo(float *left, float *right, isize n, Volume &volL, Volum
     // printf("cur: %f target: %f delta: %f\n", volume.current, volume.target[0], volume.delta[0]);
     
     if (volL.isFading() || volR.isFading()) {
-                
+
         for (isize i = 0; i < n; i++, volL.shift(), volR.shift()) {
             
             SamplePair pair = read();
@@ -61,7 +63,7 @@ StereoStream::copyStereo(float *left, float *right, isize n, Volume &volL, Volum
     } else {
         
         for (isize i = 0; i < n; i++) {
-                                        
+
             SamplePair pair = read();
             *left++ = pair.left * volL.current;
             *right++ = pair.right * volR.current;
@@ -76,7 +78,7 @@ StereoStream::copyInterleaved(float *buffer, isize n, Volume &volL, Volume &volR
     assert(count() >= n);
 
     if (volL.isFading()) {
-                
+
         for (isize i = 0; i < n; i++, volL.shift()) {
             
             SamplePair pair = read();
@@ -87,10 +89,12 @@ StereoStream::copyInterleaved(float *buffer, isize n, Volume &volL, Volume &volR
     } else {
         
         for (isize i = 0; i < n; i++) {
-                                        
+
             SamplePair pair = read();
             *buffer++ = pair.left * volL.current;
             *buffer++ = pair.right * volR.current;
         }
     }
+}
+
 }

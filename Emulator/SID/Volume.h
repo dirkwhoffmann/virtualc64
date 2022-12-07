@@ -12,6 +12,8 @@
 
 #pragma once
 
+namespace vc64 {
+
 /* An object of this class stores a single volume value and provides the means
  * to emulate a fading effect. Fading is utilized to avoid cracking noises if,
  * e.g., the emulator is put in pause mode.
@@ -88,3 +90,5 @@ template <typename T> struct AudioVolume {
 };
 
 typedef AudioVolume<float> Volume;
+
+}

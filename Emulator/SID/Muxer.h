@@ -18,7 +18,7 @@
 #include "ReSID.h"
 #include "Chrono.h"
 
-using namespace vc64;
+namespace vc64 {
 
 /* Architecture of the audio pipeline
  *
@@ -56,7 +56,7 @@ class Muxer : public SubComponent {
     //
     // Sub components
     //
-            
+
     FastSID fastsid[4] = {
         
         FastSID(c64, 0),
@@ -72,7 +72,7 @@ class Muxer : public SubComponent {
         ReSID(c64, 2),
         ReSID(c64, 3)
     };
-        
+
 private:
     
     // CPU cycle at the last call to executeUntil()
@@ -83,7 +83,7 @@ private:
     
     // Sample rate (44.1 kHz per default)
     double sampleRate = 44100.0;
-        
+
     // Time stamp of the last write pointer alignment
     util::Time lastAlignment;
 
@@ -98,7 +98,7 @@ private:
     float pan[4] = { 0, 0, 0, 0 };
 
 public:
-        
+
 
     //
     // Audio streams
@@ -108,7 +108,7 @@ public:
      * one of the four supported SIDs.
      */
     SampleStream sidStream[4];
-        
+
     /* The mixed stereo stream. This stream contains the final audio stream
      * ready to be handed over to the audio device of the host OS.
      */
@@ -120,8 +120,8 @@ public:
     //
     
 public:
-	
-	Muxer(C64 &ref);
+
+    Muxer(C64 &ref);
 
     // Resets the output buffer
     void clear();
@@ -239,7 +239,7 @@ private:
     //
     
 public:
-        
+
     /* Starts to ramp up the volume. This function configures variables volume
      * and targetVolume to simulate a smooth audio fade in.
      */
@@ -268,10 +268,10 @@ public:
     //
     
 public:
-        
+
     // Reads a audio sample pair without moving the read pointer
     void ringbufferData(isize offset, float *left, float *right);
-            
+
     /* Handles a buffer underflow condition. A buffer underflow occurs when the
      * audio device of the host machine needs sound samples than SID hasn't
      * produced, yet.
@@ -293,7 +293,7 @@ public:
     void executeUntil(Cycle targetCycle);
 
     // Executes SID for a certain number of CPU cycles
-	isize executeCycles(isize numCycles);
+    isize executeCycles(isize numCycles);
 
 private:
     
@@ -313,18 +313,18 @@ public:
     void copyInterleaved(float *buffer, isize n);
 
     
-	//
-	// Accessig memory
-	//
+    //
+    // Accessig memory
+    //
     
 public:
     
     // Translates a memory address to the mapped SID
     isize mappedSID(u16 addr) const;
     
-	// Special peek function for the I/O memory range
-	u8 peek(u16 addr);
-	
+    // Special peek function for the I/O memory range
+    u8 peek(u16 addr);
+
     // Same as peek without side effects
     u8 spypeek(u16 addr) const;
     
@@ -332,8 +332,8 @@ public:
     u8 readPotX() const;
     u8 readPotY() const;
     
-	// Special poke function for the I/O memory range
-	void poke(u16 addr, u8 value);
+    // Special poke function for the I/O memory range
+    void poke(u16 addr, u8 value);
 
 
     //
@@ -350,3 +350,5 @@ public:
     float draw(u32 *buffer, isize width, isize height,
                float maxAmp, u32 color, isize sid = -1) const;
 };
+
+}
