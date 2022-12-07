@@ -15,8 +15,8 @@
 #include <sstream>
 
 namespace vc64 {
+
 class C64;
-}
 
 bool
 Script::isCompatible(const string &path)
@@ -36,4 +36,6 @@ Script::execute(C64 &c64)
 {
     string s((char *)data, size);
     try { c64.retroShell.execScript(s); } catch (util::Exception &) { }
+}
+
 }

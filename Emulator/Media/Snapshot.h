@@ -13,10 +13,8 @@
 #include "Constants.h"
 
 namespace vc64 {
-class C64;
-}
 
-using namespace vc64;
+class C64;
 
 struct Thumbnail {
     
@@ -45,8 +43,8 @@ struct SnapshotHeader {
     u8 major;
     u8 minor;
     u8 subminor;
-	u8 beta;
-	
+    u8 beta;
+
     // Preview image
     Thumbnail screenshot;
 };
@@ -61,12 +59,12 @@ public:
 
     static bool isCompatible(const string &name);
     static bool isCompatible(std::istream &stream);
-     
+
     
     //
     // Initializing
     //
-     
+
     Snapshot(const string &path) throws { init(path); }
     Snapshot(const u8 *buf, isize len) throws { init(buf, len); }
     Snapshot(isize capacity);
@@ -83,21 +81,21 @@ public:
     //
     // Methods from AnyFile
     //
-      
-	FileType type() const override { return FILETYPE_SNAPSHOT; }
+
+    FileType type() const override { return FILETYPE_SNAPSHOT; }
     bool isCompatiblePath(const string &path) override { return isCompatible(path); }
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
-	void finalizeRead() throws override;
-	
+    void finalizeRead() throws override;
+
     
     //
     // Accessing
     //
-        
+
     // Checks the snapshot version number
     bool isTooOld() const;
     bool isTooNew() const;
-	bool isBeta() const;
+    bool isBeta() const;
     bool matches() { return !isTooOld() && !isTooNew(); }
 
     // Returns a pointer to the snapshot header
@@ -108,7 +106,9 @@ public:
 
     // Returns pointer to the core data
     u8 *getData() const { return data + sizeof(SnapshotHeader); }
-        
+
     // Records a screenshot
     void takeScreenshot(C64 &c64);
 };
+
+}

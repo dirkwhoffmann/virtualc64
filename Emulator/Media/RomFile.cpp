@@ -12,8 +12,10 @@
 #include "C64.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 const RomSignature RomFile::signatures[] = {
-   
+
     { ROM_TYPE_BASIC,  0x2000, 0x0000, { 0x94, 0xE3, 0x7B } }, // Commodore
     { ROM_TYPE_BASIC,  0x2000, 0x0000, { 0x63, 0xA6, 0xC1 } }, // MEGA65
     { ROM_TYPE_BASIC,  0x2000, 0x0000, { 0x94, 0xE3, 0xB7 } }, // MEGA65
@@ -62,7 +64,7 @@ RomFile::isRomStream(RomType type, std::istream &is)
     isize size = util::streamLength(is);
     
     for (isize i = 0; signatures[i].size != 0; i++) {
-            
+
         // Only proceed if the file type matches
         if (signatures[i].type != type) continue;
         
@@ -75,7 +77,7 @@ RomFile::isRomStream(RomType type, std::istream &is)
 
         return true;
     }
-        
+
     return false;
 }
 
@@ -174,7 +176,7 @@ RomFile::identifier(u64 fnv)
         case 0x0000000000000000: return ROM_MISSING;
             
         case 0x20765FEA67A8762D: return BASIC_COMMODORE;
-                        
+
         case 0xACC576F7B332AC15: return CHAR_COMMODORE;
         case 0x3CA9D37AA3DE0969: return CHAR_SWEDISH_C2D007;
         case 0x6E3827A65FFF116F: return CHAR_SWEDISH;
@@ -563,4 +565,6 @@ RomFile::finalizeRead()
         msg("Removing %ld padding bytes from Rom file\n", pads);
         strip(pads & ~0x3FF);
     }
+}
+
 }

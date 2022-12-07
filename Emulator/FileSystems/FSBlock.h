@@ -16,6 +16,8 @@
 
 using util::Buffer;
 
+namespace vc64 {
+
 class FSBlock : C64Object {
     
     // The device this block belongs to
@@ -25,7 +27,7 @@ public:
     
     // The number of this block
     Block nr;
-        
+
     // Outcome of the last integrity check (0 = OK, n = n-th corrupted block)
     u32 corrupted = 0;
 
@@ -94,7 +96,7 @@ public:
     // Scans the block data and returns the number of errors
     isize check(bool strict) const;
 
-      
+
     //
     // Importing and exporting
     //
@@ -106,9 +108,9 @@ public:
 
     // Exports this block to a buffer (bsize must match the volume block size)
     void exportBlock(u8 *dst);
- 
+
 };
-    
+
 typedef FSBlock* BlockPtr;
 
 
@@ -136,3 +138,5 @@ EXPECT_RANGE(0, device.layout.numTracks() + 1)
 #define EXPECT_SECTOR_REF(t) { \
 if (isize num = device.layout.numSectors(t)) \
 EXPECT_RANGE(0,num) else if (strict) EXPECT_MAX(254) }
+
+}

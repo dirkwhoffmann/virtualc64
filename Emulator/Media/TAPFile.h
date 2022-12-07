@@ -11,8 +11,10 @@
 
 #include "AnyFile.h"
 
+namespace vc64 {
+
 class TAPFile : public AnyFile {
- 
+
     // File pointer (used by read() and seek())
     isize fp = -1;
     
@@ -71,3 +73,5 @@ public:
     // Reads the next pulse and advances the file pointer
     isize read();
 };
+
+}

@@ -11,8 +11,10 @@
 
 #include "AnyCollection.h"
 
+namespace vc64 {
+
 class T64File : public AnyCollection {
-     
+
 public:
 
     static bool isCompatible(const string &name);
@@ -79,3 +81,5 @@ public:
     // Checks if the header contains information at the specified location
     bool directoryItemIsPresent(isize n);
 };
+
+}

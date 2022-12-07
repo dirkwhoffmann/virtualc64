@@ -12,6 +12,8 @@
 #include "AnyFile.h"
 #include "C64Types.h"
 
+namespace vc64 {
+
 struct RomSignature { RomType type; isize size; isize offset; u8 magic[3]; };
 
 class RomFile : public AnyFile {
@@ -23,7 +25,7 @@ private:
     
     // Rom type (Basic, Character, Kernal, or VC1541)
     FileType romFileType = FILETYPE_UNKNOWN;
-        
+
 public:
     
     //
@@ -63,7 +65,7 @@ public:
     static const char *subTitle(RomIdentifier rev);
     static const char *revision(RomIdentifier rev);
 
-  
+
     //
     // Initializing
     //
@@ -89,3 +91,5 @@ public:
     FileType type() const override { return romFileType; }
     void finalizeRead() override;
 };
+
+}

@@ -10,6 +10,8 @@
 #include "config.h"
 #include "AnyCollection.h"
 
+namespace vc64 {
+
 u16
 AnyCollection::readWordBE(isize nr, isize pos) const
 {
@@ -32,4 +34,6 @@ void
 AnyCollection::copyItem(isize nr, u8 *buf, isize len, isize offset) const
 {
     for (isize i = 0; i < len; i++) buf[i] = readByte(nr, i + offset);
+}
+
 }

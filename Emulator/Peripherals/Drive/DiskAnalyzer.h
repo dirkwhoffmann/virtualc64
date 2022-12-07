@@ -14,8 +14,10 @@
 #include "C64Object.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 class DiskAnalyzer: public C64Object {
-  
+
     // friend class Disk;
     
     // Lengths of all halftracks
@@ -23,7 +25,7 @@ class DiskAnalyzer: public C64Object {
     
     // Data of all halftracks (repeated twice, one byte for each bit on disk)
     u8 *data[85];
-        
+
     // Result of the analysis
     DiskInfo diskInfo = { };
     
@@ -126,3 +128,5 @@ private:
     // Returns a textual representation
     const char *sectorBytesAsString(Halftrack ht, isize offset, isize length, bool hex);
 };
+
+}

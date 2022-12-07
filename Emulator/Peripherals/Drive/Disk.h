@@ -15,7 +15,11 @@
 #include "SubComponent.h"
 #include "PETName.h"
 
+
+namespace vc64 {
+
 class DiskAnalyzer;
+class FileSystem;
 
 class Disk : public C64Object {
     
@@ -28,7 +32,7 @@ public:
     //
     
     static const TrackDefaults trackDefaults[43];
- 
+
     // GCR encoding table. Maps 4 data bits to 5 GCR bits.
     static constexpr u8 gcr[16] = {
         
@@ -106,7 +110,7 @@ public:
     Disk();
     Disk(const string &path, bool wp = false) { init(path, wp); } throws
     Disk(DOSType type, PETName<16> name, bool wp = false) { init(type, name, wp); }
-    Disk(const class FileSystem &device, bool wp = false) { init(device, wp); }
+    Disk(const FileSystem &device, bool wp = false) { init(device, wp); }
     Disk(const G64File &g64, bool wp = false) { init(g64, wp); }
     Disk(const D64File &d64, bool wp = false) { init(d64, wp); } throws
     Disk(AnyCollection &archive, bool wp = false) { init(archive, wp); } throws
@@ -149,7 +153,7 @@ private:
         >> data
         >> length;
     }
-        
+
     
     //
     // Accessing
@@ -251,7 +255,7 @@ public:
             writeBitToHalftrack(ht, pos++, bit);
     }
     void writeBitToTrack(Track t, HeadPos pos, bool bit, isize count) {
-            writeBitToHalftrack(2 * t - 1, pos, bit, count);
+        writeBitToHalftrack(2 * t - 1, pos, bit, count);
     }
 
     // Writes a single byte
@@ -273,7 +277,7 @@ public:
     }
 
     // Clears a single halftrack
-    void clearHalftrack(Halftrack ht); 
+    void clearHalftrack(Halftrack ht);
 
     // Reverts to a factory-fresh disk
     void clearDisk();
@@ -309,7 +313,7 @@ public:
      * determine how many bytes will be written.
      */
     isize decodeDisk(u8 *dest);
- 
+
 private:
     
     isize decodeDisk(u8 *dest, isize numTracks, DiskAnalyzer &analyzer);
@@ -352,4 +356,6 @@ private:
      */
     isize encodeSector(const FileSystem &fs, Track t, Sector sector, HeadPos start, isize gap);
 };
+
+}
  

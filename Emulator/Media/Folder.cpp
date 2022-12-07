@@ -11,6 +11,8 @@
 #include "Folder.h"
 #include "C64.h"
 
+namespace vc64 {
+
 bool
 Folder::isCompatible(const string &path)
 {
@@ -61,4 +63,6 @@ void
 Folder::copyItem(isize nr, u8 *buf, isize len, isize offset) const
 {
     fs->copyFile(nr, buf, len, offset);
+}
+
 }

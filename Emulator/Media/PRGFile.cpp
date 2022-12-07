@@ -12,6 +12,8 @@
 #include "FileSystem.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 bool
 PRGFile::isCompatible(const string &path)
 {
@@ -33,10 +35,10 @@ PRGFile::init(FileSystem &fs)
 
     // Only proceed if the requested file exists
     if (fs.numFiles() <= item) throw VC64Error(ERROR_FS_HAS_NO_FILES);
-        
+
     // Create new archive
     init(itemSize);
-                
+
     // Add data
     fs.copyFile(item, data, itemSize);
 }
@@ -73,4 +75,6 @@ PRGFile::readByte(isize nr, isize pos) const
     assert(nr == 0);
     assert(pos < itemSize(nr));
     return data[pos];
+}
+
 }

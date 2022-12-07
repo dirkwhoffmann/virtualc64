@@ -14,6 +14,8 @@
 
 #include <stdarg.h>
 
+namespace vc64 {
+
 const TrackDefaults Disk::trackDefaults[43] = {
     
     { 0, 0, 0, 0, 0, 0 }, // Padding
@@ -115,7 +117,7 @@ void
 Disk::init(const string &path, bool wp)
 {
     if (G64File::isCompatible(path)) {
-    
+
         auto file = G64File(path);
         init(file, wp);
         return;
@@ -273,7 +275,7 @@ Disk::_bitDelay(Halftrack ht, HeadPos pos) const {
     if (ht <= 59)
         return 4 * 8750;  // Density bits = 10: 4 * 14/16 * 10^4 1/10 nsec
     
-     return 4 * 8125;     // Density bits = 11: 4 * 13/16 * 10^4 1/10 nsec
+    return 4 * 8125;     // Density bits = 11: 4 * 13/16 * 10^4 1/10 nsec
 }
 
 void
@@ -292,7 +294,7 @@ Disk::clearDisk()
         clearHalftrack(ht);
     }
     writeProtected = false;
-    modified = false; 
+    modified = false;
 }
 
 bool
@@ -353,10 +355,10 @@ Disk::decodeDisk(u8 *dest)
     Track t = 42;
     while (t > 0 && trackIsEmpty(t)) t--;
     
-    // Decode disk 
+    // Decode disk
     if (t <= 35)
         return decodeDisk(dest, 35, analyzer);
-        
+
     if (t <= 40)
         return decodeDisk(dest, 40, analyzer);
     
@@ -371,12 +373,12 @@ Disk::decodeDisk(u8 *dest, isize numTracks, DiskAnalyzer &analyzer)
     assert(numTracks == 35 || numTracks == 40 || numTracks == 42);
 
     // For each full track ...
-   for (Track t = 1; t <= numTracks; t++) {
+    for (Track t = 1; t <= numTracks; t++) {
         
         if (trackIsEmpty(t))
             break;
         
-       trace(GCR_DEBUG, "Decoding track %ld %s\n", t, dest ? "" : "(test run)");
+        trace(GCR_DEBUG, "Decoding track %ld %s\n", t, dest ? "" : "(test run)");
         numBytes += decodeTrack(t, dest + (dest ? numBytes : 0), analyzer);
     }
     
@@ -441,7 +443,7 @@ void
 Disk::encodeG64(const G64File &a)
 {
     trace(GCR_DEBUG, "Encoding G64 archive\n");
-        
+
     clearDisk();
     for (Halftrack ht = 1; ht <= 84; ht++) {
         
@@ -471,15 +473,15 @@ Disk::encode(const FileSystem &fs, bool alignTracks)
 {    
     // 64COPY (fails on VICE test drive/skew)
     /*
-    int tailGap[4] = { 9, 9, 9, 9 };
-    u16 trackLength[4] =
-    {
-        6250 * 8, // Tracks 31 - 35..42 (inner tracks)
-        6666 * 8, // Tracks 25 - 30
-        7142 * 8, // Tracks 18 - 24
-        7692 * 8  // Tracks  1 - 17     (outer tracks)
-    };
-    */
+     int tailGap[4] = { 9, 9, 9, 9 };
+     u16 trackLength[4] =
+     {
+     6250 * 8, // Tracks 31 - 35..42 (inner tracks)
+     6666 * 8, // Tracks 25 - 30
+     7142 * 8, // Tracks 18 - 24
+     7692 * 8  // Tracks  1 - 17     (outer tracks)
+     };
+     */
     
     // Hoxs64 (passes VICE test drive/skew)
     int tailGap[4] = { 9, 12, 17, 8 };
@@ -493,15 +495,15 @@ Disk::encode(const FileSystem &fs, bool alignTracks)
     
     // VirtualC64 2.4
     /*
-    const int tailGap[4] = { 13, 16, 21, 12 };
-    const u16 trackLength[4] =
-    {
-        (u16)(8 * 17 * (354 + tailGap[0])), // Tracks 31 - 35..42 (inner tracks)
-        (u16)(8 * 18 * (354 + tailGap[1])), // Tracks 25 - 30
-        (u16)(8 * 19 * (354 + tailGap[2])), // Tracks 18 - 24
-        (u16)(8 * 21 * (354 + tailGap[3]))  // Tracks  1 - 17     (outer tracks)
-    };
-    */
+     const int tailGap[4] = { 13, 16, 21, 12 };
+     const u16 trackLength[4] =
+     {
+     (u16)(8 * 17 * (354 + tailGap[0])), // Tracks 31 - 35..42 (inner tracks)
+     (u16)(8 * 18 * (354 + tailGap[1])), // Tracks 25 - 30
+     (u16)(8 * 19 * (354 + tailGap[2])), // Tracks 18 - 24
+     (u16)(8 * 21 * (354 + tailGap[3]))  // Tracks  1 - 17     (outer tracks)
+     };
+     */
     
     isize numTracks = fs.getNumTracks();
 
@@ -511,8 +513,8 @@ Disk::encode(const FileSystem &fs, bool alignTracks)
     clearDisk();
 
     // Assign track length
-     for (Halftrack ht = 1; ht <= highestHalftrack; ht++)
-         length.halftrack[ht] = trackLength[speedZoneOfHalftrack(ht)];
+    for (Halftrack ht = 1; ht <= highestHalftrack; ht++)
+        length.halftrack[ht] = trackLength[speedZoneOfHalftrack(ht)];
     
     // Encode tracks
     HeadPos start;
@@ -562,7 +564,7 @@ Disk::encodeSector(const FileSystem &fs, Track t, Sector s, HeadPos start, isize
     
     HeadPos offset = start;
     u8 errorCode = fs.getErrorCode(ts);
-        
+
     trace(GCR_DEBUG, "  Encoding track/sector %ld/%ld\n", t, s);
     
     // Get disk id and compute checksum
@@ -585,7 +587,7 @@ Disk::encodeSector(const FileSystem &fs, Track t, Sector s, HeadPos start, isize
         encodeGcr(0x08, t, offset);
     }
     offset += 10;
- 
+
     // Checksum
     if (errorCode == 0x9) {
         encodeGcr(checksum ^ 0xFF, t, offset); // HEADER_BLOCK_CHECKSUM_ERROR
@@ -601,15 +603,15 @@ Disk::encodeSector(const FileSystem &fs, Track t, Sector s, HeadPos start, isize
     offset += 10;
     
     // Disk ID (two bytes)
-     if (errorCode == 0xB) {
-         encodeGcr(id2 ^ 0xFF, t, offset); // DISK_ID_MISMATCH_ERROR
-         offset += 10;
-         encodeGcr(id1 ^ 0xFF, t, offset); // DISK_ID_MISMATCH_ERROR
-     } else {
-         encodeGcr(id2, t, offset);
-         offset += 10;
-         encodeGcr(id1, t, offset);
-     }
+    if (errorCode == 0xB) {
+        encodeGcr(id2 ^ 0xFF, t, offset); // DISK_ID_MISMATCH_ERROR
+        offset += 10;
+        encodeGcr(id1 ^ 0xFF, t, offset); // DISK_ID_MISMATCH_ERROR
+    } else {
+        encodeGcr(id2, t, offset);
+        offset += 10;
+        encodeGcr(id1, t, offset);
+    }
     offset += 10;
     
     // 0x0F, 0x0F
@@ -673,4 +675,6 @@ Disk::encodeSector(const FileSystem &fs, Track t, Sector s, HeadPos start, isize
     
     // Return the number of encoded bits
     return offset - start;
+}
+
 }

@@ -17,10 +17,12 @@
 #include "IOUtils.h"
 #include <vector>
 
+namespace vc64 {
+
 class FileSystem : C64Object {
     
     friend class FSBlock;
-        
+
     // The block storage
     std::vector<BlockPtr> blocks;
 
@@ -62,7 +64,7 @@ private:
 public:
     
     const char *getDescription() const override { return "FSVolume"; }
-        
+
     // Prints information about this volume
     void info();
 
@@ -223,8 +225,8 @@ public:
     //
 
     // Returns the next free directory entry or creates one
-    FSDirEntry *getOrCreateNextFreeDirEntry(); 
-                    
+    FSDirEntry *getOrCreateNextFreeDirEntry();
+
     // Creates a new file
     bool makeFile(PETName<16> name, const u8 *buf, isize cnt);
 
@@ -270,7 +272,7 @@ public:
     //
     
 public:
-        
+
     // Reads a single byte from a block
     u8 readByte(Block block, isize offset) const;
     u8 readByte(TSLink ts, isize offset) const { return readByte(layout.blockNr(ts), offset); }
@@ -315,3 +317,5 @@ public:
     // Searches the block list for a corrupted block
     isize nextCorruptedBlock(isize after);
 };
+
+}

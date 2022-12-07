@@ -13,6 +13,8 @@
 #include "Checksum.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 bool
 CRTFile::isCompatible(const string &path)
 {
@@ -35,7 +37,7 @@ void
 CRTFile::finalizeRead()
 {
     if constexpr (CRT_DEBUG) dump();
-            
+
     // Fix known inconsistencies
     repair();
 
@@ -89,7 +91,7 @@ CRTFile::repair()
     //
     // General errors
     //
-        
+
     // Some cartridges show a header size of 0x20 which is wrong
     if (headerSize() < 0x40) {
         u32 newSize = 0x40;
@@ -110,6 +112,8 @@ CRTFile::repair()
             // Replace invalid CRT type $00 by $1C
             debug(CRT_DEBUG, "Repairing broken Mikro Assembler cartridge\n");
             data[0x17] = 0x1C;
-            break;            
+            break;
     }
+}
+
 }

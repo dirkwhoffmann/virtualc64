@@ -19,6 +19,8 @@
 #include <limits.h>
 #include <set>
 
+namespace vc64 {
+
 FileSystem::~FileSystem()
 {
     for (auto &b : blocks) delete b;
@@ -60,7 +62,7 @@ FileSystem::init(const D64File &d64)
 {
     // Get device descriptor
     FSDeviceDescriptor descriptor = FSDeviceDescriptor(d64);
-        
+
     // Create the device
     init(descriptor);
 
@@ -91,7 +93,7 @@ FileSystem::init(class Disk &disk)
         default:
             throw VC64Error(ERROR_FS_CORRUPTED);
     }
-        
+
     // Create the device
     init(descriptor);
 
@@ -130,7 +132,7 @@ void
 FileSystem::init(const string &path)
 {
     if (Folder::isCompatible(path)) {
-    
+
         // Create the device
         init(DISK_TYPE_SS_SD, DOS_TYPE_NODOS);
         
@@ -146,7 +148,7 @@ FileSystem::init(const string &path)
     }
 
     if (D64File::isCompatible(path)) {
-    
+
         auto file = D64File(path);
         init(file);
         return;
@@ -172,7 +174,7 @@ FileSystem::init(const string &path)
         init(file);
         return;
     }
-        
+
     throw VC64Error(ERROR_FILE_TYPE_MISMATCH);
 }
 
@@ -402,7 +404,7 @@ FSBlock *
 FileSystem::locateAllocBit(TSLink ts, isize *byte, isize *bit) const
 {
     assert(layout.isValidLink(ts));
-        
+
     /* Bytes $04 - $8F store the BAM entries for each track, in groups of four
      * bytes per track, starting on track 1. [...] The first byte is the number
      * of free sectors on that track. The next three bytes represent the bitmap
@@ -410,7 +412,7 @@ FileSystem::locateAllocBit(TSLink ts, isize *byte, isize *bit) const
      * storage. Remember that at most, each track only has 21 sectors, so there
      * are a few unused bits.
      */
-        
+
     *byte = (4 * ts.t) + 1 + (ts.s >> 3);
     *bit = ts.s & 0x07;
     
@@ -465,10 +467,10 @@ FileSystem::fileSize(FSDirEntry *entry) const
 
     // Iterate through the block chain
     while (b && visited.find(b->nr) == visited.end()) {
-                
+
         visited.insert(b->nr);
         BlockPtr next = nextBlockPtr(b);
-                
+
         if (next) {
             size += 254;
         } else {
@@ -528,7 +530,7 @@ FileSystem::copyFile(FSDirEntry *entry, u8 *buf, u64 len, u64 offset) const
     
     // Iterate through the block chain
     while (b && len) {
-                
+
         if (offset) {
             --offset;
         } else {
@@ -551,12 +553,12 @@ FileSystem::getOrCreateNextFreeDirEntry()
     
     // A disk can hold up to 144 files
     for (int i = 0; ptr && i < 144; i++) {
-    
+
         FSDirEntry *entry = (FSDirEntry *)ptr->data + (i % 8);
         
         // Return if this entry is unused
         if (entry->isEmpty()) return entry;
-     
+
         // Keep on searching in the current block if slots remain
         if (i % 8 != 7) continue;
         
@@ -583,7 +585,7 @@ FileSystem::scanDirectory(bool skipInvisible)
     
     // The number of files is limited by 144
     for (int i = 0; ptr && i < 144; i++) {
-    
+
         FSDirEntry *entry = (FSDirEntry *)ptr->data + (i % 8);
         
         // Terminate if there are no more entries
@@ -591,7 +593,7 @@ FileSystem::scanDirectory(bool skipInvisible)
 
         // Add file to the result list
         if (!(skipInvisible && entry->isHidden())) dir.push_back(entry);
-     
+
         // Jump to the next sector if this was the last directory item
         if (i % 8 == 7) ptr = nextBlockPtr(ptr);
     }
@@ -605,7 +607,7 @@ FileSystem::makeFile(PETName<16> name, const u8 *buf, isize cnt)
 
     // Create the file if we've found a free slot
     if (dir) return makeFile(name, dir, buf, cnt);
-         
+
     return false;
 }
 
@@ -614,11 +616,11 @@ FileSystem::makeFile(PETName<16> name, FSDirEntry *dir, const u8 *buf, isize cnt
 {
     // Determine the number of blocks needed for this file
     u32 numBlocks = (u32)((cnt + 253) / 254);
-        
+
     // Allocate data blocks
     auto blockList = allocate(numBlocks);
     if (blockList.empty()) return false;
-        
+
     auto it = blockList.begin();
     FSBlock *ptr = blockPtr(*it);
     
@@ -633,7 +635,7 @@ FileSystem::makeFile(PETName<16> name, FSDirEntry *dir, const u8 *buf, isize cnt
         }
         ptr->data[j] = buf[i];
     }
- 
+
     // Store the size of the last data chunk inside the sector link
     assert(ptr->data[0] == 0);
     ptr->data[1] = (u8)((cnt % 254) + 1);
@@ -767,7 +769,7 @@ FileSystem::importVolume(const u8 *src, isize size, ErrorCode *err)
         if (err) *err = ERROR_FS_WRONG_CAPACITY;
         return false;
     }
-        
+
     // Import all blocks
     for (u32 i = 0; i < blocks.size(); i++) {
         
@@ -858,7 +860,7 @@ FileSystem::exportBlocks(isize first, isize last, u8 *dst, isize size, ErrorCode
         if (err) *err = ERROR_FS_WRONG_CAPACITY;
         return false;
     }
-        
+
     // Wipe out the target buffer
     memset(dst, 0, size);
     
@@ -931,10 +933,10 @@ FileSystem::exportFile(FSDirEntry *entry, std::ofstream &stream)
 
     // Iterate through the block chain
     while (b && visited.find(b->nr) == visited.end()) {
-                
+
         visited.insert(b->nr);
         BlockPtr next = nextBlockPtr(b);
-                
+
         isize size = next ? 254 : b->data[1] ? b->data[1] - 1 : 0;
         stream.write((char *)(b->data + 2), size);
         
@@ -1059,4 +1061,6 @@ FileSystem::nextCorruptedBlock(isize after)
     } while (result != after);
 
     return -1;
+}
+
 }

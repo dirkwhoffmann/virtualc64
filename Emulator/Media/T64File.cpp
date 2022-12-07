@@ -13,6 +13,8 @@
 #include "IOUtils.h"
 #include "Macros.h"
 
+namespace vc64 {
+
 bool
 T64File::isCompatible(const string &path)
 {
@@ -23,18 +25,18 @@ T64File::isCompatible(const string &path)
 bool
 T64File::isCompatible(std::istream &stream)
 {
-     const string magicT64 = "C64";
-     const string magicTAP = "C64-TAPE";
+    const string magicT64 = "C64";
+    const string magicTAP = "C64-TAPE";
 
-     if (util::streamLength(stream) < 0x40) return false;
-     
-     // T64 files must begin with "C64"
-     if (!util::matchingStreamHeader(stream, magicT64)) return false;
-     
-     // T64 files must *not* begin with "C64-TAPE" (which is used by TAP files)
-     if (util::matchingStreamHeader(stream, magicTAP)) return false;
-     
-     return true;
+    if (util::streamLength(stream) < 0x40) return false;
+
+    // T64 files must begin with "C64"
+    if (!util::matchingStreamHeader(stream, magicT64)) return false;
+
+    // T64 files must *not* begin with "C64-TAPE" (which is used by TAP files)
+    if (util::matchingStreamHeader(stream, magicTAP)) return false;
+
+    return true;
 }
 
 void
@@ -99,7 +101,7 @@ T64File::init(class FileSystem &fs)
         
         // Skip if this is an empty tape slot
         if (n >= numFiles) { ptr += 32; continue; }
-                        
+
         // Entry used (1 byte)
         *ptr++ = 0x01;
         
@@ -140,7 +142,7 @@ T64File::init(class FileSystem &fs)
     //
     
     for (isize n = 0; n < numFiles; n++) {
-    
+
         fs.copyFile(n, ptr, length[n], 2);
         ptr += length[n];
     }
@@ -261,7 +263,7 @@ T64File::finalizeRead()
         if (noOfItems != noOfItemsStatedInHeader) {
             
             warn("T64: Changing number of items from %ld to %ld.\n",
-                  noOfItemsStatedInHeader, noOfItems);
+                 noOfItemsStatedInHeader, noOfItems);
             
             data[0x24] = LO_BYTE(noOfItems);
             data[0x25] = HI_BYTE(noOfItems);
@@ -284,7 +286,7 @@ T64File::finalizeRead()
             warn("T64: Offset mismatch. Sorry, can't repair.\n");
             return;
         }
-    
+
         //
         // 3. Check for file end address mismatches (as created by CONVC64)
         //
@@ -292,11 +294,11 @@ T64File::finalizeRead()
         // Compute start address in memory
         n = 0x42 + (i * 0x20);
         isize startAddrInMemory = LO_HI(data[n], data[n+1]);
-    
+
         // Compute end address in memory
         n = 0x44 + (i * 0x20);
         isize endAddrInMemory = LO_HI(data[n], data[n+1]);
-    
+
         if (endAddrInMemory == 0xC3C6) {
 
             // Let's assume that the rest of the file data belongs to this file ...
@@ -309,4 +311,6 @@ T64File::finalizeRead()
             data[n+1] = HI_BYTE(fixedEndAddrInMemory);
         }
     }
+}
+
 }

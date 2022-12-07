@@ -13,6 +13,8 @@
 #include "FSTypes.h"
 #include "PETName.h"
 
+namespace vc64 {
+
 struct FSDirEntry
 {
     u8 nextDirTrack;      // $00
@@ -33,7 +35,7 @@ struct FSDirEntry
     void init(const string &name, TSLink ref, isize numBlocks);
 
     // Checks whether this entry if empty
-    bool isEmpty() const; 
+    bool isEmpty() const;
     
     // Returns the name of this file
     PETName<16> getName() const { return PETName<16>(fileName); }
@@ -53,3 +55,5 @@ struct FSDirEntry
     // Returns the link to the first data block
     TSLink firstBlock() const { return TSLink{firstDataTrack,firstDataSector}; }
 };
+
+}

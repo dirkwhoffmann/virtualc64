@@ -22,6 +22,8 @@
 #include "T64File.h"
 #include "TAPFile.h"
 
+namespace vc64 {
+
 AnyFile::AnyFile(isize capacity)
 {
     data = new u8[capacity]();
@@ -71,7 +73,7 @@ AnyFile::init(const u8 *buf, isize len)
     stream.write((const char *)buf, len);
     init(stream);
 }
-    
+
 void
 AnyFile::init(FILE *file)
 {
@@ -149,7 +151,7 @@ AnyFile::strip(isize count)
 {
     assert(data != nullptr);
     assert(count < size);
-        
+
     isize newSize = size - count;
     u8 *newData = new u8[newSize];
     
@@ -237,4 +239,6 @@ AnyFile::writeToBuffer(u8 *buf)
 {
     assert(buf);
     std::memcpy(buf, data, size);
+}
+
 }

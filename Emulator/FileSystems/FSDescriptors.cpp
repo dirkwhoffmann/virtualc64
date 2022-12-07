@@ -11,10 +11,12 @@
 #include "FSDescriptors.h"
 #include "C64.h"
 
+namespace vc64 {
+
 FSDeviceDescriptor::FSDeviceDescriptor(DiskType type, DOSType dos)
 {
     assert(dos == DOS_TYPE_CBM);
- 
+
     this->dos = dos;
     
     switch (type) {
@@ -140,9 +142,9 @@ FSDeviceDescriptor::nextBlockRef(TSLink ref) const
 
         // Return immediately if we've wrapped over (directory track is full)
         if (s == 0) return {0,0};
-    
+
     } else {
-            
+
         // Take care of all other tracks
         s = next[speedZone(t)][s];
         
@@ -156,4 +158,6 @@ FSDeviceDescriptor::nextBlockRef(TSLink ref) const
     
     assert(isValidLink(TSLink{t,s}));
     return TSLink{t,s};
+}
+
 }

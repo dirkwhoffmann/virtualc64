@@ -12,10 +12,6 @@
 #include "AnyFile.h"
 
 namespace vc64 {
-class C64;
-}
-
-using namespace vc64;
 
 class Script : public AnyFile {
     
@@ -43,7 +39,7 @@ public:
     //
     // Methods from C64Object
     //
-        
+
     const char *getDescription() const override { return "Script"; }
     
     
@@ -63,5 +59,7 @@ public:
     //
     
     // Executes the script
-    void execute(C64 &c64);
+    void execute(class C64 &c64);
 };
+
+}

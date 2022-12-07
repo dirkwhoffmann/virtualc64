@@ -11,6 +11,8 @@
 
 #include "AnyCollection.h"
 
+namespace vc64 {
+
 class PRGFile : public AnyCollection {
 
 public:
@@ -65,3 +67,5 @@ private:
     isize itemSize(isize nr) const override;
     u8 readByte(isize nr, isize pos) const override;
 };
+
+}

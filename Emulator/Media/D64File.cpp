@@ -12,11 +12,13 @@
 #include "IOUtils.h"
 #include "MemUtils.h"
 
+namespace vc64 {
+
 bool
 D64File::isCompatible(const string &path)
 {
     auto s = util::extractSuffix(path);
- 
+
     return s == "d64" || s == "D64";
 }
 
@@ -74,7 +76,7 @@ void
 D64File::init(FileSystem &volume)
 {
     switch (volume.getNumBlocks() * 256) {
-                        
+
         case D64_683_SECTORS: init(35, false); break;
         case D64_768_SECTORS: init(40, false); break;
         case D64_802_SECTORS: init(42, false); break;
@@ -101,7 +103,7 @@ D64File::finalizeRead()
 {
     isize numSectors;
     bool errorCodes;
- 
+
     switch (size)
     {
         case D64_683_SECTORS: // 35 tracks, no errors
@@ -152,7 +154,7 @@ D64File::finalizeRead()
             errorCodes = false;
             assert(false);
     }
-        
+
     // Copy error codes
     if (errorCodes) {
         std::memcpy(errors, data + (numSectors * 256), numSectors);
@@ -203,4 +205,6 @@ void
 D64File::dump(Track track, Sector sector) const
 {
     util::hexdump(data + offset(track, sector), 256);
+}
+
 }

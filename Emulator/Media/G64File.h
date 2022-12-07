@@ -11,6 +11,8 @@
 
 #include "AnyFile.h"
 
+namespace vc64 {
+
 class G64File : public AnyFile {
 
 public:
@@ -55,8 +57,8 @@ public:
     bool isCompatiblePath(const string &path) override { return isCompatible(path); }
     bool isCompatibleStream(std::istream &stream) override { return isCompatible(stream); }
     FileType type() const override { return FILETYPE_G64; }
-        
-  
+
+
     //
     // Reading data from a track
     //
@@ -65,7 +67,7 @@ public:
     
     // Returns the size of a certain haltrack in bytes
     isize getSizeOfHalftrack(Halftrack ht) const;
-        
+
     // Copies a certain track into a buffer
     void copyHalftrack(Halftrack ht, u8 *buf) const;
     
@@ -73,3 +75,5 @@ private:
     
     isize getStartOfHalftrack(Halftrack ht) const;
 };
+
+}

@@ -11,6 +11,8 @@
 
 #include "AnyFile.h"
 
+namespace vc64 {
+
 class AnyCollection : public AnyFile {
 
 public:
@@ -30,7 +32,7 @@ public:
     
     // Returns the size of a certain in bytes
     virtual isize itemSize(isize nr) const = 0;
-        
+
     // Reads a byte from a certain item
     virtual u8 readByte(isize nr, isize pos) const = 0;
 
@@ -49,3 +51,5 @@ public:
     // Copies an item into a buffer
     virtual void copyItem(isize nr, u8 *buf, isize len, isize offset = 0) const;
 };
+
+}

@@ -12,7 +12,7 @@
 #include "C64.h"
 #include "IOUtils.h"
 
-using namespace vc64;
+namespace vc64 {
 
 Thumbnail *
 Thumbnail::makeWithC64(const C64 &c64, isize dx, isize dy)
@@ -87,13 +87,13 @@ Snapshot::Snapshot(C64 &c64): Snapshot(c64.size())
 void
 Snapshot::finalizeRead()
 {
-	if constexpr (FORCE_SNAP_TOO_OLD) throw VC64Error(ERROR_SNAP_TOO_OLD);
-	if constexpr (FORCE_SNAP_TOO_NEW) throw VC64Error(ERROR_SNAP_TOO_NEW);
-	if constexpr (FORCE_SNAP_IS_BETA) throw VC64Error(ERROR_SNAP_IS_BETA);
+    if constexpr (FORCE_SNAP_TOO_OLD) throw VC64Error(ERROR_SNAP_TOO_OLD);
+    if constexpr (FORCE_SNAP_TOO_NEW) throw VC64Error(ERROR_SNAP_TOO_NEW);
+    if constexpr (FORCE_SNAP_IS_BETA) throw VC64Error(ERROR_SNAP_IS_BETA);
 
-	if (isTooOld()) throw VC64Error(ERROR_SNAP_TOO_OLD);
-	if (isTooNew()) throw VC64Error(ERROR_SNAP_TOO_NEW);
-	if (isBeta() && !betaRelease) throw VC64Error(ERROR_SNAP_IS_BETA);
+    if (isTooOld()) throw VC64Error(ERROR_SNAP_TOO_OLD);
+    if (isTooNew()) throw VC64Error(ERROR_SNAP_TOO_NEW);
+    if (isBeta() && !betaRelease) throw VC64Error(ERROR_SNAP_IS_BETA);
 }
 
 bool
@@ -125,9 +125,9 @@ Snapshot::isTooNew() const
 bool
 Snapshot::isBeta() const
 {
-	auto header = getHeader();
+    auto header = getHeader();
 
-	return header->beta != 0;
+    return header->beta != 0;
 }
 
 void
@@ -151,4 +151,6 @@ Snapshot::takeScreenshot(C64 &c64)
         target += header->screenshot.width;
         source += TEX_WIDTH;
     }
+}
+
 }

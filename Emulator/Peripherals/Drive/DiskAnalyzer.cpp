@@ -13,6 +13,8 @@
 
 #include <stdarg.h>
 
+namespace vc64 {
+
 DiskAnalyzer::DiskAnalyzer(const Disk &disk)
 {
     // Extract the GCR encoded bit stream from the disk
@@ -97,10 +99,10 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
     assert(errorLog[ht].empty());
     assert(errorStartIndex[ht].empty());
     assert(errorEndIndex[ht].empty());
-            
+
     // Indicates where the sector headers blocks and the sectors data blocks start
     u8 sync[2 * maxBitsOnTrack] = { };
-        
+
     // Scan for SYNC sequences and decode the byte that follows
     isize noOfOnes = 0;
     long stop = (long)(2 * trackInfo.length - 10);
@@ -138,7 +140,7 @@ DiskAnalyzer::analyzeHalftrack(Halftrack ht)
         return trackInfo;
 
     } else {
-    
+
         // Compute offsets to all sectors
         u8 sector = UINT8_MAX;
         for (isize i = startOffset; i < startOffset + trackInfo.length; i++) {
@@ -347,4 +349,6 @@ DiskAnalyzer::sectorBytesAsString(Halftrack ht, isize offset, isize length, bool
     }
     text[strOffset] = 0;
     return text;
+}
+
 }

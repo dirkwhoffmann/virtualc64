@@ -12,6 +12,8 @@
 #include "FileSystem.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 bool
 P00File::isCompatible(const string &path)
 {
@@ -27,7 +29,7 @@ P00File::isCompatible(std::istream &stream)
     if (util::streamLength(stream) < 0x1A) return false;
     return util::matchingStreamHeader(stream, magicBytes, sizeof(magicBytes));
 }
- 
+
 void
 P00File::init(FileSystem &fs)
 {
@@ -36,11 +38,11 @@ P00File::init(FileSystem &fs)
 
     // Only proceed if the requested file exists
     if (fs.numFiles() <= item) throw VC64Error(ERROR_FS_HAS_NO_FILES);
-        
+
     // Create new archive
     isize p00Size = itemSize + 8 + 17 + 1;
     init(p00Size);
-            
+
     // Write magic bytes (8 bytes)
     u8 *p = data;
     strcpy((char *)p, "C64File");
@@ -55,7 +57,7 @@ P00File::init(FileSystem &fs)
 
     // Record size (applies to REL files, only) (1 byte)
     *p++ = 0;
-        
+
     // Add data
     fs.copyFile(item, p, itemSize);
 }
@@ -99,4 +101,6 @@ P00File::readByte(isize nr, isize pos) const
     assert(nr == 0);
     assert(pos < itemSize(nr));
     return data[0x1A + pos];
+}
+
 }

@@ -12,6 +12,8 @@
 #include "C64.h"
 #include "MemUtils.h"
 
+namespace vc64 {
+
 void
 FSDirEntry::init(PETName<16> name, TSLink ref, isize numBlocks)
 {
@@ -97,3 +99,4 @@ FSDirEntry::getFileType() const
     return (FSFileType)(fileType & 0b111);
 }
 
+}

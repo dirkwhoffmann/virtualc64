@@ -12,8 +12,10 @@
 #include "C64Object.h"
 #include "MemUtils.h"
 
+namespace vc64 {
+
 template <int len> class PETName : C64Object {
-        
+
     // PETSCII representation
     u8 pet[len + 1];
     
@@ -38,7 +40,7 @@ public:
         asciichar = (u8)std::toupper(asciichar);
         return asciichar >= 0x20 && asciichar <= 0x5D ? asciichar : ' ';
     }
-        
+
     PETName(const u8 *_pet, u8 _pad = 0xA0) : pad(_pad)
     {
         assert(_pet);
@@ -47,7 +49,7 @@ public:
         memset(asc, 0x0, sizeof(asc));
         
         for (int i = 0; i < len && _pet[i] != pad; i++) {
-                    
+
             asc[i] = petscii2printable(_pet[i], '_');
             pet[i] = _pet[i];
         }
@@ -109,3 +111,5 @@ public:
     const char *c_str() { return asc; }
     string str() { return string(asc); }
 };
+
+}

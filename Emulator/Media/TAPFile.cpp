@@ -11,6 +11,8 @@
 #include "TAPFile.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 bool
 TAPFile::isCompatible(const string &path)
 {
@@ -101,4 +103,6 @@ TAPFile::finalizeRead()
     } else {
         debug(TAP_DEBUG, "TAP file has been scanned with no errros\n");
     }
+}
+
 }

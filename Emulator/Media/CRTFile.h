@@ -12,6 +12,8 @@
 #include "CartridgeTypes.h"
 #include "AnyFile.h"
 
+namespace vc64 {
+
 /* For details about the .CRT format,
  * see: http://vice-emu.sourceforge.net/vice_16.html
  *      http://ist.uwaterloo.ca/~schepers/formats/CRT.TXT
@@ -21,7 +23,7 @@
  */
 
 class CRTFile : public AnyFile {
-        
+
     // Maximum number of chip packets in a CRT file
     static const isize MAX_PACKETS = 128;
 
@@ -39,7 +41,7 @@ public:
     
     static bool isCompatible(const string &name);
     static bool isCompatible(std::istream &stream);
-        
+
     
     //
     // Initializing
@@ -55,7 +57,7 @@ public:
     
     const char *getDescription() const override { return "CRTFile"; }
 
-        
+
     //
     // Methods from AnyFile
     //
@@ -106,7 +108,7 @@ public:
     
     // Returns the bank number for this chip
     u16 chipBank(isize nr) const { return LO_HI(chips[nr][0xB], chips[nr][0xA]); }
-        
+
     // Returns the start of the chip rom in address space
     u16 chipAddr(isize nr) const { return LO_HI(chips[nr][0xD], chips[nr][0xC]); }
 
@@ -121,3 +123,5 @@ public:
     // Fixes known inconsistencies of common CRT files
     void repair();
 };
+
+}

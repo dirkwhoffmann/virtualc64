@@ -11,6 +11,7 @@
 
 #include "AnyFile.h"
 
+namespace vc64 {
 
 class D64File : public AnyFile {
 
@@ -28,7 +29,7 @@ public:
     u8 errors[802];
     
     static bool isCompatible(const string &name);
-    static bool isCompatible(std::istream &stream);  
+    static bool isCompatible(std::istream &stream);
 
 
     //
@@ -56,7 +57,7 @@ public:
     
     const char *getDescription() const override { return "D64File"; }
 
-        
+
     //
     // Methods from AnyFile
     //
@@ -67,7 +68,7 @@ public:
     PETName<16> getName() const override;
     void finalizeRead() throws override;
 
-        
+
     //
     // Querying properties
     //
@@ -96,3 +97,5 @@ public:
     // Dumps the contents of a sector
     void dump(Track track, Sector sector) const;
 };
+
+}

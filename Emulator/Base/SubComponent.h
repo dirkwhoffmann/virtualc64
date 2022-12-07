@@ -39,8 +39,6 @@ class ParCable;
 class Recorder;
 class RegressionTester;
 class RetroShell;
-}
-
 class AnyFile;
 class AnyCollection;
 class TAPFile;
@@ -52,6 +50,8 @@ class G64File;
 class CRTFile;
 class RomFile;
 class Snapshot;
+
+}
 
 using namespace vc64;
 

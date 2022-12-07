@@ -12,6 +12,8 @@
 #include "Disk.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 bool
 G64File::isCompatible(const string &path)
 {
@@ -146,3 +148,4 @@ G64File::getStartOfHalftrack(Halftrack ht) const
     return LO_LO_HI_HI(data[offset], data[offset+1], data[offset+2], data[offset+3]);
 }
 
+}

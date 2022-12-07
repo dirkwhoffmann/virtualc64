@@ -12,6 +12,8 @@
 #include "FileSystem.h"
 #include "MemUtils.h"
 
+namespace vc64 {
+
 FSBlock::FSBlock(FileSystem& _device, u32 _nr) : device(_device), nr(_nr)
 {
     memset(data, 0, sizeof(data));
@@ -21,7 +23,7 @@ FSBlockType
 FSBlock::type() const
 {
     TSLink ts = device.layout.tsLink(nr);
-  
+
     if (ts.t == 18) {
         return ts.s == 0 ? FS_BLOCKTYPE_BAM : FS_BLOCKTYPE_DIR;
     } else {
@@ -41,7 +43,7 @@ FSBlock::writeBAM(PETName<16> &name)
 {
     // Don't call this methods on blocks other than the BAM block
     assert(this == device.bamPtr());
-        
+
     // Location of the first directory sector
     data[0x00] = 18;
     data[0x01] = 1;
@@ -196,9 +198,9 @@ FSBlock::check(u32 byte, u8 *expected, bool strict) const
             
             if (byte == 0) EXPECT_TRACK_REF (data[byte + 1]);
             if (byte == 1) EXPECT_SECTOR_REF(data[byte - 1]);
-                        
+
             if (!util::isZero(data + byte, 0x20)) {
-            
+
                 switch (byte & 0x1F) {
                         
                     case 0x03: EXPECT_TRACK_REF (data[byte + 1]); break;
@@ -254,4 +256,6 @@ FSBlock::exportBlock(u8 *dst)
 {
     assert(dst);
     memcpy(dst, data, 256);
+}
+
 }
