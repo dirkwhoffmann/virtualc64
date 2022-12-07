@@ -12,6 +12,12 @@
 #include "SubComponent.h"
 #include "C64Types.h"
 
+using namespace vc64;
+
+namespace vc64 {
+class C64;
+}
+
 class RegressionTester : public SubComponent {
    
 public:
@@ -62,12 +68,12 @@ private:
 public:
 
     // Reverts everything to factory settings
-    void prepare(class C64 &c64, C64Model model);
+    void prepare(C64 &c64, C64Model model);
     
     // Creates the test image and exits the emulator
-    void dumpTexture(class C64 &c64);
-    void dumpTexture(class C64 &c64, const string &filename);
-    void dumpTexture(class C64 &c64, std::ostream& os);
+    void dumpTexture(C64 &c64);
+    void dumpTexture(C64 &c64, const string &filename);
+    void dumpTexture(C64 &c64, std::ostream& os);
 
     
     //

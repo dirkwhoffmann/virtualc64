@@ -18,6 +18,8 @@
 #include "ReSID.h"
 #include "Chrono.h"
 
+using namespace vc64;
+
 /* Architecture of the audio pipeline
  *
  *           Mux class

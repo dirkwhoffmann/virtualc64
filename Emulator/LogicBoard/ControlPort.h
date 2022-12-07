@@ -14,6 +14,8 @@
 #include "Joystick.h"
 #include "Mouse.h"
 
+using namespace vc64;
+
 class ControlPort : public SubComponent {
 
     friend class Mouse;

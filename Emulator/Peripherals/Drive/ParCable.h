@@ -13,6 +13,8 @@
 #include "DriveTypes.h"
 #include "SubComponent.h"
 
+using namespace vc64;
+
 class ParCable : public SubComponent {
     
     //

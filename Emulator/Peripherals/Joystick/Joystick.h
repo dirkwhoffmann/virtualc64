@@ -12,6 +12,8 @@
 #include "JoystickTypes.h"
 #include "SubComponent.h"
 
+using namespace vc64;
+
 class Joystick : public SubComponent {
     
     // Reference to the control port this device belongs to

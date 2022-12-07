@@ -33,6 +33,8 @@
 #include "SIDStreams.h"
 #include "Constants.h"
 
+using namespace vc64;
+
 class FastSID : public SubComponent {
 
     // Number of this SID (0 = primary SID)

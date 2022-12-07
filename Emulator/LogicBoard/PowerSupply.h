@@ -13,6 +13,8 @@
 #include "SubComponent.h"
 #include "Chrono.h"
 
+using namespace vc64;
+
 class PowerSupply : public SubComponent {
     
     // Current configuration

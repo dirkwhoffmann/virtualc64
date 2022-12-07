@@ -55,6 +55,7 @@
 #include "CRTFile.h"
 #include "FileSystem.h"
 
+namespace vc64 {
 
 /* A complete virtual C64. This class is the most prominent one of all. To run
  * the emulator, it is sufficient to create a single object of this type. All
@@ -64,7 +65,7 @@
  * query information from VICII, you need to invoke a method on c64.vicii.
  */
 class C64 : public Thread {
-                
+
     // The component which is currently observed by the debugger
     InspectionTarget inspectionTarget;
 
@@ -115,7 +116,7 @@ public:
     //
     
 private:
-        
+
     /* Run loop flags. This variable is checked at the end of each runloop
      * iteration. Most of the time, the variable is 0 which causes the runloop
      * to repeat. A value greater than 0 means that one or more runloop control
@@ -154,7 +155,7 @@ public:
      * models.
      */
     u8 rasterCycle = 1;
-        
+
 private:
     
     /* Indicates whether C64 is running in ultimax mode. Ultimax mode can be
@@ -171,19 +172,19 @@ private:
      */
     i64 durationOfOneCycle;
     i64 nativeDurationOfOneCycle;
-        
-	
-	//
-	// Static methods
-	//
-	
-public:
-	
-	// Returns a version string for this release
-	static string version();
 
-	// Returns a build number string for this release
-	static string build();
+
+    //
+    // Static methods
+    //
+
+public:
+
+    // Returns a version string for this release
+    static string version();
+
+    // Returns a build number string for this release
+    static string build();
 
     
     //
@@ -242,7 +243,7 @@ public:
     
     // Configures the C64 to match a specific C64 model
     void configure(C64Model model);
-        
+
     // Powers off and resets the emulator to it's initial state
     void revertToFactorySettings();
 
@@ -260,7 +261,7 @@ private:
     //
     
 public:
-       
+
     void inspect() { inspect(inspectionTarget); }
     void autoInspect();
     InspectionTarget getInspectionTarget() const { return inspectionTarget; }
@@ -332,7 +333,7 @@ public:
     //
     // Controlling
     //
-        
+
 private:
 
     void _isReady() const throws override;
@@ -457,7 +458,7 @@ public:
     // Computes a Rom checksum
     u32 romCRC32(RomType type) const;
     u64 romFNV64(RomType type) const;
-     
+
     // Returns a unique identifier for the installed ROMs
     RomIdentifier romIdentifier(RomType type) const;
     
@@ -516,3 +517,5 @@ public:
     // Assembles a path to a temporary file
     static fs::path tmp(const string &name, bool unique = false) throws;
 };
+
+}

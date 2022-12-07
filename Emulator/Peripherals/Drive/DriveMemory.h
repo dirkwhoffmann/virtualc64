@@ -12,6 +12,8 @@
 #include "SubComponent.h"
 #include "DriveTypes.h"
 
+using namespace vc64;
+
 class DriveMemory : public SubComponent {
     
 private:

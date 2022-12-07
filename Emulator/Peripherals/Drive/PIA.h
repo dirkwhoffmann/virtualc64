@@ -11,6 +11,8 @@
 
 #include "SubComponent.h"
 
+using namespace vc64;
+
 class PIA6821 : public SubComponent {
     
     friend class Drive;

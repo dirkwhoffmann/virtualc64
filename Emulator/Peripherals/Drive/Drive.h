@@ -18,6 +18,8 @@
 #include "VIA.h"
 #include "PIA.h"
 
+using namespace vc64;
+
 /*
  * This implementation is based on the following two documents written
  * by Ruud Baltissen. Ruud, thank you for this excellent work!

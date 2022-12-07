@@ -13,6 +13,8 @@
 #include "SubComponent.h"
 #include "Colors.h"
 
+using namespace vc64;
+
 class DmaDebugger : public SubComponent {
 
     friend class VICII;

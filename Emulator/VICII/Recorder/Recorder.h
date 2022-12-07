@@ -14,6 +14,8 @@
 #include "FFmpeg.h"
 #include "NamedPipe.h"
 
+using namespace vc64;
+
 class Recorder : public SubComponent {
 
     //

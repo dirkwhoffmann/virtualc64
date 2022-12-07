@@ -14,6 +14,8 @@
 #include "Constants.h"
 #include "Chrono.h"
 
+using namespace vc64;
+
 class Pulse {
     
 public:

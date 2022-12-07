@@ -12,7 +12,10 @@
 #include "C64Component.h"
 #include "CPUTypes.h"
 
+namespace vc64 {
 class C64;
+}
+
 class C64Memory;
 class DriveMemory;
 class CPU;
@@ -50,6 +53,8 @@ class G64File;
 class CRTFile;
 class RomFile;
 class Snapshot;
+
+using namespace vc64;
 
 /* This class extends the C64Component class with references to all components
  * that are part of the C64 class.

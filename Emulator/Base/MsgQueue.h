@@ -13,6 +13,8 @@
 #include "SubComponent.h"
 #include "RingBuffer.h"
 
+using namespace vc64;
+
 class MsgQueue : public SubComponent {
         
     // Ring buffer storing all pending messages

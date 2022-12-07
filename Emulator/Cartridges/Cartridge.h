@@ -14,6 +14,8 @@
 #include "CartridgeRom.h"
 #include "CRTFile.h"
 
+using namespace vc64;
+
 class Cartridge : public SubComponent {
     
     //

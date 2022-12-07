@@ -12,6 +12,8 @@
 #include "C64.h"
 #include "IOUtils.h"
 
+using namespace vc64;
+
 Thumbnail *
 Thumbnail::makeWithC64(const C64 &c64, isize dx, isize dy)
 {

@@ -12,7 +12,11 @@
 #include "AnyFile.h"
 #include "Constants.h"
 
+namespace vc64 {
 class C64;
+}
+
+using namespace vc64;
 
 struct Thumbnail {
     
@@ -66,7 +70,7 @@ public:
     Snapshot(const string &path) throws { init(path); }
     Snapshot(const u8 *buf, isize len) throws { init(buf, len); }
     Snapshot(isize capacity);
-    Snapshot(class C64 &c64);
+    Snapshot(C64 &c64);
 
     
     //
@@ -106,5 +110,5 @@ public:
     u8 *getData() const { return data + sizeof(SnapshotHeader); }
         
     // Records a screenshot
-    void takeScreenshot(class C64 &c64);
+    void takeScreenshot(C64 &c64);
 };

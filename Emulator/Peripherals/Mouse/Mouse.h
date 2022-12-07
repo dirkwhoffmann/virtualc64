@@ -17,6 +17,8 @@
 #include "Mouse1351.h"
 #include "NeosMouse.h"
 
+using namespace vc64;
+
 class ShakeDetector {
     
     // Horizontal position

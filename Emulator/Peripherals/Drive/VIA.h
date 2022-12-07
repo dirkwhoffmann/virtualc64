@@ -11,6 +11,8 @@
 
 #include "SubComponent.h"
 
+using namespace vc64;
+
 /*
  * This implementation is mainly based on the document
  *

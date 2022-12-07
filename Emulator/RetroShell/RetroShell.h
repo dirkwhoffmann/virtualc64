@@ -16,6 +16,8 @@
 #include <sstream>
 #include <fstream>
 
+using namespace vc64;
+
 class RetroShell : public SubComponent {
 
     // Interpreter for commands typed into the console window

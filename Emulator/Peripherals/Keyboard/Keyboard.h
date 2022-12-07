@@ -11,8 +11,9 @@
 
 #include "SubComponent.h"
 #include "C64Key.h"
-
 #include <queue>
+
+using namespace vc64;
 
 struct KeyAction {
         

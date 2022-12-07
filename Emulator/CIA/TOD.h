@@ -12,6 +12,8 @@
 #include "TODTypes.h"
 #include "SubComponent.h"
 
+using namespace vc64;
+
 inline u8 incBCD(u8 x)
 {
     return ((x & 0xF) == 9) ? (x & 0xF0) + 0x10 : (x & 0xF0) + ((x + 1) & 0xF);

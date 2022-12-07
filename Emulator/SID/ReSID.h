@@ -14,6 +14,8 @@
 #include "SIDStreams.h"
 #include "resid/sid.h"
 
+using namespace vc64;
+
 /* This class is a wrapper around the third-party reSID library.
  *
  *   List of modifications applied to reSID:

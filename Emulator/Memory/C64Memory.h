@@ -12,6 +12,8 @@
 #include "MemoryTypes.h"
 #include "SubComponent.h"
 
+using namespace vc64;
+
 class C64Memory : public SubComponent {
 
     // Current configuration

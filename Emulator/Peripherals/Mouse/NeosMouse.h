@@ -11,6 +11,8 @@
 
 #include "SubComponent.h"
 
+using namespace vc64;
+
 class NeosMouse : public SubComponent {
     
     // Mouse position

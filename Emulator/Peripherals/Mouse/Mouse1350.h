@@ -11,6 +11,8 @@
 
 #include "SubComponent.h"
 
+using namespace vc64;
+
 class Mouse1350 : public SubComponent {
     
 private:

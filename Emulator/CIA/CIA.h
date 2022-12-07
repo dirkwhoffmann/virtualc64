@@ -13,6 +13,8 @@
 #include "SubComponent.h"
 #include "TOD.h"
 
+using namespace vc64;
+
 class CIA : public SubComponent {
     
     friend class TOD;

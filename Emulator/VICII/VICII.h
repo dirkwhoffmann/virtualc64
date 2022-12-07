@@ -17,6 +17,8 @@
 #include "MemoryTypes.h"
 #include "TimeDelayed.h"
 
+using namespace vc64;
+
 class VICII : public SubComponent {
 
     friend class C64Memory;

@@ -13,6 +13,8 @@
 #include "IOUtils.h"
 #include <algorithm>
 
+namespace vc64 {
+
 // Perform some consistency checks
 static_assert(sizeof(i8 ) == 1, "i8  size mismatch");
 static_assert(sizeof(i16) == 2, "i16 size mismatch");
@@ -28,27 +30,27 @@ Defaults C64::defaults;
 string
 C64::version()
 {
-	string result;
-	
-	result = std::to_string(VER_MAJOR) + "." + std::to_string(VER_MINOR);
-	if constexpr (VER_SUBMINOR > 0) result += "." + std::to_string(VER_SUBMINOR);
-	if constexpr (VER_BETA > 0) result += 'b' + std::to_string(VER_BETA);
+    string result;
 
-	return result;
+    result = std::to_string(VER_MAJOR) + "." + std::to_string(VER_MINOR);
+    if constexpr (VER_SUBMINOR > 0) result += "." + std::to_string(VER_SUBMINOR);
+    if constexpr (VER_BETA > 0) result += 'b' + std::to_string(VER_BETA);
+
+    return result;
 }
 
 string
 C64::build()
 {
-	string db = debugBuild ? " [DEBUG BUILD]" : "";
-	
-	return version() + db + " (" + __DATE__ + " " + __TIME__ + ")";
+    string db = debugBuild ? " [DEBUG BUILD]" : "";
+
+    return version() + db + " (" + __DATE__ + " " + __TIME__ + ")";
 }
 
 C64::C64()
 {
     trace(RUN_DEBUG, "Creating virtual C64\n");
-        
+
     subComponents = std::vector<C64Component *> {
         
         &mem,
@@ -75,12 +77,12 @@ C64::C64()
     // Set up the initial state
     C64Component::initialize();
     C64Component::reset(true);
-	
-	// Initialize the sync timer
-	targetTime = util::Time::now();
-	
-	// Start the thread and enter the main function
-	thread = std::thread(&Thread::main, this);
+
+    // Initialize the sync timer
+    targetTime = util::Time::now();
+
+    // Start the thread and enter the main function
+    thread = std::thread(&Thread::main, this);
 }
 
 C64::~C64()
@@ -101,7 +103,7 @@ C64::reset(bool hard)
         
         // Execute the standard reset routine
         C64Component::reset(hard);
-                
+
         // Inform the GUI
         msgQueue.put(MSG_RESET);
     }
@@ -131,7 +133,7 @@ void
 C64::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)
-                    
+
     flags = 0;
     rasterCycle = 1;
 }
@@ -305,7 +307,7 @@ C64::configure(Option option, i64 value)
 
             vic.setConfigItem(option, value);
             break;
-                        
+
         case OPT_CUT_LAYERS:
         case OPT_CUT_OPACITY:
         case OPT_DMA_DEBUG_ENABLE:
@@ -344,7 +346,7 @@ C64::configure(Option option, i64 value)
         case OPT_AUDVOL:
         case OPT_AUDVOLL:
         case OPT_AUDVOLR:
-                
+
             muxer.setConfigItem(option, value);
             break;
             
@@ -428,7 +430,7 @@ C64::configure(Option option, long id, i64 value)
     
     switch (option) {
             
-                        
+
         case OPT_DMA_DEBUG_CHANNEL:
         case OPT_DMA_DEBUG_COLOR:
             
@@ -478,7 +480,7 @@ C64::configure(Option option, long id, i64 value)
         case OPT_AUDVOL:
         case OPT_AUDVOLL:
         case OPT_AUDVOLR:
-                
+
             muxer.setConfigItem(option, id, value);
             break;
             
@@ -672,11 +674,11 @@ C64::execute()
         
         // Are we requested to update the debugger info structs?
         /*
-        if (flags & RL::INSPECT) {
-            clearFlag(RL::INSPECT);
-            inspect();
-        }
-        */
+         if (flags & RL::INSPECT) {
+         clearFlag(RL::INSPECT);
+         inspect();
+         }
+         */
 
         // Did we reach a breakpoint?
         if (flags & RL::BREAKPOINT) {
@@ -710,7 +712,7 @@ C64::execute()
             msgQueue.put(MSG_CPU_JAMMED);
             newState = EXEC_PAUSED;
         }
-                    
+
         assert(flags == 0);
     }
 }
@@ -744,7 +746,7 @@ C64::_isReady() const
     }
     if (FORCE_MEGA64_MISMATCH || (mega && string(mega65BasicRev()) != string(mega65KernalRev()))) {
         throw VC64Error(ERROR_ROM_MEGA65_MISMATCH);
-    }    
+    }
 }
 
 void
@@ -888,9 +890,9 @@ void
 C64::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
-        
+
     if (category == Category::State) {
-                
+
         os << tab("Machine type") << bol(vic.pal(), "PAL", "NTSC") << std::endl;
         os << tab("Frames per second") << vic.getFps() << std::endl;
         os << tab("Lines per frame") << vic.getLinesPerFrame() << std::endl;
@@ -1061,7 +1063,7 @@ C64::endFrame()
     frame++;
     
     vic.endFrame();
-        
+
     // Execute remaining SID cycles
     muxer.executeUntil(cpu.clock);
     
@@ -1075,7 +1077,7 @@ C64::endFrame()
     drive9.vsyncHandler();
     datasette.vsyncHandler();
     retroShell.vsyncHandler();
-    recorder.vsyncHandler();    
+    recorder.vsyncHandler();
 }
 
 void
@@ -1147,34 +1149,34 @@ C64::latestUserSnapshot()
 void
 C64::loadSnapshot(const Snapshot &snapshot)
 {
-	{   SUSPENDED
-		
-		try {
-        
-			// Restore the saved state
-			load(snapshot.getData());
-			
-			// Clear the keyboard matrix to avoid constantly pressed keys
-			keyboard.releaseAll();
-			
-			// Print some debug info if requested
-			if constexpr (SNP_DEBUG) dump(Category::State);
-    
-		} catch (VC64Error &error) {
-			
-			/* If we reach this point, the emulator has been put into an
-			 * inconsistent state due to corrupted snapshot data. We cannot
-			 * continue emulation, because it would likely crash the
-			 * application. Because we cannot revert to the old state either,
-			 * we perform a hard reset to eliminate the inconsistency.
-			 */
-			hardReset();
-			throw error;
-		}
-	}
-	
-	// Inform the GUI
-	msgQueue.put(MSG_SNAPSHOT_RESTORED);
+    {   SUSPENDED
+
+        try {
+
+            // Restore the saved state
+            load(snapshot.getData());
+
+            // Clear the keyboard matrix to avoid constantly pressed keys
+            keyboard.releaseAll();
+
+            // Print some debug info if requested
+            if constexpr (SNP_DEBUG) dump(Category::State);
+
+        } catch (VC64Error &error) {
+
+            /* If we reach this point, the emulator has been put into an
+             * inconsistent state due to corrupted snapshot data. We cannot
+             * continue emulation, because it would likely crash the
+             * application. Because we cannot revert to the old state either,
+             * we perform a hard reset to eliminate the inconsistency.
+             */
+            hardReset();
+            throw error;
+        }
+    }
+
+    // Inform the GUI
+    msgQueue.put(MSG_SNAPSHOT_RESTORED);
 }
 
 u32
@@ -1205,7 +1207,7 @@ C64::romFNV64(RomType type) const
         case ROM_TYPE_CHAR:   return util::fnv64(mem.rom + 0xD000, 0x1000);
         case ROM_TYPE_KERNAL: return util::fnv64(mem.rom + 0xE000, 0x2000);
         case ROM_TYPE_VC1541: return drive8.mem.romFNV64();
-        
+
         default:
             fatalError;
     }
@@ -1293,28 +1295,28 @@ const string
 C64::romRevision(RomType type) const
 {
     switch (type) {
-             
-         case ROM_TYPE_BASIC:
 
-             if (hasMega65Rom(ROM_TYPE_BASIC)) return mega65BasicRev();
-             return RomFile::revision(romIdentifier(ROM_TYPE_BASIC));
+        case ROM_TYPE_BASIC:
 
-         case ROM_TYPE_CHAR:
+            if (hasMega65Rom(ROM_TYPE_BASIC)) return mega65BasicRev();
+            return RomFile::revision(romIdentifier(ROM_TYPE_BASIC));
 
-             return RomFile::revision(romIdentifier(ROM_TYPE_CHAR));
+        case ROM_TYPE_CHAR:
 
-         case ROM_TYPE_KERNAL:
+            return RomFile::revision(romIdentifier(ROM_TYPE_CHAR));
 
-             if (hasMega65Rom(ROM_TYPE_KERNAL)) return mega65KernalRev();
-             return RomFile::revision(romIdentifier(ROM_TYPE_KERNAL));
+        case ROM_TYPE_KERNAL:
 
-         case ROM_TYPE_VC1541:
+            if (hasMega65Rom(ROM_TYPE_KERNAL)) return mega65KernalRev();
+            return RomFile::revision(romIdentifier(ROM_TYPE_KERNAL));
 
-             return RomFile::revision(romIdentifier(ROM_TYPE_VC1541));
+        case ROM_TYPE_VC1541:
 
-         default:
+            return RomFile::revision(romIdentifier(ROM_TYPE_VC1541));
+
+        default:
             fatalError;
-     }
+    }
 }
 
 bool
@@ -1643,4 +1645,6 @@ C64::tmp(const string &name, bool unique)
     if (unique) result = fs::path(util::makeUniquePath(result.string()));
 
     return result;
+}
+
 }

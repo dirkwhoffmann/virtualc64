@@ -31,6 +31,8 @@
 #include "SIDTypes.h"
 #include "SubComponent.h"
 
+using namespace vc64;
+
 // Waveform types
 #define FASTSID_TRIANGLE 0x10
 #define FASTSID_SAW      0x20

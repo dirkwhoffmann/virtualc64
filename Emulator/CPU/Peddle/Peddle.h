@@ -15,6 +15,8 @@
 
 using util::TimeDelayed;
 
+using namespace vc64;
+
 namespace peddle {
 
 class Peddle : public SubComponent {

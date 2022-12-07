@@ -13,6 +13,8 @@
 #include "SubComponent.h"
 #include "Cartridge.h"
 
+using namespace vc64;
+
 /*
  * For more information: http://www.c64-wiki.com/index.php/Cartridge
  *

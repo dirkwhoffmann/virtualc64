@@ -11,6 +11,8 @@
 
 #include "SubComponent.h"
 
+using namespace vc64;
+
 class CartridgeRom : public SubComponent {
     
     friend class Cartridge;
