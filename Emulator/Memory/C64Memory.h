@@ -12,7 +12,7 @@
 #include "MemoryTypes.h"
 #include "SubComponent.h"
 
-using namespace vc64;
+namespace vc64 {
 
 class C64Memory : public SubComponent {
 
@@ -32,9 +32,9 @@ public:
      *             range = upper four bits of address
      */
     MemoryType bankMap[32][16];
-        
-	// Random Access Memory
-	u8 ram[65536];
+
+    // Random Access Memory
+    u8 ram[65536];
 
     /* Color RAM
      * The color RAM is located in the I/O space, starting at $D800 and ending
@@ -44,13 +44,13 @@ public:
     u8 colorRam[1024];
 
     // Read Only Memory
-	/* Only specific memory cells are valid ROM locations. In total, the C64
+    /* Only specific memory cells are valid ROM locations. In total, the C64
      * has three ROMs that are located at different addresses. Note, that the
      * ROMs do not span over the whole 64KB range. Therefore, only some
      * addresses are valid ROM addresses.
      */
     u8 rom[65536];
-        
+
     // Peek source lookup table
     MemoryType peekSrc[16];
     
@@ -67,7 +67,7 @@ public:
     
 public:
     
-	C64Memory(C64 &ref);
+    C64Memory(C64 &ref);
     
     
     //
@@ -209,3 +209,5 @@ public:
     string decdump(u16 addr, long num) { return decdump(addr, num, peekSrc[addr >> 12]); }
     string txtdump(u16 addr, long num) { return txtdump(addr, num, peekSrc[addr >> 12]); }
 };
+
+}

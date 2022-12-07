@@ -13,6 +13,8 @@
 #include "C64.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 CPU::CPU(C64& ref) : Peddle(ref)
 {
 
@@ -528,3 +530,5 @@ template u16 Peddle::readResetVector<MOS_8502>();
 }
 
 #endif
+
+}

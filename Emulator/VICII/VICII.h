@@ -17,7 +17,7 @@
 #include "MemoryTypes.h"
 #include "TimeDelayed.h"
 
-using namespace vc64;
+namespace vc64 {
 
 class VICII : public SubComponent {
 
@@ -191,7 +191,7 @@ private:
      */
     u8 vmli;
     
- 
+
     /* Graphics data sequencer (10): An 8 bit shift register to synthesize
      * canvas pixels.
      */
@@ -246,7 +246,7 @@ private:
      * previous drawn pixel.
      */
     SpriteSR spriteSr[8];
-        
+
     /* Indicates for each sprite if the shift register is active. Once the
      * shift register is started, it runs as long it contains at least one '1'
      * bit (data != 0).
@@ -320,7 +320,7 @@ private:
      * cycle 61 (fourth right border column).
      */
     bool isVisibleColumn;
-        
+
     // True if the current scanline belongs to the VBLANK area
     bool vblank;
     
@@ -346,39 +346,39 @@ private:
      */
     bool displayState;
 
-  
-	//
-	// Sprites
-	//
+
+    //
+    // Sprites
+    //
 
 private:
 
-	// MOB data counter (16)
-	u8 mc[8];
-	
-	// MCBASE register
-	u8 mcbase[8];
-		
-	// Sprite pointer fetched during a pAccess
-	u16 spritePtr[8];
+    // MOB data counter (16)
+    u8 mc[8];
+
+    // MCBASE register
+    u8 mcbase[8];
+
+    // Sprite pointer fetched during a pAccess
+    u16 spritePtr[8];
 
     // Flags the first DMA access for each sprite
     u8 isFirstDMAcycle;
     
     // Flags the second or third DMA access for each sprite
     u8 isSecondDMAcycle;
-        
+
     // Determines if a sprite needs to be drawn in the current scanline
     u8 spriteDisplay;
 
     // Value of spriteDisplay, delayed by one cycle
     u8 spriteDisplayDelayed;
 
-	// Sprite DMA on off register
-	u8 spriteDmaOnOff;
+    // Sprite DMA on off register
+    u8 spriteDmaOnOff;
     
-	// Expansion flipflop (used to handle Y sprite stretching)
-	u8 expansionFF;
+    // Expansion flipflop (used to handle Y sprite stretching)
+    u8 expansionFF;
 
     /* Remembers which bits the CPU has cleared in the expansion Y register
      * (D017). This value is set in pokeIO and cycle 15 and read in cycle 16
@@ -389,22 +389,22 @@ private:
     u8 collision[8];
     
     
-	//
-	// Lightpen
-	//
-	
+    //
+    // Lightpen
+    //
+
     /* Current value of the LP pin. A negative transition on this pin triggers
      * a lightpen interrupt.
      */
     bool lpLine;
     
-	/* Indicates whether the lightpen has triggered. This variable indicates
+    /* Indicates whether the lightpen has triggered. This variable indicates
      * whether a lightpen interrupt has occurred within the current frame. The
      * variable is needed, because a lightpen interrupt can only occur once per
      * frame.
      */
-	bool lpIrqHasOccurred;
-	
+    bool lpIrqHasOccurred;
+
     
     //
     // CPU control and memory access
@@ -474,7 +474,7 @@ private:
     // Result of the lastest g-access
     util::TimeDelayed <u32,2> gAccessResult = util::TimeDelayed <u32,2> ();
     
- 
+
     //
     // Pipeline
     //
@@ -486,11 +486,11 @@ private:
      * See processDelayedActions()
      */
     u64 delay;
-        
+
     
-	//
-	// Screen buffers and colors
-	//
+    //
+    // Screen buffers and colors
+    //
     
 private:
     
@@ -517,7 +517,7 @@ private:
     u32 *dmaTexture2 = new u32[TEX_HEIGHT * TEX_WIDTH];
     /*
      */
-     
+
     /* Pointer to the current working texture. This variable points either to
      * the first or the second texture buffer. After a frame has been finished,
      * the pointer is redirected to the other buffer.
@@ -542,12 +542,12 @@ private:
      * of the drawn pixel (border pixel, sprite pixel, etc.).
      */
     u8 zBuffer[TEX_WIDTH];
-        
+
     /* Offset into to pixelBuffer. This variable points to the first pixel of
      * the currently drawn 8 pixel chunk.
      */
     short bufferoffset;
-            
+
     
     //
     // Debugging
@@ -573,7 +573,7 @@ public:
     //
     
 public:
-	
+
     VICII(C64 &ref);
 
     void updateVicFunctionTable();
@@ -754,7 +754,7 @@ public:
     // Returns true if a PAL or an NTSC chip is plugged in
     bool pal() const { return isPAL; }
     bool ntsc() const { return isNTSC; }
-        
+
     // Returns true if light pen interrupts are triggered with a delay
     static bool delayedLightPenIrqs(VICIIRevision rev);
     bool delayedLightPenIrqs() { return delayedLightPenIrqs(config.revision); }
@@ -778,7 +778,7 @@ public:
     // Returns the number of CPU cycles performed per scanline
     static isize getCyclesPerLine(VICIIRevision rev);
     isize getCyclesPerLine() const { return getCyclesPerLine(config.revision); }
-        
+
     // Returns the number of scanline drawn per frame
     static isize getLinesPerFrame(VICIIRevision rev);
     isize getLinesPerFrame() const { return getLinesPerFrame(config.revision); }
@@ -812,7 +812,7 @@ public:
     // Returns a C64 color in 32 bit big endian RGBA format
     u32 getColor(isize nr) const { return rgbaTable[nr]; }
     u32 getColor(isize nr, Palette palette);
-        
+
 private:
     
     /* Updates the RGBA values for all sixteen C64 colors. The base palette is
@@ -860,10 +860,10 @@ private:
     void updateBankAddr();
     
     // Reads a value from a VICII register
-	u8 peek(u16 addr);
+    u8 peek(u16 addr);
     
     // Writes a value into a VICII register
-	void poke(u16 addr, u8 value);
+    void poke(u16 addr, u8 value);
     
     // Simulates a memory access via the address and data bus
     u8 memAccess(u16 addr);
@@ -982,16 +982,16 @@ private:
     u16 upperComparisonValue() const { return isRSEL() ? 51 : 55; }
     u16 lowerComparisonValue() const { return isRSEL() ? 251 : 247; }
     
-  
-	//
-	// Accessing registers
-	//
-	
+
+    //
+    // Accessing registers
+    //
+
 public:
-		
+
     // Returns the current value of the DEN (Display ENabled) bit
     bool DENbit() const { return GET_BIT(reg.current.ctrl1, 4); }
-        
+
     // Returns the masked CB13 bit
     u8 CB13() const { return memSelect & 0x08; }
 
@@ -1001,10 +1001,10 @@ public:
     // Returns the masked VM13/VM12/VM11/VM10 bits
     u8 VM13VM12VM11VM10() const { return memSelect & 0xF0; }
 
-	// Returns the state of the CSEL bit
-	bool isCSEL() const { return GET_BIT(reg.current.ctrl2, 3); }
+    // Returns the state of the CSEL bit
+    bool isCSEL() const { return GET_BIT(reg.current.ctrl2, 3); }
     
-	// Returns the state of the RSEL bit
+    // Returns the state of the RSEL bit
     bool isRSEL() const { return GET_BIT(reg.current.ctrl1, 3); }
 
 
@@ -1032,9 +1032,9 @@ private:
      */
     bool BApulledDownForAtLeastThreeCycles() const { return baLine.delayed(); }
     
-	// Triggers a VICII interrupt
-	void triggerIrq(u8 source);
-	
+    // Triggers a VICII interrupt
+    void triggerIrq(u8 source);
+
     
     //
     // Handling lightpen events
@@ -1067,9 +1067,9 @@ private:
     void checkForLightpenIrqAtStartOfFrame();
     
     
-	//
-	// Sprites
-	//
+    //
+    // Sprites
+    //
 
 private:
 
@@ -1119,38 +1119,38 @@ private:
     void toggleExpansionFlipflop() { expansionFF ^= reg.current.sprExpandY; }
     
     
-	//
+    //
     // Running the device (VICII.cpp and VIC_cycles_xxx.cpp)
-	//
+    //
 
 public:
-	
-	/* Prepares VICII for drawing a new frame. This function is called prior to
+
+    /* Prepares VICII for drawing a new frame. This function is called prior to
      * the first cycle of each frame.
      */
-	void beginFrame();
-	
-	/* Prepares VICII for drawing a new scanline. This function is called
+    void beginFrame();
+
+    /* Prepares VICII for drawing a new scanline. This function is called
      * prior to the first cycle of each scanline.
      */
-	void beginScanline(u16 line);
+    void beginScanline(u16 line);
 
-	/* Finishes up a scanline. This function is called after the last cycle
+    /* Finishes up a scanline. This function is called after the last cycle
      * of each scanline.
      */
-	void endScanline();
-	
-	/* Finishes up a frame. This function is called after the last cycle of
+    void endScanline();
+
+    /* Finishes up a frame. This function is called after the last cycle of
      * each frame.
      */
-	void endFrame();
+    void endFrame();
     
     /* Processes all time delayed actions. This function is called at the
      * beginning of each VICII cycle.
      */
     void processDelayedActions();
     
-	// Emulates a specific scanline cycle
+    // Emulates a specific scanline cycle
     template <u16 flags> void cycle1();
     template <u16 flags> void cycle2();
     template <u16 flags> void cycle3();
@@ -1213,46 +1213,46 @@ public:
     void cycle63pal();  void cycle63ntsc();
     void cycle64ntsc();
     void cycle65ntsc();
-	
-    #define DRAW_SPRITES_DMA1 \
-        assert(isFirstDMAcycle); assert(!isSecondDMAcycle); \
-        if (!headless) { drawSpritesSlowPath(); }
 
-    #define DRAW_SPRITES_DMA2 \
-        assert(!isFirstDMAcycle); assert(isSecondDMAcycle); \
-        if (!headless) { drawSpritesSlowPath(); }
+#define DRAW_SPRITES_DMA1 \
+assert(isFirstDMAcycle); assert(!isSecondDMAcycle); \
+if (!headless) { drawSpritesSlowPath(); }
 
-    #define DRAW_SPRITES \
-        assert(!isFirstDMAcycle && !isSecondDMAcycle); \
-        if (spriteDisplay && !headless) { drawSprites(); }
-    
-    #define DRAW_SPRITES59 \
-        if ((spriteDisplayDelayed || spriteDisplay || isSecondDMAcycle) && !headless) \
-            { drawSpritesSlowPath(); }
-    
-    #define DRAW   if (!vblank && !headless) { drawCanvas(); drawBorder(); };
-    #define DRAW17 if (!vblank && !headless) { drawCanvas(); drawBorder17(); };
-    #define DRAW55 if (!vblank && !headless) { drawCanvas(); drawBorder55(); };
-    #define DRAW59 if (!vblank && !headless) { drawCanvas(); drawBorder(); };
-            
-    #define END_CYCLE \
-    dataBusPhi2 = 0xFF; \
-    xCounter += 8; \
-    bufferoffset += 8; \
-    if (unlikely(delay)) { processDelayedActions(); }
+#define DRAW_SPRITES_DMA2 \
+assert(!isFirstDMAcycle); assert(isSecondDMAcycle); \
+if (!headless) { drawSpritesSlowPath(); }
 
-    #define END_VISIBLE_CYCLE \
-    END_CYCLE
+#define DRAW_SPRITES \
+assert(!isFirstDMAcycle && !isSecondDMAcycle); \
+if (spriteDisplay && !headless) { drawSprites(); }
     
-    #define BA_LINE(x) updateBA(x);
+#define DRAW_SPRITES59 \
+if ((spriteDisplayDelayed || spriteDisplay || isSecondDMAcycle) && !headless) \
+{ drawSpritesSlowPath(); }
+    
+#define DRAW   if (!vblank && !headless) { drawCanvas(); drawBorder(); };
+#define DRAW17 if (!vblank && !headless) { drawCanvas(); drawBorder17(); };
+#define DRAW55 if (!vblank && !headless) { drawCanvas(); drawBorder55(); };
+#define DRAW59 if (!vblank && !headless) { drawCanvas(); drawBorder(); };
+
+#define END_CYCLE \
+dataBusPhi2 = 0xFF; \
+xCounter += 8; \
+bufferoffset += 8; \
+if (unlikely(delay)) { processDelayedActions(); }
+
+#define END_VISIBLE_CYCLE \
+END_CYCLE
+    
+#define BA_LINE(x) updateBA(x);
     
     
     //
     // Drawing routines (VIC_draw.cpp)
-    // 
+    //
     
 private:
-        
+
     // Draws 8 border pixels. Invoked inside draw().
     void drawBorder();
     
@@ -1297,7 +1297,7 @@ private:
      *    freezeBits : forces the sprites shift register to freeze temporarily
      */
     void drawSpritePixel(isize pixel, u8 enableBits, u8 freezeBits);
-         
+
     // Performs collision detection
     void checkCollisions();
     
@@ -1307,39 +1307,39 @@ private:
     //
     
     // Writes a single color value into the screenbuffer
-    #define COLORIZE(index,color) \
-        emuTexturePtr[index] = rgbaTable[color];
+#define COLORIZE(index,color) \
+emuTexturePtr[index] = rgbaTable[color];
     
     // Sets a single frame pixel
-    #define SET_FRAME_PIXEL(pixel,color) { \
-        isize index = bufferoffset + pixel; \
-        COLORIZE(index, color); \
-        zBuffer[index] = DEPTH_BORDER; }
+#define SET_FRAME_PIXEL(pixel,color) { \
+isize index = bufferoffset + pixel; \
+COLORIZE(index, color); \
+zBuffer[index] = DEPTH_BORDER; }
     
     // Sets a single foreground pixel
-    #define SET_FG_PIXEL(pixel,color) { \
-        isize index = bufferoffset + pixel; \
-        COLORIZE(index,color) \
-        zBuffer[index] = DEPTH_FG; }
+#define SET_FG_PIXEL(pixel,color) { \
+isize index = bufferoffset + pixel; \
+COLORIZE(index,color) \
+zBuffer[index] = DEPTH_FG; }
 
     // Sets a single background pixel
-    #define SET_BG_PIXEL(pixel,color) { \
-        isize index = bufferoffset + pixel; \
-        COLORIZE(index,color) \
-        zBuffer[index] = DEPTH_BG; }
+#define SET_BG_PIXEL(pixel,color) { \
+isize index = bufferoffset + pixel; \
+COLORIZE(index,color) \
+zBuffer[index] = DEPTH_BG; }
     
     // Sets a single sprite pixel
-    #define SET_SPRITE_PIXEL(sprite,pixel,color) { \
-        isize index = bufferoffset + pixel; \
-        if (u8 depth = spriteDepth(sprite); depth <= zBuffer[index]) { \
-            if (isVisibleColumn) COLORIZE(index, color); \
-            zBuffer[index] = depth | (zBuffer[index] & 0x10); \
-        } }
+#define SET_SPRITE_PIXEL(sprite,pixel,color) { \
+isize index = bufferoffset + pixel; \
+if (u8 depth = spriteDepth(sprite); depth <= zBuffer[index]) { \
+if (isVisibleColumn) COLORIZE(index, color); \
+zBuffer[index] = depth | (zBuffer[index] & 0x10); \
+} }
 
     
-	//
-	// Debugging
-	//
+    //
+    // Debugging
+    //
 
 public: 
 
@@ -1350,3 +1350,5 @@ public:
     u16 getSpriteX(int nr) const { assert(nr < 8); return reg.current.sprX[nr]; }
     u8 getSpriteY(int nr) const { assert(nr < 8); return reg.current.sprY[nr]; }
 };
+
+}

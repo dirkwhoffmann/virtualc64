@@ -11,6 +11,8 @@
 #include "VICII.h"
 #include "C64.h"
 
+namespace vc64 {
+
 /* All cycles are processed in this order:
  *
  *   Previous cycle  |  Phi2.5 Fetch (previous cycle)
@@ -89,11 +91,11 @@ VICII::cycle2()
     // Phi1.3 Fetch
     PAL  { sAccess2 <flags,3> (); }
     NTSC { sFinalize(3); pAccess <flags> (4); }
-            
+
     // Phi2.4 BA logic
     PAL  { BA_LINE(spriteDmaOnOff & (SPR3 | SPR4 | SPR5)); }
     NTSC { BA_LINE(spriteDmaOnOff & (SPR4 | SPR5)); }
-        
+
     END_CYCLE
 }
 
@@ -168,7 +170,7 @@ VICII::cycle5()
     // Phi2.4 BA logic
     PAL  { BA_LINE(spriteDmaOnOff & (SPR5 | SPR6)); }
     NTSC { BA_LINE(spriteDmaOnOff & (SPR5 | SPR6 | SPR7)); }
-     
+
     END_CYCLE
 }
 
@@ -189,11 +191,11 @@ VICII::cycle6()
     // Phi1.3 Fetch
     PAL  { sAccess2 <flags,5> (); }
     NTSC { sFinalize(5); pAccess <flags> (6); }
-        
+
     // Phi2.4 BA logic
     PAL  { BA_LINE(spriteDmaOnOff & (SPR5 | SPR6 | SPR7)); }
     NTSC { BA_LINE(spriteDmaOnOff & (SPR6 | SPR7)); }
-        
+
     END_CYCLE
 }
 
@@ -214,11 +216,11 @@ VICII::cycle7()
     // Phi1.3 Fetch
     PAL  { sFinalize(5); pAccess <flags> (6); }
     NTSC { sAccess2 <flags,6> (); }
-        
+
     // Phi2.4 BA logic
     PAL  { BA_LINE(spriteDmaOnOff & (SPR6 | SPR7)); }
     NTSC { BA_LINE(spriteDmaOnOff & (SPR6 | SPR7)); }
-        
+
     END_CYCLE
 }
 
@@ -653,7 +655,7 @@ VICII::cycle59()
     // Phi2.4 BA logic
     PAL  { BA_LINE(spriteDmaOnOff & (SPR0 | SPR1 | SPR2)); }
     NTSC { BA_LINE(spriteDmaOnOff & (SPR0 | SPR1)); }
-        
+
     END_VISIBLE_CYCLE
 }
 
@@ -707,7 +709,7 @@ VICII::cycle61()
     // Phi2.4 BA logic
     PAL  { BA_LINE(spriteDmaOnOff & (SPR1 | SPR2 | SPR3)); }
     NTSC { BA_LINE(spriteDmaOnOff & (SPR1 | SPR2)); }
-        
+
     END_VISIBLE_CYCLE
     isVisibleColumn = false;
 }
@@ -733,7 +735,7 @@ VICII::cycle62()
     // Phi2.4 BA logic
     PAL  { BA_LINE(spriteDmaOnOff & (SPR2 | SPR3)); }
     NTSC { BA_LINE(spriteDmaOnOff & (SPR1 | SPR2 | SPR3)); }
-        
+
     END_CYCLE
 }
 
@@ -758,7 +760,7 @@ VICII::cycle63()
     // Phi2.4 BA logic
     PAL  { BA_LINE(spriteDmaOnOff & (SPR2 | SPR3 | SPR4)); }
     NTSC { BA_LINE(spriteDmaOnOff & (SPR2 | SPR3)); }
-        
+
     END_CYCLE
 }
 
@@ -857,7 +859,7 @@ VICII::sAccess2()
             dmaDebugger.visualizeDma(bufferoffset, dataBusPhi1, MEMACCESS_S);
         }
 
-    
+
     } else {
         
         dataBusPhi1 = memAccess(0x3FFF); // Idle access
@@ -965,7 +967,7 @@ VICII::gAccess()
          *  changes to the addressing scheme (e.g. the g-accesses in idle state
          *  then occur at address $39ff)." [C.B.]
          */
- 
+
         // Get address
         addr = is856x ? gAccessAddr85x() : gAccessAddr65x();
         
@@ -1049,7 +1051,7 @@ VICII::gAccessAddr(bool bmm, bool ecm)
      *  BMM=1: |CB13| VC9| VC8|VC7|VC6|VC5|VC4|VC3|VC2|VC1|VC0|RC2|RC1|RC0|
      *  BMM=0: |CB13|CB12|CB11|D7 |D6 |D5 |D4 |D3 |D2 |D1 |D0 |RC2|RC1|RC0|
      */
-     if (bmm) {
+    if (bmm) {
         addr = (u16)(CB13() << 10 | vc << 3 | rc);
     } else {
         addr = (u16)(CB13CB12CB11() << 10 | videoMatrix[vmli] << 3 | rc);
@@ -1212,3 +1214,5 @@ template void VICII::cycle62<NTSC_CYCLE | DEBUG_CYCLE>();
 template void VICII::cycle63<NTSC_CYCLE | DEBUG_CYCLE>();
 template void VICII::cycle64<NTSC_CYCLE | DEBUG_CYCLE>();
 template void VICII::cycle65<NTSC_CYCLE | DEBUG_CYCLE>();
+
+}

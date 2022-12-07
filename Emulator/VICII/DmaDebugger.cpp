@@ -11,6 +11,8 @@
 #include "DmaDebugger.h"
 #include "C64.h"
 
+namespace vc64 {
+
 DmaDebugger::DmaDebugger(C64 &ref) : SubComponent(ref)
 {
 }
@@ -41,7 +43,7 @@ DmaDebugger::getDefaultConfig()
 
     return defaults;
 }
-    
+
 void
 DmaDebugger::resetConfig()
 {
@@ -204,7 +206,7 @@ DmaDebugger::setDmaDebugColor(MemAccess type, GpuColor color)
     assert_enum(MemAccess, type);
     
     config.dmaColor[type] = color.abgr;
-        
+
     debugColor[type][0] = color.shade(0.3).abgr;
     debugColor[type][1] = color.shade(0.1).abgr;
     debugColor[type][2] = color.tint(0.1).abgr;
@@ -243,7 +245,7 @@ DmaDebugger::computeOverlay(u32 *emuTexture, u32 *dmaTexture)
     switch (config.dmaDisplayMode) {
 
         case DMA_DISPLAY_MODE_FG_LAYER:
-                        
+
             for (isize y = 0; y < TEX_HEIGHT; y++) {
                 
                 u32 *emu = emuTexture + (y * TEX_WIDTH);
@@ -284,7 +286,7 @@ DmaDebugger::computeOverlay(u32 *emuTexture, u32 *dmaTexture)
         case DMA_DISPLAY_MODE_ODD_EVEN_LAYERS:
             
             for (isize y = 0; y < TEX_HEIGHT; y++) {
-                          
+
                 u32 *emu = emuTexture + (y * TEX_WIDTH);
                 u32 *dma = dmaTexture + (y * TEX_WIDTH);
 
@@ -324,7 +326,7 @@ DmaDebugger::cutLayers()
             case DEPTH_BORDER & 0xE0:
                 cut = config.cutLayers & 0x800;
                 break;
-                                
+
             case DEPTH_FG & 0xE0:
                 cut = config.cutLayers & 0x400;
                 break;
@@ -358,4 +360,6 @@ DmaDebugger::cutLayers()
             emuTexturePtr[i] = 0xFF000000 | newb << 16 | newg << 8 | newr;
         }
     }
+}
+
 }

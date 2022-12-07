@@ -11,6 +11,8 @@
 #include "VICII.h"
 #include "C64.h"
 
+namespace vc64 {
+
 void
 VICII::setUltimax(bool value) {
     
@@ -36,7 +38,7 @@ VICII::setUltimax(bool value) {
         memSrc[0xD] = M_RAM;
         memSrc[0xE] = M_RAM;
         memSrc[0xF] = M_CRTHI;
-    
+
     } else {
         
         memSrc[0x0] = M_RAM;
@@ -66,8 +68,8 @@ VICII::switchBank(u16 addr) {
         // Models with discrete glue logic switch banks immediately
         updateBankAddr();
         return;
-     }
- 
+    }
+
     /* Switch table for custom IC glue logic and PA / DDRA register changes
      * The tables have been derived from VICE test case fetchsplit.prg
      */
@@ -106,7 +108,7 @@ VICII::switchBank(u16 addr) {
         default:
             fatalError;
     }
-   
+
     // Switch to final bank one cycle later
     delay |= VICUpdateBankAddr;
 }
@@ -116,7 +118,7 @@ VICII::updateBankAddr()
 {
     updateBankAddr(~cia2.getPA() & 0x03);
 }
-    
+
 u8
 VICII::peek(u16 addr)
 {
@@ -150,7 +152,7 @@ VICII::peek(u16 addr)
             break;
             
         case 0x10: // Sprite X (upper bits)
-        
+
             result =
             ((reg.current.sprX[0] & 0x100) ? 0b00000001 : 0) |
             ((reg.current.sprX[1] & 0x100) ? 0b00000010 : 0) |
@@ -161,7 +163,7 @@ VICII::peek(u16 addr)
             ((reg.current.sprX[6] & 0x100) ? 0b01000000 : 0) |
             ((reg.current.sprX[7] & 0x100) ? 0b10000000 : 0);
             break;
-                   
+
         case 0x11: // SCREEN CONTROL REGISTER #1
             
             result = (reg.current.ctrl1 & 0x7f) | (yCounter > 0xFF ? 0x80 : 0);
@@ -451,7 +453,7 @@ VICII::poke(u16 addr, u8 value)
 {
     trace(VICREG_DEBUG, "poke(%x, %x)\n", addr, value);
     assert(addr < 0x40);
-     
+
     dataBusPhi2 = value;
     
     switch(addr) {
@@ -467,7 +469,7 @@ VICII::poke(u16 addr, u8 value)
             reg.current.sprX[addr >> 1] &= 0x100;
             reg.current.sprX[addr >> 1] |= value;
             break;
-        
+
         case 0x01: // Sprite Y
         case 0x03:
         case 0x05:
@@ -534,7 +536,7 @@ VICII::poke(u16 addr, u8 value)
             break;
             
         case 0x17: // SPRITE Y EXPANSION
-           
+
             reg.current.sprExpandY = value;
             cleared_bits_in_d017 = (~value) & (~expansionFF);
             
@@ -548,7 +550,7 @@ VICII::poke(u16 addr, u8 value)
             
             memSelect = value;
             return;
-    
+
         case 0x19: // Interrupt Request Register (IRR)
             
             // Bits are cleared by writing '1'
@@ -678,4 +680,6 @@ VICII::isCharRomAddr(u16 addr) const
 {
     addr = (addr | bankAddr) >> 12;
     return addr == 1 || addr == 9;
+}
+
 }

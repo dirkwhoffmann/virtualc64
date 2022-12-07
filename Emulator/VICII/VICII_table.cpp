@@ -10,6 +10,8 @@
 #include "config.h"
 #include "VICII.h"
 
+namespace vc64 {
+
 void
 VICII::updateVicFunctionTable()
 {    
@@ -36,7 +38,7 @@ VICII::updateVicFunctionTable()
                 }
             }
             break;
-                        
+
         case VICII_NTSC_6567_R56A:
             
             if (dmaDebug()) {
@@ -117,3 +119,4 @@ VICII::getViciiFunc(isize cycle)
     }
 }
 
+}

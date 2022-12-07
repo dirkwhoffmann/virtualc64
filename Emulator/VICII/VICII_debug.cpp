@@ -11,6 +11,8 @@
 #include "VICII.h"
 #include "C64.h"
 
+namespace vc64 {
+
 ScreenGeometry
 VICII::getScreenGeometry(void) const
 {
@@ -22,4 +24,6 @@ VICII::getScreenGeometry(void) const
     } else {
         return rows == 25 ? SCREEN_GEOMETRY_25_38 : SCREEN_GEOMETRY_24_38;
     }
+}
+
 }

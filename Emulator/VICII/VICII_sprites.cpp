@@ -10,6 +10,8 @@
 #include "config.h"
 #include "VICII.h"
 
+namespace vc64 {
+
 void
 VICII::drawSprites()
 {
@@ -37,7 +39,7 @@ VICII::drawSpritesFastPath()
     
     // Iterate through all 8 sprites
     for (isize i = 0; i < 8; i++) {
-    
+
         bool enable = GET_BIT(spriteDisplay, i);
         bool active = GET_BIT(spriteSrActive, i);
         
@@ -55,7 +57,7 @@ VICII::drawSpritesFastPath()
             drawSpriteNr <false> (i, enable, active);
         }
     }
- 
+
     // Perform collision checks
     checkCollisions();
 }
@@ -66,7 +68,7 @@ VICII::drawSpriteNr(isize nr, bool enable, bool active)
     bool xExp = GET_BIT(reg.delayed.sprExpandX, nr);
 
     for (isize pixel = 0; pixel < 8; pixel++) {
-                
+
         /* If a sprite is enabled, activate the shift register if the
          * horizontal trigger condition holds.
          */
@@ -146,7 +148,7 @@ VICII::drawSpritesSlowPath()
 
     u8 firstDMA = isFirstDMAcycle;
     u8 secondDMA = isSecondDMAcycle;
-        
+
     //
     // Pixel 0
     //
@@ -236,7 +238,7 @@ VICII::drawSpritePixel(isize pixel, u8 enableBits, u8 freezeBits)
         
         bool enable = GET_BIT(enableBits, sprite);
         bool active = GET_BIT(spriteSrActive, sprite);
-    
+
         if (!enable && !active) {
             if (VIC_STATS) stats.quickExitHit++;
             continue;
@@ -343,4 +345,6 @@ VICII::checkCollisions()
             }
         }
     }
+}
+
 }

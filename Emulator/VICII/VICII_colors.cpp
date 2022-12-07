@@ -14,6 +14,8 @@
 #include <algorithm>
 #include <cmath>
 
+namespace vc64 {
+
 /* This implementation is mainly based on the following articles by pepto:
  * http://www.pepto.de/projects/colorvic/
  * http://unusedino.de/ec64/technical/misc/vic656x/colors/
@@ -38,8 +40,8 @@ VICII::getColor(isize nr, Palette palette)
     double y, u, v;
     
     // LUMA levels (varies between VICII models)
-    #define LUMA_VICE(x,y,z) ((double)(x - y) * 256)/((double)(z - y))
-    #define LUMA_COLORES(x) (x * 7.96875)
+#define LUMA_VICE(x,y,z) ((double)(x - y) * 256)/((double)(z - y))
+#define LUMA_COLORES(x) (x * 7.96875)
     
     double luma_vice_6569_r1[16] = {
         
@@ -140,8 +142,8 @@ VICII::getColor(isize nr, Palette palette)
     }
     
     // Angles in the color plane
-    #define ANGLE_PEPTO(x) (x * 22.5 * M_PI / 180.0)
-    #define ANGLE_COLORES(x) ((x * 22.5 + 11.5) * M_PI / 180.0)
+#define ANGLE_PEPTO(x) (x * 22.5 * M_PI / 180.0)
+#define ANGLE_COLORES(x) ((x * 22.5 + 11.5) * M_PI / 180.0)
     
     // Pepto's first approach
     // http://unusedino.de/ec64/technical/misc/vic656x/colors/
@@ -196,34 +198,34 @@ VICII::getColor(isize nr, Palette palette)
     
     // Translate to monochrome if applicable
     switch(palette) {
-        
+
         case PALETTE_BLACK_WHITE:
-        u = 0.0;
-        v = 0.0;
-        break;
-        
+            u = 0.0;
+            v = 0.0;
+            break;
+
         case PALETTE_PAPER_WHITE:
-        u = -128.0 + 120.0;
-        v = -128.0 + 133.0;
-        break;
-        
+            u = -128.0 + 120.0;
+            v = -128.0 + 133.0;
+            break;
+
         case PALETTE_GREEN:
-        u = -128.0 + 29.0;
-        v = -128.0 + 64.0;
-        break;
-        
+            u = -128.0 + 29.0;
+            v = -128.0 + 64.0;
+            break;
+
         case PALETTE_AMBER:
-        u = -128.0 + 24.0;
-        v = -128.0 + 178.0;
-        break;
-        
+            u = -128.0 + 24.0;
+            v = -128.0 + 178.0;
+            break;
+
         case PALETTE_SEPIA:
-        u = -128.0 + 97.0;
-        v = -128.0 + 154.0;
-        break;
-        
+            u = -128.0 + 97.0;
+            v = -128.0 + 154.0;
+            break;
+
         default:
-        assert(palette == PALETTE_COLOR);
+            assert(palette == PALETTE_COLOR);
     }
     
     // Convert YUV value to RGB
@@ -252,4 +254,4 @@ VICII::updatePalette()
     }
 }
 
-
+}

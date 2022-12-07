@@ -15,6 +15,8 @@
 
 using namespace peddle;
 
+namespace vc64 {
+
 class CPU : public Peddle {
 
     // Result of the latest inspection
@@ -183,3 +185,5 @@ public:
     bool getHiram() const { return readPort() & 0x2; }
     bool getCharen() const { return readPort() & 0x4; }
 };
+
+}

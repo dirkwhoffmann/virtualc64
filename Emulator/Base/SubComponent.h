@@ -13,14 +13,14 @@
 #include "CPUTypes.h"
 
 namespace vc64 {
-class C64;
-}
 
+class C64;
 class C64Memory;
 class DriveMemory;
 class CPU;
-class ProcessorPort;
 class VICII;
+}
+
 class CIA1;
 class CIA2;
 class Muxer;

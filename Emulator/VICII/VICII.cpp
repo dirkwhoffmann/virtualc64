@@ -12,6 +12,8 @@
 #include "C64.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 #define SPR0 0x01
 #define SPR1 0x02
 #define SPR2 0x04
@@ -41,7 +43,7 @@ void
 VICII::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)
-     
+
     if (hard) {
 
         clearStats();
@@ -250,7 +252,7 @@ VICII::setConfigItem(Option option, i64 value)
             return;
 
         case OPT_SATURATION:
-        
+
             if (config.saturation < 0 || config.saturation > 100) {
                 throw VC64Error(ERROR_OPT_INVARG, "Expected 0...100");
             }
@@ -469,13 +471,13 @@ VICII::_dump(Category category, std::ostream& os) const
     if (category == Category::State) {
         
         /*
-        u8 ctrl1 = reg.current.ctrl1;
-        u8 ctrl2 = reg.current.ctrl2;
-        int yscroll = ctrl1 & 0x07;
-        int xscroll = ctrl2 & 0x07;
-        u16 screenMem = VM13VM12VM11VM10() << 6;
-        u16 charMem = (CB13CB12CB11() << 10) % 0x4000;
-        */
+         u8 ctrl1 = reg.current.ctrl1;
+         u8 ctrl2 = reg.current.ctrl2;
+         int yscroll = ctrl1 & 0x07;
+         int xscroll = ctrl2 & 0x07;
+         u16 screenMem = VM13VM12VM11VM10() << 6;
+         u16 charMem = (CB13CB12CB11() << 10) % 0x4000;
+         */
         
         os << tab("Bank address");
         os << hex(bankAddr) << std::endl;
@@ -586,7 +588,7 @@ VICII::_debugOff()
 bool
 VICII::delayedLightPenIrqs(VICIIRevision rev)
 {
-     return rev & (VICII_PAL_6569_R1 | VICII_NTSC_6567_R56A);
+    return rev & (VICII_PAL_6569_R1 | VICII_NTSC_6567_R56A);
 }
 
 double
@@ -796,8 +798,8 @@ VICII::checkVerticalFrameFF()
         
     } else if (yCounter == lowerComparisonVal) {
         
-            // Set later, in cycle 1
-            verticalFrameFFsetCond = true;
+        // Set later, in cycle 1
+        verticalFrameFFsetCond = true;
     }
 }
 
@@ -813,7 +815,7 @@ VICII::checkFrameFlipflopsLeft(u16 comparisonValue)
         // vertical border flipflop is set.
         if (!flipflops.current.vertical && !verticalFrameFFsetCond) {
             setMainFrameFF(false);
-        }        
+        }
     }
 }
 
@@ -866,7 +868,7 @@ void
 VICII::updateBA(u8 value)
 {
     if (value != baLine.current()) {
-       
+
         if (value) {
             baLine.write(value);
         } else {
@@ -926,7 +928,7 @@ void
 VICII::setLP(bool value)
 {
     if (value == lpLine) return;
-        
+
     // A negative transition on LP triggers a lightpen event
     if (FALLING_EDGE(lpLine, value)) delay |= VICLpTransition;
     
@@ -963,7 +965,7 @@ VICII::checkForLightpenIrqAtStartOfFrame()
     // This function is called at the beginning of a frame, only.
     assert(c64.scanline == 0);
     assert(c64.rasterCycle == 2);
- 
+
     // Latch coordinate (values according to VICE 3.1)
     switch (config.revision) {
             
@@ -1108,7 +1110,7 @@ VICII::updateSpriteShiftRegisters()
 void 
 VICII::beginFrame()
 {
-	lpIrqHasOccurred = false;
+    lpIrqHasOccurred = false;
 
     /* "The VIC does five read accesses in every raster line for the refresh of
      *  the dynamic RAM. An 8 bit refresh counter (REF) is used to generate 256
@@ -1117,7 +1119,7 @@ VICII::beginFrame()
      */
     refreshCounter = 0xFF;
 
-    /* "Once somewhere outside of the range of raster lines $30-$f7 (i.e. 
+    /* "Once somewhere outside of the range of raster lines $30-$f7 (i.e.
      *  outside of the Bad Line range), VCBASE is reset to zero. This is
      *  presumably done in raster line 0, the exact moment cannot be determined
      *  and is irrelevant." [C.B.]
@@ -1211,7 +1213,7 @@ VICII::beginScanline(u16 line)
 
     // Determine if we're inside the VBLANK area
     vblank = isVBlankLine(line);
- 
+
     // Increase the y counter (overflow is handled in cycle 2)
     if (!yCounterOverflow()) yCounter++;
     
@@ -1236,4 +1238,6 @@ VICII::endScanline()
 
     // Prepare buffers for the next line
     for (isize i = 0; i < TEX_WIDTH; i++) { zBuffer[i] = 0; }
+}
+
 }

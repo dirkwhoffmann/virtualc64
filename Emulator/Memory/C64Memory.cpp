@@ -14,6 +14,8 @@
 
 #include <random>
 
+namespace vc64 {
+
 C64Memory::C64Memory(C64 &ref) : SubComponent(ref)
 {    		
     memset(rom, 0, sizeof(rom));
@@ -803,4 +805,6 @@ C64Memory::txtdump(u16 addr, long num, MemoryType src) const
     *p = 0;
     
     return string(result);
+}
+
 }
