@@ -12,6 +12,8 @@
 #include "C64.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 ParCable::ParCable(C64& ref) : SubComponent(ref)
 {
 };
@@ -21,7 +23,7 @@ ParCable::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)
 }
-            
+
 void
 ParCable::_dump(Category category, std::ostream& os) const
 {
@@ -103,10 +105,10 @@ ParCable::getCIA() const
 u8
 ParCable::getVIA(const Drive &drive) const
 {
-        u8 viapra = drive.via1.portAinternal();
-        u8 viaddr = drive.via1.getDDRA();
-        
-        return (viapra & viaddr) | (0xFF & ~viaddr);
+    u8 viapra = drive.via1.portAinternal();
+    u8 viaddr = drive.via1.getDDRA();
+
+    return (viapra & viaddr) | (0xFF & ~viaddr);
 }
 
 u8
@@ -116,4 +118,6 @@ ParCable::getPIA(const Drive &drive) const
     u8 viaddr = drive.pia.ddra;
     
     return (viapra & viaddr) | (0xFF & ~viaddr);
+}
+
 }

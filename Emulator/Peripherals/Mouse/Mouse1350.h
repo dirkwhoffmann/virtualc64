@@ -11,7 +11,7 @@
 
 #include "SubComponent.h"
 
-using namespace vc64;
+namespace vc64 {
 
 class Mouse1350 : public SubComponent {
     
@@ -62,7 +62,7 @@ private:
 private:
     
     void _reset(bool hard) override;
-        
+
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -99,3 +99,5 @@ public:
     // Execution function (Translates movement deltas into joystick events)
     void execute(i64 targetX, i64 targetY);
 };
+
+}

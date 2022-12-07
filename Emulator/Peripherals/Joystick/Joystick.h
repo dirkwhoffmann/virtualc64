@@ -12,13 +12,13 @@
 #include "JoystickTypes.h"
 #include "SubComponent.h"
 
-using namespace vc64;
+namespace vc64 {
 
 class Joystick : public SubComponent {
     
     // Reference to the control port this device belongs to
     ControlPort &port;
-  
+
     // Current configuration
     JoystickConfig config = { };
     
@@ -30,7 +30,7 @@ class Joystick : public SubComponent {
     
     // Vertical joystick position (-1 = up, 1 = down, 0 = released)
     int axisY = 0;
-        
+
     // Bullet counter used in multi-fire mode
     i64 bulletCounter = 0;
     
@@ -64,7 +64,7 @@ private:
 private:
     
     void _reset(bool hard) override;
-        
+
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -103,7 +103,7 @@ public:
 
     // Reads the port bits that show up in the CIA's data port registers
     u8 getControlPort() const;
-        
+
     // Triggers a gamepad event
     void trigger(GamePadAction event);
 
@@ -120,3 +120,5 @@ private:
     // Updates variable nextAutofireFrame
     void scheduleNextShot();
 };
+
+}

@@ -12,7 +12,7 @@
 #include "TODTypes.h"
 #include "SubComponent.h"
 
-using namespace vc64;
+namespace vc64 {
 
 inline u8 incBCD(u8 x)
 {
@@ -37,29 +37,29 @@ private:
     class CIA &cia;
     
     // Time of day clock
-	TimeOfDay tod;
+    TimeOfDay tod;
 
     // Time of day clock latch
     TimeOfDay latch;
 
     // Alarm time
-	TimeOfDay alarm;
-	
-	/* Indicates if the TOD registers are frozen. The CIA freezes the registers
+    TimeOfDay alarm;
+
+    /* Indicates if the TOD registers are frozen. The CIA freezes the registers
      * when the hours-part is read and reactivates them, when the 1/10th part
      * is read. Although the values stay constant, the internal clock continues
      * to advance. Hence, if the hours-part is read first, the clock won't
      * change until all fragments have been read.
      */
-	bool frozen;
-	
-	/* Indicates if the TOD clock is halted. The CIA chip stops the TOD clock
+    bool frozen;
+
+    /* Indicates if the TOD clock is halted. The CIA chip stops the TOD clock
      * when the hours-part is written and restarts it, when the 1/10th part is
      * written. This ensures that the clock doesn't start until the time is
      * set completely.
      */
-	bool stopped;
-	
+    bool stopped;
+
     /* Indicates if tod time matches the alarm time. This value is read in
      * checkIrq() for edge detection.
      */
@@ -68,14 +68,14 @@ private:
     // Cycle where the tenth of a second counter needs to be incremented
     Cycle nextTodTrigger;
 
-        
+
     //
     // Initializing
     //
     
 public:
     
-	TOD(C64 &ref, CIA &cia);
+    TOD(C64 &ref, CIA &cia);
     
     
     //
@@ -135,7 +135,7 @@ public:
     //
     // Accessing
     //
-        
+
     // Returns the hours digits of the time of day clock
     u8 getTodHours() const { return (frozen ? latch.hour : tod.hour) & 0x9F; }
     
@@ -211,3 +211,5 @@ private:
     // Updates variable 'matching'. A positive edge triggers an interrupt.
     void checkIrq();
 };
+
+}

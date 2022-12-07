@@ -14,6 +14,8 @@
 #include "IOUtils.h"
 #include "PowerSupply.h"
 
+namespace vc64 {
+
 TOD::TOD(C64 &ref, CIA &ciaref) : SubComponent(ref), cia(ciaref)
 {
 }
@@ -77,7 +79,7 @@ TOD::increment()
     cia.wakeUp();
     
     assert(!stopped);
-        
+
     // 1/10 seconds
     if (tod.tenth != 0x09) {
         tod.tenth = incBCD(tod.tenth);
@@ -137,4 +139,6 @@ TOD::checkIrq()
     }
     
     matching = (tod.value == alarm.value);
+}
+
 }

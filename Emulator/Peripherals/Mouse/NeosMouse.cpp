@@ -13,6 +13,8 @@
 
 #include <algorithm>
 
+namespace vc64 {
+
 void
 NeosMouse::_reset(bool hard)
 {
@@ -171,3 +173,4 @@ NeosMouse::latchPosition(i64 targetX, i64 targetY)
     latchedY = mouseY;
 }
 
+}

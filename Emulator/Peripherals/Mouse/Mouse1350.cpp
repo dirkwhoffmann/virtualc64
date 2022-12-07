@@ -13,6 +13,8 @@
 
 #include <cmath>
 
+namespace vc64 {
+
 void
 Mouse1350::_reset(bool hard)
 {
@@ -51,7 +53,7 @@ Mouse1350::execute(i64 targetX, i64 targetY)
 {
     mouseX = targetX / dividerX;
     mouseY = targetY / dividerY;
- 
+
     // debug(PRT_DEBUG, "targetX = %lld targetY = %lld\n", targetX, targetY);
     
     controlPort = 0xFF;
@@ -80,3 +82,4 @@ Mouse1350::execute(i64 targetX, i64 targetY)
     latchedY[2] = mouseY;
 }
 
+}

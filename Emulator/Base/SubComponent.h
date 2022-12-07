@@ -19,25 +19,32 @@ class C64Memory;
 class DriveMemory;
 class CPU;
 class VICII;
-}
-
 class CIA1;
 class CIA2;
+
+}
+
 class Muxer;
 class SIDStream;
 class Keyboard;
+namespace vc64 {
 class ControlPort;
 class ExpansionPort;
+}
 class IEC;
 class Drive;
 class Datasette;
+namespace vc64 {
 class Mouse;
 class Mouse1350;
 class Mouse1351;
 class NeosMouse;
+}
 class MsgQueue;
+namespace vc64 {
 class PowerSupply;
 class ParCable;
+}
 class Recorder;
 class RegressionTester;
 class RetroShell;

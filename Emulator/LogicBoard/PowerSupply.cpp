@@ -11,6 +11,8 @@
 #include "PowerSupply.h"
 #include "C64.h"
 
+namespace vc64 {
+
 PowerSupply::PowerSupply(C64& ref) : SubComponent(ref)
 {
 
@@ -54,7 +56,7 @@ PowerSupply::getConfigItem(Option option) const
     switch (option) {
             
         case OPT_POWER_GRID:  return config.powerGrid;
-        
+
         default:
             fatalError;
     }
@@ -116,4 +118,6 @@ PowerSupply::todTickDelay(u8 cra)
     }
 
     return delay + jitter;
+}
+
 }

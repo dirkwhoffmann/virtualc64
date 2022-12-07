@@ -12,6 +12,8 @@
 #include "C64.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 ControlPort::ControlPort(C64 &ref, isize nr) : SubComponent(ref), nr(nr)
 {
     assert(nr == PORT_1 || nr == PORT_2);
@@ -95,4 +97,6 @@ ControlPort::readPotY() const
     if (device == CPDEVICE_MOUSE) return mouse.readPotY();
     
     return 0xFF;
+}
+
 }

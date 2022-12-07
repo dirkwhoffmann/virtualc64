@@ -13,7 +13,7 @@
 #include "SubComponent.h"
 #include "TOD.h"
 
-using namespace vc64;
+namespace vc64 {
 
 class CIA : public SubComponent {
     
@@ -105,7 +105,7 @@ class CIA : public SubComponent {
     & ~CIAPB7Low0 & ~CIASetInt0 & ~CIAClearInt0 & ~CIAOneShotA0 & ~CIAOneShotB0
     & ~CIAReadIcr0 & ~CIAClearIcr0 & ~CIAAckIcr0 & ~CIASetIcr0 & ~CIATODInt0
     & ~CIASerInt0 & ~CIASerLoad0 & ~CIASerClk0;
-            
+
     // Current configuration
     CIAConfig config = { };
     
@@ -125,7 +125,7 @@ public:
     //
     // Internals
     //
-        
+
 protected:
     
     // Timer A counter
@@ -133,34 +133,34 @@ protected:
     
     // Timer B counter
     u16 counterB;
-        
+
     // Timer A latch
     u16 latchA;
     
     // Timer B latch
     u16 latchB;
-	    
-    		
+
+
     //
-	// Control
+    // Control
     //
     
     // Action flags
-	u64 delay;
-	u64 feed;
+    u64 delay;
+    u64 feed;
     
     // Control registers
-	u8 CRA;
+    u8 CRA;
     u8 CRB;
     
     // Interrupt control register
-	u8 icr;
+    u8 icr;
 
     // ICR bits to be deleted when CIAAckIcr1 hits
     u8 icrAck;
 
     // Interrupt mask register
-	u8 imr;
+    u8 imr;
 
 protected:
     
@@ -168,11 +168,11 @@ protected:
     u8 PB67TimerMode;
     
     // PB outputs bits 6 and 7 in timer mode
-	u8 PB67TimerOut;
+    u8 PB67TimerOut;
     
     // PB outputs bits 6 and 7 in toggle mode
-	u8 PB67Toggle;
-		
+    u8 PB67Toggle;
+
     
     //
     // Port registers
@@ -191,7 +191,7 @@ protected:
     // Peripheral ports
     u8 PA;
     u8 PB;
-	
+
     
     //
     // Shift register logic
@@ -237,11 +237,11 @@ private:
     u8 serCounter;
     
     //
-	// Port pins
+    // Port pins
     //
-        
+
     bool CNT;
-	bool INT;
+    bool INT;
 
     
     //
@@ -263,7 +263,7 @@ private:
 
     // Total number of skipped cycles (used by the debugger, only)
     Cycle idleCycles;
-        
+
 public:
     
     // Indicates if the CIA is currently idle
@@ -286,7 +286,7 @@ public:
     
 public:
     
-	CIA(C64 &ref);
+    CIA(C64 &ref);
     virtual bool isCIA1() const = 0;
     virtual bool isCIA2() const = 0;
 
@@ -308,7 +308,7 @@ protected:
     
     void _reset(bool hard) override;
     void _inspect() const override;
-        
+
 private:
     
     template <class T>
@@ -385,11 +385,11 @@ public:
     i64 getConfigItem(Option option) const;
     void setConfigItem(Option option, i64 value);
 
-        
+
     //
     // Accessing the I/O register space
     //
-       
+
 public:
     
     // Reads a value from a CIA register
@@ -493,16 +493,16 @@ public:
     // Handles an interrupt request from TOD
     void todInterrupt();
     
- 
+
     //
     // Executing
     //
     
 public:
     
-	// Executes the CIA for one cycle
-	void executeOneCycle();
-        
+    // Executes the CIA for one cycle
+    void executeOneCycle();
+
     
     //
     // Speeding up (sleep logic)
@@ -514,7 +514,7 @@ private:
     void sleep();
     
 public:
-        
+
     // Emulates all previously skipped cycles
     void wakeUp();
     void wakeUp(Cycle targetCycle);
@@ -538,7 +538,7 @@ public:
 //
 
 class CIA1 : public CIA {
-	
+
 public:
 
     CIA1(C64 &ref) : CIA(ref) { };
@@ -547,7 +547,7 @@ public:
     const char *getDescription() const override { return "CIA1"; }
     
 private:
-        
+
     void pullDownInterruptLine() override;
     void releaseInterruptLine() override;
     
@@ -561,7 +561,7 @@ private:
     void updatePB() override;
     u8 computePB() const override;
 };
-	
+
 
 //
 // CIA2
@@ -579,7 +579,7 @@ public:
     const char *getDescription() const override { return "CIA2"; }
 
 private:
-        
+
     void pullDownInterruptLine() override;
     void releaseInterruptLine() override;
     
@@ -602,3 +602,5 @@ private:
     void pokeDDRA(u8 value) override;
     void pulsePC() override;
 };
+
+}

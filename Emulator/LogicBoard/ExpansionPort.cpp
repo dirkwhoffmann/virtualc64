@@ -11,6 +11,8 @@
 #include "ExpansionPort.h"
 #include "C64.h"
 
+namespace vc64 {
+
 void
 ExpansionPort::_reset(bool hard)
 {
@@ -73,7 +75,7 @@ ExpansionPort::_save(u8 *buffer)
     util::SerWriter writer(buffer);
     applyToPersistentItems(writer);
     applyToResetItems(writer);
-        
+
     // Save cartridge (if any)
     if (crtType != CRT_NONE) {
         writer.ptr += cartridge->save(writer.ptr);
@@ -291,7 +293,7 @@ ExpansionPort::attachCartridge(CRTFile *file, bool reset)
     
     // Create cartridge from cartridge file
     Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, *file);
-        
+
     // Attach cartridge to the expansion port
     {   SUSPENDED
         
@@ -364,9 +366,9 @@ ExpansionPort::numButtons() const
 const string
 ExpansionPort::getButtonTitle(isize nr) const
 {
-     return cartridge ? cartridge->getButtonTitle(nr) : nullptr;
+    return cartridge ? cartridge->getButtonTitle(nr) : nullptr;
 }
- 
+
 void
 ExpansionPort::pressButton(isize nr)
 {
@@ -396,13 +398,13 @@ ExpansionPort::switchIsNeutral() const
 {
     return cartridge ? cartridge->switchIsNeutral() : false;
 }
-   
+
 bool
 ExpansionPort::switchIsLeft() const
 {
     return cartridge ? cartridge->switchIsLeft() : false;
 }
-   
+
 bool
 ExpansionPort::switchIsRight() const
 {
@@ -424,7 +426,7 @@ ExpansionPort::getSwitchDescription() const
 bool
 ExpansionPort::validSwitchPosition(isize pos) const
 {
-    return cartridge ? cartridge->validSwitchPosition(pos) : false;    
+    return cartridge ? cartridge->validSwitchPosition(pos) : false;
 }
 
 bool
@@ -432,13 +434,13 @@ ExpansionPort::hasLED() const
 {
     return cartridge ? cartridge->hasLED() : false;
 }
- 
+
 bool
 ExpansionPort::getLED() const
 {
     return cartridge ? cartridge->getLED() : false;
 }
- 
+
 void
 ExpansionPort::setLED(bool value)
 {
@@ -466,5 +468,7 @@ ExpansionPort::nmiWillTrigger()
 void
 ExpansionPort::nmiDidTrigger()
 {
-    if (cartridge) cartridge->nmiDidTrigger();    
+    if (cartridge) cartridge->nmiDidTrigger();
+}
+
 }

@@ -13,6 +13,8 @@
 #include "IOUtils.h"
 #include <cmath>
 
+namespace vc64 {
+
 Mouse::Mouse(C64 &ref, ControlPort& pref) : SubComponent(ref), port(pref)
 {
     subComponents = std::vector<C64Component *> {
@@ -80,7 +82,7 @@ Mouse::setConfigItem(Option option, i64 value)
             return;
             
         case OPT_MOUSE_VELOCITY:
-                        
+
             if (value < 0 || value > 255) {
                 throw VC64Error(ERROR_OPT_INVARG, "0 ... 255");
             }
@@ -118,7 +120,7 @@ Mouse::_dump(Category category, std::ostream& os) const
         os << tab("Mouse nr") << dec(port.nr) << std::endl;
         os << tab("targetX") << targetX << std::endl;
         os << tab("targetY") << targetY << std::endl;
-    }    
+    }
 }
 
 bool
@@ -145,7 +147,7 @@ void
 Mouse::setXY(double x, double y)
 {
     debug(PRT_DEBUG, "setXY(%f,%f)\n", x, y);
-        
+
     targetX = x * scaleX;
     targetY = y * scaleX;
     
@@ -336,14 +338,14 @@ ShakeDetector::isShakingRel(double dx) {
     
     // Check for a direction reversal
     if (dx * dxsign < 0) {
-    
+
         u64 dt = util::Time::now().asNanoseconds() - lastTurn;
         dxsign = -dxsign;
 
         // A direction reversal is considered part of a shake, if the
         // previous reversal happened a short while ago.
         if (dt < 400 * 1000 * 1000) {
-  
+
             // Eliminate jitter by demanding that the mouse has travelled
             // a long enough distance.
             if (dxsum > 400) {
@@ -373,4 +375,6 @@ ShakeDetector::isShakingRel(double dx) {
     }
     
     return false;
+}
+
 }

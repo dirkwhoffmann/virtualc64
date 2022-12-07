@@ -13,7 +13,7 @@
 #include "SubComponent.h"
 #include "Cartridge.h"
 
-using namespace vc64;
+namespace vc64 {
 
 /*
  * For more information: http://www.c64-wiki.com/index.php/Cartridge
@@ -101,7 +101,7 @@ public:
 
     CartridgeType getCartridgeType() const;
 
- 
+
     //
     // Accessing cartrige memory
     //
@@ -186,7 +186,7 @@ public:
     
     // Releases a button (make sure to call pressButton() before)
     void releaseButton(isize nr);
-   
+
     
     //
     // Operating switches
@@ -250,4 +250,5 @@ public:
     // Called after the C64 CPU has processed the NMI instruction
     void nmiDidTrigger();
 };
- 
+
+}

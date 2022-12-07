@@ -14,7 +14,7 @@
 #include "Joystick.h"
 #include "Mouse.h"
 
-using namespace vc64;
+namespace vc64 {
 
 class ControlPort : public SubComponent {
 
@@ -23,7 +23,7 @@ class ControlPort : public SubComponent {
     
     // The represented control port (1 or 2)
     isize nr;
-        
+
     // The connected device
     ControlPortDevice device = CPDEVICE_NONE;
 
@@ -37,13 +37,13 @@ public:
     Mouse mouse = Mouse(c64, *this);
     Joystick joystick = Joystick(c64, *this);
 
-        
+
     //
     // Initializing
     //
     
 public:
- 
+
     ControlPort(C64 &ref, isize id);
 
 
@@ -64,7 +64,7 @@ private:
 private:
     
     void _reset(bool hard) override { RESET_SNAPSHOT_ITEMS(hard) };
-        
+
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -89,7 +89,7 @@ public:
     
     // Invoked at the end of each frame
     void execute();
-        
+
     // Updates the control port bits (must be called before reading)
     void updateControlPort();
     
@@ -104,3 +104,5 @@ public:
     u8 readPotX() const;
     u8 readPotY() const;
 };
+
+}

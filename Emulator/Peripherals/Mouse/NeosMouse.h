@@ -11,7 +11,7 @@
 
 #include "SubComponent.h"
 
-using namespace vc64;
+namespace vc64 {
 
 class NeosMouse : public SubComponent {
     
@@ -110,7 +110,7 @@ public:
     
     // Returns the control port bits triggered by the mouse
     u8 readControlPort() const;
-        
+
     // Triggers a state change
     void risingStrobe(i64 targetX, i64 targetY);
     void fallingStrobe(i64 targetX, i64 targetY);
@@ -120,3 +120,5 @@ private:
     // Latches the current mouse position and computed the transmission deltas
     void latchPosition(i64 targetX, i64 targetY);
 };
+
+}

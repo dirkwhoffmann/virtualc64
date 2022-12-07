@@ -13,6 +13,8 @@
 
 #include <algorithm>
 
+namespace vc64 {
+
 void
 Mouse1351::_reset(bool hard)
 {
@@ -71,4 +73,6 @@ Mouse1351::executeY(i64 targetY)
     // Move mouse coordinates towards target coordinates
     if (targetY < mouseY) mouseY -= std::min(mouseY - targetY, shiftY);
     else if (targetY > mouseY) mouseY += std::min(targetY - mouseY, shiftY);
+}
+
 }

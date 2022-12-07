@@ -11,7 +11,7 @@
 
 #include "SubComponent.h"
 
-using namespace vc64;
+namespace vc64 {
 
 class Mouse1351 : public SubComponent {
     
@@ -26,7 +26,7 @@ class Mouse1351 : public SubComponent {
     // Dividers applied to raw coordinates in setXY()
     int dividerX = 256;
     int dividerY = 256;
-        
+
     // Mouse movement in pixels per execution step
     i64 shiftX = 31;
     i64 shiftY = 31;
@@ -36,7 +36,7 @@ class Mouse1351 : public SubComponent {
     //
     
 public:
-        
+
     Mouse1351(C64 &ref) : SubComponent(ref) { }
     
     
@@ -56,7 +56,7 @@ private:
 private:
     
     void _reset(bool hard) override;
-        
+
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -98,3 +98,5 @@ public:
     u8 mouseXBits() const { return (u8)((mouseX & 0x3F) << 1); }
     u8 mouseYBits() const { return (u8)((mouseY & 0x3F) << 1); }
 };
+
+}

@@ -13,7 +13,7 @@
 #include "SubComponent.h"
 #include "Chrono.h"
 
-using namespace vc64;
+namespace vc64 {
 
 class PowerSupply : public SubComponent {
     
@@ -44,7 +44,7 @@ public:
 private:
     
     void _reset(bool hard) override;
-        
+
 private:
     
     template <class T>
@@ -80,9 +80,11 @@ public:
     //
     // Using the device
     //
-       
+
 public:
     
     // Returns the number of CPU cycles between two TOD increments
     Cycle todTickDelay(u8 cra);
 };
+
+}

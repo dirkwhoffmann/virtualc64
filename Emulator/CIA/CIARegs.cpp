@@ -11,6 +11,8 @@
 #include "CIA.h"
 #include "C64.h"
 
+namespace vc64 {
+
 u8
 CIA::peek(u16 addr)
 {
@@ -67,7 +69,7 @@ CIA::peek(u16 addr)
             result = tod.getTodTenth();
             tod.defreeze();
             break;
-        
+
         case 0x09: // CIA_TIME_OF_DAY_SECONDS
             
             result = tod.getTodSeconds();
@@ -90,7 +92,7 @@ CIA::peek(u16 addr)
             break;
             
         case 0x0D: // CIA_INTERRUPT_CONTROL
-        
+
             // For new CIAs, set upper bit if an IRQ is being triggered
             if ((delay & CIASetInt1) && (icr & 0x1F) && config.revision == MOS_8521) {
                 icr |= 0x80;
@@ -106,7 +108,7 @@ CIA::peek(u16 addr)
             
             // Discard pending interrupts
             delay &= ~(CIASetInt0 | CIASetInt1);
-        
+
             // Schedule the ICR bits to be cleared
             if (config.revision == MOS_8521) {
                 delay |= CIAClearIcr0; // Uppermost bit
@@ -146,7 +148,7 @@ CIA::spypeek(u16 addr) const
 
     assert(addr <= 0x000F);
     switch(addr) {
-          
+
         case 0x00: // CIA_DATA_PORT_A
             return PA;
             
@@ -211,7 +213,7 @@ CIA::poke(u16 addr, u8 value)
     wakeUp();
     
     switch(addr) {
-        
+
         case 0x00: // CIA_DATA_PORT_A
             
             pokePRA(value);
@@ -348,14 +350,14 @@ CIA::poke(u16 addr, u8 value)
             // Solution is taken from Hoxs64. It fixes dd0dtest (11)
             else if (delay & CIAClearIcr2) {
                 if (config.revision == MOS_6526) {
-                     delay &= ~(CIASetInt1 | CIASetIcr1);
-                 }
+                    delay &= ~(CIASetInt1 | CIASetIcr1);
+                }
             }
             
             return;
             
         case 0x0E: // CIA_CONTROL_REG_A
-        
+
             // -------0 : Stop timer
             // -------1 : Start timer
             if (value & 0x01) {
@@ -409,7 +411,7 @@ CIA::poke(u16 addr, u8 value)
                 delay &= ~(CIACountA1 | CIACountA0);
                 feed &= ~CIACountA0;
             }
-    
+
             // -0------ : Serial shift register in input mode (read)
             // -1------ : Serial shift register in output mode (write)
             if ((value ^ CRA) & 0x40)
@@ -418,7 +420,7 @@ CIA::poke(u16 addr, u8 value)
                 delay &= ~(CIASerLoad0 | CIASerLoad1);
                 feed &= ~CIASerLoad0;
                 serCounter = 0;
-            
+
                 delay &= ~(CIASerClk0 | CIASerClk1 | CIASerClk2);
                 feed &= ~CIASerClk0;
             }
@@ -502,4 +504,6 @@ CIA::poke(u16 addr, u8 value)
         default:
             fatalError;
     }
+}
+
 }

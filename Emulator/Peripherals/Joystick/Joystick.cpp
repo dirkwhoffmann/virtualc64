@@ -12,6 +12,8 @@
 #include "C64.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 Joystick::Joystick(C64& ref, ControlPort& pref) : SubComponent(ref), port(pref)
 {
 };
@@ -151,7 +153,7 @@ Joystick::getControlPort() const
     if (axisX == -1) CLR_BIT(result, 2);
     if (axisX ==  1) CLR_BIT(result, 3);
     if (button)      CLR_BIT(result, 4);
-        
+
     return result;
 }
 
@@ -161,7 +163,7 @@ Joystick::trigger(GamePadAction event)
     debug(PRT_DEBUG, "Port %ld: %s\n", port.nr, GamePadActionEnum::key(event));
     
     switch (event) {
-    
+
         case PULL_UP:    axisY = -1; break;
         case PULL_DOWN:  axisY =  1; break;
         case PULL_LEFT:  axisX = -1; break;
@@ -180,7 +182,7 @@ Joystick::trigger(GamePadAction event)
                     button = false;
                     
                 } else {
-                
+
                     // Load magazine
                     button = true;
                     reload();
@@ -196,7 +198,7 @@ Joystick::trigger(GamePadAction event)
             
             if (!config.autofire) button = false;
             break;
-  
+
         default:
             fatalError;
     }
@@ -209,7 +211,7 @@ Joystick::execute()
 {
     // Only proceed if auto fire is enabled
     if (!config.autofire || config.autofireDelay < 0) return;
-  
+
     // Only proceed if a trigger frame has been reached
     if ((i64)c64.frame != nextAutofireFrame) return;
     
@@ -223,4 +225,6 @@ Joystick::execute()
         button = true;
     }
     scheduleNextShot();
+}
+
 }
