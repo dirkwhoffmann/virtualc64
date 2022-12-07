@@ -12,8 +12,10 @@
 #include "Aliases.h"
 #include <vector>
 
+namespace vc64 {
+
 struct C64Key {
-  
+
     // Unique key identifier (0 .. 65)
     isize nr = -1;
     
@@ -124,3 +126,5 @@ struct C64Key {
     
     static std::vector<C64Key> translate(char c);
 };
+
+}

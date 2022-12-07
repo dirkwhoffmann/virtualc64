@@ -13,13 +13,13 @@
 #include "SubComponent.h"
 #include "RingBuffer.h"
 
-using namespace vc64;
+namespace vc64 {
 
 class MsgQueue : public SubComponent {
-        
+
     // Ring buffer storing all pending messages
     util::RingBuffer <Message, 128> queue;
-                
+
     // The registered listener
     const void *listener = nullptr;
     
@@ -39,7 +39,7 @@ class MsgQueue : public SubComponent {
     //
     
 private:
-        
+
     const char *getDescription() const override { return "MsgQueue"; }
     void _dump(Category category, std::ostream& os) const override { }
 
@@ -65,7 +65,9 @@ public:
     
     // Registers a listener together with it's callback function
     void setListener(const void *listener, Callback *func);
-            
+
     // Sends a message
     void put(MsgType type, isize = 0, isize = 0, isize = 0, isize = 0);
 };
+
+}

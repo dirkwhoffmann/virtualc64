@@ -11,17 +11,17 @@
 
 #include "SubComponent.h"
 
-using namespace vc64;
+namespace vc64 {
 
 class IEC : public SubComponent {
 
 public:
     
-	// Current values of the IEC bus lines
-	bool atnLine;
-	bool clockLine;
-	bool dataLine;
-	 	
+    // Current values of the IEC bus lines
+    bool atnLine;
+    bool clockLine;
+    bool dataLine;
+
     /* Indicates if the bus lines variables need an undate, because the values
      * coming from the C64 side have changed.
      * DEPRECATED
@@ -48,7 +48,7 @@ public:
     bool ciaAtn;
     bool ciaClock;
     bool ciaData;
-        
+
     // Bus idle time measured in frames
     i64 idle = 0;
     
@@ -63,7 +63,7 @@ private:
     //
     
 public:
-        
+
     IEC(C64 &ref) : SubComponent(ref) { };
 
 
@@ -138,11 +138,11 @@ public:
     void updateIecLinesC64Side();
     void updateIecLinesDriveSide();
 
-	/* Execution function for observing the bus activity. This method is
+    /* Execution function for observing the bus activity. This method is
      * invoked periodically. It's purpose is to determines if data is
      * transmitted on the bus.
      */
-	void execute();
+    void execute();
     
     // Returns true if data is currently transferred over the bus
     bool isTransferring() { return transferring; }
@@ -159,3 +159,5 @@ private:
      */
     bool _updateIecLines();
 };
+
+}

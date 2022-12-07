@@ -12,6 +12,8 @@
 #include "C64Component.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 class Defaults : public C64Object {
 
     mutable util::ReentrantMutex mutex;
@@ -93,3 +95,5 @@ public:
     void remove(Option option, isize nr) throws;
     void remove(Option option, std::vector <isize> nrs) throws;
 };
+
+}

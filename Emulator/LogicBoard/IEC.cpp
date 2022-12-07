@@ -11,6 +11,8 @@
 #include "IEC.h"
 #include "C64.h"
 
+namespace vc64 {
+
 void 
 IEC::_reset(bool hard)
 {
@@ -86,9 +88,9 @@ bool IEC::_updateIecLines()
      * }
      */
     /*
-    dataLine &= !drive8.isPoweredOn() || (atnLine ^ device1Atn);
-    dataLine &= !drive9.isPoweredOn() || (atnLine ^ device2Atn);
-    */
+     dataLine &= !drive8.isPoweredOn() || (atnLine ^ device1Atn);
+     dataLine &= !drive9.isPoweredOn() || (atnLine ^ device2Atn);
+     */
     if (drive8.connectedAndOn()) dataLine &= (atnLine ^ device1Atn);
     if (drive9.connectedAndOn()) dataLine &= (atnLine ^ device2Atn);
     return (oldAtnLine != atnLine ||
@@ -101,8 +103,8 @@ IEC::updateIecLines()
 {
     bool wasIdle = idle;
 
-	// Update bus lines
-	bool signalsChanged = _updateIecLines();
+    // Update bus lines
+    bool signalsChanged = _updateIecLines();
 
     if (signalsChanged) {
         
@@ -115,13 +117,13 @@ IEC::updateIecLines()
         // ATN signal is connected to CA1 pin of VIA 1
         drive8.via1.CA1action(!atnLine);
         drive9.via1.CA1action(!atnLine);
-                
+
         // Reset the idle counter
         idle = 0;
         
         // Update the transfer status if the bus was idle
         if (wasIdle) updateTransferStatus();
-	}
+    }
 }
 
 void
@@ -161,7 +163,7 @@ IEC::execute()
 {
     if (++idle == 32) {
         updateTransferStatus();
-    }    
+    }
 }
 
 void
@@ -174,4 +176,6 @@ IEC::updateTransferStatus()
         transferring = newValue;
         msgQueue.put(newValue ? MSG_IEC_BUS_BUSY : MSG_IEC_BUS_IDLE);
     }
+}
+
 }

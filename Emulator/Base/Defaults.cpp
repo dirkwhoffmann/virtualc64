@@ -12,6 +12,8 @@
 #include "C64.h"
 #include "StringUtils.h"
 
+namespace vc64 {
+
 Defaults::Defaults()
 {
     setFallback(OPT_POWER_GRID, GRID_STABLE_50HZ);
@@ -469,4 +471,6 @@ void
 Defaults::remove(Option option, std::vector <isize> nrs)
 {
     for (auto &nr : nrs) remove(option, nr);
+}
+
 }

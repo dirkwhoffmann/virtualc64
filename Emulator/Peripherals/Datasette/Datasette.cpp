@@ -11,6 +11,8 @@
 #include "Datasette.h"
 #include "C64.h"
 
+namespace vc64 {
+
 util::Time
 Pulse::delay() const
 {
@@ -129,7 +131,7 @@ Datasette::didSaveToBuffer(u8 *buffer)
     
     // Save pulses to buffer
     for (isize i = 0; i < size; i++) writer << pulses[i].cycles;
-        
+
     return (isize)(writer.ptr - buffer);
 }
 
@@ -200,7 +202,7 @@ void
 Datasette::insertTape(TAPFile &file)
 {
     {   SUSPENDED
-                
+
         // Allocate pulse buffer
         isize numPulses = file.numPulses();
         alloc(numPulses);
@@ -267,7 +269,7 @@ Datasette::advanceHead()
     assert(head < size);
     
     i64 old = (i64)counter.asSeconds();
-        
+
     counter += pulses[head].delay();
     head++;
     
@@ -345,7 +347,7 @@ Datasette::_execute()
 {
     // Only proceed if the datasette is active
     if (!hasTape() || !playKey || !motor) return;
-        
+
     if (--nextRisingEdge == 0) {
         
         cia1.triggerRisingEdgeOnFlagPin();
@@ -377,4 +379,6 @@ Datasette::schedulePulse(isize nr)
     // The VC1530 uses square waves with a 50% duty cycle
     nextRisingEdge = pulses[nr].cycles / 2;
     nextFallingEdge = pulses[nr].cycles;
+}
+
 }

@@ -13,10 +13,10 @@
 #include "C64Key.h"
 #include <queue>
 
-using namespace vc64;
+namespace vc64 {
 
 struct KeyAction {
-        
+
     // Action type
     enum class Action { press, release, releaseAll };
     Action type;
@@ -32,8 +32,8 @@ struct KeyAction {
 };
 
 class Keyboard : public SubComponent {
-        
-	// The keyboard matrix (indexed by row or by column)
+
+    // The keyboard matrix (indexed by row or by column)
     u8 kbMatrixRow[8] = { };
     u8 kbMatrixCol[8] = { };
 
@@ -43,7 +43,7 @@ class Keyboard : public SubComponent {
     
     // Indicates if the shift lock is currently pressed
     bool shiftLock = false;
-        
+
     // Key action list (for auto typing)
     std::queue<KeyAction> actions;
     
@@ -76,7 +76,7 @@ private:
     
 private:
     
-	void _reset(bool hard) override;
+    void _reset(bool hard) override;
 
     template <class T>
     void applyToPersistentItems(T& worker)
@@ -117,21 +117,21 @@ public:
     bool shiftLockIsPressed() const { return shiftLock; }
     bool restoreIsPressed() const;
     
-	// Presses a key
+    // Presses a key
     void press(C64Key key);
     void pressCommodore() { press(C64Key::commodore); }
     void pressCtrl() { press(C64Key::control); }
-	void pressRunstop() { press(C64Key::runStop); }
+    void pressRunstop() { press(C64Key::runStop); }
     void pressLeftShift() { press(C64Key::leftShift); }
     void pressRightShift() { press(C64Key::rightShift); }
     void pressShiftLock() { shiftLock = true; }
     void pressRestore();
 
-	// Releases a pressed key
+    // Releases a pressed key
     void release(C64Key key);
-	void releaseCommodore() { release(C64Key::commodore); }
+    void releaseCommodore() { release(C64Key::commodore); }
     void releaseCtrl() { release(C64Key::control); }
-	void releaseRunstop() { release(C64Key::runStop); }
+    void releaseRunstop() { release(C64Key::runStop); }
     void releaseLeftShift() { release(C64Key::leftShift); }
     void releaseRightShift() { release(C64Key::rightShift); }
     void releaseShiftLock() { shiftLock = false; }
@@ -166,10 +166,10 @@ private:
     
 public:
     
-	// Reads a column or row from the keyboard matrix
+    // Reads a column or row from the keyboard matrix
     u8 getColumnValues(u8 rowMask);
     u8 getRowValues(u8 columnMask);
-	u8 getRowValues(u8 columnMask, u8 thresholdMask);
+    u8 getRowValues(u8 columnMask, u8 thresholdMask);
     
     
     //
@@ -205,4 +205,5 @@ public:
     
     void vsyncHandler();
 };
-	
+
+}

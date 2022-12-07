@@ -10,6 +10,8 @@
 #include "config.h"
 #include "MsgQueue.h"
 
+namespace vc64 {
+
 void
 MsgQueue::setListener(const void *listener, Callback *callback)
 {
@@ -49,4 +51,6 @@ MsgQueue::put(MsgType type, isize d1, isize d2, isize d3, isize d4)
         // Otherwise, store it in the ring buffer
         Message msg = { type, i1, i2, i3, i4 }; queue.write(msg);
     }
+}
+
 }

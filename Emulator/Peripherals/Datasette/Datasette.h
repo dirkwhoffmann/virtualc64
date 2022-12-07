@@ -14,7 +14,7 @@
 #include "Constants.h"
 #include "Chrono.h"
 
-using namespace vc64;
+namespace vc64 {
 
 class Pulse {
     
@@ -23,7 +23,7 @@ public:
     i32 cycles;
 
 public:
-        
+
     Pulse() : cycles(0) { };
     Pulse(i32 value) : cycles(value) { };
     
@@ -54,7 +54,7 @@ class Datasette : public SubComponent {
     
     // Number of pulses stored in the pulse buffer
     isize size = 0;
-            
+
 
     //
     // Tape drive
@@ -87,7 +87,7 @@ class Datasette : public SubComponent {
     //
     
 public:
- 
+
     Datasette(C64 &ref) : SubComponent(ref) { };
     ~Datasette();
     
@@ -182,7 +182,7 @@ public:
 
     // Returns the tape type (TAP format, 0 or 1)
     u8 getType() const { return type; }
-        
+
     
     //
     // Operating the read/write head
@@ -207,7 +207,7 @@ public:
     bool getPlayKey() const { return playKey; }
 
     // Presses the play key
-    void pressPlay(); 
+    void pressPlay();
 
     // Presses the stop key
     void pressStop();
@@ -238,3 +238,5 @@ private:
     // Schedules a pulse
     void schedulePulse(isize nr);
 };
+
+}

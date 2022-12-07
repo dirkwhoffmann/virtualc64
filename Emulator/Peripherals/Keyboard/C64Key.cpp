@@ -10,6 +10,8 @@
 #include "config.h"
 #include "C64Key.h"
 
+namespace vc64 {
+
 const C64Key C64Key::del(15);
 const C64Key C64Key::ret(47);
 const C64Key C64Key::curLeftRight(63);
@@ -167,7 +169,7 @@ C64Key::translate(char c)
         case '0': return std::vector { C64Key::digit0 };
         case '+': return std::vector { C64Key::plus };
         case '-': return std::vector { C64Key::minus };
-        
+
         case 'q': return std::vector { C64Key::Q };
         case 'Q': return std::vector { C64Key::Q, C64Key::leftShift };
         case 'w': return std::vector { C64Key::W };
@@ -190,7 +192,7 @@ C64Key::translate(char c)
         case 'P': return std::vector { C64Key::P, C64Key::leftShift };
         case '@': return std::vector { C64Key::at };
         case '*': return std::vector { C64Key::asterisk };
-        
+
         case 'a': return std::vector { C64Key::A };
         case 'A': return std::vector { C64Key::A, C64Key::leftShift };
         case 's': return std::vector { C64Key::S };
@@ -215,7 +217,7 @@ C64Key::translate(char c)
         case ']': return std::vector { C64Key::semicolon, C64Key::leftShift };
         case '=': return std::vector { C64Key::equal };
         case '\n': return std::vector { C64Key::ret };
-        
+
         case 'z': return std::vector { C64Key::Z };
         case 'Z': return std::vector { C64Key::Z, C64Key::leftShift };
         case 'x': return std::vector { C64Key::X };
@@ -236,9 +238,11 @@ C64Key::translate(char c)
         case '>': return std::vector { C64Key::period, C64Key::leftShift };
         case '/': return std::vector { C64Key::slash };
         case '?': return std::vector { C64Key::slash, C64Key::leftShift };
-        
+
         case ' ': return std::vector { C64Key::space };
-        
+
         default: return std::vector<C64Key> { };
     }
+}
+
 }
