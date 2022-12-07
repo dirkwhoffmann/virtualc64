@@ -14,6 +14,8 @@
 
 #include <fstream>
 
+namespace vc64 {
+
 void
 RegressionTester::prepare(C64 &c64, C64Model model)
 {
@@ -29,7 +31,7 @@ RegressionTester::prepare(C64 &c64, C64Model model)
 
     // Run as fast as possible
     c64.warpOn(warpSource);
-        
+
     // Run the emulator
     c64.run();
 }
@@ -49,7 +51,7 @@ RegressionTester::dumpTexture(C64 &c64, const string &filename)
      * texture and compare it against a previously recorded reference image.
      */
     std::ofstream file;
-        
+
     // Assemble the target file names
     string rawFile = "/tmp/" + filename + ".raw";
     string tiffFile = "/tmp/" + filename + ".tiff";
@@ -100,4 +102,6 @@ void
 RegressionTester::debugcart(u8 value)
 {
     retValue = value;
+}
+
 }

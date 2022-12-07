@@ -11,6 +11,8 @@
 #include "Interpreter.h"
 #include "RetroShell.h"
 
+namespace vc64 {
+
 void
 Interpreter::registerInstructions()
 {
@@ -64,7 +66,7 @@ Interpreter::registerInstructions()
     
     root.add({"screenshot", "set"},
              "command", "Configures the regression test");
-        
+
     root.add({"screenshot", "set", "filename"},
              "key", "Assigns the screen shot filename",
              &RetroShell::exec <Token::screenshot, Token::set, Token::filename>, 1);
@@ -84,7 +86,7 @@ Interpreter::registerInstructions()
     
     root.add({"c64"},
              "component", "The virtual Commodore 64");
-        
+
     root.add({"c64", "config"},
              "command", "Displays the current configuration",
              &RetroShell::exec <Token::c64, Token::config>);
@@ -141,7 +143,7 @@ Interpreter::registerInstructions()
 
     root.add({"memory", "set"},
              "command", "Configures the component");
-        
+
     root.add({"memory", "set", "raminit"},
              "key", "Determines how Ram is initialized on startup",
              &RetroShell::exec <Token::memory, Token::set, Token::raminitpattern>, 1);
@@ -166,7 +168,7 @@ Interpreter::registerInstructions()
     //
     // Drive
     //
-        
+
     root.add({"drive8"},
              "component", "Floppy drive 8");
 
@@ -438,10 +440,10 @@ Interpreter::registerInstructions()
              &RetroShell::exec <Token::dmadebugger, Token::hide, Token::saccesses>);
 
     /*
-    root.add({"dmadebugger", "inspect"},
-             "command", "Displays the internal state",
-             &RetroShell::exec <Token::dmadebugger, Token::inspect>);
-    */
+     root.add({"dmadebugger", "inspect"},
+     "command", "Displays the internal state",
+     &RetroShell::exec <Token::dmadebugger, Token::inspect>);
+     */
     
     
     //
@@ -641,7 +643,7 @@ Interpreter::registerInstructions()
 
     root.add({"joystick"},
              "component", "Joystick");
-        
+
     root.add({"joystick", "config"},
              "command", "Displays the current configuration",
              &RetroShell::exec <Token::joystick, Token::config>);
@@ -672,7 +674,7 @@ Interpreter::registerInstructions()
 
     root.add({"mouse"},
              "component", "mouse");
-        
+
     root.add({"mouse", "config"},
              "command", "Displays the current configuration",
              &RetroShell::exec <Token::mouse, Token::config>);
@@ -711,4 +713,6 @@ Interpreter::registerInstructions()
     root.add({"parcable", "inspect"},
              "command", "Displays the internal state",
              &RetroShell::exec <Token::parcable, Token::inspect>);
+}
+
 }

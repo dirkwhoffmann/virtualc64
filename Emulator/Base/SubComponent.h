@@ -27,9 +27,7 @@ class Keyboard;
 class ControlPort;
 class ExpansionPort;
 class IEC;
-}
 class Drive;
-namespace vc64 {
 class Datasette;
 class Mouse;
 class Mouse1350;
@@ -38,10 +36,10 @@ class NeosMouse;
 class MsgQueue;
 class PowerSupply;
 class ParCable;
-}
 class Recorder;
 class RegressionTester;
 class RetroShell;
+}
 
 class AnyFile;
 class AnyCollection;

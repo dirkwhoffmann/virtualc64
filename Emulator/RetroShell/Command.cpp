@@ -11,6 +11,8 @@
 #include "Command.h"
 #include <algorithm>
 
+namespace vc64 {
+
 void
 Command::add(const std::vector<string> tokens,
              const string &type,
@@ -50,11 +52,11 @@ Command *
 Command::seek(const std::vector<string> &tokens)
 {
     Command *result = this;
-
+    
     for (auto &it : tokens) {
         if ((result = result->seek(it)) == nullptr) break;
     }
-
+    
     return result;
 }
 
@@ -99,7 +101,7 @@ Command::filterPrefix(const string& prefix) const
         if (it.hidden) continue;
         if (it.token.substr(0, prefix.size()) == prefix) result.push_back(&it);
     }
-
+    
     return result;
 }
 
@@ -110,7 +112,7 @@ Command::autoComplete(const string& token)
     
     auto matches = filterPrefix(token);
     if (!matches.empty()) {
-
+        
         const Command *first = matches.front();
         for (auto i = token.size(); i < first->token.size(); i++) {
             
@@ -138,9 +140,9 @@ Command::usage() const
     string firstArg, otherArgs;
     
     if (args.empty()) {
-
+        
         firstArg = numArgs == 0 ? "" : numArgs == 1 ? "<value>" : "<values>";
-
+        
     } else {
         
         // Collect all argument types
@@ -164,4 +166,6 @@ Command::usage() const
     }
     
     return tokens() + " " + firstArg + " " + otherArgs;
+}
+
 }

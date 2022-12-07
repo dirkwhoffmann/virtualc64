@@ -12,10 +12,12 @@
 #include "C64.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 Drive::Drive(isize nr, C64 &ref) : SubComponent(ref), deviceNr(nr)
 {
     assert(deviceNr == DRIVE8 || deviceNr == DRIVE9);
-	
+
     disk = std::make_unique<Disk>();
     
     subComponents = std::vector <C64Component *> {
@@ -73,7 +75,7 @@ Drive::getDefaultConfig()
     defaults.stepVolume = 50;
     defaults.insertVolume = 50;
     defaults.ejectVolume = 50;
-        
+
     return defaults;
 }
 
@@ -346,7 +348,7 @@ Drive::_dump(Category category, std::ostream& os) const
     using namespace util;
     
     if (category == Category::Config) {
-    
+
         os << tab("Auto config");
         os << bol(config.autoConfig) << std::endl;
         os << tab("Drive type");
@@ -376,7 +378,7 @@ Drive::_dump(Category category, std::ostream& os) const
     }
     
     if (category == Category::State) {
-         
+
         os << tab("Idle");
         os << bol(isIdle()) << std::endl;
         os << tab("Motor");
@@ -748,7 +750,7 @@ Drive::moveHeadUp()
         trace(DRV_DEBUG, "Moving head up to halftrack %ld (track %2.1f) (offset %ld)\n",
               halftrack, (halftrack + 1) / 2.0, offset);
     }
-       
+
     msgQueue.put(MSG_DRIVE_STEP, deviceNr, halftrack, config.stepVolume, config.pan);
 }
 
@@ -884,7 +886,7 @@ Drive::vsyncHandler()
         }
         return;
     }
-        
+
     // Check if we sould enter power-safe mode
     if (!spinning && config.powerSave) {
         if (++idleCounter == powerSafeThreshold) {
@@ -958,4 +960,6 @@ Drive::executeStateTransition()
         default:
             fatalError;
     }
+}
+
 }

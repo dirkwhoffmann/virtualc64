@@ -11,6 +11,8 @@
 
 #include "Types.h"
 
+namespace vc64 {
+
 class NamedPipe {
 
     int pipe = -1;
@@ -24,3 +26,5 @@ public:
     bool close();
     isize write(u8 *buffer, isize length);
 };
+
+}

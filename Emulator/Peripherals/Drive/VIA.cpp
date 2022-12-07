@@ -12,6 +12,8 @@
 #include "C64.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 //
 // VIA 6522 (Commons)
 //
@@ -986,7 +988,7 @@ VIA1::updatePA()
         default:
             VIA6522::updatePA();
             break;
-    }    
+    }
 }
 
 void
@@ -1096,4 +1098,4 @@ VIA2::releaseIrqLine()
     drive.cpu.releaseIrqLine(INTSRC_VIA2);
 }
 
-
+}

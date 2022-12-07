@@ -12,14 +12,12 @@
 #include "SubComponent.h"
 #include "C64Types.h"
 
-using namespace vc64;
-
 namespace vc64 {
+
 class C64;
-}
 
 class RegressionTester : public SubComponent {
-   
+
 public:
     
     // Filename of the test image
@@ -85,3 +83,5 @@ public:
     // Emulates the debugcart feature (used by VICE tests)
     void debugcart(u8 value);
 };
+
+}

@@ -14,6 +14,8 @@
 #include <unistd.h>
 #endif
 
+namespace vc64 {
+
 bool
 NamedPipe::create(const string &name)
 {
@@ -89,4 +91,6 @@ NamedPipe::write(u8 *buffer, isize length)
     return ::write(pipe, (void *)buffer, (size_t)length);
 
 #endif
+}
+
 }

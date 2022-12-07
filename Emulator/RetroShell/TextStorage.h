@@ -14,60 +14,64 @@
 #include <fstream>
 #include <vector>
 
+namespace vc64 {
+
 class TextStorage {
 
-	// Maximum number of stored lines
-	static constexpr usize capacity = 512;
-	
-	// The stored lines
-	std::vector<string> storage;
-		
-public:
-	
-	// Optional output stream for debugging
-	std::ostream *ostream = nullptr;
+    // Maximum number of stored lines
+    static constexpr usize capacity = 512;
 
-	
-	//
-	// Reading
-	//
-	
-public:
-	
-	// Returns the number of stored lines
-	isize size() const { return (isize)storage.size(); }
+    // The stored lines
+    std::vector<string> storage;
 
-	// Returns a single line
-	string operator [] (isize i) const;
-	string& operator [] (isize i);
-
-	// Returns the whole storage contents
-	void text(string &all);
-			
-	
-	//
-	// Writing
-	//
-	
 public:
-	
-	// Initializes the storage with a single empty line
-	void clear();
-	
+
+    // Optional output stream for debugging
+    std::ostream *ostream = nullptr;
+
+
+    //
+    // Reading
+    //
+
+public:
+
+    // Returns the number of stored lines
+    isize size() const { return (isize)storage.size(); }
+
+    // Returns a single line
+    string operator [] (isize i) const;
+    string& operator [] (isize i);
+
+    // Returns the whole storage contents
+    void text(string &all);
+
+
+    //
+    // Writing
+    //
+
+public:
+
+    // Initializes the storage with a single empty line
+    void clear();
+
 private:
-	
-	// Appends a new line
-	void append(const string &line);
+
+    // Appends a new line
+    void append(const string &line);
 
 public:
-	
-	// Appends a single character or a string
-	TextStorage &operator<<(char c);
-	TextStorage &operator<<(const string &s);
-	
-	// Prints the welcome message
-	void welcome();
-	
-	// Prints the help line
-	void printHelp();
+
+    // Appends a single character or a string
+    TextStorage &operator<<(char c);
+    TextStorage &operator<<(const string &s);
+
+    // Prints the welcome message
+    void welcome();
+
+    // Prints the help line
+    void printHelp();
 };
+
+}

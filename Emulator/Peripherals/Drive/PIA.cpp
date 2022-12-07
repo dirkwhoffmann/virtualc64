@@ -12,6 +12,8 @@
 #include "ParCable.h"
 #include "Drive.h"
 
+namespace vc64 {
+
 //
 // PIA (commons)
 //
@@ -27,11 +29,11 @@ PIA6821::_reset(bool hard)
     RESET_SNAPSHOT_ITEMS(hard)
     
     /*
-    ca1 = true;
-    ca2 = true;
-    cb1 = true;
-    cb2 = true;
-    */
+     ca1 = true;
+     ca2 = true;
+     cb1 = true;
+     cb2 = true;
+     */
 }
 
 void
@@ -47,7 +49,7 @@ PIA6821::setCA1External(bool value)
         
         SET_BIT(cra, 7);
         if (enable) irqAHasOccurred();
-    
+
         // Release CA2 in "Read Strobe with CA1 Restore" mode
         if (ca2Control() == 0b100) setCA2Internal(true);
     }
@@ -436,4 +438,6 @@ void
 PiaDolphin::poke(u16 addr, u8 value)
 {
     PIA6821::poke(addr & 0b10, addr & 0b01, value);
+}
+
 }

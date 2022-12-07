@@ -18,7 +18,7 @@
 #include "VIA.h"
 #include "PIA.h"
 
-using namespace vc64;
+namespace vc64 {
 
 /*
  * This implementation is based on the following two documents written
@@ -27,9 +27,9 @@ using namespace vc64;
  * Description: http://www.baltissen.org/newhtm/1541a.htm
  * Schematics:  http://www.baltissen.org/images/1540.gif
  */
- 
+
 class Drive : public SubComponent {
-        
+
     friend class DriveMemory;
     friend class VIA1;
     friend class VIA2;
@@ -75,7 +75,7 @@ class Drive : public SubComponent {
     
 public:
     
-	DriveMemory mem = DriveMemory(c64, *this);
+    DriveMemory mem = DriveMemory(c64, *this);
     CPU cpu = CPU(MOS_6502, c64);
     VIA1 via1 = VIA1(c64, *this);
     VIA2 via2 = VIA2(c64, *this);
@@ -101,7 +101,7 @@ public:
     //
     
 private:
-        
+
     // Indicates whether the disk is rotating
     bool spinning = false;
     
@@ -110,7 +110,7 @@ private:
     
     // Indicates if or how a disk is inserted
     InsertionStatus insertionStatus = DISK_FULLY_EJECTED;
-        
+
     
     //
     // Clocking logic
@@ -125,7 +125,7 @@ private:
      * the two VIA chips.
      */
     i64 nextClock = 0;
-     
+
     /* Indicates when the next carry output pulse occurs on UE7. The 16 MHz
      * signal is also fed into UE7, a 74SL193 4-bit couter, which generates a
      * carry output signal on overflow. The pre-load inputs of this counter are
@@ -217,7 +217,7 @@ public:
     i64 idleCounter = 0;
 
     // Indicates whether execute() should be called inside the run loop
-    bool needsEmulation = false; 
+    bool needsEmulation = false;
     
     
     //
@@ -306,7 +306,7 @@ private:
     //
     
 public:
-        
+
     static DriveConfig getDefaultConfig();
     const DriveConfig &getConfig() const { return config; }
     void resetConfig() override;
@@ -330,7 +330,7 @@ public:
     
     // Returns the device number
     isize getDeviceNr() const { return deviceNr; }
-        
+
     // Returns true iff the red drive LED is on
     bool getRedLED() const { return redLED; };
 
@@ -429,7 +429,7 @@ public:
     // Returns the current halftrack or track number
     Halftrack getHalftrack() const { return halftrack; }
     Track getTrack() const { return (halftrack + 1) / 2; }
-        
+
     // Returns the number of bits in a halftrack
     isize sizeOfHalftrack(Halftrack ht) {
         return hasDisk() ? disk->lengthOfHalftrack(ht) : 0; }
@@ -478,5 +478,7 @@ public:
 private:
     
     // Execute the disk state transition for a single frame
-    void executeStateTransition();    
+    void executeStateTransition();
 };
+
+}

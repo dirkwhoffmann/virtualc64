@@ -16,6 +16,8 @@
 #include <fstream>
 #include <sstream>
 
+namespace vc64 {
+
 //
 // Top-level commands
 //
@@ -112,7 +114,7 @@ RetroShell::exec <Token::screenshot, Token::set, Token::cutout> (Arguments &argv
     regressionTester.x2 = x2;
     regressionTester.y2 = y2;
 }
-    
+
 template <> void
 RetroShell::exec <Token::screenshot, Token::save> (Arguments &argv, long param)
 {
@@ -909,4 +911,6 @@ template <> void
 RetroShell::exec <Token::parcable, Token::inspect> (Arguments& argv, long param)
 {
     dump(parCable, Category::State);
+}
+
 }

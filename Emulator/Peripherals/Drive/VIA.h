@@ -11,7 +11,7 @@
 
 #include "SubComponent.h"
 
-using namespace vc64;
+namespace vc64 {
 
 /*
  * This implementation is mainly based on the document
@@ -241,7 +241,7 @@ private:
 private:
     
     void _reset(bool hard) override;
-        
+
     template <class T>
     void applyToPersistentItems(T& worker)
     {
@@ -553,3 +553,5 @@ public:
     void pullDownIrqLine() override;
     void releaseIrqLine() override;
 };
+
+}

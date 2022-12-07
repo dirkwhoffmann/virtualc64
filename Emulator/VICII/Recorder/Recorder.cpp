@@ -11,6 +11,8 @@
 #include "Recorder.h"
 #include "C64.h"
 
+namespace vc64 {
+
 Recorder::Recorder(C64& ref) : SubComponent(ref)
 {
 
@@ -424,33 +426,35 @@ Recorder::finalize()
 }
 
 /*
-void
-Recorder::finalize()
-{
-    recordCounter++;
-    
-    // Close pipes
-    close(videoPipe);
-    close(audioPipe);
-    videoPipe = -1;
-    audioPipe = -1;
-    
-    // Shut down encoders
-    pclose(videoFFmpeg);
-    pclose(audioFFmpeg);
-    videoFFmpeg = nullptr;
-    audioFFmpeg = nullptr;
-    
-    // Switch state and inform the GUI
-    state = State::wait;
-    recStop = util::Time::now();
-    msgQueue.put(MSG_RECORDING_STOPPED);
-}
-*/
+ void
+ Recorder::finalize()
+ {
+ recordCounter++;
+
+ // Close pipes
+ close(videoPipe);
+ close(audioPipe);
+ videoPipe = -1;
+ audioPipe = -1;
+
+ // Shut down encoders
+ pclose(videoFFmpeg);
+ pclose(audioFFmpeg);
+ videoFFmpeg = nullptr;
+ audioFFmpeg = nullptr;
+
+ // Switch state and inform the GUI
+ state = State::wait;
+ recStop = util::Time::now();
+ msgQueue.put(MSG_RECORDING_STOPPED);
+ }
+ */
 
 void
 Recorder::abort()
 {
     finalize();
     msgQueue.put(MSG_RECORDING_ABORTED);
+}
+
 }

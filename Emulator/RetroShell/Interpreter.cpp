@@ -12,6 +12,8 @@
 #include "RetroShell.h"
 #include <sstream>
 
+namespace vc64 {
+
 Arguments
 Interpreter::split(const string& userInput)
 {
@@ -29,7 +31,7 @@ Interpreter::split(const string& userInput)
         
         // Check for escape mode
         if (c == '\\') { esc = true; continue; }
-            
+
         // Switch between string mode and non-string mode if '"' is detected
         if (c == '"' && !esc) { str = !str; continue; }
         
@@ -49,7 +51,7 @@ Interpreter::split(const string& userInput)
     
     return result;
 }
-    
+
 string
 Interpreter::autoComplete(const string& userInput)
 {
@@ -97,7 +99,7 @@ Interpreter::exec(const string& userInput, bool verbose)
 
     // Auto complete the token list
     autoComplete(tokens);
-            
+
     // Process the command
     exec(tokens, verbose);
 }
@@ -123,7 +125,7 @@ Interpreter::exec(const Arguments &argv, bool verbose)
         current = current->seek(args.front());
         args.erase(args.begin());
     }
-                
+
     // Error out if no command handler is present
     if (current->action == nullptr && !args.empty()) {
         throw util::ParseError(args.front());
@@ -151,10 +153,10 @@ Interpreter::help(const string& userInput)
 {    
     // Split the command string
     Arguments tokens = split(userInput);
-        
+
     // Auto complete the token list
     autoComplete(tokens);
-            
+
     // Process the command
     help(tokens);
 }
@@ -212,4 +214,6 @@ Interpreter::help(const Command& current)
         }
         retroShell << '\n';
     }
+}
+
 }

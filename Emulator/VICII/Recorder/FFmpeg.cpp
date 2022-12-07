@@ -11,6 +11,8 @@
 #include "FFmpeg.h"
 #include "IOUtils.h"
 
+namespace vc64 {
+
 std::vector<string> FFmpeg::paths;
 string FFmpeg::exec;
 
@@ -110,4 +112,6 @@ FFmpeg::join()
     handle = nullptr;
 
 #endif
+}
+
 }

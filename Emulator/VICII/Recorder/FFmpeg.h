@@ -12,6 +12,8 @@
 #include "Types.h"
 #include <vector>
 
+namespace vc64 {
+
 class FFmpeg {
 
 public:
@@ -56,3 +58,5 @@ public:
     // Waits until the FFmpeg instance has terminated
     void join();
 };
+
+}

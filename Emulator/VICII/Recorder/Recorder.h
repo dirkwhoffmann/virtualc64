@@ -14,7 +14,7 @@
 #include "FFmpeg.h"
 #include "NamedPipe.h"
 
-using namespace vc64;
+namespace vc64 {
 
 class Recorder : public SubComponent {
 
@@ -45,7 +45,7 @@ class Recorder : public SubComponent {
     //
     // Recording parameters
     //
-      
+
     // Frame rate, Bit rate, Sample rate
     isize frameRate = 0;
     isize bitRate = 0;
@@ -56,7 +56,7 @@ class Recorder : public SubComponent {
     
     // The texture cutout that is going to be recorded
     struct { isize x1; isize y1; isize x2; isize y2; } cutout;
-            
+
     // Time stamps
     util::Time recStart;
     util::Time recStop;
@@ -149,14 +149,14 @@ public:
 
     // Exports the recorded video
     bool exportAs(const string &path);
-        
+
     
     //
     // Recording a video stream
     //
 
 public:
-        
+
     // Records a single frame
     void vsyncHandler();
     
@@ -169,3 +169,5 @@ private:
     void finalize();
     void abort();
 };
+
+}
