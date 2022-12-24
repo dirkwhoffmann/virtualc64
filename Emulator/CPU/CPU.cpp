@@ -227,9 +227,9 @@ CPU::externalPortBits() const
      *     Bit 6:  Eventually 0 (acts a a capacitor)
      *     Bit 7:  Eventually 0 (acts a a capacitor)
      */
-    u8 bit3 = (dischargeCycleBit3 > i64(cpu.clock)) ? 0x08 : 0x00;
-    u8 bit6 = (dischargeCycleBit6 > i64(cpu.clock)) ? 0x40 : 0x00;
-    u8 bit7 = (dischargeCycleBit7 > i64(cpu.clock)) ? 0x80 : 0x00;
+    u8 bit3 = (dischargeCycleBit3 > cpu.clock) ? 0x08 : 0x00;
+    u8 bit6 = (dischargeCycleBit6 > cpu.clock) ? 0x40 : 0x00;
+    u8 bit7 = (dischargeCycleBit7 > cpu.clock) ? 0x80 : 0x00;
     u8 bit4 = datasette.getPlayKey() ? 0x00 : 0x10;
 
     return bit7 | bit6 | bit4 | bit3 | 0x07;

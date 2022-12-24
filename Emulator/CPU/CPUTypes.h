@@ -58,7 +58,7 @@ struct CPURevisionEnum : util::Reflection<CPURevisionEnum, peddle::CPURevision> 
 
 typedef struct
 {
-    u64 cycle;
+    i64 cycle;
 
     u16 pc0;
     u8 sp;

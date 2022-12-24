@@ -506,7 +506,7 @@ Drive::execute(u64 duration)
         if (nextClock <= nextCarry) {
             
             // Execute CPU and VIAs
-            u64 cycle = ++cpu.clock;
+            i64 cycle = ++cpu.clock;
             cpu.execute<MOS_6502>();
             if (cycle >= via1.wakeUpCycle) via1.execute(); else via1.idleCounter++;
             if (cycle >= via2.wakeUpCycle) via2.execute(); else via2.idleCounter++;

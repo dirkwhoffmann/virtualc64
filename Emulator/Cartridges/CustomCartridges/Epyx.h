@@ -23,7 +23,7 @@ private:
     // either read from ROML or I/O space 1. Both operations discharge the
     // capacitor and keep the ROM alive.
     
-    u64 cycle = 0;
+    i64 cycle = 0;
     
     
     //

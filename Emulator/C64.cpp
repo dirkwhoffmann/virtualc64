@@ -893,17 +893,28 @@ C64::_dump(Category category, std::ostream& os) const
 
     if (category == Category::State) {
 
-        os << tab("Machine type") << bol(vic.pal(), "PAL", "NTSC") << std::endl;
-        os << tab("Frames per second") << vic.getFps() << std::endl;
-        os << tab("Lines per frame") << vic.getLinesPerFrame() << std::endl;
-        os << tab("Cycles per scanline") << vic.getCyclesPerLine() << std::endl;
-        os << tab("Current cycle") << cpu.clock << std::endl;
-        os << tab("Current frame") << frame << std::endl;
-        os << tab("Current scanline") << scanline << std::endl;
-        os << tab("Current scanline cycle") << dec(rasterCycle) << std::endl;
-        os << tab("Ultimax mode") << bol(getUltimax()) << std::endl;
-        os << tab("Warp mode") << bol(inWarpMode()) << std::endl;
-        os << tab("Debug mode") << bol(debugMode) << std::endl;
+        os << tab("Machine type");
+        os << bol(vic.pal(), "PAL", "NTSC") << std::endl;
+        os << tab("Frames per second");
+        os << vic.getFps() << std::endl;
+        os << tab("Lines per frame");
+        os << vic.getLinesPerFrame() << std::endl;
+        os << tab("Cycles per scanline");
+        os << vic.getCyclesPerLine() << std::endl;
+        os << tab("Current cycle");
+        os << cpu.clock << std::endl;
+        os << tab("Current frame");
+        os << frame << std::endl;
+        os << tab("Current scanline");
+        os << scanline << std::endl;
+        os << tab("Current scanline cycle");
+        os << dec(rasterCycle) << std::endl;
+        os << tab("Ultimax mode");
+        os << bol(getUltimax()) << std::endl;
+        os << tab("Warp mode");
+        os << bol(inWarpMode()) << std::endl;
+        os << tab("Debug mode");
+        os << bol(debugMode) << std::endl;
     }
 
     if (category == Category::Defaults) {

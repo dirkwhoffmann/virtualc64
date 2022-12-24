@@ -204,10 +204,10 @@ protected:
     u8 tiredness;
     
     // Wakeup cycle
-    u64 wakeUpCycle;
+    i64 wakeUpCycle;
     
     // Number of skipped executions
-    u64 idleCounter;
+    i64 idleCounter;
     
     
     //

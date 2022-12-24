@@ -38,7 +38,7 @@ class NeosMouse : public SubComponent {
     u8 state;
 
     // CPU cycle of the most recent trigger event
-    u64 triggerCycle;
+    i64 triggerCycle;
     
     // Latched mouse position
     i64 latchedX;

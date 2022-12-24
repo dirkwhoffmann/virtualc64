@@ -188,17 +188,6 @@ public:
      */
     void encodeGcr(u8 value, Track t, HeadPos offset);
     void encodeGcr(u8 *values, isize length, Track t, HeadPos offset);
-    
-    
-    /* Decodes a nibble (4 bit) from a previously encoded GCR bitstream.
-     * Returns 0xFF, if no valid GCR sequence is found.
-     */
-    // [[deprecated]] u8 decodeGcrNibble(u8 *gcrBits);
-
-    /* Decodes a byte (8 bit) form a previously encoded GCR bitstream. Returns
-     * an unpredictable result if invalid GCR sequences are found.
-     */
-    // [[deprecated]] u8 decodeGcr(u8 *gcrBits);
 
     
     //

@@ -68,7 +68,7 @@ protected:
 public:
 
     // Elapsed clock cycles since power up
-    u64 clock;
+    i64 clock;
 
 protected:
 
@@ -98,10 +98,10 @@ protected:
     bool rdyLine;
 
     // Cycle of the most recent rising edge of the RDY line
-    u64 rdyLineUp;
+    i64 rdyLineUp;
 
     // Cycle of the most recent falling edge of the RDY line
-    u64 rdyLineDown;
+    i64 rdyLineDown;
 
     /* Interrupt lines
      *
