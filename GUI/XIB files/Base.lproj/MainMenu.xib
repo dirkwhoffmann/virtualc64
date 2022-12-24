@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
@@ -966,6 +966,29 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="6wW-eK-Rtw"/>
+                            <menuItem title="Attach REU" id="3E8-6e-epT">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Attach REU" id="gqy-wA-JpK">
+                                    <items>
+                                        <menuItem title="256 KB" tag="256" id="zNt-Oc-aBn">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachReuAction:" target="-1" id="H68-ji-1Qq"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="0Py-Sh-MFB"/>
+                                        <menuItem title="RAM battery" id="5BL-9k-xld">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="reuBatteryAction:" target="-1" id="JWy-tU-az6"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                                <connections>
+                                    <action selector="attachGeoRamDummyAction:" target="-1" id="Wrt-RK-I4n"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Attach GEO/NEO Ram" id="ZWy-ig-b3R">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Attach GEO/NEO Ram" id="7j5-aX-oSo">

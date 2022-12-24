@@ -834,6 +834,11 @@ using namespace peddle;
     catch (VC64Error &err) { [ex save:err]; }
 }
 
+- (void)attachReuCartridge:(NSInteger)capacity
+{
+    [self eport]->attachReuCartridge(capacity);
+}
+
 - (void)attachGeoRamCartridge:(NSInteger)capacity
 {
     [self eport]->attachGeoRamCartridge(capacity);

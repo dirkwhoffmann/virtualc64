@@ -109,7 +109,18 @@ extension MyController: NSMenuItemValidation {
         // Cartridge menu
         case #selector(MyController.attachRecentCartridgeAction(_:)):
             return validateURLlist(MediaManager.attachedCartridges, image: smallCart)
-            
+
+        case #selector(MyController.attachReuDummyAction(_:)):
+            item.state = (c64.expansionport.cartridgeType() == .REU) ? .on : .off
+
+        case #selector(MyController.attachReuAction(_:)):
+            item.state = (c64.expansionport.cartridgeType() == .REU &&
+                          c64.expansionport.ramCapacity == item.tag * 1024) ? .on : .off
+
+        case #selector(MyController.reuBatteryAction(_:)):
+            item.state = c64.expansionport.hasBattery() ? .on : .off
+            return c64.expansionport.cartridgeType() == .REU
+
         case #selector(MyController.attachGeoRamDummyAction(_:)):
             item.state = (c64.expansionport.cartridgeType() == .GEO_RAM) ? .on : .off
             
@@ -869,6 +880,20 @@ extension MyController: NSMenuItemValidation {
         c64.expansionport.detachCartridgeAndReset()
     }
 
+    @IBAction func attachReuDummyAction(_ sender: Any!) {
+        // Dummy action method to enable menu item validation
+    }
+
+    @IBAction func attachReuAction(_ sender: NSMenuItem!) {
+
+        let capacity = sender.tag
+        c64.expansionport.attachReuCartridge(capacity)
+    }
+
+    @IBAction func reuBatteryAction(_ sender: Any!) {
+        c64.expansionport.setBattery(!c64.expansionport.hasBattery())
+    }
+
     @IBAction func attachGeoRamDummyAction(_ sender: Any!) {
         // Dummy action method to enable menu item validation
     }
@@ -878,15 +903,15 @@ extension MyController: NSMenuItemValidation {
         let capacity = sender.tag
         c64.expansionport.attachGeoRamCartridge(capacity)
     }
-    
-    @IBAction func attachIsepicAction(_ sender: Any!) {
-        c64.expansionport.attachIsepicCartridge()
-    }
-    
+
     @IBAction func geoRamBatteryAction(_ sender: Any!) {
         c64.expansionport.setBattery(!c64.expansionport.hasBattery())
     }
-    
+
+    @IBAction func attachIsepicAction(_ sender: Any!) {
+        c64.expansionport.attachIsepicCartridge()
+    }
+
     @IBAction func pressCartridgeButton1Action(_ sender: NSButton!) {
         
         c64.expansionport.pressButton(1)

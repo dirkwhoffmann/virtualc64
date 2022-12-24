@@ -27,6 +27,7 @@
 		50157EEB28256035000E9DDD /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50157EEA28256035000E9DDD /* Config.swift */; };
 		50157EEF2825A814000E9DDD /* DiskImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50157EEE2825A814000E9DDD /* DiskImporter.swift */; };
 		50157EF12825A9F5000E9DDD /* DiskImporter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50157EF02825A9F5000E9DDD /* DiskImporter.xib */; };
+		5016F02829574FDF00F2063B /* Reu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5016F02629574FDF00F2063B /* Reu.cpp */; };
 		50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50176C7A0A6F7357009E80BD /* C64Proxy.mm */; };
 		5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */; };
 		5018AF66202EDD2000B4C886 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018AF65202EDD2000B4C886 /* Defaults.swift */; };
@@ -336,6 +337,8 @@
 		50157EEA28256035000E9DDD /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		50157EEE2825A814000E9DDD /* DiskImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskImporter.swift; sourceTree = "<group>"; };
 		50157EF02825A9F5000E9DDD /* DiskImporter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiskImporter.xib; sourceTree = "<group>"; };
+		5016F02629574FDF00F2063B /* Reu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Reu.cpp; sourceTree = "<group>"; };
+		5016F02729574FDF00F2063B /* Reu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reu.h; sourceTree = "<group>"; };
 		50176C790A6F7357009E80BD /* C64Proxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 30; path = C64Proxy.h; sourceTree = "<group>"; };
 		50176C7A0A6F7357009E80BD /* C64Proxy.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = C64Proxy.mm; sourceTree = "<group>"; };
 		5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "C64_Pro_Mono-STYLE.ttf"; sourceTree = "<group>"; };
@@ -1155,8 +1158,6 @@
 				504C42A624AF29AB00E69CAE /* Funplay.cpp */,
 				50F0EB7925CC33B3002D0D72 /* GameKiller.h */,
 				50F0EB7825CC33B3002D0D72 /* GameKiller.cpp */,
-				504C429F24AF29AB00E69CAE /* GeoRam.h */,
-				504C42A124AF29AB00E69CAE /* GeoRam.cpp */,
 				504C42AA24AF29AB00E69CAE /* Isepic.h */,
 				504C42BA24AF29AB00E69CAE /* Isepic.cpp */,
 				504C42AE24AF29AB00E69CAE /* Kcs.h */,
@@ -1189,6 +1190,10 @@
 				504C429524AF29AB00E69CAE /* Westermann.cpp */,
 				504C42B824AF29AB00E69CAE /* Zaxxon.h */,
 				504C42B024AF29AB00E69CAE /* Zaxxon.cpp */,
+				504C429F24AF29AB00E69CAE /* GeoRam.h */,
+				504C42A124AF29AB00E69CAE /* GeoRam.cpp */,
+				5016F02729574FDF00F2063B /* Reu.h */,
+				5016F02629574FDF00F2063B /* Reu.cpp */,
 			);
 			path = CustomCartridges;
 			sourceTree = "<group>";
@@ -2002,6 +2007,7 @@
 				50461BBE26B522450019CEDF /* Thread.cpp in Sources */,
 				50300AEE258B2C5400D261E3 /* FSDirEntry.cpp in Sources */,
 				507A49A024C8D66A00DBF984 /* GuardTableView.swift in Sources */,
+				5016F02829574FDF00F2063B /* Reu.cpp in Sources */,
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
 				5036E0B7261AEF000048E66A /* Interpreter.cpp in Sources */,
 				504C439D24AF29AC00E69CAE /* version.cc in Sources */,

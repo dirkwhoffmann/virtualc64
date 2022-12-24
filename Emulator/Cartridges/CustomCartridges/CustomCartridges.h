@@ -29,6 +29,7 @@
 #include "MikroAss.h"
 #include "Ocean.h"
 #include "PageFox.h"
+#include "Reu.h"
 #include "Rex.h"
 #include "SimonsBasic.h"
 #include "StarDos.h"

@@ -19,6 +19,7 @@ MagicDesk.cpp
 MikroAss.cpp
 Ocean.cpp
 PageFox.cpp
+Reu.cpp
 Rex.cpp
 SimonsBasic.cpp
 StarDos.cpp

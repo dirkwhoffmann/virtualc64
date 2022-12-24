@@ -98,6 +98,7 @@ enum_long(CRT_TYPE)
     // Cartridges with no CRT ID (values can be arbitrary)
     CRT_ISEPIC,
     CRT_GEO_RAM,
+    CRT_REU,
     CRT_NONE
 };
 typedef CRT_TYPE CartridgeType;
