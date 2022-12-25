@@ -15,6 +15,10 @@ class Reu : public Cartridge {
 
 private:
 
+    //
+    // REU registers
+    //
+
     // Status register
     u8 sr;
 
@@ -36,6 +40,14 @@ private:
     
     // Address control register
     u8 acr;
+
+
+    //
+    // Emulation specific variables
+    //
+
+    // Remembers the memory type of the uppermost memory bank
+    MemoryType memTypeF;
 
 
     //
@@ -81,6 +93,7 @@ private:
         << bank
         << tlen
         << acr;
+//         << memTypeF;
     }
 
     template <class T>
@@ -95,6 +108,14 @@ private:
 
 
     //
+    // Accessing REU registers
+    //
+
+    isize memStep() { return GET_BIT(acr,7) ? 0 : 1; }
+    isize reuStep() { return GET_BIT(acr,6) ? 0 : 1; }
+
+
+    //
     // Accessing cartridge memory
     //
 
@@ -103,7 +124,26 @@ public:
     u8 peekIO2(u16 addr) override;
     u8 spypeekIO2(u16 addr) const override;
     void pokeIO2(u16 addr, u8 value) override;
+    void poke(u16 addr, u8 value) override;
 
-private:
+
+    //
+    // Performing DMA
+    //
+
+    void doDma();
+    void stash(u16 memAddr, u32 reuAddr, u32 len);
+    void fetch(u16 memAddr, u32 reuAddr, u32 len);
+    void swap(u16 memAddr, u32 reuAddr, u32 len);
+    void verify(u16 memAddr, u32 reuAddr, u32 len);
+
+
+    //
+    // Handling delegation calls
+    //
+
+public:
+
+    void updatePeekPokeLookupTables() override;
 
 };

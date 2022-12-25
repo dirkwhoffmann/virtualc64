@@ -317,8 +317,8 @@ public:
     void setBattery(bool value) { battery = value; }
 
     // Reads or write RAM cells
-    u8 peekRAM(u16 addr) const;
-    void pokeRAM(u16 addr, u8 value);
+    u8 peekRAM(u32 addr) const;
+    void pokeRAM(u32 addr, u8 value);
     void eraseRAM(u8 value);
 
     
