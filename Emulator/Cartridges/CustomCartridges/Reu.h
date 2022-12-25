@@ -15,8 +15,27 @@ class Reu : public Cartridge {
 
 private:
 
-    // TODO
-    u8 dummy = 0;
+    // Status register
+    u8 sr;
+
+    // Command register
+    u8 cr;
+
+    // Base address registers (C64 memory and REU memory)
+    u16 c64Base;
+    u16 reuBase;
+
+    // Memory bank register
+    u8 bank;
+
+    // Transfer length register
+    u16 tlen;
+
+    // Interrupt mask
+    u8 mask;
+    
+    // Address control register
+    u8 acr;
 
 
     //
@@ -36,6 +55,15 @@ private:
 
 
     //
+    // Analyzing
+    //
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override;
+
+
+    //
     // Serializing
     //
 
@@ -46,7 +74,13 @@ private:
     {
         worker
 
-        << dummy;
+        << sr
+        << cr
+        << c64Base
+        << reuBase
+        << bank
+        << tlen
+        << acr;
     }
 
     template <class T>
@@ -66,11 +100,8 @@ private:
 
 public:
 
-    u8 peekIO1(u16 addr) override;
-    u8 spypeekIO1(u16 addr) const override;
     u8 peekIO2(u16 addr) override;
     u8 spypeekIO2(u16 addr) const override;
-    void pokeIO1(u16 addr, u8 value) override;
     void pokeIO2(u16 addr, u8 value) override;
 
 private:
