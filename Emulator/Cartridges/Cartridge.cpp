@@ -240,15 +240,29 @@ Cartridge::_size()
     util::SerCounter counter;
     applyToPersistentItems(counter);
     applyToResetItems(counter);
- 
-    // Determine size of all packets
-    isize packetSize = 0;
-    for (isize i = 0; i < numPackets; i++) {
-        assert(packet[i] != nullptr);
-        packetSize += packet[i]->_size();
-    }
-    
-    return ramCapacity + packetSize + counter.count;
+
+    isize result = counter.count;
+
+    // Add ROM size
+    for (isize i = 0; i < numPackets; i++) result += packet[i]->_size();
+
+    // Add RAM size
+    result += ramCapacity;
+
+    // Add sub-class members
+    result += __size();
+
+    return result;
+}
+
+u64
+Cartridge::_checksum()
+{
+    util::SerChecker checker;
+    applyToPersistentItems(checker);
+    applyToResetItems(checker);
+
+    return util::fnvIt64(checker.hash, __checksum());
 }
 
 isize
@@ -260,7 +274,7 @@ Cartridge::_load(const u8 *buffer)
     applyToPersistentItems(reader);
     applyToResetItems(reader);
 
-    // Load ROM packets
+    // Load ROM
     for (isize i = 0; i < numPackets; i++) {
 
         assert(packet[i] == nullptr);
@@ -268,16 +282,16 @@ Cartridge::_load(const u8 *buffer)
         reader.ptr += packet[i]->_load(reader.ptr);
     }
 
-    // Load on-board RAM
+    // Load RAM
     if (ramCapacity) {
 
         assert(externalRam == nullptr);
         externalRam = new u8[ramCapacity];
         reader.copy(externalRam, ramCapacity);
-        /*
-        for (isize i = 0; i < ramCapacity; i++) externalRam[i] = util::read8(reader.ptr);
-        */
     }
+
+    // Load sub-class members
+    reader.ptr += __load(reader.ptr);
 
     trace(SNP_DEBUG, "Recreated from %ld bytes\n", isize(reader.ptr - buffer));
     return isize(reader.ptr - buffer);
@@ -290,25 +304,23 @@ Cartridge::_save(u8 *buffer)
     applyToPersistentItems(writer);
     applyToResetItems(writer);
 
-    // Save ROM packets
+    // Save ROM
     for (isize i = 0; i < numPackets; i++) {
 
         assert(packet[i] != nullptr);
         writer.ptr += packet[i]->_save(writer.ptr);
     }
     
-    // Save on-board RAM
+    // Save RAM
     if (ramCapacity) {
 
         assert(externalRam != nullptr);
         writer.copy(externalRam, ramCapacity);
-        /*
-        for (isize i = 0; i < ramCapacity; i++) {
-            util::write8(writer.ptr, externalRam[i]);
-        }
-        */
     }
-    
+
+    // Save sub-class members
+    writer.ptr += __save(writer.ptr);
+
     trace(SNP_DEBUG, "Serialized %ld bytes\n", isize(writer.ptr - buffer));
     return isize(writer.ptr - buffer);
 }

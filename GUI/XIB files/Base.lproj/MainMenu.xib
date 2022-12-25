@@ -986,7 +986,7 @@ CA
                                     </items>
                                 </menu>
                                 <connections>
-                                    <action selector="attachGeoRamDummyAction:" target="-1" id="Wrt-RK-I4n"/>
+                                    <action selector="attachReuDummyAction:" target="-1" id="MWB-UK-x8W"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Attach GEO/NEO Ram" id="ZWy-ig-b3R">

@@ -85,6 +85,15 @@ FlashRom::_dump(Category category, std::ostream& os) const
     }
 }
 
+/*
+isize
+FlashRom::_size()
+{
+    return [&](){COMPUTE_SNAPSHOT_SIZE}() + romSize;
+
+}
+*/
+
 isize
 FlashRom::didLoadFromBuffer(const u8 *buffer)
 {
