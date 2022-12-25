@@ -111,8 +111,15 @@ private:
     // Accessing REU registers
     //
 
-    isize memStep() { return GET_BIT(acr,7) ? 0 : 1; }
-    isize reuStep() { return GET_BIT(acr,6) ? 0 : 1; }
+    isize autoloadEnabled() const { return GET_BIT(cr, 5); }
+    isize ff00Enabled() const { return GET_BIT(cr, 4); }
+
+    isize irqEnabled() const { return GET_BIT(acr, 7); }
+    isize irqOnEndOfBlock() const { return GET_BIT(acr, 6); }
+    isize irqOnVerifyError() const { return GET_BIT(acr, 5); }
+
+    isize memStep() const { return GET_BIT(acr,7) ? 0 : 1; }
+    isize reuStep() const { return GET_BIT(acr,6) ? 0 : 1; }
 
 
     //
@@ -130,6 +137,11 @@ public:
     //
     // Performing DMA
     //
+
+private:
+
+    void incMemAddr(u16 &addr) { addr = U16_ADD(addr, 1); }
+    void incReuAddr(u32 &addr) { addr = U32_ADD(addr, 1) & 0x7FFFF; }
 
     void doDma();
     void stash(u16 memAddr, u32 reuAddr, u32 len);

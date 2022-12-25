@@ -36,7 +36,6 @@ Reu::_dump(Category category, std::ostream& os) const
 
     if (category == Category::State) {
 
-        os << std::endl;
         os << tab("Status Register");
         os << hex(sr) << std::endl;
         os << tab("Command Register");
@@ -53,6 +52,28 @@ Reu::_dump(Category category, std::ostream& os) const
         os << hex(mask) << std::endl;
         os << tab("Address Control Register");
         os << hex(acr) << std::endl;
+    }
+
+    if (category == Category::Dma) {
+
+        string mode[4] = { "STASH", "FETCH", "SWAP", "VERIFY" };
+
+        os << tab("Mode");
+        os << mode[cr & 3] << std::endl;
+        os << tab("Autoload");
+        os << bol(autoloadEnabled()) << std::endl;
+        os << tab("FF00 decode");
+        os << bol(ff00Enabled()) << std::endl;
+        os << tab("Irq enabled");
+        os << bol(irqEnabled()) << std::endl;
+        os << tab("Irq on end of block");
+        os << bol(irqOnEndOfBlock()) << std::endl;
+        os << tab("Irq on verify error");
+        os << bol(irqOnVerifyError()) << std::endl;
+        os << tab("C64 address increment");
+        os << dec(memStep()) << std::endl;
+        os << tab("REU address increment");
+        os << dec(reuStep()) << std::endl;
     }
 }
 
@@ -241,6 +262,8 @@ Reu::poke(u16 addr, u8 value)
 void
 Reu::doDma()
 {
+    if constexpr (REU_DEBUG) { dump(Category::Dma, std::cout); }
+
     u32 len = tlen ? tlen : 0x10000;
     u16 memAddr = c64Base;
     u32 reuAddr = HI_W_LO_W(bank, reuBase);
@@ -262,25 +285,21 @@ Reu::stash(u16 memAddr, u32 reuAddr, u32 len)
 {
     debug(REU_DEBUG,"stash(%x,%x,%d)\n", memAddr, reuAddr, len);
 
-    auto ms = memStep();
-    auto rs = reuStep();
+    for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
 
-    for (isize i = 0; i < len; i++) {
+        u8 memValue = mem.peek(memAddr);
+        pokeRAM(reuAddr, memValue);
 
-        u8 value = mem.peek(memAddr);
-        pokeRAM(reuAddr, value);
+        // debug(REU_DEBUG,"(%x, %02x) -> %x\n", memAddr, value, reuAddr);
 
-        // debug(REU_DEBUG,"%02x: %x -> %x\n", value, memAddr, reuAddr);
-
-        memAddr += ms;
-        reuAddr += rs;
+        if (ms) incMemAddr(memAddr);
+        if (rs) incReuAddr(reuAddr);
     }
 
     // Set the "End of Block" bit
     SET_BIT(sr, 6); 
 
     // Trigger interrupt if enabled
-
     // TODO
 }
 
@@ -289,6 +308,24 @@ Reu::fetch(u16 memAddr, u32 reuAddr, u32 len)
 {
     debug(REU_DEBUG,"fetch(%x,%x,%d)\n", memAddr, reuAddr, len);
 
+    for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
+
+        u8 reuValue = peekRAM(reuAddr);
+        mem.poke(memAddr, reuValue);
+
+        // debug(REU_DEBUG,"%x <- (%x, %02x)\n", memAddr, reuAddr, value);
+
+        if (ms) incMemAddr(memAddr);
+        if (rs) incReuAddr(reuAddr);
+    }
+
+    // Set the "End of Block" bit
+    SET_BIT(sr, 6);
+
+    // Trigger interrupt if enabled
+    // TODO
+
+
 }
 
 void
@@ -296,6 +333,25 @@ Reu::swap(u16 memAddr, u32 reuAddr, u32 len)
 {
     debug(REU_DEBUG,"swap(%x,%x,%d)\n", memAddr, reuAddr, len);
 
+    for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
+
+        u8 memVal = mem.peek(memAddr);
+        u8 reuVal = peekRAM(reuAddr);
+
+        // debug(REU_DEBUG, "(%x,%02x) <-> (%x,%02x)\n", memAddr, memVal, reuAddr, reuVal);
+
+        mem.poke(memAddr, reuVal);
+        pokeRAM(reuAddr, memVal);
+
+        if (ms) incMemAddr(memAddr);
+        if (rs) incReuAddr(reuAddr);
+    }
+
+    // Set the "End of Block" bit
+    SET_BIT(sr, 6);
+
+    // Trigger interrupt if enabled
+    // TODO
 }
 
 void
@@ -303,6 +359,31 @@ Reu::verify(u16 memAddr, u32 reuAddr, u32 len)
 {
     debug(REU_DEBUG,"verify(%x,%x,%d)\n", memAddr, reuAddr, len);
 
+    for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
+
+        u8 memVal = mem.peek(memAddr);
+        u8 reuVal = peekRAM(reuAddr);
+
+        // debug(REU_DEBUG, "(%x,%02x) == (%x,%02x)\n", memAddr, memVal, reuAddr, reuVal);
+
+        if (memVal != reuVal) {
+
+            debug(REU_DEBUG, "Verify error: (%x,%02x) <-> (%x,%02x)\n", memAddr, memVal, reuAddr, reuVal);
+
+            // Set the "Fault" bit
+            SET_BIT(sr, 5);
+
+        }
+
+        if (ms) incMemAddr(memAddr);
+        if (rs) incReuAddr(reuAddr);
+    }
+
+    // Set the "End of Block" bit
+    SET_BIT(sr, 6);
+
+    // Trigger interrupt if enabled
+    // TODO
 }
 
 void

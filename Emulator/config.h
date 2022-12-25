@@ -61,7 +61,7 @@ static const int DEF_DEBUG       = 0; // User defaults
 static const int RUN_DEBUG       = 0; // Run loop, component states, timing
 static const int WARP_DEBUG      = 0; // Warp mode
 static const int QUEUE_DEBUG     = 0; // Message queue
-static const int SNP_DEBUG       = 1; // Serializing (snapshots)
+static const int SNP_DEBUG       = 0; // Serializing (snapshots)
 
 // CPU
 static const int CPU_DEBUG       = 0; // CPU
