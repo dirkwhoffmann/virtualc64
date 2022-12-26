@@ -26,6 +26,7 @@ class SIDStream;
 class Keyboard;
 class ControlPort;
 class ExpansionPort;
+class Host;
 class IEC;
 class Drive;
 class Datasette;
@@ -68,6 +69,7 @@ protected:
     Drive &drive8;
     Drive &drive9;
     ExpansionPort &expansionport;
+    Host &host;
     IEC &iec;
     Keyboard &keyboard;
     C64Memory &mem;

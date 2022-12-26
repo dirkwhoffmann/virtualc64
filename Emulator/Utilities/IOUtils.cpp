@@ -341,6 +341,13 @@ hex::operator()(std::ostream &os) const
 };
 
 std::ostream &
+flt::operator()(std::ostream &os) const
+{
+    os << value;
+    return os;
+};
+
+std::ostream &
 tab::operator()(std::ostream &os) const {
     os << std::setw(pads) << std::right << std::setfill(' ') << str;
     os << (str.empty() ? "   " : " : ");

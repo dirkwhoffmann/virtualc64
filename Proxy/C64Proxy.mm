@@ -43,6 +43,7 @@ using namespace peddle;
 
 @end
 
+
 //
 // Base Proxy
 //
@@ -62,6 +63,7 @@ using namespace peddle;
 
 @end
 
+
 //
 // C64Component proxy
 //
@@ -74,6 +76,7 @@ using namespace peddle;
 }
 
 @end
+
 
 //
 // Defaults
@@ -160,6 +163,7 @@ using namespace peddle;
 }
 
 @end
+
 
 //
 // Guards (Breakpoints, Watchpoints)
@@ -248,6 +252,7 @@ using namespace peddle;
 }
 
 @end
+
 
 //
 // CPU proxy
@@ -417,6 +422,7 @@ using namespace peddle;
 
 @end
 
+
 //
 // CIA
 //
@@ -434,6 +440,7 @@ using namespace peddle;
 }
 
 @end
+
 
 //
 // VICII
@@ -508,6 +515,7 @@ using namespace peddle;
 
 @end
 
+
 //
 // Dma Debugger
 //
@@ -525,6 +533,7 @@ using namespace peddle;
 }
 
 @end
+
 
 //
 // SID
@@ -628,6 +637,7 @@ using namespace peddle;
 
 @end
 
+
 //
 // IEC bus
 //
@@ -645,6 +655,7 @@ using namespace peddle;
 }
 
 @end
+
 
 //
 // Keyboard
@@ -769,6 +780,7 @@ using namespace peddle;
 
 @end
 
+
 //
 // Control port
 //
@@ -796,6 +808,7 @@ using namespace peddle;
 }
 
 @end
+
 
 //
 // Expansion port
@@ -951,6 +964,7 @@ using namespace peddle;
 
 @end
 
+
 //
 // Disk
 //
@@ -983,6 +997,7 @@ using namespace peddle;
 }
 
 @end
+
 
 //
 // DiskAnalyzer
@@ -1070,6 +1085,7 @@ using namespace peddle;
 
 @end
 
+
 //
 // VIA
 //
@@ -1082,6 +1098,7 @@ using namespace peddle;
 }
 
 @end
+
 
 //
 // Drive
@@ -1396,6 +1413,7 @@ using namespace peddle;
 
 @end
 
+
 //
 // Joystick proxy
 //
@@ -1413,6 +1431,7 @@ using namespace peddle;
 }
 
 @end
+
 
 //
 // Recorder
@@ -1594,6 +1613,7 @@ using namespace peddle;
 
 @end
 
+
 //
 // AnyFile
 //
@@ -1719,6 +1739,7 @@ using namespace peddle;
 
 @end
 
+
 //
 // Script proxy
 //
@@ -1756,6 +1777,7 @@ using namespace peddle;
 
 @end
 
+
 //
 // RomFile proxy
 //
@@ -1780,6 +1802,7 @@ using namespace peddle;
 }
 
 @end
+
 
 //
 // CRT proxy
@@ -1836,6 +1859,7 @@ using namespace peddle;
 
 @end
 
+
 //
 // TAP
 //
@@ -1870,6 +1894,7 @@ using namespace peddle;
 }
 
 @end
+
 
 //
 // AnyCollection
@@ -1916,6 +1941,7 @@ using namespace peddle;
 
 @end
 
+
 //
 // PRG
 //
@@ -1947,6 +1973,7 @@ using namespace peddle;
 
 @end
 
+
 //
 // P00 proxy
 //
@@ -1977,6 +2004,7 @@ using namespace peddle;
 }
 
 @end
+
 
 //
 // D64 proxy
@@ -2014,6 +2042,7 @@ using namespace peddle;
 
 @end
 
+
 //
 // G64 proxy
 //
@@ -2044,6 +2073,7 @@ using namespace peddle;
 }
 
 @end
+
 
 //
 // FileSystem
@@ -2321,6 +2351,7 @@ using namespace peddle;
 
 @end
 
+
 //
 // Folder proxy
 //
@@ -2350,6 +2381,57 @@ using namespace peddle;
 
 @end
 
+
+//
+// HostProxy
+//
+
+@implementation HostProxy
+
+- (Host *)host
+{
+    return (Host *)obj;
+}
+
++ (instancetype)make:(Host *)file
+{
+    return file ? [[self alloc] initWith:file] : nil;
+}
+
+- (double)sampleRate
+{
+    return [self host]->getSampleRate();
+}
+
+- (void)setSampleRate:(double)hz
+{
+    [self host]->setSampleRate(hz);
+}
+
+- (NSInteger)refreshRate
+{
+    return (NSInteger)[self host]->getHostRefreshRate();
+}
+
+- (void)setRefreshRate:(NSInteger)value
+{
+    [self host]->setHostRefreshRate((double)value);
+}
+
+- (NSSize)frameBufferSize
+{
+    auto size = [self host]->getFrameBufferSize();
+    return NSMakeSize((CGFloat)size.first, (CGFloat)size.second);
+}
+
+- (void)setFrameBufferSize:(NSSize)size
+{
+    [self host]->setFrameBufferSize(std::pair<isize, isize>(size.width, size.height));
+}
+
+@end
+
+
 //
 // C64
 //
@@ -2365,6 +2447,7 @@ using namespace peddle;
 @synthesize drive8;
 @synthesize drive9;
 @synthesize expansionport;
+@synthesize host;
 @synthesize iec;
 @synthesize keyboard;
 @synthesize mem;
@@ -2395,6 +2478,7 @@ using namespace peddle;
     drive8 = [[DriveProxy alloc] initWithVC1541:&c64->drive8];
     drive9 = [[DriveProxy alloc] initWithVC1541:&c64->drive9];
     expansionport = [[ExpansionPortProxy alloc] initWith:&c64->expansionport];
+    host = [[HostProxy alloc] initWith:&c64->host];
     iec = [[IECProxy alloc] initWith:&c64->iec];
     keyboard = [[KeyboardProxy alloc] initWith:&c64->keyboard];
     mem = [[MemoryProxy alloc] initWith:&c64->mem];

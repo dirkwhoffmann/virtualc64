@@ -15,6 +15,7 @@
 #include "Thread.h"
 
 // Sub components
+#include "Host.h"
 #include "ExpansionPort.h"
 #include "IEC.h"
 #include "Keyboard.h"
@@ -81,6 +82,9 @@ public:
 
     // User settings
     static Defaults defaults;
+
+    // Information about the host system
+    Host host = Host(*this);
 
     // Core components
     C64Memory mem = C64Memory(*this);

@@ -188,6 +188,7 @@ class Renderer: NSObject, MTKViewDelegate {
 
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
 
+        parent.c64.host.frameBufferSize = size
         reshape(withSize: size)
     }
     

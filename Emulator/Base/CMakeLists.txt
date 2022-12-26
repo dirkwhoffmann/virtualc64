@@ -8,5 +8,5 @@ SubComponent.cpp
 Thread.cpp
 MsgQueue.cpp
 Defaults.cpp
-
+Host.cpp
 )

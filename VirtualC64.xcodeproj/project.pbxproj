@@ -276,6 +276,7 @@
 		50F420CA250BA3460043DE56 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F420C8250BA3460043DE56 /* Colors.cpp */; };
 		50F55DA50F28EADC0040592B /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DA30F28EADC0040592B /* MyDocument.xib */; };
 		50F55DCD0F28EC010040592B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F55DCB0F28EC010040592B /* MainMenu.xib */; };
+		50F5B6A22959C44E000457A0 /* Host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F5B6A02959C44E000457A0 /* Host.cpp */; };
 		50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F99563203AEC80004C4856 /* KeyViewItem.xib */; };
 		50FBB62D28294C29001366F9 /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FBB62C28294C29001366F9 /* WaveformView.swift */; };
 		50FE5B362039B3B7006CE7C7 /* MacKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FE5B352039B3B7006CE7C7 /* MacKey.swift */; };
@@ -775,6 +776,8 @@
 		50F2381D12DF505B00B1F275 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		50F420C8250BA3460043DE56 /* Colors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colors.cpp; sourceTree = "<group>"; };
 		50F420C9250BA3460043DE56 /* Colors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
+		50F5B6A02959C44E000457A0 /* Host.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Host.cpp; sourceTree = "<group>"; };
+		50F5B6A12959C44E000457A0 /* Host.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Host.h; sourceTree = "<group>"; };
 		50F99563203AEC80004C4856 /* KeyViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KeyViewItem.xib; sourceTree = "<group>"; };
 		50FBB62C28294C29001366F9 /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		50FBB62F282A51FB001366F9 /* VirtualC64.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VirtualC64.entitlements; sourceTree = "<group>"; };
@@ -1566,6 +1569,8 @@
 				504C42F124AF29AB00E69CAE /* MsgQueue.cpp */,
 				50CD369B2817D69000E40BFC /* Defaults.h */,
 				50CD369A2817D69000E40BFC /* Defaults.cpp */,
+				50F5B6A12959C44E000457A0 /* Host.h */,
+				50F5B6A02959C44E000457A0 /* Host.cpp */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1850,6 +1855,7 @@
 				504C435F24AF29AC00E69CAE /* SuperGames.cpp in Sources */,
 				50BE4B5C24E7F857008F39C9 /* Data.swift in Sources */,
 				50BE4B6424E7F941008F39C9 /* NSControl.swift in Sources */,
+				50F5B6A22959C44E000457A0 /* Host.cpp in Sources */,
 				50520F8B25108FC400C7D47F /* Folder.cpp in Sources */,
 				507A499C24C8D64700DBF984 /* InstrTableView.swift in Sources */,
 				5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */,

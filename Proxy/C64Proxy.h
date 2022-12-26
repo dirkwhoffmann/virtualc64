@@ -34,6 +34,7 @@
 #import <Cocoa/Cocoa.h>
 #import <MetalKit/MetalKit.h>
 
+
 //
 // Forward declarations
 //
@@ -55,6 +56,7 @@
 @class FileSystemProxy;
 @class G64FileProxy;
 @class GuardsProxy;
+@class HostProxy;
 @class IECProxy;
 @class JoystickProxy;
 @class KeyboardProxy;
@@ -75,6 +77,7 @@
 @class VIAProxy;
 @class VICProxy;
 
+
 //
 // Exception wrapper
 //
@@ -89,6 +92,7 @@
 @property NSString *what;
 
 @end
+
 
 //
 // Base proxies
@@ -105,6 +109,21 @@
     
 }
 @end
+
+
+//
+// Host
+//
+
+@interface HostProxy : C64ComponentProxy {
+}
+
+@property double sampleRate;
+@property NSInteger refreshRate;
+@property NSSize frameBufferSize;
+
+@end
+
 
 //
 // C64
@@ -148,6 +167,7 @@
 @property (readonly, strong) ExpansionPortProxy *expansionport;
 @property (readonly, strong) GuardsProxy *breakpoints;
 @property (readonly, strong) GuardsProxy *watchpoints;
+@property (readonly, strong) HostProxy *host;
 @property (readonly, strong) IECProxy *iec;
 @property (readonly, strong) KeyboardProxy *keyboard;
 @property (readonly, strong) MemoryProxy *mem;
@@ -380,7 +400,6 @@
 // DmaDebugger
 //
 
-
 @interface DmaDebuggerProxy : C64ComponentProxy { }
 
 - (DmaDebuggerConfig)getConfig;
@@ -452,6 +471,7 @@
 - (void)scheduleKeyReleaseAll:(NSInteger)delay;
 
 @end
+
 
 //
 // ControlPort
@@ -558,12 +578,8 @@
 
 - (BOOL)redLED;
 - (void)setModificationFlag:(BOOL)value;
-// - (void)setProtectionFlag:(BOOL)value;
 - (void)markDiskAsModified;
 - (void)markDiskAsUnmodified;
-// - (void)toggleWriteProtection;
-
-// - (void)setModifiedDisk:(BOOL)b;
 - (void)insertNewDisk:(DOSType)fstype name:(NSString *)name;
 - (void)insertD64:(D64FileProxy *)proxy protected:(BOOL)wp;
 - (void)insertG64:(G64FileProxy *)proxy protected:(BOOL)wp;
@@ -613,6 +629,7 @@
 
 @end
 
+
 //
 // DiskAnalyzer
 //
@@ -638,6 +655,7 @@
 
 @end
 
+
 //
 // Datasette
 //
@@ -657,6 +675,7 @@
 - (void)insertTape:(TAPFileProxy *)tape; // TODO: throw??
 
 @end
+
 
 //
 // Mouse
@@ -767,6 +786,7 @@ exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithFolder:(NSString *)path exception:(ExceptionWrapper *)ex;
 @end
 
+
 //
 // AnyFile
 //
@@ -784,6 +804,7 @@ exception:(ExceptionWrapper *)ex;
 
 @end
 
+
 //
 // AnyCollection
 //
@@ -791,6 +812,7 @@ exception:(ExceptionWrapper *)ex;
 @interface AnyCollectionProxy : AnyFileProxy { }
 
 @end
+
 
 //
 // Snapshot
@@ -810,6 +832,7 @@ exception:(ExceptionWrapper *)ex;
 
 @end
 
+
 //
 // Script
 //
@@ -823,6 +846,7 @@ exception:(ExceptionWrapper *)ex;
 
 @end
 
+
 //
 // RomFile
 //
@@ -833,6 +857,7 @@ exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
  
 @end
+
 
 //
 // CRTFile
@@ -851,6 +876,7 @@ exception:(ExceptionWrapper *)ex;
 
 @end
 
+
 //
 // TAPFile
 //
@@ -863,6 +889,7 @@ exception:(ExceptionWrapper *)ex;
 @property (readonly) TAPVersion version;
 
 @end
+
 
 //
 // T64File
@@ -877,6 +904,7 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 
 @end
 
+
 //
 // PRGFile
 //
@@ -889,6 +917,7 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 + (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex;
 
 @end
+
 
 //
 // P00File
@@ -903,6 +932,7 @@ AnyCollectionProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 
 @end
 
+
 //
 // D64File
 //
@@ -915,6 +945,7 @@ AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithFileSystem> { }
 + (instancetype)makeWithFileSystem:(FileSystemProxy *)proxy exception:(ExceptionWrapper *)ex;
 
 @end
+
 
 //
 // G64File
@@ -929,6 +960,7 @@ AnyFileProxy <MakeWithFile, MakeWithBuffer, MakeWithDisk> { }
 
 @end
 
+
 //
 // Folder
 //
@@ -941,6 +973,7 @@ AnyCollectionProxy <MakeWithFolder> { }
 @property (readonly) FileSystemProxy *fileSystem;
 
 @end
+
 
 //
 // FileSystem

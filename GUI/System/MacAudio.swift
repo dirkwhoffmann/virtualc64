@@ -13,7 +13,7 @@ public class MacAudio: NSObject {
 
     var parent: MyController!
     var audiounit: AUAudioUnit!
-    var sid: SIDProxy!
+    var c64: C64Proxy!
 
     var prefs: Preferences { return parent.pref }
     
@@ -34,7 +34,7 @@ public class MacAudio: NSObject {
 
         self.init()
         parent = controller
-        sid = controller.c64.sid
+        c64 = controller.c64
         
         // Setup component description for AudioUnit
         let compDesc = AudioComponentDescription(
@@ -65,13 +65,16 @@ public class MacAudio: NSObject {
             warn("Failed to set render format on input bus")
             return
         }
-        
-        // Inform SID about the sample rate
-        sid.setSampleRate(sampleRate)
+
+        // Inform the emulator about the sample rate
+        c64.host.sampleRate = sampleRate
+
+        // Inform SID about the sample rate (DEPRECATED)
+        c64.sid.setSampleRate(sampleRate)
         
         // Register render callback
         if stereo {
-            audiounit.outputProvider = { ( // AURenderPullInputBlock
+            audiounit.outputProvider = { (
                 actionFlags,
                 timestamp,
                 frameCount,
@@ -82,7 +85,7 @@ public class MacAudio: NSObject {
                 return 0
             }
         } else {
-            audiounit.outputProvider = { ( // AURenderPullInputBlock
+            audiounit.outputProvider = { (
                 actionFlags,
                 timestamp,
                 frameCount,
@@ -107,7 +110,7 @@ public class MacAudio: NSObject {
         debug(.shutdown, "Removing proxy...")
 
         stopPlayback()
-        sid = nil
+        c64 = nil
     }
     
     private func renderMono(inputDataList: UnsafeMutablePointer<AudioBufferList>,
@@ -117,7 +120,7 @@ public class MacAudio: NSObject {
         assert(bufferList.count == 1)
         
         let ptr = bufferList[0].mData!.assumingMemoryBound(to: Float.self)
-        sid.copyMono(ptr, size: Int(frameCount))
+        c64.sid.copyMono(ptr, size: Int(frameCount))
     }
     
     private func renderStereo(inputDataList: UnsafeMutablePointer<AudioBufferList>,
@@ -128,7 +131,7 @@ public class MacAudio: NSObject {
         
         let ptr1 = bufferList[0].mData!.assumingMemoryBound(to: Float.self)
         let ptr2 = bufferList[1].mData!.assumingMemoryBound(to: Float.self)
-        sid.copyStereo(ptr1, buffer2: ptr2, size: Int(frameCount))
+        c64.sid.copyStereo(ptr1, buffer2: ptr2, size: Int(frameCount))
     }
     
     // Connects SID to the audio backend

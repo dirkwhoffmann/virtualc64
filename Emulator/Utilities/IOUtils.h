@@ -122,6 +122,15 @@ struct hex {
     std::ostream &operator()(std::ostream &os) const;
 };
 
+struct flt {
+
+    double value;
+
+    flt(double v) : value(v) { };
+    flt(float v) : value(double(v)) { };
+    std::ostream &operator()(std::ostream &os) const;
+};
+
 struct tab {
     
     int pads;
@@ -147,6 +156,7 @@ struct bol {
 
 inline std::ostream &operator <<(std::ostream &os, dec v) { return v(os); }
 inline std::ostream &operator <<(std::ostream &os, hex v) { return v(os); }
+inline std::ostream &operator <<(std::ostream &os, flt v) { return v(os); }
 inline std::ostream &operator <<(std::ostream &os, tab v) { return v(os); }
 inline std::ostream &operator <<(std::ostream &os, bol v) { return v(os); }
 
