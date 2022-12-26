@@ -113,7 +113,7 @@ static const int LIP_DEBUG       = 0; // Light pen
 
 // Other components
 static const int REC_DEBUG       = 0; // Screen recorder
-static const int REU_DEBUG       = 1; // REU memory expansion
+static const int REU_DEBUG       = 0; // REU memory expansion
 
 
 //

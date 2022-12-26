@@ -27,16 +27,16 @@ private:
 
     // Base address registers (C64 memory and REU memory)
     u16 c64Base;
-    u16 reuBase;
+    u32 reuBase;
 
     // Memory bank register
-    u8 bank;
+    // u8 bank;
 
     // Transfer length register
     u16 tlen;
 
     // Interrupt mask
-    u8 mask;
+    u8 imr;
     
     // Address control register
     u8 acr;
@@ -90,10 +90,10 @@ private:
         << cr
         << c64Base
         << reuBase
-        << bank
         << tlen
-        << acr;
-//         << memTypeF;
+        << imr
+        << acr
+        << memTypeF;
     }
 
     template <class T>
@@ -111,12 +111,15 @@ private:
     // Accessing REU registers
     //
 
-    isize autoloadEnabled() const { return GET_BIT(cr, 5); }
-    isize ff00Enabled() const { return GET_BIT(cr, 4); }
+    bool autoloadEnabled() const { return GET_BIT(cr, 5); }
+    bool ff00Enabled() const { return !GET_BIT(cr, 4); }
+    bool ff00Disabled() const { return GET_BIT(cr, 4); }
 
-    isize irqEnabled() const { return GET_BIT(acr, 7); }
-    isize irqOnEndOfBlock() const { return GET_BIT(acr, 6); }
-    isize irqOnVerifyError() const { return GET_BIT(acr, 5); }
+    bool irqEnabled() const { return GET_BIT(imr, 7); }
+    bool irqOnEndOfBlock() const { return GET_BIT(imr, 6); }
+    bool irqOnVerifyError() const { return GET_BIT(imr, 5); }
+
+    bool isArmed() const { return GET_BIT(cr, 7) && ff00Enabled(); }
 
     isize memStep() const { return GET_BIT(acr,7) ? 0 : 1; }
     isize reuStep() const { return GET_BIT(acr,6) ? 0 : 1; }
@@ -141,13 +144,21 @@ public:
 private:
 
     void incMemAddr(u16 &addr) { addr = U16_ADD(addr, 1); }
-    void incReuAddr(u32 &addr) { addr = U32_ADD(addr, 1) & 0x7FFFF; }
+    void incReuAddr(u32 &addr) { addr = U32_ADD(addr, 1) & 0x3FFFF; }
 
     void doDma();
     void stash(u16 memAddr, u32 reuAddr, u32 len);
     void fetch(u16 memAddr, u32 reuAddr, u32 len);
     void swap(u16 memAddr, u32 reuAddr, u32 len);
     void verify(u16 memAddr, u32 reuAddr, u32 len);
+
+
+    //
+    // Managing interrupts
+    //
+
+    void triggerEndOfBlockIrq();
+    void triggerVerifyErrorIrq();
 
 
     //

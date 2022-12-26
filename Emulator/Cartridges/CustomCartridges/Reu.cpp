@@ -44,12 +44,12 @@ Reu::_dump(Category category, std::ostream& os) const
         os << hex(c64Base) << std::endl;
         os << tab("REU Base Address");
         os << hex(reuBase) << std::endl;
-        os << tab("REU Bank");
-        os << hex(bank) << std::endl;
+        // os << tab("REU Bank");
+        // os << hex(bank) << std::endl;
         os << tab("Transfer Length");
         os << hex(tlen) << std::endl;
         os << tab("Interrupt Mask Register");
-        os << hex(mask) << std::endl;
+        os << hex(imr) << std::endl;
         os << tab("Address Control Register");
         os << hex(acr) << std::endl;
     }
@@ -89,7 +89,9 @@ Reu::peekIO2(u16 addr)
             // Clear bits 5 - 7
             sr &= 0x1F;
 
-            // TODO: CLEAR PENDING INTERRUPT
+            // Release interrupt line
+            cpu.releaseIrqLine(INTSRC_EXP);
+
             break;
 
         default:
@@ -140,7 +142,7 @@ Reu::spypeekIO2(u16 addr) const
 
         case 0x06:  // REU Bank
 
-            result = bank | 0xF8;
+            result = (u8)HI_WORD(reuBase) | 0xF8;
             break;
 
         case 0x07:  // Transfer Length (LSB)
@@ -155,7 +157,7 @@ Reu::spypeekIO2(u16 addr) const
 
         case 0x09:  // Interrupt Mask
 
-            result = mask | 0x1F;
+            result = imr | 0x1F;
             break;
 
         case 0x0A:  // Address Control Register
@@ -186,9 +188,13 @@ Reu::pokeIO2(u16 addr, u8 value)
 
             cr = value;
 
-            if (cr & 0x80) {
+            if (GET_BIT(cr,7) && ff00Enabled()) {
 
-                debug(REU_DEBUG,"Initiating DMA\n");
+                debug(REU_DEBUG,"Preparing for DMA...\n");
+            }
+            if (GET_BIT(cr,7) && ff00Disabled()) {
+
+                debug(REU_DEBUG,"Initiating DMA...\n");
                 doDma();
             }
             break;
@@ -205,17 +211,17 @@ Reu::pokeIO2(u16 addr, u8 value)
 
         case 0x04:  // REU Base Address (LSB)
 
-            reuBase = (u16)REPLACE_LO(reuBase, value);
+            reuBase = (u32)REPLACE_LO(reuBase, value);
             break;
 
         case 0x05:  // REU Base Address (MSB)
 
-            reuBase = (u16)REPLACE_HI(reuBase, value);
+            reuBase = (u32)REPLACE_HI(reuBase, value);
             break;
 
         case 0x06:  // REU Bank
 
-            bank = value;
+            reuBase = (u32)REPLACE_HI_WORD(reuBase, value & 0x3);
             break;
 
         case 0x07:  // Transfer Length (LSB)
@@ -230,7 +236,9 @@ Reu::pokeIO2(u16 addr, u8 value)
 
         case 0x09:  // Interrupt Mask
 
-            mask = value;
+            imr = value;
+            triggerEndOfBlockIrq();
+            triggerVerifyErrorIrq();
             break;
 
         case 0x0A:  // Address Control Register
@@ -250,13 +258,18 @@ Reu::poke(u16 addr, u8 value)
     debug(REU_DEBUG,"poke(%x,%x)\n", addr, value);
     assert((addr & 0xF000) == 0xF000);
 
-    if (addr == 0xFF00) {
+    if (addr == 0xFF00) debug(REU_DEBUG,"INTERCEPTED WRITE TO $FF00");
 
-        debug(REU_DEBUG,"INTERCEPTED WRITE TO $FF00");
+    if (addr == 0xFF00 && isArmed()) {
+
+        // Initiate DMA
+        doDma();
+
+    } else {
+
+        // Route the write access back
+        mem.poke(addr, value, memTypeF);
     }
-
-    // Route the write access back
-    mem.poke(addr, value, memTypeF);
 }
 
 void
@@ -264,9 +277,9 @@ Reu::doDma()
 {
     if constexpr (REU_DEBUG) { dump(Category::Dma, std::cout); }
 
-    u32 len = tlen ? tlen : 0x10000;
-    u16 memAddr = c64Base;
-    u32 reuAddr = HI_W_LO_W(bank, reuBase);
+    auto len = tlen ? tlen : 0x10000;
+    auto memAddr = c64Base;
+    auto reuAddr = reuBase;
 
     switch (cr & 0x3) {
 
@@ -297,10 +310,17 @@ Reu::stash(u16 memAddr, u32 reuAddr, u32 len)
     }
 
     // Set the "End of Block" bit
-    SET_BIT(sr, 6); 
+    SET_BIT(sr, 6);
 
-    // Trigger interrupt if enabled
-    // TODO
+    // Update registers if autoload is disabled
+    if (!autoloadEnabled()) {
+
+        c64Base = memAddr;
+        reuBase = reuAddr;
+        len = 1;
+    }
+
+    triggerEndOfBlockIrq();
 }
 
 void
@@ -322,10 +342,14 @@ Reu::fetch(u16 memAddr, u32 reuAddr, u32 len)
     // Set the "End of Block" bit
     SET_BIT(sr, 6);
 
-    // Trigger interrupt if enabled
-    // TODO
+    if (!autoloadEnabled()) {
 
+        c64Base = memAddr;
+        reuBase = reuAddr;
+        len = 1;
+    }
 
+    triggerEndOfBlockIrq();
 }
 
 void
@@ -350,8 +374,14 @@ Reu::swap(u16 memAddr, u32 reuAddr, u32 len)
     // Set the "End of Block" bit
     SET_BIT(sr, 6);
 
-    // Trigger interrupt if enabled
-    // TODO
+    if (!autoloadEnabled()) {
+
+        c64Base = memAddr;
+        reuBase = reuAddr;
+        len = 1;
+    }
+
+    triggerEndOfBlockIrq();
 }
 
 void
@@ -373,6 +403,10 @@ Reu::verify(u16 memAddr, u32 reuAddr, u32 len)
             // Set the "Fault" bit
             SET_BIT(sr, 5);
 
+            // Trigger interrupt if enabled
+            triggerVerifyErrorIrq();
+
+            break;
         }
 
         if (ms) incMemAddr(memAddr);
@@ -382,8 +416,34 @@ Reu::verify(u16 memAddr, u32 reuAddr, u32 len)
     // Set the "End of Block" bit
     SET_BIT(sr, 6);
 
-    // Trigger interrupt if enabled
-    // TODO
+    if (!autoloadEnabled()) {
+
+        c64Base = memAddr;
+        reuBase = reuAddr;
+        len = 1;
+    }
+
+    triggerEndOfBlockIrq();
+}
+
+void
+Reu::triggerEndOfBlockIrq()
+{
+    if (irqEnabled() && irqOnEndOfBlock() && GET_BIT(sr, 6)) {
+
+        sr |= 0x80;
+        cpu.pullDownIrqLine(INTSRC_EXP);
+    }
+}
+
+void
+Reu::triggerVerifyErrorIrq()
+{
+    if (irqEnabled() && irqOnVerifyError() && GET_BIT(sr, 5)) {
+
+        sr |= 0x80;
+        cpu.pullDownIrqLine(INTSRC_EXP);
+    }
 }
 
 void
