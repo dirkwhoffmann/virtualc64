@@ -147,10 +147,10 @@ private:
     void incReuAddr(u32 &addr) { addr = U32_ADD(addr, 1) & 0x3FFFF; }
 
     void doDma();
-    void stash(u16 memAddr, u32 reuAddr, u32 len);
-    void fetch(u16 memAddr, u32 reuAddr, u32 len);
-    void swap(u16 memAddr, u32 reuAddr, u32 len);
-    void verify(u16 memAddr, u32 reuAddr, u32 len);
+    void stash(u16 memAddr, u32 reuAddr, isize len);
+    void fetch(u16 memAddr, u32 reuAddr, isize len);
+    void swap(u16 memAddr, u32 reuAddr, isize len);
+    void verify(u16 memAddr, u32 reuAddr, isize len);
 
 
     //

@@ -99,7 +99,7 @@ Reu::peekIO2(u16 addr)
 
     }
 
-    debug(REU_DEBUG,"peekIO2(%x) = %02X\n", addr, result);
+    debug(REU_DEBUG, "peekIO2(%x) = %02X\n", addr, result);
     return result;
 }
 
@@ -176,7 +176,7 @@ Reu::spypeekIO2(u16 addr) const
 void
 Reu::pokeIO2(u16 addr, u8 value)
 {
-    debug(REU_DEBUG,"pokeIO2(%x,%x)\n", addr, value);
+    debug(REU_DEBUG, "pokeIO2(%x,%x)\n", addr, value);
 
     switch (addr & 0x1F) {
 
@@ -190,11 +190,11 @@ Reu::pokeIO2(u16 addr, u8 value)
 
             if (GET_BIT(cr,7) && ff00Enabled()) {
 
-                debug(REU_DEBUG,"Preparing for DMA...\n");
+                debug(REU_DEBUG, "Preparing for DMA...\n");
             }
             if (GET_BIT(cr,7) && ff00Disabled()) {
 
-                debug(REU_DEBUG,"Initiating DMA...\n");
+                debug(REU_DEBUG, "Initiating DMA...\n");
                 doDma();
             }
             break;
@@ -255,10 +255,8 @@ Reu::pokeIO2(u16 addr, u8 value)
 void
 Reu::poke(u16 addr, u8 value)
 {
-    debug(REU_DEBUG,"poke(%x,%x)\n", addr, value);
+    debug(REU_DEBUG, "poke(%x,%x)\n", addr, value);
     assert((addr & 0xF000) == 0xF000);
-
-    if (addr == 0xFF00) debug(REU_DEBUG,"INTERCEPTED WRITE TO $FF00");
 
     if (addr == 0xFF00 && isArmed()) {
 
@@ -277,9 +275,9 @@ Reu::doDma()
 {
     if constexpr (REU_DEBUG) { dump(Category::Dma, std::cout); }
 
-    auto len = tlen ? tlen : 0x10000;
-    auto memAddr = c64Base;
-    auto reuAddr = reuBase;
+    u16 memAddr = c64Base;
+    u32 reuAddr = reuBase;
+    isize len = tlen ? tlen : 0x10000;
 
     switch (cr & 0x3) {
 
@@ -294,9 +292,9 @@ Reu::doDma()
 }
 
 void
-Reu::stash(u16 memAddr, u32 reuAddr, u32 len)
+Reu::stash(u16 memAddr, u32 reuAddr, isize len)
 {
-    debug(REU_DEBUG,"stash(%x,%x,%d)\n", memAddr, reuAddr, len);
+    debug(REU_DEBUG, "stash(%x,%x,%zd)\n", memAddr, reuAddr, len);
 
     for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
 
@@ -324,9 +322,9 @@ Reu::stash(u16 memAddr, u32 reuAddr, u32 len)
 }
 
 void
-Reu::fetch(u16 memAddr, u32 reuAddr, u32 len)
+Reu::fetch(u16 memAddr, u32 reuAddr, isize len)
 {
-    debug(REU_DEBUG,"fetch(%x,%x,%d)\n", memAddr, reuAddr, len);
+    debug(REU_DEBUG, "fetch(%x,%x,%zd)\n", memAddr, reuAddr, len);
 
     for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
 
@@ -353,16 +351,14 @@ Reu::fetch(u16 memAddr, u32 reuAddr, u32 len)
 }
 
 void
-Reu::swap(u16 memAddr, u32 reuAddr, u32 len)
+Reu::swap(u16 memAddr, u32 reuAddr, isize len)
 {
-    debug(REU_DEBUG,"swap(%x,%x,%d)\n", memAddr, reuAddr, len);
+    debug(REU_DEBUG, "swap(%x,%x,%zd)\n", memAddr, reuAddr, len);
 
     for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
 
         u8 memVal = mem.peek(memAddr);
         u8 reuVal = peekRAM(reuAddr);
-
-        // debug(REU_DEBUG, "(%x,%02x) <-> (%x,%02x)\n", memAddr, memVal, reuAddr, reuVal);
 
         mem.poke(memAddr, reuVal);
         pokeRAM(reuAddr, memVal);
@@ -385,16 +381,14 @@ Reu::swap(u16 memAddr, u32 reuAddr, u32 len)
 }
 
 void
-Reu::verify(u16 memAddr, u32 reuAddr, u32 len)
+Reu::verify(u16 memAddr, u32 reuAddr, isize len)
 {
-    debug(REU_DEBUG,"verify(%x,%x,%d)\n", memAddr, reuAddr, len);
+    debug(REU_DEBUG, "verify(%x,%x,%zd)\n", memAddr, reuAddr, len);
 
     for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
 
         u8 memVal = mem.peek(memAddr);
         u8 reuVal = peekRAM(reuAddr);
-
-        // debug(REU_DEBUG, "(%x,%02x) == (%x,%02x)\n", memAddr, memVal, reuAddr, reuVal);
 
         if (memVal != reuVal) {
 
