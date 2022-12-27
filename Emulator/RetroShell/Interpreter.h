@@ -24,16 +24,16 @@ enum class Token
     connect, contrast, controlport, counter, cpu, cutout, datasette, defaultbb,
     defaultfs, defaults, delay, device, devices, disconnect, disk, dmadebugger,
     drive, dsksync, easteregg, eject, engine, events, expansion, fastsid,
-    filename, filter, flash, frame, gaccesses, gluelogic, graydotbug, hide,
-    iaccesses, idle, init, insert, inspect, joystick, keyboard, keyset, left,
-    list, load, lock, memory, model, monitor, mouse, newdisk, none, off, on,
-    open, paccesses, palette, pan, parcable, pause, poll, power, press,
-    raccesses, raminitpattern, registers, regression, release, reset, resid,
-    revision, rewind, right, rom, run, saccesses, sampling, saturation, save,
-    saveroms, sbcollisions, screenshot, searchpath, set, setup, shakedetector,
-    shiftlock, show, sid, slow, slowramdelay, slowrammirror, source, speed,
-    sscollisions, state, step, to, tod, timerbbug, type, unmappingtype,
-    velocity, vicii, volume, wait
+    filename, filter, flash, fpsmode, fps, frame, gaccesses, gluelogic,
+    graydotbug, hide, iaccesses, idle, init, insert, inspect, joystick,
+    keyboard, keyset, left, list, load, lock, memory, model, monitor, mouse,
+    newdisk, none, off, on, open, paccesses, palette, pan, parcable, pause,
+    poll, power, press, raccesses, raminitpattern, registers, regression,
+    release, reset, resid, revision, rewind, right, rom, run, saccesses,
+    sampling, saturation, save, saveroms, sbcollisions, screenshot, searchpath,
+    set, setup, shakedetector, shiftlock, show, sid, slow, slowramdelay,
+    slowrammirror, source, speed, sscollisions, state, step, to, tod,
+    timerbbug, type, unmappingtype, velocity, vicii, volume, wait
 };
 
 struct TooFewArgumentsError : public util::ParseError {

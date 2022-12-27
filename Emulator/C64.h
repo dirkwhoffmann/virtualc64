@@ -67,6 +67,9 @@ namespace vc64 {
  */
 class C64 : public Thread {
 
+    // The current configuration
+    C64Config config = {};
+
     // The component which is currently observed by the debugger
     InspectionTarget inspectionTarget;
 
@@ -236,12 +239,16 @@ private:
     //
 
 public:
-    
+
+    const C64Config &getConfig() const { return config; }
+    void resetConfig() override;
+
     // Gets a single configuration item
     i64 getConfigItem(Option option) const;
     i64 getConfigItem(Option option, long id) const;
     
     // Sets a single configuration item
+    void setConfigItem(Option option, i64 value);
     void configure(Option option, i64 value) throws;
     void configure(Option option, long id, i64 value) throws;
     

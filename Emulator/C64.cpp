@@ -145,11 +145,36 @@ C64::setInspectionTarget(InspectionTarget target)
     inspectionTarget = target;
 }
 
+void
+C64::resetConfig()
+{
+    assert(isPoweredOff());
+
+    std::vector <Option> options = {
+
+        OPT_FPS_MODE,
+        OPT_FPS
+    };
+
+    for (auto &option : options) {
+        setConfigItem(option, defaults.get(option));
+    }
+}
+
+
 i64
 C64::getConfigItem(Option option) const
 {
     switch (option) {
-            
+
+        case OPT_FPS_MODE:
+
+            return config.fpsMode;
+
+        case OPT_FPS:
+
+            return config.fps;
+
         case OPT_VIC_REVISION:
         case OPT_VIC_SPEED:
         case OPT_VIC_POWER_SAVE:
@@ -262,6 +287,34 @@ C64::getConfigItem(Option option, long id) const
 }
 
 void
+C64::setConfigItem(Option option, i64 value)
+{
+    switch (option) {
+
+        case OPT_FPS_MODE:
+
+            if (!FpsModeEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, FpsModeEnum::keyList());
+            }
+
+            config.fpsMode = FpsMode(value);
+            return;
+
+        case OPT_FPS:
+
+            if (value < 25 || value > 120) {
+                throw VC64Error(ERROR_OPT_INVARG, "25...120");
+            }
+
+            config.fps = value;
+            return;
+
+        default:
+            fatalError;
+    }
+}
+
+void
 C64::configure(Option option, i64 value)
 {
     debug(CNF_DEBUG, "configure(%ld, %lld)\n", option, value);
@@ -291,7 +344,13 @@ C64::configure(Option option, i64 value)
     value = overrideOption(option, value);
 
     switch (option) {
-            
+
+        case OPT_FPS_MODE:
+        case OPT_FPS:
+
+            setConfigItem(option, value);
+            break;
+
         case OPT_VIC_REVISION:
         case OPT_VIC_SPEED:
         case OPT_PALETTE:
@@ -624,7 +683,6 @@ C64::updateClockFrequency(VICIIRevision rev, VICIISpeed speed)
 {
     durationOfOneCycle = 10000000000 / VICII::getFrequency(rev, speed);
     nativeDurationOfOneCycle = 10000000000 / VICII::getNativeFrequency(rev);
-    // setSyncDelay(VICII::getFrameDelay(rev, speed));
 }
 
 i64
@@ -671,14 +729,6 @@ C64::execute()
             userSnapshot = new Snapshot(*this);
             msgQueue.put(MSG_USER_SNAPSHOT_TAKEN);
         }
-        
-        // Are we requested to update the debugger info structs?
-        /*
-         if (flags & RL::INSPECT) {
-         clearFlag(RL::INSPECT);
-         inspect();
-         }
-         */
 
         // Did we reach a breakpoint?
         if (flags & RL::BREAKPOINT) {

@@ -51,6 +51,35 @@ struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
 };
 #endif
 
+enum_long(FPS_MODE)
+{
+    FPS_NATIVE,
+    FPS_CUSTOM,
+    FPS_VSYNC
+};
+typedef FPS_MODE FpsMode;
+
+#ifdef __cplusplus
+struct FpsModeEnum : util::Reflection<FpsModeEnum, FpsMode>
+{
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = FPS_VSYNC;
+    static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
+
+    static const char *prefix() { return "FPS"; }
+    static const char *key(FpsMode value)
+    {
+        switch (value) {
+
+            case FPS_NATIVE:    return "NATIVE";
+            case FPS_CUSTOM:    return "CUSTOM";
+            case FPS_VSYNC:     return "VSYNC";
+        }
+        return "???";
+    }
+};
+#endif
+
 enum_long(ROM_TYPE)
 {
     ROM_TYPE_BASIC,
@@ -118,6 +147,18 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
     }
 };
 #endif
+
+
+//
+// Structures
+//
+
+typedef struct
+{
+    FpsMode fpsMode;
+    isize fps;
+}
+C64Config;
 
 
 //

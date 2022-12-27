@@ -609,11 +609,13 @@ VICII::getFps(VICIIRevision rev, VICIISpeed speed)
     }
 }
 
+/*
 i64
 VICII::getFrameDelay(VICIIRevision rev, VICIISpeed speed)
 {
     return i64(1000000000 / getFps(rev, speed));
 }
+*/
 
 isize
 VICII::getNativeFrequency(VICIIRevision rev)

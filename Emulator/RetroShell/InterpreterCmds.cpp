@@ -87,6 +87,19 @@ Interpreter::registerInstructions()
     root.add({"c64"},
              "component", "The virtual Commodore 64");
 
+    /*
+    root.add({"c64", "set"},
+             "Configures the component");
+
+    root.add({"c64", "set", "fpsmode"}, { FpsModeEnum::argList() },
+             "Selects the frame mode",
+             &RetroShell::exec <Token::c64, Token::set, Token::fpsmode>);
+
+    root.add({"c64", "set", "fps"}, { Arg::value },
+             "Sets the frames per seconds",
+             &RetroShell::exec <Token::c64, Token::set, Token::fps>);
+    */
+
     root.add({"c64", "config"},
              "command", "Displays the current configuration",
              &RetroShell::exec <Token::c64, Token::config>);

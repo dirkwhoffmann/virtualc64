@@ -764,8 +764,8 @@ public:
     double getFps() const { return getFps(config.revision, config.speed); }
 
     // Returns the time interval between two frames in nanoseconds
-    static i64 getFrameDelay(VICIIRevision rev, VICIISpeed speed);
-    i64 getFrameDelay() const { return getFrameDelay(config.revision, config.speed); }
+    // static i64 getFrameDelay(VICIIRevision rev, VICIISpeed speed);
+    // i64 getFrameDelay() const { return getFrameDelay(config.revision, config.speed); }
 
     // Returns the native clock frequency for a certain VICII revision
     static isize getNativeFrequency(VICIIRevision rev);

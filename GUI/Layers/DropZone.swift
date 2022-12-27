@@ -58,23 +58,7 @@ class DropZone: Layer {
 
     private func image(zone: Int) -> NSImage {
 
-        var suffix = enabled[zone] ? (inUse[zone] ? "InUse" : "Empty") : "Disabled"
-
-        /*
-        var suffix = "Disabled"
-
-         if enabled[zone] {
-            
-            switch zone {
-            case 0: suffix = c64.drive8.hasDisk ? "InUse" : "Empty"
-            case 1: suffix = c64.drive9.hasDisk ? "InUse" : "Empty"
-            case 2: suffix = c64.expansionport.cartridgeAttached() ? "InUse" : "Empty"
-            case 3: suffix = c64.datasette.hasTape ? "InUse" : "Empty"
-            case 4: suffix = "InUse"
-            default: fatalError()
-            }
-        }
-        */
+        let suffix = enabled[zone] ? (inUse[zone] ? "InUse" : "Empty") : "Disabled"
         return NSImage(named: "dropZone\(zone)\(suffix)")!
     }
     

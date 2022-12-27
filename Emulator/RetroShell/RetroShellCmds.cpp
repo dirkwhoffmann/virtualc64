@@ -170,6 +170,19 @@ RetroShell::exec <Token::c64, Token::config> (Arguments &argv, long param)
 }
 
 template <> void
+RetroShell::exec <Token::c64, Token::set, Token::fpsmode> (Arguments& argv, long param)
+{
+    c64.configure(OPT_FPS_MODE, util::parseEnum <FpsModeEnum> (argv.front()));
+}
+
+template <> void
+RetroShell::exec <Token::c64, Token::set, Token::fps> (Arguments& argv, long param)
+{
+    c64.configure(OPT_FPS, util::parseNum(argv.front()));
+    c64.configure(OPT_FPS_MODE, FPS_CUSTOM);
+}
+
+template <> void
 RetroShell::exec <Token::c64, Token::power, Token::on> (Arguments &argv, long param)
 {
     c64.run();
