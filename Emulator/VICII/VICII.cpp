@@ -125,7 +125,6 @@ VICII::getDefaultConfig()
     VICIIConfig defaults;
     
     defaults.revision = VICII_PAL_8565;
-    defaults.speed = VICII_NATIVE;
     defaults.powerSave = true;
     defaults.grayDotBug = true;
     defaults.glueLogic = GLUE_LOGIC_DISCRETE;
@@ -152,7 +151,6 @@ VICII::resetConfig()
     std::vector <Option> options = {
 
         OPT_VIC_REVISION,
-        OPT_VIC_SPEED,
         OPT_VIC_POWER_SAVE,
         OPT_GRAY_DOT_BUG,
         OPT_GLUE_LOGIC,
@@ -176,7 +174,6 @@ VICII::getConfigItem(Option option) const
     switch (option) {
             
         case OPT_VIC_REVISION:      return config.revision;
-        case OPT_VIC_SPEED:         return config.speed;
         case OPT_VIC_POWER_SAVE:    return config.powerSave;
         case OPT_PALETTE:           return config.palette;
         case OPT_BRIGHTNESS:        return config.brightness;
@@ -205,15 +202,6 @@ VICII::setConfigItem(Option option, i64 value)
             }
             
             setRevision(VICIIRevision(value));
-            return;
-
-        case OPT_VIC_SPEED:
-            
-            if (!VICIISpeedEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, VICIISpeedEnum::keyList());
-            }
-            
-            setSpeed(VICIISpeed(value));
             return;
 
         case OPT_VIC_POWER_SAVE:
@@ -331,28 +319,18 @@ VICII::setRevision(VICIIRevision revision)
         
         isNTSC = !isPAL;
         is656x = !is856x;
-        
+
+        c64.updateClockFrequency();
+
+        /*
         // Update other components
         isize newFrequency = VICII::getFrequency();
         muxer.setClockFrequency((u32)newFrequency);
-        c64.updateClockFrequency(config.revision, config.speed);
+        c64.updateClockFrequency(config.revision);
+        */
     }
     
     msgQueue.put(isPAL ? MSG_PAL : MSG_NTSC);
-}
-
-void
-VICII::setSpeed(VICIISpeed speed)
-{
-    {   SUSPENDED
-        
-        config.speed = speed;
-        
-        // Update other components
-        isize newFrequency = VICII::getFrequency();
-        muxer.setClockFrequency((u32)newFrequency);
-        c64.updateClockFrequency(config.revision, config.speed);
-    }
 }
 
 void
@@ -431,8 +409,6 @@ VICII::_dump(Category category, std::ostream& os) const
 
         os << tab("Chip model");
         os << VICIIRevisionEnum::key(config.revision) << std::endl;
-        os << tab("Speed");
-        os << VICIISpeedEnum::key(config.speed) << std::endl;
         os << tab("Power save mode");
         os << bol(config.powerSave, "during warp", "never") << std::endl;
         os << tab("Gray dot bug");
@@ -592,28 +568,16 @@ VICII::delayedLightPenIrqs(VICIIRevision rev)
 }
 
 double
-VICII::getFps(VICIIRevision rev, VICIISpeed speed)
+VICII::getFps(VICIIRevision rev)
 {
-    switch (speed) {
-            
-        case VICII_TRUE_25: return 25;
-        case VICII_TRUE_30: return 30;
-        case VICII_TRUE_50: return 50;
-        case VICII_TRUE_60: return 60;
-        case VICII_TRUE_100: return 100;
-        case VICII_TRUE_120: return 120;
-            
-        default:
-            assert(speed == VICII_NATIVE);
-            return (double)getFrequency(rev, speed) / (double)getCyclesPerFrame(rev);
-    }
+    return (double)getFrequency(rev) / (double)getCyclesPerFrame(rev);
 }
 
 /*
 i64
-VICII::getFrameDelay(VICIIRevision rev, VICIISpeed speed)
+VICII::getFrameDelay(VICIIRevision rev)
 {
-    return i64(1000000000 / getFps(rev, speed));
+    return i64(1000000000 / getFps(rev));
 }
 */
 
@@ -633,21 +597,9 @@ VICII::getNativeFrequency(VICIIRevision rev)
 }
 
 isize
-VICII::getFrequency(VICIIRevision rev, VICIISpeed speed)
+VICII::getFrequency(VICIIRevision rev)
 {
-    switch (speed) {
-            
-        case VICII_TRUE_25: return getCyclesPerFrame(rev) * 25;
-        case VICII_TRUE_30: return getCyclesPerFrame(rev) * 30;
-        case VICII_TRUE_50: return getCyclesPerFrame(rev) * 50;
-        case VICII_TRUE_60: return getCyclesPerFrame(rev) * 60;
-        case VICII_TRUE_100: return getCyclesPerFrame(rev) * 100;
-        case VICII_TRUE_120: return getCyclesPerFrame(rev) * 120;
-            
-        default:
-            assert(speed == VICII_NATIVE);
-            return getNativeFrequency(rev);
-    }
+    return getNativeFrequency(rev);
 }
 
 isize

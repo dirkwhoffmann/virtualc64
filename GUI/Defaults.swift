@@ -758,7 +758,6 @@ extension DefaultsProxy {
         debug(.defaults)
 
         remove(.VIC_REVISION)
-        remove(.VIC_SPEED)
         remove(.VIC_POWER_SAVE)
 
         remove(.CIA_REVISION)
@@ -786,7 +785,6 @@ extension Configuration {
         c64.suspend()
 
         defaults.set(.VIC_REVISION, vicRevision)
-        defaults.set(.VIC_SPEED, vicSpeed)
         defaults.set(.GRAY_DOT_BUG, vicGrayDotBug)
 
         defaults.set(.CIA_REVISION, ciaRevision)
@@ -819,7 +817,6 @@ extension Configuration {
         c64.suspend()
 
         vicRevision = defaults.get(.VIC_REVISION)
-        vicSpeed = defaults.get(.VIC_SPEED)
         vicGrayDotBug = defaults.get(.GRAY_DOT_BUG) != 0
 
         ciaRevision = defaults.get(.CIA_REVISION)

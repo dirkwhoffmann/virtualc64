@@ -172,12 +172,7 @@ private:
      */
     bool ultimax = false;
 
-    /* Duration of a CPU cycle in 1/10 nano seconds. The first value depends
-     * on the selected VICII model and the selected speed setting. The second
-     * value depends on the VICII model, only. Both values match if VICII is
-     * run in speed mode "native".
-     */
-    i64 durationOfOneCycle;
+    // Duration of a CPU cycle in 1/10 nano seconds
     i64 nativeDurationOfOneCycle;
 
 
@@ -259,7 +254,10 @@ public:
     void revertToFactorySettings();
 
     // Updates the clock frequency and all variables derived from it
-    void updateClockFrequency(VICIIRevision rev, VICIISpeed speed);
+    void updateClockFrequency();
+
+    // Updates the clock frequency and all variables derived from it
+    [[deprecated]] void updateClockFrequency(VICIIRevision rev);
 
 private:
     
@@ -295,7 +293,7 @@ private:
     {
         worker
         
-        << durationOfOneCycle
+        // << durationOfOneCycle
         << nativeDurationOfOneCycle;
     }
     

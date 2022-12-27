@@ -617,7 +617,6 @@ private:
         worker
         
         << config.revision
-        << config.speed
         << config.powerSave
         << config.grayDotBug
         << config.glueLogic
@@ -727,7 +726,6 @@ public:
 private:
     
     void setRevision(VICIIRevision revision);
-    void setSpeed(VICIISpeed speed);
 
 
     //
@@ -760,20 +758,20 @@ public:
     bool delayedLightPenIrqs() { return delayedLightPenIrqs(config.revision); }
 
     // Returns the refresh rate of the selected VICII configuration
-    static double getFps(VICIIRevision rev, VICIISpeed speed);
-    double getFps() const { return getFps(config.revision, config.speed); }
+    static double getFps(VICIIRevision rev);
+    double getFps() const { return getFps(config.revision); }
 
     // Returns the time interval between two frames in nanoseconds
-    // static i64 getFrameDelay(VICIIRevision rev, VICIISpeed speed);
-    // i64 getFrameDelay() const { return getFrameDelay(config.revision, config.speed); }
+    // static i64 getFrameDelay(VICIIRevision rev);
+    // i64 getFrameDelay() const { return getFrameDelay(config.revision); }
 
     // Returns the native clock frequency for a certain VICII revision
     static isize getNativeFrequency(VICIIRevision rev);
     isize getNativeFrequency() const { return getNativeFrequency(config.revision); }
 
     // Returns the clock frequency for a certain VICII configuration
-    static isize getFrequency(VICIIRevision rev, VICIISpeed speed);
-    isize getFrequency() const { return getFrequency(config.revision, config.speed); }
+    static isize getFrequency(VICIIRevision rev);
+    isize getFrequency() const { return getFrequency(config.revision); }
     
     // Returns the number of CPU cycles performed per scanline
     static isize getCyclesPerLine(VICIIRevision rev);

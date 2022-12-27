@@ -485,12 +485,6 @@ RetroShell::exec <Token::vicii, Token::set, Token::revision> (Arguments &argv, l
 }
 
 template <> void
-RetroShell::exec <Token::vicii, Token::set, Token::speed> (Arguments &argv, long param)
-{
-    c64.configure(OPT_VIC_SPEED, util::parseEnum <VICIISpeedEnum> (argv.front()));
-}
-
-template <> void
 RetroShell::exec <Token::vicii, Token::set, Token::graydotbug> (Arguments &argv, long param)
 {
     c64.configure(OPT_GRAY_DOT_BUG, util::parseBool(argv.front()));

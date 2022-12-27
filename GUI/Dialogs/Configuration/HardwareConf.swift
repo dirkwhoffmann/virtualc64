@@ -48,7 +48,6 @@ extension ConfigurationController {
         default:
             assert(false)
         }
-        hwVicSpeedPopup.selectItem(withTag: config.vicSpeed)
         hwVicGrayDotBug.state = config.vicGrayDotBug ? .on : .off
         
         // CIA
@@ -78,12 +77,6 @@ extension ConfigurationController {
     @IBAction func hwVicRevAction(_ sender: NSPopUpButton!) {
         
         config.vicRevision = sender.selectedTag()
-        refresh()
-    }
-
-    @IBAction func hwVicSpeedAction(_ sender: NSPopUpButton!) {
-        
-        config.vicSpeed = sender.selectedTag()
         refresh()
     }
 

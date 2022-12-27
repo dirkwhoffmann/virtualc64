@@ -25,7 +25,6 @@ Defaults::Defaults()
     setFallback(OPT_TIMER_B_BUG, true);
 
     setFallback(OPT_VIC_REVISION, VICII_PAL_8565);
-    setFallback(OPT_VIC_SPEED, VICII_NATIVE);
     setFallback(OPT_VIC_POWER_SAVE, true);
     setFallback(OPT_GRAY_DOT_BUG, true);
     setFallback(OPT_GLUE_LOGIC, GLUE_LOGIC_DISCRETE);

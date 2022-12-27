@@ -176,7 +176,6 @@ C64::getConfigItem(Option option) const
             return config.fps;
 
         case OPT_VIC_REVISION:
-        case OPT_VIC_SPEED:
         case OPT_VIC_POWER_SAVE:
         case OPT_GRAY_DOT_BUG:
         case OPT_GLUE_LOGIC:
@@ -298,6 +297,7 @@ C64::setConfigItem(Option option, i64 value)
             }
 
             config.fpsMode = FpsMode(value);
+            updateClockFrequency();
             return;
 
         case OPT_FPS:
@@ -307,6 +307,7 @@ C64::setConfigItem(Option option, i64 value)
             }
 
             config.fps = value;
+            updateClockFrequency();
             return;
 
         default:
@@ -352,7 +353,6 @@ C64::configure(Option option, i64 value)
             break;
 
         case OPT_VIC_REVISION:
-        case OPT_VIC_SPEED:
         case OPT_PALETTE:
         case OPT_BRIGHTNESS:
         case OPT_CONTRAST:
@@ -679,9 +679,23 @@ C64::revertToFactorySettings()
 }
 
 void
-C64::updateClockFrequency(VICIIRevision rev, VICIISpeed speed)
+C64::updateClockFrequency()
 {
-    durationOfOneCycle = 10000000000 / VICII::getFrequency(rev, speed);
+    auto nativeFps = vic.getFps();
+    auto chosenFps = refreshRate();
+
+    auto nativeFrequency = vic.getFrequency();
+    auto chosenFrequency = nativeFrequency * chosenFps / nativeFps;
+
+    // TODO: CHANGE DATATYPE TO DOUBLE!!
+    muxer.setClockFrequency((u32)chosenFrequency);
+
+    nativeDurationOfOneCycle = 10000000000 / vic.getFrequency();
+}
+
+void
+C64::updateClockFrequency(VICIIRevision rev)
+{
     nativeDurationOfOneCycle = 10000000000 / VICII::getNativeFrequency(rev);
 }
 
@@ -702,8 +716,7 @@ C64::overrideOption(Option option, i64 value)
 C64::SyncMode
 C64::getSyncMode() const
 {
-    return SyncMode::Periodic;
-    // TODO: return config.vsync ? SyncMode::Pulsed : SyncMode::Periodic;
+    return config.fpsMode == FPS_VSYNC ? SyncMode::Pulsed : SyncMode::Periodic;
 }
 
 void
@@ -770,10 +783,11 @@ C64::execute()
 double
 C64::refreshRate() const
 {
-    switch (getSyncMode()) {
+    switch (config.fpsMode) {
 
-        case SyncMode::Pulsed:      return 60.0; // TODO: host.refreshRate;
-        case SyncMode::Periodic:    return vic.getFps();
+        case FPS_NATIVE:        return vic.getFps();
+        case FPS_CUSTOM:        return config.fps;
+        case FPS_VSYNC:         return host.getHostRefreshRate();
 
         default:
             fatalError;
@@ -941,6 +955,14 @@ C64::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
+    if (category == Category::Config) {
+
+        os << tab("FPS mode");
+        os << FpsModeEnum::key(config.fpsMode);
+        if (config.fpsMode == FPS_CUSTOM) os << " (" << config.fps << " fps)";
+        os << std::endl;
+    }
+    
     if (category == Category::State) {
 
         os << tab("Machine type");

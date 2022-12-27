@@ -61,7 +61,6 @@
                 <outlet property="hwVicGrayDotBug" destination="Tgn-hC-LhH" id="755-yB-V5Y"/>
                 <outlet property="hwVicIcon" destination="WuF-5Y-4hm" id="iar-AO-rVd"/>
                 <outlet property="hwVicModelPopup" destination="ZQk-5s-Q3i" id="GTx-Ou-jHT"/>
-                <outlet property="hwVicSpeedPopup" destination="qhR-lG-UKr" id="CzW-i0-pxh"/>
                 <outlet property="kernalDeleteButton" destination="sT6-dg-rcI" id="FTx-AU-Gup"/>
                 <outlet property="kernalDropView" destination="khi-bK-T0V" id="eUE-h3-46V"/>
                 <outlet property="kernalSubsubtitle" destination="DhW-S3-d80" id="WI0-BK-0QC"/>
@@ -611,7 +610,7 @@ Gw
                                             </connections>
                                         </popUpButton>
                                         <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tgn-hC-LhH">
-                                            <rect key="frame" x="110" y="304" width="168" height="18"/>
+                                            <rect key="frame" x="110" y="332" width="168" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Emulate grey dot bug" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="gFY-HC-hxa">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -759,44 +758,6 @@ Gw
                                             <rect key="frame" x="78" y="362" width="31" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Rev:" id="uMo-iP-5qb">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qhR-lG-UKr" userLabel="System">
-                                            <rect key="frame" x="109" y="326" width="174" height="25"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <popUpButtonCell key="cell" type="push" title="Native" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" selectedItem="JuT-TU-r0j" id="vme-MQ-H9z" userLabel="System">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="menu"/>
-                                                <menu key="menu" id="3qh-x8-lSb">
-                                                    <items>
-                                                        <menuItem title="Native" state="on" id="JuT-TU-r0j">
-                                                            <attributedString key="attributedTitle"/>
-                                                        </menuItem>
-                                                        <menuItem isSeparatorItem="YES" id="bsa-0s-HtF"/>
-                                                        <menuItem title="True 25 Hz" tag="1" id="YJ1-9r-tBS"/>
-                                                        <menuItem title="True 30 Hz" tag="2" id="AoB-nq-dz0"/>
-                                                        <menuItem isSeparatorItem="YES" id="ygg-DP-ZrH"/>
-                                                        <menuItem title="True 50 Hz" tag="3" id="Vxp-Jj-cwJ"/>
-                                                        <menuItem title="True 60 Hz" tag="4" id="5fH-Mb-Pvi">
-                                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                                        </menuItem>
-                                                        <menuItem isSeparatorItem="YES" id="5xo-GN-kde"/>
-                                                        <menuItem title="True 100 Hz" tag="5" id="vjE-WG-rdu"/>
-                                                        <menuItem title="True 120 Hz" tag="6" id="tdc-YT-JO3"/>
-                                                    </items>
-                                                </menu>
-                                            </popUpButtonCell>
-                                            <connections>
-                                                <action selector="hwVicSpeedAction:" target="-2" id="9Pi-YR-KwJ"/>
-                                            </connections>
-                                        </popUpButton>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n76-NR-4oX">
-                                            <rect key="frame" x="79" y="332" width="30" height="16"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Fps:" id="3wj-N1-nUq">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2504,7 +2465,7 @@ Gw
                                             </connections>
                                         </button>
                                         <tabView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JZz-nb-KQ8">
-                                            <rect key="frame" x="2" y="76" width="594" height="351"/>
+                                            <rect key="frame" x="3" y="69" width="594" height="351"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <font key="font" metaFont="system"/>
                                             <tabViewItems>

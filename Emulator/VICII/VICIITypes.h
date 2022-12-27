@@ -117,43 +117,6 @@ struct VICIIRevisionEnum : util::Reflection<VICIIRevisionEnum, VICIIRevision> {
 };
 #endif
 
-enum_long(VICII_SPEED)
-{
-    VICII_NATIVE,
-    VICII_TRUE_25,
-    VICII_TRUE_30,
-    VICII_TRUE_50,
-    VICII_TRUE_60,
-    VICII_TRUE_100,
-    VICII_TRUE_120
-};
-typedef VICII_SPEED VICIISpeed;
-
-#ifdef __cplusplus
-struct VICIISpeedEnum : util::Reflection<VICIISpeedEnum, VICIISpeed> {
-    
-	static constexpr long minVal = 0;
-    static constexpr long maxVal = VICII_TRUE_120;
-    static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
-    
-    static const char *prefix() { return "VICII"; }
-    static const char *key(VICIIRevision value)
-    {
-        switch (value) {
-                
-            case VICII_NATIVE:    return "VICII_NATIVE";
-            case VICII_TRUE_25:   return "VICII_TRUE_25";
-            case VICII_TRUE_30:   return "VICII_TRUE_30";
-            case VICII_TRUE_50:   return "VICII_TRUE_50";
-            case VICII_TRUE_60:   return "VICII_TRUE_60";
-            case VICII_TRUE_100:  return "VICII_TRUE_100";
-            case VICII_TRUE_120:  return "VICII_TRUE_120";
-        }
-        return "???";
-    }    
-};
-#endif
-
 enum_long(GLUE_LOGIC)
 {
     GLUE_LOGIC_DISCRETE,
@@ -385,7 +348,6 @@ typedef struct
 {
     // Silicon
     VICIIRevision revision;
-    VICIISpeed speed;
     bool powerSave;
     bool grayDotBug;
     GlueLogic glueLogic;

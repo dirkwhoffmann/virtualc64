@@ -31,11 +31,6 @@ class Configuration {
         set { c64.configure(.VIC_REVISION, value: newValue) }
     }
 
-    var vicSpeed: Int {
-        get { return c64.getConfig(.VIC_SPEED) }
-        set { c64.configure(.VIC_SPEED, value: newValue) }
-    }
-
     var vicGrayDotBug: Bool {
         get { return c64.getConfig(.GRAY_DOT_BUG) != 0 }
         set { c64.configure(.GRAY_DOT_BUG, enable: newValue) }

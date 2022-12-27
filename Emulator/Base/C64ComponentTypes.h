@@ -24,7 +24,6 @@ enum_long(OPT)
 
     // VICII
     OPT_VIC_REVISION,
-    OPT_VIC_SPEED,
     OPT_PALETTE,
     OPT_BRIGHTNESS,
     OPT_CONTRAST,
