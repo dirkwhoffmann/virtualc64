@@ -19,23 +19,29 @@ class DropZone: Layer {
     var mydocument: MyDocument { return controller.mydocument! }
     var mm: MediaManager { return controller.mm }
 
-    var zones = [NSImageView(), NSImageView(), NSImageView(), NSImageView()]
-    var ul = [NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0),
-              NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0)]
-    var lr = [NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0),
-              NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0)]
+    var zones = [ NSImageView(), NSImageView(),
+                  NSImageView(), NSImageView(),
+                  NSImageView() ]
+
+    var ul = [ NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0),
+               NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0),
+               NSPoint(x: 0, y: 0) ]
+
+    var lr = [ NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0),
+               NSPoint(x: 0, y: 0), NSPoint(x: 0, y: 0),
+               NSPoint(x: 0, y: 0) ]
     
     static let unconnected = 0.92
     static let unselected = 0.92
     static let selected = 0.92
     
     var hideAll = false
-    var enabled = [false, false, false, false]
-    var inUse = [false, false, false, false]
-    var inside = [false, false, false, false]
-    var currentAlpha = [0.0, 0.0, 0.0, 0.0]
-    var targetAlpha = [unselected, unselected, unselected, unselected]
-    var maxAlpha = [0.0, 0.0, 0.0, 0.0]
+    var enabled = [false, false, false, false, false]
+    var inUse = [false, false, false, false, false ]
+    var inside = [false, false, false, false, false ]
+    var currentAlpha = [0.0, 0.0, 0.0, 0.0, 0.0 ]
+    var targetAlpha = [unselected, unselected, unselected, unselected, unselected]
+    var maxAlpha = [0.0, 0.0, 0.0, 0.0, 0.0]
     
     //
     // Initializing
@@ -45,25 +51,30 @@ class DropZone: Layer {
         
         controller = renderer.parent
         
-        for i in 0...3 { zones[i].unregisterDraggedTypes() }
+        for i in 0...4 { zones[i].unregisterDraggedTypes() }
         super.init(renderer: renderer)
         resize()
     }
 
     private func image(zone: Int) -> NSImage {
 
+        var suffix = enabled[zone] ? (inUse[zone] ? "InUse" : "Empty") : "Disabled"
+
+        /*
         var suffix = "Disabled"
 
-        if enabled[zone] {
+         if enabled[zone] {
             
             switch zone {
             case 0: suffix = c64.drive8.hasDisk ? "InUse" : "Empty"
             case 1: suffix = c64.drive9.hasDisk ? "InUse" : "Empty"
             case 2: suffix = c64.expansionport.cartridgeAttached() ? "InUse" : "Empty"
             case 3: suffix = c64.datasette.hasTape ? "InUse" : "Empty"
+            case 4: suffix = "InUse"
             default: fatalError()
             }
         }
+        */
         return NSImage(named: "dropZone\(zone)\(suffix)")!
     }
     
@@ -76,29 +87,33 @@ class DropZone: Layer {
         inUse[1] = c64.drive9.hasDisk
         inUse[2] = c64.expansionport.cartridgeAttached()
         inUse[3] = c64.datasette.hasTape
-        
+        inUse[4] = false
+
         switch type {
-        
-        case .T64, .P00, .PRG, .FOLDER, .D64, .G64:
-            enabled = [connected8, connected9, false, false]
+
+        case .T64, .P00, .PRG:
+            enabled = [connected8, connected9, false, false, true]
+
+        case .FOLDER, .D64, .G64:
+            enabled = [connected8, connected9, false, false, false]
 
         case .CRT:
-            enabled = [false, false, true, false]
+            enabled = [false, false, true, false, false]
             
         case .TAP:
-            enabled = [false, false, false, true]
+            enabled = [false, false, false, true, false]
             
         default:
-            enabled = [false, false, false, false]
+            enabled = [false, false, false, false, false]
         }
         
-        for i in 0...3 {
+        for i in 0...4 {
             
             zones[i].image = image(zone: i)
         }
         
         // Hide all drop zones if none is enabled
-        hideAll = !enabled[0] && !enabled[1] && !enabled[2] && !enabled[3]
+        hideAll = !enabled[0] && !enabled[1] && !enabled[2] && !enabled[3] && !enabled[4]
     }
 
     func open(type: FileType, delay: Double) {
@@ -116,10 +131,8 @@ class DropZone: Layer {
     
     func isInside(_ sender: NSDraggingInfo, zone i: Int) -> Bool {
 
-        assert(i >= 0 && i <= 3)
-        
-        // if !enabled[i] { return false }
-        
+        assert(i >= 0 && i <= 4)
+
         let x = sender.draggingLocation.x
         let y = sender.draggingLocation.y
 
@@ -130,7 +143,7 @@ class DropZone: Layer {
                    
         if hideAll { return }
         
-        for i in 0...3 {
+        for i in 0...4 {
         
             if !enabled[i] {
                 targetAlpha[i] = DropZone.unconnected
@@ -159,7 +172,7 @@ class DropZone: Layer {
                 
         if hideAll { return }
         
-        for i in 0...3 {
+        for i in 0...4 {
             
             maxAlpha[i] = Double(alpha.current)
         
@@ -183,6 +196,24 @@ class DropZone: Layer {
 
             if let n = metal.dropZone {
 
+                switch n {
+
+                case 0: try mm.addMedia(url: url, allowedTypes: [type], drive: DRIVE8)
+                case 1: try mm.addMedia(url: url, allowedTypes: [type], drive: DRIVE9)
+                case 2: try mm.addMedia(url: url, allowedTypes: [type])
+                case 3: try mm.addMedia(url: url, allowedTypes: [type])
+                case 4: try mm.addMedia(url: url, allowedTypes: [type], options: [.flash])
+
+                default:
+                    fatalError()
+                }
+
+                /*
+                if n == 4 {
+                    print("TODO: FLASH")
+                    return
+                }
+
                 switch type {
 
                 case .SNAPSHOT, .SCRIPT, .CRT, .TAP:
@@ -197,6 +228,7 @@ class DropZone: Layer {
                 default:
                     fatalError()
                 }
+                */
 
             } else {
 
@@ -206,10 +238,6 @@ class DropZone: Layer {
 
                     try mm.addMedia(url: url, allowedTypes: [type])
 
-                case .PRG:
-
-                    try mm.addMedia(url: url, allowedTypes: [type], options: [.flash])
-                    
                 default:
 
                     let importer = DiskImporter(with: controller, nibName: "DiskImporter")
@@ -225,7 +253,7 @@ class DropZone: Layer {
 
     func updateAlpha() {
             
-        for i in 0...3 {
+        for i in 0...4 {
 
             let current = currentAlpha[i]
             var delta = 0.0
@@ -251,24 +279,36 @@ class DropZone: Layer {
         let h = w * 1.2
         let y = size.height + origin.y - 24 - h * CGFloat(alpha.current)
         let margin = w / 8
-        let iconSize = NSSize(width: w, height: h)
-            
-        ul[0] = CGPoint(x: midx - 2 * w - 1.5 * margin, y: y)
+        // let iconSize = NSSize(width: w, height: h)
+
+        /*
+        ul[0] = CGPoint(x: midx - 2.5 * w - 2 * margin, y: y)
         lr[0] = CGPoint(x: ul[0].x + w, y: ul[0].y + h)
 
-        ul[1] = CGPoint(x: midx - w - 0.5 * margin, y: y)
+        ul[1] = CGPoint(x: midx - 1.5 * w - margin, y: y)
         lr[1] = CGPoint(x: ul[1].x + w, y: ul[1].y + h)
 
-        ul[2] = CGPoint(x: midx + 0.5 * margin, y: y)
+        ul[2] = CGPoint(x: midx - 0.5 * w, y: y)
         lr[2] = CGPoint(x: ul[2].x + w, y: ul[2].y + h)
 
-        ul[3] = CGPoint(x: midx + w + 1.5 * margin, y: y)
+        ul[3] = CGPoint(x: midx + 1.5 * w + margin, y: y)
         lr[3] = CGPoint(x: ul[3].x + w, y: ul[3].y + h)
 
-        for i in 0...3 {
+        ul[4] = CGPoint(x: midx + 2.5 * w + 2 * margin, y: y)
+        lr[4] = CGPoint(x: ul[4].x + w, y: ul[4].y + h)
+        */
 
-            zones[i].setFrameSize(iconSize)
+        var x = midx - 2.5 * w - 2 * margin
+
+        for i in 0...4 {
+
+            ul[i] = CGPoint(x: x, y: y)
+            lr[i] = CGPoint(x: ul[i].x + w, y: ul[i].y + h)
+
+            zones[i].setFrameSize(NSSize(width: w, height: h))
             zones[i].frame.origin = ul[i]
+
+            x += w + margin
         }
     }
 }

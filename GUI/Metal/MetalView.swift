@@ -37,9 +37,6 @@ public class MetalView: MTKView {
     var dropUrl: URL?
     var dropType: FileType?
 
-    // When a file is dragged in, it's URL is stored in this variable
-    // var draggedUrl: URL?
-    
     required public init(coder: NSCoder) {
     
         super.init(coder: coder)

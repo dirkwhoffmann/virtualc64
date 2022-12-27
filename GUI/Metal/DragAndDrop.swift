@@ -129,7 +129,7 @@ public extension MetalView {
 
         // Check all drop zones
         var zone: Int?
-        for i in 0...3 {
+        for i in 0...4 {
             if renderer.dropZone.isInside(sender, zone: i) {
                 if renderer.dropZone.enabled[i] {
                     zone = i
