@@ -234,24 +234,61 @@ extension MyController {
 
     func updateSpeedometer() {
 
-        speedometer.updateWith(cycle: c64.cpu.clock, frame: renderer.frames)
+        func setColor(color: [NSColor]) {
+
+            let min = activityBar.minValue
+            let max = activityBar.maxValue
+            let cur = (activityBar.doubleValue - min) / (max - min)
+
+            let index =
+            cur < 0.15 ? 0 :
+            cur < 0.40 ? 1 :
+            cur < 0.60 ? 2 :
+            cur < 0.85 ? 3 : 4
+
+            activityBar.fillColor = color[index]
+        }
+
+        speedometer.updateWith(cycle: c64.cpu.clock,
+                               emuFrame: Int64(c64.frame),
+                               gpuFrame: renderer.frames)
 
         switch activityType.selectedTag() {
 
         case 0:
             let mhz = speedometer.mhz
+            activityBar.maxValue = 20
             activityBar.doubleValue = 10 * mhz
             activityInfo.stringValue = String(format: "%.2f MHz", mhz)
+            setColor(color: [.systemRed, .systemYellow, .systemGreen, .systemYellow, .systemRed])
 
         case 1:
-            let cpu = c64.cpuLoad
-            activityBar.integerValue = cpu
-            activityInfo.stringValue = String(format: "%d%% CPU", cpu)
+            let fps = speedometer.emuFps
+            activityBar.maxValue = 120
+            activityBar.doubleValue = fps
+            activityInfo.stringValue = String(format: "%d Hz", Int(fps))
+            setColor(color: [.systemRed, .systemYellow, .systemGreen, .systemYellow, .systemRed])
 
         case 2:
-            let fps = speedometer.fps
+            let cpu = c64.cpuLoad
+            activityBar.maxValue = 100
+            activityBar.integerValue = cpu
+            activityInfo.stringValue = String(format: "%d%% CPU", cpu)
+            setColor(color: [.systemGreen, .systemGreen, .systemGreen, .systemYellow, .systemRed])
+
+        case 3:
+            let fps = speedometer.gpsFps
+            activityBar.maxValue = 120
             activityBar.doubleValue = fps
             activityInfo.stringValue = String(format: "%d FPS", Int(fps))
+            setColor(color: [.systemRed, .systemYellow, .systemGreen, .systemYellow, .systemRed])
+
+        case 4:
+            let fill = c64.sid.getStats().fillLevel * 100.0
+            activityBar.maxValue = 100
+            activityBar.doubleValue = fill
+            activityInfo.stringValue = String(format: "Fill level %d%%", Int(fill))
+            setColor(color: [.systemRed, .systemYellow, .systemGreen, .systemYellow, .systemRed])
 
         default:
             activityBar.integerValue = 0
@@ -282,13 +319,16 @@ extension MyController {
 
     @IBAction func activityTypeAction(_ sender: NSPopUpButton!) {
 
-        var min, max, warn, crit: Double
+        /*
+        var min, max: Double
 
         switch sender.selectedTag() {
 
-        case 0: min = 0; max = 20; warn = 13; crit = 16
-        case 1: min = 0; max = 100; warn = 50; crit = 75
-        case 2: min = 0; max = 120; warn = 75; crit = 100
+        case 0: min = 0; max = 20;
+        case 1: min = 0; max = 120;
+        case 2: min = 0; max = 100;
+        case 3: min = 0; max = 120;
+        case 4: min = 0; max = 100;
 
         default:
             fatalError()
@@ -296,8 +336,9 @@ extension MyController {
 
         activityBar.minValue = min
         activityBar.maxValue = max
-        activityBar.warningValue = warn
-        activityBar.criticalValue = crit
+        // activityBar.warningValue = warn
+        // activityBar.criticalValue = crit
+        */
 
         refreshStatusBar()
     }

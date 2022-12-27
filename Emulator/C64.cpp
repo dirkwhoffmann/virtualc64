@@ -306,7 +306,7 @@ C64::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INVARG, "25...120");
             }
 
-            config.fps = value;
+            config.fps = isize(value);
             updateClockFrequency();
             return;
 

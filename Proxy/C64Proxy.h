@@ -182,6 +182,7 @@
 - (void)dealloc;
 - (void)kill;
 
+@property (readonly) NSInteger frame;
 @property BOOL warpMode;
 @property BOOL debugMode;
 @property (readonly) NSInteger cpuLoad;

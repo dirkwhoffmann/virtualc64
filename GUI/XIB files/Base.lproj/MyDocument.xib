@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -40,7 +40,7 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="preferred" titlebarAppearsTransparent="YES" toolbarStyle="expanded" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <rect key="contentRect" x="0.0" y="0.0" width="800" height="640"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1536" height="935"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1496" height="933"/>
             <value key="minSize" type="size" width="402" height="323"/>
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="640"/>
@@ -218,21 +218,25 @@
                     <levelIndicator verticalHuggingPriority="750" id="9Nj-IT-cDl">
                         <rect key="frame" x="729" y="3" width="64" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <levelIndicatorCell key="cell" alignment="left" maxValue="20" warningValue="13" criticalValue="16" id="5VJ-SQ-5Qh">
+                        <levelIndicatorCell key="cell" alignment="left" maxValue="200" warningValue="200" criticalValue="200" levelIndicatorStyle="continuousCapacity" id="5VJ-SQ-5Qh">
                             <font key="font" metaFont="system"/>
                         </levelIndicatorCell>
                     </levelIndicator>
                     <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ApN-dX-M4Z">
                         <rect key="frame" x="673" y="3" width="27" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <popUpButtonCell key="cell" type="check" title="C64 Frequency" bezelStyle="regularSquare" imagePosition="left" lineBreakMode="truncatingTail" state="on" inset="2" arrowPosition="arrowAtCenter" preferredEdge="minX" selectedItem="LP1-PF-LdL" id="qjo-CF-dOg">
+                        <popUpButtonCell key="cell" type="check" title="C64 Frequency" bezelStyle="regularSquare" imagePosition="left" lineBreakMode="truncatingTail" inset="2" arrowPosition="arrowAtCenter" preferredEdge="minX" selectedItem="LP1-PF-LdL" id="qjo-CF-dOg">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="m7b-17-QHH">
                                 <items>
-                                    <menuItem title="C64 Frequency" state="on" id="LP1-PF-LdL"/>
-                                    <menuItem title="CPU Load" tag="1" id="fbG-FO-q2S"/>
-                                    <menuItem title="Frames per Second" tag="2" id="meX-8h-Eo8"/>
+                                    <menuItem title="C64 Frequency" id="LP1-PF-LdL"/>
+                                    <menuItem title="C64 Refresh Rate" tag="1" id="nVn-1n-yKu"/>
+                                    <menuItem isSeparatorItem="YES" id="Z0D-Yd-yG2"/>
+                                    <menuItem title="Host CPU Load" tag="2" id="fbG-FO-q2S"/>
+                                    <menuItem title="Host CPU Refresh Rate" tag="3" id="L5p-QQ-iKU"/>
+                                    <menuItem isSeparatorItem="YES" id="Dfb-im-XJI"/>
+                                    <menuItem title="Audio Buffer Fill Level" tag="4" id="meX-8h-Eo8"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
@@ -303,7 +307,7 @@
                         <popUpButton key="view" tag="10" id="L2b-nG-yBo" userLabel="Port 1">
                             <rect key="frame" x="0.0" y="14" width="41" height="20"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">

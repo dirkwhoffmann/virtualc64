@@ -2523,6 +2523,11 @@ using namespace peddle;
     return releaseBuild;
 }
 
+- (NSInteger)frame
+{
+    return [self c64]->frame;
+}
+
 - (BOOL)warpMode
 {
     return [self c64]->inWarpMode();
@@ -2773,18 +2778,6 @@ using namespace peddle;
 {
     [self c64]->stepOver();
 }
-
-/*
-- (NSInteger)breakpointPC
-{
-    return [self c64]->cpu.debugger.breakpointPC;
-}
-
-- (NSInteger)watchpointPC
-{
-    return [self c64]->cpu.debugger.watchpointPC;
-}
-*/
 
 - (BOOL) hasRom:(RomType)type
 {
