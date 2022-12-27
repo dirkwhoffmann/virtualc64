@@ -757,19 +757,11 @@ public:
     static bool delayedLightPenIrqs(VICIIRevision rev);
     bool delayedLightPenIrqs() { return delayedLightPenIrqs(config.revision); }
 
-    // Returns the refresh rate of the selected VICII configuration
+    // Returns the display refresh rate
     static double getFps(VICIIRevision rev);
     double getFps() const { return getFps(config.revision); }
 
-    // Returns the time interval between two frames in nanoseconds
-    // static i64 getFrameDelay(VICIIRevision rev);
-    // i64 getFrameDelay() const { return getFrameDelay(config.revision); }
-
-    // Returns the native clock frequency for a certain VICII revision
-    static isize getNativeFrequency(VICIIRevision rev);
-    isize getNativeFrequency() const { return getNativeFrequency(config.revision); }
-
-    // Returns the clock frequency for a certain VICII configuration
+    // Returns the clock frequency
     static isize getFrequency(VICIIRevision rev);
     isize getFrequency() const { return getFrequency(config.revision); }
     

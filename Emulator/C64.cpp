@@ -687,16 +687,8 @@ C64::updateClockFrequency()
     auto nativeFrequency = vic.getFrequency();
     auto chosenFrequency = nativeFrequency * chosenFps / nativeFps;
 
-    // TODO: CHANGE DATATYPE TO DOUBLE!!
     muxer.setClockFrequency((u32)chosenFrequency);
-
-    nativeDurationOfOneCycle = 10000000000 / vic.getFrequency();
-}
-
-void
-C64::updateClockFrequency(VICIIRevision rev)
-{
-    nativeDurationOfOneCycle = 10000000000 / VICII::getNativeFrequency(rev);
+    durationOfOneCycle = 10000000000 / vic.getFrequency();
 }
 
 i64
@@ -1098,8 +1090,8 @@ C64::_executeOneCycle()
     
     // Second clock phase (o2 high)
     cpu.execute<MOS_6510>();
-    if (drive8.needsEmulation) drive8.execute(nativeDurationOfOneCycle);
-    if (drive9.needsEmulation) drive9.execute(nativeDurationOfOneCycle);
+    if (drive8.needsEmulation) drive8.execute(durationOfOneCycle);
+    if (drive9.needsEmulation) drive9.execute(durationOfOneCycle);
     datasette.execute();
     
     rasterCycle++;

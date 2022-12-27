@@ -173,7 +173,7 @@ private:
     bool ultimax = false;
 
     // Duration of a CPU cycle in 1/10 nano seconds
-    i64 nativeDurationOfOneCycle;
+    i64 durationOfOneCycle;
 
 
     //
@@ -256,9 +256,6 @@ public:
     // Updates the clock frequency and all variables derived from it
     void updateClockFrequency();
 
-    // Updates the clock frequency and all variables derived from it
-    [[deprecated]] void updateClockFrequency(VICIIRevision rev);
-
 private:
     
     // Overrides a config option if the corresponding debug option is enabled
@@ -293,8 +290,7 @@ private:
     {
         worker
         
-        // << durationOfOneCycle
-        << nativeDurationOfOneCycle;
+        << durationOfOneCycle;
     }
     
     template <class T>

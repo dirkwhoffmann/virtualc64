@@ -582,7 +582,7 @@ VICII::getFrameDelay(VICIIRevision rev)
 */
 
 isize
-VICII::getNativeFrequency(VICIIRevision rev)
+VICII::getFrequency(VICIIRevision rev)
 {
     switch (rev) {
             
@@ -594,12 +594,6 @@ VICII::getNativeFrequency(VICIIRevision rev)
         default:
             return PAL_CLOCK_FREQUENCY;
     }
-}
-
-isize
-VICII::getFrequency(VICIIRevision rev)
-{
-    return getNativeFrequency(rev);
 }
 
 isize
