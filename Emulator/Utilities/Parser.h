@@ -29,6 +29,10 @@ struct ParseBoolError : public ParseError {
     using ParseError::ParseError;
 };
 
+struct ParseOnOffError : public ParseError {
+    using ParseError::ParseError;
+};
+
 struct ParseNumError : public ParseError {
     using ParseError::ParseError;
 };
@@ -38,6 +42,7 @@ struct EnumParseError : public ParseError {
 };
 
 bool parseBool(string& token) throws;
+bool parseOnOff(string& token) throws;
 long parseNum(string& token) throws;
 
 template <typename Enum> long parseEnum(const string& key)

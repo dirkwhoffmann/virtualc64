@@ -750,7 +750,9 @@ exception:(ExceptionWrapper *)ex;
 - (void)pressEnd;
 - (void)pressBackspace;
 - (void)pressDelete;
+- (void)pressCut;
 - (void)pressReturn;
+- (void)pressShiftReturn;
 - (void)pressTab;
 - (void)pressKey:(char)c;
 

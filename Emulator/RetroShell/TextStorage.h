@@ -66,12 +66,7 @@ public:
     // Appends a single character or a string
     TextStorage &operator<<(char c);
     TextStorage &operator<<(const string &s);
-
-    // Prints the welcome message
-    void welcome();
-
-    // Prints the help line
-    void printHelp();
+    TextStorage &operator<<(std::stringstream &ss);
 };
 
 }

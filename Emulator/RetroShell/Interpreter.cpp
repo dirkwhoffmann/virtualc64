@@ -8,11 +8,24 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "Interpreter.h"
-#include "RetroShell.h"
+#include "C64.h"
 #include <sstream>
 
 namespace vc64 {
+
+Interpreter::Interpreter(C64 &ref) : SubComponent(ref)
+{
+    initCommandShell(commandShellRoot);
+    initDebugShell(debugShellRoot);
+
+    // Hide some commands
+    commandShellRoot.hide({"regression"});
+    commandShellRoot.hide({"screenshot"});
+    commandShellRoot.hide({"joshua"});
+    commandShellRoot.hide({"wait"});
+    debugShellRoot.hide({"joshua"});
+    debugShellRoot.hide({"wait"});
+}
 
 Arguments
 Interpreter::split(const string& userInput)
@@ -67,15 +80,15 @@ Interpreter::autoComplete(const string& userInput)
     for (const auto &it : tokens) { result += (result == "" ? "" : " ") + it; }
 
     // Add a space if the command has been fully completed
-    if (root.seek(tokens) != nullptr) { result += " "; }
-    
+    if (!tokens.empty() && getRoot().seek(tokens)) result += " ";
+
     return result;
 }
 
 void
 Interpreter::autoComplete(Arguments &argv)
 {
-    Command *current = &root;
+    Command *current = &getRoot();
     string prefix, token;
 
     for (auto it = argv.begin(); current && it != argv.end(); it++) {
@@ -83,6 +96,35 @@ Interpreter::autoComplete(Arguments &argv)
         *it = current->autoComplete(*it);
         current = current->seek(*it);
     }
+}
+
+Command &
+Interpreter::getRoot()
+{
+    switch (shell) {
+
+        case Shell::Command: return commandShellRoot;
+        case Shell::Debug: return debugShellRoot;
+
+        default:
+            fatalError;
+    }
+}
+
+void
+Interpreter::switchInterpreter()
+{
+    if (inCommandShell()) {
+
+        shell = Shell::Debug;
+        c64.debugOn();
+
+    } else {
+
+        shell = Shell::Command;
+    }
+
+    retroShell.updatePrompt();
 }
 
 void
@@ -112,32 +154,33 @@ Interpreter::exec(const Arguments &argv, bool verbose)
         for (const auto &it : argv) retroShell << it << ' ';
         retroShell << '\n';
     }
-    
+
     // Skip empty lines
     if (argv.empty()) return;
-    
+
     // Seek the command in the command tree
-    Command *current = &root, *next;
+    Command *current = &getRoot(), *next;
     Arguments args = argv;
 
     while (!args.empty() && ((next = current->seek(args.front())) != nullptr)) {
-        
+
         current = current->seek(args.front());
         args.erase(args.begin());
     }
+    if ((next = current->seek(""))) current = next;
 
     // Error out if no command handler is present
     if (current->action == nullptr && !args.empty()) {
         throw util::ParseError(args.front());
     }
     if (current->action == nullptr && args.empty()) {
-        throw TooFewArgumentsError(current->tokens());
+        throw TooFewArgumentsError(current->fullName);
     }
-    
+
     // Check the argument count
-    if ((isize)args.size() < current->numArgs) throw TooFewArgumentsError(current->tokens());
-    if ((isize)args.size() > current->numArgs) throw TooManyArgumentsError(current->tokens());
-    
+    if ((isize)args.size() < current->minArgs()) throw TooFewArgumentsError(current->fullName);
+    if ((isize)args.size() > current->maxArgs()) throw TooManyArgumentsError(current->fullName);
+
     // Call the command handler
     (retroShell.*(current->action))(args, current->param);
 }
@@ -164,56 +207,59 @@ Interpreter::help(const string& userInput)
 void
 Interpreter::help(const Arguments &argv)
 {
-    Command *current = &root;
+    Command *current = &getRoot();
     string prefix, token;
-    
+
     for (auto &it : argv) {
         if (current->seek(it) != nullptr) current = current->seek(it);
     }
-    
+
     help(*current);
 }
 
 void
 Interpreter::help(const Command& current)
 {
-    retroShell << '\n';
-    
+    auto indent = string("    ");
+
     // Print the usage string
     usage(current);
-    
-    // Collect all argument types
-    auto types = current.types();
 
     // Determine tabular positions to align the output
     isize tab = 0;
-    for (auto &it : current.args) {
-        tab = std::max(tab, (isize)it.token.length());
-        tab = std::max(tab, 2 + (isize)it.type.length());
+    for (auto &it : current.subCommands) {
+        tab = std::max(tab, (isize)it.fullName.length());
     }
-    tab += 5;
+    tab += indent.size();
 
-    for (auto &it : types) {
-        
-        auto opts = current.filterType(it);
-        isize size = (isize)it.length();
+    isize group = -1;
 
-        retroShell.tab(tab - size);
-        retroShell << "<" << it << "> : ";
-        retroShell << (int)opts.size() << (opts.size() == 1 ? " choice" : " choices");
-        retroShell << '\n' << '\n';
-        
-        for (auto &opt : opts) {
+    for (auto &it : current.subCommands) {
 
-            string name = opt->token == "" ? "<>" : opt->token;
-            retroShell.tab(tab + 2 - (isize)name.length());
-            retroShell << name;
-            retroShell << " : ";
-            retroShell << opt->info;
+        // Only proceed if the command is visible
+        if (it.hidden) continue;
+
+        // Print group description (when a new group begins)
+        if (group != it.group) {
+
+            group = it.group;
             retroShell << '\n';
+
+            if (!Command::groups[group].empty()) {
+                retroShell << Command::groups[group] << '\n' << '\n';
+            }
         }
+
+        // Print command descriptioon
+        retroShell << indent;
+        retroShell << it.fullName;
+        retroShell.tab(tab);
+        retroShell << " : ";
+        retroShell << it.help;
         retroShell << '\n';
     }
+
+    retroShell << '\n';
 }
 
 }

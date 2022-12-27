@@ -20,9 +20,9 @@ namespace vc64 {
 
 class RetroShell : public SubComponent {
 
-    // Interpreter for commands typed into the console window
+    // The command interpreter (parses commands typed into the console window)
     Interpreter interpreter;
-    
+
 
     //
     // Text storage
@@ -96,7 +96,7 @@ private:
 
     void _initialize() override;
     void _reset(bool hard) override { }
-    
+    void _pause() override;
     isize _size() override { return 0; }
     u64 _checksum() override { return 0; }
     isize _load(const u8 *buffer) override {return 0; }
@@ -109,21 +109,24 @@ private:
 
 public:
 
-    // Returns the prompt
-    string getPrompt() { return prompt; }
-
-    // Returns the contents of the whole storage as a single C string
-    const char *text();
-
-    // Moves the cursor forward to a certain column
-    void tab(isize pos);
-
     // Prints a message
     RetroShell &operator<<(char value);
     RetroShell &operator<<(const string &value);
     RetroShell &operator<<(int value);
     RetroShell &operator<<(long value);
     RetroShell &operator<<(std::stringstream &stream);
+
+    // Returns the prompt
+    const string &getPrompt();
+
+    // Updates the prompt according to the current shell mode
+    void updatePrompt();
+
+    // Returns the contents of the whole storage as a single C string
+    const char *text();
+
+    // Moves the cursor forward to a certain column
+    void tab(isize pos);
 
     // Assigns an additional output stream
     void setStream(std::ostream &os);
@@ -136,8 +139,14 @@ private:
     // Clears the console window
     void clear();
 
-    // Prints a help line
+    // Prints the welcome message
+    void welcome();
+
+    // Prints the help line
     void printHelp();
+
+    // Prints a state summary (used by the debug shell)
+    void printState();
 
     
     //
@@ -150,7 +159,7 @@ public:
     isize inputLength() { return (isize)input.length(); }
 
     // Presses a key or a series of keys
-    void press(RetroShellKey key);
+    void press(RetroShellKey key, bool shift = false);
     void press(char c);
     void press(const string &s);
 
@@ -221,7 +230,7 @@ private:
     
 public:
     
-    void vsyncHandler();
+    void eofHandler();
 };
 
 }

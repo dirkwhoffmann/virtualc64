@@ -23,6 +23,7 @@ enum_long(RETRO_SHELL_KEY)
 	RSKEY_LEFT,
 	RSKEY_RIGHT,
 	RSKEY_DEL,
+    RSKEY_CUT,
 	RSKEY_BACKSPACE,
 	RSKEY_HOME,
 	RSKEY_END,
@@ -49,6 +50,7 @@ struct RetroShellKeyEnum : util::Reflection<RetroShellKeyEnum, RetroShellKey>
 			case RSKEY_LEFT:        return "LEFT";
 			case RSKEY_RIGHT:       return "RIGHT";
 			case RSKEY_DEL:         return "DEL";
+            case RSKEY_CUT:         return "CUT";
 			case RSKEY_BACKSPACE:   return "BACKSPACE";
 			case RSKEY_HOME:        return "HOME";
 			case RSKEY_END:         return "END";

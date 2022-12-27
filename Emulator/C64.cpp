@@ -1151,7 +1151,7 @@ C64::endFrame()
     drive8.vsyncHandler();
     drive9.vsyncHandler();
     datasette.vsyncHandler();
-    retroShell.vsyncHandler();
+    retroShell.eofHandler();
     recorder.vsyncHandler();
 }
 

@@ -21,6 +21,15 @@ parseBool(string& token)
     throw ParseBoolError("");
 }
 
+bool
+parseOnOff(string& token)
+{
+    if (token == "on") return true;
+    if (token == "off") return false;
+
+    throw ParseOnOffError(token);
+}
+
 long
 parseNum(string& token)
 {

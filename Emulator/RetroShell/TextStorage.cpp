@@ -90,21 +90,12 @@ TextStorage::operator<<(const string &s)
     return *this;
 }
 
-void
-TextStorage::welcome()
+TextStorage &
+TextStorage::operator<<(std::stringstream &ss)
 {
-    *this << "VirtualC64 Retro Shell " << C64::build() << '\n';
-    *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
-    *this << "Licensed under the GNU General Public License v3" << '\n';
-    *this << '\n';
-    printHelp();
-    *this << '\n';
-}
-
-void
-TextStorage::printHelp()
-{
-    *this << "Type 'help' or press 'TAB' twice for help." << '\n';
+    string line;
+    while(std::getline(ss, line)) *this << line << '\n';
+    return *this;
 }
 
 }

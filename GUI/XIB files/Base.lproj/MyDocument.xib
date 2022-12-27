@@ -225,12 +225,12 @@
                     <popUpButton fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ApN-dX-M4Z">
                         <rect key="frame" x="673" y="3" width="27" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <popUpButtonCell key="cell" type="check" title="C64 Frequency" bezelStyle="regularSquare" imagePosition="left" lineBreakMode="truncatingTail" inset="2" arrowPosition="arrowAtCenter" preferredEdge="minX" selectedItem="LP1-PF-LdL" id="qjo-CF-dOg">
+                        <popUpButtonCell key="cell" type="check" title="C64 Frequency" bezelStyle="regularSquare" imagePosition="left" lineBreakMode="truncatingTail" state="on" inset="2" arrowPosition="arrowAtCenter" preferredEdge="minX" selectedItem="LP1-PF-LdL" id="qjo-CF-dOg">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="m7b-17-QHH">
                                 <items>
-                                    <menuItem title="C64 Frequency" id="LP1-PF-LdL"/>
+                                    <menuItem title="C64 Frequency" state="on" id="LP1-PF-LdL"/>
                                     <menuItem title="C64 Refresh Rate" tag="1" id="nVn-1n-yKu"/>
                                     <menuItem isSeparatorItem="YES" id="Z0D-Yd-yG2"/>
                                     <menuItem title="Host CPU Load" tag="2" id="fbG-FO-q2S"/>

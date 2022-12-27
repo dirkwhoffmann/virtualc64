@@ -32,14 +32,19 @@ RetroShell::_initialize()
     history.push_back( { "", 0 } );
 
     // Print the startup message and the input prompt
-    storage.welcome();
+    welcome();
+}
+
+void
+RetroShell::_pause()
+{
+    printState();
 }
 
 RetroShell&
 RetroShell::operator<<(char value)
 {
     storage << value;
-    // remoteManager.rshServer << value;
     needsDisplay();
     return *this;
 }
@@ -48,7 +53,6 @@ RetroShell&
 RetroShell::operator<<(const string& value)
 {
     storage << value;
-    // remoteManager.rshServer << value;
     needsDisplay();
     return *this;
 }
@@ -77,6 +81,37 @@ RetroShell::operator<<(std::stringstream &stream)
     return *this;
 }
 
+const string &
+RetroShell::getPrompt()
+{
+    return prompt;
+}
+
+void
+RetroShell::updatePrompt()
+{
+    if (interpreter.inCommandShell()) {
+
+        prompt = "vc64% ";
+
+    } else {
+
+        std::stringstream ss;
+
+        ss << "(";
+        ss << std::right << std::setw(0) << std::dec << isize(c64.scanline);
+        ss << ",";
+        ss << std::right << std::setw(0) << std::dec << isize(c64.rasterCycle);
+        ss << ") $";
+        ss << std::right << std::setw(4) << std::hex << isize(cpu.getPC0());
+        ss << ": ";
+
+        prompt = ss.str();
+    }
+
+    needsDisplay();
+}
+
 const char *
 RetroShell::text()
 {
@@ -100,7 +135,6 @@ RetroShell::tab(isize pos)
 
         std::string fill(count, ' ');
         storage << fill;
-        // remoteManager.rshServer << fill;
         needsDisplay();
     }
 }
@@ -125,15 +159,63 @@ RetroShell::clear()
 }
 
 void
-RetroShell::printHelp()
+RetroShell::welcome()
 {
-    storage.printHelp();
-    // remoteManager.rshServer << "Type 'help' for help.\n";
-    needsDisplay();
+    string name = interpreter.inDebugShell() ? "Debug Shell" : "Retro Shell";
+
+    if (interpreter.inCommandShell()) {
+
+        *this << "VirtualC64 " << name << " ";
+        *this << C64::build() << '\n';
+        *this << '\n';
+        *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
+        *this << "Licensed under the GNU General Public License v3" << '\n';
+        *this << '\n';
+    }
+
+    printHelp();
+    *this << '\n';
 }
 
 void
-RetroShell::press(RetroShellKey key)
+RetroShell::printHelp()
+{
+    string action = interpreter.inDebugShell() ? "exit" : "enter";
+
+    *this << "Type 'help' or press 'TAB' twice for help.\n";
+    *this << "Type '.' or press 'SHIFT+RETURN' to " << action << " debug mode.";
+    *this << '\n';
+}
+
+void
+RetroShell::printState()
+{
+    if (interpreter.inDebugShell()) {
+
+        std::stringstream ss;
+
+        ss << "TODO\n";
+        /*
+        ss << "\n";
+        cpu.dumpLogBuffer(ss, 8);
+        ss << "\n";
+        amiga.dump(Category::Current, ss);
+        ss << "\n";
+        cpu.disassembleRange(ss, cpu.getPC0(), 8);
+        ss << "\n";
+        */
+        *this << ss;
+
+        updatePrompt();
+
+    } else {
+
+        updatePrompt();
+    }
+}
+
+void
+RetroShell::press(RetroShellKey key, bool shift)
 {
     assert_enum(RetroShellKey, key);
     assert(ipos >= 0 && ipos < historyLength());
@@ -181,6 +263,13 @@ RetroShell::press(RetroShellKey key)
             }
             break;
 
+        case RSKEY_CUT:
+
+            if (cursor < inputLength()) {
+                input.erase(input.begin() + cursor, input.end());
+            }
+            break;
+
         case RSKEY_BACKSPACE:
 
             if (cursor > 0) {
@@ -215,11 +304,17 @@ RetroShell::press(RetroShellKey key)
 
         case RSKEY_RETURN:
 
-            *this << '\r' << prompt << input << '\n';
-            execUserCommand(input);
-            input = "";
-            cursor = 0;
-            // remoteManager.rshServer.send(prompt);
+            if (shift) {
+
+                interpreter.switchInterpreter();
+
+            } else {
+
+                *this << '\r' << getPrompt() << input << '\n';
+                execUserCommand(input);
+                input = "";
+                cursor = 0;
+            }
             break;
 
         case RSKEY_CR:
@@ -417,6 +512,13 @@ RetroShell::describe(const std::exception &e)
         return;
     }
 
+    if (auto err = dynamic_cast<const util::ParseOnOffError *>(&e)) {
+
+        *this << "'" << err->token << "' must be on or off";
+        *this << '\n';
+        return;
+    }
+
     if (auto err = dynamic_cast<const util::ParseError *>(&e)) {
 
         *this << err->what() << ": Syntax error";
@@ -452,7 +554,7 @@ RetroShell::dump(C64Component &component, Category category)
 }
 
 void
-RetroShell::vsyncHandler()
+RetroShell::eofHandler()
 {
     if (cpu.clock >= wakeUp) {
         

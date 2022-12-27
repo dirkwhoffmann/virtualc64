@@ -103,9 +103,14 @@ class Console: Layer {
     func keyDown(with event: NSEvent) {
         
         let macKey = MacKey(event: event)
-        
+        let shift  = macKey.modifierFlags.contains(.shift)
+        let ctrl   = macKey.modifierFlags.contains(.control)
+
         switch macKey.keyCode {
-        
+
+        case kVK_ANSI_A where ctrl: c64.retroShell.pressHome()
+        case kVK_ANSI_E where ctrl: c64.retroShell.pressEnd()
+        case kVK_ANSI_K where ctrl: c64.retroShell.pressCut()
         case kVK_UpArrow: c64.retroShell.pressUp()
         case kVK_DownArrow: c64.retroShell.pressDown()
         case kVK_LeftArrow: c64.retroShell.pressLeft()
@@ -114,17 +119,17 @@ class Console: Layer {
         case kVK_End: c64.retroShell.pressEnd()
         case kVK_Delete: c64.retroShell.pressBackspace()
         case kVK_ForwardDelete: c64.retroShell.pressDelete()
-        case kVK_Return: c64.retroShell.pressReturn()
+        case kVK_Return: shift ? c64.retroShell.pressShiftReturn() : c64.retroShell.pressReturn()
         case kVK_Tab: c64.retroShell.pressTab()
         case kVK_Escape: close()
-        
+
         default:
-            
+
             if let c = event.characters?.utf8CString.first {
                 c64.retroShell.pressKey(c)
             }
         }
-        
+
         isDirty = true
     }
     

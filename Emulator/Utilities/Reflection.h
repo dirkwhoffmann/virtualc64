@@ -36,19 +36,25 @@ template <class T, typename E> struct Reflection {
     }
 
     // Returns a list in form of a colon seperated string
-    static string keyList(bool prefix = false) {
+    static string keyList(bool prefix = false, const string &delim = ", ") {
         
         string result;
-        
+
         auto p = pairs();
         for(auto it = std::begin(p); it != std::end(p); ++it) {
-            
-            if (it != std::begin(p)) result += ", ";
+
+            if (it != std::begin(p)) result += delim;
             if (prefix && T::prefix()) result += T::prefix();
             result += it->first;
         }
-        
+
         return result;
+    }
+
+    // Convinience wrapper
+    static string argList(bool prefix = false) {
+
+        return "{ " + keyList(prefix, " | ") + " }";
     }
 };
 
