@@ -28,19 +28,41 @@ extension ConfigurationController {
         
         let renderer = parent.renderer!
 
-        // Geometry
-        vidHCenter.floatValue = config.hCenter * 1000
-        vidVCenter.floatValue = config.vCenter * 1000
-        vidHZoom.floatValue = config.hZoom * 1000
-        vidVZoom.floatValue = config.vZoom * 1000
-
-        // Video
-        vidUpscalerPopUp.selectItem(withTag: config.upscaler)
+        // Colors
         vidPalettePopUp.selectItem(withTag: config.palette)
         vidBrightnessSlider.integerValue = config.brightness
         vidContrastSlider.integerValue = config.contrast
         vidSaturationSlider.integerValue = config.saturation
-        
+
+        // Geometry
+        vidZoom.selectItem(withTag: 0)
+        vidHZoom.floatValue = config.hZoom * 1000
+        vidVZoom.floatValue = config.vZoom * 1000
+        vidHZoom.isEnabled = true
+        vidVZoom.isEnabled = true
+        vidHZoomLabel.textColor = .labelColor
+        vidVZoomLabel.textColor = .labelColor
+        vidCenter.selectItem(withTag: 0)
+        vidHCenter.floatValue = config.hCenter * 1000
+        vidVCenter.floatValue = config.vCenter * 1000
+        vidHCenter.isEnabled = true
+        vidVCenter.isEnabled = true
+        vidHCenterLabel.textColor = .labelColor
+        vidVCenterLabel.textColor = .labelColor
+
+        // Frame rate
+        let fpsMode = config.fpsMode
+        let fps = config.fps
+        vidFpsMode.item(at: 1)?.title = "Custom (\(fps) fps)"
+        vidFpsMode.selectItem(withTag: fpsMode)
+        vidFpsSlider.integerValue = fps
+        vidFpsSlider.isHidden = fpsMode != 1
+        vidFpsMin.isHidden = fpsMode != 1
+        vidFpsMax.isHidden = fpsMode != 1
+
+        // Upscalers
+        vidUpscalerPopUp.selectItem(withTag: config.upscaler)
+
         // Effects
         vidBlurPopUp.selectItem(withTag: Int(config.blur))
         vidBlurRadiusSlider.floatValue = config.blurRadius
@@ -77,7 +99,7 @@ extension ConfigurationController {
         vidMisalignmentYSlider.floatValue = config.disalignmentV
         vidMisalignmentYSlider.isEnabled = config.disalignment > 0
 
-        // Power button
+        // Button
         vidPowerButton.isHidden = !bootable
     }
     
@@ -133,6 +155,22 @@ extension ConfigurationController {
     @IBAction func vidSaturationAction(_ sender: NSSlider!) {
         
         config.saturation = sender.integerValue
+        refresh()
+    }
+
+    //
+    // Action methods (Refresh rate)
+    //
+
+    @IBAction func vidFpsModeAction(_ sender: NSPopUpButton!) {
+
+        config.fpsMode = sender.selectedTag()
+        refresh()
+    }
+
+    @IBAction func vidFpsAction(_ sender: NSSlider!) {
+
+        config.fps = sender.integerValue
         refresh()
     }
 
@@ -273,7 +311,70 @@ extension ConfigurationController {
     //
     // Action methods (Misc)
     //
-        
+
+    @IBAction func vidPresetAction(_ sender: NSMenuItem!) {
+
+        let defaults = C64Proxy.defaults!
+
+        switch sender.tag {
+
+        case 0: // Recommended settings (all)
+
+            C64Proxy.defaults.removeVideoUserDefaults()
+
+        case 10: // Recommended settings (geometry)
+
+            C64Proxy.defaults.removeGeometryUserDefaults()
+
+        case 20: // Recommended settings (colors + shader)
+
+            C64Proxy.defaults.removeColorUserDefaults()
+            C64Proxy.defaults.removeShaderUserDefaults()
+
+        case 21: // TFT monitor
+
+            C64Proxy.defaults.removeColorUserDefaults()
+            C64Proxy.defaults.removeShaderUserDefaults()
+
+        case 22: // CRT monitor
+
+            C64Proxy.defaults.removeColorUserDefaults()
+            C64Proxy.defaults.removeShaderUserDefaults()
+
+            /*
+            config.blur = 1
+            config.blurRadius = 1.5
+            config.bloom = 1
+            config.bloomRadiusR = 1.0
+            config.bloomRadiusG = 1.0
+            config.bloomRadiusB = 1.0
+            config.bloomBrightness = 0.4
+            config.bloomWeight = 1.21
+            config.dotMask = 1
+            config.dotMaskBrightness = 0.5
+            config.scanlines = 2
+            config.scanlineBrightness = 0.55
+            config.scanlineWeight = 0.11
+            config.disalignment = 0
+            config.disalignmentH = 0.001
+            config.disalignmentV = 0.001
+            */
+            // defaults.set(Keys.Vid.blurRadius, 1.5)
+            defaults.set(Keys.Vid.blur, 1)
+            defaults.set(Keys.Vid.bloom, 1)
+            defaults.set(Keys.Vid.dotMask, 1)
+            defaults.set(Keys.Vid.scanlines, 2)
+
+        default:
+            fatalError()
+        }
+
+        config.applyVideoUserDefaults()
+        updatePalettePreviewImages()
+        refresh()
+    }
+
+/*
     @IBAction func vidPresetAction(_ sender: NSPopUpButton!) {
 
         // Revert to standard settings
@@ -311,7 +412,8 @@ extension ConfigurationController {
         updatePalettePreviewImages()
         refresh()
     }
-    
+*/
+
     @IBAction func vidDefaultsAction(_ sender: NSButton!) {
         
         config.saveVideoUserDefaults()

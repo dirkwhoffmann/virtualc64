@@ -336,7 +336,15 @@ class Configuration {
     //
     // Video
     //
-    
+
+    var fpsMode: Int {
+        get { return c64.getConfig(.FPS_MODE) }
+        set { c64.configure(.FPS_MODE, value: newValue) }
+    }
+    var fps: Int {
+        get { return c64.getConfig(.FPS) }
+        set { c64.configure(.FPS, value: newValue) }
+    }
     var palette: Int {
         get { return c64.getConfig(.PALETTE) }
         set { c64.configure(.PALETTE, value: newValue) }
