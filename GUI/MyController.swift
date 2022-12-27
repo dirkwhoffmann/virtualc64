@@ -66,10 +66,7 @@ class MyController: NSWindowController, MessageReceiver {
     
     // Speedometer to measure clock frequence and frames per second
     var speedometer: Speedometer!
-    
-    // Used inside the timer function to fine tune timed events
-    var animationCounter = 0
-    
+
     // Remembers if audio is muted (master volume of both channels is 0)
     var muted = false
 
@@ -254,31 +251,32 @@ extension MyController {
     // Timer and message processing
     //
     
-    func timerFunc() {
+    func update(frames: Int64) {
 
-        animationCounter += 1
+        if frames % 5 == 0 {
 
-        // Animate the inspector
-        if inspector?.window?.isVisible == true { inspector!.continuousRefresh() }
-        
-        // Update the cartridge LED
-        if c64.expansionport.hasLed() {
-            let led = c64.expansionport.led() ? 1 : 0
-            if crtIcon.tag != led {
-                crtIcon.tag = led
-                crtIcon.image = NSImage(named: led == 1 ? "crtLedOnTemplate" : "crtTemplate")
-                crtIcon.needsDisplay = true
+            // Animate the inspector
+            if inspector?.window?.isVisible == true { inspector!.continuousRefresh() }
+
+            // Update the cartridge LED
+            if c64.expansionport.hasLed() {
+                let led = c64.expansionport.led() ? 1 : 0
+                if crtIcon.tag != led {
+                    crtIcon.tag = led
+                    crtIcon.image = NSImage(named: led == 1 ? "crtLedOnTemplate" : "crtTemplate")
+                    crtIcon.needsDisplay = true
+                }
             }
         }
 
-        // Do less frequently...
-        if (animationCounter % 4) == 0 {
+        // Do less times...
+        if (frames % 16) == 0 {
             
             updateSpeedometer()
         }
         
         // Do lesser times...
-        if (animationCounter % 32) == 0 {
+        if (frames % 256) == 0 {
             
             // Let the cursor disappear in fullscreen mode
             if renderer.fullscreen &&

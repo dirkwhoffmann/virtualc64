@@ -2754,6 +2754,11 @@ using namespace peddle;
     [self c64]->msgQueue.setListener(sender, func);
 }
 
+- (void)wakeUp
+{
+    [self c64]->wakeUp();
+}
+
 - (void)stopAndGo
 {
     [self c64]->stopAndGo();

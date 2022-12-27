@@ -227,6 +227,8 @@
 
 - (void)setListener:(const void *)sender function:(Callback *)func;
 
+- (void)wakeUp;
+
 - (void)stopAndGo;
 - (void)stepInto;
 - (void)stepOver;

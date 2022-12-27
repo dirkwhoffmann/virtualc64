@@ -286,7 +286,7 @@ class Canvas: Layer {
     }
     
     func render2D(encoder: MTLRenderCommandEncoder) {
-        
+
         // Configure the vertex shader
         encoder.setVertexBytes(&vertexUniforms2D,
                                length: MemoryLayout<VertexUniforms>.stride,
