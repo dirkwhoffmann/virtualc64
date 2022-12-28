@@ -142,17 +142,10 @@ Interpreter::initCommandShell(Command &root)
              "Sets the frames per seconds",
              &RetroShell::exec <Token::c64, Token::set, Token::fps>);
 
-    root.add({"c64", "power"},
-             "Switches the C64 on or off");
+    root.add({"c64", "power"}, { Arg::onoff },
+             "Switches the C64 on or off",
+             &RetroShell::exec <Token::c64, Token::power>);
     
-    root.add({"c64", "power", "on"},
-             "Switches the C64 on",
-             &RetroShell::exec <Token::c64, Token::power, Token::on>);
-
-    root.add({"c64", "power", "off"},
-             "Switches the C64 off",
-             &RetroShell::exec <Token::c64, Token::power, Token::off>);
-
     root.add({"c64", "reset"},
              "Performs a hard reset",
              &RetroShell::exec <Token::c64, Token::reset>);
@@ -488,17 +481,7 @@ Interpreter::initCommandShell(Command &root)
     // Control port
     //
 
-    /*
-    for (isize i = 0; i < 2; i++) {
 
-        string port = (i == 0) ? "controlport1" : "controlport2";
-
-        root.add({port, "inspect"},
-                 "Displays the internal state",
-                 &RetroShell::exec <Token::controlport, Token::inspect>);
-    }
-    */
-    
     //
     // Expansion port
     //

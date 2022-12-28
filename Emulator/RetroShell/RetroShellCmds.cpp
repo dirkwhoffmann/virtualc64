@@ -197,15 +197,9 @@ RetroShell::exec <Token::c64, Token::set, Token::fps> (Arguments& argv, long par
 }
 
 template <> void
-RetroShell::exec <Token::c64, Token::power, Token::on> (Arguments &argv, long param)
+RetroShell::exec <Token::c64, Token::power> (Arguments &argv, long param)
 {
-    c64.run();
-}
-
-template <> void
-RetroShell::exec <Token::c64, Token::power, Token::off> (Arguments &argv, long param)
-{
-    c64.powerOff();
+    util::parseOnOff(argv.front()) ? c64.run() : c64.powerOff();
 }
 
 template <> void
@@ -268,12 +262,6 @@ RetroShell::exec <Token::memory, Token::flash> (Arguments& argv, long param)
     c64.flash(file, 0);
 }
 
-template <> void
-RetroShell::exec <Token::memory, Token::inspect> (Arguments& argv, long param)
-{
-    dump(mem, Category::State);
-}
-
 
 //
 // Drive
@@ -326,27 +314,6 @@ RetroShell::exec <Token::drive, Token::insert, Token::newdisk> (Arguments& argv,
     drive.insertNewDisk(type, PETName<16>("NEW DISK"));
 }
 
-template <> void
-RetroShell::exec <Token::drive, Token::inspect, Token::state> (Arguments& argv, long param)
-{
-    auto &drive = param ? drive9 : drive8;
-    dump(drive, Category::State);
-}
-
-template <> void
-RetroShell::exec <Token::drive, Token::inspect, Token::bankmap> (Arguments& argv, long param)
-{
-    auto &drive = param ? drive9 : drive8;
-    dump(drive, Category::BankMap);
-}
-
-template <> void
-RetroShell::exec <Token::drive, Token::inspect, Token::disk> (Arguments& argv, long param)
-{
-    auto &drive = param ? drive9 : drive8;
-    dump(drive, Category::Disk);
-}
-
 
 //
 // Datasette
@@ -371,12 +338,6 @@ RetroShell::exec <Token::datasette, Token::disconnect> (Arguments& argv, long pa
 }
 
 template <> void
-RetroShell::exec <Token::datasette, Token::inspect> (Arguments& argv, long param)
-{
-    dump(datasette, Category::State);
-}
-
-template <> void
 RetroShell::exec <Token::datasette, Token::rewind> (Arguments& argv, long param)
 {
     datasette.rewind();
@@ -394,17 +355,6 @@ RetroShell::exec <Token::datasette, Token::rewind, Token::to> (Arguments& argv, 
 // CPU
 //
 
-template <> void
-RetroShell::exec <Token::cpu, Token::inspect, Token::state> (Arguments& argv, long param)
-{
-    dump(cpu, Category::State);
-}
-
-template <> void
-RetroShell::exec <Token::cpu, Token::inspect, Token::registers> (Arguments& argv, long param)
-{
-    dump(cpu, Category::Registers);
-}
 
 //
 // CIA
@@ -434,35 +384,6 @@ RetroShell::exec <Token::cia, Token::set, Token::timerbbug> (Arguments &argv, lo
     c64.configure(OPT_TIMER_B_BUG, param, value);
 }
 
-template <> void
-RetroShell::exec <Token::cia, Token::inspect, Token::state> (Arguments& argv, long param)
-{
-    if (param == 0) {
-        dump(cia1, Category::State);
-    } else {
-        dump(cia2, Category::State);
-    }
-}
-
-template <> void
-RetroShell::exec <Token::cia, Token::inspect, Token::registers> (Arguments& argv, long param)
-{
-    if (param == 0) {
-        dump(cia1, Category::Registers);
-    } else {
-        dump(cia2, Category::Registers);
-    }
-}
-
-template <> void
-RetroShell::exec <Token::cia, Token::inspect, Token::tod> (Arguments& argv, long param)
-{
-    if (param == 0) {
-        dump(cia1.tod, Category::State);
-    } else {
-        dump(cia2.tod, Category::State);
-    }
-}
 
 //
 // VICII
@@ -502,18 +423,6 @@ template <> void
 RetroShell::exec <Token::vicii, Token::set, Token::sbcollisions> (Arguments &argv, long param)
 {
     c64.configure(OPT_SB_COLLISIONS, util::parseBool(argv.front()));
-}
-
-template <> void
-RetroShell::exec <Token::vicii, Token::inspect, Token::registers> (Arguments& argv, long param)
-{
-    dump(vic, Category::Registers);
-}
-
-template <> void
-RetroShell::exec <Token::vicii, Token::inspect, Token::state> (Arguments& argv, long param)
-{
-    dump(vic, Category::State);
 }
 
 
@@ -705,49 +614,15 @@ RetroShell::exec <Token::sid, Token::set, Token::pan> (Arguments& argv, long par
     c64.configure(OPT_AUDPAN, param, value);
 }
 
-template <> void
-RetroShell::exec <Token::sid, Token::inspect, Token::sid> (Arguments& argv, long param)
-{
-    dump(muxer, Category::State);
-}
-
-template <> void
-RetroShell::exec <Token::sid, Token::inspect, Token::state> (Arguments& argv, long param)
-{
-    auto value = util::parseNum(argv.front());
-    if (value < 0 || value > 3) throw VC64Error(ERROR_OPT_INVARG, "0, 1, 2, or 3");
-    dump(muxer.getSID(value), Category::State);
-}
-
-template <> void
-RetroShell::exec <Token::sid, Token::inspect, Token::registers> (Arguments& argv, long param)
-{
-    auto value = util::parseNum(argv.front());
-    if (value < 0 || value > 3) throw VC64Error(ERROR_OPT_INVARG, "0, 1, 2, or 3");
-    dump(muxer.getSID(value), Category::Registers);
-}
-
 
 //
 // Control port
 //
 
-template <> void
-RetroShell::exec <Token::controlport, Token::inspect> (Arguments& argv, long param)
-{
-    dump(param == 0 ? port1 : port2, Category::State);
-}
-
 
 //
 // Expansion port
 //
-
-template <> void
-RetroShell::exec <Token::expansion, Token::inspect> (Arguments& argv, long param)
-{
-    dump(expansionport, Category::State);
-}
 
 template <> void
 RetroShell::exec <Token::expansion, Token::attach> (Arguments& argv, long param)
@@ -762,12 +637,6 @@ RetroShell::exec <Token::expansion, Token::attach> (Arguments& argv, long param)
 //
 // Keyboard
 //
-
-template <> void
-RetroShell::exec <Token::keyboard, Token::inspect> (Arguments& argv, long param)
-{
-    dump(keyboard, Category::State);
-}
 
 template <> void
 RetroShell::exec <Token::keyboard, Token::type> (Arguments& argv, long param)
@@ -829,14 +698,6 @@ RetroShell::exec <Token::joystick, Token::config> (Arguments& argv, long param)
 }
 
 template <> void
-RetroShell::exec <Token::joystick, Token::inspect> (Arguments& argv, long param)
-{
-    dump(port1.joystick, Category::State);
-    *this << '\n';
-    dump(port2.joystick, Category::State);
-}
-
-template <> void
 RetroShell::exec <Token::joystick, Token::set, Token::autofire> (Arguments& argv, long param)
 {
     auto value = util::parseBool(argv.front());
@@ -871,14 +732,6 @@ RetroShell::exec <Token::mouse, Token::config> (Arguments& argv, long param)
 }
 
 template <> void
-RetroShell::exec <Token::mouse, Token::inspect> (Arguments& argv, long param)
-{
-    dump(port1.mouse, Category::State);
-    *this << '\n';
-    dump(port2.mouse, Category::State);
-}
-
-template <> void
 RetroShell::exec <Token::mouse, Token::set, Token::model> (Arguments &argv, long param)
 {
     auto value = util::parseEnum <MouseModelEnum> (argv.front());
@@ -908,12 +761,6 @@ template <> void
 RetroShell::exec <Token::parcable, Token::config> (Arguments& argv, long param)
 {
     dump(parCable, Category::Config);
-}
-
-template <> void
-RetroShell::exec <Token::parcable, Token::inspect> (Arguments& argv, long param)
-{
-    dump(parCable, Category::State);
 }
 
 }

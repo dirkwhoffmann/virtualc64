@@ -101,7 +101,7 @@ Interpreter::initDebugShell(Command &root)
     // Memory
     //
 
-    root.add({"memory", "inspect"},
+    root.add({"memory"},
              "Displays the component state",
              &RetroShell::exec <Token::memory, Token::inspect>);
 
@@ -114,20 +114,21 @@ Interpreter::initDebugShell(Command &root)
 
         string drive = (i == 0) ? "drive8" : "drive9";
 
-        root.add({drive, "inspect"},
-                 "Displays the component state");
+        root.add({drive},
+                 "Inspects the internal state",
+                 &RetroShell::exec <Token::drive, Token::inspect>);
 
-        root.add({drive, "inspect", "state"},
-                 "Displays the drive state",
-                 &RetroShell::exec <Token::drive, Token::inspect, Token::state>);
+        root.add({drive, "debug"},
+                 "Displays additional debug information",
+                 &RetroShell::exec <Token::drive, Token::debug>);
 
-        root.add({drive, "inspect", "bankmap"},
+        root.add({drive, "bankmap"},
                  "Displays the memory layout",
-                 &RetroShell::exec <Token::drive, Token::inspect, Token::bankmap>);
+                 &RetroShell::exec <Token::drive, Token::bankmap>);
 
-        root.add({drive, "inspect", "disk"},
+        root.add({drive, "disk"},
                  "Displays the disk state",
-                 &RetroShell::exec <Token::drive, Token::inspect, Token::disk>);
+                 &RetroShell::exec <Token::drive, Token::disk>);
     }
 
 
