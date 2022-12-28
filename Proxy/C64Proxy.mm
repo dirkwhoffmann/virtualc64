@@ -2584,6 +2584,16 @@ using namespace peddle;
     [self c64]->inspect();
 }
 
+- (EventInfo)eventInfo
+{
+    return [self c64]->getEventInfo();
+}
+
+- (EventSlotInfo)getEventSlotInfo:(NSInteger)slot
+{
+    return [self c64]->getSlotInfo(slot);
+}
+
 - (void)hardReset
 {
     [self c64]->hardReset();

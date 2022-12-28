@@ -86,12 +86,10 @@ class C64 : public Thread {
     // The current configuration
     C64Config config = {};
 
-    // The component which is currently observed by the debugger
-    InspectionTarget inspectionTarget;
+    // Result of the latest inspection
+    mutable EventInfo eventInfo = {};
+    mutable EventSlotInfo slotInfo[SLOT_COUNT];
 
-    // Counter used to trigger an auto-inspection
-    isize inspectionCounter = 0;
-    
 
     //
     // Sub components
@@ -223,7 +221,16 @@ public:
     // Returns a build number string for this release
     static string build();
 
-    
+    // Returns a textual description for an event
+    static const char *eventName(EventSlot slot, EventID id);
+
+
+    //
+    // Class methods
+    //
+
+
+
     //
     // Initializing
     //
@@ -303,15 +310,21 @@ private:
     
 public:
 
-    void inspect() { inspect(inspectionTarget); }
-    void autoInspect();
-    InspectionTarget getInspectionTarget() const { return inspectionTarget; }
-    void setInspectionTarget(InspectionTarget target);
+    InspectionTarget getInspectionTarget() const;
+    void setInspectionTarget(InspectionTarget target, Cycle trigger = 0);
     void removeInspectionTarget() { setInspectionTarget(INSPECTION_NONE); }
+
+
+    // void inspect() { inspect(inspectionTarget); }
+    // void autoInspect();
+
+    EventInfo getEventInfo() const { return C64Component::getInfo(eventInfo); }
+    EventSlotInfo getSlotInfo(isize nr) const;
 
 private:
 
-    void inspect(InspectionTarget target);
+    void inspectSlot(EventSlot nr) const;
+    // void inspect(InspectionTarget target);
 
     
     //
@@ -390,6 +403,7 @@ private:
     void _warpOff() override;
     void _debugOn() override;
     void _debugOff() override;
+    void _inspect() const override;
 
     
     //
@@ -573,6 +587,11 @@ public:
         data[s] = 0;
         trigger[s] = NEVER;
     }
+
+private:
+
+    // Services an inspection event
+    void processINSEvent(EventID id);
 
 
     //

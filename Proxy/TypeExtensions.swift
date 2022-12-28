@@ -7,6 +7,29 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
+extension EventSlot: CustomStringConvertible {
+
+    public var description: String {
+
+        switch self {
+
+        case .CIAA:     return "CIA 1"
+        case .CIAB:     return "CIA 2"
+        case .SEC:      return "Next secondary event"
+        case .DAT:      return "Datasette"
+        case .TER:      return "Next tertiary event"
+        case .DC8:      return "Disk Change Drive 8"
+        case .DC9:      return "Disk Change Drive 9"
+        case .KEY:      return "Auto typing"
+        case .INS:      return "Inspector"
+        case .COUNT:    return "???"
+
+        default:
+            fatalError()
+        }
+    }
+}
+
 extension FileType {
 
     init?(url: URL?) {

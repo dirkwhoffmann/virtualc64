@@ -168,6 +168,8 @@
 		506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54CB2032255A0026D8B4 /* RomDropView.swift */; };
 		50726F2B295B61C50031F2F5 /* InterpreterDebugCmds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2A295B61C50031F2F5 /* InterpreterDebugCmds.cpp */; };
 		50726F2D295B61E00031F2F5 /* RetroShellDebugCmds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2C295B61E00031F2F5 /* RetroShellDebugCmds.cpp */; };
+		50726F2F295C27360031F2F5 /* EventPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2E295C27360031F2F5 /* EventPanel.swift */; };
+		50726F31295C27470031F2F5 /* EventTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F30295C27470031F2F5 /* EventTableView.swift */; };
 		50763277202989D300575110 /* DialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* DialogController.swift */; };
 		50769B8A24BB1B87006FE743 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50769B8924BB1B87006FE743 /* Configuration.swift */; };
 		507887CC20B1858B00941F7E /* MemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507887CB20B1858B00941F7E /* MemTableView.swift */; };
@@ -587,6 +589,8 @@
 		506D54CB2032255A0026D8B4 /* RomDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDropView.swift; sourceTree = "<group>"; };
 		50726F2A295B61C50031F2F5 /* InterpreterDebugCmds.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = InterpreterDebugCmds.cpp; sourceTree = "<group>"; };
 		50726F2C295B61E00031F2F5 /* RetroShellDebugCmds.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RetroShellDebugCmds.cpp; sourceTree = "<group>"; };
+		50726F2E295C27360031F2F5 /* EventPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPanel.swift; sourceTree = "<group>"; };
+		50726F30295C27470031F2F5 /* EventTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableView.swift; sourceTree = "<group>"; };
 		50763276202989D300575110 /* DialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogController.swift; sourceTree = "<group>"; };
 		50769B8924BB1B87006FE743 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		507887CB20B1858B00941F7E /* MemTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemTableView.swift; sourceTree = "<group>"; };
@@ -1043,12 +1047,14 @@
 				5038CA9220B6C298000D9193 /* CIAPanel.swift */,
 				5038CA9420B6C2AC000D9193 /* VICPanel.swift */,
 				5038CA9620B6C2BE000D9193 /* SIDPanel.swift */,
+				50726F2E295C27360031F2F5 /* EventPanel.swift */,
 				507A499B24C8D64700DBF984 /* InstrTableView.swift */,
 				507A499D24C8D65700DBF984 /* TraceTableView.swift */,
 				507A499F24C8D66A00DBF984 /* GuardTableView.swift */,
 				507A49A124C8D71400DBF984 /* BankTableView.swift */,
 				507887CB20B1858B00941F7E /* MemTableView.swift */,
 				50FBB62C28294C29001366F9 /* WaveformView.swift */,
+				50726F30295C27470031F2F5 /* EventTableView.swift */,
 				506D4D0C20B331A00093C5C6 /* MyFormatter.swift */,
 			);
 			path = Inspector;
@@ -1868,6 +1874,7 @@
 				5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */,
 				50BE4B6E24E7FBE1008F39C9 /* Datatypes.swift in Sources */,
 				5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */,
+				50726F31295C27470031F2F5 /* EventTableView.swift in Sources */,
 				5007E1E826A70170000E7344 /* ParCable.cpp in Sources */,
 				5002FA7B21C2650600DA4BBC /* HardwareConf.swift in Sources */,
 				50A22A252618723200C9FB1E /* Canvas.swift in Sources */,
@@ -1927,6 +1934,7 @@
 				509280CF2930A1B6006E1966 /* PeddleUtils.cpp in Sources */,
 				504C438D24AF29AC00E69CAE /* VICII.cpp in Sources */,
 				507E7AA224FB897D00AB433C /* Screenshot.swift in Sources */,
+				50726F2F295C27360031F2F5 /* EventPanel.swift in Sources */,
 				50B1A61D25A2368D00201A2C /* DeviceDatabase.swift in Sources */,
 				50A22A1D261871E600C9FB1E /* Layer.swift in Sources */,
 				50ED5BF812DD99C000596417 /* Speedometer.swift in Sources */,

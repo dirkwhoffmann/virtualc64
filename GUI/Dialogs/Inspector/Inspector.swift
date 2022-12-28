@@ -274,13 +274,20 @@ class Inspector: DialogController {
     @IBOutlet weak var sidBufferUnderflows: NSTextField!
     @IBOutlet weak var sidBufferOverflows: NSTextField!
 
+    // Events panel
+    @IBOutlet weak var evCpuProgress: NSTextField!
+    @IBOutlet weak var evVicProgress: NSTextField!
+    @IBOutlet weak var evCia1Progress: NSTextField!
+    @IBOutlet weak var evCia2Progress: NSTextField!
+    @IBOutlet weak var evTableView: EventTableView!
+
     // Cached state of all C64 components
     var cpuInfo: CPUInfo!
     var ciaInfo: CIAInfo!
     var memInfo: MemInfo!
     var vicInfo: VICIIInfo!
     var sprInfo: SpriteInfo!
-    
+    var eventInfo: EventInfo!
     var isRunning = true
     
     // Number format selection (hexadecimal or decimal)
@@ -338,7 +345,7 @@ class Inspector: DialogController {
         // c64.inspect()
         
         if let id = panel.selectedTabViewItem?.label {
-            
+
             switch id {
                 
             case "CPU": refreshCPU(count: count, full: full)
@@ -346,7 +353,10 @@ class Inspector: DialogController {
             case "Memory": refreshMemory(count: count, full: full)
             case "VICII": refreshVIC(count: count, full: full)
             case "SID": refreshSID(count: count, full: full)
-            default: break
+            case "Events": refreshEvents(count: count, full: full)
+
+            default:
+                break
             }
         }
     }
@@ -465,12 +475,15 @@ extension Inspector: NSTabViewDelegate {
                     
             switch id {
                 
-            case "CPU":     parent.c64.inspectionTarget = .CPU
-            case "Memory":  parent.c64.inspectionTarget = .MEM
-            case "CIA":     parent.c64.inspectionTarget = .CIA
-            case "VICII":   parent.c64.inspectionTarget = .VIC
-            case "SID":     parent.c64.inspectionTarget = .SID
-            default:        break
+            case "CPU":     c64.inspectionTarget = .CPU
+            case "Memory":  c64.inspectionTarget = .MEM
+            case "CIA":     c64.inspectionTarget = .CIA
+            case "VICII":   c64.inspectionTarget = .VIC
+            case "SID":     c64.inspectionTarget = .SID
+            case "Events":  c64.inspectionTarget = .EVENTS
+
+            default:
+                break
             }
             
             fullRefresh()

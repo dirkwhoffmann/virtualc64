@@ -55,8 +55,8 @@ struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
 enum_long(SLOT)
 {
     // Primary slots
-    SLOT_CIA1,                      // CIA 1 execution
-    SLOT_CIA2,                      // CIA 2 execution
+    SLOT_CIAA,                      // CIA 1 execution
+    SLOT_CIAB,                      // CIA 2 execution
     SLOT_SEC,                       // Enables secondary slots
 
     // Secondary slots
@@ -85,19 +85,19 @@ struct EventSlotEnum : util::Reflection<EventSlotEnum, EventSlot>
     {
         switch (value) {
 
-            case SLOT_CIA1:  return "CIA1";
-            case SLOT_CIA2:  return "CIA2";
-            case SLOT_SEC:   return "SEC";
+            case SLOT_CIAA:     return "CIAA";
+            case SLOT_CIAB:     return "CIAB";
+            case SLOT_SEC:      return "SEC";
 
-            case SLOT_DAT:   return "DAT";
-            case SLOT_TER:   return "TER";
+            case SLOT_DAT:      return "DAT";
+            case SLOT_TER:      return "TER";
 
-            case SLOT_DC8:   return "DC8";
-            case SLOT_DC9:   return "DC9";
-            case SLOT_KEY:   return "KEY";
-            case SLOT_INS:   return "INS";
+            case SLOT_DC8:      return "DC8";
+            case SLOT_DC9:      return "DC9";
+            case SLOT_KEY:      return "KEY";
+            case SLOT_INS:      return "INS";
 
-            case SLOT_COUNT: return "???";
+            case SLOT_COUNT:    return "???";
         }
         return "???";
     }
@@ -154,7 +154,6 @@ enum_i8(EventID)
     INS_CIA,
     INS_VIC,
     INS_SID,
-    INS_PORTS,
     INS_EVENTS,
     INS_EVENT_COUNT
 };
@@ -227,7 +226,9 @@ enum_long(INSPECTION_TARGET)
     INSPECTION_CIA,
     INSPECTION_MEM,
     INSPECTION_VIC,
-    INSPECTION_SID
+    INSPECTION_SID,
+    INSPECTION_EVENTS
+
 };
 typedef INSPECTION_TARGET InspectionTarget;
 
@@ -267,6 +268,36 @@ typedef struct
     isize fps;
 }
 C64Config;
+
+typedef struct
+{
+    EventSlot slot;
+    EventID eventId;
+    const char *eventName;
+
+    // Trigger cycle of the event
+    Cycle trigger;
+    Cycle triggerRel;
+
+    // Trigger frame relative to the current frame
+    long frameRel;
+
+    // The trigger cycle translated to a beam position.
+    long vpos;
+    long hpos;
+}
+EventSlotInfo;
+
+typedef struct
+{
+    Cycle cpuProgress;
+    Cycle cia1Progress;
+    Cycle cia2Progress;
+    i64 frame;
+    long vpos;
+    long hpos;
+}
+EventInfo;
 
 
 //

@@ -191,6 +191,9 @@
 - (void) removeInspectionTarget;
 - (void)inspect;
 
+@property (readonly) EventInfo eventInfo;
+- (EventSlotInfo)getEventSlotInfo:(NSInteger)slot;
+
 - (void)hardReset;
 - (void)softReset;
 

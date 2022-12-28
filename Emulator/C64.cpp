@@ -47,6 +47,98 @@ C64::build()
     return version() + db + " (" + __DATE__ + " " + __TIME__ + ")";
 }
 
+const char *
+C64::eventName(EventSlot slot, EventID id)
+{
+    assert_enum(EventSlot, slot);
+
+    switch (slot) {
+
+        case SLOT_CIAA:
+        case SLOT_CIAB:
+
+            switch (id) {
+                case EVENT_NONE:    return "none";
+                case CIA_EXECUTE:   return "CIA_EXECUTE";
+                case CIA_WAKEUP:    return "CIA_WAKEUP";
+                default:            return "*** INVALID ***";
+            }
+            break;
+
+        case SLOT_SEC:
+
+            switch (id) {
+
+                case EVENT_NONE:    return "none";
+                case SEC_TRIGGER:   return "SEC_TRIGGER";
+                default:            return "*** INVALID ***";
+            }
+            break;
+
+        case SLOT_DAT:
+
+            switch (id) {
+
+                case EVENT_NONE:    return "none";
+                case DAT_EXECUTE:   return "DAT_EXECUTE";
+                default:            return "*** INVALID ***";
+            }
+            break;
+
+        case SLOT_TER:
+
+            switch (id) {
+
+                case EVENT_NONE:    return "none";
+                case TER_TRIGGER:   return "TER_TRIGGER";
+                default:            return "*** INVALID ***";
+            }
+            break;
+
+        case SLOT_DC8:
+        case SLOT_DC9:
+
+            switch (id) {
+
+                case EVENT_NONE:    return "none";
+                case DCH_INSERT:    return "DCH_INSERT";
+                case DCH_EJECT:     return "DCH_EJECT";
+                default:            return "*** INVALID ***";
+            }
+            break;
+
+        case SLOT_KEY:
+
+            switch (id) {
+
+                case EVENT_NONE:    return "none";
+                case KEY_PRESS:     return "KEY_PRESS";
+                case KEY_RELEASE:   return "KEY_RELEASE";
+                default:            return "*** INVALID ***";
+            }
+            break;
+
+        case SLOT_INS:
+
+            switch (id) {
+
+                case EVENT_NONE:    return "none";
+                case INS_C64:       return "INS_C64";
+                case INS_CPU:       return "INS_CPU";
+                case INS_MEM:       return "INS_MEM";
+                case INS_CIA:       return "INS_CIA";
+                case INS_VIC:       return "INS_VIC";
+                case INS_SID:       return "INS_SID";
+                case INS_EVENTS:    return "INS_EVENTS";
+                default:            return "*** INVALID ***";
+            }
+            break;
+
+        default:
+            fatalError;
+    }
+}
+
 C64::C64()
 {
     trace(RUN_DEBUG, "Creating virtual C64\n");
@@ -151,13 +243,6 @@ C64::_reset(bool hard)
 
     flags = 0;
     rasterCycle = 1;
-}
-
-void
-C64::setInspectionTarget(InspectionTarget target)
-{
-    assert_enum(InspectionTarget, target);
-    inspectionTarget = target;
 }
 
 void
@@ -683,6 +768,41 @@ C64::configure(C64Model model)
     }
 }
 
+EventSlotInfo
+C64::getSlotInfo(isize nr) const
+{
+    assert_enum(EventSlot, nr);
+
+    {   SYNCHRONIZED
+
+        // if (!isRunning()) inspectSlot(nr);
+        inspectSlot(nr);
+        return slotInfo[nr];
+    }
+}
+
+void
+C64::inspectSlot(EventSlot nr) const
+{
+    assert_enum(EventSlot, nr);
+
+    auto &info = slotInfo[nr];
+    auto cycle = trigger[nr];
+
+    info.slot = nr;
+    info.eventId = id[nr];
+    info.trigger = cycle;
+    info.triggerRel = cycle - cpu.clock;
+
+    // auto beam = pos + isize(AS_DMA_CYCLES(cycle - clock));
+
+    info.vpos = 0; // beam.v;
+    info.hpos = 0; // beam.h;
+    info.frameRel = 0; // long(beam.frame - pos.frame);
+
+    info.eventName = eventName((EventSlot)nr, id[nr]);
+}
+
 void
 C64::revertToFactorySettings()
 {
@@ -718,6 +838,54 @@ C64::overrideOption(Option option, i64 value)
     }
 
     return value;
+}
+
+InspectionTarget
+C64::getInspectionTarget() const
+{
+    switch(id[SLOT_INS]) {
+
+        case EVENT_NONE:  return INSPECTION_NONE;
+        case INS_C64:     return INSPECTION_C64;
+        case INS_CPU:     return INSPECTION_CPU;
+        case INS_MEM:     return INSPECTION_MEM;
+        case INS_CIA:     return INSPECTION_CIA;
+        case INS_VIC:     return INSPECTION_VIC;
+        case INS_SID:     return INSPECTION_SID;
+        case INS_EVENTS:  return INSPECTION_EVENTS;
+
+        default:
+            fatalError;
+    }
+}
+
+
+void
+C64::setInspectionTarget(InspectionTarget target, Cycle trigger)
+{
+    EventID id;
+
+    {   SUSPENDED
+
+        switch(target) {
+
+            case INSPECTION_NONE:    cancel<SLOT_INS>(); return;
+
+            case INSPECTION_C64:     id = INS_C64; break;
+            case INSPECTION_CPU:     id = INS_CPU; break;
+            case INSPECTION_MEM:     id = INS_MEM; break;
+            case INSPECTION_CIA:     id = INS_CIA; break;
+            case INSPECTION_VIC:     id = INS_VIC; break;
+            case INSPECTION_SID:     id = INS_SID; break;
+            case INSPECTION_EVENTS:  id = INS_EVENTS; break;
+
+            default:
+                fatalError;
+        }
+
+        scheduleRel<SLOT_INS>(trigger, id);
+        if (trigger == 0) processINSEvent(id);
+    }
 }
 
 C64::SyncMode
@@ -829,7 +997,7 @@ C64::_powerOn()
     hardReset();
 
     // Update the recorded debug information
-    inspect(INSPECTION_C64);
+    inspect();
 
     msgQueue.put(MSG_POWER_ON);
 }
@@ -839,8 +1007,8 @@ C64::_powerOff()
 {
     debug(RUN_DEBUG, "_powerOff\n");
 
-    // Update the recorded debug information for all components
-    inspect(INSPECTION_C64);
+    // Update the recorded debug information
+    inspect();
 
     msgQueue.put(MSG_POWER_OFF);
 }
@@ -864,8 +1032,8 @@ C64::_pause()
     // Finish the current instruction to reach a clean state
     finishInstruction();
     
-    // Update the recorded debug information for all components
-    inspect(INSPECTION_C64);
+    // Update the recorded debug information
+    inspect();
 
     msgQueue.put(MSG_PAUSE);
 }
@@ -897,15 +1065,30 @@ C64::_warpOff()
 void
 C64::_debugOn()
 {
-    // debug(RUN_DEBUG, "_debugOn\n");
-    // vic.updateVicFunctionTable();
+
 }
 
 void
 C64::_debugOff()
 {
-    // debug(RUN_DEBUG, "_debugOff\n");
-    // vic.updateVicFunctionTable();
+
+}
+
+void
+C64::_inspect() const
+{
+    SYNCHRONIZED
+
+    eventInfo.cpuProgress = cpu.clock;
+    eventInfo.cia1Progress = 0;
+    eventInfo.cia2Progress = 0;
+    eventInfo.frame = frame;
+    eventInfo.vpos = scanline;
+    eventInfo.hpos = rasterCycle;
+
+    for (EventSlot i = 0; i < SLOT_COUNT; i++) {
+        inspectSlot(i);
+    }
 }
 
 isize
@@ -924,37 +1107,6 @@ C64::save(u8 *buffer)
     C64Component::didSave();
 
     return result;
-}
-
-void
-C64::inspect(InspectionTarget target)
-{
-    // Never call this function from outside if the emulator is running
-    assert(!isRunning() || isEmulatorThread());
-
-    switch(target) {
-            
-        case INSPECTION_C64: C64Component::inspect(); break;
-        case INSPECTION_CPU: cpu.inspect(); break;
-        case INSPECTION_MEM: mem.inspect(); break;
-        case INSPECTION_CIA: cia1.inspect(); cia2.inspect(); break;
-        case INSPECTION_VIC: vic.inspect(); break;
-        case INSPECTION_SID: muxer.inspect(); break;
-            
-        default:
-            break;
-    }
-}
-
-void
-C64::autoInspect()
-{
-    // This function is called periodically by the CPU in debug mode
-    if (inspectionCounter-- == 0) {
-
-        inspect();
-        inspectionCounter = 25000;
-    }
 }
 
 void
@@ -1102,7 +1254,10 @@ C64::_executeOneCycle()
     if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle();
     if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle();
     if (iec.isDirtyC64Side) iec.updateIecLinesC64Side();
-    
+
+    // Process pending events
+    if (nextTrigger <= cycle) processEvents(cycle);
+
     // Second clock phase (o2 high)
     cpu.execute<MOS_6510>();
     if (drive8.needsEmulation) drive8.execute(durationOfOneCycle);
@@ -1177,13 +1332,15 @@ C64::processEvents(Cycle cycle)
     // Check primary slots
     //
 
-    if (isDue<SLOT_CIA1>(cycle)) {
+    if (isDue<SLOT_CIAA>(cycle)) {
 
         // NOT USED, YET
+        assert(false);
     }
-    if (isDue<SLOT_CIA2>(cycle)) {
+    if (isDue<SLOT_CIAB>(cycle)) {
 
         // NOT USED, YET
+        assert(false);
     }
 
     if (isDue<SLOT_SEC>(cycle)) {
@@ -1195,6 +1352,7 @@ C64::processEvents(Cycle cycle)
         if (isDue<SLOT_DAT>(cycle)) {
 
             // NOT USED, YET
+            assert(false);
         }
 
         if (isDue<SLOT_TER>(cycle)) {
@@ -1206,18 +1364,21 @@ C64::processEvents(Cycle cycle)
             if (isDue<SLOT_DC8>(cycle)) {
 
                 // NOT USED, YET
+                assert(false);
             }
             if (isDue<SLOT_DC9>(cycle)) {
 
                 // NOT USED, YET
+                assert(false);
             }
             if (isDue<SLOT_KEY>(cycle)) {
 
                 // NOT USED, YET
+                assert(false);
             }
             if (isDue<SLOT_INS>(cycle)) {
 
-                // NOT USED, YET
+                processINSEvent(id[SLOT_INS]);
             }
 
             // Determine the next trigger cycle for all tertiary slots
@@ -1242,6 +1403,27 @@ C64::processEvents(Cycle cycle)
         if (trigger[i] < next) next = trigger[i];
     }
     nextTrigger = next;
+}
+
+void
+C64::processINSEvent(EventID id)
+{
+    switch (id) {
+
+        case INS_C64:       inspect(); break;
+        case INS_CPU:       cpu.inspect(); break;
+        case INS_MEM:       mem.inspect(); break;
+        case INS_CIA:       cia1.inspect(); cia2.inspect(); break;
+        case INS_VIC:       vic.inspect(); break;
+        case INS_SID:       muxer.inspect(); break;
+        case INS_EVENTS:    _inspect(); break;
+
+        default:
+            fatalError;
+    }
+
+    // Reschedule event
+    rescheduleRel<SLOT_INS>((Cycle)(inspectionInterval * PAL_CYCLES_PER_SECOND));
 }
 
 void

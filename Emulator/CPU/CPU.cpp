@@ -272,8 +272,7 @@ CPU::watchpointReached(u16 addr) const
 void
 CPU::instructionLogged() const
 {
-    // Perform an inspection from time to time
-    c64.autoInspect();
+
 }
 
 //
