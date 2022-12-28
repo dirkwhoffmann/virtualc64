@@ -61,6 +61,16 @@ extension MyController: NSMenuItemValidation {
             return true
             
         // Keyboard menu
+        case #selector(MyController.mapLeftCmdKeyAction(_:)):
+            item.state = myAppDelegate.mapLeftCmdKey?.nr == item.tag ? .on : .off
+            return true
+        case #selector(MyController.mapRightCmdKeyAction(_:)):
+            print("item.tag = \(item.tag)")
+            item.state = myAppDelegate.mapRightCmdKey?.nr == item.tag ? .on : .off
+            return true
+        case #selector(MyController.mapCapsLockWarpAction(_:)):
+            item.state = myAppDelegate.mapCapsLockWarp ? .on : .off
+            return true
         case #selector(MyController.shiftLockAction(_:)):
             item.state = c64.keyboard.shiftLockIsPressed() ? .on : .off
             return true
@@ -480,7 +490,33 @@ extension MyController: NSMenuItemValidation {
 
         virtualKeyboard?.showWindow()
     }
-    
+
+    @IBAction func mapLeftCmdKeyAction(_ sender: NSMenuItem!) {
+
+        let s = sender.state
+        let tag = sender.tag
+        print("State: \(s) Tag: \(tag)")
+
+        myAppDelegate.mapLeftCmdKey = sender.state == .off ? C64Key(sender.tag) : nil
+        refreshStatusBar()
+    }
+
+    @IBAction func mapRightCmdKeyAction(_ sender: NSMenuItem!) {
+
+        let s = sender.state
+        let tag = sender.tag
+        print("State: \(s) Tag: \(tag)")
+
+        myAppDelegate.mapRightCmdKey = sender.state == .off ? C64Key(sender.tag) : nil
+        refreshStatusBar()
+    }
+
+    @IBAction func mapCapsLockWarpAction(_ sender: NSMenuItem!) {
+
+        myAppDelegate.mapCapsLockWarp = !myAppDelegate.mapCapsLockWarp
+        refreshStatusBar()
+    }
+
     @IBAction func clearKeyboardMatrixAction(_ sender: Any!) {
         
         c64.keyboard.releaseAll()

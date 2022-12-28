@@ -31,7 +31,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="tOL-V1-ZdE"/>
-                            <menuItem title="Preferences..." keyEquivalent="," id="3VY-9N-OZs">
+                            <menuItem title="Settings..." keyEquivalent="," id="3VY-9N-OZs">
                                 <connections>
                                     <action selector="preferencesAction:" target="-1" id="WOg-iI-awC"/>
                                 </connections>
@@ -115,25 +115,11 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="aWt-rp-gig"/>
-                            <menuItem title="Hardware" id="EFN-6a-U7b">
+                            <menuItem title="Configure..." keyEquivalent="" id="8Bd-jD-aLS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Hardware" id="OYK-nx-S5o">
-                                    <items>
-                                        <menuItem title="Configure" keyEquivalent="" id="8Bd-jD-aLS">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="configureAction:" target="-1" id="t8g-gP-hF2"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="FLK-oU-zli"/>
-                                        <menuItem title="Restore Factory Settings" id="wOE-dg-0WH">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="factorySettingsAction:" target="-1" id="hOC-g5-2ML"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
+                                <connections>
+                                    <action selector="configureAction:" target="-1" id="t8g-gP-hF2"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Inspector..." keyEquivalent="" id="lLA-nI-jYm">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
@@ -147,8 +133,19 @@
                                     <action selector="monitorAction:" target="-1" id="PAk-Ig-aX3"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Console..." keyEquivalent="^" id="A7q-Kf-Mey">
+                                <connections>
+                                    <action selector="consoleAction:" target="-1" id="8XI-rS-RBA"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Restore Factory Settings" id="wOE-dg-0WH">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="factorySettingsAction:" target="-1" id="hOC-g5-2ML"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="f6W-1J-YBf"/>
-                            <menuItem title="Take Snapshot" keyEquivalent="t" id="BX4-y5-PoI">
+                            <menuItem title="Take Snapshot" keyEquivalent="T" id="BX4-y5-PoI">
                                 <connections>
                                     <action selector="takeSnapshotAction:" target="-1" id="jhF-O1-8rn"/>
                                 </connections>
@@ -162,8 +159,7 @@
                             <menuItem isSeparatorItem="YES" id="74">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Take Screenshot" id="Tby-pB-6Ff">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Take Screenshot" keyEquivalent="3" id="Tby-pB-6Ff">
                                 <connections>
                                     <action selector="takeScreenshotAction:" target="-1" id="JuK-WR-Nhn"/>
                                 </connections>
@@ -181,12 +177,6 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="captureScreenAction:" target="-1" id="CS6-Je-gau"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Export Video..." hidden="YES" id="Ioi-Oq-Zhb">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="exportVideoAction:" target="-1" id="1VS-4R-cgP"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -224,15 +214,16 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="rh0-lG-FJ7"/>
+                            <menuItem title="Pause" keyEquivalent="P" id="430">
+                                <connections>
+                                    <action selector="pauseAction:" target="-1" id="505"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Reset" id="rL5-uj-zUT">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Reset" id="rdH-7k-lzO">
                                     <items>
-                                        <menuItem title="Hard" id="434">
-                                            <string key="keyEquivalent" base64-UTF8="YES">
-CA
-</string>
-                                            <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                        <menuItem title="Hard" keyEquivalent="R" id="434">
                                             <connections>
                                                 <action selector="resetAction:" target="-1" id="506"/>
                                             </connections>
@@ -246,33 +237,28 @@ CA
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Power Off" id="432">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="continueAction:" target="-1" id="484"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="zO4-BV-1XU"/>
+                            <menuItem title="Step Into" keyEquivalent="I" id="429">
+                                <connections>
+                                    <action selector="stepIntoAction:" target="-1" id="488"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Step Over" keyEquivalent="O" id="428">
+                                <connections>
+                                    <action selector="stepOverAction:" target="-1" id="502"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="qq8-Qm-VmD"/>
-                            <menuItem title="Debug" id="414">
-                                <menu key="submenu" title="Debug" id="415">
-                                    <items>
-                                        <menuItem title="Pause" keyEquivalent="p" id="430">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                            <connections>
-                                                <action selector="pauseAction:" target="-1" id="505"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Continue" keyEquivalent="&gt;" id="432">
-                                            <connections>
-                                                <action selector="continueAction:" target="-1" id="484"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Step Into" keyEquivalent="I" id="429">
-                                            <connections>
-                                                <action selector="stepIntoAction:" target="-1" id="488"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Step Over" keyEquivalent="O" id="428">
-                                            <connections>
-                                                <action selector="stepOverAction:" target="-1" id="502"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
+                            <menuItem title="Toggle Warp Mode" keyEquivalent="W" id="CFb-bT-O6K">
+                                <connections>
+                                    <action selector="stepOverAction:" target="-1" id="bzn-aK-GEY"/>
+                                </connections>
                             </menuItem>
                         </items>
                     </menu>
@@ -293,7 +279,7 @@ CA
                                     <action selector="runToolbarCustomizationPalette:" target="-1" id="BLv-4t-F3C"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Show Status Bar" keyEquivalent="b" id="nZ5-yO-Ch3">
+                            <menuItem title="Show Status Bar" keyEquivalent="B" id="nZ5-yO-Ch3">
                                 <connections>
                                     <action selector="toggleStatusBarAction:" target="-1" id="XV7-PD-saG"/>
                                 </connections>
@@ -316,13 +302,69 @@ CA
                 <menuItem title="Keyboard" id="212">
                     <menu key="submenu" title="Keyboard" id="213">
                         <items>
-                            <menuItem title="Show ..." id="q11-Wg-Mnp">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Show ..." keyEquivalent="K" id="q11-Wg-Mnp">
                                 <connections>
                                     <action selector="stickyKeyboardAction:" target="-1" id="Fbk-tO-FNe"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="SGb-qh-sOW"/>
+                            <menuItem title="Map Left ⌘ Key to" id="iII-GB-xeG">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Map Left ⌘ Key to" id="zlN-wG-lva">
+                                    <items>
+                                        <menuItem title="Commodore Key" tag="49" id="Hg2-1Q-YKb">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="mapLeftCmdKeyAction:" target="-1" id="MXo-UH-EaC"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Run Stop Key" tag="33" id="djR-jn-DKl">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="mapLeftCmdKeyAction:" target="-1" id="DJp-1a-p1c"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Control Key" tag="17" id="iTS-pz-cMx">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="mapLeftCmdKeyAction:" target="-1" id="Zvz-eL-KFk"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Map Right ⌘ Key to" id="d3K-Rc-Ian">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Map Right ⌘ Key to" id="EOb-rf-I1t">
+                                    <items>
+                                        <menuItem title="Commodore Key" tag="49" id="8aX-Ro-7wg">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="mapRightCmdKeyAction:" target="-1" id="pcU-nG-n4A"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Run Stop Key" tag="33" id="Jd8-HF-OYw">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="mapRightCmdKeyAction:" target="-1" id="cZH-dA-Lbg"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Control Key" tag="17" id="nc5-cp-JTa">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="mapRightCmdKeyAction:" target="-1" id="qFA-D9-7Rq"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Control Warp Mode with Caps Lock Key" id="LsT-vV-EEh">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="mapCapsLockWarpAction:" target="-1" id="iBj-OP-tBT"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="AR2-lh-xvH"/>
                             <menuItem title="Press" id="rVt-Hc-gQG" userLabel="Press">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Press" id="Xvx-By-SBS">
@@ -463,10 +505,10 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="QAf-kY-aho"/>
-                            <menuItem title="Clear Keyboard Matrix" id="8aX-Ro-7wg">
+                            <menuItem title="Reset Keyboard Handler" id="my5-zD-yIr">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="clearKeyboardMatrixAction:" target="-1" id="sGi-3e-BCA"/>
+                                    <action selector="clearKeyboardMatrixAction:" target="-1" id="JfK-eC-d6p"/>
                                 </connections>
                             </menuItem>
                         </items>

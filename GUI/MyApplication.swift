@@ -20,8 +20,8 @@ class MyApplication: NSApplication {
      *
      * Like for all other secondary keys (Control, Option, etc.), function
      * 'flagsChanged' is invoked when the Command key is pressed or released.
-     * However, this method is called too late in the command chain to intercept,
-     * i.e., menu actions will already be carried out.
+     * However, this method is called too late in the command chain to
+     * intercept, i.e., menu actions will already be carried out.
      *
      * The solution taken here is to override function sendEvent in the
      * Application class. This delegation function is called early enough in
@@ -67,7 +67,14 @@ class MyApplication: NSApplication {
 
     // Replace the old document controller by instantiating a custom controller
     let myDocumentController = MyDocumentController()
-    
+
+    // Indicates if the Command keys should be mapped to a C64 key
+    var mapLeftCmdKey: C64Key?
+    var mapRightCmdKey: C64Key?
+
+    // Indicates if the CapsLock key should control warp mode
+    var mapCapsLockWarp = true
+
     // Preferences
     var pref: Preferences!
     var prefController: PreferencesController?

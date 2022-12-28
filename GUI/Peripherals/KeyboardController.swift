@@ -95,7 +95,22 @@ class KeyboardController: NSObject {
         case kVK_RightOption:
             rightOption = event.modifierFlags.contains(.option) ? !rightOption : false
             rightOption ? keyDown(with: MacKey.rightOption) : keyUp(with: MacKey.rightOption)
-                        
+
+        case kVK_Command where myAppDelegate.mapLeftCmdKey != nil:
+            let key = myAppDelegate.mapLeftCmdKey!
+            leftCommand = event.modifierFlags.contains(.command) ? !leftCommand : false
+            myApp.disableCmdKey = leftCommand
+            leftCommand ? keyDown(with: key) : keyUp(with: key)
+
+        case kVK_RightCommand where myAppDelegate.mapRightCmdKey != nil:
+            let key = myAppDelegate.mapRightCmdKey!
+            rightCommand = event.modifierFlags.contains(.command) ? !rightCommand : false
+            myApp.disableCmdKey = rightCommand
+            rightCommand ? keyDown(with: key) : keyUp(with: key)
+
+        case kVK_CapsLock where myAppDelegate.mapCapsLockWarp:
+            pref.warpMode = event.modifierFlags.contains(.capsLock) ? .on : .off
+
         default:
             break
         }
@@ -131,18 +146,23 @@ class KeyboardController: NSObject {
                 for key in c64Keys {
                     keyboard.pressKey(atRow: key.row, col: key.col)
                 }
+
+                parent.virtualKeyboard?.refresh()
             }
         }
-        parent.virtualKeyboard?.refresh()
     }
     
     func keyDown(with macKey: MacKey, keyMap: [MacKey: C64Key]) {
         
-        if let key = keyMap[macKey] {
-            keyboard.pressKey(key.nr)
-        }
+        if let c64Key = keyMap[macKey] { keyDown(with: c64Key) }
     }
-        
+
+    func keyDown(with c64Key: C64Key) {
+
+        keyboard.pressKey(c64Key.nr)
+        parent.virtualKeyboard?.refresh()
+    }
+
     func keyUp(with macKey: MacKey) {
         
         // Check if this key is used to emulate a game device
@@ -167,17 +187,22 @@ class KeyboardController: NSObject {
                     keyboard.releaseKey(atRow: key.row, col: key.col)
                 }
             }
+
+            parent.virtualKeyboard?.refresh()
         }
-        parent.virtualKeyboard?.refresh()
     }
     
     func keyUp(with macKey: MacKey, keyMap: [MacKey: C64Key]) {
         
-        if let key = keyMap[macKey] {
-            keyboard.releaseKey(key.nr)
-        }
+        if let c64Key = keyMap[macKey] { keyUp(with: c64Key) }
     }
-    
+
+    func keyUp(with c64Key: C64Key) {
+
+        keyboard.releaseKey(c64Key.nr)
+        parent.virtualKeyboard?.refresh()
+    }
+
     // Standard physical key map
     static let standardKeyMap: [MacKey: C64Key] = [
         
