@@ -132,7 +132,22 @@ C64::_initialize()
 void
 C64::_reset(bool hard)
 {
+    // auto insEvent = id[SLOT_INS];
+
     RESET_SNAPSHOT_ITEMS(hard)
+
+    // Initialize all event slots
+    for (isize i = 0; i < SLOT_COUNT; i++) {
+
+        trigger[i] = NEVER;
+        id[i] = (EventID)0;
+        data[i] = 0;
+    }
+
+    // Schedule initial events
+    // scheduleAbs<SLOT_CIA1>(cpu.clock, CIA_EXECUTE);
+    // scheduleAbs<SLOT_CIA2>(cpu.clock, CIA_EXECUTE);
+    // if (insEvent) scheduleRel <SLOT_INS> (0, insEvent);
 
     flags = 0;
     rasterCycle = 1;
@@ -1153,6 +1168,80 @@ C64::endFrame()
     datasette.vsyncHandler();
     retroShell.eofHandler();
     recorder.vsyncHandler();
+}
+
+void
+C64::processEvents(Cycle cycle)
+{
+    //
+    // Check primary slots
+    //
+
+    if (isDue<SLOT_CIA1>(cycle)) {
+
+        // NOT USED, YET
+    }
+    if (isDue<SLOT_CIA2>(cycle)) {
+
+        // NOT USED, YET
+    }
+
+    if (isDue<SLOT_SEC>(cycle)) {
+
+        //
+        // Check secondary slots
+        //
+
+        if (isDue<SLOT_DAT>(cycle)) {
+
+            // NOT USED, YET
+        }
+
+        if (isDue<SLOT_TER>(cycle)) {
+
+            //
+            // Check tertiary slots
+            //
+
+            if (isDue<SLOT_DC8>(cycle)) {
+
+                // NOT USED, YET
+            }
+            if (isDue<SLOT_DC9>(cycle)) {
+
+                // NOT USED, YET
+            }
+            if (isDue<SLOT_KEY>(cycle)) {
+
+                // NOT USED, YET
+            }
+            if (isDue<SLOT_INS>(cycle)) {
+
+                // NOT USED, YET
+            }
+
+            // Determine the next trigger cycle for all tertiary slots
+            Cycle next = trigger[SLOT_TER + 1];
+            for (isize i = SLOT_TER + 2; i < SLOT_COUNT; i++) {
+                if (trigger[i] < next) next = trigger[i];
+            }
+            rescheduleAbs<SLOT_TER>(next);
+        }
+
+        // Determine the next trigger cycle for all secondary slots
+        Cycle next = trigger[SLOT_SEC + 1];
+        for (isize i = SLOT_SEC + 2; i <= SLOT_TER; i++) {
+            if (trigger[i] < next) next = trigger[i];
+        }
+        rescheduleAbs<SLOT_SEC>(next);
+    }
+
+    // Determine the next trigger cycle for all primary slots
+    Cycle next = trigger[0];
+    for (isize i = 1; i <= SLOT_SEC; i++) {
+        if (trigger[i] < next) next = trigger[i];
+    }
+    nextTrigger = next;
 }
 
 void
