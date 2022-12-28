@@ -23,8 +23,8 @@ struct InputDevice {
  * All remaining gamepads are added dynamically when HID devices are connected.
  */
 class GamePadManager {
-    
-    // Reference to the the controller
+
+    // Reference to the main controller
     var parent: MyController!
     
     // Reference to the HID manager
@@ -64,7 +64,7 @@ class GamePadManager {
         gamePads[2]!.keyMap = 2
                 
         // Tell the mouse event receiver where the mouse resides
-        parent.metal.mouse = gamePads[0]!
+        parent.metal.mouse1 = gamePads[0]!
 
         // Prepare to accept HID devices
         let deviceCriteria = [
@@ -79,6 +79,10 @@ class GamePadManager {
             [
                 kIOHIDDeviceUsagePageKey: kHIDPage_GenericDesktop,
                 kIOHIDDeviceUsageKey: kHIDUsage_GD_MultiAxisController
+            ],
+            [
+                kIOHIDDeviceUsagePageKey: kHIDPage_GenericDesktop,
+                kIOHIDDeviceUsageKey: kHIDUsage_GD_Mouse
             ]
         ]
         
@@ -196,6 +200,16 @@ class GamePadManager {
     
     func addDevice(slot: Int, device: IOHIDDevice) {
         
+        if device.isMouse {
+            
+            // Create a GamePad object
+            gamePads[slot] = GamePad(manager: self, device: device, type: .MOUSE)
+            
+            // Inform the mouse event receiver about the new mouse
+            parent.metal.mouse2 = gamePads[slot]
+            
+        } else {
+        
         // Open device
         if !device.open() { return }
         
@@ -207,6 +221,7 @@ class GamePadManager {
         IOHIDDeviceRegisterInputValueCallback(device,
                                               gamePads[slot]!.inputValueCallback,
                                               hidContext)
+        }
     }
     
     func hidDeviceRemoved(context: UnsafeMutableRawPointer?,

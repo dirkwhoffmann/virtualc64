@@ -16,7 +16,10 @@ public class MetalView: MTKView {
     var prefs: Preferences { return parent.pref }
     
     // Reference to the first mouse (internal, always connected)
-    var mouse: GamePad?
+    var mouse1: GamePad?
+
+    // Reference to the second mouse (USB, usually unconnected)
+    var mouse2: GamePad?
 
     // Shows whether the emulator possesses of the mouse
     var gotMouse = false

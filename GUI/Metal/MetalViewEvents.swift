@@ -92,28 +92,44 @@ public extension MetalView {
             return
         }
 
-        mouse!.processMouseEvents(events: [.PRESS_LEFT])
+        if mouse2 == nil || event.deviceID != 0 {
+            mouse1!.processMouseEvents(events: [.PRESS_LEFT])
+        } else {
+            mouse2!.processMouseEvents(events: [.PRESS_LEFT])
+        }
     }
     
     override func mouseUp(with event: NSEvent) {
 
         if !gotMouse { return }
 
-        mouse!.processMouseEvents(events: [.RELEASE_LEFT])
+        if mouse2 == nil || event.deviceID != 0 {
+            mouse1!.processMouseEvents(events: [.RELEASE_LEFT])
+        } else {
+            mouse2!.processMouseEvents(events: [.RELEASE_LEFT])
+        }
     }
 
     override func rightMouseDown(with event: NSEvent) {
 
         if !gotMouse { return }
         
-        mouse!.processMouseEvents(events: [.PRESS_RIGHT])
+        if mouse2 == nil || event.deviceID != 0 {
+            mouse1!.processMouseEvents(events: [.PRESS_RIGHT])
+        } else {
+            mouse2!.processMouseEvents(events: [.PRESS_RIGHT])
+        }
     }
 
     override func rightMouseUp(with event: NSEvent) {
 
         if !gotMouse { return }
         
-        mouse!.processMouseEvents(events: [.RELEASE_RIGHT])
+        if mouse2 == nil || event.deviceID != 0 {
+            mouse1!.processMouseEvents(events: [.RELEASE_RIGHT])
+        } else {
+            mouse2!.processMouseEvents(events: [.RELEASE_RIGHT])
+        }
     }
         
     override func mouseMoved(with event: NSEvent) {
@@ -127,8 +143,13 @@ public extension MetalView {
         let scaleX = (256.0 * 400.0) / frame.width
         let scaleY = (256.0 * 300.0) / frame.height
         let dxdy = NSPoint(x: dx * scaleX, y: dy * scaleY)
-                
-        mouse?.processMouseEvents(delta: dxdy)
+
+        // Report the new location to the mouse
+        if mouse2 == nil || event.deviceID != 0 {
+            mouse1!.processMouseEvents(delta: dxdy)
+        } else {
+            mouse2!.processMouseEvents(delta: dxdy)
+        }
     }
     
     override func mouseDragged(with event: NSEvent) {

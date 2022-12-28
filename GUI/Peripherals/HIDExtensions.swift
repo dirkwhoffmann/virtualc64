@@ -93,16 +93,25 @@ extension IOHIDDevice {
          * evaluates the Transport property and classifies each wireless device
          * as external.
          */
-        if transportKey.hasPrefix("Bluetooth") == true {
-            return false
-        }
         
-        return builtInKey == "1"
+        let bluetooth = transportKey.hasPrefix("Bluetooth")
+        let spi = transportKey.hasPrefix("SPI")
+        let builtIn = builtInKey == "1"
+
+        // Classify all SPI connected devices as internal
+        if spi { return true }
+
+        // For mice, evaluate the BuiltIn key
+        if isMouse { return builtIn }
+
+        // For other device types, consider each Bluetooth device as external
+        if bluetooth { return false }
+        
+        // If it wasn't a Bluetooth device, evaluate the BuitIn key
+        return builtIn
     }
     
     var usageDescription: String? {
-        
-        debug(.hid, "kHIDUsage_GD_Mouse = \(kHIDUsage_GD_Mouse)")
         
         if let usage = Int(usageKey) {
             
