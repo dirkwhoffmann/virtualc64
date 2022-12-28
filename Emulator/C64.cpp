@@ -796,9 +796,17 @@ C64::inspectSlot(EventSlot nr) const
 
     // auto beam = pos + isize(AS_DMA_CYCLES(cycle - clock));
 
-    info.vpos = 0; // beam.v;
-    info.hpos = 0; // beam.h;
-    info.frameRel = 0; // long(beam.frame - pos.frame);
+    // Compute clock at pos (0,0)
+    auto clock00 = cpu.clock - vic.getCyclesPerLine() * scanline - rasterCycle;
+
+    // Compute the number of elapsed cycles since then
+    auto diff = cycle - clock00;
+
+    // Split into frame / line / cycle
+    info.frameRel = diff / vic.getCyclesPerFrame();
+    diff = diff % vic.getCyclesPerFrame();
+    info.vpos = diff / vic.getCyclesPerLine();
+    info.hpos = diff % vic.getCyclesPerLine();
 
     info.eventName = eventName((EventSlot)nr, id[nr]);
 }
@@ -1080,8 +1088,8 @@ C64::_inspect() const
     SYNCHRONIZED
 
     eventInfo.cpuProgress = cpu.clock;
-    eventInfo.cia1Progress = 0;
-    eventInfo.cia2Progress = 0;
+    eventInfo.cia1Progress = cia1.sleeping ? cia1.sleepCycle : cpu.clock;
+    eventInfo.cia2Progress = cia2.sleeping ? cia2.sleepCycle : cpu.clock;
     eventInfo.frame = frame;
     eventInfo.vpos = scanline;
     eventInfo.hpos = rasterCycle;

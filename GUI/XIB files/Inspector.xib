@@ -4044,26 +4044,17 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <box fixedFrame="YES" title="VICII progress" translatesAutoresizingMaskIntoConstraints="NO" id="x3w-09-rEk">
-                                            <rect key="frame" x="213" y="308" width="197" height="65"/>
+                                            <rect key="frame" x="213" y="315" width="197" height="58"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <view key="contentView" id="q72-Gb-VfL">
-                                                <rect key="frame" x="4" y="5" width="189" height="45"/>
+                                                <rect key="frame" x="4" y="5" width="189" height="38"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Ps-Km-KKZ">
-                                                        <rect key="frame" x="18" y="13" width="110" height="17"/>
+                                                        <rect key="frame" x="-2" y="7" width="193" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="123.123.123.123 " id="Opl-SR-1VI">
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="123.123.123.123 " id="Opl-SR-1VI">
                                                             <font key="font" size="11" name="CourierNewPS-BoldMT"/>
-                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EC0-dA-mGe">
-                                                        <rect key="frame" x="128" y="18" width="43" height="14"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Frames" id="0JD-Ec-jRc">
-                                                            <font key="font" metaFont="message" size="11"/>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
@@ -4072,26 +4063,17 @@
                                             </view>
                                         </box>
                                         <box fixedFrame="YES" title="CPU progress" translatesAutoresizingMaskIntoConstraints="NO" id="R7K-Hq-ZPa">
-                                            <rect key="frame" x="14" y="308" width="197" height="65"/>
+                                            <rect key="frame" x="14" y="315" width="197" height="58"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <view key="contentView" id="xqe-8U-JLq">
-                                                <rect key="frame" x="4" y="5" width="189" height="45"/>
+                                                <rect key="frame" x="4" y="5" width="189" height="38"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ch7-St-52g">
-                                                        <rect key="frame" x="18" y="13" width="110" height="17"/>
+                                                        <rect key="frame" x="-2" y="7" width="193" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="123.123.123.123 " id="TgS-3D-df8">
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="123.123.123.123 " id="TgS-3D-df8">
                                                             <font key="font" size="11" name="CourierNewPS-BoldMT"/>
-                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Ca-In-TgP">
-                                                        <rect key="frame" x="130" y="18" width="39" height="14"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Cycles" id="ZSm-gn-RCq">
-                                                            <font key="font" metaFont="message" size="11"/>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
@@ -4100,26 +4082,17 @@
                                             </view>
                                         </box>
                                         <box fixedFrame="YES" title="CIA 2 progress" translatesAutoresizingMaskIntoConstraints="NO" id="NpX-Fv-gIV">
-                                            <rect key="frame" x="611" y="308" width="197" height="65"/>
+                                            <rect key="frame" x="611" y="315" width="197" height="58"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <view key="contentView" id="L89-JU-WbU">
-                                                <rect key="frame" x="4" y="5" width="189" height="45"/>
+                                                <rect key="frame" x="4" y="5" width="189" height="38"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="103-pS-OUT">
-                                                        <rect key="frame" x="18" y="14" width="110" height="17"/>
+                                                        <rect key="frame" x="-2" y="7" width="193" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="123.123.123.123 " id="Nzd-dX-gfz">
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="123.123.123.123 " id="Nzd-dX-gfz">
                                                             <font key="font" size="11" name="CourierNewPS-BoldMT"/>
-                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aLZ-q7-R6G">
-                                                        <rect key="frame" x="130" y="18" width="39" height="14"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Cycles" id="nBm-Sm-Ebn">
-                                                            <font key="font" metaFont="message" size="11"/>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
@@ -4128,26 +4101,17 @@
                                             </view>
                                         </box>
                                         <box fixedFrame="YES" title="CIA 1 progress" translatesAutoresizingMaskIntoConstraints="NO" id="OZw-tt-XzG">
-                                            <rect key="frame" x="412" y="308" width="197" height="65"/>
+                                            <rect key="frame" x="412" y="315" width="197" height="58"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <view key="contentView" id="Qol-l9-qLn">
-                                                <rect key="frame" x="4" y="5" width="189" height="45"/>
+                                                <rect key="frame" x="4" y="5" width="189" height="38"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sbz-2T-iH8">
-                                                        <rect key="frame" x="18" y="13" width="110" height="17"/>
+                                                        <rect key="frame" x="-2" y="7" width="193" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="123.123.123.123 " id="fdo-cc-03S">
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="123.123.123.123 " id="fdo-cc-03S">
                                                             <font key="font" size="11" name="CourierNewPS-BoldMT"/>
-                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AHr-yk-Vkl">
-                                                        <rect key="frame" x="128" y="18" width="39" height="14"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Cycles" id="Q7g-Kl-6Hy">
-                                                            <font key="font" metaFont="message" size="11"/>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
@@ -4156,14 +4120,14 @@
                                             </view>
                                         </box>
                                         <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EIt-5D-VpU">
-                                            <rect key="frame" x="17" y="17" width="788" height="284"/>
+                                            <rect key="frame" x="17" y="10" width="788" height="301"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <clipView key="contentView" drawsBackground="NO" id="Rfm-Nm-4LL">
-                                                <rect key="frame" x="1" y="1" width="786" height="282"/>
+                                                <rect key="frame" x="1" y="1" width="786" height="299"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView wantsLayer="YES" focusRingType="exterior" verticalHuggingPriority="750" tag="1" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="15" headerView="15K-8g-xO5" id="igj-n2-UYG" userLabel="Primary Events" customClass="EventTableView" customModule="vAmiga" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="786" height="254"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="786" height="271"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>

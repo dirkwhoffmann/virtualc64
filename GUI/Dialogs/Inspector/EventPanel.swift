@@ -18,10 +18,17 @@ extension Inspector {
 
         cacheEvents()
 
+        evCpuProgress.stringValue = "\(eventInfo.cpuProgress) Cycles"
+        evVicProgress.stringValue = "\(eventInfo.frame) Frames"
+        evCia1Progress.stringValue = "\(eventInfo.cia1Progress) Cycles"
+        evCia2Progress.stringValue = "\(eventInfo.cia2Progress) Cycles"
+
+        /*
         evCpuProgress.integerValue = Int(eventInfo.cpuProgress)
         evVicProgress.integerValue = Int(eventInfo.frame)
         evCia1Progress.integerValue = Int(eventInfo.cia1Progress)
         evCia2Progress.integerValue = Int(eventInfo.cia2Progress)
+        */
 
         evTableView.refresh(count: count, full: full)
     }
