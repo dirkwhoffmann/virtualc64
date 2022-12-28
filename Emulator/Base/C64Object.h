@@ -46,7 +46,8 @@ namespace vc64 {
 
 enum class Category
 {
-    BankMap, Checksum, Config, Defaults, Disk, Dma, Events, Inspection, Layout, Registers, State
+    BankMap, Breakpoints, Catchpoints, Checksum, Config, Debug, Defaults, Disk,
+    Dma, Events, Inspection, Layout, Registers, State, Watchpoints
 };
 
 class C64Object {

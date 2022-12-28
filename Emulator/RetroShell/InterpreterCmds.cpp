@@ -131,8 +131,6 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              &RetroShell::exec <Token::c64, Token::config>);
 
-    // TODO: ENABLE THESE COMMANDS
-    /*
     root.add({"c64", "set"},
              "Configures the component");
 
@@ -143,7 +141,6 @@ Interpreter::initCommandShell(Command &root)
     root.add({"c64", "set", "fps"}, { Arg::value },
              "Sets the frames per seconds",
              &RetroShell::exec <Token::c64, Token::set, Token::fps>);
-    */
 
     root.add({"c64", "power"},
              "Switches the C64 on or off");
@@ -156,32 +153,17 @@ Interpreter::initCommandShell(Command &root)
              "Switches the C64 off",
              &RetroShell::exec <Token::c64, Token::power, Token::off>);
 
-    root.add({"c64", "run"},
-             "Starts the emulator thread",
-             &RetroShell::exec <Token::c64, Token::run>);
-
-    root.add({"c64", "pause"},
-             "Halts the emulator thread",
-             &RetroShell::exec <Token::c64, Token::pause>);
-    
     root.add({"c64", "reset"},
              "Performs a hard reset",
              &RetroShell::exec <Token::c64, Token::reset>);
-    
-    root.add({"c64", "inspect"},
-             "Displays the component state");
-
-    root.add({"c64", "inspect", "state"},
-             "Displays the current state",
-             &RetroShell::exec <Token::c64, Token::inspect, Token::state>);
-
-    root.add({"c64", "inspect", "defaults"},
-             "Displays the user defaults storage",
-             &RetroShell::exec <Token::c64, Token::inspect, Token::defaults>);
 
     root.add({"c64", "init"}, { C64ModelEnum::argList() },
              "Initializes the emulator with factory settings",
              &RetroShell::exec <Token::c64, Token::init>);
+
+    root.add({"c64", "defaults"},
+             "Displays the user defaults storage",
+             &RetroShell::exec <Token::c64, Token::defaults>);
 
     
     //
@@ -210,10 +192,6 @@ Interpreter::initCommandShell(Command &root)
     root.add({"memory", "flash"}, { Arg::path },
              "Flashes a file into memory",
              &RetroShell::exec <Token::memory, Token::flash>);
-
-    root.add({"memory", "inspect"},
-             "Displays the component state",
-             &RetroShell::exec <Token::memory, Token::inspect>);
 
     
     //
@@ -247,21 +225,6 @@ Interpreter::initCommandShell(Command &root)
         root.add({drive, "newdisk"}, { DOSTypeEnum::argList() },
                  "Inserts a new blank disk",
                  &RetroShell::exec <Token::drive, Token::insert, Token::newdisk>);
-        
-        root.add({drive, "inspect"},
-                 "Displays the component state");
-        
-        root.add({drive, "inspect", "state"},
-                 "Displays the drive state",
-                 &RetroShell::exec <Token::drive, Token::inspect, Token::state>);
-        
-        root.add({drive, "inspect", "bankmap"},
-                 "Displays the memory layout",
-                 &RetroShell::exec <Token::drive, Token::inspect, Token::bankmap>);
-        
-        root.add({drive, "inspect", "disk"},
-                 "Displays the disk state",
-                 &RetroShell::exec <Token::drive, Token::inspect, Token::disk>);
     }
     
     
@@ -281,10 +244,6 @@ Interpreter::initCommandShell(Command &root)
              "Disconnects the datasette",
              &RetroShell::exec <Token::datasette, Token::disconnect>);
 
-    root.add({"datasette", "inspect"},
-             "Displays the component state",
-             &RetroShell::exec <Token::datasette, Token::inspect>);
-
     root.add({"datasette", "rewind"},
              "Rewinds the tape",
              &RetroShell::exec <Token::datasette, Token::rewind>);
@@ -297,17 +256,6 @@ Interpreter::initCommandShell(Command &root)
     //
     // CPU
     //
-
-    root.add({"cpu", "inspect"},
-             "Displays the component state");
-
-    root.add({"cpu", "inspect", "state"},
-             "Displays the current state",
-             &RetroShell::exec <Token::cpu, Token::inspect, Token::state>);
-
-    root.add({"cpu", "inspect", "registers"},
-             "Displays the current register values",
-             &RetroShell::exec <Token::cpu, Token::inspect, Token::registers>);
 
     
     //
@@ -332,23 +280,9 @@ Interpreter::initCommandShell(Command &root)
         root.add({cia, "set", "timerbbug"}, { Arg::onoff },
                  "Enables or disables the timer B hardware bug",
                  &RetroShell::exec <Token::cia, Token::set, Token::timerbbug>);
-        
-        root.add({cia, "inspect"},
-                 "Displays the component state");
-        
-        root.add({cia, "inspect", "state"},
-                 "Displays the current state",
-                 &RetroShell::exec <Token::cia, Token::inspect, Token::state>);
-        
-        root.add({cia, "inspect", "registers"},
-                 "Displays the current register values",
-                 &RetroShell::exec <Token::cia, Token::inspect, Token::registers>);
-        
-        root.add({cia, "inspect", "tod"},
-                 "Displays the state of the TOD clock",
-                 &RetroShell::exec <Token::cia, Token::inspect, Token::tod>);
     }
-    
+
+
     //
     // VICII
     //
@@ -379,17 +313,6 @@ Interpreter::initCommandShell(Command &root)
     root.add({"vicii", "set", "sbcollisions"}, { Arg::onoff },
              "Enables or disables sprite-background collision detection",
              &RetroShell::exec <Token::vicii, Token::set, Token::sbcollisions>);
-    
-    root.add({"vicii", "inspect"},
-             "Displays the internal state");
-
-    root.add({"vicii", "inspect", "registers"},
-             "Displays the register contents",
-             &RetroShell::exec <Token::vicii, Token::inspect, Token::registers>);
-
-    root.add({"vicii", "inspect", "state"},
-             "Displays the current state",
-             &RetroShell::exec <Token::vicii, Token::inspect, Token::state>);
 
     
     //
@@ -559,23 +482,13 @@ Interpreter::initCommandShell(Command &root)
     root.add({"sid", "set", "pan", "channel3"}, { Arg::value },
              "Sets the pan for the fourth SID",
              &RetroShell::exec <Token::sid, Token::set, Token::pan>, 3);
-    
-    root.add({"sid", "inspect"},
-             "Displays the internal state");
 
-    root.add({"sid", "inspect", "state"}, { Arg::value },
-             "Displays the current state of a single SID instance",
-             &RetroShell::exec <Token::sid, Token::inspect, Token::state>);
-
-    root.add({"sid", "inspect", "registers"},
-             "Displays the registers of a single SID instance",
-             &RetroShell::exec <Token::sid, Token::inspect, Token::registers>);
-    
     
     //
     // Control port
     //
 
+    /*
     for (isize i = 0; i < 2; i++) {
 
         string port = (i == 0) ? "controlport1" : "controlport2";
@@ -584,15 +497,11 @@ Interpreter::initCommandShell(Command &root)
                  "Displays the internal state",
                  &RetroShell::exec <Token::controlport, Token::inspect>);
     }
-    
+    */
     
     //
     // Expansion port
     //
-
-    root.add({"expansion", "inspect"},
-             "Displays the internal state",
-             &RetroShell::exec <Token::expansion, Token::inspect>);
 
     root.add({"expansion", "attach"}, { Arg::path },
              "Attaches a cartridge",
@@ -602,10 +511,6 @@ Interpreter::initCommandShell(Command &root)
     //
     // Keyboard
     //
-
-    root.add({"keyboard", "inspect"},
-             "Displays the internal state",
-             &RetroShell::exec <Token::keyboard, Token::inspect>);
 
     root.add({"keyboard", "type"},
              "Types a command");
@@ -646,10 +551,6 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              &RetroShell::exec <Token::joystick, Token::config>);
 
-    root.add({"joystick", "inspect"},
-             "Displays the internal state",
-             &RetroShell::exec <Token::joystick, Token::inspect>);
-    
     root.add({"joystick", "set"},
              "Configures the component");
 
@@ -674,10 +575,6 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              &RetroShell::exec <Token::mouse, Token::config>);
 
-    root.add({"mouse", "inspect"},
-             "Displays the internal state",
-             &RetroShell::exec <Token::mouse, Token::inspect>);
-    
     root.add({"mouse", "set"},
              "Configures the component");
 
@@ -701,10 +598,6 @@ Interpreter::initCommandShell(Command &root)
     root.add({"parcable", "config"},
              "Displays the current configuration",
              &RetroShell::exec <Token::parcable, Token::config>);
-
-    root.add({"parcable", "inspect"},
-             "Displays the internal state",
-             &RetroShell::exec <Token::parcable, Token::inspect>);
 }
 
 }

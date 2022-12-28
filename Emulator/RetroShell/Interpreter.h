@@ -19,21 +19,21 @@ namespace vc64 {
 
 enum class Token
 {
-    about, accuracy, attach, audiate, autofire, autosync, bankmap, brightness,
+    about, accuracy, at, attach, audiate, autofire, autosync, bankmap, bp, brightness,
     bullets, c64, caccesses, checksums, chip, cia, clear, close, config,
-    connect, contrast, controlport, counter, cpu, cutout, datasette, debug, defaultbb,
-    defaultfs, defaults, delay, device, devices, disconnect, disk, dmadebugger,
-    drive, dsksync, easteregg, eject, engine, events, expansion, fastsid,
+    connect, cont, contrast, controlport, counter, cp, cpu, cutout, datasette, debug, defaultbb,
+    defaultfs, defaults, del, delay, device, devices, disable, disassemble, disconnect, disk, dmadebugger,
+    drive, dsksync, easteregg, enable, eject, engine, events, expansion, fastsid,
     filename, filter, flash, fpsmode, fps, frame, gaccesses, gluelogic,
-    graydotbug, help, hide, iaccesses, idle, init, insert, inspect, joystick,
+    graydotbug, help, hide, iaccesses, idle, ignore, init, insert, inspect, joystick, jump,
     keyboard, keyset, left, list, load, lock, memory, model, monitor, mouse,
-    newdisk, none, off, on, open, paccesses, palette, pan, parcable, pause,
+    newdisk, next, none, off, on, open, paccesses, palette, pan, parcable, pause,
     poll, power, press, raccesses, raminitpattern, registers, regression,
     release, reset, resid, revision, rewind, right, rom, run, saccesses,
     sampling, saturation, save, saveroms, sbcollisions, screenshot, searchpath,
     set, setup, shakedetector, shiftlock, show, sid, slow, slowramdelay,
     slowrammirror, source, speed, sscollisions, state, step, to, tod,
-    timerbbug, type, unmappingtype, velocity, vicii, volume, wait
+    timerbbug, type, unmappingtype, velocity, vicii, volume, wait, wp
 };
 
 struct TooFewArgumentsError : public util::ParseError {

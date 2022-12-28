@@ -45,15 +45,15 @@ RetroShell::exec <Token::close> (Arguments &argv, long param)
 template <> void
 RetroShell::exec <Token::help> (Arguments &argv, long param)
 {
-    retroShell.help(argv.empty() ? "" : argv.front());
+    help(argv.empty() ? "" : argv.front());
 }
 
 template <> void
 RetroShell::exec <Token::easteregg> (Arguments& argv, long param)
 {
-    retroShell << "GREETINGS PROFESSOR HOFFMANN." << '\n' << '\n';
-    retroShell << "THE ONLY WINNING MOVE IS NOT TO PLAY." << '\n' << '\n';
-    retroShell << "HOW ABOUT A NICE GAME OF CHESS?" << '\n';
+    *this << "GREETINGS PROFESSOR HOFFMANN." << '\n' << '\n';
+    *this << "THE ONLY WINNING MOVE IS NOT TO PLAY." << '\n' << '\n';
+    *this << "HOW ABOUT A NICE GAME OF CHESS?" << '\n';
 }
 
 template <> void
@@ -209,18 +209,6 @@ RetroShell::exec <Token::c64, Token::power, Token::off> (Arguments &argv, long p
 }
 
 template <> void
-RetroShell::exec <Token::c64, Token::run> (Arguments &argv, long param)
-{
-    c64.run();
-}
-
-template <> void
-RetroShell::exec <Token::c64, Token::pause> (Arguments &argv, long param)
-{
-    c64.pause();
-}
-
-template <> void
 RetroShell::exec <Token::c64, Token::reset> (Arguments &argv, long param)
 {
     c64.hardReset();
@@ -236,13 +224,7 @@ RetroShell::exec <Token::c64, Token::init> (Arguments &argv, long param)
 }
 
 template <> void
-RetroShell::exec <Token::c64, Token::inspect, Token::state> (Arguments &argv, long param)
-{
-    dump(c64, Category::State);
-}
-
-template <> void
-RetroShell::exec <Token::c64, Token::inspect, Token::defaults> (Arguments &argv, long param)
+RetroShell::exec <Token::c64, Token::defaults> (Arguments &argv, long param)
 {
     dump(c64, Category::Defaults);
 }
