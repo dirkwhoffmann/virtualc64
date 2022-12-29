@@ -166,7 +166,6 @@
 		506D4D0D20B331A00093C5C6 /* MyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D4D0C20B331A00093C5C6 /* MyFormatter.swift */; };
 		506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54CB2032255A0026D8B4 /* RomDropView.swift */; };
 		50726F2B295B61C50031F2F5 /* InterpreterDebugCmds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2A295B61C50031F2F5 /* InterpreterDebugCmds.cpp */; };
-		50726F2D295B61E00031F2F5 /* RetroShellDebugCmds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2C295B61E00031F2F5 /* RetroShellDebugCmds.cpp */; };
 		50726F2F295C27360031F2F5 /* EventPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2E295C27360031F2F5 /* EventPanel.swift */; };
 		50726F31295C27470031F2F5 /* EventTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F30295C27470031F2F5 /* EventTableView.swift */; };
 		50763277202989D300575110 /* DialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* DialogController.swift */; };
@@ -586,7 +585,6 @@
 		506D4D0C20B331A00093C5C6 /* MyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFormatter.swift; sourceTree = "<group>"; };
 		506D54CB2032255A0026D8B4 /* RomDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDropView.swift; sourceTree = "<group>"; };
 		50726F2A295B61C50031F2F5 /* InterpreterDebugCmds.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = InterpreterDebugCmds.cpp; sourceTree = "<group>"; };
-		50726F2C295B61E00031F2F5 /* RetroShellDebugCmds.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RetroShellDebugCmds.cpp; sourceTree = "<group>"; };
 		50726F2E295C27360031F2F5 /* EventPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPanel.swift; sourceTree = "<group>"; };
 		50726F30295C27470031F2F5 /* EventTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableView.swift; sourceTree = "<group>"; };
 		50763276202989D300575110 /* DialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogController.swift; sourceTree = "<group>"; };
@@ -1090,7 +1088,6 @@
 				50B7E2692813F8B000A405A3 /* RetroShellTypes.h */,
 				5036E0AE261AEF000048E66A /* RetroShell.h */,
 				5036E0B3261AEF000048E66A /* RetroShell.cpp */,
-				50726F2C295B61E00031F2F5 /* RetroShellDebugCmds.cpp */,
 				50B7E26B2813F8C400A405A3 /* TextStorage.h */,
 				50B7E26A2813F8C400A405A3 /* TextStorage.cpp */,
 				5036E0B4261AEF000048E66A /* Command.h */,
@@ -1857,7 +1854,6 @@
 				5018BFAB24B4843200551848 /* Primitives.swift in Sources */,
 				50B579B7281436F6001D8621 /* StringUtils.cpp in Sources */,
 				50176C810A6F7357009E80BD /* C64Proxy.mm in Sources */,
-				50726F2D295B61E00031F2F5 /* RetroShellDebugCmds.cpp in Sources */,
 				50AA3EC12616F62500C96EDB /* MemUtils.cpp in Sources */,
 				504C437624AF29AC00E69CAE /* P00File.cpp in Sources */,
 				5038CA9520B6C2AC000D9193 /* VICPanel.swift in Sources */,

@@ -205,24 +205,7 @@ private:
     // Prints help messages for a given command string
     void help(const string &command);
 
-
-    //
-    // Command handlers
-    //
-    
-public:
-
-    template <Token t1>
-    void exec(Arguments& argv, long param) throws;
-    template <Token t1, Token t2>
-    void exec(Arguments& argv, long param) throws;
-    template <Token t1, Token t2, Token t3>
-    void exec(Arguments& argv, long param) throws;
-    template <Token t1, Token t2, Token t3, Token t4>
-    void exec(Arguments& argv, long param) throws;
-
-private:
-    
+    // Reroutes the output of the component's dump function to the shell
     void dump(C64Component &component, Category category);
     
     

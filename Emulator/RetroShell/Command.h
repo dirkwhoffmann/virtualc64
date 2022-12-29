@@ -63,9 +63,6 @@ struct Command {
     // Command handler
     std::function<void (Arguments&, long)> callback = nullptr;
 
-    // Command handler (DEPRECATED)
-    void (RetroShell::*action)(Arguments&, long) = nullptr;
-
     // Additional argument passed to the command handler
     long param = 0;
 
@@ -98,25 +95,7 @@ struct Command {
              const std::vector<string> &optionalArgs,
              const string &help,
              std::function<void (Arguments&, long)> func, long param = 0);
-
-    // DEPRECATED
-    void add(const std::vector<string> &tokens,
-             const string &help,
-             void (RetroShell::*action)(Arguments&, long), long param = 0);
-
-    // DEPRECATED
-    void add(const std::vector<string> &tokens,
-             const std::vector<string> &args,
-             const string &help,
-             void (RetroShell::*action)(Arguments&, long), long param = 0);
-
-    // DEPRECATED
-    void add(const std::vector<string> &tokens,
-             const std::vector<string> &requiredArgs,
-             const std::vector<string> &optionalArgs,
-             const string &help,
-             void (RetroShell::*action)(Arguments&, long), long param = 0);
-
+    
     // Marks a command as hidden
     void hide(const std::vector<string> &tokens);
 
