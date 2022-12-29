@@ -31,27 +31,54 @@ Interpreter::initDebugShell(Command &root)
 
     root.add({"pause"},
              "Pauses emulation",
-             &RetroShell::exec <Token::pause>);
+             [this](Arguments& argv, long value) {
+
+        c64.pause();
+    });
 
     root.add({"continue"},
              "Continues emulation",
-             &RetroShell::exec <Token::cont>);
+             [this](Arguments& argv, long value) {
+
+        c64.run();
+    });
 
     root.add({"step"},
              "Steps into the next instruction",
-             &RetroShell::exec <Token::step>);
+             [this](Arguments& argv, long value) {
+
+        c64.stepInto();
+    });
 
     root.add({"next"},
              "Steps over the next instruction",
-             &RetroShell::exec <Token::next>);
+             [this](Arguments& argv, long value) {
+
+        c64.stepOver();
+    });
 
     root.add({"goto"}, { Arg::address },
              "Redirects the program counter",
-             &RetroShell::exec <Token::jump>);
+             [this](Arguments& argv, long value) {
 
-    root.add({"disassemble"}, { Arg::address },
+        retroShell << "TODO\n";
+        // cpu.jump((u32)parseNum(argv));
+    });
+
+    root.add({"disassemble"}, { }, { Arg::address },
              "Runs disassembler",
-             &RetroShell::exec <Token::disassemble>);
+             [this](Arguments& argv, long value) {
+
+        retroShell << "TODO\n";
+        /*
+        std::stringstream ss;
+
+        auto addr = argv.empty() ? cpu.getPC0() : u32(parseNum(argv));
+        cpu.disassembleRange(ss, addr, 16);
+
+        retroShell << '\n' << ss << '\n';
+        */
+    });
 
 
     root.newGroup("Debugging components");
@@ -90,11 +117,17 @@ Interpreter::initDebugShell(Command &root)
 
     root.add({"c64", ""},
              "Inspects the internal state",
-             &RetroShell::exec <Token::c64, Token::inspect>);
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(c64, Category::Inspection);
+    });
 
     root.add({"c64", ""},
              "Displays additional debug information",
-             &RetroShell::exec <Token::c64, Token::debug>);
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(c64, Category::Debug);
+    });
 
 
     //
@@ -103,7 +136,10 @@ Interpreter::initDebugShell(Command &root)
 
     root.add({"memory"},
              "Displays the component state",
-             &RetroShell::exec <Token::memory, Token::inspect>);
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(c64, Category::State);
+    });
 
 
     //
@@ -116,19 +152,35 @@ Interpreter::initDebugShell(Command &root)
 
         root.add({drive},
                  "Inspects the internal state",
-                 &RetroShell::exec <Token::drive, Token::inspect>);
+                 [this](Arguments& argv, long value) {
+
+            auto &drive = value ? drive9 : drive8;
+            retroShell.dump(drive, Category::Inspection);
+        });
 
         root.add({drive, "debug"},
                  "Displays additional debug information",
-                 &RetroShell::exec <Token::drive, Token::debug>);
+                 [this](Arguments& argv, long value) {
+
+            auto &drive = value ? drive9 : drive8;
+            retroShell.dump(drive, Category::Debug);
+        });
 
         root.add({drive, "bankmap"},
                  "Displays the memory layout",
-                 &RetroShell::exec <Token::drive, Token::bankmap>);
+                 [this](Arguments& argv, long value) {
+
+            auto &drive = value ? drive9 : drive8;
+            retroShell.dump(drive, Category::BankMap);
+        });
 
         root.add({drive, "disk"},
                  "Displays the disk state",
-                 &RetroShell::exec <Token::drive, Token::disk>);
+                 [this](Arguments& argv, long value) {
+
+            auto &drive = value ? drive9 : drive8;
+            retroShell.dump(drive, Category::Disk);
+        });
     }
 
 
@@ -137,25 +189,38 @@ Interpreter::initDebugShell(Command &root)
     //
 
 
-    root.add({"datasette", "inspect"},
-             "Displays the component state",
-             &RetroShell::exec <Token::datasette, Token::inspect>);
+    root.add({"datasette", ""},
+             "Inspects the internal state",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(datasette, Category::State);
+    });
 
 
     //
     // CPU
     //
 
-    root.add({"cpu", "inspect"},
-             "Displays the component state");
+    root.add({"cpu", ""},
+             "Inspects the internal state",
+             [this](Arguments& argv, long value) {
 
-    root.add({"cpu", "inspect", "state"},
-             "Displays the current state",
-             &RetroShell::exec <Token::cpu, Token::inspect, Token::state>);
+        retroShell.dump(cpu, Category::Inspection);
+    });
 
-    root.add({"cpu", "inspect", "registers"},
+    root.add({"cpu", "debug"},
+             "Displays additional debug information",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(cpu, Category::Debug);
+    });
+
+    root.add({"cpu", "registers"},
              "Displays the current register values",
-             &RetroShell::exec <Token::cpu, Token::inspect, Token::registers>);
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(cpu, Category::Registers);
+    });
 
 
     //
@@ -166,20 +231,53 @@ Interpreter::initDebugShell(Command &root)
 
         string cia = (i == 0) ? "cia1" : "cia1";
 
-        root.add({cia, "inspect"},
-                 "Displays the component state");
+        root.add({cia, ""},
+                 "Displays the component state",
+                 [this](Arguments& argv, long value) {
 
-        root.add({cia, "inspect", "state"},
+            if (value == 0) {
+                retroShell.dump(cia1, Category::Inspection);
+            } else {
+                retroShell.dump(cia2, Category::Inspection);
+            }
+
+        }, i);
+
+        root.add({cia, "debug"},
                  "Displays the current state",
-                 &RetroShell::exec <Token::cia, Token::inspect, Token::state>);
+                 [this](Arguments& argv, long value) {
 
-        root.add({cia, "inspect", "registers"},
+            if (value == 0) {
+                retroShell.dump(cia1, Category::Debug);
+            } else {
+                retroShell.dump(cia2, Category::Debug);
+            }
+
+        }, i);
+
+        root.add({cia, "registers"},
                  "Displays the current register values",
-                 &RetroShell::exec <Token::cia, Token::inspect, Token::registers>);
+                 [this](Arguments& argv, long value) {
 
-        root.add({cia, "inspect", "tod"},
+            if (value == 0) {
+                retroShell.dump(cia1, Category::Registers);
+            } else {
+                retroShell.dump(cia2, Category::Registers);
+            }
+
+        }, i);
+
+        root.add({cia, "tod"},
                  "Displays the state of the TOD clock",
-                 &RetroShell::exec <Token::cia, Token::inspect, Token::tod>);
+                 [this](Arguments& argv, long value) {
+
+            if (value == 0) {
+                retroShell.dump(cia1.tod, Category::State);
+            } else {
+                retroShell.dump(cia2.tod, Category::State);
+            }
+
+        }, i);
     }
 
 
@@ -187,32 +285,38 @@ Interpreter::initDebugShell(Command &root)
     // VICII
     //
 
-    root.add({"vicii", "inspect"},
-             "Displays the internal state");
+    root.add({"vicii", ""},
+             "Inspects the internal state",
+             [this](Arguments& argv, long value) {
 
-    root.add({"vicii", "inspect", "registers"},
-             "Displays the register contents",
-             &RetroShell::exec <Token::vicii, Token::inspect, Token::registers>);
+        retroShell.dump(vic, Category::Inspection);
+    });
 
-    root.add({"vicii", "inspect", "state"},
-             "Displays the current state",
-             &RetroShell::exec <Token::vicii, Token::inspect, Token::state>);
+    root.add({"vicii", "debug"},
+             "Displays additional debug information",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(vic, Category::Debug);
+    });
 
 
     //
     // SID
     //
 
-    root.add({"sid", "inspect"},
-             "Displays the internal state");
+    root.add({"sid", ""},
+             "Inspects the internal state",
+             [this](Arguments& argv, long value) {
 
-    root.add({"sid", "inspect", "state"}, { Arg::value },
-             "Displays the current state of a single SID instance",
-             &RetroShell::exec <Token::sid, Token::inspect, Token::state>);
+        retroShell.dump(muxer, Category::Inspection);
+    });
 
-    root.add({"sid", "inspect", "registers"},
-             "Displays the registers of a single SID instance",
-             &RetroShell::exec <Token::sid, Token::inspect, Token::registers>);
+    root.add({"sid", "debug"},
+             "Displays additional debug information",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(muxer, Category::Debug);
+    });
 
 
     //
@@ -223,9 +327,12 @@ Interpreter::initDebugShell(Command &root)
 
         string port = (i == 0) ? "controlport1" : "controlport2";
 
-        root.add({port, "inspect"},
-                 "Displays the internal state",
-                 &RetroShell::exec <Token::controlport, Token::inspect>);
+        root.add({port, ""},
+                 "Inspects the internal state",
+                 [this](Arguments& argv, long value) {
+
+            retroShell.dump(value == 0 ? port1 : port2, Category::Inspection);
+        });
     }
 
 
@@ -233,45 +340,64 @@ Interpreter::initDebugShell(Command &root)
     // Expansion port
     //
 
-    root.add({"expansion", "inspect"},
-             "Displays the internal state",
-             &RetroShell::exec <Token::expansion, Token::inspect>);
+    root.add({"expansion", ""},
+             "Inspects the internal state",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(expansionport, Category::Inspection);
+    });
 
 
     //
     // Keyboard
     //
 
-    root.add({"keyboard", "inspect"},
-             "Displays the internal state",
-             &RetroShell::exec <Token::keyboard, Token::inspect>);
+    root.add({"keyboard", ""},
+             "Inspects the internal state",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(keyboard, Category::Inspection);
+    });
 
 
     //
     // Joystick
     //
 
-    root.add({"joystick", "inspect"},
-             "Displays the internal state",
-             &RetroShell::exec <Token::joystick, Token::inspect>);
+    root.add({"joystick", ""},
+             "Inspects the internal state",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(port1.joystick, Category::State);
+        retroShell << '\n';
+        retroShell.dump(port2.joystick, Category::State);
+    });
 
 
     //
     // Mouse
     //
 
-    root.add({"mouse", "inspect"},
-             "Displays the internal state",
-             &RetroShell::exec <Token::mouse, Token::inspect>);
+    root.add({"mouse", ""},
+             "Inspects the internal state",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(port1.mouse, Category::State);
+        retroShell << '\n';
+        retroShell.dump(port2.mouse, Category::State);
+    });
 
 
     //
     // Parallel cable
     //
 
-    root.add({"parcable", "inspect"},
-             "Displays the internal state",
-             &RetroShell::exec <Token::parcable, Token::inspect>);
+    root.add({"parcable"},
+             "Inspects the internal state",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(parCable, Category::State);
+    });
 }
 
 
