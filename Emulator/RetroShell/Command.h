@@ -11,6 +11,7 @@
 
 #include "Aliases.h"
 #include <vector>
+#include <functional>
 
 namespace vc64 {
 
@@ -60,6 +61,9 @@ struct Command {
     std::vector<Command> subCommands;
 
     // Command handler
+    std::function<void (Arguments&, long)> callback = nullptr;
+
+    // Command handler (DEPRECATED)
     void (RetroShell::*action)(Arguments&, long) = nullptr;
 
     // Additional argument passed to the command handler
@@ -82,14 +86,31 @@ struct Command {
 
     void add(const std::vector<string> &tokens,
              const string &help,
+             std::function<void (Arguments&, long)> func, long param = 0);
+
+    void add(const std::vector<string> &tokens,
+             const std::vector<string> &args,
+             const string &help,
+             std::function<void (Arguments&, long)> func, long param = 0);
+
+    void add(const std::vector<string> &tokens,
+             const std::vector<string> &requiredArgs,
+             const std::vector<string> &optionalArgs,
+             const string &help,
+             std::function<void (Arguments&, long)> func, long param = 0);
+
+    // DEPRECATED
+    void add(const std::vector<string> &tokens,
+             const string &help,
              void (RetroShell::*action)(Arguments&, long), long param = 0);
 
+    // DEPRECATED
     void add(const std::vector<string> &tokens,
              const std::vector<string> &args,
              const string &help,
              void (RetroShell::*action)(Arguments&, long), long param = 0);
 
-
+    // DEPRECATED
     void add(const std::vector<string> &tokens,
              const std::vector<string> &requiredArgs,
              const std::vector<string> &optionalArgs,

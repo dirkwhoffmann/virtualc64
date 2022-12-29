@@ -67,7 +67,10 @@ public:
 
     // Reverts everything to factory settings
     void prepare(C64 &c64, C64Model model);
-    
+
+    // Runs a test case
+    void run(string path);
+
     // Creates the test image and exits the emulator
     void dumpTexture(C64 &c64);
     void dumpTexture(C64 &c64, const string &filename);

@@ -170,10 +170,10 @@ Interpreter::exec(const Arguments &argv, bool verbose)
     if ((next = current->seek(""))) current = next;
 
     // Error out if no command handler is present
-    if (current->action == nullptr && !args.empty()) {
+    if (current->action == nullptr && !current->callback && !args.empty()) {
         throw util::ParseError(args.front());
     }
-    if (current->action == nullptr && args.empty()) {
+    if (current->action == nullptr && !current->callback && args.empty()) {
         throw TooFewArgumentsError(current->fullName);
     }
 
@@ -182,7 +182,11 @@ Interpreter::exec(const Arguments &argv, bool verbose)
     if ((isize)args.size() > current->maxArgs()) throw TooManyArgumentsError(current->fullName);
 
     // Call the command handler
-    (retroShell.*(current->action))(args, current->param);
+    if (current->callback) {
+        current->callback(args, current->param);
+    } else {
+        (retroShell.*(current->action))(args, current->param);
+    }
 }
 
 void

@@ -37,6 +37,17 @@ RegressionTester::prepare(C64 &c64, C64Model model)
 }
 
 void
+RegressionTester::run(string path)
+{
+    if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
+
+    auto file = PRGFile(path);
+    c64.flash(file, 0);
+
+    keyboard.autoType("run\n");
+}
+
+void
 RegressionTester::dumpTexture(C64 &c64)
 {
     dumpTexture(c64, dumpTexturePath);

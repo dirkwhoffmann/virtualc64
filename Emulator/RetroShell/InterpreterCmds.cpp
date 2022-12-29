@@ -24,31 +24,59 @@ Interpreter::initCommons(Command &root)
 
     root.add({"."},
              "Enters or exists the debugger",
-             &RetroShell::exec <Token::debug>);
+             [this](Arguments& argv, long value) {
+
+        retroShell.clear();
+        switchInterpreter();
+        retroShell.welcome();
+    });
 
     root.add({"clear"},
              "Clears the console window",
-             &RetroShell::exec <Token::clear>);
+             [this](Arguments& argv, long value) {
+
+        retroShell.clear();
+    });
 
     root.add({"close"},
              "Hides the console window",
-             &RetroShell::exec <Token::close>);
+             [this](Arguments& argv, long value) {
+
+        msgQueue.put(MSG_CLOSE_CONSOLE);
+    });
 
     root.add({"help"}, { }, {Arg::command},
              "Prints usage information",
-             &RetroShell::exec <Token::help>);
+             [this](Arguments& argv, long value) {
+
+        retroShell.help(argv.empty() ? "" : argv.front());
+    });
 
     root.add({"joshua"},
              "",
-             &RetroShell::exec <Token::easteregg>);
+             [this](Arguments& argv, long value) {
+
+        retroShell << "\nGREETINGS PROFESSOR HOFFMANN.\n";
+        retroShell << "THE ONLY WINNING MOVE IS NOT TO PLAY.\n";
+        retroShell << "HOW ABOUT A NICE GAME OF CHESS?\n\n";
+    });
 
     root.add({"source"}, {Arg::path},
              "Processes a command script",
-             &RetroShell::exec <Token::source>);
+             [this](Arguments& argv, long value) {
+
+        auto stream = std::ifstream(argv.front());
+        if (!stream.is_open()) throw VC64Error(ERROR_FILE_NOT_FOUND, argv.front());
+        retroShell.execScript(stream);
+    });
 
     root.add({"wait"}, {Arg::value, Arg::seconds},
              "Pauses the execution of a command script",
-             &RetroShell::exec <Token::wait>);
+             [this](Arguments& argv, long value) {
+
+        retroShell.wakeUp = cpu.clock + parseNum(argv) * vic.getFrequency();
+        throw ScriptInterruption("");
+    });
 }
 
 void
@@ -60,7 +88,7 @@ Interpreter::initCommandShell(Command &root)
     // Top-level commands
     //
 
-    root.newGroup("Regression testing");
+    root.newGroup("* Regression testing");
 
     root.add({"regression"},    "Runs the regression tester");
     root.add({"screenshot"},    "Manages screenshots");
@@ -100,27 +128,63 @@ Interpreter::initCommandShell(Command &root)
 
     root.add({"regression", "setup"}, { C64ModelEnum::argList() },
              "Initializes the test environment",
-             &RetroShell::exec <Token::regression, Token::setup>);
+             [this](Arguments& argv, long value) {
 
+        auto model = util::parseEnum <C64ModelEnum> (argv.front());
+        regressionTester.prepare(c64, model);
+
+        // Pause the script to give the C64 some time to boot
+        retroShell.wakeUp = cpu.clock + 3 * vic.getFrequency();
+        throw ScriptInterruption("");
+    });
 
     root.add({"regression", "run"}, { Arg::path },
              "Launches a regression test",
-             &RetroShell::exec <Token::regression, Token::run>);
+             [this](Arguments& argv, long value) {
+
+        regressionTester.run(argv.front());
+    });
 
     root.add({"screenshot", "set"},
              "Configures the screenshot");
 
     root.add({"screenshot", "set", "filename"}, { Arg::path },
              "Assigns the screen shot filename",
-             &RetroShell::exec <Token::screenshot, Token::set, Token::filename>);
+             [this](Arguments& argv, long value) {
+
+        regressionTester.dumpTexturePath = argv.front();
+    });
 
     root.add({"screenshot", "set", "cutout"}, { Arg::value, Arg::value, Arg::value, Arg::value },
              "Adjusts the texture cutout",
-             &RetroShell::exec <Token::screenshot, Token::set, Token::cutout>);
+             [this](Arguments& argv, long value) {
+
+        /*
+         std::vector<string> vec(argv.begin(), argv.end());
+
+         isize x1 = util::parseNum(vec[0]);
+         isize y1 = util::parseNum(vec[1]);
+         isize x2 = util::parseNum(vec[2]);
+         isize y2 = util::parseNum(vec[3]);
+         */
+
+        isize x1 = parseNum(argv, 0);
+        isize y1 = parseNum(argv, 1);
+        isize x2 = parseNum(argv, 2);
+        isize y2 = parseNum(argv, 3);
+
+        regressionTester.x1 = x1;
+        regressionTester.y1 = y1;
+        regressionTester.x2 = x2;
+        regressionTester.y2 = y2;
+    });
 
     root.add({"screenshot", "save"}, { Arg::path },
              "Saves a screenshot and exits the emulator",
-             &RetroShell::exec <Token::screenshot, Token::save>);
+             [this](Arguments& argv, long value) {
+
+        regressionTester.dumpTexture(c64, argv.front());
+    });
 
     
     //
@@ -129,34 +193,59 @@ Interpreter::initCommandShell(Command &root)
 
     root.add({"c64", "config"},
              "Displays the current configuration",
-             &RetroShell::exec <Token::c64, Token::config>);
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(c64, Category::Config);
+    });
 
     root.add({"c64", "set"},
              "Configures the component");
 
     root.add({"c64", "set", "fpsmode"}, { FpsModeEnum::argList() },
              "Selects the frame mode",
-             &RetroShell::exec <Token::c64, Token::set, Token::fpsmode>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_FPS_MODE, util::parseEnum <FpsModeEnum> (argv.front()));
+    });
 
     root.add({"c64", "set", "fps"}, { Arg::value },
              "Sets the frames per seconds",
-             &RetroShell::exec <Token::c64, Token::set, Token::fps>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_FPS, util::parseNum(argv.front()));
+        c64.configure(OPT_FPS_MODE, FPS_CUSTOM);
+    });
 
     root.add({"c64", "power"}, { Arg::onoff },
              "Switches the C64 on or off",
-             &RetroShell::exec <Token::c64, Token::power>);
-    
+             [this](Arguments& argv, long value) {
+
+        util::parseOnOff(argv.front()) ? c64.run() : c64.powerOff();
+    });
+
     root.add({"c64", "reset"},
              "Performs a hard reset",
-             &RetroShell::exec <Token::c64, Token::reset>);
+             [this](Arguments& argv, long value) {
+
+        c64.hardReset();
+    });
 
     root.add({"c64", "init"}, { C64ModelEnum::argList() },
              "Initializes the emulator with factory settings",
-             &RetroShell::exec <Token::c64, Token::init>);
+             [this](Arguments& argv, long value) {
+
+        auto model = util::parseEnum <C64ModelEnum> (argv.front());
+
+        c64.revertToFactorySettings();
+        c64.configure(model);
+    });
 
     root.add({"c64", "defaults"},
              "Displays the user defaults storage",
-             &RetroShell::exec <Token::c64, Token::defaults>);
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(c64, Category::Defaults);
+    });
 
     
     //

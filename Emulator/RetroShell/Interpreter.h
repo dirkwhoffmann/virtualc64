@@ -125,6 +125,12 @@ private:
     // Auto-completes an argument list
     void autoComplete(Arguments &argv);
 
+    // Parses an argument of a certain type
+    bool parseBool(Arguments &argv, isize n = 0) { return util::parseBool(argv[n]); }
+    bool parseOnOff(Arguments &argv, isize n = 0) { return util::parseOnOff(argv[n]); }
+    long parseNum(Arguments &argv, isize n = 0) { return util::parseNum(argv[n]); }
+    template <typename T> long parseEnum(Arguments &argv, isize n = 0) { return util::parseEnum<T>(argv[n]); }
+
 
     //
     // Managing the interpreter

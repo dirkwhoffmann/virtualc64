@@ -20,6 +20,8 @@ namespace vc64 {
 
 class RetroShell : public SubComponent {
 
+    friend class Interpreter;
+    
     // The command interpreter (parses commands typed into the console window)
     Interpreter interpreter;
 

@@ -803,10 +803,10 @@ C64::inspectSlot(EventSlot nr) const
     auto diff = cycle - clock00;
 
     // Split into frame / line / cycle
-    info.frameRel = diff / vic.getCyclesPerFrame();
+    info.frameRel = long(diff / vic.getCyclesPerFrame());
     diff = diff % vic.getCyclesPerFrame();
-    info.vpos = diff / vic.getCyclesPerLine();
-    info.hpos = diff % vic.getCyclesPerLine();
+    info.vpos = long(diff / vic.getCyclesPerLine());
+    info.hpos = long(diff % vic.getCyclesPerLine());
 
     info.eventName = eventName((EventSlot)nr, id[nr]);
 }

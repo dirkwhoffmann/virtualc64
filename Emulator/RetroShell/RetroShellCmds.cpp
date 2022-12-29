@@ -22,6 +22,7 @@ namespace vc64 {
 // Top-level commands
 //
 
+/*
 template <> void
 RetroShell::exec <Token::debug> (Arguments &argv, long param)
 {
@@ -77,12 +78,13 @@ RetroShell::exec <Token::wait> (Arguments &argv, long param)
     
     throw ScriptInterruption("");
 }
-
+*/
 
 //
 // Rgression testing
 //
 
+/*
 template <> void
 RetroShell::exec <Token::regression, Token::setup> (Arguments &argv, long param)
 {
@@ -134,7 +136,9 @@ RetroShell::exec <Token::screenshot, Token::save> (Arguments &argv, long param)
 {
     regressionTester.dumpTexture(c64, argv.front());
 }
+*/
 
+/*
 template <> void
 RetroShell::exec <Token::screenshot> (Arguments &argv, long param)
 {
@@ -171,7 +175,7 @@ RetroShell::exec <Token::screenshot> (Arguments &argv, long param)
     }
     exit(0);
 }
-
+*/
 
 //
 // C64
