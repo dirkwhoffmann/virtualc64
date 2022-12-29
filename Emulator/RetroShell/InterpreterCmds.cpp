@@ -130,7 +130,7 @@ Interpreter::initCommandShell(Command &root)
              "Initializes the test environment",
              [this](Arguments& argv, long value) {
 
-        auto model = util::parseEnum <C64ModelEnum> (argv.front());
+        auto model = parseEnum <C64ModelEnum> (argv);
         regressionTester.prepare(c64, model);
 
         // Pause the script to give the C64 some time to boot
@@ -191,7 +191,7 @@ Interpreter::initCommandShell(Command &root)
     // C64
     //
 
-    root.add({"c64", "config"},
+    root.add({"c64", ""},
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
@@ -205,14 +205,14 @@ Interpreter::initCommandShell(Command &root)
              "Selects the frame mode",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_FPS_MODE, util::parseEnum <FpsModeEnum> (argv.front()));
+        c64.configure(OPT_FPS_MODE, parseEnum <FpsModeEnum> (argv));
     });
 
     root.add({"c64", "set", "fps"}, { Arg::value },
              "Sets the frames per seconds",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_FPS, util::parseNum(argv.front()));
+        c64.configure(OPT_FPS, parseNum(argv));
         c64.configure(OPT_FPS_MODE, FPS_CUSTOM);
     });
 
@@ -220,7 +220,7 @@ Interpreter::initCommandShell(Command &root)
              "Switches the C64 on or off",
              [this](Arguments& argv, long value) {
 
-        util::parseOnOff(argv.front()) ? c64.run() : c64.powerOff();
+        parseOnOff(argv) ? c64.run() : c64.powerOff();
     });
 
     root.add({"c64", "reset"},
@@ -234,7 +234,7 @@ Interpreter::initCommandShell(Command &root)
              "Initializes the emulator with factory settings",
              [this](Arguments& argv, long value) {
 
-        auto model = util::parseEnum <C64ModelEnum> (argv.front());
+        auto model = parseEnum<C64ModelEnum>(argv);
 
         c64.revertToFactorySettings();
         c64.configure(model);
@@ -252,28 +252,47 @@ Interpreter::initCommandShell(Command &root)
     // Memory
     //
 
-    root.add({"memory", "config"},
+    root.add({"memory", ""},
              "Displays the current configuration",
-             &RetroShell::exec <Token::memory, Token::config>);
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(mem, Category::Config);
+    });
 
     root.add({"memory", "set"},
              "Configures the component");
 
     root.add({"memory", "set", "raminit" }, { RamPatternEnum::argList() },
              "Determines how Ram is initialized on startup",
-             &RetroShell::exec <Token::memory, Token::set, Token::raminitpattern>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_RAM_PATTERN, parseEnum<RamPatternEnum>(argv));
+    });
 
     root.add({"memory", "set", "saveroms"}, { Arg::onoff },
              "Save Roms to snapshot files",
-             &RetroShell::exec <Token::memory, Token::set, Token::saveroms>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_SAVE_ROMS, parseBool(argv));
+    });
 
     root.add({"memory", "load"}, { Arg::path },
              "Installs a Rom image",
-             &RetroShell::exec <Token::memory, Token::load>);
+             [this](Arguments& argv, long value) {
+
+        c64.loadRom(argv.front());
+    });
 
     root.add({"memory", "flash"}, { Arg::path },
              "Flashes a file into memory",
-             &RetroShell::exec <Token::memory, Token::flash>);
+             [this](Arguments& argv, long value) {
+
+        auto path = argv.front();
+        if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
+
+        auto file = PRGFile(path);
+        c64.flash(file, 0);
+    });
 
     
     //
@@ -284,29 +303,63 @@ Interpreter::initCommandShell(Command &root)
 
         string drive = (i == 0) ? "drive8" : "drive9";
 
-        root.add({drive, "config"},
+        root.add({drive, ""},
                  "Displays the current configuration",
-                 &RetroShell::exec <Token::drive, Token::config>);
-        
+                 [this](Arguments& argv, long value) {
+
+            auto &drive = value ? drive9 : drive8;
+            retroShell.dump(drive, Category::Config);
+
+        }, i);
+
         root.add({drive, "connect"},
                  "Connects the drive",
-                 &RetroShell::exec <Token::drive, Token::connect>);
-        
+                 [this](Arguments& argv, long value) {
+
+            auto id = value ? DRIVE9 : DRIVE8;
+            c64.configure(OPT_DRV_CONNECT, id, true);
+
+        }, i);
+
         root.add({drive, "disconnect"},
                  "Disconnects the drive",
-                 &RetroShell::exec <Token::drive, Token::disconnect>);
-        
+                 [this](Arguments& argv, long value) {
+
+            auto id = value ? DRIVE9 : DRIVE8;
+            c64.configure(OPT_DRV_CONNECT, id, false);
+
+        }, i);
+
         root.add({drive, "eject"},
                  "Ejects a floppy disk",
-                 &RetroShell::exec <Token::drive, Token::eject>);
-        
+                 [this](Arguments& argv, long value) {
+
+            auto &drive = value ? drive9 : drive8;
+            drive.ejectDisk();
+
+        }, i);
+
         root.add({drive, "insert"}, { Arg::path },
                  "Inserts a floppy disk",
-                 &RetroShell::exec <Token::drive, Token::insert>, 1);
-        
+                 [this](Arguments& argv, long value) {
+
+            auto path = argv.front();
+            if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
+
+            auto &drive = value ? drive9 : drive8;
+            drive.insertDisk(path, false);
+
+        }, i);
+
         root.add({drive, "newdisk"}, { DOSTypeEnum::argList() },
                  "Inserts a new blank disk",
-                 &RetroShell::exec <Token::drive, Token::insert, Token::newdisk>);
+                 [this](Arguments& argv, long value) {
+
+            auto type = util::parseEnum <DOSTypeEnum> (argv.front());
+            auto &drive = value ? drive9 : drive8;
+            drive.insertNewDisk(type, PETName<16>("NEW DISK"));
+
+        }, i);
     }
     
     
@@ -314,32 +367,42 @@ Interpreter::initCommandShell(Command &root)
     // Datasette
     //
 
-    root.add({"datasette", "config"},
+    root.add({"datasette", ""},
              "Displays the current configuration",
-             &RetroShell::exec <Token::datasette, Token::config>);
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(datasette, Category::Config);
+    });
 
     root.add({"datasette", "connect"},
              "Connects the datasette",
-             &RetroShell::exec <Token::datasette, Token::connect>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_DAT_CONNECT, true);
+    });
 
     root.add({"datasette", "disconnect"},
              "Disconnects the datasette",
-             &RetroShell::exec <Token::datasette, Token::disconnect>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_DAT_CONNECT, false);
+    });
 
     root.add({"datasette", "rewind"},
              "Rewinds the tape",
-             &RetroShell::exec <Token::datasette, Token::rewind>);
+             [this](Arguments& argv, long value) {
+
+        datasette.rewind();
+    });
 
     root.add({"datasette", "rewind", "to"}, { Arg::value },
              "Rewinds the tape to a specific position",
-             &RetroShell::exec <Token::datasette, Token::rewind, Token::to>);
+             [this](Arguments& argv, long value) {
 
-    
-    //
-    // CPU
-    //
+        datasette.rewind(parseNum(argv));
+    });
 
-    
+
     //
     // CIA
     //
@@ -348,20 +411,37 @@ Interpreter::initCommandShell(Command &root)
 
         string cia = (i == 0) ? "cia1" : "cia1";
 
-        root.add({cia, "config"},
+        root.add({cia, ""},
                  "Displays the current configuration",
-                 &RetroShell::exec <Token::cia, Token::config>);
-        
+                 [this](Arguments& argv, long value) {
+
+            if (value == 0) {
+                retroShell.dump(cia1, Category::Config);
+            } else {
+                retroShell.dump(cia2, Category::Config);
+            }
+
+        }, i);
+
         root.add({cia, "set"},
                  "Configures the component");
         
         root.add({cia, "set", "revision"}, { CIARevisionEnum::argList() },
                  "Selects the emulated chip model",
-                 &RetroShell::exec <Token::cia, Token::set, Token::revision>);
-        
+                 [this](Arguments& argv, long value) {
+
+            auto revision = parseEnum <CIARevisionEnum> (argv);
+            c64.configure(OPT_CIA_REVISION, value, revision);
+
+        }, i);
+
         root.add({cia, "set", "timerbbug"}, { Arg::onoff },
                  "Enables or disables the timer B hardware bug",
-                 &RetroShell::exec <Token::cia, Token::set, Token::timerbbug>);
+                 [this](Arguments& argv, long value) {
+
+            c64.configure(OPT_TIMER_B_BUG, value, parseBool(argv));
+
+        }, i);
     }
 
 
@@ -369,105 +449,121 @@ Interpreter::initCommandShell(Command &root)
     // VICII
     //
 
-    root.add({"vicii", "config"},
+    root.add({"vicii", ""},
              "Displays the current configuration",
-             &RetroShell::exec <Token::vicii, Token::config>);
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(vic, Category::Config);
+    });
 
     root.add({"vicii", "set"},
              "Configures the component");
 
     root.add({"vicii", "set", "revision"}, { VICIIRevisionEnum::argList() },
              "Selects the emulated chip model",
-             &RetroShell::exec <Token::vicii, Token::set, Token::revision>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_VIC_REVISION, parseEnum <VICIIRevisionEnum> (argv));
+
+    });
 
     root.add({"vicii", "set", "graydotbug"}, { Arg::onoff },
              "Enables or disables the gray dot bug",
-             &RetroShell::exec <Token::vicii, Token::set, Token::graydotbug>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_GRAY_DOT_BUG, parseBool(argv));
+    });
 
     root.add({"vicii", "set", "gluelogic"}, { Arg::onoff },
              "Configures the logic board",
-             &RetroShell::exec <Token::vicii, Token::set, Token::gluelogic>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_GLUE_LOGIC, parseBool(argv));
+    });
 
     root.add({"vicii", "set", "sscollisions"}, { Arg::onoff },
              "Enables or disables sprite-sprite collision detection",
-             &RetroShell::exec <Token::vicii, Token::set, Token::sscollisions>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_SS_COLLISIONS, parseBool(argv));
+    });
 
     root.add({"vicii", "set", "sbcollisions"}, { Arg::onoff },
              "Enables or disables sprite-background collision detection",
-             &RetroShell::exec <Token::vicii, Token::set, Token::sbcollisions>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_SB_COLLISIONS, parseBool(argv));
+    });
 
     
     //
     // DMA Debugger
     //
 
-    root.add({"dmadebugger", "config"},
+    root.add({"dmadebugger", ""},
              "Displays the current configuration",
-             &RetroShell::exec <Token::dmadebugger, Token::config>);
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(vic.dmaDebugger, Category::Config);
+    });
 
     root.add({"dmadebugger", "open"},
              "Opens the DMA debugger",
-             &RetroShell::exec <Token::dmadebugger, Token::open>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_DMA_DEBUG_ENABLE, true);
+    });
 
     root.add({"dmadebugger", "close"},
              "Closes the DMA debugger",
-             &RetroShell::exec <Token::dmadebugger, Token::close>);
+             [this](Arguments& argv, long value) {
 
-    root.add({"dmadebugger", "show"},
-             "Enables the debugger for a certain DMA channel");
+        c64.configure(OPT_DMA_DEBUG_ENABLE, false);
+    });
 
-    root.add({"dmadebugger", "show", "raccesses"},
+    root.add({"dmadebugger", "raccesses"}, { Arg::onoff },
              "Visualizes refresh cycles",
-             &RetroShell::exec <Token::dmadebugger, Token::show, Token::raccesses>);
+             [this](Arguments& argv, long value) {
 
-    root.add({"dmadebugger", "show", "iaccesses"},
+        c64.configure(OPT_DMA_DEBUG_CHANNEL, 0, parseBool(argv));
+    });
+
+    root.add({"dmadebugger", "iaccesses"}, { Arg::onoff },
              "Visualizes idle accesses",
-             &RetroShell::exec <Token::dmadebugger, Token::show, Token::iaccesses>);
+             [this](Arguments& argv, long value) {
 
-    root.add({"dmadebugger", "show", "caccesses"},
+        c64.configure(OPT_DMA_DEBUG_CHANNEL, 1, parseBool(argv));
+    });
+
+    root.add({"dmadebugger", "caccesses"}, { Arg::onoff },
              "Visualizes character accesses",
-             &RetroShell::exec <Token::dmadebugger, Token::show, Token::caccesses>);
+             [this](Arguments& argv, long value) {
 
-    root.add({"dmadebugger", "show", "gaccesses"},
+        c64.configure(OPT_DMA_DEBUG_CHANNEL, 2, parseBool(argv));
+    });
+
+    root.add({"dmadebugger", "gaccesses"}, { Arg::onoff },
              "Visualizes graphics accesses",
-             &RetroShell::exec <Token::dmadebugger, Token::show, Token::gaccesses>);
+             [this](Arguments& argv, long value) {
 
-    root.add({"dmadebugger", "show", "paccesses"},
+        c64.configure(OPT_DMA_DEBUG_CHANNEL, 3, parseBool(argv));
+    });
+
+    root.add({"dmadebugger", "paccesses"}, { Arg::onoff },
              "Visualizes sprite pointer accesses",
-             &RetroShell::exec <Token::dmadebugger, Token::show, Token::paccesses>);
+             [this](Arguments& argv, long value) {
 
-    root.add({"dmadebugger", "show", "saccesses"},
+        c64.configure(OPT_DMA_DEBUG_CHANNEL, 4, parseBool(argv));
+    });
+
+    root.add({"dmadebugger", "saccesses"}, { Arg::onoff },
              "Visualizes sprite accesses",
-             &RetroShell::exec <Token::dmadebugger, Token::show, Token::saccesses>);
+             [this](Arguments& argv, long value) {
 
-    root.add({"dmadebugger", "hide"},
-             "Disables the debugger for a certain DMA channel");
+        c64.configure(OPT_DMA_DEBUG_CHANNEL, 5, parseBool(argv));
+    });
 
-    root.add({"dmadebugger", "hide", "raccesses"},
-             "Hides refresh cycles",
-             &RetroShell::exec <Token::dmadebugger, Token::hide, Token::raccesses>);
 
-    root.add({"dmadebugger", "hide", "iaccesses"},
-             "Hides idle accesses",
-             &RetroShell::exec <Token::dmadebugger, Token::hide, Token::iaccesses>);
-
-    root.add({"dmadebugger", "hide", "caccesses"},
-             "Hides character accesses",
-             &RetroShell::exec <Token::dmadebugger, Token::hide, Token::caccesses>);
-
-    root.add({"dmadebugger", "hide", "gaccesses"},
-             "Hides graphics accesses",
-             &RetroShell::exec <Token::dmadebugger, Token::hide, Token::gaccesses>);
-
-    root.add({"dmadebugger", "hide", "paccesses"},
-             "Hides sprite pointer accesses",
-             &RetroShell::exec <Token::dmadebugger, Token::hide, Token::paccesses>);
-
-    root.add({"dmadebugger", "hide", "saccesses"},
-             "Hides sprite accesses",
-             &RetroShell::exec <Token::dmadebugger, Token::hide, Token::saccesses>);
-
-    
     //
     // Monitor
     //
@@ -477,98 +573,153 @@ Interpreter::initCommandShell(Command &root)
 
     root.add({"monitor", "set", "palette"}, { PaletteEnum::argList() },
              "Selects the color palette",
-             &RetroShell::exec <Token::monitor, Token::set, Token::palette>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_PALETTE, util::parseEnum <PaletteEnum> (argv.front()));
+    });
 
     root.add({"monitor", "set", "brightness"}, { Arg::value },
              "Adjusts the monitor brightness",
-             &RetroShell::exec <Token::monitor, Token::set, Token::brightness>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_BRIGHTNESS, util::parseNum(argv.front()));
+    });
 
     root.add({"monitor", "set", "contrast"}, { Arg::value },
              "Adjusts the monitor contrast",
-             &RetroShell::exec <Token::monitor, Token::set, Token::contrast>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_CONTRAST, util::parseNum(argv.front()));
+    });
 
     root.add({"monitor", "set", "saturation"}, { Arg::value },
              "Adjusts the color saturation",
-             &RetroShell::exec <Token::monitor, Token::set, Token::saturation>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_SATURATION, util::parseNum(argv.front()));
+    });
 
     
     //
     // SID
     //
 
-    root.add({"sid", "config"},
+    root.add({"sid", ""},
              "Displays the current configuration",
-             &RetroShell::exec <Token::sid, Token::config>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_SATURATION, util::parseNum(argv.front()));
+    });
 
     root.add({"sid", "set"},
              "Configures the component");
 
     root.add({"sid", "set", "engine"}, { SIDEngineEnum::argList() },
              "Selects the SID backend",
-             &RetroShell::exec <Token::sid, Token::set, Token::engine>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_SID_ENGINE, parseEnum <SIDEngineEnum> (argv));
+
+    });
 
     root.add({"sid", "set", "revision"}, { SIDRevisionEnum::argList() },
              "Selects the emulated chip model",
-             &RetroShell::exec <Token::sid, Token::set, Token::revision>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_SID_REVISION, parseEnum <SIDRevisionEnum> (argv));
+
+    });
 
     root.add({"sid", "set", "sampling"}, { SamplingMethodEnum::argList() },
              "Selects the sampling method",
-             &RetroShell::exec <Token::sid, Token::set, Token::sampling>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_SID_SAMPLING, parseEnum <SamplingMethodEnum> (argv));
+
+    });
 
     root.add({"sid", "set", "filter"}, { Arg::onoff },
              "Configures the audio filter",
-             &RetroShell::exec <Token::sid, Token::set, Token::filter>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_SID_FILTER, parseBool(argv));
+    });
 
     root.add({"sid", "set", "volume"},
              "Sets the volume");
 
     root.add({"sid", "set", "volume", "channel0"}, { Arg::volume },
              "Sets the volume for the first SID",
-             &RetroShell::exec <Token::sid, Token::set, Token::volume>, 0);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_AUDVOL, 0, parseNum(argv));
+    });
 
     root.add({"sid", "set", "volume", "channel1"}, { Arg::volume },
              "Sets the volume for the second SID",
-             &RetroShell::exec <Token::sid, Token::set, Token::volume>, 1);
-    
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_AUDVOL, 1, parseNum(argv));
+    });
+
     root.add({"sid", "set", "volume", "channel2"}, { Arg::volume },
              "Sets the volume for the third SID",
-             &RetroShell::exec <Token::sid, Token::set, Token::volume>, 2);
-    
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_AUDVOL, 2, parseNum(argv));
+    });
+
     root.add({"sid", "set", "volume", "channel3"}, { Arg::volume },
              "Sets the volume for the fourth SID",
-             &RetroShell::exec <Token::sid, Token::set, Token::volume>, 3);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_AUDVOL, 3, parseNum(argv));
+    });
 
     root.add({"sid", "set", "volume", "left"}, { Arg::volume },
              "Sets the master volume for the left speaker",
-             &RetroShell::exec <Token::sid, Token::set, Token::volume>, 4);
-    
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_AUDVOLL, parseNum(argv));
+    });
+
     root.add({"sid", "set", "volume", "right"}, { Arg::volume },
              "Sets the master volume for the right speaker",
-             &RetroShell::exec <Token::sid, Token::set, Token::volume>, 5);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_AUDVOLR, parseNum(argv));
+    });
 
     root.add({"sid", "set", "pan"},
              "Sets the pan for one of the four SIDs");
     
     root.add({"sid", "set", "pan", "channel0"}, { Arg::value },
              "Sets the pan for the first SID",
-             &RetroShell::exec <Token::sid, Token::set, Token::pan>, 0);
-    
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_AUDPAN, 0, parseNum(argv));
+    });
+
     root.add({"sid", "set", "pan", "channel1"}, { Arg::value },
              "Sets the pan for the second SID",
-             &RetroShell::exec <Token::sid, Token::set, Token::pan>, 1);
-    
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_AUDPAN, 1, parseNum(argv));
+    });
+
     root.add({"sid", "set", "pan", "channel2"}, { Arg::value },
              "Sets the pan for the third SID",
-             &RetroShell::exec <Token::sid, Token::set, Token::pan>, 2);
-    
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_AUDPAN, 2, parseNum(argv));
+    });
+
     root.add({"sid", "set", "pan", "channel3"}, { Arg::value },
              "Sets the pan for the fourth SID",
-             &RetroShell::exec <Token::sid, Token::set, Token::pan>, 3);
+             [this](Arguments& argv, long value) {
 
-    
-    //
-    // Control port
-    //
+        c64.configure(OPT_AUDPAN, 3, parseNum(argv));
+    });
 
 
     //
@@ -577,7 +728,12 @@ Interpreter::initCommandShell(Command &root)
 
     root.add({"expansion", "attach"}, { Arg::path },
              "Attaches a cartridge",
-             &RetroShell::exec <Token::expansion, Token::attach>);
+             [this](Arguments& argv, long value) {
+
+        auto path = argv.front();
+        if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
+        expansionport.attachCartridge(path);
+    });
 
     
     //
@@ -585,91 +741,113 @@ Interpreter::initCommandShell(Command &root)
     //
 
     root.add({"keyboard", "type"},
-             "Types a command");
+             "Types a command",
+             [this](Arguments& argv, long value) {
 
-    root.add({"keyboard", "type", "load"},
-             "Types LOAD \"*\",8,1",
-             &RetroShell::exec <Token::keyboard, Token::type, Token::load>);
-
-    root.add({"keyboard", "type", "run"},
-             "Types RUN",
-             &RetroShell::exec <Token::keyboard, Token::type, Token::run>);
+        keyboard.autoType(argv.front());
+    });
 
     root.add({"keyboard", "press"}, { Arg::value },
              "Presses a key",
-             &RetroShell::exec <Token::keyboard, Token::press>);
+             [this](Arguments& argv, long value) {
 
-    /*
-    root.add({"keyboard", "press", "shiftlock"},
-             "command", "Presses the shift lock key",
-             &RetroShell::exec <Token::keyboard, Token::press, Token::shiftlock>);
-    */
+        keyboard.press(C64Key(parseNum(argv)));
+    });
 
     root.add({"keyboard", "release"}, { Arg::value },
              "Presses a key",
-             &RetroShell::exec <Token::keyboard, Token::release>);
+             [this](Arguments& argv, long value) {
 
-    /*
-    root.add({"keyboard", "release", "shiftlock"},
-             "command", "Releases the shift lock key",
-             &RetroShell::exec <Token::keyboard, Token::release, Token::shiftlock>);
-    */
-    
+        keyboard.release(C64Key(parseNum(argv)));
+    });
+
+
     //
     // Joystick
     //
 
-    root.add({"joystick", "config"},
+    root.add({"joystick", ""},
              "Displays the current configuration",
-             &RetroShell::exec <Token::joystick, Token::config>);
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(port1.joystick, Category::Config);
+        retroShell << '\n';
+        retroShell.dump(port2.joystick, Category::Config);
+    });
 
     root.add({"joystick", "set"},
              "Configures the component");
 
     root.add({"joystick", "set", "autofire"}, { Arg::onoff },
              "Enables or disables auto fire mode",
-             &RetroShell::exec <Token::joystick, Token::set, Token::autofire>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_AUTOFIRE, parseBool(argv));
+    });
 
     root.add({"joystick", "set", "bullets"}, { Arg::value },
              "Sets the number of bullets per auto fire shot",
-             &RetroShell::exec <Token::joystick, Token::set, Token::bullets>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_AUTOFIRE_BULLETS, parseNum(argv));
+    });
 
     root.add({"joystick", "set", "delay"}, { Arg::value },
              "Sets the auto fire delay in frames",
-             &RetroShell::exec <Token::joystick, Token::set, Token::delay>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_AUTOFIRE_DELAY, parseNum(argv));
+    });
 
     
     //
     // Mouse
     //
 
-    root.add({"mouse", "config"},
+    root.add({"mouse", ""},
              "Displays the current configuration",
-             &RetroShell::exec <Token::mouse, Token::config>);
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(port1.mouse, Category::Config);
+        retroShell << '\n';
+        retroShell.dump(port2.mouse, Category::Config);
+    });
 
     root.add({"mouse", "set"},
              "Configures the component");
 
     root.add({"mouse", "set", "model"}, { MouseModelEnum::argList() },
              "Selects the mouse model",
-             &RetroShell::exec <Token::mouse, Token::set, Token::model>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_MOUSE_MODEL, parseEnum <MouseModelEnum> (argv));
+    });
 
     root.add({"mouse", "set", "velocity"}, { Arg::value },
              "Sets the horizontal and vertical mouse velocity",
-             &RetroShell::exec <Token::mouse, Token::set, Token::velocity>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_MOUSE_VELOCITY, parseNum(argv));
+    });
 
     root.add({"mouse", "set", "shakedetector"}, { Arg::onoff },
              "Enables or disables the shake detector",
-             &RetroShell::exec <Token::mouse, Token::set, Token::shakedetector>);
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_SHAKE_DETECTION, parseBool(argv));
+    });
 
     
     //
     // Parallel cable
     //
 
-    root.add({"parcable", "config"},
+    root.add({"parcable", ""},
              "Displays the current configuration",
-             &RetroShell::exec <Token::parcable, Token::config>);
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(parCable, Category::Config);
+    });
 }
 
 }

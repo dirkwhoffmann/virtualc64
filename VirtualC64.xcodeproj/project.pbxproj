@@ -48,7 +48,6 @@
 		5036E0B9261AEF000048E66A /* Command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B2261AEF000048E66A /* Command.cpp */; };
 		5036E0BA261AEF000048E66A /* RetroShell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B3261AEF000048E66A /* RetroShell.cpp */; };
 		5036E0BB261AEF000048E66A /* InterpreterCmds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B5261AEF000048E66A /* InterpreterCmds.cpp */; };
-		5036E0BC261AEF000048E66A /* RetroShellCmds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B6261AEF000048E66A /* RetroShellCmds.cpp */; };
 		5038CA8F20B6C263000D9193 /* CPUPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA8E20B6C263000D9193 /* CPUPanel.swift */; };
 		5038CA9120B6C281000D9193 /* MemoryPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9020B6C281000D9193 /* MemoryPanel.swift */; };
 		5038CA9320B6C298000D9193 /* CIAPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5038CA9220B6C298000D9193 /* CIAPanel.swift */; };
@@ -369,7 +368,6 @@
 		5036E0B3261AEF000048E66A /* RetroShell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RetroShell.cpp; sourceTree = "<group>"; };
 		5036E0B4261AEF000048E66A /* Command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Command.h; sourceTree = "<group>"; };
 		5036E0B5261AEF000048E66A /* InterpreterCmds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InterpreterCmds.cpp; sourceTree = "<group>"; };
-		5036E0B6261AEF000048E66A /* RetroShellCmds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RetroShellCmds.cpp; sourceTree = "<group>"; };
 		5038CA8E20B6C263000D9193 /* CPUPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUPanel.swift; sourceTree = "<group>"; };
 		5038CA9020B6C281000D9193 /* MemoryPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryPanel.swift; sourceTree = "<group>"; };
 		5038CA9220B6C298000D9193 /* CIAPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIAPanel.swift; sourceTree = "<group>"; };
@@ -1092,7 +1090,6 @@
 				50B7E2692813F8B000A405A3 /* RetroShellTypes.h */,
 				5036E0AE261AEF000048E66A /* RetroShell.h */,
 				5036E0B3261AEF000048E66A /* RetroShell.cpp */,
-				5036E0B6261AEF000048E66A /* RetroShellCmds.cpp */,
 				50726F2C295B61E00031F2F5 /* RetroShellDebugCmds.cpp */,
 				50B7E26B2813F8C400A405A3 /* TextStorage.h */,
 				50B7E26A2813F8C400A405A3 /* TextStorage.cpp */,
@@ -1864,7 +1861,6 @@
 				50AA3EC12616F62500C96EDB /* MemUtils.cpp in Sources */,
 				504C437624AF29AC00E69CAE /* P00File.cpp in Sources */,
 				5038CA9520B6C2AC000D9193 /* VICPanel.swift in Sources */,
-				5036E0BC261AEF000048E66A /* RetroShellCmds.cpp in Sources */,
 				504C435F24AF29AC00E69CAE /* SuperGames.cpp in Sources */,
 				50BE4B5C24E7F857008F39C9 /* Data.swift in Sources */,
 				50BE4B6424E7F941008F39C9 /* NSControl.swift in Sources */,
