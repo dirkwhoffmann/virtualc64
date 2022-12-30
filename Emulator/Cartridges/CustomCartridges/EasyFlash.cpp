@@ -48,7 +48,8 @@ EasyFlash::_dump(Category category, std::ostream& os) const
     using namespace util;
 
     Cartridge::_dump(category, os);
-    
+    os << std::endl;
+
     if (category == Category::State) {
         
         os << tab("EasyFlash bank");

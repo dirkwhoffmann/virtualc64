@@ -89,17 +89,20 @@ void
 ExpansionPort::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
-    
+
+    auto type = cartridge ? cartridge->getCartridgeType() : CRT_NONE;
+
     if (category == Category::Inspection) {
-        
+
         os << tab("Game line");
         os << bol(gameLine) << std::endl;
         os << tab("Exrom line");
         os << bol(exromLine) << std::endl;
         os << tab("Cartridge");
-        os << bol(cartridge != nullptr, "attached", "none") << std::endl;
+        os << CartridgeTypeEnum::key(type) << std::endl;
 
         if (cartridge) {
+
             os << std::endl;
             cartridge->dump(category, os);
         }
@@ -107,8 +110,12 @@ ExpansionPort::_dump(Category category, std::ostream& os) const
 
     if (category == Category::Debug) {
 
+        os << tab("Cartridge");
+        os << CartridgeTypeEnum::key(type) << std::endl;
+
         if (cartridge) {
-            os << std::endl;
+
+            // os << std::endl;
             cartridge->dump(category, os);
         }
     }

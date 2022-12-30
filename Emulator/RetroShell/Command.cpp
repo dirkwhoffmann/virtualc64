@@ -200,7 +200,7 @@ Command::usage() const
         if (count > 1) {
             arguments = "{" + arguments + "}";
         }
-        if (seek("")) {
+        if (seek("") && arguments != "") {
             arguments = "[ " + arguments + " ]";
         }
     }

@@ -97,7 +97,6 @@ Interpreter::initCommandShell(Command &root)
 
     root.add({"c64"},           "The virtual Commodore 64");
     root.add({"memory"},        "Ram and Rom");
-    root.add({"cpu"},           "MOS 6510 CPU");
     root.add({"cia1"},          "Complex Interface Adapter 1");
     root.add({"cia2"},          "Complex Interface Adapter 2");
     root.add({"vicii"},         "Video Interface Controller");
@@ -106,8 +105,8 @@ Interpreter::initCommandShell(Command &root)
 
     root.newGroup("Controlling ports");
 
-    root.add({"controlport1"},  "Control port 1");
-    root.add({"controlport2"},  "Control port 2");
+//    root.add({"controlport1"},  "Control port 1");
+//    root.add({"controlport2"},  "Control port 2");
     root.add({"expansion"},     "Expansion port");
 
     root.newGroup("Controlling peripherals");

@@ -30,11 +30,11 @@ ControlPort::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category == Category::State) {
+    if (category == Category::Inspection) {
         
-        os << tab("Nr");
+        os << tab("Port Nr");
         os << dec(nr) << std::endl;
-        os << tab("Device");
+        os << tab("Detetected device");
         os << ControlPortDeviceEnum::key(device) << std::endl;
     }
 }

@@ -97,13 +97,14 @@ CPU::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
-    if (category == Category::Registers) {
+    if (category == Category::Inspection) {
 
-        os << tab("PC") << hex(reg.pc) << std::endl;
-        os << tab("SP") << hex(reg.sp) << std::endl;
-        os << tab("A") << hex(reg.a) << std::endl;
-        os << tab("X") << hex(reg.x) << std::endl;
-        os << tab("Y") << hex(reg.y) << std::endl;
+        os << tab("Instruction Address") << hex(reg.pc0) << std::endl;
+        os << tab("Program Counter") << hex(reg.pc) << std::endl;
+        os << tab("Accumulator") << hex(reg.a) << std::endl;
+        os << tab("X Register") << hex(reg.x) << std::endl;
+        os << tab("Y Register") << hex(reg.y) << std::endl;
+        os << tab("Stack Pointer") << hex(reg.sp) << std::endl;
         os << tab("Flags");
         os << (reg.sr.n ? "N" : "n");
         os << (reg.sr.v ? "V" : "v");
@@ -115,7 +116,7 @@ CPU::_dump(Category category, std::ostream& os) const
         os << std::endl;
     }
     
-    if (category == Category::State) {
+    if (category == Category::Debug) {
 
         auto append = [&](const string &s1, const string &s2) {
             return s1.empty() ? s2 : s1 + ", " + s2;
@@ -130,23 +131,23 @@ CPU::_dump(Category category, std::ostream& os) const
         os << dec(clock) << std::endl;
         os << tab("Flags");
         os << (str.empty() ? "-" : str) << std::endl;
-        os << tab("Rdy line");
+        os << tab("Rdy Line");
         os << bol(rdyLine, "high", "low") << std::endl;
-        os << tab("Nmi line");
+        os << tab("Nmi Line");
         os << hex(nmiLine) << std::endl;
         os << tab("Edge detector");
         os << hex(edgeDetector.current()) << std::endl;
         os << tab("doNmi");
         os << bol(doNmi) << std::endl;
-        os << tab("Irq line");
+        os << tab("Irq Line");
         os << hex(irqLine) << std::endl;
-        os << tab("Edge detector");
+        os << tab("Edge Detector");
         os << hex(levelDetector.current()) << std::endl;
         os << tab("doIrq");
         os << bol(doIrq) << std::endl;
-        os << tab("IRQ routine");
+        os << tab("IRQ Routine");
         os << hex(HI_W_LO_W(readDasm(0xFFFF), readDasm(0xFFFE))) << std::endl;
-        os << tab("NMI routine");
+        os << tab("NMI Routine");
         os << hex(HI_W_LO_W(readDasm(0xFFFB), readDasm(0xFFFA))) << std::endl;
 
         if (hasProcessorPort()) {

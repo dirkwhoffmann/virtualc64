@@ -23,6 +23,23 @@ GeoRAM::_reset(bool hard)
     }
 }
 
+void
+GeoRAM::_dump(Category category, std::ostream& os) const
+{
+    using namespace util;
+
+    Cartridge::_dump(category, os);
+    os << std::endl;
+
+    if (category == Category::Debug) {
+
+        os << tab("Bank");
+        os << dec(bank) << std::endl;
+        os << tab("Page");
+        os << dec(page) << std::endl;
+    }
+}
+
 u8
 GeoRAM::peekIO1(u16 addr)
 {

@@ -81,8 +81,8 @@ Interpreter::initDebugShell(Command &root)
     root.newGroup("Debugging components");
 
     root.add({"c64"},           "The virtual Commodore 64");
+    root.add({"cpu"},           "MOS 6810 CPU");
     root.add({"memory"},        "Ram and Rom");
-    root.add({"cpu"},           "MOS 6510 CPU");
     root.add({"cia1"},          "Complex Interface Adapter 1");
     root.add({"cia2"},          "Complex Interface Adapter 2");
     root.add({"vicii"},         "Video Interface Controller");
@@ -235,13 +235,6 @@ Interpreter::initDebugShell(Command &root)
              [this](Arguments& argv, long value) {
 
         retroShell.dump(cpu, Category::Debug);
-    });
-
-    root.add({"cpu", "registers"},
-             "Displays the current register values",
-             [this](Arguments& argv, long value) {
-
-        retroShell.dump(cpu, Category::Registers);
     });
 
 

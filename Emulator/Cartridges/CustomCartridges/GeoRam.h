@@ -37,6 +37,15 @@ private:
     
     void _reset(bool hard) override;
     
+
+    //
+    // Analyzing
+    //
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override;
+
     
     //
     // Serializing
@@ -62,12 +71,7 @@ private:
     isize __load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize __save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
 
-    /*
-    isize _size() override { return Cartridge::_size() + __size(); }
-    isize _load(const u8 *buf) override { return Cartridge::_load(buf) + __load(buf); }
-    isize _save(u8 *buf) override { return Cartridge::_save(buf) + __save(buf); }
-    */
-
+    
     //
     // Accessing cartridge memory
     //

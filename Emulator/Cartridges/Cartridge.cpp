@@ -214,10 +214,8 @@ Cartridge::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category == Category::State) {
+    if (category == Category::Inspection) {
         
-        os << tab("Cartridge type");
-        os << getCartridgeType() << std::endl;
         os << tab("Game line in CRT");
         os << bol(gameLineInCrtFile) << std::endl;
         os << tab("Exrom line in CRT");
@@ -230,6 +228,17 @@ Cartridge::_dump(Category category, std::ostream& os) const
             os << tab("Packet " + std::to_string(i));
             os << dec(packet[i]->size / 1024) << " KB starting at ";
             os << hex(packet[i]->loadAddress) << std::endl;
+        }
+    }
+
+    if (category == Category::Debug) {
+
+        if (getRamCapacity()) {
+
+            os << tab("On-Board RAM");
+            os << dec(getRamCapacity() / 1024) << " KB" << std::endl;
+            os << tab("Battery");
+            os << bol(getBattery()) << std::endl;
         }
     }
 }

@@ -192,6 +192,7 @@ struct CartridgeTypeEnum : util::Reflection<CartridgeTypeEnum, CartridgeType> {
             case CRT_HERO:               return "HERO";
             case CRT_ISEPIC:             return "ISEPIC";
             case CRT_GEO_RAM:            return "GEO_RAM";
+            case CRT_REU:                return "REU";
             case CRT_NONE:               return "NONE";
         }
         return "???";

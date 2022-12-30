@@ -59,6 +59,7 @@ Reu::_dump(Category category, std::ostream& os) const
     using namespace util;
 
     Cartridge::_dump(category, os);
+    os << std::endl;
 
     if (category == Category::Inspection) {
 
@@ -68,6 +69,12 @@ Reu::_dump(Category category, std::ostream& os) const
         os << "REU " << model << std::endl;
         os << tab("Capacity");
         os << dec(getRamCapacity() / 1024) << " KB" << std::endl;
+    }
+
+    if (category == Category::Debug) {
+
+        string mode[4] = { "STASH", "FETCH", "SWAP", "VERIFY" };
+
         os << tab("Status Register");
         os << hex(sr) << std::endl;
         os << tab("Command Register");
@@ -84,12 +91,8 @@ Reu::_dump(Category category, std::ostream& os) const
         os << hex(imr) << std::endl;
         os << tab("Address Control Register");
         os << hex(acr) << std::endl;
-    }
 
-    if (category == Category::Debug) {
-
-        string mode[4] = { "STASH", "FETCH", "SWAP", "VERIFY" };
-
+        os << std::endl;
         os << tab("Wrap mask");
         os << hex(wrapMask()) << std::endl;
         os << tab("Mode");
