@@ -292,6 +292,8 @@ public:
      */
     u16 getPC0() const { return reg.pc0; }
 
+    u16 getSP() const { return reg.sp; }
+
     bool getN() const { return reg.sr.n; }
     void setN(bool value) { reg.sr.n = value; }
 

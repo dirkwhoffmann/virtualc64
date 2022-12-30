@@ -413,7 +413,7 @@ using namespace peddle;
 
 - (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src
 {
-    return @([self mem]->memdump((u16)addr, num, hex, src).c_str());
+    return @([self mem]->memdump((u16)addr, num, hex, hex ? 2 : 1, src).c_str());
 }
 - (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemoryType)src
 {

@@ -194,16 +194,14 @@ RetroShell::printState()
 
         std::stringstream ss;
 
-        ss << "TODO\n";
-        /*
         ss << "\n";
-        cpu.dumpLogBuffer(ss, 8);
+        cpu.debugger.dumpLogBuffer(ss, 8);
         ss << "\n";
-        amiga.dump(Category::Current, ss);
+        c64.dump(Category::Current, ss);
         ss << "\n";
-        cpu.disassembleRange(ss, cpu.getPC0(), 8);
+        cpu.debugger.disassembleRange(ss, cpu.getPC0(), 8);
         ss << "\n";
-        */
+
         *this << ss;
 
         updatePrompt();
@@ -384,7 +382,26 @@ RetroShell::cursorRel()
 void
 RetroShell::execUserCommand(const string &command)
 {
-    if (!command.empty()) {
+    if (command.empty()) {
+
+        if (interpreter.inCommandShell()) {
+
+            printHelp();
+
+        } else {
+
+            if (c64.isRunning()) {
+
+                c64.pause();
+
+            } else {
+
+                c64.stepInto();
+                printState();
+            }
+        }
+
+    } else {
 
         // Add the command to the history buffer
         history.back() = { command, (isize)command.size() };
@@ -393,10 +410,6 @@ RetroShell::execUserCommand(const string &command)
 
         // Execute the command
         try { exec(command); } catch (...) { };
-
-    } else {
-
-        printHelp();
     }
 }
 

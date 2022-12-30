@@ -131,11 +131,20 @@ Interpreter::initDebugShell(Command &root)
     // Memory
     //
 
-    root.add({"memory"},
-             "Displays the component state",
+    root.add({"memory", ""},
+             "Inspects the internal state",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(c64, Category::State);
+    });
+
+    root.add({"memory", "dump"}, { Arg::address },
+             "Generates a memory hexdump",
+             [this](Arguments& argv, long value) {
+
+        std::stringstream ss;
+        mem.memDump(ss, u16(parseNum(argv)));
+        retroShell << '\n' << ss << '\n';
     });
 
 

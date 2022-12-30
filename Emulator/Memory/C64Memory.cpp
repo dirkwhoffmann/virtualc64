@@ -746,7 +746,7 @@ C64Memory::resetVector() const {
 }
 
 string
-C64Memory::memdump(u16 addr, long num, bool hex, MemoryType src) const
+C64Memory::memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const
 {
     char result[128];
     char *p = result;
@@ -755,25 +755,23 @@ C64Memory::memdump(u16 addr, long num, bool hex, MemoryType src) const
     
     if (src == M_NONE) {
         
-        for (int i = 0; i < num; i++) {
-            if (hex) {
-                *p++ = ' '; *p++ = ' '; *p++ = '-'; *p++ = '-';
-            } else {
-                *p++ = ' '; *p++ = '-'; *p++ = '-'; *p++ = '-';
-            }
+        for (isize i = 0; i < num; i++) {
+
+            for (isize j = 0; j < pads; j++) *p++ = ' ';
+            *p++ = '-'; *p++ = '-';
         }
         *p = 0;
         
     } else {
         
-        for (int i = 0; i < num; i++) {
+        for (isize i = 0; i < num; i++) {
+
+            for (isize j = 0; j < pads; j++) *p++ = ' ';
+
             if (hex) {
-                *p++ = ' ';
-                *p++ = ' ';
                 util::sprint8x(p, spypeek(addr++, src));
                 p += 2;
             } else {
-                *p++ = ' ';
                 util::sprint8d(p, spypeek(addr++, src));
                 p += 3;
             }
@@ -784,7 +782,19 @@ C64Memory::memdump(u16 addr, long num, bool hex, MemoryType src) const
 }
 
 string
-C64Memory::txtdump(u16 addr, long num, MemoryType src) const
+C64Memory::hexdump(u16 addr, isize num, isize pads, MemoryType src) const
+{
+    return memdump(addr, num, true, pads, src);
+}
+
+string
+C64Memory::decdump(u16 addr, isize num, isize pads, MemoryType src) const
+{
+    return memdump(addr, num, false, pads, src);
+}
+
+string
+C64Memory::txtdump(u16 addr, isize num, MemoryType src) const
 {
     char result[17];
     char *p = result;
@@ -793,7 +803,7 @@ C64Memory::txtdump(u16 addr, long num, MemoryType src) const
     
     if (src != M_NONE) {
         
-        for (int i = 0; i < num; i++) {
+        for (isize i = 0; i < num; i++) {
             
             u8 byte = spypeek(addr++, src);
             
@@ -805,6 +815,24 @@ C64Memory::txtdump(u16 addr, long num, MemoryType src) const
     *p = 0;
     
     return string(result);
+}
+
+void
+C64Memory::memDump(std::ostream& os, u16 addr, isize numLines, bool hex)
+{
+    addr &= ~0xF;
+    
+    os << std::setfill('0') << std::hex << std::uppercase << std::right;
+
+    for (isize i = 0, count = 16; i < numLines; i++, addr += count) {
+
+        os << std::setw(4) << isize(addr);
+        os << ": ";
+        os << memdump(addr, count, hex);
+        os << "  ";
+        os << txtdump(addr, count, hex);
+        os << std::endl;
+    }
 }
 
 }

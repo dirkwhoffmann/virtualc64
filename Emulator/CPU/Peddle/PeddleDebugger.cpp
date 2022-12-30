@@ -496,9 +496,9 @@ Debugger::dumpLogBuffer(std::ostream& os, isize count)
             os << std::setfill('0');
             os << "   ";
             os << std::right << std::setw(4) << pc;
-            os << "  ";
+            os << "   ";
             os << flags;
-            os << "  ";
+            os << "    ";
             os << instr;
             os << std::endl;
         }

@@ -1160,6 +1160,27 @@ C64::_dump(Category category, std::ostream& os) const
 
         defaults.dump(category, os);
     }
+
+    if (category == Category::Current) {
+
+        os << std::setfill('0') << std::uppercase << std::hex << std::left;
+        os << " PC  SR AC XR YR SP  NV-BDIZC" << std::endl;
+        os << std::setw(4) << isize(cpu.reg.pc0) << " ";
+        os << std::setw(2) << isize(cpu.getP()) << " ";
+        os << std::setw(2) << isize(cpu.reg.a) << " ";
+        os << std::setw(2) << isize(cpu.reg.x) << " ";
+        os << std::setw(2) << isize(cpu.reg.y) << " ";
+        os << std::setw(2) << isize(cpu.reg.sp) << "  ";
+        os << (cpu.getN() ? "1" : "0");
+        os << (cpu.getV() ? "1" : "0");
+        os << "1";
+        os << (cpu.getB() ? "1" : "0");
+        os << (cpu.getD() ? "1" : "0");
+        os << (cpu.getI() ? "1" : "0");
+        os << (cpu.getZ() ? "1" : "0");
+        os << (cpu.getC() ? "1" : "0");
+        os << std::endl;
+    }
 }
 
 void
