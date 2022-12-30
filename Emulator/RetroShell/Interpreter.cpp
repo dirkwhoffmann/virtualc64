@@ -188,7 +188,7 @@ Interpreter::exec(const Arguments &argv, bool verbose)
 void
 Interpreter::usage(const Command& current)
 {
-    retroShell << "Usage: " << current.usage() << '\n' << '\n';
+    retroShell << "Usage: " << current.usage() << '\n';
 }
 
 void

@@ -126,6 +126,8 @@ Interpreter::initCommandShell(Command &root)
     // Regression testing
     //
 
+    root.newGroup("");
+
     root.add({"regression", "setup"}, { C64ModelEnum::argList() },
              "Initializes the test environment",
              [this](Arguments& argv, long value) {
@@ -198,6 +200,13 @@ Interpreter::initCommandShell(Command &root)
         retroShell.dump(c64, Category::Config);
     });
 
+    root.add({"c64", "defaults"},
+             "Displays the user defaults storage",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(c64, Category::Defaults);
+    });
+
     root.add({"c64", "set"},
              "Configures the component");
 
@@ -209,7 +218,7 @@ Interpreter::initCommandShell(Command &root)
     });
 
     root.add({"c64", "set", "fps"}, { Arg::value },
-             "Sets the frames per seconds",
+             "Sets the proposed number of frames per seconds",
              [this](Arguments& argv, long value) {
 
         c64.configure(OPT_FPS, parseNum(argv));
@@ -231,20 +240,13 @@ Interpreter::initCommandShell(Command &root)
     });
 
     root.add({"c64", "init"}, { C64ModelEnum::argList() },
-             "Initializes the emulator with factory settings",
+             "Initializes the emulator with factory defaults",
              [this](Arguments& argv, long value) {
 
         auto model = parseEnum<C64ModelEnum>(argv);
 
         c64.revertToFactorySettings();
         c64.configure(model);
-    });
-
-    root.add({"c64", "defaults"},
-             "Displays the user defaults storage",
-             [this](Arguments& argv, long value) {
-
-        retroShell.dump(c64, Category::Defaults);
     });
 
     

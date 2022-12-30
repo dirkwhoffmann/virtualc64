@@ -109,6 +109,8 @@ Interpreter::initDebugShell(Command &root)
     // C64
     //
 
+    root.newGroup("");
+
     root.add({"c64"},
              "Displays the component state");
 
@@ -119,7 +121,7 @@ Interpreter::initDebugShell(Command &root)
         retroShell.dump(c64, Category::Inspection);
     });
 
-    root.add({"c64", ""},
+    root.add({"c64", "debug"},
              "Displays additional debug information",
              [this](Arguments& argv, long value) {
 

@@ -1133,24 +1133,22 @@ C64::_dump(Category category, std::ostream& os) const
         os << std::endl;
     }
     
-    if (category == Category::State) {
+    if (category == Category::Inspection) {
 
         os << tab("Machine type");
         os << bol(vic.pal(), "PAL", "NTSC") << std::endl;
-        os << tab("Frames per second");
-        os << vic.getFps() << std::endl;
-        os << tab("Lines per frame");
-        os << vic.getLinesPerFrame() << std::endl;
-        os << tab("Cycles per scanline");
-        os << vic.getCyclesPerLine() << std::endl;
-        os << tab("Current cycle");
+        os << tab("Cycle");
         os << cpu.clock << std::endl;
-        os << tab("Current frame");
+        os << tab("Frame");
         os << frame << std::endl;
-        os << tab("Current scanline");
+        os << tab("VPos");
         os << scanline << std::endl;
-        os << tab("Current scanline cycle");
+        os << tab("HPos");
         os << dec(rasterCycle) << std::endl;
+    }
+
+    if (category == Category::Debug) {
+
         os << tab("Ultimax mode");
         os << bol(getUltimax()) << std::endl;
         os << tab("Warp mode");
