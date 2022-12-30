@@ -90,7 +90,7 @@ ExpansionPort::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category == Category::State) {
+    if (category == Category::Inspection) {
         
         os << tab("Game line");
         os << bol(gameLine) << std::endl;
@@ -98,6 +98,14 @@ ExpansionPort::_dump(Category category, std::ostream& os) const
         os << bol(exromLine) << std::endl;
         os << tab("Cartridge");
         os << bol(cartridge != nullptr, "attached", "none") << std::endl;
+
+        if (cartridge) {
+            os << std::endl;
+            cartridge->dump(category, os);
+        }
+    }
+
+    if (category == Category::Debug) {
 
         if (cartridge) {
             os << std::endl;

@@ -166,7 +166,7 @@ Command::usage() const
         for (isize i = 0; i < optArgs(); i++) {
 
             optional += optionalArgs[i];
-            optional + " ";
+            optional += " ";
         }
         if (optional != "") optional = "[ " + optional + "]";
 

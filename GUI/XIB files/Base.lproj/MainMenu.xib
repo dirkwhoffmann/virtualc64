@@ -1030,6 +1030,12 @@
                                                 <action selector="attachReuAction:" target="-1" id="ymE-ZG-9cD"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="REU 1750 XL (2048 KB)" tag="2048" id="qDn-Sz-Kfg">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachReuAction:" target="-1" id="fDb-ef-W2q"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="0Py-Sh-MFB"/>
                                         <menuItem title="RAM battery" id="5BL-9k-xld">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -1047,43 +1053,43 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Attach GEO/NEO Ram" id="7j5-aX-oSo">
                                     <items>
-                                        <menuItem title="64 KB" tag="64" id="UjY-4P-9Du">
+                                        <menuItem title="64 KB" tag="64" hidden="YES" id="UjY-4P-9Du">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="attachGeoRamAction:" target="-1" id="qyn-Py-GIU"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="128 KB" tag="128" id="Ih5-c5-Alt">
+                                        <menuItem title="128 KB" tag="128" hidden="YES" id="Ih5-c5-Alt">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="attachGeoRamAction:" target="-1" id="WKS-rU-KLB"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="256 KB" tag="256" id="Wz7-fL-tvu">
+                                        <menuItem title="256 KB" tag="256" hidden="YES" id="Wz7-fL-tvu">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="attachGeoRamAction:" target="-1" id="uu1-sL-uk4"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="512 KB" tag="512" id="HAU-nh-ha2">
+                                        <menuItem title="GEO RAM (512 KB)" tag="512" id="HAU-nh-ha2">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="attachGeoRamAction:" target="-1" id="B6c-ID-l7n"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="1024 KB" tag="1024" id="ZQA-u8-gy9">
+                                        <menuItem title="NEO RAM (1024 KB)" tag="1024" id="ZQA-u8-gy9">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="attachGeoRamAction:" target="-1" id="Ffj-Ky-Lrk"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="2048 KB" tag="2048" id="D3E-7F-aMl">
+                                        <menuItem title="NEO RAM (2048 KB)" tag="2048" id="D3E-7F-aMl">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="attachGeoRamAction:" target="-1" id="g9u-Jv-cG2"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="4096 KB" tag="4096" id="b7O-tE-XhB">
+                                        <menuItem title="NEO RAM (4096 KB)" tag="4096" id="b7O-tE-XhB">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="attachGeoRamAction:" target="-1" id="unP-gr-RPf"/>

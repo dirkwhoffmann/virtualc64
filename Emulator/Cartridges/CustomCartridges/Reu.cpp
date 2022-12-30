@@ -90,6 +90,8 @@ Reu::_dump(Category category, std::ostream& os) const
 
         string mode[4] = { "STASH", "FETCH", "SWAP", "VERIFY" };
 
+        os << tab("Wrap mask");
+        os << hex(wrapMask()) << std::endl;
         os << tab("Mode");
         os << mode[cr & 3] << std::endl;
         os << tab("Autoload");
@@ -253,18 +255,18 @@ Reu::pokeIO2(u16 addr, u8 value)
 
         case 0x06:  // REU Bank
 
-            reuBase = (u32)REPLACE_HI_WORD(reuBase, value & 0x3);
+            reuBase = (u32)REPLACE_HI_WORD(reuBase, value & 0b111);
 
             switch (getRamCapacity()) {
 
                 case KB(128):   upperBankBits = 0; break;
                 case KB(256):   upperBankBits = 0; break;
                 case KB(512):   upperBankBits = 0; break;
-                case KB(1024):  upperBankBits = (value & 0b00001) << 11; break;
-                case KB(2048):  upperBankBits = (value & 0b00011) << 11; break;
-                case KB(4096):  upperBankBits = (value & 0b00111) << 11; break;
-                case KB(8192):  upperBankBits = (value & 0b01111) << 11; break;
-                case KB(16384): upperBankBits = (value & 0b11111) << 11; break;
+                case KB(1024):  upperBankBits = (value & 0b00001000) << 16; break;
+                case KB(2048):  upperBankBits = (value & 0b00011000) << 16; break;
+                case KB(4096):  upperBankBits = (value & 0b00111000) << 16; break;
+                case KB(8192):  upperBankBits = (value & 0b01111000) << 16; break;
+                case KB(16384): upperBankBits = (value & 0b11111000) << 16; break;
 
                 default:
                     fatalError;
@@ -324,17 +326,10 @@ Reu::readFromReuRam(u32 addr)
 
     if (addr < getRamCapacity()) {
 
-        return peekRAM(addr);
-
-    } else {
-
-        assert(isREU1764());
-
-        // TODO: Return floating value from bus
-
-        // For the time being: Mirror other banks
-        return peekRAM(addr % getRamCapacity());
+        bus = peekRAM(addr);
     }
+
+    return bus;
 }
 
 void
@@ -342,7 +337,11 @@ Reu::writeToReuRam(u32 addr, u8 value)
 {
     addr |= upperBankBits;
 
-    if (addr < getRamCapacity()) pokeRAM(addr, value);
+    if (addr < getRamCapacity()) {
+
+        bus = value;
+        pokeRAM(addr, value);
+    }
 }
 
 void
@@ -374,7 +373,7 @@ Reu::stash(u16 memAddr, u32 reuAddr, isize len)
     for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
 
         u8 memValue = mem.peek(memAddr);
-        pokeRAM(reuAddr, memValue);
+        writeToReuRam(reuAddr, memValue);
 
         // debug(REU_DEBUG,"(%x, %02x) -> %x\n", memAddr, value, reuAddr);
 
@@ -403,7 +402,7 @@ Reu::fetch(u16 memAddr, u32 reuAddr, isize len)
 
     for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
 
-        u8 reuValue = peekRAM(reuAddr);
+        u8 reuValue = readFromReuRam(reuAddr);
         mem.poke(memAddr, reuValue);
 
         // debug(REU_DEBUG,"%x <- (%x, %02x)\n", memAddr, reuAddr, value);
@@ -411,6 +410,9 @@ Reu::fetch(u16 memAddr, u32 reuAddr, isize len)
         if (ms) incMemAddr(memAddr);
         if (rs) incReuAddr(reuAddr);
     }
+
+    // Update bus value
+    (void)readFromReuRam(reuAddr);
 
     // Set the "End of Block" bit
     SET_BIT(sr, 6);
@@ -433,10 +435,10 @@ Reu::swap(u16 memAddr, u32 reuAddr, isize len)
     for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
 
         u8 memVal = mem.peek(memAddr);
-        u8 reuVal = peekRAM(reuAddr);
+        u8 reuVal = readFromReuRam(reuAddr);
 
         mem.poke(memAddr, reuVal);
-        pokeRAM(reuAddr, memVal);
+        writeToReuRam(reuAddr, memVal);
 
         if (ms) incMemAddr(memAddr);
         if (rs) incReuAddr(reuAddr);
@@ -463,7 +465,7 @@ Reu::verify(u16 memAddr, u32 reuAddr, isize len)
     for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
 
         u8 memVal = mem.peek(memAddr);
-        u8 reuVal = peekRAM(reuAddr);
+        u8 reuVal = readFromReuRam(reuAddr);
 
         if (memVal != reuVal) {
 

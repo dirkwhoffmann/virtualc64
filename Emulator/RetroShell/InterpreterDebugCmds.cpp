@@ -353,7 +353,14 @@ Interpreter::initDebugShell(Command &root)
         retroShell.dump(expansionport, Category::Inspection);
     });
 
+    root.add({"expansion", "debug"},
+             "Displays additional debug information",
+             [this](Arguments& argv, long value) {
 
+        retroShell.dump(expansionport, Category::Debug);
+    });
+
+    
     //
     // Keyboard
     //

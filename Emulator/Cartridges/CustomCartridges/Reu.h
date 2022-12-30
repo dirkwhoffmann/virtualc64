@@ -41,6 +41,9 @@ private:
     // Address control register
     u8 acr;
 
+    // Latest value on the data bus
+    u8 bus;
+
 
     //
     // Emulation specific variables
@@ -94,6 +97,7 @@ private:
         << tlen
         << imr
         << acr
+        << bus
         << memTypeF;
     }
 
@@ -117,7 +121,7 @@ private:
     bool isREU1750() const { return getRamCapacity() >= KB(512); }
 
     // Returns the bit-mask for emulating memory wrap-around
-    u32 wrapMask() const { return isREU1700() ? 0x1FFFF : 0x3FFFF; }
+    u32 wrapMask() const { return isREU1700() ? 0x1FFFF : 0x7FFFF; }
 
 
     //
