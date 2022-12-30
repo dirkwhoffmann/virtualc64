@@ -7,7 +7,8 @@
 
 #include "PeddleConfig.h"
 #include "Peddle.h"
-
+#include <iostream>
+#include <fstream>
 #include <cassert>
 
 namespace peddle {
@@ -403,25 +404,25 @@ Debugger::getAddressOfNextInstruction() const
 }
 
 const char *
-Debugger::disassembleRecordedInstr(int i, long *len) const
+Debugger::disassembleRecordedInstr(isize i, long *len) const
 {
     return disassembleInstr(logEntryAbs(i), len);
 }
 
 const char *
-Debugger::disassembleRecordedBytes(int i) const
+Debugger::disassembleRecordedBytes(isize i) const
 {
     return disassembleBytes(logEntryAbs(i));
 }
 
 const char *
-Debugger::disassembleRecordedFlags(int i) const
+Debugger::disassembleRecordedFlags(isize i) const
 {
     return disassembleRecordedFlags(logEntryAbs(i));
 }
 
 const char *
-Debugger::disassembleRecordedPC(int i) const
+Debugger::disassembleRecordedPC(isize i) const
 {
     return disassembleAddr(logEntryAbs(i).pc);
 }
@@ -461,13 +462,13 @@ Debugger::disassembleAddr(u16 addr) const
 }
 
 const char *
-Debugger::disassembleInstruction(long *len) const
+Debugger::disassembleInstr(long *len) const
 {
     return disassembleInstr(cpu.getPC0(), len);
 }
 
 const char *
-Debugger::disassembleDataBytes() const
+Debugger::disassembleBytes() const
 {
     return disassembleBytes(cpu.getPC0());
 }
@@ -476,6 +477,80 @@ const char *
 Debugger::disassemblePC() const
 {
     return disassembleAddr(cpu.getPC0());
+}
+
+void
+Debugger::dumpLogBuffer(std::ostream& os, isize count)
+{
+    isize numBytes = 0;
+    isize num = loggedInstructions();
+
+    for (isize i = num - count; i < num ; i++) {
+
+        if (i >= 0) {
+
+            auto pc = disassembleRecordedPC(i);
+            auto instr = disassembleRecordedInstr(i, &numBytes);
+            auto flags = disassembleRecordedFlags(i);
+
+            os << std::setfill('0');
+            os << "   ";
+            os << std::right << std::setw(4) << pc;
+            os << "  ";
+            os << flags;
+            os << "  ";
+            os << instr;
+            os << std::endl;
+        }
+    }
+}
+
+void
+Debugger::dumpLogBuffer(std::ostream& os)
+{
+    dumpLogBuffer(os, loggedInstructions());
+}
+
+void
+Debugger::disassembleRange(std::ostream& os, u16 addr, isize count)
+{
+    disassembleRange(os, std::pair<u16, u16>(addr, UINT16_MAX), count);
+}
+
+void
+Debugger::disassembleRange(std::ostream& os, std::pair<u16, u16> range, isize max)
+{
+    u16 addr = range.first;
+    isize numBytes = 0;
+    auto pc = cpu.getPC0();
+
+    for (isize i = 0; i < max && addr <= range.second; i++, addr += numBytes) {
+
+        auto instr = disassembleInstr(addr, &numBytes);
+        auto data = disassembleBytes(addr);
+
+        os << std::setfill(' ');
+
+        os << (addr == pc ? "->" : "  ");
+
+        /*
+        if (breakpoints.isDisabledAt(addr)) {
+            os << "b";
+        } else if (breakpoints.isSetAt(addr)) {
+            os << "B";
+        } else {
+            os << " ";
+        }
+        */
+        os << " ";
+
+        os << std::right << std::setw(4) << disassembleAddr(addr);
+        os << "   ";
+        os << std::left << std::setw(9) << data;
+        os << "   ";
+        os << instr;
+        os << std::endl;
+    }
 }
 
 const char *

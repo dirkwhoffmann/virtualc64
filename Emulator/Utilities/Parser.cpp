@@ -34,7 +34,10 @@ long
 parseNum(string& token)
 {
     long result;
-    
+
+    // Replace leading '$' by '0x'
+    if (!token.empty() && token[0] == '$') token = "0x" + token.erase(0, 1);
+
     try { result = stol(token, nullptr, 0); }
     catch (std::exception&) { throw ParseNumError(token); }
 

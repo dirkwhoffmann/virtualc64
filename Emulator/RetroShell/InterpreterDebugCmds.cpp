@@ -69,15 +69,12 @@ Interpreter::initDebugShell(Command &root)
              "Runs disassembler",
              [this](Arguments& argv, long value) {
 
-        retroShell << "TODO\n";
-        /*
         std::stringstream ss;
 
-        auto addr = argv.empty() ? cpu.getPC0() : u32(parseNum(argv));
-        cpu.disassembleRange(ss, addr, 16);
+        auto addr = argv.empty() ? cpu.getPC0() : u16(parseNum(argv));
+        cpu.debugger.disassembleRange(ss, addr, 16);
 
         retroShell << '\n' << ss << '\n';
-        */
     });
 
 
