@@ -166,6 +166,9 @@ C64::C64()
         &msgQueue
     };
 
+    // Assign a unique ID to the CPU
+    cpu.setID(0);
+
     // Set up the initial state
     C64Component::initialize();
     C64Component::reset(true);

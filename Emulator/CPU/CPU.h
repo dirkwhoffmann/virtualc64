@@ -63,9 +63,11 @@ public:
 
     bool isC64CPU() const { return cpuModel == MOS_6510; }
     bool isDriveCPU() const { return cpuModel == MOS_6502; }
-    bool isDriveCPU(isize nr) const { return isDriveCPU() && id == nr + 1; }
+    // bool isDriveCPU(isize nr) const { return isDriveCPU() && id == nr + 1; }
 
+    void setID(isize id) { this->id = id; }
 
+    
     //
     // Methods from C64Object
     //

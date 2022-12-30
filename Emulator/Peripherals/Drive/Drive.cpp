@@ -27,6 +27,9 @@ Drive::Drive(isize nr, C64 &ref) : SubComponent(ref), deviceNr(nr)
         &via1,
         &via2
     };
+
+    // Assign a unique ID to the CPU
+    cpu.setID(nr == DRIVE8 ? 1 : 2);
 }
 
 const char *

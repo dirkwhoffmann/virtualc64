@@ -8,6 +8,7 @@
 #include "PeddleConfig.h"
 #include "Peddle.h"
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <cassert>
 
