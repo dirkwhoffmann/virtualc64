@@ -525,7 +525,7 @@ Debugger::disassembleRange(std::ostream& os, std::pair<u16, u16> range, isize ma
     isize numBytes = 0;
     auto pc = cpu.getPC0();
 
-    for (isize i = 0; i < max && addr <= range.second; i++, addr += numBytes) {
+    for (isize i = 0; i < max && addr <= range.second; i++) {
 
         auto instr = disassembleInstr(addr, &numBytes);
         auto data = disassembleBytes(addr);
@@ -551,6 +551,8 @@ Debugger::disassembleRange(std::ostream& os, std::pair<u16, u16> range, isize ma
         os << "   ";
         os << instr;
         os << std::endl;
+
+        U16_INC(addr, numBytes);
     }
 }
 

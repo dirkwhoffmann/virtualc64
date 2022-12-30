@@ -324,7 +324,7 @@ Reu::readFromReuRam(u32 addr)
 {
     addr |= upperBankBits;
 
-    if (addr < getRamCapacity()) {
+    if (addr < u32(getRamCapacity())) {
 
         bus = peekRAM(addr);
     }
@@ -337,7 +337,7 @@ Reu::writeToReuRam(u32 addr, u8 value)
 {
     addr |= upperBankBits;
 
-    if (addr < getRamCapacity()) {
+    if (addr < u32(getRamCapacity())) {
 
         bus = value;
         pokeRAM(addr, value);

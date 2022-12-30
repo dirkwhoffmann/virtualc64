@@ -120,7 +120,7 @@ private:
     bool isREU1764() const { return getRamCapacity() == KB(256); }
     bool isREU1750() const { return getRamCapacity() >= KB(512); }
 
-    // Returns the bit-mask for emulating memory wrap-around
+    // Returns the bitmask of the REU address register
     u32 wrapMask() const { return isREU1700() ? 0x1FFFF : 0x7FFFF; }
 
 

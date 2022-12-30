@@ -821,10 +821,10 @@ void
 C64Memory::memDump(std::ostream& os, u16 addr, isize numLines, bool hex)
 {
     addr &= ~0xF;
-    
+
     os << std::setfill('0') << std::hex << std::uppercase << std::right;
 
-    for (isize i = 0, count = 16; i < numLines; i++, addr += count) {
+    for (isize i = 0, count = 16; i < numLines; i++) {
 
         os << std::setw(4) << isize(addr);
         os << ": ";
@@ -832,6 +832,8 @@ C64Memory::memDump(std::ostream& os, u16 addr, isize numLines, bool hex)
         os << "  ";
         os << txtdump(addr, count, hex);
         os << std::endl;
+
+        U16_INC(addr, count);
     }
 }
 
