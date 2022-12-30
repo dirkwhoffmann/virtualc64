@@ -556,14 +556,22 @@ RetroShell::help(const string &command)
 void
 RetroShell::dump(C64Component &component, Category category)
 {
-    std::stringstream ss; string line;
+    std::stringstream ss;
 
     {   SUSPENDED
+
+        switch (category) {
+
+            case Category::Config: ss << "Current configuration:\n\n"; break;
+
+            default:
+                break;
+        }
 
         component.dump(category, ss);
     }
 
-    while(std::getline(ss, line)) *this << line << '\n';
+    *this << '\n' << ss << '\n';
 }
 
 void

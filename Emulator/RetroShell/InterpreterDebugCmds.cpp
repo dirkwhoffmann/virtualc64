@@ -121,6 +121,20 @@ Interpreter::initDebugShell(Command &root)
         retroShell.dump(c64, Category::Inspection);
     });
 
+    root.add({"c64", "progress"},
+             "Displays clocks and the frame counter",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(c64, Category::Progress);
+    });
+
+    root.add({"c64", "host"},
+             "Displays information about the host machine",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(host, Category::Inspection);
+    });
+
     root.add({"c64", "debug"},
              "Displays additional debug information",
              [this](Arguments& argv, long value) {

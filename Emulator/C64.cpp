@@ -1132,29 +1132,44 @@ C64::_dump(Category category, std::ostream& os) const
         if (config.syncMode == SYNC_FIXED_FPS) os << " (" << config.proposedFps << " fps)";
         os << std::endl;
     }
-    
+
     if (category == Category::Inspection) {
 
-        os << tab("Machine type");
-        os << bol(vic.pal(), "PAL", "NTSC") << std::endl;
-        os << tab("Cycle");
-        os << cpu.clock << std::endl;
+        os << tab("Power");
+        os << bol(isPoweredOn()) << std::endl;
+        os << tab("Running");
+        os << bol(isRunning()) << std::endl;
+        os << tab("Suspended");
+        os << bol(isSuspended()) << std::endl;
+        os << tab("Warp mode");
+        os << bol(inWarpMode()) << std::endl;
+        os << tab("Debug mode");
+        os << bol(inDebugMode()) << std::endl;
+        os << std::endl;
+        os << tab("Refresh rate");
+        os << dec(isize(refreshRate())) << " Fps" << std::endl;
+    }
+
+    if (category == Category::Progress) {
+
         os << tab("Frame");
-        os << frame << std::endl;
-        os << tab("VPos");
-        os << scanline << std::endl;
-        os << tab("HPos");
-        os << dec(rasterCycle) << std::endl;
+        os << dec(frame) << std::endl;
+        os << tab("CPU progress");
+        os << dec(cpu.clock) << " Cycles" << std::endl;
+        os << tab("CIA 1 progress");
+        os << dec(cia1.isSleeping() ? cia1.sleepCycle : cpu.clock) << " Cycles" << std::endl;
+        os << tab("CIA 2 progress");
+        os << dec(cia2.isSleeping() ? cia2.sleepCycle : cpu.clock) << " Cycles" << std::endl;
     }
 
     if (category == Category::Debug) {
 
+        os << tab("Thread state");
+        os << ExecutionStateEnum::key(state) << std::endl;
+        os << tab("Thread mode");
+        os << (getThreadMode() == ThreadMode::Periodic ? "PERIODIC" : "PULSED") << std::endl;
         os << tab("Ultimax mode");
         os << bol(getUltimax()) << std::endl;
-        os << tab("Warp mode");
-        os << bol(inWarpMode()) << std::endl;
-        os << tab("Debug mode");
-        os << bol(debugMode) << std::endl;
     }
 
     if (category == Category::Defaults) {

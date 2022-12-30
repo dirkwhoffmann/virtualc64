@@ -31,7 +31,8 @@ Host::_dump(Category category, std::ostream& os) const
         os << tab("Monitor refresh rate");
         os << flt(refreshRate) << " Hz" << std::endl;
         os << tab("Frame buffer size");
-        os << dec(frameBufferWidth) << " x " << dec(frameBufferHeight) << std::endl;
+        os << dec(frameBufferWidth) << " x ";
+        os << dec(frameBufferHeight) << " Texels" << std::endl;
     }
 }
 
