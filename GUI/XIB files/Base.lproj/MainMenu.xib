@@ -1012,10 +1012,22 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Attach REU" id="gqy-wA-JpK">
                                     <items>
-                                        <menuItem title="256 KB" tag="256" id="zNt-Oc-aBn">
+                                        <menuItem title="REU 1700 (128 KB)" tag="128" id="zNt-Oc-aBn">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="attachReuAction:" target="-1" id="H68-ji-1Qq"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="REU 1764 (256 KB)" tag="256" id="svU-LF-bnA">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachReuAction:" target="-1" id="zI7-EZ-AB2"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="REU 1750 (512 KB)" tag="512" id="SNe-HZ-9QS">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="attachReuAction:" target="-1" id="ymE-ZG-9cD"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="0Py-Sh-MFB"/>

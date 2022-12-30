@@ -10,6 +10,27 @@
 #include "config.h"
 #include "C64.h"
 
+Reu::Reu(C64 &ref, isize kb) : Cartridge(ref)
+{
+    switch (kb) {
+
+        case 128:
+        case 256:
+        case 512:
+        case 1024:
+        case 2048:
+        case 4096:
+        case 8192:
+        case 16384:
+
+            setRamCapacity(KB(kb));
+            break;
+
+        default:
+            fatalError;
+    }
+}
+
 void
 Reu::_reset(bool hard)
 {
@@ -22,8 +43,13 @@ Reu::_reset(bool hard)
         trace(CRT_DEBUG, "Preserving REU contents\n");
     }
 
-    sr = 0x10;      // Size = 256KB
-    cr = 0x10;      // FF00 option is disabled
+    // Initialize the status register
+    sr = isREU1700() ? 0x00 : 0x10;
+
+    // Initialize the command register
+    cr = 0x10;
+
+    // Initialize the length register
     tlen = 0xFFFF;
 }
 
@@ -34,8 +60,14 @@ Reu::_dump(Category category, std::ostream& os) const
 
     Cartridge::_dump(category, os);
 
-    if (category == Category::State) {
+    if (category == Category::Inspection) {
 
+        auto model = isREU1700() ? "1700" : isREU1764() ? "1764" : "1750";
+
+        os << tab("Model");
+        os << "REU " << model << std::endl;
+        os << tab("Capacity");
+        os << dec(getRamCapacity() / 1024) << " KB" << std::endl;
         os << tab("Status Register");
         os << hex(sr) << std::endl;
         os << tab("Command Register");
@@ -44,8 +76,8 @@ Reu::_dump(Category category, std::ostream& os) const
         os << hex(c64Base) << std::endl;
         os << tab("REU Base Address");
         os << hex(reuBase) << std::endl;
-        // os << tab("REU Bank");
-        // os << hex(bank) << std::endl;
+        os << tab("Upper bank bits" );
+        os << hex(upperBankBits) << std::endl;
         os << tab("Transfer Length");
         os << hex(tlen) << std::endl;
         os << tab("Interrupt Mask Register");
@@ -54,7 +86,7 @@ Reu::_dump(Category category, std::ostream& os) const
         os << hex(acr) << std::endl;
     }
 
-    if (category == Category::Dma) {
+    if (category == Category::Debug) {
 
         string mode[4] = { "STASH", "FETCH", "SWAP", "VERIFY" };
 
@@ -222,6 +254,21 @@ Reu::pokeIO2(u16 addr, u8 value)
         case 0x06:  // REU Bank
 
             reuBase = (u32)REPLACE_HI_WORD(reuBase, value & 0x3);
+
+            switch (getRamCapacity()) {
+
+                case KB(128):   upperBankBits = 0; break;
+                case KB(256):   upperBankBits = 0; break;
+                case KB(512):   upperBankBits = 0; break;
+                case KB(1024):  upperBankBits = (value & 0b00001) << 11; break;
+                case KB(2048):  upperBankBits = (value & 0b00011) << 11; break;
+                case KB(4096):  upperBankBits = (value & 0b00111) << 11; break;
+                case KB(8192):  upperBankBits = (value & 0b01111) << 11; break;
+                case KB(16384): upperBankBits = (value & 0b11111) << 11; break;
+
+                default:
+                    fatalError;
+            }
             break;
 
         case 0x07:  // Transfer Length (LSB)
@@ -268,6 +315,34 @@ Reu::poke(u16 addr, u8 value)
         // Route the write access back
         mem.poke(addr, value, memTypeF);
     }
+}
+
+u8
+Reu::readFromReuRam(u32 addr)
+{
+    addr |= upperBankBits;
+
+    if (addr < getRamCapacity()) {
+
+        return peekRAM(addr);
+
+    } else {
+
+        assert(isREU1764());
+
+        // TODO: Return floating value from bus
+
+        // For the time being: Mirror other banks
+        return peekRAM(addr % getRamCapacity());
+    }
+}
+
+void
+Reu::writeToReuRam(u32 addr, u8 value)
+{
+    addr |= upperBankBits;
+
+    if (addr < getRamCapacity()) pokeRAM(addr, value);
 }
 
 void

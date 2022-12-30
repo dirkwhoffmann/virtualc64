@@ -25,12 +25,12 @@ private:
     // Command register
     u8 cr;
 
-    // Base address registers (C64 memory and REU memory)
+    // Base address registers
     u16 c64Base;
     u32 reuBase;
 
-    // Memory bank register
-    // u8 bank;
+    // Upper bank bits (used by modded REUs with higher capacities)
+    u32 upperBankBits;
 
     // Transfer length register
     u16 tlen;
@@ -57,7 +57,7 @@ private:
 public:
 
     Reu(C64 &ref) : Cartridge(ref) { };
-    Reu(C64 &ref, isize kb) : Reu(ref) { setRamCapacity(kb * 1024); }
+    Reu(C64 &ref, isize kb);
     const char *getDescription() const override { return "REU"; }
     CartridgeType getCartridgeType() const override { return CRT_REU; }
 
@@ -90,6 +90,7 @@ private:
         << cr
         << c64Base
         << reuBase
+        << upperBankBits
         << tlen
         << imr
         << acr
@@ -105,6 +106,18 @@ private:
     u64 __checksum() override { COMPUTE_SNAPSHOT_CHECKSUM }
     isize __load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize __save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
+
+
+    //
+    // Querying properties
+    //
+
+    bool isREU1700() const { return getRamCapacity() == KB(128); }
+    bool isREU1764() const { return getRamCapacity() == KB(256); }
+    bool isREU1750() const { return getRamCapacity() >= KB(512); }
+
+    // Returns the bit-mask for emulating memory wrap-around
+    u32 wrapMask() const { return isREU1700() ? 0x1FFFF : 0x3FFFF; }
 
 
     //
@@ -136,6 +149,11 @@ public:
     void pokeIO2(u16 addr, u8 value) override;
     void poke(u16 addr, u8 value) override;
 
+private:
+
+    u8 readFromReuRam(u32 addr);
+    void writeToReuRam(u32 addr, u8 value);
+
 
     //
     // Performing DMA
@@ -144,7 +162,7 @@ public:
 private:
 
     void incMemAddr(u16 &addr) { addr = U16_ADD(addr, 1); }
-    void incReuAddr(u32 &addr) { addr = U32_ADD(addr, 1) & 0x3FFFF; }
+    void incReuAddr(u32 &addr) { addr = U32_ADD(addr, 1) & wrapMask(); }
 
     void doDma();
     void stash(u16 memAddr, u32 reuAddr, isize len);
