@@ -19,8 +19,8 @@
 enum_long(OPT)
 {
     // C64
-    OPT_FPS_MODE,
-    OPT_FPS,
+    OPT_SYNC_MODE,
+    OPT_PROPOSED_FPS,
 
     // VICII
     OPT_VIC_REVISION,
@@ -119,8 +119,8 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
     {
         switch (value) {
 
-            case OPT_FPS_MODE:              return "FPS_MODE";
-            case OPT_FPS:                   return "FPS";
+            case OPT_SYNC_MODE:             return "SYNC_MODE";
+            case OPT_PROPOSED_FPS:          return "PROPOSED_FPS";
 
             case OPT_VIC_REVISION:          return "VIC_REVISION";
             case OPT_PALETTE:               return "PALETTE";

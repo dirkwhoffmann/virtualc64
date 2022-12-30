@@ -10,6 +10,7 @@
 #include "config.h"
 #include "Command.h"
 #include <algorithm>
+#include <utility>
 
 namespace vc64 {
 

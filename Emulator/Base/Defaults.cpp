@@ -16,8 +16,8 @@ namespace vc64 {
 
 Defaults::Defaults()
 {
-    setFallback(OPT_FPS_MODE, FPS_NATIVE);
-    setFallback(OPT_FPS, 60);
+    setFallback(OPT_SYNC_MODE, SYNC_NATIVE_FPS);
+    setFallback(OPT_PROPOSED_FPS, 60);
 
     setFallback(OPT_POWER_GRID, GRID_STABLE_50HZ);
 

@@ -130,8 +130,8 @@ protected:
     // The thread object
     std::thread thread;
 
-    // The current synchronization mode
-    enum class SyncMode { Periodic, Pulsed };
+    // The thread synchronization mode
+    enum class ThreadMode { Periodic, Pulsed };
 
     // The current thread state and a change request
     volatile ExecutionState state = EXEC_OFF;
@@ -178,8 +178,8 @@ public:
 
 private:
     
-    template <SyncMode M> void execute();
-    template <SyncMode M> void sleep();
+    template <ThreadMode M> void execute();
+    template <ThreadMode M> void sleep();
 
     // The main entry point (called when the thread is created)
     void main();
@@ -247,7 +247,7 @@ protected:
 public:
 
     // Provides the current sync mode
-    virtual SyncMode getSyncMode() const = 0;
+    virtual ThreadMode getThreadMode() const = 0;
 
     // Awakes the thread if it runs in pulse mode
     void wakeUp();

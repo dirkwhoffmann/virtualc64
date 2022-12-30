@@ -189,7 +189,7 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var vidVCenterLabel: NSTextField!
 
     // Frame rate
-    @IBOutlet weak var vidFpsMode: NSPopUpButton!
+    @IBOutlet weak var vidSyncMode: NSPopUpButton!
     @IBOutlet weak var vidFpsSlider: NSSlider!
     @IBOutlet weak var vidFpsMin: NSTextField!
     @IBOutlet weak var vidFpsMax: NSTextField!

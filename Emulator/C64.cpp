@@ -255,8 +255,8 @@ C64::resetConfig()
 
     std::vector <Option> options = {
 
-        OPT_FPS_MODE,
-        OPT_FPS
+        OPT_SYNC_MODE,
+        OPT_PROPOSED_FPS
     };
 
     for (auto &option : options) {
@@ -270,13 +270,13 @@ C64::getConfigItem(Option option) const
 {
     switch (option) {
 
-        case OPT_FPS_MODE:
+        case OPT_SYNC_MODE:
 
-            return config.fpsMode;
+            return config.syncMode;
 
-        case OPT_FPS:
+        case OPT_PROPOSED_FPS:
 
-            return config.fps;
+            return config.proposedFps;
 
         case OPT_VIC_REVISION:
         case OPT_VIC_POWER_SAVE:
@@ -393,23 +393,23 @@ C64::setConfigItem(Option option, i64 value)
 {
     switch (option) {
 
-        case OPT_FPS_MODE:
+        case OPT_SYNC_MODE:
 
-            if (!FpsModeEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, FpsModeEnum::keyList());
+            if (!SyncModeEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, SyncModeEnum::keyList());
             }
 
-            config.fpsMode = FpsMode(value);
+            config.syncMode = SyncMode(value);
             updateClockFrequency();
             return;
 
-        case OPT_FPS:
+        case OPT_PROPOSED_FPS:
 
             if (value < 25 || value > 120) {
                 throw VC64Error(ERROR_OPT_INVARG, "25...120");
             }
 
-            config.fps = isize(value);
+            config.proposedFps = isize(value);
             updateClockFrequency();
             return;
 
@@ -449,8 +449,8 @@ C64::configure(Option option, i64 value)
 
     switch (option) {
 
-        case OPT_FPS_MODE:
-        case OPT_FPS:
+        case OPT_SYNC_MODE:
+        case OPT_PROPOSED_FPS:
 
             setConfigItem(option, value);
             break;
@@ -899,10 +899,10 @@ C64::setInspectionTarget(InspectionTarget target, Cycle trigger)
     }
 }
 
-C64::SyncMode
-C64::getSyncMode() const
+C64::ThreadMode
+C64::getThreadMode() const
 {
-    return config.fpsMode == FPS_VSYNC ? SyncMode::Pulsed : SyncMode::Periodic;
+    return config.syncMode == SYNC_VSYNC ? ThreadMode::Pulsed : ThreadMode::Periodic;
 }
 
 void
@@ -969,11 +969,11 @@ C64::execute()
 double
 C64::refreshRate() const
 {
-    switch (config.fpsMode) {
+    switch (config.syncMode) {
 
-        case FPS_NATIVE:        return vic.getFps();
-        case FPS_CUSTOM:        return config.fps;
-        case FPS_VSYNC:         return host.getHostRefreshRate();
+        case SYNC_NATIVE_FPS:        return vic.getFps();
+        case SYNC_FIXED_FPS:         return config.proposedFps;
+        case SYNC_VSYNC:         return host.getHostRefreshRate();
 
         default:
             fatalError;
@@ -1127,9 +1127,9 @@ C64::_dump(Category category, std::ostream& os) const
 
     if (category == Category::Config) {
 
-        os << tab("FPS mode");
-        os << FpsModeEnum::key(config.fpsMode);
-        if (config.fpsMode == FPS_CUSTOM) os << " (" << config.fps << " fps)";
+        os << tab("Sync mode");
+        os << SyncModeEnum::key(config.syncMode);
+        if (config.syncMode == SYNC_FIXED_FPS) os << " (" << config.proposedFps << " fps)";
         os << std::endl;
     }
     

@@ -378,7 +378,7 @@ private:
 
 private:
 
-    SyncMode getSyncMode() const override;
+    ThreadMode getThreadMode() const override;
     void execute() override;
     // util::Time getDelay() const override;
 

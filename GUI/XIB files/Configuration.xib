@@ -109,7 +109,6 @@
                 <outlet property="vidDotMaskPopUp" destination="Nrz-LF-GtK" id="KdW-or-4ar"/>
                 <outlet property="vidFpsMax" destination="3Qj-9m-80r" id="ESE-Nb-ylw"/>
                 <outlet property="vidFpsMin" destination="tGi-U4-V3z" id="y1c-Oa-r9l"/>
-                <outlet property="vidFpsMode" destination="d9c-B0-ipE" id="4Kl-gR-vzE"/>
                 <outlet property="vidFpsSlider" destination="Bce-Ei-uLi" id="2wg-jE-FM6"/>
                 <outlet property="vidHCenter" destination="1dt-4x-dGf" id="kSr-kq-vDy"/>
                 <outlet property="vidHCenterLabel" destination="7Az-jX-qt3" id="w0b-Wy-30k"/>
@@ -125,6 +124,7 @@
                 <outlet property="vidScanlineBrightnessSlider" destination="91k-67-6iN" id="Ny4-2J-Tad"/>
                 <outlet property="vidScanlineWeightSlider" destination="nIa-kK-410" id="Wd7-gc-qEK"/>
                 <outlet property="vidScanlinesPopUp" destination="ICF-4F-jzR" id="gZQ-Hx-W9q"/>
+                <outlet property="vidSyncMode" destination="d9c-B0-ipE" id="4Kl-gR-vzE"/>
                 <outlet property="vidUpscalerPopUp" destination="GCj-d1-3AP" id="E8J-9A-tc3"/>
                 <outlet property="vidVCenter" destination="CKW-By-Vhs" id="kRV-xd-hhD"/>
                 <outlet property="vidVCenterLabel" destination="oLj-Nh-5xH" id="5IQ-UP-c4a"/>
@@ -2743,7 +2743,7 @@ Gw
                                                                     </menu>
                                                                 </popUpButtonCell>
                                                                 <connections>
-                                                                    <action selector="vidFpsModeAction:" target="-2" id="jxI-em-7tZ"/>
+                                                                    <action selector="vidSyncModeAction:" target="-2" id="HNg-5D-Tcb"/>
                                                                 </connections>
                                                             </popUpButton>
                                                         </subviews>

@@ -158,29 +158,29 @@ enum_i8(EventID)
     INS_EVENT_COUNT
 };
 
-enum_long(FPS_MODE)
+enum_long(SYNC_MODE)
 {
-    FPS_NATIVE,
-    FPS_CUSTOM,
-    FPS_VSYNC
+    SYNC_NATIVE_FPS,
+    SYNC_FIXED_FPS,
+    SYNC_VSYNC
 };
-typedef FPS_MODE FpsMode;
+typedef SYNC_MODE SyncMode;
 
 #ifdef __cplusplus
-struct FpsModeEnum : util::Reflection<FpsModeEnum, FpsMode>
+struct SyncModeEnum : util::Reflection<SyncModeEnum, SyncMode>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = FPS_VSYNC;
+    static constexpr long maxVal = SYNC_VSYNC;
     static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
 
-    static const char *prefix() { return "FPS"; }
-    static const char *key(FpsMode value)
+    static const char *prefix() { return "SYNC"; }
+    static const char *key(SyncMode value)
     {
         switch (value) {
 
-            case FPS_NATIVE:    return "NATIVE";
-            case FPS_CUSTOM:    return "CUSTOM";
-            case FPS_VSYNC:     return "VSYNC";
+            case SYNC_NATIVE_FPS:   return "NATIVE_FPS";
+            case SYNC_FIXED_FPS:    return "FIXED_FPS";
+            case SYNC_VSYNC:        return "VSYNC";
         }
         return "???";
     }
@@ -264,8 +264,8 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
 
 typedef struct
 {
-    FpsMode fpsMode;
-    isize fps;
+    SyncMode syncMode;
+    isize proposedFps;
 }
 C64Config;
 

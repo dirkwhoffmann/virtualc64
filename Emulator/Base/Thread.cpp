@@ -26,7 +26,7 @@ Thread::~Thread()
 }
 
 template <> void
-Thread::execute <Thread::SyncMode::Periodic> ()
+Thread::execute <Thread::ThreadMode::Periodic> ()
 {
     loadClock.go();
     execute();
@@ -34,7 +34,7 @@ Thread::execute <Thread::SyncMode::Periodic> ()
 }
 
 template <> void
-Thread::execute <Thread::SyncMode::Pulsed> ()
+Thread::execute <Thread::ThreadMode::Pulsed> ()
 {
     loadClock.go();
     execute();
@@ -43,7 +43,7 @@ Thread::execute <Thread::SyncMode::Pulsed> ()
 }
 
 template <> void
-Thread::sleep <Thread::SyncMode::Periodic> ()
+Thread::sleep <Thread::ThreadMode::Periodic> ()
 {
     auto now = util::Time::now();
 
@@ -82,7 +82,7 @@ Thread::sleep <Thread::SyncMode::Periodic> ()
 }
 
 template <> void
-Thread::sleep <Thread::SyncMode::Pulsed> ()
+Thread::sleep <Thread::ThreadMode::Pulsed> ()
 {
     // Set a timeout to prevent the thread from stalling
     auto timeout = util::Time(i64(2000000000.0 / refreshRate()));
@@ -100,17 +100,17 @@ Thread::main()
 
         if (isRunning()) {
 
-            switch (getSyncMode()) {
-                case SyncMode::Periodic: execute<SyncMode::Periodic>(); break;
-                case SyncMode::Pulsed: execute<SyncMode::Pulsed>(); break;
+            switch (getThreadMode()) {
+                case ThreadMode::Periodic: execute<ThreadMode::Periodic>(); break;
+                case ThreadMode::Pulsed: execute<ThreadMode::Pulsed>(); break;
             }
         }
 
         if (!warpMode || !isRunning()) {
             
-            switch (getSyncMode()) {
-                case SyncMode::Periodic: sleep<SyncMode::Periodic>(); break;
-                case SyncMode::Pulsed: sleep<SyncMode::Pulsed>(); break;
+            switch (getThreadMode()) {
+                case ThreadMode::Periodic: sleep<ThreadMode::Periodic>(); break;
+                case ThreadMode::Pulsed: sleep<ThreadMode::Pulsed>(); break;
             }
         }
         
@@ -325,7 +325,7 @@ Thread::changeDebugTo(u8 value, bool blocking)
 void
 Thread::wakeUp()
 {
-    if (getSyncMode() == SyncMode::Pulsed) util::Wakeable::wakeUp();
+    if (getThreadMode() == ThreadMode::Pulsed) util::Wakeable::wakeUp();
 }
 
 void

@@ -210,19 +210,19 @@ Interpreter::initCommandShell(Command &root)
     root.add({"c64", "set"},
              "Configures the component");
 
-    root.add({"c64", "set", "fpsmode"}, { FpsModeEnum::argList() },
-             "Selects the frame mode",
+    root.add({"c64", "set", "syncmode"}, { SyncModeEnum::argList() },
+             "Selects the synchronization mode",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_FPS_MODE, parseEnum <FpsModeEnum> (argv));
+        c64.configure(OPT_SYNC_MODE, parseEnum <SyncModeEnum> (argv));
     });
 
     root.add({"c64", "set", "fps"}, { Arg::value },
              "Sets the proposed number of frames per seconds",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_FPS, parseNum(argv));
-        c64.configure(OPT_FPS_MODE, FPS_CUSTOM);
+        c64.configure(OPT_PROPOSED_FPS, parseNum(argv));
+        c64.configure(OPT_SYNC_MODE, SYNC_FIXED_FPS);
     });
 
     root.add({"c64", "power"}, { Arg::onoff },
