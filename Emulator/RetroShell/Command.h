@@ -108,7 +108,9 @@ struct Command {
     isize maxArgs() const { return minArgs() + optArgs(); }
 
     // Seeks a command object inside the command object tree
+    const Command *seek(const string& token) const;
     Command *seek(const string& token);
+    const Command *seek(const std::vector<string> &tokens) const;
     Command *seek(const std::vector<string> &tokens);
 
     // Filters the argument list (used by auto-completion)

@@ -91,8 +91,8 @@ Command::remove(const string& token)
     }
 }
 
-Command *
-Command::seek(const string& token)
+const Command *
+Command::seek(const string& token) const
 {
     for (auto &it : subCommands) {
         if (it.name == token) return &it;
@@ -101,15 +101,27 @@ Command::seek(const string& token)
 }
 
 Command *
-Command::seek(const std::vector<string> &tokens)
+Command::seek(const string& token)
 {
-    Command *result = this;
+    return const_cast<Command *>(std::as_const(*this).seek(token));
+}
+
+const Command *
+Command::seek(const std::vector<string> &tokens) const
+{
+    const Command *result = this;
 
     for (auto &it : tokens) {
         if ((result = result->seek(it)) == nullptr) break;
     }
 
     return result;
+}
+
+Command *
+Command::seek(const std::vector<string> &tokens)
+{
+    return const_cast<Command *>(std::as_const(*this).seek(tokens));
 }
 
 std::vector<const Command *>
@@ -187,7 +199,7 @@ Command::usage() const
         if (count > 1) {
             arguments = "{" + arguments + "}";
         }
-        if (callback && arguments != "") {
+        if (seek("")) {
             arguments = "[ " + arguments + " ]";
         }
     }
