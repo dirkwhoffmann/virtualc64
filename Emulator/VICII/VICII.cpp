@@ -404,7 +404,7 @@ void
 VICII::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
-    
+
     if (category == Category::Config) {
 
         os << tab("Chip model");
@@ -429,6 +429,26 @@ VICII::_dump(Category category, std::ostream& os) const
         os << bol(config.checkSBCollisions) << std::endl;
     }
 
+    if (category == Category::Inspection) {
+
+        os << tab("Bank address");
+        os << hex(bankAddr) << std::endl;
+        os << tab("Screen memory");
+        os << hex(u16(VM13VM12VM11VM10() << 6)) << std::endl;
+        os << tab("Character memory");
+        os << hex(u16((CB13CB12CB11() << 10) % 0x4000)) << std::endl;
+        os << tab("X scroll");
+        os << dec(reg.current.ctrl2 & 0x07) << std::endl;
+        os << tab("Y scroll");
+        os << dec(reg.current.ctrl1 & 0x07) << std::endl;
+        os << tab("Control register 1");
+        os << hex(reg.current.ctrl1) << std::endl;
+        os << tab("Control register 2");
+        os << hex(reg.current.ctrl2) << std::endl;
+        os << tab("Display mode");
+        os << DisplayModeEnum::key(reg.current.mode) << std::endl;
+    }
+
     if (category == Category::Registers) {
         
         string addr[8] = {
@@ -443,35 +463,10 @@ VICII::_dump(Category category, std::ostream& os) const
             os << std::endl;
         }
     }
-    
-    if (category == Category::State) {
-        
-        /*
-         u8 ctrl1 = reg.current.ctrl1;
-         u8 ctrl2 = reg.current.ctrl2;
-         int yscroll = ctrl1 & 0x07;
-         int xscroll = ctrl2 & 0x07;
-         u16 screenMem = VM13VM12VM11VM10() << 6;
-         u16 charMem = (CB13CB12CB11() << 10) % 0x4000;
-         */
-        
-        os << tab("Bank address");
-        os << hex(bankAddr) << std::endl;
-        os << tab("Screen memory");
-        os << hex(u16(VM13VM12VM11VM10() << 6)) << std::endl;
-        os << tab("Character memory");
-        os << hex(u16((CB13CB12CB11() << 10) % 0x4000)) << std::endl;
-        os << tab("X scroll");
-        os << dec(reg.current.ctrl2 & 0x07) << std::endl;
-        os << tab("Y scroll");
-        os << dec(reg.current.ctrl1 & 0x07) << std::endl;
-        os << tab("Control reg 1");
-        os << hex(reg.current.ctrl1) << std::endl;
-        os << tab("Control reg 2");
-        os << hex(reg.current.ctrl2) << std::endl;
-        os << tab("Display mode");
-        os << DisplayModeEnum::key(reg.current.mode) << std::endl;
-        os << tab("badLine");
+
+    if (category == Category::Debug) {
+
+        os << tab("Bad Line");
         os << bol(badLine) << std::endl;
         os << tab("DENwasSetIn30");
         os << bol(DENwasSetInLine30) << std::endl;
@@ -483,7 +478,7 @@ VICII::_dump(Category category, std::ostream& os) const
         os << hex(rc) << std::endl;
         os << tab("VMLI");
         os << hex(vmli) << std::endl;
-        os << tab("BA line");
+        os << tab("BA Line");
         os << bol(baLine.current(), "low", "high") << std::endl;
         os << tab("MainFrameFF");
         os << bol(flipflops.current.main, "set", "cleared") << std::endl;

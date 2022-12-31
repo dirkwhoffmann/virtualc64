@@ -60,7 +60,7 @@ Command::add(const std::vector<string> &tokens,
     assert(cmd != nullptr);
 
     // Create the instruction
-    Command d;
+    Command d { };
     d.name = tokens.back();
     d.fullName = (cmd->fullName.empty() ? "" : cmd->fullName + " ") + tokens.back();
     d.group = isize(groups.size()) - 1;
@@ -69,7 +69,12 @@ Command::add(const std::vector<string> &tokens,
     d.help = help;
     d.callback = func;
     d.param = param;
-    d.hidden = help.empty() || help.at(0) == '*';
+
+    // Hide a command if it's description is empty or starts with an asterix
+    if (help.empty() || help.at(0) == '*') d.hidden = true;
+
+    // Hide all "debug" commands in release mode
+    if (name == "debug") d.hidden = true;
 
     // Register the instruction
     cmd->subCommands.push_back(d);

@@ -51,7 +51,7 @@ TOD::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category == Category::State) {
+    if (category == Category::Inspection) {
         
         os << tab("Time of Day");
         os << hex(tod.hour)   << ":" << hex(tod.min)     << ":";
@@ -65,8 +65,10 @@ TOD::_dump(Category category, std::ostream& os) const
         os << hex(latch.hour) << ":" << hex(latch.min)   << ":";
         os << hex(latch.sec)  << ":" << hex(latch.tenth) << std::endl;
 
-        os << tab("Frozen") << bol(frozen) << std::endl;
-        os << tab("Stopped") << bol(stopped) << std::endl;
+        os << tab("Frozen");
+        os << bol(frozen) << std::endl;
+        os << tab("Stopped");
+        os << bol(stopped) << std::endl;
     }
 }
 

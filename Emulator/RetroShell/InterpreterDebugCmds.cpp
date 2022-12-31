@@ -151,7 +151,7 @@ Interpreter::initDebugShell(Command &root)
              "Inspects the internal state",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(c64, Category::State);
+        retroShell.dump(mem, Category::Inspection);
     });
 
     root.add({"memory", "dump"}, { Arg::address },
@@ -305,6 +305,13 @@ Interpreter::initDebugShell(Command &root)
              [this](Arguments& argv, long value) {
 
         retroShell.dump(vic, Category::Inspection);
+    });
+
+    root.add({"vicii", "registers"},
+             "Dumps all VICII registers",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(vic, Category::Registers);
     });
 
     root.add({"vicii", "debug"},

@@ -156,28 +156,19 @@ CIA::_dump(Category category, std::ostream& os) const
         os << tab("Timer B bug");
         os << bol(config.timerBBug) << std::endl;
     }
-    
-    if (category == Category::State) {
-        
-        os << tab("Sleeping") << bol(sleeping) << std::endl;
-        os << tab("Tiredness") << dec(tiredness) << std::endl;
-        os << tab("Sleep cycle") << dec(sleepCycle) << std::endl;
-        os << tab("Wakeup cycle") << dec(wakeUpCycle) << std::endl;
-        os << tab("CNT") << dec(CNT) << std::endl;
-        os << tab("INT") << dec(INT) << std::endl;
-    }
-    
-    if (category == Category::Registers) {
-        
-        os << tab("Counter A") << dec(counterA) << std::endl;
-        os << tab("Latch A") << dec(latchA) << std::endl;
+
+    if (category == Category::Inspection) {
+
+        os << std::endl;
+        os << tab("Counter A") << hex(counterA) << std::endl;
+        os << tab("Latch A") << hex(latchA) << std::endl;
         os << tab("Data register A") << hex(PRA) << std::endl;
         os << tab("Data port direction A") << hex(DDRA) << std::endl;
         os << tab("Data port A") << hex(PA) << std::endl;
         os << tab("Control register A") << hex(CRA) << std::endl;
         os << std::endl;
-        os << tab("Counter B") << dec(counterB) << std::endl;
-        os << tab("Latch B") << dec(latchB) << std::endl;
+        os << tab("Counter B") << hex(counterB) << std::endl;
+        os << tab("Latch B") << hex(latchB) << std::endl;
         os << tab("Data register B") << hex(PRB) << std::endl;
         os << tab("Data port direction B") << hex(DDRB) << std::endl;
         os << tab("Data port B") << hex(PB) << std::endl;
@@ -187,10 +178,19 @@ CIA::_dump(Category category, std::ostream& os) const
         os << tab("Interrupt mask reg") << hex(imr) << std::endl;
         os << std::endl;
         os << tab("SDR") << hex(sdr) << std::endl;
-        // os << tab("SSR") << hex(ssr) << std::endl;
         os << tab("serCounter") << dec(serCounter) << std::endl;
         os << std::endl;
     }
+
+    if (category == Category::Debug) {
+        
+        os << tab("Sleeping") << bol(sleeping) << std::endl;
+        os << tab("Tiredness") << dec(tiredness) << std::endl;
+        os << tab("Sleep cycle") << dec(sleepCycle) << std::endl;
+        os << tab("Wakeup cycle") << dec(wakeUpCycle) << std::endl;
+        os << tab("CNT") << dec(CNT) << std::endl;
+        os << tab("INT") << dec(INT) << std::endl;
+    }    
 }
 
 void

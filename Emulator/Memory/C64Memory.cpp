@@ -268,14 +268,31 @@ C64Memory::_dump(Category category, std::ostream& os) const
         os << bol(config.saveRoms) << std::endl;
     }
     
-    if (category == Category::State) {
-        
-        os << tab("Basic ROM");
-        os << bol(c64.hasRom(ROM_TYPE_BASIC)) << std::endl;
-        os << tab("Character ROM");
-        os << bol(c64.hasRom(ROM_TYPE_CHAR)) << std::endl;
-        os << tab("Kernal ROM");
-        os << bol(c64.hasRom(ROM_TYPE_KERNAL)) << std::endl;
+    if (category == Category::Inspection) {
+
+        auto info = [&](const string &title, RomType type) {
+
+            auto crc32 = c64.romCRC32(type);
+            auto fnv64 = c64.romFNV64(type);
+            auto present = crc32 != 0;
+
+            os << tab(title) << bol(present) << std::endl;
+
+            if (present) {
+
+                os << tab("Title") << c64.romTitle(type) << std::endl;
+                os << tab("Subtitle") << c64.romSubTitle(type) << std::endl;
+                os << tab("Revision") << c64.romRevision(type) << std::endl;
+                os << tab("CRC 32") << hex(c64.romCRC32(type)) << std::endl;
+                os << tab("FNV 64") << hex(c64.romFNV64(type)) << std::endl;
+            }
+        };
+
+        info("Basic ROM", ROM_TYPE_BASIC);
+        os << std::endl;
+        info("Character ROM", ROM_TYPE_CHAR);
+        os << std::endl;
+        info("Kernal ROM", ROM_TYPE_KERNAL);
     }
 }
 

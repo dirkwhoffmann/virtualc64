@@ -169,7 +169,7 @@ FastSID::_dump(Category category, std::ostream& os) const
     ft == FASTSID_HIGH_PASS ? "HIGH_PASS" :
     ft == FASTSID_BAND_PASS ? "BAND_PASS" : "???";
     
-    if (category == Category::State) {
+    if (category == Category::Inspection) {
 
         os << tab("Chip");
         os << "FastSID " << dec(nr) << std::endl;
