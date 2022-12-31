@@ -60,10 +60,11 @@ enum_long(SLOT)
     SLOT_SEC,                       // Enables secondary slots
 
     // Secondary slots
-    SLOT_DAT,                       // Datasette
+    SLOT_DAT,                       // Datasette execution
     SLOT_TER,                       // Enables tertiary slots
 
     // Tertiary slots
+    SLOT_MOT,                       // Datasette motor
     SLOT_DC8,                       // Disk change (Drive 8)
     SLOT_DC9,                       // Disk change (Drive 9)
     SLOT_KEY,                       // Auto-typing
@@ -137,7 +138,11 @@ enum_i8(EventID)
     // Events in tertiary event table
     //
 
-    // Disk change slot
+    // Datasette motor
+    MOT_START           = 1,
+    MOT_STOP,
+
+    // Disk change
     DCH_INSERT          = 1,
     DCH_EJECT,
     DCH_EVENT_COUNT,

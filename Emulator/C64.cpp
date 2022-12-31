@@ -95,6 +95,17 @@ C64::eventName(EventSlot slot, EventID id)
             }
             break;
 
+        case SLOT_MOT:
+
+            switch (id) {
+
+                case EVENT_NONE:    return "none";
+                case MOT_START:     return "MOT_START";
+                case MOT_STOP:      return "MOT_STOP";
+                default:            return "*** INVALID ***";
+            }
+            break;
+
         case SLOT_DC8:
         case SLOT_DC9:
 
@@ -1409,9 +1420,7 @@ C64::processEvents(Cycle cycle)
         //
 
         if (isDue<SLOT_DAT>(cycle)) {
-
-            // NOT USED, YET
-            assert(false);
+            datasette.processDatEvent(id[SLOT_DAT]);
         }
 
         if (isDue<SLOT_TER>(cycle)) {
@@ -1419,6 +1428,10 @@ C64::processEvents(Cycle cycle)
             //
             // Check tertiary slots
             //
+
+            if (isDue<SLOT_MOT>(cycle)) {
+                datasette.processMotEvent(id[SLOT_MOT]);
+            }
 
             if (isDue<SLOT_DC8>(cycle)) {
 

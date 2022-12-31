@@ -178,6 +178,7 @@ Datasette::setConfigItem(Option option, i64 value)
         case OPT_DAT_CONNECT:
 
             config.connected = bool(value);
+            scheduleNextDatEvent();
             msgQueue.put(value ? MSG_VC1530_CONNECT : MSG_VC1530_DISCONNECT);
             return;
 
@@ -295,7 +296,10 @@ Datasette::pressPlay()
     // Schedule the first pulse
     schedulePulse(head);
     advanceHead();
-    
+
+    // Update the execution event slot
+    scheduleNextDatEvent();
+
     msgQueue.put(MSG_VC1530_PLAY, 1);
 }
 
@@ -304,11 +308,11 @@ Datasette::pressStop()
 {
     debug(TAP_DEBUG, "pressStop\n");
 
-    // Only proceed if the device is connected
-    if (!config.connected) return;
-
     playKey = false;
     motor = false;
+
+    // Update the execution event slot
+    scheduleNextDatEvent();
 
     msgQueue.put(MSG_VC1530_PLAY, 0);
 }
@@ -322,7 +326,10 @@ Datasette::setMotor(bool value)
         if (!config.connected) return;
 
         motor = value;
-        
+
+        // Update the execution event slot
+        scheduleNextDatEvent();
+
         /* When the motor is switched on or off, a MSG_VC1530_MOTOR message is
          * sent to the GUI. However, if we sent the message immediately, we
          * would risk to flood the message queue, because some C64 switch the
@@ -330,21 +337,87 @@ Datasette::setMotor(bool value)
          * counter and let the vsync handler send the message once the counter
          * has timed out.
          */
-        msgMotorDelay = 10;
+        c64.scheduleRel<SLOT_MOT>(MSEC(200), motor ? MOT_START : MOT_STOP);
     }
+}
+
+void
+Datasette::processDatEvent(EventID event)
+{
+    switch (event) {
+
+        case DAT_EXECUTE:
+
+            if (--nextRisingEdge == 0) {
+
+                cia1.triggerRisingEdgeOnFlagPin();
+            }
+
+            if (--nextFallingEdge == 0) {
+
+                cia1.triggerFallingEdgeOnFlagPin();
+
+                if (head < size) {
+
+                    schedulePulse(head);
+                    advanceHead();
+
+                } else {
+
+                    pressStop();
+                }
+            }
+            break;
+
+        default:
+            fatalError;
+    }
+
+    scheduleNextDatEvent();
+}
+
+void
+Datasette::scheduleNextDatEvent()
+{
+    if (playKey && motor && hasTape() && config.connected) {
+
+        c64.scheduleImm<SLOT_DAT>(DAT_EXECUTE);
+
+    } else {
+
+        c64.cancel<SLOT_DAT>();
+    }
+}
+
+void
+Datasette::processMotEvent(EventID event)
+{
+    switch (event) {
+
+        case MOT_START: msgQueue.put(MSG_VC1530_MOTOR, true);
+        case MOT_STOP:  msgQueue.put(MSG_VC1530_MOTOR, false);
+
+        default:
+            break;
+    }
+
+    c64.cancel<SLOT_MOT>();
 }
 
 void
 Datasette::vsyncHandler()
 {
+    /*
     if (--msgMotorDelay == 0) {
         msgQueue.put(MSG_VC1530_MOTOR, motor);
     }
+    */
 }
 
 void
 Datasette::_execute()
 {
+    /*
     // Only proceed if the datasette is active
     if (!hasTape() || !playKey || !motor) return;
 
@@ -369,6 +442,7 @@ Datasette::_execute()
             pressStop();
         }
     }
+    */
 }
 
 void

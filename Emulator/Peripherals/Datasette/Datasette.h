@@ -10,6 +10,7 @@
 #pragma once
 
 #include "DatasetteTypes.h"
+#include "C64Types.h"
 #include "SubComponent.h"
 #include "Constants.h"
 #include "Chrono.h"
@@ -218,7 +219,16 @@ public:
     // Switches the motor on or off
     void setMotor(bool value);
 
-    
+
+    //
+    // Processing events
+    //
+
+    void processMotEvent(EventID event);
+    void processDatEvent(EventID event);
+    void scheduleNextDatEvent();
+
+
     //
     // Performing periodic events
     //
