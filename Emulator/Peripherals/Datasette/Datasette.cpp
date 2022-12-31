@@ -393,7 +393,7 @@ Datasette::scheduleNextDatEvent()
     if (playKey && motor && hasTape() && config.connected) {
 
         // Call the execution handler every 16 cycles
-        c64.scheduleRel<SLOT_DAT>(16, DAT_EXECUTE, 16);
+        c64.scheduleRel<SLOT_DAT>(13, DAT_EXECUTE, 13);
 
     } else {
 

@@ -96,7 +96,7 @@ extension EventTableView: NSTableViewDataSource {
             } else if info.triggerRel == 0 {
                 return "due immediately"
             } else {
-                return "due in \(info.triggerRel / 8) cycles"
+                return "due in \(info.triggerRel) cycles"
             }
         default:        return "???"
         }
