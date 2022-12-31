@@ -342,54 +342,6 @@ Datasette::setMotor(bool value)
 }
 
 void
-Datasette::processDatEvent(EventID event)
-{
-    switch (event) {
-
-        case DAT_EXECUTE:
-
-            if (--nextRisingEdge == 0) {
-
-                cia1.triggerRisingEdgeOnFlagPin();
-            }
-
-            if (--nextFallingEdge == 0) {
-
-                cia1.triggerFallingEdgeOnFlagPin();
-
-                if (head < size) {
-
-                    schedulePulse(head);
-                    advanceHead();
-
-                } else {
-
-                    pressStop();
-                }
-            }
-            break;
-
-        default:
-            fatalError;
-    }
-
-    scheduleNextDatEvent();
-}
-
-void
-Datasette::scheduleNextDatEvent()
-{
-    if (playKey && motor && hasTape() && config.connected) {
-
-        c64.scheduleImm<SLOT_DAT>(DAT_EXECUTE);
-
-    } else {
-
-        c64.cancel<SLOT_DAT>();
-    }
-}
-
-void
 Datasette::processMotEvent(EventID event)
 {
     switch (event) {
@@ -405,44 +357,48 @@ Datasette::processMotEvent(EventID event)
 }
 
 void
-Datasette::vsyncHandler()
+Datasette::processDatEvent(EventID event, isize cycles)
 {
-    /*
-    if (--msgMotorDelay == 0) {
-        msgQueue.put(MSG_VC1530_MOTOR, motor);
+    assert(event == DAT_EXECUTE);
+
+    for (isize i = 0; i < cycles; i++) {
+
+        if (--nextRisingEdge == 0) {
+
+            cia1.triggerRisingEdgeOnFlagPin();
+        }
+
+        if (--nextFallingEdge == 0) {
+
+            cia1.triggerFallingEdgeOnFlagPin();
+
+            if (head < size) {
+
+                schedulePulse(head);
+                advanceHead();
+
+            } else {
+
+                pressStop();
+            }
+        }
     }
-    */
+
+    scheduleNextDatEvent();
 }
 
 void
-Datasette::_execute()
+Datasette::scheduleNextDatEvent()
 {
-    /*
-    // Only proceed if the datasette is active
-    if (!hasTape() || !playKey || !motor) return;
+    if (playKey && motor && hasTape() && config.connected) {
 
-    if (--nextRisingEdge == 0) {
-        
-        cia1.triggerRisingEdgeOnFlagPin();
+        // Call the execution handler every 16 cycles
+        c64.scheduleRel<SLOT_DAT>(16, DAT_EXECUTE, 16);
+
+    } else {
+
+        c64.cancel<SLOT_DAT>();
     }
-
-    if (--nextFallingEdge == 0) {
-        
-        cia1.triggerFallingEdgeOnFlagPin();
-
-        if (head < size) {
-
-            // Schedule the next pulse
-            schedulePulse(head);
-            advanceHead();
-            
-        } else {
-            
-            // Press the stop key
-            pressStop();
-        }
-    }
-    */
 }
 
 void

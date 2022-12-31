@@ -1332,8 +1332,7 @@ C64::_executeOneCycle()
     cpu.execute<MOS_6510>();
     if (drive8.needsEmulation) drive8.execute(durationOfOneCycle);
     if (drive9.needsEmulation) drive9.execute(durationOfOneCycle);
-    datasette.execute();
-    
+
     rasterCycle++;
 }
 
@@ -1390,7 +1389,6 @@ C64::endFrame()
     keyboard.vsyncHandler();
     drive8.vsyncHandler();
     drive9.vsyncHandler();
-    datasette.vsyncHandler();
     retroShell.eofHandler();
     recorder.vsyncHandler();
 }
@@ -1420,7 +1418,7 @@ C64::processEvents(Cycle cycle)
         //
 
         if (isDue<SLOT_DAT>(cycle)) {
-            datasette.processDatEvent(id[SLOT_DAT]);
+            datasette.processDatEvent(id[SLOT_DAT], data[SLOT_DAT]);
         }
 
         if (isDue<SLOT_TER>(cycle)) {

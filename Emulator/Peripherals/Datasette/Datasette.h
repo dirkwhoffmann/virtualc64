@@ -79,9 +79,6 @@ class Datasette : public SubComponent {
     // Next scheduled falling edge on data line
     i64 nextFallingEdge = 0;
     
-    // Frame counter for controlling the amout of messages sent to the GUI
-    isize msgMotorDelay = 0;
-
     
     //
     // Initializing
@@ -132,8 +129,7 @@ private:
         << playKey
         << motor
         << nextRisingEdge
-        << nextFallingEdge
-        << msgMotorDelay;
+        << nextFallingEdge;
     }
     
     isize _size() override;
@@ -224,27 +220,16 @@ public:
     // Processing events
     //
 
-    void processMotEvent(EventID event);
-    void processDatEvent(EventID event);
-    void scheduleNextDatEvent();
-
-
-    //
-    // Performing periodic events
-    //
-    
 public:
-    
-    void vsyncHandler();
 
-    // Emulates the datasette
-    void execute() { if (playKey && motor) _execute(); }
+    void processMotEvent(EventID event);
+    void processDatEvent(EventID event, isize cycles);
 
 private:
 
-    // Internal execution function
-    void _execute();
-    
+    // Schedules the next event in the DAT slot
+    void scheduleNextDatEvent();
+
     // Schedules a pulse
     void schedulePulse(isize nr);
 };
