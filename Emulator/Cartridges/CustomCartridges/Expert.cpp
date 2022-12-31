@@ -35,18 +35,33 @@ void
 Expert::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
+
+    Cartridge::_dump(category, os);
     
-    if (category == Category::State) {
-    
+    if (category == Category::Inspection) {
+
+        os << std::endl;
+
+        os << tab("Active");
+        os << bol(active) << std::endl;
+    }
+
+    if (category == Category::Debug) {
+
         u16 nmi = LO_HI(peekRAM(0x1FFA), peekRAM(0x1FFB));
         u16 irq = LO_HI(peekRAM(0x1FFE), peekRAM(0x1FFF));
         u16 rst = LO_HI(peekRAM(0x1FFC), peekRAM(0x1FFD));
-        
-        os << tab("active") << bol(active) << std::endl;
-        os << tab("switch") << dec(getSwitch()) << std::endl;
-        os << tab("NMI vector") << hex(nmi) << std::endl;
-        os << tab("IRQ vector") << hex(irq) << std::endl;
-        os << tab("Reset vector") << hex(rst) << std::endl;
+
+        os << std::endl;
+
+        os << tab("Switch");
+        os << dec(getSwitch()) << std::endl;
+        os << tab("NMI Vector");
+        os << hex(nmi) << std::endl;
+        os << tab("IRQ Vector");
+        os << hex(irq) << std::endl;
+        os << tab("Reset Vector");
+        os << hex(rst) << std::endl;
     }
 }
 

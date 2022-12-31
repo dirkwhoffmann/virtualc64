@@ -21,10 +21,19 @@ public:
     SuperGames(C64 &ref) : Cartridge(ref) { };
     const char *getDescription() const override { return "Supergames"; }
     CartridgeType getCartridgeType() const override { return CRT_SUPER_GAMES; }
-        
+
+
+    //
+    // Methods from C64Object
+    //
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override;
+
     
     //
-    // Serializing
+    // Methods from C64Component
     //
     
 private:

@@ -23,6 +23,32 @@ Isepic::Isepic(C64 &ref) : Cartridge(ref)
 }
 
 void
+Isepic::_dump(Category category, std::ostream& os) const
+{
+    using namespace util;
+
+    Cartridge::_dump(category, os);
+
+    if (category == Category::Inspection) {
+
+        os << std::endl;
+
+        os << tab("Selected Memory Page");
+        os << bol(page) << std::endl;
+    }
+
+    if (category == Category::Debug) {
+
+        os << std::endl;
+
+        os << tab("Latched Peek Source");
+        os << MemoryTypeEnum::key(oldPeekSource) << std::endl;
+        os << tab("Latched Poke Target");
+        os << MemoryTypeEnum::key(oldPokeTarget) << std::endl;
+    }
+}
+
+void
 Isepic::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)

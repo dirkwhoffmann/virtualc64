@@ -324,11 +324,10 @@ public:
 private:
 
     void inspectSlot(EventSlot nr) const;
-    // void inspect(InspectionTarget target);
 
     
     //
-    // Serializing
+    // Methods from C64Component
     //
     
 private:

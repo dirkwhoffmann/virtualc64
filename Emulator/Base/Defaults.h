@@ -37,7 +37,7 @@ public:
 
 
     //
-    // Methods from AmigaObject
+    // Methods from C64Object
     //
 
 private:

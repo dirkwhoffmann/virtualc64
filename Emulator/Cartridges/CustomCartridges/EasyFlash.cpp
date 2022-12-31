@@ -48,12 +48,19 @@ EasyFlash::_dump(Category category, std::ostream& os) const
     using namespace util;
 
     Cartridge::_dump(category, os);
-    os << std::endl;
 
     if (category == Category::State) {
+
+        os << std::endl;
         
-        os << tab("EasyFlash bank");
+        os << tab("Bank Register");
+        os << hex(bankReg) << std::endl;
+        os << tab("Mode Register");
+        os << hex(modeReg) << std::endl;
+        os << tab("Selected bank");
         os << dec(bank);
+        os << tab("GameLine Jumper");
+        os << bol(jumper);
     }
 
     flashRomL.dump(category, os);

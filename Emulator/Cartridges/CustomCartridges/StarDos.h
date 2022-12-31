@@ -13,8 +13,8 @@
 
 class StarDos : public Cartridge {
         
-    u64 voltage = 5000000;
-    u64 latestVoltageUpdate = 0;
+    i64 voltage = 5000000;
+    i64 latestVoltageUpdate = 0;
     
     
     //
@@ -30,10 +30,19 @@ public:
 private:
     
     void _reset(bool hard) override;
-    
+
+
+    //
+    // Methods from C64Object
+    //
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override;
+
     
     //
-    // Serializing
+    // Methods from C64Component
     //
     
 private:

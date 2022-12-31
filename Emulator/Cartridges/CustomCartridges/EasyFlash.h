@@ -48,7 +48,7 @@ private:
 
     
     //
-    // Analyzing
+    // Methods from C64Object
     //
     
 private:
@@ -57,7 +57,7 @@ private:
     
     
     //
-    // Serialization
+    // Methods from C64Component
     //
     
 private:

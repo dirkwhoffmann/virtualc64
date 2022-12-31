@@ -11,6 +11,22 @@
 #include "C64.h"
 
 void
+SuperGames::_dump(Category category, std::ostream& os) const
+{
+    using namespace util;
+
+    Cartridge::_dump(category, os);
+
+    if (category == Category::Inspection) {
+
+        os << std::endl;
+
+        os << tab("Write Protection Latch");
+        os << bol(protect);
+    }
+}
+
+void
 SuperGames::pokeIO2(u16 addr, u8 value)
 {
     if (addr == 0xDF00 && protect == false) {

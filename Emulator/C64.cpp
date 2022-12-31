@@ -2003,13 +2003,13 @@ C64::tmp()
         base = "/tmp";
 
         // Open a file to see if we have write permissions
-        std::ofstream logfile(base / "vAmiga.log");
+        std::ofstream logfile(base / "virtualc64.log");
 
         // If /tmp is not accessible, use a different directory
         if (!logfile.is_open()) {
 
             base = fs::temp_directory_path();
-            logfile.open(base / "vAmiga.log");
+            logfile.open(base / "virtualc64.log");
 
             if (!logfile.is_open()) {
 
@@ -2018,7 +2018,7 @@ C64::tmp()
         }
 
         logfile.close();
-        fs::remove(base / "vAmiga.log");
+        fs::remove(base / "virtualc64.log");
     }
 
     return base;

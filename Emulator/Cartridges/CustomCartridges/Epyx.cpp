@@ -20,6 +20,22 @@ Epyx::_reset(bool hard)
 }
 
 void
+Epyx::_dump(Category category, std::ostream& os) const
+{
+    using namespace util;
+
+    Cartridge::_dump(category, os);
+
+    if (category == Category::Inspection) {
+
+        os << std::endl;
+
+        os << tab("Capacitor Discharge Cycle");
+        os << dec(cycle) << std::endl;
+    }
+}
+
+void
 Epyx::resetCartConfig()
 {
     expansionport.setCartridgeMode(CRTMODE_8K);

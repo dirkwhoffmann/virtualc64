@@ -50,7 +50,7 @@ private:
     
     
     //
-    // Serializing
+    // Methods from C64Component
     //
     
     isize _size() override { return 0; }

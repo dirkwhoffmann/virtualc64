@@ -19,6 +19,24 @@ StarDos::_reset(bool hard)
 }
 
 void
+StarDos::_dump(Category category, std::ostream& os) const
+{
+    using namespace util;
+
+    Cartridge::_dump(category, os);
+
+    if (category == Category::Inspection) {
+
+        os << std::endl;
+
+        os << tab("Voltage");
+        os << dec(voltage);
+        os << tab("Latest Voltage Update");
+        os << dec(latestVoltageUpdate);
+    }
+}
+
+void
 StarDos::updatePeekPokeLookupTables()
 {
     // Replace Kernal by the StarDos kernal
@@ -34,7 +52,8 @@ StarDos::updateVoltage()
     // If the capacitor is untouched, it slowly raises to 2.0V
     
     if (voltage < 2000000 /* 2.0V */) {
-        u64 elapsedCycles = cpu.clock - latestVoltageUpdate;
+
+        i64 elapsedCycles = cpu.clock - latestVoltageUpdate;
         voltage += std::min(2000000 - voltage, elapsedCycles * 2);
     }
     latestVoltageUpdate = cpu.clock;
@@ -45,6 +64,7 @@ StarDos::charge()
 {
     updateVoltage();
     voltage += std::min(5000000ULL /* 5.0V */ - voltage, 78125ULL);
+
     if (voltage > 2700000 /* 2.7V */) {
         enableROML();
     }
@@ -54,7 +74,8 @@ void
 StarDos::discharge()
 {
     updateVoltage();
-    voltage -= std::min(voltage, 78125ULL);
+    voltage -= std::min(voltage, 78125LL);
+    
     if (voltage < 1400000 /* 1.4V */) {
         disableROML();
     }

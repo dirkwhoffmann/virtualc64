@@ -26,13 +26,29 @@ void
 PageFox::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
+
+    Cartridge::_dump(category, os);
+
+    if (category == Category::Inspection) {
+
+        os << std::endl;
+
+        os << tab("Control Register");
+        os << hex(ctrlReg);
+    }
     
-    if (category == Category::State) {
-    
-        os << tab("bankSelect()") << hex(bankSelect()) << std::endl;
-        os << tab("chipSelect()") << hex(chipSelect()) << std::endl;
-        os << tab("bank()") << hex(bank()) << std::endl;
-        os << tab("disable()") << hex(disabled()) << std::endl;
+    if (category == Category::Debug) {
+
+        os << std::endl;
+
+        os << tab("bankSelect()");
+        os << hex(bankSelect()) << std::endl;
+        os << tab("chipSelect()");
+        os << hex(chipSelect()) << std::endl;
+        os << tab("bank()");
+        os << hex(bank()) << std::endl;
+        os << tab("disable()");
+        os << hex(disabled()) << std::endl;
     }
 }
 

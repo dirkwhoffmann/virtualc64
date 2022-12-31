@@ -71,28 +71,17 @@ void
 FlashRom::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
-    
-    if (category == Category::State) {
-        
-        os << tab("state");
-        os << dec(state) << std::endl;
-        os << tab("baseState");
-        os << dec(baseState) << std::endl;
-        os << tab("numSectors");
-        os << dec(numSectors) << std::endl;
-        os << tab("sectorSize");
-        os << dec(sectorSize) << std::endl;
+
+    if (category == Category::Debug) {
+
+        os << std::endl;
+
+        os << tab("Flash ROM State");
+        os << FlashStateEnum::key(state) << std::endl;
+        os << tab("Base State");
+        os << FlashStateEnum::key(baseState) << std::endl;
     }
 }
-
-/*
-isize
-FlashRom::_size()
-{
-    return [&](){COMPUTE_SNAPSHOT_SIZE}() + romSize;
-
-}
-*/
 
 isize
 FlashRom::didLoadFromBuffer(const u8 *buffer)

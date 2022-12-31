@@ -59,7 +59,7 @@ private:
 
 
     //
-    // Methods from AmigaObject
+    // Methods from C64Object
     //
 
 private:
@@ -69,7 +69,7 @@ private:
 
 
     //
-    // Methods from AmigaComponent
+    // Methods from C64Component
     //
 
 private:
@@ -78,7 +78,7 @@ private:
     
     
     //
-    // Serializing
+    // Methods from C64Component
     //
 
 private:

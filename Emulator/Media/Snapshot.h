@@ -30,7 +30,7 @@ struct Thumbnail {
     // Factory methods
     static Thumbnail *makeWithC64(const C64 &c64, isize dx = 1, isize dy = 1);
     
-    // Takes a screenshot from a given Amiga
+    // Takes a screenshot from the current texture
     void take(const C64 &c64, isize dx = 1, isize dy = 1);
 };
 

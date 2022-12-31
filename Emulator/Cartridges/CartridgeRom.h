@@ -52,7 +52,7 @@ private:
 
     
     //
-    // Serializing
+    // Methods from C64Component
     //
     
 private:

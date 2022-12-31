@@ -194,14 +194,14 @@ enum Failure {
             "Visit FFmpeg.org for installation instructions."
 
         case .noMetalSupport: return
-            "vAmiga can only run on machines supporting the Metal graphics " +
+            "The emulator can only run on machines supporting the Metal graphics " +
             "technology (2012 models and above)."
 
         case .recorderAborted: return
             "Failed to write to the FFmpeg pipes."
 
         case let .recorderSandboxed(exec): return
-            "vAmiga is running as a sandboxed application and has no " +
+            "The emulator is running as a sandboxed application and has no " +
             "permission to access file \"\(exec)\"" +
             "Please copy the file to the Applications folder."
 

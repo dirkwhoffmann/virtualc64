@@ -23,7 +23,7 @@ private:
     // either read from ROML or I/O space 1. Both operations discharge the
     // capacitor and keep the ROM alive.
     
-    i64 cycle = 0;
+    Cycle cycle = 0;
     
     
     //
@@ -40,9 +40,18 @@ private:
     
     void _reset(bool hard) override;
 
-    
+
     //
-    // Serializing
+    // Methods from C64Object
+    //
+
+private:
+
+    void _dump(Category category, std::ostream& os) const override;
+
+
+    //
+    // Methods from C64Component
     //
     
 private:

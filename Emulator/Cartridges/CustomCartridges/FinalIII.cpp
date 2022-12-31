@@ -11,6 +11,24 @@
 #include "C64.h"
 
 void
+FinalIII::_dump(Category category, std::ostream& os) const
+{
+    using namespace util;
+
+    Cartridge::_dump(category, os);
+    
+    if (category == Category::Inspection) {
+
+        os << std::endl;
+
+        os << tab("QD Pin");
+        os << dec(qD) << std::endl;
+        os << tab("Freeze Button Pressed");
+        os << dec(freeezeButtonIsPressed) << std::endl;
+    }
+}
+
+void
 FinalIII::resetCartConfig()
 {
     expansionport.setCartridgeMode(CRTMODE_16K);

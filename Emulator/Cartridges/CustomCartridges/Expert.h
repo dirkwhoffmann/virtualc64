@@ -33,14 +33,14 @@ private:
 
     
     //
-    // Initializing
+    // Methods from C64Object
     //
 
     void _dump(Category category, std::ostream& os) const override;
     
     
     //
-    // Serializing
+    // Methods from C64Component
     //
     
 private:

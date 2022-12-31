@@ -225,15 +225,7 @@ public:
     // Checks whether this cartridge is supported by the emulator yet
     bool isSupported() const { return isSupportedType(getCartridgeType()); }
         
-    
-    //
-    // Serializing
-    //
-    
-private:
-    
- 
-        
+
     //
     // Accessing
     //
