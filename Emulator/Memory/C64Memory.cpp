@@ -274,17 +274,15 @@ C64Memory::_dump(Category category, std::ostream& os) const
 
             auto crc32 = c64.romCRC32(type);
             auto fnv64 = c64.romFNV64(type);
-            auto present = crc32 != 0;
 
-            os << tab(title) << bol(present) << std::endl;
+            os << tab(title) << (crc32 ? "Installed" : "Not installed") << std::endl;
 
-            if (present) {
+            if (crc32) {
 
                 os << tab("Title") << c64.romTitle(type) << std::endl;
                 os << tab("Subtitle") << c64.romSubTitle(type) << std::endl;
                 os << tab("Revision") << c64.romRevision(type) << std::endl;
-                os << tab("CRC 32") << hex(c64.romCRC32(type)) << std::endl;
-                os << tab("FNV 64") << hex(c64.romFNV64(type)) << std::endl;
+                os << tab("CRC32 / FNV64") << hex(crc32) << " / " << hex(fnv64) << std::endl;
             }
         };
 
@@ -293,6 +291,8 @@ C64Memory::_dump(Category category, std::ostream& os) const
         info("Character ROM", ROM_TYPE_CHAR);
         os << std::endl;
         info("Kernal ROM", ROM_TYPE_KERNAL);
+        os << std::endl;
+        info("Drive ROM", ROM_TYPE_VC1541);
     }
 }
 

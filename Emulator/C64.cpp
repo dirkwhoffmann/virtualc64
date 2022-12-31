@@ -1133,6 +1133,22 @@ C64::_dump(Category category, std::ostream& os) const
         os << std::endl;
     }
 
+    if (category == Category::Summary) {
+
+        os << tab("Model");
+        os << (vic.pal() ? "PAL" : "NTSC") << std::endl;
+        os << tab("VICII");
+        os << VICIIRevisionEnum::key(getConfigItem(OPT_VIC_REVISION)) << std::endl;
+        os << tab("SID");
+        os << SIDRevisionEnum::key(getConfigItem(OPT_SID_REVISION)) << std::endl;
+        os << tab("CIA 1");
+        os << CIARevisionEnum::key(cia1.getConfigItem(OPT_CIA_REVISION)) << std::endl;
+        os << tab("CIA 2");
+        os << CIARevisionEnum::key(cia2.getConfigItem(OPT_CIA_REVISION)) << std::endl;
+        os << tab("Refresh rate");
+        os << dec(isize(refreshRate())) << " Fps" << std::endl;
+    }
+
     if (category == Category::Inspection) {
 
         os << tab("Power");
@@ -1146,8 +1162,6 @@ C64::_dump(Category category, std::ostream& os) const
         os << tab("Debug mode");
         os << bol(inDebugMode()) << std::endl;
         os << std::endl;
-        os << tab("Refresh rate");
-        os << dec(isize(refreshRate())) << " Fps" << std::endl;
     }
 
     if (category == Category::Progress) {
@@ -1551,7 +1565,7 @@ C64::loadSnapshot(const Snapshot &snapshot)
             keyboard.releaseAll();
 
             // Print some debug info if requested
-            if constexpr (SNP_DEBUG) dump(Category::State);
+            if constexpr (SNP_DEBUG) dump(Category::Inspection);
 
         } catch (VC64Error &error) {
 

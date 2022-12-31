@@ -172,20 +172,12 @@ Interpreter::initDebugShell(Command &root)
 
         string drive = (i == 0) ? "drive8" : "drive9";
 
-        root.add({drive},
+        root.add({drive, ""},
                  "Inspects the internal state",
                  [this](Arguments& argv, long value) {
 
             auto &drive = value ? drive9 : drive8;
             retroShell.dump(drive, Category::Inspection);
-        });
-
-        root.add({drive, "debug"},
-                 "Displays additional debug information",
-                 [this](Arguments& argv, long value) {
-
-            auto &drive = value ? drive9 : drive8;
-            retroShell.dump(drive, Category::Debug);
         });
 
         root.add({drive, "bankmap"},
@@ -197,11 +189,27 @@ Interpreter::initDebugShell(Command &root)
         });
 
         root.add({drive, "disk"},
-                 "Displays the disk state",
+                 "Inspects the current disk",
                  [this](Arguments& argv, long value) {
 
             auto &drive = value ? drive9 : drive8;
             retroShell.dump(drive, Category::Disk);
+        });
+
+        root.add({drive, "layout"},
+                 "Displays the disk layout",
+                 [this](Arguments& argv, long value) {
+
+            auto &drive = value ? drive9 : drive8;
+            retroShell.dump(drive, Category::Layout);
+        });
+
+        root.add({drive, "debug"},
+                 "Displays additional debug information",
+                 [this](Arguments& argv, long value) {
+
+            auto &drive = value ? drive9 : drive8;
+            retroShell.dump(drive, Category::Debug);
         });
     }
 

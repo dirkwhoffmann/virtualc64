@@ -124,8 +124,9 @@ FileSystem::init(AnyCollection &collection)
         makeFile(collection.itemName(i), buffer, size);
         delete[] buffer;
     }
-    
-    printDirectory();
+
+    // Print some debug information
+    if constexpr (FS_DEBUG) printDirectory();
 }
 
 void
@@ -143,7 +144,9 @@ FileSystem::init(const string &path)
         // Import the folder
         importDirectory(path);
 
-        printDirectory();
+        // Print some debug information
+        if constexpr (FS_DEBUG) printDirectory();
+
         return;
     }
 
@@ -783,6 +786,7 @@ FileSystem::importVolume(const u8 *src, isize size, ErrorCode *err)
     scanDirectory();
     
     if constexpr (FS_DEBUG) {
+
         // info();
         // dump();
         printDirectory();

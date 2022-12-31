@@ -185,7 +185,7 @@ Disk::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category == Category::State) {
+    if (category == Category::Disk) {
 
         auto checksum = util::fnv32((const u8 *)data.track, sizeof(data.track));
 
@@ -212,7 +212,6 @@ Disk::setModified(bool b)
 {
     if (b != modified) {
         modified = b;
-        // messageQueue.put(MSG_DISK_PROTECT);
     }
 }
 

@@ -88,6 +88,8 @@ Recorder::startRecording(isize x1, isize y1, isize x2, isize y2,
     debug(REC_DEBUG, "startRecording(%ld,%ld,%ld,%ld,%ld,%ld,%ld)\n",
           x1, y1, x2, y2, bitRate, aspectX, aspectY);
 
+    if constexpr (REC_DEBUG) dump(Category::Inspection);
+
     if (isRecording()) {
         throw VC64Error(ERROR_REC_LAUNCH, "Recording in progress.");
     }
@@ -103,7 +105,6 @@ Recorder::startRecording(isize x1, isize y1, isize x2, isize y2,
     }
 
     debug(REC_DEBUG, "Pipes created\n");
-    dump(Category::State);
 
     debug(REC_DEBUG, "startRecording(%ld,%ld,%ld,%ld,%ld,%ld,%ld)\n",
           x1, y1, x2, y2, bitRate, aspectX, aspectY);

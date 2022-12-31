@@ -380,7 +380,7 @@ Drive::_dump(Category category, std::ostream& os) const
         mem.C64Component::_dump(Category::BankMap, os);
     }
     
-    if (category == Category::State) {
+    if (category == Category::Inspection) {
 
         os << tab("Idle");
         os << bol(isIdle()) << std::endl;
@@ -403,10 +403,10 @@ Drive::_dump(Category category, std::ostream& os) const
         mem.dump(Category::BankMap, os);
     }
     
-    if (category == Category::Disk) {
+    if (category == Category::Disk || category == Category::Layout) {
         
         if (hasDisk()) {
-            disk->dump(Category::State, os);
+            disk->dump(category, os);
         } else {
             os << "No disk";
         }

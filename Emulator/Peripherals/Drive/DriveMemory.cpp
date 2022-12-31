@@ -108,12 +108,6 @@ DriveMemory::_dump(Category category, std::ostream& os) const
             }
         }
     }
-    
-    if (category == Category::State) {
-        
-        os << tab("Drive ROM");
-        os << bol(c64.hasRom(ROM_TYPE_VC1541)) << std::endl;
-    }
 }
 
 u16

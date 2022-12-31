@@ -48,7 +48,7 @@ enum class Category
 {
     BankMap, Breakpoints, Catchpoints, Checksum, Config, Current, Debug,
     Defaults, Disk, Dma, Events, Inspection, Layout, Progress, Registers, State,
-    Watchpoints
+    Summary, Thread, Watchpoints
 };
 
 class C64Object {
