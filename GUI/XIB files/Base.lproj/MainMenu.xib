@@ -145,15 +145,20 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="f6W-1J-YBf"/>
-                            <menuItem title="Take Snapshot" keyEquivalent="T" id="BX4-y5-PoI">
+                            <menuItem title="Take Snapshot" keyEquivalent="+" id="BX4-y5-PoI">
                                 <connections>
                                     <action selector="takeSnapshotAction:" target="-1" id="jhF-O1-8rn"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Browse Snapshots..." id="EcZ-LE-gfc">
+                            <menuItem title="Restore Latest Snapshot" keyEquivalent="-" id="EcZ-LE-gfc">
+                                <connections>
+                                    <action selector="restoreSnapshotAction:" target="-1" id="d5m-4e-CCb"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Browse Snapshots..." id="yFm-f5-3w6">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="browseSnapshotsAction:" target="-1" id="ias-aN-eeK"/>
+                                    <action selector="browseSnapshotsAction:" target="-1" id="m5J-gm-IHF"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="74">
@@ -214,28 +219,23 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="rh0-lG-FJ7"/>
-                            <menuItem title="Pause" keyEquivalent="P" id="430">
+                            <menuItem title="Pause" keyEquivalent="y" id="430">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                 <connections>
-                                    <action selector="pauseAction:" target="-1" id="505"/>
+                                    <action selector="stopAndGoAction:" target="-1" id="n8V-Ue-wLj"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Reset" id="rL5-uj-zUT">
+                            <menuItem title="Hard Reset" keyEquivalent="r" id="434">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="resetAction:" target="-1" id="506"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Soft Reset" id="iuq-Lf-hht">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Reset" id="rdH-7k-lzO">
-                                    <items>
-                                        <menuItem title="Hard" keyEquivalent="R" id="434">
-                                            <connections>
-                                                <action selector="resetAction:" target="-1" id="506"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Soft" id="iuq-Lf-hht">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="softResetAction:" target="-1" id="5sT-Nu-Tp6"/>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
+                                <connections>
+                                    <action selector="softResetAction:" target="-1" id="5sT-Nu-Tp6"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Power Off" id="432">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -244,18 +244,24 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="zO4-BV-1XU"/>
-                            <menuItem title="Step Into" keyEquivalent="I" id="429">
-                                <connections>
-                                    <action selector="stepIntoAction:" target="-1" id="488"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Step Over" keyEquivalent="O" id="428">
+                            <menuItem title="Step Over" keyEquivalent="" id="428">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="stepOverAction:" target="-1" id="502"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Step Into" keyEquivalent="" id="429">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="stepIntoAction:" target="-1" id="488"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="qq8-Qm-VmD"/>
-                            <menuItem title="Toggle Warp Mode" keyEquivalent="W" id="CFb-bT-O6K">
+                            <menuItem title="Toggle Warp Mode" id="CFb-bT-O6K">
+                                <string key="keyEquivalent" base64-UTF8="YES">
+CQ
+</string>
+                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                                 <connections>
                                     <action selector="stepOverAction:" target="-1" id="bzn-aK-GEY"/>
                                 </connections>
@@ -279,7 +285,8 @@
                                     <action selector="runToolbarCustomizationPalette:" target="-1" id="BLv-4t-F3C"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Show Status Bar" keyEquivalent="B" id="nZ5-yO-Ch3">
+                            <menuItem title="Show Status Bar" keyEquivalent="b" id="nZ5-yO-Ch3">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="toggleStatusBarAction:" target="-1" id="XV7-PD-saG"/>
                                 </connections>
@@ -302,7 +309,7 @@
                 <menuItem title="Keyboard" id="212">
                     <menu key="submenu" title="Keyboard" id="213">
                         <items>
-                            <menuItem title="Show ..." keyEquivalent="K" id="q11-Wg-Mnp">
+                            <menuItem title="Show ..." keyEquivalent="k" id="q11-Wg-Mnp">
                                 <connections>
                                     <action selector="stickyKeyboardAction:" target="-1" id="Fbk-tO-FNe"/>
                                 </connections>
@@ -1219,9 +1226,6 @@
             </items>
             <point key="canvasLocation" x="140" y="154"/>
         </menu>
-        <menuItem title="Item" id="MrQ-y1-7yS">
-            <modifierMask key="keyEquivalentModifierMask"/>
-        </menuItem>
     </objects>
     <resources>
         <image name="crtButtonOnTemplate" width="24" height="24"/>
