@@ -92,10 +92,7 @@ public:
     
     // A disk waiting to be inserted
     std::unique_ptr<Disk> diskToInsert;
-    
-    // State change delay counter (checked in the vsync handler)
-    i64 diskChangeCounter = 0;
-    
+        
     
     //
     // Drive state
@@ -480,11 +477,6 @@ public:
     // Performs periodic actions
     void vsyncHandler();
     
-private:
-    
-    // Execute the disk state transition for a single frame
-    void executeStateTransition();
-
 
     //
     // Processing events

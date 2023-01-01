@@ -818,13 +818,11 @@ Drive::insertDisk(std::unique_ptr<Disk> disk)
     {   SUSPENDED
         
         if (!diskToInsert) {
-            
-            // Initiate the disk change procedure
+
             diskToInsert = std::move(disk);
 
+            // Initiate the disk change procedure
             scheduleFirstDiskChangeEvent(DCH_INSERT);
-
-            diskChangeCounter = 1;
         }
     }
 }
@@ -867,10 +865,9 @@ Drive::ejectDisk()
     {   SUSPENDED
         
         if (insertionStatus == DISK_FULLY_INSERTED && !diskToInsert) {
-            
-            scheduleFirstDiskChangeEvent(DCH_EJECT);
 
-            diskChangeCounter = 1;
+            // Initiate the disk change procedure
+            scheduleFirstDiskChangeEvent(DCH_EJECT);
         }
     }
 }
@@ -878,22 +875,16 @@ Drive::ejectDisk()
 void
 Drive::vsyncHandler()
 {
+    auto diskChangeInProgress = [&]() {
+        return isDrive8() ? c64.hasEvent<SLOT_DC8>() : c64.hasEvent<SLOT_DC9>();
+    };
+
     // Only proceed if the drive is connected and switched on
     if (!config.connected || !config.switchedOn) return;
 
-    // Emulate an ongoing disk state transition
-    if (diskChangeCounter) {
-        
-        wakeUp();
-        
-        if (--diskChangeCounter == 0) {
-            executeStateTransition();
-        }
-        return;
-    }
-
     // Check if we should enter power-safe mode
-    if (!spinning && config.powerSave) {
+    if (!spinning && config.powerSave && !diskChangeInProgress()) {
+
         if (++idleCounter == powerSafeThreshold) {
 
             trace(DRV_DEBUG, "Entering power-save mode\n");
@@ -901,72 +892,6 @@ Drive::vsyncHandler()
             msgQueue.put(MSG_DRIVE_POWER_SAVE_ON, deviceNr);
         }
     }
-}
-
-void
-Drive::executeStateTransition()
-{
-    /*
-    switch (insertionStatus) {
-            
-        case DISK_FULLY_INSERTED:
-        {
-            trace(DSKCHG_DEBUG, "FULLY_INSERTED -> PARTIALLY_EJECTED\n");
-
-            // Pull the disk half out (blocks the light barrier)
-            insertionStatus = DISK_PARTIALLY_EJECTED;
-            
-            // Make sure the drive can no longer read from this disk
-            disk->clearDisk();
-            
-            // Schedule the next transition
-            diskChangeCounter = config.ejectDelay;
-            return;
-        }
-        case DISK_PARTIALLY_EJECTED:
-        {
-            trace(DSKCHG_DEBUG, "PARTIALLY_EJECTED -> FULLY_EJECTED\n");
-
-            // Take the disk out (unblocks the light barrier)
-            insertionStatus = DISK_FULLY_EJECTED;
-            
-            // Inform listeners
-            msgQueue.put(MSG_DISK_EJECT, deviceNr, halftrack, config.stepVolume, config.pan);
-            
-            // Schedule the next transition
-            diskChangeCounter = config.swapDelay;
-            return;
-        }
-        case DISK_FULLY_EJECTED:
-        {
-            trace(DSKCHG_DEBUG, "FULLY_EJECTED -> PARTIALLY_INSERTED\n");
-
-            // Only proceed if a new disk is waiting for insertion
-            if (!diskToInsert) return;
-            
-            // Push the new disk half in (blocks the light barrier)
-            insertionStatus = DISK_PARTIALLY_INSERTED;
-            
-            // Schedule the next transition
-            diskChangeCounter = config.insertDelay;
-            return;
-        }
-        case DISK_PARTIALLY_INSERTED:
-        {
-            trace(DSKCHG_DEBUG, "PARTIALLY_INSERTED -> FULLY_INSERTED\n");
-
-            // Fully insert the disk (unblocks the light barrier)
-            insertionStatus = DISK_FULLY_INSERTED;
-            disk = std::move(diskToInsert);
-            
-            // Inform listeners
-            msgQueue.put(MSG_DISK_INSERT, deviceNr, halftrack, config.stepVolume, config.pan);
-            return;
-        }
-        default:
-            fatalError;
-    }
-    */
 }
 
 void
