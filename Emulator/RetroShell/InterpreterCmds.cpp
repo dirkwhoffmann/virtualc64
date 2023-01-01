@@ -741,13 +741,6 @@ Interpreter::initCommandShell(Command &root)
     // Keyboard
     //
 
-    root.add({"keyboard", "type"},
-             "Types a command",
-             [this](Arguments& argv, long value) {
-
-        keyboard.autoType(argv.front());
-    });
-
     root.add({"keyboard", "press"}, { Arg::value },
              "Presses a key",
              [this](Arguments& argv, long value) {
@@ -760,6 +753,30 @@ Interpreter::initCommandShell(Command &root)
              [this](Arguments& argv, long value) {
 
         keyboard.release(C64Key(parseNum(argv)));
+    });
+
+    root.add({"keyboard", "type"},
+             "Types text on the keyboard");
+
+    root.add({"keyboard", "type", "text"},
+             "Types arbitrary text",
+             [this](Arguments& argv, long value) {
+
+        keyboard.autoType(argv.front());
+    });
+
+    root.add({"keyboard", "type", "load"},
+             "Types \"LOAD\"*\",8,1",
+             [this](Arguments& argv, long value) {
+
+        keyboard.autoType("load \"*\",8,1\n");
+    });
+
+    root.add({"keyboard", "type", "run"},
+             "Types RUN",
+             [this](Arguments& argv, long value) {
+
+        keyboard.autoType("run\n");
     });
 
 

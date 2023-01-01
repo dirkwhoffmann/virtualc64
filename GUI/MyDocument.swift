@@ -14,6 +14,9 @@ class MyDocument: NSDocument {
     // The window controller for this document
     var parent: MyController { return windowControllers.first as! MyController }
 
+    // Optional media URL provided on app launch
+    var launchUrl: URL?
+
     // The media manager for this document
     var mm: MediaManager!
 

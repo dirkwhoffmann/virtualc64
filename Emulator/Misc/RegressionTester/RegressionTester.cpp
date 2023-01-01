@@ -19,13 +19,16 @@ namespace vc64 {
 void
 RegressionTester::prepare(C64 &c64, C64Model model)
 {
+    // Only proceed if the /tmp folder exisits
+    if (!util::fileExists("/tmp")) throw VC64Error(ERROR_DIR_NOT_FOUND, "/tmp");
+
+    // Check if we've got write permissions
+    if (c64.tmp() != "/tmp") throw VC64Error(ERROR_DIR_ACCESS_DENIED, "/tmp");
+
     // Initialize the emulator according to the specified model
     c64.revertToFactorySettings();
     c64.configure(model);
     
-    // Select the default texture cutout
-    x1 = 104; y1 = 17; x2 = 488; y2 = c64.vic.pal() ? 291 : 241;
-
     // Choose a warp source that prevents the GUI from disabling warp mode
     constexpr isize warpSource = 1;
 
@@ -39,11 +42,7 @@ RegressionTester::prepare(C64 &c64, C64Model model)
 void
 RegressionTester::run(string path)
 {
-    if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
-
-    auto file = PRGFile(path);
-    c64.flash(file, 0);
-
+    c64.flash(PRGFile(path), 0);
     keyboard.autoType("run\n");
 }
 
@@ -56,51 +55,49 @@ RegressionTester::dumpTexture(C64 &c64)
 void
 RegressionTester::dumpTexture(C64 &c64, const string &filename)
 {
-    /* This function is used for automatic regression testing. It generates a
-     * TIFF image of the current emulator texture in the /tmp directory and
-     * exits the application. The regression testing script will pick up the
-     * texture and compare it against a previously recorded reference image.
+    /* This function is used for automatic regression testing. It dumps the
+     * visible portion of the texture into the /tmp directory and exits the
+     * application. The regression test script picks up the texture and
+     * compares it against a previously recorded reference image.
      */
     std::ofstream file;
 
-    // Assemble the target file names
-    string rawFile = "/tmp/" + filename + ".raw";
-    string tiffFile = "/tmp/" + filename + ".tiff";
-
     // Open an output stream
-    file.open(rawFile.c_str());
-    
+    file.open(("/tmp/" + filename + ".raw").c_str());
+
     // Dump texture
     dumpTexture(c64, file);
     file.close();
-    
-    // Convert raw data into a TIFF file
-    string cmd = "/usr/local/bin/raw2tiff";
-    cmd += " -p rgb -b 3";
-    cmd += " -w " + std::to_string(x2 - x1);
-    cmd += " -l " + std::to_string(y2 - y1);
-    cmd += " " + rawFile + " " + tiffFile;
-    
-    if (system(cmd.c_str()) == -1) {
-        warn("Error executing %s\n", cmd.c_str());
-    }
-    
-    // Exit the emulator
-    exit(retValue);
+
+    // Ask the GUI to quit
+    msgQueue.put(MSG_ABORT, retValue);
 }
 
 void
 RegressionTester::dumpTexture(C64 &c64, std::ostream& os)
 {
+    char grey2[3] = { 0x22, 0x22, 0x22 };
+    char grey4[3] = { 0x44, 0x44, 0x44 };
+
+    auto checkerboard = [&](isize y, isize x) {
+        return ((y >> 3) & 1) == ((x >> 3) & 1) ? grey2 : grey4;
+    };
+
     {   SUSPENDED
-        
-        auto buffer = (u32 *) c64.vic.stableEmuTexture();
-        
-        for (isize y = y1; y < y2; y++) {
+
+        auto buffer = (u32 *)c64.vic.stableEmuTexture();
+        char *cptr;
+
+        for (isize y = Y1; y < Y2; y++) {
             
-            for (isize x = x1; x < x2; x++) {
-                
-                char *cptr = (char *)(buffer + y * TEX_WIDTH + x);
+            for (isize x = X1; x < X2; x++) {
+
+                if (y >= y1 && y < y2 && x >= x1 && x < x2) {
+                    cptr = (char *)(buffer + y * TEX_WIDTH + x);
+                } else {
+                    cptr = checkerboard(y, x);
+                }
+
                 os.write(cptr + 0, 1);
                 os.write(cptr + 1, 1);
                 os.write(cptr + 2, 1);

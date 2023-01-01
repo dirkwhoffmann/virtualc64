@@ -189,6 +189,9 @@ extension MyController {
         // Enable message processing
         registerAsListener()
 
+        // Add media file (if provided on startup)
+        mydocument.mm.addMedia()
+
         do {
             // Let the C64 throw an exception if it is not ready to power on
             try c64.isReady()
@@ -358,6 +361,10 @@ extension MyController {
 
         case .HALT:
             shutDown()
+
+        case .ABORT:
+            debug(.shutdown, "Aborting with exit code \(msg.data1)")
+            exit(msg.data1)
 
         case .MUTE_ON:
             muted = true

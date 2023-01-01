@@ -1146,16 +1146,21 @@ C64::_dump(Category category, std::ostream& os) const
 
     if (category == Category::Summary) {
 
+        auto vicRev = (VICIIRevision)getConfigItem(OPT_VIC_REVISION);
+        auto sidRev = (SIDRevision)getConfigItem(OPT_SID_REVISION);
+        auto cia1Rev = (CIARevision)cia1.getConfigItem(OPT_CIA_REVISION);
+        auto cia2Rev = (CIARevision)cia2.getConfigItem(OPT_CIA_REVISION);
+
         os << tab("Model");
         os << (vic.pal() ? "PAL" : "NTSC") << std::endl;
         os << tab("VICII");
-        os << VICIIRevisionEnum::key(getConfigItem(OPT_VIC_REVISION)) << std::endl;
+        os << VICIIRevisionEnum::key(vicRev) << std::endl;
         os << tab("SID");
-        os << SIDRevisionEnum::key(getConfigItem(OPT_SID_REVISION)) << std::endl;
+        os << SIDRevisionEnum::key(sidRev) << std::endl;
         os << tab("CIA 1");
-        os << CIARevisionEnum::key(cia1.getConfigItem(OPT_CIA_REVISION)) << std::endl;
+        os << CIARevisionEnum::key(cia1Rev) << std::endl;
         os << tab("CIA 2");
-        os << CIARevisionEnum::key(cia2.getConfigItem(OPT_CIA_REVISION)) << std::endl;
+        os << CIARevisionEnum::key(cia2Rev) << std::endl;
         os << tab("Refresh rate");
         os << dec(isize(refreshRate())) << " Fps" << std::endl;
     }
