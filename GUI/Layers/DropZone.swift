@@ -69,23 +69,23 @@ class DropZone: Layer {
 
         inUse[0] = c64.drive8.hasDisk
         inUse[1] = c64.drive9.hasDisk
-        inUse[2] = c64.expansionport.cartridgeAttached()
-        inUse[3] = c64.datasette.hasTape
-        inUse[4] = false
+        inUse[2] = false
+        inUse[3] = c64.expansionport.cartridgeAttached()
+        inUse[4] = c64.datasette.hasTape
 
         switch type {
 
         case .T64, .P00, .PRG:
-            enabled = [connected8, connected9, false, false, true]
+            enabled = [connected8, connected9, true, false, false]
 
         case .FOLDER, .D64, .G64:
             enabled = [connected8, connected9, false, false, false]
 
         case .CRT:
-            enabled = [false, false, true, false, false]
+            enabled = [false, false, false, true, false]
             
         case .TAP:
-            enabled = [false, false, false, true, false]
+            enabled = [false, false, false, false, true]
             
         default:
             enabled = [false, false, false, false, false]
@@ -184,35 +184,13 @@ class DropZone: Layer {
 
                 case 0: try mm.addMedia(url: url, allowedTypes: [type], drive: DRIVE8)
                 case 1: try mm.addMedia(url: url, allowedTypes: [type], drive: DRIVE9)
-                case 2: try mm.addMedia(url: url, allowedTypes: [type])
+                case 2: try mm.addMedia(url: url, allowedTypes: [type], options: [.flash])
                 case 3: try mm.addMedia(url: url, allowedTypes: [type])
-                case 4: try mm.addMedia(url: url, allowedTypes: [type], options: [.flash])
+                case 4: try mm.addMedia(url: url, allowedTypes: [type])
 
                 default:
                     fatalError()
                 }
-
-                /*
-                if n == 4 {
-                    print("TODO: FLASH")
-                    return
-                }
-
-                switch type {
-
-                case .SNAPSHOT, .SCRIPT, .CRT, .TAP:
-
-                    try mm.addMedia(url: url, allowedTypes: [type])
-
-                case .T64, .P00, .PRG, .FOLDER, .D64, .G64:
-
-                    let drive = n == 0 ? DRIVE8 : DRIVE9
-                    try mm.addMedia(url: url, allowedTypes: [type], drive: drive)
-
-                default:
-                    fatalError()
-                }
-                */
 
             } else {
 
@@ -263,24 +241,6 @@ class DropZone: Layer {
         let h = w * 1.2
         let y = size.height + origin.y - 24 - h * CGFloat(alpha.current)
         let margin = w / 8
-        // let iconSize = NSSize(width: w, height: h)
-
-        /*
-        ul[0] = CGPoint(x: midx - 2.5 * w - 2 * margin, y: y)
-        lr[0] = CGPoint(x: ul[0].x + w, y: ul[0].y + h)
-
-        ul[1] = CGPoint(x: midx - 1.5 * w - margin, y: y)
-        lr[1] = CGPoint(x: ul[1].x + w, y: ul[1].y + h)
-
-        ul[2] = CGPoint(x: midx - 0.5 * w, y: y)
-        lr[2] = CGPoint(x: ul[2].x + w, y: ul[2].y + h)
-
-        ul[3] = CGPoint(x: midx + 1.5 * w + margin, y: y)
-        lr[3] = CGPoint(x: ul[3].x + w, y: ul[3].y + h)
-
-        ul[4] = CGPoint(x: midx + 2.5 * w + 2 * margin, y: y)
-        lr[4] = CGPoint(x: ul[4].x + w, y: ul[4].y + h)
-        */
 
         var x = midx - 2.5 * w - 2 * margin
 
