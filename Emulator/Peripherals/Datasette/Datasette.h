@@ -182,20 +182,7 @@ public:
 
     
     //
-    // Operating the read/write head
-    //
-
-public:
-    
-    // Puts the read/write head at the beginning of the tape
-    void rewind(isize seconds = 0);
-
-    // Advances the read/write head one pulse
-    void advanceHead();
-    
-    
-    //
-    // Running the device
+    // Operating the device
     //
     
 public:
@@ -209,11 +196,35 @@ public:
     // Presses the stop key
     void pressStop();
 
+private:
+
+    // Performs the pressPlay action
+    void play();
+
+    // Performs the pressStop action
+    void stop();
+
+
+    //
+    // Emulating the device
+    //
+
+public:
+
+    // Puts the read/write head at the beginning of the tape
+    void rewind(isize seconds = 0);
+
     // Returns true if the datasette motor is switched on
     bool getMotor() const { return motor; }
 
     // Switches the motor on or off
     void setMotor(bool value);
+
+private:
+
+    // Advances the read/write head one pulse
+    void advanceHead();
+
 
 
     //
@@ -227,10 +238,13 @@ public:
 
 private:
 
+    // Updates the event in the DAT slot
+    void updateDatEvent();
+
     // Schedules the next event in the DAT slot
     void scheduleNextDatEvent();
 
-    // Schedules a pulse
+    // Schedules the rising and falling edge of the next pulse
     void schedulePulse(isize nr);
 };
 

@@ -177,9 +177,14 @@ Datasette::setConfigItem(Option option, i64 value)
 
         case OPT_DAT_CONNECT:
 
-            config.connected = bool(value);
-            scheduleNextDatEvent();
-            msgQueue.put(value ? MSG_VC1530_CONNECT : MSG_VC1530_DISCONNECT);
+            if (config.connected != value) {
+
+                SUSPENDED
+
+                config.connected = bool(value);
+                updateDatEvent();
+                msgQueue.put(value ? MSG_VC1530_CONNECT : MSG_VC1530_DISCONNECT);
+            }
             return;
 
         default:
@@ -220,7 +225,10 @@ Datasette::insertTape(TAPFile &file)
         
         // Rewind the tape
         rewind();
-        
+
+        // Update the execution event slot
+        updateDatEvent();
+
         // Inform the GUI
         msgQueue.put(MSG_VC1530_TAPE, 1);
     }
@@ -285,22 +293,36 @@ Datasette::pressPlay()
 {
     debug(TAP_DEBUG, "pressPlay\n");
 
+    // Never call this function inside the emulator thread
+    assert(!c64.isEmulatorThread());
+
     // Only proceed if the device is connected
     if (!config.connected) return;
 
     // Only proceed if a tape is present
     if (!hasTape()) return;
-    
-    playKey = true;
 
-    // Schedule the first pulse
-    schedulePulse(head);
-    advanceHead();
+    // Pause the emulator and press press
+    { SUSPENDED play(); }
+}
 
-    // Update the execution event slot
-    scheduleNextDatEvent();
+void
+Datasette::play()
+{
+    if (!playKey) {
 
-    msgQueue.put(MSG_VC1530_PLAY, 1);
+        playKey = true;
+
+        // Schedule the first pulse
+        schedulePulse(head);
+        advanceHead();
+
+        // Update the execution event slot
+        updateDatEvent();
+
+        // Inform the GUI
+        msgQueue.put(MSG_VC1530_PLAY, 1);
+    }
 }
 
 void
@@ -308,13 +330,29 @@ Datasette::pressStop()
 {
     debug(TAP_DEBUG, "pressStop\n");
 
-    playKey = false;
-    motor = false;
+    // Never call this function inside the emulator thread
+    assert(!c64.isEmulatorThread());
 
-    // Update the execution event slot
-    scheduleNextDatEvent();
+    // Only proceed if the device is connected
+    if (!config.connected) return;
 
-    msgQueue.put(MSG_VC1530_PLAY, 0);
+    // Pause the emulator and press press
+    { SUSPENDED stop(); }
+}
+
+void
+Datasette::stop()
+{
+    if (playKey) {
+        
+        playKey = false;
+        motor = false;
+
+        // Update the execution event slot
+        scheduleNextDatEvent();
+
+        msgQueue.put(MSG_VC1530_PLAY, 0);
+    }
 }
 
 void
@@ -388,12 +426,27 @@ Datasette::processDatEvent(EventID event, isize cycles)
 }
 
 void
-Datasette::scheduleNextDatEvent()
+Datasette::updateDatEvent()
 {
     if (playKey && motor && hasTape() && config.connected) {
 
-        // Call the execution handler every 16 cycles
-        c64.scheduleRel<SLOT_DAT>(13, DAT_EXECUTE, 13);
+        scheduleNextDatEvent();
+
+    } else {
+
+        c64.cancel<SLOT_DAT>();
+    }
+}
+
+void
+Datasette::scheduleNextDatEvent()
+{
+    static constexpr Cycle period = 16;
+
+    if (playKey && motor && hasTape() && config.connected) {
+
+        // Call the execution handler periodically
+        c64.scheduleRel<SLOT_DAT>(period, DAT_EXECUTE, period);
 
     } else {
 

@@ -176,6 +176,11 @@ public:
     // Executing
     //
 
+public:
+
+    // Returns true if this functions is called from within the emulator thread
+    bool isEmulatorThread() { return std::this_thread::get_id() == thread.get_id(); }
+
 private:
     
     template <ThreadMode M> void execute();
@@ -189,9 +194,6 @@ private:
 
     // Target frame rate of this thread (provided by the subclass)
     virtual double refreshRate() const = 0;
-
-    // Returns true if this functions is called from within the emulator thread
-    bool isEmulatorThread() { return std::this_thread::get_id() == thread.get_id(); }
 
     
     //
