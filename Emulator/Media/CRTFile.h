@@ -39,6 +39,7 @@ public:
     // Class methods
     //
     
+    static string cartridgeTypeName(CartridgeType type);
     static bool isCompatible(const string &name);
     static bool isCompatible(std::istream &stream);
 
@@ -81,6 +82,9 @@ public:
     
     // Returns the cartridge type (e.g., SimonsBasic, FinalIII)
     CartridgeType cartridgeType() const;
+
+    // Returns a textual description for the cartridge type
+    string cartridgeTypeName() const { return cartridgeTypeName(cartridgeType()); }
 
     // Checks whether the cartridge type is supported by the emulator, yet
     bool isSupported() const;

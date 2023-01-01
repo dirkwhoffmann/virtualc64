@@ -264,13 +264,13 @@ PIA6821::poke(bool rs1, bool rs0, u8 value)
             
         case 0x0: case 0x1: // DDRA
             
-            if (value != 0) trace(PIA_DEBUG, "pokeDDRA(%x)\n", value);
+            trace(PIA_DEBUG, "pokeDDRA(%x)\n", value);
             ddra = value;
             break;
             
         case 0x4: case 0x5: case 0x6: case 0x7: // CRA
         {
-            if (value != 0 && value != 4) trace(PIA_DEBUG, "pokeCRA(%x)\n", value);
+            trace(PIA_DEBUG, "pokeCRA(%x)\n", value);
 
             bool pendingIrq =
             (GET_BIT(cra, 7) && RISING_EDGE_BIT(cra, value, 0)) ||

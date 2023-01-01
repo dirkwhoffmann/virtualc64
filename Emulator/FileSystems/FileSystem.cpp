@@ -126,7 +126,8 @@ FileSystem::init(AnyCollection &collection)
     }
 
     // Print some debug information
-    if constexpr (FS_DEBUG) printDirectory();
+    // if constexpr (FS_DEBUG)
+        printDirectory();
 }
 
 void

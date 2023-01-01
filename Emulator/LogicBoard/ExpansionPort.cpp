@@ -311,8 +311,10 @@ ExpansionPort::attachCartridge(CRTFile *file, bool reset)
     assert(file);
     
     // Only proceed if this cartridge is supported
-    if (!file->isSupported()) throw VC64Error(ERROR_CRT_UNSUPPORTED);
-    
+    if (!file->isSupported()) {
+        throw VC64Error(ERROR_CRT_UNSUPPORTED, file->cartridgeTypeName());
+    }
+
     // Create cartridge from cartridge file
     Cartridge *cartridge = Cartridge::makeWithCRTFile(c64, *file);
 

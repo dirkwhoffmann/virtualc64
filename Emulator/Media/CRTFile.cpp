@@ -15,6 +15,12 @@
 
 namespace vc64 {
 
+string
+CRTFile::cartridgeTypeName(CartridgeType type)
+{
+    return std::to_string(type) + " (" + CartridgeTypeEnum::key(type) + ")";
+}
+
 bool
 CRTFile::isCompatible(const string &path)
 {

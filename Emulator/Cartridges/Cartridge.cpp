@@ -129,8 +129,7 @@ Cartridge::makeWithType(C64 &c64, CartridgeType type)
         case CRT_REU:               return new Reu(c64);
 
         default:
-            throw VC64Error(ERROR_CRT_UNSUPPORTED,
-                            std::to_string(type) + " (" + CartridgeTypeEnum::key(type) + ")");
+            throw VC64Error(ERROR_CRT_UNSUPPORTED, CRTFile::cartridgeTypeName(type));
     }
 }
 
