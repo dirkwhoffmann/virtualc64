@@ -77,7 +77,8 @@ TAPFile::read()
             
         } else {
             
-            warn("TAP1 with a zero pulse byte\n");
+            debug(TAP_DEBUG, "TAP1 with a zero pulse byte\n");
+
             // TAP1 with a zero pulse byte
             result = LO_LO_HI_HI(fp + 1 < (isize)size ? data[fp + 1] : 0,
                                  fp + 2 < (isize)size ? data[fp + 2] : 0,

@@ -1432,14 +1432,10 @@ C64::processEvents(Cycle cycle)
             }
 
             if (isDue<SLOT_DC8>(cycle)) {
-
-                // NOT USED, YET
-                assert(false);
+                drive8.processDiskChangeEvent(id[SLOT_DC8]);
             }
             if (isDue<SLOT_DC9>(cycle)) {
-
-                // NOT USED, YET
-                assert(false);
+                drive9.processDiskChangeEvent(id[SLOT_DC9]);
             }
             if (isDue<SLOT_KEY>(cycle)) {
 

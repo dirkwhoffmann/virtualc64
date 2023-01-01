@@ -543,12 +543,12 @@ public:
 
     template<EventSlot s> void scheduleImm(EventID id)
     {
-        scheduleAbs<s>(0, id);
+        scheduleAbs<s>(cpu.clock, id);
     }
 
     template<EventSlot s> void scheduleImm(EventID id, i64 data)
     {
-        scheduleAbs<s>(0, id);
+        scheduleAbs<s>(cpu.clock, id);
         this->data[s] = data;
     }
 

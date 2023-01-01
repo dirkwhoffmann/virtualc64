@@ -10,6 +10,7 @@
 #pragma once
 
 #include "DriveTypes.h"
+#include "C64Types.h"
 #include "SubComponent.h"
 #include "CPU.h"
 #include "Disk.h"
@@ -331,6 +332,10 @@ public:
     // Returns the device number
     isize getDeviceNr() const { return deviceNr; }
 
+    // Convenience wrappers
+    bool isDrive8() { return getDeviceNr() == DRIVE8; }
+    bool isDrive9() { return getDeviceNr() == DRIVE9; }
+
     // Returns true iff the red drive LED is on
     bool getRedLED() const { return redLED; };
 
@@ -479,6 +484,19 @@ private:
     
     // Execute the disk state transition for a single frame
     void executeStateTransition();
+
+
+    //
+    // Processing events
+    //
+
+public:
+
+    // Initiates the disk change procedure
+    void scheduleFirstDiskChangeEvent(EventID id);
+
+    // Carries out the disk change procedure
+    void processDiskChangeEvent(EventID id);
 };
 
 }
