@@ -85,7 +85,7 @@ ReSID::_inspect() const
         info.volume = reg[0x18] & 0xF;
         info.filterModeBits = reg[0x18] & 0xF0;
         info.filterType = reg[0x18] & 0x70;
-        info.filterCutoff = (reg[0x16] << 3) | (reg[0x15] & 0x07);
+        info.filterCutoff = u16(reg[0x16] << 3 | (reg[0x15] & 0x07));
         info.filterResonance = reg[0x17] >> 4;
         info.filterEnableBits = reg[0x17] & 0x0F;
         
@@ -93,7 +93,7 @@ ReSID::_inspect() const
             
             for (isize j = 0; j < 7; j++) voiceInfo[i].reg[j] = reg[j];
             voiceInfo[i].frequency = HI_LO(reg[0x1], reg[0x0]);
-            voiceInfo[i].pulseWidth = ((reg[0x3] & 0xF) << 8) | reg[0x02];
+            voiceInfo[i].pulseWidth = u16((reg[0x3] & 0xF) << 8 | reg[0x02]);
             voiceInfo[i].waveform = reg[0x4] & 0xF0;
             voiceInfo[i].ringMod = (reg[0x4] & 0x4) != 0;
             voiceInfo[i].hardSync = (reg[0x4] & 0x2) != 0;
