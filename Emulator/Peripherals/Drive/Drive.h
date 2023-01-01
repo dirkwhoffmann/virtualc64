@@ -45,7 +45,7 @@ class Drive : public SubComponent {
      * the run loop. As a effect, the current drive state is frozen until the
      * drive is woken up.
      */
-    const i64 powerSafeThreshold = 100;
+    static constexpr i64 powerSafeThreshold = 100;
     
     /* Time between two carry pulses of UE7 in 1/10 nano seconds. The VC1541
      * drive is clocked by 16 Mhz. The base frequency is divided by N where N
@@ -212,7 +212,7 @@ public:
     //
     
     // Idle counter
-    i64 idleCounter = 0;
+    i64 watchdog = INT64_MAX;
 
     // Indicates whether execute() should be called inside the run loop
     bool needsEmulation = false;
@@ -276,7 +276,6 @@ private:
         
         << spinning
         << redLED
-        << idleCounter
         << elapsedTime
         << nextClock
         << nextCarry
@@ -290,7 +289,8 @@ private:
         << readShiftreg
         << writeShiftreg
         << sync
-        << byteReady;
+        << byteReady
+        << watchdog;
     }
     
     isize _size() override;
@@ -346,10 +346,10 @@ public:
     void setRotating(bool b);
     
     // Wakes up the drive (clears the idle state)
-    void wakeUp();
-    
+    void wakeUp(isize awakeness = powerSafeThreshold);
+
     // Checks whether the drive has been idle for a while
-    bool isIdle() const { return idleCounter >= powerSafeThreshold; }
+    bool isIdle() const { return watchdog < 0; }
     
     // Checks whether the drive is connected and switched on
     bool connectedAndOn() { return config.connected && config.switchedOn; }

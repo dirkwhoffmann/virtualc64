@@ -720,15 +720,16 @@ Drive::setRotating(bool b)
 }
 
 void
-Drive::wakeUp()
+Drive::wakeUp(isize awakeness)
 {
     if (isIdle()) {
         
         trace(DRV_DEBUG, "Exiting power-safe mode\n");
         msgQueue.put(MSG_DRIVE_POWER_SAVE_OFF, deviceNr);
-        idleCounter = 0;
         needsEmulation = true;
     }
+
+    watchdog = awakeness;
 }
 
 void
@@ -875,17 +876,13 @@ Drive::ejectDisk()
 void
 Drive::vsyncHandler()
 {
-    auto diskChangeInProgress = [&]() {
-        return isDrive8() ? c64.hasEvent<SLOT_DC8>() : c64.hasEvent<SLOT_DC9>();
-    };
-
     // Only proceed if the drive is connected and switched on
     if (!config.connected || !config.switchedOn) return;
 
     // Check if we should enter power-safe mode
-    if (!spinning && config.powerSave && !diskChangeInProgress()) {
+    if (!spinning && config.powerSave) {
 
-        if (++idleCounter == powerSafeThreshold) {
+        if (--watchdog == 0) {
 
             trace(DRV_DEBUG, "Entering power-save mode\n");
             needsEmulation = false;
@@ -897,8 +894,8 @@ Drive::vsyncHandler()
 void
 Drive::scheduleFirstDiskChangeEvent(EventID id)
 {
-    // Exit power-safe mode
-    wakeUp();
+    // Exit power-safe mode and make sure the drive stays awake for a while
+    wakeUp(200); // 200 frames
 
     // Schedule the first event
     if (isDrive8()) c64.scheduleImm<SLOT_DC8>(id);
