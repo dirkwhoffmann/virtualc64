@@ -240,6 +240,9 @@ public:
     C64();
     ~C64();
 
+    // Launches the emulator thread
+    void launch();
+
 
     //
     // Methods from C64Object
@@ -379,7 +382,6 @@ private:
 
     ThreadMode getThreadMode() const override;
     void execute() override;
-    // util::Time getDelay() const override;
 
 public:
 

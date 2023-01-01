@@ -234,7 +234,7 @@ private:
 public:
 
     void processMotEvent(EventID event);
-    void processDatEvent(EventID event, isize cycles);
+    void processDatEvent(EventID event, i64 cycles);
 
 private:
 

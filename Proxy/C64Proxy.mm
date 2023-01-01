@@ -2476,9 +2476,13 @@ using namespace peddle;
     
     if (!(self = [super init])) return self;
     
+    // Create the emulator instance
     C64 *c64 = new C64();
     obj = c64;
-    
+
+    // Launch the emulator thread
+    c64->launch();
+
     breakpoints = [[GuardsProxy alloc] initWith:&c64->cpu.debugger.breakpoints];
     cia1 = [[CIAProxy alloc] initWith:&c64->cia1];
     cia2 = [[CIAProxy alloc] initWith:&c64->cia2];

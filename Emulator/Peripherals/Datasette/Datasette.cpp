@@ -177,7 +177,7 @@ Datasette::setConfigItem(Option option, i64 value)
 
         case OPT_DAT_CONNECT:
 
-            if (config.connected != value) {
+            if (config.connected != bool(value)) {
 
                 SUSPENDED
 
@@ -395,7 +395,7 @@ Datasette::processMotEvent(EventID event)
 }
 
 void
-Datasette::processDatEvent(EventID event, isize cycles)
+Datasette::processDatEvent(EventID event, i64 cycles)
 {
     assert(event == DAT_EXECUTE);
 

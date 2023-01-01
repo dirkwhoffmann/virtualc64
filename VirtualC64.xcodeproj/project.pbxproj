@@ -168,6 +168,133 @@
 		50726F2B295B61C50031F2F5 /* InterpreterDebugCmds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2A295B61C50031F2F5 /* InterpreterDebugCmds.cpp */; };
 		50726F2F295C27360031F2F5 /* EventPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2E295C27360031F2F5 /* EventPanel.swift */; };
 		50726F31295C27470031F2F5 /* EventTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F30295C27470031F2F5 /* EventTableView.swift */; };
+		50726F3D2961C96B0031F2F5 /* C64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F724AF29AB00E69CAE /* C64.cpp */; };
+		50726F3E2961C97B0031F2F5 /* Chrono.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DD829E2614D47E00B84EB3 /* Chrono.cpp */; };
+		50726F3F2961C97B0031F2F5 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B579B5281436F6001D8621 /* StringUtils.cpp */; };
+		50726F402961C97B0031F2F5 /* IOUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34122615BF5E006A38DA /* IOUtils.cpp */; };
+		50726F412961C97B0031F2F5 /* Parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34152615C40D006A38DA /* Parser.cpp */; };
+		50726F422961C97B0031F2F5 /* Concurrency.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CCC308256FAC870052619A /* Concurrency.cpp */; };
+		50726F432961C97B0031F2F5 /* Checksum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B526158ABC005D3DA6 /* Checksum.cpp */; };
+		50726F442961C97B0031F2F5 /* MemUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA3EC02616F62500C96EDB /* MemUtils.cpp */; };
+		50726F452961C97B0031F2F5 /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AD303A28141F0B00D9A7A6 /* Buffer.cpp */; };
+		50726F462961C9940031F2F5 /* Error.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5055D5B32615886E005D3DA6 /* Error.cpp */; };
+		50726F472961C9940031F2F5 /* SubComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500EA6C524B09037009AA7D7 /* SubComponent.cpp */; };
+		50726F482961C9940031F2F5 /* Defaults.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD369A2817D69000E40BFC /* Defaults.cpp */; };
+		50726F492961C9940031F2F5 /* MsgQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42F124AF29AB00E69CAE /* MsgQueue.cpp */; };
+		50726F4A2961C9940031F2F5 /* CPU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42E924AF29AB00E69CAE /* CPU.cpp */; };
+		50726F4B2961C9940031F2F5 /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50461BBC26B522450019CEDF /* Thread.cpp */; };
+		50726F4C2961C9940031F2F5 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F420C8250BA3460043DE56 /* Colors.cpp */; };
+		50726F4D2961C9940031F2F5 /* PowerSupply.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ACF4D9256EB43B003B5690 /* PowerSupply.cpp */; };
+		50726F4E2961C9940031F2F5 /* Host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F5B6A02959C44E000457A0 /* Host.cpp */; };
+		50726F4F2961C9940031F2F5 /* C64Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42ED24AF29AB00E69CAE /* C64Object.cpp */; };
+		50726F502961C9940031F2F5 /* C64Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42EE24AF29AB00E69CAE /* C64Component.cpp */; };
+		50726F512961C9940031F2F5 /* ExpansionPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434524AF29AC00E69CAE /* ExpansionPort.cpp */; };
+		50726F522961C9940031F2F5 /* ControlPort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433E24AF29AC00E69CAE /* ControlPort.cpp */; };
+		50726F532961C9940031F2F5 /* IEC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433C24AF29AC00E69CAE /* IEC.cpp */; };
+		50726F542961C99A0031F2F5 /* PeddleDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50995F2824DBCDE400F40713 /* PeddleDebugger.cpp */; };
+		50726F552961C99A0031F2F5 /* Peddle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AA48B0292F8EC30084401D /* Peddle.cpp */; };
+		50726F562961C99A0031F2F5 /* PeddleUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509280CD2930A1B6006E1966 /* PeddleUtils.cpp */; };
+		50726F572961C9A10031F2F5 /* CIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C435824AF29AC00E69CAE /* CIA.cpp */; };
+		50726F582961C9A10031F2F5 /* CIARegs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B7124E81266008F39C9 /* CIARegs.cpp */; };
+		50726F592961C9A10031F2F5 /* TOD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C435524AF29AC00E69CAE /* TOD.cpp */; };
+		50726F5A2961C9AC0031F2F5 /* DmaDebugger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DBB3CF2641101E006F45E6 /* DmaDebugger.cpp */; };
+		50726F5B2961C9AC0031F2F5 /* VICII_cycles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D20B742508F6D70088E8F2 /* VICII_cycles.cpp */; };
+		50726F5C2961C9AC0031F2F5 /* VICII_colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430824AF29AC00E69CAE /* VICII_colors.cpp */; };
+		50726F5D2961C9AC0031F2F5 /* VICII.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430724AF29AC00E69CAE /* VICII.cpp */; };
+		50726F5E2961C9AC0031F2F5 /* VICII_debug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430924AF29AC00E69CAE /* VICII_debug.cpp */; };
+		50726F5F2961C9AC0031F2F5 /* VICII_memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430B24AF29AC00E69CAE /* VICII_memory.cpp */; };
+		50726F602961C9AC0031F2F5 /* VICII_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430524AF29AB00E69CAE /* VICII_draw.cpp */; };
+		50726F612961C9AC0031F2F5 /* VICII_sprites.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50891C002652380A0004AC1B /* VICII_sprites.cpp */; };
+		50726F622961C9AC0031F2F5 /* VICII_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5003382A266F7F3C00D5456E /* VICII_table.cpp */; };
+		50726F632961C9B30031F2F5 /* Recorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5044A0392657A7A800C551C6 /* Recorder.cpp */; };
+		50726F642961C9B30031F2F5 /* FFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3696281681E700E40BFC /* FFmpeg.cpp */; };
+		50726F652961C9B30031F2F5 /* NamedPipe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3693281681D000E40BFC /* NamedPipe.cpp */; };
+		50726F662961C9B80031F2F5 /* Muxer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C431224AF29AC00E69CAE /* Muxer.cpp */; };
+		50726F672961C9B80031F2F5 /* SIDStreams.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50549B47257D288E006FE39C /* SIDStreams.cpp */; };
+		50726F682961C9B80031F2F5 /* ReSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433124AF29AC00E69CAE /* ReSID.cpp */; };
+		50726F692961C9C60031F2F5 /* version.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432F24AF29AC00E69CAE /* version.cc */; };
+		50726F6A2961C9C60031F2F5 /* sid.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431F24AF29AC00E69CAE /* sid.cc */; };
+		50726F6B2961C9C60031F2F5 /* extfilt.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432B24AF29AC00E69CAE /* extfilt.cc */; };
+		50726F6C2961C9C60031F2F5 /* envelope.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431724AF29AC00E69CAE /* envelope.cc */; };
+		50726F6D2961C9C60031F2F5 /* filter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432024AF29AC00E69CAE /* filter.cc */; };
+		50726F6E2961C9C60031F2F5 /* dac.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432224AF29AC00E69CAE /* dac.cc */; };
+		50726F6F2961C9C60031F2F5 /* wave.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C432D24AF29AC00E69CAE /* wave.cc */; };
+		50726F702961C9C60031F2F5 /* pot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431824AF29AC00E69CAE /* pot.cc */; };
+		50726F712961C9C60031F2F5 /* voice.cc in Sources */ = {isa = PBXBuildFile; fileRef = 504C431C24AF29AC00E69CAE /* voice.cc */; };
+		50726F722961C9CC0031F2F5 /* FastSID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433524AF29AC00E69CAE /* FastSID.cpp */; };
+		50726F732961C9CC0031F2F5 /* FastVoice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C433824AF29AC00E69CAE /* FastVoice.cpp */; };
+		50726F742961C9D10031F2F5 /* C64Memory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42E124AF29AB00E69CAE /* C64Memory.cpp */; };
+		50726F752961C9DC0031F2F5 /* DriveMemory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434B24AF29AC00E69CAE /* DriveMemory.cpp */; };
+		50726F762961C9DC0031F2F5 /* VIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434A24AF29AC00E69CAE /* VIA.cpp */; };
+		50726F772961C9DC0031F2F5 /* Datasette.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C430F24AF29AC00E69CAE /* Datasette.cpp */; };
+		50726F782961C9DC0031F2F5 /* PIA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AF2F8026AFFE9A002DC43B /* PIA.cpp */; };
+		50726F792961C9DC0031F2F5 /* ParCable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5007E1E626A70170000E7344 /* ParCable.cpp */; };
+		50726F7A2961C9DC0031F2F5 /* DiskAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AB70742721B8EE004ABB2B /* DiskAnalyzer.cpp */; };
+		50726F7B2961C9DC0031F2F5 /* Drive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434D24AF29AC00E69CAE /* Drive.cpp */; };
+		50726F7C2961C9DC0031F2F5 /* Disk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434824AF29AC00E69CAE /* Disk.cpp */; };
+		50726F7D2961C9E80031F2F5 /* Joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5085D89B25B848940043B15C /* Joystick.cpp */; };
+		50726F7E2961C9E80031F2F5 /* Mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42FC24AF29AB00E69CAE /* Mouse.cpp */; };
+		50726F7F2961C9E80031F2F5 /* Mouse1350.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42FE24AF29AB00E69CAE /* Mouse1350.cpp */; };
+		50726F802961C9E80031F2F5 /* Mouse1351.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42FF24AF29AB00E69CAE /* Mouse1351.cpp */; };
+		50726F812961C9E80031F2F5 /* NeosMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42FD24AF29AB00E69CAE /* NeosMouse.cpp */; };
+		50726F822961C9ED0031F2F5 /* C64Key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AEEE7126305625001DED20 /* C64Key.cpp */; };
+		50726F832961C9ED0031F2F5 /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C434424AF29AC00E69CAE /* Keyboard.cpp */; };
+		50726F842961C9F10031F2F5 /* Cartridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42C024AF29AB00E69CAE /* Cartridge.cpp */; };
+		50726F852961C9F10031F2F5 /* CartridgeRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42C224AF29AB00E69CAE /* CartridgeRom.cpp */; };
+		50726F862961C9F10031F2F5 /* FlashRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42C324AF29AB00E69CAE /* FlashRom.cpp */; };
+		50726F872961CA0D0031F2F5 /* MikroAss.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42B624AF29AB00E69CAE /* MikroAss.cpp */; };
+		50726F882961CA0D0031F2F5 /* Comal80.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42BE24AF29AB00E69CAE /* Comal80.cpp */; };
+		50726F892961CA0D0031F2F5 /* SuperGames.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429B24AF29AB00E69CAE /* SuperGames.cpp */; };
+		50726F8A2961CA0D0031F2F5 /* GameKiller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F0EB7825CC33B3002D0D72 /* GameKiller.cpp */; };
+		50726F8B2961CA0D0031F2F5 /* Expert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42A424AF29AB00E69CAE /* Expert.cpp */; };
+		50726F8C2961CA0D0031F2F5 /* Reu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5016F02629574FDF00F2063B /* Reu.cpp */; };
+		50726F8D2961CA0D0031F2F5 /* ActionReplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42AD24AF29AB00E69CAE /* ActionReplay.cpp */; };
+		50726F8E2961CA0D0031F2F5 /* FreezeFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42B124AF29AB00E69CAE /* FreezeFrame.cpp */; };
+		50726F8F2961CA0D0031F2F5 /* Ocean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429124AF29AB00E69CAE /* Ocean.cpp */; };
+		50726F902961CA0D0031F2F5 /* Epyx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42BD24AF29AB00E69CAE /* Epyx.cpp */; };
+		50726F912961CA0D0031F2F5 /* PageFox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A9A086250DE90900723D32 /* PageFox.cpp */; };
+		50726F922961CA0D0031F2F5 /* StarDos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429324AF29AB00E69CAE /* StarDos.cpp */; };
+		50726F932961CA0D0031F2F5 /* Zaxxon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42B024AF29AB00E69CAE /* Zaxxon.cpp */; };
+		50726F942961CA0D0031F2F5 /* GeoRam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42A124AF29AB00E69CAE /* GeoRam.cpp */; };
+		50726F952961CA0D0031F2F5 /* Funplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42A624AF29AB00E69CAE /* Funplay.cpp */; };
+		50726F962961CA0D0031F2F5 /* Westermann.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429524AF29AB00E69CAE /* Westermann.cpp */; };
+		50726F972961CA0D0031F2F5 /* Dinamic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508081E725110FFE0084B060 /* Dinamic.cpp */; };
+		50726F982961CA0D0031F2F5 /* Kingsoft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42A224AF29AB00E69CAE /* Kingsoft.cpp */; };
+		50726F992961CA0D0031F2F5 /* MagicDesk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42AC24AF29AB00E69CAE /* MagicDesk.cpp */; };
+		50726F9A2961CA0D0031F2F5 /* FinalIII.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429824AF29AB00E69CAE /* FinalIII.cpp */; };
+		50726F9B2961CA0D0031F2F5 /* Mach5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429D24AF29AB00E69CAE /* Mach5.cpp */; };
+		50726F9C2961CA0D0031F2F5 /* Kcs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42A924AF29AB00E69CAE /* Kcs.cpp */; };
+		50726F9D2961CA0D0031F2F5 /* Isepic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42BA24AF29AB00E69CAE /* Isepic.cpp */; };
+		50726F9E2961CA0D0031F2F5 /* StructuredBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508081EA2511206D0084B060 /* StructuredBasic.cpp */; };
+		50726F9F2961CA0D0031F2F5 /* EasyFlash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429724AF29AB00E69CAE /* EasyFlash.cpp */; };
+		50726FA02961CA0D0031F2F5 /* Rex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42BC24AF29AB00E69CAE /* Rex.cpp */; };
+		50726FA12961CA0D0031F2F5 /* SimonsBasic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42A024AF29AB00E69CAE /* SimonsBasic.cpp */; };
+		50726FA22961CA0D0031F2F5 /* WarpSpeed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C429224AF29AB00E69CAE /* WarpSpeed.cpp */; };
+		50726FA32961CA1C0031F2F5 /* RomFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42C724AF29AB00E69CAE /* RomFile.cpp */; };
+		50726FA42961CA1C0031F2F5 /* T64File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42CC24AF29AB00E69CAE /* T64File.cpp */; };
+		50726FA52961CA1C0031F2F5 /* AnyCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E2D9AA25991E4B009A986B /* AnyCollection.cpp */; };
+		50726FA62961CA1C0031F2F5 /* G64File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42D224AF29AB00E69CAE /* G64File.cpp */; };
+		50726FA72961CA1C0031F2F5 /* D64File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42D824AF29AB00E69CAE /* D64File.cpp */; };
+		50726FA82961CA1C0031F2F5 /* PRGFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42CD24AF29AB00E69CAE /* PRGFile.cpp */; };
+		50726FA92961CA1C0031F2F5 /* AnyFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42D624AF29AB00E69CAE /* AnyFile.cpp */; };
+		50726FAA2961CA1C0031F2F5 /* Snapshot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42D524AF29AB00E69CAE /* Snapshot.cpp */; };
+		50726FAB2961CA1C0031F2F5 /* P00File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42CF24AF29AB00E69CAE /* P00File.cpp */; };
+		50726FAC2961CA1C0031F2F5 /* TAPFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42DB24AF29AB00E69CAE /* TAPFile.cpp */; };
+		50726FAD2961CA1C0031F2F5 /* CRTFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504C42DA24AF29AB00E69CAE /* CRTFile.cpp */; };
+		50726FAE2961CA1C0031F2F5 /* Folder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50520F8925108FC400C7D47F /* Folder.cpp */; };
+		50726FAF2961CA1C0031F2F5 /* Script.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE19372632B787005A5898 /* Script.cpp */; };
+		50726FB02961CA230031F2F5 /* FSBlock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077FC258A1ADF005ACF5B /* FSBlock.cpp */; };
+		50726FB12961CA230031F2F5 /* FSDirEntry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50300AEC258B2C5400D261E3 /* FSDirEntry.cpp */; };
+		50726FB22961CA230031F2F5 /* FSDescriptors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 508050192587A16D004FE1F5 /* FSDescriptors.cpp */; };
+		50726FB32961CA230031F2F5 /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A077F6258A18B9005ACF5B /* FileSystem.cpp */; };
+		50726FB42961CA290031F2F5 /* Command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B2261AEF000048E66A /* Command.cpp */; };
+		50726FB52961CA290031F2F5 /* RetroShell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B3261AEF000048E66A /* RetroShell.cpp */; };
+		50726FB62961CA290031F2F5 /* Interpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0AF261AEF000048E66A /* Interpreter.cpp */; };
+		50726FB72961CA290031F2F5 /* InterpreterDebugCmds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2A295B61C50031F2F5 /* InterpreterDebugCmds.cpp */; };
+		50726FB82961CA290031F2F5 /* InterpreterCmds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5036E0B5261AEF000048E66A /* InterpreterCmds.cpp */; };
+		50726FB92961CA290031F2F5 /* TextStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B7E26A2813F8C400A405A3 /* TextStorage.cpp */; };
+		50726FBA2961CA2F0031F2F5 /* RegressionTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE193A2633E9B0005A5898 /* RegressionTester.cpp */; };
+		50726FBD2961CA5A0031F2F5 /* Headless.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726FBB2961CA5A0031F2F5 /* Headless.cpp */; };
 		50763277202989D300575110 /* DialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* DialogController.swift */; };
 		50769B8A24BB1B87006FE743 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50769B8924BB1B87006FE743 /* Configuration.swift */; };
 		507887CC20B1858B00941F7E /* MemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507887CB20B1858B00941F7E /* MemTableView.swift */; };
@@ -299,6 +426,15 @@
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50726F342961C86B0031F2F5 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -587,6 +723,9 @@
 		50726F2A295B61C50031F2F5 /* InterpreterDebugCmds.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = InterpreterDebugCmds.cpp; sourceTree = "<group>"; };
 		50726F2E295C27360031F2F5 /* EventPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPanel.swift; sourceTree = "<group>"; };
 		50726F30295C27470031F2F5 /* EventTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableView.swift; sourceTree = "<group>"; };
+		50726F362961C86B0031F2F5 /* VirtualC64Core */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = VirtualC64Core; sourceTree = BUILT_PRODUCTS_DIR; };
+		50726FBB2961CA5A0031F2F5 /* Headless.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Headless.cpp; sourceTree = "<group>"; };
+		50726FBC2961CA5A0031F2F5 /* Headless.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Headless.h; sourceTree = "<group>"; };
 		50763276202989D300575110 /* DialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogController.swift; sourceTree = "<group>"; };
 		50769B8924BB1B87006FE743 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		507887CB20B1858B00941F7E /* MemTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemTableView.swift; sourceTree = "<group>"; };
@@ -794,6 +933,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		50726F332961C86B0031F2F5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D15AC330486D014006FF6A4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -833,6 +979,7 @@
 			isa = PBXGroup;
 			children = (
 				8D15AC370486D014006FF6A4 /* VirtualC64.app */,
+				50726F362961C86B0031F2F5 /* VirtualC64Core */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1108,6 +1255,8 @@
 				504268AC24F0F76F006BB841 /* C64Types.h */,
 				504C42F624AF29AB00E69CAE /* C64.h */,
 				504C42F724AF29AB00E69CAE /* C64.cpp */,
+				50726FBC2961CA5A0031F2F5 /* Headless.h */,
+				50726FBB2961CA5A0031F2F5 /* Headless.cpp */,
 				500FAA62261376980062488E /* Utilities */,
 				50A2D7AF24AF945200671F38 /* Base */,
 				50ACF4DC256EB451003B5690 /* LogicBoard */,
@@ -1688,6 +1837,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		50726F352961C86B0031F2F5 /* VirtualC64Core */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50726F3C2961C86B0031F2F5 /* Build configuration list for PBXNativeTarget "VirtualC64Core" */;
+			buildPhases = (
+				50726F322961C86B0031F2F5 /* Sources */,
+				50726F332961C86B0031F2F5 /* Frameworks */,
+				50726F342961C86B0031F2F5 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VirtualC64Core;
+			productName = VirtualC64Core;
+			productReference = 50726F362961C86B0031F2F5 /* VirtualC64Core */;
+			productType = "com.apple.product-type.tool";
+		};
 		8D15AC270486D014006FF6A4 /* VirtualC64 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 504F83690A89E0D2009FA225 /* Build configuration list for PBXNativeTarget "VirtualC64" */;
@@ -1717,6 +1883,9 @@
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1410;
 				TargetAttributes = {
+					50726F352961C86B0031F2F5 = {
+						CreatedOnToolsVersion = 14.2;
+					};
 					8D15AC270486D014006FF6A4 = {
 						DevelopmentTeam = 3NG65ZLYW7;
 						LastSwiftMigration = 1020;
@@ -1737,6 +1906,7 @@
 			projectRoot = "";
 			targets = (
 				8D15AC270486D014006FF6A4 /* VirtualC64 */,
+				50726F352961C86B0031F2F5 /* VirtualC64Core */,
 			);
 		};
 /* End PBXProject section */
@@ -1812,6 +1982,140 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		50726F322961C86B0031F2F5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50726F852961C9F10031F2F5 /* CartridgeRom.cpp in Sources */,
+				50726FAD2961CA1C0031F2F5 /* CRTFile.cpp in Sources */,
+				50726FB62961CA290031F2F5 /* Interpreter.cpp in Sources */,
+				50726F502961C9940031F2F5 /* C64Component.cpp in Sources */,
+				50726FA72961CA1C0031F2F5 /* D64File.cpp in Sources */,
+				50726F432961C97B0031F2F5 /* Checksum.cpp in Sources */,
+				50726F522961C9940031F2F5 /* ControlPort.cpp in Sources */,
+				50726F632961C9B30031F2F5 /* Recorder.cpp in Sources */,
+				50726F622961C9AC0031F2F5 /* VICII_table.cpp in Sources */,
+				50726F872961CA0D0031F2F5 /* MikroAss.cpp in Sources */,
+				50726F7D2961C9E80031F2F5 /* Joystick.cpp in Sources */,
+				50726F8F2961CA0D0031F2F5 /* Ocean.cpp in Sources */,
+				50726F922961CA0D0031F2F5 /* StarDos.cpp in Sources */,
+				50726F822961C9ED0031F2F5 /* C64Key.cpp in Sources */,
+				50726F942961CA0D0031F2F5 /* GeoRam.cpp in Sources */,
+				50726FB42961CA290031F2F5 /* Command.cpp in Sources */,
+				50726F592961C9A10031F2F5 /* TOD.cpp in Sources */,
+				50726F972961CA0D0031F2F5 /* Dinamic.cpp in Sources */,
+				50726FB92961CA290031F2F5 /* TextStorage.cpp in Sources */,
+				50726F672961C9B80031F2F5 /* SIDStreams.cpp in Sources */,
+				50726F912961CA0D0031F2F5 /* PageFox.cpp in Sources */,
+				50726FAA2961CA1C0031F2F5 /* Snapshot.cpp in Sources */,
+				50726F552961C99A0031F2F5 /* Peddle.cpp in Sources */,
+				50726F612961C9AC0031F2F5 /* VICII_sprites.cpp in Sources */,
+				50726FB72961CA290031F2F5 /* InterpreterDebugCmds.cpp in Sources */,
+				50726F842961C9F10031F2F5 /* Cartridge.cpp in Sources */,
+				50726F542961C99A0031F2F5 /* PeddleDebugger.cpp in Sources */,
+				50726F462961C9940031F2F5 /* Error.cpp in Sources */,
+				50726F5C2961C9AC0031F2F5 /* VICII_colors.cpp in Sources */,
+				50726F452961C97B0031F2F5 /* Buffer.cpp in Sources */,
+				50726F4B2961C9940031F2F5 /* Thread.cpp in Sources */,
+				50726FA02961CA0D0031F2F5 /* Rex.cpp in Sources */,
+				50726F9D2961CA0D0031F2F5 /* Isepic.cpp in Sources */,
+				50726FAC2961CA1C0031F2F5 /* TAPFile.cpp in Sources */,
+				50726F402961C97B0031F2F5 /* IOUtils.cpp in Sources */,
+				50726F572961C9A10031F2F5 /* CIA.cpp in Sources */,
+				50726F3F2961C97B0031F2F5 /* StringUtils.cpp in Sources */,
+				50726F682961C9B80031F2F5 /* ReSID.cpp in Sources */,
+				50726FBD2961CA5A0031F2F5 /* Headless.cpp in Sources */,
+				50726F5F2961C9AC0031F2F5 /* VICII_memory.cpp in Sources */,
+				50726F7F2961C9E80031F2F5 /* Mouse1350.cpp in Sources */,
+				50726FAF2961CA1C0031F2F5 /* Script.cpp in Sources */,
+				50726F4C2961C9940031F2F5 /* Colors.cpp in Sources */,
+				50726F602961C9AC0031F2F5 /* VICII_draw.cpp in Sources */,
+				50726FA52961CA1C0031F2F5 /* AnyCollection.cpp in Sources */,
+				50726F532961C9940031F2F5 /* IEC.cpp in Sources */,
+				50726F8D2961CA0D0031F2F5 /* ActionReplay.cpp in Sources */,
+				50726FB52961CA290031F2F5 /* RetroShell.cpp in Sources */,
+				50726F6F2961C9C60031F2F5 /* wave.cc in Sources */,
+				50726F5A2961C9AC0031F2F5 /* DmaDebugger.cpp in Sources */,
+				50726F952961CA0D0031F2F5 /* Funplay.cpp in Sources */,
+				50726F6C2961C9C60031F2F5 /* envelope.cc in Sources */,
+				50726F992961CA0D0031F2F5 /* MagicDesk.cpp in Sources */,
+				50726F442961C97B0031F2F5 /* MemUtils.cpp in Sources */,
+				50726F9B2961CA0D0031F2F5 /* Mach5.cpp in Sources */,
+				50726F732961C9CC0031F2F5 /* FastVoice.cpp in Sources */,
+				50726FB22961CA230031F2F5 /* FSDescriptors.cpp in Sources */,
+				50726F3E2961C97B0031F2F5 /* Chrono.cpp in Sources */,
+				50726F8B2961CA0D0031F2F5 /* Expert.cpp in Sources */,
+				50726FAE2961CA1C0031F2F5 /* Folder.cpp in Sources */,
+				50726F692961C9C60031F2F5 /* version.cc in Sources */,
+				50726F4D2961C9940031F2F5 /* PowerSupply.cpp in Sources */,
+				50726F512961C9940031F2F5 /* ExpansionPort.cpp in Sources */,
+				50726F932961CA0D0031F2F5 /* Zaxxon.cpp in Sources */,
+				50726F4E2961C9940031F2F5 /* Host.cpp in Sources */,
+				50726F9E2961CA0D0031F2F5 /* StructuredBasic.cpp in Sources */,
+				50726F772961C9DC0031F2F5 /* Datasette.cpp in Sources */,
+				50726F6D2961C9C60031F2F5 /* filter.cc in Sources */,
+				50726FB82961CA290031F2F5 /* InterpreterCmds.cpp in Sources */,
+				50726F832961C9ED0031F2F5 /* Keyboard.cpp in Sources */,
+				50726F742961C9D10031F2F5 /* C64Memory.cpp in Sources */,
+				50726FA42961CA1C0031F2F5 /* T64File.cpp in Sources */,
+				50726F882961CA0D0031F2F5 /* Comal80.cpp in Sources */,
+				50726F5D2961C9AC0031F2F5 /* VICII.cpp in Sources */,
+				50726F5E2961C9AC0031F2F5 /* VICII_debug.cpp in Sources */,
+				50726F652961C9B30031F2F5 /* NamedPipe.cpp in Sources */,
+				50726F8C2961CA0D0031F2F5 /* Reu.cpp in Sources */,
+				50726F722961C9CC0031F2F5 /* FastSID.cpp in Sources */,
+				50726F422961C97B0031F2F5 /* Concurrency.cpp in Sources */,
+				50726F492961C9940031F2F5 /* MsgQueue.cpp in Sources */,
+				50726F862961C9F10031F2F5 /* FlashRom.cpp in Sources */,
+				50726F782961C9DC0031F2F5 /* PIA.cpp in Sources */,
+				50726FB32961CA230031F2F5 /* FileSystem.cpp in Sources */,
+				50726F712961C9C60031F2F5 /* voice.cc in Sources */,
+				50726F812961C9E80031F2F5 /* NeosMouse.cpp in Sources */,
+				50726F5B2961C9AC0031F2F5 /* VICII_cycles.cpp in Sources */,
+				50726FA62961CA1C0031F2F5 /* G64File.cpp in Sources */,
+				50726F6E2961C9C60031F2F5 /* dac.cc in Sources */,
+				50726F662961C9B80031F2F5 /* Muxer.cpp in Sources */,
+				50726F892961CA0D0031F2F5 /* SuperGames.cpp in Sources */,
+				50726FB02961CA230031F2F5 /* FSBlock.cpp in Sources */,
+				50726F8E2961CA0D0031F2F5 /* FreezeFrame.cpp in Sources */,
+				50726FA32961CA1C0031F2F5 /* RomFile.cpp in Sources */,
+				50726F582961C9A10031F2F5 /* CIARegs.cpp in Sources */,
+				50726F982961CA0D0031F2F5 /* Kingsoft.cpp in Sources */,
+				50726F762961C9DC0031F2F5 /* VIA.cpp in Sources */,
+				50726F7C2961C9DC0031F2F5 /* Disk.cpp in Sources */,
+				50726FBA2961CA2F0031F2F5 /* RegressionTester.cpp in Sources */,
+				50726FB12961CA230031F2F5 /* FSDirEntry.cpp in Sources */,
+				50726F802961C9E80031F2F5 /* Mouse1351.cpp in Sources */,
+				50726F9A2961CA0D0031F2F5 /* FinalIII.cpp in Sources */,
+				50726F482961C9940031F2F5 /* Defaults.cpp in Sources */,
+				50726F6A2961C9C60031F2F5 /* sid.cc in Sources */,
+				50726F7A2961C9DC0031F2F5 /* DiskAnalyzer.cpp in Sources */,
+				50726F7B2961C9DC0031F2F5 /* Drive.cpp in Sources */,
+				50726F412961C97B0031F2F5 /* Parser.cpp in Sources */,
+				50726F8A2961CA0D0031F2F5 /* GameKiller.cpp in Sources */,
+				50726FAB2961CA1C0031F2F5 /* P00File.cpp in Sources */,
+				50726F752961C9DC0031F2F5 /* DriveMemory.cpp in Sources */,
+				50726F792961C9DC0031F2F5 /* ParCable.cpp in Sources */,
+				50726F642961C9B30031F2F5 /* FFmpeg.cpp in Sources */,
+				50726F4A2961C9940031F2F5 /* CPU.cpp in Sources */,
+				50726FA22961CA0D0031F2F5 /* WarpSpeed.cpp in Sources */,
+				50726F472961C9940031F2F5 /* SubComponent.cpp in Sources */,
+				50726F702961C9C60031F2F5 /* pot.cc in Sources */,
+				50726FA92961CA1C0031F2F5 /* AnyFile.cpp in Sources */,
+				50726F902961CA0D0031F2F5 /* Epyx.cpp in Sources */,
+				50726F4F2961C9940031F2F5 /* C64Object.cpp in Sources */,
+				50726F3D2961C96B0031F2F5 /* C64.cpp in Sources */,
+				50726F9F2961CA0D0031F2F5 /* EasyFlash.cpp in Sources */,
+				50726F962961CA0D0031F2F5 /* Westermann.cpp in Sources */,
+				50726F6B2961C9C60031F2F5 /* extfilt.cc in Sources */,
+				50726F9C2961CA0D0031F2F5 /* Kcs.cpp in Sources */,
+				50726F562961C99A0031F2F5 /* PeddleUtils.cpp in Sources */,
+				50726FA82961CA1C0031F2F5 /* PRGFile.cpp in Sources */,
+				50726F7E2961C9E80031F2F5 /* Mouse.cpp in Sources */,
+				50726FA12961CA0D0031F2F5 /* SimonsBasic.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D15AC300486D014006FF6A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2335,6 +2639,50 @@
 			};
 			name = Release;
 		};
+		50726F3A2961C86B0031F2F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 3NG65ZLYW7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		50726F3B2961C86B0031F2F5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 3NG65ZLYW7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2352,6 +2700,15 @@
 			buildConfigurations = (
 				504F836E0A89E0D2009FA225 /* Debug */,
 				504F836F0A89E0D2009FA225 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50726F3C2961C86B0031F2F5 /* Build configuration list for PBXNativeTarget "VirtualC64Core" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50726F3A2961C86B0031F2F5 /* Debug */,
+				50726F3B2961C86B0031F2F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

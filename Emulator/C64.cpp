@@ -186,14 +186,22 @@ C64::C64()
 
     // Initialize the sync timer
     targetTime = util::Time::now();
-
-    // Start the thread and enter the main function
-    thread = std::thread(&Thread::main, this);
 }
 
 C64::~C64()
 {
-    trace(RUN_DEBUG, "Destroying C64\n");
+    debug(RUN_DEBUG, "Destroying emulator instance\n");
+    if (thread.joinable()) { halt(); }
+}
+
+void
+C64::launch()
+{
+    // Make sure to call this function only once
+    assert(!thread.joinable());
+
+    // Start the thread and enter the main function
+    thread = std::thread(&Thread::main, this);
 }
 
 void

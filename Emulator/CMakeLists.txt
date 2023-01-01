@@ -13,14 +13,12 @@ if(NOT CMAKE_BUILD_TYPE)
 set(CMAKE_BUILD_TYPE Release)
 endif()
 
-# Add emulator library
+# Add the emulator library
 add_library(vc64Core C64.cpp)
 
 # Add the console app (VirtualC64 Headless)
-if(NOT WIN32)
-# add_executable(vc64Console Headless.cpp)
-# target_link_libraries(vc64Console vc64Core)
-endif()
+add_executable(vc64Console Headless.cpp)
+target_link_libraries(vc64Console vc64Core)
 
 # Specify compile options
 target_compile_definitions(vc64Core PUBLIC _USE_MATH_DEFINES)
