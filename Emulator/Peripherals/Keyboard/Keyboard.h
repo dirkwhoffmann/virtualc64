@@ -22,13 +22,13 @@ struct KeyAction {
     Action type;
 
     // The key the action is performed on
-    C64Key key;
+    std::vector<C64Key> keys;
     
     // Delay until the next action is performed, measures in frames
     i64 delay;
 
     // Constructors
-    KeyAction(Action a, C64Key k, u64 d) : type(a), key(k), delay(d) { };
+    KeyAction(Action a, C64Key k, u64 d);
 };
 
 class Keyboard : public SubComponent {

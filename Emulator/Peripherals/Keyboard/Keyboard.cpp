@@ -13,6 +13,12 @@
 #include "C64Key.h"
 #include "IOUtils.h"
 
+KeyAction::KeyAction(Action a, C64Key k, u64 d) : type(a), delay(d)
+{
+    keys.push_back(k);
+    assert(keys.size() == 1);
+};
+
 void 
 Keyboard::_reset(bool hard) 
 {
@@ -377,7 +383,6 @@ Keyboard::vsyncHandler()
         while (delay == 0 && !actions.empty()) {
 
             KeyAction &action = actions.front();
-            actions.pop();
 
             // trace(KBD_DEBUG, "%d: key (%d,%d) next: %lld\n",
             //       action.type, action.row, action.col, action.delay);
@@ -387,14 +392,20 @@ Keyboard::vsyncHandler()
 
                 case KeyAction::Action::press:
 
-                    debug(KBD_DEBUG, "Pressing %ld\n", action.key.nr);
-                    _press(action.key);
+                    for (auto &key: action.keys) {
+
+                        debug(KBD_DEBUG, "Pressing %ld\n", key.nr);
+                        _press(key);
+                    }
                     break;
 
                 case KeyAction::Action::release:
 
-                    debug(KBD_DEBUG, "Releasing %ld\n", action.key.nr);
-                    _release(action.key);
+                    for (auto &key: action.keys) {
+
+                        debug(KBD_DEBUG, "Releasing %ld\n", key.nr);
+                        _release(key);
+                    }
                     break;
 
                 case KeyAction::Action::releaseAll:
@@ -403,6 +414,8 @@ Keyboard::vsyncHandler()
                     _releaseAll();
                     break;
             }
+
+            actions.pop();
 
             // Schedule next event
             delay = actions.empty() ? INT64_MAX : actions.front().delay;
