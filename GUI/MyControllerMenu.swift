@@ -973,28 +973,16 @@ extension MyController: NSMenuItemValidation {
     @IBAction func setSwitchNeutralAction(_ sender: Any!) {
         
         c64.expansionport.setSwitchPosition(0)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            // TODO: Delete or call a method here if it is really needed.
-        }
     }
 
     @IBAction func setSwitchLeftAction(_ sender: Any!) {
         
         c64.expansionport.setSwitchPosition(-1)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            // TODO: Delete or call a method here if it is really needed.
-        }
     }
 
     @IBAction func setSwitchRightAction(_ sender: Any!) {
         
         c64.expansionport.setSwitchPosition(1)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            // TODO: Delete or call a method here if it is really needed.
-        }
     }
 
     @IBAction func setSwitchDummyAction(_ sender: Any!) {
@@ -1005,5 +993,22 @@ extension MyController: NSMenuItemValidation {
 
         let panel = CartridgeInspector(with: self, nibName: "CartridgeInspector")
         panel?.show(expansionPort: c64.expansionport)
+    }
+
+    //
+    // Action methods (Window menu)
+    //
+
+    // Resizes the window such that every texture line hits a display line
+    @IBAction func autoResizeWindow(_ sender: NSMenuItem!) {
+
+        let height = renderer.canvas.visible.height * 2
+
+        debug(.metal, "Old metal view: \(metal.frame)")
+        debug(.metal, "Visible texture lines: \(height)")
+
+        adjustWindowSize(height: height)
+
+        debug(.metal, "New metal view: \(metal.frame)")
     }
 }

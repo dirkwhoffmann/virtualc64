@@ -218,13 +218,13 @@ extension MyController {
 
                 metal.adjustHeight(-26.0)
                 window?.setContentBorderThickness(26, for: .minY)
-                adjustWindowSize(26.0)
+                adjustWindowSize(dy: 26.0)
 
             } else {
 
                 metal.adjustHeight(26.0)
                 window?.setContentBorderThickness(0.0, for: .minY)
-                adjustWindowSize(-26.0)
+                adjustWindowSize(dy: -26.0)
             }
 
             statusBar = value

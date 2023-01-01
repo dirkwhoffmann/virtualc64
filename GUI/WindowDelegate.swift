@@ -129,7 +129,7 @@ extension MyController: NSWindowDelegate {
     }
     
     // Fixes a NSSize to match our desired aspect ration
-    func fixSize(window: NSWindow, size: NSSize) -> NSSize {
+    func fixSizeX(window: NSWindow, size: NSSize) -> NSSize {
         
         // Get some basic parameters
         let windowFrame = window.frame
@@ -148,10 +148,29 @@ extension MyController: NSWindowDelegate {
         return NSSize(width: size.width + dx, height: size.height)
     }
 
+    func fixSizeY(window: NSWindow, size: NSSize) -> NSSize {
+
+        // Get some basic parameters
+        let windowFrame = window.frame
+        let deltaX = size.width - windowFrame.size.width
+        let deltaY = size.height - windowFrame.size.height
+
+        // How big would the metal view become?
+        let metalFrame = metal.frame
+        let metalX = metalFrame.size.width + deltaX
+        let metalY = metalFrame.size.height + deltaY
+
+        // We want to achieve an aspect ratio of 4:3
+        let newMetalY  = metalX * (3.0 / 4.0)
+        let dy = newMetalY - metalY
+
+        return NSSize(width: size.width, height: size.height + dy)
+    }
+    
     // Fixes a NSRect to match our desired aspect ration
     func fixRect(window: NSWindow, rect: NSRect) -> NSRect {
         
-        let newSize = fixSize(window: window, size: rect.size)
+        let newSize = fixSizeX(window: window, size: rect.size)
         let newOriginX = (rect.width - newSize.width) / 2.0
         
         return NSRect(x: newOriginX, y: 0, width: newSize.width, height: newSize.height)
@@ -159,7 +178,7 @@ extension MyController: NSWindowDelegate {
     
     public func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
                 
-        return fixSize(window: sender, size: frameSize)
+        return fixSizeX(window: sender, size: frameSize)
     }
     
     public func windowWillUseStandardFrame(_ window: NSWindow,
@@ -167,11 +186,21 @@ extension MyController: NSWindowDelegate {
 
         return fixRect(window: window, rect: newFrame)
     }
+
+    public func windowDidChangeScreen(_ notification: Notification) {
+
+        debug(.vsync)
+    }
+
+    public func windowDidChangeScreenProfile(_ notification: Notification) {
+
+        debug(.vsync)
+    }
 }
 
 extension MyController {
     
-    func adjustWindowSize(_ dv: CGFloat = 0.0) {
+    func adjustWindowSize(dy: CGFloat = 0.0) {
 
         // Only proceed in window mode
         if renderer?.fullscreen == true { return }
@@ -180,16 +209,40 @@ extension MyController {
         guard var frame = window?.frame else { return }
 
         // Modify the frame height
-        frame.origin.y -= dv
-        frame.size.height += dv
+        frame.origin.y -= dy
+        frame.size.height += dy
 
         // Compute the size correction
         let newsize = windowWillResize(window!, to: frame.size)
-        let correction = newsize.height - frame.size.height
+        let yCorrection = newsize.height - frame.size.height
 
         // Adjust frame
-        frame.origin.y -= correction
+        frame.origin.y -= yCorrection
         frame.size = newsize
 
-        window!.setFrame(frame, display: true)          }
+        window!.setFrame(frame, display: true)
+    }
+
+    func adjustWindowSize(height: CGFloat) {
+
+        // Only proceed in window mode
+        if renderer?.fullscreen == true { return }
+
+        // Get window frame
+        guard var frame = window?.frame else { return }
+        let yCorrection = height - metal.frame.height
+
+        // Modify the frame height
+        let borderHeight = frame.height - metal.frame.height
+        frame.size.height = round(height) + borderHeight
+
+        // Compute the size correction
+        let newSize = fixSizeX(window: window!, size: frame.size)
+
+        // Adjust frame
+        frame.origin.y -= yCorrection
+        frame.size = newSize
+
+        window!.setFrame(frame, display: true)
+    }
 }
