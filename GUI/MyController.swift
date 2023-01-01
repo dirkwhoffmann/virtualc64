@@ -76,9 +76,6 @@ class MyController: NSWindowController, MessageReceiver {
     // TouchBar is pressed.
     var modifierFlags: NSEvent.ModifierFlags = .init(rawValue: 0)
 
-    // Indicates if the mouse is currently hidden
-    var hideMouse = false
-
     // Indicates if a status bar is shown
     var statusBar = true
     
@@ -162,9 +159,6 @@ extension MyController {
     override open func windowDidLoad() {
 
         debug(.lifetime)
-
-        // Show the mouse
-        hideMouse = false
         
         // Create keyboard controller
         keyboard = KeyboardController(parent: self)
