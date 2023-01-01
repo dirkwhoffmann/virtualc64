@@ -13,11 +13,12 @@
 #include "C64Key.h"
 #include "IOUtils.h"
 
+/*
 KeyAction::KeyAction(Action a, C64Key k, u64 d) : type(a), delay(d)
 {
     keys.push_back(k);
-    assert(keys.size() == 1);
 };
+*/
 
 void 
 Keyboard::_reset(bool hard) 
@@ -311,43 +312,21 @@ Keyboard::autoType(const string &text)
 }
 
 void
-Keyboard::scheduleKeyPress(C64Key key, i64 delay)
+Keyboard::scheduleKeyPress(std::vector<C64Key> keys, i64 delay)
 {
-    SYNCHRONIZED _scheduleKeyAction(KeyAction::Action::press, key, delay);
+    SYNCHRONIZED _scheduleKeyAction(KeyAction::Action::press, keys, delay);
 }
 
 void
-Keyboard::scheduleKeyPress(char c, i64 delay)
+Keyboard::scheduleKeyRelease(std::vector<C64Key> keys, i64 delay)
 {
-    auto keys = C64Key::translate(c);
-
-    for (auto &key: keys) {
-        scheduleKeyPress(key, delay);
-        delay = 0;
-    }
-}
-
-void
-Keyboard::scheduleKeyRelease(C64Key key, i64 delay)
-{
-    SYNCHRONIZED _scheduleKeyAction(KeyAction::Action::release, key, delay);
-}
-
-void
-Keyboard::scheduleKeyRelease(char c, i64 delay)
-{
-    auto keys = C64Key::translate(c);
-
-    for (auto &key: keys) {
-        scheduleKeyRelease(key, delay);
-        delay = 0;
-    }
+    SYNCHRONIZED _scheduleKeyAction(KeyAction::Action::release, keys, delay);
 }
 
 void
 Keyboard::scheduleKeyReleaseAll(i64 delay)
 {
-    SYNCHRONIZED _scheduleKeyAction(KeyAction::Action::releaseAll, C64Key(0), delay);
+    SYNCHRONIZED _scheduleKeyAction(KeyAction::Action::releaseAll, {}, delay);
 }
 
 void
@@ -363,12 +342,12 @@ Keyboard::abortAutoTyping()
 }
 
 void
-Keyboard::_scheduleKeyAction(KeyAction::Action type, C64Key key, i64 delay)
+Keyboard::_scheduleKeyAction(KeyAction::Action type, std::vector<C64Key> keys, i64 delay)
 {
-    debug(KBD_DEBUG, "Recording %ld %ld %lld\n", isize(type), key.nr, delay);
+    debug(KBD_DEBUG, "Recording %ld %lld\n", isize(type), delay);
 
     if (actions.empty()) this->delay = delay;
-    actions.push(KeyAction(type, key.nr, delay));
+    actions.push(KeyAction(type, keys, delay));
 }
 
 void
