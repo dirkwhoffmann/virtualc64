@@ -849,12 +849,12 @@ using namespace peddle;
 
 - (void)attachReuCartridge:(NSInteger)capacity
 {
-    [self eport]->attachReuCartridge(capacity);
+    [self eport]->attachReu(capacity);
 }
 
 - (void)attachGeoRamCartridge:(NSInteger)capacity
 {
-    [self eport]->attachGeoRamCartridge(capacity);
+    [self eport]->attachGeoRam(capacity);
 }
 
 - (void)attachIsepicCartridge

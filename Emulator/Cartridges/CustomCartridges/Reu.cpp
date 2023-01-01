@@ -12,23 +12,12 @@
 
 Reu::Reu(C64 &ref, isize kb) : Cartridge(ref)
 {
-    switch (kb) {
-
-        case 128:
-        case 256:
-        case 512:
-        case 1024:
-        case 2048:
-        case 4096:
-        case 8192:
-        case 16384:
-
-            setRamCapacity(KB(kb));
-            break;
-
-        default:
-            fatalError;
+    // The RAM capacity must be a power of two between 128 and 16384
+    if ((kb & (kb - 1)) || kb < 128 || kb > 16384) {
+        throw VC64Error(ERROR_OPT_INVARG, "128, 256, 512, ..., 16384");
     }
+
+    setRamCapacity(KB(kb));
 }
 
 void

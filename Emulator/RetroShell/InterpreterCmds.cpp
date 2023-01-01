@@ -102,11 +102,6 @@ Interpreter::initCommandShell(Command &root)
     root.add({"vicii"},         "Video Interface Controller");
     root.add({"dmadebugger"},   "DMA Debugger");
     root.add({"sid"},           "Sound Interface Device");
-
-    root.newGroup("Controlling ports");
-
-//    root.add({"controlport1"},  "Control port 1");
-//    root.add({"controlport2"},  "Control port 2");
     root.add({"expansion"},     "Expansion port");
 
     root.newGroup("Controlling peripherals");
@@ -727,13 +722,30 @@ Interpreter::initCommandShell(Command &root)
     // Expansion port
     //
 
-    root.add({"expansion", "attach"}, { Arg::path },
-             "Attaches a cartridge",
+    root.add({"expansion", "attach"},
+             "Attaches a cartridge");
+
+    root.add({"expansion", "attach", "cartridge"}, { Arg::path },
+             "Attaches a cartridge from a CRT file",
              [this](Arguments& argv, long value) {
 
         auto path = argv.front();
         if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
         expansionport.attachCartridge(path);
+    });
+
+    root.add({"expansion", "attach", "reu"}, { "<KB>" },
+             "Attaches a REU expansion cartridge",
+             [this](Arguments& argv, long value) {
+
+        expansionport.attachReu(parseNum(argv));
+    });
+
+    root.add({"expansion", "attach", "georam"}, { "<KB>" },
+             "Attaches a GeoRAM expansion cartridge",
+             [this](Arguments& argv, long value) {
+
+        expansionport.attachGeoRam(parseNum(argv));
     });
 
     

@@ -29,7 +29,7 @@ private:
 public:
     
     GeoRAM(C64 &ref) : Cartridge(ref) { };
-    GeoRAM(C64 &ref, isize kb) : GeoRAM(ref) { setRamCapacity(kb * 1024); }
+    GeoRAM(C64 &ref, isize kb);
     const char *getDescription() const override { return "GeoRam"; }
     CartridgeType getCartridgeType() const override { return CRT_GEO_RAM; }
     

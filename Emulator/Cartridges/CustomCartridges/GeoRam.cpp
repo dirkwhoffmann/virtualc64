@@ -10,6 +10,16 @@
 #include "config.h"
 #include "C64.h"
 
+GeoRAM::GeoRAM(C64 &ref, isize kb) : GeoRAM(ref)
+{
+    // The RAM capacity must be a power of two between 64 and 4096
+    if ((kb & (kb - 1)) || kb < 64 || kb > 4096) {
+        throw VC64Error(ERROR_OPT_INVARG, "64, 128, 256, ..., 4096");
+    }
+
+    setRamCapacity(kb * 1024);
+}
+
 void
 GeoRAM::_reset(bool hard)
 {

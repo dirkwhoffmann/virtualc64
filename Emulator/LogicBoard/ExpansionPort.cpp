@@ -282,20 +282,16 @@ ExpansionPort::attachCartridge(Cartridge *c)
 }
 
 void
-ExpansionPort::attachReuCartridge(isize kb)
+ExpansionPort::attachReu(isize kb)
 {
-    debug(EXP_DEBUG, "Attaching REU cartridge (%zu KB)", kb);
+    debug(EXP_DEBUG, "Attaching REU (%zu KB)", kb);
     attachCartridge(new Reu(c64, kb));
 }
 
 void
-ExpansionPort::attachGeoRamCartridge(isize kb)
+ExpansionPort::attachGeoRam(isize kb)
 {
-    debug(EXP_DEBUG, "Attaching GeoRAM cartridge (%zu KB)", kb);
-
-    // kb must be a power of two between 64 and 4096
-    assert(kb >= 64 && kb <= 4096 && !(kb & (kb - 1)));
-    
+    debug(EXP_DEBUG, "Attaching GeoRAM (%zu KB)", kb);
     attachCartridge(new GeoRAM(c64, kb));
 }
 

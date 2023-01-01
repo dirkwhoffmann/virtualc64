@@ -149,8 +149,8 @@ public:
     void attachCartridge(const string &path, bool reset = true) throws;
     void attachCartridge(CRTFile *c, bool reset = true) throws;
     void attachCartridge(Cartridge *c);
-    void attachReuCartridge(isize capacity);
-    void attachGeoRamCartridge(isize capacity);
+    void attachReu(isize capacity);
+    void attachGeoRam(isize capacity);
     void attachIsepicCartridge();
 
     // Removes a cartridge from the expansion port (if any)
