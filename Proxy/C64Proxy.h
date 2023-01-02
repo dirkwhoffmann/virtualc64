@@ -476,6 +476,8 @@
 - (void)scheduleKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay;
 - (void)scheduleKeyReleaseAll:(NSInteger)delay;
 
+- (void)autoType:(NSString *)text;
+
 @end
 
 

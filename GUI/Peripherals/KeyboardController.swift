@@ -353,38 +353,9 @@ class KeyboardController: NSObject {
             }
         }
     }
-    
-    func type(_ string: String?, initialDelay seconds: Double = 0.0) {
-        
-        if var truncated = string {
-            
-            // Shorten string if it is too large
-            if truncated.count > 2048 {
-                truncated = truncated.prefix(2048) + "..."
-            }
 
-            // Set the initial delay for the first key (in frames)
-            var delay = Int(seconds * 50.0)
+    func type(_ string: String) {
 
-            // Record events
-            for c in truncated.lowercased() {
-
-                let keyList = C64Key.translate(char: String(c))
-                
-                // Press keys
-                for key in keyList {
-                    keyboard.scheduleKeyPress(atRow: key.row, col: key.col, delay: delay)
-                    delay = 0
-                }
-                delay = 1
-
-                // Release keys
-                for key in keyList {
-                    keyboard.scheduleKeyRelease(atRow: key.row, col: key.col, delay: delay)
-                    delay = 0
-                }
-                delay = 1
-            }
-        }
-    }    
+        keyboard.autoType(string)
+    }
 }

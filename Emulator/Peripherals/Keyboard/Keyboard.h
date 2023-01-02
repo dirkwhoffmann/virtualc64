@@ -107,7 +107,12 @@ private:
     //
     
 public:
-    
+
+    // Reads a column or row from the keyboard matrix
+    u8 getColumnValues(u8 rowMask) const;
+    u8 getRowValues(u8 columnMask) const;
+    u8 getRowValues(u8 columnMask, u8 thresholdMask) const;
+
     // Checks whether a certain key is pressed
     bool isPressed(C64Key key) const;
     bool shiftLockIsPressed() const;
@@ -167,19 +172,7 @@ private:
 
     void _releaseAll();
     
-    
-    //
-    // Accessing the keyboard matrix
-    //
-    
-public:
-    
-    // Reads a column or row from the keyboard matrix
-    u8 getColumnValues(u8 rowMask);
-    u8 getRowValues(u8 columnMask);
-    u8 getRowValues(u8 columnMask, u8 thresholdMask);
-    
-    
+
     //
     // Auto typing
     //
@@ -187,7 +180,7 @@ public:
 public:
     
     void autoType(const string &text);
-    
+
     void scheduleKeyPress(std::vector<C64Key> keys, i64 delay);
     void scheduleKeyPress(C64Key key, i64 delay) { scheduleKeyPress(std::vector<C64Key>{key}, delay); }
     void scheduleKeyPress(char c, i64 delay) { scheduleKeyPress(C64Key::translate(c), delay); }

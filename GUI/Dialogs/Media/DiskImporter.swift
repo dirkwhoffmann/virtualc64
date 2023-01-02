@@ -312,7 +312,7 @@ class DiskImporter: DialogController {
         debug(.media, "flashAction: \(sender.selectedTag())")
 
         try? parent.c64.flash(volume!, item: sender.selectedTag())
-        parent.keyboard.type("RUN\n")
+        parent.keyboard.type("run\n")
         parent.renderer.rotateLeft()
         hideSheet()
     }

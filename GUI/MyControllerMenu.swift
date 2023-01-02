@@ -450,7 +450,7 @@ extension MyController: NSMenuItemValidation {
         
         showStatusBar(!statusBar)
     }
-    
+
     //
     // Action methods (Keyboard menu)
     //
@@ -571,19 +571,19 @@ extension MyController: NSMenuItemValidation {
 
     // -----------------------------------------------------------------
     @IBAction func loadDirectoryAction(_ sender: Any!) {
-        keyboard.type("LOAD \"$\",8")
+        keyboard.type("load \"$\",8:\n")
     }
     @IBAction func listAction(_ sender: Any!) {
-        keyboard.type("LIST")
+        keyboard.type("list:\n")
     }
     @IBAction func loadFirstFileAction(_ sender: Any!) {
-        keyboard.type("LOAD \"*\",8,1")
+        keyboard.type("load \"*\",8,1:\n")
     }
     @IBAction func runProgramAction(_ sender: Any!) {
-        keyboard.type("RUN")
+        keyboard.type("run:")
     }
     @IBAction func formatDiskAction(_ sender: Any!) {
-        keyboard.type("OPEN 1,8,15,\"N:TEST, ID\": CLOSE 1")
+        keyboard.type("open 1,8,15,\"n:test, id\": close 1\n:")
     }
     
     //

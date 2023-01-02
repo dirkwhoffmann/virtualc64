@@ -64,7 +64,7 @@ Keyboard::_dump(Category category, std::ostream& os) const
 }
 
 u8
-Keyboard::getColumnValues(u8 rowMask)
+Keyboard::getColumnValues(u8 rowMask) const
 {
     u8 result = 0xff;
     
@@ -83,7 +83,7 @@ Keyboard::getColumnValues(u8 rowMask)
 }
 
 u8
-Keyboard::getRowValues(u8 columnMask)
+Keyboard::getRowValues(u8 columnMask) const
 {
     u8 result = 0xff;
         
@@ -102,7 +102,7 @@ Keyboard::getRowValues(u8 columnMask)
 }
 
 u8
-Keyboard::getRowValues(u8 columnMask, u8 thresholdMask)
+Keyboard::getRowValues(u8 columnMask, u8 thresholdMask) const
 {
     /* This function implements the special behaviour of the keyboard matrix
      * as described in the README file of VICE test ciaports.prg. It covers the

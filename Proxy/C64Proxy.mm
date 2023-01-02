@@ -778,6 +778,11 @@ using namespace peddle;
     [self kb]->scheduleKeyReleaseAll(delay);
 }
 
+- (void)autoType:(NSString *)text
+{
+    [self kb]->autoType(string([text UTF8String]));
+}
+
 @end
 
 
