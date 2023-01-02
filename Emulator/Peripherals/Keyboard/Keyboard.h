@@ -10,6 +10,7 @@
 #pragma once
 
 #include "SubComponent.h"
+#include "C64Types.h"
 #include "C64Key.h"
 #include <queue>
 
@@ -47,10 +48,7 @@ class Keyboard : public SubComponent {
 
     // Key action list (for auto typing)
     std::queue<KeyAction> actions;
-    
-    // Delay counter until the next key action is processed
-    i64 delay = INT64_MAX;
-    
+
     
     //
     // Initializing
@@ -199,14 +197,15 @@ private:
     // Workhorses for scheduleKeyPress and scheduleKeyRelease
     void _scheduleKeyAction(KeyAction::Action type, std::vector<C64Key> keys, i64 delay);
 
-    
+
     //
-    // Performing periodic events
+    // Processing events
     //
-    
+
 public:
-    
-    void vsyncHandler();
+
+    // Processes the next auto-type event
+    void processKeyEvent(EventID id);
 };
 
 }

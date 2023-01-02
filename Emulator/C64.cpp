@@ -123,8 +123,7 @@ C64::eventName(EventSlot slot, EventID id)
             switch (id) {
 
                 case EVENT_NONE:    return "none";
-                case KEY_PRESS:     return "KEY_PRESS";
-                case KEY_RELEASE:   return "KEY_RELEASE";
+                case KEY_AUTO_TYPE: return "AUTO_TYPE";
                 default:            return "*** INVALID ***";
             }
             break;
@@ -1399,7 +1398,6 @@ C64::endFrame()
     expansionport.execute();
     port1.execute();
     port2.execute();
-    keyboard.vsyncHandler();
     drive8.vsyncHandler();
     drive9.vsyncHandler();
     retroShell.eofHandler();
@@ -1451,9 +1449,7 @@ C64::processEvents(Cycle cycle)
                 drive9.processDiskChangeEvent(id[SLOT_DC9]);
             }
             if (isDue<SLOT_KEY>(cycle)) {
-
-                // NOT USED, YET
-                assert(false);
+                keyboard.processKeyEvent(id[SLOT_KEY]);
             }
             if (isDue<SLOT_INS>(cycle)) {
 

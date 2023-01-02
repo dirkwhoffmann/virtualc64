@@ -148,8 +148,7 @@ enum_i8(EventID)
     DCH_EVENT_COUNT,
 
     // Auto typing
-    KEY_PRESS           = 1,
-    KEY_RELEASE,
+    KEY_AUTO_TYPE       = 1,
     KEY_EVENT_COUNT,
 
     // Inspector slot

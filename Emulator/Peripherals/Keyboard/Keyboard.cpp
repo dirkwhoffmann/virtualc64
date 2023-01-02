@@ -380,59 +380,62 @@ Keyboard::_scheduleKeyAction(KeyAction::Action type, std::vector<C64Key> keys, i
 {
     debug(KBD_DEBUG, "Recording %ld %lld\n", isize(type), delay);
 
-    if (actions.empty()) this->delay = delay;
     actions.push(KeyAction(type, keys, delay));
+
+    // Schedule the first auto-typing event if the auto-typer is idle
+    if (!c64.hasEvent<SLOT_KEY>()) {
+        c64.scheduleRel<SLOT_KEY>(delay * vic.getCyclesPerFrame(), KEY_AUTO_TYPE);
+    }
 }
 
 void
-Keyboard::vsyncHandler()
+Keyboard::processKeyEvent(EventID id)
 {
-    // Only take action when the timer fires
-    if (delay == 0) {
-        
-        SYNCHRONIZED
+    SYNCHRONIZED
 
-        // Process all pending auto-typing events
-        while (delay == 0 && !actions.empty()) {
+    if (actions.empty()) {
 
-            KeyAction &action = actions.front();
+        _releaseAll();
+        c64.cancel<SLOT_KEY>();
 
-            // trace(KBD_DEBUG, "%d: key (%d,%d) next: %lld\n",
-            //       action.type, action.row, action.col, action.delay);
+    } else {
 
-            // Process event
-            switch (action.type) {
+        KeyAction &action = actions.front();
 
-                case KeyAction::Action::press:
+        // trace(KBD_DEBUG, "%d: key (%d,%d) next: %lld\n",
+        //       action.type, action.row, action.col, action.delay);
 
-                    for (auto &key: action.keys) {
+        // Process event
+        switch (action.type) {
 
-                        debug(KBD_DEBUG, "Pressing %ld\n", key.nr);
-                        _press(key);
-                    }
-                    break;
+            case KeyAction::Action::press:
 
-                case KeyAction::Action::release:
+                for (auto &key: action.keys) {
 
-                    for (auto &key: action.keys) {
+                    debug(KBD_DEBUG, "Pressing %ld\n", key.nr);
+                    _press(key);
+                }
+                break;
 
-                        debug(KBD_DEBUG, "Releasing %ld\n", key.nr);
-                        _release(key);
-                    }
-                    break;
+            case KeyAction::Action::release:
 
-                case KeyAction::Action::releaseAll:
+                for (auto &key: action.keys) {
 
-                    debug(KBD_DEBUG, "Releasing all\n");
-                    _releaseAll();
-                    break;
-            }
+                    debug(KBD_DEBUG, "Releasing %ld\n", key.nr);
+                    _release(key);
+                }
+                break;
 
-            actions.pop();
+            case KeyAction::Action::releaseAll:
 
-            // Schedule next event
-            delay = actions.empty() ? INT64_MAX : actions.front().delay;
+                debug(KBD_DEBUG, "Releasing all\n");
+                _releaseAll();
+                break;
         }
+
+        // Schedule next event
+        c64.rescheduleInc<SLOT_KEY>(vic.getCyclesPerFrame() * action.delay);
+
+        actions.pop();
     }
-    delay--;
 }
