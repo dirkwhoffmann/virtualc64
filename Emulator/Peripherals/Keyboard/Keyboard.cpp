@@ -150,30 +150,54 @@ Keyboard::getRowValues(u8 columnMask, u8 thresholdMask)
 	return result;
 }
 
+bool
+Keyboard::isPressed(C64Key key) const
+{
+    SYNCHRONIZED return _isPressed(key);
+}
+
+bool
+Keyboard::shiftLockIsPressed() const
+{
+    SYNCHRONIZED return _shiftLockIsPressed();
+}
+
+bool
+Keyboard::restoreIsPressed() const
+{
+    SYNCHRONIZED return _restoreIsPressed();
+}
+
 void
 Keyboard::press(C64Key key)
 {
-    {   SYNCHRONIZED
+    abortAutoTyping();
+    SYNCHRONIZED _press(key);
+}
 
-        abortAutoTyping();
-        _press(key);
-    }
+void
+Keyboard::pressShiftLock()
+{
+    SYNCHRONIZED _pressShiftLock();
 }
 
 void
 Keyboard::pressRestore()
 {
-    {   SYNCHRONIZED
-        
-        abortAutoTyping();
-        _pressRestore();        
-    }
+    abortAutoTyping();
+    SYNCHRONIZED _pressRestore();
 }
 
 void
 Keyboard::release(C64Key key)
 {
     SYNCHRONIZED _release(key);
+}
+
+void
+Keyboard::releaseShiftLock()
+{
+    SYNCHRONIZED _releaseShiftLock();
 }
 
 void
@@ -188,16 +212,44 @@ Keyboard::releaseAll()
     SYNCHRONIZED _releaseAll();
 }
 
+bool
+Keyboard::_isPressed(C64Key key) const
+{
+    assert(key.nr < 66);
+
+    switch (key.nr) {
+        case 34: return shiftLockIsPressed();
+        case 31: return restoreIsPressed();
+    }
+
+    return (kbMatrixRow[key.row] & (1 << key.col)) == 0;
+}
+
+bool
+Keyboard::_shiftLockIsPressed() const
+{
+    return shiftLock;
+}
+
+bool
+Keyboard::_restoreIsPressed() const
+{
+    return cpu.getNmiLine() & INTSRC_KBD;
+}
+
 void
 Keyboard::_press(C64Key key)
 {
     debug(KBD_DEBUG, "_press(%ld)\n", key.nr);
 
-    assert(key.nr < 66);
-
     switch (key.nr) {
+
         case 34: toggleShiftLock(); return;
         case 31: _pressRestore(); return;
+
+        default:
+            assert(key.nr < 66);
+            break;
     }
 
     assert(key.row < 8);
@@ -214,10 +266,16 @@ Keyboard::_press(C64Key key)
 }
 
 void
+Keyboard::_pressShiftLock()
+{
+    shiftLock = true;
+}
+
+void
 Keyboard::_pressRestore()
 {
     debug(KBD_DEBUG, "_pressRestor()\n");
-    
+
     cpu.pullDownNmiLine(INTSRC_KBD);
 }
 
@@ -250,10 +308,16 @@ Keyboard::_release(C64Key key)
 }
 
 void
+Keyboard::_releaseShiftLock()
+{
+    shiftLock = false;
+}
+
+void
 Keyboard::_releaseRestore()
 {
     debug(KBD_DEBUG, "_releaseRestore()\n");
-    
+
     cpu.releaseNmiLine(INTSRC_KBD);
 }
 
@@ -269,36 +333,6 @@ Keyboard::_releaseAll()
         
     }
     _releaseRestore();
-}
-
-bool
-Keyboard::isPressed(C64Key key) const
-{
-    assert(key.nr < 66);
-    
-    switch (key.nr) {
-        case 34: return shiftLockIsPressed();
-        case 31: return restoreIsPressed();
-    }
-
-    bool result = (kbMatrixRow[key.row] & (1 << key.col)) == 0;
-
-    // We could have also checked the column matrix
-    assert(result == ((kbMatrixCol[key.col] & (1 << key.row)) == 0));
-
-    return result;
-}
-    
-bool
-Keyboard::restoreIsPressed() const
-{
-    return cpu.getNmiLine() & INTSRC_KBD;
-}
-
-void
-Keyboard::toggle(C64Key key)
-{
-    isPressed(key) ? release(key) : press(key);
 }
 
 void

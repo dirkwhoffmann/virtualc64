@@ -103,59 +103,66 @@ private:
     
 
     //
-    // Accessing
+    // Accessing the keyboard matrix
     //
     
 public:
     
-    // Checks whether a certain key is being pressed
+    // Checks whether a certain key is pressed
     bool isPressed(C64Key key) const;
+    bool shiftLockIsPressed() const;
+    bool restoreIsPressed() const;
     bool commodoreIsPressed() const { return isPressed(C64Key::commodore); }
     bool ctrlIsPressed() const { return isPressed(C64Key::control); }
     bool runstopIsPressed() const { return isPressed(C64Key::runStop); }
     bool leftShiftIsPressed() const { return isPressed(C64Key::leftShift); }
     bool rightShiftIsPressed() const { return isPressed(C64Key::rightShift); }
-    bool shiftLockIsPressed() const { return shiftLock; }
-    bool restoreIsPressed() const;
-    
+
     // Presses a key
     void press(C64Key key);
+    void pressShiftLock();
+    void pressRestore();
     void pressCommodore() { press(C64Key::commodore); }
     void pressCtrl() { press(C64Key::control); }
     void pressRunstop() { press(C64Key::runStop); }
     void pressLeftShift() { press(C64Key::leftShift); }
     void pressRightShift() { press(C64Key::rightShift); }
-    void pressShiftLock() { shiftLock = true; }
-    void pressRestore();
 
     // Releases a pressed key
     void release(C64Key key);
+    void releaseShiftLock();
+    void releaseRestore();
     void releaseCommodore() { release(C64Key::commodore); }
     void releaseCtrl() { release(C64Key::control); }
     void releaseRunstop() { release(C64Key::runStop); }
     void releaseLeftShift() { release(C64Key::leftShift); }
     void releaseRightShift() { release(C64Key::rightShift); }
-    void releaseShiftLock() { shiftLock = false; }
-    void releaseRestore();
-    
-    // Clears the keyboard matrix
-    void releaseAll();
-    
+
     // Presses a released key and vice versa
-    void toggle(C64Key key);
+    void toggle(C64Key key) { isPressed(key) ? release(key) : press(key); }
+    void toggleShiftLock() { shiftLockIsPressed() ? releaseShiftLock() : pressShiftLock(); }
+    void toggleRestore() { restoreIsPressed() ? releaseRestore() : pressRestore(); }
     void toggleCommodore() { toggle(C64Key::commodore); }
     void toggleCtrl() { toggle(C64Key::control); }
     void toggleRunstop() { toggle(C64Key::runStop); }
     void toggleLeftShift() { toggle(C64Key::leftShift); }
     void toggleRightShift() { toggle(C64Key::rightShift); }
-    void toggleShiftLock() { shiftLock = !shiftLock; }
-    
+
+    // Clears the keyboard matrix
+    void releaseAll();
+
 private:
-    
+
+    bool _isPressed(C64Key key) const;
+    bool _shiftLockIsPressed() const;
+    bool _restoreIsPressed() const;
+
     void _press(C64Key key);
+    void _pressShiftLock();
     void _pressRestore();
     
     void _release(C64Key key);
+    void _releaseShiftLock();
     void _releaseRestore();
 
     void _releaseAll();
