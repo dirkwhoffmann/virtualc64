@@ -156,22 +156,6 @@ public:
     // Clears the keyboard matrix
     void releaseAll();
 
-private:
-
-    bool _isPressed(C64Key key) const;
-    bool _shiftLockIsPressed() const;
-    bool _restoreIsPressed() const;
-
-    void _press(C64Key key);
-    void _pressShiftLock();
-    void _pressRestore();
-    
-    void _release(C64Key key);
-    void _releaseShiftLock();
-    void _releaseRestore();
-
-    void _releaseAll();
-    
 
     //
     // Auto typing
@@ -191,22 +175,8 @@ public:
 
     void scheduleKeyReleaseAll(double delay);
 
-private:
-
-    void _autoType(const string &text);
-
-    void _scheduleKeyPress(std::vector<C64Key> keys, double delay);
-    void _scheduleKeyPress(C64Key key, double delay) { _scheduleKeyPress(std::vector<C64Key>{key}, delay); }
-    void _scheduleKeyPress(char c, double delay) { _scheduleKeyPress(C64Key::translate(c), delay); }
-
-    void _scheduleKeyRelease(std::vector<C64Key> keys, double delay);
-    void _scheduleKeyRelease(C64Key key, double delay) { _scheduleKeyRelease(std::vector<C64Key>{key}, delay); }
-    void _scheduleKeyRelease(char c, double delay) { _scheduleKeyRelease(C64Key::translate(c), delay); }
-
-    void _scheduleKeyReleaseAll(double delay);
-
     // Deletes all pending actions and clears the keyboard matrix
-    void _abortAutoTyping();
+    void abortAutoTyping();
 
 
     //

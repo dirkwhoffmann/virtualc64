@@ -245,7 +245,7 @@ C64::_initialize()
 void
 C64::_reset(bool hard)
 {
-    // auto insEvent = id[SLOT_INS];
+    auto insEvent = id[SLOT_INS];
 
     RESET_SNAPSHOT_ITEMS(hard)
 
@@ -260,7 +260,7 @@ C64::_reset(bool hard)
     // Schedule initial events
     // scheduleAbs<SLOT_CIA1>(cpu.clock, CIA_EXECUTE);
     // scheduleAbs<SLOT_CIA2>(cpu.clock, CIA_EXECUTE);
-    // if (insEvent) scheduleRel <SLOT_INS> (0, insEvent);
+    if (insEvent) scheduleRel <SLOT_INS> (0, insEvent);
 
     flags = 0;
     rasterCycle = 1;

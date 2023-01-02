@@ -705,6 +705,7 @@ using namespace peddle;
 
 - (void)pressKey:(NSInteger)nr
 {
+    [self kb]->abortAutoTyping();
     [self kb]->press(C64Key(nr));
 }
 

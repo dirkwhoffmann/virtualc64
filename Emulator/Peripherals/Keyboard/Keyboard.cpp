@@ -13,13 +13,6 @@
 #include "C64Key.h"
 #include "IOUtils.h"
 
-/*
-KeyAction::KeyAction(Action a, C64Key k, u64 d) : type(a), delay(d)
-{
-    keys.push_back(k);
-};
-*/
-
 void 
 Keyboard::_reset(bool hard) 
 {
@@ -153,66 +146,6 @@ Keyboard::getRowValues(u8 columnMask, u8 thresholdMask) const
 bool
 Keyboard::isPressed(C64Key key) const
 {
-    SYNCHRONIZED return _isPressed(key);
-}
-
-bool
-Keyboard::shiftLockIsPressed() const
-{
-    SYNCHRONIZED return _shiftLockIsPressed();
-}
-
-bool
-Keyboard::restoreIsPressed() const
-{
-    SYNCHRONIZED return _restoreIsPressed();
-}
-
-void
-Keyboard::press(C64Key key)
-{
-    SYNCHRONIZED _abortAutoTyping(); _press(key);
-}
-
-void
-Keyboard::pressShiftLock()
-{
-    SYNCHRONIZED _pressShiftLock();
-}
-
-void
-Keyboard::pressRestore()
-{
-    SYNCHRONIZED _abortAutoTyping(); _pressRestore();
-}
-
-void
-Keyboard::release(C64Key key)
-{
-    SYNCHRONIZED _release(key);
-}
-
-void
-Keyboard::releaseShiftLock()
-{
-    SYNCHRONIZED _releaseShiftLock();
-}
-
-void
-Keyboard::releaseRestore()
-{
-    SYNCHRONIZED _releaseRestore();
-}
-
-void
-Keyboard::releaseAll()
-{
-    SYNCHRONIZED _releaseAll();
-}
-
-bool
-Keyboard::_isPressed(C64Key key) const
-{
     assert(key.nr < 66);
 
     switch (key.nr) {
@@ -224,26 +157,26 @@ Keyboard::_isPressed(C64Key key) const
 }
 
 bool
-Keyboard::_shiftLockIsPressed() const
+Keyboard::shiftLockIsPressed() const
 {
     return shiftLock;
 }
 
 bool
-Keyboard::_restoreIsPressed() const
+Keyboard::restoreIsPressed() const
 {
     return cpu.getNmiLine() & INTSRC_KBD;
 }
 
 void
-Keyboard::_press(C64Key key)
+Keyboard::press(C64Key key)
 {
-    debug(KBD_DEBUG, "_press(%ld)\n", key.nr);
+    debug(KBD_DEBUG, "press(%ld)\n", key.nr);
 
     switch (key.nr) {
 
         case 34: toggleShiftLock(); return;
-        case 31: _pressRestore(); return;
+        case 31: pressRestore(); return;
 
         default:
             assert(key.nr < 66);
@@ -252,7 +185,9 @@ Keyboard::_press(C64Key key)
 
     assert(key.row < 8);
     assert(key.col < 8);
-    
+
+    SYNCHRONIZED
+
     if (GET_BIT(kbMatrixRow[key.row], key.col)) {
         CLR_BIT(kbMatrixRow[key.row], key.col);
         kbMatrixRowCnt[key.row]++;
@@ -264,37 +199,41 @@ Keyboard::_press(C64Key key)
 }
 
 void
-Keyboard::_pressShiftLock()
+Keyboard::pressShiftLock()
 {
+    SYNCHRONIZED
+
     shiftLock = true;
 }
 
 void
-Keyboard::_pressRestore()
+Keyboard::pressRestore()
 {
-    debug(KBD_DEBUG, "_pressRestor()\n");
+    SYNCHRONIZED
 
     cpu.pullDownNmiLine(INTSRC_KBD);
 }
 
 void
-Keyboard::_release(C64Key key)
+Keyboard::release(C64Key key)
 {
-    debug(KBD_DEBUG, "_release(%ld)\n", key.nr);
+    debug(KBD_DEBUG, "release(%ld)\n", key.nr);
 
     assert(key.nr < 66);
-    
+
     switch (key.nr) {
         case 34: releaseShiftLock(); return;
-        case 31: _releaseRestore(); return;
+        case 31: releaseRestore(); return;
     }
 
     assert(key.row < 8);
     assert(key.col < 8);
-    
+
+    SYNCHRONIZED
+
     // Only release right shift key if shift lock is not pressed
     if (key.row == 6 && key.col == 4 && shiftLock) return;
-    
+
     if (GET_BIT(kbMatrixRow[key.row], key.col) == 0) {
         SET_BIT(kbMatrixRow[key.row], key.col);
         kbMatrixRowCnt[key.row]--;
@@ -302,62 +241,56 @@ Keyboard::_release(C64Key key)
     if (GET_BIT(kbMatrixCol[key.col], key.row) == 0) {
         SET_BIT(kbMatrixCol[key.col], key.row);
         kbMatrixColCnt[key.col]--;
-    }
-}
+    }}
 
 void
-Keyboard::_releaseShiftLock()
+Keyboard::releaseShiftLock()
 {
+    SYNCHRONIZED
+
     shiftLock = false;
 }
 
 void
-Keyboard::_releaseRestore()
+Keyboard::releaseRestore()
 {
-    debug(KBD_DEBUG, "_releaseRestore()\n");
+    SYNCHRONIZED
 
     cpu.releaseNmiLine(INTSRC_KBD);
 }
 
 void
-Keyboard::_releaseAll()
+Keyboard::releaseAll()
 {
+    SYNCHRONIZED
+
     debug(KBD_DEBUG, "_releaseAll()\n");
-    
+
     for (isize i = 0; i < 8; i++) {
-        
+
         kbMatrixRow[i] = 0xFF; kbMatrixRowCnt[i] = 0;
         kbMatrixCol[i] = 0xFF; kbMatrixColCnt[i] = 0;
-        
+
     }
-    _releaseRestore();
+    releaseRestore();
 }
 
 void
 Keyboard::autoType(const string &text)
 {
-    SYNCHRONIZED _autoType(text);
-}
-
-void
-Keyboard::_autoType(const string &text)
-{    
     for (char const &c: text) {
-                
-        _scheduleKeyPress(c, 0.03);
-        _scheduleKeyRelease(c, 0.03);
+
+        printf("Typing %c\n", c);
+        scheduleKeyPress(c, 0.03);
+        scheduleKeyRelease(c, 0.03);
     }
 }
 
 void
 Keyboard::scheduleKeyPress(std::vector<C64Key> keys, double delay)
 {
-    SYNCHRONIZED _scheduleKeyPress(keys, delay);
-}
+    SYNCHRONIZED
 
-void
-Keyboard::_scheduleKeyPress(std::vector<C64Key> keys, double delay)
-{
     actions.push(KeyAction(KeyAction::Action::wait, SEC(delay)));
     actions.push(KeyAction(KeyAction::Action::press, keys));
 
@@ -367,12 +300,8 @@ Keyboard::_scheduleKeyPress(std::vector<C64Key> keys, double delay)
 void
 Keyboard::scheduleKeyRelease(std::vector<C64Key> keys, double delay)
 {
-    SYNCHRONIZED _scheduleKeyRelease(keys, delay);
-}
+    SYNCHRONIZED
 
-void
-Keyboard::_scheduleKeyRelease(std::vector<C64Key> keys, double delay)
-{
     actions.push(KeyAction(KeyAction::Action::wait, SEC(delay)));
     actions.push(KeyAction(KeyAction::Action::release, keys));
 
@@ -382,12 +311,8 @@ Keyboard::_scheduleKeyRelease(std::vector<C64Key> keys, double delay)
 void
 Keyboard::scheduleKeyReleaseAll(double delay)
 {
-    SYNCHRONIZED _scheduleKeyReleaseAll(delay);
-}
+    SYNCHRONIZED
 
-void
-Keyboard::_scheduleKeyReleaseAll(double delay)
-{
     actions.push(KeyAction(KeyAction::Action::wait, SEC(delay)));
     actions.push(KeyAction(KeyAction::Action::releaseAll, {}));
 
@@ -395,14 +320,16 @@ Keyboard::_scheduleKeyReleaseAll(double delay)
 }
 
 void
-Keyboard::_abortAutoTyping()
+Keyboard::abortAutoTyping()
 {
+    SYNCHRONIZED
+
     if (!actions.empty()) {
 
         std::queue<KeyAction> empty;
         std::swap(actions, empty);
 
-        _releaseAll();
+        releaseAll();
     }
 }
 
@@ -433,7 +360,7 @@ Keyboard::processKeyEvent(EventID id)
                 for (auto &key: keys) {
 
                     debug(KBD_DEBUG, "Pressing %ld\n", key.nr);
-                    _press(key);
+                    press(key);
                 }
                 break;
 
@@ -442,18 +369,18 @@ Keyboard::processKeyEvent(EventID id)
                 for (auto &key: keys) {
 
                     debug(KBD_DEBUG, "Releasing %ld\n", key.nr);
-                    _release(key);
+                    release(key);
                 }
                 break;
 
             case KeyAction::Action::releaseAll:
 
                 debug(KBD_DEBUG, "Releasing all\n");
-                _releaseAll();
+                releaseAll();
                 break;
         }
     }
 
-    _releaseAll();
+    releaseAll();
     c64.cancel<SLOT_KEY>();
 }
