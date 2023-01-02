@@ -34,13 +34,6 @@ class VirtualKeyboardController: DialogController {
      */
     var autoClose = true
 
-    /*
-    static func make(parent: MyController) -> VirtualKeyboardController? {
-
-        return make(parent: parent, nibName: NSNib.Name("VirtualKeyboard"))
-    }
-    */
-
     func showSheet() {
         
         autoClose = true
@@ -50,7 +43,7 @@ class VirtualKeyboardController: DialogController {
     func showWindow() {
         
         autoClose = false
-        super.showWindow(self)
+        super.showWindow()
     }
     
     override func windowDidLoad() {
