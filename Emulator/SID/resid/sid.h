@@ -50,6 +50,7 @@ public:
   double sample_freq, double pass_freq = -1,
   double filter_scale = 0.97);
   void adjust_sampling_frequency(double sample_freq);
+  void enable_raw_debug_output(bool enable);
 
   void clock();
   void clock(cycle_count delta_t);
@@ -100,8 +101,9 @@ public:
   // 16-bit output (AUDIO OUT).
   int output();
 
+  void debugoutput(void);
+
  public:
-    
   static double I0(double x);
   int clock_fast(cycle_count& delta_t, short* buf, int n, int interleave);
   int clock_interpolate(cycle_count& delta_t, short* buf, int n, int interleave);
@@ -166,6 +168,8 @@ public:
 
   // FIR_RES filter tables (FIR_N*FIR_RES).
   short* fir;
+
+  bool raw_debug_output; // FIXME: should be private?
 };
 
 
@@ -230,6 +234,10 @@ void SID::clock()
   if (unlikely(!--bus_value_ttl)) {
     bus_value = 0;
   }
+
+  if (unlikely(raw_debug_output)) {
+    debugoutput();
+  }
 }
 
 #endif // RESID_INLINING || defined(RESID_SID_CC)
@@ -237,4 +245,3 @@ void SID::clock()
 } // namespace reSID
 
 #endif // not RESID_SID_H
-
