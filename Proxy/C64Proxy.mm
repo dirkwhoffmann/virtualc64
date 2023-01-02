@@ -705,7 +705,13 @@ using namespace peddle;
 
 - (void)pressKey:(NSInteger)nr
 {
-    [self kb]->press(nr);
+    [self kb]->press(C64Key(nr));
+}
+
+- (void)pressKeyCombination:(NSInteger)nr with: (NSInteger)nr2
+{
+    [self kb]->press(C64Key(nr));
+    [self kb]->press(C64Key(nr2));
 }
 
 - (void)pressKeyAtRow:(NSInteger)row col:(NSInteger)col
@@ -720,7 +726,13 @@ using namespace peddle;
 
 - (void)releaseKey:(NSInteger)nr
 {
-    [self kb]->release(nr);
+    [self kb]->release(C64Key(nr));
+}
+
+- (void)releaseKeyCombination:(NSInteger)nr with: (NSInteger)nr2
+{
+    [self kb]->release(C64Key(nr));
+    [self kb]->release(C64Key(nr2));
 }
 
 - (void)releaseKeyAtRow:(NSInteger)row col:(NSInteger)col
@@ -753,29 +765,39 @@ using namespace peddle;
     [self kb]->toggleShiftLock();
 }
 
-- (void)scheduleKeyPress:(NSInteger)nr delay:(NSInteger)delay
+- (void)scheduleKeyPress:(NSInteger)nr delay:(double)seconds
 {
-    [self kb]->scheduleKeyPress(C64Key(nr), delay);
+    [self kb]->scheduleKeyPress(C64Key(nr), seconds);
 }
 
-- (void)scheduleKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay
+- (void)scheduleKeyPresses:(NSInteger)nr with:(NSInteger)nr2 delay:(double)seconds
 {
-    [self kb]->scheduleKeyPress(C64Key(row, col), delay);
+    [self kb]->scheduleKeyPress(std::vector<C64Key> { C64Key(nr), C64Key(nr2) }, seconds);
 }
 
-- (void)scheduleKeyRelease:(NSInteger)nr delay:(NSInteger)delay
+- (void)scheduleKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(double)seconds
 {
-    [self kb]->scheduleKeyRelease(C64Key(nr), delay);
+    [self kb]->scheduleKeyPress(C64Key(row, col), seconds);
 }
 
-- (void)scheduleKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay
+- (void)scheduleKeyRelease:(NSInteger)nr delay:(double)seconds
 {
-    [self kb]->scheduleKeyRelease(C64Key(row, col), delay);
+    [self kb]->scheduleKeyRelease(C64Key(nr), seconds);
 }
 
-- (void)scheduleKeyReleaseAll:(NSInteger)delay
+- (void)scheduleKeyReleases:(NSInteger)nr with:(NSInteger)nr2 delay:(double)seconds
 {
-    [self kb]->scheduleKeyReleaseAll(delay);
+    [self kb]->scheduleKeyRelease(std::vector<C64Key> { C64Key(nr), C64Key(nr2) }, seconds);
+}
+
+- (void)scheduleKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(double)seconds
+{
+    [self kb]->scheduleKeyRelease(C64Key(row, col), seconds);
+}
+
+- (void)scheduleKeyReleaseAll:(double)seconds
+{
+    [self kb]->scheduleKeyReleaseAll(seconds);
 }
 
 - (void)autoType:(NSString *)text

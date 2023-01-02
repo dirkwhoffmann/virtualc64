@@ -19,18 +19,20 @@ namespace vc64 {
 struct KeyAction {
 
     // Action type
-    enum class Action { press, release, releaseAll };
+    enum class Action { wait, press, release, releaseAll };
     Action type;
 
     // The key the action is performed on
     std::vector<C64Key> keys;
     
-    // Delay until the next action is performed, measures in frames
-    i64 delay;
+    // Number of idle cycles (wait action)
+    Cycle delay;
 
     // Constructors
-    KeyAction(Action a, std::vector<C64Key> k, u64 d) : type(a), keys(k), delay(d) { };
-    KeyAction(Action a, C64Key k, u64 d) : KeyAction(a, std::vector<C64Key> { k }, d) { };
+    KeyAction(Action a, std::vector<C64Key> k, Cycle d) : type(a), keys(k), delay(d) { };
+    KeyAction(Action a, std::vector<C64Key> k) : type(a), keys(k), delay(0) { };
+    KeyAction(Action a, C64Key k) : KeyAction(a, std::vector<C64Key> { k }) { };
+    KeyAction(Action a, Cycle d) : type(a), delay(d) { };
 };
 
 class Keyboard : public SubComponent {
@@ -179,23 +181,32 @@ public:
     
     void autoType(const string &text);
 
-    void scheduleKeyPress(std::vector<C64Key> keys, i64 delay);
-    void scheduleKeyPress(C64Key key, i64 delay) { scheduleKeyPress(std::vector<C64Key>{key}, delay); }
-    void scheduleKeyPress(char c, i64 delay) { scheduleKeyPress(C64Key::translate(c), delay); }
+    void scheduleKeyPress(std::vector<C64Key> keys, double delay);
+    void scheduleKeyPress(C64Key key, double delay) { scheduleKeyPress(std::vector<C64Key>{key}, delay); }
+    void scheduleKeyPress(char c, double delay) { scheduleKeyPress(C64Key::translate(c), delay); }
 
-    void scheduleKeyRelease(std::vector<C64Key> keys, i64 delay);
-    void scheduleKeyRelease(C64Key key, i64 delay) { scheduleKeyRelease(std::vector<C64Key>{key}, delay); }
-    void scheduleKeyRelease(char c, i64 delay) { scheduleKeyRelease(C64Key::translate(c), delay); }
+    void scheduleKeyRelease(std::vector<C64Key> keys, double delay);
+    void scheduleKeyRelease(C64Key key, double delay) { scheduleKeyRelease(std::vector<C64Key>{key}, delay); }
+    void scheduleKeyRelease(char c, double delay) { scheduleKeyRelease(C64Key::translate(c), delay); }
 
-    void scheduleKeyReleaseAll(i64 delay);
+    void scheduleKeyReleaseAll(double delay);
 
 private:
-    
+
+    void _autoType(const string &text);
+
+    void _scheduleKeyPress(std::vector<C64Key> keys, double delay);
+    void _scheduleKeyPress(C64Key key, double delay) { _scheduleKeyPress(std::vector<C64Key>{key}, delay); }
+    void _scheduleKeyPress(char c, double delay) { _scheduleKeyPress(C64Key::translate(c), delay); }
+
+    void _scheduleKeyRelease(std::vector<C64Key> keys, double delay);
+    void _scheduleKeyRelease(C64Key key, double delay) { _scheduleKeyRelease(std::vector<C64Key>{key}, delay); }
+    void _scheduleKeyRelease(char c, double delay) { _scheduleKeyRelease(C64Key::translate(c), delay); }
+
+    void _scheduleKeyReleaseAll(double delay);
+
     // Deletes all pending actions and clears the keyboard matrix
-    void abortAutoTyping();
-    
-    // Workhorses for scheduleKeyPress and scheduleKeyRelease
-    void _scheduleKeyAction(KeyAction::Action type, std::vector<C64Key> keys, i64 delay);
+    void _abortAutoTyping();
 
 
     //

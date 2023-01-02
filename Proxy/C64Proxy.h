@@ -458,10 +458,12 @@
 - (BOOL)shiftLockIsPressed;
 
 - (void)pressKey:(NSInteger)nr;
+- (void)pressKeyCombination:(NSInteger)nr with: (NSInteger)nr2;
 - (void)pressKeyAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)pressShiftLock;
 
 - (void)releaseKey:(NSInteger)nr;
+- (void)releaseKeyCombination:(NSInteger)nr with: (NSInteger)nr2;
 - (void)releaseKeyAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)releaseShiftLock;
 - (void)releaseAll;
@@ -470,11 +472,13 @@
 - (void)toggleKeyAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)toggleShiftLock;
 
-- (void)scheduleKeyPress:(NSInteger)nr delay:(NSInteger)delay;
-- (void)scheduleKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay;
-- (void)scheduleKeyRelease:(NSInteger)nr delay:(NSInteger)delay;
-- (void)scheduleKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(NSInteger)delay;
-- (void)scheduleKeyReleaseAll:(NSInteger)delay;
+- (void)scheduleKeyPress:(NSInteger)nr delay:(double)seconds;
+- (void)scheduleKeyPresses:(NSInteger)nr with:(NSInteger)nr2 delay:(double)seconds;
+- (void)scheduleKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(double)seconds;
+- (void)scheduleKeyRelease:(NSInteger)nr delay:(double)seconds;
+- (void)scheduleKeyReleases:(NSInteger)nr with:(NSInteger)nr2 delay:(double)seconds;
+- (void)scheduleKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(double)seconds;
+- (void)scheduleKeyReleaseAll:(double)seconds;
 
 - (void)autoType:(NSString *)text;
 

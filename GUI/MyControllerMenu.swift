@@ -504,7 +504,7 @@ extension MyController: NSMenuItemValidation {
     // -----------------------------------------------------------------
     @IBAction func pressAction(_ sender: NSMenuItem!) {
      
-        keyboard.pressKey(C64Key(sender.tag), duration: 4)
+        keyboard.pressKey(key: C64Key(sender.tag), duration: 0.08)
         virtualKeyboard?.refresh()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             self.virtualKeyboard?.refresh()
@@ -513,7 +513,7 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func pressWithShiftAction(_ sender: NSMenuItem!) {
         
-        keyboard.pressKeys([C64Key.shift, C64Key(sender.tag)], duration: 4)
+        keyboard.pressKeyCombination(key1: C64Key(sender.tag), key2: C64Key.shift, duration: 0.08)
         virtualKeyboard?.refresh()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             self.virtualKeyboard?.refresh()
@@ -521,8 +521,8 @@ extension MyController: NSMenuItemValidation {
     }
 
     @IBAction func pressRunstopRestoreAction(_ sender: Any!) {
-        
-        keyboard.pressKeys([C64Key.runStop, C64Key.restore], duration: 4)
+
+        keyboard.pressKeyCombination(key1: C64Key.runStop, key2: C64Key.restore, duration: 0.08)
         virtualKeyboard?.refresh()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             self.virtualKeyboard?.refresh()
@@ -530,35 +530,35 @@ extension MyController: NSMenuItemValidation {
     }
 
     @IBAction func runstopAction(_ sender: Any!) {
-        keyboard.pressKey(C64Key.runStop, duration: 4)
+        keyboard.pressKey(key: C64Key.runStop, duration: 0.08)
     }
     
     @IBAction func restoreAction(_ sender: Any!) {
-        keyboard.pressKey(C64Key.restore, duration: 4)
+        keyboard.pressKey(key: C64Key.restore, duration: 0.08)
     }
     
     @IBAction func commodoreKeyAction(_ sender: Any!) {
-        keyboard.pressKey(C64Key.commodore, duration: 4)
+        keyboard.pressKey(key: C64Key.commodore, duration: 0.08)
     }
     
     @IBAction func clearKeyAction(_ sender: Any!) {
-        keyboard.pressKeys([C64Key.home, C64Key.shift], duration: 4)
+        keyboard.pressKeyCombination(key1: C64Key.home, key2: C64Key.shift, duration: 0.08)
     }
     
     @IBAction func homeKeyAction(_ sender: Any!) {
-        keyboard.pressKey(C64Key.home, duration: 4)
+        keyboard.pressKey(key: C64Key.home, duration: 0.08)
     }
     
     @IBAction func insertKeyAction(_ sender: Any!) {
-        keyboard.pressKeys([C64Key.delete, C64Key.shift], duration: 4)
+        keyboard.pressKeyCombination(key1: C64Key.delete, key2: C64Key.shift, duration: 0.08)
     }
     
     @IBAction func deleteKeyAction(_ sender: Any!) {
-        keyboard.pressKey(C64Key.delete, duration: 4)
+        keyboard.pressKey(key: C64Key.delete, duration: 0.08)
     }
     
     @IBAction func leftarrowKeyAction(_ sender: Any!) {
-        keyboard.pressKey(C64Key.leftArrow, duration: 4)
+        keyboard.pressKey(key: C64Key.leftArrow, duration: 0.08)
     }
     
     @IBAction func shiftLockAction(_ sender: Any!) {

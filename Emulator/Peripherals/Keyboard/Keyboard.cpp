@@ -171,8 +171,7 @@ Keyboard::restoreIsPressed() const
 void
 Keyboard::press(C64Key key)
 {
-    abortAutoTyping();
-    SYNCHRONIZED _press(key);
+    SYNCHRONIZED _abortAutoTyping(); _press(key);
 }
 
 void
@@ -184,8 +183,7 @@ Keyboard::pressShiftLock()
 void
 Keyboard::pressRestore()
 {
-    abortAutoTyping();
-    SYNCHRONIZED _pressRestore();
+    SYNCHRONIZED _abortAutoTyping(); _pressRestore();
 }
 
 void
@@ -337,34 +335,67 @@ Keyboard::_releaseAll()
 
 void
 Keyboard::autoType(const string &text)
+{
+    SYNCHRONIZED _autoType(text);
+}
+
+void
+Keyboard::_autoType(const string &text)
 {    
     for (char const &c: text) {
                 
-        scheduleKeyPress(c, 2);
-        scheduleKeyRelease(c, 2);
+        scheduleKeyPress(c, 0.04);
+        scheduleKeyRelease(c, 0.04);
     }
 }
 
 void
-Keyboard::scheduleKeyPress(std::vector<C64Key> keys, i64 delay)
+Keyboard::scheduleKeyPress(std::vector<C64Key> keys, double delay)
 {
-    SYNCHRONIZED _scheduleKeyAction(KeyAction::Action::press, keys, delay);
+    SYNCHRONIZED _scheduleKeyPress(keys, delay);
 }
 
 void
-Keyboard::scheduleKeyRelease(std::vector<C64Key> keys, i64 delay)
+Keyboard::_scheduleKeyPress(std::vector<C64Key> keys, double delay)
 {
-    SYNCHRONIZED _scheduleKeyAction(KeyAction::Action::release, keys, delay);
+    actions.push(KeyAction(KeyAction::Action::wait, SEC(delay)));
+    actions.push(KeyAction(KeyAction::Action::press, keys));
+
+    if (!c64.hasEvent<SLOT_KEY>()) c64.scheduleImm<SLOT_KEY>(KEY_AUTO_TYPE);
 }
 
 void
-Keyboard::scheduleKeyReleaseAll(i64 delay)
+Keyboard::scheduleKeyRelease(std::vector<C64Key> keys, double delay)
 {
-    SYNCHRONIZED _scheduleKeyAction(KeyAction::Action::releaseAll, {}, delay);
+    SYNCHRONIZED _scheduleKeyRelease(keys, delay);
 }
 
 void
-Keyboard::abortAutoTyping()
+Keyboard::_scheduleKeyRelease(std::vector<C64Key> keys, double delay)
+{
+    actions.push(KeyAction(KeyAction::Action::wait, SEC(delay)));
+    actions.push(KeyAction(KeyAction::Action::release, keys));
+
+    if (!c64.hasEvent<SLOT_KEY>()) c64.scheduleImm<SLOT_KEY>(KEY_AUTO_TYPE);
+}
+
+void
+Keyboard::scheduleKeyReleaseAll(double delay)
+{
+    SYNCHRONIZED _scheduleKeyReleaseAll(delay);
+}
+
+void
+Keyboard::_scheduleKeyReleaseAll(double delay)
+{
+    actions.push(KeyAction(KeyAction::Action::wait, SEC(delay)));
+    actions.push(KeyAction(KeyAction::Action::releaseAll, {}));
+
+    if (!c64.hasEvent<SLOT_KEY>()) c64.scheduleImm<SLOT_KEY>(KEY_AUTO_TYPE);
+}
+
+void
+Keyboard::_abortAutoTyping()
 {
     if (!actions.empty()) {
 
@@ -376,41 +407,30 @@ Keyboard::abortAutoTyping()
 }
 
 void
-Keyboard::_scheduleKeyAction(KeyAction::Action type, std::vector<C64Key> keys, i64 delay)
-{
-    debug(KBD_DEBUG, "Recording %ld %lld\n", isize(type), delay);
-
-    actions.push(KeyAction(type, keys, delay));
-
-    // Schedule the first auto-typing event if the auto-typer is idle
-    if (!c64.hasEvent<SLOT_KEY>()) {
-        c64.scheduleRel<SLOT_KEY>(delay * vic.getCyclesPerFrame(), KEY_AUTO_TYPE);
-    }
-}
-
-void
 Keyboard::processKeyEvent(EventID id)
 {
     SYNCHRONIZED
 
-    if (actions.empty()) {
+    // Process all pending events
+    while (!actions.empty()) {
 
-        _releaseAll();
-        c64.cancel<SLOT_KEY>();
+        auto type = actions.front().type;
+        auto keys = actions.front().keys;
+        auto delay = actions.front().delay;
 
-    } else {
+        actions.pop();
 
-        KeyAction &action = actions.front();
+        switch (type) {
 
-        // trace(KBD_DEBUG, "%d: key (%d,%d) next: %lld\n",
-        //       action.type, action.row, action.col, action.delay);
+            case KeyAction::Action::wait:
 
-        // Process event
-        switch (action.type) {
+                debug(KBD_DEBUG, "Waiting %lld cycles\n", delay);
+                c64.rescheduleRel<SLOT_KEY>(delay);
+                return;
 
             case KeyAction::Action::press:
 
-                for (auto &key: action.keys) {
+                for (auto &key: keys) {
 
                     debug(KBD_DEBUG, "Pressing %ld\n", key.nr);
                     _press(key);
@@ -419,7 +439,7 @@ Keyboard::processKeyEvent(EventID id)
 
             case KeyAction::Action::release:
 
-                for (auto &key: action.keys) {
+                for (auto &key: keys) {
 
                     debug(KBD_DEBUG, "Releasing %ld\n", key.nr);
                     _release(key);
@@ -432,10 +452,8 @@ Keyboard::processKeyEvent(EventID id)
                 _releaseAll();
                 break;
         }
-
-        // Schedule next event
-        c64.rescheduleInc<SLOT_KEY>(vic.getCyclesPerFrame() * action.delay);
-
-        actions.pop();
     }
+
+    _releaseAll();
+    c64.cancel<SLOT_KEY>();
 }

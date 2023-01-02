@@ -31,7 +31,7 @@ typedef isize HeadPos;
 // Conversion macros
 //
 
-// Converts a certain unit to master cycles
+// Converts a time span to an (approximate) cycle count
 #define USEC(delay)           (Cycle)((delay) * 1)
 #define MSEC(delay)           (Cycle)((delay) * 1000)
 #define SEC(delay)            (Cycle)((delay) * 1000000)

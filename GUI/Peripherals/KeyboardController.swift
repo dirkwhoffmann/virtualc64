@@ -328,29 +328,25 @@ class KeyboardController: NSObject {
         }
     }
     
-    func pressKey(_ key: C64Key, duration numFrames: Int? = nil) {
+    func pressKey(key: C64Key, duration: TimeInterval? = nil) {
     
         // Press key
         keyboard.pressKey(key.nr)
 
         // Schedule the key release
-        if numFrames != nil {
-            keyboard.scheduleKeyRelease(key.nr, delay: numFrames!)
+        if let seconds = duration {
+            keyboard.scheduleKeyRelease(key.nr, delay: seconds)
         }
     }
 
-    func pressKeys(_ keys: [C64Key], duration numFrames: Int? = nil) {
-        
+    func pressKeyCombination(key1: C64Key, key2: C64Key, duration: TimeInterval? = nil) {
+
         // Press keys
-        for key in keys {
-            keyboard.pressKey(key.nr)
-        }
-        
+        keyboard.pressKeyCombination(key1.nr, with: key2.nr)
+
         // Schedule the key releases
-        if numFrames != nil {
-            for key in keys {
-                keyboard.scheduleKeyRelease(key.nr, delay: numFrames!)
-            }
+        if let seconds = duration {
+            keyboard.scheduleKeyReleases(key1.nr, with: key2.nr, delay: seconds)
         }
     }
 
