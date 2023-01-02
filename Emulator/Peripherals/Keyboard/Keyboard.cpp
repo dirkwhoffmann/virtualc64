@@ -344,8 +344,8 @@ Keyboard::_autoType(const string &text)
 {    
     for (char const &c: text) {
                 
-        scheduleKeyPress(c, 0.04);
-        scheduleKeyRelease(c, 0.04);
+        _scheduleKeyPress(c, 0.03);
+        _scheduleKeyRelease(c, 0.03);
     }
 }
 
