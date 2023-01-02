@@ -339,7 +339,7 @@ class MediaManager {
             c64.datasette.insertTape(proxy)
 
             if options.contains(.autostart) {
-                controller.keyboard.type("LOAD\n")
+                controller.keyboard.type("load\n")
                 c64.datasette.pressPlay()
             }
 
@@ -349,7 +349,7 @@ class MediaManager {
             if let volume = try? FileSystemProxy.make(with: proxy) {
 
                 try? c64.flash(volume, item: 0)
-                controller.keyboard.type("RUN\n")
+                controller.keyboard.type("run\n")
                 controller.renderer.rotateLeft()
             }
 

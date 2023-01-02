@@ -31,6 +31,7 @@ static const std::string process    = "<process>";
 static const std::string seconds    = "<seconds>";
 static const std::string value      = "<value>";
 static const std::string volume     = "<volume>";
+static const std::string string     = "<string>";
 
 };
 

@@ -770,7 +770,7 @@ Interpreter::initCommandShell(Command &root)
     root.add({"keyboard", "type"},
              "Types text on the keyboard");
 
-    root.add({"keyboard", "type", "text"},
+    root.add({"keyboard", "type", "text"}, { Arg::string },
              "Types arbitrary text",
              [this](Arguments& argv, long value) {
 
