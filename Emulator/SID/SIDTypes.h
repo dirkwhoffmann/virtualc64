@@ -95,7 +95,7 @@ struct SamplingMethodEnum : util::Reflection<SamplingMethodEnum, SamplingMethod>
             case SAMPLING_FAST:              return "FAST";
             case SAMPLING_INTERPOLATE:       return "INTERPOLATE";
             case SAMPLING_RESAMPLE:          return "RESAMPLE";
-            case SAMPLING_RESAMPLE_FASTMEM:  return "RESAMPLE FASTMEM";
+            case SAMPLING_RESAMPLE_FASTMEM:  return "RESAMPLE_FASTMEM";
         }
         return "???";
     }

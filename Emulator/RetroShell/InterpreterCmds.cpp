@@ -155,15 +155,6 @@ Interpreter::initCommandShell(Command &root)
              "Adjusts the texture cutout",
              [this](Arguments& argv, long value) {
 
-        /*
-         std::vector<string> vec(argv.begin(), argv.end());
-
-         isize x1 = util::parseNum(vec[0]);
-         isize y1 = util::parseNum(vec[1]);
-         isize x2 = util::parseNum(vec[2]);
-         isize y2 = util::parseNum(vec[3]);
-         */
-
         isize x1 = parseNum(argv, 0);
         isize y1 = parseNum(argv, 1);
         isize x2 = parseNum(argv, 2);
@@ -290,114 +281,6 @@ Interpreter::initCommandShell(Command &root)
         c64.flash(file, 0);
     });
 
-    
-    //
-    // Drive
-    //
-
-    for (isize i = 0; i < 2; i++) {
-
-        string drive = (i == 0) ? "drive8" : "drive9";
-
-        root.add({drive, ""},
-                 "Displays the current configuration",
-                 [this](Arguments& argv, long value) {
-
-            auto &drive = value ? drive9 : drive8;
-            retroShell.dump(drive, Category::Config);
-
-        }, i);
-
-        root.add({drive, "connect"},
-                 "Connects the drive",
-                 [this](Arguments& argv, long value) {
-
-            auto id = value ? DRIVE9 : DRIVE8;
-            c64.configure(OPT_DRV_CONNECT, id, true);
-
-        }, i);
-
-        root.add({drive, "disconnect"},
-                 "Disconnects the drive",
-                 [this](Arguments& argv, long value) {
-
-            auto id = value ? DRIVE9 : DRIVE8;
-            c64.configure(OPT_DRV_CONNECT, id, false);
-
-        }, i);
-
-        root.add({drive, "eject"},
-                 "Ejects a floppy disk",
-                 [this](Arguments& argv, long value) {
-
-            auto &drive = value ? drive9 : drive8;
-            drive.ejectDisk();
-
-        }, i);
-
-        root.add({drive, "insert"}, { Arg::path },
-                 "Inserts a floppy disk",
-                 [this](Arguments& argv, long value) {
-
-            auto path = argv.front();
-            if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
-
-            auto &drive = value ? drive9 : drive8;
-            drive.insertDisk(path, false);
-
-        }, i);
-
-        root.add({drive, "newdisk"}, { DOSTypeEnum::argList() },
-                 "Inserts a new blank disk",
-                 [this](Arguments& argv, long value) {
-
-            auto type = util::parseEnum <DOSTypeEnum> (argv.front());
-            auto &drive = value ? drive9 : drive8;
-            drive.insertNewDisk(type, PETName<16>("NEW DISK"));
-
-        }, i);
-    }
-    
-    
-    //
-    // Datasette
-    //
-
-    root.add({"datasette", ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        retroShell.dump(datasette, Category::Config);
-    });
-
-    root.add({"datasette", "connect"},
-             "Connects the datasette",
-             [this](Arguments& argv, long value) {
-
-        c64.configure(OPT_DAT_CONNECT, true);
-    });
-
-    root.add({"datasette", "disconnect"},
-             "Disconnects the datasette",
-             [this](Arguments& argv, long value) {
-
-        c64.configure(OPT_DAT_CONNECT, false);
-    });
-
-    root.add({"datasette", "rewind"},
-             "Rewinds the tape",
-             [this](Arguments& argv, long value) {
-
-        datasette.rewind();
-    });
-
-    root.add({"datasette", "rewind", "to"}, { Arg::value },
-             "Rewinds the tape to a specific position",
-             [this](Arguments& argv, long value) {
-
-        datasette.rewind(parseNum(argv));
-    });
-
 
     //
     // CIA
@@ -405,7 +288,7 @@ Interpreter::initCommandShell(Command &root)
 
     for (isize i = 0; i < 2; i++) {
 
-        string cia = (i == 0) ? "cia1" : "cia1";
+        string cia = (i == 0) ? "cia1" : "cia2";
 
         root.add({cia, ""},
                  "Displays the current configuration",
@@ -564,6 +447,13 @@ Interpreter::initCommandShell(Command &root)
     // Monitor
     //
 
+    root.add({"monitor", ""},
+             "Displays the current configuration",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(vic.dmaDebugger, Category::Config);
+    });
+
     root.add({"monitor", "set"},
              "Configures the component");
 
@@ -604,7 +494,7 @@ Interpreter::initCommandShell(Command &root)
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_SATURATION, util::parseNum(argv.front()));
+        retroShell.dump(muxer, Category::Config);
     });
 
     root.add({"sid", "set"},
@@ -793,81 +683,316 @@ Interpreter::initCommandShell(Command &root)
 
 
     //
-    // Joystick
+    // Drive
     //
 
-    root.add({"joystick", ""},
+    for (isize i = 0; i < 2; i++) {
+
+        string drive = (i == 0) ? "drive8" : "drive9";
+
+        root.add({drive, ""},
+                 "Displays the current configuration",
+                 [this](Arguments& argv, long value) {
+
+            auto &drive = value ? drive9 : drive8;
+            retroShell.dump(drive, Category::Config);
+
+        }, i);
+
+        root.add({drive, "connect"},
+                 "Connects the drive",
+                 [this](Arguments& argv, long value) {
+
+            auto id = value ? DRIVE9 : DRIVE8;
+            c64.configure(OPT_DRV_CONNECT, id, true);
+
+        }, i);
+
+        root.add({drive, "disconnect"},
+                 "Disconnects the drive",
+                 [this](Arguments& argv, long value) {
+
+            auto id = value ? DRIVE9 : DRIVE8;
+            c64.configure(OPT_DRV_CONNECT, id, false);
+
+        }, i);
+
+        root.add({drive, "eject"},
+                 "Ejects a floppy disk",
+                 [this](Arguments& argv, long value) {
+
+            auto &drive = value ? drive9 : drive8;
+            drive.ejectDisk();
+
+        }, i);
+
+        root.add({drive, "insert"}, { Arg::path },
+                 "Inserts a floppy disk",
+                 [this](Arguments& argv, long value) {
+
+            auto path = argv.front();
+            if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
+
+            auto &drive = value ? drive9 : drive8;
+            drive.insertDisk(path, false);
+
+        }, i);
+
+        root.add({drive, "newdisk"}, { DOSTypeEnum::argList() },
+                 "Inserts a new blank disk",
+                 [this](Arguments& argv, long value) {
+
+            auto type = util::parseEnum <DOSTypeEnum> (argv.front());
+            auto &drive = value ? drive9 : drive8;
+            drive.insertNewDisk(type, PETName<16>("NEW DISK"));
+
+        }, i);
+    }
+
+
+    //
+    // Datasette
+    //
+
+    root.add({"datasette", ""},
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(port1.joystick, Category::Config);
-        retroShell << '\n';
-        retroShell.dump(port2.joystick, Category::Config);
+        retroShell.dump(datasette, Category::Config);
     });
 
-    root.add({"joystick", "set"},
-             "Configures the component");
-
-    root.add({"joystick", "set", "autofire"}, { Arg::onoff },
-             "Enables or disables auto fire mode",
+    root.add({"datasette", "connect"},
+             "Connects the datasette",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_AUTOFIRE, parseBool(argv));
+        c64.configure(OPT_DAT_CONNECT, true);
     });
 
-    root.add({"joystick", "set", "bullets"}, { Arg::value },
-             "Sets the number of bullets per auto fire shot",
+    root.add({"datasette", "disconnect"},
+             "Disconnects the datasette",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_AUTOFIRE_BULLETS, parseNum(argv));
+        c64.configure(OPT_DAT_CONNECT, false);
     });
 
-    root.add({"joystick", "set", "delay"}, { Arg::value },
-             "Sets the auto fire delay in frames",
+    root.add({"datasette", "rewind"},
+             "Rewinds the tape",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_AUTOFIRE_DELAY, parseNum(argv));
+        datasette.rewind();
     });
 
-    
+    root.add({"datasette", "rewind", "to"}, { Arg::value },
+             "Rewinds the tape to a specific position",
+             [this](Arguments& argv, long value) {
+
+        datasette.rewind(parseNum(argv));
+    });
+
+
+    //
+    // Joystick
+    //
+
+    root.newGroup("");
+
+    for (isize i = PORT_1; i <= PORT_2; i++) {
+
+        string nr = (i == 1) ? "1" : "2";
+
+        root.add({"joystick", nr},
+                 "Joystick in port " + nr);
+
+        root.add({"joystick", nr, ""},
+                 "Displays the current configuration",
+                 [this](Arguments& argv, long value) {
+
+            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            retroShell.dump(port.joystick, Category::Config);
+
+        }, i);
+
+        root.add({"joystick", nr, "set"},
+                 "Configures the component");
+
+        root.add({"joystick", nr, "set", "autofire"}, { Arg::onoff },
+                 "Enables or disables auto fire mode",
+                 [this](Arguments& argv, long value) {
+
+            c64.configure(OPT_AUTOFIRE, value, parseBool(argv));
+
+        }, i);
+
+        root.add({"joystick", nr, "set", "bullets"}, { Arg::value },
+                 "Sets the number of bullets per auto fire shot",
+                 [this](Arguments& argv, long value) {
+
+            c64.configure(OPT_AUTOFIRE_BULLETS, value, parseNum(argv));
+
+        }, i);
+
+
+        root.add({"joystick", nr, "set", "delay"}, { Arg::value },
+                 "Sets the auto fire delay in frames",
+                 [this](Arguments& argv, long value) {
+
+            c64.configure(OPT_AUTOFIRE_DELAY, value, parseNum(argv));
+
+        }, i);
+
+        root.add({"joystick", nr, "press"},
+                 "Presses the joystick button",
+                 [this](Arguments& argv, long value) {
+
+            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            port.joystick.trigger(PRESS_FIRE);
+
+        }, i);
+
+        root.add({"joystick", nr, "unpress"},
+                 "Releases a joystick button",
+                 [this](Arguments& argv, long value) {
+
+            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            port.joystick.trigger(RELEASE_FIRE);
+
+        }, i);
+
+        root.add({"joystick", nr, "pull"},
+                 "Pulls the joystick");
+
+        root.add({"joystick", nr, "pull", "left"},
+                 "Pulls the joystick left",
+                 [this](Arguments& argv, long value) {
+
+            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            port.joystick.trigger(PULL_LEFT);
+
+        }, i);
+
+        root.add({"joystick", nr, "pull", "right"},
+                 "Pulls the joystick right",
+                 [this](Arguments& argv, long value) {
+
+            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            port.joystick.trigger(PULL_RIGHT);
+
+        }, i);
+
+        root.add({"joystick", nr, "pull", "up"},
+                 "Pulls the joystick up",
+                 [this](Arguments& argv, long value) {
+
+            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            port.joystick.trigger(PULL_UP);
+
+        }, i);
+
+        root.add({"joystick", nr, "pull", "down"},
+                 "Pulls the joystick down",
+                 [this](Arguments& argv, long value) {
+
+            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            port.joystick.trigger(PULL_DOWN);
+
+        }, i);
+
+        root.add({"joystick", nr, "release"},
+                 "Release a joystick axis");
+
+        root.add({"joystick", nr, "release", "x"},
+                 "Releases the x-axis",
+                 [this](Arguments& argv, long value) {
+
+            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            port.joystick.trigger(RELEASE_X);
+
+        }, i);
+
+        root.add({"joystick", nr, "release", "y"},
+                 "Releases the y-axis",
+                 [this](Arguments& argv, long value) {
+
+            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            port.joystick.trigger(RELEASE_Y);
+
+        }, i);
+    }
+
     //
     // Mouse
     //
 
-    root.add({"mouse", ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
+    root.newGroup("");
 
-        retroShell.dump(port1.mouse, Category::Config);
-        retroShell << '\n';
-        retroShell.dump(port2.mouse, Category::Config);
-    });
+    for (isize i = PORT_1; i <= PORT_2; i++) {
 
-    root.add({"mouse", "set"},
-             "Configures the component");
+        string nr = (i == 1) ? "1" : "2";
 
-    root.add({"mouse", "set", "model"}, { MouseModelEnum::argList() },
-             "Selects the mouse model",
-             [this](Arguments& argv, long value) {
+        root.add({"mouse", nr},
+                 "Mouse in port " + nr);
 
-        c64.configure(OPT_MOUSE_MODEL, parseEnum <MouseModelEnum> (argv));
-    });
+        root.add({"mouse", nr, ""},
+                 "Displays the current configuration",
+                 [this](Arguments& argv, long value) {
 
-    root.add({"mouse", "set", "velocity"}, { Arg::value },
-             "Sets the horizontal and vertical mouse velocity",
-             [this](Arguments& argv, long value) {
+            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            retroShell.dump(port.mouse, Category::Config);
 
-        c64.configure(OPT_MOUSE_VELOCITY, parseNum(argv));
-    });
+        }, i);
 
-    root.add({"mouse", "set", "shakedetector"}, { Arg::onoff },
-             "Enables or disables the shake detector",
-             [this](Arguments& argv, long value) {
+        root.add({"mouse", nr, "set"},
+                 "Configures the component");
 
-        c64.configure(OPT_SHAKE_DETECTION, parseBool(argv));
-    });
+        root.add({"mouse", nr, "set", "model"}, { MouseModelEnum::argList() },
+                 "Selects the mouse model",
+                 [this](Arguments& argv, long value) {
 
-    
+            c64.configure(OPT_MOUSE_MODEL, value, parseEnum <MouseModelEnum> (argv));
+
+        }, i);
+
+        root.add({"mouse", nr, "set", "velocity"}, { Arg::value },
+                 "Sets the horizontal and vertical mouse velocity",
+                 [this](Arguments& argv, long value) {
+
+            c64.configure(OPT_MOUSE_VELOCITY, value, parseNum(argv));
+
+        }, i);
+
+        root.add({"mouse", nr, "set", "shakedetector"}, { Arg::onoff },
+                 "Enables or disables the shake detector",
+                 [this](Arguments& argv, long value) {
+
+            c64.configure(OPT_SHAKE_DETECTION, value, parseBool(argv));
+
+        }, i);
+
+        /*
+        root.add({"mouse", nr, "press"},
+                 "Presses a mouse button");
+
+        root.add({"mouse", nr, "press", "left"},
+                 "Presses the left mouse button",
+                 [this](Arguments& argv, long value) {
+
+            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            port.mouse.pressAndReleaseLeft();
+
+        }, i);
+
+        root.add({"mouse", nr, "press", "right"},
+                 "Presses the right mouse button",
+                 [this](Arguments& argv, long value) {
+
+            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            port.mouse.pressAndReleaseRight();
+
+        }, i);
+        */
+    }
+
+
     //
     // Parallel cable
     //

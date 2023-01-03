@@ -280,7 +280,6 @@ Keyboard::autoType(const string &text)
 {
     for (char const &c: text) {
 
-        printf("Typing %c\n", c);
         scheduleKeyPress(c, 0.03);
         scheduleKeyRelease(c, 0.03);
     }
