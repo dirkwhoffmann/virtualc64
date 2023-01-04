@@ -52,7 +52,7 @@ private:
 
     
     //
-    // Methods from C64Component
+    // Methods from CoreComponent
     //
     
 private:

@@ -18,7 +18,7 @@ ControlPort::ControlPort(C64 &ref, isize nr) : SubComponent(ref), nr(nr)
 {
     assert(nr == PORT_1 || nr == PORT_2);
     
-    subComponents = std::vector<C64Component *> {
+    subComponents = std::vector<CoreComponent *> {
         
         &mouse,
         &joystick

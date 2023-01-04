@@ -10,7 +10,7 @@
 #pragma once
 
 #include "ThreadTypes.h"
-#include "C64Component.h"
+#include "CoreComponent.h"
 #include "Chrono.h"
 #include "Concurrency.h"
 
@@ -121,7 +121,7 @@ namespace vc64 {
  * executed instructions in a trace buffer.
  */
 
-class Thread : public C64Component, util::Wakeable {
+class Thread : public CoreComponent, util::Wakeable {
 
 protected:
 
@@ -262,8 +262,8 @@ private:
 
 struct AutoResume {
 
-    C64Component *c;
-    AutoResume(C64Component *c) : c(c) { c->suspend(); }
+    CoreComponent *c;
+    AutoResume(CoreComponent *c) : c(c) { c->suspend(); }
     ~AutoResume() { c->resume(); }
 };
 

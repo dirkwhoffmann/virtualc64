@@ -23,7 +23,7 @@ RetroShell::RetroShell(C64& ref) : SubComponent(ref), interpreter(ref)
 void
 RetroShell::_initialize()
 {
-    C64Component::_initialize();
+    CoreComponent::_initialize();
 
     // Initialize the text storage
     clear();
@@ -554,7 +554,7 @@ RetroShell::help(const string &command)
 }
 
 void
-RetroShell::dump(C64Component &component, Category category)
+RetroShell::dump(CoreComponent &component, Category category)
 {
     std::stringstream ss;
 

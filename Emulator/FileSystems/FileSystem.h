@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-class FileSystem : C64Object {
+class FileSystem : CoreObject {
     
     friend class FSBlock;
 

@@ -21,7 +21,7 @@ namespace vc64 {
 class DiskAnalyzer;
 class FileSystem;
 
-class Disk : public C64Object {
+class Disk : public CoreObject {
     
     friend class Drive;
     
@@ -128,7 +128,7 @@ private:
 
     
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
 
 private:
@@ -138,7 +138,7 @@ private:
 
     
     //
-    // Methods from C64Component
+    // Methods from CoreComponent
     //
     
 private:

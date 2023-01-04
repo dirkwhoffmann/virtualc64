@@ -117,14 +117,14 @@ Thread::main()
         // Are we requested to enter or exit warp mode?
         if (newWarpMode != warpMode) {
             
-            C64Component::warpOnOff(newWarpMode);
+            CoreComponent::warpOnOff(newWarpMode);
             warpMode = newWarpMode;
         }
 
         // Are we requested to enter or exit warp mode?
         if (newDebugMode != debugMode) {
             
-            C64Component::debugOnOff(newDebugMode);
+            CoreComponent::debugOnOff(newDebugMode);
             debugMode = newDebugMode;
         }
 
@@ -133,32 +133,32 @@ Thread::main()
 
             if (state == EXEC_OFF && newState == EXEC_PAUSED) {
 
-                C64Component::powerOn();
+                CoreComponent::powerOn();
                 state = EXEC_PAUSED;
 
             } else if (state == EXEC_OFF && newState == EXEC_RUNNING) {
 
-                C64Component::powerOn();
+                CoreComponent::powerOn();
                 state = EXEC_PAUSED;
 
             } else if (state == EXEC_PAUSED && newState == EXEC_OFF) {
 
-                C64Component::powerOff();
+                CoreComponent::powerOff();
                 state = EXEC_OFF;
 
             } else if (state == EXEC_PAUSED && newState == EXEC_RUNNING) {
 
-                C64Component::run();
+                CoreComponent::run();
                 state = EXEC_RUNNING;
 
             } else if (state == EXEC_RUNNING && newState == EXEC_OFF) {
 
-                C64Component::pause();
+                CoreComponent::pause();
                 state = EXEC_PAUSED;
 
             } else if (state == EXEC_RUNNING && newState == EXEC_PAUSED) {
 
-                C64Component::pause();
+                CoreComponent::pause();
                 state = EXEC_PAUSED;
 
             } else if (state == EXEC_RUNNING && newState == EXEC_SUSPENDED) {
@@ -171,7 +171,7 @@ Thread::main()
 
             } else if (newState == EXEC_HALTED) {
 
-                C64Component::halt();
+                CoreComponent::halt();
                 state = EXEC_HALTED;
                 return;
 

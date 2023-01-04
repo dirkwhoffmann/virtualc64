@@ -79,7 +79,7 @@ public:
     
     
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
 
 private:
@@ -89,7 +89,7 @@ private:
 
     
     //
-    // Methods from C64Component
+    // Methods from CoreComponent
     //
     
 private:
@@ -129,7 +129,7 @@ private:
 public:
     
     // Returns the result of the most recent call to inspect()
-    TODInfo getInfo() const { return C64Component::getInfo(info); }
+    TODInfo getInfo() const { return CoreComponent::getInfo(info); }
 
     
     //

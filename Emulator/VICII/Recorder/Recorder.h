@@ -72,7 +72,7 @@ public:
 
     
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
 
 private:
@@ -82,7 +82,7 @@ private:
     
     
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
 
 private:

@@ -11,14 +11,14 @@
 
 #include "FSTypes.h"
 #include "Buffer.h"
-#include "C64Object.h"
+#include "CoreObject.h"
 #include "PETName.h"
 
 using util::Buffer;
 
 namespace vc64 {
 
-class FSBlock : C64Object {
+class FSBlock : CoreObject {
     
     // The device this block belongs to
     class FileSystem &device;

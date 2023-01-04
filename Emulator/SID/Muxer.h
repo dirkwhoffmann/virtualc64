@@ -128,7 +128,7 @@ public:
 
     
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
 
 private:
@@ -139,7 +139,7 @@ private:
 
     
     //
-    // Methods from C64Component
+    // Methods from CoreComponent
     //
 
 private:
@@ -226,7 +226,7 @@ public:
     
     SIDInfo getInfo(isize nr);
     VoiceInfo getVoiceInfo(isize nr, isize voice);
-    C64Component &getSID(isize nr);
+    CoreComponent &getSID(isize nr);
     SIDStats getStats();
     
 private:

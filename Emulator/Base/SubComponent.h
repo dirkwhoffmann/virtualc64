@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "C64Component.h"
+#include "CoreComponent.h"
 #include "CPUTypes.h"
 
 namespace vc64 {
@@ -52,10 +52,10 @@ class CRTFile;
 class RomFile;
 class Snapshot;
 
-/* This class extends the C64Component class with references to all components
+/* This class extends the CoreComponent class with references to all components
  * that are part of the C64 class.
  */
-class SubComponent : public C64Component {
+class SubComponent : public CoreComponent {
 
 protected:
 

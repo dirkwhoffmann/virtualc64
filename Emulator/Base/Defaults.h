@@ -9,12 +9,12 @@
 
 #pragma once
 
-#include "C64Component.h"
+#include "CoreComponent.h"
 #include "IOUtils.h"
 
 namespace vc64 {
 
-class Defaults : public C64Object {
+class Defaults : public CoreObject {
 
     mutable util::ReentrantMutex mutex;
 
@@ -37,7 +37,7 @@ public:
 
 
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
 
 private:

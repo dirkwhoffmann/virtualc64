@@ -590,7 +590,7 @@ private:
 
     
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
 
 private:
@@ -600,7 +600,7 @@ private:
 
 
     //
-    // Methods from C64Component
+    // Methods from CoreComponent
     //
 
 private:
@@ -734,7 +734,7 @@ private:
     
 public:
     
-    VICIIInfo getInfo() const { return C64Component::getInfo(info); }
+    VICIIInfo getInfo() const { return CoreComponent::getInfo(info); }
     SpriteInfo getSpriteInfo(isize nr);
     VICIIStats getStats() { return stats; }
     

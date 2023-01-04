@@ -16,11 +16,11 @@ namespace vc64 {
 /* Object model:
  *
  * ------------------
- * |   C64Object    |
+ * |   CoreObject   |
  * ------------------
  *         |
  * ------------------
- * |  C64Component  |
+ * | CoreComponent  |
  * ------------------
  *         |
  *         |   ------------------   ----------------
@@ -30,15 +30,15 @@ namespace vc64 {
  *         |-->|  SubComponent  |
  *             ------------------
  *
- * C64Object is the base class for all C64 related classes. It provides a
+ * CoreObject is the base class for all C64 related classes. It provides a
  * a textual description for the object as well as various functions for
  * printing debug information.
  *
- * C64Component defines the base functionality of all hardware components. It
+ * CoreComponent defines the base functionality of all hardware components. It
  * comprises functions for initializing, configuring, and serializing the
  * object, as well as functions for powering up and down, running and
  * pausing. Furthermore, a 'SYNCHRONIZED' macro is provided to prevent mutual
- * execution of certain code components.
+ * execution of certain code blocks.
  *
  * Thread adds the ability to run the component asynchroneously. It implements
  * the emulator's state model (off, paused, running).
@@ -51,7 +51,7 @@ enum class Category
     Summary, Thread, Watchpoints
 };
 
-class C64Object {
+class CoreObject {
 
 protected:
 
@@ -63,7 +63,7 @@ protected:
     
 public:
     
-    virtual ~C64Object() { };
+    virtual ~CoreObject() { };
     
     // Returns the name for this component (e.g., "CPU" or "VICII")
     virtual const char *getDescription() const = 0;

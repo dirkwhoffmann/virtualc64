@@ -20,7 +20,7 @@ Drive::Drive(isize nr, C64 &ref) : SubComponent(ref), deviceNr(nr)
 
     disk = std::make_unique<Disk>();
     
-    subComponents = std::vector <C64Component *> {
+    subComponents = std::vector <CoreComponent *> {
         
         &mem,
         &cpu,
@@ -41,7 +41,7 @@ Drive::getDescription() const
 void
 Drive::_initialize()
 {
-    C64Component::_initialize();
+    CoreComponent::_initialize();
     
     insertionStatus = DISK_FULLY_EJECTED;
     disk->clearDisk();
@@ -377,7 +377,7 @@ Drive::_dump(Category category, std::ostream& os) const
         os << tab("Eject volume");
         os << dec(config.ejectVolume) << std::endl;
         
-        mem.C64Component::_dump(Category::BankMap, os);
+        mem.CoreComponent::_dump(Category::BankMap, os);
     }
     
     if (category == Category::Inspection) {

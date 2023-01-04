@@ -11,12 +11,12 @@
 
 #include "DiskAnalyzerTypes.h"
 #include "DiskTypes.h"
-#include "C64Object.h"
+#include "CoreObject.h"
 #include "IOUtils.h"
 
 namespace vc64 {
 
-class DiskAnalyzer: public C64Object {
+class DiskAnalyzer: public CoreObject {
 
     // friend class Disk;
     
@@ -53,7 +53,7 @@ public:
     
     
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
 
 private:

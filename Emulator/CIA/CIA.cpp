@@ -16,7 +16,7 @@ namespace vc64 {
 
 CIA::CIA(C64 &ref) : SubComponent(ref)
 {    
-    subComponents = std::vector<C64Component *> { &tod };
+    subComponents = std::vector<CoreComponent *> { &tod };
 }
 
 void

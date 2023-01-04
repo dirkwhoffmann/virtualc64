@@ -153,7 +153,7 @@ C64::C64()
 {
     trace(RUN_DEBUG, "Creating virtual C64\n");
 
-    subComponents = std::vector<C64Component *> {
+    subComponents = std::vector<CoreComponent *> {
         
         &mem,
         &cpu,
@@ -180,8 +180,8 @@ C64::C64()
     cpu.setID(0);
 
     // Set up the initial state
-    C64Component::initialize();
-    C64Component::reset(true);
+    CoreComponent::initialize();
+    CoreComponent::reset(true);
 
     // Initialize the sync timer
     targetTime = util::Time::now();
@@ -215,7 +215,7 @@ C64::reset(bool hard)
     {   SUSPENDED
         
         // Execute the standard reset routine
-        C64Component::reset(hard);
+        CoreComponent::reset(hard);
 
         // Inform the GUI
         msgQueue.put(MSG_RESET);
@@ -225,7 +225,7 @@ C64::reset(bool hard)
 void
 C64::_initialize()
 {
-    C64Component::_initialize();
+    CoreComponent::_initialize();
 
     auto load = [&](const string &path) {
 
@@ -1123,8 +1123,8 @@ C64::_inspect() const
 isize
 C64::load(const u8 *buffer)
 {
-    auto result = C64Component::load(buffer);
-    C64Component::didLoad();
+    auto result = CoreComponent::load(buffer);
+    CoreComponent::didLoad();
 
     return result;
 }
@@ -1132,8 +1132,8 @@ C64::load(const u8 *buffer)
 isize
 C64::save(u8 *buffer)
 {
-    auto result = C64Component::save(buffer);
-    C64Component::didSave();
+    auto result = CoreComponent::save(buffer);
+    CoreComponent::didSave();
 
     return result;
 }

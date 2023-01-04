@@ -152,7 +152,7 @@ public:
 
     
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
 
 protected:
@@ -162,7 +162,7 @@ protected:
 
     
     //
-    // Methods from C64Component
+    // Methods from CoreComponent
     //
     
 protected:

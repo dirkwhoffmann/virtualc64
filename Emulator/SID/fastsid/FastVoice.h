@@ -180,7 +180,7 @@ public:
 
     
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
 
 private:
@@ -189,7 +189,7 @@ private:
 
     
     //
-    // Methods from C64Component
+    // Methods from CoreComponent
     //
     
 private:
@@ -236,8 +236,8 @@ private:
     
 public:
     
-    SIDInfo getInfo() const { return C64Component::getInfo(info); }
-    VoiceInfo getVoiceInfo(isize nr) const { return C64Component::getInfo(voiceInfo[nr]); }
+    SIDInfo getInfo() const { return CoreComponent::getInfo(info); }
+    VoiceInfo getVoiceInfo(isize nr) const { return CoreComponent::getInfo(voiceInfo[nr]); }
    
     
     //

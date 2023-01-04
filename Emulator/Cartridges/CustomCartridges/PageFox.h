@@ -34,7 +34,7 @@ private:
     
     
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
     
 private:
@@ -43,7 +43,7 @@ private:
     
     
     //
-    // Methods from C64Component
+    // Methods from CoreComponent
     //
     
 private:

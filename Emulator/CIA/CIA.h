@@ -292,7 +292,7 @@ public:
 
     
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
 
 private:
@@ -301,7 +301,7 @@ private:
 
     
     //
-    // Methods from C64Component
+    // Methods from CoreComponent
     //
 
 protected:
@@ -369,7 +369,7 @@ private:
 
 public:
     
-    CIAInfo getInfo() const { return C64Component::getInfo(info); }
+    CIAInfo getInfo() const { return CoreComponent::getInfo(info); }
 
     
     //

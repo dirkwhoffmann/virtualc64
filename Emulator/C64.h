@@ -245,7 +245,7 @@ public:
 
 
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
 
 public:
@@ -259,7 +259,7 @@ private:
 
 
     //
-    // Methods from C64Component
+    // Methods from CoreComponent
     //
 
 public:
@@ -321,7 +321,7 @@ public:
     // void inspect() { inspect(inspectionTarget); }
     // void autoInspect();
 
-    EventInfo getEventInfo() const { return C64Component::getInfo(eventInfo); }
+    EventInfo getEventInfo() const { return CoreComponent::getInfo(eventInfo); }
     EventSlotInfo getSlotInfo(isize nr) const;
 
 private:
@@ -330,7 +330,7 @@ private:
 
     
     //
-    // Methods from C64Component
+    // Methods from CoreComponent
     //
     
 private:

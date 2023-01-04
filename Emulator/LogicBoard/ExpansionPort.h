@@ -54,7 +54,7 @@ public:
 
 
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
 
     const char *getDescription() const override { return "ExpansionPort"; }
@@ -62,7 +62,7 @@ public:
 
     
     //
-    // Methods from C64Component
+    // Methods from CoreComponent
     //
 
 private:

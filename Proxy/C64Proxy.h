@@ -21,7 +21,7 @@
 #import "ExpansionPortTypes.h"
 #import "FileTypes.h"
 #import "FSTypes.h"
-#import "C64ComponentTypes.h"
+#import "CoreComponentTypes.h"
 #import "JoystickTypes.h"
 #import "MemoryTypes.h"
 #import "MouseTypes.h"
@@ -105,7 +105,7 @@
 }
 @end
 
-@interface C64ComponentProxy : Proxy {
+@interface CoreComponentProxy : Proxy {
     
 }
 @end
@@ -115,7 +115,7 @@
 // Host
 //
 
-@interface HostProxy : C64ComponentProxy {
+@interface HostProxy : CoreComponentProxy {
 }
 
 @property double sampleRate;
@@ -129,7 +129,7 @@
 // C64
 //
 
-@interface C64Proxy : C64ComponentProxy {
+@interface C64Proxy : CoreComponentProxy {
         
     CIAProxy *cia1;
     CIAProxy *cia2;
@@ -319,7 +319,7 @@
 // CPU
 //
 
-@interface CPUProxy : C64ComponentProxy { }
+@interface CPUProxy : CoreComponentProxy { }
 
 @property (readonly) CPUInfo info;
 @property (readonly) i64 clock;
@@ -350,7 +350,7 @@
 // CIA
 //
 
-@interface CIAProxy : C64ComponentProxy { }
+@interface CIAProxy : CoreComponentProxy { }
 
 - (CIAInfo)getInfo;
 
@@ -361,7 +361,7 @@
 // Memory
 //
 
-@interface MemoryProxy : C64ComponentProxy { }
+@interface MemoryProxy : CoreComponentProxy { }
 
 - (MemInfo)getInfo;
 
@@ -384,7 +384,7 @@
 //
 
 
-@interface VICProxy : C64ComponentProxy { }
+@interface VICProxy : CoreComponentProxy { }
 
 @property (readonly) NSInteger hPixels;
 @property (readonly) NSInteger vPixels;
@@ -406,7 +406,7 @@
 // DmaDebugger
 //
 
-@interface DmaDebuggerProxy : C64ComponentProxy { }
+@interface DmaDebuggerProxy : CoreComponentProxy { }
 
 - (DmaDebuggerConfig)getConfig;
 
@@ -417,7 +417,7 @@
 // SID
 //
 
-@interface SIDProxy : C64ComponentProxy { }
+@interface SIDProxy : CoreComponentProxy { }
 
 - (SIDInfo)getInfo:(NSInteger)nr;
 - (VoiceInfo)getVoiceInfo:(NSInteger)nr voice:(NSInteger)voice;
@@ -447,7 +447,7 @@
 // Keyboard
 //
 
-@interface KeyboardProxy : C64ComponentProxy { }
+@interface KeyboardProxy : CoreComponentProxy { }
 
 - (BOOL)keyIsPressed:(NSInteger)nr;
 - (BOOL)keyIsPressedAtRow:(NSInteger)row col:(NSInteger)col;
@@ -489,7 +489,7 @@
 // ControlPort
 //
 
-@interface ControlPortProxy : C64ComponentProxy {
+@interface ControlPortProxy : CoreComponentProxy {
     
     JoystickProxy *joystick;
     MouseProxy *mouse;
@@ -505,7 +505,7 @@
 // ExpansionPort
 //
 
-@interface ExpansionPortProxy : C64ComponentProxy { }
+@interface ExpansionPortProxy : CoreComponentProxy { }
 
 - (CartridgeInfo)getInfo;
 - (CartridgeRomInfo)getRomInfo:(NSInteger)nr;
@@ -549,7 +549,7 @@
 // IEC bus
 //
 
-@interface IECProxy : C64ComponentProxy { }
+@interface IECProxy : CoreComponentProxy { }
 
 @property (readonly) BOOL transferring;
 
@@ -560,7 +560,7 @@
 // Drive
 //
 
-@interface DriveProxy : C64ComponentProxy {
+@interface DriveProxy : CoreComponentProxy {
     
     VIAProxy *via1;
     VIAProxy *via2;
@@ -615,7 +615,7 @@
 // VIA
 //
 
-@interface VIAProxy : C64ComponentProxy { }
+@interface VIAProxy : CoreComponentProxy { }
 
 @end
 
@@ -624,7 +624,7 @@
 // ParCable
 //
 
-@interface ParCableProxy : C64ComponentProxy { }
+@interface ParCableProxy : CoreComponentProxy { }
 
 @end
 
@@ -633,7 +633,7 @@
 // Disk
 //
 
-@interface DiskProxy : C64ComponentProxy { }
+@interface DiskProxy : CoreComponentProxy { }
     
 - (BOOL)writeProtected;
 - (void)setWriteProtected:(BOOL)b;
@@ -672,7 +672,7 @@
 // Datasette
 //
 
-@interface DatasetteProxy : C64ComponentProxy { }
+@interface DatasetteProxy : CoreComponentProxy { }
 
 @property (readonly) BOOL hasTape;
 @property (readonly) NSInteger type;
@@ -693,7 +693,7 @@
 // Mouse
 //
 
-@interface MouseProxy : C64ComponentProxy { }
+@interface MouseProxy : CoreComponentProxy { }
 
 - (BOOL)detectShakeAbs:(NSPoint)pos;
 - (BOOL)detectShakeRel:(NSPoint)pos;
@@ -708,7 +708,7 @@
 // Joystick
 //
 
-@interface JoystickProxy : C64ComponentProxy { }
+@interface JoystickProxy : CoreComponentProxy { }
 
 - (void) trigger:(GamePadAction)event;
 

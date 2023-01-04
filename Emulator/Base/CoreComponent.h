@@ -9,8 +9,8 @@
 
 #pragma once
 
-#include "C64ComponentTypes.h"
-#include "C64Object.h"
+#include "CoreComponentTypes.h"
+#include "CoreObject.h"
 #include "Serialization.h"
 #include "Concurrency.h"
 #include <vector>
@@ -42,7 +42,7 @@ struct NoAssign
     NoAssign& operator=(NoAssign const&) = delete;
 };
 
-class C64Component : public C64Object, NoCopy, NoAssign {
+class CoreComponent : public CoreObject, NoCopy, NoAssign {
 
 protected:
     
@@ -50,7 +50,7 @@ protected:
     bool verbose = true;
 
     // Sub components
-    std::vector<C64Component *> subComponents;
+    std::vector<CoreComponent *> subComponents;
 
     /* Mutex for implementing the 'synchronized' macro. The macro can be used
      * to prevent multiple threads to enter the same code block. It mimics the

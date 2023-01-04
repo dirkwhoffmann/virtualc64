@@ -17,7 +17,7 @@ namespace vc64 {
 
 Mouse::Mouse(C64 &ref, ControlPort& pref) : SubComponent(ref), port(pref)
 {
-    subComponents = std::vector<C64Component *> {
+    subComponents = std::vector<CoreComponent *> {
         
         &mouse1350,
         &mouse1351,

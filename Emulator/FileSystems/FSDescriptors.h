@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "C64Object.h"
+#include "CoreObject.h"
 #include "DiskTypes.h"
 #include "FSTypes.h"
 
@@ -26,7 +26,7 @@ namespace vc64 {
  * file.
  */
 
-struct FSDeviceDescriptor : C64Object {
+struct FSDeviceDescriptor : CoreObject {
     
     // DOS type
     DOSType dos = DOS_TYPE_NODOS;

@@ -8,28 +8,28 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "C64Object.h"
+#include "CoreObject.h"
 #include <iostream>
 
 namespace vc64 {
 
 bool
-C64Object::verbose = true;
+CoreObject::verbose = true;
 
 void
-C64Object::prefix() const
+CoreObject::prefix() const
 {
     fprintf(stderr, "%s: ", getDescription());
 }
 
 void
-C64Object::dump(Category category, std::ostream& ss) const
+CoreObject::dump(Category category, std::ostream& ss) const
 {
     _dump(category, ss);
 }
 
 void
-C64Object::dump(Category category) const
+CoreObject::dump(Category category) const
 {
     dump(category, std::cout);
 }

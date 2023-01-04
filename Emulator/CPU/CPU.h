@@ -68,7 +68,7 @@ public:
 
     
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
 
 private:
@@ -78,7 +78,7 @@ private:
 
     
     //
-    // Methods from C64Component
+    // Methods from CoreComponent
     //
 
 private:
@@ -173,7 +173,7 @@ public:
 public:
     
     // Returns the result of the latest inspection
-    CPUInfo getInfo() const { return C64Component::getInfo(info); }
+    CPUInfo getInfo() const { return CoreComponent::getInfo(info); }
 
 
     //

@@ -81,7 +81,7 @@ public:
 
 
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
 
 private:
@@ -91,7 +91,7 @@ private:
 
 
     //
-    // Methods from C64Component
+    // Methods from CoreComponent
     //
 
 private:
@@ -206,7 +206,7 @@ private:
     void help(const string &command);
 
     // Reroutes the output of the component's dump function to the shell
-    void dump(C64Component &component, Category category);
+    void dump(CoreComponent &component, Category category);
     
     
     //

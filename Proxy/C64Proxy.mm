@@ -65,14 +65,14 @@ using namespace vc64;
 
 
 //
-// C64Component proxy
+// CoreComponent proxy
 //
 
-@implementation C64ComponentProxy
+@implementation CoreComponentProxy
 
--(C64Component *)component
+-(CoreComponent *)component
 {
-    return (C64Component *)obj;
+    return (CoreComponent *)obj;
 }
 
 @end

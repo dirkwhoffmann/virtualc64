@@ -9,12 +9,12 @@
 
 #pragma once
 
-#include "C64Object.h"
+#include "CoreObject.h"
 #include "MemUtils.h"
 
 namespace vc64 {
 
-template <int len> class PETName : C64Object {
+template <int len> class PETName : CoreObject {
 
     // PETSCII representation
     u8 pet[len + 1];

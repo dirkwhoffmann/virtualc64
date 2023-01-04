@@ -42,7 +42,7 @@ private:
     
     
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
     
     const char *getDescription() const override { return "PRGFile"; }

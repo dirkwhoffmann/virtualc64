@@ -33,14 +33,14 @@ private:
 
     
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
 
     void _dump(Category category, std::ostream& os) const override;
     
     
     //
-    // Methods from C64Component
+    // Methods from CoreComponent
     //
     
 private:

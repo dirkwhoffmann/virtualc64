@@ -8,17 +8,17 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "C64Component.h"
+#include "CoreComponent.h"
 #include "Checksum.h"
 
 namespace vc64 {
 
 void
-C64Component::initialize()
+CoreComponent::initialize()
 {
     try {
 
-        for (C64Component *c : subComponents) { c->initialize(); }
+        for (CoreComponent *c : subComponents) { c->initialize(); }
         _initialize();
 
     } catch (std::exception &e) {
@@ -29,38 +29,38 @@ C64Component::initialize()
 }
 
 void
-C64Component::reset(bool hard)
+CoreComponent::reset(bool hard)
 {
-    for (C64Component *c : subComponents) { c->reset(hard); }
+    for (CoreComponent *c : subComponents) { c->reset(hard); }
     _reset(hard);
 }
 
 void
-C64Component::inspect() const
+CoreComponent::inspect() const
 {
-    for (C64Component *c : subComponents) { c->inspect(); }
+    for (CoreComponent *c : subComponents) { c->inspect(); }
     _inspect();
 }
 
 isize
-C64Component::size()
+CoreComponent::size()
 {
     isize result = _size();
 
     // Add 8 bytes for the checksum
     result += 8;
 
-    for (C64Component *c : subComponents) { result += c->size(); }
+    for (CoreComponent *c : subComponents) { result += c->size(); }
     return result;
 }
 
 u64
-C64Component::checksum()
+CoreComponent::checksum()
 {
     u64 result = _checksum();
 
     // Compute checksums for all subcomponents
-    for (C64Component *c : subComponents) {
+    for (CoreComponent *c : subComponents) {
         result = util::fnvIt64(result, c->checksum());
     }
 
@@ -68,7 +68,7 @@ C64Component::checksum()
 }
 
 isize
-C64Component::load(const u8 *buffer)
+CoreComponent::load(const u8 *buffer)
 {
     assert(!isRunning());
 
@@ -78,7 +78,7 @@ C64Component::load(const u8 *buffer)
     ptr += willLoadFromBuffer(ptr);
 
     // Load internal state of all subcomponents
-    for (C64Component *c : subComponents) {
+    for (CoreComponent *c : subComponents) {
         ptr += c->load(ptr);
     }
 
@@ -102,11 +102,11 @@ C64Component::load(const u8 *buffer)
 }
 
 void
-C64Component::didLoad()
+CoreComponent::didLoad()
 {
     assert(!isRunning());
 
-    for (C64Component *c : subComponents) {
+    for (CoreComponent *c : subComponents) {
         c->didLoad();
     }
 
@@ -114,7 +114,7 @@ C64Component::didLoad()
 }
 
 isize
-C64Component::save(u8 *buffer)
+CoreComponent::save(u8 *buffer)
 {
     u8 *ptr = buffer;
     
@@ -122,7 +122,7 @@ C64Component::save(u8 *buffer)
     ptr += willSaveToBuffer(ptr);
 
     // Save internal state of all subcomponents
-    for (C64Component *c : subComponents) {
+    for (CoreComponent *c : subComponents) {
         ptr += c->save(ptr);
     }
 
@@ -143,9 +143,9 @@ C64Component::save(u8 *buffer)
 }
 
 void
-C64Component::didSave()
+CoreComponent::didSave()
 {
-    for (C64Component *c : subComponents) {
+    for (CoreComponent *c : subComponents) {
         c->didSave();
     }
 
@@ -153,70 +153,70 @@ C64Component::didSave()
 }
 
 void
-C64Component::isReady() const
+CoreComponent::isReady() const
 {
     for (auto c : subComponents) { c->isReady(); }
     _isReady();
 }
 
 void
-C64Component::powerOn()
+CoreComponent::powerOn()
 {
     for (auto c : subComponents) { c->powerOn(); }
     _powerOn();
 }
 
 void
-C64Component::powerOff()
+CoreComponent::powerOff()
 {
     for (auto c : subComponents) { c->powerOff(); }
     _powerOff();
 }
 
 void
-C64Component::run()
+CoreComponent::run()
 {
     for (auto c : subComponents) { c->run(); }
     _run();
 }
 
 void
-C64Component::pause()
+CoreComponent::pause()
 {
     for (auto c : subComponents) { c->pause(); }
     _pause();
 }
 
 void
-C64Component::halt()
+CoreComponent::halt()
 {
     for (auto c : subComponents) { c->halt(); }
     _halt();
 }
 
 void
-C64Component::warpOn()
+CoreComponent::warpOn()
 {
     for (auto c : subComponents) { c->warpOn(); }
     _warpOn();
 }
 
 void
-C64Component::warpOff()
+CoreComponent::warpOff()
 {
     for (auto c : subComponents) { c->warpOff(); }
     _warpOff();
 }
 
 void
-C64Component::debugOn()
+CoreComponent::debugOn()
 {
     for (auto c : subComponents) { c->debugOn(); }
     _debugOn();
 }
 
 void
-C64Component::debugOff()
+CoreComponent::debugOff()
 {
     for (auto c : subComponents) { c->debugOff(); }
     _debugOff();

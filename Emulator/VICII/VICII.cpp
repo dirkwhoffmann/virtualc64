@@ -25,7 +25,7 @@ namespace vc64 {
 
 VICII::VICII(C64 &ref) : SubComponent(ref), dmaDebugger(ref)
 {    
-    subComponents = std::vector<C64Component *> { &dmaDebugger };
+    subComponents = std::vector<CoreComponent *> { &dmaDebugger };
 
     // Assign reference clock to all time delayed variables
     baLine.setClock(&cpu.clock);

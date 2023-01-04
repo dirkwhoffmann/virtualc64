@@ -36,7 +36,7 @@ public:
     
     
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
 
     const char *getDescription() const override { return "DmaDebugger"; }
@@ -44,7 +44,7 @@ public:
 
     
     //
-    // Methods from C64Component
+    // Methods from CoreComponent
     //
 
 private:

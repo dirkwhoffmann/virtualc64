@@ -71,7 +71,7 @@ public:
     
     
     //
-    // Methods from C64Object
+    // Methods from CoreObject
     //
     
 private:
@@ -81,7 +81,7 @@ private:
 
     
     //
-    // Methods from C64Component
+    // Methods from CoreComponent
     //
 
 private:
@@ -138,7 +138,7 @@ public:
     
 public:
     
-    MemInfo getInfo() const { return C64Component::getInfo(info); }
+    MemInfo getInfo() const { return CoreComponent::getInfo(info); }
     
 private:
     

@@ -37,7 +37,7 @@
 
 FastSID::FastSID(C64 &ref, int n) : SubComponent(ref), nr(n)
 {    
-    subComponents = std::vector<C64Component *> {
+    subComponents = std::vector<CoreComponent *> {
         
         &voice[0],
         &voice[1],

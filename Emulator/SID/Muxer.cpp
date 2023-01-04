@@ -19,7 +19,7 @@ namespace vc64 {
 
 Muxer::Muxer(C64 &ref) : SubComponent(ref)
 {        
-    subComponents = std::vector<C64Component *> {
+    subComponents = std::vector<CoreComponent *> {
         
         &resid[0],
         &resid[1],
@@ -574,7 +574,7 @@ Muxer::getVoiceInfo(isize nr, isize voice)
     }
 }
 
-C64Component &
+CoreComponent &
 Muxer::getSID(isize nr)
 {
     assert(nr >= 0 && nr <= 3);

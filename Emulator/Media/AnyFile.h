@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "C64Object.h"
+#include "CoreObject.h"
 #include "FileTypes.h"
 #include "PETName.h"
 
@@ -50,7 +50,7 @@ namespace vc64 {
  *               ---------   ---------    ---------    ---------
  */
 
-class AnyFile : public C64Object {
+class AnyFile : public CoreObject {
     
 public:
 
