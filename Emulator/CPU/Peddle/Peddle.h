@@ -40,14 +40,6 @@ protected:
     // Emulated CPU model
     CPURevision cpuModel = MOS_6510;
 
-    // Disassembler style
-    DasmStyle style = {
-
-        // .numberFormat   = { .prefix = "$", .radix = 16 },
-        .numberFormat   = { .upperCase = true, .prefix = "", .radix = 16 },
-        .tab            = 4
-    };
-
 
     //
     // Sub components
@@ -209,10 +201,6 @@ public:
 
     // Selects the emulated CPU model
     void setModel(CPURevision cpuModel);
-
-    // Configures the disassembler
-    void setDasmNumberFormat(DasmNumberFormat value);
-    void setDasmIndentation(int value);
 
 
     //

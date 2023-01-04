@@ -21,11 +21,12 @@ class Disassembler {
     // Reference to the connected CPU
     class Peddle &cpu;
 
-    // Textual representation for each opcode
-    const char *mnemonic[256];
+    // Currently used disassembler style
+    DasmStyle style = {
 
-    // Adressing mode of each opcode
-    AddressingMode addressingMode[256];
+        .numberFormat   = { .prefix = "", .radix = 16, .upperCase = true },
+        .tab            = 4
+    };
 
 
     //
@@ -35,6 +36,14 @@ class Disassembler {
 public:
 
     Disassembler(Peddle& ref) : cpu(ref) { };
+
+
+    //
+    // Configuring
+    //
+
+    void setNumberFormat(DasmNumberFormat value);
+    void setIndentation(int value);
 
 
     //
@@ -69,12 +78,14 @@ public:
 
 private:
 
-    const char *disassembleInstr(const RecordedInstruction &instr, long *len) const;
+    const char *disassembleInstr(RecordedInstruction instr, long *len) const;
     const char *disassembleBytes(const RecordedInstruction &instr) const;
     const char *disassembleRecordedFlags(const RecordedInstruction &instr) const;
 
+    /*
     template <bool hex>
     const char *disassembleInstr(RecordedInstruction instr, long *len) const;
+    */
 
     const char *disassembleRecordedInstrNew(RecordedInstruction instr, long *len) const;
 };
