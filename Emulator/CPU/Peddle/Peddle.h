@@ -9,7 +9,7 @@
 
 #include "PeddleConfig.h"
 #include "PeddleTypes.h"
-#include "StrWriter.h"
+#include "PeddleDisassembler.h"
 #include "PeddleDebugger.h"
 #include "SubComponent.h"
 #include "PeddleUtils.h"
@@ -24,6 +24,7 @@ namespace vc64::peddle {
 class Peddle : public SubComponent {
 
     friend class Debugger;
+    friend class Disassembler;
     friend class Breakpoints;
     friend class Watchpoints;
 
@@ -54,8 +55,8 @@ protected:
 
 public:
 
-    // CPU debugger
     Debugger debugger = Debugger(*this);
+    Disassembler disassembler = Disassembler(*this);
 
 
     //

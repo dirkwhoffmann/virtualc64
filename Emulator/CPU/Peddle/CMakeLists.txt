@@ -2,6 +2,7 @@ target_sources(vc64Core PRIVATE
 
 Peddle.cpp
 PeddleDebugger.cpp
-StringWriter.cpp
+PeddleDasm.cpp
+StrWriter.cpp
 
 )

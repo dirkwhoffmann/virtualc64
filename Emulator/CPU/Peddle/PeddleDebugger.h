@@ -257,46 +257,6 @@ public:
 
     // Returns the address of the instruction following the current one
     u16 getAddressOfNextInstruction() const;
-    
-    
-    //
-    // Running the disassembler
-    //
-
-    // Disassembles a previously recorded instruction
-    const char *disassembleRecordedInstr(isize i, long *len) const;
-    const char *disassembleRecordedBytes(isize i) const;
-    const char *disassembleRecordedFlags(isize i) const;
-    const char *disassembleRecordedPC(isize i) const;
-
-    // Disassembles the instruction at the specified address
-    const char *disassembleInstr(u16 addr, long *len) const;
-    const char *disassembleBytes(u16 addr) const;
-    const char *disassembleAddr(u16 addr) const;
-
-    // Disassembles the currently executed instruction
-    const char *disassembleInstr(long *len) const;
-    const char *disassembleBytes() const;
-    const char *disassemblePC() const;
-
-    // Dumps a portion of the log buffer
-    void dumpLogBuffer(std::ostream& os, isize count);
-    void dumpLogBuffer(std::ostream& os);
-
-    // Disassembles a memory range
-    void disassembleRange(std::ostream& os, u16 addr, isize count);
-    void disassembleRange(std::ostream& os, std::pair<u16, u16> range, isize max = 255);
-
-private:
-    
-    const char *disassembleInstr(const RecordedInstruction &instr, long *len) const;
-    const char *disassembleBytes(const RecordedInstruction &instr) const;
-    const char *disassembleRecordedFlags(const RecordedInstruction &instr) const;
-
-    template <bool hex>
-    const char *disassembleInstr(RecordedInstruction instr, long *len) const;
-
-    const char *disassembleRecordedInstrNew(RecordedInstruction instr, long *len) const;
 };
 
 }

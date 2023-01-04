@@ -322,43 +322,43 @@ using namespace vc64;
 
 - (NSString *)disassembleRecordedInstr:(NSInteger)i length:(NSInteger *)len
 {
-    const char *str = [self cpu]->debugger.disassembleRecordedInstr((int)i, len);
+    const char *str = [self cpu]->disassembler.disassembleRecordedInstr((int)i, len);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 
 - (NSString *)disassembleRecordedBytes:(NSInteger)i
 {
-    const char *str = [self cpu]->debugger.disassembleRecordedBytes((int)i);
+    const char *str = [self cpu]->disassembler.disassembleRecordedBytes((int)i);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 
 - (NSString *)disassembleRecordedFlags:(NSInteger)i
 {
-    const char *str = [self cpu]->debugger.disassembleRecordedFlags((int)i);
+    const char *str = [self cpu]->disassembler.disassembleRecordedFlags((int)i);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 
 - (NSString *)disassembleRecordedPC:(NSInteger)i
 {
-    const char *str = [self cpu]->debugger.disassembleRecordedPC((int)i);
+    const char *str = [self cpu]->disassembler.disassembleRecordedPC((int)i);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 
 - (NSString *)disassembleInstr:(NSInteger)addr length:(NSInteger *)len
 {
-    const char *str = [self cpu]->debugger.disassembleInstr((u16)addr, len);
+    const char *str = [self cpu]->disassembler.disassembleInstr((u16)addr, len);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 
 - (NSString *)disassembleBytes:(NSInteger)addr
 {
-    const char *str = [self cpu]->debugger.disassembleBytes((u16)addr);
+    const char *str = [self cpu]->disassembler.disassembleBytes((u16)addr);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 
 - (NSString *)disassembleAddr:(NSInteger)addr
 {
-    const char *str = [self cpu]->debugger.disassembleAddr((u16)addr);
+    const char *str = [self cpu]->disassembler.disassembleAddr((u16)addr);
     return str ? [NSString stringWithUTF8String:str] : NULL;
 }
 

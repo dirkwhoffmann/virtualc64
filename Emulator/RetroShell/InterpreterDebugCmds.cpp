@@ -72,7 +72,7 @@ Interpreter::initDebugShell(Command &root)
         std::stringstream ss;
 
         auto addr = argv.empty() ? cpu.getPC0() : u16(parseNum(argv));
-        cpu.debugger.disassembleRange(ss, addr, 16);
+        cpu.disassembler.disassembleRange(ss, addr, 16);
 
         retroShell << '\n' << ss << '\n';
     });
