@@ -10,6 +10,11 @@
 
 namespace vc64::peddle {
 
+// Static lookup tables
+MicroInstruction Peddle::actionFunc[256] = { };
+const char *Peddle::mnemonic[256] = { };
+AddressingMode Peddle::addressingMode[256] = { };
+
 Peddle::Peddle(C64 &ref) : SubComponent(ref)
 {
     static isize counter = 0;

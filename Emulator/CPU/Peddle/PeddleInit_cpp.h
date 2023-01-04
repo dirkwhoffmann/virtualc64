@@ -20,11 +20,19 @@ Peddle::registerCallback(u8 opcode, const char *mnemonic,
 void
 Peddle::registerInstructions()
 {
-    for (isize i = 0; i < 256; i++) {
-        registerCallback((u8)i, "???", ADDR_IMPLIED, JAM);
+    if (mnemonic[0] == nullptr) {
+
+        for (isize i = 0; i < 256; i++) {
+            registerCallback((u8)i, "???", ADDR_IMPLIED, JAM);
+        }
+        registerLegalInstructions();
+        registerIllegalInstructions();
+
+    } else {
+
+        printf("Tables already initialized\n"); 
     }
-    registerLegalInstructions();
-    registerIllegalInstructions();
+
 }
 
 void

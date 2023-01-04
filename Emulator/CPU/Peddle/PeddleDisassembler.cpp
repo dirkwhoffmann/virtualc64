@@ -10,7 +10,7 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-// #include <cassert>
+
 
 //
 // Printing
@@ -240,149 +240,6 @@ Disassembler::disassembleRange(std::ostream& os, std::pair<u16, u16> range, isiz
 const char *
 Disassembler::disassembleInstr(RecordedInstruction instr, long *len) const
 {
-    static char result[16];
-
-    bool hex = style.numberFormat.radix == 16;
-
-    u8 opcode = instr.byte1;
-    if (len) *len = cpu.getLengthOfInstruction(opcode);
-
-    // Convert command
-    char operand[6];
-    switch (cpu.addressingMode[opcode]) {
-
-        case ADDR_IMMEDIATE:
-        case ADDR_ZERO_PAGE:
-        case ADDR_ZERO_PAGE_X:
-        case ADDR_ZERO_PAGE_Y:
-        case ADDR_INDIRECT_X:
-        case ADDR_INDIRECT_Y:
-        {
-            u8 value = instr.byte2;
-            hex ? sprint8x(operand, value) : sprint8d(operand, value);
-            break;
-        }
-        case ADDR_DIRECT:
-        case ADDR_INDIRECT:
-        case ADDR_ABSOLUTE:
-        case ADDR_ABSOLUTE_X:
-        case ADDR_ABSOLUTE_Y:
-        {
-            u16 value = LO_HI(instr.byte2, instr.byte3);
-            hex ? sprint16x(operand, value) : sprint16d(operand, value);
-            break;
-        }
-        case ADDR_RELATIVE:
-        {
-            u16 value = (u16)(instr.pc + 2 + (i8)instr.byte2);
-            hex ? sprint16x(operand, value) : sprint16d(operand, value);
-            break;
-        }
-        default:
-            break;
-    }
-
-    switch (cpu.addressingMode[opcode]) {
-
-        case ADDR_IMPLIED:
-        case ADDR_ACCUMULATOR:
-
-            std::strcpy(result, "xxx");
-            break;
-
-        case ADDR_IMMEDIATE:
-
-            std::strcpy(result, hex ? "xxx #hh" : "xxx #ddd");
-            std::memcpy(&result[5], operand, hex ? 2 : 3);
-            break;
-
-        case ADDR_ZERO_PAGE:
-
-            std::strcpy(result, hex ? "xxx hh" : "xxx ddd");
-            std::memcpy(&result[4], operand, hex ? 2 : 3);
-            break;
-
-        case ADDR_ZERO_PAGE_X:
-
-            std::strcpy(result, hex ? "xxx hh,X" : "xxx ddd,X");
-            std::memcpy(&result[4], operand, hex ? 2 : 3);
-            break;
-
-        case ADDR_ZERO_PAGE_Y:
-
-            std::strcpy(result, hex ? "xxx hh,Y" : "xxx ddd,Y");
-            std::memcpy(&result[4], operand, hex ? 2 : 3);
-            break;
-
-        case ADDR_ABSOLUTE:
-        case ADDR_DIRECT:
-
-            std::strcpy(result, hex ? "xxx hhhh" : "xxx ddddd");
-            std::memcpy(&result[4], operand, hex ? 4 : 5);
-            break;
-
-        case ADDR_ABSOLUTE_X:
-
-            std::strcpy(result, hex ? "xxx hhhh,X" : "xxx ddddd,X");
-            std::memcpy(&result[4], operand, hex ? 4 : 5);
-            break;
-
-        case ADDR_ABSOLUTE_Y:
-
-            std::strcpy(result, hex ? "xxx hhhh,Y" : "xxx ddddd,Y");
-            std::memcpy(&result[4], operand, hex ? 4 : 5);
-            break;
-
-        case ADDR_INDIRECT:
-
-            std::strcpy(result, hex ? "xxx (hhhh)" : "xxx (ddddd)");
-            std::memcpy(&result[5], operand, hex ? 4 : 5);
-            break;
-
-        case ADDR_INDIRECT_X:
-
-            std::strcpy(result, hex ? "xxx (hh,X)" : "xxx (ddd,X)");
-            std::memcpy(&result[5], operand, hex ? 2 : 3);
-            break;
-
-        case ADDR_INDIRECT_Y:
-
-            std::strcpy(result, hex ? "xxx (hh),Y" : "xxx (ddd),Y");
-            std::memcpy(&result[5], operand, hex ? 2 : 3);
-            break;
-
-        case ADDR_RELATIVE:
-
-            std::strcpy(result, hex ? "xxx hhhh" : "xxx ddddd");
-            std::memcpy(&result[4], operand, hex ? 4 : 5);
-            break;
-
-        default:
-
-            std::strcpy(result, "???");
-    }
-
-    // Copy mnemonic
-    strncpy(result, cpu.mnemonic[opcode], 3);
-
-    // RUN NEW CODE SIDE BY SIDE (REMOVE ASAP)
-    long len2;
-    auto newStr = disassembleRecordedInstrNew(instr, &len2);
-
-    if (len2 != cpu.getLengthOfInstruction(opcode) || strcmp(result, newStr)) {
-        printf("Length: %ld Expected: %ld (%s, %s)\n", len2, cpu.getLengthOfInstruction(opcode), result, newStr);
-        printf("%x %x %x\n", instr.byte1, instr.byte2, instr.byte3);
-        printf("Mnem: %s\n", cpu.mnemonic[instr.byte1]);
-        printf("Addr: %ld\n", cpu.addressingMode[instr.byte1]);
-        assert(false);
-    }
-
-    return result;
-}
-
-const char *
-Disassembler::disassembleRecordedInstrNew(RecordedInstruction instr, long *len) const
-{
     static char result[32];
 
     StrWriter writer(result, style);
@@ -390,7 +247,7 @@ Disassembler::disassembleRecordedInstrNew(RecordedInstruction instr, long *len) 
     u8 opcode = instr.byte1;
     if (len) *len = cpu.getLengthOfInstruction(opcode);
 
-    writer << Ins { cpu.mnemonic[opcode] };
+    writer << Ins { opcode };
 
     switch (cpu.addressingMode[opcode]) {
 

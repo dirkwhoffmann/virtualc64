@@ -82,12 +82,8 @@ private:
     const char *disassembleBytes(const RecordedInstruction &instr) const;
     const char *disassembleRecordedFlags(const RecordedInstruction &instr) const;
 
-    /*
-    template <bool hex>
-    const char *disassembleInstr(RecordedInstruction instr, long *len) const;
-    */
 
-    const char *disassembleRecordedInstrNew(RecordedInstruction instr, long *len) const;
+//     const char *disassembleRecordedInstrNew(RecordedInstruction instr, long *len) const;
 };
 
 }

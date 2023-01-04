@@ -15,16 +15,8 @@ namespace vc64::peddle {
 // Wrapper structures controlling the output format
 //
 
-// Numerical values
-/*
-struct Int { i32 raw; Int(i32 v) : raw(v) { } };
-struct UInt { u32 raw; UInt(u32 v) : raw(v) { } };
-struct UInt8 { u8 raw; UInt8(u8 v) : raw(v) { } };
-struct UInt16 { u16 raw; UInt16(u16 v) : raw(v) { } };
-*/
-
 // Mnemonics
-struct Ins  { const char *raw; };
+struct Ins  { u8 raw; };
 
 // Addressing modes
 struct Imm  { u8 raw; };
@@ -67,20 +59,10 @@ public:
 
     StrWriter& operator<<(char);
     StrWriter& operator<<(const char *);
-    // StrWriter& operator<<(int);
-    // StrWriter& operator<<(unsigned int);
     StrWriter& operator<<(u8);
     StrWriter& operator<<(u16);
 
-    /*
-    StrWriter& operator<<(Int);
-    StrWriter& operator<<(UInt);
-    StrWriter& operator<<(UInt8);
-    StrWriter& operator<<(UInt16);
-    */
-
     StrWriter& operator<<(Ins);
-
     StrWriter& operator<<(Imm);
     StrWriter& operator<<(Zp);
     StrWriter& operator<<(Zpx);

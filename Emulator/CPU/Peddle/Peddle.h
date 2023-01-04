@@ -29,6 +29,22 @@ class Peddle : public SubComponent {
     friend class Watchpoints;
 
     //
+    // Static lookup tables
+    //
+
+public:
+
+    // Table storing the first microinstruction for each opcode
+    static MicroInstruction actionFunc[256];
+
+    // Table storing a textual representation for each opcode
+    static const char *mnemonic[256];
+
+    // Table storing the adressing mode for each opcode
+    static AddressingMode addressingMode[256];
+
+
+    //
     // Configuration
     //
 
@@ -49,22 +65,6 @@ public:
 
     Debugger debugger = Debugger(*this);
     Disassembler disassembler = Disassembler(*this);
-
-
-    //
-    // Lookup tables
-    //
-
-protected:
-
-    // Table storing the first microinstruction for each opcode
-    MicroInstruction actionFunc[256];
-
-    // Table storing a textual representation for each opcode
-    const char *mnemonic[256];
-
-    // Table storing the adressing mode for each opcode
-    AddressingMode addressingMode[256];
 
 
     //

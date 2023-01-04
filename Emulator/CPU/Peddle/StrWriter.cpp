@@ -65,6 +65,7 @@ static void sprintx_signed(char *&s, i64 value, const DasmNumberFormat &fmt)
     sprintx(s, value, fmt, hexDigits(value));
 }
 
+/*
 static void sprint(char *&s, u64 value, const DasmNumberFormat &fmt)
 {
     fmt.radix == 10 ? sprintd(s, value) : sprintx(s, value, fmt);
@@ -74,6 +75,7 @@ static void sprint_signed(char *&s, i64 value, const DasmNumberFormat &fmt)
 {
     fmt.radix == 10 ? sprintd_signed(s, value) : sprintx_signed(s, value, fmt);
 }
+*/
 
 StrWriter&
 StrWriter::operator<<(char c)
@@ -111,80 +113,15 @@ StrWriter::operator<<(u16 value)
     return *this;
 }
 
-/*
-StrWriter&
-StrWriter::operator<<(int value)
-{
-    sprintd_signed(ptr, value);
-    return *this;
-}
-
-StrWriter&
-StrWriter::operator<<(unsigned int value)
-{
-    sprintd(ptr, value);
-    return *this;
-}
-
-StrWriter&
-StrWriter::operator<<(Int i)
-{
-    sprint_signed(ptr, i.raw, style.numberFormat);
-    return *this;
-}
-
-StrWriter&
-StrWriter::operator<<(UInt u)
-{
-    sprint(ptr, u.raw, style.numberFormat);
-    return *this;
-}
-
-StrWriter&
-StrWriter::operator<<(UInt8 u)
-{
-    if (style.numberFormat.radix == 16) {
-        sprintx(ptr, u.raw, style.numberFormat, 2);
-    } else {
-        sprintd(ptr, u.raw, 3);
-    }
-    return *this;
-}
-
-StrWriter&
-StrWriter::operator<<(UInt16 u)
-{
-    if (style.numberFormat.radix == 16) {
-        sprintx(ptr, u.raw, style.numberFormat, 4);
-    } else {
-        sprintd(ptr, u.raw, 5);
-    }
-    return *this;
-}
-*/
-
-/*
-StrWriter&
-operator<<(Imp imp)
-{
-    *this << "xxx"; // TODO: << Mnemonic
-
-    return *this;
-}
-
-StrWriter&
-operator<<(Acc acc)
-{
-    *this << "xxx"; // TODO: << Mnemonic
-
-    return *this;
-}
-*/
-
 StrWriter&
 StrWriter::operator<<(Ins ins)
 {
-    *this << ins.raw[0] << ins.raw[1] << ins.raw[2];
+    const char *mnemonic = Peddle::mnemonic[ins.raw];
+
+    *ptr++ = mnemonic[0];
+    *ptr++ = mnemonic[1];
+    *ptr++ = mnemonic[2];
+
     return *this;
 }
 
