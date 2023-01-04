@@ -8,7 +8,7 @@
 #include "Peddle.h"
 #include "PeddleUtils.h"
 
-namespace peddle {
+namespace vc64::peddle {
 
 Peddle::Peddle(C64 &ref) : SubComponent(ref)
 {
@@ -34,6 +34,25 @@ void
 Peddle::setModel(CPURevision cpuModel)
 {
     this->cpuModel = cpuModel;
+}
+
+void
+Peddle::setDasmNumberFormat(DasmNumberFormat value)
+{
+    if (value.prefix == nullptr) {
+        throw std::runtime_error("prefix must not be NULL");
+    }
+    if (value.radix != 10 && value.radix != 16) {
+        throw std::runtime_error("Invalid radix: " + std::to_string(value.radix));
+    }
+
+    style.numberFormat = value;
+}
+
+void
+Peddle::setDasmIndentation(int value)
+{
+    style.tab = value;
 }
 
 u16

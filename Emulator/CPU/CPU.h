@@ -13,7 +13,7 @@
 #include "Peddle.h"
 #include "SubComponent.h"
 
-using namespace peddle;
+using namespace vc64::peddle;
 
 namespace vc64 {
 

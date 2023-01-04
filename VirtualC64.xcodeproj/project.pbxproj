@@ -17,6 +17,8 @@
 		5003382B266F7F3C00D5456E /* VICII_table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5003382A266F7F3C00D5456E /* VICII_table.cpp */; };
 		5007E1E826A70170000E7344 /* ParCable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5007E1E626A70170000E7344 /* ParCable.cpp */; };
 		5009CF3324C0B8EF00F674FF /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5009CF3224C0B8EF00F674FF /* Preferences.swift */; };
+		500C1C752965D10F00071AF3 /* StrWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501C46BD2965C54200C4B27B /* StrWriter.cpp */; };
+		500C1C762965D11000071AF3 /* StrWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501C46BD2965C54200C4B27B /* StrWriter.cpp */; };
 		500E2D642824EBE30015C46F /* CartridgeInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500E2D632824EBE30015C46F /* CartridgeInspector.xib */; };
 		500E2D662824EC140015C46F /* CartridgeInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500E2D652824EC130015C46F /* CartridgeInspector.swift */; };
 		500E34142615BF5E006A38DA /* IOUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500E34122615BF5E006A38DA /* IOUtils.cpp */; };
@@ -35,6 +37,8 @@
 		5018BFB124B48DC400551848 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFB024B48DC400551848 /* Renderer.swift */; };
 		5018BFB324B48DD500551848 /* RendererSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018BFB224B48DD500551848 /* RendererSetup.swift */; };
 		501B80C325B1702500C90284 /* MyDocumentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501B80C225B1702500C90284 /* MyDocumentController.swift */; };
+		501C46BE2965C54200C4B27B /* StrWriter.h in Sources */ = {isa = PBXBuildFile; fileRef = 501C46BC2965C54200C4B27B /* StrWriter.h */; };
+		501C46BF2965C54200C4B27B /* StrWriter.h in Sources */ = {isa = PBXBuildFile; fileRef = 501C46BC2965C54200C4B27B /* StrWriter.h */; };
 		501E2C1225B2DDED00B9C9C0 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E2C1125B2DDED00B9C9C0 /* AppIcon.icns */; };
 		501E427C20D975AD000BB48D /* IconD64.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427720D975AC000BB48D /* IconD64.icns */; };
 		501E427D20D975AD000BB48D /* IconCRT.icns in Resources */ = {isa = PBXBuildFile; fileRef = 501E427820D975AC000BB48D /* IconCRT.icns */; };
@@ -487,6 +491,8 @@
 		5018BFB224B48DD500551848 /* RendererSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererSetup.swift; sourceTree = "<group>"; };
 		501B80C225B1702500C90284 /* MyDocumentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDocumentController.swift; sourceTree = "<group>"; };
 		501C46BB2964BF1200C4B27B /* SelfTestScript.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelfTestScript.h; sourceTree = "<group>"; };
+		501C46BC2965C54200C4B27B /* StrWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StrWriter.h; sourceTree = "<group>"; };
+		501C46BD2965C54200C4B27B /* StrWriter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StrWriter.cpp; sourceTree = "<group>"; };
 		501E2C1125B2DDED00B9C9C0 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
 		501E427720D975AC000BB48D /* IconD64.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconD64.icns; sourceTree = "<group>"; };
 		501E427820D975AC000BB48D /* IconCRT.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = IconCRT.icns; sourceTree = "<group>"; };
@@ -1747,6 +1753,8 @@
 				5044C5D12931FA5F00F4A413 /* PeddleMemory_cpp.h */,
 				50995F2924DBCDE400F40713 /* PeddleDebugger.h */,
 				50995F2824DBCDE400F40713 /* PeddleDebugger.cpp */,
+				501C46BC2965C54200C4B27B /* StrWriter.h */,
+				501C46BD2965C54200C4B27B /* StrWriter.cpp */,
 			);
 			path = Peddle;
 			sourceTree = "<group>";
@@ -2013,6 +2021,7 @@
 				50726F552961C99A0031F2F5 /* Peddle.cpp in Sources */,
 				50726F612961C9AC0031F2F5 /* VICII_sprites.cpp in Sources */,
 				50726FB72961CA290031F2F5 /* InterpreterDebugCmds.cpp in Sources */,
+				500C1C762965D11000071AF3 /* StrWriter.cpp in Sources */,
 				50726F842961C9F10031F2F5 /* Cartridge.cpp in Sources */,
 				50726F542961C99A0031F2F5 /* PeddleDebugger.cpp in Sources */,
 				50726F462961C9940031F2F5 /* Error.cpp in Sources */,
@@ -2040,6 +2049,7 @@
 				50726F5A2961C9AC0031F2F5 /* DmaDebugger.cpp in Sources */,
 				50726F952961CA0D0031F2F5 /* Funplay.cpp in Sources */,
 				50726F6C2961C9C60031F2F5 /* envelope.cc in Sources */,
+				501C46BF2965C54200C4B27B /* StrWriter.h in Sources */,
 				50726F992961CA0D0031F2F5 /* MagicDesk.cpp in Sources */,
 				50726F442961C97B0031F2F5 /* MemUtils.cpp in Sources */,
 				50726F9B2961CA0D0031F2F5 /* Mach5.cpp in Sources */,
@@ -2129,6 +2139,7 @@
 				5098C57B2658CF9800E05EFC /* VideoExporter.swift in Sources */,
 				50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */,
 				50D3091E24C5CE1A00B92563 /* MyControllerStatusBar.swift in Sources */,
+				501C46BE2965C54200C4B27B /* StrWriter.h in Sources */,
 				504C436624AF29AC00E69CAE /* Kcs.cpp in Sources */,
 				5036E0BA261AEF000048E66A /* RetroShell.cpp in Sources */,
 				504C438724AF29AC00E69CAE /* C64.cpp in Sources */,
@@ -2319,6 +2330,7 @@
 				50A077F8258A18B9005ACF5B /* FileSystem.cpp in Sources */,
 				50BE4B6824E7FB28008F39C9 /* MTLTexture.swift in Sources */,
 				50A22A2A2618725200C9FB1E /* Console.swift in Sources */,
+				500C1C752965D10F00071AF3 /* StrWriter.cpp in Sources */,
 				50157EEF2825A814000E9DDD /* DiskImporter.swift in Sources */,
 				5031D59C200B81D20088C802 /* Animation.swift in Sources */,
 				50D5F88424F4FE9C0062EF13 /* SectorTableView.swift in Sources */,

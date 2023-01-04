@@ -10,7 +10,7 @@
 #include "PeddleTypes.h"
 #include "PeddleUtils.h"
 
-namespace peddle {
+namespace vc64::peddle {
 
 // Base structure for a single breakpoint or watchpoint
 struct Guard {
@@ -294,7 +294,9 @@ private:
     const char *disassembleRecordedFlags(const RecordedInstruction &instr) const;
 
     template <bool hex>
-    const char *disassembleInstr(const RecordedInstruction &instr, long *len) const;
+    const char *disassembleInstr(RecordedInstruction instr, long *len) const;
+
+    const char *disassembleRecordedInstrNew(RecordedInstruction instr, long *len) const;
 };
 
 }

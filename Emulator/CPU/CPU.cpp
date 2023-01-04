@@ -330,7 +330,7 @@ CPU::readResetVector()
 
 #if PEDDLE_SIMPLE_MEMORY_API == false
 
-namespace peddle {
+namespace vc64::peddle {
 
 #define CHECK_WATCHPOINT \
 if constexpr (PEDDLE_ENABLE_WATCHPOINTS) { \

@@ -10,7 +10,7 @@
 #include "Types.h"
 
 #ifdef __cplusplus
-namespace peddle {
+namespace vc64::peddle {
 #endif
 
 //
@@ -447,6 +447,22 @@ typedef struct
     u8 flags;
 }
 RecordedInstruction;
+
+typedef struct
+{
+    const char *prefix;     // Prefix for hexidecimal numbers
+    u8 radix;               // 10 (decimal) or 16 (hexadecimal)
+    bool upperCase;         // Lettercase for hexadecimal digits A...F
+    bool plainZero;         // Determines whether 0 is printed with a prefix
+}
+DasmNumberFormat;
+
+typedef struct
+{
+    DasmNumberFormat numberFormat;
+    int tab;
+}
+DasmStyle;
 
 #ifdef __cplusplus
 }

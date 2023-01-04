@@ -8,6 +8,8 @@
 #pragma once
 
 #include "PeddleConfig.h"
+#include "PeddleTypes.h"
+#include "StrWriter.h"
 #include "PeddleDebugger.h"
 #include "SubComponent.h"
 #include "PeddleUtils.h"
@@ -17,7 +19,7 @@ using util::TimeDelayed;
 
 using namespace vc64;
 
-namespace peddle {
+namespace vc64::peddle {
 
 class Peddle : public SubComponent {
 
@@ -31,11 +33,19 @@ class Peddle : public SubComponent {
 
 protected:
 
-    // The emulated CPU model
-    CPURevision cpuModel = MOS_6510;
-
     // Instance counter (to distinguish different CPU instances)
     isize id;
+
+    // Emulated CPU model
+    CPURevision cpuModel = MOS_6510;
+
+    // Disassembler style
+    DasmStyle style = {
+
+        // .numberFormat   = { .prefix = "$", .radix = 16 },
+        .numberFormat   = { .upperCase = true, .prefix = "", .radix = 16 },
+        .tab            = 4
+    };
 
 
     //
@@ -195,6 +205,10 @@ public:
 
     // Selects the emulated CPU model
     void setModel(CPURevision cpuModel);
+
+    // Configures the disassembler
+    void setDasmNumberFormat(DasmNumberFormat value);
+    void setDasmIndentation(int value);
 
 
     //

@@ -30,21 +30,21 @@
 //
 
 #ifdef __cplusplus
-struct CPURevisionEnum : util::Reflection<CPURevisionEnum, peddle::CPURevision> {
+struct CPURevisionEnum : util::Reflection<CPURevisionEnum, vc64::peddle::CPURevision> {
     
     static constexpr long minVal = 0;
-    static constexpr long maxVal = peddle::MOS_8502;
+    static constexpr long maxVal = vc64::peddle::MOS_8502;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return nullptr; }
-    static const char *key(peddle::CPURevision value)
+    static const char *key(vc64::peddle::CPURevision value)
     {
         switch (value) {
                 
-            case peddle::MOS_6502:  return "MOS_6502";
-            case peddle::MOS_6507:  return "MOS_6507";
-            case peddle::MOS_6510:  return "MOS_6510";
-            case peddle::MOS_8502:  return "MOS_8502";
+            case vc64::peddle::MOS_6502:  return "MOS_6502";
+            case vc64::peddle::MOS_6507:  return "MOS_6507";
+            case vc64::peddle::MOS_6510:  return "MOS_6510";
+            case vc64::peddle::MOS_8502:  return "MOS_8502";
         }
         return "???";
     }

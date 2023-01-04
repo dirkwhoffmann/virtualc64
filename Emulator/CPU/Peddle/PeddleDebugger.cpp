@@ -12,7 +12,7 @@
 #include <fstream>
 #include <cassert>
 
-namespace peddle {
+namespace vc64::peddle {
 
 //
 // Printing
@@ -566,8 +566,91 @@ Debugger::disassembleInstr(const RecordedInstruction &instr, long *len) const
     }
 }
 
+const char *
+Debugger::disassembleRecordedInstrNew(RecordedInstruction instr, long *len) const
+{
+    static char result[32];
+
+    StrWriter writer(result, cpu.style);
+
+    u8 opcode = instr.byte1;
+    if (len) *len = getLengthOfInstruction(opcode);
+
+    writer << Ins { mnemonic[opcode] };
+
+    switch (addressingMode[opcode]) {
+
+        case ADDR_IMMEDIATE:
+
+            writer << Tab{} << Imm { instr.byte2 };
+            break;
+
+        case ADDR_ZERO_PAGE:
+
+            writer << Tab{} << Zp { instr.byte2 };
+            break;
+
+        case ADDR_ZERO_PAGE_X:
+
+            writer << Tab{} << Zpx { instr.byte2 };
+            break;
+
+        case ADDR_ZERO_PAGE_Y:
+
+            writer << Tab{} << Zpy { instr.byte2 };
+            break;
+
+        case ADDR_ABSOLUTE:
+
+            writer << Tab{} << Abs { LO_HI(instr.byte2, instr.byte3) };
+            break;
+
+        case ADDR_ABSOLUTE_X:
+
+            writer << Tab{} << Absx { LO_HI(instr.byte2, instr.byte3) };
+            break;
+
+        case ADDR_ABSOLUTE_Y:
+
+            writer << Tab{} << Absy { LO_HI(instr.byte2, instr.byte3) };
+            break;
+
+        case ADDR_DIRECT:
+
+            writer << Tab{} << Dir  { LO_HI(instr.byte2, instr.byte3) };
+            break;
+
+        case ADDR_INDIRECT:
+
+            writer << Tab{} << Ind  { LO_HI(instr.byte2, instr.byte3) };
+            break;
+
+        case ADDR_INDIRECT_X:
+
+            writer << Tab{} << Indx { instr.byte2 };
+            break;
+
+        case ADDR_INDIRECT_Y:
+
+            writer << Tab{} << Indy { instr.byte2 };
+            break;
+
+        case ADDR_RELATIVE:
+
+            writer << Tab{} << Rel { (u16)(instr.pc + 2 + (i8)instr.byte2) };
+            break;
+
+        default:
+            break;
+    }
+
+    writer << Fin{};
+
+    return result;
+}
+
 template <bool hex> const char *
-Debugger::disassembleInstr(const RecordedInstruction &instr, long *len) const
+Debugger::disassembleInstr(RecordedInstruction instr, long *len) const
 {
     static char result[16];
 
@@ -691,7 +774,19 @@ Debugger::disassembleInstr(const RecordedInstruction &instr, long *len) const
     
     // Copy mnemonic
     strncpy(result, mnemonic[opcode], 3);
-    
+
+    // RUN NEW CODE SIDE BY SIDE
+    long len2;
+    auto newStr = disassembleRecordedInstrNew(instr, &len2);
+
+    if (len2 != getLengthOfInstruction(opcode) || strcmp(result, newStr)) {
+        printf("Length: %d Expected: %d (%s, %s)\n", len2, getLengthOfInstruction(opcode), result, newStr);
+        printf("%x %x %x\n", instr.byte1, instr.byte2, instr.byte3);
+        printf("Mnem: %s\n", mnemonic[instr.byte1]);
+        printf("Addr: %d\n", addressingMode[instr.byte1]);
+        assert(false);
+    }
+
     return result;
 }
 
