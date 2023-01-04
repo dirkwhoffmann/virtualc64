@@ -236,7 +236,7 @@ Disassembler::disassembleRecordedInstrNew(RecordedInstruction instr, long *len) 
     StrWriter writer(result, cpu.style);
 
     u8 opcode = instr.byte1;
-    if (len) *len = cpu.debugger.getLengthOfInstruction(opcode);
+    if (len) *len = cpu.getLengthOfInstruction(opcode);
 
     writer << Ins { mnemonic[opcode] };
 
@@ -317,7 +317,7 @@ Disassembler::disassembleInstr(RecordedInstruction instr, long *len) const
     static char result[16];
 
     u8 opcode = instr.byte1;
-    if (len) *len = cpu.debugger.getLengthOfInstruction(opcode);
+    if (len) *len = cpu.getLengthOfInstruction(opcode);
 
     // Convert command
     char operand[6];
@@ -437,12 +437,12 @@ Disassembler::disassembleInstr(RecordedInstruction instr, long *len) const
     // Copy mnemonic
     strncpy(result, mnemonic[opcode], 3);
 
-    // RUN NEW CODE SIDE BY SIDE
+    // RUN NEW CODE SIDE BY SIDE (REMOVE ASAP)
     long len2;
     auto newStr = disassembleRecordedInstrNew(instr, &len2);
 
-    if (len2 != cpu.debugger.getLengthOfInstruction(opcode) || strcmp(result, newStr)) {
-        printf("Length: %d Expected: %d (%s, %s)\n", len2, cpu.debugger.getLengthOfInstruction(opcode), result, newStr);
+    if (len2 != cpu.getLengthOfInstruction(opcode) || strcmp(result, newStr)) {
+        printf("Length: %ld Expected: %ld (%s, %s)\n", len2, cpu.getLengthOfInstruction(opcode), result, newStr);
         printf("%x %x %x\n", instr.byte1, instr.byte2, instr.byte3);
         printf("Mnem: %s\n", mnemonic[instr.byte1]);
         printf("Addr: %d\n", addressingMode[instr.byte1]);
@@ -457,7 +457,7 @@ Disassembler::disassembleBytes(const RecordedInstruction &instr) const
 {
     static char result[13]; char *ptr = result;
 
-    isize len = cpu.debugger.getLengthOfInstruction(instr.byte1);
+    isize len = cpu.getLengthOfInstruction(instr.byte1);
 
     if (cpu.debugger.hex) {
 

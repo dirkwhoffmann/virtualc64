@@ -65,11 +65,14 @@ public:
 
 protected:
 
-    /* Mapping from opcodes to microinstructions. This array stores the tags
-     * of the second microcycle which is the microcycle following the fetch
-     * phase.
-     */
+    // Table storing the first microinstruction for each opcode
     MicroInstruction actionFunc[256];
+
+    // Table storing a textual representation for each opcode
+    const char *mnemonic[256];
+
+    // Table storing the adressing mode for each opcode
+    AddressingMode addressingMode[256];
 
 
     //
@@ -231,6 +234,19 @@ public:
 
     // Returns true if the next cycle marks the beginning of an instruction
     bool inFetchPhase() const { return next == fetch; }
+
+
+    //
+    // Examining instructions
+    //
+
+    // Returns the length of an instruction in bytes
+    isize getLengthOfInstruction(u8 opcode) const;
+    isize getLengthOfInstructionAtAddress(u16 addr) const;
+    isize getLengthOfCurrentInstruction() const;
+
+    // Returns the address of the instruction following the current one
+    u16 getAddressOfNextInstruction() const;
 
 
     //

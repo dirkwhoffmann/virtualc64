@@ -200,17 +200,16 @@ Debugger::reset()
 }
 
 void
-Debugger::registerInstruction(u8 opcode, const char *mnemonic, AddressingMode mode)
-{
-    this->mnemonic[opcode] = mnemonic;
-    this->addressingMode[opcode] = mode;
-}
-
-void
 Debugger::setSoftStop(u64 addr)
 {
     softStop = addr;
     breakpoints.setNeedsCheck(true);
+}
+
+void
+Debugger::setSoftStopAtNextInstr()
+{
+    setSoftStop(cpu.getAddressOfNextInstruction());
 }
 
 bool
@@ -264,7 +263,7 @@ Debugger::logInstruction()
 {
     u16 pc = cpu.getPC0();
     u8 opcode = cpu.readDasm(pc);
-    isize length = getLengthOfInstruction(opcode);
+    isize length = cpu.getLengthOfInstruction(opcode);
 
     isize i = logCnt++ % LOG_BUFFER_CAPACITY;
     
@@ -306,49 +305,6 @@ Debugger::loggedPC0Abs(isize n) const
 {
     assert(n < loggedInstructions());
     return loggedPC0Rel(loggedInstructions() - n - 1);
-}
-
-isize
-Debugger::getLengthOfInstruction(u8 opcode) const
-{
-    switch(addressingMode[opcode]) {
-        case ADDR_IMPLIED:
-        case ADDR_ACCUMULATOR:
-            return 1;
-        case ADDR_IMMEDIATE:
-        case ADDR_ZERO_PAGE:
-        case ADDR_ZERO_PAGE_X:
-        case ADDR_ZERO_PAGE_Y:
-        case ADDR_INDIRECT_X:
-        case ADDR_INDIRECT_Y:
-        case ADDR_RELATIVE:
-            return 2;
-        case ADDR_ABSOLUTE:
-        case ADDR_ABSOLUTE_X:
-        case ADDR_ABSOLUTE_Y:
-        case ADDR_DIRECT:
-        case ADDR_INDIRECT:
-            return 3;
-    }
-    return 1;
-}
-
-isize
-Debugger::getLengthOfInstructionAtAddress(u16 addr) const
-{
-    return getLengthOfInstruction(cpu.readDasm(addr));
-}
-
-isize
-Debugger::getLengthOfCurrentInstruction() const
-{
-    return getLengthOfInstructionAtAddress(cpu.getPC0());
-}
-
-u16
-Debugger::getAddressOfNextInstruction() const
-{
-    return (u16)(cpu.getPC0() + getLengthOfCurrentInstruction());
 }
 
 }

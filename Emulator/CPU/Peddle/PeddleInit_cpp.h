@@ -12,8 +12,9 @@ Peddle::registerCallback(u8 opcode, const char *mnemonic,
     // Table is write-once
     assert(mInstr == JAM || actionFunc[opcode] == JAM);
 
-    actionFunc[opcode] = mInstr;
-    debugger.registerInstruction(opcode, mnemonic, mode);
+    this->actionFunc[opcode] = mInstr;
+    this->mnemonic[opcode] = mnemonic;
+    this->addressingMode[opcode] = mode;
 }
 
 void

@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include "PeddleTypes.h"
-#include "PeddleUtils.h"
+#include "PeddleDebugger.h"
+#include "Peddle.h"
 
 namespace vc64::peddle {
 
@@ -139,12 +139,6 @@ class Debugger {
     
     // Reference to the connected CPU
     class Peddle &cpu;
-
-    // Textual representation for each opcode (used by the disassembler)
-    const char *mnemonic[256];
-
-    // Adressing mode of each opcode (used by the disassembler)
-    AddressingMode addressingMode[256];
     
 public:
     
@@ -195,11 +189,6 @@ public:
     Debugger(Peddle& ref) : cpu(ref) { };
     void reset();
 
-
-private:
-    
-    void registerInstruction(u8 opcode, const char *mnemonic, AddressingMode mode);
-
     
     //
     // Working with breakpoints and watchpoints
@@ -209,7 +198,7 @@ public:
 
     // Sets a soft breakpoint
     void setSoftStop(u64 addr);
-    void setSoftStopAtNextInstr() { setSoftStop(getAddressOfNextInstruction()); }
+    void setSoftStopAtNextInstr();
     
     // Returns true if a breakpoint hits at the provides address
     bool breakpointMatches(u32 addr);
@@ -244,19 +233,6 @@ public:
 
     // Clears the log buffer
     void clearLog() { logCnt = 0; }
-    
-    
-    //
-    // Examining instructions
-    //
-    
-    // Returns the length of an instruction in bytes
-    isize getLengthOfInstruction(u8 opcode) const;
-    isize getLengthOfInstructionAtAddress(u16 addr) const;
-    isize getLengthOfCurrentInstruction() const;
-
-    // Returns the address of the instruction following the current one
-    u16 getAddressOfNextInstruction() const;
 };
 
 }

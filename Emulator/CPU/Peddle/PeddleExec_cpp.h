@@ -198,6 +198,49 @@ Peddle::sbcBcd(u8 op)
     reg.a = (u8)((highDigit << 4) | (lowDigit & 0x0f));
 }
 
+isize
+Peddle::getLengthOfInstruction(u8 opcode) const
+{
+    switch(addressingMode[opcode]) {
+
+        case ADDR_IMPLIED:
+        case ADDR_ACCUMULATOR:  return 1;
+        case ADDR_IMMEDIATE:
+        case ADDR_ZERO_PAGE:
+        case ADDR_ZERO_PAGE_X:
+        case ADDR_ZERO_PAGE_Y:
+        case ADDR_INDIRECT_X:
+        case ADDR_INDIRECT_Y:
+        case ADDR_RELATIVE:     return 2;
+        case ADDR_ABSOLUTE:
+        case ADDR_ABSOLUTE_X:
+        case ADDR_ABSOLUTE_Y:
+        case ADDR_DIRECT:
+        case ADDR_INDIRECT:     return 3;
+
+        default:
+            fatalError;
+    }
+}
+
+isize
+Peddle::getLengthOfInstructionAtAddress(u16 addr) const
+{
+    return getLengthOfInstruction(readDasm(addr));
+}
+
+isize
+Peddle::getLengthOfCurrentInstruction() const
+{
+    return getLengthOfInstructionAtAddress(getPC0());
+}
+
+u16
+Peddle::getAddressOfNextInstruction() const
+{
+    return (u16)(getPC0() + getLengthOfCurrentInstruction());
+}
+
 void
 Peddle::reset()
 {
