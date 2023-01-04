@@ -19,6 +19,8 @@ extension Inspector {
         cacheCPU()
         
         if full {
+
+            hex ? c64.cpu.setHex() : c64.cpu.setDec()
             cpuPc.assignFormatter(fmt16)
             cpuSp.assignFormatter(fmt8)
             cpuA.assignFormatter(fmt8)

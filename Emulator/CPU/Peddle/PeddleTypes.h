@@ -453,6 +453,7 @@ typedef struct
     const char *prefix;     // Prefix for hexidecimal numbers
     u8 radix;               // 10 (decimal) or 16 (hexadecimal)
     bool upperCase;         // Lettercase for hexadecimal digits A...F
+    bool fill;              // Determines whether leading zeroes are printed
     bool plainZero;         // Determines whether 0 is printed with a prefix
 }
 DasmNumberFormat;

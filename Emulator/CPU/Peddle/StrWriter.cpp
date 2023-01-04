@@ -7,17 +7,13 @@
 
 #include "PeddleTypes.h"
 #include "StrWriter.h"
-#include <cmath>
 
 namespace vc64::peddle {
 
-static int decDigits(u64 value) { return value ? 1 + (int)log10(value) : 1; }
-static int binDigits(u64 value) { return value ? 1 + (int)log2(value) : 1; }
-static int hexDigits(u64 value) { return (binDigits(value) + 3) / 4; }
-
-static void sprintd(char *&s, u64 value, int digits)
+void
+StrWriter::sprintd(char *&s, u64 value, isize digits)
 {
-    for (int i = digits - 1; i >= 0; i--) {
+    for (isize i = digits - 1; i >= 0; i--) {
 
         u8 digit = value % 10;
         s[i] = '0' + digit;
@@ -26,26 +22,23 @@ static void sprintd(char *&s, u64 value, int digits)
     s += digits;
 }
 
-static void sprintd(char *&s, u64 value)
+void
+StrWriter::sprintd(char *&s, u64 value)
 {
     sprintd(s, value, decDigits(value));
 }
 
-static void sprintd_signed(char *&s, i64 value)
+void
+StrWriter::sprintx(char *&s, u64 value, isize digits)
 {
-    if (value < 0) { *s++ = '-'; value *= -1; }
-    sprintd(s, value, decDigits(value));
-}
+    char a = (style.numberFormat.upperCase ? 'A' : 'a') - 10;
 
-static void sprintx(char *&s, u64 value, const DasmNumberFormat &fmt, int digits)
-{
-    char a = (fmt.upperCase ? 'A' : 'a') - 10;
+    if (value || !style.numberFormat.plainZero) {
 
-    if (value || !fmt.plainZero) {
-
-        for (int i = 0; fmt.prefix[i]; i++) *s++ = fmt.prefix[i];
+        auto prefix = style.numberFormat.prefix;
+        for (int i = 0; prefix[i]; i++) *s++ = prefix[i];
     }
-    for (int i = digits - 1; i >= 0; i--) {
+    for (isize i = digits - 1; i >= 0; i--) {
 
         auto digit = char(value % 16);
         s[i] = (digit <= 9) ? ('0' + digit) : (a + digit);
@@ -54,28 +47,11 @@ static void sprintx(char *&s, u64 value, const DasmNumberFormat &fmt, int digits
     s += digits;
 }
 
-static void sprintx(char *&s, u64 value, const DasmNumberFormat &fmt)
+void
+StrWriter::sprintx(char *&s, u64 value)
 {
-    sprintx(s, value, fmt, hexDigits(value));
+    sprintx(s, value, hexDigits(value));
 }
-
-static void sprintx_signed(char *&s, i64 value, const DasmNumberFormat &fmt)
-{
-    if (value < 0) { *s++ = '-'; value *= -1; }
-    sprintx(s, value, fmt, hexDigits(value));
-}
-
-/*
-static void sprint(char *&s, u64 value, const DasmNumberFormat &fmt)
-{
-    fmt.radix == 10 ? sprintd(s, value) : sprintx(s, value, fmt);
-}
-
-static void sprint_signed(char *&s, i64 value, const DasmNumberFormat &fmt)
-{
-    fmt.radix == 10 ? sprintd_signed(s, value) : sprintx_signed(s, value, fmt);
-}
-*/
 
 StrWriter&
 StrWriter::operator<<(char c)
@@ -94,10 +70,12 @@ StrWriter::operator<<(const char *str)
 StrWriter&
 StrWriter::operator<<(u8 value)
 {
-    if (style.numberFormat.radix == 16) {
-        sprintx(ptr, value, style.numberFormat, 2);
-    } else {
-        sprintd(ptr, value, 3);
+    bool fill = style.numberFormat.fill;
+
+    switch (style.numberFormat.radix) {
+
+        case 10: fill ? sprintd(ptr, value, 3) : sprintd(ptr, value); break;
+        case 16: fill ? sprintx(ptr, value, 2) : sprintx(ptr, value); break;
     }
     return *this;
 }
@@ -105,10 +83,12 @@ StrWriter::operator<<(u8 value)
 StrWriter&
 StrWriter::operator<<(u16 value)
 {
-    if (style.numberFormat.radix == 16) {
-        sprintx(ptr, value, style.numberFormat, 4);
-    } else {
-        sprintd(ptr, value, 5);
+    bool fill = style.numberFormat.fill;
+
+    switch (style.numberFormat.radix) {
+
+        case 10: fill ? sprintd(ptr, value, 5) : sprintd(ptr, value); break;
+        case 16: fill ? sprintx(ptr, value, 4) : sprintx(ptr, value); break;
     }
     return *this;
 }

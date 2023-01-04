@@ -139,7 +139,7 @@ Disassembler::disassembleAddr(u16 addr) const
 {
     static char result[6];
 
-    cpu.debugger.hex ? sprint16x(result, addr) : sprint16d(result, addr);
+    style.numberFormat.radix == 16 ? sprint16x(result, addr) : sprint16d(result, addr);
     return result;
 }
 
@@ -327,7 +327,7 @@ Disassembler::disassembleBytes(const RecordedInstruction &instr) const
 
     isize len = cpu.getLengthOfInstruction(instr.byte1);
 
-    if (cpu.debugger.hex) {
+    if (style.numberFormat.radix == 16) {
 
         if (len >= 1) { sprint8x(ptr, instr.byte1); ptr[2] = ' '; ptr += 3; }
         if (len >= 2) { sprint8x(ptr, instr.byte2); ptr[2] = ' '; ptr += 3; }

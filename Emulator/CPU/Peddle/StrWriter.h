@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Peddle.h"
+#include <cmath>
 
 namespace vc64::peddle {
 
@@ -46,9 +47,7 @@ public:
 
     char *base;             // Start address of the destination string
     char *ptr;              // Write pointer
-
     const DasmStyle &style;
-    // Tab tab {8};
 
 public:
 
@@ -56,6 +55,19 @@ public:
 
         base = ptr = p;
     };
+
+private:
+
+    isize decDigits(u64 value) { return value ? 1 + (isize)log10(value) : 1; }
+    isize binDigits(u64 value) { return value ? 1 + (isize)log2(value) : 1; }
+    isize hexDigits(u64 value) { return (binDigits(value) + 3) / 4; }
+
+    void sprintd(char *&s, u64 value, isize digits);
+    void sprintd(char *&s, u64 value);
+    void sprintx(char *&s, u64 value, isize digits);
+    void sprintx(char *&s, u64 value);
+
+public:
 
     StrWriter& operator<<(char);
     StrWriter& operator<<(const char *);

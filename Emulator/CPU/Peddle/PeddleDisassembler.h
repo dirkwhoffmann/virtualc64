@@ -21,10 +21,12 @@ class Disassembler {
     // Reference to the connected CPU
     class Peddle &cpu;
 
+public:
+
     // Currently used disassembler style
     DasmStyle style = {
 
-        .numberFormat   = { .prefix = "", .radix = 16, .upperCase = true },
+        .numberFormat   = { .prefix = "", .radix = 16, .upperCase = true, .fill = true },
         .tab            = 4
     };
 

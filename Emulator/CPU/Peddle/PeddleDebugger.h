@@ -174,11 +174,6 @@ private:
      */
     u64 softStop = UINT64_MAX - 1;
 
-public:
-    
-    // Number format used by the disassembler
-    bool hex = true;
-
     
     //
     // Initializing
