@@ -23,12 +23,11 @@ class Disassembler {
 
 public:
 
-    // Currently used disassembler style
-    DasmStyle style = {
+    // Number style for disassembled instructions
+    DasmStyle instrStyle;
 
-        .numberFormat   = { .prefix = "", .radix = 16, .upperCase = true, .fill = true },
-        .tab            = 4
-    };
+    // Number style for data dumps
+    DasmStyle dataStyle;
 
 
     //
@@ -37,14 +36,15 @@ public:
 
 public:
 
-    Disassembler(Peddle& ref) : cpu(ref) { };
+    Disassembler(Peddle& ref);
 
 
     //
     // Configuring
     //
 
-    void setNumberFormat(DasmNumberFormat value);
+    void setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat);
+    void setNumberFormat(DasmNumberFormat format) { setNumberFormat(format, format); }
     void setIndentation(int value);
 
 

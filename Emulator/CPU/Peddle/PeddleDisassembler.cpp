@@ -12,29 +12,39 @@
 #include <fstream>
 
 
-//
-// Printing
-//
-
 namespace vc64::peddle {
 
-void
-Disassembler::setNumberFormat(DasmNumberFormat value)
+Disassembler::Disassembler(Peddle& ref) : cpu(ref)
 {
-    if (value.prefix == nullptr) {
+    instrStyle = dataStyle = DasmStyle {
+
+        .numberFormat = { .prefix = "", .radix = 16, .upperCase = true, .fill = true },
+        .tab          = 4
+    };
+}
+
+void
+Disassembler::setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat)
+{
+    auto validPrefix = [&](DasmNumberFormat fmt) { return fmt.prefix != nullptr; };
+    auto validRadix = [&](DasmNumberFormat fmt) { return fmt.radix == 10 || fmt.radix == 16; };
+
+    if (!validPrefix(instrFormat) || !validPrefix(dataFormat)) {
         throw std::runtime_error("prefix must not be NULL");
     }
-    if (value.radix != 10 && value.radix != 16) {
-        throw std::runtime_error("Invalid radix: " + std::to_string(value.radix));
+    if (!validRadix(instrFormat) || !validRadix(dataFormat)) {
+        throw std::runtime_error("radix must be 10 or 16");
     }
 
-    style.numberFormat = value;
+    instrStyle.numberFormat = instrFormat;
+    dataStyle.numberFormat = dataFormat;
 }
 
 void
 Disassembler::setIndentation(int value)
 {
-    style.tab = value;
+    instrStyle.tab = value;
+    dataStyle.tab = value;
 }
 
 isize
@@ -50,7 +60,7 @@ Disassembler::disassemble(char *str, u16 addr) const
 isize
 Disassembler::disassemble(char *str, u16 pc, u8 byte1, u8 byte2, u8 byte3) const
 {
-    StrWriter writer(str, style);
+    StrWriter writer(str, instrStyle);
 
     // Write mnemonic
     writer << Ins { byte1 };
@@ -106,19 +116,19 @@ Disassembler::disassembleFlags(char *str) const
 void
 Disassembler::dumpByte(char *str, u8 value) const
 {
-    StrWriter(str, style) << value;
+    StrWriter(str, dataStyle) << value;
 }
 
 void
 Disassembler::dumpWord(char *str, u16 value) const
 {
-    StrWriter(str, style) << value;
+    StrWriter(str, dataStyle) << value;
 }
 
 void
 Disassembler::dumpBytes(char *str, u32 addr, isize cnt) const
 {
-    StrWriter writer(str, style);
+    StrWriter writer(str, dataStyle);
 
     for (isize i = 0; i < cnt; i++) {
 
@@ -130,7 +140,7 @@ Disassembler::dumpBytes(char *str, u32 addr, isize cnt) const
 void
 Disassembler::dumpBytes(char *str, u8 values[], isize cnt) const
 {
-    StrWriter writer(str, style);
+    StrWriter writer(str, dataStyle);
 
     for (isize i = 0; i < cnt; i++) {
 
@@ -142,7 +152,7 @@ Disassembler::dumpBytes(char *str, u8 values[], isize cnt) const
 void
 Disassembler::dumpWords(char *str, u32 addr, isize cnt) const
 {
-    StrWriter writer(str, style);
+    StrWriter writer(str, dataStyle);
 
     for (isize i = 0; i < cnt; i++) {
 
@@ -155,7 +165,7 @@ Disassembler::dumpWords(char *str, u32 addr, isize cnt) const
 void
 Disassembler::dumpWords(char *str, u16 values[], isize cnt) const
 {
-    StrWriter writer(str, style);
+    StrWriter writer(str, dataStyle);
 
     for (isize i = 0; i < cnt; i++) {
 
@@ -164,56 +174,6 @@ Disassembler::dumpWords(char *str, u16 values[], isize cnt) const
     }
 
 }
-
-/*
-void
-Disassembler::disassembleByte(u8 byte, char *str) const
-{
-    StrWriter writer(str, style);
-    writer << byte;
-}
-
-void
-Disassembler::disassembleBytes(u8 values[], isize cnt, char *str) const
-{
-    StrWriter writer(str, style);
-
-    for (isize i = 0; i < cnt; i++) {
-
-        if (i) writer << " ";
-        writer << values[i];
-    }
-}
-
-isize
-Disassembler::disassembleInstrBytes(u16 addr, char *str) const
-{
-    u8 bytes[] = {cpu.readDasm(addr), cpu.readDasm(addr + 1), cpu.readDasm(addr + 2) };
-    isize len = cpu.getLengthOfInstruction(bytes[0]);
-
-    disassembleBytes(bytes, len, str);
-    return len;
-}
-
-void
-Disassembler::disassembleWord(u16 word, char *str) const
-{
-    StrWriter writer(str, style);
-    writer << word;
-}
-
-void
-Disassembler::disassembleMemory(u16 addr, isize cnt, char *str) const
-{
-    StrWriter writer(str, style);
-
-    for (isize i = 0; i < cnt; i++) {
-
-        if (i) writer << " ";
-        writer << cpu.readDasm(U16_ADD(addr, i));
-    }
-}
-*/
 
 void
 Disassembler::disassembleRange(std::ostream& os, u16 addr, isize count)

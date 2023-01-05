@@ -312,21 +312,30 @@ using namespace vc64;
 
 - (void)setHex
 {
-    DasmNumberFormat format = {
+    DasmNumberFormat instrFormat = {
 
-        .prefix = "$",
+        .prefix = "",
         .radix = 16,
         .upperCase = true,
         .fill = true,
         .plainZero = false
     };
 
-    [self cpu]->disassembler.setNumberFormat(format);
+    DasmNumberFormat dataFormat = {
+
+        .prefix = "",
+        .radix = 16,
+        .upperCase = true,
+        .fill = true,
+        .plainZero = false
+    };
+
+    [self cpu]->disassembler.setNumberFormat(instrFormat, dataFormat);
 }
 
 - (void)setDec
 {
-    DasmNumberFormat format = {
+    DasmNumberFormat instrFormat = {
 
         .prefix = "",
         .radix = 10,
@@ -335,7 +344,16 @@ using namespace vc64;
         .plainZero = false
     };
 
-    [self cpu]->disassembler.setNumberFormat(format);
+    DasmNumberFormat dataFormat = {
+
+        .prefix = "",
+        .radix = 10,
+        .upperCase = true,
+        .fill = true,
+        .plainZero = false
+    };
+
+    [self cpu]->disassembler.setNumberFormat(instrFormat, dataFormat);
 }
 
 - (NSString *)disassembleRecordedInstr:(NSInteger)i length:(NSInteger *)len
