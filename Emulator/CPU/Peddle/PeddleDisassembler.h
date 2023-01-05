@@ -54,11 +54,30 @@ public:
 
 public:
 
+    // Disassemble an instruction
+    isize disassemble(u16 addr, char *str) const;
+    isize disassemble(u16 pc, u8 byte1, u8 byte2, u8 byte3, char *str) const;
+
+    // Pretty-prints memory and flags
+    void disassembleByte(u8 value, char *str) const;
+    void disassembleBytes(u8 values[], isize cnt, char *str) const;
+    isize disassembleInstrBytes(u16 addr, char *str) const;
+    void disassembleWord(u16 value, char *str) const;
+    void disassembleMemory(u16 addr, isize cnt, char *str) const;
+    void disassembleFlags(u8 sr, char *str) const;
+    void disassembleFlags(char *str) const;
+
+    //
+    // OLD API
+    //
+
+public:
+
     // Disassembles a previously recorded instruction
-    const char *disassembleRecordedInstr(isize i, long *len) const;
-    const char *disassembleRecordedBytes(isize i) const;
-    const char *disassembleRecordedFlags(isize i) const;
-    const char *disassembleRecordedPC(isize i) const;
+    [[deprecated]] const char *disassembleRecordedInstr(isize i, long *len) const;
+    [[deprecated]] const char *disassembleRecordedBytes(isize i) const;
+    [[deprecated]] const char *disassembleRecordedFlags(isize i) const;
+    [[deprecated]] const char *disassembleRecordedPC(isize i) const;
 
     // Disassembles the instruction at the specified address
     const char *disassembleInstr(u16 addr, long *len) const;
@@ -70,10 +89,6 @@ public:
     const char *disassembleBytes() const;
     const char *disassemblePC() const;
 
-    // Dumps a portion of the log buffer
-    void dumpLogBuffer(std::ostream& os, isize count);
-    void dumpLogBuffer(std::ostream& os);
-
     // Disassembles a memory range
     void disassembleRange(std::ostream& os, u16 addr, isize count);
     void disassembleRange(std::ostream& os, std::pair<u16, u16> range, isize max = 255);
@@ -83,9 +98,6 @@ private:
     const char *disassembleInstr(RecordedInstruction instr, long *len) const;
     const char *disassembleBytes(const RecordedInstruction &instr) const;
     const char *disassembleRecordedFlags(const RecordedInstruction &instr) const;
-
-
-//     const char *disassembleRecordedInstrNew(RecordedInstruction instr, long *len) const;
 };
 
 }

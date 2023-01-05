@@ -206,6 +206,10 @@ public:
     // Working with the instruction log
     //
 
+    // Dumps a portion of the log buffer
+    void dumpLogBuffer(std::ostream& os, isize count);
+    void dumpLogBuffer(std::ostream& os);
+
     // Turns instruction logging on or off
     void enableLogging();
     void disableLogging();
@@ -225,6 +229,12 @@ public:
     const RecordedInstruction &logEntryAbs(isize n) const;
     u16 loggedPC0Rel(isize n) const;
     u16 loggedPC0Abs(isize n) const;
+
+    // Disassembles an item from the log buffer
+    isize disassembleRecordedInstr(isize i, char *str) const;
+    isize disassembleRecordedBytes(isize i, char *str) const;
+    void disassembleRecordedFlags(isize i, char *str) const;
+    void disassembleRecordedPC(isize i, char *str) const;
 
     // Clears the log buffer
     void clearLog() { logCnt = 0; }

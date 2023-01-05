@@ -9,7 +9,7 @@
 
 #pragma once
 
-static const char *script[] = {
+static const char *testScript[] = {
 
     "# Self-test script for VirtualC64",
     "# ",

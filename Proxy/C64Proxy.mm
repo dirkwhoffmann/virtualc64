@@ -340,44 +340,60 @@ using namespace vc64;
 
 - (NSString *)disassembleRecordedInstr:(NSInteger)i length:(NSInteger *)len
 {
-    const char *str = [self cpu]->disassembler.disassembleRecordedInstr((int)i, len);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    char result[32];
+
+    (void)[self cpu]->debugger.disassembleRecordedInstr(i, result);
+    return @(result);
 }
 
 - (NSString *)disassembleRecordedBytes:(NSInteger)i
 {
-    const char *str = [self cpu]->disassembler.disassembleRecordedBytes((int)i);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    char result[16];
+
+    (void)[self cpu]->debugger.disassembleRecordedBytes(i, result);
+    return @(result);
 }
 
 - (NSString *)disassembleRecordedFlags:(NSInteger)i
 {
-    const char *str = [self cpu]->disassembler.disassembleRecordedFlags((int)i);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    char result[16];
+
+    (void)[self cpu]->debugger.disassembleRecordedFlags(i, result);
+    return @(result);
 }
 
 - (NSString *)disassembleRecordedPC:(NSInteger)i
 {
-    const char *str = [self cpu]->disassembler.disassembleRecordedPC((int)i);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    char result[16];
+
+    (void)[self cpu]->debugger.disassembleRecordedPC(i, result);
+    return @(result);
 }
 
 - (NSString *)disassembleInstr:(NSInteger)addr length:(NSInteger *)len
 {
-    const char *str = [self cpu]->disassembler.disassembleInstr((u16)addr, len);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    char result[32];
+
+    auto length = [self cpu]->disassembler.disassemble(u16(addr), result);
+
+    *len = (NSInteger)length;
+    return @(result);
 }
 
 - (NSString *)disassembleBytes:(NSInteger)addr
 {
-    const char *str = [self cpu]->disassembler.disassembleBytes((u16)addr);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    char result[32];
+
+    [self cpu]->disassembler.disassembleInstrBytes(u16(addr), result);
+    return @(result);
 }
 
 - (NSString *)disassembleAddr:(NSInteger)addr
 {
-    const char *str = [self cpu]->disassembler.disassembleAddr((u16)addr);
-    return str ? [NSString stringWithUTF8String:str] : NULL;
+    char result[32];
+
+    [self cpu]->disassembler.disassembleWord(u16(addr), result);
+    return @(result);
 }
 
 @end

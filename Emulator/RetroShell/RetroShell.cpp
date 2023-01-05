@@ -195,7 +195,7 @@ RetroShell::printState()
         std::stringstream ss;
 
         ss << "\n";
-        cpu.disassembler.dumpLogBuffer(ss, 8);
+        cpu.debugger.dumpLogBuffer(ss, 8);
         ss << "\n";
         c64.dump(Category::Current, ss);
         ss << "\n";

@@ -241,6 +241,41 @@ Debugger::watchpointMatches(u32 addr)
 }
 
 void
+Debugger::dumpLogBuffer(std::ostream& os, isize count)
+{
+    isize num = loggedInstructions();
+
+    char pc[16];
+    char instr[16];
+    char flags[16];
+
+    for (isize i = num - count; i < num ; i++) {
+
+        if (i >= 0) {
+
+            cpu.debugger.disassembleRecordedPC(i, pc);
+            cpu.debugger.disassembleRecordedInstr(i, instr);
+            cpu.debugger.disassembleRecordedFlags(i, flags);
+
+            os << std::setfill('0');
+            os << "   ";
+            os << std::right << std::setw(4) << pc;
+            os << "   ";
+            os << flags;
+            os << "    ";
+            os << instr;
+            os << std::endl;
+        }
+    }
+}
+
+void
+Debugger::dumpLogBuffer(std::ostream& os)
+{
+    dumpLogBuffer(os, loggedInstructions());
+}
+
+void
 Debugger::enableLogging()
 {
     cpu.flags |= CPU_LOG_INSTRUCTION;
@@ -305,6 +340,41 @@ Debugger::loggedPC0Abs(isize n) const
 {
     assert(n < loggedInstructions());
     return loggedPC0Rel(loggedInstructions() - n - 1);
+}
+
+isize
+Debugger::disassembleRecordedInstr(isize i, char *str) const
+{
+    RecordedInstruction instr = logEntryAbs(i);
+
+    return cpu.disassembler.disassemble(instr.pc,
+                                        instr.byte1,
+                                        instr.byte2,
+                                        instr.byte3, str);
+}
+
+isize
+Debugger::disassembleRecordedBytes(isize i, char *str) const
+{
+    RecordedInstruction instr = logEntryAbs(i);
+
+    u8 bytes[] = {instr.byte1, instr.byte2, instr.byte3 };
+    isize len = cpu.getLengthOfInstruction(instr.byte1);
+
+    cpu.disassembler.disassembleBytes(bytes, len, str);
+    return len;
+}
+
+void
+Debugger::disassembleRecordedFlags(isize i, char *str) const
+{
+    cpu.disassembler.disassembleFlags(logEntryAbs(i).flags, str);
+}
+
+void
+Debugger::disassembleRecordedPC(isize i, char *str) const
+{
+    cpu.disassembler.disassembleWord(logEntryAbs(i).pc, str);
 }
 
 }
