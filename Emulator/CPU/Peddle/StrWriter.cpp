@@ -70,26 +70,52 @@ StrWriter::operator<<(const char *str)
 StrWriter&
 StrWriter::operator<<(u8 value)
 {
-    bool fill = style.numberFormat.fill;
+    auto fill = style.numberFormat.fill;
 
     switch (style.numberFormat.radix) {
 
-        case 10: fill ? sprintd(ptr, value, 3) : sprintd(ptr, value); break;
-        case 16: fill ? sprintx(ptr, value, 2) : sprintx(ptr, value); break;
+        case 10:
+        {
+            auto digits = decDigits(value);
+            if (fill) for (isize i = 0; i < 3 - digits; i++) *ptr++ = fill;
+            sprintd(ptr, value, digits);
+            break;
+        }
+        case 16:
+        {
+            auto digits = hexDigits(value);
+            if (fill) for (isize i = 0; i < 2 - digits; i++) *ptr++ = fill;
+            sprintx(ptr, value, digits);
+            break;
+        }
     }
+    
     return *this;
 }
 
 StrWriter&
 StrWriter::operator<<(u16 value)
 {
-    bool fill = style.numberFormat.fill;
+    auto fill = style.numberFormat.fill;
 
     switch (style.numberFormat.radix) {
 
-        case 10: fill ? sprintd(ptr, value, 5) : sprintd(ptr, value); break;
-        case 16: fill ? sprintx(ptr, value, 4) : sprintx(ptr, value); break;
+        case 10:
+        {
+            auto digits = decDigits(value);
+            if (fill) for (isize i = 0; i < 5 - digits; i++) *ptr++ = fill;
+            sprintd(ptr, value, digits);
+            break;
+        }
+        case 16:
+        {
+            auto digits = hexDigits(value);
+            if (fill) for (isize i = 0; i < 4 - digits; i++) *ptr++ = fill;
+            sprintx(ptr, value, digits);
+            break;
+        }
     }
+
     return *this;
 }
 

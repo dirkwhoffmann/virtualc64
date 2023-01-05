@@ -317,7 +317,7 @@ using namespace vc64;
         .prefix = "",
         .radix = 16,
         .upperCase = true,
-        .fill = true,
+        .fill = '0',
         .plainZero = false
     };
 
@@ -326,7 +326,7 @@ using namespace vc64;
         .prefix = "",
         .radix = 16,
         .upperCase = true,
-        .fill = true,
+        .fill = '0',
         .plainZero = false
     };
 
@@ -340,7 +340,7 @@ using namespace vc64;
         .prefix = "",
         .radix = 10,
         .upperCase = true,
-        .fill = false,
+        .fill = '\0',
         .plainZero = false
     };
 
@@ -349,7 +349,7 @@ using namespace vc64;
         .prefix = "",
         .radix = 10,
         .upperCase = true,
-        .fill = true,
+        .fill = '0',
         .plainZero = false
     };
 

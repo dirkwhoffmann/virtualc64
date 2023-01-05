@@ -18,7 +18,7 @@ Disassembler::Disassembler(Peddle& ref) : cpu(ref)
 {
     instrStyle = dataStyle = DasmStyle {
 
-        .numberFormat = { .prefix = "", .radix = 16, .upperCase = true, .fill = true },
+        .numberFormat = { .prefix = "", .radix = 16, .upperCase = true, .fill = '0' },
         .tab          = 4
     };
 }
