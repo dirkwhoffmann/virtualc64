@@ -228,9 +228,11 @@ public:
     // Examining instructions
     //
 
+public:
+    
     // Returns the length of an instruction in bytes
     isize getLengthOfInstruction(u8 opcode) const;
-    isize getLengthOfInstructionAtAddress(u16 addr) const;
+    isize getLengthOfInstructionAt(u16 addr) const;
     isize getLengthOfCurrentInstruction() const;
 
     // Returns the address of the instruction following the current one

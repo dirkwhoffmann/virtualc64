@@ -29,6 +29,7 @@ class InstrTableView: NSTableView {
     var numRows = 0
     var bpInRow: [Int: BreakpointType] = [:]
     var addrInRow: [Int: Int] = [:]
+    var addrStrInRow: [Int: String] = [:]
     var dataInRow: [Int: String] = [:]
     var instrInRow: [Int: String] = [:]
     var rowForAddr: [Int: Int] = [:]
@@ -67,6 +68,7 @@ class InstrTableView: NSTableView {
             
             var length = 0
             addrInRow[i] = addr
+            addrStrInRow[i] = cpu.disassembleAddr(addr)
             instrInRow[i] = cpu.disassembleInstr(addr, length: &length)
             dataInRow[i] = cpu.disassembleBytes(addr)
             
@@ -191,7 +193,7 @@ extension InstrTableView: NSTableViewDataSource {
         case "break" where bpInRow[row] == .disabled:
             return "\u{26AA}" // "⚪" ("\u{2B55}" // "⭕")
         case "addr":
-            return addrInRow[row]
+            return addrStrInRow[row]
         case "data":
             return dataInRow[row]
         case "instr":

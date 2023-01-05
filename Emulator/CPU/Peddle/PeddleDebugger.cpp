@@ -347,10 +347,11 @@ Debugger::disassembleRecordedInstr(isize i, char *str) const
 {
     RecordedInstruction instr = logEntryAbs(i);
 
-    return cpu.disassembler.disassemble(instr.pc,
+    return cpu.disassembler.disassemble(str,
+                                        instr.pc,
                                         instr.byte1,
                                         instr.byte2,
-                                        instr.byte3, str);
+                                        instr.byte3);
 }
 
 isize
@@ -361,20 +362,20 @@ Debugger::disassembleRecordedBytes(isize i, char *str) const
     u8 bytes[] = {instr.byte1, instr.byte2, instr.byte3 };
     isize len = cpu.getLengthOfInstruction(instr.byte1);
 
-    cpu.disassembler.disassembleBytes(bytes, len, str);
+    cpu.disassembler.dumpBytes(str, bytes, len);
     return len;
 }
 
 void
 Debugger::disassembleRecordedFlags(isize i, char *str) const
 {
-    cpu.disassembler.disassembleFlags(logEntryAbs(i).flags, str);
+    cpu.disassembler.disassembleFlags(str, logEntryAbs(i).flags);
 }
 
 void
 Debugger::disassembleRecordedPC(isize i, char *str) const
 {
-    cpu.disassembler.disassembleWord(logEntryAbs(i).pc, str);
+    cpu.disassembler.dumpWord(str, logEntryAbs(i).pc);
 }
 
 }

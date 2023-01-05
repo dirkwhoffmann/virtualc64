@@ -38,16 +38,17 @@ Disassembler::setIndentation(int value)
 }
 
 isize
-Disassembler::disassemble(u16 addr, char *str) const
+Disassembler::disassemble(char *str, u16 addr) const
 {
-    return disassemble(cpu.getPC0(),
+    return disassemble(str,
+                       cpu.getPC0(),
                        cpu.readDasm(addr),
                        cpu.readDasm(addr + 1),
-                       cpu.readDasm(addr + 2), str);
+                       cpu.readDasm(addr + 2));
 }
 
 isize
-Disassembler::disassemble(u16 pc, u8 byte1, u8 byte2, u8 byte3, char *str) const
+Disassembler::disassemble(char *str, u16 pc, u8 byte1, u8 byte2, u8 byte3) const
 {
     StrWriter writer(str, style);
 
@@ -80,6 +81,91 @@ Disassembler::disassemble(u16 pc, u8 byte1, u8 byte2, u8 byte3, char *str) const
     return cpu.getLengthOfInstruction(byte1);
 }
 
+void
+Disassembler::disassembleFlags(char *str, u8 sr) const
+{
+    assert(str);
+
+    str[0] = (sr & N_FLAG) ? 'N' : 'n';
+    str[1] = (sr & V_FLAG) ? 'V' : 'v';
+    str[2] = '-';
+    str[3] = (sr & B_FLAG) ? 'B' : 'b';
+    str[4] = (sr & D_FLAG) ? 'D' : 'd';
+    str[5] = (sr & I_FLAG) ? 'I' : 'i';
+    str[6] = (sr & Z_FLAG) ? 'Z' : 'z';
+    str[7] = (sr & C_FLAG) ? 'C' : 'c';
+    str[8] = 0;
+}
+
+void
+Disassembler::disassembleFlags(char *str) const
+{
+    disassembleFlags(str, cpu.getP());
+}
+
+void
+Disassembler::dumpByte(char *str, u8 value) const
+{
+    StrWriter(str, style) << value;
+}
+
+void
+Disassembler::dumpWord(char *str, u16 value) const
+{
+    StrWriter(str, style) << value;
+}
+
+void
+Disassembler::dumpBytes(char *str, u32 addr, isize cnt) const
+{
+    StrWriter writer(str, style);
+
+    for (isize i = 0; i < cnt; i++) {
+
+        if (i) writer << " ";
+        writer << cpu.readDasm(U16_ADD(addr, i));
+    }
+}
+
+void
+Disassembler::dumpBytes(char *str, u8 values[], isize cnt) const
+{
+    StrWriter writer(str, style);
+
+    for (isize i = 0; i < cnt; i++) {
+
+        if (i) writer << " ";
+        writer << values[i];
+    }
+}
+
+void
+Disassembler::dumpWords(char *str, u32 addr, isize cnt) const
+{
+    StrWriter writer(str, style);
+
+    for (isize i = 0; i < cnt; i++) {
+
+        if (i) writer << " ";
+        writer << u16(HI_LO(cpu.readDasm(U16_ADD(addr, 2 * i)),
+                            cpu.readDasm(U16_ADD(addr, 2 * i + 1))));
+    }
+}
+
+void
+Disassembler::dumpWords(char *str, u16 values[], isize cnt) const
+{
+    StrWriter writer(str, style);
+
+    for (isize i = 0; i < cnt; i++) {
+
+        if (i) writer << " ";
+        writer << values[i];
+    }
+
+}
+
+/*
 void
 Disassembler::disassembleByte(u8 byte, char *str) const
 {
@@ -127,28 +213,7 @@ Disassembler::disassembleMemory(u16 addr, isize cnt, char *str) const
         writer << cpu.readDasm(U16_ADD(addr, i));
     }
 }
-
-void
-Disassembler::disassembleFlags(u8 sr, char *str) const
-{
-    assert(str);
-
-    str[0] = (sr & N_FLAG) ? 'N' : 'n';
-    str[1] = (sr & V_FLAG) ? 'V' : 'v';
-    str[2] = '-';
-    str[3] = (sr & B_FLAG) ? 'B' : 'b';
-    str[4] = (sr & D_FLAG) ? 'D' : 'd';
-    str[5] = (sr & I_FLAG) ? 'I' : 'i';
-    str[6] = (sr & Z_FLAG) ? 'Z' : 'z';
-    str[7] = (sr & C_FLAG) ? 'C' : 'c';
-    str[8] = 0;
-}
-
-void
-Disassembler::disassembleFlags(char *str) const
-{
-    disassembleFlags(cpu.getP(), str);
-}
+*/
 
 void
 Disassembler::disassembleRange(std::ostream& os, u16 addr, isize count)
@@ -169,9 +234,9 @@ Disassembler::disassembleRange(std::ostream& os, std::pair<u16, u16> range, isiz
 
     for (isize i = 0; i < max && addr <= range.second; i++) {
 
-        auto numBytes = disassemble(addr, instr);
-        disassembleInstrBytes(addr, data);
-        disassembleWord(addr, address);
+        auto numBytes = disassemble(instr, addr);
+        dumpBytes(data, addr, numBytes);
+        dumpWord(address, addr);
 
         os << std::setfill(' ');
 

@@ -374,7 +374,7 @@ using namespace vc64;
 {
     char result[32];
 
-    auto length = [self cpu]->disassembler.disassemble(u16(addr), result);
+    auto length = [self cpu]->disassembler.disassemble(result, u16(addr));
 
     *len = (NSInteger)length;
     return @(result);
@@ -384,7 +384,8 @@ using namespace vc64;
 {
     char result[32];
 
-    [self cpu]->disassembler.disassembleInstrBytes(u16(addr), result);
+    auto length = [self cpu]->getLengthOfInstructionAt(u16(addr));
+    [self cpu]->disassembler.dumpBytes(result, u16(addr), length);
     return @(result);
 }
 
@@ -392,7 +393,7 @@ using namespace vc64;
 {
     char result[32];
 
-    [self cpu]->disassembler.disassembleWord(u16(addr), result);
+    [self cpu]->disassembler.dumpWord(result, u16(addr));
     return @(result);
 }
 

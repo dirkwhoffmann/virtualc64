@@ -224,7 +224,7 @@ Peddle::getLengthOfInstruction(u8 opcode) const
 }
 
 isize
-Peddle::getLengthOfInstructionAtAddress(u16 addr) const
+Peddle::getLengthOfInstructionAt(u16 addr) const
 {
     return getLengthOfInstruction(readDasm(addr));
 }
@@ -232,7 +232,7 @@ Peddle::getLengthOfInstructionAtAddress(u16 addr) const
 isize
 Peddle::getLengthOfCurrentInstruction() const
 {
-    return getLengthOfInstructionAtAddress(getPC0());
+    return getLengthOfInstructionAt(getPC0());
 }
 
 u16

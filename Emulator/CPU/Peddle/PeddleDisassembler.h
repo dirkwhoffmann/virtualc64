@@ -54,20 +54,23 @@ public:
 
 public:
 
-    // Disassemble an instruction
-    isize disassemble(u16 addr, char *str) const;
-    isize disassemble(u16 pc, u8 byte1, u8 byte2, u8 byte3, char *str) const;
+    // Disassembles an instruction
+    isize disassemble(char *str, u16 addr) const;
+    isize disassemble(char *str, u16 pc, u8 byte1, u8 byte2, u8 byte3) const;
 
     // Creates a textual representation for the status register
-    void disassembleFlags(u8 sr, char *str) const;
+    void disassembleFlags(char *str, u8 sr) const;
     void disassembleFlags(char *str) const;
 
-    // Creates textual representations for memory data
-    void disassembleByte(u8 value, char *str) const;
-    void disassembleBytes(u8 values[], isize cnt, char *str) const;
-    isize disassembleInstrBytes(u16 addr, char *str) const;
-    void disassembleWord(u16 value, char *str) const;
-    void disassembleMemory(u16 addr, isize cnt, char *str) const;
+    // Creates a textual representation for a single byte or word
+    void dumpByte(char *str, u8 value) const;
+    void dumpWord(char *str, u16 value) const;
+
+    // Creates a textual representation for a sequence of bytes or words
+    void dumpBytes(char *str, u32 addr, isize cnt) const;
+    void dumpBytes(char *str, u8 values[], isize cnt) const;
+    void dumpWords(char *str, u32 addr, isize cnt) const;
+    void dumpWords(char *str, u16 values[], isize cnt) const;
 
     // Disassembles larger code sections
     void disassembleRange(std::ostream& os, u16 addr, isize count);
