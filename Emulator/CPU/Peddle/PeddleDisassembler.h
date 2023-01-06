@@ -23,10 +23,10 @@ class Disassembler {
 
 public:
 
-    // Number style for disassembled instructions
+    // Visual style for disassembled instructions
     DasmStyle instrStyle;
 
-    // Number style for data dumps
+    // Visual style for data dumps
     DasmStyle dataStyle;
 
 

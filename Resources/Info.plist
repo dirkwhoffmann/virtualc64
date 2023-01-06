@@ -204,7 +204,7 @@
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.entertainment</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2022 Dirk Hoffmann. All rights reserved.</string>
+	<string>Copyright © 2023 Dirk Hoffmann. All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
