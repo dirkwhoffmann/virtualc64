@@ -379,7 +379,6 @@
 		50CD3698281681E800E40BFC /* FFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD3696281681E700E40BFC /* FFmpeg.cpp */; };
 		50CD369C2817D69000E40BFC /* Defaults.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50CD369A2817D69000E40BFC /* Defaults.cpp */; };
 		50D1072E2019D6C3006E6428 /* MyControllerMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */; };
-		50D197E021606DEC008BC551 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 50D197DF21606DEC008BC551 /* dsa_pub.pem */; };
 		50D20B752508F6D70088E8F2 /* VICII_cycles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50D20B742508F6D70088E8F2 /* VICII_cycles.cpp */; };
 		50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */; };
 		50D2A6A0210F20F700F13D43 /* VirtualKeyboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */; };
@@ -419,7 +418,6 @@
 		50FF1FCB26BAB3DA0061E5CE /* DropZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FF1FCA26BAB3DA0061E5CE /* DropZone.swift */; };
 		50FF818F1F88D9100004548A /* GamePad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FF818E1F88D9100004548A /* GamePad.swift */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
-		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -882,7 +880,6 @@
 		50CD369A2817D69000E40BFC /* Defaults.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Defaults.cpp; sourceTree = "<group>"; };
 		50CD369B2817D69000E40BFC /* Defaults.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Defaults.h; sourceTree = "<group>"; };
 		50D1072D2019D6C3006E6428 /* MyControllerMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyControllerMenu.swift; sourceTree = "<group>"; };
-		50D197DF21606DEC008BC551 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		50D20B742508F6D70088E8F2 /* VICII_cycles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VICII_cycles.cpp; sourceTree = "<group>"; };
 		50D2A69D210F20CB00F13D43 /* VirtualKeyboard.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VirtualKeyboard.xib; sourceTree = "<group>"; };
 		50D2A69F210F20F700F13D43 /* VirtualKeyboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualKeyboardController.swift; sourceTree = "<group>"; };
@@ -911,7 +908,6 @@
 		50E2D9AA25991E4B009A986B /* AnyCollection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnyCollection.cpp; sourceTree = "<group>"; };
 		50E2D9AB25991E4B009A986B /* AnyCollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnyCollection.h; sourceTree = "<group>"; };
 		50E5FFAF227964F20025C73D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		50E5FFB0227964F20025C73D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50E5FFB3227964FA0025C73D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		50E5FFB4227964FA0025C73D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		50E806BE25A1C2B800F08732 /* Reflection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reflection.h; sourceTree = "<group>"; };
@@ -1625,8 +1621,6 @@
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
 				5018A2721F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
-				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
-				50D197DF21606DEC008BC551 /* dsa_pub.pem */,
 				501E2C1125B2DDED00B9C9C0 /* AppIcon.icns */,
 				501E427B20D975AD000BB48D /* IconVirtualC64.icns */,
 				501E427820D975AC000BB48D /* IconCRT.icns */,
@@ -1934,7 +1928,6 @@
 			files = (
 				506A724821C033EF00DA0AC3 /* Configuration.xib in Resources */,
 				8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */,
-				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				5018A2731F17FC5000707AFA /* C64_Pro_Mono-STYLE.ttf in Resources */,
 				500E2D642824EBE30015C46F /* CartridgeInspector.xib in Resources */,
 				503E199020C42C6D007E91F1 /* Assets.xcassets in Resources */,
@@ -1947,7 +1940,6 @@
 				50F99565203AEC80004C4856 /* KeyViewItem.xib in Resources */,
 				50D2A69E210F20CB00F13D43 /* VirtualKeyboard.xib in Resources */,
 				501E428020D975AD000BB48D /* IconVirtualC64.icns in Resources */,
-				50D197E021606DEC008BC551 /* dsa_pub.pem in Resources */,
 				50157EF12825A9F5000E9DDD /* DiskImporter.xib in Resources */,
 				5051A15B1B885E1B00CBFB5A /* 1541_door_closed_2.aiff in Resources */,
 				5058A91A281D041400C223C9 /* DiskExporter.xib in Resources */,
@@ -2384,14 +2376,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		089C165FFE840EACC02AAC07 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				50E5FFB0227964F20025C73D /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */ = {
 			isa = PBXVariantGroup;
 			children = (
