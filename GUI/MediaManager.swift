@@ -205,13 +205,6 @@ class MediaManager {
     // Importing media files
     //
 
-    func addMedia() {
-
-        if let url = document.launchUrl {
-            try? addMedia(url: url)
-        }
-    }
-
     func addMedia(url: URL,
                   allowedTypes types: [FileType] = FileType.all,
                   drive id: Int = DRIVE8,

@@ -27,12 +27,7 @@ Peddle::registerInstructions()
         }
         registerLegalInstructions();
         registerIllegalInstructions();
-
-    } else {
-
-        printf("Tables already initialized\n"); 
     }
-
 }
 
 void

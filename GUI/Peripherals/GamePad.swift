@@ -146,13 +146,13 @@ class GamePad {
     }
     
     func dump() {
-        
+
         print(name != "" ? "\(name) " : "Placeholder device ", terminator: "")
         print(isMouse ? "(Mouse) " : "", terminator: "")
-        print(port != nil ? "[\(port!)] " : "[-] ", terminator: "")
-        if vendorID != "" { print("v: \(vendorID) ", terminator: "") }
-        if productID != "" { print("p: \(productID) ", terminator: "") }
-        if locationID != "" { print("l: \(locationID) ", terminator: "") }
+        print(port != nil ? "[\(port!)]" : "[-] ", terminator: "")
+        print(vendorID == "" ? "" : "v: \(vendorID) ", terminator: "")
+        print(productID == "" ? "" : "v: \(productID) ", terminator: "")
+        print(locationID == "" ? "" : "v: \(locationID) ")
     }
     
     //

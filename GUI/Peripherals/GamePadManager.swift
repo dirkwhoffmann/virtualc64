@@ -246,12 +246,16 @@ class GamePadManager {
     }
     
     func listDevices() {
-        
-        print("Input devices:")
-        for i in 0 ... Int.max {
-            
-            guard let dev = gamePads[i] else { break }
-            dev.dump()
+
+        if Int.hid != 0 {
+
+            print("Input devices:")
+            for i in 0 ... Int.max {
+
+                guard let dev = gamePads[i] else { break }
+                dev.dump()
+            }
+
         }
     }
     
