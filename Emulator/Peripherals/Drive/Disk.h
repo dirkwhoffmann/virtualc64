@@ -215,7 +215,7 @@ public:
      */
     u8 _readBitFromHalftrack(Halftrack ht, HeadPos pos) const {
         assert(isValidHeadPos(ht, pos));
-        return (data.halftrack[ht][pos / 8] & (0x80 >> (pos % 8))) != 0;
+        return (data.halftrack[ht][pos >> 3] & (0x80 >> (pos & 7))) != 0;
     }
     u8 readBitFromHalftrack(Halftrack ht, HeadPos pos) const {
         return _readBitFromHalftrack(ht, wrap(ht, pos));
@@ -223,9 +223,9 @@ public:
     void _writeBitToHalftrack(Halftrack ht, HeadPos pos, bool bit) {
         assert(isValidHeadPos(ht, pos));
         if (bit) {
-            data.halftrack[ht][pos / 8] |= (0x0080 >> (pos % 8));
+            data.halftrack[ht][pos >> 3] |= (0x0080 >> (pos & 7));
         } else {
-            data.halftrack[ht][pos / 8] &= (0xFF7F >> (pos % 8));
+            data.halftrack[ht][pos >> 3] &= (0xFF7F >> (pos & 7));
         }
     }
     void _writeBitToTrack(Track t, HeadPos pos, bool bit) {

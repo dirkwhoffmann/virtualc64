@@ -144,12 +144,14 @@ ReSID::_dump(Category category, std::ostream& os) const
         os << hex((u8)(reg[0x17] & 0x0F));
     }
     
-    if (category == Category::Registers) {
+    if (category == Category::Debug) {
 
-        for (isize i = 0; i <= 0x1C; i++) {
+        for (isize i = 0, col = 0, row = 0; i <= 0x1C; i++, row = i / 4, col = i % 4) {
 
-            os << "  " << hex((u8)i) << ": " << hex(reg[i]);
-            if ((i + 1) % 8 == 0) os << std::endl;
+            if (col == 0 && row != 0) os << std::endl;
+            if (col != 0) os << "  ";
+
+            os << hex((u8)i) << ": " << hex(reg[i]);
         }
     }
 }

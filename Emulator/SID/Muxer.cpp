@@ -500,15 +500,11 @@ Muxer::_dump(Category category, std::ostream& os) const
         os << config.volL << std::endl;
         os << tab("Volume R");
         os << config.volR << std::endl;
-    }
 
-    /*
-    if (category == Category::Inspection) {
+    } else {
 
-        os << tab("Fill level");
-        os << fillLevelAsString(stream.fillLevel());
+        _dump(category, os, 0);
     }
-    */
 }
 
 void

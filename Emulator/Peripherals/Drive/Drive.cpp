@@ -598,7 +598,7 @@ Drive::executeUF4()
             raiseByteReady();
             
             // (3) Execute byte ready counter
-            byteReadyCounter = sync ? (byteReadyCounter + 1) % 8 : 0;
+            byteReadyCounter = sync ? (byteReadyCounter + 1) & 7 : 0;
             
             // (4) Execute the write shift register
             if (writeMode() && hasDisk() && !getLightBarrier()) {

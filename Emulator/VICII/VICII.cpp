@@ -1073,7 +1073,7 @@ VICII::beginFrame()
     clearStats();
     
     // Check if this frame should be executed in headless mode
-    headless = c64.inWarpMode() && config.powerSave && (c64.frame % 8) != 0;
+    headless = c64.inWarpMode() && config.powerSave && (c64.frame & 7) != 0;
 }
 
 void
