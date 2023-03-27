@@ -386,7 +386,7 @@ private:
 public:
 
     double refreshRate() const override;
-
+    isize missingFrames(util::Time base) const override;
     
     //
     // Controlling
@@ -402,8 +402,8 @@ private:
     void _halt() override;
     void _warpOn() override;
     void _warpOff() override;
-    void _debugOn() override;
-    void _debugOff() override;
+    void _trackOn() override;
+    void _trackOff() override;
     void _inspect() const override;
 
     

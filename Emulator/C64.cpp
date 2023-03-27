@@ -917,10 +917,10 @@ C64::setInspectionTarget(InspectionTarget target, Cycle trigger)
     }
 }
 
-C64::ThreadMode
+ThreadMode
 C64::getThreadMode() const
 {
-    return config.syncMode == SYNC_VSYNC ? ThreadMode::Pulsed : ThreadMode::Periodic;
+    return config.syncMode == SYNC_VSYNC ? THREAD_PULSED : THREAD_PERIODIC; //  ADAPTIVE;
 }
 
 void
@@ -989,13 +989,26 @@ C64::refreshRate() const
 {
     switch (config.syncMode) {
 
-        case SYNC_NATIVE_FPS:        return vic.getFps();
-        case SYNC_FIXED_FPS:         return config.proposedFps;
-        case SYNC_VSYNC:         return host.getHostRefreshRate();
+        case SYNC_NATIVE_FPS:   return vic.getFps();
+        case SYNC_FIXED_FPS:    return config.proposedFps;
+        case SYNC_VSYNC:        return host.getHostRefreshRate();
 
         default:
             fatalError;
     }
+}
+
+isize
+C64::missingFrames(util::Time base) const
+{
+    // Compute the elapsed time
+    auto elapsed = util::Time::now() - base;
+
+    // Compute which frame should have been reached by now
+    auto targetFrame = elapsed.asNanoseconds() * i64(refreshRate()) / 1000000000;
+
+    // Compute the number of missing frames
+    return isize(targetFrame - frame);
 }
 
 void
@@ -1048,7 +1061,7 @@ C64::_run()
     debug(RUN_DEBUG, "_run\n");
 
     // Enable or disable CPU debugging
-    debugMode ? cpu.debugger.enableLogging() : cpu.debugger.disableLogging();
+    track ? cpu.debugger.enableLogging() : cpu.debugger.disableLogging();
 
     msgQueue.put(MSG_RUN);
 }
@@ -1092,13 +1105,13 @@ C64::_warpOff()
 }
 
 void
-C64::_debugOn()
+C64::_trackOn()
 {
 
 }
 
 void
-C64::_debugOff()
+C64::_trackOff()
 {
 
 }
@@ -1180,10 +1193,10 @@ C64::_dump(Category category, std::ostream& os) const
         os << bol(isRunning()) << std::endl;
         os << tab("Suspended");
         os << bol(isSuspended()) << std::endl;
-        os << tab("Warp mode");
-        os << bol(inWarpMode()) << std::endl;
-        os << tab("Debug mode");
-        os << bol(inDebugMode()) << std::endl;
+        os << tab("Warping");
+        os << bol(isWarping()) << std::endl;
+        os << tab("Tracking");
+        os << bol(isTracking()) << std::endl;
         os << std::endl;
     }
 
@@ -1204,7 +1217,7 @@ C64::_dump(Category category, std::ostream& os) const
         os << tab("Thread state");
         os << ExecutionStateEnum::key(state) << std::endl;
         os << tab("Thread mode");
-        os << (getThreadMode() == ThreadMode::Periodic ? "PERIODIC" : "PULSED") << std::endl;
+        os << ThreadModeEnum::key(getThreadMode()) << std::endl;
         os << tab("Ultimax mode");
         os << bol(getUltimax()) << std::endl;
     }

@@ -47,5 +47,34 @@ struct ExecutionStateEnum : util::Reflection<ExecutionStateEnum, ExecutionState>
         return "???";
     }
 };
+#endif
+
+enum_long(THREAD_MODE)
+{
+    THREAD_PERIODIC,
+    THREAD_PULSED,
+    THREAD_ADAPTIVE
+};
+typedef THREAD_MODE ThreadMode;
+
+#ifdef __cplusplus
+struct ThreadModeEnum : util::Reflection<ThreadModeEnum, ThreadMode>
+{
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = THREAD_ADAPTIVE;
+    static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
+
+    static const char *prefix() { return "THREAD"; }
+    static const char *key(ThreadMode value)
+    {
+        switch (value) {
+
+            case THREAD_PERIODIC:   return "PERIODIC";
+            case THREAD_PULSED:     return "PULSED";
+            case THREAD_ADAPTIVE:   return "ADAPTIVE";
+        }
+        return "???";
+    }
+};
 
 #endif

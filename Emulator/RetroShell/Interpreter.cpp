@@ -117,7 +117,7 @@ Interpreter::switchInterpreter()
     if (inCommandShell()) {
 
         shell = Shell::Debug;
-        c64.debugOn();
+        c64.trackOn();
 
     } else {
 

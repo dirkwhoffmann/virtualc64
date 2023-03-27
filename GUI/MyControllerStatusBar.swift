@@ -42,7 +42,7 @@ extension MyController {
         let on9 = c64.drive9.isSwitchedOn()
 
         let running = c64.running
-        let debug = c64.debugMode
+        let track = c64.trackMode
         let jammed = c64.cpu.isJammed()
         let warp = c64.warpMode
         
@@ -69,7 +69,7 @@ extension MyController {
             trackNumber9: connected9 && on9,
             
             haltIcon: jammed,
-            debugIcon: debug,
+            trackIcon: track,
             muteIcon: warp || muted,
             
             tapeIcon: c64.datasette.hasTape,

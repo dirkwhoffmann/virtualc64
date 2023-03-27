@@ -2625,7 +2625,7 @@ using namespace vc64;
 
 - (BOOL)warpMode
 {
-    return [self c64]->inWarpMode();
+    return [self c64]->isWarping();
 }
 
 - (void)setWarpMode:(BOOL)enable
@@ -2633,14 +2633,18 @@ using namespace vc64;
     enable ? [self c64]->warpOn() : [self c64]->warpOff();
 }
 
-- (BOOL)debugMode
+- (BOOL)trackMode
 {
-    return [self c64]->inDebugMode();
+    return [self c64]->isTracking();
 }
 
-- (void)setDebugMode:(BOOL)enable
+- (void)setTrackMode:(BOOL)value
 {
-    enable ? [self c64]->debugOn() : [self c64]->debugOff();
+    if (value) {
+        [self c64]->trackOn();
+    } else {
+        [self c64]->trackOff();
+    }
 }
 
 - (NSInteger)cpuLoad

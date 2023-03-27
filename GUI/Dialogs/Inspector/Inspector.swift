@@ -307,7 +307,7 @@ class Inspector: DialogController {
     override func showWindow(_ sender: Any?) {
 
         super.showWindow(self)
-        c64.debugMode = true
+        c64.trackMode = true
         updateInspectionTarget()
     }
         
@@ -460,7 +460,7 @@ extension Inspector {
     override func windowWillClose(_ notification: Notification) {
                 
         // Leave debug mode
-        c64?.debugMode = false
+        c64?.trackMode = false
         c64?.inspectionTarget = .NONE
     }
 }

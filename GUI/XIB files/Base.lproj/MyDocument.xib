@@ -13,7 +13,6 @@
                 <outlet property="activityType" destination="ApN-dX-M4Z" id="zMi-4l-Cko"/>
                 <outlet property="cpuInfo" destination="tD7-Kt-2R4" id="3c1-O6-Q9y"/>
                 <outlet property="crtIcon" destination="2003" id="CVl-nZ-xP2"/>
-                <outlet property="debugIcon" destination="6c9-VQ-Wmb" id="2dW-WG-eAT"/>
                 <outlet property="diskIcon8" destination="1045" id="wFy-Xz-5J7"/>
                 <outlet property="diskIcon9" destination="D1i-Ep-fTN" id="4H9-ek-oFn"/>
                 <outlet property="greenLED8" destination="1208" id="wdq-y9-MpT"/>
@@ -29,6 +28,7 @@
                 <outlet property="tapeIcon" destination="NlM-JA-g9p" id="N4F-vG-K0f"/>
                 <outlet property="tapeProgress" destination="H1X-Kk-fcE" id="HyE-RP-1yJ"/>
                 <outlet property="toolbar" destination="1845" id="vCR-nf-AUd"/>
+                <outlet property="trackIcon" destination="6c9-VQ-Wmb" id="2dW-WG-eAT"/>
                 <outlet property="trackNumber8" destination="eRV-bT-c7s" id="0Q1-xr-S5e"/>
                 <outlet property="trackNumber9" destination="ndF-PV-uVn" id="bAX-4R-ZjY"/>
                 <outlet property="warpIcon" destination="1052" id="uvG-el-lRi"/>
@@ -307,7 +307,7 @@
                         <popUpButton key="view" tag="10" id="L2b-nG-yBo" userLabel="Port 1">
                             <rect key="frame" x="0.0" y="14" width="41" height="20"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" tag="-1" imageScaling="proportionallyUpOrDown" inset="2" autoenablesItems="NO" selectedItem="VD3-Wr-Ufe" id="Oxd-8A-P5o" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" autoenablesItems="NO" id="zHf-yH-YTM">
@@ -334,7 +334,7 @@
                         <popUpButton key="view" tag="11" id="4MP-rV-xX2" userLabel="Port 2">
                             <rect key="frame" x="0.0" y="14" width="41" height="20"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
+                            <popUpButtonCell key="cell" type="roundTextured" title="None" bezelStyle="texturedRounded" image="devNoneTemplate" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" tag="-1" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="xyt-eC-0im" id="skK-6M-sib" userLabel="PopupButtonCell">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" autoenablesItems="NO" id="L3K-on-eyR">
@@ -372,7 +372,6 @@
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="1850"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="1851"/>
-                    <toolbarItem implicitItemIdentifier="NSToolbarSeparatorItem" id="1848"/>
                     <toolbarItem implicitItemIdentifier="0EA96B6A-DC7A-4937-8E51-B903053C331E" label="Preferences" paletteLabel="Preferences" sizingBehavior="auto" id="E7X-uf-vpw" userLabel="Preferences">
                         <nil key="toolTip"/>
                         <segmentedControl key="view" verticalHuggingPriority="750" id="Q4T-pS-2Ar">

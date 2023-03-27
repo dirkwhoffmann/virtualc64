@@ -96,8 +96,8 @@ CoreComponent::load(const u8 *buffer)
     if (hash != _checksum() || FORCE_SNAP_CORRUPTED) {
         throw VC64Error(ERROR_SNAP_CORRUPTED);
     }
-
-    trace(SNP_DEBUG, "Loaded %ld bytes (expected %ld)\n", result, size());
+    
+    debug(SNP_DEBUG, "Loaded %ld bytes (expected %ld)\n", result, size());
     return result;
 }
 
@@ -209,17 +209,17 @@ CoreComponent::warpOff()
 }
 
 void
-CoreComponent::debugOn()
-{
-    for (auto c : subComponents) { c->debugOn(); }
-    _debugOn();
+CoreComponent::trackOn()
+{    
+    for (auto c : subComponents) { c->trackOn(); }
+    _trackOn();
 }
 
 void
-CoreComponent::debugOff()
+CoreComponent::trackOff()
 {
-    for (auto c : subComponents) { c->debugOff(); }
-    _debugOff();
+    for (auto c : subComponents) { c->trackOff(); }
+    _trackOff();
 }
 
 }

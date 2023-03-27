@@ -184,7 +184,7 @@
 
 @property (readonly) NSInteger frame;
 @property BOOL warpMode;
-@property BOOL debugMode;
+@property BOOL trackMode;
 @property (readonly) NSInteger cpuLoad;
 
 @property InspectionTarget inspectionTarget;

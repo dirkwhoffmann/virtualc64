@@ -541,17 +541,17 @@ VICII::_run()
 }
 
 void
-VICII::_debugOn()
+VICII::_trackOn()
 {
-    debug(RUN_DEBUG, "_debugOn\n");
+    debug(RUN_DEBUG, "_trackOn\n");
 
     updateVicFunctionTable();
 }
 
 void
-VICII::_debugOff()
+VICII::_trackOff()
 {
-    debug(RUN_DEBUG, "_debugOff\n");
+    debug(RUN_DEBUG, "_trackOff\n");
 
     updateVicFunctionTable();
 }
@@ -1073,7 +1073,7 @@ VICII::beginFrame()
     clearStats();
     
     // Check if this frame should be executed in headless mode
-    headless = c64.inWarpMode() && config.powerSave && (c64.frame & 7) != 0;
+    headless = c64.isWarping() && config.powerSave && (c64.frame & 7) != 0;
 }
 
 void

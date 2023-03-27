@@ -85,8 +85,8 @@ private:
     
     void _reset(bool hard) override;
     void _inspect() const override;
-    void _debugOn() override;
-    void _debugOff() override;
+    void _trackOn() override;
+    void _trackOff() override;
 
     template <class T>
     void applyToPersistentItems(T& worker)

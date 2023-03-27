@@ -133,7 +133,7 @@ class DiskDataView: NSScrollView {
         }
 
         // Colorize
-        let color = NSColor.alternateSelectedControlColor
+        let color = NSColor.selectedContentBackgroundColor
         storage?.addAttr(.foregroundColor, value: color, range: firstHeaderRange)
         storage?.addAttr(.foregroundColor, value: color, range: secondHeaderRange)
         storage?.addAttr(.foregroundColor, value: color, range: firstDataSectorRange)

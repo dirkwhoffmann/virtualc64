@@ -76,7 +76,7 @@ CPU::_inspect() const
 }
 
 void
-CPU::_debugOn()
+CPU::_trackOn()
 {
     // We only allow the C64 CPU to enter debug mode
     if (!isC64CPU()) return;
@@ -86,7 +86,7 @@ CPU::_debugOn()
 }
 
 void
-CPU::_debugOff()
+CPU::_trackOff()
 {
     debug(RUN_DEBUG, "Disabling debug mode\n");
     debugger.disableLogging();

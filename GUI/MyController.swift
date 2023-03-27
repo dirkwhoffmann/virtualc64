@@ -110,7 +110,7 @@ class MyController: NSWindowController, MessageReceiver {
     @IBOutlet weak var spinning9: NSProgressIndicator!
     
     @IBOutlet weak var haltIcon: NSButton!
-    @IBOutlet weak var debugIcon: NSButton!
+    @IBOutlet weak var trackIcon: NSButton!
     @IBOutlet weak var muteIcon: NSButton!
     @IBOutlet weak var tapeIcon: NSButton!
     @IBOutlet weak var tapeCounter: NSTextField!
