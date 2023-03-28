@@ -38,9 +38,6 @@ class PreferencesController: DialogController {
     @IBOutlet weak var genAspectRatioButton: NSButton!
     @IBOutlet weak var genExitOnEscButton: NSButton!
 
-    // Warp mode
-    @IBOutlet weak var genWarpMode: NSPopUpButton!
-
     // Misc
     @IBOutlet weak var genEjectUnasked: NSButton!
     @IBOutlet weak var genPauseInBackground: NSButton!

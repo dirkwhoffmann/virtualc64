@@ -8,7 +8,20 @@
 // -----------------------------------------------------------------------------
 
 extension MyController {
-    
+
+    var hourglassIcon: NSImage? {
+
+        if WarpMode(rawValue: config.warpMode) == .AUTO {
+
+            return NSImage(named: c64.warpMode ? "hourglass3Template" : "hourglass1Template")
+
+        } else {
+
+            return NSImage(named: c64.warpMode ? "warpOnTemplate" : "warpOffTemplate")
+        }
+    }
+
+    /*
     var hourglass: NSImage? {
         
         switch pref.warpMode {
@@ -22,7 +35,8 @@ extension MyController {
             return NSImage(named: "warpOnTemplate")
         }
     }
-    
+    */
+
     var cartridgeSwitch: NSImage? {
         
         if !c64.expansionport.hasSwitch { return nil }
@@ -207,7 +221,7 @@ extension MyController {
 
     func refreshStatusBarWarpIcon() {
 
-        warpIcon.image = hourglass
+        warpIcon.image = hourglassIcon
     }
 
     func showStatusBar(_ value: Bool) {
@@ -307,6 +321,23 @@ extension MyController {
 
     @IBAction func warpAction(_ sender: Any!) {
 
+        switch WarpMode(rawValue: config.warpMode) {
+
+        case .AUTO: config.warpMode = WarpMode.NEVER.rawValue
+        case .NEVER: config.warpMode = WarpMode.ALWAYS.rawValue
+        case .ALWAYS: config.warpMode = WarpMode.AUTO.rawValue
+
+        default:
+            fatalError()
+        }
+
+        refreshStatusBar()
+        myAppDelegate.prefController?.refresh()
+    }
+    
+    /*
+    @IBAction func warpAction(_ sender: Any!) {
+
         switch pref.warpMode {
 
         case .auto: pref.warpMode = .off
@@ -316,6 +347,7 @@ extension MyController {
 
         refreshStatusBar()
     }
+    */
 
     @IBAction func activityTypeAction(_ sender: NSPopUpButton!) {
 

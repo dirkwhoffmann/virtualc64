@@ -7,13 +7,6 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-enum WarpMode: Int {
-
-    case auto
-    case off
-    case on
-}
-
 protocol MessageReceiver {
     func processMessage(_ msg: Message)
 }
@@ -283,19 +276,6 @@ extension MyController {
             }
         }
     }
-    
-    func updateWarp() {
-        
-        var warp: Bool
-        
-        switch pref.warpMode {
-        case .auto: warp = c64.iec.transferring
-        case .off: warp = false
-        case .on: warp = true
-        }
-        
-        if warp != c64.warpMode {  c64.warpMode = warp }
-    }
 
     func processMessage(_ msg: Message) {
 
@@ -350,7 +330,6 @@ extension MyController {
             inspector?.step()
 
         case .RESET:
-            updateWarp()
             inspector?.reset()
 
         case .HALT:
@@ -431,12 +410,11 @@ extension MyController {
 
         case .IEC_BUS_BUSY,
                 .IEC_BUS_IDLE:
-            updateWarp()
-            refreshStatusBarDriveActivity()
+            refreshStatusBar()
 
         case .DRIVE_MOTOR_ON,
                 .DRIVE_MOTOR_OFF:
-            refreshStatusBarDriveActivity()
+            refreshStatusBar()
 
         case .DRIVE_CONNECT,
                 .DRIVE_DISCONNECT,

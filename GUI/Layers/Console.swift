@@ -136,7 +136,7 @@ class Console: Layer {
     func keyUp(with event: NSEvent) {
         
     }
-    
+
     func runScript(script: ScriptProxy) {
         
         open()

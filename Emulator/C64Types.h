@@ -162,6 +162,35 @@ enum_i8(EventID)
     INS_EVENT_COUNT
 };
 
+enum_long(WARP_MODE)
+{
+    WARP_AUTO,
+    WARP_NEVER,
+    WARP_ALWAYS
+};
+typedef WARP_MODE WarpMode;
+
+#ifdef __cplusplus
+struct WarpModeEnum : util::Reflection<WarpModeEnum, WarpMode>
+{
+    static constexpr long minVal = 0;
+    static constexpr long maxVal = WARP_ALWAYS;
+    static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
+
+    static const char *prefix() { return "WARP"; }
+    static const char *key(WarpMode value)
+    {
+        switch (value) {
+
+            case WARP_AUTO:     return "WARP_AUTO";
+            case WARP_NEVER:    return "WARP_NEVER";
+            case WARP_ALWAYS:   return "WARP_ALWAYS";
+        }
+        return "???";
+    }
+};
+#endif
+
 enum_long(SYNC_MODE)
 {
     SYNC_NATIVE_FPS,
@@ -268,6 +297,8 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
 
 typedef struct
 {
+    isize warpBoot;
+    WarpMode warpMode;
     SyncMode syncMode;
     isize proposedFps;
 }

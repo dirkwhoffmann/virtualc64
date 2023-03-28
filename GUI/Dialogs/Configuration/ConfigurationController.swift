@@ -129,6 +129,9 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var comSsCollisions: NSButton!
     @IBOutlet weak var comSbCollisions: NSButton!
 
+    // Warp mode
+    @IBOutlet weak var comWarpMode: NSPopUpButton!
+
     // Buttons
     @IBOutlet weak var comPowerButton: NSButton!
 

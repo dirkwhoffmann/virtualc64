@@ -19,7 +19,10 @@ extension ConfigurationController {
         // Collision detection
         comSsCollisions.state = config.ssCollisions ? .on : .off
         comSbCollisions.state = config.sbCollisions ? .on : .off
-        
+
+        // Warp
+        comWarpMode.selectItem(withTag: config.warpMode)
+
         // Power button
         comPowerButton.isHidden = !bootable
     }
@@ -52,6 +55,12 @@ extension ConfigurationController {
     @IBAction func comSbCollisionsAction(_ sender: NSButton!) {
         
         config.sbCollisions = sender.state == .on
+        refresh()
+    }
+
+    @IBAction func comWarpModeAction(_ sender: NSPopUpButton!) {
+
+        config.warpMode = sender.selectedTag()
         refresh()
     }
 

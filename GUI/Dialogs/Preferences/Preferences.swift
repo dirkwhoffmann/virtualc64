@@ -67,15 +67,6 @@ class Preferences {
     // Fullscreen
     var keepAspectRatio = false
     var exitOnEsc = false
-
-    // Warp mode
-    var warpMode = WarpMode.off {
-        didSet { for c in myAppDelegate.controllers { c.updateWarp() } }
-    }
-    var warpModeIntValue: Int {
-        get { return Int(warpMode.rawValue) }
-        set { warpMode = WarpMode(rawValue: newValue)! }
-    }
     
     // Misc
     var ejectWithoutAsking = false

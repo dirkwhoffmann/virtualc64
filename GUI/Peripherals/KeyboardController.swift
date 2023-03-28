@@ -23,6 +23,7 @@ class KeyboardController: NSObject {
     var leftControl = false, rightControl = false
     var leftOption  = false, rightOption  = false
     var leftCommand = false, rightCommand = false
+    var capsLock    = false
 
     // Remembers the currently pressed keys and their assigned C64 key list.
     // This variable is only used when keys are mapped symbolically. It it
@@ -109,7 +110,9 @@ class KeyboardController: NSObject {
             rightCommand ? keyDown(with: key) : keyUp(with: key)
 
         case kVK_CapsLock where myAppDelegate.mapCapsLockWarp:
-            pref.warpMode = event.modifierFlags.contains(.capsLock) ? .on : .off
+            capsLock = event.modifierFlags.contains(.capsLock)
+            capsLock ? capsLockDown() : capsLockUp()
+            // pref.warpMode = event.modifierFlags.contains(.capsLock) ? .on : .off
 
         default:
             break
@@ -348,6 +351,16 @@ class KeyboardController: NSObject {
         if let seconds = duration {
             keyboard.scheduleKeyReleases(key1.nr, with: key2.nr, delay: seconds)
         }
+    }
+
+    func capsLockDown() {
+
+        parent.config.warpMode = WarpMode.ALWAYS.rawValue
+    }
+
+    func capsLockUp() {
+
+        parent.config.warpMode = WarpMode.NEVER.rawValue
     }
 
     func type(_ string: String) {

@@ -230,7 +230,17 @@ class Configuration {
         get { return c64.getConfig(.SB_COLLISIONS) != 0 }
         set { c64.configure(.SB_COLLISIONS, enable: newValue) }
     }
-        
+
+    var warpMode: Int {
+        get { return c64.getConfig(.WARP_MODE) }
+        set { c64.configure(.WARP_MODE, value: newValue) }
+    }
+
+    var warpBoot: Int {
+        get { return c64.getConfig(.WARP_BOOT) }
+        set { c64.configure(.WARP_BOOT, value: newValue) }
+    }
+
     //
     // Audio
     //

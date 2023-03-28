@@ -298,10 +298,7 @@ struct Keys {
         // Fullscreen
         static let keepAspectRatio        = "General.FullscreenKeepAspectRatio"
         static let exitOnEsc              = "General.FullscreenExitOnEsc"
-                
-        // Warp mode
-        static let warpMode               = "General.WarpMode"
-        
+
         // Miscellaneous
         static let ejectWithoutAsking     = "General.EjectWithoutAsking"
         static let closeWithoutAsking     = "General.CloseWithoutAsking"
@@ -334,9 +331,6 @@ extension DefaultsProxy {
         register(Keys.Gen.keepAspectRatio, false)
         register(Keys.Gen.exitOnEsc, true)
 
-        // Warp mode
-        register(Keys.Gen.warpMode, WarpMode.off.rawValue)
-
         // Misc
         register(Keys.Gen.ejectWithoutAsking, false)
         register(Keys.Gen.closeWithoutAsking, false)
@@ -361,8 +355,6 @@ extension DefaultsProxy {
 
                      Keys.Gen.keepAspectRatio,
                      Keys.Gen.exitOnEsc,
-
-                     Keys.Gen.warpMode,
 
                      Keys.Gen.ejectWithoutAsking,
                      Keys.Gen.closeWithoutAsking,
@@ -395,8 +387,6 @@ extension Preferences {
         defaults.set(Keys.Gen.keepAspectRatio, keepAspectRatio)
         defaults.set(Keys.Gen.exitOnEsc, exitOnEsc)
 
-        defaults.set(Keys.Gen.warpMode, warpModeIntValue)
-
         defaults.set(Keys.Gen.ejectWithoutAsking, ejectWithoutAsking)
         defaults.set(Keys.Gen.closeWithoutAsking, closeWithoutAsking)
         defaults.set(Keys.Gen.pauseInBackground, pauseInBackground)
@@ -423,8 +413,6 @@ extension Preferences {
 
         keepAspectRatio = defaults.bool(Keys.Gen.keepAspectRatio)
         exitOnEsc = defaults.bool(Keys.Gen.exitOnEsc)
-
-        warpModeIntValue = defaults.int(Keys.Gen.warpMode)
 
         ejectWithoutAsking = defaults.bool(Keys.Gen.ejectWithoutAsking)
         closeWithoutAsking = defaults.bool(Keys.Gen.closeWithoutAsking)
@@ -960,6 +948,8 @@ extension DefaultsProxy {
         remove(.SID_POWER_SAVE)
         remove(.SS_COLLISIONS)
         remove(.SB_COLLISIONS)
+        remove(.WARP_MODE)
+        remove(.WARP_BOOT)
     }
 }
 
@@ -978,6 +968,8 @@ extension Configuration {
         defaults.set(.SID_POWER_SAVE, sidPowerSave)
         defaults.set(.SS_COLLISIONS, ssCollisions)
         defaults.set(.SB_COLLISIONS, sbCollisions)
+        defaults.set(.WARP_MODE, warpMode)
+        defaults.set(.WARP_BOOT, warpBoot)
         defaults.save()
 
         c64.resume()
@@ -996,6 +988,8 @@ extension Configuration {
         sidPowerSave = defaults.get(.SID_POWER_SAVE) != 0
         ssCollisions = defaults.get(.SS_COLLISIONS) != 0
         sbCollisions = defaults.get(.SB_COLLISIONS) != 0
+        warpMode = defaults.get(.WARP_MODE)
+        warpBoot = defaults.get(.WARP_BOOT)
 
         c64.resume()
     }

@@ -19,6 +19,8 @@
 enum_long(OPT)
 {
     // C64
+    OPT_WARP_BOOT,
+    OPT_WARP_MODE,
     OPT_SYNC_MODE,
     OPT_PROPOSED_FPS,
 
@@ -119,6 +121,8 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
     {
         switch (value) {
 
+            case OPT_WARP_BOOT:             return "WARP_BOOT";
+            case OPT_WARP_MODE:             return "WARP_MODE";
             case OPT_SYNC_MODE:             return "SYNC_MODE";
             case OPT_PROPOSED_FPS:          return "PROPOSED_FPS";
 

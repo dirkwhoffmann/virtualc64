@@ -273,6 +273,8 @@ C64::resetConfig()
 
     std::vector <Option> options = {
 
+        OPT_WARP_BOOT,
+        OPT_WARP_MODE,
         OPT_SYNC_MODE,
         OPT_PROPOSED_FPS
     };
@@ -287,6 +289,14 @@ i64
 C64::getConfigItem(Option option) const
 {
     switch (option) {
+
+        case OPT_WARP_BOOT:
+
+            return config.warpBoot;
+
+        case OPT_WARP_MODE:
+
+            return config.warpMode;
 
         case OPT_SYNC_MODE:
 
@@ -411,6 +421,22 @@ C64::setConfigItem(Option option, i64 value)
 {
     switch (option) {
 
+        case OPT_WARP_BOOT:
+
+            config.warpBoot = isize(value);
+            updateWarpState();
+            return;
+
+        case OPT_WARP_MODE:
+
+            if (!WarpModeEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, WarpModeEnum::keyList());
+            }
+
+            config.warpMode = WarpMode(value);
+            updateWarpState();
+            return;
+
         case OPT_SYNC_MODE:
 
             if (!SyncModeEnum::isValid(value)) {
@@ -467,6 +493,8 @@ C64::configure(Option option, i64 value)
 
     switch (option) {
 
+        case OPT_WARP_BOOT:
+        case OPT_WARP_MODE:
         case OPT_SYNC_MODE:
         case OPT_PROPOSED_FPS:
 
@@ -1512,6 +1540,37 @@ C64::processINSEvent(EventID id)
 
     // Reschedule event
     rescheduleRel<SLOT_INS>((Cycle)(inspectionInterval * PAL_CYCLES_PER_SECOND));
+}
+
+void
+C64::updateWarpState()
+{
+    if (cpu.clock < SEC(config.warpBoot)) {
+
+        switchWarp(true);
+        return;
+    }
+
+    switch (config.warpMode) {
+
+        case WARP_AUTO:     switchWarp(iec.isTransferring()); break;
+        case WARP_NEVER:    switchWarp(false); break;
+        case WARP_ALWAYS:   switchWarp(true); break;
+
+        default:
+            fatalError;
+    }
+}
+
+void
+C64::processWBTEvent()
+{
+    /*
+    assert(id[SLOT_WBT] == WBT_DISABLE);
+
+    updateWarpState();
+    cancel <SLOT_WBT> ();
+    */
 }
 
 void
