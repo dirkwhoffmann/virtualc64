@@ -907,6 +907,7 @@
 		50DF719325021FCA00953E2E /* Keycap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keycap.swift; sourceTree = "<group>"; };
 		50E2D9AA25991E4B009A986B /* AnyCollection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnyCollection.cpp; sourceTree = "<group>"; };
 		50E2D9AB25991E4B009A986B /* AnyCollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnyCollection.h; sourceTree = "<group>"; };
+		50E56AF629D48A0E00EBCE76 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		50E5FFAF227964F20025C73D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		50E5FFB3227964FA0025C73D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		50E5FFB4227964FA0025C73D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MyDocument.xib; sourceTree = "<group>"; };
@@ -1267,17 +1268,11 @@
 				50726FBB2961CA5A0031F2F5 /* Headless.cpp */,
 				500FAA62261376980062488E /* Utilities */,
 				50A2D7AF24AF945200671F38 /* Base */,
-				50ACF4DC256EB451003B5690 /* LogicBoard */,
-				504C42E524AF29AB00E69CAE /* CPU */,
-				504C435224AF29AC00E69CAE /* CIA */,
-				504C430424AF29AB00E69CAE /* VICII */,
-				504C431124AF29AC00E69CAE /* SID */,
-				504C42E024AF29AB00E69CAE /* Memory */,
+				50E56AF529D489EA00EBCE76 /* Components */,
 				504C42F924AF29AB00E69CAE /* Peripherals */,
 				504C428E24AF29AB00E69CAE /* Cartridges */,
 				504C42C624AF29AB00E69CAE /* Media */,
 				5080501C2587A177004FE1F5 /* FileSystems */,
-				5036E0AD261AEF000048E66A /* RetroShell */,
 				50EF22312815925100440C4D /* Misc */,
 			);
 			path = Emulator;
@@ -1825,6 +1820,20 @@
 			path = Monitor;
 			sourceTree = "<group>";
 		};
+		50E56AF529D489EA00EBCE76 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				50E56AF629D48A0E00EBCE76 /* CMakeLists.txt */,
+				50ACF4DC256EB451003B5690 /* LogicBoard */,
+				504C42E524AF29AB00E69CAE /* CPU */,
+				504C435224AF29AC00E69CAE /* CIA */,
+				504C430424AF29AB00E69CAE /* VICII */,
+				504C431124AF29AC00E69CAE /* SID */,
+				504C42E024AF29AB00E69CAE /* Memory */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		50EF22302815922300440C4D /* RegressionTester */ = {
 			isa = PBXGroup;
 			children = (
@@ -1839,6 +1848,7 @@
 			isa = PBXGroup;
 			children = (
 				50EF22322815927D00440C4D /* CMakeLists.txt */,
+				5036E0AD261AEF000048E66A /* RetroShell */,
 				50EF22302815922300440C4D /* RegressionTester */,
 			);
 			path = Misc;
