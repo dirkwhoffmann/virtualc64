@@ -492,7 +492,6 @@
 		5018BFB024B48DC400551848 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		5018BFB224B48DD500551848 /* RendererSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendererSetup.swift; sourceTree = "<group>"; };
 		501B80C225B1702500C90284 /* MyDocumentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDocumentController.swift; sourceTree = "<group>"; };
-		501C46BB2964BF1200C4B27B /* SelfTestScript.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelfTestScript.h; sourceTree = "<group>"; };
 		501C46BC2965C54200C4B27B /* StrWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StrWriter.h; sourceTree = "<group>"; };
 		501C46BD2965C54200C4B27B /* StrWriter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StrWriter.cpp; sourceTree = "<group>"; };
 		501E2C1125B2DDED00B9C9C0 /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
@@ -1260,10 +1259,6 @@
 			children = (
 				5078BEAA264D70AC00EDA161 /* CMakeLists.txt */,
 				504C42F824AF29AB00E69CAE /* config.h */,
-				504268AC24F0F76F006BB841 /* C64Types.h */,
-				504C42F624AF29AB00E69CAE /* C64.h */,
-				504C42F724AF29AB00E69CAE /* C64.cpp */,
-				501C46BB2964BF1200C4B27B /* SelfTestScript.h */,
 				50726FBC2961CA5A0031F2F5 /* Headless.h */,
 				50726FBB2961CA5A0031F2F5 /* Headless.cpp */,
 				500FAA62261376980062488E /* Utilities */,
@@ -1824,6 +1819,9 @@
 			isa = PBXGroup;
 			children = (
 				50E56AF629D48A0E00EBCE76 /* CMakeLists.txt */,
+				504268AC24F0F76F006BB841 /* C64Types.h */,
+				504C42F624AF29AB00E69CAE /* C64.h */,
+				504C42F724AF29AB00E69CAE /* C64.cpp */,
 				50ACF4DC256EB451003B5690 /* LogicBoard */,
 				504C42E524AF29AB00E69CAE /* CPU */,
 				504C435224AF29AC00E69CAE /* CIA */,

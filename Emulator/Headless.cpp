@@ -10,7 +10,6 @@
 #include "config.h"
 #include "Headless.h"
 #include "Script.h"
-#include "SelfTestScript.h"
 #include <filesystem>
 #include <chrono>
 
