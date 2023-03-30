@@ -422,7 +422,7 @@ CQ
                                                 <action selector="pressAction:" target="-1" id="4Gh-a2-zMj"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="POWND" tag="13" id="vlz-6C-SB5">
+                                        <menuItem title="POUND" tag="13" id="vlz-6C-SB5">
                                             <connections>
                                                 <action selector="pressAction:" target="-1" id="o8c-La-kkF"/>
                                             </connections>
