@@ -117,7 +117,7 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var perPowerButton: NSButton!
 
     //
-    // Compatibility
+    // Performance (formerly called Compatibility)
     //
     
     // Power saving
@@ -262,7 +262,7 @@ class ConfigurationController: DialogController {
             case "Roms": refreshRomTab()
             case "Hardware": refreshHardwareTab()
             case "Peripherals": refreshPeripheralsTab()
-            case "Compatibility": refreshCompatibilityTab()
+            case "Performance": refreshPerformanceTab()
             case "Audio": refreshAudioTab()
             case "Video": refreshVideoTab()
             default: break

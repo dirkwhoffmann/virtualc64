@@ -9,7 +9,7 @@
 
 extension ConfigurationController {
 
-    func refreshCompatibilityTab() {
+    func refreshPerformanceTab() {
                                 
         // Power saving
         comDrivePowerSave.state = config.drive8PowerSave ? .on : .off
@@ -76,10 +76,10 @@ extension ConfigurationController {
         c64.suspend()
 
         // Revert to standard settings
-        C64Proxy.defaults.removeCompatibilityUserDefaults()
+        C64Proxy.defaults.removePerformanceUserDefaults()
 
         // Update the configuration
-        config.applyCompatibilityUserDefaults()
+        config.applyPerformanceUserDefaults()
 
         // Override some options
         switch sender.selectedTag() {
@@ -112,6 +112,6 @@ extension ConfigurationController {
     
     @IBAction func comDefaultsAction(_ sender: NSButton!) {
         
-        config.saveCompatibilityUserDefaults()
+        config.savePerformanceUserDefaults()
     }
 }

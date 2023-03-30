@@ -239,7 +239,7 @@ extension DefaultsProxy {
 
         registerHardwareUserDefaults()
         registerPeripheralsUserDefaults()
-        registerCompatibilityUserDefaults()
+        registerPerformanceUserDefaults()
         registerAudioUserDefaults()
         registerVideoUserDefaults()
     }
@@ -266,7 +266,7 @@ extension Configuration {
 
         applyHardwareUserDefaults()
         applyPeripheralsUserDefaults()
-        applyCompatibilityUserDefaults()
+        applyPerformanceUserDefaults()
         applyAudioUserDefaults()
         applyVideoUserDefaults()
     }
@@ -927,18 +927,18 @@ extension Configuration {
 }
 
 //
-// User defaults (Compatibility)
+// User defaults (Performance)
 //
 
 extension DefaultsProxy {
 
-    func registerCompatibilityUserDefaults() {
+    func registerPerformanceUserDefaults() {
 
         debug(.defaults)
         // No GUI related items in this sections
     }
 
-    func removeCompatibilityUserDefaults() {
+    func removePerformanceUserDefaults() {
 
         debug(.defaults)
 
@@ -955,7 +955,7 @@ extension DefaultsProxy {
 
 extension Configuration {
 
-    func saveCompatibilityUserDefaults() {
+    func savePerformanceUserDefaults() {
 
         debug(.defaults)
         let defaults = C64Proxy.defaults!
@@ -975,7 +975,7 @@ extension Configuration {
         c64.resume()
     }
 
-    func applyCompatibilityUserDefaults() {
+    func applyPerformanceUserDefaults() {
 
         debug(.defaults)
         let defaults = C64Proxy.defaults!

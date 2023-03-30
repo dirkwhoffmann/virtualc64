@@ -1415,7 +1415,7 @@ Gw
                                     </subviews>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="Compatibility" identifier="Compatibility" id="vMQ-2m-gAx" userLabel="Compatibility">
+                            <tabViewItem label="Performance" identifier="Performance" id="vMQ-2m-gAx" userLabel="Compatibility">
                                 <view key="view" id="zGW-6j-MnU">
                                     <rect key="frame" x="10" y="33" width="600" height="424"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1511,7 +1511,7 @@ Gw
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WZL-K6-LDf">
-                                            <rect key="frame" x="27" y="193" width="284" height="18"/>
+                                            <rect key="frame" x="26" y="193" width="284" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Run with reduced frame rate in warp mode" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="YgZ-jT-3Uo">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1522,7 +1522,7 @@ Gw
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CCh-5S-q44">
-                                            <rect key="frame" x="47" y="218" width="485" height="32"/>
+                                            <rect key="frame" x="46" y="218" width="485" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" selectable="YES" title="Disable this option in combination with Fast Loaders or programs that run directly in the memory of the floppy drive. " id="Ovz-Fg-Q5B">
                                                 <font key="font" metaFont="system"/>
@@ -1531,7 +1531,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vG2-A5-LN9">
-                                            <rect key="frame" x="47" y="154" width="484" height="32"/>
+                                            <rect key="frame" x="46" y="154" width="484" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" selectable="YES" title="Disable this option in combination with programs that rely on exact collision register values while warp mode is active." id="ACJ-iD-7Os">
                                                 <font key="font" metaFont="system"/>
@@ -1540,7 +1540,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xx0-43-RDp">
-                                            <rect key="frame" x="27" y="129" width="315" height="18"/>
+                                            <rect key="frame" x="26" y="129" width="315" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="check" title="Do not synthesize sound samples in warp mode" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Bxr-vl-hDe">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1551,7 +1551,7 @@ Gw
                                             </connections>
                                         </button>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rQR-Mu-cl8">
-                                            <rect key="frame" x="47" y="90" width="484" height="32"/>
+                                            <rect key="frame" x="46" y="90" width="484" height="32"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" selectable="YES" title="Disable this option to avoid the unlikely, but possible case of corrupted sound being played after leaving warp mode." id="VXi-Jt-1NA">
                                                 <font key="font" metaFont="system"/>
@@ -1559,26 +1559,17 @@ Gw
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qnY-Rc-kUU">
-                                            <rect key="frame" x="7" y="395" width="114" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Sprites" id="QhC-cs-oyb">
-                                                <font key="font" metaFont="systemBold"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G3A-op-Gue">
-                                            <rect key="frame" x="315" y="358" width="81" height="20"/>
+                                            <rect key="frame" x="26" y="354" width="69" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Activation:" id="ZVZ-Zq-u21">
+                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="left" title="Activation:" id="ZVZ-Zq-u21">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Trj-sJ-IWk">
-                                            <rect key="frame" x="327" y="331" width="177" height="20"/>
+                                            <rect key="frame" x="26" y="327" width="177" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="left" title="Boot in warp mode for " id="9pc-1w-rKp">
                                                 <font key="font" metaFont="system"/>
@@ -1587,7 +1578,7 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4fl-rA-Zcx">
-                                            <rect key="frame" x="397" y="355" width="197" height="26"/>
+                                            <rect key="frame" x="96" y="351" width="176" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <popUpButtonCell key="cell" type="push" title="During disk activity" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" inset="2" arrowPosition="arrowAtCenter" preferredEdge="maxY" autoenablesItems="NO" selectedItem="BS3-Uo-1ya" id="pAl-uT-EqD">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -1611,7 +1602,7 @@ Gw
                                             </connections>
                                         </popUpButton>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3JD-FK-e09">
-                                            <rect key="frame" x="316" y="392" width="143" height="20"/>
+                                            <rect key="frame" x="8" y="388" width="143" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Warp Mode" id="ObI-Xn-2kq">
                                                 <font key="font" metaFont="systemBold"/>
@@ -1619,30 +1610,8 @@ Gw
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qgS-di-RAL">
-                                            <rect key="frame" x="26" y="361" width="205" height="18"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="Detect sprite-sprite collisions" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="5QX-T5-tXj">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="comSsCollisionsAction:" target="-2" id="qgk-fZ-ldm"/>
-                                            </connections>
-                                        </button>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bnG-rw-e1M">
-                                            <rect key="frame" x="26" y="334" width="243" height="18"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="Detect sprite-background collisions" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="NJp-nu-9Jd">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="comSbCollisionsAction:" target="-2" id="exI-gv-cre"/>
-                                            </connections>
-                                        </button>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ybs-ej-OVe">
-                                            <rect key="frame" x="470" y="332" width="37" height="21"/>
+                                            <rect key="frame" x="169" y="328" width="37" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="PC0-hK-ne8">
                                                 <font key="font" metaFont="system"/>
@@ -1654,7 +1623,7 @@ Gw
                                             </connections>
                                         </textField>
                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NJ9-Sp-buV">
-                                            <rect key="frame" x="513" y="331" width="68" height="20"/>
+                                            <rect key="frame" x="212" y="327" width="68" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="left" title="seconds" id="75R-BA-1QQ">
                                                 <font key="font" metaFont="system"/>
@@ -1662,6 +1631,37 @@ Gw
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
+                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qnY-Rc-kUU">
+                                            <rect key="frame" x="313" y="391" width="114" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Sprites" id="QhC-cs-oyb">
+                                                <font key="font" metaFont="systemBold"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qgS-di-RAL">
+                                            <rect key="frame" x="332" y="358" width="205" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Detect sprite-sprite collisions" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="5QX-T5-tXj">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="comSsCollisionsAction:" target="-2" id="qgk-fZ-ldm"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bnG-rw-e1M">
+                                            <rect key="frame" x="332" y="330" width="243" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="check" title="Detect sprite-background collisions" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="NJp-nu-9Jd">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="comSbCollisionsAction:" target="-2" id="exI-gv-cre"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                 </view>
                             </tabViewItem>

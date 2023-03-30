@@ -198,7 +198,7 @@ class Configuration {
     }
     
     //
-    // Compatibility
+    // Performance (formerly called Compatibility)
     //
 
     var drive8PowerSave: Bool {
