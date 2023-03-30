@@ -147,7 +147,7 @@ C64::eventName(EventSlot slot, EventID id)
                 default:            return "*** INVALID ***";
             }
             break;
-            
+
         case SLOT_INS:
 
             switch (id) {
@@ -282,8 +282,10 @@ C64::_reset(bool hard)
     // scheduleAbs<SLOT_CIA2>(cpu.clock, CIA_EXECUTE);
     scheduleAbs<SLOT_WBT>(SEC(config.warpBoot), WBT_DISABLE);
     if (insEvent) scheduleRel <SLOT_INS> (0, insEvent);
+
     flags = 0;
     rasterCycle = 1;
+    updateWarpState();
 }
 
 void

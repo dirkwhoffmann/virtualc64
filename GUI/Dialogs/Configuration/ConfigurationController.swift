@@ -131,6 +131,7 @@ class ConfigurationController: DialogController {
 
     // Warp mode
     @IBOutlet weak var comWarpMode: NSPopUpButton!
+    @IBOutlet weak var comWarpBoot: NSTextField!
 
     // Buttons
     @IBOutlet weak var comPowerButton: NSButton!

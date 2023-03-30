@@ -22,6 +22,7 @@ extension ConfigurationController {
 
         // Warp
         comWarpMode.selectItem(withTag: config.warpMode)
+        comWarpBoot.integerValue = config.warpBoot
 
         // Power button
         comPowerButton.isHidden = !bootable
@@ -61,6 +62,12 @@ extension ConfigurationController {
     @IBAction func comWarpModeAction(_ sender: NSPopUpButton!) {
 
         config.warpMode = sender.selectedTag()
+        refresh()
+    }
+
+    @IBAction func comWarpBootAction(_ sender: NSTextField!) {
+
+        config.warpBoot = sender.integerValue
         refresh()
     }
 
