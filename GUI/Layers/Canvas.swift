@@ -149,7 +149,22 @@ class Canvas: Layer {
     }
 
     func screenshot(texture: MTLTexture, rect: CGRect) -> NSImage? {
-        
+
+        blitTexture(texture: texture)
+        /*
+        let queue = texture.device.makeCommandQueue()!
+        let commandBuffer = queue.makeCommandBuffer()!
+        let blitEncoder = commandBuffer.makeBlitCommandEncoder()!
+        blitEncoder.synchronize(texture: texture, slice: 0, level: 0)
+        blitEncoder.endEncoding()
+        commandBuffer.commit()
+        commandBuffer.waitUntilCompleted()
+        */
+        return NSImage.make(texture: texture, rect: rect)
+    }
+
+    func blitTexture(texture: MTLTexture) {
+
         // Use the blitter to copy the texture data back from the GPU
         let queue = texture.device.makeCommandQueue()!
         let commandBuffer = queue.makeCommandBuffer()!
@@ -158,10 +173,8 @@ class Canvas: Layer {
         blitEncoder.endEncoding()
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
-        
-        return NSImage.make(texture: texture, rect: rect)
     }
-    
+
     //
     // Updating
     //
@@ -169,6 +182,12 @@ class Canvas: Layer {
     override func update(frames: Int64) {
             
         super.update(frames: frames)
+
+        // Grab the current texture
+        updateTexture()
+
+        // Let the emulator compute the next frame
+        c64.wakeUp()
     }
     
     func updateTexture() {

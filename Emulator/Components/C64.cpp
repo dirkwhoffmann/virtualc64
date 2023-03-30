@@ -970,7 +970,7 @@ C64::setInspectionTarget(InspectionTarget target, Cycle trigger)
 ThreadMode
 C64::getThreadMode() const
 {
-    return config.syncMode == SYNC_VSYNC ? THREAD_PULSED : THREAD_PERIODIC; //  ADAPTIVE;
+    return config.syncMode == SYNC_VSYNC ? THREAD_PULSED : THREAD_ADAPTIVE;
 }
 
 void
