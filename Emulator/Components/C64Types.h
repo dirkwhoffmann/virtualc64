@@ -68,6 +68,8 @@ enum_long(SLOT)
     SLOT_DC8,                       // Disk change (Drive 8)
     SLOT_DC9,                       // Disk change (Drive 9)
     SLOT_KEY,                       // Auto-typing
+    SLOT_WBT,                       // Warp boot
+    SLOT_ALA,                       // Alarms (set by the GUI)
     SLOT_INS,                       // Handles periodic calls to inspect()
 
     SLOT_COUNT
@@ -96,6 +98,8 @@ struct EventSlotEnum : util::Reflection<EventSlotEnum, EventSlot>
             case SLOT_DC8:      return "DC8";
             case SLOT_DC9:      return "DC9";
             case SLOT_KEY:      return "KEY";
+            case SLOT_WBT:      return "WBT";
+            case SLOT_ALA:      return "ALA";
             case SLOT_INS:      return "INS";
 
             case SLOT_COUNT:    return "???";
@@ -150,6 +154,14 @@ enum_i8(EventID)
     // Auto typing
     KEY_AUTO_TYPE       = 1,
     KEY_EVENT_COUNT,
+
+    // Warp boot
+    WBT_DISABLE         = 1,
+    WBT_EVENT_COUNT,
+
+    // Alarm event slot
+    ALA_TRIGGER         = 1,
+    ALA_EVENT_COUNT,
 
     // Inspector slot
     INS_C64             = 1,

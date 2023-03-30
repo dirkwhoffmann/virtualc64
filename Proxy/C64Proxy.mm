@@ -3027,4 +3027,14 @@ using namespace vc64;
     catch (VC64Error &error) { [ex save:error]; }
 }
 
+- (void)setAlarmAbs:(NSInteger)cycle payload:(NSInteger)value
+{
+    [self c64]->setAlarmAbs(cycle, value);
+}
+
+- (void)setAlarmRel:(NSInteger)cycle payload:(NSInteger)value
+{
+    [self c64]->setAlarmRel(cycle, value);
+}
+
 @end

@@ -123,7 +123,10 @@ enum_long(MSG_TYPE)
     // Debugging
     MSG_DMA_DEBUG_ON,
     MSG_DMA_DEBUG_OFF,
-    
+
+    // Scheduled alarms
+    MSG_ALARM,
+
     MSG_COUNT
 };
 typedef MSG_TYPE MsgType;

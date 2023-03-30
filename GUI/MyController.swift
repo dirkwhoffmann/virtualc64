@@ -505,6 +505,10 @@ extension MyController {
         case .DMA_DEBUG_OFF:
             renderer.zoomTextureIn()
 
+        case .ALARM:
+            // debug(.events, "Received Alarm \(msg.value)")
+            print("Received Alarm \(msg)")
+
         default:
             warn("Unknown message: \(msg)")
             fatalError()

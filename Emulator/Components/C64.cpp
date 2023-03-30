@@ -128,6 +128,26 @@ C64::eventName(EventSlot slot, EventID id)
             }
             break;
 
+        case SLOT_WBT:
+
+            switch (id) {
+
+                case EVENT_NONE:        return "none";
+                case WBT_DISABLE:       return "WBT_DISABLE";
+                default:                return "*** INVALID ***";
+            }
+            break;
+
+        case SLOT_ALA:
+
+            switch (id) {
+
+                case EVENT_NONE:    return "none";
+                case ALA_TRIGGER:   return "ALA_TRIGGER";
+                default:            return "*** INVALID ***";
+            }
+            break;
+            
         case SLOT_INS:
 
             switch (id) {
@@ -260,8 +280,8 @@ C64::_reset(bool hard)
     // Schedule initial events
     // scheduleAbs<SLOT_CIA1>(cpu.clock, CIA_EXECUTE);
     // scheduleAbs<SLOT_CIA2>(cpu.clock, CIA_EXECUTE);
+    scheduleAbs<SLOT_WBT>(SEC(config.warpBoot), WBT_DISABLE);
     if (insEvent) scheduleRel <SLOT_INS> (0, insEvent);
-
     flags = 0;
     rasterCycle = 1;
 }
@@ -1492,6 +1512,12 @@ C64::processEvents(Cycle cycle)
             if (isDue<SLOT_KEY>(cycle)) {
                 keyboard.processKeyEvent(id[SLOT_KEY]);
             }
+            if (isDue<SLOT_WBT>(cycle)) {
+                processWBTEvent();
+            }
+            if (isDue<SLOT_ALA>(cycle)) {
+                processAlarmEvent();
+            }
             if (isDue<SLOT_INS>(cycle)) {
 
                 processINSEvent(id[SLOT_INS]);
@@ -1565,12 +1591,10 @@ C64::updateWarpState()
 void
 C64::processWBTEvent()
 {
-    /*
     assert(id[SLOT_WBT] == WBT_DISABLE);
 
     updateWarpState();
     cancel <SLOT_WBT> ();
-    */
 }
 
 void
@@ -2090,6 +2114,57 @@ C64::flash(const FileSystem &fs, isize nr)
     }
     
     msgQueue.put(MSG_FILE_FLASHED);
+}
+
+void
+C64::setAlarmAbs(Cycle trigger, i64 payload)
+{
+    {   SUSPENDED
+
+        alarms.push_back(Alarm { trigger, payload });
+        scheduleNextAlarm();
+    }
+}
+
+void
+C64::setAlarmRel(Cycle trigger, i64 payload)
+{
+    {   SUSPENDED
+
+        alarms.push_back(Alarm { cpu.clock + trigger, payload });
+        scheduleNextAlarm();
+    }
+}
+
+void
+C64::processAlarmEvent()
+{
+    for (auto it = alarms.begin(); it != alarms.end(); ) {
+
+        if (it->trigger <= cpu.clock) {
+            msgQueue.put(MSG_ALARM, it->payload);
+            it = alarms.erase(it);
+        } else {
+            it++;
+        }
+    }
+    scheduleNextAlarm();
+}
+
+void
+C64::scheduleNextAlarm()
+{
+    Cycle trigger = INT64_MAX;
+
+    cancel<SLOT_ALA>();
+
+    for(Alarm alarm : alarms) {
+
+        if (alarm.trigger < trigger) {
+            scheduleAbs<SLOT_ALA>(alarm.trigger, ALA_TRIGGER);
+            trigger = alarm.trigger;
+        }
+    }
 }
 
 fs::path

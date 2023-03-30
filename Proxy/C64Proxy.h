@@ -258,6 +258,9 @@
 - (void)flash:(AnyFileProxy *)container exception:(ExceptionWrapper *)ex;
 - (void)flash:(FileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
 
+- (void)setAlarmAbs:(NSInteger)cycle payload:(NSInteger)value;
+- (void)setAlarmRel:(NSInteger)cycle payload:(NSInteger)value;
+
 @end
 
 
