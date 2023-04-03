@@ -331,7 +331,7 @@ extension MyController {
         case .RESET:
             inspector?.reset()
 
-        case .HALT:
+        case .SHUTDOWN:
             shutDown()
 
         case .ABORT:
@@ -345,6 +345,15 @@ extension MyController {
         case .MUTE:
             muted = data1 != 0
             refreshStatusBar()
+
+        case .CONSOLE_CLOSE:
+            renderer.console.close(delay: 0.25)
+
+        case .CONSOLE_UPDATE:
+            renderer.console.isDirty = true
+
+        case .CONSOLE_DEBUGGER:
+            break
 
         case .SCRIPT_DONE,
                 .SCRIPT_PAUSE,
@@ -487,12 +496,6 @@ extension MyController {
         case .RECORDING_ABORTED:
             refreshStatusBar()
             showAlert(.recorderAborted)
-
-        case .CLOSE_CONSOLE:
-            renderer.console.close(delay: 0.25)
-
-        case .UPDATE_CONSOLE:
-            renderer.console.isDirty = true
 
         case .DMA_DEBUG_ON:
             renderer.zoomTextureOut()

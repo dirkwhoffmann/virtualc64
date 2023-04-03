@@ -148,7 +148,7 @@ RetroShell::setStream(std::ostream &os)
 void
 RetroShell::needsDisplay()
 {
-    msgQueue.put(MSG_UPDATE_CONSOLE);
+    msgQueue.put(MSG_CONSOLE_UPDATE);
 }
 
 void

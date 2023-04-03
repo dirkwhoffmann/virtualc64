@@ -117,11 +117,14 @@ Interpreter::switchInterpreter()
     if (inCommandShell()) {
 
         shell = Shell::Debug;
-        c64.trackOn();
+        c64.trackOn(1);
+        msgQueue.put(MSG_CONSOLE_DEBUGGER, true);
 
     } else {
 
         shell = Shell::Command;
+        c64.trackOff(1);
+        msgQueue.put(MSG_CONSOLE_DEBUGGER, false);
     }
 
     retroShell.updatePrompt();

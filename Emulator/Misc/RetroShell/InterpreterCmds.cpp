@@ -42,7 +42,7 @@ Interpreter::initCommons(Command &root)
              "Hides the console window",
              [this](Arguments& argv, long value) {
 
-        msgQueue.put(MSG_CLOSE_CONSOLE);
+        msgQueue.put(MSG_CONSOLE_CLOSE);
     });
 
     root.add({"help"}, { }, {Arg::command},

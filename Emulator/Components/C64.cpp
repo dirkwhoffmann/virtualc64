@@ -1135,7 +1135,7 @@ C64::_halt()
 {
     debug(RUN_DEBUG, "_halt\n");
 
-    msgQueue.put(MSG_HALT);
+    msgQueue.put(MSG_SHUTDOWN);
 }
 
 void
