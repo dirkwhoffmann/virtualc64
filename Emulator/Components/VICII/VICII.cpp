@@ -543,16 +543,12 @@ VICII::_run()
 void
 VICII::_trackOn()
 {
-    debug(RUN_DEBUG, "_trackOn\n");
-
     updateVicFunctionTable();
 }
 
 void
 VICII::_trackOff()
 {
-    debug(RUN_DEBUG, "_trackOff\n");
-
     updateVicFunctionTable();
 }
 

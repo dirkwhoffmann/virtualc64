@@ -250,7 +250,7 @@ Muxer::setConfigItem(Option option, i64 value)
             volL.set(powf((float)config.volL / 50, 1.4f));
             
             if (wasMuted != isMuted()) {
-                msgQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
+                msgQueue.put(MSG_MUTE, isMuted());
             }
             return;
             
@@ -260,7 +260,7 @@ Muxer::setConfigItem(Option option, i64 value)
             volR.set(powf((float)config.volR / 50, 1.4f));
 
             if (wasMuted != isMuted()) {
-                msgQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
+                msgQueue.put(MSG_MUTE, isMuted());
             }
             return;
             
@@ -335,7 +335,7 @@ Muxer::setConfigItem(Option option, long id, i64 value)
             vol[id] *= 0.15f;
 #endif
             if (wasMuted != isMuted()) {
-                msgQueue.put(isMuted() ? MSG_MUTE_ON : MSG_MUTE_OFF);
+                msgQueue.put(MSG_MUTE, isMuted());
             }
 
             return;

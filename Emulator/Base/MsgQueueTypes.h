@@ -19,26 +19,20 @@
 enum_long(MSG_TYPE)
 {
     MSG_NONE = 0,
-    
-    // Message queue
-    MSG_REGISTER,
-    MSG_UNREGISTER,
-    
+
     // Emulator state
     MSG_CONFIG,
-    MSG_POWER_ON,
-    MSG_POWER_OFF,
+    MSG_POWER,
     MSG_RUN,
     MSG_PAUSE,
     MSG_STEP,
     MSG_RESET,
     MSG_HALT,
     MSG_ABORT,
-    MSG_WARP_ON,
-    MSG_WARP_OFF,
-    MSG_MUTE_ON,
-    MSG_MUTE_OFF,
-    
+    MSG_WARP,
+    MSG_TRACK,
+    MSG_MUTE,
+
     // Scripting
     MSG_SCRIPT_DONE,
     MSG_SCRIPT_PAUSE,
@@ -144,13 +138,9 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
         switch (value) {
                 
             case MSG_NONE:                 return "NONE";
-                
-            case MSG_REGISTER:             return "MSG_REGISTER";
-            case MSG_UNREGISTER:           return "MSG_UNREGISTER";
 
             case MSG_CONFIG:               return "CONFIG";
-            case MSG_POWER_ON:             return "POWER_ON";
-            case MSG_POWER_OFF:            return "POWER_OFF";
+            case MSG_POWER:                return "POWER";
             case MSG_RUN:                  return "RUN";
             case MSG_PAUSE:                return "PAUSE";
             case MSG_RESET:                return "RESET";
@@ -160,11 +150,10 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_SCRIPT_WAKEUP:        return "MSG_SCRIPT_WAKEUP";
             case MSG_HALT:                 return "HALT";
             case MSG_ABORT:                return "ABORT";
-            case MSG_WARP_ON:              return "WARP_ON";
-            case MSG_WARP_OFF:             return "WARP_OFF";
-            case MSG_MUTE_ON:              return "MUTE_ON";
-            case MSG_MUTE_OFF:             return "MUTE_OFF";
-                
+            case MSG_WARP:                 return "WARP";
+            case MSG_TRACK:                return "TRACK";
+            case MSG_MUTE:                 return "MUTE";
+
             case MSG_BASIC_ROM_LOADED:     return "BASIC_ROM_LOADED";
             case MSG_CHAR_ROM_LOADED:      return "CHAR_ROM_LOADED";
             case MSG_KERNAL_ROM_LOADED:    return "KERNAL_ROM_LOADED";

@@ -294,25 +294,24 @@ extension MyController {
 
         switch msg.type {
 
-        case .REGISTER:
-            debug(.lifetime, "Registered to message queue")
-
-        case .UNREGISTER:
-            debug(.lifetime, "Unregistered from message queue")
-
         case .CONFIG:
             inspector?.fullRefresh()
             refreshStatusBar()
 
-        case .POWER_ON:
-            renderer.canvas.open(delay: 2)
-            virtualKeyboard = nil
-            toolbar.updateToolbar()
-            inspector?.powerOn()
+        case .POWER:
 
-        case .POWER_OFF:
-            toolbar.updateToolbar()
-            inspector?.powerOff()
+            if data1 != 0 {
+
+                renderer.canvas.open(delay: 2)
+                virtualKeyboard = nil
+                toolbar.updateToolbar()
+                inspector?.powerOn()
+
+            } else {
+
+                toolbar.updateToolbar()
+                inspector?.powerOff()
+            }
 
         case .RUN:
             needsSaving = true
@@ -339,16 +338,12 @@ extension MyController {
             debug(.shutdown, "Aborting with exit code \(msg.data1)")
             exit(msg.data1)
 
-        case .MUTE_ON:
-            muted = true
+        case .WARP,
+                .TRACK:
             refreshStatusBar()
 
-        case .MUTE_OFF:
-            muted = false
-            refreshStatusBar()
-
-        case .WARP_ON,
-                .WARP_OFF:
+        case .MUTE:
+            muted = data1 != 0
             refreshStatusBar()
 
         case .SCRIPT_DONE,

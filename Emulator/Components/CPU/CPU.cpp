@@ -81,14 +81,12 @@ CPU::_trackOn()
     // We only allow the C64 CPU to enter debug mode
     if (!isC64CPU()) return;
 
-    debug(RUN_DEBUG, "Enabling debug mode\n");
     debugger.enableLogging();
 }
 
 void
 CPU::_trackOff()
 {
-    debug(RUN_DEBUG, "Disabling debug mode\n");
     debugger.disableLogging();
 }
 

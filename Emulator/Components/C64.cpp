@@ -1091,7 +1091,7 @@ C64::_powerOn()
     // Update the recorded debug information
     inspect();
 
-    msgQueue.put(MSG_POWER_ON);
+    msgQueue.put(MSG_POWER, 1);
 }
 
 void
@@ -1102,7 +1102,7 @@ C64::_powerOff()
     // Update the recorded debug information
     inspect();
 
-    msgQueue.put(MSG_POWER_OFF);
+    msgQueue.put(MSG_POWER, 0);
 }
 
 void
@@ -1143,7 +1143,7 @@ C64::_warpOn()
 {
     debug(RUN_DEBUG, "_warpOn\n");
 
-    msgQueue.put(MSG_WARP_ON);
+    msgQueue.put(MSG_WARP, 1);
 }
 
 void
@@ -1151,19 +1151,23 @@ C64::_warpOff()
 {
     debug(RUN_DEBUG, "_warpOff\n");
 
-    msgQueue.put(MSG_WARP_OFF);
+    msgQueue.put(MSG_WARP, 0);
 }
 
 void
 C64::_trackOn()
 {
+    debug(RUN_DEBUG, "_trackOn\n");
 
+    msgQueue.put(MSG_TRACK, 1);
 }
 
 void
 C64::_trackOff()
 {
+    debug(RUN_DEBUG, "_trackOff\n");
 
+    msgQueue.put(MSG_TRACK, 0);
 }
 
 void
