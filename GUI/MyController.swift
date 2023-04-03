@@ -435,8 +435,7 @@ extension MyController {
                 .DRIVE_POWER_SAVE_OFF:
             break
 
-        case .VC1530_CONNECT,
-                .VC1530_DISCONNECT:
+        case .VC1530_CONNECT:
             hideOrShowDriveMenus()
             refreshStatusBar()
 
@@ -453,9 +452,6 @@ extension MyController {
             refreshStatusBar()
 
         case .CRT_ATTACHED:
-            refreshStatusBar()
-
-        case .CRT_DETACHED:
             refreshStatusBar()
 
         case .CART_SWITCH:
@@ -497,15 +493,11 @@ extension MyController {
             refreshStatusBar()
             showAlert(.recorderAborted)
 
-        case .DMA_DEBUG_ON:
-            renderer.zoomTextureOut()
-
-        case .DMA_DEBUG_OFF:
-            renderer.zoomTextureIn()
+        case .DMA_DEBUG:
+            data1 != 0 ? renderer.zoomTextureOut() : renderer.zoomTextureIn()
 
         case .ALARM:
-            // debug(.events, "Received Alarm \(msg.value)")
-            print("Received Alarm \(msg)")
+            debug(.events, "Received Alarm \(msg.data1)")
 
         default:
             warn("Unknown message: \(msg)")

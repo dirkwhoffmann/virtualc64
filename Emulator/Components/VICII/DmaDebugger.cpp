@@ -121,7 +121,7 @@ DmaDebugger::setConfigItem(Option option, i64 value)
                 vic.resetDmaTextures();
                 vic.resetEmuTextures();
                 vic.updateVicFunctionTable();
-                msgQueue.put(value ? MSG_DMA_DEBUG_ON : MSG_DMA_DEBUG_OFF);
+                msgQueue.put(MSG_DMA_DEBUG, value);
             }
             return;
         }

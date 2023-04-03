@@ -183,7 +183,7 @@ Datasette::setConfigItem(Option option, i64 value)
 
                 config.connected = bool(value);
                 updateDatEvent();
-                msgQueue.put(value ? MSG_VC1530_CONNECT : MSG_VC1530_DISCONNECT);
+                msgQueue.put(MSG_VC1530_CONNECT, value);
             }
             return;
 

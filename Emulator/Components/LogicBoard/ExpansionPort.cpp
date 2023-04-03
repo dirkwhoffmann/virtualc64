@@ -273,7 +273,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
         // Reset cartridge to update exrom and game line on the expansion port
         cartridge->reset(true);
         
-        msgQueue.put(MSG_CRT_ATTACHED);
+        msgQueue.put(MSG_CRT_ATTACHED, 1);
         if (cartridge->hasSwitch()) msgQueue.put(MSG_CART_SWITCH);
         
         debug(EXP_DEBUG, "Cartridge attached to expansion port");
@@ -344,7 +344,7 @@ ExpansionPort::detachCartridge()
             setCartridgeMode(CRTMODE_OFF);
             
             debug(EXP_DEBUG, "Cartridge detached from expansion port");
-            msgQueue.put(MSG_CRT_DETACHED);
+            msgQueue.put(MSG_CRT_ATTACHED, 0);
         }
     }
 }

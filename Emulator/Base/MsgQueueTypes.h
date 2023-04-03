@@ -49,13 +49,13 @@ enum_long(MSG_TYPE)
     MSG_DRIVE_ROM_LOADED,
     MSG_ROM_MISSING,
 
-    // CPU related messages
+    // CPU
     MSG_CPU_OK,
     MSG_CPU_JAMMED,
     MSG_BREAKPOINT_REACHED,
     MSG_WATCHPOINT_REACHED,
 
-    // VIC related messages
+    // VIC
     MSG_PAL,
     MSG_NTSC,
 
@@ -86,7 +86,6 @@ enum_long(MSG_TYPE)
 
     // Peripherals (Datasette)
     MSG_VC1530_CONNECT,
-    MSG_VC1530_DISCONNECT,
     MSG_VC1530_TAPE,
     MSG_VC1530_PLAY,
     MSG_VC1530_MOTOR,
@@ -94,7 +93,6 @@ enum_long(MSG_TYPE)
 
     // Peripherals (Expansion port)
     MSG_CRT_ATTACHED,
-    MSG_CRT_DETACHED,
     MSG_CART_SWITCH,
 
     // Peripherals (Keyboard)
@@ -114,13 +112,10 @@ enum_long(MSG_TYPE)
     MSG_RECORDING_ABORTED,
 
     // Debugging
-    MSG_DMA_DEBUG_ON,
-    MSG_DMA_DEBUG_OFF,
+    MSG_DMA_DEBUG,
 
     // Scheduled alarms
-    MSG_ALARM,
-
-    MSG_COUNT
+    MSG_ALARM
 };
 typedef MSG_TYPE MsgType;
 
@@ -128,7 +123,7 @@ typedef MSG_TYPE MsgType;
 struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
     
     static constexpr long minVal = 0;
-    static constexpr long maxVal = MSG_DMA_DEBUG_OFF;
+    static constexpr long maxVal = MSG_ALARM;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "MSG"; }
@@ -195,14 +190,12 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_FILE_FLASHED:          return "FILE_FLASHED";
 
             case MSG_VC1530_CONNECT:        return "VC1530_CONNECT";
-            case MSG_VC1530_DISCONNECT:     return "VC1530_DISCONNECT";
             case MSG_VC1530_TAPE:           return "VC1530_TAPE";
             case MSG_VC1530_PLAY:           return "VC1530_PLAY";
             case MSG_VC1530_MOTOR:          return "VC1530_MOTOR";
             case MSG_VC1530_COUNTER:        return "VC1530_COUNTER";
                 
             case MSG_CRT_ATTACHED:          return "CRT_ATTACHED";
-            case MSG_CRT_DETACHED:          return "CRT_DETACHED";
             case MSG_CART_SWITCH:           return "CART_SWITCH";
                 
             case MSG_KB_AUTO_RELEASE:       return "KB_AUTO_RELEASE";
@@ -217,10 +210,9 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_RECORDING_STOPPED:     return "RECORDING_STOPPED";
             case MSG_RECORDING_ABORTED:     return "RECORDING_ABORTED";
 
-            case MSG_DMA_DEBUG_ON:          return "DMA_DEBUG_ON";
-            case MSG_DMA_DEBUG_OFF:         return "DMA_DEBUG_OFF";
-                
-            case MSG_COUNT:                 return "???";
+            case MSG_DMA_DEBUG:             return "DMA_DEBUG";
+
+            case MSG_ALARM:                 return "ALARM";
         }
         return "???";
     }
