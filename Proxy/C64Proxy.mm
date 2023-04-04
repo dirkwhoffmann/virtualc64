@@ -2561,9 +2561,7 @@ using namespace vc64;
     C64 *c64 = new C64();
     obj = c64;
 
-    // Launch the emulator thread
-    c64->launch();
-
+    // Create sub proxys
     breakpoints = [[GuardsProxy alloc] initWith:&c64->cpu.debugger.breakpoints];
     cia1 = [[CIAProxy alloc] initWith:&c64->cia1];
     cia2 = [[CIAProxy alloc] initWith:&c64->cia2];
@@ -2681,6 +2679,11 @@ using namespace vc64;
 - (EventSlotInfo)getEventSlotInfo:(NSInteger)slot
 {
     return [self c64]->getSlotInfo(slot);
+}
+
+- (void)launch:(const void *)listener function:(Callback *)func
+{
+    [self c64]->launch(listener, func);
 }
 
 - (void)hardReset

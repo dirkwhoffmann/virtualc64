@@ -214,6 +214,14 @@ C64::~C64()
 }
 
 void
+C64::launch(const void *listener, Callback *func)
+{
+    msgQueue.setListener(listener, func);
+
+    launch();
+}
+
+void
 C64::launch()
 {
     // Make sure to call this function only once

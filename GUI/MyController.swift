@@ -174,7 +174,7 @@ extension MyController {
         configureWindow()
 
         // Enable message processing
-        registerAsListener()
+        launch()
 
         do {
             // Let the C64 throw an exception if it is not ready to power on
@@ -219,12 +219,12 @@ extension MyController {
         window?.collectionBehavior = .fullScreenPrimary
     }
     
-    func registerAsListener() {
+    func launch() {
 
         // Convert 'self' to a void pointer
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
         
-        c64.setListener(myself) { (ptr, msg: Message) in
+        c64.launch(myself) { (ptr, msg: Message) in
 
             // Convert void pointer back to 'self'
             let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()

@@ -75,11 +75,8 @@ Headless::main(int argc, char *argv[])
     // Read the input script
     Script script(keys["arg1"]);
 
-    // Register message receiver
-    c64.msgQueue.setListener(this, vc64::process);
-
     // Launch the emulator thread
-    c64.launch();
+    c64.launch(this, vc64::process);
 
     // Execute the script
     barrier.lock();
@@ -208,24 +205,24 @@ Headless::selfTestScript()
 }
 
 void
-process(const void *listener, long type, i32 d1, i32 d2, i32 d3, i32 d4)
+process(const void *listener, Message msg)
 {
-    ((Headless *)listener)->process(type, d1, d2, d3, d4);
+    ((Headless *)listener)->process(msg);
 }
 
 void
-Headless::process(long type, i32 d1, i32 d2, i32 d3, i32 d4)
+Headless::process(Message msg)
 {
     static bool messages = keys.find("messages") != keys.end();
     
     if (messages) {
         
-        std::cout << MsgTypeEnum::key(type);
-        std::cout << "(" << d1 << ", " << d2 << ", " << d3 << ", " << d4 << ")";
+        std::cout << MsgTypeEnum::key(msg.type);
+        std::cout << "(" << msg.value << ")";
         std::cout << std::endl;
     }
 
-    switch (type) {
+    switch (msg.type) {
             
         case MSG_SCRIPT_DONE:
 
@@ -240,7 +237,7 @@ Headless::process(long type, i32 d1, i32 d2, i32 d3, i32 d4)
 
         case MSG_SCRIPT_PAUSE:
 
-            std::this_thread::sleep_for(std::chrono::seconds(d2));
+            std::this_thread::sleep_for(std::chrono::seconds(msg.script.delay));
             break;
 
         default:

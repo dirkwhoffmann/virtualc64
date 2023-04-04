@@ -194,6 +194,8 @@
 @property (readonly) EventInfo eventInfo;
 - (EventSlotInfo)getEventSlotInfo:(NSInteger)slot;
 
+- (void)launch:(const void *)listener function:(Callback *)func;
+
 - (void)hardReset;
 - (void)softReset;
 
