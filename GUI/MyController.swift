@@ -224,16 +224,13 @@ extension MyController {
         // Convert 'self' to a void pointer
         let myself = UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
         
-        c64.setListener(myself) { (ptr, type, d1, d2, d3, d4) in
+        c64.setListener(myself) { (ptr, msg: Message) in
 
             // Convert void pointer back to 'self'
             let myself = Unmanaged<MyController>.fromOpaque(ptr!).takeUnretainedValue()
 
             // Process message in the main thread
-            DispatchQueue.main.async {
-                myself.processMessage(Message(type: MsgType(rawValue: type)!,
-                                              data1: d1, data2: d2, data3: d3, data4: d4))
-            }
+            DispatchQueue.main.async { myself.processMessage(msg) }
         }
     }
     
@@ -279,15 +276,12 @@ extension MyController {
 
     func processMessage(_ msg: Message) {
 
-        var data1: Int { return Int(msg.data1) }
-        var data2: Int { return Int(msg.data2) }
-        var data3: Int { return Int(msg.data3) }
-        var data4: Int { return Int(msg.data4) }
-
-        var driveNr: Int { return data1 }
-        var halftrack: Int { return data2; }
-        var vol: Int { return data3; }
-        var pan: Int { return data4; }
+        var value: Int { return Int(msg.value) }
+        var driveNr: Int { return Int(msg.drive.nr) }
+        var halftrack: Int { return Int(msg.drive.value) }
+        var pc: Int { return Int(msg.cpu.pc) }
+        var vol: Int { return Int(msg.drive.volume) }
+        var pan: Int { return Int(msg.drive.pan) }
 
         // Only proceed if the proxy object is still alive
         if c64 == nil { return }
@@ -300,7 +294,7 @@ extension MyController {
 
         case .POWER:
 
-            if data1 != 0 {
+            if value != 0 {
 
                 renderer.canvas.open(delay: 2)
                 virtualKeyboard = nil
@@ -335,15 +329,14 @@ extension MyController {
             shutDown()
 
         case .ABORT:
-            debug(.shutdown, "Aborting with exit code \(msg.data1)")
-            exit(msg.data1)
+            debug(.shutdown, "Aborting with exit code \(value)")
+            exit(Int32(value))
 
-        case .WARP,
-                .TRACK:
+        case .WARP, .TRACK:
             refreshStatusBar()
 
         case .MUTE:
-            muted = data1 != 0
+            muted = value != 0
             refreshStatusBar()
 
         case .CONSOLE_CLOSE:
@@ -373,14 +366,11 @@ extension MyController {
         case .ROM_MISSING:
             break
 
-        case .CPU_OK:
-            break
-
         case .BREAKPOINT_REACHED:
-            inspector?.signalBreakPoint(pc: Int(msg.data1))
+            inspector?.signalBreakPoint(pc: pc)
 
         case .WATCHPOINT_REACHED:
-            inspector?.signalWatchPoint(pc: Int(msg.data1))
+            inspector?.signalWatchPoint(pc: pc)
 
         case .CPU_JAMMED:
             refreshStatusBar()
@@ -494,10 +484,10 @@ extension MyController {
             showAlert(.recorderAborted)
 
         case .DMA_DEBUG:
-            data1 != 0 ? renderer.zoomTextureOut() : renderer.zoomTextureIn()
+            value != 0 ? renderer.zoomTextureOut() : renderer.zoomTextureIn()
 
         case .ALARM:
-            debug(.events, "Received Alarm \(msg.data1)")
+            debug(.events, "Received Alarm \(msg.value)")
 
         default:
             warn("Unknown message: \(msg)")

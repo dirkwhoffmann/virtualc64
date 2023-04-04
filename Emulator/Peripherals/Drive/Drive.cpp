@@ -755,7 +755,9 @@ Drive::moveHeadUp()
               halftrack, (halftrack + 1) / 2.0, offset);
     }
 
-    msgQueue.put(MSG_DRIVE_STEP, deviceNr, halftrack, config.stepVolume, config.pan);
+    msgQueue.put(MSG_DRIVE_STEP, DriveMsg {
+        i16(deviceNr), i16(halftrack), config.stepVolume, config.pan
+    });
 }
 
 void
@@ -781,7 +783,9 @@ Drive::moveHeadDown()
               halftrack, (halftrack + 1) / 2.0);
     }
 
-    msgQueue.put(MSG_DRIVE_STEP, deviceNr, halftrack, config.stepVolume, config.pan);
+    msgQueue.put(MSG_DRIVE_STEP, DriveMsg {
+        i16(deviceNr), i16(halftrack), config.stepVolume, config.pan
+    });
 }
 
 bool
@@ -943,7 +947,9 @@ Drive::processDiskChangeEvent(EventID id)
             insertionStatus = DISK_FULLY_EJECTED;
 
             // Inform the GUI
-            msgQueue.put(MSG_DISK_EJECT, deviceNr, halftrack, config.stepVolume, config.pan);
+            msgQueue.put(MSG_DISK_EJECT, DriveMsg {
+                i16(deviceNr), i16(halftrack), config.stepVolume, config.pan
+            });
 
             // Schedule the next transition
             reschedule(config.swapDelay);
@@ -972,7 +978,9 @@ Drive::processDiskChangeEvent(EventID id)
             disk = std::move(diskToInsert);
 
             // Inform the GUI
-            msgQueue.put(MSG_DISK_INSERT, deviceNr, halftrack, config.stepVolume, config.pan);
+            msgQueue.put(MSG_DISK_INSERT, DriveMsg {
+                i16(deviceNr), i16(halftrack), config.stepVolume, config.pan
+            });
             break;
 
         default:

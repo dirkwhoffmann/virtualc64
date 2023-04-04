@@ -50,7 +50,6 @@ enum_long(MSG_TYPE)
     MSG_ROM_MISSING,
 
     // CPU
-    MSG_CPU_OK,
     MSG_CPU_JAMMED,
     MSG_BREAKPOINT_REACHED,
     MSG_WATCHPOINT_REACHED,
@@ -158,7 +157,6 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_DRIVE_ROM_LOADED:      return "DRIVE_ROM_LOADED";
             case MSG_ROM_MISSING:           return "ROM_MISSING";
                 
-            case MSG_CPU_OK:                return "CPU_OK";
             case MSG_CPU_JAMMED:            return "CPU_JAMMED";
             case MSG_BREAKPOINT_REACHED:    return "BREAKPOINT_REACHED";
             case MSG_WATCHPOINT_REACHED:    return "WATCHPOINT_REACHED";
@@ -224,18 +222,22 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
 // Structures
 //
 
+typedef struct { u16 pc; } CpuMsg;
+typedef struct { i16 nr; i16 value; i16 volume; i16 pan; } DriveMsg;
+typedef struct { isize line; i16 delay; } ScriptMsg;
+
 typedef struct
 {
+    // Header
     MsgType type;
 
-    /* The payload of a message consists of up to four (signed) 32-bit values.
-     * We avoid the usage of 64-bit types inside this structure to make it
-     * easily processable by JavaScript (web ports).
-     */
-    i32 data1;
-    i32 data2;
-    i32 data3;
-    i32 data4;
+    // Payload
+    union {
+        i64 value;
+        CpuMsg cpu;
+        DriveMsg drive;
+        ScriptMsg script;
+    };
 }
 Message;
 
@@ -244,4 +246,4 @@ Message;
 // Signatures
 //
 
-typedef void Callback(const void *, long, i32, i32, i32, i32);
+typedef void Callback(const void *, Message);

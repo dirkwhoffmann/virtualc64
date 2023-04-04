@@ -1000,14 +1000,14 @@ C64::execute()
         // Did we reach a breakpoint?
         if (flags & RL::BREAKPOINT) {
             clearFlag(RL::BREAKPOINT);
-            msgQueue.put(MSG_BREAKPOINT_REACHED, cpu.debugger.breakpointPC);
+            msgQueue.put(MSG_BREAKPOINT_REACHED, CpuMsg {u16(cpu.debugger.breakpointPC)});
             newState = EXEC_PAUSED;
         }
         
         // Did we reach a watchpoint?
         if (flags & RL::WATCHPOINT) {
             clearFlag(RL::WATCHPOINT);
-            msgQueue.put(MSG_WATCHPOINT_REACHED, cpu.debugger.watchpointPC);
+            msgQueue.put(MSG_WATCHPOINT_REACHED, CpuMsg {u16(cpu.debugger.watchpointPC)});
             newState = EXEC_PAUSED;
         }
         
