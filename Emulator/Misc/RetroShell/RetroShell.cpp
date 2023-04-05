@@ -439,21 +439,29 @@ RetroShell::exec(const string &command)
 }
 
 void
-RetroShell::execScript(std::ifstream &fs)
+RetroShell::execScript(const std::stringstream &ss)
 {
     script.str("");
-    script << fs.rdbuf();
+    script.clear();
+    script << ss.rdbuf();
     scriptLine = 1;
     continueScript();
 }
 
 void
+RetroShell::execScript(const std::ifstream &fs)
+{
+    std::stringstream ss;
+    ss << fs.rdbuf();
+    execScript(ss);
+}
+
+void
 RetroShell::execScript(const string &contents)
 {
-    script.str("");
-    script << contents;
-    scriptLine = 1;
-    continueScript();
+    std::stringstream ss;
+    ss << contents;
+    execScript(ss);
 }
 
 void
@@ -554,24 +562,47 @@ RetroShell::help(const string &command)
 }
 
 void
-RetroShell::dump(CoreComponent &component, Category category)
+RetroShell::dump(CoreObject &component, Category category)
+{
+    {   SUSPENDED
+
+        *this << '\n';
+        _dump(component, category);
+    }
+}
+
+void
+RetroShell::dump(CoreObject &component, std::vector <Category> categories)
+{
+    {   SUSPENDED
+
+        *this << '\n';
+        for(auto &category : categories) _dump(component, category);
+
+    }
+}
+
+void
+RetroShell::_dump(CoreObject &component, Category category)
 {
     std::stringstream ss;
 
-    {   SUSPENDED
+    switch (category) {
 
-        switch (category) {
+        case Category::Slots:       ss << "Slots:\n\n"; break;
+        case Category::Config:      ss << "Configuration:\n\n"; break;
+        case Category::Properties:  ss << "Properties:\n\n"; break;
+        case Category::Registers:   ss << "Registers:\n\n"; break;
+        case Category::State:       ss << "State:\n\n"; break;
+        case Category::Stats:       ss << "Statistics:\n\n"; break;
 
-            case Category::Config: ss << "Current configuration:\n\n"; break;
-
-            default:
-                break;
-        }
-
-        component.dump(category, ss);
+        default:
+            break;
     }
 
-    *this << '\n' << ss << '\n';
+    component.dump(category, ss);
+
+    *this << ss << '\n';
 }
 
 void
@@ -580,17 +611,5 @@ RetroShell::serviceEvent()
     msgQueue.put(MSG_SCRIPT_WAKEUP, ScriptMsg { scriptLine, 0 });
     c64.cancel<SLOT_RSH>();
 }
-
-/*
-void
-RetroShell::eofHandler()
-{
-    if (cpu.clock >= wakeUp) {
-        
-        msgQueue.put(MSG_SCRIPT_WAKEUP, ScriptMsg { scriptLine, 0 });
-        wakeUp = INT64_MAX;
-    }
-}
-*/
 
 }

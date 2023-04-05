@@ -67,9 +67,6 @@ class RetroShell : public SubComponent {
     // The script line counter (first line = 1)
     isize scriptLine = 0;
 
-    // Wake up cycle for interrupted scripts
-    Cycle wakeUp = INT64_MAX;
-    
     
     //
     // Initializing
@@ -191,7 +188,8 @@ public:
     void exec(const string &command) throws;
 
     // Executes a shell script
-    void execScript(std::ifstream &fs) throws;
+    void execScript(const std::stringstream &ss) throws;
+    void execScript(const std::ifstream &fs) throws;
     void execScript(const string &contents) throws;
 
     // Continues a previously interrupted script
@@ -205,9 +203,20 @@ private:
     // Prints help messages for a given command string
     void help(const string &command);
 
-    // Reroutes the output of the component's dump function to the shell
-    void dump(CoreComponent &component, Category category);
-    
+
+    //
+    // Command handlers
+    //
+
+public:
+
+    void dump(CoreObject &component, std::vector <Category> categories);
+    void dump(CoreObject &component, Category category);
+
+private:
+
+    void _dump(CoreObject &component, Category category);
+
     
     //
     // Servicing events

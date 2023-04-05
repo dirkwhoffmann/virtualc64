@@ -378,4 +378,14 @@ Debugger::disassembleRecordedPC(isize i, char *str) const
     cpu.disassembler.dumpWord(str, logEntryAbs(i).pc);
 }
 
+void
+Debugger::jump(u16 addr)
+{
+    cpu.reg.pc = addr;
+    cpu.reg.pc0 = addr;
+    cpu.next = fetch;
+
+    cpu.jumpedTo(addr);
+}
+
 }

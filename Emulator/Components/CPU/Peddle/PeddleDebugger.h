@@ -238,6 +238,14 @@ public:
 
     // Clears the log buffer
     void clearLog() { logCnt = 0; }
+
+
+    //
+    // Changing state
+    //
+
+    // Continues program execution at the specified address
+    void jump(u16 addr);
 };
 
 }

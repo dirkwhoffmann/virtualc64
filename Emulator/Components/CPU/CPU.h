@@ -164,6 +164,7 @@ public:
     virtual void breakpointReached(u16 addr) const override;
     virtual void watchpointReached(u16 addr) const override;
     virtual void instructionLogged() const override;
+    virtual void jumpedTo(u16 addr) const override;
 
 
     //
@@ -174,6 +175,14 @@ public:
     
     // Returns the result of the latest inspection
     CPUInfo getInfo() const { return CoreComponent::getInfo(info); }
+
+
+    //
+    // Changing state
+    //
+
+    // Continues program execution at the specified address
+    void jump(u16 addr);
 
 
     //

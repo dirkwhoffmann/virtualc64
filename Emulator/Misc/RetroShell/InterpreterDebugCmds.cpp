@@ -61,8 +61,7 @@ Interpreter::initDebugShell(Command &root)
              "Redirects the program counter",
              [this](Arguments& argv, long value) {
 
-        retroShell << "TODO\n";
-        // cpu.jump((u32)parseNum(argv));
+        cpu.jump((u16)parseNum(argv));
     });
 
     root.add({"disassemble"}, { }, { Arg::address },

@@ -422,6 +422,16 @@ class Inspector: DialogController {
         scrollToPC()
     }
 
+    func signalGoto(pc: Int) {
+
+        if isRunning { return }
+
+        let addr = String(format: (hex ? "$%04X" : "%d"), pc)
+        message.stringValue = String(format: "Program counter redirected to " + addr)
+        fullRefresh()
+        scrollToPC()
+    }
+
     @IBAction func refreshAction(_ sender: NSButton!) {
 
         refresh()

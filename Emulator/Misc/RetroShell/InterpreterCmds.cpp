@@ -74,7 +74,8 @@ Interpreter::initCommons(Command &root)
              "Pauses the execution of a command script",
              [this](Arguments& argv, long value) {
 
-        retroShell.wakeUp = cpu.clock + parseNum(argv) * vic.getFrequency();
+        auto cycles = parseNum(argv) * vic.getFrequency();
+        c64.scheduleRel<SLOT_RSH>(cycles, RSH_WAKEUP);
         throw ScriptInterruption("");
     });
 }
@@ -130,7 +131,7 @@ Interpreter::initCommandShell(Command &root)
         regressionTester.prepare(c64, model);
 
         // Pause the script to give the C64 some time to boot
-        retroShell.wakeUp = cpu.clock + 3 * vic.getFrequency();
+        c64.scheduleRel<SLOT_RSH>(3 * vic.getFrequency(), RSH_WAKEUP);
         throw ScriptInterruption("");
     });
 
@@ -263,18 +264,18 @@ Interpreter::initCommandShell(Command &root)
     root.add({"memory", "set"},
              "Configures the component");
 
-    root.add({"memory", "set", "raminit" }, { RamPatternEnum::argList() },
-             "Determines how Ram is initialized on startup",
-             [this](Arguments& argv, long value) {
-
-        c64.configure(OPT_RAM_PATTERN, parseEnum<RamPatternEnum>(argv));
-    });
-
     root.add({"memory", "set", "saveroms"}, { Arg::onoff },
              "Save Roms to snapshot files",
              [this](Arguments& argv, long value) {
 
         c64.configure(OPT_SAVE_ROMS, parseBool(argv));
+    });
+
+    root.add({"memory", "set", "raminit" }, { RamPatternEnum::argList() },
+             "Determines how Ram is initialized on startup",
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_RAM_PATTERN, parseEnum<RamPatternEnum>(argv));
     });
 
     root.add({"memory", "load"}, { Arg::path },
@@ -308,11 +309,8 @@ Interpreter::initCommandShell(Command &root)
                  "Displays the current configuration",
                  [this](Arguments& argv, long value) {
 
-            if (value == 0) {
-                retroShell.dump(cia1, Category::Config);
-            } else {
-                retroShell.dump(cia2, Category::Config);
-            }
+            if (value == 0) retroShell.dump(cia1, Category::Config);
+            if (value == 1) retroShell.dump(cia2, Category::Config);
 
         }, i);
 
@@ -323,8 +321,7 @@ Interpreter::initCommandShell(Command &root)
                  "Selects the emulated chip model",
                  [this](Arguments& argv, long value) {
 
-            auto revision = parseEnum <CIARevisionEnum> (argv);
-            c64.configure(OPT_CIA_REVISION, value, revision);
+            c64.configure(OPT_CIA_REVISION, value, parseEnum <CIARevisionEnum> (argv));
 
         }, i);
 

@@ -375,6 +375,9 @@ extension MyController {
         case .CPU_JAMMED:
             refreshStatusBar()
 
+        case .CPU_JUMPED:
+            inspector?.signalGoto(pc: pc)
+
         case .PAL, .NTSC:
             renderer.canvas.updateTextureRect()
 

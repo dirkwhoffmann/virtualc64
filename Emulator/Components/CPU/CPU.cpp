@@ -274,6 +274,22 @@ CPU::instructionLogged() const
 
 }
 
+void
+CPU::jumpedTo(u16 addr) const
+{
+    msgQueue.put(MSG_CPU_JUMPED, CpuMsg { .pc = addr } );
+}
+
+void
+CPU::jump(u16 addr)
+{
+    {   SUSPENDED
+
+        debugger.jump(addr);
+    }
+}
+
+
 //
 // Memory API
 //

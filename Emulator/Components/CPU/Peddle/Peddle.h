@@ -415,9 +415,10 @@ protected:
     virtual void nmiDidTrigger() { }
 
     // Debugger delegates
-    virtual void breakpointReached(u16 addr) const { };
-    virtual void watchpointReached(u16 addr) const { };
+    virtual void breakpointReached(u16 addr) const { }
+    virtual void watchpointReached(u16 addr) const { }
     virtual void instructionLogged() const { }
+    virtual void jumpedTo(u16 addr) const { }
 
 
     //
