@@ -50,20 +50,15 @@ Reu::_dump(Category category, std::ostream& os) const
     Cartridge::_dump(category, os);
     os << std::endl;
 
-    if (category == Category::Inspection) {
+    if (category == Category::State) {
 
+        string mode[4] = { "STASH", "FETCH", "SWAP", "VERIFY" };
         auto model = isREU1700() ? "1700" : isREU1764() ? "1764" : "1750";
 
         os << tab("Model");
         os << "REU " << model << std::endl;
         os << tab("Capacity");
         os << dec(getRamCapacity() / 1024) << " KB" << std::endl;
-    }
-
-    if (category == Category::Debug) {
-
-        string mode[4] = { "STASH", "FETCH", "SWAP", "VERIFY" };
-
         os << tab("Status Register");
         os << hex(sr) << std::endl;
         os << tab("Command Register");

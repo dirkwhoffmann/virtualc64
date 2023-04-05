@@ -1230,10 +1230,48 @@ C64::_dump(Category category, std::ostream& os) const
 
     if (category == Category::Config) {
 
+        os << tab("Warp mode");
+        os << WarpModeEnum::key(config.warpMode) << std::endl;
+        os << tab("Warp boot");
+        os << dec(config.warpBoot) << " seconds" << std::endl;
         os << tab("Sync mode");
         os << SyncModeEnum::key(config.syncMode);
         if (config.syncMode == SYNC_FIXED_FPS) os << " (" << config.proposedFps << " fps)";
         os << std::endl;
+    }
+
+    if (category == Category::State) {
+
+        os << tab("Power");
+        os << bol(isPoweredOn()) << std::endl;
+        os << tab("Running");
+        os << bol(isRunning()) << std::endl;
+        os << tab("Suspended");
+        os << bol(isSuspended()) << std::endl;
+        os << tab("Warping");
+        os << bol(isWarping()) << std::endl;
+        os << tab("Tracking");
+        os << bol(isTracking()) << std::endl;
+        os << std::endl;
+
+        os << tab("Refresh rate");
+        os << dec(isize(refreshRate())) << " Fps" << std::endl;
+        os << tab("Thread state");
+        os << ExecutionStateEnum::key(state) << std::endl;
+        os << tab("Thread mode");
+        os << ThreadModeEnum::key(getThreadMode()) << std::endl;
+        os << tab("Ultimax mode");
+        os << bol(getUltimax()) << std::endl;
+        os << std::endl;
+
+        os << tab("Frame");
+        os << dec(frame) << std::endl;
+        os << tab("CPU progress");
+        os << dec(cpu.clock) << " Cycles" << std::endl;
+        os << tab("CIA 1 progress");
+        os << dec(cia1.isSleeping() ? cia1.sleepCycle : cpu.clock) << " Cycles" << std::endl;
+        os << tab("CIA 2 progress");
+        os << dec(cia2.isSleeping() ? cia2.sleepCycle : cpu.clock) << " Cycles" << std::endl;
     }
 
     if (category == Category::Summary) {
@@ -1255,43 +1293,6 @@ C64::_dump(Category category, std::ostream& os) const
         os << CIARevisionEnum::key(cia2Rev) << std::endl;
         os << tab("Refresh rate");
         os << dec(isize(refreshRate())) << " Fps" << std::endl;
-    }
-
-    if (category == Category::Inspection) {
-
-        os << tab("Power");
-        os << bol(isPoweredOn()) << std::endl;
-        os << tab("Running");
-        os << bol(isRunning()) << std::endl;
-        os << tab("Suspended");
-        os << bol(isSuspended()) << std::endl;
-        os << tab("Warping");
-        os << bol(isWarping()) << std::endl;
-        os << tab("Tracking");
-        os << bol(isTracking()) << std::endl;
-        os << std::endl;
-    }
-
-    if (category == Category::Progress) {
-
-        os << tab("Frame");
-        os << dec(frame) << std::endl;
-        os << tab("CPU progress");
-        os << dec(cpu.clock) << " Cycles" << std::endl;
-        os << tab("CIA 1 progress");
-        os << dec(cia1.isSleeping() ? cia1.sleepCycle : cpu.clock) << " Cycles" << std::endl;
-        os << tab("CIA 2 progress");
-        os << dec(cia2.isSleeping() ? cia2.sleepCycle : cpu.clock) << " Cycles" << std::endl;
-    }
-
-    if (category == Category::Debug) {
-
-        os << tab("Thread state");
-        os << ExecutionStateEnum::key(state) << std::endl;
-        os << tab("Thread mode");
-        os << ThreadModeEnum::key(getThreadMode()) << std::endl;
-        os << tab("Ultimax mode");
-        os << bol(getUltimax()) << std::endl;
     }
 
     if (category == Category::Defaults) {
@@ -1703,7 +1704,7 @@ C64::loadSnapshot(const Snapshot &snapshot)
             keyboard.releaseAll();
 
             // Print some debug info if requested
-            if constexpr (SNP_DEBUG) dump(Category::Inspection);
+            if constexpr (SNP_DEBUG) dump(Category::State);
 
         } catch (VC64Error &error) {
 

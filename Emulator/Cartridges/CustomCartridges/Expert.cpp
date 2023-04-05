@@ -38,20 +38,16 @@ Expert::_dump(Category category, std::ostream& os) const
 
     Cartridge::_dump(category, os);
     
-    if (category == Category::Inspection) {
-
-        os << std::endl;
-
-        os << tab("Active");
-        os << bol(active) << std::endl;
-    }
-
-    if (category == Category::Debug) {
+    if (category == Category::State) {
 
         u16 nmi = LO_HI(peekRAM(0x1FFA), peekRAM(0x1FFB));
         u16 irq = LO_HI(peekRAM(0x1FFE), peekRAM(0x1FFF));
         u16 rst = LO_HI(peekRAM(0x1FFC), peekRAM(0x1FFD));
 
+        os << std::endl;
+
+        os << tab("Active");
+        os << bol(active) << std::endl;
         os << std::endl;
 
         os << tab("Switch");

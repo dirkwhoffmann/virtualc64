@@ -24,7 +24,7 @@ Host::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
-    if (category == Category::Inspection) {
+    if (category == Category::State) {
 
         os << tab("Audio sample rate");
         os << flt(sampleRate) << " Hz" << std::endl;

@@ -37,7 +37,7 @@ Recorder::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
-    if (category == Category::Inspection) {
+    if (category == Category::State) {
 
         os << tab("FFmpeg path");
         os << FFmpeg::getExecPath() << std::endl;
@@ -88,7 +88,8 @@ Recorder::startRecording(isize x1, isize y1, isize x2, isize y2,
     debug(REC_DEBUG, "startRecording(%ld,%ld,%ld,%ld,%ld,%ld,%ld)\n",
           x1, y1, x2, y2, bitRate, aspectX, aspectY);
 
-    if constexpr (REC_DEBUG) dump(Category::Inspection);
+    // Print some debugging information if requested
+    if constexpr (REC_DEBUG) dump(Category::State);
 
     if (isRecording()) {
         throw VC64Error(ERROR_REC_LAUNCH, "Recording in progress.");

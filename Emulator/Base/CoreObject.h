@@ -47,8 +47,8 @@ namespace vc64 {
 enum class Category
 {
     BankMap, Breakpoints, Catchpoints, Checksum, Config, Current, Debug,
-    Defaults, Disk, Dma, Events, Inspection, Layout, Progress, Properties,
-    Registers, Slots, State, Stats, Summary, Thread, Watchpoints
+    Defaults, Disk, Dma, Events, Layout, Properties,
+    Registers, Slots, State, Stats, Summary, Thread, Tod, Watchpoints
 };
 
 class CoreObject {

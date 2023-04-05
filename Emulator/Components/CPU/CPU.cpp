@@ -95,7 +95,7 @@ CPU::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
-    if (category == Category::Inspection) {
+    if (category == Category::Registers) {
 
         os << tab("Instruction Address") << hex(reg.pc0) << std::endl;
         os << tab("Program Counter") << hex(reg.pc) << std::endl;
@@ -114,7 +114,7 @@ CPU::_dump(Category category, std::ostream& os) const
         os << std::endl;
     }
     
-    if (category == Category::Debug) {
+    if (category == Category::State) {
 
         auto append = [&](const string &s1, const string &s2) {
             return s1.empty() ? s2 : s1 + ", " + s2;
@@ -125,7 +125,7 @@ CPU::_dump(Category category, std::ostream& os) const
         if (flags & CPU_CHECK_BP) str = append(str, "CHECK_BP");
         if (flags & CPU_CHECK_WP) str = append(str, "CHECK_WP");
 
-        os << tab("Cycle");
+        os << tab("Clock");
         os << dec(clock) << std::endl;
         os << tab("Flags");
         os << (str.empty() ? "-" : str) << std::endl;

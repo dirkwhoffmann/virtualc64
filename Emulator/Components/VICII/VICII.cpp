@@ -429,7 +429,7 @@ VICII::_dump(Category category, std::ostream& os) const
         os << bol(config.checkSBCollisions) << std::endl;
     }
 
-    if (category == Category::Inspection) {
+    if (category == Category::State) {
 
         os << tab("Bank address");
         os << hex(bankAddr) << std::endl;
@@ -447,24 +447,6 @@ VICII::_dump(Category category, std::ostream& os) const
         os << hex(reg.current.ctrl2) << std::endl;
         os << tab("Display mode");
         os << DisplayModeEnum::key(reg.current.mode) << std::endl;
-    }
-
-    if (category == Category::Registers) {
-        
-        string addr[8] = {
-            "$D000 - $D007", "$D008 - $D00F", "$D010 - $D017", "$D018 - $D01F",
-            "$D020 - $D027", "$D028 - $D02F", "$D030 - $D037", "$D038 - $D03F" };
-        
-        for (isize i = 0; i < 6; i++) {
-            os << tab(addr[i]);
-            for (isize j = 0; j < 8; j++) {
-                os << hex(spypeek((u16)(8 * i + j))) << " ";
-            }
-            os << std::endl;
-        }
-    }
-
-    if (category == Category::Debug) {
 
         os << tab("Bad Line");
         os << bol(badLine) << std::endl;
@@ -494,6 +476,21 @@ VICII::_dump(Category category, std::ostream& os) const
         os << hex(expansionFF) << std::endl;
         os << tab("expansionFF");
         os << hex(expansionFF) << std::endl;
+    }
+
+    if (category == Category::Registers) {
+
+        string addr[8] = {
+            "$D000 - $D007", "$D008 - $D00F", "$D010 - $D017", "$D018 - $D01F",
+            "$D020 - $D027", "$D028 - $D02F", "$D030 - $D037", "$D038 - $D03F" };
+
+        for (isize i = 0; i < 6; i++) {
+            os << tab(addr[i]);
+            for (isize j = 0; j < 8; j++) {
+                os << hex(spypeek((u16)(8 * i + j))) << " ";
+            }
+            os << std::endl;
+        }
     }
 }
 

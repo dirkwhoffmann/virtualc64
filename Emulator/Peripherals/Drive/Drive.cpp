@@ -380,7 +380,7 @@ Drive::_dump(Category category, std::ostream& os) const
         mem.CoreComponent::_dump(Category::BankMap, os);
     }
     
-    if (category == Category::Inspection) {
+    if (category == Category::State) {
 
         os << tab("Idle");
         os << bol(isIdle()) << std::endl;

@@ -157,7 +157,7 @@ CIA::_dump(Category category, std::ostream& os) const
         os << bol(config.timerBBug) << std::endl;
     }
 
-    if (category == Category::Inspection) {
+    if (category == Category::Registers) {
 
         os << std::endl;
         os << tab("Counter A") << hex(counterA) << std::endl;
@@ -182,7 +182,7 @@ CIA::_dump(Category category, std::ostream& os) const
         os << std::endl;
     }
 
-    if (category == Category::Debug) {
+    if (category == Category::State) {
         
         os << tab("Sleeping") << bol(sleeping) << std::endl;
         os << tab("Tiredness") << dec(tiredness) << std::endl;
@@ -190,7 +190,12 @@ CIA::_dump(Category category, std::ostream& os) const
         os << tab("Wakeup cycle") << dec(wakeUpCycle) << std::endl;
         os << tab("CNT") << dec(CNT) << std::endl;
         os << tab("INT") << dec(INT) << std::endl;
-    }    
+    }
+
+    if (category == Category::Tod) {
+
+        tod.dump(Category::State, os);
+    }
 }
 
 void

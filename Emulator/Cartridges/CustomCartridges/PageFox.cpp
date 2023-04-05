@@ -29,18 +29,10 @@ PageFox::_dump(Category category, std::ostream& os) const
 
     Cartridge::_dump(category, os);
 
-    if (category == Category::Inspection) {
-
-        os << std::endl;
+    if (category == Category::State) {
 
         os << tab("Control Register");
         os << hex(ctrlReg);
-    }
-    
-    if (category == Category::Debug) {
-
-        os << std::endl;
-
         os << tab("bankSelect()");
         os << hex(bankSelect()) << std::endl;
         os << tab("chipSelect()");

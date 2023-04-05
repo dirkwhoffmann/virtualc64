@@ -40,7 +40,7 @@ IEC::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category == Category::Inspection) {
+    if (category == Category::State) {
         
         os << tab("VIA1::DDRB (Drive8)");
         os << hex(drive8.via1.getDDRB()) << std::endl;

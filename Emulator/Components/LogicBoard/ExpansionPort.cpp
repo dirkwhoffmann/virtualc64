@@ -92,7 +92,7 @@ ExpansionPort::_dump(Category category, std::ostream& os) const
 
     auto type = cartridge ? cartridge->getCartridgeType() : CRT_NONE;
 
-    if (category == Category::Inspection) {
+    if (category == Category::State) {
 
         os << tab("Game line");
         os << bol(gameLine) << std::endl;
@@ -104,18 +104,6 @@ ExpansionPort::_dump(Category category, std::ostream& os) const
         if (cartridge) {
 
             os << std::endl;
-            cartridge->dump(category, os);
-        }
-    }
-
-    if (category == Category::Debug) {
-
-        os << tab("Cartridge");
-        os << CartridgeTypeEnum::key(type) << std::endl;
-
-        if (cartridge) {
-
-            // os << std::endl;
             cartridge->dump(category, os);
         }
     }

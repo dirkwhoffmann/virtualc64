@@ -29,18 +29,12 @@ Isepic::_dump(Category category, std::ostream& os) const
 
     Cartridge::_dump(category, os);
 
-    if (category == Category::Inspection) {
+    if (category == Category::State) {
 
         os << std::endl;
 
         os << tab("Selected Memory Page");
         os << bol(page) << std::endl;
-    }
-
-    if (category == Category::Debug) {
-
-        os << std::endl;
-
         os << tab("Latched Peek Source");
         os << MemoryTypeEnum::key(oldPeekSource) << std::endl;
         os << tab("Latched Poke Target");

@@ -268,7 +268,7 @@ C64Memory::_dump(Category category, std::ostream& os) const
         os << bol(config.saveRoms) << std::endl;
     }
     
-    if (category == Category::Inspection) {
+    if (category == Category::State) {
 
         auto info = [&](const string &title, RomType type) {
 

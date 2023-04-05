@@ -26,7 +26,7 @@ Epyx::_dump(Category category, std::ostream& os) const
 
     Cartridge::_dump(category, os);
 
-    if (category == Category::Inspection) {
+    if (category == Category::State) {
 
         os << std::endl;
 

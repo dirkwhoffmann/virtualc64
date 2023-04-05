@@ -213,7 +213,7 @@ Cartridge::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
     
-    if (category == Category::Inspection) {
+    if (category == Category::State) {
         
         os << tab("Game line in CRT");
         os << bol(gameLineInCrtFile) << std::endl;
@@ -228,9 +228,6 @@ Cartridge::_dump(Category category, std::ostream& os) const
             os << dec(packet[i]->size / 1024) << " KB starting at ";
             os << hex(packet[i]->loadAddress) << std::endl;
         }
-    }
-
-    if (category == Category::Debug) {
 
         if (getRamCapacity()) {
 

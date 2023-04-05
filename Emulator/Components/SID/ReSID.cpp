@@ -120,7 +120,7 @@ ReSID::_dump(Category category, std::ostream& os) const
     ft == FASTSID_HIGH_PASS ? "HIGH_PASS" :
     ft == FASTSID_BAND_PASS ? "BAND_PASS" : "???";
     
-    if (category == Category::Inspection) {
+    if (category == Category::State) {
 
         os << tab("Chip");
         os << "ReSID " << dec(nr) << std::endl;
@@ -142,9 +142,6 @@ ReSID::_dump(Category category, std::ostream& os) const
         os << dec((u8)(reg[0x17] >> 4)) << std::endl;
         os << tab("Filter enable bits");
         os << hex((u8)(reg[0x17] & 0x0F));
-    }
-    
-    if (category == Category::Debug) {
 
         for (isize i = 0, col = 0, row = 0; i <= 0x1C; i++, row = i / 4, col = i % 4) {
 
