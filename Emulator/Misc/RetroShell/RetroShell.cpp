@@ -575,6 +575,14 @@ RetroShell::dump(CoreComponent &component, Category category)
 }
 
 void
+RetroShell::serviceEvent()
+{
+    msgQueue.put(MSG_SCRIPT_WAKEUP, ScriptMsg { scriptLine, 0 });
+    c64.cancel<SLOT_RSH>();
+}
+
+/*
+void
 RetroShell::eofHandler()
 {
     if (cpu.clock >= wakeUp) {
@@ -583,5 +591,6 @@ RetroShell::eofHandler()
         wakeUp = INT64_MAX;
     }
 }
+*/
 
 }

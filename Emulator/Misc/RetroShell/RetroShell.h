@@ -210,12 +210,12 @@ private:
     
     
     //
-    // Performing periodic events
+    // Servicing events
     //
-    
+
 public:
-    
-    void eofHandler();
+
+    void serviceEvent();
 };
 
 }

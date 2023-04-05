@@ -118,6 +118,16 @@ C64::eventName(EventSlot slot, EventID id)
             }
             break;
 
+        case SLOT_RSH:
+
+            switch (id) {
+
+                case EVENT_NONE:        return "none";
+                case RSH_WAKEUP:        return "RSH_WAKEUP";
+                default:                return "*** INVALID ***";
+            }
+            break;
+
         case SLOT_KEY:
 
             switch (id) {
@@ -1475,7 +1485,6 @@ C64::endFrame()
     port2.execute();
     drive8.vsyncHandler();
     drive9.vsyncHandler();
-    retroShell.eofHandler();
     recorder.vsyncHandler();
 }
 
@@ -1522,6 +1531,9 @@ C64::processEvents(Cycle cycle)
             }
             if (isDue<SLOT_DC9>(cycle)) {
                 drive9.processDiskChangeEvent(id[SLOT_DC9]);
+            }
+            if (isDue<SLOT_RSH>(cycle)) {
+                retroShell.serviceEvent();
             }
             if (isDue<SLOT_KEY>(cycle)) {
                 keyboard.processKeyEvent(id[SLOT_KEY]);
