@@ -1339,7 +1339,7 @@ extension Configuration {
         c64.suspend()
 
         hCenter = defaults.float(Keys.Vid.hCenter)
-        hCenter = defaults.float(Keys.Vid.vCenter)
+        vCenter = defaults.float(Keys.Vid.vCenter)
         hZoom = defaults.float(Keys.Vid.hZoom)
         vZoom = defaults.float(Keys.Vid.vZoom)
 
