@@ -116,13 +116,13 @@ Disassembler::disassembleFlags(char *str) const
 void
 Disassembler::dumpByte(char *str, u8 value) const
 {
-    StrWriter(str, dataStyle) << value;
+    StrWriter(str, dataStyle) << value << '\0';
 }
 
 void
 Disassembler::dumpWord(char *str, u16 value) const
 {
-    StrWriter(str, dataStyle) << value;
+    StrWriter(str, dataStyle) << value << '\0';
 }
 
 void
@@ -135,6 +135,7 @@ Disassembler::dumpBytes(char *str, u32 addr, isize cnt) const
         if (i) writer << " ";
         writer << cpu.readDasm(U16_ADD(addr, i));
     }
+    writer << '\0';
 }
 
 void
@@ -147,6 +148,7 @@ Disassembler::dumpBytes(char *str, u8 values[], isize cnt) const
         if (i) writer << " ";
         writer << values[i];
     }
+    writer << '\0';
 }
 
 void
@@ -160,6 +162,7 @@ Disassembler::dumpWords(char *str, u32 addr, isize cnt) const
         writer << u16(HI_LO(cpu.readDasm(U16_ADD(addr, 2 * i)),
                             cpu.readDasm(U16_ADD(addr, 2 * i + 1))));
     }
+    writer << '\0';
 }
 
 void
@@ -172,7 +175,7 @@ Disassembler::dumpWords(char *str, u16 values[], isize cnt) const
         if (i) writer << " ";
         writer << values[i];
     }
-
+    writer << '\0';
 }
 
 void
