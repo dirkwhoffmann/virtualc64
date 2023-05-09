@@ -51,7 +51,7 @@ isize
 Disassembler::disassemble(char *str, u16 addr) const
 {
     return disassemble(str,
-                       cpu.getPC0(),
+                       addr,
                        cpu.readDasm(addr),
                        cpu.readDasm(addr + 1),
                        cpu.readDasm(addr + 2));
