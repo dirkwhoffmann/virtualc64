@@ -51,3 +51,10 @@ MagicDesk::pokeIO1(u16 addr, u8 value)
         // c64.signalStop();
     }
 }
+
+u8
+MagicDesk::peekIO2(u16 addr)
+{
+    // printf("MagicDesk::peekIO2(%x) = %x\n", addr, vic.getDataBusPhi1());
+    return vic.getDataBusPhi1();
+}
