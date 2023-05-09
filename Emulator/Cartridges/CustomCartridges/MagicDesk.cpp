@@ -55,6 +55,12 @@ MagicDesk::pokeIO1(u16 addr, u8 value)
 u8
 MagicDesk::peekIO2(u16 addr)
 {
+    return spypeekIO2(addr);
+}
+
+u8
+MagicDesk::spypeekIO2(u16 addr) const
+{
     // printf("MagicDesk::peekIO2(%x) = %x\n", addr, vic.getDataBusPhi1());
     return vic.getDataBusPhi1();
 }
