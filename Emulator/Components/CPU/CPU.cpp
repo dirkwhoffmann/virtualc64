@@ -47,6 +47,9 @@ CPU::_reset(bool hard)
     Peddle::reset();
     mem.updatePeekPokeLookupTables();
 
+    // Enable or disable CPU debugging
+    c64.isTracking() ? debugger.enableLogging() : debugger.disableLogging();
+
     assert(levelDetector.isClear());
     assert(edgeDetector.isClear());
 }
@@ -78,7 +81,7 @@ CPU::_inspect() const
 void
 CPU::_trackOn()
 {
-    // We only allow the C64 CPU to enter debug mode
+    // We only allow the C64 CPU to enter track mode
     if (!isC64CPU()) return;
 
     debugger.enableLogging();

@@ -296,8 +296,6 @@ C64::_reset(bool hard)
     }
 
     // Schedule initial events
-    // scheduleAbs<SLOT_CIA1>(cpu.clock, CIA_EXECUTE);
-    // scheduleAbs<SLOT_CIA2>(cpu.clock, CIA_EXECUTE);
     scheduleAbs<SLOT_WBT>(SEC(config.warpBoot), WBT_DISABLE);
     if (insEvent) scheduleRel <SLOT_INS> (0, insEvent);
 
@@ -1129,7 +1127,7 @@ C64::_run()
     debug(RUN_DEBUG, "_run\n");
 
     // Enable or disable CPU debugging
-    track ? cpu.debugger.enableLogging() : cpu.debugger.disableLogging();
+    // track ? cpu.debugger.enableLogging() : cpu.debugger.disableLogging();
 
     msgQueue.put(MSG_RUN);
 }
