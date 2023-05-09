@@ -10,6 +10,7 @@
 #pragma once
 
 #include <sys/types.h>
+#include <stdint.h>
 
 //
 // Booleans
