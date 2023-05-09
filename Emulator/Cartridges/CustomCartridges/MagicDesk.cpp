@@ -33,7 +33,9 @@ void
 MagicDesk::pokeIO1(u16 addr, u8 value)
 {
     control = value & 0x8F;
-    
+
+    // printf("%x control = %x\n", addr, control);
+
     /* This cartridge type is very similar to the OCEAN cart type: ROM  memory
      * is  organized  in  8Kb  ($2000)  banks  located  at  $8000-$9FFF.  Bank
      * switching is done by writing the bank number to $DE00. Deviant from the
@@ -41,10 +43,11 @@ MagicDesk::pokeIO1(u16 addr, u8 value)
      * 8 is set ($DE00 = $80), the GAME/EXROM lines are disabled,  turning  on
      * RAM at $8000-$9FFF instead of ROM.
      */
-    
-    // if (addr == 0xDE00) {
-    {
-        expansionport.setExromLine(value & 0x80);
-        bankIn(value & 0x0F);
+
+    expansionport.setExromLine(value & 0x80);
+    bankIn(value & 0x0F);
+
+    if (value & 0x80) {
+        // c64.signalStop();
     }
 }

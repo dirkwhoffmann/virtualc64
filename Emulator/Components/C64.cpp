@@ -1019,20 +1019,20 @@ C64::execute()
         if (flags & RL::BREAKPOINT) {
             clearFlag(RL::BREAKPOINT);
             msgQueue.put(MSG_BREAKPOINT_REACHED, CpuMsg {u16(cpu.debugger.breakpointPC)});
-            newState = EXEC_PAUSED;
+            switchState(EXEC_PAUSED);
         }
         
         // Did we reach a watchpoint?
         if (flags & RL::WATCHPOINT) {
             clearFlag(RL::WATCHPOINT);
             msgQueue.put(MSG_WATCHPOINT_REACHED, CpuMsg {u16(cpu.debugger.watchpointPC)});
-            newState = EXEC_PAUSED;
+            switchState(EXEC_PAUSED);
         }
         
         // Are we requested to terminate the run loop?
         if (flags & RL::STOP) {
             clearFlag(RL::STOP);
-            newState = EXEC_PAUSED;
+            switchState(EXEC_PAUSED);
         }
         
         // Are we requested to pull the NMI line down?
@@ -1045,7 +1045,7 @@ C64::execute()
         if (flags & RL::CPU_JAM) {
             clearFlag(RL::CPU_JAM);
             msgQueue.put(MSG_CPU_JAMMED);
-            newState = EXEC_PAUSED;
+            switchState(EXEC_PAUSED);
         }
 
         assert(flags == 0);
