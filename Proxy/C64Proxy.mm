@@ -305,11 +305,6 @@ using namespace vc64;
     [self cpu]->debugger.clearLog();
 }
 
-- (BOOL)isJammed
-{
-    return [self cpu]->isJammed();
-}
-
 - (void)setHex
 {
     DasmNumberFormat instrFormat = {

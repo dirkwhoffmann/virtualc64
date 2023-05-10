@@ -60,6 +60,9 @@ class MyController: NSWindowController, MessageReceiver {
     // Speedometer to measure clock frequence and frames per second
     var speedometer: Speedometer!
 
+    // Remembers if an illegal instruction has jammed the CPU
+    var jammed = false
+
     // Remembers if audio is muted (master volume of both channels is 0)
     var muted = false
 
@@ -309,6 +312,7 @@ extension MyController {
 
         case .RUN:
             needsSaving = true
+            jammed = false
             toolbar.updateToolbar()
             inspector?.run()
             refreshStatusBar()
@@ -373,6 +377,7 @@ extension MyController {
             inspector?.signalWatchPoint(pc: pc)
 
         case .CPU_JAMMED:
+            jammed = true
             refreshStatusBar()
 
         case .CPU_JUMPED:

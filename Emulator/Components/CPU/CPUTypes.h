@@ -70,7 +70,6 @@ typedef struct
     u8 irq;
     u8 nmi;
     bool rdy;
-    bool jammed;
     
     u8 processorPort;
     u8 processorPortDir;

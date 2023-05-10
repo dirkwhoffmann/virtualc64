@@ -334,7 +334,6 @@
 - (NSInteger)loggedPCRel:(NSInteger)nr;
 - (NSInteger)loggedPCAbs:(NSInteger)nr;
 - (void)clearLog;
-- (BOOL)isJammed;
 
 - (void)setHex;
 - (void)setDec;

@@ -70,7 +70,6 @@ CPU::_inspect() const
         info.irq = irqLine;
         info.nmi = nmiLine;
         info.rdy = rdyLine;
-        info.jammed = isJammed();
         
         info.processorPort = readPort();
         info.processorPortDir = readPortDir();
@@ -133,8 +132,6 @@ CPU::_dump(Category category, std::ostream& os) const
         os << (str.empty() ? "-" : str) << std::endl;
         os << tab("Next microinstruction");
         os << dec(next) << std::endl;
-        os << tab("Jammed");
-        os << bol(isJammed()) << std::endl;
         os << tab("Rdy Line");
         os << bol(rdyLine, "high", "low") << std::endl;
         os << tab("Nmi Line");

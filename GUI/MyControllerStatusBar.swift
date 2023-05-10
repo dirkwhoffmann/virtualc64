@@ -57,7 +57,6 @@ extension MyController {
 
         let running = c64.running
         let track = c64.trackMode
-        let jammed = c64.cpu.isJammed()
         let warp = c64.warpMode
         
         let hasCrt = c64.expansionport.cartridgeAttached()

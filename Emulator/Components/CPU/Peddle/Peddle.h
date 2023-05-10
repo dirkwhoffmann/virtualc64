@@ -217,9 +217,6 @@ public:
     u16 addrMask() const;
     template <CPURevision C> u16 addrMask() const;
 
-    // Returns true if the CPU is jammed
-    bool isJammed() const { return next == JAM || next == JAM_2; }
-
     // Returns true if the next cycle marks the beginning of an instruction
     bool inFetchPhase() const { return next == fetch; }
 
