@@ -131,6 +131,10 @@ CPU::_dump(Category category, std::ostream& os) const
         os << dec(clock) << std::endl;
         os << tab("Flags");
         os << (str.empty() ? "-" : str) << std::endl;
+        os << tab("Next microinstruction");
+        os << dec(next) << std::endl;
+        os << tab("Jammed");
+        os << bol(isJammed()) << std::endl;
         os << tab("Rdy Line");
         os << bol(rdyLine, "high", "low") << std::endl;
         os << tab("Nmi Line");

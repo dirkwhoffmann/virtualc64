@@ -340,6 +340,7 @@ Peddle::execute()
             CONTINUE
 
         case JAM_2:
+            
             POLL_INT
             DONE
 
