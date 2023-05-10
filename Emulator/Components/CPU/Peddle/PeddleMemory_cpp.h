@@ -115,12 +115,14 @@ Peddle::writeStack(u8 addr, u8 val)
     write(u16(addr) + 0x100, val);
 }
 
+/*
 template <CPURevision C> u16
 Peddle::readResetVector()
 {
     u16 addr = 0xFFFC & addrMask<C>();
     return u16(read<C>(addr) | read<C>(addr + 1) << 8);
 }
+*/
 
 #endif
 

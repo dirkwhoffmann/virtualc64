@@ -753,7 +753,9 @@ C64Memory::irqVector() const {
 }
 
 u16
-C64Memory::resetVector() const {
+C64Memory::resetVector() {
+
+    updatePeekPokeLookupTables();
     
     if (peekSrc[0xF] != M_KERNAL || c64.hasRom(ROM_TYPE_KERNAL)) {
         return LO_HI(spypeek(0xFFFC), spypeek(0xFFFD));

@@ -274,8 +274,7 @@ Peddle::reset()
 
     reg = { };
     reg.pport.data = 0xFF;
-    reg.pc = reg.pc0 = readResetVector<C>();
-
+    reg.pc = reg.pc0 = readResetVector();
     setB(1);
     setI(1);
 

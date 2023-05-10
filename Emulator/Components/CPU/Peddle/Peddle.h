@@ -364,7 +364,7 @@ private:
     template <CPURevision C> void writeStack(u8 sp, u8 value);
 
     template <CPURevision C> u16 readDasm(u16 addr) const;
-    template <CPURevision C> u16 readResetVector();
+    // template <CPURevision C> u16 readResetVector();
 
     
     //

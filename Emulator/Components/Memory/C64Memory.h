@@ -196,7 +196,7 @@ public:
     // Reads a vector address from memory
     u16 nmiVector() const;
     u16 irqVector() const;
-    u16 resetVector() const;
+    u16 resetVector();
     
     // Returns a string representations for a portion of memory
     string memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const;

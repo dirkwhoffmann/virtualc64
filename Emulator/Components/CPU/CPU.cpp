@@ -45,7 +45,6 @@ CPU::_reset(bool hard)
     RESET_SNAPSHOT_ITEMS(hard)
 
     Peddle::reset();
-    mem.updatePeekPokeLookupTables();
 
     // Enable or disable CPU debugging
     c64.isTracking() ? debugger.enableLogging() : debugger.disableLogging();
