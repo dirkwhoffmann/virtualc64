@@ -243,16 +243,21 @@ extension Inspector {
     var memLayoutImage: NSImage? {
                 
         // Create image representation in memory
-        let size = CGSize(width: 256, height: 16)
-        let cap = Int(size.width) * Int(size.height)
+        let width = 256
+        let height = 16
+        let size = CGSize(width: width, height: height)
+        let cap = width * height
         let mask = calloc(cap, MemoryLayout<UInt32>.size)!
         let ptr = mask.bindMemory(to: UInt32.self, capacity: cap)
         let c = 3
+        let banks = 16
+        let dx = width / banks
 
         // Create image data
-        for bank in 0...15 {
+        for bank in 0..<banks {
             
             var color: NSColor
+
             switch bankType[bank] {
             case .NONE: color = MemColors.unmapped
             case .PP: color = MemColors.ram
@@ -265,15 +270,16 @@ extension Inspector {
             case .CRTHI: color = MemColors.carthi
             default: color = MemColors.unmapped
             }
-            
+
             let ciColor = CIColor(color: color)!
-            for y in 0...15 {
-                for i in 0...15 {
+            for y in 0..<height {
+                for i in 0..<dx {
                     let r = Int(ciColor.red * CGFloat(255 - y*c))
                     let g = Int(ciColor.green * CGFloat(255 - y*c))
                     let b = Int(ciColor.blue * CGFloat(255 - y*c))
-                    let a = Int(ciColor.alpha)
-                    ptr[256*y+16*bank+i] = UInt32(r | g << 8 | b << 16 | a << 24)
+                    let a = Int(ciColor.alpha * CGFloat(255))
+                    let abgr = UInt32(r | g << 8 | b << 16 | a << 24)
+                    ptr[width*y+dx*bank+i] = abgr
                 }
             }
         }
@@ -281,12 +287,13 @@ extension Inspector {
         // Mark the processor port area
         if bankType[0] == .PP {
             let ciColor = CIColor(color: MemColors.pp)!
-            for y in 0...15 {
+            for y in 0..<height {
                 let r = Int(ciColor.red * CGFloat(255 - y*c))
                 let g = Int(ciColor.green * CGFloat(255 - y*c))
                 let b = Int(ciColor.blue * CGFloat(255 - y*c))
-                let a = Int(ciColor.alpha)
-                ptr[256*y] = UInt32(r | g << 8 | b << 16 | a << 24)
+                let a = Int(ciColor.alpha * CGFloat(255))
+                let abgr = UInt32(r | g << 8 | b << 16 | a << 24)
+                ptr[width*y] = abgr
             }
         }
         
