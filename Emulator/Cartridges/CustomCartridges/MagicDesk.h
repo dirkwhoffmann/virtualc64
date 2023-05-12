@@ -31,4 +31,8 @@ public:
     void pokeIO1(u16 addr, u8 value) override;
     u8 peekIO2(u16 addr) override;
     u8 spypeekIO2(u16 addr) const override;
+
+private:
+
+    bool disabled() const { return control & 0x80; }
 };

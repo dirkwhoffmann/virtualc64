@@ -20,13 +20,13 @@ MagicDesk::resetCartConfig()
 u8
 MagicDesk::peekIO1(u16 addr)
 {
-    return control;
+    return spypeekIO1(addr);
 }
 
 u8
 MagicDesk::spypeekIO1(u16 addr) const
 {
-    return control;
+    return disabled() ? vic.getDataBusPhi1() : control;
 }
 
 void
@@ -44,12 +44,8 @@ MagicDesk::pokeIO1(u16 addr, u8 value)
      * RAM at $8000-$9FFF instead of ROM.
      */
 
-    expansionport.setExromLine(value & 0x80);
+    expansionport.setExromLine(disabled());
     bankIn(value & 0x0F);
-
-    if (value & 0x80) {
-        // c64.signalStop();
-    }
 }
 
 u8
@@ -61,6 +57,5 @@ MagicDesk::peekIO2(u16 addr)
 u8
 MagicDesk::spypeekIO2(u16 addr) const
 {
-    // printf("MagicDesk::peekIO2(%x) = %x\n", addr, vic.getDataBusPhi1());
     return vic.getDataBusPhi1();
 }
