@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication"/>
@@ -244,13 +244,13 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="zO4-BV-1XU"/>
-                            <menuItem title="Step Over" keyEquivalent="" id="428">
+                            <menuItem title="Step Over" id="428">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="stepOverAction:" target="-1" id="502"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Step Into" keyEquivalent="" id="429">
+                            <menuItem title="Step Into" id="429">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="stepIntoAction:" target="-1" id="488"/>
