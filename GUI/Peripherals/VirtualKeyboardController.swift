@@ -120,7 +120,7 @@ class VirtualKeyboardController: DialogController {
             c64.keyboard.scheduleKeyReleaseAll(2)
             cancelAction(self)
         } else {
-            c64.keyboard.scheduleKeyRelease(nr, delay: 2)
+            c64.keyboard.scheduleKeyRelease(nr, delay: 0.25)
         }
     }
     

@@ -212,11 +212,11 @@ private:
 
     // Returns the number of frames to compute (provided by the subclass)
     virtual isize missingFrames(util::Time base) const = 0;
-    
-    // Returns true if this functions is called from within the emulator thread
-    bool isEmulatorThread() { return std::this_thread::get_id() == thread.get_id(); }
 
 public:
+
+    // Returns true if this functions is called from within the emulator thread
+    bool isEmulatorThread() { return std::this_thread::get_id() == thread.get_id(); }
     
     // Performs a state change
     void switchState(ExecutionState newState);

@@ -96,6 +96,7 @@ enum_long(MSG_TYPE)
     MSG_CART_SWITCH,
 
     // Peripherals (Keyboard)
+    MSG_KB_AUTO_PRESS,
     MSG_KB_AUTO_RELEASE,
     
     // Peripherals (Mouse)
@@ -197,6 +198,7 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_CRT_ATTACHED:          return "CRT_ATTACHED";
             case MSG_CART_SWITCH:           return "CART_SWITCH";
                 
+            case MSG_KB_AUTO_PRESS:         return "KB_AUTO_PRESS";
             case MSG_KB_AUTO_RELEASE:       return "KB_AUTO_RELEASE";
 
             case MSG_SHAKING:               return "SHAKING";

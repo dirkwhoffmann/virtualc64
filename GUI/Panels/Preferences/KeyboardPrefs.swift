@@ -7,17 +7,6 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-/*
-class KeyViewItem: NSCollectionViewItem {
-    
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-        view.wantsLayer = true
-    }
-}
-*/
-
 extension PreferencesController {
         
     func refreshKeyboardTab() {

@@ -17,13 +17,13 @@
 #define VER_MAJOR 4
 #define VER_MINOR 6
 #define VER_SUBMINOR 0
-#define VER_BETA 2
+#define VER_BETA 0
 
 // Snapshot version number
 #define SNP_MAJOR 4
 #define SNP_MINOR 6
 #define SNP_SUBMINOR 0
-#define SNP_BETA 2
+#define SNP_BETA 0
 
 // Uncomment these settings in a release build
 #define RELEASEBUILD
@@ -150,8 +150,3 @@ static const bool betaRelease = 1;
 #endif
 
 #include <assert.h>
-
-
-// IDEAS:
-// Update IEC bus inside CIA and VIA. Use delay flags if neccessary.
-// Call CA1 action in VIA class only if the pin value really has changed.

@@ -264,7 +264,7 @@ Keyboard::releaseAll()
 {
     SYNCHRONIZED
 
-    debug(KBD_DEBUG, "_releaseAll()\n");
+    debug(KBD_DEBUG, "releaseAll()\n");
 
     for (isize i = 0; i < 8; i++) {
 
@@ -360,23 +360,26 @@ Keyboard::processKeyEvent(EventID id)
 
                     debug(KBD_DEBUG, "Pressing %ld\n", key.nr);
                     press(key);
+                    msgQueue.put(MSG_KB_AUTO_PRESS, key.nr);
                 }
-                break;
+                continue;
 
             case KeyAction::Action::release:
 
                 for (auto &key: keys) {
 
                     debug(KBD_DEBUG, "Releasing %ld\n", key.nr);
+                    msgQueue.put(MSG_KB_AUTO_RELEASE, key.nr);
                     release(key);
                 }
-                break;
+                continue;
 
             case KeyAction::Action::releaseAll:
 
                 debug(KBD_DEBUG, "Releasing all\n");
                 releaseAll();
-                break;
+                msgQueue.put(MSG_KB_AUTO_RELEASE, -1);
+                continue;
         }
     }
 
