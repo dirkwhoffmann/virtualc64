@@ -2110,8 +2110,13 @@ C64::flash(const AnyCollection &file, isize nr)
             case FILETYPE_PRG:
             case FILETYPE_FOLDER:
 
+                // Flash data into memory
                 size = std::min(size - 2, isize(0x10000 - addr));
                 file.copyItem(nr, mem.ram + addr, size, 2);
+
+                // Rectify zero page
+                mem.ram[0x2D] = LO_BYTE(addr + size);   // VARTAB (lo byte)
+                mem.ram[0x2E] = HI_BYTE(addr + size);   // VARTAB (high byte)
                 break;
                 
             default:
@@ -2133,9 +2138,14 @@ C64::flash(const FileSystem &fs, isize nr)
     }
     
     {   SUSPENDED
-        
+
+        // Flash data into memory
         size = std::min(size - 2, (u64)(0x10000 - addr));
         fs.copyFile(nr, mem.ram + addr, size, 2);
+
+        // Rectify zero page
+        mem.ram[0x2D] = LO_BYTE(addr + size);   // VARTAB (lo byte)
+        mem.ram[0x2E] = HI_BYTE(addr + size);   // VARTAB (high byte)
     }
     
     msgQueue.put(MSG_FILE_FLASHED);
