@@ -205,6 +205,7 @@ class RessourceManager {
     // Selecting dot masks
     //
     
+    @discardableResult
     func selectDotMask(_ nr: Int) -> Bool {
         
         if nr >= 0 && nr < dotMaskGallery.count && dotMaskGallery[nr] != nil {

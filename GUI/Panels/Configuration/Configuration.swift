@@ -421,6 +421,7 @@ class Configuration {
         didSet {
             renderer.shaderOptions.dotMaskBrightness = dotMaskBrightness
             ressourceManager.buildDotMasks()
+            ressourceManager.selectDotMask(dotMask)
         }
     }
     var scanlines: Int = 0 {

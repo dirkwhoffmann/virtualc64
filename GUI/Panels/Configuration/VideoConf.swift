@@ -341,25 +341,6 @@ extension ConfigurationController {
             C64Proxy.defaults.removeColorUserDefaults()
             C64Proxy.defaults.removeShaderUserDefaults()
 
-            /*
-            config.blur = 1
-            config.blurRadius = 1.5
-            config.bloom = 1
-            config.bloomRadiusR = 1.0
-            config.bloomRadiusG = 1.0
-            config.bloomRadiusB = 1.0
-            config.bloomBrightness = 0.4
-            config.bloomWeight = 1.21
-            config.dotMask = 1
-            config.dotMaskBrightness = 0.5
-            config.scanlines = 2
-            config.scanlineBrightness = 0.55
-            config.scanlineWeight = 0.11
-            config.disalignment = 0
-            config.disalignmentH = 0.001
-            config.disalignmentV = 0.001
-            */
-            // defaults.set(Keys.Vid.blurRadius, 1.5)
             defaults.set(Keys.Vid.blur, 1)
             defaults.set(Keys.Vid.bloom, 1)
             defaults.set(Keys.Vid.dotMask, 1)
@@ -373,46 +354,6 @@ extension ConfigurationController {
         updatePalettePreviewImages()
         refresh()
     }
-
-/*
-    @IBAction func vidPresetAction(_ sender: NSPopUpButton!) {
-
-        // Revert to standard settings
-        C64Proxy.defaults.removeVideoUserDefaults()
-
-        // Update the configuration
-        config.applyVideoUserDefaults()
-
-        // Override some options
-        switch sender.selectedTag() {
-
-        case 1: // CRT appearance
-
-            config.blur = 1
-            config.blurRadius = 1.5
-            config.bloom = 1
-            config.bloomRadiusR = 1.0
-            config.bloomRadiusG = 1.0
-            config.bloomRadiusB = 1.0
-            config.bloomBrightness = 0.4
-            config.bloomWeight = 1.21
-            config.dotMask = 1
-            config.dotMaskBrightness = 0.5
-            config.scanlines = 2
-            config.scanlineBrightness = 0.55
-            config.scanlineWeight = 0.11
-            config.disalignment = 0
-            config.disalignmentH = 0.001
-            config.disalignmentV = 0.001
-
-        default:
-            break
-        }
-        
-        updatePalettePreviewImages()
-        refresh()
-    }
-*/
 
     @IBAction func vidDefaultsAction(_ sender: NSButton!) {
         
