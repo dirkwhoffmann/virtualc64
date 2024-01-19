@@ -14,7 +14,7 @@
 bool
 Cartridge::isKnownType(CartridgeType type)
 {
-    if constexpr (FORCE_CRT_UNKNOWN) return false;
+    if (FORCE_CRT_UNKNOWN) return false;
     
     return type >= CRT_NORMAL && type <= CRT_GMOD2;
 }
@@ -22,7 +22,7 @@ Cartridge::isKnownType(CartridgeType type)
 bool
 Cartridge::isSupportedType(CartridgeType type)
 {
-    if constexpr (FORCE_CRT_UNSUPPORTED) return false;
+    if (FORCE_CRT_UNSUPPORTED) return false;
 
     switch (type) {
 
@@ -154,7 +154,7 @@ Cartridge::makeWithCRTFile(C64 &c64, CRTFile &file)
         cart->loadChip(i, file);
     }
     
-    if constexpr (CRT_DEBUG) cart->dump(Category::State);
+    if (CRT_DEBUG) cart->dump(Category::State);
     return cart;
 }
 

@@ -111,27 +111,22 @@ fprintf(stderr, "Warning: " format, ##__VA_ARGS__);
 #define fatal(format, ...) \
 { fprintf(stderr, "Fatal: " format, ##__VA_ARGS__); exit(1); }
 
-#ifndef NDEBUG
-
 #define debug(enable, format, ...) \
-if constexpr (enable) { if (verbose) { \
+if (enable) { if (verbose) { \
 fprintf(stderr, "%s:%d " format, getDescription(), __LINE__, ##__VA_ARGS__); }}
 
 #define plain(enable, format, ...) \
-if constexpr (enable) { if (verbose) { \
+if (enable) { if (verbose) { \
 fprintf(stderr, format, ##__VA_ARGS__); }}
 
 #define trace(enable, format, ...) \
-if constexpr (enable) { if (verbose) { \
+if (enable) { if (verbose) { \
 prefix(); \
 fprintf(stderr, "%s:%d " format, getDescription(), __LINE__, ##__VA_ARGS__); }}
 
-#else
-
-#define debug(enable, format, ...)
-#define plain(enable, format, ...)
-#define trace(enable, format, ...)
-
-#endif
+#define xfiles(format, ...) \
+if (XFILES) { if (verbose) { \
+prefix(); \
+fprintf(stderr, "XFILES: " format, ##__VA_ARGS__); }}
 
 }

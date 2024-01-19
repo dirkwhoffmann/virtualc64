@@ -103,6 +103,16 @@ Interpreter::initDebugShell(Command &root)
     root.add({"drive9"},        "Floppy drive 9");
     root.add({"parcable"},      "Parallel drive cable");
 
+    //
+    // Debug variables
+    //
+
+    root.add({"set"}, { "<variable>", Arg::value },
+             "Sets an internal debug variable",
+             [this](Arguments& argv, long value) {
+
+        C64::setDebugVariable(argv[0], int(parseNum(argv, 1)));
+    });
 
     //
     // C64

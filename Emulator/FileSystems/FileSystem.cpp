@@ -146,7 +146,7 @@ FileSystem::init(const string &path)
         importDirectory(path);
 
         // Print some debug information
-        if constexpr (FS_DEBUG) printDirectory();
+        if (FS_DEBUG) printDirectory();
 
         return;
     }
@@ -786,7 +786,7 @@ FileSystem::importVolume(const u8 *src, isize size, ErrorCode *err)
     // Run a directory scan
     scanDirectory();
     
-    if constexpr (FS_DEBUG) {
+    if (FS_DEBUG) {
 
         // info();
         // dump();

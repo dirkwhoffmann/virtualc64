@@ -303,6 +303,8 @@
 		50726FBD2961CA5A0031F2F5 /* Headless.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726FBB2961CA5A0031F2F5 /* Headless.cpp */; };
 		50763277202989D300575110 /* DialogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50763276202989D300575110 /* DialogController.swift */; };
 		50769B8A24BB1B87006FE743 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50769B8924BB1B87006FE743 /* Configuration.swift */; };
+		5077AC682B5ACC5100EFAC85 /* config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5077AC672B5ACC5100EFAC85 /* config.cpp */; };
+		5077AC692B5ACC5100EFAC85 /* config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5077AC672B5ACC5100EFAC85 /* config.cpp */; };
 		507887CC20B1858B00941F7E /* MemTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507887CB20B1858B00941F7E /* MemTableView.swift */; };
 		507A499C24C8D64700DBF984 /* InstrTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A499B24C8D64700DBF984 /* InstrTableView.swift */; };
 		507A499E24C8D65700DBF984 /* TraceTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A499D24C8D65700DBF984 /* TraceTableView.swift */; };
@@ -736,6 +738,7 @@
 		50726FBC2961CA5A0031F2F5 /* Headless.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Headless.h; sourceTree = "<group>"; };
 		50763276202989D300575110 /* DialogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogController.swift; sourceTree = "<group>"; };
 		50769B8924BB1B87006FE743 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		5077AC672B5ACC5100EFAC85 /* config.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = config.cpp; sourceTree = "<group>"; };
 		507887CB20B1858B00941F7E /* MemTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemTableView.swift; sourceTree = "<group>"; };
 		5078BEA5264D064600EDA161 /* PowerSupplyTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerSupplyTypes.h; sourceTree = "<group>"; };
 		5078BEA8264D6F9E00EDA161 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -1259,6 +1262,7 @@
 			children = (
 				5078BEAA264D70AC00EDA161 /* CMakeLists.txt */,
 				504C42F824AF29AB00E69CAE /* config.h */,
+				5077AC672B5ACC5100EFAC85 /* config.cpp */,
 				50726FBC2961CA5A0031F2F5 /* Headless.h */,
 				50726FBB2961CA5A0031F2F5 /* Headless.cpp */,
 				500FAA62261376980062488E /* Utilities */,
@@ -2063,6 +2067,7 @@
 				50726F732961C9CC0031F2F5 /* FastVoice.cpp in Sources */,
 				50726FB22961CA230031F2F5 /* FSDescriptors.cpp in Sources */,
 				50726F3E2961C97B0031F2F5 /* Chrono.cpp in Sources */,
+				5077AC692B5ACC5100EFAC85 /* config.cpp in Sources */,
 				50726F8B2961CA0D0031F2F5 /* Expert.cpp in Sources */,
 				50726FAE2961CA1C0031F2F5 /* Folder.cpp in Sources */,
 				50726F692961C9C60031F2F5 /* version.cc in Sources */,
@@ -2349,6 +2354,7 @@
 				507A49A024C8D66A00DBF984 /* GuardTableView.swift in Sources */,
 				5016F02829574FDF00F2063B /* Reu.cpp in Sources */,
 				50C72DE61BC7F42100F1863B /* Shaders.metal in Sources */,
+				5077AC682B5ACC5100EFAC85 /* config.cpp in Sources */,
 				5036E0B7261AEF000048E66A /* Interpreter.cpp in Sources */,
 				504C439D24AF29AC00E69CAE /* version.cc in Sources */,
 				504C436324AF29AC00E69CAE /* Kingsoft.cpp in Sources */,

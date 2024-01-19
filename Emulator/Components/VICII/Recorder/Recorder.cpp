@@ -89,7 +89,7 @@ Recorder::startRecording(isize x1, isize y1, isize x2, isize y2,
           x1, y1, x2, y2, bitRate, aspectX, aspectY);
 
     // Print some debugging information if requested
-    if constexpr (REC_DEBUG) dump(Category::State);
+    if (REC_DEBUG) dump(Category::State);
 
     if (isRecording()) {
         throw VC64Error(ERROR_REC_LAUNCH, "Recording in progress.");

@@ -1702,7 +1702,7 @@ C64::loadSnapshot(const Snapshot &snapshot)
             keyboard.releaseAll();
 
             // Print some debug info if requested
-            if constexpr (SNP_DEBUG) dump(Category::State);
+            if (SNP_DEBUG) dump(Category::State);
 
         } catch (VC64Error &error) {
 
@@ -2250,4 +2250,76 @@ C64::tmp(const string &name, bool unique)
     return result;
 }
 
+void
+C64::setDebugVariable(const string &name, int val)
+{
+#ifdef RELEASEBUILD
+
+    throw VC64Error(ERROR_OPT_UNSUPPORTED, "Debug variables can only be altered in debug builds.");
+
+#else
+
+    if      (name == "XFILES")          XFILES          = val;
+    else if (name == "CNF_DEBUG")       CNF_DEBUG       = val;
+    else if (name == "DEF_DEBUG")       DEF_DEBUG       = val;
+
+    else if (name == "RUN_DEBUG")       RUN_DEBUG       = val;
+    else if (name == "WARP_DEBUG")      WARP_DEBUG      = val;
+    else if (name == "QUEUE_DEBUG")     QUEUE_DEBUG     = val;
+    else if (name == "SNP_DEBUG")       SNP_DEBUG       = val;
+
+    else if (name == "CPU_DEBUG")       CPU_DEBUG       = val;
+    else if (name == "IRQ_DEBUG")       IRQ_DEBUG       = val;
+
+    else if (name == "MEM_DEBUG")       MEM_DEBUG       = val;
+
+    else if (name == "CIA_DEBUG")       CIA_DEBUG       = val;
+    else if (name == "CIAREG_DEBUG")    CIAREG_DEBUG    = val;
+    else if (name == "CIA_ON_STEROIDS") CIA_ON_STEROIDS = val;
+
+
+    else if (name == "VIC_DEBUG")       VIC_DEBUG       = val;
+    else if (name == "VICREG_DEBUG")    VICREG_DEBUG    = val;
+    else if (name == "RASTERIRQ_DEBUG") RASTERIRQ_DEBUG = val;
+    else if (name == "VIC_SAFE_MODE")   VIC_SAFE_MODE   = val;
+    else if (name == "VIC_STATS")       VIC_STATS       = val;
+
+    else if (name == "SID_DEBUG")       SID_DEBUG       = val;
+    else if (name == "SID_EXEC")        SID_EXEC        = val;
+    else if (name == "SIDREG_DEBUG")    SIDREG_DEBUG    = val;
+    else if (name == "AUDBUF_DEBUG")    AUDBUF_DEBUG    = val;
+
+    // SID
+
+    else if (name == "VIA_DEBUG")       VIA_DEBUG       = val;
+    else if (name == "PIA_DEBUG")       PIA_DEBUG       = val;
+    else if (name == "IEC_DEBUG")       IEC_DEBUG       = val;
+    else if (name == "DSK_DEBUG")       DSK_DEBUG       = val;
+    else if (name == "GCR_DEBUG")       GCR_DEBUG       = val;
+    else if (name == "FS_DEBUG")        FS_DEBUG        = val;
+    else if (name == "PAR_DEBUG")       PAR_DEBUG       = val;
+
+    // Media
+    else if (name == "CRT_DEBUG")       CRT_DEBUG       = val;
+    else if (name == "FILE_DEBUG")      FILE_DEBUG      = val;
+
+
+    else if (name == "JOY_DEBUG")       JOY_DEBUG       = val;
+    else if (name == "DRV_DEBUG")       DRV_DEBUG       = val;
+    else if (name == "TAP_DEBUG")       TAP_DEBUG       = val;
+    else if (name == "KBD_DEBUG")       KBD_DEBUG       = val;
+    else if (name == "PRT_DEBUG")       PRT_DEBUG       = val;
+    else if (name == "EXP_DEBUG")       EXP_DEBUG       = val;
+    else if (name == "LIP_DEBUG")       LIP_DEBUG       = val;
+
+    else if (name == "REC_DEBUG")       REC_DEBUG       = val;
+    else if (name == "REU_DEBUG")       REU_DEBUG       = val;
+
+    else {
+
+    throw VC64Error(ERROR_OPT_UNSUPPORTED, "Unknown debug variable: " + name);
+}
+
+#endif
+}
 }

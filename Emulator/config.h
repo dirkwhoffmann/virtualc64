@@ -26,7 +26,7 @@
 #define SNP_BETA 0
 
 // Uncomment these settings in a release build
-#define RELEASEBUILD
+// #define RELEASEBUILD
 
 
 //
@@ -52,95 +52,17 @@
 // Debug settings
 //
 
-// General
-static const int XFILES          = 0; // Report paranormal activity
-static const int CNF_DEBUG       = 0; // Configuration
-static const int DEF_DEBUG       = 0; // User defaults
-
-// Runloop
-static const int RUN_DEBUG       = 0; // Run loop, component states, timing
-static const int WARP_DEBUG      = 0; // Warp mode
-static const int QUEUE_DEBUG     = 0; // Message queue
-static const int SNP_DEBUG       = 0; // Serializing (snapshots)
-
-// CPU
-static const int CPU_DEBUG       = 0; // CPU
-static const int IRQ_DEBUG       = 0; // Interrupts
-
-// Memory
-static const int MEM_DEBUG       = 0; // RAM, ROM
-
-// CIAs
-static const int CIA_DEBUG       = 0; // Complex Interface Adapter
-static const int CIAREG_DEBUG    = 0; // CIA registers
-static const int CIA_ON_STEROIDS = 0; // Keep the CIAs awake all the time
-
-// VICII
-static const int VIC_DEBUG       = 0; // Video Interface Controller II
-static const int VICREG_DEBUG    = 0; // VICII registers
-static const int RASTERIRQ_DEBUG = 0; // Raster interrupt
-static const int VIC_SAFE_MODE   = 0; // Disable performance optimizations
-static const int VIC_STATS       = 0; // Collect statistical information
-
-// SID
-static const int SID_DEBUG       = 0; // Sound Interface Device
-static const int SID_EXEC        = 0; // Sound Interface Device (Execution)
-static const int SIDREG_DEBUG    = 0; // Sound Interface Device (Registers)
-static const int AUDBUF_DEBUG    = 0; // Audio buffers
-
-// Drive
-static const int VIA_DEBUG       = 0; // Versatile Interface Adapter
-static const int PIA_DEBUG       = 0; // Peripheral Interface Adapter
-static const int IEC_DEBUG       = 0; // IEC bus
-static const int DSK_DEBUG       = 0; // Disk controller execution
-static const int DSKCHG_DEBUG    = 0; // Disk changing procedure
-static const int GCR_DEBUG       = 0; // Disk encoding / decoding
-static const int FS_DEBUG        = 0; // File System Classes
-static const int PAR_DEBUG       = 0; // Parallel cable
-
-// Media
-static const int CRT_DEBUG       = 0; // Cartridges
-static const int FILE_DEBUG      = 0; // Media files (D64,T64,...)
-
-// Peripherals
-static const int JOY_DEBUG       = 0; // Joystick
-static const int DRV_DEBUG       = 0; // Floppy drive
-static const int TAP_DEBUG       = 0; // Datasette
-static const int KBD_DEBUG       = 0; // Keyboard
-static const int PRT_DEBUG       = 0; // Control ports and connected devices
-static const int EXP_DEBUG       = 0; // Expansion port
-static const int LIP_DEBUG       = 0; // Light pen
-
-// Other components
-static const int REC_DEBUG       = 0; // Screen recorder
-static const int REU_DEBUG       = 0; // REU memory expansion
-
-
-//
-// Forced error conditions
-//
-
-static const int FORCE_ROM_MISSING     			= 0;
-static const int FORCE_MEGA64_MISMATCH  		= 0;
-static const int FORCE_SNAP_TOO_OLD             = 0;
-static const int FORCE_SNAP_TOO_NEW             = 0;
-static const int FORCE_SNAP_IS_BETA             = 0;
-static const int FORCE_SNAP_CORRUPTED           = 0;
-static const int FORCE_CRT_UNKNOWN      		= 0;
-static const int FORCE_CRT_UNSUPPORTED  		= 0;
-static const int FORCE_RECORDING_ERROR  		= 0;
-static const int FORCE_NO_FFMPEG                = 0;
-
-
 #ifdef RELEASEBUILD
 #ifndef NDEBUG
 #define NDEBUG
 #endif
 static const bool releaseBuild = 1;
 static const bool debugBuild = 0;
+typedef const int debugflag;
 #else
 static const bool releaseBuild = 0;
 static const bool debugBuild = 1;
+typedef int debugflag;
 #endif
 
 #if VER_BETA == 0
@@ -148,5 +70,84 @@ static const bool betaRelease = 0;
 #else
 static const bool betaRelease = 1;
 #endif
+
+// General
+extern debugflag XFILES;
+extern debugflag CNF_DEBUG;
+extern debugflag DEF_DEBUG;
+
+// Runloop
+extern debugflag RUN_DEBUG;
+extern debugflag WARP_DEBUG;
+extern debugflag QUEUE_DEBUG;
+extern debugflag SNP_DEBUG;
+
+// CPU
+extern debugflag CPU_DEBUG;
+extern debugflag IRQ_DEBUG;
+
+// Memory
+extern debugflag MEM_DEBUG;
+
+// CIAs
+extern debugflag CIA_DEBUG;
+extern debugflag CIAREG_DEBUG;
+extern debugflag CIA_ON_STEROIDS;
+
+// VICII
+extern debugflag VIC_DEBUG;
+extern debugflag VICREG_DEBUG;
+extern debugflag RASTERIRQ_DEBUG;
+extern debugflag VIC_SAFE_MODE;
+extern debugflag VIC_STATS;
+
+// SID
+extern debugflag SID_DEBUG;
+extern debugflag SID_EXEC;
+extern debugflag SIDREG_DEBUG;
+extern debugflag AUDBUF_DEBUG;
+
+// Drive
+extern debugflag VIA_DEBUG;
+extern debugflag PIA_DEBUG;
+extern debugflag IEC_DEBUG;
+extern debugflag DSK_DEBUG;
+extern debugflag DSKCHG_DEBUG;
+extern debugflag GCR_DEBUG;
+extern debugflag FS_DEBUG;
+extern debugflag PAR_DEBUG;
+
+// Media
+extern debugflag CRT_DEBUG;
+extern debugflag FILE_DEBUG;
+
+// Peripherals
+extern debugflag JOY_DEBUG;
+extern debugflag DRV_DEBUG;
+extern debugflag TAP_DEBUG;
+extern debugflag KBD_DEBUG;
+extern debugflag PRT_DEBUG;
+extern debugflag EXP_DEBUG;
+extern debugflag LIP_DEBUG;
+
+// Other components
+extern debugflag REC_DEBUG;
+extern debugflag REU_DEBUG;
+
+
+//
+// Forced error conditions
+//
+
+extern debugflag FORCE_ROM_MISSING;
+extern debugflag FORCE_MEGA64_MISMATCH;
+extern debugflag FORCE_SNAP_TOO_OLD;
+extern debugflag FORCE_SNAP_TOO_NEW;
+extern debugflag FORCE_SNAP_IS_BETA;
+extern debugflag FORCE_SNAP_CORRUPTED;
+extern debugflag FORCE_CRT_UNKNOWN;
+extern debugflag FORCE_CRT_UNSUPPORTED;
+extern debugflag FORCE_RECORDING_ERROR;
+extern debugflag FORCE_NO_FFMPEG;
 
 #include <assert.h>

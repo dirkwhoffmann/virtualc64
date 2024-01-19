@@ -38,7 +38,7 @@ VC64Error::VC64Error(ErrorCode code, const string &s)
             break;
 
         case ERROR_OPT_UNSUPPORTED:
-            description = "This option is not supported yet.";
+            description = s == "" ? "This option is not supported yet." : s;
             break;
             
         case ERROR_OPT_INVARG:

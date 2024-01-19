@@ -80,16 +80,16 @@ Snapshot::Snapshot(C64 &c64): Snapshot(c64.size())
 {
     takeScreenshot(c64);
 
-    if constexpr (SNP_DEBUG) c64.dump(Category::State);
+    if (SNP_DEBUG) c64.dump(Category::State);
     c64.save(getData());
 }
 
 void
 Snapshot::finalizeRead()
 {
-    if constexpr (FORCE_SNAP_TOO_OLD) throw VC64Error(ERROR_SNAP_TOO_OLD);
-    if constexpr (FORCE_SNAP_TOO_NEW) throw VC64Error(ERROR_SNAP_TOO_NEW);
-    if constexpr (FORCE_SNAP_IS_BETA) throw VC64Error(ERROR_SNAP_IS_BETA);
+    if (FORCE_SNAP_TOO_OLD) throw VC64Error(ERROR_SNAP_TOO_OLD);
+    if (FORCE_SNAP_TOO_NEW) throw VC64Error(ERROR_SNAP_TOO_NEW);
+    if (FORCE_SNAP_IS_BETA) throw VC64Error(ERROR_SNAP_IS_BETA);
 
     if (isTooOld()) throw VC64Error(ERROR_SNAP_TOO_OLD);
     if (isTooNew()) throw VC64Error(ERROR_SNAP_TOO_NEW);

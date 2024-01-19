@@ -334,7 +334,7 @@ Reu::writeToReuRam(u32 addr, u8 value)
 void
 Reu::doDma()
 {
-    if constexpr (REU_DEBUG) { dump(Category::Dma, std::cout); }
+    if (REU_DEBUG) { dump(Category::Dma, std::cout); }
 
     u16 memAddr = c64Base;
     u32 reuAddr = reuBase;
