@@ -90,7 +90,7 @@ Datasette::_size()
     util::SerCounter counter;
     
     applyToPersistentItems(counter);
-    applyToResetItems(counter);
+    serialize(counter);
     
     counter << size;
     for (isize i = 0; i < size; i++) counter << pulses[i].cycles;

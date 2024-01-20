@@ -348,21 +348,20 @@ private:
     }
     
     template <class T>
-    void applyToResetItems(T& worker, bool hard = true)
+    void serialize(T& worker)
     {
-        if (hard) {
-            
-            worker
+        if (util::isSoftResetter(worker)) return;
 
-            << trigger
-            << id
-            << data
-            << nextTrigger
-            << frame
-            << scanline
-            << rasterCycle
-            << ultimax;
-        }
+        worker
+
+        << trigger
+        << id
+        << data
+        << nextTrigger
+        << frame
+        << scanline
+        << rasterCycle
+        << ultimax;
     }
 
 public:

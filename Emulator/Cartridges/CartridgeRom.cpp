@@ -41,7 +41,7 @@ CartridgeRom::_size()
 {
     util::SerCounter counter;
     applyToPersistentItems(counter);
-    applyToResetItems(counter);
+    serialize(counter);
     
     return size + counter.count;
 }
@@ -51,7 +51,7 @@ CartridgeRom::_load(const u8 *buffer)
 {
     util::SerReader reader(buffer);
     applyToPersistentItems(reader);
-    applyToResetItems(reader);
+    serialize(reader);
     
     // Delete the old packet and create a new one with the proper size
     if (rom) delete[] rom;
@@ -69,7 +69,7 @@ CartridgeRom::_save(u8 *buffer)
 {
     util::SerWriter writer(buffer);
     applyToPersistentItems(writer);
-    applyToResetItems(writer);
+    serialize(writer);
 
     // Write packet data
     for (int i = 0; i < size; i++) util::write8(writer.ptr, rom[i]);

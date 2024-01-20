@@ -62,14 +62,13 @@ private:
     }
     
     template <class T>
-    void applyToResetItems(T& worker, bool hard = true)
+    void serialize(T& worker)
     {
-        if (hard) {
-            
-            worker
-            
-            << cycle;
-        }
+        if (util::isSoftResetter(worker)) return;
+
+        worker
+
+        << cycle;
     }
     
     isize __size() override { COMPUTE_SNAPSHOT_SIZE }

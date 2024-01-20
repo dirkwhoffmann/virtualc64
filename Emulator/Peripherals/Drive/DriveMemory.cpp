@@ -38,7 +38,7 @@ DriveMemory::_size()
     bool saveRoms = mem.getConfig().saveRoms;
 
     applyToPersistentItems(counter);
-    applyToResetItems(counter);
+    serialize(counter);
 
     counter << saveRoms;
     if (saveRoms) applyToRoms(counter);
@@ -52,7 +52,7 @@ DriveMemory::_checksum()
     util::SerChecker checker;
 
     applyToPersistentItems(checker);
-    applyToResetItems(checker);
+    serialize(checker);
 
     return checker.hash;
 }
@@ -65,7 +65,7 @@ DriveMemory::_load(const u8 *buffer)
 
     reader << saveRoms;
     applyToPersistentItems(reader);
-    applyToResetItems(reader);
+    serialize(reader);
     if (saveRoms) applyToRoms(reader);
 
     debug(SNP_DEBUG, "Recreated from %zu bytes\n", reader.ptr - buffer); \
@@ -80,7 +80,7 @@ DriveMemory::_save(u8 *buffer)
 
     writer << saveRoms;
     applyToPersistentItems(writer);
-    applyToResetItems(writer);
+    serialize(writer);
     if (saveRoms) applyToRoms(writer);
 
     debug(SNP_DEBUG, "Serialized to %zu bytes\n", writer.ptr - buffer);

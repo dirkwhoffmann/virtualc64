@@ -142,21 +142,20 @@ private:
     }
     
     template <class T>
-    void applyToResetItems(T& worker, bool hard = true)
-    {
-        if (hard) {
-            
-            worker
-            
-            << executedCycles
-            << computedSamples;
-        }
-        
+    void serialize(T& worker)
+    {        
         worker
         
         << sidreg
         << speed1
         << latchedDataBus;
+
+        if (util::isSoftResetter(worker)) return;
+
+        worker
+
+        << executedCycles
+        << computedSamples;
     }
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }

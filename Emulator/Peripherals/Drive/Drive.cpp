@@ -419,7 +419,7 @@ Drive::_size()
     util::SerCounter counter;
 
     applyToPersistentItems(counter);
-    applyToResetItems(counter);
+    serialize(counter);
 
     // Add the size of the boolean indicating whether a disk is inserted
     counter.count += sizeof(bool);
@@ -428,7 +428,7 @@ Drive::_size()
 
         // Add the disk size
         disk->applyToPersistentItems(counter);
-        disk->applyToResetItems(counter);
+        disk->serialize(counter);
     }
 
     return counter.count;
@@ -440,7 +440,7 @@ Drive::_checksum()
     util::SerChecker checker;
 
     applyToPersistentItems(checker);
-    applyToResetItems(checker);
+    serialize(checker);
 
     // TODO: Get checksum from disk
     
@@ -455,7 +455,7 @@ Drive::_load(const u8 *buffer)
     
     // Read own state
     applyToPersistentItems(reader);
-    applyToResetItems(reader);
+    serialize(reader);
 
     // Check if the snapshot includes a disk
     bool diskInSnapshot; reader << diskInSnapshot;
@@ -480,7 +480,7 @@ Drive::_save(u8 *buffer)
     
     // Write own state
     applyToPersistentItems(writer);
-    applyToResetItems(writer);
+    serialize(writer);
 
     // Indicate whether this drive has a disk is inserted
     writer << hasDisk();
@@ -489,7 +489,7 @@ Drive::_save(u8 *buffer)
     if (hasDisk()) {
 
         disk->applyToPersistentItems(writer);
-        disk->applyToResetItems(writer);
+        disk->serialize(writer);
     }
 
     // Compute the number of written bytes and return

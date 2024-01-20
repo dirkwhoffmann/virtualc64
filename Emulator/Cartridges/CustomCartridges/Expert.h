@@ -54,7 +54,7 @@ private:
     }
     
     template <class T>
-    void applyToResetItems(T& worker, bool hard = true)
+    void serialize(T& worker)
     {
     }
     

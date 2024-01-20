@@ -629,77 +629,76 @@ private:
     }
     
     template <class T>
-    void applyToResetItems(T& worker, bool hard = true)
+    void serialize(T& worker)
     {
-        if (hard) {
-            
-            worker
-            
-            << headless
-            >> reg.current
-            >> reg.delayed
-            << rasterIrqLine
-            << latchedLPX
-            << latchedLPY
-            << memSelect
-            << irr
-            << imr
-            << refreshCounter
-            << xCounter
-            << yCounter
-            << vc
-            << vcBase
-            << rc
-            << videoMatrix
-            << colorLine
-            << vmli
-            << sr.data
-            << sr.canLoad
-            << sr.mcFlop
-            << sr.latchedChr
-            << sr.latchedCol
-            << sr.colorbits
-            >> spriteSr
-            << spriteSrActive
-            << spriteSpriteCollision
-            << spriteBackgroundColllision
-            << flipflops.current.vertical
-            << flipflops.current.main
-            << flipflops.delayed.vertical
-            << flipflops.delayed.main
-            << verticalFrameFFsetCond
-            << leftComparisonVal
-            << rightComparisonVal
-            << upperComparisonVal
-            << lowerComparisonVal
-            << lineMatchesIrqLine
-            << isVisibleColumn
-            << vblank
-            << badLine
-            << DENwasSetInLine30
-            << displayState
-            << mc
-            << mcbase
-            << spritePtr
-            << isFirstDMAcycle
-            << isSecondDMAcycle
-            << spriteDisplay
-            << spriteDisplayDelayed
-            << spriteDmaOnOff
-            << expansionFF
-            << cleared_bits_in_d017
-            << lpLine
-            << lpIrqHasOccurred
-            << ultimax
-            << dataBusPhi1
-            << dataBusPhi2
-            << addrBus
-            >> baLine
-            << bankAddr
-            >> gAccessResult
-            << delay
-            << bufferoffset;
-        }
+        if (util::isSoftResetter(worker)) return;
+
+        worker
+
+        << headless
+        >> reg.current
+        >> reg.delayed
+        << rasterIrqLine
+        << latchedLPX
+        << latchedLPY
+        << memSelect
+        << irr
+        << imr
+        << refreshCounter
+        << xCounter
+        << yCounter
+        << vc
+        << vcBase
+        << rc
+        << videoMatrix
+        << colorLine
+        << vmli
+        << sr.data
+        << sr.canLoad
+        << sr.mcFlop
+        << sr.latchedChr
+        << sr.latchedCol
+        << sr.colorbits
+        >> spriteSr
+        << spriteSrActive
+        << spriteSpriteCollision
+        << spriteBackgroundColllision
+        << flipflops.current.vertical
+        << flipflops.current.main
+        << flipflops.delayed.vertical
+        << flipflops.delayed.main
+        << verticalFrameFFsetCond
+        << leftComparisonVal
+        << rightComparisonVal
+        << upperComparisonVal
+        << lowerComparisonVal
+        << lineMatchesIrqLine
+        << isVisibleColumn
+        << vblank
+        << badLine
+        << DENwasSetInLine30
+        << displayState
+        << mc
+        << mcbase
+        << spritePtr
+        << isFirstDMAcycle
+        << isSecondDMAcycle
+        << spriteDisplay
+        << spriteDisplayDelayed
+        << spriteDmaOnOff
+        << expansionFF
+        << cleared_bits_in_d017
+        << lpLine
+        << lpIrqHasOccurred
+        << ultimax
+        << dataBusPhi1
+        << dataBusPhi2
+        << addrBus
+        >> baLine
+        << bankAddr
+        >> gAccessResult
+        << delay
+        << bufferoffset;
     }
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }

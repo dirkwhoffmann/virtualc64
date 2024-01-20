@@ -78,25 +78,24 @@ private:
     }
     
     template <class T>
-    void applyToResetItems(T& worker, bool hard = true)
+    void serialize(T& worker)
     {
-        if (hard) {
-            
-            worker
-            
-            << pa
-            << pb
-            << ora
-            << orb
-            << ddra
-            << ddrb
-            << cra
-            << crb
-            << ca1
-            << ca2
-            << cb1
-            << cb2;
-        }
+        if (util::isSoftResetter(worker)) return;
+
+        worker
+
+        << pa
+        << pb
+        << ora
+        << orb
+        << ddra
+        << ddrb
+        << cra
+        << crb
+        << ca1
+        << ca2
+        << cb1
+        << cb2;
     }
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }

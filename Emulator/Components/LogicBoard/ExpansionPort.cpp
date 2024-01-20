@@ -31,7 +31,7 @@ ExpansionPort::_size()
 {
     util::SerCounter counter;
     applyToPersistentItems(counter);
-    applyToResetItems(counter);
+    serialize(counter);
     
     if (cartridge) counter.count += cartridge->size();
     return counter.count;
@@ -43,7 +43,7 @@ ExpansionPort::_checksum()
     util::SerChecker checker;
 
     applyToPersistentItems(checker);
-    applyToResetItems(checker);
+    serialize(checker);
 
     if (cartridge) {
         checker.hash = util::fnvIt64(checker.hash, cartridge->checksum());
@@ -57,7 +57,7 @@ ExpansionPort::_load(const u8 *buffer)
 {
     util::SerReader reader(buffer);
     applyToPersistentItems(reader);
-    applyToResetItems(reader);
+    serialize(reader);
     
     // Load cartridge (if any)
     if (crtType != CRT_NONE) {
@@ -74,7 +74,7 @@ ExpansionPort::_save(u8 *buffer)
 {
     util::SerWriter writer(buffer);
     applyToPersistentItems(writer);
-    applyToResetItems(writer);
+    serialize(writer);
 
     // Save cartridge (if any)
     if (crtType != CRT_NONE) {

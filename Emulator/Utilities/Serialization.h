@@ -16,6 +16,8 @@
 
 namespace util {
 
+class Serializable { };
+
 //
 // Basic memory buffer I/O
 //
@@ -198,6 +200,13 @@ public:
         }
         return *this;
     }
+
+    template <std::derived_from<Serializable> T>
+    SerCounter& operator<<(T &v)
+    {
+        v << *this;
+        return *this;
+    }
 };
 
 
@@ -293,6 +302,13 @@ public:
         for(isize i = 0; i < N; ++i) {
             v[i] << *this;
         }
+        return *this;
+    }
+
+    template <std::derived_from<Serializable> T>
+    SerChecker& operator<<(T &v)
+    {
+        v << *this;
         return *this;
     }
 };
@@ -413,6 +429,13 @@ public:
         std::memcpy(dst, (void *)ptr, n);
         ptr += n;
     }
+
+    template <std::derived_from<Serializable> T>
+    SerReader& operator<<(T &v)
+    {
+        v << *this;
+        return *this;
+    }
 };
 
 
@@ -519,6 +542,13 @@ public:
         return *this;
     }
     
+    template <std::derived_from<Serializable> T>
+    SerWriter& operator<<(T &v)
+    {
+        v << *this;
+        return *this;
+    }
+
     void copy(const void *src, isize n)
     {
         std::memcpy((void *)ptr, src, n);
@@ -610,6 +640,13 @@ public:
         for(isize i = 0; i < N; ++i) {
             v[i] << *this;
         }
+        return *this;
+    }
+
+    template <std::derived_from<Serializable> T>
+    SerResetter& operator<<(T &v)
+    {
+        v << *this;
         return *this;
     }
 };

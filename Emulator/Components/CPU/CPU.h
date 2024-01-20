@@ -94,13 +94,8 @@ private:
     }
     
     template <class T>
-    void applyToResetItems(T& worker, bool hard = true)
+    void serialize(T& worker)
     {
-        if (hard) {
-            
-            worker << clock;
-        }
-        
         worker
 
         << flags
@@ -135,6 +130,12 @@ private:
         << dischargeCycleBit3
         << dischargeCycleBit6
         << dischargeCycleBit7;
+
+        if (util::isSoftResetter(worker)) return;
+
+        worker
+
+        << clock;
     }
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }
