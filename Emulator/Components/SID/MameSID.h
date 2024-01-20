@@ -50,14 +50,14 @@ private:
     // Sample rate (usually set to 44.1 kHz or 48.0 kHz)
     double sampleRate = 44100.0;
 
+    // Switches filter emulation on or off
+    bool emulateFilter = true;
+
     // Stores for how many cycles FastSID was executed so far
     i64 executedCycles = 0;
 
     // Stores how many sound samples were computed so far
     i64 computedSamples = 0;
-
-    // Switches filter emulation on or off
-    bool emulateFilter = true;
 
     // Last value on the data bus
     u8 latchedDataBus = 0;
@@ -79,7 +79,7 @@ public:
 
 private:
 
-    const char *getDescription() const override { return "MameSID"; }
+    const char *getDescription() const override;
 
 
     //
@@ -93,131 +93,138 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        /*
         worker
 
-        << xyz;
+        // This class
+        << model
+        << cpuFrequency
+        << sampleRate
+        << emulateFilter
 
-         save_item(NAME(token->type));
-         save_item(NAME(token->clock));
+        // Mame SID backend
+        << sid->type
+        << sid->clock
+        << sid->PCMfreq
+        << sid->PCMsid
+        << sid->PCMsidNoise
+        << sid->reg
+        << sid->masterVolume
+        << sid->masterVolumeAmplIndex
+        << sid->filter.Enabled
+        << sid->filter.Type
+        << sid->filter.CurType
+        << sid->filter.Dy
+        << sid->filter.ResDy
+        << sid->filter.Value;
 
-         save_item(NAME(token->PCMfreq));
-         save_item(NAME(token->PCMsid));
-         save_item(NAME(token->PCMsidNoise));
+        for (int v = 0; v < 3; v++) {
 
-         save_item(NAME(token->reg));
-         //save_item(NAME(token->sidKeysOn));
-         //save_item(NAME(token->sidKeysOff));
+            worker
 
-         save_item(NAME(token->masterVolume));
-         save_item(NAME(token->masterVolumeAmplIndex));
+            << sid->optr[v].reg
+            << sid->optr[v].SIDfreq
+            << sid->optr[v].SIDpulseWidth
+            << sid->optr[v].SIDctrl
+            << sid->optr[v].SIDAD
+            << sid->optr[v].SIDSR
+            << sid->optr[v].sync
+            << sid->optr[v].pulseIndex
+            << sid->optr[v].newPulseIndex
+            << sid->optr[v].curSIDfreq
+            << sid->optr[v].curNoiseFreq
+            << sid->optr[v].output
+            << sid->optr[v].filtEnabled
+            << sid->optr[v].filtLow
+            << sid->optr[v].filtRef
+            << sid->optr[v].filtIO
+            << sid->optr[v].reg
+            << sid->optr[v].SIDfreq
+            << sid->optr[v].SIDpulseWidth
+            << sid->optr[v].SIDctrl
+            << sid->optr[v].SIDAD
+            << sid->optr[v].SIDSR
+            << sid->optr[v].sync
+            << sid->optr[v].pulseIndex
+            << sid->optr[v].newPulseIndex
+            << sid->optr[v].curSIDfreq
+            << sid->optr[v].curNoiseFreq
+            << sid->optr[v].output
+            << sid->optr[v].filtVoiceMask
+            << sid->optr[v].filtEnabled
+            << sid->optr[v].filtLow
+            << sid->optr[v].filtRef
+            << sid->optr[v].filtIO
+            << sid->optr[v].cycleLenCount
+            << sid->optr[v].cycleAddLenPnt
+            << sid->optr[v].cycleLen
+            << sid->optr[v].cycleLenPnt
+            << sid->optr[v].waveStep
+            << sid->optr[v].waveStepAdd
+            << sid->optr[v].waveStepPnt
+            << sid->optr[v].waveStepAddPnt
+            << sid->optr[v].waveStepOld;
 
-         save_item(NAME(token->filter.Enabled));
-         save_item(NAME(token->filter.Type));
-         save_item(NAME(token->filter.CurType));
-         save_item(NAME(token->filter.Dy));
-         save_item(NAME(token->filter.ResDy));
-         save_item(NAME(token->filter.Value));
+            for (isize n = 0; n < 2; n++) {
 
-         for (int v = 0; v < m_token->max_voices; v++)
-         {
-         save_item(NAME(token->optr[v].reg), v);
+                worker
 
-         save_item(NAME(token->optr[v].SIDfreq), v);
-         save_item(NAME(token->optr[v].SIDpulseWidth), v);
-         save_item(NAME(token->optr[v].SIDctrl), v);
-         save_item(NAME(token->optr[v].SIDAD), v);
-         save_item(NAME(token->optr[v].SIDSR), v);
+                << sid->optr[v].wavePre[n].len
+                << sid->optr[v].wavePre[n].pnt
+                << sid->optr[v].wavePre[n].stp;
+            }
 
-         save_item(NAME(token->optr[v].sync), v);
+            worker
 
-         save_item(NAME(token->optr[v].pulseIndex), v);
-         save_item(NAME(token->optr[v].newPulseIndex), v);
+            << sid->optr[v].noiseReg
+            << sid->optr[v].noiseStep
+            << sid->optr[v].noiseStepAdd
+            << sid->optr[v].noiseOutput
+            << sid->optr[v].noiseIsLocked
+            << sid->optr[v].ADSRctrl;
 
-         save_item(NAME(token->optr[v].curSIDfreq), v);
-         save_item(NAME(token->optr[v].curNoiseFreq), v);
+#ifdef SID_FPUENVE
 
-         save_item(NAME(token->optr[v].output), v);
-         //save_item(NAME(token->optr[v].outputMask), v);
+            worker
 
-         save_item(NAME(token->optr[v].filtVoiceMask), v);
+            << sid->optr[v].fenveStep
+            << sid->optr[v].fenveStepAdd
+            << sid->optr[v].enveStep;
 
-         save_item(NAME(token->optr[v].filtEnabled), v);
-         save_item(NAME(token->optr[v].filtLow), v);
-         save_item(NAME(token->optr[v].filtRef), v);
-         save_item(NAME(token->optr[v].filtIO), v);
+#else
 
-         save_item(NAME(token->optr[v].cycleLenCount), v);
-         #if defined(DIRECT_FIXPOINT)
-         save_item(NAME(token->optr[v].cycleLen.l), v);
-         save_item(NAME(token->optr[v].cycleAddLen.l), v);
-         #else
-         save_item(NAME(token->optr[v].cycleAddLenPnt), v);
-         save_item(NAME(token->optr[v].cycleLen), v);
-         save_item(NAME(token->optr[v].cycleLenPnt), v);
-         #endif
+            worker
 
-         #if defined(DIRECT_FIXPOINT)
-         save_item(NAME(token->optr[v].waveStep.l), v);
-         save_item(NAME(token->optr[v].waveStepAdd.l), v);
-         #else
-         save_item(NAME(token->optr[v].waveStep), v);
-         save_item(NAME(token->optr[v].waveStepAdd), v);
-         save_item(NAME(token->optr[v].waveStepPnt), v);
-         save_item(NAME(token->optr[v].waveStepAddPnt), v);
-         #endif
-         save_item(NAME(token->optr[v].waveStepOld), v);
-         for (int n = 0; n < 2; n++)
-         {
-         save_item(NAME(token->optr[v].wavePre[n].len), v | (n << 4));
-         #if defined(DIRECT_FIXPOINT)
-         save_item(NAME(token->optr[v].wavePre[n].stp), v | (n << 4));
-         #else
-         save_item(NAME(token->optr[v].wavePre[n].pnt), v | (n << 4));
-         save_item(NAME(token->optr[v].wavePre[n].stp), v | (n << 4));
-         #endif
-         }
+            << sid->optr[v].enveStep
+            << sid->optr[v].enveStepAdd
+            << sid->optr[v].enveStepPnt
+            << sid->optr[v].enveStepAddPnt;
 
-         #if defined(DIRECT_FIXPOINT)
-         save_item(NAME(token->optr[v].noiseReg.l), v);
-         #else
-         save_item(NAME(token->optr[v].noiseReg), v);
-         #endif
-         save_item(NAME(token->optr[v].noiseStep), v);
-         save_item(NAME(token->optr[v].noiseStepAdd), v);
-         save_item(NAME(token->optr[v].noiseOutput), v);
-         save_item(NAME(token->optr[v].noiseIsLocked), v);
+#endif
 
-         save_item(NAME(token->optr[v].ADSRctrl), v);
-         //save_item(NAME(token->optr[v].gateOnCtrl), v);
-         //save_item(NAME(token->optr[v].gateOffCtrl), v);
+            worker
 
-         #ifdef SID_FPUENVE
-         save_item(NAME(token->optr[v].fenveStep), v);
-         save_item(NAME(token->optr[v].fenveStepAdd), v);
-         save_item(NAME(token->optr[v].enveStep), v);
-         #elif defined(DIRECT_FIXPOINT)
-         save_item(NAME(token->optr[v].enveStep.l), v);
-         save_item(NAME(token->optr[v].enveStepAdd.l), v);
-         #else
-         save_item(NAME(token->optr[v].enveStep), v);
-         save_item(NAME(token->optr[v].enveStepAdd), v);
-         save_item(NAME(token->optr[v].enveStepPnt), v);
-         save_item(NAME(token->optr[v].enveStepAddPnt), v);
-         #endif
-         save_item(NAME(token->optr[v].enveVol), v);
-         save_item(NAME(token->optr[v].enveSusVol), v);
-         save_item(NAME(token->optr[v].enveShortAttackCount), v);
-         }
+            << sid->optr[v].enveVol
+            << sid->optr[v].enveSusVol
+            << sid->optr[v].enveShortAttackCount;
+        }
 
-         save_item(NAME(token->optr3_outputmask));
-        */
+        worker << sid->optr3_outputmask;
     }
 
     template <class T>
     void applyToResetItems(T& worker, bool hard = true)
     {
+        if (hard) {
 
+            worker
+
+            << executedCycles
+            << computedSamples;
+        }
+
+        worker
+
+        << latchedDataBus;
     }
 
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }
@@ -240,14 +247,11 @@ public:
     SIDRevision getRevision() const;
     void setRevision(SIDRevision m);
 
-    double getSampleRate() const { return sampleRate; }
+    double getSampleRate() const;
     void setSampleRate(double rate);
 
-    bool getAudioFilter() const { return emulateFilter; }
+    bool getAudioFilter() const;
     void setAudioFilter(bool enable);
-
-    // SamplingMethod getSamplingMethod() const;
-    // void setSamplingMethod(SamplingMethod value);
 
 
     //

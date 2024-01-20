@@ -53,6 +53,17 @@ MameSID::~MameSID()
     delete sid;
 }
 
+const char *
+MameSID::getDescription() const
+{
+    assert(usize(nr) < 4);
+
+    return
+    nr == 0 ? "MameSID0" :
+    nr == 1 ? "MameSID1" : 
+    nr == 2 ? "MameSID2" : "MameSID3";
+}
+
 void
 MameSID::_reset(bool hard)
 {
@@ -63,12 +74,6 @@ MameSID::_reset(bool hard)
     sid->reset();
 
     /*
-    // Resetting reSID is done by creating a new reSID object. We don't call
-    // reSID::reset() because it only performs a soft reset.
-
-    delete sid;
-    sid = new reSID::SID();
-
     sid->set_chip_model((reSID::chip_model)model);
     sid->set_sampling_parameters((double)clockFrequency,
                                  (reSID::sampling_method)samplingMethod,
@@ -80,8 +85,8 @@ MameSID::_reset(bool hard)
 u32
 MameSID::getClockFrequency() const
 {
-    // assert((u32)sid->clock_frequency == clockFrequency);
-    return (u32)cpuFrequency;
+    assert(sid->clock == cpuFrequency);
+    return cpuFrequency;
 }
 
 void
@@ -90,7 +95,7 @@ MameSID::setClockFrequency(u32 frequency)
     trace(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
 
     cpuFrequency = frequency;
-    sid->clock = cpuFrequency;
+    sid->clock = frequency;
 }
 
 void
@@ -200,20 +205,20 @@ MameSID::getRevision() const
 void
 MameSID::setRevision(SIDRevision revision)
 {
-    assert(!isRunning());
-
-    assert(revision == 0 || revision == 1);
-    model = revision;
-
     {   SUSPENDED
 
+        model = revision;
         sid->type = (int)revision;
         sidInitWaveformTables(int(model));
-        // TODO: Reinitialize MameSID
     }
 
-    assert((SIDRevision)sid->type == revision);
     trace(SID_DEBUG, "Emulating SID revision %s.\n", SIDRevisionEnum::key(revision));
+}
+
+double 
+MameSID::getSampleRate() const
+{
+    return sampleRate;
 }
 
 void
@@ -222,25 +227,26 @@ MameSID::setSampleRate(double value)
     sampleRate = value;
     sid->sample_rate = (int)value;
 
-    /*
-    sid->set_sampling_parameters((double)clockFrequency,
-                                 (reSID::sampling_method)samplingMethod,
-                                 sampleRate);
-     */
-
     trace(SID_DEBUG, "Setting sample rate to %f samples per second\n", sampleRate);
 }
+
+bool 
+MameSID::getAudioFilter() const
+{
+    assert(emulateFilter == sid->filter.Enabled);
+    return emulateFilter;
+}
+
 
 void
 MameSID::setAudioFilter(bool value)
 {
     assert(!isRunning());
 
-    emulateFilter = value;
-
     {   SUSPENDED
 
-        // TODO: sid->enable_filter(value);
+        emulateFilter = value;
+        sid->filter.Enabled = value;
     }
 
     trace(SID_DEBUG, "%s audio filter emulation.\n", value ? "Enabling" : "Disabling");
@@ -278,17 +284,20 @@ MameSID::executeCycles(isize numCycles, SampleStream &stream)
     isize samples = isize(shouldHave - computedSamples);
     computedSamples = shouldHave;
 
-    // Do some consistency checking
+    // Check consistency
+    if (samples < 0 || samples > buflength) {
+        warn("Number of missing cycles is out of bounds: %ld\n", samples);
+        executedCycles = samples = 0;
+    }
+    // Ensure the temporary buffer is large enough to hold all samples
+    /*
     if (samples > buflength) {
         warn("Number of missing sound samples exceeds buffer size\n");
         samples = buflength;
     }
+    */
 
     // Compute missing samples
-    if (samples > 1024) {
-        warn("BUFFER TOO SHORT");
-        samples = 1024;
-    }
     sid->fill_buffer(buf, (int)samples);
 
     // Check for a buffer overflow
@@ -303,7 +312,6 @@ MameSID::executeCycles(isize numCycles, SampleStream &stream)
         short s = buf[i];
         min = i == 0 ? s : std::min(min, s);
         max = i == 0 ? s : std::max(max, s);
-        // stream.write((short)0);
         stream.write(s);
     }
 
