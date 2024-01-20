@@ -178,6 +178,7 @@ void
 Disk::init(util::SerReader &reader)
 {
     applyToPersistentItems(reader);
+    applyToResetItems(reader);
 }
 
 void

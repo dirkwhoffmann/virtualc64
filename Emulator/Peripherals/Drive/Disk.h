@@ -154,6 +154,12 @@ private:
         >> length;
     }
 
+    template <class T>
+    void applyToResetItems(T& worker)
+    {
+
+    }
+
     
     //
     // Accessing

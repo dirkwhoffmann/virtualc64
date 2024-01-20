@@ -540,11 +540,11 @@ return *this; \
 
 class SerResetter
 {
-public:
+protected:
 
-    SerResetter()
-    {
-    }
+    SerResetter() { };
+
+public:
 
     RESET(bool)
     RESET(char)
@@ -613,5 +613,32 @@ public:
         return *this;
     }
 };
+
+class SerSoftResetter : public SerResetter
+{
+public:
+    SerSoftResetter() { }
+};
+
+class SerHardResetter : public SerResetter
+{
+public:
+    SerHardResetter() { }
+};
+
+template <class T>
+static constexpr bool isSoftResetter(T &worker) {
+    return std::is_same_v<T, SerSoftResetter>;
+}
+
+template <class T>
+static constexpr bool isHardResetter(T &worker) {
+    return std::is_same_v<T, SerHardResetter>;
+}
+
+template <class T>
+static constexpr bool isResetter(T &worker) {
+    return isSoftResetter(worker) || isHardResetter(worker);
+}
 
 }

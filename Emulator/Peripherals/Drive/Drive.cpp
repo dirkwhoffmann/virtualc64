@@ -428,6 +428,7 @@ Drive::_size()
 
         // Add the disk size
         disk->applyToPersistentItems(counter);
+        disk->applyToResetItems(counter);
     }
 
     return counter.count;
@@ -485,8 +486,12 @@ Drive::_save(u8 *buffer)
     writer << hasDisk();
 
     // If yes, write the disk
-    if (hasDisk()) disk->applyToPersistentItems(writer);
-    
+    if (hasDisk()) {
+
+        disk->applyToPersistentItems(writer);
+        disk->applyToResetItems(writer);
+    }
+
     // Compute the number of written bytes and return
     result = isize(writer.ptr - buffer);
     trace(SNP_DEBUG, "Serialized to %ld bytes\n", result);

@@ -211,8 +211,13 @@ public:
 //
 
 #define RESET_SNAPSHOT_ITEMS(hard) \
-util::SerResetter resetter; \
-applyToResetItems(resetter, hard);
+if (hard) { \
+util::SerHardResetter resetter; \
+applyToResetItems(resetter); \
+} else { \
+util::SerSoftResetter resetter; \
+applyToResetItems(resetter); \
+}
 
 #define COMPUTE_SNAPSHOT_SIZE \
 util::SerCounter counter; \
