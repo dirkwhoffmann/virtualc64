@@ -413,10 +413,15 @@ FastSID::executeCycles(isize numCycles, SampleStream &stream)
     }
     
     // Compute missing samples
+    i16 min = 0, max = 0;
     for (isize i = 0; i < samples; i++) {
-        stream.write(calculateSingleSample());
+        auto s = calculateSingleSample();
+        min = i == 0 ? s : std::min(min, s);
+        max = i == 0 ? s : std::max(max, s);
+        stream.write(s);
     }
-    
+    trace(true, "Computing %ld samples (%hd - %hd)\n", samples, min, max);
+
     return samples;
 }
 

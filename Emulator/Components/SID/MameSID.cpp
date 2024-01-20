@@ -23,7 +23,7 @@ MameSID::MameSID(C64 &ref, int n) : SubComponent(ref), nr(n)
     sid = new SID6581_t();
     sid->type = (int)model;
     sid->PCMfreq = (uint16_t)sampleRate;
-    sid->clock = 0;
+    sid->clock = PAL_CLOCK_FREQUENCY;
 
     // initialize SID engine
     /*
@@ -90,6 +90,7 @@ MameSID::setClockFrequency(u32 frequency)
     trace(SID_DEBUG, "Setting clock frequency to %d\n", frequency);
 
     cpuFrequency = frequency;
+    sid->clock = cpuFrequency;
 }
 
 void
@@ -260,11 +261,16 @@ MameSID::poke(u16 addr, u8 value)
 isize
 MameSID::executeCycles(isize numCycles, SampleStream &stream)
 {
-    isize buflength = stream.cap();
+    static constexpr isize buflength = 2048;
+    short buf[buflength];
 
-    executedCycles += numCycles;
+    if (numCycles > PAL_CYCLES_PER_SECOND) {
+        warn("Number of missing SID cycles is far too large\n");
+        numCycles = PAL_CYCLES_PER_SECOND;
+    }
 
     // Compute the number of sound samples to produce
+    executedCycles += numCycles;
     double samplesPerCycle = (double)sampleRate / (double)cpuFrequency;
     isize shouldHave = (isize)(executedCycles * samplesPerCycle);
 
@@ -278,23 +284,30 @@ MameSID::executeCycles(isize numCycles, SampleStream &stream)
         samples = buflength;
     }
 
+    // Compute missing samples
+    if (samples > 1024) {
+        warn("BUFFER TOO SHORT");
+        samples = 1024;
+    }
+    sid->fill_buffer(buf, (int)samples);
+
     // Check for a buffer overflow
     if (samples > stream.free()) {
         warn("SID %d: SAMPLE BUFFER OVERFLOW", nr);
         stream.clear();
     }
 
-    // Compute missing samples
-    float tmp[1024];
-    debug(true, "Computing %ld samples\n", samples);
-    if (samples > 1024) samples = 1024;
-
-    sid->fill_buffer(tmp, (int)samples);
+    // Write samples into ringbuffer
+    i16 min = 0, max = 0;
     for (isize i = 0; i < samples; i++) {
-        debug(AUDBUF_DEBUG, "Sample %f\n", tmp[i]);
-        stream.write((short)0);
-        // stream.write((short)tmp[i]);
+        short s = buf[i];
+        min = i == 0 ? s : std::min(min, s);
+        max = i == 0 ? s : std::max(max, s);
+        // stream.write((short)0);
+        stream.write(s);
     }
+
+    // trace(true, "Computed %ld samples (%d - %d)\n", samples, min, max);
 
     return samples;
 }

@@ -35,9 +35,10 @@ inline stream_buffer::sample_t mix_mono(uint16_t usum)
     return stream_buffer::sample_t(int16_t(usum - maxLogicalVoices*128)) * (1.0 / (256 * maxLogicalVoices));
 }
 */
-inline float mix_mono(int usum)
+inline short mix_mono(int usum)
 {
-    return float(usum - maxLogicalVoices*128) * float(1.0 / (256 * maxLogicalVoices));
+    // return float(usum - maxLogicalVoices*128) * float(1.0 / (256 * maxLogicalVoices));
+    return (short)((usum << 8) / maxLogicalVoices);
 }
 
 } // anonymous namespace
@@ -69,7 +70,7 @@ inline void SID6581_t::syncEm()
 
 
 // void SID6581_t::fill_buffer(write_stream_view &buffer)
-void SID6581_t::fill_buffer(float *buffer, int samples)
+void SID6581_t::fill_buffer(short *buffer, int samples)
 {
     for (int sampindex = 0; sampindex < samples; sampindex++)
     {

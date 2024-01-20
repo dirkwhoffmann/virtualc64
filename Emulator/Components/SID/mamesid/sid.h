@@ -58,7 +58,7 @@ struct SID6581_t
     void port_w(int offset, int data);
 
     // void fill_buffer(write_stream_view &buffer);
-    void fill_buffer(float *buffer, int samples);
+    void fill_buffer(short *buffer, int samples);
 
 private:
     void syncEm();
