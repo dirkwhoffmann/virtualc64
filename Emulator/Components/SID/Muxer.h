@@ -149,12 +149,6 @@ private:
     void _pause() override;
     void _warpOn() override;
     void _warpOff() override;
-
-    template <class T>
-    void applyToPersistentItems(T& worker)
-    {
-
-    }
     
     template <class T>
     void serialize(T& worker)

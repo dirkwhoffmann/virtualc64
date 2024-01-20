@@ -243,7 +243,6 @@ isize
 Cartridge::_size()
 {
     util::SerCounter counter;
-    applyToPersistentItems(counter);
     serialize(counter);
 
     isize result = counter.count;
@@ -264,7 +263,6 @@ u64
 Cartridge::_checksum()
 {
     util::SerChecker checker;
-    applyToPersistentItems(checker);
     serialize(checker);
 
     return util::fnvIt64(checker.hash, __checksum());
@@ -276,7 +274,6 @@ Cartridge::_load(const u8 *buffer)
     dealloc();
     
     util::SerReader reader(buffer);
-    applyToPersistentItems(reader);
     serialize(reader);
 
     // Load ROM
@@ -306,7 +303,6 @@ isize
 Cartridge::_save(u8 *buffer)
 {
     util::SerWriter writer(buffer);
-    applyToPersistentItems(writer);
     serialize(writer);
 
     // Save ROM

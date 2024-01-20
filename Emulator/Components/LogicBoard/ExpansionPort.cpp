@@ -30,7 +30,6 @@ isize
 ExpansionPort::_size()
 {
     util::SerCounter counter;
-    applyToPersistentItems(counter);
     serialize(counter);
     
     if (cartridge) counter.count += cartridge->size();
@@ -42,7 +41,6 @@ ExpansionPort::_checksum()
 {
     util::SerChecker checker;
 
-    applyToPersistentItems(checker);
     serialize(checker);
 
     if (cartridge) {
@@ -56,7 +54,6 @@ isize
 ExpansionPort::_load(const u8 *buffer)
 {
     util::SerReader reader(buffer);
-    applyToPersistentItems(reader);
     serialize(reader);
     
     // Load cartridge (if any)
@@ -73,7 +70,6 @@ isize
 ExpansionPort::_save(u8 *buffer)
 {
     util::SerWriter writer(buffer);
-    applyToPersistentItems(writer);
     serialize(writer);
 
     // Save cartridge (if any)

@@ -89,7 +89,6 @@ Datasette::_size()
 {
     util::SerCounter counter;
     
-    applyToPersistentItems(counter);
     serialize(counter);
     
     counter << size;

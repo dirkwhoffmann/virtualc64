@@ -246,12 +246,6 @@ private:
     void _initialize() override;
     void _reset(bool hard) override;
     void _run() override;
-
-    template <class T>
-    void applyToPersistentItems(T& worker)
-    {
-
-    }
     
     template <class T>
     void serialize(T& worker)

@@ -144,12 +144,6 @@ private:
 private:
     
     template <class T>
-    void applyToPersistentItems(T& worker)
-    {
-
-    }
-
-    template <class T>
     void serialize(T& worker)
     {
         if (util::isResetter(worker)) return;

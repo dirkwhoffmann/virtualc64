@@ -40,7 +40,6 @@ isize
 CartridgeRom::_size()
 {
     util::SerCounter counter;
-    applyToPersistentItems(counter);
     serialize(counter);
     
     return size + counter.count;
@@ -50,7 +49,6 @@ isize
 CartridgeRom::_load(const u8 *buffer)
 {
     util::SerReader reader(buffer);
-    applyToPersistentItems(reader);
     serialize(reader);
     
     // Delete the old packet and create a new one with the proper size
@@ -68,7 +66,6 @@ isize
 CartridgeRom::_save(u8 *buffer)
 {
     util::SerWriter writer(buffer);
-    applyToPersistentItems(writer);
     serialize(writer);
 
     // Write packet data

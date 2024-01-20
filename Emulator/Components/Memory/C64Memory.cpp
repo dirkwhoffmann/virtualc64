@@ -121,7 +121,6 @@ C64Memory::_size()
     util::SerCounter counter;
     bool saveRoms = config.saveRoms;
 
-    applyToPersistentItems(counter);
     serialize(counter);
 
     counter << saveRoms;
@@ -135,7 +134,6 @@ C64Memory::_checksum()
 {
     util::SerChecker checker;
 
-    applyToPersistentItems(checker);
     serialize(checker);
 
     return checker.hash;
@@ -148,7 +146,6 @@ C64Memory::_load(const u8 *buffer)
     bool saveRoms;
 
     reader << saveRoms;
-    applyToPersistentItems(reader);
     serialize(reader);
     if (saveRoms) applyToRoms(reader);
 
@@ -163,7 +160,6 @@ C64Memory::_save(u8 *buffer)
     bool saveRoms = config.saveRoms;
 
     writer << saveRoms;
-    applyToPersistentItems(writer);
     serialize(writer);
     if (saveRoms) applyToRoms(writer);
 

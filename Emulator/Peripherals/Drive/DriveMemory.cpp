@@ -37,7 +37,6 @@ DriveMemory::_size()
     util::SerCounter counter;
     bool saveRoms = mem.getConfig().saveRoms;
 
-    applyToPersistentItems(counter);
     serialize(counter);
 
     counter << saveRoms;
@@ -51,7 +50,6 @@ DriveMemory::_checksum()
 {
     util::SerChecker checker;
 
-    applyToPersistentItems(checker);
     serialize(checker);
 
     return checker.hash;
@@ -64,7 +62,6 @@ DriveMemory::_load(const u8 *buffer)
     bool saveRoms;
 
     reader << saveRoms;
-    applyToPersistentItems(reader);
     serialize(reader);
     if (saveRoms) applyToRoms(reader);
 
@@ -79,7 +76,6 @@ DriveMemory::_save(u8 *buffer)
     bool saveRoms = mem.getConfig().saveRoms;
 
     writer << saveRoms;
-    applyToPersistentItems(writer);
     serialize(writer);
     if (saveRoms) applyToRoms(writer);
 

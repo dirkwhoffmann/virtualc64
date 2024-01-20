@@ -177,7 +177,6 @@ Disk::init(AnyCollection &collection, bool wp)
 void
 Disk::init(util::SerReader &reader)
 {
-    applyToPersistentItems(reader);
     serialize(reader);
 }
 

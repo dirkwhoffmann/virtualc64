@@ -87,11 +87,6 @@ private:
     void _inspect() const override;
     void _trackOn() override;
     void _trackOff() override;
-
-    template <class T>
-    void applyToPersistentItems(T& worker)
-    {
-    }
     
     template <class T>
     void serialize(T& worker)
