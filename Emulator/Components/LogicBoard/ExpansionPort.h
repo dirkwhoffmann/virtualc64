@@ -72,16 +72,19 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker
-        
-        << crtType
-        << gameLine
-        << exromLine;
+
     }
-    
+
     template <class T>
     void serialize(T& worker)
     {
+        if (util::isResetter(worker)) return;
+
+        worker
+
+        << crtType
+        << gameLine
+        << exromLine;
     }
     
     isize _size() override;

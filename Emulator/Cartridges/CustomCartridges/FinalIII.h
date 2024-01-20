@@ -59,13 +59,21 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker << freeezeButtonIsPressed;
+
     }
     
     template <class T>
     void serialize(T& worker)
     {
-        worker << qD;
+        worker 
+
+        << qD;
+
+        if (util::isResetter(worker)) return;
+
+        worker 
+
+        << freeezeButtonIsPressed;
     }
     
     isize __size() override { COMPUTE_SNAPSHOT_SIZE }

@@ -52,10 +52,7 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker
-        
-        << oldPeekSource
-        << oldPokeTarget;
+
     }
     
     template <class T>
@@ -64,6 +61,13 @@ private:
         worker
         
         << page;
+
+        if (util::isResetter(worker)) return;
+
+        worker
+
+        << oldPeekSource
+        << oldPokeTarget;
     }
     
     isize __size() override { COMPUTE_SNAPSHOT_SIZE }

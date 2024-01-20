@@ -112,12 +112,17 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker << config.model;
+
     }
     
     template <class T>
     void serialize(T& worker)
     {
+        if (util::isResetter(worker)) return;
+
+        worker
+
+        << config.model;
     }
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }

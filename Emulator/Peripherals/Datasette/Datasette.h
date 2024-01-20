@@ -114,9 +114,7 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker
-        
-        << type;
+
     }
     
     template <class T>
@@ -130,6 +128,12 @@ private:
         << motor
         << nextRisingEdge
         << nextFallingEdge;
+
+        if (util::isResetter(worker)) return;
+
+        worker
+
+        << type;
     }
     
     isize _size() override;

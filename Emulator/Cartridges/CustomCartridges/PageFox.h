@@ -51,14 +51,17 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker
-        
-        << ctrlReg;
+
     }
     
     template <class T>
     void serialize(T& worker)
     {
+        if (util::isResetter(worker)) return;
+
+        worker
+
+        << ctrlReg;
     }
     
     isize __size() override { COMPUTE_SNAPSHOT_SIZE }

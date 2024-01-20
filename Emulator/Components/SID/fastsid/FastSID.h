@@ -134,11 +134,7 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker
-        
-        << model
-        << cpuFrequency
-        << emulateFilter;
+
     }
     
     template <class T>
@@ -156,6 +152,14 @@ private:
 
         << executedCycles
         << computedSamples;
+
+        if (util::isResetter(worker)) return;
+
+        worker
+
+        << model
+        << cpuFrequency
+        << emulateFilter;
     }
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }

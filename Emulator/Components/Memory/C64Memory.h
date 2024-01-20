@@ -91,12 +91,7 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker
-        
-        << ram
-        << colorRam
-        << peekSrc
-        << pokeTarget;
+
     }
 
     template <class T>
@@ -105,6 +100,15 @@ private:
         worker
 
         << rom;
+
+        if (util::isResetter(worker)) return;
+
+        worker
+
+        << ram
+        << colorRam
+        << peekSrc
+        << pokeTarget;
     }
 
     template <class T>

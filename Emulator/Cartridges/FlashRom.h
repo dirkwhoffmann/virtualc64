@@ -86,15 +86,18 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker
-        
-        << state
-        << baseState;
+
     }
     
     template <class T>
     void serialize(T& worker)
     {
+        if (util::isResetter(worker)) return;
+
+        worker
+
+        << state
+        << baseState;
     }
     
     isize _size() override { return [&](){COMPUTE_SNAPSHOT_SIZE}() + romSize; }

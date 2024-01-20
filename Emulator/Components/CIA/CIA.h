@@ -314,12 +314,9 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker
-        
-        << config.revision
-        << config.timerBBug;
+
     }
-    
+
     template <class T>
     void serialize(T& worker)
     {
@@ -355,6 +352,13 @@ private:
         << sleeping
         << sleepCycle
         << wakeUpCycle;
+
+        if (util::isResetter(worker)) return;
+
+        worker
+
+        << config.revision
+        << config.timerBBug;
     }
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }

@@ -153,8 +153,22 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
+
+    }
+    
+    template <class T>
+    void serialize(T& worker)
+    {
+        if (util::isSoftResetter(worker)) return;
+
         worker
         
+        << cycles;
+
+        if (util::isResetter(worker)) return;
+
+        worker
+
         << config.revision
         << config.enabled
         << config.address
@@ -171,16 +185,6 @@ private:
         >> volR
         << vol
         << pan;
-    }
-    
-    template <class T>
-    void serialize(T& worker)
-    {
-        if (util::isSoftResetter(worker)) return;
-
-        worker
-        
-        << cycles;
     }
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }

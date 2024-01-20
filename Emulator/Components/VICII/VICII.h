@@ -614,20 +614,9 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker
-        
-        << config.revision
-        << config.powerSave
-        << config.grayDotBug
-        << config.glueLogic
-        << isPAL
-        << isNTSC
-        << is856x
-        << is656x
-        
-        << memSrc;
+
     }
-    
+
     template <class T>
     void serialize(T& worker)
     {
@@ -699,6 +688,21 @@ private:
         >> gAccessResult
         << delay
         << bufferoffset;
+
+        if (util::isResetter(worker)) return;
+
+        worker
+
+        << config.revision
+        << config.powerSave
+        << config.grayDotBug
+        << config.glueLogic
+        << isPAL
+        << isNTSC
+        << is856x
+        << is656x
+
+        << memSrc;
     }
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }

@@ -342,11 +342,9 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker
-        
-        << durationOfOneCycle;
+
     }
-    
+
     template <class T>
     void serialize(T& worker)
     {
@@ -362,6 +360,12 @@ private:
         << scanline
         << rasterCycle
         << ultimax;
+
+        if (util::isResetter(worker)) return;
+
+        worker
+
+        << durationOfOneCycle;
     }
 
 public:

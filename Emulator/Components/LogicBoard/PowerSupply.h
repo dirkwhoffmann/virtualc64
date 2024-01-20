@@ -48,15 +48,9 @@ private:
 private:
     
     template <class T>
-    void applyToPersistentItems(T& worker)
-    {
-    }
-    
+    void applyToPersistentItems(T& worker) { }
     template <class T>
-    void serialize(T& worker)
-    {
-    }
-
+    void serialize(T& worker) { }
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }
     u64 _checksum() override { COMPUTE_SNAPSHOT_CHECKSUM }
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }

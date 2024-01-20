@@ -250,23 +250,7 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker
-        
-        << config.type
-        << config.ram
-        << config.parCable
-        << config.powerSave
-        << config.connected
-        << config.switchedOn
-        << config.ejectDelay
-        << config.swapDelay
-        << config.insertDelay
-        << config.pan
-        << config.powerVolume
-        << config.stepVolume
-        << config.insertVolume
-        << config.ejectVolume
-        << insertionStatus;
+
     }
     
     template <class T>
@@ -291,6 +275,26 @@ private:
         << sync
         << byteReady
         << watchdog;
+
+        if (util::isResetter(worker)) return;
+
+        worker
+
+        << config.type
+        << config.ram
+        << config.parCable
+        << config.powerSave
+        << config.connected
+        << config.switchedOn
+        << config.ejectDelay
+        << config.swapDelay
+        << config.insertDelay
+        << config.pan
+        << config.powerVolume
+        << config.stepVolume
+        << config.insertVolume
+        << config.ejectVolume
+        << insertionStatus;
     }
     
     isize _size() override;

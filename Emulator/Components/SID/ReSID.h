@@ -93,6 +93,14 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
+
+    }
+    
+    template <class T>
+    void serialize(T& worker)
+    {
+        if (util::isResetter(worker)) return;
+
         worker
 
         << st.sid_register
@@ -115,17 +123,11 @@ private:
         << st.envelope_state
         << st.hold_zero
         << st.envelope_pipeline
-        
+
         << model
         << clockFrequency
         << samplingMethod
         << emulateFilter;
-    }
-    
-    template <class T>
-    void serialize(T& worker)
-    {
-        
     }
     
     isize _size() override { COMPUTE_SNAPSHOT_SIZE }

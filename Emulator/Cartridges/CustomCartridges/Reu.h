@@ -87,6 +87,14 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
+
+    }
+
+    template <class T>
+    void serialize(T& worker)
+    {
+        if (util::isResetter(worker)) return;
+
         worker
 
         << sr
@@ -99,11 +107,6 @@ private:
         << acr
         << bus
         << memTypeF;
-    }
-
-    template <class T>
-    void serialize(T& worker)
-    {
     }
 
     isize __size() override { COMPUTE_SNAPSHOT_SIZE }

@@ -65,9 +65,7 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker
-        
-        << jumper;
+
     }
     
     template <class T>
@@ -78,6 +76,12 @@ private:
         << bankReg
         << modeReg
         << bank;
+
+        if (util::isResetter(worker)) return;
+
+        worker
+
+        << jumper;
     }
     
     isize __size() override { COMPUTE_SNAPSHOT_SIZE }

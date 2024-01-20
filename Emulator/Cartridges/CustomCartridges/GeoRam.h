@@ -56,15 +56,18 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker
-        
-        << bank
-        << page;
+
     }
     
     template <class T>
     void serialize(T& worker)
     {
+        if (util::isResetter(worker)) return;
+
+        worker
+
+        << bank
+        << page;
     }
 
     isize __size() override { COMPUTE_SNAPSHOT_SIZE }

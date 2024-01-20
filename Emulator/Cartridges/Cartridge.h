@@ -172,15 +172,7 @@ protected:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker
-        
-        << gameLineInCrtFile
-        << exromLineInCrtFile
-        << numPackets
-        << ramCapacity
-        << battery
-        << control
-        << switchPos;
+
     }
     
     template <class T>
@@ -195,6 +187,18 @@ protected:
         << offsetL
         << offsetH
         << led;
+
+        if (util::isResetter(worker)) return;
+
+        worker
+
+        << gameLineInCrtFile
+        << exromLineInCrtFile
+        << numPackets
+        << ramCapacity
+        << battery
+        << control
+        << switchPos;
     }
     
 protected:

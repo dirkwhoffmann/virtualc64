@@ -146,18 +146,20 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker
-        
-        << writeProtected
-        << modified
-        >> data
-        >> length;
+
     }
 
     template <class T>
     void serialize(T& worker)
     {
+        if (util::isResetter(worker)) return;
 
+        worker
+
+        << writeProtected
+        << modified
+        >> data
+        >> length;
     }
 
     

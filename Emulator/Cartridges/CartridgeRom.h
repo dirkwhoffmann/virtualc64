@@ -60,15 +60,18 @@ private:
     template <class T>
     void applyToPersistentItems(T& worker)
     {
-        worker
-        
-        << size
-        << loadAddress;
+
     }
     
     template <class T>
     void serialize(T& worker)
     {
+        if (util::isResetter(worker)) return;
+
+        worker
+
+        << size
+        << loadAddress;
     }
     
     isize _size() override;
