@@ -14,8 +14,9 @@
 #include "Constants.h"
 #include "Volume.h"
 #include "SIDStreams.h"
-#include "FastSID.h"
 #include "ReSID.h"
+#include "MameSID.h"
+#include "FastSID.h"
 #include "Chrono.h"
 
 namespace vc64 {
@@ -57,20 +58,28 @@ class Muxer : public SubComponent {
     // Sub components
     //
 
-    FastSID fastsid[4] = {
-        
-        FastSID(c64, 0),
-        FastSID(c64, 1),
-        FastSID(c64, 2),
-        FastSID(c64, 3)
-    };
-    
     ReSID resid[4] = {
         
         ReSID(c64, 0),
         ReSID(c64, 1),
         ReSID(c64, 2),
         ReSID(c64, 3)
+    };
+
+    MameSID mamesid[4] = {
+
+        MameSID(c64, 0),
+        MameSID(c64, 1),
+        MameSID(c64, 2),
+        MameSID(c64, 3)
+    };
+
+    FastSID fastsid[4] = {
+
+        FastSID(c64, 0),
+        FastSID(c64, 1),
+        FastSID(c64, 2),
+        FastSID(c64, 3)
     };
 
 private:

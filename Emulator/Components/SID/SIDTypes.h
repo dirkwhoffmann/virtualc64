@@ -46,7 +46,8 @@ struct SIDRevisionEnum : util::Reflection<SIDRevisionEnum, SIDRevision> {
 enum_long(SIDENGINE)
 {
     SIDENGINE_FASTSID,
-    SIDENGINE_RESID
+    SIDENGINE_RESID,
+    SIDENGINE_MAMESID
 };
 typedef SIDENGINE SIDEngine;
 
@@ -54,7 +55,7 @@ typedef SIDENGINE SIDEngine;
 struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
     
 	static constexpr long minVal = 0;
-    static constexpr long maxVal = SIDENGINE_RESID;
+    static constexpr long maxVal = SIDENGINE_MAMESID;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "SIDENGINE"; }
@@ -64,6 +65,7 @@ struct SIDEngineEnum : util::Reflection<SIDEngineEnum, SIDEngine> {
                 
             case SIDENGINE_FASTSID:  return "FASTSID";
             case SIDENGINE_RESID:    return "RESID";
+            case SIDENGINE_MAMESID:  return "MAMESID";
         }
         return "???";
     }

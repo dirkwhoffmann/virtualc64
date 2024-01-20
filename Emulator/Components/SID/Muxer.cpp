@@ -25,6 +25,12 @@ Muxer::Muxer(C64 &ref) : SubComponent(ref)
         &resid[1],
         &resid[2],
         &resid[3],
+
+        &mamesid[0],
+        &mamesid[1],
+        &mamesid[2],
+        &mamesid[3],
+
         &fastsid[0],
         &fastsid[1],
         &fastsid[2],
@@ -32,7 +38,9 @@ Muxer::Muxer(C64 &ref) : SubComponent(ref)
     };
 
     for (int i = 0; i < 4; i++) {
+
         resid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
+        mamesid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
         fastsid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
     }
 }
@@ -199,6 +207,7 @@ Muxer::setConfigItem(Option option, i64 value)
                 config.revision = SIDRevision(value);
                 for (int i = 0; i < 4; i++) {
                     resid[i].setRevision(SIDRevision(value));
+                    mamesid[i].setRevision(SIDRevision(value));
                     fastsid[i].setRevision(SIDRevision(value));
                 }
             }
@@ -211,6 +220,7 @@ Muxer::setConfigItem(Option option, i64 value)
                 config.filter = bool(value);
                 for (int i = 0; i < 4; i++) {
                     resid[i].setAudioFilter(bool(value));
+                    mamesid[i].setAudioFilter(bool(value));
                     fastsid[i].setAudioFilter(bool(value));
                 }
             }
@@ -239,7 +249,8 @@ Muxer::setConfigItem(Option option, i64 value)
                 config.sampling = SamplingMethod(value);
                 for (int i = 0; i < 4; i++) {
                     resid[i].setSamplingMethod(SamplingMethod(value));
-                    // Note: fastSID has no such option
+                    // mameSID has no such option
+                    // fastSID has no such option
                 }
             }
             return;
@@ -295,7 +306,9 @@ Muxer::setConfigItem(Option option, long id, i64 value)
                 clearSampleBuffer(id);
                 
                 for (int i = 0; i < 4; i++) {
+
                     resid[i].reset(true);
+                    mamesid[i].reset(true);
                     fastsid[i].reset(true);
                 }
             }
@@ -371,7 +384,9 @@ Muxer::getClockFrequency()
     u32 result = resid[0].getClockFrequency();
     
     for (int i = 0; i < 4; i++) {
+
         assert(resid[i].getClockFrequency() == result);
+        assert(mamesid[i].getClockFrequency() == result);
         assert(fastsid[i].getClockFrequency() == result);
     }
     
@@ -386,7 +401,9 @@ Muxer::setClockFrequency(u32 frequency)
     cpuFrequency = frequency;
 
     for (int i = 0; i < 4; i++) {
+
         resid[i].setClockFrequency(frequency);
+        mamesid[i].setClockFrequency(frequency);
         fastsid[i].setClockFrequency(frequency);
     }
 }
@@ -397,13 +414,17 @@ Muxer::getSampleRate() const
     double result = resid[0].getSampleRate();
     
     for (int i = 0; i < 4; i++) {
+
+        /*
         if (resid[i].getSampleRate() != result) {
             warn("%f != %f\n", resid[i].getSampleRate(), result);
         }
         if (fastsid[i].getSampleRate() != result) {
             warn("%f != %f\n", fastsid[i].getSampleRate(), result);
         }
+        */
         assert(resid[i].getSampleRate() == result);
+        assert(mamesid[i].getSampleRate() == result);
         assert(fastsid[i].getSampleRate() == result);
     }
     
@@ -418,7 +439,9 @@ Muxer::setSampleRate(double rate)
     sampleRate = rate;
     
     for (int i = 0; i < 4; i++) {
+
         resid[i].setSampleRate(rate);
+        mamesid[i].setSampleRate(rate);
         fastsid[i].setSampleRate(rate);
     }
 }
@@ -514,6 +537,7 @@ Muxer::_dump(Category category, std::ostream& os, isize nr) const
             
         case SIDENGINE_FASTSID: fastsid[nr].dump(category, os); break;
         case SIDENGINE_RESID:   resid[nr].dump(category, os); break;
+        case SIDENGINE_MAMESID: mamesid[nr].dump(category, os); break;
 
         default:
             fatalError;
@@ -544,7 +568,8 @@ Muxer::getInfo(isize nr)
             
         case SIDENGINE_FASTSID: info = fastsid[nr].getInfo(); break;
         case SIDENGINE_RESID:   info = resid[nr].getInfo(); break;
-            
+        case SIDENGINE_MAMESID: info = mamesid[nr].getInfo(); break;
+
         default:
             fatalError;
     }
@@ -564,6 +589,7 @@ Muxer::getVoiceInfo(isize nr, isize voice)
             
         case SIDENGINE_FASTSID: return fastsid[nr].getVoiceInfo(voice);
         case SIDENGINE_RESID:   return resid[nr].getVoiceInfo(voice);
+        case SIDENGINE_MAMESID: return mamesid[nr].getVoiceInfo(voice);
 
         default:
             fatalError;
@@ -579,6 +605,7 @@ Muxer::getSID(isize nr)
             
         case SIDENGINE_FASTSID: return fastsid[nr];
         case SIDENGINE_RESID:   return resid[nr];
+        case SIDENGINE_MAMESID: return mamesid[nr];
 
         default:
             fatalError;
@@ -663,7 +690,8 @@ Muxer::peek(u16 addr)
             
         case SIDENGINE_FASTSID: return fastsid[sidNr].peek(addr);
         case SIDENGINE_RESID:   return resid[sidNr].peek(addr);
-            
+        case SIDENGINE_MAMESID: return mamesid[sidNr].peek(addr);
+
         default:
             fatalError;
     }
@@ -678,6 +706,7 @@ Muxer::spypeek(u16 addr) const
     addr &= 0x1F;
 
     if (sidNr == 0) {
+
         if (addr == 0x19) { return port1.readPotX() & port2.readPotX(); }
         if (addr == 0x1A) { return port1.readPotY() & port2.readPotY(); }
     }
@@ -724,8 +753,9 @@ Muxer::poke(u16 addr, u8 value)
 
     addr &= 0x1F;
     
-    // Keep both SID implementations up to date
+    // Keep all SID implementations up to date
     resid[sidNr].poke(addr, value);
+    mamesid[sidNr].poke(addr, value);
     fastsid[sidNr].poke(addr, value);
 }
 
@@ -800,6 +830,22 @@ Muxer::executeCycles(isize numCycles)
                 for (isize i = 1; i < 4; i++) {
                     if (isEnabled(i)) {
                         isize numSamples2 = resid[i].executeCycles(numCycles, sidStream[i]);
+                        numSamples = std::min(numSamples, numSamples2);
+                    }
+                }
+            }
+            break;
+
+        case SIDENGINE_MAMESID:
+
+            // Run the primary SID (which is always enabled)
+            numSamples = mamesid[0].executeCycles(numCycles, sidStream[0]);
+
+            // Run all other SIDS (if any)
+            if (config.enabled > 1) {
+                for (isize i = 1; i < 4; i++) {
+                    if (isEnabled(i)) {
+                        isize numSamples2 = mamesid[i].executeCycles(numCycles, sidStream[i]);
                         numSamples = std::min(numSamples, numSamples2);
                     }
                 }
