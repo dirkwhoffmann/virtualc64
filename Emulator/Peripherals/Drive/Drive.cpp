@@ -488,7 +488,6 @@ Drive::_save(u8 *buffer)
 
     // Compute the number of written bytes and return
     result = isize(writer.ptr - buffer);
-    trace(SNP_DEBUG, "Serialized to %ld bytes\n", result);
     return result;
 }
 

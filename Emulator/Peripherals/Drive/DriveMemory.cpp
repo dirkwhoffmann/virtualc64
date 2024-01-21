@@ -65,7 +65,6 @@ DriveMemory::_load(const u8 *buffer)
     serialize(reader);
     if (saveRoms) applyToRoms(reader);
 
-    debug(SNP_DEBUG, "Recreated from %zu bytes\n", reader.ptr - buffer); \
     return (isize)(reader.ptr - buffer);
 }
 
@@ -79,7 +78,6 @@ DriveMemory::_save(u8 *buffer)
     serialize(writer);
     if (saveRoms) applyToRoms(writer);
 
-    debug(SNP_DEBUG, "Serialized to %zu bytes\n", writer.ptr - buffer);
     return (isize)(writer.ptr - buffer);
 }
 

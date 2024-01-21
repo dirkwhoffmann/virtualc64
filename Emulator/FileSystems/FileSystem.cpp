@@ -765,7 +765,7 @@ FileSystem::importVolume(const u8 *src, isize size, ErrorCode *err)
 {
     assert(src != nullptr);
 
-    debug(FS_DEBUG, "Importing file system (%zu bytes)...\n", size);
+    debug(FS_DEBUG, "Importing file system (%ld bytes)...\n", size);
 
     // Only proceed if the buffer size matches
     if ((isize)blocks.size() * 256 > size) {

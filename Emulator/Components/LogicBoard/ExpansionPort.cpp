@@ -81,7 +81,6 @@ ExpansionPort::_save(u8 *buffer)
         writer.ptr += cartridge->save(writer.ptr);
     }
     
-    debug(SNP_DEBUG, "Serialized to %ld bytes\n", isize(writer.ptr - buffer));
     return isize(writer.ptr - buffer);
 }
 
@@ -272,14 +271,14 @@ ExpansionPort::attachCartridge(Cartridge *c)
 void
 ExpansionPort::attachReu(isize kb)
 {
-    debug(EXP_DEBUG, "Attaching REU (%zu KB)", kb);
+    debug(EXP_DEBUG, "Attaching REU (%ld KB)", kb);
     attachCartridge(new Reu(c64, kb));
 }
 
 void
 ExpansionPort::attachGeoRam(isize kb)
 {
-    debug(EXP_DEBUG, "Attaching GeoRAM (%zu KB)", kb);
+    debug(EXP_DEBUG, "Attaching GeoRAM (%ld KB)", kb);
     attachCartridge(new GeoRAM(c64, kb));
 }
 

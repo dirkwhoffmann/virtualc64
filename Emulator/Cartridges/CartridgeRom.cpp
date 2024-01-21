@@ -71,7 +71,6 @@ CartridgeRom::_save(u8 *buffer)
     // Write packet data
     for (int i = 0; i < size; i++) util::write8(writer.ptr, rom[i]);
 
-    trace(SNP_DEBUG, "Serialized to %ld bytes\n", isize(writer.ptr - buffer));
     return isize(writer.ptr - buffer);
 }
 

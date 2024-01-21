@@ -232,13 +232,11 @@ return checker.hash;
 #define LOAD_SNAPSHOT_ITEMS \
 util::SerReader reader(buffer); \
 serialize(reader); \
-debug(SNP_DEBUG, "Recreated from %zu bytes\n", reader.ptr - buffer); \
 return (isize)(reader.ptr - buffer);
 
 #define SAVE_SNAPSHOT_ITEMS \
 util::SerWriter writer(buffer); \
 serialize(writer); \
-debug(SNP_DEBUG, "Serialized to %zu bytes\n", writer.ptr - buffer); \
 return (isize)(writer.ptr - buffer);
 
 }
