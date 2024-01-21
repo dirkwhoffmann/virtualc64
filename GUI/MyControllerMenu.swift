@@ -438,6 +438,11 @@ extension MyController: NSMenuItemValidation {
         }
     }
      
+    @IBAction func brkAction(_ sender: Any!) {
+
+        c64.signalBrk();
+    }
+
     //
     // Action methods (View menu)
     //

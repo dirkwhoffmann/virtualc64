@@ -238,6 +238,7 @@
 - (void)stopAndGo;
 - (void)stepInto;
 - (void)stepOver;
+- (void)signalBrk;
 
 - (BOOL)hasRom:(RomType)type;
 - (BOOL)hasMega65Rom:(RomType)type;

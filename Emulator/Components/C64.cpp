@@ -1046,6 +1046,13 @@ C64::execute()
             switchState(EXEC_PAUSED);
         }
 
+        // Are we requested to simulate a BRK instruction
+        if (flags & RL::EXTERNAL_BRK) {
+            clearFlag(RL::EXTERNAL_BRK);
+            cpu.next = BRK;
+            cpu.reg.pc0 = cpu.reg.pc - 1;
+        }
+
         assert(flags == 0);
     }
 }

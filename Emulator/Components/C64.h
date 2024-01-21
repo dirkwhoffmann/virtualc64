@@ -432,6 +432,7 @@ public:
     void signalJammed() { setFlag(RL::CPU_JAM); }
     void signalStop() { setFlag(RL::STOP); }
     void signalExpPortNmi() { setFlag(RL::EXTERNAL_NMI); }
+    void signalBrk() { setFlag(RL::EXTERNAL_BRK); }
 
     // Runs or pauses the emulator
     void stopAndGo();

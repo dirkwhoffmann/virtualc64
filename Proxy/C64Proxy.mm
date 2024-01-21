@@ -2886,6 +2886,11 @@ using namespace vc64;
     [self c64]->stepOver();
 }
 
+- (void)signalBrk
+{
+    [self c64]->signalBrk();
+}
+
 - (BOOL) hasRom:(RomType)type
 {
     return [self c64]->hasRom(type);

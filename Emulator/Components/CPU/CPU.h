@@ -19,6 +19,8 @@ namespace vc64 {
 
 class CPU : public Peddle {
 
+    friend class C64;
+    
     // Result of the latest inspection
     mutable CPUInfo info = { };
 
