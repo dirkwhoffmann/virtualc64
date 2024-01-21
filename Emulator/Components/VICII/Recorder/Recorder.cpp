@@ -389,7 +389,7 @@ Recorder::recordAudio()
 {
     if (muxer.stream.count() != samplesPerFrame) {
         
-        trace(REC_DEBUG, "Samples: %zd\n", muxer.stream.count());
+        trace(REC_DEBUG, "Samples: %ld\n", muxer.stream.count());
         assert(muxer.stream.count() >= samplesPerFrame);
     }
     

@@ -355,7 +355,7 @@ Reu::doDma()
 void
 Reu::stash(u16 memAddr, u32 reuAddr, isize len)
 {
-    debug(REU_DEBUG, "stash(%x,%x,%zd)\n", memAddr, reuAddr, len);
+    debug(REU_DEBUG, "stash(%x,%x,%ld)\n", memAddr, reuAddr, len);
 
     for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
 
@@ -385,7 +385,7 @@ Reu::stash(u16 memAddr, u32 reuAddr, isize len)
 void
 Reu::fetch(u16 memAddr, u32 reuAddr, isize len)
 {
-    debug(REU_DEBUG, "fetch(%x,%x,%zd)\n", memAddr, reuAddr, len);
+    debug(REU_DEBUG, "fetch(%x,%x,%ld)\n", memAddr, reuAddr, len);
 
     for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
 
@@ -417,7 +417,7 @@ Reu::fetch(u16 memAddr, u32 reuAddr, isize len)
 void
 Reu::swap(u16 memAddr, u32 reuAddr, isize len)
 {
-    debug(REU_DEBUG, "swap(%x,%x,%zd)\n", memAddr, reuAddr, len);
+    debug(REU_DEBUG, "swap(%x,%x,%ld)\n", memAddr, reuAddr, len);
 
     for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
 
@@ -447,7 +447,7 @@ Reu::swap(u16 memAddr, u32 reuAddr, isize len)
 void
 Reu::verify(u16 memAddr, u32 reuAddr, isize len)
 {
-    debug(REU_DEBUG, "verify(%x,%x,%zd)\n", memAddr, reuAddr, len);
+    debug(REU_DEBUG, "verify(%x,%x,%ld)\n", memAddr, reuAddr, len);
 
     for (isize i = 0, ms = memStep(), rs = reuStep(); i < len; i++) {
 
