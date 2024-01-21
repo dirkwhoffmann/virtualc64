@@ -56,12 +56,16 @@ ExpansionPort::_load(const u8 *buffer)
     util::SerReader reader(buffer);
     serialize(reader);
     
+    // Delete existing cartridge
+    cartridge = nullptr;
+
     // Load cartridge (if any)
     if (crtType != CRT_NONE) {
+        
         cartridge = std::unique_ptr<Cartridge>(Cartridge::makeWithType(c64, crtType));
         reader.ptr += cartridge->load(reader.ptr);
     }
-    
+
     debug(SNP_DEBUG, "Recreated from %ld bytes\n", isize(reader.ptr - buffer));
     return isize(reader.ptr - buffer);
 }

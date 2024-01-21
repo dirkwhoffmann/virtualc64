@@ -95,12 +95,17 @@ private:
 
         << flags
         << next
-        << reg.a
-        << reg.x
-        << reg.y
         << reg.pc
         << reg.pc0
         << reg.sp
+        << reg.a
+        << reg.x
+        << reg.y
+        << reg.adl
+        << reg.adh
+        << reg.idl
+        << reg.d
+        << reg.ovl
         << reg.sr.n
         << reg.sr.v
         << reg.sr.b
@@ -108,11 +113,8 @@ private:
         << reg.sr.i
         << reg.sr.z
         << reg.sr.c
-        << reg.adl
-        << reg.adh
-        << reg.idl
-        << reg.d
-        << reg.ovl
+        << reg.pport.data
+        << reg.pport.direction
         << rdyLine
         << rdyLineUp
         << rdyLineDown

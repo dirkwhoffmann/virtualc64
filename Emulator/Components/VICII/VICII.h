@@ -671,8 +671,10 @@ private:
         << spriteDmaOnOff
         << expansionFF
         << cleared_bits_in_d017
+        << collision
         << lpLine
         << lpIrqHasOccurred
+        << memSrc
         << ultimax
         << dataBusPhi1
         << dataBusPhi2

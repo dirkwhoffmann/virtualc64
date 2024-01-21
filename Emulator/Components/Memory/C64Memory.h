@@ -94,7 +94,11 @@ private:
         worker
 
         << rom;
+    }
 
+    template <class T>
+    void serialize(T& worker)
+    {
         if (util::isResetter(worker)) return;
 
         worker
@@ -103,11 +107,6 @@ private:
         << colorRam
         << peekSrc
         << pokeTarget;
-    }
-
-    template <class T>
-    void serialize(T& worker)
-    {
     }
     
     isize _size() override;

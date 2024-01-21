@@ -232,7 +232,7 @@ Interpreter::initDebugShell(Command &root)
 
     for (isize i = 0; i < 2; i++) {
 
-        string cia = (i == 0) ? "cia1" : "cia1";
+        string cia = (i == 0) ? "cia1" : "cia2";
 
         root.add({cia, ""},
                  "Displays the component state",

@@ -94,6 +94,8 @@ CoreComponent::load(const u8 *buffer)
 
     // Check integrity
     if (hash != _checksum() || FORCE_SNAP_CORRUPTED) {
+
+        debug(SNP_DEBUG, "Corrupted snapshot detected\n");
         throw VC64Error(ERROR_SNAP_CORRUPTED);
     }
     

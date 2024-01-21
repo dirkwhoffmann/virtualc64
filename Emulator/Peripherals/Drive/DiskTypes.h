@@ -12,6 +12,10 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+#ifdef __cplusplus
+#include "Serialization.h"
+#endif
+
 //
 // Constants
 //
@@ -220,16 +224,18 @@ struct DiskErrorCodeEnum : util::Reflection<DiskErrorCodeEnum, DiskErrorCode> {
  */
 
 #ifdef __cplusplus
-union DiskData
+struct DiskData : public util::Serializable
 {
-    struct
-    {
-        u8 _pad[maxBytesOnTrack];
-        u8 halftrack[85][maxBytesOnTrack];
+    union {
+
+        struct
+        {
+            u8 _pad[maxBytesOnTrack];
+            u8 halftrack[85][maxBytesOnTrack];
+        };
+
+        u8 track[43][2 * maxBytesOnTrack];
     };
-    
-    u8 track[43][2 * maxBytesOnTrack];
-    
     template <class W>
     void operator<<(W& worker)
     {
@@ -248,15 +254,18 @@ union DiskData
  */
 
 #ifdef __cplusplus
-union DiskLength
+struct DiskLength : public util::Serializable
 {
-    struct
-    {
-        isize _pad;
-        isize halftrack[85];
+    union {
+
+        struct
+        {
+            isize _pad;
+            isize halftrack[85];
+        };
+
+        isize track[43][2];
     };
-    
-    isize track[43][2];
 
     template <class W>
     void operator<<(W& worker)
