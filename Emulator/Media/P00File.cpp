@@ -65,13 +65,19 @@ P00File::init(FileSystem &fs)
 PETName<16>
 P00File::getName() const
 {
-    return PETName<16>(data + 8, 0x00);
+    // P00 files use 0x00 as padding character
+    auto result = PETName<16>(data + 8, 0x00);
+
+    // Rectify the padding characters
+    result.setPad(0xA0);
+
+    return result;
 }
 
 PETName<16>
 P00File::collectionName()
 {
-    return PETName<16>(data + 8, 0x00);
+    return getName();
 }
 
 isize
@@ -84,8 +90,8 @@ PETName<16>
 P00File::itemName(isize nr) const
 {
     assert(nr == 0);
-    u8 padChar = 0x00;
-    return PETName<16>(data + 0x08, padChar);
+
+    return getName();
 }
 
 isize

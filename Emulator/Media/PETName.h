@@ -71,6 +71,14 @@ public:
 
     PETName(string str) : PETName(str.c_str()) { }
     
+    void setPad(u8 _pad) {
+
+        for (int i = 0; i < len; i++) {
+            if (pet[i] == pad) pet[i] = _pad;
+        }
+        pad = _pad;
+    }
+
     const char *getDescription() const override { return "PETName"; }
     
     bool operator== (PETName &rhs)
