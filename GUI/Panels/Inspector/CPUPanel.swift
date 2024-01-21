@@ -49,9 +49,9 @@ extension Inspector {
         cpuIrqVIC.state = (cpuInfo.irq & UInt8(INTSRC_VIC)) != 0 ? .on : .off
         cpuIrqEXP.state = (cpuInfo.irq & UInt8(INTSRC_EXP)) != 0 ? .on : .off
         cpuNmi.state = (cpuInfo.nmi != 0) ? .on : .off
-        cpuNmiCIA.state = (cpuInfo.irq & UInt8(INTSRC_CIA)) != 0 ? .on : .off
-        cpuNmiKBD.state = (cpuInfo.irq & UInt8(INTSRC_KBD)) != 0 ? .on : .off
-        cpuNmiEXP.state = (cpuInfo.irq & UInt8(INTSRC_EXP)) != 0 ? .on : .off
+        cpuNmiCIA.state = (cpuInfo.nmi & UInt8(INTSRC_CIA)) != 0 ? .on : .off
+        cpuNmiKBD.state = (cpuInfo.nmi & UInt8(INTSRC_KBD)) != 0 ? .on : .off
+        cpuNmiEXP.state = (cpuInfo.nmi & UInt8(INTSRC_EXP)) != 0 ? .on : .off
         cpuRdy.state = cpuInfo.rdy ? .on : .off
         
         cpuPortReg.integerValue = Int(cpuInfo.processorPort)
