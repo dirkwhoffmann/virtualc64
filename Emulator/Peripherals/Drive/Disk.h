@@ -155,8 +155,8 @@ private:
 
         << writeProtected
         << modified
-        >> data
-        >> length;
+        << data
+        << length;
     }
 
     

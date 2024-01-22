@@ -125,8 +125,8 @@ private:
         << rdyLineDown
         << nmiLine
         << irqLine
-        >> edgeDetector
-        >> levelDetector
+        << edgeDetector
+        << levelDetector
         << doNmi
         << doIrq
         << dischargeCycleBit3

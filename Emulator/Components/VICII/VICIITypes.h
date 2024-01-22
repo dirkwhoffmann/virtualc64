@@ -14,6 +14,7 @@
 
 #include "Aliases.h"
 #include "Reflection.h"
+#include "Serialization.h"
 #include "BusTypes.h"
 
 #include "DmaDebuggerTypes.h"
@@ -460,7 +461,7 @@ typedef struct
 SpriteInfo;
     
 #ifdef __cplusplus
-struct VICIIRegisters
+struct VICIIRegisters : util::Serializable
 {
     // Registers
     u16 sprX[8];     // D000, D002, ..., D00E, upper bits from D010
@@ -499,7 +500,7 @@ struct VICIIRegisters
     }
 };
 
-struct SpriteSR
+struct SpriteSR : util::Serializable
 {    
     // Shift register data (24 bit)
     u32 data;

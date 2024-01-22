@@ -178,8 +178,8 @@ private:
         << config.pan
         << cycles
         << cpuFrequency
-        >> volL
-        >> volR
+        << volL
+        << volR
         << vol
         << pan;
     }

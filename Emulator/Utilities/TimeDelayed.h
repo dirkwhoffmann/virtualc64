@@ -13,11 +13,12 @@
 #pragma once
 
 #include "Macros.h"
+#include "Serialization.h"
 #include <algorithm>
 
 namespace util {
 
-template <class T, isize delay> class TimeDelayed {
+template <class T, isize delay> class TimeDelayed : public Serializable {
     
     static constexpr isize capacity = delay + 1;
     
