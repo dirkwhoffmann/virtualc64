@@ -258,6 +258,9 @@ C64::reset(bool hard)
         // Execute the standard reset routine
         CoreComponent::reset(hard);
 
+        // Reinitialize the program counter
+        cpu.reg.pc = cpu.reg.pc0 = mem.resetVector();
+
         // Inform the GUI
         msgQueue.put(MSG_RESET);
     }
