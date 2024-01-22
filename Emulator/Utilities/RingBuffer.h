@@ -33,7 +33,7 @@ namespace util {
 template <class T, isize capacity> struct Array
 {
     // Element storage
-    T elements[capacity];
+    T *elements = new T[capacity];
 
     // Write pointer
     isize w;
@@ -44,7 +44,8 @@ template <class T, isize capacity> struct Array
     //
 
     Array() { clear(); }
-    
+    ~Array() { delete[] elements; }
+
     void clear() { w = 0; }
     void clear(T t) { for (isize i = 0; i < capacity; i++) elements[i] = t; clear(); }
     void align(isize offset) { w = offset; }
@@ -57,10 +58,11 @@ template <class T, isize capacity> struct Array
     template <class W>
     void operator<<(W& worker)
     {
-        worker << this->elements << this->w;
+        for (isize i = 0; i < capacity; i++) worker << elements[i];
+        worker << w;
     }
-    
-    
+
+
     //
     // Querying the fill status
     //
@@ -100,8 +102,32 @@ template <class T, isize capacity>
 struct SortedArray : public Array<T, capacity>
 {
     // Key storage
-    i64 keys[capacity];
-    
+    i64 *keys = new i64[capacity];
+
+
+    //
+    // Initializing
+    //
+
+    ~SortedArray() { delete[] keys; }
+
+
+    //
+    // Serializing
+    //
+
+    template <class W>
+    void operator<<(W& worker)
+    {
+        Array<T, capacity>::operator<<(worker);
+        for (isize i = 0; i < capacity; i++) worker << keys[i];
+    }
+
+
+    //
+    // Inserting
+    //
+
     // Inserts an element at the end
     void write(i64 key, T element)
     {
@@ -141,7 +167,7 @@ struct SortedArray : public Array<T, capacity>
 template <class T, isize capacity> struct RingBuffer
 {
     // Element storage
-    T elements[capacity];
+    T *elements = new T[capacity];
 
     // Read and write pointers
     isize r, w;
@@ -152,7 +178,8 @@ template <class T, isize capacity> struct RingBuffer
     //
 
     RingBuffer() { clear(); }
-    
+    ~RingBuffer() { delete[] elements; }
+
     void clear() { r = w = 0; }
     void clear(T t) { for (isize i = 0; i < capacity; i++) elements[i] = t; clear(); }
     void align(isize offset) { w = (r + offset) % capacity; }
@@ -165,9 +192,10 @@ template <class T, isize capacity> struct RingBuffer
     template <class W>
     void operator<<(W& worker)
     {
-        worker << this->elements << this->r << this->w;
+        for (isize i = 0; i < capacity; i++) worker << elements[i];
+        worker << this->r << this->w;
     }
-    
+
     
     //
     // Querying the fill status
@@ -253,8 +281,8 @@ template <class T, isize capacity>
 struct SortedRingBuffer : public RingBuffer<T, capacity>
 {
     // Key storage
-    i64 keys[capacity];
-    
+    i64 *keys = new i64[capacity];
+
     // Inserts an element at the proper position
     void insert(i64 key, T element)
     {
