@@ -469,9 +469,6 @@ public:
     // Executes a single clock cycle
     void executeOneCycle();
 
-    // DEPRECATED
-    void _executeOneCycle(isize lastCycle);
-
     /* Finishes the current instruction. This function is called when the
      * emulator threads terminates in order to reach a clean state. It emulates
      * the CPU until the next fetch cycle is reached.

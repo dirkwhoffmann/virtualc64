@@ -1377,7 +1377,7 @@ void
 C64::executeOneLine()
 {
     isize lastCycle = vic.getCyclesPerLine();
-    
+
     while (1) {
 
         Cycle cycle = ++cpu.clock;
@@ -1432,48 +1432,9 @@ C64::executeOneLine()
 void
 C64::executeOneCycle()
 {
-    _executeOneCycle(vic.getCyclesPerLine());
-}
-
-void
-C64::_executeOneCycle(isize lastCycle)
-{
-    Cycle cycle = ++cpu.clock;
-    
-    //  <---------- o2 low phase ----------->|<- o2 high phase ->|
-    //                                       |                   |
-    // ,-- C64 ------------------------------|-------------------|--,
-    // |   ,-----,     ,-----,     ,-----,   |    ,-----,        |  |
-    // |   |     |     |     |     |     |   |    |     |        |  |
-    // '-->| VIC | --> | CIA | --> | CIA | --|--> | CPU | -------|--'
-    //     |     |     |  1  |     |  2  |   |    |     |        |
-    //     '-----'     '-----'     '-----'   |    '-----'        |
-    //                                  ,---------,              |
-    //                                  | IEC bus |              |
-    //                                  '---------'              |
-    //                                       |    ,--------,     |
-    //                                       |    |        |     |
-    // ,-- Drive ----------------------------|--> | VC1541 | ----|--,
-    // |                                     |    |        |     |  |
-    // |                                     |    '--------'     |  |
-    // '-------------------------------------|-------------------|--'
-    
-    // First clock phase (o2 low)
-    (vic.*vic.vicfunc[rasterCycle])();
-    if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle();
-    if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle();
-    if (iec.isDirtyC64Side) iec.updateIecLinesC64Side();
-
-    // Process pending events
-    if (nextTrigger <= cycle) processEvents(cycle);
-
-    // Second clock phase (o2 high)
-    cpu.execute<MOS_6510>();
-    if (drive8.needsEmulation) drive8.execute(durationOfOneCycle);
-    if (drive9.needsEmulation) drive9.execute(durationOfOneCycle);
-
-    // rasterCycle++;
-    if (rasterCycle++ == lastCycle) endScanline();
+    setFlag(RL::STOP);
+    executeOneLine();
+    clearFlag(RL::STOP);
 }
 
 void
