@@ -468,7 +468,9 @@ public:
     
     // Executes a single clock cycle
     void executeOneCycle();
-    void _executeOneCycle();
+
+    // DEPRECATED
+    void _executeOneCycle(isize lastCycle);
 
     /* Finishes the current instruction. This function is called when the
      * emulator threads terminates in order to reach a clean state. It emulates
@@ -478,12 +480,12 @@ public:
     
     // Finishes the current frame
     void finishFrame();
-    
-private:
-    
+
     // Invoked before executing the first cycle of a scanline
     void beginScanline();
     
+private:
+
     // Invoked after executing the last cycle of a scanline
     void endScanline();
     

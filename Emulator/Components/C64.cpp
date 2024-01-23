@@ -1376,37 +1376,67 @@ C64::executeOneFrame()
 void
 C64::executeOneLine()
 {
-    // Emulate the beginning of a scanline
-    if (rasterCycle == 1) beginScanline();
-    
-    // Emulate the middle of a scanline
     isize lastCycle = vic.getCyclesPerLine();
-    for (isize i = rasterCycle; i <= lastCycle; i++) {
-        
-        _executeOneCycle();
+    
+    while (1) {
+
+        Cycle cycle = ++cpu.clock;
+
+        //  <---------- o2 low phase ----------->|<- o2 high phase ->|
+        //                                       |                   |
+        // ,-- C64 ------------------------------|-------------------|--,
+        // |   ,-----,     ,-----,     ,-----,   |    ,-----,        |  |
+        // |   |     |     |     |     |     |   |    |     |        |  |
+        // '-->| VIC | --> | CIA | --> | CIA | --|--> | CPU | -------|--'
+        //     |     |     |  1  |     |  2  |   |    |     |        |
+        //     '-----'     '-----'     '-----'   |    '-----'        |
+        //                                  ,---------,              |
+        //                                  | IEC bus |              |
+        //                                  '---------'              |
+        //                                       |    ,--------,     |
+        //                                       |    |        |     |
+        // ,-- Drive ----------------------------|--> | VC1541 | ----|--,
+        // |                                     |    |        |     |  |
+        // |                                     |    '--------'     |  |
+        // '-------------------------------------|-------------------|--'
+
+        // First clock phase (o2 low)
+        (vic.*vic.vicfunc[rasterCycle])();
+        if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle();
+        if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle();
+        if (iec.isDirtyC64Side) iec.updateIecLinesC64Side();
+
+        // Process pending events
+        if (nextTrigger <= cycle) processEvents(cycle);
+
+        // Second clock phase (o2 high)
+        cpu.execute<MOS_6510>();
+        if (drive8.needsEmulation) drive8.execute(durationOfOneCycle);
+        if (drive9.needsEmulation) drive9.execute(durationOfOneCycle);
+
+        // Advance to the next raster cycle
+        if (rasterCycle++ == lastCycle) {
+
+            endScanline();
+            return;
+        }
+
+        // Exit the loop if an action flag is set
         if (flags != 0) {
-            if (i == lastCycle) endScanline();
+
             return;
         }
     }
-    
-    // Emulate the end of a scanline
-    endScanline();
 }
 
 void
 C64::executeOneCycle()
 {
-    bool isFirstCycle = rasterCycle == 1;
-    bool isLastCycle = vic.isLastCycleInLine(rasterCycle);
-    
-    if (isFirstCycle) beginScanline();
-    _executeOneCycle();
-    if (isLastCycle) endScanline();
+    _executeOneCycle(vic.getCyclesPerLine());
 }
 
 void
-C64::_executeOneCycle()
+C64::_executeOneCycle(isize lastCycle)
 {
     Cycle cycle = ++cpu.clock;
     
@@ -1442,7 +1472,8 @@ C64::_executeOneCycle()
     if (drive8.needsEmulation) drive8.execute(durationOfOneCycle);
     if (drive9.needsEmulation) drive9.execute(durationOfOneCycle);
 
-    rasterCycle++;
+    // rasterCycle++;
+    if (rasterCycle++ == lastCycle) endScanline();
 }
 
 void
