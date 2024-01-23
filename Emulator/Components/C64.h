@@ -460,12 +460,7 @@ public:
      * the C64 is emulated until the curent frame has been completed.
      */
     void executeOneFrame();
-    
-    /* Emulates the C64 until the end of the current scanline. This function
-     * is called inside executeOneFrame().
-     */
-    void executeOneLine();
-    
+        
     // Executes a single clock cycle
     void executeOneCycle();
 

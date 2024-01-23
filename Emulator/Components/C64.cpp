@@ -1059,6 +1059,11 @@ C64::execute()
             cpu.reg.pc0 = cpu.reg.pc - 1;
         }
 
+        // Are we requested to synchronize the thread?
+        if (flags & RL::SYNC_THREAD) {
+            clearFlag(RL::SYNC_THREAD);
+        }
+
         assert(flags == 0);
     }
 }
@@ -1370,15 +1375,9 @@ C64::stepOver()
 void
 C64::executeOneFrame()
 {
-    do { executeOneLine(); } while (scanline != 0 && flags == 0);
-}
-
-void
-C64::executeOneLine()
-{
     isize lastCycle = vic.getCyclesPerLine();
 
-    while (1) {
+    do {
 
         Cycle cycle = ++cpu.clock;
 
@@ -1418,22 +1417,17 @@ C64::executeOneLine()
         if (rasterCycle++ == lastCycle) {
 
             endScanline();
-            return;
+            if (scanline == 0) setFlag(RL::SYNC_THREAD);
         }
 
-        // Exit the loop if an action flag is set
-        if (flags != 0) {
-
-            return;
-        }
-    }
+    } while (!flags);
 }
 
 void
 C64::executeOneCycle()
 {
     setFlag(RL::STOP);
-    executeOneLine();
+    executeOneFrame();
     clearFlag(RL::STOP);
 }
 
