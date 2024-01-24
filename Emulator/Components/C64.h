@@ -452,16 +452,8 @@ public:
      * length bytes of the current instruction and starts the emulator thread.
      */
     void stepOver();
-    
-    /* Emulates the C64 until the end of the current frame. Under certain
-     * circumstances the function may terminate earlier, in the middle of a
-     * frame. This happens, e.g., if the CPU jams or a breakpoint is reached.
-     * It is save to call the function in the middle of a frame. In this case,
-     * the C64 is emulated until the curent frame has been completed.
-     */
-    void executeOneFrame();
-        
-    // Executes a single clock cycle
+
+    // Executes a single clock cycle.
     void executeOneCycle();
 
     /* Finishes the current instruction. This function is called when the

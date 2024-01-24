@@ -1000,71 +1000,131 @@ C64::execute()
 {
     cpu.debugger.watchpointPC = -1;
     cpu.debugger.breakpointPC = -1;
-    
-    // Run the emulator
-    executeOneFrame();
-    
-    // Check if special action needs to be taken
-    if (flags) {
-        
-        // Are we requested to take a snapshot?
-        if (flags & RL::AUTO_SNAPSHOT) {
-            clearFlag(RL::AUTO_SNAPSHOT);
-            autoSnapshot = new Snapshot(*this);
-            msgQueue.put(MSG_AUTO_SNAPSHOT_TAKEN);
-        }
-        if (flags & RL::USER_SNAPSHOT) {
-            clearFlag(RL::USER_SNAPSHOT);
-            userSnapshot = new Snapshot(*this);
-            msgQueue.put(MSG_USER_SNAPSHOT_TAKEN);
+
+    //
+    // Run the emulator for one cycle
+    //
+
+    isize lastCycle = vic.getCyclesPerLine();
+
+    while(1) {
+
+        Cycle cycle = ++cpu.clock;
+
+        //  <---------- o2 low phase ----------->|<- o2 high phase ->|
+        //                                       |                   |
+        // ,-- C64 ------------------------------|-------------------|--,
+        // |   ,-----,     ,-----,     ,-----,   |    ,-----,        |  |
+        // |   |     |     |     |     |     |   |    |     |        |  |
+        // '-->| VIC | --> | CIA | --> | CIA | --|--> | CPU | -------|--'
+        //     |     |     |  1  |     |  2  |   |    |     |        |
+        //     '-----'     '-----'     '-----'   |    '-----'        |
+        //                                  ,---------,              |
+        //                                  | IEC bus |              |
+        //                                  '---------'              |
+        //                                       |    ,--------,     |
+        //                                       |    |        |     |
+        // ,-- Drive ----------------------------|--> | VC1541 | ----|--,
+        // |                                     |    |        |     |  |
+        // |                                     |    '--------'     |  |
+        // '-------------------------------------|-------------------|--'
+
+        // First clock phase (o2 low)
+        (vic.*vic.vicfunc[rasterCycle])();
+        if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle();
+        if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle();
+        if (iec.isDirtyC64Side) iec.updateIecLinesC64Side();
+
+        // Process pending events
+        if (nextTrigger <= cycle) processEvents(cycle);
+
+        // Second clock phase (o2 high)
+        cpu.execute<MOS_6510>();
+        if (drive8.needsEmulation) drive8.execute(durationOfOneCycle);
+        if (drive9.needsEmulation) drive9.execute(durationOfOneCycle);
+
+        // Advance to the next raster cycle
+        if (rasterCycle++ == lastCycle) {
+
+            endScanline();
+            if (scanline == 0) setFlag(RL::SYNC_THREAD);
         }
 
-        // Did we reach a breakpoint?
-        if (flags & RL::BREAKPOINT) {
-            clearFlag(RL::BREAKPOINT);
-            msgQueue.put(MSG_BREAKPOINT_REACHED, CpuMsg {u16(cpu.debugger.breakpointPC)});
-            switchState(EXEC_PAUSED);
-        }
-        
-        // Did we reach a watchpoint?
-        if (flags & RL::WATCHPOINT) {
-            clearFlag(RL::WATCHPOINT);
-            msgQueue.put(MSG_WATCHPOINT_REACHED, CpuMsg {u16(cpu.debugger.watchpointPC)});
-            switchState(EXEC_PAUSED);
-        }
-        
-        // Are we requested to terminate the run loop?
-        if (flags & RL::STOP) {
-            clearFlag(RL::STOP);
-            switchState(EXEC_PAUSED);
-        }
-        
-        // Are we requested to pull the NMI line down?
-        if (flags & RL::EXTERNAL_NMI) {
-            clearFlag(RL::EXTERNAL_NMI);
-            cpu.pullDownNmiLine(INTSRC_EXP);
-        }
-        
-        // Is the CPU jammed due the execution of an illegal instruction?
-        if (flags & RL::CPU_JAM) {
-            clearFlag(RL::CPU_JAM);
-            msgQueue.put(MSG_CPU_JAMMED);
-            switchState(EXEC_PAUSED);
-        }
+        //
+        // Process all runloop flags
+        //
 
-        // Are we requested to simulate a BRK instruction
-        if (flags & RL::EXTERNAL_BRK) {
-            clearFlag(RL::EXTERNAL_BRK);
-            cpu.next = BRK;
-            cpu.reg.pc0 = cpu.reg.pc - 1;
-        }
+        if (flags) {
 
-        // Are we requested to synchronize the thread?
-        if (flags & RL::SYNC_THREAD) {
-            clearFlag(RL::SYNC_THREAD);
-        }
+            // Are we requested to take a snapshot?
+            if (flags & RL::AUTO_SNAPSHOT) {
+                clearFlag(RL::AUTO_SNAPSHOT);
+                autoSnapshot = new Snapshot(*this);
+                msgQueue.put(MSG_AUTO_SNAPSHOT_TAKEN);
+            }
+            if (flags & RL::USER_SNAPSHOT) {
+                clearFlag(RL::USER_SNAPSHOT);
+                userSnapshot = new Snapshot(*this);
+                msgQueue.put(MSG_USER_SNAPSHOT_TAKEN);
+            }
 
-        assert(flags == 0);
+            // Did we reach a breakpoint?
+            if (flags & RL::BREAKPOINT) {
+                clearFlag(RL::BREAKPOINT);
+                msgQueue.put(MSG_BREAKPOINT_REACHED, CpuMsg {u16(cpu.debugger.breakpointPC)});
+                inspect();
+                switchState(EXEC_PAUSED);
+                break;
+            }
+
+            // Did we reach a watchpoint?
+            if (flags & RL::WATCHPOINT) {
+                clearFlag(RL::WATCHPOINT);
+                msgQueue.put(MSG_WATCHPOINT_REACHED, CpuMsg {u16(cpu.debugger.watchpointPC)});
+                inspect();
+                switchState(EXEC_PAUSED);
+                break;
+            }
+
+            // Are we requested to terminate the run loop?
+            if (flags & RL::STOP) {
+                clearFlag(RL::STOP);
+                switchState(EXEC_PAUSED);
+                break;
+            }
+
+            // Are we requested to pull the NMI line down?
+            if (flags & RL::EXTERNAL_NMI) {
+                clearFlag(RL::EXTERNAL_NMI);
+                cpu.pullDownNmiLine(INTSRC_EXP);
+            }
+
+            // Is the CPU jammed due the execution of an illegal instruction?
+            if (flags & RL::CPU_JAM) {
+                clearFlag(RL::CPU_JAM);
+                msgQueue.put(MSG_CPU_JAMMED);
+                switchState(EXEC_PAUSED);
+                break;
+            }
+
+            // Are we requested to simulate a BRK instruction
+            if (flags & RL::EXTERNAL_BRK) {
+                clearFlag(RL::EXTERNAL_BRK);
+                cpu.next = BRK;
+                cpu.reg.pc0 = cpu.reg.pc - 1;
+            }
+
+            // Are we requested to synchronize the thread?
+            if (flags & RL::SYNC_THREAD) {
+                clearFlag(RL::SYNC_THREAD);
+                break;
+            }
+
+            assert(flags == 0);
+
+            // Break the loop in pause mode
+            if (isPaused()) break;
+        }
     }
 }
 
@@ -1373,62 +1433,11 @@ C64::stepOver()
 }
 
 void
-C64::executeOneFrame()
-{
-    isize lastCycle = vic.getCyclesPerLine();
-
-    do {
-
-        Cycle cycle = ++cpu.clock;
-
-        //  <---------- o2 low phase ----------->|<- o2 high phase ->|
-        //                                       |                   |
-        // ,-- C64 ------------------------------|-------------------|--,
-        // |   ,-----,     ,-----,     ,-----,   |    ,-----,        |  |
-        // |   |     |     |     |     |     |   |    |     |        |  |
-        // '-->| VIC | --> | CIA | --> | CIA | --|--> | CPU | -------|--'
-        //     |     |     |  1  |     |  2  |   |    |     |        |
-        //     '-----'     '-----'     '-----'   |    '-----'        |
-        //                                  ,---------,              |
-        //                                  | IEC bus |              |
-        //                                  '---------'              |
-        //                                       |    ,--------,     |
-        //                                       |    |        |     |
-        // ,-- Drive ----------------------------|--> | VC1541 | ----|--,
-        // |                                     |    |        |     |  |
-        // |                                     |    '--------'     |  |
-        // '-------------------------------------|-------------------|--'
-
-        // First clock phase (o2 low)
-        (vic.*vic.vicfunc[rasterCycle])();
-        if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle();
-        if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle();
-        if (iec.isDirtyC64Side) iec.updateIecLinesC64Side();
-
-        // Process pending events
-        if (nextTrigger <= cycle) processEvents(cycle);
-
-        // Second clock phase (o2 high)
-        cpu.execute<MOS_6510>();
-        if (drive8.needsEmulation) drive8.execute(durationOfOneCycle);
-        if (drive9.needsEmulation) drive9.execute(durationOfOneCycle);
-
-        // Advance to the next raster cycle
-        if (rasterCycle++ == lastCycle) {
-
-            endScanline();
-            if (scanline == 0) setFlag(RL::SYNC_THREAD);
-        }
-
-    } while (!flags);
-}
-
-void
 C64::executeOneCycle()
 {
-    setFlag(RL::STOP);
-    executeOneFrame();
-    clearFlag(RL::STOP);
+    setFlag(RL::SYNC_THREAD);
+    execute();
+    clearFlag(RL::SYNC_THREAD);
 }
 
 void
