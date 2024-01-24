@@ -46,15 +46,15 @@ struct MemoryTypeEnum : util::Reflection<MemoryTypeEnum, MemoryType> {
     {
         switch (value) {
                 
-            case M_RAM:     return "M_RAM";
-            case M_CHAR:    return "M_CHAR";
-            case M_KERNAL:  return "M_KERNAL";
-            case M_BASIC:   return "M_BASIC";
-            case M_IO:      return "M_IO";
-            case M_CRTLO:   return "M_CRTLO";
-            case M_CRTHI:   return "M_CRTHI";
-            case M_PP:      return "M_PP";
-            case M_NONE:    return "M_NONE";
+            case M_RAM:     return "RAM";
+            case M_CHAR:    return "CHAR";
+            case M_KERNAL:  return "KERNAL";
+            case M_BASIC:   return "BASIC";
+            case M_IO:      return "IO";
+            case M_CRTLO:   return "CRTLO";
+            case M_CRTHI:   return "CRTHI";
+            case M_PP:      return "PP";
+            case M_NONE:    return "NONE";
             case M_COUNT:   return "???";
         }
         return "???";

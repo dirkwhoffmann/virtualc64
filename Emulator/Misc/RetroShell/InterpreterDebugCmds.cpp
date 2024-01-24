@@ -161,6 +161,31 @@ Interpreter::initDebugShell(Command &root)
         retroShell << '\n' << ss << '\n';
     });
 
+    root.add({"memory", "read"}, { Arg::address }, { MemoryTypeEnum::argList() },
+             "Reads a byte from memory",
+             [this](Arguments& argv, long value) {
+
+        auto addr = u16(parseNum(argv));
+        MemoryType type = argv.size() == 1 ? mem.peekSrc[addr >> 12] : parseEnum <MemoryTypeEnum> (argv, 1);
+        auto byte = mem.peek(addr, type);
+
+        std::stringstream ss;
+        ss << util::hex(addr) << ": " << util::hex(byte);
+        ss << " (" << MemoryTypeEnum::key(type) << ")\n";
+        retroShell << ss;
+    });
+
+    root.add({"memory", "write"}, { Arg::address, Arg::value }, { MemoryTypeEnum::argList() },
+             "Writes a byte into memory",
+             [this](Arguments& argv, long value) {
+
+        auto addr = u16(parseNum(argv, 0));
+        auto byte = u8(parseNum(argv, 1));
+        MemoryType type = argv.size() == 2 ? mem.pokeTarget[addr >> 12] : parseEnum <MemoryTypeEnum> (argv, 2);
+
+        mem.poke(addr, byte, type);
+    });
+
 
     //
     // Drive

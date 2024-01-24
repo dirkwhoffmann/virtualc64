@@ -1007,9 +1007,7 @@ C64::execute()
 
     isize lastCycle = vic.getCyclesPerLine();
 
-    while(1) {
-
-        Cycle cycle = ++cpu.clock;
+    while (1) {
 
         //  <---------- o2 low phase ----------->|<- o2 high phase ->|
         //                                       |                   |
@@ -1028,6 +1026,8 @@ C64::execute()
         // |                                     |    |        |     |  |
         // |                                     |    '--------'     |  |
         // '-------------------------------------|-------------------|--'
+
+        Cycle cycle = ++cpu.clock;
 
         // First clock phase (o2 low)
         (vic.*vic.vicfunc[rasterCycle])();
