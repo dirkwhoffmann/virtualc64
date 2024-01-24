@@ -792,7 +792,7 @@ VICII::cycle64()
     
     // Phi2.5 Fetch
     sAccess3 <flags,2> ();
-    
+
     END_CYCLE
 }
 

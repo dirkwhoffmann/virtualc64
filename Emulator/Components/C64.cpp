@@ -1047,85 +1047,87 @@ C64::execute()
         if (rasterCycle++ == lastCycle) {
 
             endScanline();
-            if (scanline == 0) setFlag(RL::SYNC_THREAD);
+            if (scanline == 0) { (void)processFlags(); break; }
         }
 
-        //
-        // Process all runloop flags
-        //
-
-        if (flags) {
-
-            // Are we requested to take a snapshot?
-            if (flags & RL::AUTO_SNAPSHOT) {
-                clearFlag(RL::AUTO_SNAPSHOT);
-                autoSnapshot = new Snapshot(*this);
-                msgQueue.put(MSG_AUTO_SNAPSHOT_TAKEN);
-            }
-            if (flags & RL::USER_SNAPSHOT) {
-                clearFlag(RL::USER_SNAPSHOT);
-                userSnapshot = new Snapshot(*this);
-                msgQueue.put(MSG_USER_SNAPSHOT_TAKEN);
-            }
-
-            // Did we reach a breakpoint?
-            if (flags & RL::BREAKPOINT) {
-                clearFlag(RL::BREAKPOINT);
-                msgQueue.put(MSG_BREAKPOINT_REACHED, CpuMsg {u16(cpu.debugger.breakpointPC)});
-                inspect();
-                switchState(EXEC_PAUSED);
-                break;
-            }
-
-            // Did we reach a watchpoint?
-            if (flags & RL::WATCHPOINT) {
-                clearFlag(RL::WATCHPOINT);
-                msgQueue.put(MSG_WATCHPOINT_REACHED, CpuMsg {u16(cpu.debugger.watchpointPC)});
-                inspect();
-                switchState(EXEC_PAUSED);
-                break;
-            }
-
-            // Are we requested to terminate the run loop?
-            if (flags & RL::STOP) {
-                clearFlag(RL::STOP);
-                switchState(EXEC_PAUSED);
-                break;
-            }
-
-            // Are we requested to pull the NMI line down?
-            if (flags & RL::EXTERNAL_NMI) {
-                clearFlag(RL::EXTERNAL_NMI);
-                cpu.pullDownNmiLine(INTSRC_EXP);
-            }
-
-            // Is the CPU jammed due the execution of an illegal instruction?
-            if (flags & RL::CPU_JAM) {
-                clearFlag(RL::CPU_JAM);
-                msgQueue.put(MSG_CPU_JAMMED);
-                switchState(EXEC_PAUSED);
-                break;
-            }
-
-            // Are we requested to simulate a BRK instruction
-            if (flags & RL::EXTERNAL_BRK) {
-                clearFlag(RL::EXTERNAL_BRK);
-                cpu.next = BRK;
-                cpu.reg.pc0 = cpu.reg.pc - 1;
-            }
-
-            // Are we requested to synchronize the thread?
-            if (flags & RL::SYNC_THREAD) {
-                clearFlag(RL::SYNC_THREAD);
-                break;
-            }
-
-            assert(flags == 0);
-
-            // Break the loop in pause mode
-            if (isPaused()) break;
-        }
+        // Process pending flags
+        if (flags && processFlags()) break;
     }
+}
+
+bool
+C64::processFlags()
+{
+    // The following flags will terminate the loop
+    bool exit = flags & (RL::BREAKPOINT |
+                         RL::WATCHPOINT |
+                         RL::STOP |
+                         RL::CPU_JAM |
+                         RL::SINGLE_STEP);
+
+    // Are we requested to take an auto-snapshot?
+    if (flags & RL::AUTO_SNAPSHOT) {
+        clearFlag(RL::AUTO_SNAPSHOT);
+        autoSnapshot = new Snapshot(*this);
+        msgQueue.put(MSG_AUTO_SNAPSHOT_TAKEN);
+    }
+
+    // Are we requested to take a user-snapshot?
+    if (flags & RL::USER_SNAPSHOT) {
+        clearFlag(RL::USER_SNAPSHOT);
+        userSnapshot = new Snapshot(*this);
+        msgQueue.put(MSG_USER_SNAPSHOT_TAKEN);
+    }
+
+    // Did we reach a breakpoint?
+    if (flags & RL::BREAKPOINT) {
+        clearFlag(RL::BREAKPOINT);
+        msgQueue.put(MSG_BREAKPOINT_REACHED, CpuMsg {u16(cpu.debugger.breakpointPC)});
+        inspect();
+        switchState(EXEC_PAUSED);
+    }
+
+    // Did we reach a watchpoint?
+    if (flags & RL::WATCHPOINT) {
+        clearFlag(RL::WATCHPOINT);
+        msgQueue.put(MSG_WATCHPOINT_REACHED, CpuMsg {u16(cpu.debugger.watchpointPC)});
+        inspect();
+        switchState(EXEC_PAUSED);
+    }
+
+    // Are we requested to terminate the run loop?
+    if (flags & RL::STOP) {
+        clearFlag(RL::STOP);
+        switchState(EXEC_PAUSED);
+    }
+
+    // Are we requested to pull the NMI line down?
+    if (flags & RL::EXTERNAL_NMI) {
+        clearFlag(RL::EXTERNAL_NMI);
+        cpu.pullDownNmiLine(INTSRC_EXP);
+    }
+
+    // Is the CPU jammed due the execution of an illegal instruction?
+    if (flags & RL::CPU_JAM) {
+        clearFlag(RL::CPU_JAM);
+        msgQueue.put(MSG_CPU_JAMMED);
+        switchState(EXEC_PAUSED);
+    }
+
+    // Are we requested to simulate a BRK instruction
+    if (flags & RL::EXTERNAL_BRK) {
+        clearFlag(RL::EXTERNAL_BRK);
+        cpu.next = BRK;
+        cpu.reg.pc0 = cpu.reg.pc - 1;
+    }
+
+    // Are we requested to run for a single cycle?
+    if (flags & RL::SINGLE_STEP) {
+        clearFlag(RL::SINGLE_STEP);
+    }
+
+    assert(flags == 0);
+    return exit;
 }
 
 double
@@ -1435,9 +1437,9 @@ C64::stepOver()
 void
 C64::executeOneCycle()
 {
-    setFlag(RL::SYNC_THREAD);
+    setFlag(RL::SINGLE_STEP);
     execute();
-    clearFlag(RL::SYNC_THREAD);
+    clearFlag(RL::SINGLE_STEP);
 }
 
 void

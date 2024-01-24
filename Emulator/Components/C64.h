@@ -386,6 +386,7 @@ private:
 
     ThreadMode getThreadMode() const override;
     void execute() override;
+    bool processFlags();
 
 public:
 

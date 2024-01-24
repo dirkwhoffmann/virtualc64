@@ -377,7 +377,8 @@ constexpr u32 USER_SNAPSHOT = (1 << 7);
 constexpr u32 CPU_JAM       = (1 << 8);
 constexpr u32 EXTERNAL_NMI  = (1 << 9);
 constexpr u32 EXTERNAL_BRK  = (1 << 10);
-constexpr u32 SYNC_THREAD   = (1 << 11);
+constexpr u32 SINGLE_STEP   = (1 << 11);
+
 };
 
 #endif
