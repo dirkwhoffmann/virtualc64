@@ -1025,6 +1025,8 @@ C64::execute()
 template <bool enable8, bool enable9> void
 C64::execute()
 {
+    bool exit = false;
+
     cpu.debugger.watchpointPC = -1;
     cpu.debugger.breakpointPC = -1;
 
@@ -1034,58 +1036,66 @@ C64::execute()
 
     isize lastCycle = vic.getCyclesPerLine();
 
-    while (1) {
+    do {
 
-        //  <---------- o2 low phase ----------->|<- o2 high phase ->|
-        //                                       |                   |
-        // ,-- C64 ------------------------------|-------------------|--,
-        // |   ,-----,     ,-----,     ,-----,   |    ,-----,        |  |
-        // |   |     |     |     |     |     |   |    |     |        |  |
-        // '-->| VIC | --> | CIA | --> | CIA | --|--> | CPU | -------|--'
-        //     |     |     |  1  |     |  2  |   |    |     |        |
-        //     '-----'     '-----'     '-----'   |    '-----'        |
-        //                                       |                   |
-        //                                       |                   |
-        //                                       |                   |
-        //                                       |    ,--------,     |
-        //                                       |    |        |     |
-        // ,-- Drive ----------------------------|--> | VC1541 | ----|--,
-        // |                                     |    |        |     |  |
-        // |                                     |    '--------'     |  |
-        // '-------------------------------------|-------------------|--'
+        // Emulate the (rest of the) current scanline
+        for (; rasterCycle <= lastCycle; rasterCycle++) {
 
-        Cycle cycle = ++cpu.clock;
+            //  <---------- o2 low phase ----------->|<- o2 high phase ->|
+            //                                       |                   |
+            // ,-- C64 ------------------------------|-------------------|--,
+            // |   ,-----,     ,-----,     ,-----,   |    ,-----,        |  |
+            // |   |     |     |     |     |     |   |    |     |        |  |
+            // '-->| CIA | --> | CIA | --> | VIC | --|--> | CPU | -------|--'
+            //     |  1  |     |  2  |     |     |   |    |     |        |
+            //     '-----'     '-----'     '-----'   |    '-----'        |
+            //                                       |                   |
+            //                                       |                   |
+            //                                       |                   |
+            //                                       |    ,--------,     |
+            //                                       |    |        |     |
+            // ,-- Drive ----------------------------|--> | VC1541 | ----|--,
+            // |                                     |    |        |     |  |
+            // |                                     |    '--------'     |  |
+            // '-------------------------------------|-------------------|--'
 
-        //
-        // First clock phase (o2 low)
-        //
+            Cycle cycle = ++cpu.clock;
 
-        if (nextTrigger <= cycle) processEvents(cycle);
-        (vic.*vic.vicfunc[rasterCycle])();
+            //
+            // First clock phase (o2 low)
+            //
 
-
-        //
-        // Second clock phase (o2 high)
-        //
-
-        if (nextTrigger <= cycle) processEvents(cycle);
-        cpu.execute<MOS_6510>();
-        if constexpr (enable8) { if (drive8.needsEmulation) drive8.execute(durationOfOneCycle); }
-        if constexpr (enable9) { if (drive9.needsEmulation) drive9.execute(durationOfOneCycle); }
+            if (nextTrigger <= cycle) processEvents(cycle);
+            (vic.*vic.vicfunc[rasterCycle])();
 
 
-        //
-        // Finish cycle
-        //
+            //
+            // Second clock phase (o2 high)
+            //
 
-        if (rasterCycle++ == lastCycle) {
+            if (nextTrigger <= cycle) processEvents(cycle);
+            cpu.execute<MOS_6510>();
+            if constexpr (enable8) { if (drive8.needsEmulation) drive8.execute(durationOfOneCycle); }
+            if constexpr (enable9) { if (drive9.needsEmulation) drive9.execute(durationOfOneCycle); }
 
-            endScanline();
-            if (scanline == 0) { (void)processFlags(); break; }
+
+            //
+            // Process run loop flags
+            //
+
+            if (flags && processFlags()) { rasterCycle++; exit = true; break; }
         }
 
-        if (flags && processFlags()) break;
-    }
+        if (rasterCycle > lastCycle) {
+
+            // Finish the current scanline
+            endScanline();
+
+            // Terminate the loop if an entire frame has been emulated
+            if (scanline == 0) exit = true;
+        }
+
+    } while (!exit);
 }
 
 bool
