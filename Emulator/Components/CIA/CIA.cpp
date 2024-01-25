@@ -142,8 +142,8 @@ CIA::_inspect() const
         info.todIntEnable= imr & 0x04;
         
         info.idleSince = idleSince();
-        info.idleTotal = idleTotal();
-        info.idlePercentage =  cpu.clock ? (double)idleCycles / (double)cpu.clock : 100.0;
+        info.idleTotal = idleTotal() + info.idleSince;
+        info.idlePercentage =  cpu.clock ? (double)info.idleTotal / (double)cpu.clock : 100.0;
     }
 }
 

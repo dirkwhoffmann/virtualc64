@@ -14,7 +14,7 @@ extension Inspector {
     
     private func cacheCIA() {
 
-        ciaInfo = cia1 ? c64.cia1.getInfo() : c64.cia1.getInfo()
+        ciaInfo = cia1 ? c64.cia1.getInfo() : c64.cia2.getInfo()
     }
 
     func refreshCIA(count: Int = 0, full: Bool = false) {
