@@ -386,6 +386,7 @@ private:
 
     ThreadMode getThreadMode() const override;
     void execute() override;
+    template <bool enable8, bool enable9> void execute();
     bool processFlags();
 
 public:

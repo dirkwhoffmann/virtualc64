@@ -1010,6 +1010,21 @@ C64::getThreadMode() const
 void
 C64::execute()
 {
+    switch ((drive8.isPoweredOn() ? 2 : 0) + (drive9.isPoweredOn() ? 1 : 0)) {
+
+        case 0b00: execute <false,false> (); break;
+        case 0b01: execute <false,true>  (); break;
+        case 0b10: execute <true,false>  (); break;
+        case 0b11: execute <true,true>   (); break;
+
+        default:
+            fatalError;
+    }
+}
+
+template <bool enable8, bool enable9> void
+C64::execute()
+{
     cpu.debugger.watchpointPC = -1;
     cpu.debugger.breakpointPC = -1;
 
@@ -1029,9 +1044,9 @@ C64::execute()
         // '-->| VIC | --> | CIA | --> | CIA | --|--> | CPU | -------|--'
         //     |     |     |  1  |     |  2  |   |    |     |        |
         //     '-----'     '-----'     '-----'   |    '-----'        |
-        //                                  ,---------,              |
-        //                                  | IEC bus |              |
-        //                                  '---------'              |
+        //                                       |                   |
+        //                                       |                   |
+        //                                       |                   |
         //                                       |    ,--------,     |
         //                                       |    |        |     |
         // ,-- Drive ----------------------------|--> | VC1541 | ----|--,
@@ -1055,8 +1070,8 @@ C64::execute()
 
         if (nextTrigger <= cycle) processEvents(cycle);
         cpu.execute<MOS_6510>();
-        if (drive8.needsEmulation) drive8.execute(durationOfOneCycle);
-        if (drive9.needsEmulation) drive9.execute(durationOfOneCycle);
+        if constexpr (enable8) { if (drive8.needsEmulation) drive8.execute(durationOfOneCycle); }
+        if constexpr (enable9) { if (drive9.needsEmulation) drive9.execute(durationOfOneCycle); }
 
 
         //
@@ -1068,6 +1083,8 @@ C64::execute()
             endScanline();
             if (scanline == 0) { (void)processFlags(); break; }
         }
+
+        if (flags && processFlags()) break;
     }
 }
 
