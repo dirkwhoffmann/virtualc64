@@ -36,7 +36,7 @@ namespace vc64 {
 template <u16 flags> void
 VICII::cycle1()
 {
-    c64.beginScanline();
+    beginScanline();
     
     // Phi2.5 Fetch (previous cycle)
     PAL  { sAccess3 <flags,2> (); }

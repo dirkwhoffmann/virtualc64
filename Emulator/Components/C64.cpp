@@ -1010,6 +1010,9 @@ C64::getThreadMode() const
 void
 C64::execute()
 {
+    cpu.debugger.watchpointPC = -1;
+    cpu.debugger.breakpointPC = -1;
+
     switch ((drive8.isPoweredOn() ? 2 : 0) + (drive9.isPoweredOn() ? 1 : 0)) {
 
         case 0b00: execute <false,false> (); break;
@@ -1026,21 +1029,20 @@ template <bool enable8, bool enable9> void
 C64::execute()
 {
     bool exit = false;
-
-    cpu.debugger.watchpointPC = -1;
-    cpu.debugger.breakpointPC = -1;
-
-    //
-    // Run the emulator for one cycle
-    //
-
     isize lastCycle = vic.getCyclesPerLine();
 
     do {
 
-        // Emulate the (rest of the) current scanline
+        //
+        // Run the emulator for the (rest of the) current scanline
+        //
+
         for (; rasterCycle <= lastCycle; rasterCycle++) {
 
+            //
+            // Run the emulator for one cycle
+            //
+            
             //  <---------- o2 low phase ----------->|<- o2 high phase ->|
             //                                       |                   |
             // ,-- C64 ------------------------------|-------------------|--,
@@ -1495,13 +1497,6 @@ void
 C64::finishFrame()
 {
     while (scanline != 0 || rasterCycle > 1) executeOneCycle();
-}
-
-void
-C64::beginScanline()
-{
-    if (scanline == 0) vic.beginFrame();
-    vic.beginScanline(scanline);
 }
 
 void

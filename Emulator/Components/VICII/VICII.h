@@ -1125,7 +1125,7 @@ public:
     /* Prepares VICII for drawing a new scanline. This function is called
      * prior to the first cycle of each scanline.
      */
-    void beginScanline(u16 line);
+    void beginScanline();
 
     /* Finishes up a scanline. This function is called after the last cycle
      * of each scanline.

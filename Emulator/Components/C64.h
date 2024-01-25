@@ -466,9 +466,6 @@ public:
     
     // Finishes the current frame
     void finishFrame();
-
-    // Invoked before executing the first cycle of a scanline
-    void beginScanline();
     
 private:
 

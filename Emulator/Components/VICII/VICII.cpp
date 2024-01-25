@@ -1142,8 +1142,14 @@ VICII::processDelayedActions()
 }
 
 void 
-VICII::beginScanline(u16 line)
+VICII::beginScanline()
 {
+    u16 line = c64.scanline;
+
+    // Check if a new frame begins
+    if (line == 0) beginFrame();
+
+    // Reset some variables
     verticalFrameFFsetCond = false;
 
     // Adjust the texture pointers
