@@ -1075,7 +1075,6 @@ C64::execute()
             // Second clock phase (o2 high)
             //
 
-            if (nextTrigger <= cycle) processEvents(cycle);
             cpu.execute<MOS_6510>();
             if constexpr (enable8) { if (drive8.needsEmulation) drive8.execute(durationOfOneCycle); }
             if constexpr (enable9) { if (drive9.needsEmulation) drive9.execute(durationOfOneCycle); }
