@@ -281,10 +281,48 @@ CIA::todInterrupt()
 }
 
 void
+CIA::serviceEvent(EventID id)
+{
+    switch(id) {
+
+        case CIA_EXECUTE:
+
+            executeOneCycle();
+            break;
+
+        case CIA_WAKEUP:
+
+            wakeUp();
+            break;
+
+        default:
+            fatalError;
+    }
+}
+
+void
+CIA::scheduleNextExecution()
+{
+    if (isCIA1()) {
+        c64.scheduleRel<SLOT_CIA1>(1, CIA_EXECUTE);
+    } else {
+        c64.scheduleRel<SLOT_CIA2>(1, CIA_EXECUTE);
+    }
+}
+
+void
+CIA::scheduleWakeUp()
+{
+    if (isCIA1()) {
+        c64.scheduleAbs<SLOT_CIA1>(wakeUpCycle, CIA_WAKEUP);
+    } else {
+        c64.scheduleAbs<SLOT_CIA2>(wakeUpCycle, CIA_WAKEUP);
+    }
+}
+
+void
 CIA::executeOneCycle()
 {
-    if (sleeping) wakeUp(cpu.clock - 1);
-    
     // Make a local copy for speed
     u64 delay = this->delay;
     
@@ -612,7 +650,13 @@ CIA::executeOneCycle()
     this->delay = delay;
     
     // Sleep if threshold is reached
-    if (tiredness > 8 && !CIA_ON_STEROIDS) sleep();
+    // if (tiredness > 8 && !CIA_ON_STEROIDS) sleep();
+    if (tiredness > 8 && !CIA_ON_STEROIDS) {
+        sleep();
+        scheduleWakeUp();
+    } else {
+        scheduleNextExecution();
+    }
 }
 
 void
@@ -632,23 +676,18 @@ CIA::sleep()
     // ZZzzz
     sleepCycle = cpu.clock;
     wakeUpCycle = std::min(sleepA, sleepB);;
-    tiredness = 0;
     sleeping = true;
+    tiredness = 0;
 }
 
 void
 CIA::wakeUp()
 {
-    wakeUp(cpu.clock);
-}
-
-void
-CIA::wakeUp(Cycle targetCycle)
-{
     if (!sleeping) return;
+    sleeping = false;
 
     // Calculate the number of missed cycles
-    wakeUpCycle = targetCycle;
+    wakeUpCycle = cpu.clock;
     Cycle missedCycles = wakeUpCycle - sleepCycle;
     
     // Make up for missed cycles
@@ -666,7 +705,8 @@ CIA::wakeUp(Cycle targetCycle)
         idleCycles += missedCycles;
     }
 
-    sleeping = false;
+    // Schedule the next execution event
+    scheduleNextExecution();
 }
 
 Cycle

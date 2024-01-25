@@ -13,6 +13,7 @@
 #pragma once
 
 #include "CIATypes.h"
+#include "C64Types.h"
 #include "SubComponent.h"
 #include "TOD.h"
 
@@ -496,6 +497,22 @@ public:
     
 
     //
+    // Handling events
+    //
+
+public:
+
+    // Services an event in the CIA slot
+    void serviceEvent(EventID id);
+
+    // Schedules the next execution event
+    void scheduleNextExecution();
+
+    // Schedules the next wakeup event
+    void scheduleWakeUp();
+
+
+    //
     // Executing
     //
     
@@ -518,7 +535,6 @@ public:
 
     // Emulates all previously skipped cycles
     void wakeUp();
-    void wakeUp(Cycle targetCycle);
     
     // Returns true if the CIA is in idle state
     bool isSleeping() const { return sleeping; }

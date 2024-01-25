@@ -57,8 +57,8 @@ C64::eventName(EventSlot slot, EventID id)
 
     switch (slot) {
 
-        case SLOT_CIAA:
-        case SLOT_CIAB:
+        case SLOT_CIA1:
+        case SLOT_CIA2:
 
             switch (id) {
                 case EVENT_NONE:    return "none";
@@ -312,6 +312,8 @@ C64::_reset(bool hard)
     }
 
     // Schedule initial events
+    scheduleAbs<SLOT_CIA1>(cpu.clock, CIA_EXECUTE);
+    scheduleAbs<SLOT_CIA2>(cpu.clock, CIA_EXECUTE);
     scheduleAbs<SLOT_WBT>(SEC(config.warpBoot), WBT_DISABLE);
     if (insEvent) scheduleRel <SLOT_INS> (0, insEvent);
 
@@ -1043,12 +1045,7 @@ C64::execute()
         // First clock phase (o2 low)
         //
 
-        // Process pending events
         if (nextTrigger <= cycle) processEvents(cycle);
-
-        // Run VIC and CIAs
-        if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle();
-        if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle();
         (vic.*vic.vicfunc[rasterCycle])();
 
 
@@ -1056,10 +1053,7 @@ C64::execute()
         // Second clock phase (o2 high)
         //
 
-        // Process pending events
         if (nextTrigger <= cycle) processEvents(cycle);
-
-        // Run CPU and Drives
         cpu.execute<MOS_6510>();
         if (drive8.needsEmulation) drive8.execute(durationOfOneCycle);
         if (drive9.needsEmulation) drive9.execute(durationOfOneCycle);
@@ -1526,15 +1520,11 @@ C64::processEvents(Cycle cycle)
     // Check primary slots
     //
 
-    if (isDue<SLOT_CIAA>(cycle)) {
-
-        // NOT USED, YET
-        assert(false);
+    if (isDue<SLOT_CIA1>(cycle)) {
+        cia1.serviceEvent(id[SLOT_CIA1]);
     }
-    if (isDue<SLOT_CIAB>(cycle)) {
-
-        // NOT USED, YET
-        assert(false);
+    if (isDue<SLOT_CIA2>(cycle)) {
+        cia2.serviceEvent(id[SLOT_CIA2]);
     }
 
     if (isDue<SLOT_SEC>(cycle)) {

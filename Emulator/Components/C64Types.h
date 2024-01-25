@@ -58,8 +58,8 @@ struct C64ModelEnum : util::Reflection<C64ModelEnum, C64Model> {
 enum_long(SLOT)
 {
     // Primary slots
-    SLOT_CIAA,                      // CIA 1 execution
-    SLOT_CIAB,                      // CIA 2 execution
+    SLOT_CIA1,                      // CIA 1 execution
+    SLOT_CIA2,                      // CIA 2 execution
     SLOT_SEC,                       // Enables secondary slots
 
     // Secondary slots
@@ -93,8 +93,8 @@ struct EventSlotEnum : util::Reflection<EventSlotEnum, EventSlot>
     {
         switch (value) {
 
-            case SLOT_CIAA:     return "CIAA";
-            case SLOT_CIAB:     return "CIAB";
+            case SLOT_CIA1:     return "CIA1";
+            case SLOT_CIA2:     return "CIA2";
             case SLOT_SEC:      return "SEC";
 
             case SLOT_IEC:      return "IEC";

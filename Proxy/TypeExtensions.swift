@@ -13,24 +13,24 @@ extension EventSlot: CustomStringConvertible {
 
         switch self {
 
-        case .CIAA:     return "CIA 1"
-        case .CIAB:     return "CIA 2"
-        case .SEC:      return "Next Secondary Event"
+        case ._CIA1:    return "CIA 1"
+        case ._CIA2:    return "CIA 2"
+        case ._SEC:     return "Next Secondary Event"
 
-        case .IEC:      return "IEC Bus"
-        case .DAT:      return "Datasette Data"
-        case .TER:      return "Next Tertiary Event"
+        case ._IEC:     return "IEC Bus"
+        case ._DAT:     return "Datasette Data"
+        case ._TER:     return "Next Tertiary Event"
 
-        case .MOT:      return "Datasette Motor"
-        case .DC8:      return "Disk Change Drive 8"
-        case .DC9:      return "Disk Change Drive 9"
-        case .RSH:      return "Retro Shell"
-        case .KEY:      return "Auto Typing"
-        case .WBT:      return "Warp Boot"
-        case .ALA:      return "Alarms"
-        case .INS:      return "Inspector"
+        case ._MOT:     return "Datasette Motor"
+        case ._DC8:     return "Disk Change Drive 8"
+        case ._DC9:     return "Disk Change Drive 9"
+        case ._RSH:     return "Retro Shell"
+        case ._KEY:     return "Auto Typing"
+        case ._WBT:     return "Warp Boot"
+        case ._ALA:     return "Alarms"
+        case ._INS:     return "Inspector"
 
-        case .COUNT:    return "???"
+        case ._COUNT:   return "???"
 
         default:        fatalError()
         }

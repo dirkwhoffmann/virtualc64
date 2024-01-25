@@ -13,7 +13,7 @@ class EventTableView: NSTableView {
 
     var c64: C64Proxy { return inspector.c64 }
 
-    var slotInfo = [EventSlotInfo?](repeating: nil, count: EventSlot.COUNT.rawValue)
+    var slotInfo = [EventSlotInfo?](repeating: nil, count: EventSlot._COUNT.rawValue)
 
     override func awakeFromNib() {
 
@@ -23,7 +23,7 @@ class EventTableView: NSTableView {
     }
 
     private func cache() {
-        for row in 0 ..< EventSlot.COUNT.rawValue {
+        for row in 0 ..< EventSlot._COUNT.rawValue {
             slotInfo[row] = c64.getEventSlotInfo(row)
         }
     }
@@ -39,7 +39,7 @@ extension EventTableView: NSTableViewDataSource {
 
     func numberOfRows(in tableView: NSTableView) -> Int {
 
-        return EventSlot.COUNT.rawValue
+        return EventSlot._COUNT.rawValue
     }
 
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
