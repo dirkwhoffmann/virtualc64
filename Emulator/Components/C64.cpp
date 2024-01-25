@@ -1029,29 +1029,43 @@ C64::execute()
 
         Cycle cycle = ++cpu.clock;
 
+        //
         // First clock phase (o2 low)
-        (vic.*vic.vicfunc[rasterCycle])();
-        if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle();
-        if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle();
-        if (iec.isDirtyC64Side) iec.updateIecLinesC64Side();
+        //
 
         // Process pending events
         if (nextTrigger <= cycle) processEvents(cycle);
 
+        // Run VIC and CIAs
+        (vic.*vic.vicfunc[rasterCycle])();
+        if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle();
+        if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle();
+        if (iec.isDirtyC64Side || iec.isDirtyDriveSide) iec.update();
+
+
+        //
         // Second clock phase (o2 high)
+        //
+
+        // Process pending events
+        if (nextTrigger <= cycle) processEvents(cycle);
+
+        // Run CPU and Drives
         cpu.execute<MOS_6510>();
         if (drive8.needsEmulation) drive8.execute(durationOfOneCycle);
         if (drive9.needsEmulation) drive9.execute(durationOfOneCycle);
+        if (iec.isDirtyC64Side || iec.isDirtyDriveSide) iec.update();
 
-        // Advance to the next raster cycle
+
+        //
+        // Finish cycle
+        //
+
         if (rasterCycle++ == lastCycle) {
 
             endScanline();
             if (scanline == 0) { (void)processFlags(); break; }
         }
-
-        // Process pending flags
-        if (flags && processFlags()) break;
     }
 }
 

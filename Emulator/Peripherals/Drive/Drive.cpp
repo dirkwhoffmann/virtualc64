@@ -515,8 +515,6 @@ Drive::execute(u64 duration)
             if (cycle >= via1.wakeUpCycle) via1.execute(); else via1.idleCounter++;
             if (cycle >= via2.wakeUpCycle) via2.execute(); else via2.idleCounter++;
             updateByteReady();
-            if (iec.isDirtyDriveSide) iec.updateIecLinesDriveSide();
-
             nextClock += 10000;
 
         } else {

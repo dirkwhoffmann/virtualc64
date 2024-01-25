@@ -133,8 +133,7 @@ public:
     /* Updates all three bus lines. The new values are determined by VIA1
      * (drive side) and CIA2 (C64 side).
      */
-    void updateIecLinesC64Side();
-    void updateIecLinesDriveSide();
+    void update();
 
     /* Execution function for observing the bus activity. This method is
      * invoked periodically. It's purpose is to determines if data is
@@ -143,7 +142,7 @@ public:
     void execute();
     
     // Returns true if data is currently transferred over the bus
-    bool isTransferring() { return transferring; }
+    bool isTransferring() const { return transferring; }
     
     // Updates variable transferring
     void updateTransferStatus();

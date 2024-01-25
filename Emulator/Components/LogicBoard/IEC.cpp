@@ -129,22 +129,15 @@ IEC::updateIecLines()
     }
 }
 
-void
-IEC::updateIecLinesC64Side()
+void 
+IEC::update()
 {
     // Get bus signals from C64 side
     u8 ciaBits = cia2.getPA();
     ciaAtn = !!(ciaBits & 0x08);
     ciaClock = !!(ciaBits & 0x10);
     ciaData = !!(ciaBits & 0x20);
-    
-    updateIecLines();
-    isDirtyC64Side = false;
-}
 
-void
-IEC::updateIecLinesDriveSide()
-{
     // Get bus signals from drive 1
     u8 device1Bits = drive8.via1.getPB();
     device1Atn = !!(device1Bits & 0x10);
@@ -156,8 +149,9 @@ IEC::updateIecLinesDriveSide()
     device2Atn = !!(device2Bits & 0x10);
     device2Clock = !!(device2Bits & 0x08);
     device2Data = !!(device2Bits & 0x02);
-    
+
     updateIecLines();
+    isDirtyC64Side = false;
     isDirtyDriveSide = false;
 }
 
