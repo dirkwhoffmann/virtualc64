@@ -25,18 +25,6 @@ public:
     bool clockLine;
     bool dataLine;
 
-    /* Indicates if the bus lines variables need an undate, because the values
-     * coming from the C64 side have changed.
-     * DEPRECATED
-     */
-    bool isDirtyC64Side;
-
-    /* Indicates if the bus lines variables need an undate, because the values
-     * coming from the drive side have changed.
-     * DEPRECATED
-     */
-    bool isDirtyDriveSide;
-
     // Bus driving values from drive 1
     bool device1Atn;
     bool device1Clock;
@@ -96,8 +84,6 @@ private:
         << atnLine
         << clockLine
         << dataLine
-        << isDirtyC64Side
-        << isDirtyDriveSide
         << device1Atn
         << device1Clock
         << device1Data
@@ -122,13 +108,8 @@ private:
     
 public:
     
-    // Requensts an update of the bus lines from the C64 side
-    // DEPRECATED
-    void setNeedsUpdateC64Side(); // { isDirtyC64Side = true; }
-
-    // Requensts an update of the bus lines from the drive side
-    // DEPRECATED
-    void setNeedsUpdateDriveSide(); // { isDirtyDriveSide = true; }
+    // Schedules an update event for the IEC bus
+    void setNeedsUpdate();
 
     /* Updates all three bus lines. The new values are determined by VIA1
      * (drive side) and CIA2 (C64 side).

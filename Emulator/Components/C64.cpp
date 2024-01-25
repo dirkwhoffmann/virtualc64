@@ -1050,7 +1050,6 @@ C64::execute()
         (vic.*vic.vicfunc[rasterCycle])();
         if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle();
         if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle();
-        // if (iec.isDirtyC64Side || iec.isDirtyDriveSide) iec.update();
 
 
         //
@@ -1064,7 +1063,6 @@ C64::execute()
         cpu.execute<MOS_6510>();
         if (drive8.needsEmulation) drive8.execute(durationOfOneCycle);
         if (drive9.needsEmulation) drive9.execute(durationOfOneCycle);
-        // if (iec.isDirtyC64Side || iec.isDirtyDriveSide) iec.update();
 
 
         //

@@ -851,9 +851,7 @@ void
 CIA2::updatePA()
 {
     PA = computePA();
-
-    // Mark IEC bus as dirty
-    iec.setNeedsUpdateC64Side();
+    iec.setNeedsUpdate();
 }
 
 u8

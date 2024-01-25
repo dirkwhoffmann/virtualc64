@@ -130,16 +130,8 @@ IEC::updateIecLines()
 }
 
 void 
-IEC::setNeedsUpdateC64Side()
+IEC::setNeedsUpdate()
 {
-    isDirtyC64Side = true;
-    c64.scheduleImm<SLOT_IEC>(IEC_UPDATE);
-}
-
-void 
-IEC::setNeedsUpdateDriveSide()
-{
-    isDirtyDriveSide = true;
     c64.scheduleImm<SLOT_IEC>(IEC_UPDATE);
 }
 
@@ -165,8 +157,6 @@ IEC::update()
     device2Data = !!(device2Bits & 0x02);
 
     updateIecLines();
-    isDirtyC64Side = false;
-    isDirtyDriveSide = false;
 
     c64.cancel<SLOT_IEC>();
 }
