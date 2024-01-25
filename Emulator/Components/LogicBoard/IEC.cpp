@@ -130,6 +130,20 @@ IEC::updateIecLines()
 }
 
 void 
+IEC::setNeedsUpdateC64Side()
+{
+    isDirtyC64Side = true;
+    c64.scheduleImm<SLOT_IEC>(IEC_UPDATE);
+}
+
+void 
+IEC::setNeedsUpdateDriveSide()
+{
+    isDirtyDriveSide = true;
+    c64.scheduleImm<SLOT_IEC>(IEC_UPDATE);
+}
+
+void
 IEC::update()
 {
     // Get bus signals from C64 side
@@ -153,6 +167,8 @@ IEC::update()
     updateIecLines();
     isDirtyC64Side = false;
     isDirtyDriveSide = false;
+
+    c64.cancel<SLOT_IEC>();
 }
 
 void

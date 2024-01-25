@@ -17,6 +17,7 @@ extension EventSlot: CustomStringConvertible {
         case .CIAB:     return "CIA 2"
         case .SEC:      return "Next Secondary Event"
 
+        case .IEC:      return "IEC Bus"
         case .DAT:      return "Datasette Data"
         case .TER:      return "Next Tertiary Event"
 

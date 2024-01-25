@@ -78,6 +78,16 @@ C64::eventName(EventSlot slot, EventID id)
             }
             break;
 
+        case SLOT_IEC:
+
+            switch (id) {
+
+                case EVENT_NONE:    return "none";
+                case IEC_UPDATE:    return "IEC_UPDATE";
+                default:            return "*** INVALID ***";
+            }
+            break;
+
         case SLOT_DAT:
 
             switch (id) {
@@ -1040,7 +1050,7 @@ C64::execute()
         (vic.*vic.vicfunc[rasterCycle])();
         if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle();
         if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle();
-        if (iec.isDirtyC64Side || iec.isDirtyDriveSide) iec.update();
+        // if (iec.isDirtyC64Side || iec.isDirtyDriveSide) iec.update();
 
 
         //
@@ -1054,7 +1064,7 @@ C64::execute()
         cpu.execute<MOS_6510>();
         if (drive8.needsEmulation) drive8.execute(durationOfOneCycle);
         if (drive9.needsEmulation) drive9.execute(durationOfOneCycle);
-        if (iec.isDirtyC64Side || iec.isDirtyDriveSide) iec.update();
+        // if (iec.isDirtyC64Side || iec.isDirtyDriveSide) iec.update();
 
 
         //
@@ -1534,6 +1544,10 @@ C64::processEvents(Cycle cycle)
         //
         // Check secondary slots
         //
+
+        if (isDue<SLOT_IEC>(cycle)) {
+            iec.update();
+        }
 
         if (isDue<SLOT_DAT>(cycle)) {
             datasette.processDatEvent(id[SLOT_DAT], data[SLOT_DAT]);

@@ -124,11 +124,11 @@ public:
     
     // Requensts an update of the bus lines from the C64 side
     // DEPRECATED
-    void setNeedsUpdateC64Side() { isDirtyC64Side = true; }
+    void setNeedsUpdateC64Side(); // { isDirtyC64Side = true; }
 
     // Requensts an update of the bus lines from the drive side
     // DEPRECATED
-    void setNeedsUpdateDriveSide() { isDirtyDriveSide = true; }
+    void setNeedsUpdateDriveSide(); // { isDirtyDriveSide = true; }
 
     /* Updates all three bus lines. The new values are determined by VIA1
      * (drive side) and CIA2 (C64 side).
