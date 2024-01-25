@@ -11,6 +11,7 @@ class Layer: NSObject {
     
     let renderer: Renderer
 
+    var controller : MyController { return renderer.parent }
     var ressourceManager: RessourceManager { return renderer.ressourceManager }
     var device: MTLDevice { return renderer.device }
     var view: MTKView { return renderer.view }

@@ -11,8 +11,6 @@ import Foundation
 
 class DropZone: Layer {
  
-    let controller: MyController
-    
     var window: NSWindow { return controller.window! }
     var contentView: NSView { return window.contentView! }
     var metal: MetalView { return controller.metal! }
@@ -48,9 +46,7 @@ class DropZone: Layer {
     //
     
     override init(renderer: Renderer) {
-        
-        controller = renderer.parent
-        
+
         for i in 0...4 { zones[i].unregisterDraggedTypes() }
         super.init(renderer: renderer)
         resize()

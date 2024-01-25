@@ -199,7 +199,9 @@ class Canvas: Layer {
 
             let w = TextureSize.original.width
             let h = TextureSize.original.height
-            emulatorTexture.replace(w: w, h: h, buffer: c64.vic.noise)
+            if !controller.inBackground || !controller.pref.pauseInBackground {
+                emulatorTexture.replace(w: w, h: h, buffer: c64.vic.noise)
+            }
             return
         }
         

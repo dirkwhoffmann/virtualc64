@@ -12,8 +12,6 @@ import Carbon.HIToolbox
 
 class Console: Layer {
  
-    let controller: MyController
-    
     var window: NSWindow { return controller.window! }
     var contentView: NSView { return window.contentView! }
     
@@ -27,9 +25,7 @@ class Console: Layer {
     //
     
     override init(renderer: Renderer) {
-        
-        controller = renderer.parent
-        
+
         textView = (scrollView.documentView as? NSTextView)!
         textView.isEditable = false
         textView.backgroundColor = NSColor(r: 0x80, g: 0x80, b: 0x80, a: 0x80)

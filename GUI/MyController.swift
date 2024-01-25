@@ -81,6 +81,9 @@ class MyController: NSWindowController, MessageReceiver {
     var smallTape = NSImage(named: "tapeTemplate")!.resize(size: iconSize)
     var smallCart = NSImage(named: "crtTemplate")!.resize(size: iconSize)
 
+    // Indicates if the window is in background
+    var inBackground = false
+    
     // Remembers the running state for the pauseInBackground feature
     var pauseInBackgroundSavedState = false
 
