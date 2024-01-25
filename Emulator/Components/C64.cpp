@@ -1047,9 +1047,9 @@ C64::execute()
         if (nextTrigger <= cycle) processEvents(cycle);
 
         // Run VIC and CIAs
-        (vic.*vic.vicfunc[rasterCycle])();
         if (cycle >= cia1.wakeUpCycle) cia1.executeOneCycle();
         if (cycle >= cia2.wakeUpCycle) cia2.executeOneCycle();
+        (vic.*vic.vicfunc[rasterCycle])();
 
 
         //
