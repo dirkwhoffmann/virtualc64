@@ -283,6 +283,26 @@ struct SortedRingBuffer : public RingBuffer<T, capacity>
     // Key storage
     i64 *keys = new i64[capacity];
 
+
+    //
+    // Initializing
+    //
+
+    ~SortedRingBuffer() { delete[] keys; }
+
+
+    //
+    // Serializing
+    //
+
+    template <class W>
+    void operator<<(W& worker)
+    {
+        RingBuffer<T, capacity>::operator<<(worker);
+        for (isize i = 0; i < capacity; i++) worker << keys[i];
+    }
+
+
     // Inserts an element at the proper position
     void insert(i64 key, T element)
     {
