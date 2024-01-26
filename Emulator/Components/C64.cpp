@@ -1004,6 +1004,7 @@ C64::setInspectionTarget(InspectionTarget target, Cycle trigger)
 ThreadMode
 C64::getThreadMode() const
 {
+    // return THREAD_PULSED;
     return config.syncMode == SYNC_VSYNC ? THREAD_PULSED : THREAD_ADAPTIVE;
 }
 
@@ -1095,6 +1096,14 @@ C64::execute()
             // Terminate the loop if an entire frame has been emulated
             if (scanline == 0) exit = true;
         }
+
+        // Experimental
+        if (slicesPerFrame() == 2 && scanline == 156) exit = true;
+        if (slicesPerFrame() == 3 && scanline == 104) exit = true;
+        if (slicesPerFrame() == 3 && scanline == 208) exit = true;
+        if (slicesPerFrame() == 4 && scanline == 78) exit = true;
+        if (slicesPerFrame() == 4 && scanline == 156) exit = true;
+        if (slicesPerFrame() == 4 && scanline == 234) exit = true;
 
     } while (!exit);
 }
@@ -1188,17 +1197,16 @@ C64::refreshRate() const
     }
 }
 
-isize
-C64::missingFrames(util::Time base) const
+isize 
+C64::slicesPerFrame() const
 {
-    // Compute the elapsed time
-    auto elapsed = util::Time::now() - base;
+    return 4;
+}
 
-    // Compute which frame should have been reached by now
-    auto targetFrame = elapsed.asNanoseconds() * i64(refreshRate()) / 1000000000;
-
-    // Compute the number of missing frames
-    return isize(targetFrame - frame);
+util::Time 
+C64::wakeupPeriod() const
+{
+    return util::Time(i64(1000000000.0 / host.getHostRefreshRate()));
 }
 
 void
@@ -2308,8 +2316,9 @@ C64::setDebugVariable(const string &name, int val)
     else if (name == "DEF_DEBUG")       DEF_DEBUG       = val;
 
     else if (name == "RUN_DEBUG")       RUN_DEBUG       = val;
+    else if (name == "TIM_DEBUG")       TIM_DEBUG       = val;
     else if (name == "WARP_DEBUG")      WARP_DEBUG      = val;
-    else if (name == "QUEUE_DEBUG")     QUEUE_DEBUG     = val;
+    else if (name == "MSG_DEBUG")       MSG_DEBUG       = val;
     else if (name == "SNP_DEBUG")       SNP_DEBUG       = val;
 
     else if (name == "CPU_DEBUG")       CPU_DEBUG       = val;

@@ -37,7 +37,7 @@ MsgQueue::put(const Message &msg)
 {
     {   SYNCHRONIZED
 
-        debug(QUEUE_DEBUG, "%s [%llx]\n", MsgTypeEnum::key(msg.type), msg.value);
+        debug(MSG_DEBUG, "%s [%llx]\n", MsgTypeEnum::key(msg.type), msg.value);
 
         if (listener) {
 

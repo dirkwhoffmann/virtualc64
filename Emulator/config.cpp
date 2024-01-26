@@ -18,9 +18,10 @@ debugflag CNF_DEBUG       = 0; // Configuration
 debugflag DEF_DEBUG       = 0; // User defaults
 
 // Runloop
-debugflag RUN_DEBUG       = 0; // Run loop, component states, timing
+debugflag RUN_DEBUG       = 0; // Run loop, component states
+debugflag TIM_DEBUG       = 0; // Thread synchronization
 debugflag WARP_DEBUG      = 0; // Warp mode
-debugflag QUEUE_DEBUG     = 0; // Message queue
+debugflag MSG_DEBUG       = 0; // Message queue
 debugflag SNP_DEBUG       = 0; // Serializing (snapshots)
 
 // CPU

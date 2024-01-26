@@ -20,9 +20,9 @@
 namespace vc64 {
 
 /* This class manages the emulator thread that runs side by side with the GUI.
- * The thread exists during the lifetime of the emulator instance, but may not
- * execute the emulator all the time. The exact behavior is controlled by the
- * internal state. Five states are distinguished:
+ * The thread exists during the lifetime of the emulator, but may not run the
+ * emulator all the time. The exact behavior is controlled by the internal
+ * state. The following states are distinguished:
  *
  *        Off: The emulator is turned off
  *     Paused: The emulator is turned on, but not running
@@ -79,14 +79,10 @@ namespace vc64 {
  * ------------------------------------------------------------------------
  * halt()     | --        | halted    | _halt()
  *
- * When an instance of the Thread class has been created, a new thread is
- * started which executes the thread's main() function. This function executes
+ * When an instance of the Thread class is created, a new thread is started
+ * which executes the thread's main() function. This function executes
  * a loop which periodically calls function execute(). After each iteration,
- * the thread is put to sleep to synchronize timing. Two synchronization modes
- * are offered: Periodic or Pulsed. In periodic mode, the thread is put to
- * sleep for a certain amout of time and wakes up automatically. The second
- * mode puts the thread to sleep indefinitely and waits for an external signal
- * (a call to wakeUp()) to continue.
+ * the thread is put to sleep to synchronize timing.
  *
  * The Thread class provides a suspend-resume mechanism for pausing the thread
  * temporarily. This functionality is utilized frequently by the GUI to carry
@@ -118,14 +114,14 @@ namespace vc64 {
  *
  *   In periodic mode the thread puts itself to sleep and utilizes a timer to
  *   schedule a wakeup call. In this mode, no further action has to be taken
- *   by the GUI. This method had been the default mode used by vAmiga up to
- *   version 2.3.
+ *   by the GUI. This method had been the default mode used by earlier versions
+ *   VirtualC64.
  *
  * - Pulsed:
  *
  *   In pulsed mode, the thread waits for an external wake-up signal that has
  *   to be sent by the GUI. When the wake-up signal is received, a single frame
- *   is computed. vAmiga uses this mode to implement VSYNC.
+ *   is computed. VirtualC64 uses this mode to implement VSYNC.
  *
  * - Adaptive:
  *
@@ -134,7 +130,7 @@ namespace vc64 {
  *   computes the number of missing frames based on the current time and the
  *   time the thread had been lauchen. Then it executes all missing frames or
  *   resynchronizes if the number of missing frames is way off. Adaptive mode
- *   has been introduced in vAmiga 2.4 as a replacement for Pulsed mode.
+ *   has been introduced as a replacement for Pulsed mode.
  *
  * To speed up emulation (e.g., during disk accesses), the emulator may be put
  * into warp mode. In this mode, timing synchronization is disabled causing the
@@ -166,15 +162,24 @@ protected:
     u8 track = 0;
 
     // Counters
-    isize loopCounter = 0;
     isize suspendCounter = 0;
+    isize sliceCounter = 0;
+    isize frameCounter = 0;
 
-    // Reference time stamp for adaptive sync
-    util::Time baseTime;
+    // Debug clocks
+    util::Clock execClock;
+    util::Clock wakeupClock;
 
-    // Time stamp for adjusting execution speed
+    // Reference time stamp for periodic sync mode
     util::Time targetTime;
 
+    // Reference time stamp for adaptive sync mode
+    util::Time baseTime;
+    
+    // Experimental
+    util::Time deltaTime;
+    isize missing = 0;
+    
     // Clocks for measuring the CPU load
     util::Clock nonstopClock;
     util::Clock loadClock;
@@ -204,8 +209,20 @@ private:
     template <ThreadMode M> void execute();
     template <ThreadMode M> void sleep();
 
+    // Called inside execute when an out-of-sync condition has been detected
+    void resync();
+
     // The main entry point (called when the thread is created)
     void main();
+
+    // Returns the time to elapse between two frames
+    util::Time frameDuration() const;
+
+    // Returns the time to elapse between two slices
+    util::Time sliceDuration() const;
+
+    // Returns the number of pending emulation chunks
+    isize missingSlices() const;
 
     // The code to be executed in each iteration (implemented by the subclass)
     virtual void execute() = 0;
@@ -213,8 +230,11 @@ private:
     // Target frame rate of this thread (provided by the subclass)
     virtual double refreshRate() const = 0;
 
-    // Returns the number of frames to compute (provided by the subclass)
-    virtual isize missingFrames(util::Time base) const = 0;
+    // Number of thread syncs per frame (provided by the subclass)
+    virtual isize slicesPerFrame() const = 0;
+
+    // Time span between two wakeup calls (provided by the subclass)
+    virtual util::Time wakeupPeriod() const = 0;
 
 public:
 

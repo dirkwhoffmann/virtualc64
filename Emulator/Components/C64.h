@@ -392,8 +392,10 @@ private:
 public:
 
     double refreshRate() const override;
-    isize missingFrames(util::Time base) const override;
-    
+    isize slicesPerFrame() const override;
+    util::Time wakeupPeriod() const override;
+
+
     //
     // Controlling
     //

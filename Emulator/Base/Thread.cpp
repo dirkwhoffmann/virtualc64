@@ -28,10 +28,30 @@ Thread::~Thread()
     join();
 }
 
+template <ThreadMode M> void
+Thread::execute()
+{
+    if (missing) {
+
+        trace(TIM_DEBUG, "%s SYNC POINT: %lld us\n", ThreadModeEnum::key(M), 
+              execClock.restart().asMicroseconds());
+
+        loadClock.go();
+
+        execute();
+        sliceCounter++;
+        missing--;
+
+        loadClock.stop();
+    }
+}
+
+/*
 template <> void
 Thread::execute<THREAD_PERIODIC>()
 {
     loadClock.go();
+    sliceCounter++;
     execute();
     loadClock.stop();
 }
@@ -40,6 +60,7 @@ template <> void
 Thread::execute<THREAD_PULSED>()
 {
     loadClock.go();
+    sliceCounter++;
     execute();
     loadClock.stop();
 }
@@ -47,82 +68,99 @@ Thread::execute<THREAD_PULSED>()
 template <> void
 Thread::execute<THREAD_ADAPTIVE>()
 {
-    loadClock.go();
+    if (missing) {
 
-    // Get the number of missing frames
-    i64 missing = warp ? 1 : missingFrames(baseTime);
+        trace(TIM_DEBUG, "THREAD_ADAPTIVE: %lld us\n", execClock.restart().asMicroseconds());
 
-    // Resync if necessary
-    if (missing < -5 || missing > 5) {
-
-        debug(RUN_DEBUG, "Adaptive sync: Resyncing %lld frames\n", missing);
-        baseTime += util::Time(missing * 1000000000LL / i64(refreshRate()));
-        missing = 0;
+        loadClock.go();
+        execute();
+        sliceCounter++;
+        missing--;
+        loadClock.stop();
     }
-
-    // Compute all missing frames
-    for (isize i = 0; i < missing; i++) execute();
-
-    loadClock.stop();
 }
+*/
 
 template <> void
 Thread::sleep<THREAD_PERIODIC>()
 {
     auto now = util::Time::now();
 
-    // Only proceed if we're not running in warp mode
+    // Don't sleep in warp mode
     if (warp) return;
 
-    // Check if we're running too slow...
-    if (now > targetTime) {
-
-        // Check if we're completely out of sync...
-        if ((now - targetTime).asMilliseconds() > 200) {
-
-            warn("Emulation is way too slow: %f\n",(now - targetTime).asSeconds());
-
-            // Restart the sync timer
-            targetTime = util::Time::now();
-        }
+    // Make sure the emulator is still in sync
+    if ((now - targetTime).asMilliseconds() > 200) {
+        warn("Emulation is way too slow: %f\n", (now - targetTime).asSeconds());
+        resync();
+    }
+    if ((targetTime - now).asMilliseconds() > 200) {
+        warn("Emulation is way too fast: %f\n", (targetTime - now).asSeconds());
+        resync();
     }
 
-    // Check if we're running too fast...
-    if (now < targetTime) {
-
-        // Check if we're completely out of sync...
-        if ((targetTime - now).asMilliseconds() > 200) {
-
-            warn("Emulation is way too slow: %f\n",(targetTime - now).asSeconds());
-
-            // Restart the sync timer
-            targetTime = util::Time::now();
-        }
-    }
-
-    // Sleep for a while
-    targetTime += util::Time(i64(1000000000.0 / refreshRate()));
+    // Sleep till the next sync point
+    targetTime += sliceDuration();
     targetTime.sleepUntil();
+    missing = 1;
 }
 
 template <> void
 Thread::sleep<THREAD_PULSED>()
 {
-    // Set a timeout to prevent the thread from stalling
-    auto timeout = util::Time(i64(2000000000.0 / refreshRate()));
+    // Only proceed if we're not running in warp mode
+    if (warp) return;
 
-    // Wait for the next pulse
-    if (!warp) waitForWakeUp(timeout);
+    if (missing) {
+
+        // Wake up at the scheduled target time
+        targetTime.sleepUntil();
+
+        // Schedule the next execution
+        targetTime += deltaTime;
+
+    } else {
+
+        // Set a timeout to prevent the thread from stalling
+        auto timeout = util::Time(i64(2000000000.0 / refreshRate()));
+
+        // Wait for the next pulse
+        waitForWakeUp(timeout);
+
+        // Determine the number of overdue slices
+        missing = missingSlices();
+
+        if (missing) {
+
+            // Evenly distribute the missing slices till the next wakeup happens
+            deltaTime = wakeupPeriod() / missing;
+            targetTime = util::Time::now() + deltaTime;
+
+            // Start over when we are out of sync
+            if (std::abs(missing) > 5 * slicesPerFrame()) {
+
+                debug(true, "Adaptive sync: Off by %ld slices\n", missing);
+                resync();
+            }
+        }
+    }
 }
 
 template <> void
 Thread::sleep<THREAD_ADAPTIVE>()
 {
-    // Set a timeout to prevent the thread from stalling
-    auto timeout = util::Time(i64(2000000000.0 / refreshRate()));
+    sleep<THREAD_PULSED>();
+}
 
-    // Wait for the next pulse
-    if (!warp) waitForWakeUp(timeout);
+void
+Thread::resync()
+{
+    targetTime = util::Time::now();
+    baseTime = util::Time::now();
+    deltaTime = 0;
+    sliceCounter = 0;
+    frameCounter = 0;
+    missing = 0;
 }
 
 void
@@ -132,7 +170,7 @@ Thread::main()
 
     baseTime = util::Time::now();
 
-    while (++loopCounter) {
+    while (1) {
 
         if (isRunning()) {
 
@@ -164,19 +202,59 @@ Thread::main()
             if (state == EXEC_HALTED) return;
         }
 
-        // Compute the CPU load once in a while
-        if (loopCounter % 32 == 0) {
-            
-            auto used  = loadClock.getElapsedTime().asSeconds();
-            auto total = nonstopClock.getElapsedTime().asSeconds();
-            
-            cpuLoad = used / total;
-            
-            loadClock.restart();
-            loadClock.stop();
-            nonstopClock.restart();
+        // Have we completed an entire frame?
+        if (sliceCounter % slicesPerFrame() == 0) {
+
+            frameCounter++;
+
+            // Compute the CPU load once in a while
+            if (frameCounter % 32 == 0) {
+
+                auto used  = loadClock.getElapsedTime().asSeconds();
+                auto total = nonstopClock.getElapsedTime().asSeconds();
+
+                cpuLoad = used / total;
+
+                loadClock.restart();
+                loadClock.stop();
+                nonstopClock.restart();
+            }
         }
     }
+}
+
+    util::Time
+    Thread::frameDuration() const
+    {
+        return util::Time(i64(1000000000.0 / refreshRate()));
+    }
+
+util::Time
+Thread::sliceDuration() const
+{
+    return util::Time(i64(1000000000.0 / refreshRate() / slicesPerFrame()));
+}
+
+isize
+Thread::missingSlices() const
+{
+    if (getThreadMode() == THREAD_PULSED) {
+
+        return slicesPerFrame();
+    }
+    if (getThreadMode() == THREAD_ADAPTIVE) {
+
+        // Compute the elapsed time
+        auto elapsed = util::Time::now() - baseTime;
+
+        // Compute which slice should be reached by now
+        auto target = slicesPerFrame() * elapsed.asNanoseconds() * i64(refreshRate()) / 1000000000;
+
+        // Compute the number of missing slices
+        return isize(target - sliceCounter);
+    }
+
+    return 0;
 }
 
 void
@@ -387,7 +465,11 @@ Thread::changeStateTo(ExecutionState requestedState)
 void
 Thread::wakeUp()
 {
-    if (getThreadMode() != THREAD_PERIODIC) util::Wakeable::wakeUp();
+    if (getThreadMode() != THREAD_PERIODIC) {
+
+        trace(TIM_DEBUG, "wakeup: %lld us\n", wakeupClock.restart().asMicroseconds());
+        util::Wakeable::wakeUp();
+    }
 }
 
 void

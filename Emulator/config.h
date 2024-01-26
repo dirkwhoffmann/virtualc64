@@ -81,8 +81,9 @@ extern debugflag DEF_DEBUG;
 
 // Runloop
 extern debugflag RUN_DEBUG;
+extern debugflag TIM_DEBUG;
 extern debugflag WARP_DEBUG;
-extern debugflag QUEUE_DEBUG;
+extern debugflag MSG_DEBUG;
 extern debugflag SNP_DEBUG;
 
 // CPU

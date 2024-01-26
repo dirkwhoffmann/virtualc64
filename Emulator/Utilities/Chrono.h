@@ -44,10 +44,12 @@ public:
     bool operator>(const Time &rhs) const;
     Time operator+(const Time &rhs) const;
     Time operator-(const Time &rhs) const;
-    Time operator*(const int i) const;
+    Time operator*(const long i) const;
+    Time operator/(const long i) const;
     Time& operator+=(const Time &rhs);
     Time& operator-=(const Time &rhs);
-    Time& operator*=(const int i);
+    Time& operator*=(const long i);
+    Time& operator/=(const long i);
     Time abs() const;
     Time diff() const;
     
