@@ -117,7 +117,7 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var perPowerButton: NSButton!
 
     //
-    // Performance (formerly called Compatibility)
+    // Performance
     //
     
     // Power saving
@@ -132,6 +132,14 @@ class ConfigurationController: DialogController {
     // Warp mode
     @IBOutlet weak var comWarpMode: NSPopUpButton!
     @IBOutlet weak var comWarpBoot: NSTextField!
+
+    // Threading
+    @IBOutlet weak var comSyncMode: NSPopUpButton!
+    @IBOutlet weak var comAutoFps: NSButton!
+    @IBOutlet weak var comFpsSlider: NSSlider!
+    @IBOutlet weak var comFpsInfo: NSTextField!
+    @IBOutlet weak var comSliceSlider: NSSlider!
+    @IBOutlet weak var comSliceInfo: NSTextField!
 
     // Buttons
     @IBOutlet weak var comPowerButton: NSButton!
@@ -192,12 +200,6 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var vidHCenterLabel: NSTextField!
     @IBOutlet weak var vidVCenterLabel: NSTextField!
 
-    // Frame rate
-    @IBOutlet weak var vidSyncMode: NSPopUpButton!
-    @IBOutlet weak var vidFpsSlider: NSSlider!
-    @IBOutlet weak var vidFpsMin: NSTextField!
-    @IBOutlet weak var vidFpsMax: NSTextField!
-    
     // Effects
     @IBOutlet weak var vidUpscalerPopUp: NSPopUpButton!
     @IBOutlet weak var vidBlurPopUp: NSPopUpButton!

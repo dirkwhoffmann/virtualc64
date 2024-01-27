@@ -50,16 +50,6 @@ extension ConfigurationController {
         vidHCenterLabel.textColor = .labelColor
         vidVCenterLabel.textColor = .labelColor
 
-        // Frame rate
-        let syncMode = config.syncMode
-        let fps = config.proposedFps
-        vidSyncMode.item(at: 1)?.title = "Fixed (\(fps) fps)"
-        vidSyncMode.selectItem(withTag: syncMode)
-        vidFpsSlider.integerValue = fps
-        vidFpsSlider.isHidden = syncMode != 1
-        vidFpsMin.isHidden = syncMode != 1
-        vidFpsMax.isHidden = syncMode != 1
-
         // Upscalers
         vidUpscalerPopUp.selectItem(withTag: config.upscaler)
 
@@ -155,22 +145,6 @@ extension ConfigurationController {
     @IBAction func vidSaturationAction(_ sender: NSSlider!) {
         
         config.saturation = sender.integerValue
-        refresh()
-    }
-
-    //
-    // Action methods (Refresh rate)
-    //
-
-    @IBAction func vidSyncModeAction(_ sender: NSPopUpButton!) {
-
-        config.syncMode = sender.selectedTag()
-        refresh()
-    }
-
-    @IBAction func vidFpsAction(_ sender: NSSlider!) {
-
-        config.proposedFps = sender.integerValue
         refresh()
     }
 

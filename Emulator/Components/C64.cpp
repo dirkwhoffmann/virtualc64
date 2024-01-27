@@ -332,7 +332,9 @@ C64::resetConfig()
         OPT_WARP_BOOT,
         OPT_WARP_MODE,
         OPT_SYNC_MODE,
-        OPT_PROPOSED_FPS
+        OPT_TIME_SLICES,
+        OPT_AUTO_FPS,
+        OPT_PROPOSED_FPS,
     };
 
     for (auto &option : options) {
@@ -357,6 +359,14 @@ C64::getConfigItem(Option option) const
         case OPT_SYNC_MODE:
 
             return config.syncMode;
+
+        case OPT_TIME_SLICES:
+
+            return config.timeSlices;
+
+        case OPT_AUTO_FPS:
+
+            return config.autoFps;
 
         case OPT_PROPOSED_FPS:
 
@@ -495,12 +505,26 @@ C64::setConfigItem(Option option, i64 value)
 
         case OPT_SYNC_MODE:
 
-            if (!SyncModeEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, SyncModeEnum::keyList());
+            if (!ThreadModeEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, ThreadModeEnum::keyList());
             }
 
-            config.syncMode = SyncMode(value);
+            config.syncMode = ThreadMode(value);
             updateClockFrequency();
+            return;
+
+        case OPT_TIME_SLICES:
+
+            if (value < 1 || value > 4) {
+                throw VC64Error(ERROR_OPT_INVARG, "1...4");
+            }
+
+            config.timeSlices = value;
+            return;
+
+        case OPT_AUTO_FPS:
+
+            config.autoFps = bool(value);
             return;
 
         case OPT_PROPOSED_FPS:
@@ -552,6 +576,8 @@ C64::configure(Option option, i64 value)
         case OPT_WARP_BOOT:
         case OPT_WARP_MODE:
         case OPT_SYNC_MODE:
+        case OPT_TIME_SLICES:
+        case OPT_AUTO_FPS:
         case OPT_PROPOSED_FPS:
 
             setConfigItem(option, value);
@@ -1004,7 +1030,7 @@ C64::setInspectionTarget(InspectionTarget target, Cycle trigger)
 ThreadMode
 C64::getThreadMode() const
 {
-    return config.syncMode == SYNC_VSYNC ? THREAD_PULSED : THREAD_ADAPTIVE;
+    return config.syncMode;
 }
 
 void
@@ -1193,9 +1219,14 @@ C64::refreshRate() const
 {
     switch (config.syncMode) {
 
-        case SYNC_NATIVE_FPS:   return vic.getFps();
-        case SYNC_FIXED_FPS:    return config.proposedFps;
-        case SYNC_VSYNC:        return host.getHostRefreshRate();
+        case THREAD_PULSED:
+
+            return host.getHostRefreshRate();
+
+        case THREAD_PERIODIC:
+        case THREAD_ADAPTIVE:
+
+            return config.autoFps ? vic.getFps() : config.proposedFps;
 
         default:
             fatalError;
@@ -1205,7 +1236,7 @@ C64::refreshRate() const
 isize 
 C64::slicesPerFrame() const
 {
-    return 1;
+    return config.timeSlices;
 }
 
 util::Time 
@@ -1367,8 +1398,13 @@ C64::_dump(Category category, std::ostream& os) const
         os << tab("Warp boot");
         os << dec(config.warpBoot) << " seconds" << std::endl;
         os << tab("Sync mode");
-        os << SyncModeEnum::key(config.syncMode);
-        if (config.syncMode == SYNC_FIXED_FPS) os << " (" << config.proposedFps << " fps)";
+        os << ThreadModeEnum::key(config.syncMode) << std::endl;
+        os << tab("Time slices");
+        os << config.timeSlices << std::endl;
+        os << tab("Auto fps");
+        os << bol(config.autoFps) << std::endl;
+        os << tab("Proposed fps");
+        os << config.proposedFps << " Fps" << std::endl;
         os << std::endl;
     }
 

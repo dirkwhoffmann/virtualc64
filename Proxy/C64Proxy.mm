@@ -2781,6 +2781,11 @@ using namespace vc64;
     return [SnapshotProxy make:snapshot];
 }
 
+- (NSInteger)refreshRate
+{
+    return (NSInteger)[self c64]->refreshRate();
+}
+
 - (NSInteger)getConfig:(Option)opt
 {
     return [self c64]->getConfigItem(opt);

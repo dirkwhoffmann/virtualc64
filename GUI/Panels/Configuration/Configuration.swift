@@ -198,7 +198,7 @@ class Configuration {
     }
     
     //
-    // Performance (formerly called Compatibility)
+    // Performance
     //
 
     var drive8PowerSave: Bool {
@@ -239,6 +239,26 @@ class Configuration {
     var warpBoot: Int {
         get { return c64.getConfig(.WARP_BOOT) }
         set { c64.configure(.WARP_BOOT, value: newValue) }
+    }
+
+    var syncMode: Int {
+        get { return c64.getConfig(.SYNC_MODE) }
+        set { c64.configure(.SYNC_MODE, value: newValue) }
+    }
+
+    var timeSlices: Int {
+        get { return c64.getConfig(.TIME_SLICES) }
+        set { c64.configure(.TIME_SLICES, value: newValue) }
+    }
+
+    var autoFps: Bool {
+        get { return c64.getConfig(.AUTO_FPS) != 0 }
+        set { c64.configure(.AUTO_FPS, enable: newValue) }
+    }
+
+    var proposedFps: Int {
+        get { return c64.getConfig(.PROPOSED_FPS) }
+        set { c64.configure(.PROPOSED_FPS, value: newValue) }
     }
 
     //
@@ -342,14 +362,6 @@ class Configuration {
     // Video
     //
 
-    var syncMode: Int {
-        get { return c64.getConfig(.SYNC_MODE) }
-        set { c64.configure(.SYNC_MODE, value: newValue) }
-    }
-    var proposedFps: Int {
-        get { return c64.getConfig(.PROPOSED_FPS) }
-        set { c64.configure(.PROPOSED_FPS, value: newValue) }
-    }
     var palette: Int {
         get { return c64.getConfig(.PALETTE) }
         set { c64.configure(.PALETTE, value: newValue) }

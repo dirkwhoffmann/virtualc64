@@ -950,6 +950,10 @@ extension DefaultsProxy {
         remove(.SB_COLLISIONS)
         remove(.WARP_MODE)
         remove(.WARP_BOOT)
+        remove(.SYNC_MODE)
+        remove(.AUTO_FPS)
+        remove(.PROPOSED_FPS)
+        remove(.TIME_SLICES)
     }
 }
 
@@ -970,6 +974,11 @@ extension Configuration {
         defaults.set(.SB_COLLISIONS, sbCollisions)
         defaults.set(.WARP_MODE, warpMode)
         defaults.set(.WARP_BOOT, warpBoot)
+        defaults.set(.SYNC_MODE, syncMode)
+        defaults.set(.AUTO_FPS, autoFps)
+        defaults.set(.PROPOSED_FPS, proposedFps)
+        defaults.set(.TIME_SLICES, timeSlices)
+
         defaults.save()
 
         c64.resume()
@@ -990,6 +999,10 @@ extension Configuration {
         sbCollisions = defaults.get(.SB_COLLISIONS) != 0
         warpMode = defaults.get(.WARP_MODE)
         warpBoot = defaults.get(.WARP_BOOT)
+        syncMode = defaults.get(.SYNC_MODE)
+        autoFps = defaults.get(.AUTO_FPS) != 0
+        proposedFps = defaults.get(.PROPOSED_FPS)
+        timeSlices = defaults.get(.TIME_SLICES)
 
         c64.resume()
     }

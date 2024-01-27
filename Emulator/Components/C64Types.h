@@ -14,7 +14,7 @@
 
 #include "Aliases.h"
 #include "Reflection.h"
-
+#include "ThreadTypes.h"
 
 //
 // Enumerations
@@ -218,6 +218,7 @@ struct WarpModeEnum : util::Reflection<WarpModeEnum, WarpMode>
 };
 #endif
 
+/*
 enum_long(SYNC_MODE)
 {
     SYNC_NATIVE_FPS,
@@ -246,6 +247,7 @@ struct SyncModeEnum : util::Reflection<SyncModeEnum, SyncMode>
     }
 };
 #endif
+*/
 
 enum_long(ROM_TYPE)
 {
@@ -326,8 +328,10 @@ typedef struct
 {
     isize warpBoot;
     WarpMode warpMode;
-    SyncMode syncMode;
+    ThreadMode syncMode;
+    bool autoFps;
     isize proposedFps;
+    isize timeSlices;
 }
 C64Config;
 

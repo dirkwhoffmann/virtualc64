@@ -25,6 +25,8 @@ enum_long(OPT)
     OPT_WARP_BOOT,
     OPT_WARP_MODE,
     OPT_SYNC_MODE,
+    OPT_TIME_SLICES,
+    OPT_AUTO_FPS,
     OPT_PROPOSED_FPS,
 
     // VICII
@@ -127,6 +129,8 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_WARP_BOOT:             return "WARP_BOOT";
             case OPT_WARP_MODE:             return "WARP_MODE";
             case OPT_SYNC_MODE:             return "SYNC_MODE";
+            case OPT_TIME_SLICES:           return "TIME_SLICES";
+            case OPT_AUTO_FPS:              return "AUTO_FPS";
             case OPT_PROPOSED_FPS:          return "PROPOSED_FPS";
 
             case OPT_VIC_REVISION:          return "VIC_REVISION";

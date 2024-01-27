@@ -31,7 +31,7 @@ Thread::~Thread()
 template <ThreadMode M> void
 Thread::execute()
 {
-    if (missing) {
+    if (missing > 0 || warp) {
 
         trace(TIM_DEBUG, "execute<%s>: %lld us\n", ThreadModeEnum::key(M),
               execClock.restart().asMicroseconds());
@@ -56,11 +56,11 @@ Thread::sleep<THREAD_PERIODIC>()
 
     // Make sure the emulator is still in sync
     if ((now - targetTime).asMilliseconds() > 200) {
-        warn("Emulation is way too slow: %f\n", (now - targetTime).asSeconds());
+        warn("Emulation is way too slow: %f sec behind\n", (now - targetTime).asSeconds());
         resync();
     }
     if ((targetTime - now).asMilliseconds() > 200) {
-        warn("Emulation is way too fast: %f\n", (targetTime - now).asSeconds());
+        warn("Emulation is way too fast: %f sec ahead\n", (targetTime - now).asSeconds());
         resync();
     }
 
@@ -76,7 +76,7 @@ Thread::sleep<THREAD_PULSED>()
     // Only proceed if we're not running in warp mode
     if (warp) return;
 
-    if (missing) {
+    if (missing > 0) {
 
         // Wake up at the scheduled target time
         targetTime.sleepUntil();
@@ -103,8 +103,13 @@ Thread::sleep<THREAD_PULSED>()
 
             // Start over if the emulator got out of sync
             if (std::abs(missing) > 5 * slicesPerFrame()) {
+                
+                if (missing > 0) {
+                    warn("Emulation is way too slow: %ld time slices behind\n", missing);
+                } else {
+                    warn("Emulation is way too fast: %ld time slices ahead\n", missing);
+                }
 
-                warn("Emulation is off by %ld SYNC points\n", missing);
                 resync();
             }
         }

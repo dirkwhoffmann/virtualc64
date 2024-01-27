@@ -213,11 +213,25 @@ Interpreter::initCommandShell(Command &root)
         c64.configure(OPT_WARP_MODE, parseEnum <WarpModeEnum> (argv));
     });
 
-    root.add({"c64", "set", "syncmode"}, { SyncModeEnum::argList() },
+    root.add({"c64", "set", "syncmode"}, { ThreadModeEnum::argList() },
              "Selects the synchronization mode",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_SYNC_MODE, parseEnum <SyncModeEnum> (argv));
+        c64.configure(OPT_SYNC_MODE, parseEnum <ThreadModeEnum> (argv));
+    });
+
+    root.add({"c64", "set", "timeslices"}, { Arg::value },
+             "Sets how often the thread starts and stops per frame",
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_TIME_SLICES, parseNum(argv));
+    });
+
+    root.add({"c64", "set", "autofps"}, { Arg::boolean },
+             "Selects whether the refresh rate is determined by the C64 model",
+             [this](Arguments& argv, long value) {
+
+        c64.configure(OPT_AUTO_FPS, parseBool(argv));
     });
 
     root.add({"c64", "set", "fps"}, { Arg::value },
@@ -225,7 +239,6 @@ Interpreter::initCommandShell(Command &root)
              [this](Arguments& argv, long value) {
 
         c64.configure(OPT_PROPOSED_FPS, parseNum(argv));
-        c64.configure(OPT_SYNC_MODE, SYNC_FIXED_FPS);
     });
 
     root.add({"c64", "power"}, { Arg::onoff },
