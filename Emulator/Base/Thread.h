@@ -22,7 +22,11 @@ namespace vc64 {
 /* This class manages the emulator thread that runs side by side with the GUI.
  * The thread exists during the lifetime of the emulator, but may not run the
  * emulator all the time. The exact behavior is controlled by the internal
- * state. The following states are distinguished:
+ * state. 
+ *
+ * 1. Thread states:
+ *
+ * The following states are distinguished:
  *
  *        Off: The emulator is turned off
  *     Paused: The emulator is turned on, but not running
@@ -84,6 +88,8 @@ namespace vc64 {
  * a loop which periodically calls function execute(). After each iteration,
  * the thread is put to sleep to synchronize timing.
  *
+ * 2. Suspend / Resume:
+ *
  * The Thread class provides a suspend-resume mechanism for pausing the thread
  * temporarily. This functionality is utilized frequently by the GUI to carry
  * out atomic operations that cannot be performed while the emulator is running.
@@ -105,6 +111,8 @@ namespace vc64 {
  *       Do something with the internal state;
  *       return or throw an exceptions as you like;
  *    }
+ *
+ * 3. Synchronization:
  *
  * The Thread class is also responsible for timing synchronization. I.e., it
  * has to ensure that the proper amount of frames are executed per second.
@@ -128,9 +136,26 @@ namespace vc64 {
  *   In adaptive mode, the thread waits for an external wake-up signal just as
  *   it does in pulsed mode. When the wake-up signal comes in, the thread
  *   computes the number of missing frames based on the current time and the
- *   time the thread had been lauchen. Then it executes all missing frames or
- *   resynchronizes if the number of missing frames is way off. Adaptive mode
- *   has been introduced as a replacement for Pulsed mode.
+ *   time the thread had been lauchen. After that, it executes all missing
+ *   frames or resynchronizes if the number of missing frames is way off.
+ *
+ * 4. Time slicing:
+ *
+ * The number of time slices per frame controls the size of a single
+ * computation chunk. Per default, the emulator thread computes an entire frame
+ * in a single chunk. That is, it computes a frame, sleeps, computes a frame,
+ * sleeps, and so on. A frame can be time-sliced to make the emulator more
+ * responsive and let it react faster to external events such as joystick
+ * movements. For example, if two-time slices are chosen per frame, the thread
+ * computes the first half of the current frame, sleeps, computes the second
+ * half of the current frame, sleeps, and so on. Note that increasing the
+ * number of time slices can increase CPU load and jitter, even in pulsed mode.
+ * Jitter may increase because time slices are distributed equally between two
+ * wake-up events. Hence, the later chunks will be computed close to the next
+ * wake-up event and may, therefore, interfere with the VSYNC event of the host
+ * computer.
+ *
+ * 5. Warp mode:
  *
  * To speed up emulation (e.g., during disk accesses), the emulator may be put
  * into warp mode. In this mode, timing synchronization is disabled causing the

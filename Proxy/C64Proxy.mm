@@ -2548,8 +2548,6 @@ using namespace vc64;
 
 - (instancetype) init
 {
-    NSLog(@"C64Proxy::init");
-    
     if (!(self = [super init])) return self;
     
     // Create the emulator instance
