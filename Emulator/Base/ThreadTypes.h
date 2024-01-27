@@ -52,29 +52,29 @@ struct ExecutionStateEnum : util::Reflection<ExecutionStateEnum, ExecutionState>
 };
 #endif
 
-enum_long(THREAD_MODE)
+enum_long(SYNC_MODE)
 {
-    THREAD_PERIODIC,
-    THREAD_PULSED,
-    THREAD_ADAPTIVE
+    SYNC_PERIODIC,
+    SYNC_PULSED,
+    SYNC_ADAPTIVE
 };
-typedef THREAD_MODE ThreadMode;
+typedef SYNC_MODE SyncMode;
 
 #ifdef __cplusplus
-struct ThreadModeEnum : util::Reflection<ThreadModeEnum, ThreadMode>
+struct SyncModeEnum : util::Reflection<SyncModeEnum, SyncMode>
 {
     static constexpr long minVal = 0;
-    static constexpr long maxVal = THREAD_ADAPTIVE;
+    static constexpr long maxVal = SYNC_ADAPTIVE;
     static bool isValid(auto val) { return val >= minVal && val <= maxVal; }
 
-    static const char *prefix() { return "THREAD"; }
-    static const char *key(ThreadMode value)
+    static const char *prefix() { return "SYNC"; }
+    static const char *key(SyncMode value)
     {
         switch (value) {
 
-            case THREAD_PERIODIC:   return "PERIODIC";
-            case THREAD_PULSED:     return "PULSED";
-            case THREAD_ADAPTIVE:   return "ADAPTIVE";
+            case SYNC_PERIODIC:   return "PERIODIC";
+            case SYNC_PULSED:     return "PULSED";
+            case SYNC_ADAPTIVE:   return "ADAPTIVE";
         }
         return "???";
     }

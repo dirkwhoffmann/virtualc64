@@ -213,11 +213,11 @@ Interpreter::initCommandShell(Command &root)
         c64.configure(OPT_WARP_MODE, parseEnum <WarpModeEnum> (argv));
     });
 
-    root.add({"c64", "set", "syncmode"}, { ThreadModeEnum::argList() },
+    root.add({"c64", "set", "syncmode"}, { SyncModeEnum::argList() },
              "Selects the synchronization mode",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_SYNC_MODE, parseEnum <ThreadModeEnum> (argv));
+        c64.configure(OPT_SYNC_MODE, parseEnum <SyncModeEnum> (argv));
     });
 
     root.add({"c64", "set", "timeslices"}, { Arg::value },

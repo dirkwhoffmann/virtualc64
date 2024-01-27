@@ -505,11 +505,11 @@ C64::setConfigItem(Option option, i64 value)
 
         case OPT_SYNC_MODE:
 
-            if (!ThreadModeEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, ThreadModeEnum::keyList());
+            if (!SyncModeEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, SyncModeEnum::keyList());
             }
 
-            config.syncMode = ThreadMode(value);
+            config.syncMode = SyncMode(value);
             updateClockFrequency();
             return;
 
@@ -519,7 +519,7 @@ C64::setConfigItem(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INVARG, "1...4");
             }
 
-            config.timeSlices = value;
+            config.timeSlices = isize(value);
             return;
 
         case OPT_AUTO_FPS:
@@ -1027,8 +1027,8 @@ C64::setInspectionTarget(InspectionTarget target, Cycle trigger)
     }
 }
 
-ThreadMode
-C64::getThreadMode() const
+SyncMode
+C64::getSyncMode() const
 {
     return config.syncMode;
 }
@@ -1219,12 +1219,12 @@ C64::refreshRate() const
 {
     switch (config.syncMode) {
 
-        case THREAD_PULSED:
+        case SYNC_PULSED:
 
             return host.getHostRefreshRate();
 
-        case THREAD_PERIODIC:
-        case THREAD_ADAPTIVE:
+        case SYNC_PERIODIC:
+        case SYNC_ADAPTIVE:
 
             return config.autoFps ? vic.getFps() : config.proposedFps;
 
@@ -1398,7 +1398,7 @@ C64::_dump(Category category, std::ostream& os) const
         os << tab("Warp boot");
         os << dec(config.warpBoot) << " seconds" << std::endl;
         os << tab("Sync mode");
-        os << ThreadModeEnum::key(config.syncMode) << std::endl;
+        os << SyncModeEnum::key(config.syncMode) << std::endl;
         os << tab("Time slices");
         os << config.timeSlices << std::endl;
         os << tab("Auto fps");
@@ -1426,8 +1426,8 @@ C64::_dump(Category category, std::ostream& os) const
         os << dec(isize(refreshRate())) << " Fps" << std::endl;
         os << tab("Thread state");
         os << ExecutionStateEnum::key(state) << std::endl;
-        os << tab("Thread mode");
-        os << ThreadModeEnum::key(getThreadMode()) << std::endl;
+        os << tab("Sync mode");
+        os << SyncModeEnum::key(getSyncMode()) << std::endl;
         os << tab("Ultimax mode");
         os << bol(getUltimax()) << std::endl;
         os << std::endl;

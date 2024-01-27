@@ -164,28 +164,25 @@ protected:
     // Counters
     isize suspendCounter = 0;
     isize sliceCounter = 0;
-    isize frameCounter = 0;
 
-    // Debug clocks
-    util::Clock execClock;
-    util::Clock wakeupClock;
-
-    // Reference time stamp for periodic sync mode
+    // Time stamps for calculating wakeup times
+    util::Time baseTime;
+    util::Time deltaTime;
     util::Time targetTime;
 
-    // Reference time stamp for adaptive sync mode
-    util::Time baseTime;
-    
-    // Experimental
-    util::Time deltaTime;
+    // Number of time slices that need to be computed
     isize missing = 0;
     
     // Clocks for measuring the CPU load
     util::Clock nonstopClock;
     util::Clock loadClock;
 
-    // The current CPU load (%)
+    // The current CPU load in percent
     double cpuLoad = 0.0;
+
+    // Debug clocks
+    util::Clock execClock;
+    util::Clock wakeupClock;
 
     
     //
@@ -206,24 +203,6 @@ public:
 
 private:
     
-    template <ThreadMode M> void execute();
-    template <ThreadMode M> void sleep();
-
-    // Called inside execute when an out-of-sync condition has been detected
-    void resync();
-
-    // The main entry point (called when the thread is created)
-    void main();
-
-    // Returns the time to elapse between two frames
-    util::Time frameDuration() const;
-
-    // Returns the time to elapse between two slices
-    util::Time sliceDuration() const;
-
-    // Returns the number of pending emulation chunks
-    isize missingSlices() const;
-
     // The code to be executed in each iteration (implemented by the subclass)
     virtual void execute() = 0;
 
@@ -235,6 +214,27 @@ private:
 
     // Time span between two wakeup calls (provided by the subclass)
     virtual util::Time wakeupPeriod() const = 0;
+
+    // Computes the time span between two frames
+    util::Time frameDuration() const;
+
+    // Computes the time span between two time slices
+    util::Time sliceDuration() const;
+
+    // Computes the number of overdue time slices
+    isize missingSlices() const;
+
+    // Rectifies an out-of-sync condition by resetting all counters and clocks
+    void resync();
+
+    // Executes a single time slice (if one is pending)
+    template <SyncMode M> void execute();
+
+    // Suspends the thread until the next time slice is due
+    template <SyncMode M> void sleep();
+
+    // The main entry point (called when the thread is created)
+    void main();
 
 public:
 
@@ -299,9 +299,9 @@ protected:
 public:
 
     // Provides the current sync mode
-    virtual ThreadMode getThreadMode() const = 0;
+    virtual SyncMode getSyncMode() const = 0;
 
-    // Awakes the thread if it runs in pulse mode
+    // Awakes the thread if it runs in pulse mode or adaptive mode
     void wakeUp();
 
 private:
