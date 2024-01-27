@@ -1004,7 +1004,6 @@ C64::setInspectionTarget(InspectionTarget target, Cycle trigger)
 ThreadMode
 C64::getThreadMode() const
 {
-    // return THREAD_PULSED;
     return config.syncMode == SYNC_VSYNC ? THREAD_PULSED : THREAD_ADAPTIVE;
 }
 
@@ -1030,7 +1029,8 @@ template <bool enable8, bool enable9> void
 C64::execute()
 {
     bool exit = false;
-    isize lastCycle = vic.getCyclesPerLine();
+    auto lastCycle = vic.getCyclesPerLine();
+    auto syncLine = nextSyncLine(scanline);
 
     do {
 
@@ -1088,24 +1088,29 @@ C64::execute()
             if (flags && processFlags()) { rasterCycle++; exit = true; break; }
         }
 
-        if (rasterCycle > lastCycle) {
+        // Finish the current scanline if we are at the end
+        if (rasterCycle > lastCycle) endScanline();
 
-            // Finish the current scanline
-            endScanline();
-
-            // Terminate the loop if an entire frame has been emulated
-            if (scanline == 0) exit = true;
-        }
-
-        // Experimental
-        if (slicesPerFrame() == 2 && scanline == 156) exit = true;
-        if (slicesPerFrame() == 3 && scanline == 104) exit = true;
-        if (slicesPerFrame() == 3 && scanline == 208) exit = true;
-        if (slicesPerFrame() == 4 && scanline == 78) exit = true;
-        if (slicesPerFrame() == 4 && scanline == 156) exit = true;
-        if (slicesPerFrame() == 4 && scanline == 234) exit = true;
+        // Check if we have reached the next sync point
+        if (scanline == syncLine) exit = true;
 
     } while (!exit);
+    
+    trace(TIM_DEBUG, "Syncing at scanline %d\n", scanline);
+}
+
+isize 
+C64::nextSyncLine(isize line)
+{
+    switch (slicesPerFrame()) {
+
+        case 2: return line < 156 ? 156 : 0;
+        case 3: return line < 104 ? 104 : line < 208 ? 208 : 0;
+        case 4: return line <  78 ?  78 : line < 156 ? 156 : line < 234 ? 234 : 0;
+
+        default:
+            return 0;
+    }
 }
 
 bool
@@ -1200,7 +1205,7 @@ C64::refreshRate() const
 isize 
 C64::slicesPerFrame() const
 {
-    return 4;
+    return 1;
 }
 
 util::Time 

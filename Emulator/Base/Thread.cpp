@@ -33,7 +33,7 @@ Thread::execute()
 {
     if (missing) {
 
-        trace(TIM_DEBUG, "%s SYNC POINT: %lld us\n", ThreadModeEnum::key(M), 
+        trace(TIM_DEBUG, "execute<%s>: %lld us\n", ThreadModeEnum::key(M),
               execClock.restart().asMicroseconds());
 
         loadClock.go();
@@ -45,41 +45,6 @@ Thread::execute()
         loadClock.stop();
     }
 }
-
-/*
-template <> void
-Thread::execute<THREAD_PERIODIC>()
-{
-    loadClock.go();
-    sliceCounter++;
-    execute();
-    loadClock.stop();
-}
-
-template <> void
-Thread::execute<THREAD_PULSED>()
-{
-    loadClock.go();
-    sliceCounter++;
-    execute();
-    loadClock.stop();
-}
-
-template <> void
-Thread::execute<THREAD_ADAPTIVE>()
-{
-    if (missing) {
-
-        trace(TIM_DEBUG, "THREAD_ADAPTIVE: %lld us\n", execClock.restart().asMicroseconds());
-
-        loadClock.go();
-        execute();
-        sliceCounter++;
-        missing--;
-        loadClock.stop();
-    }
-}
-*/
 
 template <> void
 Thread::sleep<THREAD_PERIODIC>()
@@ -127,7 +92,7 @@ Thread::sleep<THREAD_PULSED>()
         // Wait for the next pulse
         waitForWakeUp(timeout);
 
-        // Determine the number of overdue slices
+        // Determine the number of slices that are overdue
         missing = missingSlices();
 
         if (missing) {
@@ -136,10 +101,10 @@ Thread::sleep<THREAD_PULSED>()
             deltaTime = wakeupPeriod() / missing;
             targetTime = util::Time::now() + deltaTime;
 
-            // Start over when we are out of sync
+            // Start over if the emulator got out of sync
             if (std::abs(missing) > 5 * slicesPerFrame()) {
 
-                debug(true, "Adaptive sync: Off by %ld slices\n", missing);
+                warn("Emulation is off by %ld SYNC points\n", missing);
                 resync();
             }
         }
