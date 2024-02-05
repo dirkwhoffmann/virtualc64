@@ -436,7 +436,6 @@ public:
     void signalUserSnapshot() { setFlag(RL::USER_SNAPSHOT); }
     void signalBreakpoint() { setFlag(RL::BREAKPOINT); }
     void signalWatchpoint() { setFlag(RL::WATCHPOINT); }
-    void signalInspect() { setFlag(RL::INSPECT); }
     void signalJammed() { setFlag(RL::CPU_JAM); }
     void signalStop() { setFlag(RL::STOP); }
     void signalExpPortNmi() { setFlag(RL::EXTERNAL_NMI); }

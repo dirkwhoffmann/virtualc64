@@ -331,21 +331,17 @@ extension MyController {
         refreshStatusBar()
         myAppDelegate.prefController?.refresh()
     }
-    
+
     /*
-    @IBAction func warpAction(_ sender: Any!) {
+    @IBAction func timeLapseAction(_ sender: NSSlider!) {
 
-        switch pref.warpMode {
-
-        case .auto: pref.warpMode = .off
-        case .off: pref.warpMode = .on
-        case .on: pref.warpMode = .auto
-        }
-
+        let value = sender.integerValue
+        let incr = sender.altIncrementValue
+        print("value = \(value) incr = \(incr)")
+        config.tim
         refreshStatusBar()
     }
-    */
-
+*/
     @IBAction func activityTypeAction(_ sender: NSPopUpButton!) {
 
         /*
