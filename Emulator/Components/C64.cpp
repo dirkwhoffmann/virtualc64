@@ -192,7 +192,7 @@ C64::eventName(EventSlot slot, EventID id)
     }
 }
 
-C64::C64()
+C64::C64(class Emulator& ref) : emulator(ref)
 {
     trace(RUN_DEBUG, "Creating virtual C64\n");
 

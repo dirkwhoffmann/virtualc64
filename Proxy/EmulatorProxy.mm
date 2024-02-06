@@ -9,6 +9,7 @@
 
 #import "config.h"
 #import "EmulatorProxy.h"
+#import "Emulator.h"
 #import "C64.h"
 #import "C64Key.h"
 #import "VirtualC64-Swift.h"
@@ -2520,38 +2521,43 @@ using namespace vc64;
     if (!(self = [super init])) return self;
     
     // Create the emulator instance
-    C64 *c64 = new C64();
-    obj = c64;
+    Emulator *emu = new Emulator();
+    obj = emu;
 
     // Create sub proxys
-    breakpoints = [[GuardsProxy alloc] initWith:&c64->cpu.debugger.breakpoints];
-    cia1 = [[CIAProxy alloc] initWith:&c64->cia1];
-    cia2 = [[CIAProxy alloc] initWith:&c64->cia2];
-    cpu = [[CPUProxy alloc] initWith:&c64->cpu];
-    datasette = [[DatasetteProxy alloc] initWith:&c64->datasette];
-    dmaDebugger = [[DmaDebuggerProxy alloc] initWith:&c64->vic.dmaDebugger];
-    drive8 = [[DriveProxy alloc] initWithVC1541:&c64->drive8];
-    drive9 = [[DriveProxy alloc] initWithVC1541:&c64->drive9];
-    expansionport = [[ExpansionPortProxy alloc] initWith:&c64->expansionport];
-    host = [[HostProxy alloc] initWith:&c64->host];
-    iec = [[IECProxy alloc] initWith:&c64->iec];
-    keyboard = [[KeyboardProxy alloc] initWith:&c64->keyboard];
-    mem = [[MemoryProxy alloc] initWith:&c64->mem];
-    parCable = [[ParCableProxy alloc] initWith:&c64->parCable];
-    port1 = [[ControlPortProxy alloc] initWith:&c64->port1];
-    port2 = [[ControlPortProxy alloc] initWith:&c64->port2];
-    recorder = [[RecorderProxy alloc] initWith:&c64->recorder];
-    retroShell = [[RetroShellProxy alloc] initWith:&c64->retroShell];
-    sid = [[SIDProxy alloc] initWith:&c64->muxer];
-    vic = [[VICIIProxy alloc] initWith:&c64->vic];
-    watchpoints = [[GuardsProxy alloc] initWith:&c64->cpu.debugger.watchpoints];
+    breakpoints = [[GuardsProxy alloc] initWith:&emu->c64.cpu.debugger.breakpoints];
+    cia1 = [[CIAProxy alloc] initWith:&emu->c64.cia1];
+    cia2 = [[CIAProxy alloc] initWith:&emu->c64.cia2];
+    cpu = [[CPUProxy alloc] initWith:&emu->c64.cpu];
+    datasette = [[DatasetteProxy alloc] initWith:&emu->c64.datasette];
+    dmaDebugger = [[DmaDebuggerProxy alloc] initWith:&emu->c64.vic.dmaDebugger];
+    drive8 = [[DriveProxy alloc] initWithVC1541:&emu->c64.drive8];
+    drive9 = [[DriveProxy alloc] initWithVC1541:&emu->c64.drive9];
+    expansionport = [[ExpansionPortProxy alloc] initWith:&emu->c64.expansionport];
+    host = [[HostProxy alloc] initWith:&emu->c64.host];
+    iec = [[IECProxy alloc] initWith:&emu->c64.iec];
+    keyboard = [[KeyboardProxy alloc] initWith:&emu->c64.keyboard];
+    mem = [[MemoryProxy alloc] initWith:&emu->c64.mem];
+    parCable = [[ParCableProxy alloc] initWith:&emu->c64.parCable];
+    port1 = [[ControlPortProxy alloc] initWith:&emu->c64.port1];
+    port2 = [[ControlPortProxy alloc] initWith:&emu->c64.port2];
+    recorder = [[RecorderProxy alloc] initWith:&emu->c64.recorder];
+    retroShell = [[RetroShellProxy alloc] initWith:&emu->c64.retroShell];
+    sid = [[SIDProxy alloc] initWith:&emu->c64.muxer];
+    vic = [[VICIIProxy alloc] initWith:&emu->c64.vic];
+    watchpoints = [[GuardsProxy alloc] initWith:&emu->c64.cpu.debugger.watchpoints];
 
     return self;
 }
 
+- (Emulator *)emu
+{
+    return (Emulator *)obj;
+}
+
 - (C64 *)c64
 {
-    return (C64 *)obj;
+    return &((Emulator *)obj)->c64;
 }
 
 + (DefaultsProxy *) defaults

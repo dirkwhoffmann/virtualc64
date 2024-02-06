@@ -86,6 +86,9 @@ static constexpr double inspectionInterval = 0.1;
  */
 class C64 : public Thread {
 
+    // Reference to the emulator this instance belongs to
+    class Emulator &emulator;
+
     // The current configuration
     C64Config config = {};
 
@@ -243,7 +246,7 @@ public:
     
 public:
     
-    C64();
+    C64(class Emulator& ref);
     ~C64();
 
     // Launches the emulator thread

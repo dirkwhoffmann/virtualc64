@@ -171,6 +171,8 @@
 		506D3DD020224BF4009742CF /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCF20224BF4009742CF /* MyDocument.swift */; };
 		506D4D0D20B331A00093C5C6 /* MyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D4D0C20B331A00093C5C6 /* MyFormatter.swift */; };
 		506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54CB2032255A0026D8B4 /* RomDropView.swift */; };
+		506F303A2B729CE80083EAEA /* Emulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30382B729CE80083EAEA /* Emulator.cpp */; };
+		506F303B2B729CE80083EAEA /* Emulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30382B729CE80083EAEA /* Emulator.cpp */; };
 		50726F2B295B61C50031F2F5 /* InterpreterDebugCmds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2A295B61C50031F2F5 /* InterpreterDebugCmds.cpp */; };
 		50726F2F295C27360031F2F5 /* EventPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2E295C27360031F2F5 /* EventPanel.swift */; };
 		50726F31295C27470031F2F5 /* EventTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F30295C27470031F2F5 /* EventTableView.swift */; };
@@ -730,6 +732,8 @@
 		506D3DCF20224BF4009742CF /* MyDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDocument.swift; sourceTree = "<group>"; };
 		506D4D0C20B331A00093C5C6 /* MyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFormatter.swift; sourceTree = "<group>"; };
 		506D54CB2032255A0026D8B4 /* RomDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDropView.swift; sourceTree = "<group>"; };
+		506F30382B729CE80083EAEA /* Emulator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Emulator.cpp; sourceTree = "<group>"; };
+		506F30392B729CE80083EAEA /* Emulator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Emulator.h; sourceTree = "<group>"; };
 		50726F2A295B61C50031F2F5 /* InterpreterDebugCmds.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = InterpreterDebugCmds.cpp; sourceTree = "<group>"; };
 		50726F2E295C27360031F2F5 /* EventPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPanel.swift; sourceTree = "<group>"; };
 		50726F30295C27470031F2F5 /* EventTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableView.swift; sourceTree = "<group>"; };
@@ -1263,6 +1267,8 @@
 				5078BEAA264D70AC00EDA161 /* CMakeLists.txt */,
 				504C42F824AF29AB00E69CAE /* config.h */,
 				5077AC672B5ACC5100EFAC85 /* config.cpp */,
+				506F30392B729CE80083EAEA /* Emulator.h */,
+				506F30382B729CE80083EAEA /* Emulator.cpp */,
 				50726FBC2961CA5A0031F2F5 /* Headless.h */,
 				50726FBB2961CA5A0031F2F5 /* Headless.cpp */,
 				500FAA62261376980062488E /* Utilities */,
@@ -2077,6 +2083,7 @@
 				50726F4E2961C9940031F2F5 /* Host.cpp in Sources */,
 				50726F9E2961CA0D0031F2F5 /* StructuredBasic.cpp in Sources */,
 				50726F772961C9DC0031F2F5 /* Datasette.cpp in Sources */,
+				506F303B2B729CE80083EAEA /* Emulator.cpp in Sources */,
 				50726F6D2961C9C60031F2F5 /* filter.cc in Sources */,
 				50726FB82961CA290031F2F5 /* InterpreterCmds.cpp in Sources */,
 				50726F832961C9ED0031F2F5 /* Keyboard.cpp in Sources */,
@@ -2149,6 +2156,7 @@
 				504C438A24AF29AC00E69CAE /* Mouse1350.cpp in Sources */,
 				50AD303C28141F0B00D9A7A6 /* Buffer.cpp in Sources */,
 				504C436824AF29AC00E69CAE /* ActionReplay.cpp in Sources */,
+				506F303A2B729CE80083EAEA /* Emulator.cpp in Sources */,
 				5098C57B2658CF9800E05EFC /* VideoExporter.swift in Sources */,
 				50BF77D220309A2A006E000F /* WindowDelegate.swift in Sources */,
 				50D3091E24C5CE1A00B92563 /* MyControllerStatusBar.swift in Sources */,
