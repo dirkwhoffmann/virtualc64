@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "C64.h"
+#include "Emulator.h"
 #include "Checksum.h"
 #include "IOUtils.h"
 #include <algorithm>
@@ -225,33 +225,12 @@ C64::C64(class Emulator& ref) : emulator(ref)
     // Set up the initial state
     CoreComponent::initialize();
     CoreComponent::reset(true);
-
-    // Initialize the sync timer
-    targetTime = util::Time::now();
 }
 
 C64::~C64()
 {
-    debug(RUN_DEBUG, "Destroying emulator instance\n");
-    if (thread.joinable()) { halt(); }
-}
-
-void
-C64::launch(const void *listener, Callback *func)
-{
-    msgQueue.setListener(listener, func);
-
-    launch();
-}
-
-void
-C64::launch()
-{
-    // Make sure to call this function only once
-    assert(!thread.joinable());
-
-    // Start the thread and enter the main function
-    thread = std::thread(&Thread::main, this);
+    // debug(RUN_DEBUG, "Destroying emulator instance\n");
+    // if (thread.joinable()) { halt(); }
 }
 
 void
@@ -321,6 +300,16 @@ C64::_reset(bool hard)
     rasterCycle = 1;
     updateWarpState();
 }
+
+bool C64::isPoweredOff() const { return emulator.isPoweredOff(); }
+bool C64::isPoweredOn() const { return emulator.isPoweredOn(); }
+bool C64::isPaused() const { return emulator.isPaused(); }
+bool C64::isRunning() const { return emulator.isRunning(); }
+bool C64::isSuspended() const { return emulator.isSuspended(); }
+bool C64::isHalted() const { return emulator.isHalted(); }
+void C64::suspend() { return emulator.suspend(); }
+void C64::resume() { return emulator.resume(); }
+
 
 void
 C64::resetConfig()
@@ -1188,7 +1177,7 @@ C64::processFlags()
         clearFlag(RL::BREAKPOINT);
         msgQueue.put(MSG_BREAKPOINT_REACHED, CpuMsg {u16(cpu.debugger.breakpointPC)});
         inspect();
-        switchState(EXEC_PAUSED);
+        emulator.switchState(EXEC_PAUSED);
     }
 
     // Did we reach a watchpoint?
@@ -1196,13 +1185,13 @@ C64::processFlags()
         clearFlag(RL::WATCHPOINT);
         msgQueue.put(MSG_WATCHPOINT_REACHED, CpuMsg {u16(cpu.debugger.watchpointPC)});
         inspect();
-        switchState(EXEC_PAUSED);
+        emulator.switchState(EXEC_PAUSED);
     }
 
     // Are we requested to terminate the run loop?
     if (flags & RL::STOP) {
         clearFlag(RL::STOP);
-        switchState(EXEC_PAUSED);
+        emulator.switchState(EXEC_PAUSED);
     }
 
     // Are we requested to pull the NMI line down?
@@ -1215,7 +1204,7 @@ C64::processFlags()
     if (flags & RL::CPU_JAM) {
         clearFlag(RL::CPU_JAM);
         msgQueue.put(MSG_CPU_JAMMED);
-        switchState(EXEC_PAUSED);
+        emulator.switchState(EXEC_PAUSED);
     }
 
     // Are we requested to simulate a BRK instruction
@@ -1437,15 +1426,15 @@ C64::_dump(Category category, std::ostream& os) const
         os << tab("Suspended");
         os << bol(isSuspended()) << std::endl;
         os << tab("Warping");
-        os << bol(isWarping()) << std::endl;
+        os << bol(emulator.isWarping()) << std::endl;
         os << tab("Tracking");
-        os << bol(isTracking()) << std::endl;
+        os << bol(emulator.isTracking()) << std::endl;
         os << std::endl;
 
         os << tab("Refresh rate");
         os << dec(isize(refreshRate())) << " Fps" << std::endl;
         os << tab("Thread state");
-        os << ExecutionStateEnum::key(state) << std::endl;
+        os << ExecutionStateEnum::key(emulator.state) << std::endl;
         os << tab("Sync mode");
         os << SyncModeEnum::key(getSyncMode()) << std::endl;
         os << tab("Ultimax mode");
@@ -1513,7 +1502,7 @@ C64::_dump(Category category, std::ostream& os) const
 void
 C64::stopAndGo()
 {
-    isRunning() ? pause() : run();
+    isRunning() ? emulator.pause() : emulator.run();
 }
 
 void
@@ -1711,15 +1700,15 @@ C64::updateWarpState()
 {
     if (cpu.clock < SEC(config.warpBoot)) {
 
-        switchWarp(true);
+        emulator.switchWarp(true);
         return;
     }
 
     switch (config.warpMode) {
 
-        case WARP_AUTO:     switchWarp(iec.isTransferring()); break;
-        case WARP_NEVER:    switchWarp(false); break;
-        case WARP_ALWAYS:   switchWarp(true); break;
+        case WARP_AUTO:     emulator.switchWarp(iec.isTransferring()); break;
+        case WARP_NEVER:    emulator.switchWarp(false); break;
+        case WARP_ALWAYS:   emulator.switchWarp(true); break;
 
         default:
             fatalError;

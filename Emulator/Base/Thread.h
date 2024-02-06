@@ -172,6 +172,7 @@ class Thread : public CoreComponent, util::Wakeable {
     
 protected:
 
+    friend class Emulator;
     friend class C64;
     
     // The thread object

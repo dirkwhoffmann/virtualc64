@@ -17,8 +17,10 @@
 
 namespace vc64 {
 
-class Emulator : public CoreComponent { // } : public Thread {
+class Emulator : public Thread {
 
+    friend class C64;
+    
     //
     // The virtual C64
     //
@@ -44,6 +46,10 @@ public:
     Emulator();
     ~Emulator();
 
+    // Launches the emulator thread
+    void launch();
+    void launch(const void *listener, Callback *func);
+
 
     //
     // Methods from CoreObject
@@ -67,8 +73,23 @@ private:
     isize _load(const u8 *buffer) override { return 0; }
     isize _save(u8 *buffer) override { return 0; }
 
+    //
+    // Methods from Thread
+    //
 
+private:
 
+    SyncMode getSyncMode() const override;
+    void execute() override;
+
+public:
+
+    double refreshRate() const override;
+    isize slicesPerFrame() const override;
+    util::Time wakeupPeriod() const override;
+
+    
+/*
     virtual bool isPoweredOff() const override;
     virtual bool isPoweredOn() const override;
     virtual bool isPaused() const override;
@@ -78,7 +99,7 @@ private:
 
     virtual void suspend() override;
     virtual void resume() override;
-
+*/
 };
 
 }

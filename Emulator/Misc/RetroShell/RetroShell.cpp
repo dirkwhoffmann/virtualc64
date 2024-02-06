@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "RetroShell.h"
-#include "C64.h"
+#include "Emulator.h"
 #include "Parser.h"
 #include <sstream>
 
@@ -393,9 +393,9 @@ RetroShell::execUserCommand(const string &command)
 
         } else {
 
-            if (c64.isRunning()) {
+            if (c64.emulator.isRunning()) {
 
-                c64.pause();
+                c64.emulator.pause();
 
             } else {
 

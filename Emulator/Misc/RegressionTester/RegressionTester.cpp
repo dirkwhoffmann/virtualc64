@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "RegressionTester.h"
-#include "C64.h"
+#include "Emulator.h"
 #include "IOUtils.h"
 
 #include <fstream>
@@ -36,10 +36,10 @@ RegressionTester::prepare(C64 &c64, C64Model model)
     constexpr isize warpSource = 1;
 
     // Run as fast as possible
-    c64.warpOn(warpSource);
+    c64.emulator.warpOn(warpSource);
 
     // Run the emulator
-    c64.run();
+    c64.emulator.run();
 }
 
 void

@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "C64.h"
+#include "Emulator.h"
 #include <sstream>
 
 namespace vc64 {
@@ -120,13 +120,13 @@ Interpreter::switchInterpreter()
     if (inCommandShell()) {
 
         shell = Shell::Debug;
-        c64.trackOn(1);
+        c64.emulator.trackOn(1);
         msgQueue.put(MSG_CONSOLE_DEBUGGER, true);
 
     } else {
 
         shell = Shell::Command;
-        c64.trackOff(1);
+        c64.emulator.trackOff(1);
         msgQueue.put(MSG_CONSOLE_DEBUGGER, false);
     }
 

@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "Interpreter.h"
-#include "C64.h"
+#include "Emulator.h"
 
 namespace vc64 {
 
@@ -245,7 +245,7 @@ Interpreter::initCommandShell(Command &root)
              "Switches the C64 on or off",
              [this](Arguments& argv, long value) {
 
-        parseOnOff(argv) ? c64.run() : c64.powerOff();
+        parseOnOff(argv) ? c64.emulator.run() : c64.emulator.powerOff();
     });
 
     root.add({"c64", "reset"},

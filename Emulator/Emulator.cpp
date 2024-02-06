@@ -19,22 +19,65 @@ Emulator::Emulator()
 {
     subComponents = std::vector<CoreComponent *> { &c64 };
 
+    // Initialize the sync timer
+    targetTime = util::Time::now();
+
     // trace(RUN_DEBUG, "Creating emulator\n");
 }
 
 Emulator::~Emulator()
 {
-    // debug(RUN_DEBUG, "Destroying emulator\n");
-    // if (thread.joinable()) { c64.halt(); }
+    debug(RUN_DEBUG, "Destroying emulator\n");
+    if (thread.joinable()) { halt(); }
 }
 
-bool Emulator::isPoweredOff() const { return c64.isPoweredOff(); }
-bool Emulator::isPoweredOn() const { return c64.isPoweredOn(); }
-bool Emulator::isPaused() const { return c64.isPaused(); }
-bool Emulator::isRunning() const { return c64.isRunning(); }
-bool Emulator::isSuspended() const { return c64.isSuspended(); }
-bool Emulator::isHalted() const { return c64.isHalted(); }
+void
+Emulator::launch(const void *listener, Callback *func)
+{
+    c64.msgQueue.setListener(listener, func);
 
-void Emulator::suspend() { return c64.suspend(); }
-void Emulator::resume() { return c64.resume(); }
+    launch();
+}
+
+void
+Emulator::launch()
+{
+    // Make sure to call this function only once
+    assert(!thread.joinable());
+
+    // Start the thread and enter the main function
+    thread = std::thread(&Thread::main, this);
+}
+
+
+SyncMode
+Emulator::getSyncMode() const
+{
+    return c64.getSyncMode();
+}
+
+void 
+Emulator::execute()
+{
+    c64.execute();
+}
+
+double 
+Emulator::refreshRate() const
+{
+    return c64.refreshRate();
+}
+
+isize 
+Emulator::slicesPerFrame() const
+{
+    return c64.slicesPerFrame();
+}
+
+util::Time 
+Emulator::wakeupPeriod() const
+{
+    return c64.wakeupPeriod();
+}
+
 }

@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "VICII.h"
-#include "C64.h"
+#include "Emulator.h"
 #include "IOUtils.h"
 
 namespace vc64 {
@@ -1069,7 +1069,7 @@ VICII::beginFrame()
     clearStats();
     
     // Check if this frame should be executed in headless mode
-    headless = c64.isWarping() && config.powerSave && (c64.frame & 7) != 0;
+    headless = c64.emulator.isWarping() && config.powerSave && (c64.frame & 7) != 0;
 }
 
 void

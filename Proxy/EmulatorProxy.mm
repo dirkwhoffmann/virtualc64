@@ -2589,31 +2589,31 @@ using namespace vc64;
 
 - (BOOL)warpMode
 {
-    return [self c64]->isWarping();
+    return [self c64]->emulator.isWarping();
 }
 
 - (void)setWarpMode:(BOOL)enable
 {
-    enable ? [self c64]->warpOn() : [self c64]->warpOff();
+    enable ? [self c64]->emulator.warpOn() : [self c64]->emulator.warpOff();
 }
 
 - (BOOL)trackMode
 {
-    return [self c64]->isTracking();
+    return [self c64]->emulator.isTracking();
 }
 
 - (void)setTrackMode:(BOOL)value
 {
     if (value) {
-        [self c64]->trackOn();
+        [self c64]->emulator.trackOn();
     } else {
-        [self c64]->trackOff();
+        [self c64]->emulator.trackOff();
     }
 }
 
 - (NSInteger)cpuLoad
 {
-    double load = [self c64]->getCpuLoad();
+    double load = [self c64]->emulator.getCpuLoad();
     return (NSInteger)(100 * load);
 }
 
@@ -2649,7 +2649,7 @@ using namespace vc64;
 
 - (void)launch:(const void *)listener function:(Callback *)func
 {
-    [self c64]->launch(listener, func);
+    [self c64]->emulator.launch(listener, func);
 }
 
 - (void)hardReset
@@ -2670,59 +2670,59 @@ using namespace vc64;
 
 - (void)powerOn:(ExceptionWrapper *)ex
 {
-    try { [self c64]->powerOn(); }
+    try { [self c64]->emulator.powerOn(); }
     catch (VC64Error &error) { [ex save:error]; }
 }
 
 - (void)powerOff
 {
-    [self c64]->powerOff();
+    [self c64]->emulator.powerOff();
 }
 
 - (BOOL)poweredOn
 {
-    return [self c64]->isPoweredOn();
+    return [self c64]->emulator.isPoweredOn();
 }
 
 - (BOOL)poweredOff
 {
-    return [self c64]->isPoweredOff();
+    return [self c64]->emulator.isPoweredOff();
 }
 
 - (BOOL)running
 {
-    return [self c64]->isRunning();
+    return [self c64]->emulator.isRunning();
 }
 
 - (BOOL)paused
 {
-    return [self c64]->isPaused();
+    return [self c64]->emulator.isPaused();
 }
 
 - (void)run:(ExceptionWrapper *)e
 {
-    try { [self c64]->run(); }
+    try { [self c64]->emulator.run(); }
     catch (VC64Error &error) { [e save:error]; }
 }
 
 - (void)pause
 {
-    [self c64]->pause();
+    [self c64]->emulator.pause();
 }
 
 - (void)halt
 {
-    [self c64]->halt();
+    [self c64]->emulator.halt();
 }
 
 - (void)suspend
 {
-    [self c64]->suspend();
+    [self c64]->emulator.suspend();
 }
 
 - (void)resume
 {
-    [self c64]->resume();
+    [self c64]->emulator.resume();
 }
 
 - (void)continueScript
@@ -2844,12 +2844,12 @@ using namespace vc64;
 
 - (void)wakeUp
 {
-    [self c64]->wakeUp();
+    [self c64]->emulator.wakeUp();
 }
 
 - (void)stopAndGo
 {
-    [self c64]->stopAndGo();
+    [self c64]-> stopAndGo();
 }
 
 - (void)stepInto

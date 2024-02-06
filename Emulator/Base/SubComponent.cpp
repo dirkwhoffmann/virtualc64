@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "SubComponent.h"
-#include "C64.h"
+#include "Emulator.h"
 
 namespace vc64 {
 
@@ -46,49 +46,49 @@ vic(ref.vic)
 bool
 SubComponent::isPoweredOff() const
 {
-    return c64.isPoweredOff();
+    return c64.emulator.isPoweredOff();
 }
 
 bool
 SubComponent::isPoweredOn() const
 {
-    return c64.isPoweredOn();
+    return c64.emulator.isPoweredOn();
 }
 
 bool
 SubComponent::isPaused() const
 {
-    return c64.isPaused();
+    return c64.emulator.isPaused();
 }
 
 bool
 SubComponent::isRunning() const
 {
-    return c64.isRunning();
+    return c64.emulator.isRunning();
 }
 
 bool
 SubComponent::isSuspended() const
 {
-    return c64.isSuspended();
+    return c64.emulator.isSuspended();
 }
 
 bool
 SubComponent::isHalted() const
 {
-    return c64.isHalted();
+    return c64.emulator.isHalted();
 }
 
 void
 SubComponent::suspend()
 {
-    c64.suspend();
+    c64.emulator.suspend();
 }
 
 void
 SubComponent::resume()
 {
-    c64.resume();
+    c64.emulator.resume();
 }
 
 void

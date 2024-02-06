@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "RetroShell.h"
-#include "C64.h"
+#include "Emulator.h"
 #include "IOUtils.h"
 #include "Parser.h"
 
@@ -36,14 +36,14 @@ Interpreter::initDebugShell(Command &root)
              "Pauses emulation",
              [this](Arguments& argv, long value) {
 
-        c64.pause();
+        c64.emulator.pause();
     });
 
     root.add({"continue"},
              "Continues emulation",
              [this](Arguments& argv, long value) {
 
-        c64.run();
+        c64.emulator.run();
     });
 
     root.add({"step"},

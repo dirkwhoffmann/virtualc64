@@ -13,7 +13,7 @@
 #include "config.h"
 #include "PeddleConfig.h"
 #include "CPU.h"
-#include "C64.h"
+#include "Emulator.h"
 #include "IOUtils.h"
 
 namespace vc64 {
@@ -50,7 +50,7 @@ CPU::_reset(bool hard)
     Peddle::reset();
 
     // Enable or disable CPU debugging
-    c64.isTracking() ? debugger.enableLogging() : debugger.disableLogging();
+    c64.emulator.isTracking() ? debugger.enableLogging() : debugger.disableLogging();
 
     assert(levelDetector.isClear());
     assert(edgeDetector.isClear());

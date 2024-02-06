@@ -84,11 +84,17 @@ static constexpr double inspectionInterval = 0.1;
  * Please note that most subcomponents have their own public API. E.g., to
  * query information from VICII, you need to invoke a method on c64.vicii.
  */
-class C64 : public Thread {
+class C64 : public CoreComponent {
+
+    friend class Emulator;
+    
+public:
 
     // Reference to the emulator this instance belongs to
     class Emulator &emulator;
 
+private:
+    
     // The current configuration
     C64Config config = {};
 
@@ -249,10 +255,6 @@ public:
     C64(class Emulator& ref);
     ~C64();
 
-    // Launches the emulator thread
-    void launch();
-    void launch(const void *listener, Callback *func);
-
 
     //
     // Methods from CoreObject
@@ -378,22 +380,22 @@ private:
 
 
     //
-    // Methods from Thread
+    // (Methods from Thread)
     //
 
 private:
 
-    SyncMode getSyncMode() const override;
-    void execute() override;
+    SyncMode getSyncMode() const;
+    void execute();
     template <bool enable8, bool enable9> void execute();
     isize nextSyncLine(isize scanline);
     bool processFlags();
 
 public:
 
-    double refreshRate() const override;
-    isize slicesPerFrame() const override;
-    util::Time wakeupPeriod() const override;
+    double refreshRate() const;
+    isize slicesPerFrame() const;
+    util::Time wakeupPeriod() const;
 
 
     //
@@ -414,7 +416,17 @@ private:
     void _trackOff() override;
     void _inspect() const override;
 
-    
+    bool isPoweredOff() const override;
+    bool isPoweredOn() const override;
+    bool isPaused() const override;
+    bool isRunning() const override;
+    bool isSuspended() const override;
+    bool isHalted() const override;
+
+    void suspend() override;
+    void resume() override;
+
+
     //
     // Running the emulator
     //
