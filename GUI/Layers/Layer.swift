@@ -15,7 +15,7 @@ class Layer: NSObject {
     var ressourceManager: RessourceManager { return renderer.ressourceManager }
     var device: MTLDevice { return renderer.device }
     var view: MTKView { return renderer.view }
-    var c64: C64Proxy { return renderer.parent.c64 }
+    var c64: EmulatorProxy { return renderer.parent.c64 }
     
     // Alpha channel of this layer
     var alpha: AnimatedFloat = AnimatedFloat(0.0)

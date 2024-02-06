@@ -140,7 +140,7 @@ extension ConfigurationController {
         c64.suspend()
 
         // Revert to standard settings
-        C64Proxy.defaults.removePeripheralsUserDefaults()
+        EmulatorProxy.defaults.removePeripheralsUserDefaults()
 
         // Update the configuration
         config.applyPeripheralsUserDefaults()

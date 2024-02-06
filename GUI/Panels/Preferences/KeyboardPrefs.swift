@@ -152,7 +152,7 @@ extension PreferencesController {
         c64.suspend()
 
         // Revert to standard settings
-        C64Proxy.defaults.removeKeyboardUserDefaults()
+        EmulatorProxy.defaults.removeKeyboardUserDefaults()
 
         // Update the configuration
         pref.applyKeyboardUserDefaults()

@@ -122,7 +122,7 @@ extension MyAppDelegate {
     var controllers: [MyController] {
         return documents.compactMap({ $0.windowForSheet?.windowController as? MyController })
     }
-    var proxies: [C64Proxy] {
+    var proxies: [EmulatorProxy] {
         return documents.map({ $0.c64 })
     }
     

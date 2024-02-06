@@ -17,7 +17,7 @@
 class Configuration {
     
     var parent: MyController!
-    var c64: C64Proxy { return parent.c64 }
+    var c64: EmulatorProxy { return parent.c64 }
     var renderer: Renderer { return parent.renderer }
     var gamePadManager: GamePadManager { return parent.gamePadManager }
     var ressourceManager: RessourceManager { return renderer.ressourceManager }

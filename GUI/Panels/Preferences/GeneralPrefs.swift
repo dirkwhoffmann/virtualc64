@@ -193,7 +193,7 @@ extension PreferencesController {
         assert(sender.selectedTag() == 0)
 
         // Revert to standard settings
-        C64Proxy.defaults.removeGeneralUserDefaults()
+        EmulatorProxy.defaults.removeGeneralUserDefaults()
 
         // Apply the new settings
         pref.applyGeneralUserDefaults()

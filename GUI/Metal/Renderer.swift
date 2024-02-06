@@ -25,7 +25,7 @@ class Renderer: NSObject, MTKViewDelegate {
     
     var prefs: Preferences { return parent.pref }
     var config: Configuration { return parent.config }
-    var c64: C64Proxy { return parent.c64 }
+    var c64: EmulatorProxy { return parent.c64 }
 
     // Number of drawn frames since power up
     var frames: Int64 = 0

@@ -13,7 +13,7 @@ public class MacAudio: NSObject {
 
     var parent: MyController!
     var audiounit: AUAudioUnit!
-    var c64: C64Proxy!
+    var c64: EmulatorProxy!
 
     var prefs: Preferences { return parent.pref }
     

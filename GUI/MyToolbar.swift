@@ -9,7 +9,7 @@
 
 class MyToolbar: NSToolbar {
     
-    var c64: C64Proxy { parent.c64 }
+    var c64: EmulatorProxy { parent.c64 }
 
     @IBOutlet weak var parent: MyController!
     @IBOutlet weak var controlPort1: NSPopUpButton!

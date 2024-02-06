@@ -21,7 +21,7 @@ class MyDocument: NSDocument {
     var mm: MediaManager!
 
     // Gateway to the core emulator
-    var c64: C64Proxy!
+    var c64: EmulatorProxy!
 
     // Snapshot storage
     private(set) var snapshots = ManagedArray<SnapshotProxy>(capacity: 32)
@@ -48,13 +48,13 @@ class MyDocument: NSDocument {
         mm = MediaManager(with: self)
 
         // Register all GUI related user defaults
-        C64Proxy.defaults.registerUserDefaults()
+        EmulatorProxy.defaults.registerUserDefaults()
 
         // Load the user default settings
-        C64Proxy.defaults.load()
+        EmulatorProxy.defaults.load()
 
         // Create an emulator instance
-        c64 = C64Proxy()
+        c64 = EmulatorProxy()
     }
 
     override open func makeWindowControllers() {

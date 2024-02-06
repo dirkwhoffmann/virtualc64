@@ -41,7 +41,7 @@
 
 @class AnyFileProxy;
 @class AnyCollectionProxy;
-@class C64Proxy;
+@class EmulatorProxy;
 @class CIAProxy;
 @class ControlPortProxy;
 @class CPUProxy;
@@ -125,7 +125,7 @@
 // C64
 //
 
-@interface C64Proxy : CoreComponentProxy {
+@interface EmulatorProxy : CoreComponentProxy {
         
     CIAProxy *cia1;
     CIAProxy *cia2;
@@ -844,7 +844,7 @@ exception:(ExceptionWrapper *)ex;
 
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
-+ (instancetype)makeWithC64:(C64Proxy *)c64proxy;
++ (instancetype)makeWithC64:(EmulatorProxy *)c64proxy;
 
 @property (readonly, strong) NSImage *previewImage;
 @property (readonly) time_t timeStamp;
@@ -861,7 +861,7 @@ exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithFile:(NSString *)path exception:(ExceptionWrapper *)ex;
 + (instancetype)makeWithBuffer:(const void *)buf length:(NSInteger)len exception:(ExceptionWrapper *)ex;
  
-- (void)execute:(C64Proxy *)proxy;
+- (void)execute:(EmulatorProxy *)proxy;
 
 @end
 

@@ -4,5 +4,5 @@
 
 #define __SWIFT__
 
-#import "C64Proxy.h"
+#import "EmulatorProxy.h"
 #import "iCarousel.h"

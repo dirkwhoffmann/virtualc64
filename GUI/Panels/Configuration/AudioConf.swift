@@ -155,7 +155,7 @@ extension ConfigurationController {
         c64.suspend()
 
         // Revert to standard settings
-        C64Proxy.defaults.removeAudioUserDefaults()
+        EmulatorProxy.defaults.removeAudioUserDefaults()
 
         // Update the configuration
         config.applyAudioUserDefaults()

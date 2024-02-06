@@ -8,7 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #import "config.h"
-#import "C64Proxy.h"
+#import "EmulatorProxy.h"
 #import "C64.h"
 #import "C64Key.h"
 #import "VirtualC64-Swift.h"
@@ -1780,7 +1780,7 @@ using namespace vc64;
     catch (VC64Error &error) { [ex save:error]; return nil; }
 }
 
-+ (instancetype)makeWithC64:(C64Proxy *)proxy
++ (instancetype)makeWithC64:(EmulatorProxy *)proxy
 {
     [proxy suspend];
     Snapshot *snapshot = new Snapshot(*(C64 *)proxy->obj);
@@ -1854,7 +1854,7 @@ using namespace vc64;
     catch (VC64Error &error) { [ex save:error]; return nil; }    
 }
 
-- (void)execute:(C64Proxy *)proxy
+- (void)execute:(EmulatorProxy *)proxy
 {
     C64 *c64 = (C64 *)proxy->obj;
     
@@ -2491,7 +2491,7 @@ using namespace vc64;
 // C64
 //
 
-@implementation C64Proxy
+@implementation EmulatorProxy
 
 @synthesize breakpoints;
 @synthesize cia1;
@@ -2561,13 +2561,11 @@ using namespace vc64;
 
 - (void)dealloc
 {
-    NSLog(@"C64 dealloc");
+
 }
 
 - (void)kill
 {
-    NSLog(@"kill");
-    
     assert([self c64] != NULL);
     delete [self c64];
     obj = NULL;

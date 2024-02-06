@@ -215,7 +215,7 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func factorySettingsAction(_ sender: Any!) {
 
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         // Power off the emulator if the user doesn't object
         if !askToPowerOff() { return }

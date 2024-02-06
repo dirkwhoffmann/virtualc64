@@ -22,7 +22,7 @@ extension NSDraggingInfo {
 class DropView: NSImageView {
 
     @IBOutlet var parent: ConfigurationController!
-    var c64: C64Proxy { return parent.c64 }
+    var c64: EmulatorProxy { return parent.c64 }
         
     override func awakeFromNib() {
 

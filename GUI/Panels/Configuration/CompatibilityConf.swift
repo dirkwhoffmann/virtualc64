@@ -128,7 +128,7 @@ extension ConfigurationController {
         c64.suspend()
 
         // Revert to standard settings
-        C64Proxy.defaults.removePerformanceUserDefaults()
+        EmulatorProxy.defaults.removePerformanceUserDefaults()
 
         // Update the configuration
         config.applyPerformanceUserDefaults()

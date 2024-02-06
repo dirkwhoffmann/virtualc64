@@ -11,7 +11,7 @@ class EventTableView: NSTableView {
 
     @IBOutlet weak var inspector: Inspector!
 
-    var c64: C64Proxy { return inspector.c64 }
+    var c64: EmulatorProxy { return inspector.c64 }
 
     var slotInfo = [EventSlotInfo?](repeating: nil, count: EventSlot._COUNT.rawValue)
 

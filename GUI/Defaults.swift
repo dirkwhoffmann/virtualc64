@@ -370,7 +370,7 @@ extension Preferences {
     func saveGeneralUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         defaults.set(Keys.Gen.autoSnapshots, autoSnapshots)
         defaults.set(Keys.Gen.autoSnapshotInterval, snapshotInterval)
@@ -397,7 +397,7 @@ extension Preferences {
     func applyGeneralUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         autoSnapshots = defaults.bool(Keys.Gen.autoSnapshots)
         snapshotInterval = defaults.int(Keys.Gen.autoSnapshotInterval)
@@ -527,7 +527,7 @@ extension Preferences {
     func saveControlsUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         defaults.encode(Keys.Con.mouseKeyMap, keyMaps[0])
         defaults.encode(Keys.Con.joyKeyMap1, keyMaps[1])
@@ -552,7 +552,7 @@ extension Preferences {
     func applyControlsUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         defaults.decode(Keys.Con.mouseKeyMap, &keyMaps[0])
         defaults.decode(Keys.Con.joyKeyMap1, &keyMaps[1])
@@ -601,7 +601,7 @@ extension Preferences {
     func saveDevicesUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         defaults.save()
     }
@@ -653,7 +653,7 @@ extension Preferences {
     func saveKeyboardUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         defaults.encode(Keys.Kbd.keyMap, keyMap)
         defaults.set(Keys.Kbd.mapKeysByPosition, mapKeysByPosition)
@@ -664,7 +664,7 @@ extension Preferences {
     func applyKeyboardUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         defaults.decode(Keys.Kbd.keyMap, &keyMap)
         mapKeysByPosition = defaults.bool(Keys.Kbd.mapKeysByPosition)
@@ -768,7 +768,7 @@ extension Configuration {
     func saveHardwareUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         c64.suspend()
 
@@ -800,7 +800,7 @@ extension Configuration {
     func applyHardwareUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         c64.suspend()
 
@@ -872,7 +872,7 @@ extension Configuration {
     func savePeripheralsUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         c64.suspend()
 
@@ -901,7 +901,7 @@ extension Configuration {
     func applyPeripheralsUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         c64.suspend()
 
@@ -962,7 +962,7 @@ extension Configuration {
     func savePerformanceUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         c64.suspend()
 
@@ -987,7 +987,7 @@ extension Configuration {
     func applyPerformanceUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         c64.suspend()
 
@@ -1043,7 +1043,7 @@ extension Configuration {
     func saveAudioUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         c64.suspend()
 
@@ -1072,7 +1072,7 @@ extension Configuration {
     func applyAudioUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         c64.suspend()
 
@@ -1259,7 +1259,7 @@ extension Configuration {
     func saveColorUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         c64.suspend()
 
@@ -1276,7 +1276,7 @@ extension Configuration {
     func saveGeometryUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         c64.suspend()
 
@@ -1293,7 +1293,7 @@ extension Configuration {
     func saveShaderUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         c64.suspend()
 
@@ -1332,7 +1332,7 @@ extension Configuration {
     func applyColorUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         c64.suspend()
 
@@ -1347,7 +1347,7 @@ extension Configuration {
     func applyGeometryUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         c64.suspend()
 
@@ -1362,7 +1362,7 @@ extension Configuration {
     func applyShaderUserDefaults() {
 
         debug(.defaults)
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         c64.suspend()
 

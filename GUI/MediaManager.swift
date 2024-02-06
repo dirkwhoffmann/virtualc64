@@ -23,7 +23,7 @@ class MediaManager {
 
     // References to other objects
     var document: MyDocument!
-    var c64: C64Proxy { return document.c64 }
+    var c64: EmulatorProxy { return document.c64 }
     var controller: MyController { return document.parent }
 
     // Computed references

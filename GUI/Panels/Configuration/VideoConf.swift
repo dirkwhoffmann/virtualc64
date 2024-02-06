@@ -288,32 +288,32 @@ extension ConfigurationController {
 
     @IBAction func vidPresetAction(_ sender: NSMenuItem!) {
 
-        let defaults = C64Proxy.defaults!
+        let defaults = EmulatorProxy.defaults!
 
         switch sender.tag {
 
         case 0: // Recommended settings (all)
 
-            C64Proxy.defaults.removeVideoUserDefaults()
+            EmulatorProxy.defaults.removeVideoUserDefaults()
 
         case 10: // Recommended settings (geometry)
 
-            C64Proxy.defaults.removeGeometryUserDefaults()
+            EmulatorProxy.defaults.removeGeometryUserDefaults()
 
         case 20: // Recommended settings (colors + shader)
 
-            C64Proxy.defaults.removeColorUserDefaults()
-            C64Proxy.defaults.removeShaderUserDefaults()
+            EmulatorProxy.defaults.removeColorUserDefaults()
+            EmulatorProxy.defaults.removeShaderUserDefaults()
 
         case 21: // TFT monitor
 
-            C64Proxy.defaults.removeColorUserDefaults()
-            C64Proxy.defaults.removeShaderUserDefaults()
+            EmulatorProxy.defaults.removeColorUserDefaults()
+            EmulatorProxy.defaults.removeShaderUserDefaults()
 
         case 22: // CRT monitor
 
-            C64Proxy.defaults.removeColorUserDefaults()
-            C64Proxy.defaults.removeShaderUserDefaults()
+            EmulatorProxy.defaults.removeColorUserDefaults()
+            EmulatorProxy.defaults.removeShaderUserDefaults()
 
             defaults.set(Keys.Vid.blur, 1)
             defaults.set(Keys.Vid.bloom, 1)

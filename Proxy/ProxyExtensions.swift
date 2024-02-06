@@ -108,7 +108,7 @@ extension MakeWithFolder {
 // Exception passing
 //
 
-extension C64Proxy {
+extension EmulatorProxy {
 
     func isReady() throws {
         
@@ -197,7 +197,7 @@ extension RecorderProxy {
 // Other extensions
 //
 
-public extension C64Proxy {
+public extension EmulatorProxy {
     
     func drive(_ nr: NSInteger) -> DriveProxy {
         
