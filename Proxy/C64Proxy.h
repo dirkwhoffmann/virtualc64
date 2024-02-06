@@ -75,7 +75,7 @@
 @class T64FileProxy;
 @class TAPFileProxy;
 @class VIAProxy;
-@class VICProxy;
+@class VICIIProxy;
 
 
 //
@@ -148,7 +148,7 @@
     RecorderProxy *recorder;
     RetroShellProxy *retroShell;
     SIDProxy *sid;
-    VICProxy *vic;
+    VICIIProxy *vic;
 }
 
 @property (readonly, strong) CIAProxy *cia1;
@@ -171,7 +171,7 @@
 @property (readonly, strong) RecorderProxy *recorder;
 @property (readonly, strong) RetroShellProxy *retroShell;
 @property (readonly, strong) SIDProxy *sid;
-@property (readonly, strong) VICProxy *vic;
+@property (readonly, strong) VICIIProxy *vic;
 
 @property (class, readonly, strong) DefaultsProxy *defaults;
 
@@ -387,7 +387,7 @@
 //
 
 
-@interface VICProxy : CoreComponentProxy { }
+@interface VICIIProxy : CoreComponentProxy { }
 
 @property (readonly) NSInteger hPixels;
 @property (readonly) NSInteger vPixels;

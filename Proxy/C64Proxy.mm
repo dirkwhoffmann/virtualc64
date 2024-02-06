@@ -494,7 +494,7 @@ using namespace vc64;
 // VICII
 //
 
-@implementation VICProxy
+@implementation VICIIProxy
 
 - (VICII *)vicii
 {
@@ -2543,7 +2543,7 @@ using namespace vc64;
     recorder = [[RecorderProxy alloc] initWith:&c64->recorder];
     retroShell = [[RetroShellProxy alloc] initWith:&c64->retroShell];
     sid = [[SIDProxy alloc] initWith:&c64->muxer];
-    vic = [[VICProxy alloc] initWith:&c64->vic];
+    vic = [[VICIIProxy alloc] initWith:&c64->vic];
     watchpoints = [[GuardsProxy alloc] initWith:&c64->cpu.debugger.watchpoints];
 
     return self;
