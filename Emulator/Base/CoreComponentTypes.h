@@ -21,6 +21,10 @@
 
 enum_long(OPT)
 {
+    // Host
+    OPT_HOST_REFRESH_RATE,
+    OPT_HOST_SAMPLE_RATE,
+
     // C64
     OPT_WARP_BOOT,
     OPT_WARP_MODE,
@@ -125,6 +129,9 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
     static const char *key(Option value)
     {
         switch (value) {
+
+            case OPT_HOST_REFRESH_RATE:     return "HOST_REFRESH_RATE";
+            case OPT_HOST_SAMPLE_RATE:      return "HOST_SAMPLE_RATE";
 
             case OPT_WARP_BOOT:             return "WARP_BOOT";
             case OPT_WARP_MODE:             return "WARP_MODE";

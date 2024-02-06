@@ -416,7 +416,7 @@ Muxer::getSampleRate() const
 void
 Muxer::setSampleRate(double rate)
 {
-    trace(SID_DEBUG, "Setting sample rate to %f\n", rate);
+    trace(true, "Setting sample rate to %f\n", rate);
 
     sampleRate = rate;
     

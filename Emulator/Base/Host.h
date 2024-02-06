@@ -17,15 +17,15 @@
 namespace vc64 {
 
 /* This class stores some information about the host system. The values have
- * are set the GUI on start and updated on-the-fly when a value changes.
+ * are set by the GUI on start and updated on-the-fly when a value changes.
  */
 class Host : public SubComponent {
 
-    // Audio sample rate
-    double sampleRate = 44100.0;
-
-    // Video refresh rate of the host monitor
+    // Refresh rate of the host display
     double refreshRate = 60.0;
+
+    // Audio sample rate of the host computer
+    double sampleRate = 44100.0;
 
     // Framebuffer dimensions
     isize frameBufferWidth = 0;
@@ -62,6 +62,16 @@ private:
     u64 _checksum() override { return 0; }
     isize _load(const u8 *buffer) override { return 0; }
     isize _save(u8 *buffer) override { return 0; }
+
+
+    //
+    // Configuring
+    //
+
+public:
+
+    i64 getConfigItem(Option option) const;
+    void setConfigItem(Option option, i64 value);
 
 
     //

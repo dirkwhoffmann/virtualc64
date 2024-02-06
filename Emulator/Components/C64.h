@@ -324,10 +324,6 @@ public:
     void setInspectionTarget(InspectionTarget target, Cycle trigger = 0);
     void removeInspectionTarget() { setInspectionTarget(INSPECTION_NONE); }
 
-
-    // void inspect() { inspect(inspectionTarget); }
-    // void autoInspect();
-
     EventInfo getEventInfo() const { return CoreComponent::getInfo(eventInfo); }
     EventSlotInfo getSlotInfo(isize nr) const;
 

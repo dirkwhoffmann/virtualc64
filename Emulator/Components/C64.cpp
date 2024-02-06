@@ -348,6 +348,11 @@ C64::getConfigItem(Option option) const
 {
     switch (option) {
 
+        case OPT_HOST_REFRESH_RATE:
+        case OPT_HOST_SAMPLE_RATE:
+
+            return host.getConfigItem(option);
+
         case OPT_WARP_BOOT:
 
             return config.warpBoot;
@@ -384,6 +389,7 @@ C64::getConfigItem(Option option) const
         case OPT_BRIGHTNESS:
         case OPT_CONTRAST:
         case OPT_SATURATION:
+
             return vic.getConfigItem(option);
 
         case OPT_DMA_DEBUG_ENABLE:
@@ -391,14 +397,17 @@ C64::getConfigItem(Option option) const
         case OPT_DMA_DEBUG_OPACITY:
         case OPT_CUT_LAYERS:
         case OPT_CUT_OPACITY:
+
             return vic.dmaDebugger.getConfigItem(option);
             
         case OPT_CIA_REVISION:
         case OPT_TIMER_B_BUG:
+
             assert(cia1.getConfigItem(option) == cia2.getConfigItem(option));
             return cia1.getConfigItem(option);
 
         case OPT_POWER_GRID:
+
             return supply.getConfigItem(option);
             
         case OPT_SID_REVISION:
@@ -408,14 +417,17 @@ C64::getConfigItem(Option option) const
         case OPT_SID_SAMPLING:
         case OPT_AUDVOLL:
         case OPT_AUDVOLR:
+
             return muxer.getConfigItem(option);
 
         case OPT_RAM_PATTERN:
         case OPT_SAVE_ROMS:
+
             return mem.getConfigItem(option);
 
         case OPT_DAT_MODEL:
         case OPT_DAT_CONNECT:
+
             return datasette.getConfigItem(option);
             
         default:
@@ -573,6 +585,12 @@ C64::configure(Option option, i64 value)
 
     switch (option) {
 
+        case OPT_HOST_REFRESH_RATE:
+        case OPT_HOST_SAMPLE_RATE:
+
+            host.setConfigItem(option, value);
+            break;
+            
         case OPT_WARP_BOOT:
         case OPT_WARP_MODE:
         case OPT_SYNC_MODE:

@@ -205,9 +205,12 @@ class Renderer: NSObject, MTKViewDelegate {
             let newfps = Int(round(Double(interval) / elapsed))
             if newfps != fps {
 
-                fps = newfps
-                c64.host.refreshRate = Int(fps)
-                debug(.vsync, "New GPU frame rate: \(fps)")
+                if [50, 60, 100, 120, 200, 240].contains(newfps) {
+
+                    fps = newfps
+                    c64.host.refreshRate = Int(fps)
+                    debug(.vsync, "New GPU frame rate: \(fps)")
+                }
             }
         }
     }

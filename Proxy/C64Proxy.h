@@ -430,8 +430,10 @@
 - (VoiceInfo)getVoiceInfo:(NSInteger)nr voice:(NSInteger)voice;
 - (SIDStats) getStats;
 
+/*
 - (double)sampleRate;
 - (void)setSampleRate:(double)rate;
+*/
 
 - (NSInteger)ringbufferSize;
 - (void)ringbufferData:(NSInteger)offset left:(float *)l right:(float *)r;

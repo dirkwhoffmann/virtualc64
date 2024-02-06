@@ -22,6 +22,40 @@ Host::Host(C64& ref) : SubComponent(ref)
 
 }
 
+i64
+Host::getConfigItem(Option option) const
+{
+    switch (option) {
+
+        case OPT_HOST_REFRESH_RATE: return i64(refreshRate);
+        case OPT_HOST_SAMPLE_RATE:  return i64(sampleRate);
+
+        default:
+            fatalError;
+    }
+}
+
+void
+Host::setConfigItem(Option option, i64 value)
+{
+    switch (option) {
+
+        case OPT_HOST_REFRESH_RATE:
+
+            refreshRate = double(value);
+            return;
+
+        case OPT_HOST_SAMPLE_RATE:
+
+            sampleRate = double(value);
+            muxer.setSampleRate(sampleRate);
+            return;
+
+        default:
+            fatalError;
+    }
+}
+
 void
 Host::_dump(Category category, std::ostream& os) const
 {
