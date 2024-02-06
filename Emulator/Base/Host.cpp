@@ -27,8 +27,10 @@ Host::getConfigItem(Option option) const
 {
     switch (option) {
 
-        case OPT_HOST_REFRESH_RATE: return i64(refreshRate);
-        case OPT_HOST_SAMPLE_RATE:  return i64(sampleRate);
+        case OPT_HOST_REFRESH_RATE:     return i64(refreshRate);
+        case OPT_HOST_SAMPLE_RATE:      return i64(sampleRate);
+        case OPT_HOST_FRAMEBUF_WIDTH:   return i64(frameBufferWidth);
+        case OPT_HOST_FRAMEBUF_HEIGHT:  return i64(frameBufferHeight);
 
         default:
             fatalError;
@@ -49,6 +51,16 @@ Host::setConfigItem(Option option, i64 value)
 
             sampleRate = double(value);
             muxer.setSampleRate(sampleRate);
+            return;
+
+        case OPT_HOST_FRAMEBUF_WIDTH:
+
+            frameBufferWidth = isize(value);
+            return;
+
+        case OPT_HOST_FRAMEBUF_HEIGHT:
+
+            frameBufferHeight = isize(value);
             return;
 
         default:

@@ -118,10 +118,6 @@
 @interface HostProxy : CoreComponentProxy {
 }
 
-@property double sampleRate;
-@property NSInteger refreshRate;
-@property NSSize frameBufferSize;
-
 @end
 
 

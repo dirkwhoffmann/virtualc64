@@ -2484,37 +2484,6 @@ using namespace vc64;
     return file ? [[self alloc] initWith:file] : nil;
 }
 
-- (double)sampleRate
-{
-    return [self host]->getSampleRate();
-}
-
-- (void)setSampleRate:(double)hz
-{
-    [self host]->setSampleRate(hz);
-}
-
-- (NSInteger)refreshRate
-{
-    return (NSInteger)[self host]->getHostRefreshRate();
-}
-
-- (void)setRefreshRate:(NSInteger)value
-{
-    [self host]->setHostRefreshRate((double)value);
-}
-
-- (NSSize)frameBufferSize
-{
-    auto size = [self host]->getFrameBufferSize();
-    return NSMakeSize((CGFloat)size.first, (CGFloat)size.second);
-}
-
-- (void)setFrameBufferSize:(NSSize)size
-{
-    [self host]->setFrameBufferSize(std::pair<isize, isize>(size.width, size.height));
-}
-
 @end
 
 

@@ -24,6 +24,8 @@ enum_long(OPT)
     // Host
     OPT_HOST_REFRESH_RATE,
     OPT_HOST_SAMPLE_RATE,
+    OPT_HOST_FRAMEBUF_WIDTH,
+    OPT_HOST_FRAMEBUF_HEIGHT,
 
     // C64
     OPT_WARP_BOOT,
@@ -132,6 +134,8 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
 
             case OPT_HOST_REFRESH_RATE:     return "HOST_REFRESH_RATE";
             case OPT_HOST_SAMPLE_RATE:      return "HOST_SAMPLE_RATE";
+            case OPT_HOST_FRAMEBUF_WIDTH:   return "HOST_FRAMEBUF_WIDTH";
+            case OPT_HOST_FRAMEBUF_HEIGHT:  return "HOST_FRAMEBUF_HEIGHT";
 
             case OPT_WARP_BOOT:             return "WARP_BOOT";
             case OPT_WARP_MODE:             return "WARP_MODE";

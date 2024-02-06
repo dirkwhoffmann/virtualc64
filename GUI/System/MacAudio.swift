@@ -67,11 +67,7 @@ public class MacAudio: NSObject {
         }
 
         // Inform the emulator about the sample rate
-        c64.host.sampleRate = sampleRate
-
-        // Inform SID about the sample rate
         c64.configure(.HOST_SAMPLE_RATE, value: Int(sampleRate))
-        // c64.sid.setSampleRate(sampleRate)
 
         // Register render callback
         if stereo {

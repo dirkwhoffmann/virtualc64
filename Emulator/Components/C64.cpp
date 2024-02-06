@@ -350,6 +350,8 @@ C64::getConfigItem(Option option) const
 
         case OPT_HOST_REFRESH_RATE:
         case OPT_HOST_SAMPLE_RATE:
+        case OPT_HOST_FRAMEBUF_WIDTH:
+        case OPT_HOST_FRAMEBUF_HEIGHT:
 
             return host.getConfigItem(option);
 
@@ -587,6 +589,8 @@ C64::configure(Option option, i64 value)
 
         case OPT_HOST_REFRESH_RATE:
         case OPT_HOST_SAMPLE_RATE:
+        case OPT_HOST_FRAMEBUF_WIDTH:
+        case OPT_HOST_FRAMEBUF_HEIGHT:
 
             host.setConfigItem(option, value);
             break;
