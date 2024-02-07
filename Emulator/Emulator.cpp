@@ -63,11 +63,16 @@ void
 Emulator::resetConfig()
 {
     assert(isPoweredOff());
+
     auto &defaults = c64.defaults;
 
     std::vector <Option> options = {
 
+        OPT_WARP_BOOT,
         OPT_WARP_MODE,
+        OPT_SYNC_MODE,
+        OPT_AUTO_FPS,
+        OPT_PROPOSED_FPS,
     };
 
     for (auto &option : options) {
@@ -80,7 +85,11 @@ Emulator::getConfigItem(Option option) const
 {
     switch (option) {
 
+        case OPT_WARP_BOOT:     return config.warpBoot;
         case OPT_WARP_MODE:     return config.warpMode;
+        case OPT_SYNC_MODE:     return config.syncMode;
+        case OPT_AUTO_FPS:      return config.autoFps;
+        case OPT_PROPOSED_FPS:  return config.proposedFps;
 
         default:
             fatalError;
@@ -92,6 +101,12 @@ Emulator::setConfigItem(Option option, i64 value)
 {
     switch (option) {
 
+        case OPT_WARP_BOOT:
+
+            config.warpBoot = isize(value);
+            // updateWarpState();
+            return;
+
         case OPT_WARP_MODE:
 
             if (!WarpModeEnum::isValid(value)) {
@@ -99,6 +114,32 @@ Emulator::setConfigItem(Option option, i64 value)
             }
 
             config.warpMode = WarpMode(value);
+            // updateWarpState();
+            return;
+
+        case OPT_SYNC_MODE:
+
+            if (!SyncModeEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, SyncModeEnum::keyList());
+            }
+
+            config.syncMode = SyncMode(value);
+            c64.updateClockFrequency();
+            return;
+
+        case OPT_AUTO_FPS:
+
+            config.autoFps = bool(value);
+            return;
+
+        case OPT_PROPOSED_FPS:
+
+            if (value < 25 || value > 120) {
+                throw VC64Error(ERROR_OPT_INVARG, "25...120");
+            }
+
+            config.proposedFps = isize(value);
+            c64.updateClockFrequency();
             return;
 
         default:
@@ -115,6 +156,36 @@ Emulator::_dump(Category category, std::ostream& os) const
 
         os << tab("Warp mode");
         os << WarpModeEnum::key(config.warpMode) << std::endl;
+        os << tab("Warp boot");
+        os << dec(config.warpBoot) << " seconds" << std::endl;
+        os << tab("Sync mode");
+        os << SyncModeEnum::key(config.syncMode) << std::endl;
+        os << tab("Auto fps");
+        os << bol(config.autoFps) << std::endl;
+        os << tab("Proposed fps");
+        os << config.proposedFps << " Fps" << std::endl;
+        os << std::endl;
+    }
+
+    if (category == Category::State) {
+
+        os << tab("Power");
+        os << bol(isPoweredOn()) << std::endl;
+        os << tab("Running");
+        os << bol(isRunning()) << std::endl;
+        os << tab("Suspended");
+        os << bol(isSuspended()) << std::endl;
+        os << tab("Warping");
+        os << bol(isWarping()) << std::endl;
+        os << tab("Tracking");
+        os << bol(isTracking()) << std::endl;
+        os << std::endl;
+        os << tab("Refresh rate");
+        os << dec(isize(refreshRate())) << " Fps" << std::endl;
+        os << tab("Thread state");
+        os << ExecutionStateEnum::key(state) << std::endl;
+        os << tab("Sync mode");
+        os << SyncModeEnum::key(getSyncMode()) << std::endl;
     }
 }
 
@@ -129,7 +200,7 @@ Emulator::updateWarp()
 {
     u8 oldwarp = warp;
 
-    if (c64.cpu.clock < SEC(c64.config.warpBoot)) {
+    if (c64.cpu.clock < SEC(config.warpBoot)) {
 
         warp = 1;
 
@@ -156,10 +227,10 @@ Emulator::updateWarp()
 SyncMode
 Emulator::getSyncMode() const
 {
-    return c64.getSyncMode();
+    return config.syncMode;
 }
 
-void 
+void
 Emulator::execute()
 {
     c64.execute();
@@ -168,13 +239,26 @@ Emulator::execute()
 double 
 Emulator::refreshRate() const
 {
-    return c64.refreshRate();
+    switch (config.syncMode) {
+
+        case SYNC_PULSED:
+
+            return c64.host.getHostRefreshRate();
+
+        case SYNC_PERIODIC:
+        case SYNC_ADAPTIVE:
+
+            return config.autoFps ? c64.vic.getFps() : config.proposedFps;
+
+        default:
+            fatalError;
+    }
 }
 
 util::Time 
 Emulator::wakeupPeriod() const
 {
-    return c64.wakeupPeriod();
+    return util::Time(i64(1000000000.0 / c64.host.getHostRefreshRate()));
 }
 
 void Emulator::powerOnDelegate() { c64.powerOn(); }

@@ -375,22 +375,17 @@ private:
 
 
     //
-    // (Methods from Thread)
+    // Executing
     //
 
 private:
 
-    SyncMode getSyncMode() const;
+    // SyncMode getSyncMode() const;
     void execute();
     template <bool enable8, bool enable9> void execute();
     bool processFlags();
 
-public:
-
-    double refreshRate() const;
-    util::Time wakeupPeriod() const;
-
-
+    
     //
     // Controlling
     //

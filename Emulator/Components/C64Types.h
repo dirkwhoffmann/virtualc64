@@ -289,11 +289,7 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
 
 typedef struct
 {
-    isize warpBoot;
-    WarpMode warpMode;
-    SyncMode syncMode;
-    bool autoFps;
-    isize proposedFps;
+
 }
 C64Config;
 

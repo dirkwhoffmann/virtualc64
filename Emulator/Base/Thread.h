@@ -226,8 +226,8 @@ private:
     // Computes the time span between two frames
     util::Time frameDuration() const;
 
-    // Computes the number of overdue time slices
-    isize missingSlices() const;
+    // Computes the number of overdue frames
+    isize missingFrames() const;
 
     // Rectifies an out-of-sync condition by resetting all counters and clocks
     void resync();

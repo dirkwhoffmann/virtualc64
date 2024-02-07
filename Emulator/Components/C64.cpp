@@ -292,20 +292,7 @@ C64::_reset(bool hard)
 void
 C64::resetConfig()
 {
-    assert(isPoweredOff());
 
-    std::vector <Option> options = {
-
-        OPT_WARP_BOOT,
-        OPT_WARP_MODE,
-        OPT_SYNC_MODE,
-        OPT_AUTO_FPS,
-        OPT_PROPOSED_FPS,
-    };
-
-    for (auto &option : options) {
-        setConfigItem(option, defaults.get(option));
-    }
 }
 
 
@@ -322,24 +309,12 @@ C64::getConfigItem(Option option) const
             return host.getConfigItem(option);
 
         case OPT_WARP_BOOT:
-
-            return config.warpBoot;
-
         case OPT_WARP_MODE:
-
-            return config.warpMode;
-
         case OPT_SYNC_MODE:
-
-            return config.syncMode;
-
         case OPT_AUTO_FPS:
-
-            return config.autoFps;
-
         case OPT_PROPOSED_FPS:
 
-            return config.proposedFps;
+            return emulator.getConfigItem(option);
 
         case OPT_VIC_REVISION:
         case OPT_VIC_POWER_SAVE:
@@ -461,52 +436,7 @@ C64::getConfigItem(Option option, long id) const
 void
 C64::setConfigItem(Option option, i64 value)
 {
-    switch (option) {
 
-        case OPT_WARP_BOOT:
-
-            config.warpBoot = isize(value);
-            // updateWarpState();
-            return;
-
-        case OPT_WARP_MODE:
-
-            if (!WarpModeEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, WarpModeEnum::keyList());
-            }
-
-            config.warpMode = WarpMode(value);
-            // updateWarpState();
-            return;
-
-        case OPT_SYNC_MODE:
-
-            if (!SyncModeEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, SyncModeEnum::keyList());
-            }
-
-            config.syncMode = SyncMode(value);
-            updateClockFrequency();
-            return;
-
-        case OPT_AUTO_FPS:
-
-            config.autoFps = bool(value);
-            return;
-
-        case OPT_PROPOSED_FPS:
-
-            if (value < 25 || value > 120) {
-                throw VC64Error(ERROR_OPT_INVARG, "25...120");
-            }
-
-            config.proposedFps = isize(value);
-            updateClockFrequency();
-            return;
-
-        default:
-            fatalError;
-    }
 }
 
 void
@@ -549,17 +479,12 @@ C64::configure(Option option, i64 value)
             break;
 
         case OPT_WARP_MODE:
-
-            emulator.setConfigItem(option, value);
-            setConfigItem(option, value); // DEPRECATED
-            break;
-
         case OPT_WARP_BOOT:
         case OPT_SYNC_MODE:
         case OPT_AUTO_FPS:
         case OPT_PROPOSED_FPS:
 
-            setConfigItem(option, value);
+            emulator.setConfigItem(option, value);
             break;
 
         case OPT_VIC_REVISION:
@@ -935,7 +860,7 @@ void
 C64::updateClockFrequency()
 {
     auto nativeFps = vic.getFps();
-    auto chosenFps = refreshRate();
+    auto chosenFps = emulator.refreshRate();
 
     auto nativeFrequency = vic.getFrequency();
     auto chosenFrequency = nativeFrequency * chosenFps / nativeFps;
@@ -1004,12 +929,6 @@ C64::setInspectionTarget(InspectionTarget target, Cycle trigger)
         scheduleRel<SLOT_INS>(trigger, id);
         if (trigger == 0) processINSEvent(id);
     }
-}
-
-SyncMode
-C64::getSyncMode() const
-{
-    return config.syncMode;
 }
 
 void
@@ -1176,31 +1095,6 @@ C64::processFlags()
     return exit;
 }
 
-double
-C64::refreshRate() const
-{
-    switch (config.syncMode) {
-
-        case SYNC_PULSED:
-
-            return host.getHostRefreshRate();
-
-        case SYNC_PERIODIC:
-        case SYNC_ADAPTIVE:
-
-            return config.autoFps ? vic.getFps() : config.proposedFps;
-
-        default:
-            fatalError;
-    }
-}
-
-util::Time 
-C64::wakeupPeriod() const
-{
-    return util::Time(i64(1000000000.0 / host.getHostRefreshRate()));
-}
-
 void
 C64::_isReady() const
 {
@@ -1349,17 +1243,6 @@ C64::_dump(Category category, std::ostream& os) const
 
     if (category == Category::Config) {
 
-        os << tab("Warp mode");
-        os << WarpModeEnum::key(config.warpMode) << std::endl;
-        os << tab("Warp boot");
-        os << dec(config.warpBoot) << " seconds" << std::endl;
-        os << tab("Sync mode");
-        os << SyncModeEnum::key(config.syncMode) << std::endl;
-        os << tab("Auto fps");
-        os << bol(config.autoFps) << std::endl;
-        os << tab("Proposed fps");
-        os << config.proposedFps << " Fps" << std::endl;
-        os << std::endl;
     }
 
     if (category == Category::State) {
@@ -1376,12 +1259,6 @@ C64::_dump(Category category, std::ostream& os) const
         os << bol(emulator.isTracking()) << std::endl;
         os << std::endl;
 
-        os << tab("Refresh rate");
-        os << dec(isize(refreshRate())) << " Fps" << std::endl;
-        os << tab("Thread state");
-        os << ExecutionStateEnum::key(emulator.state) << std::endl;
-        os << tab("Sync mode");
-        os << SyncModeEnum::key(getSyncMode()) << std::endl;
         os << tab("Ultimax mode");
         os << bol(getUltimax()) << std::endl;
         os << std::endl;
@@ -1413,8 +1290,6 @@ C64::_dump(Category category, std::ostream& os) const
         os << CIARevisionEnum::key(cia1Rev) << std::endl;
         os << tab("CIA 2");
         os << CIARevisionEnum::key(cia2Rev) << std::endl;
-        os << tab("Refresh rate");
-        os << dec(isize(refreshRate())) << " Fps" << std::endl;
     }
 
     if (category == Category::Defaults) {

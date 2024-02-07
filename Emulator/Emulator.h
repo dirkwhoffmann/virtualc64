@@ -19,11 +19,11 @@ namespace vc64 {
 
 typedef struct
 {
-    // isize warpBoot;
+    isize warpBoot;
     WarpMode warpMode;
-    // SyncMode syncMode;
-    // bool autoFps;
-    // isize proposedFps;
+    SyncMode syncMode;
+    bool autoFps;
+    isize proposedFps;
 }
 EmulatorConfig;
 

@@ -35,7 +35,7 @@ Thread::frameDuration() const
 }
 
 isize
-Thread::missingSlices() const
+Thread::missingFrames() const
 {
     if (getSyncMode() == SYNC_PULSED) {
 
@@ -131,7 +131,7 @@ Thread::sleep<SYNC_PULSED>()
         waitForWakeUp(timeout);
 
         // Determine the number of slices that are overdue
-        missing = missingSlices();
+        missing = missingFrames();
 
         if (missing) {
 

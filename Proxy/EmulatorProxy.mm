@@ -2754,7 +2754,7 @@ using namespace vc64;
 
 - (NSInteger)refreshRate
 {
-    return (NSInteger)[self c64]->refreshRate();
+    return (NSInteger)[self c64]->emulator.refreshRate();
 }
 
 - (NSInteger)getConfig:(Option)opt
