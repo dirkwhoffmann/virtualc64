@@ -99,6 +99,7 @@ Interpreter::initCommandShell(Command &root)
 
     root.newGroup("Controlling components");
 
+    root.add({"emulator"},      "The emulator thread");
     root.add({"c64"},           "The virtual Commodore 64");
     root.add({"memory"},        "Ram and Rom");
     root.add({"cia1"},          "Complex Interface Adapter 1");
@@ -178,6 +179,18 @@ Interpreter::initCommandShell(Command &root)
     });
 
     
+    //
+    // Emulator
+    //
+
+    root.add({"emulator", ""},
+             "Displays the current configuration",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(emulator, Category::Config);
+    });
+
+
     //
     // C64
     //

@@ -169,6 +169,8 @@ Thread::main()
 
     while (1) {
 
+        updateWarp();
+
         if (isRunning()) {
 
             switch (getSyncMode()) {
@@ -275,23 +277,6 @@ Thread::switchState(ExecutionState newState)
 }
 
 void
-Thread::switchWarp(bool state, u8 source)
-{
-    assert(source >= 0 && source < 8);
-
-    if (!isEmulatorThread()) suspend();
-
-    u8 old = warp;
-    state ? SET_BIT(warp, source) : CLR_BIT(warp, source);
-
-    if (bool(old) != bool(warp)) {
-        warpOnOffDelegate(warp);
-    }
-
-    if (!isEmulatorThread()) resume();
-}
-
-void
 Thread::switchTrack(bool state, u8 source)
 {
     assert(source >= 0 && source < 8);
@@ -375,18 +360,6 @@ Thread::halt()
 
     changeStateTo(EXEC_HALTED);
     join();
-}
-
-void
-Thread::warpOn(isize source)
-{
-    SUSPENDED switchWarp(true, u8(source));
-}
-
-void
-Thread::warpOff(isize source)
-{
-    SUSPENDED switchWarp(false, u8(source));
 }
 
 void

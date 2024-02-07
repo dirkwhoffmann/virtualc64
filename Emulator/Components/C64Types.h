@@ -73,7 +73,6 @@ enum_long(SLOT)
     SLOT_DC9,                       // Disk change (Drive 9)
     SLOT_RSH,                       // Retro Shell
     SLOT_KEY,                       // Auto-typing
-    SLOT_WBT,                       // Warp boot
     SLOT_ALA,                       // Alarms (set by the GUI)
     SLOT_INS,                       // Handles periodic calls to inspect()
 
@@ -105,7 +104,6 @@ struct EventSlotEnum : util::Reflection<EventSlotEnum, EventSlot>
             case SLOT_DC9:      return "DC9";
             case SLOT_RSH:      return "RSH";
             case SLOT_KEY:      return "KEY";
-            case SLOT_WBT:      return "WBT";
             case SLOT_ALA:      return "ALA";
             case SLOT_INS:      return "INS";
 
@@ -169,10 +167,6 @@ enum_i8(EventID)
     // Auto typing
     KEY_AUTO_TYPE       = 1,
     KEY_EVENT_COUNT,
-
-    // Warp boot
-    WBT_DISABLE         = 1,
-    WBT_EVENT_COUNT,
 
     // Alarm event slot
     ALA_TRIGGER         = 1,

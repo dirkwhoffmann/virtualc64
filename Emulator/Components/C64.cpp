@@ -151,16 +151,6 @@ C64::eventName(EventSlot slot, EventID id)
             }
             break;
 
-        case SLOT_WBT:
-
-            switch (id) {
-
-                case EVENT_NONE:        return "none";
-                case WBT_DISABLE:       return "WBT_DISABLE";
-                default:                return "*** INVALID ***";
-            }
-            break;
-
         case SLOT_ALA:
 
             switch (id) {
@@ -292,12 +282,11 @@ C64::_reset(bool hard)
     // Schedule initial events
     scheduleAbs<SLOT_CIA1>(cpu.clock, CIA_EXECUTE);
     scheduleAbs<SLOT_CIA2>(cpu.clock, CIA_EXECUTE);
-    scheduleAbs<SLOT_WBT>(SEC(config.warpBoot), WBT_DISABLE);
     if (insEvent) scheduleRel <SLOT_INS> (0, insEvent);
 
     flags = 0;
     rasterCycle = 1;
-    updateWarpState();
+    // updateWarpState();
 }
 
 void
@@ -477,7 +466,7 @@ C64::setConfigItem(Option option, i64 value)
         case OPT_WARP_BOOT:
 
             config.warpBoot = isize(value);
-            updateWarpState();
+            // updateWarpState();
             return;
 
         case OPT_WARP_MODE:
@@ -487,7 +476,7 @@ C64::setConfigItem(Option option, i64 value)
             }
 
             config.warpMode = WarpMode(value);
-            updateWarpState();
+            // updateWarpState();
             return;
 
         case OPT_SYNC_MODE:
@@ -558,9 +547,14 @@ C64::configure(Option option, i64 value)
 
             host.setConfigItem(option, value);
             break;
-            
-        case OPT_WARP_BOOT:
+
         case OPT_WARP_MODE:
+
+            emulator.setConfigItem(option, value);
+            setConfigItem(option, value); // DEPRECATED
+            break;
+
+        case OPT_WARP_BOOT:
         case OPT_SYNC_MODE:
         case OPT_AUTO_FPS:
         case OPT_PROPOSED_FPS:
@@ -1590,9 +1584,6 @@ C64::processEvents(Cycle cycle)
             if (isDue<SLOT_KEY>(cycle)) {
                 keyboard.processKeyEvent(id[SLOT_KEY]);
             }
-            if (isDue<SLOT_WBT>(cycle)) {
-                processWBTEvent();
-            }
             if (isDue<SLOT_ALA>(cycle)) {
                 processAlarmEvent();
             }
@@ -1644,35 +1635,6 @@ C64::processINSEvent(EventID id)
 
     // Reschedule event
     rescheduleRel<SLOT_INS>((Cycle)(inspectionInterval * PAL_CYCLES_PER_SECOND));
-}
-
-void
-C64::updateWarpState()
-{
-    if (cpu.clock < SEC(config.warpBoot)) {
-
-        emulator.switchWarp(true);
-        return;
-    }
-
-    switch (config.warpMode) {
-
-        case WARP_AUTO:     emulator.switchWarp(iec.isTransferring()); break;
-        case WARP_NEVER:    emulator.switchWarp(false); break;
-        case WARP_ALWAYS:   emulator.switchWarp(true); break;
-
-        default:
-            fatalError;
-    }
-}
-
-void
-C64::processWBTEvent()
-{
-    assert(id[SLOT_WBT] == WBT_DISABLE);
-
-    updateWarpState();
-    cancel <SLOT_WBT> ();
 }
 
 void

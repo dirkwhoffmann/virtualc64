@@ -17,24 +17,32 @@
 
 namespace vc64 {
 
+typedef struct
+{
+    // isize warpBoot;
+    WarpMode warpMode;
+    // SyncMode syncMode;
+    // bool autoFps;
+    // isize proposedFps;
+}
+EmulatorConfig;
+
 class Emulator : public Thread {
 
     friend class C64;
-    
-    //
-    // The virtual C64
-    //
 
 public:
 
+    // The virtual C64
     C64 c64 = C64(*this);
 
-
-    //
-    // Emulator thread
-    //
-
 private:
+
+    // The current configuration
+    EmulatorConfig config = {};
+
+    // Warp override mask (to enforce warp mode from outside)
+    u8 warpLock = 0;
 
 
     //
@@ -52,29 +60,30 @@ public:
 
 
     //
+    // Configuring
+    //
+
+public:
+
+    static EmulatorConfig getDefaultConfig();
+    const EmulatorConfig &getConfig() const { return config; }
+    void resetConfig();
+
+    i64 getConfigItem(Option option) const;
+    void setConfigItem(Option option, i64 value);
+
+
+
+    //
     // Methods from CoreObject
     //
 
 private:
 
     const char *getDescription() const override { return "Emulator"; }
-    void _dump(Category category, std::ostream& os) const override { }
+    void _dump(Category category, std::ostream& os) const override;
 
 
-    //
-    // Methods from CoreComponent
-    //
-
-private:
-
-    /*
-    void _reset(bool hard) override { };
-    isize _size() override { return 0; }
-    u64 _checksum() override { return 0; }
-    isize _load(const u8 *buffer) override { return 0; }
-    isize _save(u8 *buffer) override { return 0; }
-    */
-    
     //
     // Methods from Thread
     //
@@ -82,7 +91,7 @@ private:
 private:
 
     void readyToGo() override;
-
+    void updateWarp() override;
     SyncMode getSyncMode() const override;
     void execute() override;
 
@@ -96,10 +105,17 @@ public:
     void runDelegate() override;
     void pauseDelegate() override;
     void haltDelegate() override;
-    void warpOnDelegate() override;
-    void warpOffDelegate() override;
     void trackOnDelegate() override;
     void trackOffDelegate() override;
+
+
+    //
+    // Warp mode
+    //
+
+    // Switches warp mode on or off
+    void warpOn(isize source = 0);
+    void warpOff(isize source = 0);
 };
 
 }

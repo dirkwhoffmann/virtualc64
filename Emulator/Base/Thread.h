@@ -211,6 +211,9 @@ public:
 
 private:
     
+    // Returns the current warp status (implemented by the subclass)
+    virtual void updateWarp() = 0;
+
     // The code to be executed in each iteration (implemented by the subclass)
     virtual void execute() = 0;
 
@@ -245,7 +248,6 @@ public:
     
     // Performs a state change
     void switchState(ExecutionState newState);
-    void switchWarp(bool state, u8 source = 0);
     void switchTrack(bool state, u8 source = 0);
 
 
@@ -281,8 +283,6 @@ public:
     void halt();
 
     bool isWarping() const { return warp != 0; }
-    void warpOn(isize source = 0);
-    void warpOff(isize source = 0);
 
     bool isTracking() const { return track != 0; }
     void trackOn(isize source = 0);
@@ -294,13 +294,10 @@ public:
     virtual void runDelegate() = 0;
     virtual void pauseDelegate() = 0;
     virtual void haltDelegate() = 0;
-    virtual void warpOnDelegate() = 0;
-    virtual void warpOffDelegate() = 0;
     virtual void trackOnDelegate() = 0;
     virtual void trackOffDelegate() = 0;
 
     void powerOnOffDelegate(bool value) { value ? powerOnDelegate() : powerOffDelegate(); }
-    void warpOnOffDelegate(bool value) { value ? warpOnDelegate() : warpOffDelegate(); }
     void trackOnOffDelegate(bool value) { value ? trackOnDelegate() : trackOffDelegate(); }
 
 protected:

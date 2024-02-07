@@ -582,19 +582,6 @@ private:
 
 
     //
-    // Managing warp mode
-    //
-
-public:
-
-    // Updates the current warp state according to the selected warp mode
-    void updateWarpState();
-
-    // Services a warp boot event
-    void processWBTEvent();
-
-
-    //
     // Handling snapshots
     //
     

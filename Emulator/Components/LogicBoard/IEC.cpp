@@ -178,7 +178,7 @@ IEC::updateTransferStatus()
     if (transferring != newValue) {
 
         transferring = newValue;
-        c64.updateWarpState();
+        // c64.updateWarpState();
         msgQueue.put(newValue ? MSG_IEC_BUS_BUSY : MSG_IEC_BUS_IDLE);
     }
 }

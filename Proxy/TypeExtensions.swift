@@ -26,7 +26,6 @@ extension EventSlot: CustomStringConvertible {
         case ._DC9:     return "Disk Change Drive 9"
         case ._RSH:     return "Retro Shell"
         case ._KEY:     return "Auto Typing"
-        case ._WBT:     return "Warp Boot"
         case ._ALA:     return "Alarms"
         case ._INS:     return "Inspector"
 
