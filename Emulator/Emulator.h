@@ -79,6 +79,8 @@ private:
 
 private:
 
+    void readyToGo() override;
+
     SyncMode getSyncMode() const override;
     void execute() override;
 

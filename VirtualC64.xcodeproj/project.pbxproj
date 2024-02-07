@@ -173,6 +173,8 @@
 		506D54CC2032255A0026D8B4 /* RomDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D54CB2032255A0026D8B4 /* RomDropView.swift */; };
 		506F303A2B729CE80083EAEA /* Emulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30382B729CE80083EAEA /* Emulator.cpp */; };
 		506F303B2B729CE80083EAEA /* Emulator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F30382B729CE80083EAEA /* Emulator.cpp */; };
+		506F303E2B7364270083EAEA /* Suspendable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F303C2B7364270083EAEA /* Suspendable.cpp */; };
+		506F303F2B7364270083EAEA /* Suspendable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506F303C2B7364270083EAEA /* Suspendable.cpp */; };
 		50726F2B295B61C50031F2F5 /* InterpreterDebugCmds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2A295B61C50031F2F5 /* InterpreterDebugCmds.cpp */; };
 		50726F2F295C27360031F2F5 /* EventPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F2E295C27360031F2F5 /* EventPanel.swift */; };
 		50726F31295C27470031F2F5 /* EventTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50726F30295C27470031F2F5 /* EventTableView.swift */; };
@@ -734,6 +736,8 @@
 		506D54CB2032255A0026D8B4 /* RomDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RomDropView.swift; sourceTree = "<group>"; };
 		506F30382B729CE80083EAEA /* Emulator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Emulator.cpp; sourceTree = "<group>"; };
 		506F30392B729CE80083EAEA /* Emulator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Emulator.h; sourceTree = "<group>"; };
+		506F303C2B7364270083EAEA /* Suspendable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Suspendable.cpp; sourceTree = "<group>"; };
+		506F303D2B7364270083EAEA /* Suspendable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Suspendable.h; sourceTree = "<group>"; };
 		50726F2A295B61C50031F2F5 /* InterpreterDebugCmds.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = InterpreterDebugCmds.cpp; sourceTree = "<group>"; };
 		50726F2E295C27360031F2F5 /* EventPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPanel.swift; sourceTree = "<group>"; };
 		50726F30295C27470031F2F5 /* EventTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableView.swift; sourceTree = "<group>"; };
@@ -1715,6 +1719,8 @@
 				5055D5B32615886E005D3DA6 /* Error.cpp */,
 				50F420C9250BA3460043DE56 /* Colors.h */,
 				50F420C8250BA3460043DE56 /* Colors.cpp */,
+				506F303D2B7364270083EAEA /* Suspendable.h */,
+				506F303C2B7364270083EAEA /* Suspendable.cpp */,
 				504C42EC24AF29AB00E69CAE /* CoreObject.h */,
 				504C42ED24AF29AB00E69CAE /* CoreObject.cpp */,
 				50AFE0D32616E93A00D71E75 /* CoreComponentTypes.h */,
@@ -2080,6 +2086,7 @@
 				50726F4D2961C9940031F2F5 /* PowerSupply.cpp in Sources */,
 				50726F512961C9940031F2F5 /* ExpansionPort.cpp in Sources */,
 				50726F932961CA0D0031F2F5 /* Zaxxon.cpp in Sources */,
+				506F303F2B7364270083EAEA /* Suspendable.cpp in Sources */,
 				50726F4E2961C9940031F2F5 /* Host.cpp in Sources */,
 				50726F9E2961CA0D0031F2F5 /* StructuredBasic.cpp in Sources */,
 				50726F772961C9DC0031F2F5 /* Datasette.cpp in Sources */,
@@ -2316,6 +2323,7 @@
 				504C436C24AF29AC00E69CAE /* Isepic.cpp in Sources */,
 				50AB70762721B8EE004ABB2B /* DiskAnalyzer.cpp in Sources */,
 				5018BFB324B48DD500551848 /* RendererSetup.swift in Sources */,
+				506F303E2B7364270083EAEA /* Suspendable.cpp in Sources */,
 				50F0EB7A25CC33B3002D0D72 /* GameKiller.cpp in Sources */,
 				504C437D24AF29AC00E69CAE /* CRTFile.cpp in Sources */,
 				504C439624AF29AC00E69CAE /* pot.cc in Sources */,

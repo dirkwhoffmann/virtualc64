@@ -101,7 +101,7 @@ public:
 
     virtual void suspend() override;
     virtual void resume() override;
-    
+
     void prefix() const override;
 };
 

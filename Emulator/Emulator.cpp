@@ -49,6 +49,11 @@ Emulator::launch()
     thread = std::thread(&Thread::main, this);
 }
 
+void 
+Emulator::readyToGo()
+{
+    c64.isReady();
+}
 
 SyncMode
 Emulator::getSyncMode() const

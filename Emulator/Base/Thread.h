@@ -317,7 +317,8 @@ protected:
     // Initiates a state change
     void changeStateTo(ExecutionState requestedState);
 
-    
+    virtual void readyToGo() = 0;
+
     //
     // Synchronizing
     //
@@ -335,14 +336,5 @@ private:
     // Wait until the thread has terminated
     void join() { if (thread.joinable()) thread.join(); }
 };
-
-struct AutoResume {
-
-    CoreComponent *c;
-    AutoResume(CoreComponent *c) : c(c) { c->suspend(); }
-    ~AutoResume() { c->resume(); }
-};
-
-#define SUSPENDED AutoResume _ar(this);
 
 }

@@ -16,6 +16,7 @@
 #include "CoreObject.h"
 #include "Serialization.h"
 #include "Concurrency.h"
+#include "Suspendable.h"
 #include <vector>
 
 namespace vc64 {
@@ -45,7 +46,7 @@ struct NoAssign
     NoAssign& operator=(NoAssign const&) = delete;
 };
 
-class CoreComponent : public CoreObject, NoCopy, NoAssign {
+class CoreComponent : public CoreObject, public Suspendable, NoCopy, NoAssign {
 
 protected:
     
@@ -96,8 +97,8 @@ public:
     virtual bool isSuspended() const = 0;
     virtual bool isHalted() const = 0;
 
-    virtual void suspend() = 0;
-    virtual void resume() = 0;
+    // virtual void suspend() = 0;
+    // virtual void resume() = 0;
 
     // Throws an exception if the emulator is not ready to power on
     virtual void isReady() const throws;
