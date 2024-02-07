@@ -37,10 +37,6 @@ Thread::frameDuration() const
 isize
 Thread::missingFrames() const
 {
-    if (getSyncMode() == SYNC_PULSED) {
-
-        return 1;
-    }
     if (getSyncMode() == SYNC_ADAPTIVE) {
 
         // Compute the elapsed time

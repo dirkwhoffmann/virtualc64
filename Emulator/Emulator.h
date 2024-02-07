@@ -21,9 +21,9 @@ typedef struct
 {
     isize warpBoot;
     WarpMode warpMode;
-    SyncMode syncMode;
-    bool autoFps;
-    isize proposedFps;
+    bool vsync;
+    isize timeLapse;
+    isize runAhead;
 }
 EmulatorConfig;
 

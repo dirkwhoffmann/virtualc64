@@ -134,10 +134,12 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var comWarpBoot: NSTextField!
 
     // Threading
-    @IBOutlet weak var comSyncMode: NSPopUpButton!
-    @IBOutlet weak var comAutoFps: NSButton!
-    @IBOutlet weak var comFpsSlider: NSSlider!
-    @IBOutlet weak var comFpsInfo: NSTextField!
+    @IBOutlet weak var prfSyncMode: NSPopUpButton!
+    @IBOutlet weak var prfVSync: NSButton!
+    @IBOutlet weak var prfTimeLapse: NSSlider!
+    @IBOutlet weak var prfTimeLapseInfo: NSTextField!
+    @IBOutlet weak var prfRunAheadSlider: NSSlider!
+    @IBOutlet weak var prfRunAheadInfo: NSTextField!
 
     // Buttons
     @IBOutlet weak var comPowerButton: NSButton!

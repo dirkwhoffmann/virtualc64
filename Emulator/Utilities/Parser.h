@@ -44,9 +44,9 @@ struct EnumParseError : public ParseError {
     using ParseError::ParseError;
 };
 
-bool parseBool(string& token) throws;
-bool parseOnOff(string& token) throws;
-long parseNum(string& token) throws;
+bool parseBool(const string& token) throws;
+bool parseOnOff(const string& token) throws;
+long parseNum(const string& token) throws;
 
 template <typename Enum> long parseEnum(const string& key)
 {

@@ -950,9 +950,9 @@ extension DefaultsProxy {
         remove(.SB_COLLISIONS)
         remove(.WARP_MODE)
         remove(.WARP_BOOT)
-        remove(.SYNC_MODE)
-        remove(.AUTO_FPS)
-        remove(.PROPOSED_FPS)
+        remove(.VSYNC)
+        remove(.TIME_LAPSE)
+        remove(.RUN_AHEAD)
     }
 }
 
@@ -973,9 +973,9 @@ extension Configuration {
         defaults.set(.SB_COLLISIONS, sbCollisions)
         defaults.set(.WARP_MODE, warpMode)
         defaults.set(.WARP_BOOT, warpBoot)
-        defaults.set(.SYNC_MODE, syncMode)
-        defaults.set(.AUTO_FPS, autoFps)
-        defaults.set(.PROPOSED_FPS, proposedFps)
+        defaults.set(.VSYNC, vsync)
+        defaults.set(.TIME_LAPSE, timeLapse)
+        defaults.set(.RUN_AHEAD, runAhead)
 
         defaults.save()
 
@@ -997,9 +997,9 @@ extension Configuration {
         sbCollisions = defaults.get(.SB_COLLISIONS) != 0
         warpMode = defaults.get(.WARP_MODE)
         warpBoot = defaults.get(.WARP_BOOT)
-        syncMode = defaults.get(.SYNC_MODE)
-        autoFps = defaults.get(.AUTO_FPS) != 0
-        proposedFps = defaults.get(.PROPOSED_FPS)
+        vsync = defaults.get(.VSYNC) != 0
+        timeLapse = defaults.get(.TIME_LAPSE)
+        runAhead = defaults.get(.RUN_AHEAD)
 
         c64.resume()
     }

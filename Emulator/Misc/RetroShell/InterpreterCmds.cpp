@@ -226,25 +226,25 @@ Interpreter::initCommandShell(Command &root)
         c64.configure(OPT_WARP_MODE, parseEnum <WarpModeEnum> (argv));
     });
 
-    root.add({"c64", "set", "syncmode"}, { SyncModeEnum::argList() },
-             "Selects the synchronization mode",
+    root.add({"c64", "set", "vsync"}, { Arg::onoff },
+             "Enables or disables VSYNC",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_SYNC_MODE, parseEnum <SyncModeEnum> (argv));
+        c64.configure(OPT_VSYNC, parseBool(argv[0]));
     });
 
-    root.add({"c64", "set", "autofps"}, { Arg::boolean },
-             "Selects whether the refresh rate is determined by the C64 model",
+    root.add({"c64", "set", "timelapse"}, { Arg::value },
+             "Increases or decreases the native frame rate",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_AUTO_FPS, parseBool(argv));
+        c64.configure(OPT_TIME_LAPSE, parseNum(argv[0]));
     });
 
-    root.add({"c64", "set", "fps"}, { Arg::value },
-             "Sets the proposed number of frames per seconds",
+    root.add({"c64", "set", "runahead"}, { Arg::value },
+             "Sets the number of run-ahead frames",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_PROPOSED_FPS, parseNum(argv));
+        c64.configure(OPT_RUN_AHEAD, parseNum(argv));
     });
 
     root.add({"c64", "power"}, { Arg::onoff },

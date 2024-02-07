@@ -16,7 +16,7 @@
 namespace util {
 
 bool
-parseBool(string& token)
+parseBool(const string& token)
 {
     if (token == "1" || token == "true" || token == "yes") return true;
     if (token == "0" || token == "false" || token == "no") return false;
@@ -25,7 +25,7 @@ parseBool(string& token)
 }
 
 bool
-parseOnOff(string& token)
+parseOnOff(const string& token)
 {
     if (token == "on") return true;
     if (token == "off") return false;
@@ -34,14 +34,15 @@ parseOnOff(string& token)
 }
 
 long
-parseNum(string& token)
+parseNum(const string& token)
 {
+    string _token = token;
     long result;
 
     // Replace leading '$' by '0x'
-    if (!token.empty() && token[0] == '$') token = "0x" + token.erase(0, 1);
+    if (!token.empty() && token[0] == '$') _token = "0x" + _token.erase(0, 1);
 
-    try { result = stol(token, nullptr, 0); }
+    try { result = stol(_token, nullptr, 0); }
     catch (std::exception&) { throw ParseNumError(token); }
 
     return result;

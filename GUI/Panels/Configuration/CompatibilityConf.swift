@@ -24,15 +24,16 @@ extension ConfigurationController {
         comWarpMode.selectItem(withTag: config.warpMode)
         comWarpBoot.integerValue = config.warpBoot
 
-        // Frame rate
-        let fps = c64.refreshRate
-        comSyncMode.selectItem(withTag: config.syncMode)
-        comAutoFps.state = config.autoFps ? .on : .off
-        comFpsSlider.integerValue = fps
-        comFpsInfo.stringValue = "\(fps) frames per second"
-        comAutoFps.isEnabled = config.syncMode != 1
-        comFpsSlider.isEnabled = config.syncMode != 1 && !config.autoFps
-        comFpsInfo.isEnabled = config.syncMode != 1
+        // Threading
+        let timeLapse = config.timeLapse
+        let runAhead = config.runAhead
+        prfVSync.state = config.vsync ? .on : .off
+        prfTimeLapse.integerValue = timeLapse
+        prfTimeLapseInfo.stringValue = "\(timeLapse) %"
+        prfRunAheadSlider.integerValue = runAhead
+        prfRunAheadInfo.stringValue = "\(runAhead) frame" + (runAhead == 1 ? "" : "s")
+        prfTimeLapse.isEnabled = !config.vsync
+        prfTimeLapseInfo.textColor = config.vsync ? .tertiaryLabelColor : .labelColor
 
         // Power button
         comPowerButton.isHidden = !bootable
@@ -97,21 +98,21 @@ extension ConfigurationController {
     // Action methods (threading)
     //
 
-    @IBAction func comSyncModeAction(_ sender: NSPopUpButton!) {
+    @IBAction func prfVSyncAction(_ sender: NSButton!) {
 
-        config.syncMode = sender.selectedTag()
+        config.vsync = sender.state == .on
         refresh()
     }
 
-    @IBAction func comAutoFpsAction(_ sender: NSButton!) {
+    @IBAction func prfTimeLapseAction(_ sender: NSSlider!) {
 
-        config.autoFps = sender.state == .on
+        config.timeLapse = sender.integerValue
         refresh()
     }
 
-    @IBAction func comFpsAction(_ sender: NSSlider!) {
+    @IBAction func prfRunAheadAction(_ sender: NSSlider!) {
 
-        config.proposedFps = sender.integerValue
+        config.runAhead = sender.integerValue
         refresh()
     }
 

@@ -23,6 +23,7 @@ Emulator::Emulator()
     targetTime = util::Time::now();
 
     // trace(RUN_DEBUG, "Creating emulator\n");
+    resetConfig(); // TODO: DELETE AND CALL SOMEWHERE ELSE
 }
 
 Emulator::~Emulator()
@@ -70,9 +71,9 @@ Emulator::resetConfig()
 
         OPT_WARP_BOOT,
         OPT_WARP_MODE,
-        OPT_SYNC_MODE,
-        OPT_AUTO_FPS,
-        OPT_PROPOSED_FPS,
+        OPT_VSYNC,
+        OPT_TIME_LAPSE,
+        OPT_RUN_AHEAD,
     };
 
     for (auto &option : options) {
@@ -87,9 +88,9 @@ Emulator::getConfigItem(Option option) const
 
         case OPT_WARP_BOOT:     return config.warpBoot;
         case OPT_WARP_MODE:     return config.warpMode;
-        case OPT_SYNC_MODE:     return config.syncMode;
-        case OPT_AUTO_FPS:      return config.autoFps;
-        case OPT_PROPOSED_FPS:  return config.proposedFps;
+        case OPT_VSYNC:         return config.vsync;
+        case OPT_TIME_LAPSE:    return config.timeLapse;
+        case OPT_RUN_AHEAD:     return config.runAhead;
 
         default:
             fatalError;
@@ -117,29 +118,27 @@ Emulator::setConfigItem(Option option, i64 value)
             // updateWarpState();
             return;
 
-        case OPT_SYNC_MODE:
+        case OPT_VSYNC:
 
-            if (!SyncModeEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, SyncModeEnum::keyList());
-            }
-
-            config.syncMode = SyncMode(value);
-            c64.updateClockFrequency();
+            config.vsync = bool(value);
             return;
 
-        case OPT_AUTO_FPS:
+        case OPT_TIME_LAPSE:
 
-            config.autoFps = bool(value);
-            return;
-
-        case OPT_PROPOSED_FPS:
-
-            if (value < 25 || value > 120) {
-                throw VC64Error(ERROR_OPT_INVARG, "25...120");
+            if (value < 50 || value > 200) {
+                throw VC64Error(ERROR_OPT_INVARG, "50...200");
             }
 
-            config.proposedFps = isize(value);
-            c64.updateClockFrequency();
+            config.timeLapse = isize(value);
+            return;
+
+        case OPT_RUN_AHEAD:
+
+            if (value < 0 || value > 5) {
+                throw VC64Error(ERROR_OPT_INVARG, "0...5");
+            }
+
+            config.runAhead = isize(value);
             return;
 
         default:
@@ -158,12 +157,12 @@ Emulator::_dump(Category category, std::ostream& os) const
         os << WarpModeEnum::key(config.warpMode) << std::endl;
         os << tab("Warp boot");
         os << dec(config.warpBoot) << " seconds" << std::endl;
-        os << tab("Sync mode");
-        os << SyncModeEnum::key(config.syncMode) << std::endl;
-        os << tab("Auto fps");
-        os << bol(config.autoFps) << std::endl;
-        os << tab("Proposed fps");
-        os << config.proposedFps << " Fps" << std::endl;
+        os << tab("VSYNC");
+        os << bol(config.vsync) << std::endl;
+        os << tab("Time lapse");
+        os << dec(config.timeLapse) << "%" << std::endl;
+        os << tab("Run ahead");
+        os << dec(config.runAhead) << " frames" << std::endl;
         os << std::endl;
     }
 
@@ -227,7 +226,7 @@ Emulator::updateWarp()
 SyncMode
 Emulator::getSyncMode() const
 {
-    return config.syncMode;
+    return SYNC_ADAPTIVE;
 }
 
 void
@@ -239,19 +238,13 @@ Emulator::execute()
 double 
 Emulator::refreshRate() const
 {
-    switch (config.syncMode) {
+    if (config.vsync) {
 
-        case SYNC_PULSED:
+        return c64.host.getHostRefreshRate();
 
-            return c64.host.getHostRefreshRate();
+    } else {
 
-        case SYNC_PERIODIC:
-        case SYNC_ADAPTIVE:
-
-            return config.autoFps ? c64.vic.getFps() : config.proposedFps;
-
-        default:
-            fatalError;
+        return c64.vic.getFps() * config.timeLapse / 100.0;
     }
 }
 

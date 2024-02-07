@@ -310,9 +310,9 @@ C64::getConfigItem(Option option) const
 
         case OPT_WARP_BOOT:
         case OPT_WARP_MODE:
-        case OPT_SYNC_MODE:
-        case OPT_AUTO_FPS:
-        case OPT_PROPOSED_FPS:
+        case OPT_VSYNC:
+        case OPT_TIME_LAPSE:
+        case OPT_RUN_AHEAD:
 
             return emulator.getConfigItem(option);
 
@@ -480,10 +480,10 @@ C64::configure(Option option, i64 value)
 
         case OPT_WARP_MODE:
         case OPT_WARP_BOOT:
-        case OPT_SYNC_MODE:
-        case OPT_AUTO_FPS:
-        case OPT_PROPOSED_FPS:
-
+        case OPT_VSYNC:
+        case OPT_TIME_LAPSE:
+        case OPT_RUN_AHEAD:
+            
             emulator.setConfigItem(option, value);
             break;
 

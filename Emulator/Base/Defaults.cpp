@@ -21,9 +21,9 @@ Defaults::Defaults()
 {
     setFallback(OPT_WARP_BOOT, 0);
     setFallback(OPT_WARP_MODE, WARP_NEVER);
-    setFallback(OPT_SYNC_MODE, SYNC_ADAPTIVE);
-    setFallback(OPT_AUTO_FPS, true);
-    setFallback(OPT_PROPOSED_FPS, 60);
+    setFallback(OPT_VSYNC, false);
+    setFallback(OPT_TIME_LAPSE, 100);
+    setFallback(OPT_RUN_AHEAD, 0);
 
     setFallback(OPT_POWER_GRID, GRID_STABLE_50HZ);
 

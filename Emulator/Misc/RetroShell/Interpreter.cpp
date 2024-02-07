@@ -101,6 +101,42 @@ Interpreter::autoComplete(Arguments &argv)
     }
 }
 
+bool
+Interpreter::parseBool(const string &argv)
+{
+    return util::parseBool(argv);
+}
+
+bool
+Interpreter::parseBool(const string &argv, bool fallback)
+{
+    try { return parseBool(argv); } catch(...) { return fallback; }
+}
+
+bool
+Interpreter::parseOnOff(const string &argv)
+{
+    return util::parseOnOff(argv);
+}
+
+bool
+Interpreter::parseOnOff(const string &argv, bool fallback)
+{
+    try { return parseOnOff(argv); } catch(...) { return fallback; }
+}
+
+long
+Interpreter::parseNum(const string &argv)
+{
+    return util::parseNum(argv);
+}
+
+long
+Interpreter::parseNum(const string &argv, long fallback)
+{
+    try { return parseNum(argv); } catch(...) { return fallback; }
+}
+
 Command &
 Interpreter::getRoot()
 {

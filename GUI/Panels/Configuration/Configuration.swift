@@ -241,19 +241,18 @@ class Configuration {
         set { c64.configure(.WARP_BOOT, value: newValue) }
     }
 
-    var syncMode: Int {
-        get { return c64.getConfig(.SYNC_MODE) }
-        set { c64.configure(.SYNC_MODE, value: newValue) }
+    var vsync: Bool {
+        get { return c64.getConfig(.VSYNC) != 0 }
+        set { c64.configure(.VSYNC, enable: newValue) }
+    }
+    var timeLapse: Int {
+        get { return c64.getConfig(.TIME_LAPSE) }
+        set { c64.configure(.TIME_LAPSE, value: newValue) }
     }
 
-    var autoFps: Bool {
-        get { return c64.getConfig(.AUTO_FPS) != 0 }
-        set { c64.configure(.AUTO_FPS, enable: newValue) }
-    }
-
-    var proposedFps: Int {
-        get { return c64.getConfig(.PROPOSED_FPS) }
-        set { c64.configure(.PROPOSED_FPS, value: newValue) }
+    var runAhead: Int {
+        get { return c64.getConfig(.RUN_AHEAD) }
+        set { c64.configure(.RUN_AHEAD, value: newValue) }
     }
 
     //
