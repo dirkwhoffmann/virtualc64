@@ -87,11 +87,6 @@ static constexpr double inspectionInterval = 0.1;
 class C64 : public CoreComponent {
 
     friend class Emulator;
-    
-public:
-
-    // Reference to the emulator this instance belongs to
-    class Emulator &emulator;
 
 private:
     
@@ -415,16 +410,6 @@ private:
     void _trackOn() override;
     void _trackOff() override;
     void _inspect() const override;
-
-    bool isPoweredOff() const override;
-    bool isPoweredOn() const override;
-    bool isPaused() const override;
-    bool isRunning() const override;
-    bool isSuspended() const override;
-    bool isHalted() const override;
-
-    void suspend() override;
-    void resume() override;
 
 
     //

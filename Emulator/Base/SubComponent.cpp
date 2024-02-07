@@ -12,11 +12,11 @@
 
 #include "config.h"
 #include "SubComponent.h"
-#include "Emulator.h"
+#include "C64.h"
 
 namespace vc64 {
 
-SubComponent::SubComponent(C64& ref) :
+SubComponent::SubComponent(C64& ref) : CoreComponent(ref.emulator),
 
 c64(ref),
 cia1(ref.cia1),
@@ -42,54 +42,6 @@ muxer(ref.muxer),
 vic(ref.vic)
 {
 };
-
-bool
-SubComponent::isPoweredOff() const
-{
-    return c64.emulator.isPoweredOff();
-}
-
-bool
-SubComponent::isPoweredOn() const
-{
-    return c64.emulator.isPoweredOn();
-}
-
-bool
-SubComponent::isPaused() const
-{
-    return c64.emulator.isPaused();
-}
-
-bool
-SubComponent::isRunning() const
-{
-    return c64.emulator.isRunning();
-}
-
-bool
-SubComponent::isSuspended() const
-{
-    return c64.emulator.isSuspended();
-}
-
-bool
-SubComponent::isHalted() const
-{
-    return c64.emulator.isHalted();
-}
-
-void
-SubComponent::suspend()
-{
-    c64.emulator.suspend();
-}
-
-void
-SubComponent::resume()
-{
-    c64.emulator.resume();
-}
 
 void
 SubComponent::prefix() const

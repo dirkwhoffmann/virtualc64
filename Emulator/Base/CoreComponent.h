@@ -48,8 +48,13 @@ struct NoAssign
 
 class CoreComponent : public CoreObject, public Suspendable, NoCopy, NoAssign {
 
+public:
+
+    // Reference to the emulator this instance belongs to
+    class Emulator &emulator;
+
 protected:
-    
+
     // Set to false to silence all debug messages for this component
     bool verbose = true;
 
@@ -68,6 +73,8 @@ protected:
     //
     
 public:
+
+    CoreComponent(class Emulator& ref) : emulator(ref) { }
 
     /* Initializes the component and it's subcomponents. The initialization
      * procedure is initiated once, in the constructor of the C64 class. By
@@ -90,15 +97,15 @@ public:
 
 public:
 
-    virtual bool isPoweredOff() const = 0;
-    virtual bool isPoweredOn() const = 0;
-    virtual bool isPaused() const = 0;
-    virtual bool isRunning() const = 0;
-    virtual bool isSuspended() const = 0;
-    virtual bool isHalted() const = 0;
+    virtual bool isPoweredOff() const;
+    virtual bool isPoweredOn() const;
+    virtual bool isPaused() const;
+    virtual bool isRunning() const;
+    virtual bool isSuspended() const;
+    virtual bool isHalted() const;
 
-    // virtual void suspend() = 0;
-    // virtual void resume() = 0;
+    void suspend();
+    void resume();
 
     // Throws an exception if the emulator is not ready to power on
     virtual void isReady() const throws;

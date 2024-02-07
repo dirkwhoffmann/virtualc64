@@ -55,9 +55,6 @@ class CRTFile;
 class RomFile;
 class Snapshot;
 
-/* This class extends the CoreComponent class with references to all components
- * that are part of the C64 class.
- */
 class SubComponent : public CoreComponent {
 
 protected:
@@ -91,16 +88,6 @@ public:
 
     SubComponent(C64& ref);
     SubComponent(const SubComponent &other) : SubComponent(other.c64) { }
-    
-    virtual bool isPoweredOff() const override;
-    virtual bool isPoweredOn() const override;
-    virtual bool isPaused() const override;
-    virtual bool isRunning() const override;
-    virtual bool isSuspended() const override;
-    virtual bool isHalted() const override;
-
-    virtual void suspend() override;
-    virtual void resume() override;
 
     void prefix() const override;
 };

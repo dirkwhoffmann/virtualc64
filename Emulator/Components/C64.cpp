@@ -192,7 +192,7 @@ C64::eventName(EventSlot slot, EventID id)
     }
 }
 
-C64::C64(class Emulator& ref) : emulator(ref)
+C64::C64(class Emulator& ref) : CoreComponent(ref)
 {
     trace(RUN_DEBUG, "Creating virtual C64\n");
 
@@ -229,8 +229,7 @@ C64::C64(class Emulator& ref) : emulator(ref)
 
 C64::~C64()
 {
-    // debug(RUN_DEBUG, "Destroying emulator instance\n");
-    // if (thread.joinable()) { halt(); }
+    trace(RUN_DEBUG, "Destructing virtual C64\n");
 }
 
 void
@@ -300,16 +299,6 @@ C64::_reset(bool hard)
     rasterCycle = 1;
     updateWarpState();
 }
-
-bool C64::isPoweredOff() const { return emulator.isPoweredOff(); }
-bool C64::isPoweredOn() const { return emulator.isPoweredOn(); }
-bool C64::isPaused() const { return emulator.isPaused(); }
-bool C64::isRunning() const { return emulator.isRunning(); }
-bool C64::isSuspended() const { return emulator.isSuspended(); }
-bool C64::isHalted() const { return emulator.isHalted(); }
-void C64::suspend() { return emulator.suspend(); }
-void C64::resume() { return emulator.resume(); }
-
 
 void
 C64::resetConfig()
