@@ -229,33 +229,33 @@ Thread::switchState(ExecutionState newState)
 
         if (state == EXEC_OFF && newState == EXEC_PAUSED) {
 
-            CoreComponent::powerOn();
+            powerOnDelegate();
             state = EXEC_PAUSED;
 
         } else if (state == EXEC_OFF && newState == EXEC_RUNNING) {
 
-            CoreComponent::powerOn();
+            powerOnDelegate();
             state = EXEC_PAUSED;
 
         } else if (state == EXEC_PAUSED && newState == EXEC_OFF) {
 
-            CoreComponent::powerOff();
+            powerOffDelegate();
             state = EXEC_OFF;
 
         } else if (state == EXEC_PAUSED && newState == EXEC_RUNNING) {
 
-            CoreComponent::run();
+            runDelegate();
             state = EXEC_RUNNING;
 
         } else if (state == EXEC_RUNNING && newState == EXEC_OFF) {
 
             state = EXEC_PAUSED;
-            CoreComponent::pause();
+            pauseDelegate();
 
         } else if (state == EXEC_RUNNING && newState == EXEC_PAUSED) {
 
             state = EXEC_PAUSED;
-            CoreComponent::pause();
+            pauseDelegate();
 
         } else if (state == EXEC_RUNNING && newState == EXEC_SUSPENDED) {
 
@@ -267,7 +267,7 @@ Thread::switchState(ExecutionState newState)
 
         } else if (newState == EXEC_HALTED) {
 
-            CoreComponent::halt();
+            haltDelegate();
             state = EXEC_HALTED;
 
         } else {
@@ -291,7 +291,7 @@ Thread::switchWarp(bool state, u8 source)
     state ? SET_BIT(warp, source) : CLR_BIT(warp, source);
 
     if (bool(old) != bool(warp)) {
-        CoreComponent::warpOnOff(warp);
+        warpOnOffDelegate(warp);
     }
 
     if (!isEmulatorThread()) resume();
@@ -307,7 +307,7 @@ Thread::switchTrack(bool state, u8 source)
     state ? SET_BIT(track, source) : CLR_BIT(track, source);
 
     if (bool(old) != bool(track)) {
-        CoreComponent::trackOnOff(track);
+        trackOnOffDelegate(track);
     }
 }
 

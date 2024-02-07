@@ -17,7 +17,7 @@ namespace vc64 {
 
 Emulator::Emulator()
 {
-    subComponents = std::vector<CoreComponent *> { &c64 };
+    // subComponents = std::vector<CoreComponent *> { &c64 };
 
     // Initialize the sync timer
     targetTime = util::Time::now();

@@ -168,8 +168,8 @@ namespace vc64 {
  * the recorded information in a trace buffer.
  */
 
-class Thread : public CoreComponent, util::Wakeable {
-    
+class Thread : public CoreObject, public Suspendable, util::Wakeable {
+
 protected:
 
     friend class Emulator;
@@ -288,12 +288,12 @@ public:
     
 public:
     
-    bool isPoweredOn() const override { return state != EXEC_OFF; }
-    bool isPoweredOff() const override { return state == EXEC_OFF; }
-    bool isPaused() const override { return state == EXEC_PAUSED; }
-    bool isRunning() const override { return state == EXEC_RUNNING; }
-    bool isSuspended() const override { return state == EXEC_SUSPENDED; }
-    bool isHalted() const override { return state == EXEC_HALTED; }
+    bool isPoweredOn() const { return state != EXEC_OFF; }
+    bool isPoweredOff() const { return state == EXEC_OFF; }
+    bool isPaused() const { return state == EXEC_PAUSED; }
+    bool isRunning() const { return state == EXEC_RUNNING; }
+    bool isSuspended() const { return state == EXEC_SUSPENDED; }
+    bool isHalted() const { return state == EXEC_HALTED; }
 
     void suspend() override;
     void resume() override;
