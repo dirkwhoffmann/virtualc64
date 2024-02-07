@@ -37,19 +37,14 @@ Thread::frameDuration() const
 isize
 Thread::missingFrames() const
 {
-    if (getSyncMode() == SYNC_ADAPTIVE) {
+    // Compute the elapsed time
+    auto elapsed = util::Time::now() - baseTime;
 
-        // Compute the elapsed time
-        auto elapsed = util::Time::now() - baseTime;
+    // Compute which frame should be reached by now
+    auto target = elapsed.asNanoseconds() * i64(refreshRate()) / 1000000000;
 
-        // Compute which frame should be reached by now
-        auto target = elapsed.asNanoseconds() * i64(refreshRate()) / 1000000000;
-
-        // Compute the number of missing frames
-        return isize(target - frameCounter);
-    }
-
-    return 0;
+    // Compute the number of missing frames
+    return isize(target - frameCounter);
 }
 
 void
@@ -63,7 +58,7 @@ Thread::resync()
 }
 
 template <SyncMode M> void
-Thread::execute()
+Thread::executeFrame()
 {
     if (missing > 0 || warp) {
 
@@ -168,23 +163,13 @@ Thread::main()
         updateWarp();
 
         if (isRunning()) {
-
-            switch (getSyncMode()) {
-
-                case SYNC_PERIODIC:   execute<SYNC_PERIODIC>(); break;
-                case SYNC_PULSED:     execute<SYNC_PULSED>(); break;
-                case SYNC_ADAPTIVE:   execute<SYNC_ADAPTIVE>(); break;
-            }
+            
+            executeFrame<SYNC_ADAPTIVE>();
         }
-
+        
         if (!warp || !isRunning()) {
             
-            switch (getSyncMode()) {
-
-                case SYNC_PERIODIC:   sleep<SYNC_PERIODIC>(); break;
-                case SYNC_PULSED:     sleep<SYNC_PULSED>(); break;
-                case SYNC_ADAPTIVE:   sleep<SYNC_ADAPTIVE>(); break;
-            }
+            sleep<SYNC_ADAPTIVE>();
         }
         
         // Are we requested to change state?

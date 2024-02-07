@@ -233,7 +233,7 @@ private:
     void resync();
 
     // Executes a single time slice (if one is pending)
-    template <SyncMode M> void execute();
+    template <SyncMode M> void executeFrame();
 
     // Suspends the thread until the next time slice is due
     template <SyncMode M> void sleep();
