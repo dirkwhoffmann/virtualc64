@@ -90,7 +90,17 @@ public:
     isize slicesPerFrame() const override;
     util::Time wakeupPeriod() const override;
 
-    
+    void powerOnDelegate() override;
+    void powerOffDelegate() override;
+    void runDelegate() override;
+    void pauseDelegate() override;
+    void haltDelegate() override;
+    void warpOnDelegate() override;
+    void warpOffDelegate() override;
+    void trackOnDelegate() override;
+    void trackOffDelegate() override;
+
+
 /*
     virtual bool isPoweredOff() const override;
     virtual bool isPoweredOn() const override;

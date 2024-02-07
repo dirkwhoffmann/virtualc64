@@ -85,4 +85,15 @@ Emulator::wakeupPeriod() const
     return c64.wakeupPeriod();
 }
 
+void Emulator::powerOnDelegate() { c64.powerOn(); }
+void Emulator::powerOffDelegate() { c64.powerOff(); }
+void Emulator::runDelegate() { c64.run(); }
+void Emulator::pauseDelegate() { c64.pause(); }
+void Emulator::haltDelegate() { c64.halt(); }
+void Emulator::warpOnDelegate() { c64.warpOn(); }
+void Emulator::warpOffDelegate() { c64.warpOff(); }
+void Emulator::trackOnDelegate() { c64.trackOn(); }
+void Emulator::trackOffDelegate() { c64.trackOff(); }
+
+
 }

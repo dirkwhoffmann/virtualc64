@@ -312,6 +312,21 @@ public:
     void trackOn(isize source = 0);
     void trackOff(isize source = 0);
 
+    // Delegates (formerly inherited from CoreComponent, clean this up)
+    virtual void powerOnDelegate() = 0;
+    virtual void powerOffDelegate() = 0;
+    virtual void runDelegate() = 0;
+    virtual void pauseDelegate() = 0;
+    virtual void haltDelegate() = 0;
+    virtual void warpOnDelegate() = 0;
+    virtual void warpOffDelegate() = 0;
+    virtual void trackOnDelegate() = 0;
+    virtual void trackOffDelegate() = 0;
+
+    void powerOnOffDelegate(bool value) { value ? powerOnDelegate() : powerOffDelegate(); }
+    void warpOnOffDelegate(bool value) { value ? warpOnDelegate() : warpOffDelegate(); }
+    void trackOnOffDelegate(bool value) { value ? trackOnDelegate() : trackOffDelegate(); }
+
 protected:
 
     // Initiates a state change
