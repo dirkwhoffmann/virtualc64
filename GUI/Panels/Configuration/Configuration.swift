@@ -246,11 +246,6 @@ class Configuration {
         set { c64.configure(.SYNC_MODE, value: newValue) }
     }
 
-    var timeSlices: Int {
-        get { return c64.getConfig(.TIME_SLICES) }
-        set { c64.configure(.TIME_SLICES, value: newValue) }
-    }
-
     var autoFps: Bool {
         get { return c64.getConfig(.AUTO_FPS) != 0 }
         set { c64.configure(.AUTO_FPS, enable: newValue) }

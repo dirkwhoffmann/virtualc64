@@ -953,7 +953,6 @@ extension DefaultsProxy {
         remove(.SYNC_MODE)
         remove(.AUTO_FPS)
         remove(.PROPOSED_FPS)
-        remove(.TIME_SLICES)
     }
 }
 
@@ -977,7 +976,6 @@ extension Configuration {
         defaults.set(.SYNC_MODE, syncMode)
         defaults.set(.AUTO_FPS, autoFps)
         defaults.set(.PROPOSED_FPS, proposedFps)
-        defaults.set(.TIME_SLICES, timeSlices)
 
         defaults.save()
 
@@ -1002,7 +1000,6 @@ extension Configuration {
         syncMode = defaults.get(.SYNC_MODE)
         autoFps = defaults.get(.AUTO_FPS) != 0
         proposedFps = defaults.get(.PROPOSED_FPS)
-        timeSlices = defaults.get(.TIME_SLICES)
 
         c64.resume()
     }

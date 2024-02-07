@@ -45,8 +45,6 @@
                 <outlet property="comPowerButton" destination="MaC-Tv-e4H" id="r0L-EC-VjG"/>
                 <outlet property="comSbCollisions" destination="bnG-rw-e1M" id="HG9-2I-s0C"/>
                 <outlet property="comSidPowerSave" destination="xx0-43-RDp" id="xyp-xA-a8H"/>
-                <outlet property="comSliceInfo" destination="7Gk-Yf-PBW" id="saL-iw-gp6"/>
-                <outlet property="comSliceSlider" destination="qYR-eZ-gM3" id="nEm-hR-RMC"/>
                 <outlet property="comSsCollisions" destination="qgS-di-RAL" id="dez-ar-RTx"/>
                 <outlet property="comSyncMode" destination="rWB-Jd-xtg" id="kmB-TQ-Nrw"/>
                 <outlet property="comViciiPowerSave" destination="WZL-K6-LDf" id="cqp-gt-dO7"/>
@@ -1705,32 +1703,6 @@ Gw
                                                 <action selector="comFpsAction:" target="-2" id="tD9-Bk-Mvg"/>
                                             </connections>
                                         </slider>
-                                        <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qYR-eZ-gM3">
-                                            <rect key="frame" x="97" y="66" width="169" height="28"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="1" maxValue="4" doubleValue="2" tickMarkPosition="above" numberOfTickMarks="4" allowsTickMarkValuesOnly="YES" sliderType="linear" id="3xI-sF-6tx"/>
-                                            <connections>
-                                                <action selector="comTimeSlicesAction:" target="-2" id="zJd-0C-BqX"/>
-                                            </connections>
-                                        </slider>
-                                        <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Gk-Yf-PBW">
-                                            <rect key="frame" x="279" y="68" width="178" height="23"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="left" title="2 time slices per frame" id="ALw-WL-1lM">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zXR-N0-V0Z">
-                                            <rect key="frame" x="7" y="72" width="85" height="20"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" alignment="right" title="Slicing:" id="rbO-SC-1fL">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FHx-4K-dGQ">
                                             <rect key="frame" x="97" y="101" width="55" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>

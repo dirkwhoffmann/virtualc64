@@ -89,7 +89,6 @@ private:
 public:
 
     double refreshRate() const override;
-    isize slicesPerFrame() const override;
     util::Time wakeupPeriod() const override;
 
     void powerOnDelegate() override;
@@ -101,19 +100,6 @@ public:
     void warpOffDelegate() override;
     void trackOnDelegate() override;
     void trackOffDelegate() override;
-
-
-/*
-    virtual bool isPoweredOff() const override;
-    virtual bool isPoweredOn() const override;
-    virtual bool isPaused() const override;
-    virtual bool isRunning() const override;
-    virtual bool isSuspended() const override;
-    virtual bool isHalted() const override;
-
-    virtual void suspend() override;
-    virtual void resume() override;
-*/
 };
 
 }

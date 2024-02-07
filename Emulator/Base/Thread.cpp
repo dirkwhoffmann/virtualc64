@@ -34,29 +34,23 @@ Thread::frameDuration() const
     return util::Time(i64(1000000000.0 / refreshRate()));
 }
 
-util::Time
-Thread::sliceDuration() const
-{
-    return util::Time(i64(1000000000.0 / refreshRate() / slicesPerFrame()));
-}
-
 isize
 Thread::missingSlices() const
 {
     if (getSyncMode() == SYNC_PULSED) {
 
-        return slicesPerFrame();
+        return 1;
     }
     if (getSyncMode() == SYNC_ADAPTIVE) {
 
         // Compute the elapsed time
         auto elapsed = util::Time::now() - baseTime;
 
-        // Compute which slice should be reached by now
-        auto target = slicesPerFrame() * elapsed.asNanoseconds() * i64(refreshRate()) / 1000000000;
+        // Compute which frame should be reached by now
+        auto target = elapsed.asNanoseconds() * i64(refreshRate()) / 1000000000;
 
-        // Compute the number of missing slices
-        return isize(target - sliceCounter);
+        // Compute the number of missing frames
+        return isize(target - frameCounter);
     }
 
     return 0;
@@ -68,7 +62,7 @@ Thread::resync()
     targetTime = util::Time::now();
     baseTime = util::Time::now();
     deltaTime = 0;
-    sliceCounter = 0;
+    frameCounter = 0;
     missing = 0;
 }
 
@@ -83,7 +77,7 @@ Thread::execute()
         loadClock.go();
 
         execute();
-        sliceCounter++;
+        frameCounter++;
         missing--;
 
         loadClock.stop();
@@ -109,7 +103,7 @@ Thread::sleep<SYNC_PERIODIC>()
     }
 
     // Sleep till the next sync point
-    targetTime += sliceDuration();
+    targetTime += frameDuration();
     targetTime.sleepUntil();
     missing = 1;
 }
@@ -146,7 +140,7 @@ Thread::sleep<SYNC_PULSED>()
             targetTime = util::Time::now() + deltaTime;
 
             // Start over if the emulator got out of sync
-            if (std::abs(missing) > 5 * slicesPerFrame()) {
+            if (std::abs(missing) > 5) {
                 
                 if (missing > 0) {
                     warn("Emulation is way too slow: %ld time slices behind\n", missing);
@@ -206,7 +200,7 @@ Thread::main()
         }
 
         // Compute the CPU load once in a while
-        if (sliceCounter % (32 * slicesPerFrame()) == 0) {
+        if (frameCounter % 32 == 0) {
 
             auto used  = loadClock.getElapsedTime().asSeconds();
             auto total = nonstopClock.getElapsedTime().asSeconds();

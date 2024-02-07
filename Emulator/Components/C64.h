@@ -383,13 +383,11 @@ private:
     SyncMode getSyncMode() const;
     void execute();
     template <bool enable8, bool enable9> void execute();
-    isize nextSyncLine(isize scanline);
     bool processFlags();
 
 public:
 
     double refreshRate() const;
-    isize slicesPerFrame() const;
     util::Time wakeupPeriod() const;
 
 

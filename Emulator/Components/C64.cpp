@@ -310,7 +310,6 @@ C64::resetConfig()
         OPT_WARP_BOOT,
         OPT_WARP_MODE,
         OPT_SYNC_MODE,
-        OPT_TIME_SLICES,
         OPT_AUTO_FPS,
         OPT_PROPOSED_FPS,
     };
@@ -344,10 +343,6 @@ C64::getConfigItem(Option option) const
         case OPT_SYNC_MODE:
 
             return config.syncMode;
-
-        case OPT_TIME_SLICES:
-
-            return config.timeSlices;
 
         case OPT_AUTO_FPS:
 
@@ -505,15 +500,6 @@ C64::setConfigItem(Option option, i64 value)
             updateClockFrequency();
             return;
 
-        case OPT_TIME_SLICES:
-
-            if (value < 1 || value > 4) {
-                throw VC64Error(ERROR_OPT_INVARG, "1...4");
-            }
-
-            config.timeSlices = isize(value);
-            return;
-
         case OPT_AUTO_FPS:
 
             config.autoFps = bool(value);
@@ -576,7 +562,6 @@ C64::configure(Option option, i64 value)
         case OPT_WARP_BOOT:
         case OPT_WARP_MODE:
         case OPT_SYNC_MODE:
-        case OPT_TIME_SLICES:
         case OPT_AUTO_FPS:
         case OPT_PROPOSED_FPS:
 
@@ -1056,7 +1041,6 @@ C64::execute()
 {
     bool exit = false;
     auto lastCycle = vic.getCyclesPerLine();
-    auto syncLine = nextSyncLine(scanline);
 
     do {
 
@@ -1116,25 +1100,11 @@ C64::execute()
         if (rasterCycle > lastCycle) endScanline();
 
         // Check if we have reached the next sync point
-        if (scanline == syncLine) exit = true;
+        if (scanline == 0) exit = true;
 
     } while (!exit);
     
     trace(TIM_DEBUG, "Syncing at scanline %d\n", scanline);
-}
-
-isize 
-C64::nextSyncLine(isize line)
-{
-    switch (slicesPerFrame()) {
-
-        case 2: return line < 156 ? 156 : 0;
-        case 3: return line < 104 ? 104 : line < 208 ? 208 : 0;
-        case 4: return line <  78 ?  78 : line < 156 ? 156 : line < 234 ? 234 : 0;
-
-        default:
-            return 0;
-    }
 }
 
 bool
@@ -1229,12 +1199,6 @@ C64::refreshRate() const
         default:
             fatalError;
     }
-}
-
-isize 
-C64::slicesPerFrame() const
-{
-    return config.timeSlices;
 }
 
 util::Time 
@@ -1397,8 +1361,6 @@ C64::_dump(Category category, std::ostream& os) const
         os << dec(config.warpBoot) << " seconds" << std::endl;
         os << tab("Sync mode");
         os << SyncModeEnum::key(config.syncMode) << std::endl;
-        os << tab("Time slices");
-        os << config.timeSlices << std::endl;
         os << tab("Auto fps");
         os << bol(config.autoFps) << std::endl;
         os << tab("Proposed fps");

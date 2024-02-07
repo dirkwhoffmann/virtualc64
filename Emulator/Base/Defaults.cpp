@@ -22,7 +22,6 @@ Defaults::Defaults()
     setFallback(OPT_WARP_BOOT, 0);
     setFallback(OPT_WARP_MODE, WARP_NEVER);
     setFallback(OPT_SYNC_MODE, SYNC_ADAPTIVE);
-    setFallback(OPT_TIME_SLICES, 1);
     setFallback(OPT_AUTO_FPS, true);
     setFallback(OPT_PROPOSED_FPS, 60);
 

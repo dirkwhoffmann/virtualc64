@@ -30,8 +30,6 @@ extension ConfigurationController {
         comAutoFps.state = config.autoFps ? .on : .off
         comFpsSlider.integerValue = fps
         comFpsInfo.stringValue = "\(fps) frames per second"
-        comSliceSlider.integerValue = config.timeSlices
-        comSliceInfo.stringValue = "\(config.timeSlices) time slices per frame"
         comAutoFps.isEnabled = config.syncMode != 1
         comFpsSlider.isEnabled = config.syncMode != 1 && !config.autoFps
         comFpsInfo.isEnabled = config.syncMode != 1
@@ -102,12 +100,6 @@ extension ConfigurationController {
     @IBAction func comSyncModeAction(_ sender: NSPopUpButton!) {
 
         config.syncMode = sender.selectedTag()
-        refresh()
-    }
-
-    @IBAction func comTimeSlicesAction(_ sender: NSSlider!) {
-
-        config.timeSlices = sender.integerValue
         refresh()
     }
 

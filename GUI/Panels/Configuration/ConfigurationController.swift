@@ -138,8 +138,6 @@ class ConfigurationController: DialogController {
     @IBOutlet weak var comAutoFps: NSButton!
     @IBOutlet weak var comFpsSlider: NSSlider!
     @IBOutlet weak var comFpsInfo: NSTextField!
-    @IBOutlet weak var comSliceSlider: NSSlider!
-    @IBOutlet weak var comSliceInfo: NSTextField!
 
     // Buttons
     @IBOutlet weak var comPowerButton: NSButton!

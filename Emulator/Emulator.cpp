@@ -73,12 +73,6 @@ Emulator::refreshRate() const
     return c64.refreshRate();
 }
 
-isize 
-Emulator::slicesPerFrame() const
-{
-    return c64.slicesPerFrame();
-}
-
 util::Time 
 Emulator::wakeupPeriod() const
 {

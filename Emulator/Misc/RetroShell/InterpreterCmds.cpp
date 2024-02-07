@@ -220,13 +220,6 @@ Interpreter::initCommandShell(Command &root)
         c64.configure(OPT_SYNC_MODE, parseEnum <SyncModeEnum> (argv));
     });
 
-    root.add({"c64", "set", "timeslices"}, { Arg::value },
-             "Sets how often the thread starts and stops per frame",
-             [this](Arguments& argv, long value) {
-
-        c64.configure(OPT_TIME_SLICES, parseNum(argv));
-    });
-
     root.add({"c64", "set", "autofps"}, { Arg::boolean },
              "Selects whether the refresh rate is determined by the C64 model",
              [this](Arguments& argv, long value) {

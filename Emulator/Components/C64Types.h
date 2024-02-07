@@ -300,7 +300,6 @@ typedef struct
     SyncMode syncMode;
     bool autoFps;
     isize proposedFps;
-    isize timeSlices;
 }
 C64Config;
 

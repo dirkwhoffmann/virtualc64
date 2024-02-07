@@ -24,8 +24,6 @@ namespace vc64 {
  * emulator all the time. The exact behavior is controlled by the internal
  * state. 
  *
- * 1. Thread states:
- *
  * The following states are distinguished:
  *
  *        Off: The emulator is turned off
@@ -88,7 +86,7 @@ namespace vc64 {
  * a loop which periodically calls function execute(). After each iteration,
  * the thread is put to sleep to synchronize timing.
  *
- * 2. Suspend / Resume:
+ * Suspend / Resume:
  *
  * The Thread class provides a suspend-resume mechanism for pausing the thread
  * temporarily. This functionality is utilized frequently by the GUI to carry
@@ -112,11 +110,11 @@ namespace vc64 {
  *       return or throw an exceptions as you like;
  *    }
  *
- * 3. Synchronization:
+ * Synchronization:
  *
- * The Thread class is also responsible for timing synchronization. I.e., it
- * has to ensure that the proper amount of frames are executed per second.
- * Three different synchronization modes are supported:
+ * The Thread class is responsible for timing synchronization. I.e., it has to
+ * ensure that the proper amount of frames are executed per second. Three
+ * different synchronization modes are supported:
  *
  * - Periodic:
  *
@@ -139,23 +137,7 @@ namespace vc64 {
  *   time the thread had been lauchen. After that, it executes all missing
  *   frames or resynchronizes if the number of missing frames is way off.
  *
- * 4. Time slicing:
- *
- * The number of time slices per frame controls the size of a single
- * computation chunk. Per default, the emulator thread computes an entire frame
- * in a single chunk. That is, it computes a frame, sleeps, computes a frame,
- * sleeps, and so on. A frame can be time-sliced to make the emulator more
- * responsive and let it react faster to external events such as joystick
- * movements. For example, if two-time slices are chosen per frame, the thread
- * computes the first half of the current frame, sleeps, computes the second
- * half of the current frame, sleeps, and so on. Note that increasing the
- * number of time slices can increase CPU load and jitter, even in pulsed mode.
- * Jitter may increase because time slices are distributed equally between two
- * wake-up events. Hence, the later chunks will be computed close to the next
- * wake-up event and may, therefore, interfere with the VSYNC event of the host
- * computer.
- *
- * 5. Warp mode:
+ * Warp mode:
  *
  * To speed up emulation (e.g., during disk accesses), the emulator may be put
  * into warp mode. In this mode, timing synchronization is disabled causing the
@@ -189,14 +171,14 @@ protected:
 
     // Counters
     isize suspendCounter = 0;
-    isize sliceCounter = 0;
+    isize frameCounter = 0;
 
     // Time stamps for calculating wakeup times
     util::Time baseTime;
     util::Time deltaTime;
     util::Time targetTime;
 
-    // Number of time slices that need to be computed
+    // Number of frames that need to be computed
     isize missing = 0;
     
     // Clocks for measuring the CPU load
@@ -235,17 +217,11 @@ private:
     // Target frame rate of this thread (provided by the subclass)
     virtual double refreshRate() const = 0;
 
-    // Number of thread syncs per frame (provided by the subclass)
-    virtual isize slicesPerFrame() const = 0;
-
     // Time span between two wakeup calls (provided by the subclass)
     virtual util::Time wakeupPeriod() const = 0;
 
     // Computes the time span between two frames
     util::Time frameDuration() const;
-
-    // Computes the time span between two time slices
-    util::Time sliceDuration() const;
 
     // Computes the number of overdue time slices
     isize missingSlices() const;
