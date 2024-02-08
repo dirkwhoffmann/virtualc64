@@ -267,7 +267,8 @@ void Emulator::trackOffDelegate() { c64.trackOff(); }
 
 void Emulator::stateChange(ExecutionState oldState, ExecutionState newState)
 {
-    c64.stateChange(oldState, newState);
+    
+
 }
 
 void

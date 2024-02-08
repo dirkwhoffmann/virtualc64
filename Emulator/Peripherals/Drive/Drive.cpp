@@ -495,12 +495,6 @@ Drive::_save(u8 *buffer)
 }
 
 void
-Drive::_run()
-{
-
-}
-
-void
 Drive::execute(u64 duration)
 {
     elapsedTime += duration;

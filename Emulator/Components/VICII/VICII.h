@@ -610,7 +610,6 @@ private:
     
     void _reset(bool hard) override;
     void _inspect() const override;
-    void _run() override;
     void _trackOn() override;
     void _trackOff() override;
 

@@ -535,12 +535,6 @@ VICII::getSpriteInfo(isize nr)
 }
 
 void
-VICII::_run()
-{
-    
-}
-
-void
 VICII::_trackOn()
 {
     updateVicFunctionTable();

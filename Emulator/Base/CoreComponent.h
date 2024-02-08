@@ -140,10 +140,6 @@ private:
     virtual void _trackOn() { }
     virtual void _trackOff() { }
 
-public:
-
-    virtual void stateChange(ExecutionState oldState, ExecutionState newState) { };
-
 
     //
     // Configuring

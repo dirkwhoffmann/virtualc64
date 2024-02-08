@@ -128,23 +128,23 @@ Thread::switchState(ExecutionState newState)
 
         if (state == EXEC_OFF && newState == EXEC_PAUSED) {
 
-            powerOnDelegate();
             state = EXEC_PAUSED;
+            powerOnDelegate();
 
         } else if (state == EXEC_OFF && newState == EXEC_RUNNING) {
 
-            powerOnDelegate();
             state = EXEC_PAUSED;
+            powerOnDelegate();
 
         } else if (state == EXEC_PAUSED && newState == EXEC_OFF) {
 
-            powerOffDelegate();
             state = EXEC_OFF;
+            powerOffDelegate();
 
         } else if (state == EXEC_PAUSED && newState == EXEC_RUNNING) {
 
-            runDelegate();
             state = EXEC_RUNNING;
+            runDelegate();
 
         } else if (state == EXEC_RUNNING && newState == EXEC_OFF) {
 
@@ -166,8 +166,8 @@ Thread::switchState(ExecutionState newState)
 
         } else if (newState == EXEC_HALTED) {
 
-            haltDelegate();
             state = EXEC_HALTED;
+            haltDelegate();
 
         } else {
 

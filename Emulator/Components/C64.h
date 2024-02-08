@@ -403,7 +403,6 @@ private:
     void _trackOff() override;
     void _inspect() const override;
 
-    void stateChange(ExecutionState oldState, ExecutionState newState) override;
 
     //
     // Running the emulator
