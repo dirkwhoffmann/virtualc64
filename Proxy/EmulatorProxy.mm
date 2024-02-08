@@ -2572,8 +2572,8 @@ using namespace vc64;
 
 - (void)kill
 {
-    assert([self c64] != NULL);
-    delete [self c64];
+    assert([self emu] != NULL);
+    delete [self emu];
     obj = NULL;
 }
 

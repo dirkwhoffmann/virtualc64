@@ -27,59 +27,27 @@ namespace vc64 {
  * The following states are distinguished:
  *
  *        Off: The emulator is turned off
- *     Paused: The emulator is turned on, but not running
+ *     Paused: The emulator is turned on but not running
  *    Running: The emulator is turned on and running
  *  Suspended: The emulator is paused for a short period of time
  *     Halted: The emulator is shutting down
  *
- *   ---------  powerOn   ---------    run     ---------  suspend   ---------
- *  |   Off   |--------->| Paused  |--------->| Running |--------->|Suspended|
- *  |         |<---------|         |<---------|         |<---------|         |
- *   ---------  powerOff  ---------   pause    ---------   resume   ---------
- *       ^                                         |
- *       |                   powerOff()            |
- *        -----------------------------------------
+ *                                                          halt()    ---------
+ *       -------------------------------------------   ...---------->| Halted  |
+ *      |                   run()                   |                 ---------
+ *      |                                           v
+ *  ---------  powerOn()  ---------    run()    ---------  suspend()  ---------
+ * |   Off   |---------->| Paused  |---------->| Running |---------->|Suspended|
+ * |         |<----------|         |<----------|         |<----------|         |
+ *  ---------  powerOff() ---------   pause()   ---------  resume()   ---------
+ *      ^                                           |
+ *      |                powerOff()                 |
+ *       -------------------------------------------
  *
- *   isPoweredOff          isPaused             isRunning        isSuspended
- *  |-------------||---------------------||--------------------||------------|
- *                 |---------------------------------------------------------|
- *                                       isPoweredOn
- *
- * State changes are triggered by the following functions:
- *
- * Command    | Current   | Next      | Actions on the delegate
- * ------------------------------------------------------------------------
- * powerOn()  | off       | paused    | _powerOn()
- *            | paused    | paused    | none
- *            | running   | running   | none
- *            | suspended | ---       | Error
- * ------------------------------------------------------------------------
- * powerOff() | off       | off       | none
- *            | paused    | off       | _powerOff()
- *            | running   | off       | _powerOff() + _pause()
- *            | suspended | ---       | Error
- * ------------------------------------------------------------------------
- * run()      | off       | ---       | Error
- *            | paused    | running   | _run()
- *            | running   | running   | none
- *            | suspended | ---       | Error
- * ------------------------------------------------------------------------
- * pause()    | off       | off       | none
- *            | paused    | paused    | none
- *            | running   | paused    | _pause()
- *            | suspended | ---       | Error
- * ------------------------------------------------------------------------
- * suspend()  | off       | ---       | Error
- *            | paused    | ---       | Error
- *            | running   | suspended | none
- *            | suspended | suspended | none
- * ------------------------------------------------------------------------
- * resume()   | off       | ---       | Error
- *            | paused    | ---       | Error
- *            | running   | ---       | Error
- *            | suspended | running   | none
- * ------------------------------------------------------------------------
- * halt()     | --        | halted    | _halt()
+ *  isPoweredOff()       isPaused()            isRunning()       isSuspended()
+ * |--------------||--------------------||--------------------||---------------|
+ *                 |-----------------------------------------------------------|
+ *                                       isPoweredOn()
  *
  * When an instance of the Thread class is created, a new thread is started
  * which executes the thread's main() function. This function executes
@@ -113,29 +81,11 @@ namespace vc64 {
  * Synchronization:
  *
  * The Thread class is responsible for timing synchronization. I.e., it has to
- * ensure that the proper amount of frames are executed per second. Three
- * different synchronization modes are supported:
- *
- * - Periodic:
- *
- *   In periodic mode the thread puts itself to sleep and utilizes a timer to
- *   schedule a wakeup call. In this mode, no further action has to be taken
- *   by the GUI. This method had been the default mode used by earlier versions
- *   VirtualC64.
- *
- * - Pulsed:
- *
- *   In pulsed mode, the thread waits for an external wake-up signal that has
- *   to be sent by the GUI. When the wake-up signal is received, a single frame
- *   is computed. VirtualC64 uses this mode to implement VSYNC.
- *
- * - Adaptive:
- *
- *   In adaptive mode, the thread waits for an external wake-up signal just as
- *   it does in pulsed mode. When the wake-up signal comes in, the thread
- *   computes the number of missing frames based on the current time and the
- *   time the thread had been lauchen. After that, it executes all missing
- *   frames or resynchronizes if the number of missing frames is way off.
+ * ensure that the proper amount of frames are executed per second. To
+ * synchronize timing, the thread waits for an external wake-up signal. When
+ * the wake-up signal comes in (by calling wakeup()), the thread computes the
+ * computes computes all missing frames. If the number of missing frames
+ * exceeds a threshold, the thread resynchronizes itself by calling resync().
  *
  * Warp mode:
  *
@@ -143,6 +93,7 @@ namespace vc64 {
  * into warp mode. In this mode, timing synchronization is disabled causing the
  * emulator to run as fast as possible.
  *
+ * DEPRECATED:
  * Similar to warp mode, the emulator may be put into track mode. This mode is
  * enabled when the GUI debugger is opend and disabled when the debugger is
  * closed. In track mode, several time-consuming tasks are performed that are
@@ -154,7 +105,7 @@ class Thread : public CoreObject, public Suspendable, Wakeable {
 
 protected:
 
-    friend class Emulator;
+    // friend class Emulator;
     friend class C64;
     
     // The thread object
@@ -199,13 +150,18 @@ public:
     
     const char *getDescription() const override { return "Thread"; }
 
-    
+protected:
+
+    // Launches the emulator thread
+    void launch();
+
+
     //
     // Executing
     //
-
-private:
     
+private:
+
     // Returns the current warp status (provided by the subclass)
     virtual void updateWarp() = 0;
 

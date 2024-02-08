@@ -23,26 +23,14 @@ Emulator::Emulator()
 
 Emulator::~Emulator()
 {
-    debug(RUN_DEBUG, "Destroying emulator\n");
-    if (thread.joinable()) { halt(); }
+
 }
 
 void
 Emulator::launch(const void *listener, Callback *func)
 {
     c64.msgQueue.setListener(listener, func);
-
-    launch();
-}
-
-void
-Emulator::launch()
-{
-    // Make sure to call this function only once
-    assert(!thread.joinable());
-
-    // Start the thread and enter the main function
-    thread = std::thread(&Thread::main, this);
+    Thread::launch();
 }
 
 EmulatorConfig

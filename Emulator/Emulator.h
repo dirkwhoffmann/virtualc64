@@ -55,7 +55,6 @@ public:
     ~Emulator();
 
     // Launches the emulator thread
-    void launch();
     void launch(const void *listener, Callback *func);
 
 

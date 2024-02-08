@@ -24,7 +24,18 @@ Thread::Thread()
 
 Thread::~Thread()
 {
+    printf("~Thread\n");
     join();
+}
+
+void
+Thread::launch()
+{
+    // Make sure to call this function only once
+    assert(!thread.joinable());
+
+    // Start the thread and enter the main function
+    thread = std::thread(&Thread::main, this);
 }
 
 void
