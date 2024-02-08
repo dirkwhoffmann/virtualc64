@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "CoreComponentTypes.h"
+#include "EmulatorTypes.h"
 #include "CoreObject.h"
 #include "Serialization.h"
 #include "Concurrency.h"

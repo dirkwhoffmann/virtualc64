@@ -170,7 +170,7 @@ Emulator::_dump(Category category, std::ostream& os) const
 }
 
 void
-Emulator::readyToGo()
+Emulator::isReady()
 {
     c64.isReady();
 }

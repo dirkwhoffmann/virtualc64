@@ -256,7 +256,7 @@ Thread::run()
     if (!isRunning()) {
 
         // Throw an exception if the emulator is not ready to run
-        readyToGo();
+        isReady();
 
         // Request a state change and wait until the new state has been reached
         changeStateTo(STATE_RUNNING);

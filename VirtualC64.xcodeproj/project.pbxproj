@@ -742,6 +742,7 @@
 		506F303D2B7364270083EAEA /* Suspendable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Suspendable.h; sourceTree = "<group>"; };
 		506F30402B74C1C70083EAEA /* Wakeable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Wakeable.cpp; sourceTree = "<group>"; };
 		506F30412B74C1C70083EAEA /* Wakeable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Wakeable.h; sourceTree = "<group>"; };
+		506F30442B7578870083EAEA /* EmulatorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmulatorTypes.h; sourceTree = "<group>"; };
 		50726F2A295B61C50031F2F5 /* InterpreterDebugCmds.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = InterpreterDebugCmds.cpp; sourceTree = "<group>"; };
 		50726F2E295C27360031F2F5 /* EventPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPanel.swift; sourceTree = "<group>"; };
 		50726F30295C27470031F2F5 /* EventTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableView.swift; sourceTree = "<group>"; };
@@ -1275,6 +1276,7 @@
 				5078BEAA264D70AC00EDA161 /* CMakeLists.txt */,
 				504C42F824AF29AB00E69CAE /* config.h */,
 				5077AC672B5ACC5100EFAC85 /* config.cpp */,
+				506F30442B7578870083EAEA /* EmulatorTypes.h */,
 				506F30392B729CE80083EAEA /* Emulator.h */,
 				506F30382B729CE80083EAEA /* Emulator.cpp */,
 				50726FBC2961CA5A0031F2F5 /* Headless.h */,

@@ -93,7 +93,6 @@ namespace vc64 {
  * into warp mode. In this mode, timing synchronization is disabled causing the
  * emulator to run as fast as possible.
  *
- * DEPRECATED:
  * Similar to warp mode, the emulator may be put into track mode. This mode is
  * enabled when the GUI debugger is opend and disabled when the debugger is
  * closed. In track mode, several time-consuming tasks are performed that are
@@ -246,7 +245,7 @@ private:
     virtual void stateChange(ThreadTransition) = 0;
 
     // Returns if the emulator is ready to runs, throws an exception otherwise
-    virtual void readyToGo() throws = 0;
+    virtual void isReady() throws = 0;
 
 
     //

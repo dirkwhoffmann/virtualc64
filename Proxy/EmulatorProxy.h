@@ -17,6 +17,7 @@
 #import "DiskTypes.h"
 #import "DiskAnalyzerTypes.h"
 #import "DriveTypes.h"
+#import "EmulatorTypes.h"
 #import "ErrorTypes.h"
 #import "ExpansionPortTypes.h"
 #import "FileTypes.h"

@@ -13,6 +13,7 @@
 #pragma once
 
 #include "Thread.h"
+#include "EmulatorTypes.h"
 #include "C64.h"
 
 namespace vc64 {
@@ -89,7 +90,7 @@ private:
 
 private:
 
-    void readyToGo() override;
+    void isReady() override;
     bool shouldWarp() override;
     isize missingFrames() const override;
     void computeFrame() override;
