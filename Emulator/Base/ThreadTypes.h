@@ -51,3 +51,15 @@ struct ExecutionStateEnum : util::Reflection<ExecutionStateEnum, ExecutionState>
     }
 };
 #endif
+
+enum_long(EXEC_TRANSITION)
+{
+    EXEC_POWER_OFF,
+    EXEC_POWER_ON,
+    EXEC_PAUSE,
+    EXEC_RUN,
+    EXEC_SUSPEND,
+    EXEC_RESUME,
+    EXEC_HALT
+};
+typedef EXEC_TRANSITION Transition;

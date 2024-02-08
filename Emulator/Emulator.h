@@ -100,15 +100,10 @@ public:
     double refreshRate() const override;
     util::Time wakeupPeriod() const override;
 
-    void powerOnDelegate() override;
-    void powerOffDelegate() override;
-    void runDelegate() override;
-    void pauseDelegate() override;
-    void haltDelegate() override;
     void trackOnDelegate() override;
     void trackOffDelegate() override;
-
-    void stateChange(ExecutionState oldState, ExecutionState newState) override;
+    
+    void stateChange(Transition transition) override;
 
 
     //

@@ -281,18 +281,12 @@ public:
     void trackOff(isize source = 0);
 
     // Delegates DEPRECATE
-    virtual void powerOnDelegate() = 0;
-    virtual void powerOffDelegate() = 0;
-    virtual void runDelegate() = 0;
-    virtual void pauseDelegate() = 0;
-    virtual void haltDelegate() = 0;
     virtual void trackOnDelegate() = 0;
     virtual void trackOffDelegate() = 0;
-    void powerOnOffDelegate(bool value) { value ? powerOnDelegate() : powerOffDelegate(); }
     void trackOnOffDelegate(bool value) { value ? trackOnDelegate() : trackOffDelegate(); }
 
     // Signals a state change
-    virtual void stateChange(ExecutionState oldState, ExecutionState newState) = 0;
+    virtual void stateChange(Transition) = 0;
 
 protected:
 

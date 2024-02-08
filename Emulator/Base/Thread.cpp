@@ -124,59 +124,64 @@ Thread::switchState(ExecutionState newState)
 {
     assert(isEmulatorThread());
 
-    while (newState != state) {
+    if (state == EXEC_OFF && newState == EXEC_PAUSED) {
 
-        if (state == EXEC_OFF && newState == EXEC_PAUSED) {
+        stateChange(EXEC_POWER_ON);
+        state = EXEC_PAUSED;
 
-            state = EXEC_PAUSED;
-            powerOnDelegate();
+    } else if (state == EXEC_OFF && newState == EXEC_RUNNING) {
 
-        } else if (state == EXEC_OFF && newState == EXEC_RUNNING) {
+        stateChange(EXEC_POWER_ON);
+        state = EXEC_PAUSED;
 
-            state = EXEC_PAUSED;
-            powerOnDelegate();
+        stateChange(EXEC_RUN);
+        state = EXEC_RUNNING;
 
-        } else if (state == EXEC_PAUSED && newState == EXEC_OFF) {
+    } else if (state == EXEC_PAUSED && newState == EXEC_OFF) {
 
-            state = EXEC_OFF;
-            powerOffDelegate();
+        stateChange(EXEC_POWER_OFF);
+        state = EXEC_OFF;
 
-        } else if (state == EXEC_PAUSED && newState == EXEC_RUNNING) {
+    } else if (state == EXEC_PAUSED && newState == EXEC_RUNNING) {
 
-            state = EXEC_RUNNING;
-            runDelegate();
+        stateChange(EXEC_RUN);
+        state = EXEC_RUNNING;
 
-        } else if (state == EXEC_RUNNING && newState == EXEC_OFF) {
+    } else if (state == EXEC_RUNNING && newState == EXEC_OFF) {
 
-            state = EXEC_PAUSED;
-            pauseDelegate();
+        stateChange(EXEC_PAUSE);
+        state = EXEC_PAUSED;
 
-        } else if (state == EXEC_RUNNING && newState == EXEC_PAUSED) {
+        stateChange(EXEC_POWER_OFF);
+        state = EXEC_OFF;
 
-            state = EXEC_PAUSED;
-            pauseDelegate();
+    } else if (state == EXEC_RUNNING && newState == EXEC_PAUSED) {
 
-        } else if (state == EXEC_RUNNING && newState == EXEC_SUSPENDED) {
+        stateChange(EXEC_PAUSE);
+        state = EXEC_PAUSED;
 
-            state = EXEC_SUSPENDED;
+    } else if (state == EXEC_RUNNING && newState == EXEC_SUSPENDED) {
 
-        } else if (state == EXEC_SUSPENDED && newState == EXEC_RUNNING) {
+        stateChange(EXEC_SUSPEND);
+        state = EXEC_SUSPENDED;
 
-            state = EXEC_RUNNING;
+    } else if (state == EXEC_SUSPENDED && newState == EXEC_RUNNING) {
 
-        } else if (newState == EXEC_HALTED) {
+        stateChange(EXEC_RESUME);
+        state = EXEC_RUNNING;
 
-            state = EXEC_HALTED;
-            haltDelegate();
+    } else if (newState == EXEC_HALTED) {
 
-        } else {
+        stateChange(EXEC_HALT);
+        state = EXEC_HALTED;
 
-            // Invalid state transition
-            fatalError;
-        }
+    } else {
 
-        debug(RUN_DEBUG, "Changed state to %s\n", ExecutionStateEnum::key(state));
+        // Invalid state transition
+        fatalError;
     }
+
+    debug(RUN_DEBUG, "Changed state to %s\n", ExecutionStateEnum::key(state));
 }
 
 void

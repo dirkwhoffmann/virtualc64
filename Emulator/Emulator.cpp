@@ -257,18 +257,22 @@ Emulator::wakeupPeriod() const
     return util::Time(i64(1000000000.0 / c64.host.getHostRefreshRate()));
 }
 
-void Emulator::powerOnDelegate() { c64.powerOn(); }
-void Emulator::powerOffDelegate() { c64.powerOff(); }
-void Emulator::runDelegate() { c64.run(); }
-void Emulator::pauseDelegate() { c64.pause(); }
-void Emulator::haltDelegate() { c64.halt(); }
 void Emulator::trackOnDelegate() { c64.trackOn(); }
 void Emulator::trackOffDelegate() { c64.trackOff(); }
 
-void Emulator::stateChange(ExecutionState oldState, ExecutionState newState)
+void Emulator::stateChange(Transition transition)
 {
-    
+    switch (transition) {
 
+        case    EXEC_POWER_OFF: c64.powerOff(); break;
+        case    EXEC_POWER_ON:  c64.powerOn(); break;
+        case    EXEC_PAUSE:     c64.pause(); break;
+        case    EXEC_RUN:       c64.run(); break;
+        case    EXEC_HALT:      c64.halt(); break;
+
+        default:
+            break;
+    }
 }
 
 void
