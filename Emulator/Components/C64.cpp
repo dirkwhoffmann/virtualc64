@@ -1114,6 +1114,11 @@ C64::_isReady() const
     }
 }
 
+void 
+C64::stateChange(ExecutionState oldState, ExecutionState newState)
+{
+}
+
 void
 C64::_powerOn()
 {

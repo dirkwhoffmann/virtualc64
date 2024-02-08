@@ -10,30 +10,30 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#pragma once
-
-// #include "Error.h"
+#include "config.h"
+#include "Wakeable.h"
 
 namespace vc64 {
 
-class Suspendable {
+void
+Wakeable::waitForWakeUp(util::Time timeout)
+{
+    auto now = std::chrono::system_clock::now();
+    auto delay = std::chrono::nanoseconds(timeout.asNanoseconds());
 
-public:
-    
-    Suspendable() { }
-    virtual ~Suspendable() { }
+    std::unique_lock<std::mutex> lock(condMutex);
+    condVar.wait_until(lock, now + delay, [this]{ return ready; });
+    ready = false;
+}
 
-    virtual void suspend() = 0;
-    virtual void resume() = 0;
-};
-
-struct AutoResume {
-
-    Suspendable *s;
-    AutoResume(Suspendable *s) : s(s) { s->suspend(); }
-    ~AutoResume() { s->resume(); }
-};
-
-#define SUSPENDED AutoResume _ar(this);
+void
+Wakeable::wakeUp()
+{
+    {
+        std::lock_guard<std::mutex> lock(condMutex);
+        ready = true;
+    }
+    condVar.notify_one();
+}
 
 }

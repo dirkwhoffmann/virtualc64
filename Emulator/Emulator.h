@@ -92,7 +92,7 @@ private:
 
     void readyToGo() override;
     void updateWarp() override;
-    SyncMode getSyncMode() const override;
+    isize missingFrames() const override;
     void execute() override;
 
 public:
@@ -107,6 +107,8 @@ public:
     void haltDelegate() override;
     void trackOnDelegate() override;
     void trackOffDelegate() override;
+
+    void stateChange(ExecutionState oldState, ExecutionState newState) override;
 
 
     //

@@ -17,11 +17,6 @@ namespace vc64 {
 
 Emulator::Emulator()
 {
-    // subComponents = std::vector<CoreComponent *> { &c64 };
-
-    // Initialize the sync timer
-    targetTime = util::Time::now();
-
     // trace(RUN_DEBUG, "Creating emulator\n");
     resetConfig(); // TODO: DELETE AND CALL SOMEWHERE ELSE
 }
@@ -183,8 +178,6 @@ Emulator::_dump(Category category, std::ostream& os) const
         os << dec(isize(refreshRate())) << " Fps" << std::endl;
         os << tab("Thread state");
         os << ExecutionStateEnum::key(state) << std::endl;
-        os << tab("Sync mode");
-        os << SyncModeEnum::key(getSyncMode()) << std::endl;
     }
 }
 
@@ -223,10 +216,20 @@ Emulator::updateWarp()
     }
 }
 
-SyncMode
-Emulator::getSyncMode() const
+isize
+Emulator::missingFrames() const
 {
-    return SYNC_ADAPTIVE;
+    // In VSYNC mode, compute exactly one frame per wakeup call
+    if (config.vsync) return 1;
+
+    // Compute the elapsed time
+    auto elapsed = util::Time::now() - baseTime;
+
+    // Compute which slice should be reached by now
+    auto target = elapsed.asNanoseconds() * i64(refreshRate()) / 1000000000;
+
+    // Compute the number of missing slices
+    return isize(target - frameCounter);
 }
 
 void
@@ -261,6 +264,11 @@ void Emulator::pauseDelegate() { c64.pause(); }
 void Emulator::haltDelegate() { c64.halt(); }
 void Emulator::trackOnDelegate() { c64.trackOn(); }
 void Emulator::trackOffDelegate() { c64.trackOff(); }
+
+void Emulator::stateChange(ExecutionState oldState, ExecutionState newState)
+{
+    c64.stateChange(oldState, newState);
+}
 
 void
 Emulator::warpOn(isize source)

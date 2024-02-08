@@ -24,131 +24,53 @@ Thread::Thread()
 
 Thread::~Thread()
 {
-    // Wait until the thread has terminated
     join();
-}
-
-util::Time
-Thread::frameDuration() const
-{
-    return util::Time(i64(1000000000.0 / refreshRate()));
-}
-
-isize
-Thread::missingFrames() const
-{
-    // Compute the elapsed time
-    auto elapsed = util::Time::now() - baseTime;
-
-    // Compute which frame should be reached by now
-    auto target = elapsed.asNanoseconds() * i64(refreshRate()) / 1000000000;
-
-    // Compute the number of missing frames
-    return isize(target - frameCounter);
 }
 
 void
 Thread::resync()
 {
-    targetTime = util::Time::now();
     baseTime = util::Time::now();
-    deltaTime = 0;
     frameCounter = 0;
-    missing = 0;
 }
 
-template <SyncMode M> void
+void
 Thread::executeFrame()
 {
-    if (missing > 0 || warp) {
+    // Determine the number of overdue frames
+    isize missing = warp ? 1 : missingFrames();
 
-        trace(TIM_DEBUG, "execute<%s>: %lld us\n", SyncModeEnum::key(M),
-              execClock.restart().asMicroseconds());
+    if (std::abs(missing) <= 5) {
 
+        // Execute all missing frames
         loadClock.go();
-
-        execute();
-        frameCounter++;
-        missing--;
-
+        for (isize i = 0; i < missing; i++, frameCounter++) execute();
         loadClock.stop();
-    }
-}
-
-template <> void
-Thread::sleep<SYNC_PERIODIC>()
-{
-    auto now = util::Time::now();
-
-    // Don't sleep in warp mode
-    if (warp) return;
-
-    // Make sure the emulator is still in sync
-    if ((now - targetTime).asMilliseconds() > 200) {
-        warn("Emulation is way too slow: %f sec behind\n", (now - targetTime).asSeconds());
-        resync();
-    }
-    if ((targetTime - now).asMilliseconds() > 200) {
-        warn("Emulation is way too fast: %f sec ahead\n", (targetTime - now).asSeconds());
-        resync();
-    }
-
-    // Sleep till the next sync point
-    targetTime += frameDuration();
-    targetTime.sleepUntil();
-    missing = 1;
-}
-
-template <> void
-Thread::sleep<SYNC_PULSED>()
-{
-    // Only proceed if we're not running in warp mode
-    if (warp) return;
-
-    if (missing > 0) {
-
-        // Wake up at the scheduled target time
-        targetTime.sleepUntil();
-
-        // Schedule the next execution
-        targetTime += deltaTime;
 
     } else {
 
-        // Set a timeout to prevent the thread from stalling
-        auto timeout = util::Time(i64(2000000000.0 / refreshRate()));
-
-        // Wait for the next pulse
-        waitForWakeUp(timeout);
-
-        // Determine the number of slices that are overdue
-        missing = missingFrames();
-
-        if (missing) {
-
-            // Evenly distribute the missing slices till the next wakeup happens
-            deltaTime = wakeupPeriod() / missing;
-            targetTime = util::Time::now() + deltaTime;
-
-            // Start over if the emulator got out of sync
-            if (std::abs(missing) > 5) {
-                
-                if (missing > 0) {
-                    warn("Emulation is way too slow: %ld time slices behind\n", missing);
-                } else {
-                    warn("Emulation is way too fast: %ld time slices ahead\n", -missing);
-                }
-
-                resync();
-            }
+        // The emulator got out of sync
+        if (missing > 0) {
+            warn("Emulation is way too slow (%ld frames behind)\n", missing);
+        } else {
+            warn("Emulation is way too fast (%ld time slices ahead)\n", -missing);
         }
+
+        resync();
     }
 }
 
-template <> void
-Thread::sleep<SYNC_ADAPTIVE>()
+void
+Thread::sleep()
 {
-    sleep<SYNC_PULSED>();
+
+    assert(missing == 0);
+
+    // Set a timeout to prevent the thread from stalling
+    auto timeout = util::Time(i64(2000000000.0 / refreshRate()));
+
+    // Wait for the next pulse
+    waitForWakeUp(timeout);
 }
 
 void
@@ -163,13 +85,13 @@ Thread::main()
         updateWarp();
 
         if (isRunning()) {
-            
-            executeFrame<SYNC_ADAPTIVE>();
+
+            executeFrame();
         }
-        
+
         if (!warp || !isRunning()) {
-            
-            sleep<SYNC_ADAPTIVE>();
+
+            sleep();
         }
         
         // Are we requested to change state?
@@ -376,11 +298,8 @@ Thread::changeStateTo(ExecutionState requestedState)
 void
 Thread::wakeUp()
 {
-    if (getSyncMode() != SYNC_PERIODIC) {
-
-        trace(TIM_DEBUG, "wakeup: %lld us\n", wakeupClock.restart().asMicroseconds());
-        util::Wakeable::wakeUp();
-    }
+    trace(TIM_DEBUG, "wakeup: %lld us\n", wakeupClock.restart().asMicroseconds());
+    Wakeable::wakeUp();
 }
 
 void

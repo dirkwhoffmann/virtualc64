@@ -380,7 +380,6 @@ private:
 
 private:
 
-    // SyncMode getSyncMode() const;
     void execute();
     template <bool enable8, bool enable9> void execute();
     bool processFlags();
@@ -404,6 +403,7 @@ private:
     void _trackOff() override;
     void _inspect() const override;
 
+    void stateChange(ExecutionState oldState, ExecutionState newState) override;
 
     //
     // Running the emulator

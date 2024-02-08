@@ -12,28 +12,22 @@
 
 #pragma once
 
-// #include "Error.h"
+#include "Concurrency.h"
 
 namespace vc64 {
 
-class Suspendable {
+class Wakeable
+{
+    static constexpr auto timeout = std::chrono::milliseconds(100);
+
+    std::mutex condMutex;
+    std::condition_variable condVar;
+    bool ready = false;
 
 public:
-    
-    Suspendable() { }
-    virtual ~Suspendable() { }
 
-    virtual void suspend() = 0;
-    virtual void resume() = 0;
+    void waitForWakeUp(util::Time timeout);
+    void wakeUp();
 };
-
-struct AutoResume {
-
-    Suspendable *s;
-    AutoResume(Suspendable *s) : s(s) { s->suspend(); }
-    ~AutoResume() { s->resume(); }
-};
-
-#define SUSPENDED AutoResume _ar(this);
 
 }

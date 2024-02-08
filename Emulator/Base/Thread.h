@@ -15,7 +15,7 @@
 #include "ThreadTypes.h"
 #include "CoreComponent.h"
 #include "Chrono.h"
-#include "Concurrency.h"
+#include "Wakeable.h"
 
 namespace vc64 {
 
@@ -150,7 +150,7 @@ namespace vc64 {
  * the recorded information in a trace buffer.
  */
 
-class Thread : public CoreObject, public Suspendable, util::Wakeable {
+class Thread : public CoreObject, public Suspendable, Wakeable {
 
 protected:
 
@@ -175,11 +175,6 @@ protected:
 
     // Time stamps for calculating wakeup times
     util::Time baseTime;
-    util::Time deltaTime;
-    util::Time targetTime;
-
-    // Number of frames that need to be computed
-    isize missing = 0;
     
     // Clocks for measuring the CPU load
     util::Clock nonstopClock;
@@ -211,8 +206,11 @@ public:
 
 private:
     
-    // Returns the current warp status (implemented by the subclass)
+    // Returns the current warp status (provided by the subclass)
     virtual void updateWarp() = 0;
+
+    // Computes the number of overdue frames (provided by the subclass)
+    virtual isize missingFrames() const = 0;
 
     // The code to be executed in each iteration (implemented by the subclass)
     virtual void execute() = 0;
@@ -223,20 +221,14 @@ private:
     // Time span between two wakeup calls (provided by the subclass)
     virtual util::Time wakeupPeriod() const = 0;
 
-    // Computes the time span between two frames
-    util::Time frameDuration() const;
-
-    // Computes the number of overdue frames
-    isize missingFrames() const;
-
     // Rectifies an out-of-sync condition by resetting all counters and clocks
     void resync();
 
     // Executes a single time slice (if one is pending)
-    template <SyncMode M> void executeFrame();
+    void executeFrame();
 
     // Suspends the thread until the next time slice is due
-    template <SyncMode M> void sleep();
+    void sleep();
 
     // The main entry point (called when the thread is created)
     void main();
@@ -288,7 +280,7 @@ public:
     void trackOn(isize source = 0);
     void trackOff(isize source = 0);
 
-    // Delegates (formerly inherited from CoreComponent, clean this up)
+    // Delegates DEPRECATE
     virtual void powerOnDelegate() = 0;
     virtual void powerOffDelegate() = 0;
     virtual void runDelegate() = 0;
@@ -296,9 +288,11 @@ public:
     virtual void haltDelegate() = 0;
     virtual void trackOnDelegate() = 0;
     virtual void trackOffDelegate() = 0;
-
     void powerOnOffDelegate(bool value) { value ? powerOnDelegate() : powerOffDelegate(); }
     void trackOnOffDelegate(bool value) { value ? trackOnDelegate() : trackOffDelegate(); }
+
+    // Signals a state change
+    virtual void stateChange(ExecutionState oldState, ExecutionState newState) = 0;
 
 protected:
 
@@ -313,10 +307,7 @@ protected:
 
 public:
 
-    // Provides the current sync mode
-    virtual SyncMode getSyncMode() const = 0;
-
-    // Awakes the thread if it runs in pulse mode or adaptive mode
+    // Awakes the thread
     void wakeUp();
 
 private:

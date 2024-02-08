@@ -17,6 +17,7 @@
 #include "Serialization.h"
 #include "Concurrency.h"
 #include "Suspendable.h"
+#include "ThreadTypes.h"
 #include <vector>
 
 namespace vc64 {
@@ -139,7 +140,11 @@ private:
     virtual void _trackOn() { }
     virtual void _trackOff() { }
 
-    
+public:
+
+    virtual void stateChange(ExecutionState oldState, ExecutionState newState) { };
+
+
     //
     // Configuring
     //
