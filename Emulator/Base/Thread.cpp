@@ -111,6 +111,20 @@ Thread::sleep()
     waitForWakeUp(timeout);
 }
 
+double 
+Thread::computeCpuLoad()
+{
+    auto used  = loadClock.getElapsedTime().asSeconds();
+    auto total = nonstopClock.getElapsedTime().asSeconds();
+
+    loadClock.restart();
+    loadClock.stop();
+    nonstopClock.restart();
+
+    cpuLoad = 0.3 * cpuLoad + 0.7 * used / total;
+    return cpuLoad;
+}
+
 void
 Thread::main()
 {
@@ -138,19 +152,6 @@ Thread::main()
             stateChangeRequest.notify_one();
 
             if (state == STATE_HALTED) return;
-        }
-
-        // Compute the CPU load once in a while
-        if (frameCounter % 32 == 0) {
-
-            auto used  = loadClock.getElapsedTime().asSeconds();
-            auto total = nonstopClock.getElapsedTime().asSeconds();
-
-            cpuLoad = used / total;
-
-            loadClock.restart();
-            loadClock.stop();
-            nonstopClock.restart();
         }
     }
 }

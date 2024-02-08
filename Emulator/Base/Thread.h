@@ -202,9 +202,13 @@ private:
 
 public:
     
-    double getCpuLoad() { return cpuLoad; }
-    
-    
+    double getCpuLoad() { return computeCpuLoad(); }
+
+private:
+
+    double computeCpuLoad();
+
+
     //
     // Managing states
     //
@@ -242,7 +246,7 @@ private:
     virtual void stateChange(ThreadTransition) = 0;
 
     // Returns if the emulator is ready to runs, throws an exception otherwise
-    virtual void readyToGo() = 0;
+    virtual void readyToGo() throws = 0;
 
 
     //
