@@ -105,26 +105,23 @@ class Thread : public CoreObject, public Suspendable, Wakeable {
 
 protected:
 
-    // friend class Emulator;
-    friend class C64;
-    
     // The thread object
     std::thread thread;
     
     // The current thread state and a change request
-    ExecutionState state = EXEC_OFF;
-    ExecutionState newState = EXEC_OFF;
+    EmulatorState state = STATE_OFF;
+    EmulatorState newState = STATE_OFF;
     std::atomic_flag stateChangeRequest {};
 
-    // Warp state and track state
-    u8 warp = 0;
-    u8 track = 0;
+    // Warp and track state
+    u8 warp = 0, oldWarp = 0;
+    u8 track = 0, oldTrack = 0;
 
     // Counters
     isize suspendCounter = 0;
     isize frameCounter = 0;
 
-    // Time stamps for calculating wakeup times
+    // Time stamps
     util::Time baseTime;
     
     // Clocks for measuring the CPU load
@@ -135,7 +132,6 @@ protected:
     double cpuLoad = 0.0;
 
     // Debug clocks
-    util::Clock execClock;
     util::Clock wakeupClock;
 
     
@@ -160,43 +156,44 @@ protected:
     // Executing
     //
     
-private:
-
-    // Returns the current warp status (provided by the subclass)
-    virtual void updateWarp() = 0;
-
-    // Computes the number of overdue frames (provided by the subclass)
-    virtual isize missingFrames() const = 0;
-
-    // The code to be executed in each iteration (implemented by the subclass)
-    virtual void execute() = 0;
-
-    // Target frame rate of this thread (provided by the subclass)
-    virtual double refreshRate() const = 0;
-
-    // Time span between two wakeup calls (provided by the subclass)
-    virtual util::Time wakeupPeriod() const = 0;
-
-    // Rectifies an out-of-sync condition by resetting all counters and clocks
-    void resync();
-
-    // Executes a single time slice (if one is pending)
-    void executeFrame();
-
-    // Suspends the thread until the next time slice is due
-    void sleep();
-
-    // The main entry point (called when the thread is created)
-    void main();
-
 public:
 
     // Returns true if this functions is called from within the emulator thread
     bool isEmulatorThread() { return std::this_thread::get_id() == thread.get_id(); }
-    
+
     // Performs a state change
-    void switchState(ExecutionState newState);
-    void switchTrack(bool state, u8 source = 0);
+    void switchState(EmulatorState newState);
+
+private:
+
+    // Returns the current warp and track status (provided by the subclass)
+    virtual bool shouldWarp() { return false; }
+    virtual bool shouldTrack() { return false; }
+
+    // Updates the current warp and track state
+    void updateWarp();
+    void updateTrack();
+
+    // Computes the number of overdue frames (provided by the subclass)
+    virtual isize missingFrames() const = 0;
+
+    // Target frame rate of this thread (provided by the subclass)
+    virtual double refreshRate() const = 0;
+
+    // The code to be executed in each iteration (implemented by the subclass)
+    virtual void computeFrame() = 0;
+
+    // Rectifies an out-of-sync condition by resetting all counters and clocks
+    void resync();
+
+    // The main entry point (called when the thread is created)
+    void main();
+
+    // Computes all missing frames
+    void execute();
+
+    // Suspends the thread till the next wakeup pulse
+    void sleep();
 
 
     //
@@ -213,43 +210,40 @@ public:
     //
     
 public:
-    
-    bool isPoweredOn() const { return state != EXEC_OFF; }
-    bool isPoweredOff() const { return state == EXEC_OFF; }
-    bool isPaused() const { return state == EXEC_PAUSED; }
-    bool isRunning() const { return state == EXEC_RUNNING; }
-    bool isSuspended() const { return state == EXEC_SUSPENDED; }
-    bool isHalted() const { return state == EXEC_HALTED; }
 
     void suspend() override;
     void resume() override;
+
+    bool isPoweredOn() const { return state != STATE_OFF; }
+    bool isPoweredOff() const { return state == STATE_OFF; }
+    bool isPaused() const { return state == STATE_PAUSED; }
+    bool isRunning() const { return state == STATE_RUNNING; }
+    bool isSuspended() const { return state == STATE_SUSPENDED; }
+    bool isHalted() const { return state == STATE_HALTED; }
+    bool isWarping() const { return warp != 0; }
+    bool isTracking() const { return track != 0; }
 
     void powerOn();
     void powerOff();
     void run() throws;
     void pause();
     void halt();
-
-    bool isWarping() const { return warp != 0; }
-
-    bool isTracking() const { return track != 0; }
+    void warpOn(isize source = 0);
+    void warpOff(isize source = 0);
     void trackOn(isize source = 0);
     void trackOff(isize source = 0);
 
-    // Delegates DEPRECATE
-    virtual void trackOnDelegate() = 0;
-    virtual void trackOffDelegate() = 0;
-    void trackOnOffDelegate(bool value) { value ? trackOnDelegate() : trackOffDelegate(); }
-
-    // Signals a state change
-    virtual void stateChange(Transition) = 0;
-
-protected:
+private:
 
     // Initiates a state change
-    void changeStateTo(ExecutionState requestedState);
+    void changeStateTo(EmulatorState requestedState);
 
+    // Signals a state change
+    virtual void stateChange(ThreadTransition) = 0;
+
+    // Returns if the emulator is ready to runs, throws an exception otherwise
     virtual void readyToGo() = 0;
+
 
     //
     // Synchronizing

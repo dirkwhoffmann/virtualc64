@@ -1049,7 +1049,7 @@ C64::processFlags()
         clearFlag(RL::BREAKPOINT);
         msgQueue.put(MSG_BREAKPOINT_REACHED, CpuMsg {u16(cpu.debugger.breakpointPC)});
         inspect();
-        emulator.switchState(EXEC_PAUSED);
+        emulator.switchState(STATE_PAUSED);
     }
 
     // Did we reach a watchpoint?
@@ -1057,13 +1057,13 @@ C64::processFlags()
         clearFlag(RL::WATCHPOINT);
         msgQueue.put(MSG_WATCHPOINT_REACHED, CpuMsg {u16(cpu.debugger.watchpointPC)});
         inspect();
-        emulator.switchState(EXEC_PAUSED);
+        emulator.switchState(STATE_PAUSED);
     }
 
     // Are we requested to terminate the run loop?
     if (flags & RL::STOP) {
         clearFlag(RL::STOP);
-        emulator.switchState(EXEC_PAUSED);
+        emulator.switchState(STATE_PAUSED);
     }
 
     // Are we requested to pull the NMI line down?
@@ -1076,7 +1076,7 @@ C64::processFlags()
     if (flags & RL::CPU_JAM) {
         clearFlag(RL::CPU_JAM);
         msgQueue.put(MSG_CPU_JAMMED);
-        emulator.switchState(EXEC_PAUSED);
+        emulator.switchState(STATE_PAUSED);
     }
 
     // Are we requested to simulate a BRK instruction

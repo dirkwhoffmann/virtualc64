@@ -164,8 +164,8 @@ Emulator::_dump(Category category, std::ostream& os) const
         os << std::endl;
         os << tab("Refresh rate");
         os << dec(isize(refreshRate())) << " Fps" << std::endl;
-        os << tab("Thread state");
-        os << ExecutionStateEnum::key(state) << std::endl;
+        os << tab("Emulator state");
+        os << EmulatorStateEnum::key(state) << std::endl;
     }
 }
 
@@ -175,32 +175,24 @@ Emulator::readyToGo()
     c64.isReady();
 }
 
-void
-Emulator::updateWarp()
+bool
+Emulator::shouldWarp()
 {
-    u8 oldwarp = warp;
-
     if (c64.cpu.clock < SEC(config.warpBoot)) {
 
-        warp = 1;
+        return true;
 
     } else {
 
         switch (config.warpMode) {
 
-            case WARP_AUTO:     warp = c64.iec.isTransferring(); break;
-            case WARP_NEVER:    warp = 0; break;
-            case WARP_ALWAYS:   warp = 1; break;
+            case WARP_AUTO:     return c64.iec.isTransferring() || warp;
+            case WARP_NEVER:    return warp;
+            case WARP_ALWAYS:   return true;
 
             default:
                 fatalError;
         }
-    }
-
-    warp |= warpLock;
-    
-    if (!warp != !oldwarp) {
-        warp ? c64.warpOn() : c64.warpOff();
     }
 }
 
@@ -221,7 +213,7 @@ Emulator::missingFrames() const
 }
 
 void
-Emulator::execute()
+Emulator::computeFrame()
 {
     c64.execute();
 }
@@ -239,40 +231,23 @@ Emulator::refreshRate() const
     }
 }
 
-util::Time 
-Emulator::wakeupPeriod() const
-{
-    return util::Time(i64(1000000000.0 / c64.host.getHostRefreshRate()));
-}
-
-void Emulator::trackOnDelegate() { c64.trackOn(); }
-void Emulator::trackOffDelegate() { c64.trackOff(); }
-
-void Emulator::stateChange(Transition transition)
+void Emulator::stateChange(ThreadTransition transition)
 {
     switch (transition) {
 
-        case    EXEC_POWER_OFF: c64.powerOff(); break;
-        case    EXEC_POWER_ON:  c64.powerOn(); break;
-        case    EXEC_PAUSE:     c64.pause(); break;
-        case    EXEC_RUN:       c64.run(); break;
-        case    EXEC_HALT:      c64.halt(); break;
+        case    TRANSITION_POWER_OFF:   c64.powerOff(); break;
+        case    TRANSITION_POWER_ON:    c64.powerOn(); break;
+        case    TRANSITION_PAUSE:       c64.pause(); break;
+        case    TRANSITION_RUN:         c64.run(); break;
+        case    TRANSITION_HALT:        c64.halt(); break;
+        case    TRANSITION_WARP_ON:     c64.warpOn(); break;
+        case    TRANSITION_WARP_OFF:    c64.warpOff(); break;
+        case    TRANSITION_TRACK_ON:    c64.trackOn(); break;
+        case    TRANSITION_TRACK_OFF:   c64.trackOff(); break;
 
         default:
             break;
     }
-}
-
-void
-Emulator::warpOn(isize source)
-{
-    SUSPENDED SET_BIT(warpLock, source);
-}
-
-void
-Emulator::warpOff(isize source)
-{
-    SUSPENDED CLR_BIT(warpLock, source);
 }
 
 }

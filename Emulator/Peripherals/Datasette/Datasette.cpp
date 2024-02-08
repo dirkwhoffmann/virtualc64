@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "Datasette.h"
-#include "C64.h"
+#include "Emulator.h"
 
 namespace vc64 {
 
@@ -296,7 +296,7 @@ Datasette::pressPlay()
     debug(TAP_DEBUG, "pressPlay\n");
 
     // Never call this function inside the emulator thread
-    assert(!c64.isEmulatorThread());
+    assert(!emulator.isEmulatorThread());
 
     // Only proceed if the device is connected
     if (!config.connected) return;
@@ -333,7 +333,7 @@ Datasette::pressStop()
     debug(TAP_DEBUG, "pressStop\n");
 
     // Never call this function inside the emulator thread
-    assert(!c64.isEmulatorThread());
+    assert(!emulator.isEmulatorThread());
 
     // Only proceed if the device is connected
     if (!config.connected) return;

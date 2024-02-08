@@ -41,8 +41,8 @@ private:
     // The current configuration
     EmulatorConfig config = {};
 
-    // Warp override mask (to enforce warp mode from outside)
-    u8 warpLock = 0;
+    // Warp state
+    u8 warp = 0;
 
 
     //
@@ -90,28 +90,15 @@ private:
 private:
 
     void readyToGo() override;
-    void updateWarp() override;
+    bool shouldWarp() override;
     isize missingFrames() const override;
-    void execute() override;
+    void computeFrame() override;
 
 public:
 
     double refreshRate() const override;
-    util::Time wakeupPeriod() const override;
-
-    void trackOnDelegate() override;
-    void trackOffDelegate() override;
     
-    void stateChange(Transition transition) override;
-
-
-    //
-    // Warp mode
-    //
-
-    // Switches warp mode on or off
-    void warpOn(isize source = 0);
-    void warpOff(isize source = 0);
+    void stateChange(ThreadTransition transition) override;
 };
 
 }
