@@ -2489,7 +2489,7 @@ using namespace vc64;
 
 
 //
-// C64
+// Emulator
 //
 
 @implementation EmulatorProxy
@@ -2654,12 +2654,12 @@ using namespace vc64;
 
 - (void)hardReset
 {
-    [self c64]->hardReset();
+    [self emu]->hardReset();
 }
 
 - (void)softReset
 {
-    [self c64]->softReset();
+    [self emu]->softReset();
 }
 
 - (void)isReady:(ExceptionWrapper *)ex

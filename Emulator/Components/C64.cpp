@@ -211,10 +211,6 @@ C64::C64(class Emulator& ref) : CoreComponent(ref)
 
     // Assign a unique ID to the CPU
     cpu.setID(0);
-
-    // Set up the initial state
-    CoreComponent::initialize();
-    CoreComponent::reset(true);
 }
 
 C64::~C64()
@@ -231,17 +227,14 @@ C64::prefix() const
 void
 C64::reset(bool hard)
 {
-    {   SUSPENDED
-        
-        // Execute the standard reset routine
-        CoreComponent::reset(hard);
-
-        // Reinitialize the program counter
-        cpu.reg.pc = cpu.reg.pc0 = mem.resetVector();
-
-        // Inform the GUI
-        msgQueue.put(MSG_RESET);
-    }
+    // Execute the standard reset routine
+    CoreComponent::reset(hard);
+    
+    // Reinitialize the program counter
+    cpu.reg.pc = cpu.reg.pc0 = mem.resetVector();
+    
+    // Inform the GUI
+    msgQueue.put(MSG_RESET);
 }
 
 void

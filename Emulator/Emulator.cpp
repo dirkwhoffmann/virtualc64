@@ -26,10 +26,25 @@ Emulator::~Emulator()
 
 }
 
+void 
+Emulator::initialize()
+{
+    resetConfig();
+    c64.initialize();
+}
+
 void
 Emulator::launch(const void *listener, Callback *func)
 {
     c64.msgQueue.setListener(listener, func);
+
+    // Initialize all components
+    initialize();
+
+    // Reset the emulator
+    hardReset();
+
+    // Launch the emulator thread
     Thread::launch();
 }
 
@@ -247,6 +262,28 @@ void Emulator::stateChange(ThreadTransition transition)
 
         default:
             break;
+    }
+}
+
+void 
+Emulator::hardReset()
+{
+    assert(!isEmulatorThread());
+
+    {   SUSPENDED
+
+        c64.reset(true);
+    }
+}
+
+void
+Emulator::softReset()
+{
+    assert(!isEmulatorThread());
+
+    {   SUSPENDED
+
+        c64.reset(false);
     }
 }
 

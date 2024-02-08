@@ -20,6 +20,8 @@ namespace vc64 {
 void
 CoreComponent::initialize()
 {
+    assert(!isRunning());
+
     try {
 
         for (CoreComponent *c : subComponents) { c->initialize(); }
@@ -35,6 +37,8 @@ CoreComponent::initialize()
 void
 CoreComponent::reset(bool hard)
 {
+    if (hard) assert(!isRunning());
+
     for (CoreComponent *c : subComponents) { c->reset(hard); }
     _reset(hard);
 }

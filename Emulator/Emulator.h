@@ -18,19 +18,7 @@
 
 namespace vc64 {
 
-typedef struct
-{
-    isize warpBoot;
-    WarpMode warpMode;
-    bool vsync;
-    isize timeLapse;
-    isize runAhead;
-}
-EmulatorConfig;
-
 class Emulator : public Thread {
-
-    friend class C64;
 
 public:
 
@@ -42,9 +30,6 @@ private:
     // The current configuration
     EmulatorConfig config = {};
 
-    // Warp state
-    u8 warp = 0;
-
 
     //
     // Initializing
@@ -54,6 +39,9 @@ public:
 
     Emulator();
     ~Emulator();
+
+    // Initializes all components
+    void initialize();
 
     // Launches the emulator thread
     void launch(const void *listener, Callback *func);
@@ -88,6 +76,11 @@ private:
     // Methods from Thread
     //
 
+public:
+
+    double refreshRate() const override;
+    void stateChange(ThreadTransition transition) override;
+
 private:
 
     void isReady() override;
@@ -95,11 +88,16 @@ private:
     isize missingFrames() const override;
     void computeFrame() override;
 
-public:
 
-    double refreshRate() const override;
+    //
+    // Running the emulator
+    //
+
+public:
     
-    void stateChange(ThreadTransition transition) override;
+    void hardReset();
+    void softReset();
+
 };
 
 }
