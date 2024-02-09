@@ -53,6 +53,34 @@ struct C64_API : API {
 
 
 //
+// CPU
+//
+
+struct CPU_API : API {
+
+    using API::API;
+
+    CPUInfo getInfo() const;
+    i64 clock() const;
+    u16 getPC0() const;
+    isize loggedInstructions() const;
+    u16 loggedPC0Rel(isize nr) const;
+    u16 loggedPC0Abs(isize nr) const;
+    RecordedInstruction logEntryAbs(isize index) const;
+    void clearLog();
+    void setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat);
+    isize disassembleRecordedInstr(isize, char *) const;
+    isize disassembleRecordedBytes(isize, char *) const;
+    void disassembleRecordedFlags(isize, char *) const;
+    void disassembleRecordedPC(isize, char *) const;
+    isize disassemble(char *, u16 addr) const;
+    isize getLengthOfInstructionAt(u16 addr) const;
+    void dumpBytes(char *, u16 addr, isize length) const;
+    void dumpWord(char *, u16 addr) const;
+
+} cpu;
+
+//
 // CIAs
 //
 

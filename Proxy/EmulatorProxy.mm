@@ -261,9 +261,9 @@ using namespace vc64;
 
 @implementation CPUProxy
 
-- (CPU *)cpu
+- (Emulator::CPU_API *)cpu
 {
-    return (CPU *)obj;
+    return (Emulator::CPU_API *)obj;
 }
 
 - (CPUInfo)info
@@ -273,7 +273,7 @@ using namespace vc64;
 
 - (i64)clock
 {
-    return (i64)[self cpu]->clock;
+    return (i64)[self cpu]->clock();
 }
 
 - (u16)pc
@@ -283,27 +283,27 @@ using namespace vc64;
 
 - (NSInteger)loggedInstructions
 {
-    return [self cpu]->debugger.loggedInstructions();
+    return [self cpu]->loggedInstructions();
 }
 
 - (NSInteger)loggedPCRel:(NSInteger)nr
 {
-    return [self cpu]->debugger.loggedPC0Rel((int)nr);
+    return [self cpu]->loggedPC0Rel((int)nr);
 }
 
 - (NSInteger)loggedPCAbs:(NSInteger)nr
 {
-    return [self cpu]->debugger.loggedPC0Abs((int)nr);
+    return [self cpu]->loggedPC0Abs((int)nr);
 }
 
 - (RecordedInstruction)getRecordedInstruction:(NSInteger)index
 {
-    return [self cpu]->debugger.logEntryAbs((int)index);
+    return [self cpu]->logEntryAbs((int)index);
 }
 
 - (void)clearLog
 {
-    [self cpu]->debugger.clearLog();
+    [self cpu]->clearLog();
 }
 
 - (void)setHex
@@ -326,7 +326,7 @@ using namespace vc64;
         .plainZero = false
     };
 
-    [self cpu]->disassembler.setNumberFormat(instrFormat, dataFormat);
+    [self cpu]->setNumberFormat(instrFormat, dataFormat);
 }
 
 - (void)setDec
@@ -349,14 +349,14 @@ using namespace vc64;
         .plainZero = false
     };
 
-    [self cpu]->disassembler.setNumberFormat(instrFormat, dataFormat);
+    [self cpu]->setNumberFormat(instrFormat, dataFormat);
 }
 
 - (NSString *)disassembleRecordedInstr:(NSInteger)i length:(NSInteger *)len
 {
     char result[32];
 
-    (void)[self cpu]->debugger.disassembleRecordedInstr(i, result);
+    (void)[self cpu]->disassembleRecordedInstr(i, result);
     return @(result);
 }
 
@@ -364,7 +364,7 @@ using namespace vc64;
 {
     char result[16];
 
-    (void)[self cpu]->debugger.disassembleRecordedBytes(i, result);
+    (void)[self cpu]->disassembleRecordedBytes(i, result);
     return @(result);
 }
 
@@ -372,7 +372,7 @@ using namespace vc64;
 {
     char result[16];
 
-    (void)[self cpu]->debugger.disassembleRecordedFlags(i, result);
+    (void)[self cpu]->disassembleRecordedFlags(i, result);
     return @(result);
 }
 
@@ -380,7 +380,7 @@ using namespace vc64;
 {
     char result[16];
 
-    (void)[self cpu]->debugger.disassembleRecordedPC(i, result);
+    (void)[self cpu]->disassembleRecordedPC(i, result);
     return @(result);
 }
 
@@ -388,7 +388,7 @@ using namespace vc64;
 {
     char result[32];
 
-    auto length = [self cpu]->disassembler.disassemble(result, u16(addr));
+    auto length = [self cpu]->disassemble(result, u16(addr));
 
     *len = (NSInteger)length;
     return @(result);
@@ -399,7 +399,7 @@ using namespace vc64;
     char result[32];
 
     auto length = [self cpu]->getLengthOfInstructionAt(u16(addr));
-    [self cpu]->disassembler.dumpBytes(result, u16(addr), length);
+    [self cpu]->dumpBytes(result, u16(addr), length);
     return @(result);
 }
 
@@ -407,7 +407,7 @@ using namespace vc64;
 {
     char result[32];
 
-    [self cpu]->disassembler.dumpWord(result, u16(addr));
+    [self cpu]->dumpWord(result, u16(addr));
     return @(result);
 }
 
@@ -2439,7 +2439,7 @@ using namespace vc64;
     breakpoints = [[GuardsProxy alloc] initWith:&emu->_c64.cpu.debugger.breakpoints];
     cia1 = [[CIAProxy alloc] initWith:&emu->cia1];
     cia2 = [[CIAProxy alloc] initWith:&emu->cia2];
-    cpu = [[CPUProxy alloc] initWith:&emu->_c64.cpu];
+    cpu = [[CPUProxy alloc] initWith:&emu->cpu];
     datasette = [[DatasetteProxy alloc] initWith:&emu->_c64.datasette];
     dmaDebugger = [[DmaDebuggerProxy alloc] initWith:&emu->dmaDebugger];
     drive8 = [[DriveProxy alloc] initWithVC1541:&emu->_c64.drive8];

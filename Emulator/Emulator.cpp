@@ -31,6 +31,7 @@ Emulator::defaults;
 Emulator::Emulator() :
 
 c64(*this),
+cpu(*this),
 cia1(*this, _c64.cia1),
 cia2(*this, _c64.cia2),
 vicii(*this),
@@ -838,6 +839,131 @@ Emulator::C64_API::softReset()
 
         c64.reset(false);
     }
+}
+
+
+//
+// CPU
+//
+
+CPUInfo
+Emulator::CPU_API::getInfo() const
+{
+    assert(isUserThread());
+    return cpu.getInfo();
+}
+
+i64
+Emulator::CPU_API::clock() const
+{
+    assert(isUserThread());
+    return cpu.clock;
+}
+
+u16 
+Emulator::CPU_API::getPC0() const
+{
+    assert(isUserThread());
+    return cpu.getPC0();
+}
+
+isize 
+Emulator::CPU_API::loggedInstructions() const
+{
+    assert(isUserThread());
+    return cpu.debugger.loggedInstructions();
+}
+
+u16 
+Emulator::CPU_API::loggedPC0Rel(isize nr) const
+{
+    assert(isUserThread());
+    return cpu.debugger.loggedPC0Rel(nr);
+}
+
+u16 
+Emulator::CPU_API::loggedPC0Abs(isize nr) const
+{
+    assert(isUserThread());
+    return cpu.debugger.loggedPC0Abs(nr);
+}
+
+RecordedInstruction 
+Emulator::CPU_API::logEntryAbs(isize nr) const
+{
+    assert(isUserThread());
+    return cpu.debugger.logEntryAbs(nr);
+}
+
+void 
+Emulator::CPU_API::clearLog()
+{
+    assert(isUserThread());
+    return cpu.debugger.clearLog();
+}
+
+void 
+Emulator::CPU_API::setNumberFormat(DasmNumberFormat instrFormat, DasmNumberFormat dataFormat)
+{
+    assert(isUserThread());
+    return cpu.disassembler.setNumberFormat(instrFormat, dataFormat);
+}
+
+isize 
+Emulator::CPU_API::disassembleRecordedInstr(isize i, char *str) const
+{
+    assert(isUserThread());
+    return cpu.debugger.disassembleRecordedInstr(i, str);
+}
+
+isize
+Emulator::CPU_API::disassembleRecordedBytes(isize i, char *str) const
+{
+    assert(isUserThread());
+    return cpu.debugger.disassembleRecordedBytes(i, str);
+}
+
+void
+Emulator::CPU_API::disassembleRecordedFlags(isize i, char *str) const
+{
+    assert(isUserThread());
+    return cpu.debugger.disassembleRecordedFlags(i, str);
+}
+
+void 
+Emulator::CPU_API::disassembleRecordedPC(isize i, char *str) const
+{
+    assert(isUserThread());
+    return cpu.debugger.disassembleRecordedPC(i, str);
+
+}
+
+isize 
+Emulator::CPU_API::disassemble(char *str, u16 addr) const
+{
+    assert(isUserThread());
+    return cpu.disassembler.disassemble(str, addr);
+}
+
+isize 
+Emulator::CPU_API::getLengthOfInstructionAt(u16 addr) const
+{
+    assert(isUserThread());
+    return cpu.getLengthOfInstructionAt(addr);
+}
+
+void 
+Emulator::CPU_API::dumpBytes(char *str, u16 addr, isize length) const
+{
+    assert(isUserThread());
+    return cpu.disassembler.dumpBytes(str, addr, length);
+}
+
+void 
+Emulator::CPU_API::dumpWord(char *str, u16 addr) const
+{
+    assert(isUserThread());
+    return cpu.disassembler.dumpWord(str, addr);
 }
 
 
