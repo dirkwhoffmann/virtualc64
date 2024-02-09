@@ -304,4 +304,17 @@ Interpreter::help(const Command& current)
     retroShell << '\n';
 }
 
+void 
+Interpreter::configure(Option option, i64 value)
+{
+    emulator.configure(option, value);
+}
+
+void 
+Interpreter::configure(Option option, long id, i64 value)
+{
+    emulator.configure(option, id, value);
+}
+
+
 }

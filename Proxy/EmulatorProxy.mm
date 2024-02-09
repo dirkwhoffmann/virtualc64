@@ -2775,7 +2775,7 @@ using namespace vc64;
 - (BOOL)configure:(Option)opt value:(NSInteger)val
 {
     try {
-        [self c64]->configure(opt, val);
+        [self emu]->configure(opt, val);
         return true;
     } catch (VC64Error &exception) {
         return false;
@@ -2785,7 +2785,7 @@ using namespace vc64;
 - (BOOL)configure:(Option)opt enable:(BOOL)val
 {
     try {
-        [self c64]->configure(opt, val ? 1 : 0);
+        [self emu]->configure(opt, val ? 1 : 0);
         return true;
     } catch (VC64Error &exception) {
         return false;
@@ -2795,7 +2795,7 @@ using namespace vc64;
 - (BOOL)configure:(Option)opt id:(NSInteger)id value:(NSInteger)val
 {
     try {
-        [self c64]->configure(opt, id, val);
+        [self emu]->configure(opt, id, val);
         return true;
     } catch (VC64Error &exception) {
         return false;
@@ -2805,7 +2805,7 @@ using namespace vc64;
 - (BOOL)configure:(Option)opt id:(NSInteger)id enable:(BOOL)val
 {
     try {
-        [self c64]->configure(opt, id, val ? 1 : 0);
+        [self emu]->configure(opt, id, val ? 1 : 0);
         return true;
     } catch (VC64Error &exception) {
         return false;
@@ -2815,7 +2815,7 @@ using namespace vc64;
 - (BOOL)configure:(Option)opt drive:(NSInteger)id value:(NSInteger)val
 {
     try {
-        [self c64]->configure(opt, (long)id, val);
+        [self emu]->configure(opt, (long)id, val);
         return true;
     } catch (VC64Error &exception) {
         return false;
@@ -2825,7 +2825,7 @@ using namespace vc64;
 - (BOOL)configure:(Option)opt drive:(NSInteger)id enable:(BOOL)val
 {
     try {
-        [self c64]->configure(opt, (long)id, val ? 1 : 0);
+        [self emu]->configure(opt, (long)id, val ? 1 : 0);
         return true;
     } catch (VC64Error &exception) {
         return false;
@@ -2834,7 +2834,7 @@ using namespace vc64;
 
 - (void)configure:(C64Model)model
 {
-    [self c64]->configure(model);
+    [self emu]->configure(model);
 }
 
 - (void)setListener:(const void *)sender function:(Callback *)func

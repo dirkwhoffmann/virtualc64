@@ -216,35 +216,35 @@ Interpreter::initCommandShell(Command &root)
              "Enables or disables warp mode while Kickstart initializes",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_WARP_BOOT, parseBool(argv));
+        configure(OPT_WARP_BOOT, parseBool(argv));
     });
 
     root.add({"c64", "set", "warpmode"}, { WarpModeEnum::argList() },
              "Selects the warp mode",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_WARP_MODE, parseEnum <WarpModeEnum> (argv));
+        configure(OPT_WARP_MODE, parseEnum <WarpModeEnum> (argv));
     });
 
     root.add({"c64", "set", "vsync"}, { Arg::onoff },
              "Enables or disables VSYNC",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_VSYNC, parseBool(argv[0]));
+        configure(OPT_VSYNC, parseBool(argv[0]));
     });
 
     root.add({"c64", "set", "timelapse"}, { Arg::value },
              "Increases or decreases the native frame rate",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_TIME_LAPSE, parseNum(argv[0]));
+        configure(OPT_TIME_LAPSE, parseNum(argv[0]));
     });
 
     root.add({"c64", "set", "runahead"}, { Arg::value },
              "Sets the number of run-ahead frames",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_RUN_AHEAD, parseNum(argv));
+        configure(OPT_RUN_AHEAD, parseNum(argv));
     });
 
     root.add({"c64", "power"}, { Arg::onoff },
@@ -267,8 +267,8 @@ Interpreter::initCommandShell(Command &root)
 
         auto model = parseEnum<C64ModelEnum>(argv);
 
-        c64.revertToFactorySettings();
-        c64.configure(model);
+        emulator.revertToFactorySettings();
+        emulator.configure(model);
     });
 
     
@@ -290,14 +290,14 @@ Interpreter::initCommandShell(Command &root)
              "Save Roms to snapshot files",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_SAVE_ROMS, parseBool(argv));
+        configure(OPT_SAVE_ROMS, parseBool(argv));
     });
 
     root.add({"memory", "set", "raminit" }, { RamPatternEnum::argList() },
              "Determines how Ram is initialized on startup",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_RAM_PATTERN, parseEnum<RamPatternEnum>(argv));
+        configure(OPT_RAM_PATTERN, parseEnum<RamPatternEnum>(argv));
     });
 
     root.add({"memory", "load"}, { Arg::path },
@@ -343,7 +343,7 @@ Interpreter::initCommandShell(Command &root)
                  "Selects the emulated chip model",
                  [this](Arguments& argv, long value) {
 
-            c64.configure(OPT_CIA_REVISION, value, parseEnum <CIARevisionEnum> (argv));
+            configure(OPT_CIA_REVISION, value, parseEnum <CIARevisionEnum> (argv));
 
         }, i);
 
@@ -351,7 +351,7 @@ Interpreter::initCommandShell(Command &root)
                  "Enables or disables the timer B hardware bug",
                  [this](Arguments& argv, long value) {
 
-            c64.configure(OPT_TIMER_B_BUG, value, parseBool(argv));
+            configure(OPT_TIMER_B_BUG, value, parseBool(argv));
 
         }, i);
     }
@@ -375,7 +375,7 @@ Interpreter::initCommandShell(Command &root)
              "Selects the emulated chip model",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_VIC_REVISION, parseEnum <VICIIRevisionEnum> (argv));
+        configure(OPT_VIC_REVISION, parseEnum <VICIIRevisionEnum> (argv));
 
     });
 
@@ -383,28 +383,28 @@ Interpreter::initCommandShell(Command &root)
              "Enables or disables the gray dot bug",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_GRAY_DOT_BUG, parseBool(argv));
+        configure(OPT_GRAY_DOT_BUG, parseBool(argv));
     });
 
     root.add({"vicii", "set", "gluelogic"}, { Arg::onoff },
              "Configures the logic board",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_GLUE_LOGIC, parseBool(argv));
+        configure(OPT_GLUE_LOGIC, parseBool(argv));
     });
 
     root.add({"vicii", "set", "sscollisions"}, { Arg::onoff },
              "Enables or disables sprite-sprite collision detection",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_SS_COLLISIONS, parseBool(argv));
+        configure(OPT_SS_COLLISIONS, parseBool(argv));
     });
 
     root.add({"vicii", "set", "sbcollisions"}, { Arg::onoff },
              "Enables or disables sprite-background collision detection",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_SB_COLLISIONS, parseBool(argv));
+        configure(OPT_SB_COLLISIONS, parseBool(argv));
     });
 
     
@@ -423,56 +423,56 @@ Interpreter::initCommandShell(Command &root)
              "Opens the DMA debugger",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_DMA_DEBUG_ENABLE, true);
+        configure(OPT_DMA_DEBUG_ENABLE, true);
     });
 
     root.add({"dmadebugger", "close"},
              "Closes the DMA debugger",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_DMA_DEBUG_ENABLE, false);
+        configure(OPT_DMA_DEBUG_ENABLE, false);
     });
 
     root.add({"dmadebugger", "raccesses"}, { Arg::onoff },
              "Visualizes refresh cycles",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_DMA_DEBUG_CHANNEL, 0, parseBool(argv));
+        configure(OPT_DMA_DEBUG_CHANNEL, 0, parseBool(argv));
     });
 
     root.add({"dmadebugger", "iaccesses"}, { Arg::onoff },
              "Visualizes idle accesses",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_DMA_DEBUG_CHANNEL, 1, parseBool(argv));
+        configure(OPT_DMA_DEBUG_CHANNEL, 1, parseBool(argv));
     });
 
     root.add({"dmadebugger", "caccesses"}, { Arg::onoff },
              "Visualizes character accesses",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_DMA_DEBUG_CHANNEL, 2, parseBool(argv));
+        configure(OPT_DMA_DEBUG_CHANNEL, 2, parseBool(argv));
     });
 
     root.add({"dmadebugger", "gaccesses"}, { Arg::onoff },
              "Visualizes graphics accesses",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_DMA_DEBUG_CHANNEL, 3, parseBool(argv));
+        configure(OPT_DMA_DEBUG_CHANNEL, 3, parseBool(argv));
     });
 
     root.add({"dmadebugger", "paccesses"}, { Arg::onoff },
              "Visualizes sprite pointer accesses",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_DMA_DEBUG_CHANNEL, 4, parseBool(argv));
+        configure(OPT_DMA_DEBUG_CHANNEL, 4, parseBool(argv));
     });
 
     root.add({"dmadebugger", "saccesses"}, { Arg::onoff },
              "Visualizes sprite accesses",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_DMA_DEBUG_CHANNEL, 5, parseBool(argv));
+        configure(OPT_DMA_DEBUG_CHANNEL, 5, parseBool(argv));
     });
 
 
@@ -494,28 +494,28 @@ Interpreter::initCommandShell(Command &root)
              "Selects the color palette",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_PALETTE, util::parseEnum <PaletteEnum> (argv.front()));
+        configure(OPT_PALETTE, util::parseEnum <PaletteEnum> (argv.front()));
     });
 
     root.add({"monitor", "set", "brightness"}, { Arg::value },
              "Adjusts the monitor brightness",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_BRIGHTNESS, util::parseNum(argv.front()));
+        configure(OPT_BRIGHTNESS, util::parseNum(argv.front()));
     });
 
     root.add({"monitor", "set", "contrast"}, { Arg::value },
              "Adjusts the monitor contrast",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_CONTRAST, util::parseNum(argv.front()));
+        configure(OPT_CONTRAST, util::parseNum(argv.front()));
     });
 
     root.add({"monitor", "set", "saturation"}, { Arg::value },
              "Adjusts the color saturation",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_SATURATION, util::parseNum(argv.front()));
+        configure(OPT_SATURATION, util::parseNum(argv.front()));
     });
 
     
@@ -537,7 +537,7 @@ Interpreter::initCommandShell(Command &root)
              "Selects the SID backend",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_SID_ENGINE, parseEnum <SIDEngineEnum> (argv));
+        configure(OPT_SID_ENGINE, parseEnum <SIDEngineEnum> (argv));
 
     });
 
@@ -545,7 +545,7 @@ Interpreter::initCommandShell(Command &root)
              "Selects the emulated chip model",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_SID_REVISION, parseEnum <SIDRevisionEnum> (argv));
+        configure(OPT_SID_REVISION, parseEnum <SIDRevisionEnum> (argv));
 
     });
 
@@ -553,7 +553,7 @@ Interpreter::initCommandShell(Command &root)
              "Selects the sampling method",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_SID_SAMPLING, parseEnum <SamplingMethodEnum> (argv));
+        configure(OPT_SID_SAMPLING, parseEnum <SamplingMethodEnum> (argv));
 
     });
 
@@ -561,7 +561,7 @@ Interpreter::initCommandShell(Command &root)
              "Configures the audio filter",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_SID_FILTER, parseBool(argv));
+        configure(OPT_SID_FILTER, parseBool(argv));
     });
 
     root.add({"sid", "set", "volume"},
@@ -571,42 +571,42 @@ Interpreter::initCommandShell(Command &root)
              "Sets the volume for the first SID",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_AUDVOL, 0, parseNum(argv));
+        configure(OPT_AUDVOL, 0, parseNum(argv));
     });
 
     root.add({"sid", "set", "volume", "channel1"}, { Arg::volume },
              "Sets the volume for the second SID",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_AUDVOL, 1, parseNum(argv));
+        configure(OPT_AUDVOL, 1, parseNum(argv));
     });
 
     root.add({"sid", "set", "volume", "channel2"}, { Arg::volume },
              "Sets the volume for the third SID",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_AUDVOL, 2, parseNum(argv));
+        configure(OPT_AUDVOL, 2, parseNum(argv));
     });
 
     root.add({"sid", "set", "volume", "channel3"}, { Arg::volume },
              "Sets the volume for the fourth SID",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_AUDVOL, 3, parseNum(argv));
+        configure(OPT_AUDVOL, 3, parseNum(argv));
     });
 
     root.add({"sid", "set", "volume", "left"}, { Arg::volume },
              "Sets the master volume for the left speaker",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_AUDVOLL, parseNum(argv));
+        configure(OPT_AUDVOLL, parseNum(argv));
     });
 
     root.add({"sid", "set", "volume", "right"}, { Arg::volume },
              "Sets the master volume for the right speaker",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_AUDVOLR, parseNum(argv));
+        configure(OPT_AUDVOLR, parseNum(argv));
     });
 
     root.add({"sid", "set", "pan"},
@@ -616,28 +616,28 @@ Interpreter::initCommandShell(Command &root)
              "Sets the pan for the first SID",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_AUDPAN, 0, parseNum(argv));
+        configure(OPT_AUDPAN, 0, parseNum(argv));
     });
 
     root.add({"sid", "set", "pan", "channel1"}, { Arg::value },
              "Sets the pan for the second SID",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_AUDPAN, 1, parseNum(argv));
+        configure(OPT_AUDPAN, 1, parseNum(argv));
     });
 
     root.add({"sid", "set", "pan", "channel2"}, { Arg::value },
              "Sets the pan for the third SID",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_AUDPAN, 2, parseNum(argv));
+        configure(OPT_AUDPAN, 2, parseNum(argv));
     });
 
     root.add({"sid", "set", "pan", "channel3"}, { Arg::value },
              "Sets the pan for the fourth SID",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_AUDPAN, 3, parseNum(argv));
+        configure(OPT_AUDPAN, 3, parseNum(argv));
     });
 
 
@@ -737,7 +737,7 @@ Interpreter::initCommandShell(Command &root)
                  [this](Arguments& argv, long value) {
 
             auto id = value ? DRIVE9 : DRIVE8;
-            c64.configure(OPT_DRV_CONNECT, id, true);
+            configure(OPT_DRV_CONNECT, id, true);
 
         }, i);
 
@@ -746,7 +746,7 @@ Interpreter::initCommandShell(Command &root)
                  [this](Arguments& argv, long value) {
 
             auto id = value ? DRIVE9 : DRIVE8;
-            c64.configure(OPT_DRV_CONNECT, id, false);
+            configure(OPT_DRV_CONNECT, id, false);
 
         }, i);
 
@@ -798,14 +798,14 @@ Interpreter::initCommandShell(Command &root)
              "Connects the datasette",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_DAT_CONNECT, true);
+        configure(OPT_DAT_CONNECT, true);
     });
 
     root.add({"datasette", "disconnect"},
              "Disconnects the datasette",
              [this](Arguments& argv, long value) {
 
-        c64.configure(OPT_DAT_CONNECT, false);
+        configure(OPT_DAT_CONNECT, false);
     });
 
     root.add({"datasette", "rewind"},
@@ -852,7 +852,7 @@ Interpreter::initCommandShell(Command &root)
                  "Enables or disables auto fire mode",
                  [this](Arguments& argv, long value) {
 
-            c64.configure(OPT_AUTOFIRE, value, parseBool(argv));
+            configure(OPT_AUTOFIRE, value, parseBool(argv));
 
         }, i);
 
@@ -860,7 +860,7 @@ Interpreter::initCommandShell(Command &root)
                  "Sets the number of bullets per auto fire shot",
                  [this](Arguments& argv, long value) {
 
-            c64.configure(OPT_AUTOFIRE_BULLETS, value, parseNum(argv));
+            configure(OPT_AUTOFIRE_BULLETS, value, parseNum(argv));
 
         }, i);
 
@@ -869,7 +869,7 @@ Interpreter::initCommandShell(Command &root)
                  "Sets the auto fire delay in frames",
                  [this](Arguments& argv, long value) {
 
-            c64.configure(OPT_AUTOFIRE_DELAY, value, parseNum(argv));
+            configure(OPT_AUTOFIRE_DELAY, value, parseNum(argv));
 
         }, i);
 
@@ -981,7 +981,7 @@ Interpreter::initCommandShell(Command &root)
                  "Selects the mouse model",
                  [this](Arguments& argv, long value) {
 
-            c64.configure(OPT_MOUSE_MODEL, value, parseEnum <MouseModelEnum> (argv));
+            configure(OPT_MOUSE_MODEL, value, parseEnum <MouseModelEnum> (argv));
 
         }, i);
 
@@ -989,7 +989,7 @@ Interpreter::initCommandShell(Command &root)
                  "Sets the horizontal and vertical mouse velocity",
                  [this](Arguments& argv, long value) {
 
-            c64.configure(OPT_MOUSE_VELOCITY, value, parseNum(argv));
+            configure(OPT_MOUSE_VELOCITY, value, parseNum(argv));
 
         }, i);
 
@@ -997,7 +997,7 @@ Interpreter::initCommandShell(Command &root)
                  "Enables or disables the shake detector",
                  [this](Arguments& argv, long value) {
 
-            c64.configure(OPT_SHAKE_DETECTION, value, parseBool(argv));
+            configure(OPT_SHAKE_DETECTION, value, parseBool(argv));
 
         }, i);
 

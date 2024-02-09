@@ -161,6 +161,13 @@ public:
     void help(const Arguments &argv);
     void help(const Command &command);
 
+
+    //
+    // Wrappers
+    //
+
+    void configure(Option option, i64 value) throws;
+    void configure(Option option, long id, i64 value) throws;
 };
 
 }

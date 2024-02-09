@@ -53,6 +53,18 @@ public:
 
 public:
 
+    // Configures a single item
+    void configure(Option option, i64 value) throws;
+    void configure(Option option, long id, i64 value) throws;
+
+    // Configures the C64 to match a specific C64 model
+    void configure(C64Model model);
+
+    // Powers off and resets the emulator to it's initial state
+    void revertToFactorySettings();
+
+public:
+
     static EmulatorConfig getDefaultConfig();
     const EmulatorConfig &getConfig() const { return config; }
     void resetConfig();
@@ -60,8 +72,12 @@ public:
     i64 getConfigItem(Option option) const;
     void setConfigItem(Option option, i64 value);
 
+private:
 
+    // Overrides a config option if the corresponding debug option is enabled
+    i64 overrideOption(Option option, i64 value);
 
+    
     //
     // Methods from CoreObject
     //
@@ -97,7 +113,6 @@ public:
     
     void hardReset();
     void softReset();
-
 };
 
 }

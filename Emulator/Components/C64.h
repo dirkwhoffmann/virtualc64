@@ -296,22 +296,9 @@ public:
     
     // Sets a single configuration item
     void setConfigItem(Option option, i64 value);
-    void configure(Option option, i64 value) throws;
-    void configure(Option option, long id, i64 value) throws;
-    
-    // Configures the C64 to match a specific C64 model
-    void configure(C64Model model);
-
-    // Powers off and resets the emulator to it's initial state
-    void revertToFactorySettings();
 
     // Updates the clock frequency and all variables derived from it
     void updateClockFrequency();
-
-private:
-    
-    // Overrides a config option if the corresponding debug option is enabled
-    i64 overrideOption(Option option, i64 value);
     
     
     //
