@@ -52,7 +52,7 @@ Host::setConfigItem(Option option, i64 value)
         case OPT_HOST_SAMPLE_RATE:
 
             sampleRate = double(value);
-            emulator.c64.muxer.setSampleRate(sampleRate);
+            emulator._c64.muxer.setSampleRate(sampleRate);
             return;
 
         case OPT_HOST_FRAMEBUF_WIDTH:
@@ -91,7 +91,7 @@ void
 Host::setSampleRate(double hz)
 {
     sampleRate = hz;
-    emulator.c64.muxer.setSampleRate(hz);
+    emulator._c64.muxer.setSampleRate(hz);
 }
 
 void

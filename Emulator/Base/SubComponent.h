@@ -92,4 +92,40 @@ public:
     void prefix() const override;
 };
 
+
+// EXPERIMENTAL
+class References {
+
+protected:
+
+    C64 &c64;
+    CIA1 &cia1;
+    CIA2 &cia2;
+    ControlPort &port1;
+    ControlPort &port2;
+    CPU &cpu;
+    Datasette &datasette;
+    Drive &drive8;
+    Drive &drive9;
+    ExpansionPort &expansionport;
+    Host &host;
+    IEC &iec;
+    Keyboard &keyboard;
+    C64Memory &mem;
+    MsgQueue &msgQueue;
+    PowerSupply &oscillator;
+    ParCable &parCable;
+    Recorder &recorder;
+    RegressionTester &regressionTester;
+    RetroShell &retroShell;
+    Muxer &muxer;
+    VICII &vic;
+
+    Drive *drive[2] = { &drive8, &drive9 };
+
+public:
+
+    References(C64& ref);
+};
+
 }

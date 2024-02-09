@@ -217,8 +217,6 @@
 @property (readonly) SnapshotProxy *latestAutoSnapshot;
 @property (readonly) SnapshotProxy *latestUserSnapshot;
 
-// @property (readonly) NSInteger refreshRate;
-
 - (NSInteger)getConfig:(Option)opt;
 - (NSInteger)getConfig:(Option)opt id:(NSInteger)id;
 - (NSInteger)getConfig:(Option)opt drive:(NSInteger)id;

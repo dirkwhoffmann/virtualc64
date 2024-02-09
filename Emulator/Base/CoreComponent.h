@@ -75,7 +75,7 @@ protected:
     
 public:
 
-    CoreComponent(class Emulator& ref) : emulator(ref) { }
+    CoreComponent(Emulator& ref) : emulator(ref) { }
 
     /* Initializes the component and it's subcomponents. The initialization
      * procedure is initiated once, in the constructor of the C64 class. By

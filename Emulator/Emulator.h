@@ -27,11 +27,11 @@ public:
     // User default settings
     static Defaults defaults;
 
-    // The virtual C64
-    C64 c64 = C64(*this);
-
     // Information about the host system
     Host host = Host(*this);
+
+    // The virtual C64 TODO: MAKE THIS PRIVATE EVENTUALLY
+    C64 _c64 = C64(*this);
 
 private:
 
@@ -53,33 +53,12 @@ private:
     // Initializes all components
     void initialize();
 
-public:
-
-    // Launches the emulator thread
-    void launch(const void *listener, Callback *func);
-
 
     //
     // Configuring
     //
 
-public:
-
-    // Configures a single item
-    void configure(Option option, i64 value) throws;
-    void configure(Option option, long id, i64 value) throws;
-
-    // Configures the C64 to match a specific C64 model
-    void configure(C64Model model);
-
-    i64 getConfigItem(Option option) const;
-    i64 getConfigItem(Option option, long id) const;
-    void setConfigItem(Option option, i64 value);
-
 private:
-
-    // Powers off and resets the emulator to it's initial state
-    void revertToFactorySettings();
 
     static EmulatorConfig getDefaultConfig();
     const EmulatorConfig &getConfig() const { return config; }
@@ -88,7 +67,10 @@ private:
     // Overrides a config option if the corresponding debug option is enabled
     i64 overrideOption(Option option, i64 value);
 
-    
+    // Powers off and resets the emulator to it's initial state
+    void revertToFactorySettings();
+
+
     //
     // Methods from CoreObject
     //
@@ -113,23 +95,31 @@ private:
 
 
     //
-    // Running the emulator
-    //
-
-public:
-    
-    void hardReset();
-    void softReset();
-
-
-    //
     // Querying properties
     //
 
 public:
 
-    double refreshRate() const override;
     
+    
+
+    //
+    // PUBLIC API
+    //
+
+    struct API : Suspendable, References {
+
+        class Emulator &emulator;
+
+        API(Emulator& ref) : References(ref.c64), emulator(ref) { }
+
+        void suspend();
+        void resume();
+
+        bool isUserThread() { return !emulator.isEmulatorThread(); }
+    };
+
+    #include "API.h"
 
 };
 

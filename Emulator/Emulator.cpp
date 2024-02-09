@@ -28,7 +28,12 @@ static_assert(sizeof(u64) == 8, "u64 size mismatch");
 Defaults
 Emulator::defaults;
 
-Emulator::Emulator()
+Emulator::Emulator() :
+
+c64(*this),
+cia1(*this, _c64.cia1),
+cia2(*this, _c64.cia2)
+
 {
     // trace(RUN_DEBUG, "Creating emulator\n");
     resetConfig(); // TODO: DELETE (MAKE SURE initialize() IS CALLED)
@@ -43,19 +48,211 @@ void
 Emulator::initialize()
 {
     resetConfig();
-    c64.initialize();
+    _c64.initialize();
 }
+
+void
+Emulator::revertToFactorySettings()
+{
+    // Power off the emulator
+    powerOff();
+
+    // Put all components into their initial state
+    initialize();
+}
+
+EmulatorConfig
+Emulator::getDefaultConfig()
+{
+    EmulatorConfig defaults;
+
+    defaults.warpMode = WARP_AUTO;
+
+    return defaults;
+}
+
+void
+Emulator::resetConfig()
+{
+    assert(isPoweredOff());
+
+    std::vector <Option> options = {
+
+        OPT_WARP_BOOT,
+        OPT_WARP_MODE,
+        OPT_VSYNC,
+        OPT_TIME_LAPSE,
+        OPT_RUN_AHEAD,
+    };
+
+    for (auto &option : options) {
+        setConfigItem(option, defaults.get(option));
+    }
+}
+
+i64
+Emulator::overrideOption(Option option, i64 value)
+{
+    static std::map<Option,i64> overrides = OVERRIDES;
+
+    if (overrides.find(option) != overrides.end()) {
+
+        msg("Overriding option: %s = %lld\n", OptionEnum::key(option), value);
+        return overrides[option];
+    }
+
+    return value;
+}
+
+void
+Emulator::_dump(Category category, std::ostream& os) const
+{
+    using namespace util;
+
+    if (category == Category::Config) {
+
+        os << tab("Warp mode");
+        os << WarpModeEnum::key(config.warpMode) << std::endl;
+        os << tab("Warp boot");
+        os << dec(config.warpBoot) << " seconds" << std::endl;
+        os << tab("VSYNC");
+        os << bol(config.vsync) << std::endl;
+        os << tab("Time lapse");
+        os << dec(config.timeLapse) << "%" << std::endl;
+        os << tab("Run ahead");
+        os << dec(config.runAhead) << " frames" << std::endl;
+        os << std::endl;
+    }
+
+    if (category == Category::Defaults) {
+
+        defaults.dump(category, os);
+    }
+
+    if (category == Category::State) {
+
+        os << tab("Power");
+        os << bol(isPoweredOn()) << std::endl;
+        os << tab("Running");
+        os << bol(isRunning()) << std::endl;
+        os << tab("Suspended");
+        os << bol(isSuspended()) << std::endl;
+        os << tab("Warping");
+        os << bol(isWarping()) << std::endl;
+        os << tab("Tracking");
+        os << bol(isTracking()) << std::endl;
+        os << std::endl;
+        os << tab("Refresh rate");
+        os << dec(isize(refreshRate())) << " Fps" << std::endl;
+        os << tab("Emulator state");
+        os << EmulatorStateEnum::key(state) << std::endl;
+    }
+}
+
+void
+Emulator::isReady()
+{
+    _c64.isReady();
+}
+
+bool
+Emulator::shouldWarp()
+{
+    if (_c64.cpu.clock < SEC(config.warpBoot)) {
+
+        return true;
+
+    } else {
+
+        switch (config.warpMode) {
+
+            case WARP_AUTO:     return _c64.iec.isTransferring();
+            case WARP_NEVER:    return false;
+            case WARP_ALWAYS:   return true;
+
+            default:
+                fatalError;
+        }
+    }
+}
+
+isize
+Emulator::missingFrames() const
+{
+    // In VSYNC mode, compute exactly one frame per wakeup call
+    if (config.vsync) return 1;
+
+    // Compute the elapsed time
+    auto elapsed = util::Time::now() - baseTime;
+
+    // Compute which slice should be reached by now
+    auto target = elapsed.asNanoseconds() * i64(refreshRate()) / 1000000000;
+
+    // Compute the number of missing slices
+    return isize(target - frameCounter);
+}
+
+void
+Emulator::computeFrame()
+{
+    _c64.execute();
+}
+
+double
+Emulator::refreshRate() const
+{
+    if (config.vsync) {
+
+        return host.getHostRefreshRate();
+
+    } else {
+
+        return _c64.vic.getFps() * config.timeLapse / 100.0;
+    }
+}
+
+void Emulator::stateChange(ThreadTransition transition)
+{
+    switch (transition) {
+
+        case    TRANSITION_POWER_OFF:   _c64.powerOff(); break;
+        case    TRANSITION_POWER_ON:    _c64.powerOn(); break;
+        case    TRANSITION_PAUSE:       _c64.pause(); break;
+        case    TRANSITION_RUN:         _c64.run(); break;
+        case    TRANSITION_HALT:        _c64.halt(); break;
+        case    TRANSITION_WARP_ON:     _c64.warpOn(); break;
+        case    TRANSITION_WARP_OFF:    _c64.warpOff(); break;
+        case    TRANSITION_TRACK_ON:    _c64.trackOn(); break;
+        case    TRANSITION_TRACK_OFF:   _c64.trackOff(); break;
+
+        default:
+            break;
+    }
+}
+
+
+//
+// Public API
+//
+
+void Emulator::API::suspend() { emulator.suspend(); }
+void Emulator::API::resume() { emulator.resume(); }
+
+
+//
+// Top level
+//
 
 void
 Emulator::launch(const void *listener, Callback *func)
 {
-    c64.msgQueue.setListener(listener, func);
+    _c64.msgQueue.setListener(listener, func);
 
     // Initialize all components
     initialize();
 
     // Reset the emulator
-    hardReset();
+    _c64.hardReset();
 
     // Launch the emulator thread
     Thread::launch();
@@ -121,7 +318,7 @@ Emulator::configure(Option option, i64 value)
         case OPT_SB_COLLISIONS:
         case OPT_GLUE_LOGIC:
 
-            c64.vic.setConfigItem(option, value);
+            _c64.vic.setConfigItem(option, value);
             break;
 
         case OPT_CUT_LAYERS:
@@ -130,28 +327,28 @@ Emulator::configure(Option option, i64 value)
         case OPT_DMA_DEBUG_MODE:
         case OPT_DMA_DEBUG_OPACITY:
 
-            c64.vic.dmaDebugger.setConfigItem(option, value);
+            _c64.vic.dmaDebugger.setConfigItem(option, value);
             break;
 
         case OPT_POWER_GRID:
 
-            c64.supply.setConfigItem(option, value);
+            _c64.supply.setConfigItem(option, value);
             break;
 
         case OPT_CIA_REVISION:
         case OPT_TIMER_B_BUG:
 
-            c64.cia1.setConfigItem(option, value);
-            c64.cia2.setConfigItem(option, value);
+            _c64.cia1.setConfigItem(option, value);
+            _c64.cia2.setConfigItem(option, value);
             break;
 
         case OPT_SID_ENABLE:
         case OPT_SID_ADDRESS:
 
-            c64.muxer.setConfigItem(option, 0, value);
-            c64.muxer.setConfigItem(option, 1, value);
-            c64.muxer.setConfigItem(option, 2, value);
-            c64.muxer.setConfigItem(option, 3, value);
+            _c64.muxer.setConfigItem(option, 0, value);
+            _c64.muxer.setConfigItem(option, 1, value);
+            _c64.muxer.setConfigItem(option, 2, value);
+            _c64.muxer.setConfigItem(option, 3, value);
 
         case OPT_SID_REVISION:
         case OPT_SID_FILTER:
@@ -163,13 +360,13 @@ Emulator::configure(Option option, i64 value)
         case OPT_AUDVOLL:
         case OPT_AUDVOLR:
 
-            c64.muxer.setConfigItem(option, value);
+            _c64.muxer.setConfigItem(option, value);
             break;
 
         case OPT_RAM_PATTERN:
         case OPT_SAVE_ROMS:
 
-            c64.mem.setConfigItem(option, value);
+            _c64.mem.setConfigItem(option, value);
             break;
 
         case OPT_DRV_AUTO_CONFIG:
@@ -188,35 +385,35 @@ Emulator::configure(Option option, i64 value)
         case OPT_DRV_INSERT_VOL:
         case OPT_DRV_EJECT_VOL:
 
-            c64.drive8.setConfigItem(option, value);
-            c64.drive9.setConfigItem(option, value);
+            _c64.drive8.setConfigItem(option, value);
+            _c64.drive9.setConfigItem(option, value);
             break;
 
         case OPT_DAT_MODEL:
         case OPT_DAT_CONNECT:
-            c64.datasette.setConfigItem(option, value);
+            _c64.datasette.setConfigItem(option, value);
 
         case OPT_MOUSE_MODEL:
         case OPT_SHAKE_DETECTION:
         case OPT_MOUSE_VELOCITY:
 
-            c64.port1.mouse.setConfigItem(option, value);
-            c64.port2.mouse.setConfigItem(option, value);
+            _c64.port1.mouse.setConfigItem(option, value);
+            _c64.port2.mouse.setConfigItem(option, value);
             break;
 
         case OPT_AUTOFIRE:
         case OPT_AUTOFIRE_BULLETS:
         case OPT_AUTOFIRE_DELAY:
 
-            c64.port1.joystick.setConfigItem(option, value);
-            c64.port2.joystick.setConfigItem(option, value);
+            _c64.port1.joystick.setConfigItem(option, value);
+            _c64.port2.joystick.setConfigItem(option, value);
             break;
         default:
             fatalError;
     }
 
     if (std::find(quiet.begin(), quiet.end(), option) == quiet.end()) {
-        c64.msgQueue.put(MSG_CONFIG, option);
+        _c64.msgQueue.put(MSG_CONFIG, option);
     }
 }
 
@@ -250,15 +447,15 @@ Emulator::configure(Option option, long id, i64 value)
         case OPT_DMA_DEBUG_CHANNEL:
         case OPT_DMA_DEBUG_COLOR:
 
-            c64.vic.dmaDebugger.setConfigItem(option, id, value);
+            _c64.vic.dmaDebugger.setConfigItem(option, id, value);
             break;
 
         case OPT_CIA_REVISION:
         case OPT_TIMER_B_BUG:
 
             switch (id) {
-                case 0: c64.cia1.setConfigItem(option, value); break;
-                case 1: c64.cia2.setConfigItem(option, value); break;
+                case 0: _c64.cia1.setConfigItem(option, value); break;
+                case 1: _c64.cia2.setConfigItem(option, value); break;
                 default: fatalError;
             }
             break;
@@ -268,8 +465,8 @@ Emulator::configure(Option option, long id, i64 value)
         case OPT_MOUSE_VELOCITY:
 
             switch (id) {
-                case PORT_1: c64.port1.mouse.setConfigItem(option, value); break;
-                case PORT_2: c64.port2.mouse.setConfigItem(option, value); break;
+                case PORT_1: _c64.port1.mouse.setConfigItem(option, value); break;
+                case PORT_2: _c64.port2.mouse.setConfigItem(option, value); break;
                 default: fatalError;
             }
             break;
@@ -279,8 +476,8 @@ Emulator::configure(Option option, long id, i64 value)
         case OPT_AUTOFIRE_DELAY:
 
             switch (id) {
-                case PORT_1: c64.port1.joystick.setConfigItem(option, value); break;
-                case PORT_2: c64.port2.joystick.setConfigItem(option, value); break;
+                case PORT_1: _c64.port1.joystick.setConfigItem(option, value); break;
+                case PORT_2: _c64.port2.joystick.setConfigItem(option, value); break;
                 default: fatalError;
             }
             break;
@@ -297,7 +494,7 @@ Emulator::configure(Option option, long id, i64 value)
         case OPT_AUDVOLL:
         case OPT_AUDVOLR:
 
-            c64.muxer.setConfigItem(option, id, value);
+            _c64.muxer.setConfigItem(option, id, value);
             break;
 
         case OPT_DRV_AUTO_CONFIG:
@@ -317,8 +514,8 @@ Emulator::configure(Option option, long id, i64 value)
         case OPT_DRV_EJECT_VOL:
 
             switch (id) {
-                case DRIVE8: c64.drive8.setConfigItem(option, value); break;
-                case DRIVE9: c64.drive9.setConfigItem(option, value); break;
+                case DRIVE8: _c64.drive8.setConfigItem(option, value); break;
+                case DRIVE9: _c64.drive9.setConfigItem(option, value); break;
                 default: fatalError;
             }
             break;
@@ -328,7 +525,7 @@ Emulator::configure(Option option, long id, i64 value)
     }
 
     if (std::find(quiet.begin(), quiet.end(), option) == quiet.end()) {
-        c64.msgQueue.put(MSG_CONFIG, option);
+        _c64.msgQueue.put(MSG_CONFIG, option);
     }
 }
 
@@ -427,45 +624,6 @@ Emulator::configure(C64Model model)
     }
 }
 
-void
-Emulator::revertToFactorySettings()
-{
-    // Power off the emulator
-    powerOff();
-
-    // Put all components into their initial state
-    initialize();
-}
-
-EmulatorConfig
-Emulator::getDefaultConfig()
-{
-    EmulatorConfig defaults;
-
-    defaults.warpMode = WARP_AUTO;
-
-    return defaults;
-}
-
-void
-Emulator::resetConfig()
-{
-    assert(isPoweredOff());
-
-    std::vector <Option> options = {
-
-        OPT_WARP_BOOT,
-        OPT_WARP_MODE,
-        OPT_VSYNC,
-        OPT_TIME_LAPSE,
-        OPT_RUN_AHEAD,
-    };
-
-    for (auto &option : options) {
-        setConfigItem(option, defaults.get(option));
-    }
-}
-
 i64
 Emulator::getConfigItem(Option option) const
 {
@@ -497,7 +655,7 @@ Emulator::getConfigItem(Option option) const
         case OPT_CONTRAST:
         case OPT_SATURATION:
 
-            return c64.vic.getConfigItem(option);
+            return _c64.vic.getConfigItem(option);
 
         case OPT_DMA_DEBUG_ENABLE:
         case OPT_DMA_DEBUG_MODE:
@@ -505,17 +663,17 @@ Emulator::getConfigItem(Option option) const
         case OPT_CUT_LAYERS:
         case OPT_CUT_OPACITY:
 
-            return c64.vic.dmaDebugger.getConfigItem(option);
+            return _c64.vic.dmaDebugger.getConfigItem(option);
 
         case OPT_CIA_REVISION:
         case OPT_TIMER_B_BUG:
 
-            assert(c64.cia1.getConfigItem(option) == c64.cia2.getConfigItem(option));
-            return c64.cia1.getConfigItem(option);
+            assert(_c64.cia1.getConfigItem(option) == _c64.cia2.getConfigItem(option));
+            return _c64.cia1.getConfigItem(option);
 
         case OPT_POWER_GRID:
 
-            return c64.supply.getConfigItem(option);
+            return _c64.supply.getConfigItem(option);
 
         case OPT_SID_REVISION:
         case OPT_SID_POWER_SAVE:
@@ -525,17 +683,17 @@ Emulator::getConfigItem(Option option) const
         case OPT_AUDVOLL:
         case OPT_AUDVOLR:
 
-            return c64.muxer.getConfigItem(option);
+            return _c64.muxer.getConfigItem(option);
 
         case OPT_RAM_PATTERN:
         case OPT_SAVE_ROMS:
 
-            return c64.mem.getConfigItem(option);
+            return _c64.mem.getConfigItem(option);
 
         case OPT_DAT_MODEL:
         case OPT_DAT_CONNECT:
 
-            return c64.datasette.getConfigItem(option);
+            return _c64.datasette.getConfigItem(option);
 
         default:
             fatalError;
@@ -545,14 +703,14 @@ Emulator::getConfigItem(Option option) const
 i64
 Emulator::getConfigItem(Option option, long id) const
 {
-    const Drive &drive = id == DRIVE8 ? c64.drive8 : c64.drive9;
+    const Drive &drive = id == DRIVE8 ? _c64.drive8 : _c64.drive9;
 
     switch (option) {
 
         case OPT_DMA_DEBUG_CHANNEL:
         case OPT_DMA_DEBUG_COLOR:
 
-            return c64.vic.dmaDebugger.getConfigItem(option, id);
+            return _c64.vic.dmaDebugger.getConfigItem(option, id);
 
         case OPT_SID_ENABLE:
         case OPT_SID_ADDRESS:
@@ -560,7 +718,7 @@ Emulator::getConfigItem(Option option, long id) const
         case OPT_AUDVOL:
 
             assert(id >= 0 && id <= 3);
-            return c64.muxer.getConfigItem(option, id);
+            return _c64.muxer.getConfigItem(option, id);
 
         case OPT_DRV_CONNECT:
         case OPT_DRV_AUTO_CONFIG:
@@ -584,16 +742,16 @@ Emulator::getConfigItem(Option option, long id) const
         case OPT_SHAKE_DETECTION:
         case OPT_MOUSE_VELOCITY:
 
-            if (id == PORT_1) return c64.port1.mouse.getConfigItem(option);
-            if (id == PORT_2) return c64.port2.mouse.getConfigItem(option);
+            if (id == PORT_1) return _c64.port1.mouse.getConfigItem(option);
+            if (id == PORT_2) return _c64.port2.mouse.getConfigItem(option);
             fatalError;
 
         case OPT_AUTOFIRE:
         case OPT_AUTOFIRE_BULLETS:
         case OPT_AUTOFIRE_DELAY:
 
-            if (id == PORT_1) return c64.port1.joystick.getConfigItem(option);
-            if (id == PORT_2) return c64.port2.joystick.getConfigItem(option);
+            if (id == PORT_1) return _c64.port1.joystick.getConfigItem(option);
+            if (id == PORT_2) return _c64.port2.joystick.getConfigItem(option);
             fatalError;
 
         default:
@@ -648,150 +806,15 @@ Emulator::setConfigItem(Option option, i64 value)
     }
 }
 
-i64
-Emulator::overrideOption(Option option, i64 value)
-{
-    static std::map<Option,i64> overrides = OVERRIDES;
 
-    if (overrides.find(option) != overrides.end()) {
-
-        msg("Overriding option: %s = %lld\n", OptionEnum::key(option), value);
-        return overrides[option];
-    }
-
-    return value;
-}
+//
+// C64
+//
 
 void
-Emulator::_dump(Category category, std::ostream& os) const
+Emulator::C64_API::hardReset()
 {
-    using namespace util;
-
-    if (category == Category::Config) {
-
-        os << tab("Warp mode");
-        os << WarpModeEnum::key(config.warpMode) << std::endl;
-        os << tab("Warp boot");
-        os << dec(config.warpBoot) << " seconds" << std::endl;
-        os << tab("VSYNC");
-        os << bol(config.vsync) << std::endl;
-        os << tab("Time lapse");
-        os << dec(config.timeLapse) << "%" << std::endl;
-        os << tab("Run ahead");
-        os << dec(config.runAhead) << " frames" << std::endl;
-        os << std::endl;
-    }
-
-    if (category == Category::Defaults) {
-
-        defaults.dump(category, os);
-    }
-
-    if (category == Category::State) {
-
-        os << tab("Power");
-        os << bol(isPoweredOn()) << std::endl;
-        os << tab("Running");
-        os << bol(isRunning()) << std::endl;
-        os << tab("Suspended");
-        os << bol(isSuspended()) << std::endl;
-        os << tab("Warping");
-        os << bol(isWarping()) << std::endl;
-        os << tab("Tracking");
-        os << bol(isTracking()) << std::endl;
-        os << std::endl;
-        os << tab("Refresh rate");
-        os << dec(isize(refreshRate())) << " Fps" << std::endl;
-        os << tab("Emulator state");
-        os << EmulatorStateEnum::key(state) << std::endl;
-    }
-}
-
-void
-Emulator::isReady()
-{
-    c64.isReady();
-}
-
-bool
-Emulator::shouldWarp()
-{
-    if (c64.cpu.clock < SEC(config.warpBoot)) {
-
-        return true;
-
-    } else {
-
-        switch (config.warpMode) {
-
-            case WARP_AUTO:     return c64.iec.isTransferring();
-            case WARP_NEVER:    return false;
-            case WARP_ALWAYS:   return true;
-
-            default:
-                fatalError;
-        }
-    }
-}
-
-isize
-Emulator::missingFrames() const
-{
-    // In VSYNC mode, compute exactly one frame per wakeup call
-    if (config.vsync) return 1;
-
-    // Compute the elapsed time
-    auto elapsed = util::Time::now() - baseTime;
-
-    // Compute which slice should be reached by now
-    auto target = elapsed.asNanoseconds() * i64(refreshRate()) / 1000000000;
-
-    // Compute the number of missing slices
-    return isize(target - frameCounter);
-}
-
-void
-Emulator::computeFrame()
-{
-    c64.execute();
-}
-
-double 
-Emulator::refreshRate() const
-{
-    if (config.vsync) {
-
-        return host.getHostRefreshRate();
-
-    } else {
-
-        return c64.vic.getFps() * config.timeLapse / 100.0;
-    }
-}
-
-void Emulator::stateChange(ThreadTransition transition)
-{
-    switch (transition) {
-
-        case    TRANSITION_POWER_OFF:   c64.powerOff(); break;
-        case    TRANSITION_POWER_ON:    c64.powerOn(); break;
-        case    TRANSITION_PAUSE:       c64.pause(); break;
-        case    TRANSITION_RUN:         c64.run(); break;
-        case    TRANSITION_HALT:        c64.halt(); break;
-        case    TRANSITION_WARP_ON:     c64.warpOn(); break;
-        case    TRANSITION_WARP_OFF:    c64.warpOff(); break;
-        case    TRANSITION_TRACK_ON:    c64.trackOn(); break;
-        case    TRANSITION_TRACK_OFF:   c64.trackOff(); break;
-
-        default:
-            break;
-    }
-}
-
-void 
-Emulator::hardReset()
-{
-    assert(!isEmulatorThread());
+    assert(isUserThread());
 
     {   SUSPENDED
 
@@ -800,14 +823,23 @@ Emulator::hardReset()
 }
 
 void
-Emulator::softReset()
+Emulator::C64_API::softReset()
 {
-    assert(!isEmulatorThread());
+    assert(isUserThread());
 
     {   SUSPENDED
 
         c64.reset(false);
     }
 }
+
+
+//
+// CIAs
+//
+
+CIAInfo 
+Emulator::CIA_API::getInfo() const { return cia.getInfo(); }
+
 
 }
