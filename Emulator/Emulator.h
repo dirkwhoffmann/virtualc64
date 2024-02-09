@@ -111,12 +111,12 @@ public:
 
         class Emulator &emulator;
 
-        API(Emulator& ref) : References(ref.c64), emulator(ref) { }
+        API(Emulator& ref) : References(ref._c64), emulator(ref) { }
 
         void suspend();
         void resume();
 
-        bool isUserThread() { return !emulator.isEmulatorThread(); }
+        bool isUserThread() const { return !emulator.isEmulatorThread(); }
     };
 
     #include "API.h"

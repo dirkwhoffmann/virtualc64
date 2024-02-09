@@ -10,7 +10,7 @@
 #import "config.h"
 #import "EmulatorProxy.h"
 #import "Emulator.h"
-#import "C64.h"
+// #import "C64.h"
 #import "C64Key.h"
 #import "VirtualC64-Swift.h"
 #import "Script.h"
@@ -420,9 +420,9 @@ using namespace vc64;
 
 @implementation MemoryProxy
 
-- (C64Memory *)mem
+- (Emulator::MEM_API *)mem
 {
-    return (C64Memory *)obj;
+    return (Emulator::MEM_API *)obj;
 }
 
 - (MemInfo)getInfo
@@ -430,40 +430,11 @@ using namespace vc64;
     return [self mem]->getInfo();
 }
 
-- (MemoryType)peekSource:(u16)addr
-{
-    return [self mem]->getPeekSource(addr);
-}
-
-- (MemoryType)pokeTarget:(u16)addr
-{
-    return [self mem]->getPokeTarget(addr);
-}
-
-- (u8)spypeek:(u16)addr source:(MemoryType)source
-{
-    return [self mem]->spypeek(addr, source);
-}
-
-- (u8)spypeek:(u16)addr
-{
-    return [self mem]->spypeek(addr);
-}
-
-- (u8)spypeekIO:(u16)addr
-{
-    return [self mem]->spypeekIO(addr);
-}
-
-- (u8)spypeekColor:(u16)addr
-{
-    return [self mem]->spypeekColor(addr);
-}
-
 - (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src
 {
     return @([self mem]->memdump((u16)addr, num, hex, hex ? 2 : 1, src).c_str());
 }
+
 - (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemoryType)src
 {
     return @([self mem]->txtdump((u16)addr, num, src).c_str());
@@ -478,9 +449,9 @@ using namespace vc64;
 
 @implementation CIAProxy
 
-- (CIA *)cia
+- (Emulator::CIA_API *)cia
 {
-    return (CIA *)obj;
+    return (Emulator::CIA_API *)obj;
 }
 
 - (CIAInfo)getInfo
@@ -2526,8 +2497,8 @@ using namespace vc64;
 
     // Create sub proxys
     breakpoints = [[GuardsProxy alloc] initWith:&emu->_c64.cpu.debugger.breakpoints];
-    cia1 = [[CIAProxy alloc] initWith:&emu->_c64.cia1];
-    cia2 = [[CIAProxy alloc] initWith:&emu->_c64.cia2];
+    cia1 = [[CIAProxy alloc] initWith:&emu->cia1];
+    cia2 = [[CIAProxy alloc] initWith:&emu->cia2];
     cpu = [[CPUProxy alloc] initWith:&emu->_c64.cpu];
     datasette = [[DatasetteProxy alloc] initWith:&emu->_c64.datasette];
     dmaDebugger = [[DmaDebuggerProxy alloc] initWith:&emu->_c64.vic.dmaDebugger];
@@ -2537,7 +2508,7 @@ using namespace vc64;
     host = [[HostProxy alloc] initWith:&emu->host];
     iec = [[IECProxy alloc] initWith:&emu->_c64.iec];
     keyboard = [[KeyboardProxy alloc] initWith:&emu->_c64.keyboard];
-    mem = [[MemoryProxy alloc] initWith:&emu->_c64.mem];
+    mem = [[MemoryProxy alloc] initWith:&emu->mem];
     parCable = [[ParCableProxy alloc] initWith:&emu->_c64.parCable];
     port1 = [[ControlPortProxy alloc] initWith:&emu->_c64.port1];
     port2 = [[ControlPortProxy alloc] initWith:&emu->_c64.port2];

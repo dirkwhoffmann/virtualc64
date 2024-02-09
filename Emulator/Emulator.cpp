@@ -32,7 +32,8 @@ Emulator::Emulator() :
 
 c64(*this),
 cia1(*this, _c64.cia1),
-cia2(*this, _c64.cia2)
+cia2(*this, _c64.cia2),
+mem(*this)
 
 {
     // trace(RUN_DEBUG, "Creating emulator\n");
@@ -839,7 +840,36 @@ Emulator::C64_API::softReset()
 //
 
 CIAInfo 
-Emulator::CIA_API::getInfo() const { return cia.getInfo(); }
+Emulator::CIA_API::getInfo() const 
+{
+    assert(isUserThread());
+    return cia.getInfo();
+}
 
+
+//
+// Memory
+//
+
+MemInfo 
+Emulator::MEM_API::getInfo() const 
+{
+    assert(isUserThread());
+    return emulator._c64.mem.getInfo();
+}
+
+string 
+Emulator::MEM_API::memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const
+{
+    assert(isUserThread());
+    return mem.memdump(addr, num, hex, pads, src);
+}
+
+string
+Emulator::MEM_API::txtdump(u16 addr, isize num, MemoryType src) const
+{
+    assert(isUserThread());
+    return emulator._c64.mem.txtdump(addr, num, src);
+}
 
 }

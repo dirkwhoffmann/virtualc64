@@ -49,4 +49,31 @@ SubComponent::prefix() const
     c64.prefix();
 }
 
+References::References(C64& ref) :
+
+c64(ref),
+cia1(ref.cia1),
+cia2(ref.cia2),
+port1(ref.port1),
+port2(ref.port2),
+cpu(ref.cpu),
+datasette(ref.datasette),
+drive8(ref.drive8),
+drive9(ref.drive9),
+expansionport(ref.expansionport),
+host(ref.emulator.host),
+iec(ref.iec),
+keyboard(ref.keyboard),
+mem(ref.mem),
+msgQueue(ref.msgQueue),
+oscillator(ref.supply),
+parCable(ref.parCable),
+recorder(ref.recorder),
+regressionTester(ref.regressionTester),
+retroShell(ref.retroShell),
+muxer(ref.muxer),
+vic(ref.vic)
+{
+};
+
 }

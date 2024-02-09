@@ -367,14 +367,6 @@
 
 - (MemInfo)getInfo;
 
-- (MemoryType)peekSource:(u16)addr;
-- (MemoryType)pokeTarget:(u16)addr;
-
-- (u8)spypeek:(u16)addr source:(MemoryType)source;
-- (u8)spypeek:(u16)addr;
-- (u8)spypeekIO:(u16)addr;
-- (u8)spypeekColor:(u16)addr;
-
 - (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src;
 - (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemoryType)src;
 

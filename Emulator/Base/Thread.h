@@ -158,7 +158,7 @@ protected:
 public:
 
     // Returns true if this functions is called from within the emulator thread
-    bool isEmulatorThread() { return std::this_thread::get_id() == thread.get_id(); }
+    bool isEmulatorThread() const { return std::this_thread::get_id() == thread.get_id(); }
 
     // Performs a state change
     void switchState(EmulatorState newState);

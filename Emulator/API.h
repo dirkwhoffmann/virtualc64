@@ -61,8 +61,25 @@ struct CIA_API : API {
     CIA &cia;
     CIA_API(Emulator &emu, CIA& cia) : API(emu), cia(cia) { }
 
+    // Returns the current component state
     CIAInfo getInfo() const;
 
 } cia1, cia2;
 
 
+//
+// Memory
+//
+
+struct MEM_API : API {
+
+    using API::API;
+
+    // Returns the current component state
+    MemInfo getInfo() const;
+
+    // Returns a string representations for a portion of memory
+    string memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const;
+    string txtdump(u16 addr, isize num, MemoryType src) const;
+
+} mem;
