@@ -61,10 +61,33 @@ struct CIA_API : API {
     CIA &cia;
     CIA_API(Emulator &emu, CIA& cia) : API(emu), cia(cia) { }
 
-    // Returns the current component state
     CIAInfo getInfo() const;
 
 } cia1, cia2;
+
+
+//
+// VICII
+//
+
+struct VICII_API : API {
+
+    using API::API;
+
+    VICIIConfig getConfig() const;
+    VICIIInfo getInfo() const;
+    SpriteInfo getSpriteInfo(isize nr) const;
+
+    isize getCyclesPerLine() const;
+    isize getLinesPerFrame() const;
+    bool pal() const;
+
+    u32 *stableEmuTexture() const;
+    u32 *getNoise() const;
+    u32 getColor(isize nr) const;
+    u32 getColor(isize nr, Palette palette) const;
+
+} vicii;
 
 
 //

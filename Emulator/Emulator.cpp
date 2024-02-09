@@ -33,6 +33,7 @@ Emulator::Emulator() :
 c64(*this),
 cia1(*this, _c64.cia1),
 cia2(*this, _c64.cia2),
+vicii(*this),
 mem(*this),
 dmaDebugger(*this)
 
@@ -46,7 +47,7 @@ Emulator::~Emulator()
 
 }
 
-void 
+void
 Emulator::initialize()
 {
     resetConfig();
@@ -844,11 +845,76 @@ Emulator::C64_API::softReset()
 // CIAs
 //
 
-CIAInfo 
-Emulator::CIA_API::getInfo() const 
+CIAInfo
+Emulator::CIA_API::getInfo() const
 {
     assert(isUserThread());
     return cia.getInfo();
+}
+
+
+//
+// VICII
+//
+
+VICIIConfig
+Emulator::VICII_API::getConfig() const
+{
+    return vic.getConfig();
+}
+
+VICIIInfo
+Emulator::VICII_API::getInfo() const
+{
+    return vic.getInfo();
+}
+
+SpriteInfo
+Emulator::VICII_API::getSpriteInfo(isize nr) const
+{
+    return vic.getSpriteInfo(nr);
+}
+
+isize
+Emulator::VICII_API::getCyclesPerLine() const
+{
+    return vic.getCyclesPerLine();
+}
+
+isize
+Emulator::VICII_API::getLinesPerFrame() const
+{
+    return vic.getLinesPerFrame();
+}
+
+bool
+Emulator::VICII_API::pal() const
+{
+    return vic.pal();
+}
+
+u32 *
+Emulator::VICII_API::stableEmuTexture() const
+{
+    return vic.stableEmuTexture();
+}
+
+u32 *
+Emulator::VICII_API::getNoise() const
+{
+    return vic.getNoise();
+}
+
+u32
+Emulator::VICII_API::getColor(isize nr) const
+{
+    return vic.getColor(nr);
+}
+
+u32
+Emulator::VICII_API::getColor(isize nr, Palette palette) const
+{
+    return vic.getColor(nr, palette);
 }
 
 

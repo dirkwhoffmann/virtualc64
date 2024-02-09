@@ -473,9 +473,9 @@ using namespace vc64;
 
 @implementation VICIIProxy
 
-- (VICII *)vicii
+- (Emulator::VICII_API *)vicii
 {
-    return (VICII *)obj;
+    return (Emulator::VICII_API *)obj;
 }
 
 - (NSInteger)hPixels
@@ -2453,7 +2453,7 @@ using namespace vc64;
     recorder = [[RecorderProxy alloc] initWith:&emu->_c64.recorder];
     retroShell = [[RetroShellProxy alloc] initWith:&emu->_c64.retroShell];
     sid = [[SIDProxy alloc] initWith:&emu->_c64.muxer];
-    vic = [[VICIIProxy alloc] initWith:&emu->_c64.vic];
+    vic = [[VICIIProxy alloc] initWith:&emu->vicii];
     watchpoints = [[GuardsProxy alloc] initWith:&emu->_c64.cpu.debugger.watchpoints];
 
     return self;

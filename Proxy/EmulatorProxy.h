@@ -365,8 +365,8 @@
 
 @interface VICIIProxy : CoreComponentProxy { }
 
-@property (readonly) NSInteger hPixels; // TODO: MOVE TO VicIIInfo
-@property (readonly) NSInteger vPixels; // TODO: MOVE TO VicIIInfo
+@property (readonly) NSInteger hPixels;
+@property (readonly) NSInteger vPixels;
 
 - (VICIIConfig)getConfig;
 - (VICIIInfo)getInfo;
