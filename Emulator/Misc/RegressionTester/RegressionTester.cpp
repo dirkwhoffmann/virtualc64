@@ -29,7 +29,6 @@ RegressionTester::prepare(C64 &c64, C64Model model)
     if (c64.tmp() != "/tmp") throw VC64Error(ERROR_DIR_ACCESS_DENIED, "/tmp");
 
     // Initialize the emulator according to the specified model
-    emulator.revertToFactorySettings();
     emulator.configure(model);
 
     // Choose a warp source that prevents the GUI from disabling warp mode

@@ -18,18 +18,6 @@
 
 namespace vc64 {
 
-// Perform some consistency checks
-static_assert(sizeof(i8 ) == 1, "i8  size mismatch");
-static_assert(sizeof(i16) == 2, "i16 size mismatch");
-static_assert(sizeof(i32) == 4, "i32 size mismatch");
-static_assert(sizeof(i64) == 8, "i64 size mismatch");
-static_assert(sizeof(u8 ) == 1, "u8  size mismatch");
-static_assert(sizeof(u16) == 2, "u16 size mismatch");
-static_assert(sizeof(u32) == 4, "u32 size mismatch");
-static_assert(sizeof(u64) == 8, "u64 size mismatch");
-
-Defaults C64::defaults;
-
 string
 C64::version()
 {
@@ -251,10 +239,10 @@ C64::_initialize()
         }
     };
 
-    if (auto path = C64::defaults.getString("BASIC_PATH");  path != "") load(path);
-    if (auto path = C64::defaults.getString("CHAR_PATH");   path != "") load(path);
-    if (auto path = C64::defaults.getString("KERNAL_PATH"); path != "") load(path);
-    if (auto path = C64::defaults.getString("VC1541_PATH"); path != "") load(path);
+    if (auto path = Emulator::defaults.getString("BASIC_PATH");  path != "") load(path);
+    if (auto path = Emulator::defaults.getString("CHAR_PATH");   path != "") load(path);
+    if (auto path = Emulator::defaults.getString("KERNAL_PATH"); path != "") load(path);
+    if (auto path = Emulator::defaults.getString("VC1541_PATH"); path != "") load(path);
 }
 
 void
@@ -279,7 +267,6 @@ C64::_reset(bool hard)
 
     flags = 0;
     rasterCycle = 1;
-    // updateWarpState();
 }
 
 void
@@ -292,138 +279,13 @@ C64::resetConfig()
 i64
 C64::getConfigItem(Option option) const
 {
-    switch (option) {
-
-        case OPT_HOST_REFRESH_RATE:
-        case OPT_HOST_SAMPLE_RATE:
-        case OPT_HOST_FRAMEBUF_WIDTH:
-        case OPT_HOST_FRAMEBUF_HEIGHT:
-
-            return host.getConfigItem(option);
-
-        case OPT_WARP_BOOT:
-        case OPT_WARP_MODE:
-        case OPT_VSYNC:
-        case OPT_TIME_LAPSE:
-        case OPT_RUN_AHEAD:
-
-            return emulator.getConfigItem(option);
-
-        case OPT_VIC_REVISION:
-        case OPT_VIC_POWER_SAVE:
-        case OPT_GRAY_DOT_BUG:
-        case OPT_GLUE_LOGIC:
-        case OPT_HIDE_SPRITES:
-        case OPT_SS_COLLISIONS:
-        case OPT_SB_COLLISIONS:
-
-        case OPT_PALETTE:
-        case OPT_BRIGHTNESS:
-        case OPT_CONTRAST:
-        case OPT_SATURATION:
-
-            return vic.getConfigItem(option);
-
-        case OPT_DMA_DEBUG_ENABLE:
-        case OPT_DMA_DEBUG_MODE:
-        case OPT_DMA_DEBUG_OPACITY:
-        case OPT_CUT_LAYERS:
-        case OPT_CUT_OPACITY:
-
-            return vic.dmaDebugger.getConfigItem(option);
-            
-        case OPT_CIA_REVISION:
-        case OPT_TIMER_B_BUG:
-
-            assert(cia1.getConfigItem(option) == cia2.getConfigItem(option));
-            return cia1.getConfigItem(option);
-
-        case OPT_POWER_GRID:
-
-            return supply.getConfigItem(option);
-            
-        case OPT_SID_REVISION:
-        case OPT_SID_POWER_SAVE:
-        case OPT_SID_FILTER:
-        case OPT_SID_ENGINE:
-        case OPT_SID_SAMPLING:
-        case OPT_AUDVOLL:
-        case OPT_AUDVOLR:
-
-            return muxer.getConfigItem(option);
-
-        case OPT_RAM_PATTERN:
-        case OPT_SAVE_ROMS:
-
-            return mem.getConfigItem(option);
-
-        case OPT_DAT_MODEL:
-        case OPT_DAT_CONNECT:
-
-            return datasette.getConfigItem(option);
-            
-        default:
-            fatalError;
-    }
+    return 0;
 }
 
 i64
 C64::getConfigItem(Option option, long id) const
 {
-    const Drive &drive = id == DRIVE8 ? drive8 : drive9;
-    
-    switch (option) {
-            
-        case OPT_DMA_DEBUG_CHANNEL:
-        case OPT_DMA_DEBUG_COLOR:
-            
-            return vic.dmaDebugger.getConfigItem(option, id);
-
-        case OPT_SID_ENABLE:
-        case OPT_SID_ADDRESS:
-        case OPT_AUDPAN:
-        case OPT_AUDVOL:
-            
-            assert(id >= 0 && id <= 3);
-            return muxer.getConfigItem(option, id);
-
-        case OPT_DRV_CONNECT:
-        case OPT_DRV_AUTO_CONFIG:
-        case OPT_DRV_TYPE:
-        case OPT_DRV_RAM:
-        case OPT_DRV_PARCABLE:
-        case OPT_DRV_POWER_SAVE:
-        case OPT_DRV_POWER_SWITCH:
-        case OPT_DRV_EJECT_DELAY:
-        case OPT_DRV_SWAP_DELAY:
-        case OPT_DRV_INSERT_DELAY:
-        case OPT_DRV_PAN:
-        case OPT_DRV_POWER_VOL:
-        case OPT_DRV_STEP_VOL:
-        case OPT_DRV_INSERT_VOL:
-        case OPT_DRV_EJECT_VOL:
-            
-            return drive.getConfigItem(option);
-
-        case OPT_MOUSE_MODEL:
-        case OPT_SHAKE_DETECTION:
-        case OPT_MOUSE_VELOCITY:
-            
-            if (id == PORT_1) return port1.mouse.getConfigItem(option);
-            if (id == PORT_2) return port2.mouse.getConfigItem(option);
-            fatalError;
-
-        case OPT_AUTOFIRE:
-        case OPT_AUTOFIRE_BULLETS:
-        case OPT_AUTOFIRE_DELAY:
-            
-            if (id == PORT_1) return port1.joystick.getConfigItem(option);
-            if (id == PORT_2) return port2.joystick.getConfigItem(option);
-            fatalError;
-
-        default:
-            fatalError;
-    }
+    return 0;
 }
 
 void
@@ -894,11 +756,6 @@ C64::_dump(Category category, std::ostream& os) const
         os << CIARevisionEnum::key(cia1Rev) << std::endl;
         os << tab("CIA 2");
         os << CIARevisionEnum::key(cia2Rev) << std::endl;
-    }
-
-    if (category == Category::Defaults) {
-
-        defaults.dump(category, os);
     }
 
     if (category == Category::Current) {

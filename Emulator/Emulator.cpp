@@ -15,10 +15,23 @@
 
 namespace vc64 {
 
+// Perform some consistency checks
+static_assert(sizeof(i8 ) == 1, "i8  size mismatch");
+static_assert(sizeof(i16) == 2, "i16 size mismatch");
+static_assert(sizeof(i32) == 4, "i32 size mismatch");
+static_assert(sizeof(i64) == 8, "i64 size mismatch");
+static_assert(sizeof(u8 ) == 1, "u8  size mismatch");
+static_assert(sizeof(u16) == 2, "u16 size mismatch");
+static_assert(sizeof(u32) == 4, "u32 size mismatch");
+static_assert(sizeof(u64) == 8, "u64 size mismatch");
+
+Defaults
+Emulator::defaults;
+
 Emulator::Emulator()
 {
     // trace(RUN_DEBUG, "Creating emulator\n");
-    resetConfig(); // TODO: DELETE AND CALL SOMEWHERE ELSE
+    resetConfig(); // TODO: DELETE (MAKE SURE initialize() IS CALLED)
 }
 
 Emulator::~Emulator()
@@ -93,7 +106,7 @@ Emulator::configure(Option option, i64 value)
         case OPT_HOST_FRAMEBUF_WIDTH:
         case OPT_HOST_FRAMEBUF_HEIGHT:
 
-            c64.host.setConfigItem(option, value);
+            host.setConfigItem(option, value);
             break;
 
         case OPT_VIC_REVISION:
@@ -326,6 +339,8 @@ Emulator::configure(C64Model model)
 
     {   SUSPENDED
 
+        revertToFactorySettings();
+
         switch(model) {
 
             case C64_MODEL_PAL:
@@ -437,8 +452,6 @@ Emulator::resetConfig()
 {
     assert(isPoweredOff());
 
-    auto &defaults = c64.defaults;
-
     std::vector <Option> options = {
 
         OPT_WARP_BOOT,
@@ -464,6 +477,125 @@ Emulator::getConfigItem(Option option) const
         case OPT_TIME_LAPSE:    return config.timeLapse;
         case OPT_RUN_AHEAD:     return config.runAhead;
 
+        case OPT_HOST_REFRESH_RATE:
+        case OPT_HOST_SAMPLE_RATE:
+        case OPT_HOST_FRAMEBUF_WIDTH:
+        case OPT_HOST_FRAMEBUF_HEIGHT:
+
+            return host.getConfigItem(option);
+
+        case OPT_VIC_REVISION:
+        case OPT_VIC_POWER_SAVE:
+        case OPT_GRAY_DOT_BUG:
+        case OPT_GLUE_LOGIC:
+        case OPT_HIDE_SPRITES:
+        case OPT_SS_COLLISIONS:
+        case OPT_SB_COLLISIONS:
+
+        case OPT_PALETTE:
+        case OPT_BRIGHTNESS:
+        case OPT_CONTRAST:
+        case OPT_SATURATION:
+
+            return c64.vic.getConfigItem(option);
+
+        case OPT_DMA_DEBUG_ENABLE:
+        case OPT_DMA_DEBUG_MODE:
+        case OPT_DMA_DEBUG_OPACITY:
+        case OPT_CUT_LAYERS:
+        case OPT_CUT_OPACITY:
+
+            return c64.vic.dmaDebugger.getConfigItem(option);
+
+        case OPT_CIA_REVISION:
+        case OPT_TIMER_B_BUG:
+
+            assert(c64.cia1.getConfigItem(option) == c64.cia2.getConfigItem(option));
+            return c64.cia1.getConfigItem(option);
+
+        case OPT_POWER_GRID:
+
+            return c64.supply.getConfigItem(option);
+
+        case OPT_SID_REVISION:
+        case OPT_SID_POWER_SAVE:
+        case OPT_SID_FILTER:
+        case OPT_SID_ENGINE:
+        case OPT_SID_SAMPLING:
+        case OPT_AUDVOLL:
+        case OPT_AUDVOLR:
+
+            return c64.muxer.getConfigItem(option);
+
+        case OPT_RAM_PATTERN:
+        case OPT_SAVE_ROMS:
+
+            return c64.mem.getConfigItem(option);
+
+        case OPT_DAT_MODEL:
+        case OPT_DAT_CONNECT:
+
+            return c64.datasette.getConfigItem(option);
+
+        default:
+            fatalError;
+    }
+}
+
+i64
+Emulator::getConfigItem(Option option, long id) const
+{
+    const Drive &drive = id == DRIVE8 ? c64.drive8 : c64.drive9;
+
+    switch (option) {
+
+        case OPT_DMA_DEBUG_CHANNEL:
+        case OPT_DMA_DEBUG_COLOR:
+
+            return c64.vic.dmaDebugger.getConfigItem(option, id);
+
+        case OPT_SID_ENABLE:
+        case OPT_SID_ADDRESS:
+        case OPT_AUDPAN:
+        case OPT_AUDVOL:
+
+            assert(id >= 0 && id <= 3);
+            return c64.muxer.getConfigItem(option, id);
+
+        case OPT_DRV_CONNECT:
+        case OPT_DRV_AUTO_CONFIG:
+        case OPT_DRV_TYPE:
+        case OPT_DRV_RAM:
+        case OPT_DRV_PARCABLE:
+        case OPT_DRV_POWER_SAVE:
+        case OPT_DRV_POWER_SWITCH:
+        case OPT_DRV_EJECT_DELAY:
+        case OPT_DRV_SWAP_DELAY:
+        case OPT_DRV_INSERT_DELAY:
+        case OPT_DRV_PAN:
+        case OPT_DRV_POWER_VOL:
+        case OPT_DRV_STEP_VOL:
+        case OPT_DRV_INSERT_VOL:
+        case OPT_DRV_EJECT_VOL:
+
+            return drive.getConfigItem(option);
+
+        case OPT_MOUSE_MODEL:
+        case OPT_SHAKE_DETECTION:
+        case OPT_MOUSE_VELOCITY:
+
+            if (id == PORT_1) return c64.port1.mouse.getConfigItem(option);
+            if (id == PORT_2) return c64.port2.mouse.getConfigItem(option);
+            fatalError;
+
+        case OPT_AUTOFIRE:
+        case OPT_AUTOFIRE_BULLETS:
+        case OPT_AUTOFIRE_DELAY:
+
+            if (id == PORT_1) return c64.port1.joystick.getConfigItem(option);
+            if (id == PORT_2) return c64.port2.joystick.getConfigItem(option);
+            fatalError;
+
         default:
             fatalError;
     }
@@ -477,7 +609,6 @@ Emulator::setConfigItem(Option option, i64 value)
         case OPT_WARP_BOOT:
 
             config.warpBoot = isize(value);
-            // updateWarpState();
             return;
 
         case OPT_WARP_MODE:
@@ -487,7 +618,6 @@ Emulator::setConfigItem(Option option, i64 value)
             }
 
             config.warpMode = WarpMode(value);
-            // updateWarpState();
             return;
 
         case OPT_VSYNC:
@@ -552,6 +682,11 @@ Emulator::_dump(Category category, std::ostream& os) const
         os << std::endl;
     }
 
+    if (category == Category::Defaults) {
+
+        defaults.dump(category, os);
+    }
+
     if (category == Category::State) {
 
         os << tab("Power");
@@ -589,8 +724,8 @@ Emulator::shouldWarp()
 
         switch (config.warpMode) {
 
-            case WARP_AUTO:     return c64.iec.isTransferring() || warp;
-            case WARP_NEVER:    return warp;
+            case WARP_AUTO:     return c64.iec.isTransferring();
+            case WARP_NEVER:    return false;
             case WARP_ALWAYS:   return true;
 
             default:
@@ -626,7 +761,7 @@ Emulator::refreshRate() const
 {
     if (config.vsync) {
 
-        return c64.host.getHostRefreshRate();
+        return host.getHostRefreshRate();
 
     } else {
 

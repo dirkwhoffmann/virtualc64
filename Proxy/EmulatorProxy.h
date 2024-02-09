@@ -217,7 +217,7 @@
 @property (readonly) SnapshotProxy *latestAutoSnapshot;
 @property (readonly) SnapshotProxy *latestUserSnapshot;
 
-@property (readonly) NSInteger refreshRate;
+// @property (readonly) NSInteger refreshRate;
 
 - (NSInteger)getConfig:(Option)opt;
 - (NSInteger)getConfig:(Option)opt id:(NSInteger)id;

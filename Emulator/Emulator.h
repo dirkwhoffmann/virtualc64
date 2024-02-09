@@ -12,9 +12,11 @@
 
 #pragma once
 
-#include "Thread.h"
-#include "EmulatorTypes.h"
 #include "C64.h"
+#include "Defaults.h"
+#include "EmulatorTypes.h"
+#include "Host.h"
+#include "Thread.h"
 
 namespace vc64 {
 
@@ -22,8 +24,14 @@ class Emulator : public Thread {
 
 public:
 
+    // User default settings
+    static Defaults defaults;
+
     // The virtual C64
     C64 c64 = C64(*this);
+
+    // Information about the host system
+    Host host = Host(*this);
 
 private:
 
@@ -40,8 +48,12 @@ public:
     Emulator();
     ~Emulator();
 
+private:
+
     // Initializes all components
     void initialize();
+
+public:
 
     // Launches the emulator thread
     void launch(const void *listener, Callback *func);
@@ -60,19 +72,18 @@ public:
     // Configures the C64 to match a specific C64 model
     void configure(C64Model model);
 
+    i64 getConfigItem(Option option) const;
+    i64 getConfigItem(Option option, long id) const;
+    void setConfigItem(Option option, i64 value);
+
+private:
+
     // Powers off and resets the emulator to it's initial state
     void revertToFactorySettings();
-
-public:
 
     static EmulatorConfig getDefaultConfig();
     const EmulatorConfig &getConfig() const { return config; }
     void resetConfig();
-
-    i64 getConfigItem(Option option) const;
-    void setConfigItem(Option option, i64 value);
-
-private:
 
     // Overrides a config option if the corresponding debug option is enabled
     i64 overrideOption(Option option, i64 value);
@@ -92,13 +103,9 @@ private:
     // Methods from Thread
     //
 
-public:
-
-    double refreshRate() const override;
-    void stateChange(ThreadTransition transition) override;
-
 private:
 
+    void stateChange(ThreadTransition transition) override;
     void isReady() override;
     bool shouldWarp() override;
     isize missingFrames() const override;
@@ -113,6 +120,17 @@ public:
     
     void hardReset();
     void softReset();
+
+
+    //
+    // Querying properties
+    //
+
+public:
+
+    double refreshRate() const override;
+    
+
 };
 
 }

@@ -265,10 +265,7 @@ Interpreter::initCommandShell(Command &root)
              "Initializes the emulator with factory defaults",
              [this](Arguments& argv, long value) {
 
-        auto model = parseEnum<C64ModelEnum>(argv);
-
-        emulator.revertToFactorySettings();
-        emulator.configure(model);
+        emulator.configure(parseEnum<C64ModelEnum>(argv));
     });
 
     

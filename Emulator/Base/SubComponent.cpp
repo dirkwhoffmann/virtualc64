@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "SubComponent.h"
-#include "C64.h"
+#include "Emulator.h"
 
 namespace vc64 {
 
@@ -28,7 +28,7 @@ datasette(ref.datasette),
 drive8(ref.drive8),
 drive9(ref.drive9),
 expansionport(ref.expansionport),
-host(ref.host),
+host(ref.emulator.host),
 iec(ref.iec),
 keyboard(ref.keyboard),
 mem(ref.mem),

@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "Muxer.h"
-#include "C64.h"
+#include "Emulator.h"
 #include "IOUtils.h"
 
 #include <algorithm>
@@ -91,7 +91,7 @@ void
 Muxer::resetConfig()
 {
     assert(isPoweredOff());
-    auto &defaults = c64.defaults;
+    auto &defaults = emulator.defaults;
 
     std::vector <Option> options = {
 

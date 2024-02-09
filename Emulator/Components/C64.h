@@ -13,12 +13,10 @@
 #pragma once
 
 #include "C64Types.h"
-#include "Defaults.h"
 #include "MsgQueue.h"
 #include "Thread.h"
 
 // Sub components
-#include "Host.h"
 #include "ExpansionPort.h"
 #include "IEC.h"
 #include "Keyboard.h"
@@ -103,12 +101,6 @@ private:
     //
     
 public:
-
-    // User settings
-    static Defaults defaults;
-
-    // Information about the host system
-    Host host = Host(*this);
 
     // Core components
     C64Memory mem = C64Memory(*this);

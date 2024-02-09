@@ -141,7 +141,7 @@ void
 Datasette::resetConfig()
 {
     assert(isPoweredOff());
-    auto &defaults = c64.defaults;
+    auto &defaults = emulator.defaults;
 
     std::vector <Option> options = {
 

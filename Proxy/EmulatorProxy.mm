@@ -2534,7 +2534,7 @@ using namespace vc64;
     drive8 = [[DriveProxy alloc] initWithVC1541:&emu->c64.drive8];
     drive9 = [[DriveProxy alloc] initWithVC1541:&emu->c64.drive9];
     expansionport = [[ExpansionPortProxy alloc] initWith:&emu->c64.expansionport];
-    host = [[HostProxy alloc] initWith:&emu->c64.host];
+    host = [[HostProxy alloc] initWith:&emu->host];
     iec = [[IECProxy alloc] initWith:&emu->c64.iec];
     keyboard = [[KeyboardProxy alloc] initWith:&emu->c64.keyboard];
     mem = [[MemoryProxy alloc] initWith:&emu->c64.mem];
@@ -2562,7 +2562,7 @@ using namespace vc64;
 
 + (DefaultsProxy *) defaults
 {
-    return [[DefaultsProxy alloc] initWith:&C64::defaults];
+    return [[DefaultsProxy alloc] initWith:&Emulator::defaults];
 }
 
 - (void)dealloc
@@ -2752,24 +2752,19 @@ using namespace vc64;
     return [SnapshotProxy make:snapshot];
 }
 
-- (NSInteger)refreshRate
-{
-    return (NSInteger)[self c64]->emulator.refreshRate();
-}
-
 - (NSInteger)getConfig:(Option)opt
 {
-    return [self c64]->getConfigItem(opt);
+    return [self emu]->getConfigItem(opt);
 }
 
 - (NSInteger)getConfig:(Option)opt id:(NSInteger)id
 {
-    return [self c64]->getConfigItem(opt, id);
+    return [self emu]->getConfigItem(opt, id);
 }
 
 - (NSInteger)getConfig:(Option)opt drive:(NSInteger)id
 {
-    return [self c64]->getConfigItem(opt, (long)id);
+    return [self emu]->getConfigItem(opt, (long)id);
 }
 
 - (BOOL)configure:(Option)opt value:(NSInteger)val

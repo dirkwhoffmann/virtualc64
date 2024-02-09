@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "C64Memory.h"
-#include "C64.h"
+#include "Emulator.h"
 #include "IOUtils.h"
 
 #include <random>
@@ -182,7 +182,7 @@ void
 C64Memory::resetConfig()
 {
     assert(isPoweredOff());
-    auto &defaults = c64.defaults;
+    auto &defaults = emulator.defaults;
 
     std::vector <Option> options = {
 

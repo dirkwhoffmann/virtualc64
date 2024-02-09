@@ -12,15 +12,17 @@
 
 #include "config.h"
 #include "Host.h"
-#include "Muxer.h"
+#include "Emulator.h"
 #include "IOUtils.h"
 
 namespace vc64 {
 
-Host::Host(C64& ref) : SubComponent(ref)
+/*
+Host::Host(Emulator& ref) : CoreComponent(ref)
 {
 
 }
+*/
 
 i64
 Host::getConfigItem(Option option) const
@@ -50,7 +52,7 @@ Host::setConfigItem(Option option, i64 value)
         case OPT_HOST_SAMPLE_RATE:
 
             sampleRate = double(value);
-            muxer.setSampleRate(sampleRate);
+            emulator.c64.muxer.setSampleRate(sampleRate);
             return;
 
         case OPT_HOST_FRAMEBUF_WIDTH:
@@ -89,7 +91,7 @@ void
 Host::setSampleRate(double hz)
 {
     sampleRate = hz;
-    muxer.setSampleRate(hz);
+    emulator.c64.muxer.setSampleRate(hz);
 }
 
 void

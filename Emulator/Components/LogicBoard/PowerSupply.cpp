@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "PowerSupply.h"
-#include "C64.h"
+#include "Emulator.h"
 
 namespace vc64 {
 
@@ -41,7 +41,7 @@ void
 PowerSupply::resetConfig()
 {
     assert(isPoweredOff());
-    auto &defaults = c64.defaults;
+    auto &defaults = emulator.defaults;
 
     std::vector <Option> options = {
 
