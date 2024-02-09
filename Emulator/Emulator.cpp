@@ -33,7 +33,8 @@ Emulator::Emulator() :
 c64(*this),
 cia1(*this, _c64.cia1),
 cia2(*this, _c64.cia2),
-mem(*this)
+mem(*this),
+dmaDebugger(*this)
 
 {
     // trace(RUN_DEBUG, "Creating emulator\n");
@@ -409,7 +410,9 @@ Emulator::configure(Option option, i64 value)
             _c64.port1.joystick.setConfigItem(option, value);
             _c64.port2.joystick.setConfigItem(option, value);
             break;
+
         default:
+            warn("Unrecognized option: %s\n", OptionEnum::key(option));
             fatalError;
     }
 
@@ -445,6 +448,7 @@ Emulator::configure(Option option, long id, i64 value)
     switch (option) {
 
 
+        case OPT_DMA_DEBUG_ENABLE:
         case OPT_DMA_DEBUG_CHANNEL:
         case OPT_DMA_DEBUG_COLOR:
 
@@ -522,6 +526,7 @@ Emulator::configure(Option option, long id, i64 value)
             break;
 
         default:
+            warn("Unrecognized option: %s\n", OptionEnum::key(option));
             fatalError;
     }
 
@@ -851,7 +856,14 @@ Emulator::CIA_API::getInfo() const
 // Memory
 //
 
-MemInfo 
+MemConfig
+Emulator::MEM_API::getConfig() const
+{
+    assert(isUserThread());
+    return emulator._c64.mem.getConfig();
+}
+
+MemInfo
 Emulator::MEM_API::getInfo() const 
 {
     assert(isUserThread());
@@ -869,7 +881,19 @@ string
 Emulator::MEM_API::txtdump(u16 addr, isize num, MemoryType src) const
 {
     assert(isUserThread());
-    return emulator._c64.mem.txtdump(addr, num, src);
+    return mem.txtdump(addr, num, src);
+}
+
+
+//
+// DMA Debugger
+//
+
+DmaDebuggerConfig
+Emulator::DMA_DEBUGGER_API::getConfig() const
+{
+    assert(isUserThread());
+    return vic.dmaDebugger.getConfig();
 }
 
 }

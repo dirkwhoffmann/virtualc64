@@ -75,7 +75,8 @@ struct MEM_API : API {
 
     using API::API;
 
-    // Returns the current component state
+    // Returns the current configuration and state
+    MemConfig getConfig() const;
     MemInfo getInfo() const;
 
     // Returns a string representations for a portion of memory
@@ -83,3 +84,17 @@ struct MEM_API : API {
     string txtdump(u16 addr, isize num, MemoryType src) const;
 
 } mem;
+
+
+//
+// DMA Debugger
+//
+
+struct DMA_DEBUGGER_API : API {
+
+    using API::API;
+
+    // Returns the current configuration
+    DmaDebuggerConfig getConfig() const;
+
+} dmaDebugger;

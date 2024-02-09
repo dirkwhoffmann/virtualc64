@@ -57,7 +57,6 @@
 @class FileSystemProxy;
 @class G64FileProxy;
 @class GuardsProxy;
-@class HostProxy;
 @class IECProxy;
 @class JoystickProxy;
 @class KeyboardProxy;
@@ -65,7 +64,6 @@
 @class MouseProxy;
 @class MyController;
 @class P00FileProxy;
-@class ParCableProxy;
 @class PRGFileProxy;
 @class RecorderProxy;
 @class RetroShellProxy;
@@ -75,7 +73,6 @@
 @class SnapshotProxy;
 @class T64FileProxy;
 @class TAPFileProxy;
-@class VIAProxy;
 @class VICIIProxy;
 
 
@@ -113,16 +110,6 @@
 
 
 //
-// Host
-//
-
-@interface HostProxy : CoreComponentProxy {
-}
-
-@end
-
-
-//
 // C64
 //
 
@@ -145,7 +132,6 @@
     KeyboardProxy *keyboard;
     MemoryProxy *mem;
     MouseProxy *mouse;
-    ParCableProxy *parCable;
     RecorderProxy *recorder;
     RetroShellProxy *retroShell;
     SIDProxy *sid;
@@ -164,11 +150,9 @@
 @property (readonly, strong) ExpansionPortProxy *expansionport;
 @property (readonly, strong) GuardsProxy *breakpoints;
 @property (readonly, strong) GuardsProxy *watchpoints;
-@property (readonly, strong) HostProxy *host;
 @property (readonly, strong) IECProxy *iec;
 @property (readonly, strong) KeyboardProxy *keyboard;
 @property (readonly, strong) MemoryProxy *mem;
-@property (readonly, strong) ParCableProxy *parCable;
 @property (readonly, strong) RecorderProxy *recorder;
 @property (readonly, strong) RetroShellProxy *retroShell;
 @property (readonly, strong) SIDProxy *sid;
@@ -365,6 +349,7 @@
 
 @interface MemoryProxy : CoreComponentProxy { }
 
+- (MemConfig)getConfig;
 - (MemInfo)getInfo;
 
 - (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src;
@@ -380,15 +365,16 @@
 
 @interface VICIIProxy : CoreComponentProxy { }
 
-@property (readonly) NSInteger hPixels;
-@property (readonly) NSInteger vPixels;
+@property (readonly) NSInteger hPixels; // TODO: MOVE TO VicIIInfo
+@property (readonly) NSInteger vPixels; // TODO: MOVE TO VicIIInfo
 
 - (VICIIConfig)getConfig;
+- (VICIIInfo)getInfo;
+- (SpriteInfo)getSpriteInfo:(NSInteger)sprite;
+
 - (BOOL)isPAL;
 - (NSColor *)color:(NSInteger)nr;
 - (UInt32)rgbaColor:(NSInteger)nr palette:(Palette)palette;
-- (VICIIInfo)getInfo;
-- (SpriteInfo)getSpriteInfo:(NSInteger)sprite;
 
 @property (readonly) u32 *stableEmuTexture;
 @property (readonly) u32 *noise;
@@ -558,16 +544,10 @@
 
 @interface DriveProxy : CoreComponentProxy {
     
-    VIAProxy *via1;
-    VIAProxy *via2;
     DiskProxy *disk;
 }
 
-@property (readonly) VIAProxy *via1;
-@property (readonly) VIAProxy *via2;
 @property (readonly) DiskProxy *disk;
-- (VIAProxy *)via:(NSInteger)num;
-
 @property (readonly) NSInteger id;
 
 - (DriveConfig)getConfig;
@@ -603,24 +583,6 @@
 - (u8)readBitFromHead;
 
 - (BOOL)isRotating;
-
-@end
-
-
-//
-// VIA
-//
-
-@interface VIAProxy : CoreComponentProxy { }
-
-@end
-
-
-//
-// ParCable
-//
-
-@interface ParCableProxy : CoreComponentProxy { }
 
 @end
 

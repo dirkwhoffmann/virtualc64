@@ -425,6 +425,11 @@ using namespace vc64;
     return (Emulator::MEM_API *)obj;
 }
 
+- (MemConfig)getConfig
+{
+    return [self mem]->getConfig();
+}
+
 - (MemInfo)getInfo
 {
     return [self mem]->getInfo();
@@ -542,9 +547,9 @@ using namespace vc64;
 
 @implementation DmaDebuggerProxy
 
-- (DmaDebugger *)debugger
+- (Emulator::DMA_DEBUGGER_API *)debugger
 {
-    return (DmaDebugger *)obj;
+    return (Emulator::DMA_DEBUGGER_API *)obj;
 }
 
 - (DmaDebuggerConfig)getConfig
@@ -1135,32 +1140,14 @@ using namespace vc64;
 
 
 //
-// VIA
-//
-
-@implementation VIAProxy
-
-- (VIA6522 *)via
-{
-    return (VIA6522 *)obj;
-}
-
-@end
-
-
-//
 // Drive
 //
 
 @implementation DriveProxy
 
-@synthesize via1, via2;
-
 - (instancetype)initWithVC1541:(Drive *)drive
 {    
     if ([self initWith:drive]) {
-        via1 = [[VIAProxy alloc] initWith:&drive->via1];
-        via2 = [[VIAProxy alloc] initWith:&drive->via2];
         disk = [[DiskProxy alloc] initWith:drive];
     }
     return self;
@@ -1184,18 +1171,6 @@ using namespace vc64;
 - (DriveConfig)getConfig
 {
     return [self drive]->getConfig();
-}
-
-- (VIAProxy *)via:(NSInteger)num {
-	switch (num) {
-		case 1:
-			return [self via1];
-		case 2:
-			return [self via2];
-		default:
-			assert(false);
-			return NULL;
-	}
 }
 
 - (BOOL)isConnected
@@ -1340,20 +1315,6 @@ using namespace vc64;
 - (BOOL)isRotating
 {
     return [self drive]->isRotating();
-}
-
-@end
-
-
-//
-// ParCable
-//
-
-@implementation ParCableProxy
-
-- (ParCable *)cable
-{
-    return (ParCable *)obj;
 }
 
 @end
@@ -2441,25 +2402,6 @@ using namespace vc64;
 
 
 //
-// HostProxy
-//
-
-@implementation HostProxy
-
-- (Host *)host
-{
-    return (Host *)obj;
-}
-
-+ (instancetype)make:(Host *)file
-{
-    return file ? [[self alloc] initWith:file] : nil;
-}
-
-@end
-
-
-//
 // Emulator
 //
 
@@ -2474,11 +2416,9 @@ using namespace vc64;
 @synthesize drive8;
 @synthesize drive9;
 @synthesize expansionport;
-@synthesize host;
 @synthesize iec;
 @synthesize keyboard;
 @synthesize mem;
-@synthesize parCable;
 @synthesize port1;
 @synthesize port2;
 @synthesize recorder;
@@ -2501,15 +2441,13 @@ using namespace vc64;
     cia2 = [[CIAProxy alloc] initWith:&emu->cia2];
     cpu = [[CPUProxy alloc] initWith:&emu->_c64.cpu];
     datasette = [[DatasetteProxy alloc] initWith:&emu->_c64.datasette];
-    dmaDebugger = [[DmaDebuggerProxy alloc] initWith:&emu->_c64.vic.dmaDebugger];
+    dmaDebugger = [[DmaDebuggerProxy alloc] initWith:&emu->dmaDebugger];
     drive8 = [[DriveProxy alloc] initWithVC1541:&emu->_c64.drive8];
     drive9 = [[DriveProxy alloc] initWithVC1541:&emu->_c64.drive9];
     expansionport = [[ExpansionPortProxy alloc] initWith:&emu->_c64.expansionport];
-    host = [[HostProxy alloc] initWith:&emu->host];
     iec = [[IECProxy alloc] initWith:&emu->_c64.iec];
     keyboard = [[KeyboardProxy alloc] initWith:&emu->_c64.keyboard];
     mem = [[MemoryProxy alloc] initWith:&emu->mem];
-    parCable = [[ParCableProxy alloc] initWith:&emu->_c64.parCable];
     port1 = [[ControlPortProxy alloc] initWith:&emu->_c64.port1];
     port2 = [[ControlPortProxy alloc] initWith:&emu->_c64.port2];
     recorder = [[RecorderProxy alloc] initWith:&emu->_c64.recorder];
