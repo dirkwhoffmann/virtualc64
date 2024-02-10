@@ -53,6 +53,25 @@ struct C64_API : API {
 
 
 //
+// Memory
+//
+
+struct MEM_API : API {
+
+    using API::API;
+
+    // Returns the current configuration and state
+    MemConfig getConfig() const;
+    MemInfo getInfo() const;
+
+    // Returns a string representations for a portion of memory
+    string memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const;
+    string txtdump(u16 addr, isize num, MemoryType src) const;
+
+} mem;
+
+
+//
 // CPU
 //
 
@@ -119,22 +138,29 @@ struct VICII_API : API {
 
 
 //
-// Memory
+// SID
 //
 
-struct MEM_API : API {
+struct SID_API : API {
 
     using API::API;
 
-    // Returns the current configuration and state
-    MemConfig getConfig() const;
-    MemInfo getInfo() const;
+    SIDConfig getConfig() const;
+    SIDInfo getInfo(isize nr) const;
+    VoiceInfo getVoiceInfo(isize nr, isize voice) const;
+    SIDStats getStats() const;
 
-    // Returns a string representations for a portion of memory
-    string memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const;
-    string txtdump(u16 addr, isize num, MemoryType src) const;
+    void rampUp();
+    void rampUpFromZero();
+    void rampDown();
 
-} mem;
+    void copyMono(float *buffer, isize n);
+    void copyStereo(float *left, float *right, isize n);
+    void copyInterleaved(float *buffer, isize n);
+
+    float draw(u32 *buffer, isize width, isize height,
+               float maxAmp, u32 color, isize sid = -1) const;
+} muxer;
 
 
 //

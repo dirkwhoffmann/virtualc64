@@ -403,14 +403,6 @@
 - (VoiceInfo)getVoiceInfo:(NSInteger)nr voice:(NSInteger)voice;
 - (SIDStats) getStats;
 
-/*
-- (double)sampleRate;
-- (void)setSampleRate:(double)rate;
-*/
-
-- (NSInteger)ringbufferSize;
-- (void)ringbufferData:(NSInteger)offset left:(float *)l right:(float *)r;
-
 - (void)copyMono:(float *)target size:(NSInteger)n;
 - (void)copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;
 - (void)copyInterleaved:(float *)target size:(NSInteger)n;

@@ -31,11 +31,12 @@ Emulator::defaults;
 Emulator::Emulator() :
 
 c64(*this),
+mem(*this),
 cpu(*this),
 cia1(*this, _c64.cia1),
 cia2(*this, _c64.cia2),
 vicii(*this),
-mem(*this),
+muxer(*this),
 dmaDebugger(*this)
 
 {
@@ -968,6 +969,39 @@ Emulator::CPU_API::dumpWord(char *str, u16 addr) const
 
 
 //
+// Memory
+//
+
+MemConfig
+Emulator::MEM_API::getConfig() const
+{
+    assert(isUserThread());
+    return emulator._c64.mem.getConfig();
+}
+
+MemInfo
+Emulator::MEM_API::getInfo() const
+{
+    assert(isUserThread());
+    return emulator._c64.mem.getInfo();
+}
+
+string
+Emulator::MEM_API::memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const
+{
+    assert(isUserThread());
+    return mem.memdump(addr, num, hex, pads, src);
+}
+
+string
+Emulator::MEM_API::txtdump(u16 addr, isize num, MemoryType src) const
+{
+    assert(isUserThread());
+    return mem.txtdump(addr, num, src);
+}
+
+
+//
 // CIAs
 //
 
@@ -1043,37 +1077,87 @@ Emulator::VICII_API::getColor(isize nr, Palette palette) const
     return vic.getColor(nr, palette);
 }
 
-
 //
-// Memory
+// SID
 //
 
-MemConfig
-Emulator::MEM_API::getConfig() const
+SIDConfig 
+Emulator::SID_API::getConfig() const
 {
     assert(isUserThread());
-    return emulator._c64.mem.getConfig();
+    return muxer.getConfig();
 }
 
-MemInfo
-Emulator::MEM_API::getInfo() const 
+SIDInfo 
+Emulator::SID_API::getInfo(isize nr) const
 {
     assert(isUserThread());
-    return emulator._c64.mem.getInfo();
+    return muxer.getInfo(nr);
 }
 
-string 
-Emulator::MEM_API::memdump(u16 addr, isize num, bool hex, isize pads, MemoryType src) const
+VoiceInfo
+Emulator::SID_API::getVoiceInfo(isize nr, isize voice) const
 {
     assert(isUserThread());
-    return mem.memdump(addr, num, hex, pads, src);
+    return muxer.getVoiceInfo(nr, voice);
 }
 
-string
-Emulator::MEM_API::txtdump(u16 addr, isize num, MemoryType src) const
+
+SIDStats
+Emulator::SID_API::getStats() const
 {
     assert(isUserThread());
-    return mem.txtdump(addr, num, src);
+    return muxer.getStats();
+}
+
+void 
+Emulator::SID_API::rampUp()
+{
+    assert(isUserThread());
+    muxer.rampUp();
+}
+
+void
+Emulator::SID_API::rampUpFromZero()
+{
+    assert(isUserThread());
+    muxer.rampUpFromZero();
+}
+
+void
+Emulator::SID_API::rampDown()
+{
+    assert(isUserThread());
+    muxer.rampDown();
+}
+
+void 
+Emulator::SID_API::copyMono(float *buffer, isize n)
+{
+    assert(isUserThread());
+    muxer.copyMono(buffer, n);
+}
+
+void 
+Emulator::SID_API::copyStereo(float *left, float *right, isize n)
+{
+    assert(isUserThread());
+    muxer.copyStereo(left, right, n);
+}
+
+void 
+Emulator::SID_API::copyInterleaved(float *buffer, isize n)
+{
+    assert(isUserThread());
+    muxer.copyInterleaved(buffer, n);
+}
+
+float
+Emulator::SID_API::draw(u32 *buffer, isize width, isize height,
+                        float maxAmp, u32 color, isize sid) const
+{
+    assert(isUserThread());
+    return muxer.draw(buffer, width, height, maxAmp, color, sid);
 }
 
 

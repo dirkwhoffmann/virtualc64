@@ -327,16 +327,19 @@ Thread::changeStateTo(EmulatorState requestedState)
     assert(!isEmulatorThread());
     assert(stateChangeRequest.test() == false);
 
-    // Assign new state
-    newState = requestedState;
+    if (requestedState != state) {
 
-    // Request the change
-    stateChangeRequest.test_and_set();
-    assert(stateChangeRequest.test() == true);
+        // Assign new state
+        newState = requestedState;
 
-    // Wait until the change has been performed
-    stateChangeRequest.wait(true);
-    assert(stateChangeRequest.test() == false);
+        // Request the change
+        stateChangeRequest.test_and_set();
+        assert(stateChangeRequest.test() == true);
+
+        // Wait until the change has been performed
+        stateChangeRequest.wait(true);
+        assert(stateChangeRequest.test() == false);
+    }
 }
 
 void

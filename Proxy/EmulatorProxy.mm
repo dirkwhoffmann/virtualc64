@@ -566,9 +566,9 @@ using namespace vc64;
 
 @implementation SIDProxy
 
-- (Muxer *)bridge
+- (Emulator::SID_API *)bridge
 {
-    return (Muxer *)obj;
+    return (Emulator::SID_API *)obj;
 }
 
 - (SIDInfo)getInfo:(NSInteger)nr
@@ -584,26 +584,6 @@ using namespace vc64;
 - (SIDStats)getStats
 {
     return [self bridge]->getStats();
-}
-
-- (double)sampleRate
-{
-    return [self bridge]->getSampleRate();
-}
-
-- (void)setSampleRate:(double)rate
-{
-    [self bridge]->setSampleRate(rate);
-}
-
-- (NSInteger)ringbufferSize
-{
-    return [self bridge]->stream.cap();
-}
-
-- (void)ringbufferData:(NSInteger)offset left:(float *)l right:(float *)r
-{
-    [self bridge]->ringbufferData(offset, l, r);
 }
 
 - (void)copyMono:(float *)target size:(NSInteger)n
@@ -2452,7 +2432,7 @@ using namespace vc64;
     port2 = [[ControlPortProxy alloc] initWith:&emu->_c64.port2];
     recorder = [[RecorderProxy alloc] initWith:&emu->_c64.recorder];
     retroShell = [[RetroShellProxy alloc] initWith:&emu->_c64.retroShell];
-    sid = [[SIDProxy alloc] initWith:&emu->_c64.muxer];
+    sid = [[SIDProxy alloc] initWith:&emu->muxer];
     vic = [[VICIIProxy alloc] initWith:&emu->vicii];
     watchpoints = [[GuardsProxy alloc] initWith:&emu->_c64.cpu.debugger.watchpoints];
 
