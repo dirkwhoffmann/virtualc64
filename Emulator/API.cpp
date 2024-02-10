@@ -981,4 +981,44 @@ void Emulator::KBD_API::scheduleKeyReleaseAll(double delay) {
 // Deletes all pending actions and clears the keyboard matrix
 void Emulator::KBD_API::abortAutoTyping() { keyboard.abortAutoTyping(); }
 
+
+//
+// Joystick
+//
+
+void Emulator::JOYSTICK_API::trigger(GamePadAction event)
+{
+    joystick.trigger(event);
+}
+
+
+//
+// Mouse
+//
+
+bool Emulator::MOUSE_API::detectShakeXY(double x, double y)
+{
+    return mouse.detectShakeXY(x, y);
+}
+
+bool Emulator::MOUSE_API::detectShakeDxDy(double dx, double dy)
+{
+    return mouse.detectShakeDxDy(dx, dy);
+}
+
+void Emulator::MOUSE_API::setXY(double x, double y)
+{
+    mouse.setXY(x, y);
+}
+
+void Emulator::MOUSE_API::setDxDy(double dx, double dy)
+{
+    mouse.setDxDy(dx, dy);
+}
+
+void Emulator::MOUSE_API::trigger(GamePadAction event)
+{
+    mouse.trigger(event);
+}
+
 }

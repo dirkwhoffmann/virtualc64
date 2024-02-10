@@ -827,7 +827,7 @@ using namespace vc64;
 {
     if (self = [super init]) {
         
-        ControlPort *port = (ControlPort *)ref;
+        Emulator::CP_API *port = (Emulator::CP_API *)ref;
         obj = ref;
         joystick = [[JoystickProxy alloc] initWith:&port->joystick];
         mouse = [[MouseProxy alloc] initWith:&port->mouse];
@@ -835,9 +835,9 @@ using namespace vc64;
     return self;
 }
 
-- (ControlPort *)port
+- (Emulator::CP_API *)port
 {
-    return (ControlPort *)obj;
+    return (Emulator::CP_API *)obj;
 }
 
 @end
@@ -1370,9 +1370,9 @@ using namespace vc64;
 
 @implementation MouseProxy
 
-- (Mouse *)mouse
+- (Emulator::MOUSE_API *)mouse
 {
-    return (Mouse *)obj;
+    return (Emulator::MOUSE_API *)obj;
 }
 
 - (BOOL)detectShakeAbs:(NSPoint)pos
@@ -1409,9 +1409,9 @@ using namespace vc64;
 
 @implementation JoystickProxy
 
-- (Joystick *)joystick
+- (Emulator::JOYSTICK_API *)joystick
 {
-    return (Joystick *)obj;
+    return (Emulator::JOYSTICK_API *)obj;
 }
 
 - (void)trigger:(GamePadAction)event
@@ -2428,8 +2428,8 @@ using namespace vc64;
     iec = [[IECProxy alloc] initWith:&emu->_c64.iec];
     keyboard = [[KeyboardProxy alloc] initWith:&emu->keyboard];
     mem = [[MemoryProxy alloc] initWith:&emu->mem];
-    port1 = [[ControlPortProxy alloc] initWith:&emu->_c64.port1];
-    port2 = [[ControlPortProxy alloc] initWith:&emu->_c64.port2];
+    port1 = [[ControlPortProxy alloc] initWith:&emu->port1];
+    port2 = [[ControlPortProxy alloc] initWith:&emu->port2];
     recorder = [[RecorderProxy alloc] initWith:&emu->_c64.recorder];
     retroShell = [[RetroShellProxy alloc] initWith:&emu->_c64.retroShell];
     sid = [[SIDProxy alloc] initWith:&emu->muxer];

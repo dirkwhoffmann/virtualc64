@@ -38,7 +38,9 @@ cia2(*this, _c64.cia2),
 vicii(*this),
 muxer(*this),
 dmaDebugger(*this),
-keyboard(*this)
+keyboard(*this),
+port1(*this, _c64.port1),
+port2(*this, _c64.port2)
 
 {
     // trace(RUN_DEBUG, "Creating emulator\n");

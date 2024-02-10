@@ -246,3 +246,53 @@ struct KBD_API : API {
 
 } keyboard;
 
+
+//
+// Joystick
+//
+
+struct JOYSTICK_API : API {
+
+    Joystick &joystick;
+    JOYSTICK_API(Emulator &emu, Joystick& joystick) : API(emu), joystick(joystick) { }
+
+    // Triggers a gamepad event
+    void trigger(GamePadAction event);
+};
+
+
+//
+// Mouse
+//
+
+struct MOUSE_API : API {
+
+    Mouse &mouse;
+    MOUSE_API(Emulator &emu, Mouse& mouse) : API(emu), mouse(mouse) { }
+
+    bool detectShakeXY(double x, double y);
+    bool detectShakeDxDy(double dx, double dy);
+
+    // Emulates a mouse movement
+    void setXY(double x, double y);
+    void setDxDy(double dx, double dy);
+
+    // Triggers a gamepad event
+    void trigger(GamePadAction event);
+};
+
+
+//
+// Control port
+//
+
+struct CP_API : API {
+
+    ControlPort &port;
+    CP_API(Emulator &emu, ControlPort& port) : 
+    API(emu), port(port), joystick(emu, port.joystick), mouse(emu, port.mouse) { }
+
+    JOYSTICK_API joystick;
+    MOUSE_API mouse;
+
+} port1, port2;
