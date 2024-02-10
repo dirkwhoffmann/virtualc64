@@ -1428,9 +1428,9 @@ using namespace vc64;
 
 @implementation RecorderProxy
 
-- (Recorder *)recorder
+- (Emulator::REC_API *)recorder
 {
-    return (Recorder *)obj;
+    return (Emulator::REC_API *)obj;
 }
 
 - (NSString *)path
@@ -2430,7 +2430,7 @@ using namespace vc64;
     mem = [[MemoryProxy alloc] initWith:&emu->mem];
     port1 = [[ControlPortProxy alloc] initWith:&emu->port1];
     port2 = [[ControlPortProxy alloc] initWith:&emu->port2];
-    recorder = [[RecorderProxy alloc] initWith:&emu->_c64.recorder];
+    recorder = [[RecorderProxy alloc] initWith:&emu->recorder];
     retroShell = [[RetroShellProxy alloc] initWith:&emu->_c64.retroShell];
     sid = [[SIDProxy alloc] initWith:&emu->muxer];
     vic = [[VICIIProxy alloc] initWith:&emu->vicii];

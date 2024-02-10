@@ -296,3 +296,29 @@ struct CP_API : API {
     MOUSE_API mouse;
 
 } port1, port2;
+
+
+//
+// Recorder
+//
+
+struct REC_API : API {
+
+    using API::API;
+
+    const string getExecPath() const;
+    void setExecPath(const string &path);
+    std::vector<string> &paths() const;
+    bool available() const;
+    util::Time getDuration() const;
+    isize getFrameRate() const;
+    isize getBitRate() const;
+    isize getSampleRate() const;
+    bool isRecording() const;
+    void startRecording(isize x1, isize y1, isize x2, isize y2,
+                        isize bitRate,
+                        isize aspectX, isize aspectY);
+    void stopRecording();
+    bool exportAs(const string &path);
+
+} recorder;

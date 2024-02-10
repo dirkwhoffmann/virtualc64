@@ -1021,4 +1021,80 @@ void Emulator::MOUSE_API::trigger(GamePadAction event)
     mouse.trigger(event);
 }
 
+
+//
+// Recorder
+//
+
+const string
+Emulator::REC_API::getExecPath() const
+{
+    return FFmpeg::getExecPath();
+}
+
+void Emulator::REC_API::setExecPath(const string &path)
+{
+    FFmpeg::setExecPath(path);
+}
+
+std::vector<string> &
+Emulator::REC_API::paths() const
+{
+    return FFmpeg::paths;
+}
+
+bool
+Emulator::REC_API::available() const
+{
+    return FFmpeg::available();
+}
+
+util::Time
+Emulator::REC_API::getDuration() const
+{
+    return recorder.getDuration();
+}
+
+isize
+Emulator::REC_API::getFrameRate() const
+{
+    return recorder.getFrameRate();
+}
+
+isize Emulator::REC_API::getBitRate() const
+{
+    return recorder.getBitRate();
+}
+
+isize Emulator::REC_API::getSampleRate() const
+{
+    return recorder.getSampleRate();
+}
+
+bool
+Emulator::REC_API::isRecording() const
+{
+    return recorder.isRecording();
+}
+
+void
+Emulator::REC_API::startRecording(isize x1, isize y1, isize x2, isize y2,
+                                  isize bitRate,
+                                  isize aspectX, isize aspectY)
+{
+    recorder.startRecording(x1, y1, x2, y2, bitRate, aspectX, aspectY);
+}
+
+void 
+Emulator::REC_API::stopRecording()
+{
+    recorder.stopRecording();
+}
+
+bool 
+Emulator::REC_API::exportAs(const string &path)
+{
+    return recorder.exportAs(path);
+}
+
 }

@@ -40,7 +40,8 @@ muxer(*this),
 dmaDebugger(*this),
 keyboard(*this),
 port1(*this, _c64.port1),
-port2(*this, _c64.port2)
+port2(*this, _c64.port2),
+recorder(*this)
 
 {
     // trace(RUN_DEBUG, "Creating emulator\n");
