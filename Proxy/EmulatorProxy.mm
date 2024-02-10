@@ -668,9 +668,9 @@ using namespace vc64;
 
 @implementation KeyboardProxy
 
-- (Keyboard *)kb
+- (Emulator::KBD_API *)kb
 {
-    return (Keyboard *)obj;
+    return (Emulator::KBD_API *)obj;
 }
 
 - (BOOL)keyIsPressed:(NSInteger)nr
@@ -2426,7 +2426,7 @@ using namespace vc64;
     drive9 = [[DriveProxy alloc] initWithVC1541:&emu->_c64.drive9];
     expansionport = [[ExpansionPortProxy alloc] initWith:&emu->_c64.expansionport];
     iec = [[IECProxy alloc] initWith:&emu->_c64.iec];
-    keyboard = [[KeyboardProxy alloc] initWith:&emu->_c64.keyboard];
+    keyboard = [[KeyboardProxy alloc] initWith:&emu->keyboard];
     mem = [[MemoryProxy alloc] initWith:&emu->mem];
     port1 = [[ControlPortProxy alloc] initWith:&emu->_c64.port1];
     port2 = [[ControlPortProxy alloc] initWith:&emu->_c64.port2];

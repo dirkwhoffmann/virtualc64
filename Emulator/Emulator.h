@@ -95,29 +95,24 @@ private:
 
 
     //
-    // Querying properties
+    // Public API
     //
 
-public:
-
+private:
     
-    
-
-    //
-    // PUBLIC API
-    //
-
     struct API : Suspendable, References {
 
         class Emulator &emulator;
 
         API(Emulator& ref) : References(ref._c64), emulator(ref) { }
 
-        void suspend();
-        void resume();
+        void suspend() { emulator.suspend(); }
+        void resume() { emulator.resume(); }
 
         bool isUserThread() const { return !emulator.isEmulatorThread(); }
     };
+
+public:
 
     #include "API.h"
 
