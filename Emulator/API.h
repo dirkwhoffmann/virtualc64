@@ -49,6 +49,51 @@ struct C64_API : API {
     void hardReset();
     void softReset();
 
+    void stopAndGo();
+    void stepInto();
+    void stepOver();
+
+    InspectionTarget getInspectionTarget() const;
+    void setInspectionTarget(InspectionTarget target, Cycle trigger = 0);
+    void removeInspectionTarget();
+
+    u64 getFrame();
+
+    EventInfo getEventInfo() const;
+    EventSlotInfo getSlotInfo(isize nr) const;
+
+    void isReady();
+
+    void requestAutoSnapshot();
+    void requestUserSnapshot();
+
+    Snapshot *latestAutoSnapshot();
+    Snapshot *latestUserSnapshot();
+
+    void loadSnapshot(const Snapshot &snapshot);
+
+    void signalBrk();
+
+    RomIdentifier romIdentifier(RomType type) const;
+    const string romTitle(RomType type) const;
+    const string romSubTitle(u64 fnv) const;
+    const string romSubTitle(RomType type) const;
+    const string romRevision(RomType type) const;
+
+    bool hasRom(RomType type) const;
+    bool hasMega65Rom(RomType type) const;
+    void loadRom(const string &path);
+    void loadRom(const RomFile &file);
+    void deleteRom(RomType type);
+    void saveRom(RomType rom, const string &path);
+
+    void flash(const AnyFile &file);
+    void flash(const AnyCollection &file, isize item);
+    void flash(const FileSystem &fs, isize item);
+
+    void setAlarmAbs(Cycle trigger, i64 payload);
+    void setAlarmRel(Cycle trigger, i64 payload);
+
 } c64;
 
 
@@ -530,6 +575,8 @@ struct RSHELL_API : API {
     void press(const string &s);
 
     isize cursorRel();
+
+    void continueScript();
 
 } retroShell;
 

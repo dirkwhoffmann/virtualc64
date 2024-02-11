@@ -183,6 +183,11 @@ Muxer::setConfigItem(Option option, i64 value)
 
     switch (option) {
 
+        case OPT_HOST_SAMPLE_RATE:
+        {
+            setSampleRate(double(value));
+            return;
+        }
         case OPT_SID_POWER_SAVE:
         {
             {   SUSPENDED

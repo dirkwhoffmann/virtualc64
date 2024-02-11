@@ -22,6 +22,9 @@ namespace vc64 {
 
 class Emulator : public Thread {
 
+    // The virtual C64
+    C64 _c64 = C64(*this);
+
 public:
 
     // User default settings
@@ -29,9 +32,6 @@ public:
 
     // Information about the host system
     Host host = Host(*this);
-
-    // The virtual C64 TODO: MAKE THIS PRIVATE EVENTUALLY
-    C64 _c64 = C64(*this);
 
 private:
 

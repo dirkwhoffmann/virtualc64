@@ -37,7 +37,7 @@ Emulator::launch(const void *listener, Callback *func)
 void
 Emulator::configure(Option option, i64 value)
 {
-    debug(CNF_DEBUG, "configure(%ld, %lld)\n", option, value);
+    debug(CNF_DEBUG, "configure(%s, %lld)\n", OptionEnum::key(option), value);
 
     // The following options do not send a message to the GUI
     static std::vector<Option> quiet = {
@@ -74,8 +74,13 @@ Emulator::configure(Option option, i64 value)
             setConfigItem(option, value);
             break;
 
-        case OPT_HOST_REFRESH_RATE:
         case OPT_HOST_SAMPLE_RATE:
+
+            host.setConfigItem(option, value);
+            _c64.muxer.setConfigItem(option, value);
+            break;
+
+        case OPT_HOST_REFRESH_RATE:
         case OPT_HOST_FRAMEBUF_WIDTH:
         case OPT_HOST_FRAMEBUF_HEIGHT:
 
@@ -198,7 +203,7 @@ Emulator::configure(Option option, i64 value)
 void
 Emulator::configure(Option option, long id, i64 value)
 {
-    debug(CNF_DEBUG, "configure(%ld, %ld, %lld)\n", option, id, value);
+    debug(CNF_DEBUG, "configure(%s, %ld, %lld)\n", OptionEnum::key(option), id, value);
 
     // Check if this option has been locked for debugging
     value = overrideOption(option, value);
@@ -611,6 +616,182 @@ Emulator::C64_API::softReset()
 
         c64.reset(false);
     }
+}
+
+void 
+Emulator::C64_API::stopAndGo()
+{
+    c64.stopAndGo();
+}
+
+void
+Emulator::C64_API::stepInto()
+{
+    c64.stepInto();
+}
+
+void
+Emulator::C64_API::stepOver()
+{
+    c64.stepOver();
+}
+
+InspectionTarget
+Emulator::C64_API::getInspectionTarget() const
+{
+    return c64.getInspectionTarget();
+}
+
+void
+Emulator::C64_API::setInspectionTarget(InspectionTarget target, Cycle trigger)
+{
+    c64.setInspectionTarget(target, trigger);
+}
+
+void
+Emulator::C64_API::removeInspectionTarget()
+{
+    c64.removeInspectionTarget();
+}
+
+u64 
+Emulator::C64_API::getFrame()
+{
+    return c64.frame;
+}
+
+EventInfo
+Emulator::C64_API::getEventInfo() const
+{
+    return c64.getEventInfo();
+}
+
+EventSlotInfo
+Emulator::C64_API::getSlotInfo(isize nr) const
+{
+    return c64.getSlotInfo(nr);
+}
+
+void 
+Emulator::C64_API::isReady()
+{
+    c64.isReady();
+}
+
+void 
+Emulator::C64_API::requestAutoSnapshot()
+{
+    c64.requestAutoSnapshot();
+}
+
+void 
+Emulator::C64_API::requestUserSnapshot()
+{
+    c64.requestUserSnapshot();
+}
+
+Snapshot *
+Emulator::C64_API::latestAutoSnapshot()
+{
+    return c64.latestAutoSnapshot();
+}
+
+Snapshot *
+Emulator::C64_API::latestUserSnapshot()
+{
+    return c64.latestUserSnapshot();
+}
+
+void 
+Emulator::C64_API::loadSnapshot(const Snapshot &snapshot)
+{
+    c64.loadSnapshot(snapshot);
+}
+
+void 
+Emulator::C64_API::signalBrk()
+{
+    c64.signalBrk();
+}
+
+RomIdentifier Emulator::C64_API::romIdentifier(RomType type) const
+{
+    return c64.romIdentifier(type);
+}
+
+const string Emulator::C64_API::romTitle(RomType type) const
+{
+    return c64.romTitle(type);
+}
+
+const string Emulator::C64_API::romSubTitle(u64 fnv) const
+{
+    return c64.romSubTitle(fnv);
+}
+
+const string Emulator::C64_API::romSubTitle(RomType type) const
+{
+    return c64.romSubTitle(type);
+}
+
+const string Emulator::C64_API::romRevision(RomType type) const
+{
+    return c64.romRevision(type);
+}
+
+bool Emulator::C64_API::hasRom(RomType type) const
+{
+    return c64.hasRom(type);
+}
+
+bool Emulator::C64_API::hasMega65Rom(RomType type) const
+{
+    return c64.hasMega65Rom(type);
+}
+
+void Emulator::C64_API::loadRom(const string &path)
+{
+    c64.loadRom(path);
+}
+
+void Emulator::C64_API::loadRom(const RomFile &file)
+{
+    c64.loadRom(file);
+}
+
+void Emulator::C64_API::deleteRom(RomType type)
+{
+    c64.deleteRom(type);
+}
+
+void Emulator::C64_API::saveRom(RomType rom, const string &path)
+{
+    c64.saveRom(rom, path);
+}
+
+void Emulator::C64_API::flash(const AnyFile &file)
+{
+    c64.flash(file);
+}
+
+void Emulator::C64_API::flash(const AnyCollection &file, isize item)
+{
+    c64.flash(file, item);
+}
+
+void Emulator::C64_API::flash(const FileSystem &fs, isize item)
+{
+    c64.flash(fs, item);
+}
+
+void Emulator::C64_API::setAlarmAbs(Cycle trigger, i64 payload)
+{
+    c64.setAlarmAbs(trigger, payload);
+}
+
+void Emulator::C64_API::setAlarmRel(Cycle trigger, i64 payload)
+{
+    c64.setAlarmRel(trigger, payload);
 }
 
 
@@ -1301,6 +1482,12 @@ isize
 Emulator::RSHELL_API::cursorRel()
 {
     return retroShell.cursorRel();
+}
+
+void 
+Emulator::RSHELL_API::continueScript()
+{
+    return retroShell.continueScript();
 }
 
 

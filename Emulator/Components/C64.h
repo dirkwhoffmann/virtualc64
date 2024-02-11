@@ -269,6 +269,7 @@ public:
 
 private:
 
+    void initialize();
     void _initialize() override;
     void _reset(bool hard) override;
 

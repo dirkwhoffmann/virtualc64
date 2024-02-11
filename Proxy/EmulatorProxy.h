@@ -170,7 +170,6 @@
 
 @property InspectionTarget inspectionTarget;
 - (void) removeInspectionTarget;
-- (void)inspect;
 
 @property (readonly) EventInfo eventInfo;
 - (EventSlotInfo)getEventSlotInfo:(NSInteger)slot;
@@ -211,8 +210,6 @@
 - (BOOL)configure:(Option)opt drive:(NSInteger)id value:(NSInteger)val;
 - (BOOL)configure:(Option)opt drive:(NSInteger)id enable:(BOOL)val;
 - (void)configure:(C64Model)value;
-
-- (void)setListener:(const void *)sender function:(Callback *)func;
 
 - (void)wakeUp;
 

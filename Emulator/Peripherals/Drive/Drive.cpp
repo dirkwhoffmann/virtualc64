@@ -115,11 +115,9 @@ Drive::resetConfig()
         if (option == OPT_DRV_CONNECT && !canConnect()) {
 
             setConfigItem(option, false);
-            setConfigItem(option, false);
 
         } else {
 
-            setConfigItem(option, defaults.get(option, deviceNr));
             setConfigItem(option, defaults.get(option, deviceNr));
         }
     }
@@ -154,6 +152,8 @@ Drive::getConfigItem(Option option) const
 void
 Drive::setConfigItem(Option option, i64 value)
 {
+    debug(true, "%s, %ld\n", OptionEnum::key(option), value);
+
     switch (option) {
 
         case OPT_DRV_AUTO_CONFIG:

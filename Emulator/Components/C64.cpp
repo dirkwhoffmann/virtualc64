@@ -225,11 +225,9 @@ C64::reset(bool hard)
     msgQueue.put(MSG_RESET);
 }
 
-void
-C64::_initialize()
+void 
+C64::initialize()
 {
-    CoreComponent::_initialize();
-
     auto load = [&](const string &path) {
 
         msg("Trying to load Rom from %s...\n", path.c_str());
@@ -243,6 +241,14 @@ C64::_initialize()
     if (auto path = Emulator::defaults.getString("CHAR_PATH");   path != "") load(path);
     if (auto path = Emulator::defaults.getString("KERNAL_PATH"); path != "") load(path);
     if (auto path = Emulator::defaults.getString("VC1541_PATH"); path != "") load(path);
+
+    CoreComponent::initialize();
+}
+
+void
+C64::_initialize()
+{
+    CoreComponent::_initialize();
 }
 
 void

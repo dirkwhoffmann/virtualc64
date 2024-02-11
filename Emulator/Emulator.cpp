@@ -50,8 +50,7 @@ drive9(*this, _c64.drive9),
 retroShell(*this)
 
 {
-    // trace(RUN_DEBUG, "Creating emulator\n");
-    resetConfig(); // TODO: DELETE (MAKE SURE initialize() IS CALLED)
+
 }
 
 Emulator::~Emulator()

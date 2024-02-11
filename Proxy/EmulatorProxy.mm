@@ -2430,11 +2430,6 @@ using namespace vc64;
     return (Emulator *)obj;
 }
 
-- (C64 *)c64
-{
-    return &((Emulator *)obj)->_c64;
-}
-
 + (DefaultsProxy *) defaults
 {
     return [[DefaultsProxy alloc] initWith:&Emulator::defaults];
@@ -2459,72 +2454,67 @@ using namespace vc64;
 
 - (NSInteger)frame
 {
-    return [self c64]->frame;
+    return [self emu]->c64.getFrame();
 }
 
 - (BOOL)warpMode
 {
-    return [self c64]->emulator.isWarping();
+    return [self emu]->isWarping();
 }
 
 - (void)setWarpMode:(BOOL)enable
 {
-    enable ? [self c64]->emulator.warpOn() : [self c64]->emulator.warpOff();
+    enable ? [self emu]->warpOn() : [self emu]->warpOff();
 }
 
 - (BOOL)trackMode
 {
-    return [self c64]->emulator.isTracking();
+    return [self emu]->isTracking();
 }
 
 - (void)setTrackMode:(BOOL)value
 {
     if (value) {
-        [self c64]->emulator.trackOn();
+        [self emu]->trackOn();
     } else {
-        [self c64]->emulator.trackOff();
+        [self emu]->trackOff();
     }
 }
 
 - (NSInteger)cpuLoad
 {
-    double load = [self c64]->emulator.getCpuLoad();
+    double load = [self emu]->getCpuLoad();
     return (NSInteger)(100 * load);
 }
 
 - (InspectionTarget)inspectionTarget
 {
-    return [self c64]->getInspectionTarget();
+    return [self emu]->c64.getInspectionTarget();
 }
 
 - (void)setInspectionTarget:(InspectionTarget)target
 {
-    [self c64]->setInspectionTarget(target);
+    [self emu]->c64.setInspectionTarget(target);
 }
 
 - (void) removeInspectionTarget
 {
-    [self c64]->removeInspectionTarget();
-}
-
-- (void)inspect
-{
-    [self c64]->inspect();
+    [self emu]->c64.removeInspectionTarget();
 }
 
 - (EventInfo)eventInfo
 {
-    return [self c64]->getEventInfo();
+    return [self emu]->c64.getEventInfo();
 }
 
 - (EventSlotInfo)getEventSlotInfo:(NSInteger)slot
 {
-    return [self c64]->getSlotInfo(slot);
+    return [self emu]->c64.getSlotInfo(slot);
 }
 
 - (void)launch:(const void *)listener function:(Callback *)func
 {
-    [self c64]->emulator.launch(listener, func);
+    [self emu]->launch(listener, func);
 }
 
 - (void)hardReset
@@ -2539,91 +2529,91 @@ using namespace vc64;
 
 - (void)isReady:(ExceptionWrapper *)ex
 {
-    try { [self c64]->isReady(); }
+    try { [self emu]->c64.isReady(); }
     catch (VC64Error &error) { [ex save:error]; }
 }
 
 - (void)powerOn:(ExceptionWrapper *)ex
 {
-    try { [self c64]->emulator.powerOn(); }
+    try { [self emu]->powerOn(); }
     catch (VC64Error &error) { [ex save:error]; }
 }
 
 - (void)powerOff
 {
-    [self c64]->emulator.powerOff();
+    [self emu]->powerOff();
 }
 
 - (BOOL)poweredOn
 {
-    return [self c64]->emulator.isPoweredOn();
+    return [self emu]->isPoweredOn();
 }
 
 - (BOOL)poweredOff
 {
-    return [self c64]->emulator.isPoweredOff();
+    return [self emu]->isPoweredOff();
 }
 
 - (BOOL)running
 {
-    return [self c64]->emulator.isRunning();
+    return [self emu]->isRunning();
 }
 
 - (BOOL)paused
 {
-    return [self c64]->emulator.isPaused();
+    return [self emu]->isPaused();
 }
 
 - (void)run:(ExceptionWrapper *)e
 {
-    try { [self c64]->emulator.run(); }
+    try { [self emu]->run(); }
     catch (VC64Error &error) { [e save:error]; }
 }
 
 - (void)pause
 {
-    [self c64]->emulator.pause();
+    [self emu]->pause();
 }
 
 - (void)halt
 {
-    [self c64]->emulator.halt();
+    [self emu]->halt();
 }
 
 - (void)suspend
 {
-    [self c64]->emulator.suspend();
+    [self emu]->suspend();
 }
 
 - (void)resume
 {
-    [self c64]->emulator.resume();
+    [self emu]->resume();
 }
 
 - (void)continueScript
 {
-    [self c64]->retroShell.continueScript();
+    [self emu]->retroShell.continueScript();
 }
 
 - (void)requestAutoSnapshot
 {
-    [self c64]->requestAutoSnapshot();
+    [self emu]->c64.requestAutoSnapshot();
 }
 
 - (void)requestUserSnapshot
 {
-    [self c64]->requestUserSnapshot();
+    [self emu]->c64.requestUserSnapshot();
 }
 
 - (SnapshotProxy *)latestAutoSnapshot
 {
-    Snapshot *snapshot = [self c64]->latestAutoSnapshot();
+    Snapshot *snapshot = [self emu]->c64.latestAutoSnapshot();
     return [SnapshotProxy make:snapshot];
 }
 
 - (SnapshotProxy *)latestUserSnapshot
 {
-    Snapshot *snapshot = [self c64]->latestUserSnapshot();
+    Snapshot *snapshot = [self emu]->c64.latestUserSnapshot();
     return [SnapshotProxy make:snapshot];
 }
 
@@ -2707,44 +2697,39 @@ using namespace vc64;
     [self emu]->configure(model);
 }
 
-- (void)setListener:(const void *)sender function:(Callback *)func
-{
-    [self c64]->msgQueue.setListener(sender, func);
-}
-
 - (void)wakeUp
 {
-    [self c64]->emulator.wakeUp();
+    [self emu]->wakeUp();
 }
 
 - (void)stopAndGo
 {
-    [self c64]-> stopAndGo();
+    [self emu]->c64.stopAndGo();
 }
 
 - (void)stepInto
 {
-    [self c64]->stepInto();
+    [self emu]->c64.stepInto();
 }
 
 - (void)stepOver
 {
-    [self c64]->stepOver();
+    [self emu]->c64.stepOver();
 }
 
 - (void)signalBrk
 {
-    [self c64]->signalBrk();
+    [self emu]->c64.signalBrk();
 }
 
 - (BOOL) hasRom:(RomType)type
 {
-    return [self c64]->hasRom(type);
+    return [self emu]->c64.hasRom(type);
 }
 
 - (BOOL)hasMega65Rom:(RomType)type
 {
-    return [self c64]->hasMega65Rom(type);
+    return [self emu]->c64.hasMega65Rom(type);
 }
 
 - (BOOL) isRom:(RomType)type url:(NSURL *)url
@@ -2754,104 +2739,104 @@ using namespace vc64;
 
 - (void) loadRom:(NSURL *)url exception:(ExceptionWrapper *)e
 {
-    try { [self c64]->loadRom(string([url fileSystemRepresentation])); }
+    try { [self emu]->c64.loadRom(string([url fileSystemRepresentation])); }
     catch (VC64Error &error) { [e save:error]; }
 }
 
 - (void) loadRom:(RomFileProxy *)proxy
 {
-    [self c64]->loadRom(*(RomFile *)proxy->obj);
+    [self emu]->c64.loadRom(*(RomFile *)proxy->obj);
 }
 
 - (void) saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)e
 {
-    try { [self c64]->saveRom(type, string([url fileSystemRepresentation])); }
+    try { [self emu]->c64.saveRom(type, string([url fileSystemRepresentation])); }
     catch (VC64Error &error) { [e save:error]; }
 }
 
 - (void) deleteRom:(RomType)type
 {
-    [self c64]->deleteRom(type);
+    [self emu]->c64.deleteRom(type);
 }
 
 - (RomIdentifier)romIdentifier:(RomType)type
 {
-    return [self c64]->romIdentifier(type);
+    return [self emu]->c64.romIdentifier(type);
 }
 
 - (NSString *)romTitle:(RomType)type
 {
-    return @([self c64]->romTitle(type).c_str());
+    return @([self emu]->c64.romTitle(type).c_str());
 }
 
 - (NSString *)basicRomTitle
 {
-    return @([self c64]->romTitle(ROM_TYPE_BASIC).c_str());
+    return @([self emu]->c64.romTitle(ROM_TYPE_BASIC).c_str());
 }
 
 - (NSString *)charRomTitle
 {
-    return @([self c64]->romTitle(ROM_TYPE_CHAR).c_str());
+    return @([self emu]->c64.romTitle(ROM_TYPE_CHAR).c_str());
 }
 
 - (NSString *)kernalRomTitle
 {
-    return @([self c64]->romTitle(ROM_TYPE_KERNAL).c_str());
+    return @([self emu]->c64.romTitle(ROM_TYPE_KERNAL).c_str());
 }
 
 - (NSString *)vc1541RomTitle
 {
-    return @([self c64]->romTitle(ROM_TYPE_VC1541).c_str());
+    return @([self emu]->c64.romTitle(ROM_TYPE_VC1541).c_str());
 }
 
 - (NSString *)romSubTitle:(RomType)type
 {
-    return @([self c64]->romSubTitle(type).c_str());
+    return @([self emu]->c64.romSubTitle(type).c_str());
 }
 
 - (NSString *)basicRomSubTitle
 {
-    return @([self c64]->romSubTitle(ROM_TYPE_BASIC).c_str());
+    return @([self emu]->c64.romSubTitle(ROM_TYPE_BASIC).c_str());
 }
 
 - (NSString *)charRomSubTitle
 {
-    return @([self c64]->romSubTitle(ROM_TYPE_CHAR).c_str());
+    return @([self emu]->c64.romSubTitle(ROM_TYPE_CHAR).c_str());
 }
 
 - (NSString *)kernalRomSubTitle
 {
-    return @([self c64]->romSubTitle(ROM_TYPE_KERNAL).c_str());
+    return @([self emu]->c64.romSubTitle(ROM_TYPE_KERNAL).c_str());
 }
 
 - (NSString *)vc1541RomSubTitle
 {
-    return @([self c64]->romSubTitle(ROM_TYPE_VC1541).c_str());
+    return @([self emu]->c64.romSubTitle(ROM_TYPE_VC1541).c_str());
 }
 
 - (NSString *)romRevision:(RomType)type
 {
-    return @([self c64]->romRevision(type).c_str());
+    return @([self emu]->c64.romRevision(type).c_str());
 }
 
 - (NSString *)basicRomRevision
 {
-    return @([self c64]->romRevision(ROM_TYPE_BASIC).c_str());
+    return @([self emu]->c64.romRevision(ROM_TYPE_BASIC).c_str());
 }
 
 - (NSString *)charRomRevision
 {
-    return @([self c64]->romRevision(ROM_TYPE_CHAR).c_str());
+    return @([self emu]->c64.romRevision(ROM_TYPE_CHAR).c_str());
 }
 
 - (NSString *)kernalRomRevision
 {
-    return @([self c64]->romRevision(ROM_TYPE_KERNAL).c_str());
+    return @([self emu]->c64.romRevision(ROM_TYPE_KERNAL).c_str());
 }
 
 - (NSString *)vc1541RomRevision
 {
-    return @([self c64]->romRevision(ROM_TYPE_VC1541).c_str());
+    return @([self emu]->c64.romRevision(ROM_TYPE_VC1541).c_str());
 }
 
 - (BOOL)isCommodoreRom:(RomIdentifier)rev
@@ -2866,24 +2851,24 @@ using namespace vc64;
 
 - (void)flash:(AnyFileProxy *)proxy exception:(ExceptionWrapper *)ex
 {
-    try { [self c64]->flash(*(AnyFile *)proxy->obj); }
+    try { [self emu]->c64.flash(*(AnyFile *)proxy->obj); }
     catch (VC64Error &error) { [ex save:error]; }
 }
 
 - (void)flash:(FileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex
 {
-    try { [self c64]->flash(*(FileSystem *)proxy->obj, (unsigned)nr); }
+    try { [self emu]->c64.flash(*(FileSystem *)proxy->obj, (unsigned)nr); }
     catch (VC64Error &error) { [ex save:error]; }
 }
 
 - (void)setAlarmAbs:(NSInteger)cycle payload:(NSInteger)value
 {
-    [self c64]->setAlarmAbs(cycle, value);
+    [self emu]->c64.setAlarmAbs(cycle, value);
 }
 
 - (void)setAlarmRel:(NSInteger)cycle payload:(NSInteger)value
 {
-    [self c64]->setAlarmRel(cycle, value);
+    [self emu]->c64.setAlarmRel(cycle, value);
 }
 
 @end

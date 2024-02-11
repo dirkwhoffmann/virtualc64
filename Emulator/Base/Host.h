@@ -81,8 +81,10 @@ public:
 
 public:
 
+    /*
     double getSampleRate() const { return sampleRate; }
     void setSampleRate(double hz);
+    */
 
     double getHostRefreshRate() const { return refreshRate; }
     void setHostRefreshRate(double fps);
