@@ -86,45 +86,4 @@ Host::_dump(Category category, std::ostream& os) const
     }
 }
 
-/*
-void
-Host::setSampleRate(double hz)
-{
-    sampleRate = hz;
-    emulator._c64.muxer.setSampleRate(hz);
-}
-*/
-
-void
-Host::setHostRefreshRate(double fps)
-{
-    switch (i16(fps)) {
-
-        case 50: case 60: case 100: case 120: case 200: case 240:
-
-            refreshRate = fps;
-            // muxer.adjustSpeed();
-            break;
-
-        default:
-
-            // We keep the old value because the new value is likely the result
-            // of a wrong measurement.
-            break;
-    }
-}
-
-std::pair<isize, isize>
-Host::getFrameBufferSize() const
-{
-    return std::pair<isize, isize>(frameBufferWidth, frameBufferHeight);
-}
-
-void
-Host::setFrameBufferSize(std::pair<isize, isize> size)
-{
-    frameBufferWidth = size.first;
-    frameBufferHeight = size.second;
-}
-
 }

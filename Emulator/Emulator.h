@@ -25,6 +25,9 @@ class Emulator : public Thread {
     // The virtual C64
     C64 _c64 = C64(*this);
 
+    // The current configuration
+    EmulatorConfig config = {};
+
 public:
 
     // User default settings
@@ -33,12 +36,7 @@ public:
     // Information about the host system
     Host host = Host(*this);
 
-private:
-
-    // The current configuration
-    EmulatorConfig config = {};
-
-
+    
     //
     // Initializing
     //

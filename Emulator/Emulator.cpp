@@ -217,7 +217,7 @@ Emulator::refreshRate() const
 {
     if (config.vsync) {
 
-        return host.getHostRefreshRate();
+        return double(host.getConfigItem(OPT_HOST_REFRESH_RATE));
 
     } else {
 

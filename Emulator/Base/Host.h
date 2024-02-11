@@ -73,25 +73,6 @@ public:
 
     i64 getConfigItem(Option option) const;
     void setConfigItem(Option option, i64 value);
-
-
-    //
-    // Accessing properties
-    //
-
-public:
-
-    /*
-    double getSampleRate() const { return sampleRate; }
-    void setSampleRate(double hz);
-    */
-
-    double getHostRefreshRate() const { return refreshRate; }
-    void setHostRefreshRate(double fps);
-
-    std::pair<isize, isize> getFrameBufferSize() const;
-    void setFrameBufferSize(std::pair<isize, isize> size);
-
 };
 
 }
