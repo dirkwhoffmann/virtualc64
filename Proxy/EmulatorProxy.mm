@@ -10,7 +10,6 @@
 #import "config.h"
 #import "EmulatorProxy.h"
 #import "Emulator.h"
-// #import "C64.h"
 #import "C64Key.h"
 #import "VirtualC64-Swift.h"
 #import "Script.h"
@@ -849,9 +848,9 @@ using namespace vc64;
 
 @implementation ExpansionPortProxy
 
-- (ExpansionPort *)eport
+- (Emulator::EXP_PORT_API *)eport
 {
-    return (ExpansionPort *)obj;
+    return (Emulator::EXP_PORT_API *)obj;
 }
 
 - (CartridgeType)cartridgeType
@@ -1521,12 +1520,12 @@ using namespace vc64;
 
 @implementation RetroShellProxy
 
-- (RetroShell *)shell
+- (Emulator::RSHELL_API *)shell
 {
-    return (RetroShell *)obj;
+    return (Emulator::RSHELL_API *)obj;
 }
 
-+ (instancetype)make:(RetroShell *)shell
++ (instancetype)make:(Emulator::RSHELL_API *)shell
 {
     if (shell == nullptr) { return nil; }
     
@@ -2424,14 +2423,14 @@ using namespace vc64;
     dmaDebugger = [[DmaDebuggerProxy alloc] initWith:&emu->dmaDebugger];
     drive8 = [[DriveProxy alloc] initWithVC1541:&emu->_c64.drive8];
     drive9 = [[DriveProxy alloc] initWithVC1541:&emu->_c64.drive9];
-    expansionport = [[ExpansionPortProxy alloc] initWith:&emu->_c64.expansionport];
+    expansionport = [[ExpansionPortProxy alloc] initWith:&emu->expansionport];
     iec = [[IECProxy alloc] initWith:&emu->_c64.iec];
     keyboard = [[KeyboardProxy alloc] initWith:&emu->keyboard];
     mem = [[MemoryProxy alloc] initWith:&emu->mem];
     port1 = [[ControlPortProxy alloc] initWith:&emu->port1];
     port2 = [[ControlPortProxy alloc] initWith:&emu->port2];
     recorder = [[RecorderProxy alloc] initWith:&emu->recorder];
-    retroShell = [[RetroShellProxy alloc] initWith:&emu->_c64.retroShell];
+    retroShell = [[RetroShellProxy alloc] initWith:&emu->retroShell];
     sid = [[SIDProxy alloc] initWith:&emu->muxer];
     vic = [[VICIIProxy alloc] initWith:&emu->vicii];
     watchpoints = [[GuardsProxy alloc] initWith:&emu->_c64.cpu.debugger.watchpoints];

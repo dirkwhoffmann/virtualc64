@@ -1097,4 +1097,226 @@ Emulator::REC_API::exportAs(const string &path)
     return recorder.exportAs(path);
 }
 
+
+const char *
+Emulator::RSHELL_API::text()
+{
+    return retroShell.text();
+}
+
+void 
+Emulator::RSHELL_API::press(RetroShellKey key, bool shift)
+{
+    retroShell.press(key, shift); 
+}
+
+void 
+Emulator::RSHELL_API::press(char c)
+{
+    retroShell.press(c);
+}
+
+void 
+Emulator::RSHELL_API::press(const string &s)
+{
+    retroShell.press(s);
+}
+
+isize 
+Emulator::RSHELL_API::cursorRel()
+{
+    return retroShell.cursorRel();
+}
+
+
+//
+// Expansion port
+//
+
+CartridgeInfo
+Emulator::EXP_PORT_API::getInfo() const
+{
+    return expansionport.getInfo();
+}
+
+CartridgeRomInfo 
+Emulator::EXP_PORT_API::getRomInfo(isize nr) const
+{
+    return expansionport.getRomInfo(nr);
+}
+
+CartridgeType 
+Emulator::EXP_PORT_API::getCartridgeType() const
+{
+    return expansionport.getCartridgeType();
+}
+
+bool 
+Emulator::EXP_PORT_API::getCartridgeAttached() const
+{
+    return expansionport.getCartridgeAttached();
+}
+
+void 
+Emulator::EXP_PORT_API::attachCartridge(const string &path, bool reset)
+{
+    expansionport.attachCartridge(path, reset);
+}
+
+void 
+Emulator::EXP_PORT_API::attachCartridge(CRTFile *c, bool reset)
+{
+    expansionport.attachCartridge(c, reset);
+}
+
+void 
+Emulator::EXP_PORT_API::attachCartridge(Cartridge *c)
+{
+    expansionport.attachCartridge(c);
+}
+
+void 
+Emulator::EXP_PORT_API::attachReu(isize capacity)
+{
+    expansionport.attachReu(capacity);
+}
+
+void 
+Emulator::EXP_PORT_API::attachGeoRam(isize capacity)
+{
+    expansionport.attachGeoRam(capacity);
+}
+
+void 
+Emulator::EXP_PORT_API::attachIsepicCartridge()
+{
+    expansionport.attachIsepicCartridge();
+}
+
+void 
+Emulator::EXP_PORT_API::detachCartridge()
+{
+    expansionport.detachCartridge();
+}
+
+void 
+Emulator::EXP_PORT_API::detachCartridgeAndReset()
+{
+    expansionport.detachCartridgeAndReset();
+}
+
+isize 
+Emulator::EXP_PORT_API::numButtons() const
+{
+    return expansionport.numButtons();
+}
+
+const 
+string Emulator::EXP_PORT_API::getButtonTitle(isize nr) const
+{
+    return expansionport.getButtonTitle(nr);
+}
+
+void 
+Emulator::EXP_PORT_API::pressButton(isize nr)
+{
+    return expansionport.pressButton(nr);
+}
+
+void 
+Emulator::EXP_PORT_API::releaseButton(isize nr)
+{
+    return expansionport.releaseButton(nr);
+}
+
+bool 
+Emulator::EXP_PORT_API::hasSwitch() const
+{
+    return expansionport.hasSwitch();
+}
+
+isize 
+Emulator::EXP_PORT_API::getSwitch() const
+{
+    return expansionport.getSwitch();
+}
+
+bool 
+Emulator::EXP_PORT_API::switchIsNeutral() const
+{
+    return expansionport.switchIsNeutral();
+}
+
+bool 
+Emulator::EXP_PORT_API::switchIsLeft() const
+{
+    return expansionport.switchIsLeft();
+}
+
+bool 
+Emulator::EXP_PORT_API::switchIsRight() const
+{
+    return expansionport.switchIsRight();
+}
+
+const string 
+Emulator::EXP_PORT_API::getSwitchDescription(isize pos) const
+{
+    return expansionport.getSwitchDescription(pos);
+}
+
+const string
+Emulator::EXP_PORT_API::getSwitchDescription() const
+{
+    return expansionport.getSwitchDescription();
+}
+
+bool 
+Emulator::EXP_PORT_API::validSwitchPosition(isize pos) const
+{
+    return expansionport.validSwitchPosition(pos);
+}
+
+void 
+Emulator::EXP_PORT_API::setSwitch(isize pos)
+{
+    return expansionport.setSwitch(pos);
+}
+
+bool 
+Emulator::EXP_PORT_API::hasLED() const
+{
+    return expansionport.hasLED();
+}
+
+bool 
+Emulator::EXP_PORT_API::getLED() const
+{
+    return expansionport.getLED();
+}
+
+void 
+Emulator::EXP_PORT_API::setLED(bool value)
+{
+    return expansionport.setLED(value);
+}
+
+isize 
+Emulator::EXP_PORT_API::getRamCapacity() const
+{
+    return expansionport.getRamCapacity();
+}
+
+bool 
+Emulator::EXP_PORT_API::hasBattery() const
+{
+    return expansionport.hasBattery();
+}
+
+void 
+Emulator::EXP_PORT_API::setBattery(bool value)
+{
+    expansionport.setLED(value);
+}
+
 }

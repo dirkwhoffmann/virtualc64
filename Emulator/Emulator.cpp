@@ -41,7 +41,9 @@ dmaDebugger(*this),
 keyboard(*this),
 port1(*this, _c64.port1),
 port2(*this, _c64.port2),
-recorder(*this)
+recorder(*this),
+expansionport(*this),
+retroShell(*this)
 
 {
     // trace(RUN_DEBUG, "Creating emulator\n");
