@@ -1292,9 +1292,9 @@ using namespace vc64;
 
 @implementation DatasetteProxy
 
-- (Datasette *)datasette
+- (Emulator::DATASETTE_API *)datasette
 {
-    return (Datasette *)obj;
+    return (Emulator::DATASETTE_API *)obj;
 }
 
 - (BOOL)hasTape
@@ -2406,7 +2406,7 @@ using namespace vc64;
     cia1 = [[CIAProxy alloc] initWith:&emu->cia1];
     cia2 = [[CIAProxy alloc] initWith:&emu->cia2];
     cpu = [[CPUProxy alloc] initWith:&emu->cpu];
-    datasette = [[DatasetteProxy alloc] initWith:&emu->_c64.datasette];
+    datasette = [[DatasetteProxy alloc] initWith:&emu->datasette];
     dmaDebugger = [[DmaDebuggerProxy alloc] initWith:&emu->dmaDebugger];
     drive8 = [[DriveProxy alloc] initWithVC1541:&emu->drive8];
     drive9 = [[DriveProxy alloc] initWithVC1541:&emu->drive9];

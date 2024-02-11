@@ -1112,6 +1112,62 @@ void Emulator::JOYSTICK_API::trigger(GamePadAction event)
 
 
 //
+// Datasette
+//
+
+bool 
+Emulator::DATASETTE_API::hasTape() const
+{
+    return datasette.hasTape();
+}
+
+isize Emulator::DATASETTE_API::getCounter() const
+{
+    return datasette.getCounter();
+}
+
+void Emulator::DATASETTE_API::insertTape(TAPFile &file)
+{
+    datasette.insertTape(file);
+}
+
+void Emulator::DATASETTE_API::ejectTape()
+{
+    datasette.ejectTape();
+}
+
+u8 Emulator::DATASETTE_API::getType() const
+{
+    return datasette.getType();
+}
+
+bool Emulator::DATASETTE_API::getMotor() const
+{
+    return datasette.getMotor();
+}
+
+bool Emulator::DATASETTE_API::getPlayKey() const
+{
+    return datasette.getPlayKey();
+}
+
+void Emulator::DATASETTE_API::pressPlay()
+{
+    datasette.pressPlay();
+}
+
+void Emulator::DATASETTE_API::pressStop()
+{
+    datasette.pressStop();
+}
+
+void Emulator::DATASETTE_API::rewind(isize seconds)
+{
+    datasette.rewind(seconds);
+}
+
+
+//
 // Mouse
 //
 

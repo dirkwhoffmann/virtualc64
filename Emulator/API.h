@@ -293,20 +293,6 @@ struct KBD_API : API {
 
 
 //
-// Joystick
-//
-
-struct JOYSTICK_API : API {
-
-    Joystick &joystick;
-    JOYSTICK_API(Emulator &emu, Joystick& joystick) : API(emu), joystick(joystick) { }
-
-    // Triggers a gamepad event
-    void trigger(GamePadAction event);
-};
-
-
-//
 // Mouse
 //
 
@@ -325,6 +311,42 @@ struct MOUSE_API : API {
     // Triggers a gamepad event
     void trigger(GamePadAction event);
 };
+
+
+//
+// Joystick
+//
+
+struct JOYSTICK_API : API {
+
+    Joystick &joystick;
+    JOYSTICK_API(Emulator &emu, Joystick& joystick) : API(emu), joystick(joystick) { }
+
+    // Triggers a gamepad event
+    void trigger(GamePadAction event);
+};
+
+
+//
+// Mouse
+//
+
+struct DATASETTE_API : API {
+
+    using API::API;
+
+    bool hasTape() const;
+    isize getCounter() const;
+    void insertTape(TAPFile &file);
+    void ejectTape();
+    u8 getType() const;
+    bool getMotor() const;
+    bool getPlayKey() const;
+    void pressPlay();
+    void pressStop();
+    void rewind(isize seconds = 0);
+
+} datasette;
 
 
 //

@@ -170,7 +170,7 @@ public:
     util::Time tapeDuration() { return tapeDuration(size); }
 
     // Returns the current tape counter in (truncated) seconds
-    isize getCounter() { return (isize)counter.asSeconds(); }
+    isize getCounter() const { return (isize)counter.asSeconds(); }
 
     //Inserts a TAP archive as a virtual tape
     void insertTape(TAPFile &file);
