@@ -648,9 +648,9 @@ using namespace vc64;
 
 @implementation IECProxy
 
-- (IEC *)iec
+- (Emulator::IEC_API *)iec
 {
-    return (IEC *)obj;
+    return (Emulator::IEC_API *)obj;
 }
 
 - (BOOL)transferring
@@ -1003,14 +1003,14 @@ using namespace vc64;
 
 @implementation DiskProxy
 
-- (Drive *)drive
+- (Emulator::DRIVE_API *)drive
 {
-    return (Drive *)obj;
+    return (Emulator::DRIVE_API *)obj;
 }
 
-- (Disk *)disk
+- (Emulator::DISK_API *)disk
 {
-    return [self drive]->disk.get();
+    return &[self drive]->disk; // .get();
 }
 
 - (BOOL)writeProtected
@@ -1047,8 +1047,9 @@ using namespace vc64;
     NSLog(@"DiskAnalyzerProxy::initWithDisk");
     
     if (!(self = [super init])) return self;
-    obj = new DiskAnalyzer(*[disk disk]);
-    
+    auto dsk = [disk disk]->drive.disk.get();
+    obj = new DiskAnalyzer(*dsk);
+
     return self;
 }
 
@@ -1124,17 +1125,17 @@ using namespace vc64;
 
 @implementation DriveProxy
 
-- (instancetype)initWithVC1541:(Drive *)drive
-{    
+- (instancetype)initWithVC1541:(Emulator::DRIVE_API *)drive
+{
     if ([self initWith:drive]) {
         disk = [[DiskProxy alloc] initWith:drive];
     }
     return self;
 }
 
-- (Drive *)drive
+- (Emulator::DRIVE_API *)drive
 {
-    return (Drive *)obj;
+    return (Emulator::DRIVE_API *)obj;
 }
 
 - (DiskProxy *)disk
@@ -1154,12 +1155,12 @@ using namespace vc64;
 
 - (BOOL)isConnected
 {
-    return [self drive]->getConfigItem(OPT_DRV_CONNECT) != 0;
+    return [self drive]->drive.getConfigItem(OPT_DRV_CONNECT) != 0;
 }
 
 - (BOOL)isSwitchedOn
 {
-    return [self drive]->getConfigItem(OPT_DRV_POWER_SWITCH) != 0;
+    return [self drive]->drive.getConfigItem(OPT_DRV_POWER_SWITCH) != 0;
 }
 
 - (BOOL)readMode
@@ -1207,13 +1208,6 @@ using namespace vc64;
     [self drive]->setModificationFlag(value);
 }
 
-/*
-- (void)setProtectionFlag:(BOOL)value
-{
-    [self drive]->setProtectionFlag(value);
-}
-*/
-
 - (void)markDiskAsModified
 {
     [self drive]->markDiskAsModified();
@@ -1223,13 +1217,6 @@ using namespace vc64;
 {
     [self drive]->markDiskAsUnmodified();
 }
-
-/*
-- (void)toggleWriteProtection
-{
-    [self drive]->toggleWriteProtection();
-}
-*/
 
 - (void)insertD64:(D64FileProxy *)proxy protected:(BOOL)wp
 {
@@ -2421,10 +2408,10 @@ using namespace vc64;
     cpu = [[CPUProxy alloc] initWith:&emu->cpu];
     datasette = [[DatasetteProxy alloc] initWith:&emu->_c64.datasette];
     dmaDebugger = [[DmaDebuggerProxy alloc] initWith:&emu->dmaDebugger];
-    drive8 = [[DriveProxy alloc] initWithVC1541:&emu->_c64.drive8];
-    drive9 = [[DriveProxy alloc] initWithVC1541:&emu->_c64.drive9];
+    drive8 = [[DriveProxy alloc] initWithVC1541:&emu->drive8];
+    drive9 = [[DriveProxy alloc] initWithVC1541:&emu->drive9];
     expansionport = [[ExpansionPortProxy alloc] initWith:&emu->expansionport];
-    iec = [[IECProxy alloc] initWith:&emu->_c64.iec];
+    iec = [[IECProxy alloc] initWith:&emu->iec];
     keyboard = [[KeyboardProxy alloc] initWith:&emu->keyboard];
     mem = [[MemoryProxy alloc] initWith:&emu->mem];
     port1 = [[ControlPortProxy alloc] initWith:&emu->port1];

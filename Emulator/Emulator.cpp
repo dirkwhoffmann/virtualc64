@@ -43,6 +43,9 @@ port1(*this, _c64.port1),
 port2(*this, _c64.port2),
 recorder(*this),
 expansionport(*this),
+iec(*this),
+drive8(*this, _c64.drive8),
+drive9(*this, _c64.drive9),
 retroShell(*this)
 
 {

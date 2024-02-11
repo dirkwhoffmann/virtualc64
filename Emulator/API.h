@@ -369,6 +369,83 @@ struct EXP_PORT_API : API {
 } expansionport;
 
 
+//
+// IEC bus
+//
+
+struct IEC_API : API {
+
+    using API::API;
+
+    bool isTransferring() const;
+
+} iec;
+
+
+//
+// Disk
+//
+
+struct DISK_API : API {
+
+    Drive &drive;
+    DISK_API(Emulator &emu, Drive& drive) : API(emu), drive(drive) { }
+
+    bool isWriteProtected() const;
+    void setWriteProtection(bool b);
+    void toggleWriteProtection();
+};
+
+
+//
+// Drive
+//
+
+struct DRIVE_API : API {
+
+    Drive &drive;
+    DRIVE_API(Emulator &emu, Drive& drive) : API(emu), drive(drive), disk(emu, drive) { }
+
+    DISK_API disk;
+
+    bool hasDisk() const;
+    bool hasPartiallyRemovedDisk() const;
+    bool hasProtectedDisk() const;
+    bool hasModifiedDisk() const;
+    bool hasUnmodifiedDisk() const;
+    bool hasUnprotectedDisk() const;
+    void setModificationFlag(bool value);
+    void markDiskAsModified();
+    void markDiskAsUnmodified();
+    /*
+     bool isModified() const;
+     void setModified(bool b);
+     */
+
+    isize getDeviceNr() const;
+    bool getRedLED() const;
+    bool isRotating() const;
+    const DriveConfig &getConfig() const;
+    bool readMode() const;
+    bool writeMode() const;
+
+    Halftrack getHalftrack() const;
+    Track getTrack() const;
+    isize sizeOfHalftrack(Halftrack ht);
+    isize sizeOfCurrentHalftrack();
+    HeadPos getOffset() const;
+
+    void insertNewDisk(DOSType fstype, PETName<16> name);
+    void insertD64(const D64File &d64, bool wp);
+    void insertG64(const G64File &g64, bool wp);
+    void insertCollection(AnyCollection &archive, bool wp) throws;
+    void insertFileSystem(const class FileSystem &device, bool wp);
+    void ejectDisk();
+
+    u8 readBitFromHead() const;
+
+} drive8, drive9;
+
 
 //
 // RetroShell

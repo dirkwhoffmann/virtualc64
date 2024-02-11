@@ -1319,4 +1319,210 @@ Emulator::EXP_PORT_API::setBattery(bool value)
     expansionport.setLED(value);
 }
 
+bool 
+Emulator::IEC_API::isTransferring() const
+{
+    return iec.isTransferring();
+}
+
+bool
+Emulator::DISK_API::isWriteProtected() const
+{
+    Disk *disk = drive.disk.get();
+    return disk ? false: disk->isWriteProtected();
+}
+
+void 
+Emulator::DISK_API::setWriteProtection(bool b) 
+{
+    Disk *disk = drive.disk.get();
+    if (disk) disk->setWriteProtection(b);
+}
+
+void Emulator::DISK_API::toggleWriteProtection()
+{
+    Disk *disk = drive.disk.get();
+    if (disk) disk->toggleWriteProtection();
+}
+
+//
+// Drive
+//
+
+bool
+Emulator::DRIVE_API::hasDisk() const
+{
+    return drive.hasDisk();
+}
+
+bool 
+Emulator::DRIVE_API::hasPartiallyRemovedDisk() const
+{
+    return drive.hasPartiallyRemovedDisk();
+}
+
+bool 
+Emulator::DRIVE_API::hasProtectedDisk() const
+{
+    return drive.hasProtectedDisk();
+}
+
+bool 
+Emulator::DRIVE_API::hasModifiedDisk() const
+{
+    return drive.hasModifiedDisk();
+}
+
+bool 
+Emulator::DRIVE_API::hasUnmodifiedDisk() const
+{
+    return drive.hasUnmodifiedDisk();
+}
+
+bool 
+Emulator::DRIVE_API::hasUnprotectedDisk() const
+{
+    return drive.hasUnprotectedDisk();
+}
+
+void 
+Emulator::DRIVE_API::setModificationFlag(bool value)
+{
+    drive.setModificationFlag(value);
+}
+
+void 
+Emulator::DRIVE_API::markDiskAsModified()
+{
+    drive.markDiskAsModified();
+}
+
+void 
+Emulator::DRIVE_API::markDiskAsUnmodified()
+{
+    drive.markDiskAsUnmodified();
+}
+
+/*
+bool
+Emulator::DRIVE_API::isModified() const
+{
+    return drive.isModified();
+}
+
+void 
+Emulator::DRIVE_API::setModified(bool b)
+{
+    drive.setModified(b);
+}
+*/
+
+isize
+Emulator::DRIVE_API::getDeviceNr() const
+{
+    return drive.getDeviceNr();
+}
+
+bool 
+Emulator::DRIVE_API::getRedLED() const
+{
+    return drive.getRedLED();
+}
+
+bool 
+Emulator::DRIVE_API::isRotating() const
+{
+    return drive.isRotating();
+}
+
+const DriveConfig &
+Emulator::DRIVE_API::getConfig() const
+{
+    return drive.getConfig();
+}
+
+bool
+Emulator::DRIVE_API::readMode() const
+{
+    return drive.readMode();
+}
+
+bool
+Emulator::DRIVE_API::writeMode() const
+{
+    return drive.writeMode();
+}
+
+Halftrack 
+Emulator::DRIVE_API::getHalftrack() const
+{
+    return drive.getHalftrack();
+}
+
+Track
+Emulator::DRIVE_API::getTrack() const
+{
+    return drive.getTrack();
+}
+
+isize
+Emulator::DRIVE_API::sizeOfHalftrack(Halftrack ht)
+{
+    return drive.sizeOfHalftrack(ht);
+}
+
+isize
+Emulator::DRIVE_API::sizeOfCurrentHalftrack()
+{
+    return drive.sizeOfCurrentHalftrack();
+}
+
+HeadPos
+Emulator::DRIVE_API::getOffset() const
+{
+    return drive.getOffset();
+}
+
+void 
+Emulator::DRIVE_API::insertNewDisk(DOSType fstype, PETName<16> name)
+{
+    drive.insertNewDisk(fstype, name);
+}
+
+void
+Emulator::DRIVE_API::insertD64(const D64File &d64, bool wp)
+{
+    drive.insertD64(d64, wp);
+}
+
+void
+Emulator::DRIVE_API::insertG64(const G64File &g64, bool wp)
+{
+    drive.insertG64(g64, wp);
+}
+
+void
+Emulator::DRIVE_API::insertCollection(AnyCollection &archive, bool wp)
+{
+    drive.insertCollection(archive, wp);
+}
+
+void
+Emulator::DRIVE_API::insertFileSystem(const class FileSystem &device, bool wp)
+{
+    drive.insertFileSystem(device, wp);
+}
+
+void
+Emulator::DRIVE_API::ejectDisk()
+{
+    drive.ejectDisk();
+}
+
+u8 
+Emulator::DRIVE_API::readBitFromHead() const
+{
+    return drive.readBitFromHead();
+}
+
 }
