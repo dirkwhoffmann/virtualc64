@@ -152,7 +152,7 @@ Drive::getConfigItem(Option option) const
 void
 Drive::setConfigItem(Option option, i64 value)
 {
-    debug(true, "%s, %ld\n", OptionEnum::key(option), value);
+    debug(CNF_DEBUG, "%s, %lld\n", OptionEnum::key(option), value);
 
     switch (option) {
 
