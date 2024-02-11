@@ -740,6 +740,125 @@ Emulator::CPU_API::dumpWord(char *str, u16 addr) const
 
 
 //
+// Guards
+//
+
+long 
+Emulator::GUARD_API::elements() const
+{
+    return guards.elements();
+}
+
+u32 
+Emulator::GUARD_API::guardAddr(long nr) const
+{
+    return guards.guardAddr(nr);
+}
+
+bool 
+Emulator::GUARD_API::isEnabled(long nr) const
+{
+    return guards.isEnabled(nr);
+}
+
+bool 
+Emulator::GUARD_API::isDisabled(long nr) const
+{
+    return guards.isDisabled(nr);
+}
+
+bool 
+Emulator::GUARD_API::isSetAt(u32 addr) const
+{
+    return guards.isSetAt(addr);
+}
+
+bool 
+Emulator::GUARD_API::isSetAndEnabledAt(u32 addr) const
+{
+    return guards.isSetAndEnabledAt(addr);
+}
+
+bool 
+Emulator::GUARD_API::isSetAndDisabledAt(u32 addr) const
+{
+    return guards.isSetAndDisabledAt(addr);
+}
+
+bool 
+Emulator::GUARD_API::isSetAndConditionalAt(u32 addr) const
+{
+    return guards.isSetAndConditionalAt(addr);
+}
+
+void 
+Emulator::GUARD_API::setEnable(long nr, bool val)
+{
+    guards.setEnable(nr, val);
+}
+
+void 
+Emulator::GUARD_API::enable(long nr)
+{
+    guards.enable(nr);
+}
+
+void 
+Emulator::GUARD_API::disable(long nr)
+{
+    guards.disable(nr);
+}
+
+void 
+Emulator::GUARD_API::setEnableAt(u32 addr, bool val)
+{
+    guards.setEnableAt(addr, val);
+}
+
+void 
+Emulator::GUARD_API::enableAt(u32 addr)
+{
+    guards.enableAt(addr);
+}
+
+void 
+Emulator::GUARD_API::disableAt(u32 addr)
+{
+    guards.disableAt(addr);
+}
+
+void 
+Emulator::GUARD_API::addAt(u32 addr, long skip)
+{
+    guards.addAt(addr, skip);
+}
+
+void 
+Emulator::GUARD_API::removeAt(u32 addr)
+{
+    guards.removeAt(addr);
+}
+
+void 
+Emulator::GUARD_API::remove(long nr)
+{
+    guards.remove(nr);
+}
+
+void 
+Emulator::GUARD_API::removeAll()
+{
+    guards.removeAll();
+}
+
+void 
+Emulator::GUARD_API::replace(long nr, u32 addr)
+{
+    guards.replace(nr, addr);
+}
+
+
+//
 // Memory
 //
 

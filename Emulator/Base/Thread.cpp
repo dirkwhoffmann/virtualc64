@@ -161,6 +161,9 @@ Thread::switchState(EmulatorState newState)
 {
     assert(isEmulatorThread());
 
+    // Only proceed if the state changes
+    if (state == newState) return;
+
     if (state == STATE_OFF && newState == STATE_PAUSED) {
 
         stateChange(TRANSITION_POWER_ON);

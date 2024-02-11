@@ -171,9 +171,9 @@ using namespace vc64;
 
 @implementation GuardsProxy
 
-- (Guards *)guards
+- (Emulator::GUARD_API *)guards
 {
-    return (Guards *)obj;
+    return (Emulator::GUARD_API *)obj;
 }
 
 - (NSInteger)count
@@ -2402,7 +2402,7 @@ using namespace vc64;
     obj = emu;
 
     // Create sub proxys
-    breakpoints = [[GuardsProxy alloc] initWith:&emu->_c64.cpu.debugger.breakpoints];
+    breakpoints = [[GuardsProxy alloc] initWith:&emu->cpu.breakpoints];
     cia1 = [[CIAProxy alloc] initWith:&emu->cia1];
     cia2 = [[CIAProxy alloc] initWith:&emu->cia2];
     cpu = [[CPUProxy alloc] initWith:&emu->cpu];
@@ -2420,7 +2420,7 @@ using namespace vc64;
     retroShell = [[RetroShellProxy alloc] initWith:&emu->retroShell];
     sid = [[SIDProxy alloc] initWith:&emu->muxer];
     vic = [[VICIIProxy alloc] initWith:&emu->vicii];
-    watchpoints = [[GuardsProxy alloc] initWith:&emu->_c64.cpu.debugger.watchpoints];
+    watchpoints = [[GuardsProxy alloc] initWith:&emu->cpu.watchpoints];
 
     return self;
 }

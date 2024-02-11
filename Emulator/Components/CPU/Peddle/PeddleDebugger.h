@@ -98,7 +98,7 @@ public:
     //
     
     bool isEnabled(long nr) const;
-    bool isDisabled(long nr) { return !isEnabled(nr); }
+    bool isDisabled(long nr) const { return !isEnabled(nr); }
     
     void setEnable(long nr, bool val);
     void enable(long nr) { setEnable(nr, true); }

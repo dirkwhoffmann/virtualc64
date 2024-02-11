@@ -72,12 +72,56 @@ struct MEM_API : API {
 
 
 //
+// Guards
+//
+
+struct GUARD_API : API {
+
+    Guards &guards;
+    GUARD_API(Emulator &emu, Guards& guards) : API(emu), guards(guards) { }
+
+    long elements() const;
+    u32 guardAddr(long nr) const;
+    bool isEnabled(long nr) const;
+    bool isDisabled(long nr) const;
+    bool isSetAt(u32 addr) const;
+    bool isSetAndEnabledAt(u32 addr) const;
+    bool isSetAndDisabledAt(u32 addr) const;
+    bool isSetAndConditionalAt(u32 addr) const;
+
+    void setEnable(long nr, bool val);
+    void enable(long nr);
+    void disable(long nr);
+
+    void setEnableAt(u32 addr, bool val);
+    void enableAt(u32 addr);
+    void disableAt(u32 addr);
+
+    void addAt(u32 addr, long skip = 0);
+    void removeAt(u32 addr);
+
+    void remove(long nr);
+    void removeAll();
+
+    void replace(long nr, u32 addr);
+};
+
+
+//
 // CPU
 //
 
 struct CPU_API : API {
 
     using API::API;
+
+    GUARD_API breakpoints;
+    GUARD_API watchpoints;
+
+    CPU_API(Emulator &emu) : 
+    API(emu),
+    breakpoints(emu, emu._c64.cpu.debugger.breakpoints),
+    watchpoints(emu, emu._c64.cpu.debugger.watchpoints) { }
 
     CPUInfo getInfo() const;
     i64 clock() const;
@@ -98,6 +142,7 @@ struct CPU_API : API {
     void dumpWord(char *, u16 addr) const;
 
 } cpu;
+
 
 //
 // CIAs
@@ -445,6 +490,8 @@ struct DRIVE_API : API {
     u8 readBitFromHead() const;
 
 } drive8, drive9;
+
+
 
 
 //
