@@ -364,6 +364,10 @@
 		50B7E26C2813F8C400A405A3 /* TextStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50B7E26A2813F8C400A405A3 /* TextStorage.cpp */; };
 		50B929F221C2B5C90039E8F2 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */; };
 		50B9F2812826392400BDFE7B /* MediaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B9F2802826392400BDFE7B /* MediaManager.swift */; };
+		50BB3E8D2B7A1AC100B2D87B /* CPUInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E8B2B7A1AC100B2D87B /* CPUInspector.cpp */; };
+		50BB3E8E2B7A1AC100B2D87B /* CPUInspector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E8B2B7A1AC100B2D87B /* CPUInspector.cpp */; };
+		50BB3E912B7A232800B2D87B /* Inspectable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */; };
+		50BB3E922B7A232800B2D87B /* Inspectable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */; };
 		50BE4B5524E7F77F008F39C9 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5424E7F77F008F39C9 /* URL.swift */; };
 		50BE4B5824E7F80C008F39C9 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5724E7F80C008F39C9 /* FileManager.swift */; };
 		50BE4B5A24E7F81B008F39C9 /* NSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE4B5924E7F81B008F39C9 /* NSColor.swift */; };
@@ -868,6 +872,10 @@
 		50B929F121C2B5C90039E8F2 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
 		50B9F2802826392400BDFE7B /* MediaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManager.swift; sourceTree = "<group>"; };
 		50B9F2822826C23100BDFE7B /* DatasetteTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DatasetteTypes.h; sourceTree = "<group>"; };
+		50BB3E8B2B7A1AC100B2D87B /* CPUInspector.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CPUInspector.cpp; sourceTree = "<group>"; };
+		50BB3E8C2B7A1AC100B2D87B /* CPUInspector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUInspector.h; sourceTree = "<group>"; };
+		50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Inspectable.cpp; sourceTree = "<group>"; };
+		50BB3E902B7A232800B2D87B /* Inspectable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Inspectable.h; sourceTree = "<group>"; };
 		50BE4B5424E7F77F008F39C9 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		50BE4B5724E7F80C008F39C9 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		50BE4B5924E7F81B008F39C9 /* NSColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColor.swift; sourceTree = "<group>"; };
@@ -1431,6 +1439,8 @@
 				5052A7BF25A0703D00E62EDD /* CPUTypes.h */,
 				504C42E824AF29AB00E69CAE /* CPU.h */,
 				504C42E924AF29AB00E69CAE /* CPU.cpp */,
+				50BB3E8C2B7A1AC100B2D87B /* CPUInspector.h */,
+				50BB3E8B2B7A1AC100B2D87B /* CPUInspector.cpp */,
 				50AA48B5292F8F350084401D /* Peddle */,
 			);
 			path = CPU;
@@ -1728,6 +1738,8 @@
 				5055D5B32615886E005D3DA6 /* Error.cpp */,
 				50F420C9250BA3460043DE56 /* Colors.h */,
 				50F420C8250BA3460043DE56 /* Colors.cpp */,
+				50BB3E902B7A232800B2D87B /* Inspectable.h */,
+				50BB3E8F2B7A232800B2D87B /* Inspectable.cpp */,
 				506F303D2B7364270083EAEA /* Suspendable.h */,
 				506F303C2B7364270083EAEA /* Suspendable.cpp */,
 				506F30412B74C1C70083EAEA /* Wakeable.h */,
@@ -2041,6 +2053,7 @@
 				50726F432961C97B0031F2F5 /* Checksum.cpp in Sources */,
 				50726F522961C9940031F2F5 /* ControlPort.cpp in Sources */,
 				50726F632961C9B30031F2F5 /* Recorder.cpp in Sources */,
+				50BB3E8E2B7A1AC100B2D87B /* CPUInspector.cpp in Sources */,
 				50726F622961C9AC0031F2F5 /* VICII_table.cpp in Sources */,
 				50726F872961CA0D0031F2F5 /* MikroAss.cpp in Sources */,
 				50726F7D2961C9E80031F2F5 /* Joystick.cpp in Sources */,
@@ -2121,6 +2134,7 @@
 				50726F492961C9940031F2F5 /* MsgQueue.cpp in Sources */,
 				50726F862961C9F10031F2F5 /* FlashRom.cpp in Sources */,
 				50726F782961C9DC0031F2F5 /* PIA.cpp in Sources */,
+				50BB3E922B7A232800B2D87B /* Inspectable.cpp in Sources */,
 				50726FB32961CA230031F2F5 /* FileSystem.cpp in Sources */,
 				50726F712961C9C60031F2F5 /* voice.cc in Sources */,
 				50726F812961C9E80031F2F5 /* NeosMouse.cpp in Sources */,
@@ -2353,6 +2367,7 @@
 				504C436424AF29AC00E69CAE /* Expert.cpp in Sources */,
 				504C436724AF29AC00E69CAE /* MagicDesk.cpp in Sources */,
 				50033829266E47B400D5456E /* CompatibilityConf.swift in Sources */,
+				50BB3E8D2B7A1AC100B2D87B /* CPUInspector.cpp in Sources */,
 				50B485FD24FA1D3200844133 /* iCarousel.m in Sources */,
 				50BE4B7024E7FC21008F39C9 /* MTLDevice.swift in Sources */,
 				5055D5B726158ABC005D3DA6 /* Checksum.cpp in Sources */,
@@ -2382,6 +2397,7 @@
 				5031D59C200B81D20088C802 /* Animation.swift in Sources */,
 				50D5F88424F4FE9C0062EF13 /* SectorTableView.swift in Sources */,
 				50B165AE25B06A03009B576D /* TextureToolbox.swift in Sources */,
+				50BB3E912B7A232800B2D87B /* Inspectable.cpp in Sources */,
 				506B13C224C1C40600814BB0 /* PreferencesController.swift in Sources */,
 				50461BBE26B522450019CEDF /* Thread.cpp in Sources */,
 				50300AEE258B2C5400D261E3 /* FSDirEntry.cpp in Sources */,

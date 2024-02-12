@@ -11,18 +11,20 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "CoreObject.h"
-#include <iostream>
+#include "Inspectable.h"
 
 namespace vc64 {
 
-bool
-CoreObject::verbose = true;
+void
+Inspectable::dump(Category category, std::ostream& ss) const
+{
+    _dump(category, ss);
+}
 
 void
-CoreObject::prefix() const
+Inspectable::dump(Category category) const
 {
-    fprintf(stderr, "%s: ", getDescription());
+    dump(category, std::cout);
 }
 
 }

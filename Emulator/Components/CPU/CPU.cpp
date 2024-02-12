@@ -97,6 +97,8 @@ CPU::_trackOff()
 void
 CPU::_dump(Category category, std::ostream& os) const
 {
+    inspector._dump(category, os);
+    /*
     using namespace util;
 
     if (category == Category::Registers) {
@@ -168,6 +170,7 @@ CPU::_dump(Category category, std::ostream& os) const
             os << dec(dischargeCycleBit7) << std::endl;
         }
     }
+    */
 }
 
 void

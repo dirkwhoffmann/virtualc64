@@ -10,19 +10,42 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.h"
-#include "CoreObject.h"
+#pragma once
+
 #include <iostream>
 
 namespace vc64 {
 
-bool
-CoreObject::verbose = true;
-
-void
-CoreObject::prefix() const
+enum class Category
 {
-    fprintf(stderr, "%s: ", getDescription());
-}
+    BankMap,
+    Config,
+    Current,
+    Debug,
+    Defaults,
+    Disk,
+    Dma,
+    Layout,
+    Properties,
+    Registers,
+    Slots,
+    State,
+    Stats,
+    Summary,
+    Tod,
+};
+
+class Inspectable {
+
+public:
+
+    Inspectable() { }
+    virtual ~Inspectable() { }
+
+    virtual void _dump(Category category, std::ostream& ss) const { };
+
+    void dump(Category category, std::ostream& ss) const;
+    void dump(Category category) const;
+};
 
 }

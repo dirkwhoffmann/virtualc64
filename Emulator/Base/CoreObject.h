@@ -13,6 +13,7 @@
 #pragma once
 
 #include "Error.h"
+#include "Inspectable.h"
 
 namespace vc64 {
 
@@ -47,26 +48,7 @@ namespace vc64 {
  * the emulator's state model (off, paused, running).
  */
 
-enum class Category
-{
-    BankMap,
-    Config,
-    Current,
-    Debug,
-    Defaults,
-    Disk,
-    Dma,
-    Layout,
-    Properties,
-    Registers,
-    Slots,
-    State,
-    Stats,
-    Summary,
-    Tod,
-};
-
-class CoreObject {
+class CoreObject : public Inspectable {
 
 protected:
 
@@ -85,11 +67,6 @@ public:
     
     // Called by debug() and trace() to produce a detailed debug output
     virtual void prefix() const;
-    
-    // Prints debug information about this component
-    void dump(Category category, std::ostream& ss) const;
-    void dump(Category category) const;
-    virtual void _dump(Category category, std::ostream& ss) const { };
 };
 
 /* This file provides several macros for printing messages:

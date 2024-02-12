@@ -10,19 +10,22 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-#include "config.h"
+#pragma once
+
+#include "CPUInspector.h"
 #include "CoreObject.h"
-#include <iostream>
 
 namespace vc64 {
 
-bool
-CoreObject::verbose = true;
+class CPUInspector {
 
-void
-CoreObject::prefix() const
-{
-    fprintf(stderr, "%s: ", getDescription());
-}
+    class CPU &cpu;
+
+public:
+
+    CPUInspector(CPU &ref) : cpu(ref) { }
+
+    void _dump(Category category, std::ostream& os) const;
+};
 
 }
