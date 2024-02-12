@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "C64.h"
+#include "VirtualC64.h"
 #include <map>
 
 using std::map;
@@ -32,7 +32,7 @@ class Headless {
     map<string,string> keys;
 
     // The emulator instance
-    C64 c64;
+    VirtualC64 c64;
 
     // Barrier for syncing script execution
     util::Mutex barrier;
@@ -105,8 +105,13 @@ static const char *testScript[] = {
     "",
     "c64",
     "c64 defaults",
-    "c64 set fps 50",
-    "c64 set fps 60",
+    "c64 set warpboot 50",
+    "c64 set warpmode WARP_ALWAYS",
+    "c64 set warpmode WARP_AUTO",
+    "c64 set warpmode WARP_NEVER",
+    "c64 set vsync yes",
+    "c64 set timelapse 75",
+    "c64 set runahead 2",    
     "c64 init PAL",
     "c64 init PAL_II",
     "c64 init PAL_OLD",

@@ -7,7 +7,7 @@ Colors.cpp
 CoreObject.cpp
 CoreComponent.cpp
 SubComponent.cpp
-Suspandable.cpp
+Suspendable.cpp
 Wakeable.cpp
 Thread.cpp
 MsgQueue.cpp

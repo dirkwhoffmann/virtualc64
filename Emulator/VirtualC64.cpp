@@ -11,7 +11,19 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "API.h"
+#include "VirtualC64.h"
+
+string
+VirtualC64::version()
+{
+    return C64::version();
+}
+
+string
+VirtualC64::build()
+{
+    return C64::build();
+}
 
 VirtualC64::VirtualC64() :
 c64(*this),
@@ -33,6 +45,11 @@ drive8(*this, _c64.drive8),
 drive9(*this, _c64.drive9),
 retroShell(*this)
 { }
+
+VirtualC64::~VirtualC64()
+{
+    halt();
+}
 
 void
 VirtualC64::launch(const void *listener, Callback *func)
@@ -985,9 +1002,33 @@ VirtualC64::RSHELL_API::cursorRel()
 }
 
 void 
+VirtualC64::RSHELL_API::execScript(const std::stringstream &ss)
+{
+    retroShell.execScript(ss);
+}
+
+void
+VirtualC64::RSHELL_API::execScript(const std::ifstream &fs)
+{
+    retroShell.execScript(fs);
+}
+
+void
+VirtualC64::RSHELL_API::execScript(const string &contents)
+{
+    retroShell.execScript(contents);
+}
+
+void
 VirtualC64::RSHELL_API::continueScript()
 {
     return retroShell.continueScript();
+}
+
+void
+VirtualC64::RSHELL_API::setStream(std::ostream &os)
+{
+    retroShell.setStream(os);
 }
 
 

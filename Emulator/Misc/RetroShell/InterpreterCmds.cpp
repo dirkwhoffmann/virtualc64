@@ -212,11 +212,11 @@ Interpreter::initCommandShell(Command &root)
     root.add({"c64", "set"},
              "Configures the component");
 
-    root.add({"c64", "set", "warpboot"}, { Arg::onoff },
-             "Enables or disables warp mode while Kickstart initializes",
+    root.add({"c64", "set", "warpboot"}, { Arg::seconds },
+             "Enables or disables warp mode on startup",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_WARP_BOOT, parseBool(argv));
+        configure(OPT_WARP_BOOT, parseNum(argv));
     });
 
     root.add({"c64", "set", "warpmode"}, { WarpModeEnum::argList() },

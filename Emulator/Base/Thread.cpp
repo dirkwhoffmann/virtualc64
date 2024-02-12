@@ -24,8 +24,7 @@ Thread::Thread()
 
 Thread::~Thread()
 {
-    printf("~Thread\n");
-    join();
+
 }
 
 void

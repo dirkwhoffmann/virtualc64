@@ -22,13 +22,28 @@ class VirtualC64 : vc64::Emulator {
 
     using vc64::Emulator::Thread::Suspendable;
 
+
+    //
+    // Static methods
+    //
+
 public:
+
+    // Returns a version string for this release
+    static string version();
+
+    // Returns a build number string for this release
+    static string build();
+
 
     //
     // Initializing
     //
 
+public:
+    
     VirtualC64();
+    ~VirtualC64();
 
     // Expose portions of the Emulator API (clean this up)
     using vc64::Emulator::defaults;
@@ -615,8 +630,11 @@ public:
         void press(const string &s);
 
         isize cursorRel();
-
+        void execScript(const std::stringstream &ss);
+        void execScript(const std::ifstream &fs);
+        void execScript(const string &contents);
         void continueScript();
+        void setStream(std::ostream &os);
 
     } retroShell;
 };

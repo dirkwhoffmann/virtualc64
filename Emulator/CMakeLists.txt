@@ -17,7 +17,7 @@ set(CMAKE_BUILD_TYPE Release)
 endif()
 
 # Add the emulator library
-add_library(vc64Core Components/C64.cpp config.cpp API.cpp Emulator.cpp)
+add_library(vc64Core VirtualC64.cpp config.cpp)
 
 # Add the console app (VirtualC64 Headless)
 add_executable(vc64Console Headless.cpp config.cpp)

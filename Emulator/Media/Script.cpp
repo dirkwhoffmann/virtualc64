@@ -12,14 +12,12 @@
 
 #include "config.h"
 #include "Script.h"
-#include "C64.h"
+#include "VirtualC64.h"
 #include "IOUtils.h"
 
 #include <sstream>
 
 namespace vc64 {
-
-class C64;
 
 bool
 Script::isCompatible(const string &path)
@@ -35,7 +33,7 @@ Script::isCompatible(std::istream &stream)
 }
 
 void
-Script::execute(C64 &c64)
+Script::execute(VirtualC64 &c64)
 {
     string s((char *)data, size);
     try { c64.retroShell.execScript(s); } catch (util::Exception &) { }

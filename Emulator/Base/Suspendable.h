@@ -12,7 +12,7 @@
 
 #pragma once
 
-// #include "Error.h"
+#include <cstdio>
 
 namespace vc64 {
 

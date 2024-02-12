@@ -14,6 +14,8 @@
 
 #include "AnyFile.h"
 
+class VirtualC64;
+
 namespace vc64 {
 
 class Script : public AnyFile {
@@ -62,7 +64,7 @@ public:
     //
     
     // Executes the script
-    void execute(class C64 &c64);
+    void execute(VirtualC64 &c64);
 };
 
 }

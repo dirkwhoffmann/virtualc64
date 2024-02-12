@@ -9,7 +9,7 @@
 
 #import "config.h"
 #import "EmulatorProxy.h"
-#import "API.h"
+#import "VirtualC64.h"
 #import "C64Key.h"
 #import "VirtualC64-Swift.h"
 #import "Script.h"
@@ -1755,8 +1755,8 @@ using namespace vc64;
 
 - (void)execute:(EmulatorProxy *)proxy
 {
-    C64 *c64 = (C64 *)proxy->obj;
-    
+    VirtualC64 *c64 = (VirtualC64 *)proxy->obj;
+
     [self script]->execute(*c64);
 }
 
