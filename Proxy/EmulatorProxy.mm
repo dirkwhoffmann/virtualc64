@@ -709,8 +709,11 @@ using namespace vc64;
 
 - (void)pressKey:(NSInteger)nr
 {
+    [self kb]->emulator.cmdQueue.put(CMD_KEY_PRESS, { (u8)nr, 0.0 });
+    /*
     [self kb]->abortAutoTyping();
     [self kb]->press(C64Key(nr));
+    */
 }
 
 - (void)pressKeyCombination:(NSInteger)nr with: (NSInteger)nr2
@@ -721,7 +724,9 @@ using namespace vc64;
 
 - (void)pressKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
-    [self kb]->press(C64Key(row, col));
+    [self kb]->emulator.cmdQueue.put(CMD_KEY_PRESS, { (u8)C64Key(row, col).nr, 0.0 });
+
+    // [self kb]->press(C64Key(row, col));
 }
 
 - (void)pressShiftLock
@@ -2870,5 +2875,12 @@ using namespace vc64;
 {
     [self emu]->c64.setAlarmRel(cycle, value);
 }
+
+/*
+- (void)send:(Cmd *)cmd
+{
+    [self emu]->cmdQueue.put(cmd);
+}
+*/
 
 @end

@@ -335,6 +335,22 @@ Keyboard::abortAutoTyping()
     }
 }
 
+void 
+Keyboard::processCommand(const Cmd &cmd)
+{
+    debug(true, "%d (%f)\n", cmd.key.keycode, cmd.key.delay);
+
+    switch (cmd.type) {
+
+        case CMD_KEY_PRESS:     press(C64Key(cmd.key.keycode)); break;
+        case CMD_KEY_RELEASE:   release(C64Key(cmd.key.keycode)); break;
+        case CMD_KEY_TOGGLE:    toggle(C64Key(cmd.key.keycode)); break;
+
+        default:
+            fatalError;
+    }
+}
+
 void
 Keyboard::processKeyEvent(EventID id)
 {

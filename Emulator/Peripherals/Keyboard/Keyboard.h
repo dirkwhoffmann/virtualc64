@@ -13,6 +13,7 @@
 #pragma once
 
 #include "SubComponent.h"
+#include "CmdQueue.h"
 #include "C64Types.h"
 #include "C64Key.h"
 #include <queue>
@@ -182,6 +183,9 @@ public:
     //
 
 public:
+
+    // Processes a keyboard command
+    void processCommand(const Cmd &cmd);
 
     // Processes the next auto-type event
     void processKeyEvent(EventID id);

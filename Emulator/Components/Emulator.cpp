@@ -750,10 +750,39 @@ Emulator::computeFrame()
 
     while (cmdQueue.poll(cmd)) {
 
-        printf("TODO: Process %s\n", CmdTypeEnum::key(cmd.type));
+        switch (cmd.type) {
+
+            case CMD_KEY_PRESS:
+            case CMD_KEY_RELEASE:
+            case CMD_KEY_TOGGLE:
+
+                _c64.keyboard.processCommand(cmd);
+                break;
+
+            default:
+                fatal("Unhandled command: %s\n", CmdTypeEnum::key(cmd.type));
+        }
     }
 
     _c64.execute();
+}
+
+void 
+Emulator::process(const Cmd &cmd)
+{
+    switch (cmd.type) {
+
+            debug(CMD_DEBUG, "Command: %s\n", CmdTypeEnum::key(cmd.type));
+
+        case CMD_KEY_PRESS:
+
+            _c64.keyboard.processCommand(cmd);
+            break;
+
+        default:
+            fatal("Unhandled command: %s\n", CmdTypeEnum::key(cmd.type));
+
+    }
 }
 
 double

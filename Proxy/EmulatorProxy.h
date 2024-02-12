@@ -12,6 +12,7 @@
 #import "C64Types.h"
 #import "CartridgeTypes.h"
 #import "CIATypes.h"
+#import "CmdQueueTypes.h"
 #import "ControlPortTypes.h"
 #import "CPUTypes.h"
 #import "DiskTypes.h"
@@ -241,6 +242,8 @@
 
 - (void)setAlarmAbs:(NSInteger)cycle payload:(NSInteger)value;
 - (void)setAlarmRel:(NSInteger)cycle payload:(NSInteger)value;
+
+// - (void)send:(Cmd)cmd;
 
 @end
 

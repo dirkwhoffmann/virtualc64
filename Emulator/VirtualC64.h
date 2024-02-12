@@ -48,6 +48,7 @@ public:
     // Expose portions of the Emulator API (clean this up)
     using vc64::Emulator::defaults;
     using vc64::Emulator::host;
+    using vc64::Emulator::cmdQueue;
     using vc64::Emulator::Thread::isWarping;
     using vc64::Emulator::Thread::warpOn;
     using vc64::Emulator::Thread::warpOff;

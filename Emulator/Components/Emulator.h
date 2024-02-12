@@ -120,6 +120,23 @@ private:
     bool shouldWarp() override;
     isize missingFrames() const override;
     void computeFrame() override;
+
+
+    //
+    // Command queue
+    //
+
+    //
+
+public:
+
+    // Feeds a command into the command queue
+    //
+
+private:
+
+    // Processes a command from the command queue
+    void process(const Cmd &cmd);
 };
 
 //
