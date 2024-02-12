@@ -65,6 +65,8 @@ protected:
     /* Mutex for implementing the 'synchronized' macro. The macro can be used
      * to prevent multiple threads to enter the same code block. It mimics the
      * behaviour of the well known Java construct 'synchronized(this) { }'.
+     *
+     * DEPRECATED: INHERIT FROM SYNCHRONIZABLE
      */
     mutable util::ReentrantMutex mutex;
     

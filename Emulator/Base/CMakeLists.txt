@@ -7,10 +7,12 @@ Colors.cpp
 CoreObject.cpp
 CoreComponent.cpp
 SubComponent.cpp
+Synchronizable.cpp
 Inspectable.cpp
 Suspendable.cpp
 Wakeable.cpp
 Thread.cpp
+CmdQueue.cpp
 MsgQueue.cpp
 Defaults.cpp
 Host.cpp

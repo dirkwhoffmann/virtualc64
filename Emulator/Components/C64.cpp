@@ -1623,6 +1623,7 @@ C64::setDebugVariable(const string &name, int val)
     else if (name == "RUN_DEBUG")       RUN_DEBUG       = val;
     else if (name == "TIM_DEBUG")       TIM_DEBUG       = val;
     else if (name == "WARP_DEBUG")      WARP_DEBUG      = val;
+    else if (name == "CMD_DEBUG")       CMD_DEBUG       = val;
     else if (name == "MSG_DEBUG")       MSG_DEBUG       = val;
     else if (name == "SNP_DEBUG")       SNP_DEBUG       = val;
 

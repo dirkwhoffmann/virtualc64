@@ -17,6 +17,7 @@
 #include "EmulatorTypes.h"
 #include "Host.h"
 #include "Thread.h"
+#include "CmdQueue.h"
 
 class VirtualC64;
 
@@ -34,6 +35,9 @@ class Emulator : public Thread {
     EmulatorConfig config = {};
 
 public:
+
+    // Storage for external events
+    CmdQueue cmdQueue;
 
     // User default settings
     static Defaults defaults;

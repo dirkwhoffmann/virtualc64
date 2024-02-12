@@ -83,6 +83,7 @@ extern debugflag DEF_DEBUG;
 extern debugflag RUN_DEBUG;
 extern debugflag TIM_DEBUG;
 extern debugflag WARP_DEBUG;
+extern debugflag CMD_DEBUG;
 extern debugflag MSG_DEBUG;
 extern debugflag SNP_DEBUG;
 

@@ -746,6 +746,13 @@ Emulator::missingFrames() const
 void
 Emulator::computeFrame()
 {
+    Cmd cmd;
+
+    while (cmdQueue.poll(cmd)) {
+
+        printf("TODO: Process %s\n", CmdTypeEnum::key(cmd.type));
+    }
+
     _c64.execute();
 }
 
