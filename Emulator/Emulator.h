@@ -18,9 +18,14 @@
 #include "Host.h"
 #include "Thread.h"
 
+class VirtualC64;
+
 namespace vc64 {
 
 class Emulator : public Thread {
+
+    friend class API;
+    friend class ::VirtualC64;
 
     // The virtual C64
     C64 _c64 = C64(*this);
@@ -46,6 +51,10 @@ public:
     Emulator();
     ~Emulator();
 
+    // Launches the emulator thread
+    void launch(const void *listener, Callback *func);
+
+    
 private:
 
     // Initializes all components
@@ -55,6 +64,23 @@ private:
     //
     // Configuring
     //
+
+public:
+
+    // Configures the emulator to match a specific C64 model
+    void configure(C64Model model);
+
+    // Sets a single configuration option
+    void configure(Option option, i64 value) throws;
+    void configure(Option option, long id, i64 value) throws;
+
+    // Queries a single configuration option
+    i64 getConfigItem(Option option) const;
+    i64 getConfigItem(Option option, long id) const;
+    void setConfigItem(Option option, i64 value);
+
+    // Returns the emulated refresh rate of the virtual C64
+    double refreshRate() const override;
 
 private:
 
@@ -90,30 +116,24 @@ private:
     bool shouldWarp() override;
     isize missingFrames() const override;
     void computeFrame() override;
+};
 
+//
+// Public API
+//
 
-    //
-    // Public API
-    //
-
-private:
-    
-    struct API : Suspendable, References {
-
-        class Emulator &emulator;
-
-        API(Emulator& ref) : References(ref._c64), emulator(ref) { }
-
-        void suspend() { emulator.suspend(); }
-        void resume() { emulator.resume(); }
-
-        bool isUserThread() const { return !emulator.isEmulatorThread(); }
-    };
+class API : public Suspendable, public References {
 
 public:
+    
+    class Emulator &emulator;
 
-    #include "API.h"
+    API(Emulator& ref) : References(ref._c64), emulator(ref) { }
 
+    void suspend() { emulator.suspend(); }
+    void resume() { emulator.resume(); }
+
+    bool isUserThread() const { return !emulator.isEmulatorThread(); }
 };
 
 }

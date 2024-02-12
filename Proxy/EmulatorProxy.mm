@@ -9,7 +9,7 @@
 
 #import "config.h"
 #import "EmulatorProxy.h"
-#import "Emulator.h"
+#import "API.h"
 #import "C64Key.h"
 #import "VirtualC64-Swift.h"
 #import "Script.h"
@@ -171,9 +171,9 @@ using namespace vc64;
 
 @implementation GuardsProxy
 
-- (Emulator::GUARD_API *)guards
+- (VirtualC64::GUARD_API *)guards
 {
-    return (Emulator::GUARD_API *)obj;
+    return (VirtualC64::GUARD_API *)obj;
 }
 
 - (NSInteger)count
@@ -260,9 +260,9 @@ using namespace vc64;
 
 @implementation CPUProxy
 
-- (Emulator::CPU_API *)cpu
+- (VirtualC64::CPU_API *)cpu
 {
-    return (Emulator::CPU_API *)obj;
+    return (VirtualC64::CPU_API *)obj;
 }
 
 - (CPUInfo)info
@@ -419,9 +419,9 @@ using namespace vc64;
 
 @implementation MemoryProxy
 
-- (Emulator::MEM_API *)mem
+- (VirtualC64::MEM_API *)mem
 {
-    return (Emulator::MEM_API *)obj;
+    return (VirtualC64::MEM_API *)obj;
 }
 
 - (MemConfig)getConfig
@@ -453,9 +453,9 @@ using namespace vc64;
 
 @implementation CIAProxy
 
-- (Emulator::CIA_API *)cia
+- (VirtualC64::CIA_API *)cia
 {
-    return (Emulator::CIA_API *)obj;
+    return (VirtualC64::CIA_API *)obj;
 }
 
 - (CIAInfo)getInfo
@@ -472,9 +472,9 @@ using namespace vc64;
 
 @implementation VICIIProxy
 
-- (Emulator::VICII_API *)vicii
+- (VirtualC64::VICII_API *)vicii
 {
-    return (Emulator::VICII_API *)obj;
+    return (VirtualC64::VICII_API *)obj;
 }
 
 - (NSInteger)hPixels
@@ -546,9 +546,9 @@ using namespace vc64;
 
 @implementation DmaDebuggerProxy
 
-- (Emulator::DMA_DEBUGGER_API *)debugger
+- (VirtualC64::DMA_DEBUGGER_API *)debugger
 {
-    return (Emulator::DMA_DEBUGGER_API *)obj;
+    return (VirtualC64::DMA_DEBUGGER_API *)obj;
 }
 
 - (DmaDebuggerConfig)getConfig
@@ -565,9 +565,9 @@ using namespace vc64;
 
 @implementation SIDProxy
 
-- (Emulator::SID_API *)bridge
+- (VirtualC64::SID_API *)bridge
 {
-    return (Emulator::SID_API *)obj;
+    return (VirtualC64::SID_API *)obj;
 }
 
 - (SIDInfo)getInfo:(NSInteger)nr
@@ -648,9 +648,9 @@ using namespace vc64;
 
 @implementation IECProxy
 
-- (Emulator::IEC_API *)iec
+- (VirtualC64::IEC_API *)iec
 {
-    return (Emulator::IEC_API *)obj;
+    return (VirtualC64::IEC_API *)obj;
 }
 
 - (BOOL)transferring
@@ -667,9 +667,9 @@ using namespace vc64;
 
 @implementation KeyboardProxy
 
-- (Emulator::KBD_API *)kb
+- (VirtualC64::KBD_API *)kb
 {
-    return (Emulator::KBD_API *)obj;
+    return (VirtualC64::KBD_API *)obj;
 }
 
 - (BOOL)keyIsPressed:(NSInteger)nr
@@ -826,7 +826,7 @@ using namespace vc64;
 {
     if (self = [super init]) {
         
-        Emulator::CP_API *port = (Emulator::CP_API *)ref;
+        VirtualC64::CP_API *port = (VirtualC64::CP_API *)ref;
         obj = ref;
         joystick = [[JoystickProxy alloc] initWith:&port->joystick];
         mouse = [[MouseProxy alloc] initWith:&port->mouse];
@@ -834,9 +834,9 @@ using namespace vc64;
     return self;
 }
 
-- (Emulator::CP_API *)port
+- (VirtualC64::CP_API *)port
 {
-    return (Emulator::CP_API *)obj;
+    return (VirtualC64::CP_API *)obj;
 }
 
 @end
@@ -848,9 +848,9 @@ using namespace vc64;
 
 @implementation ExpansionPortProxy
 
-- (Emulator::EXP_PORT_API *)eport
+- (VirtualC64::EXP_PORT_API *)eport
 {
-    return (Emulator::EXP_PORT_API *)obj;
+    return (VirtualC64::EXP_PORT_API *)obj;
 }
 
 - (CartridgeType)cartridgeType
@@ -1003,12 +1003,12 @@ using namespace vc64;
 
 @implementation DiskProxy
 
-- (Emulator::DRIVE_API *)drive
+- (VirtualC64::DRIVE_API *)drive
 {
-    return (Emulator::DRIVE_API *)obj;
+    return (VirtualC64::DRIVE_API *)obj;
 }
 
-- (Emulator::DISK_API *)disk
+- (VirtualC64::DISK_API *)disk
 {
     return &[self drive]->disk; // .get();
 }
@@ -1125,7 +1125,7 @@ using namespace vc64;
 
 @implementation DriveProxy
 
-- (instancetype)initWithVC1541:(Emulator::DRIVE_API *)drive
+- (instancetype)initWithVC1541:(VirtualC64::DRIVE_API *)drive
 {
     if ([self initWith:drive]) {
         disk = [[DiskProxy alloc] initWith:drive];
@@ -1133,9 +1133,9 @@ using namespace vc64;
     return self;
 }
 
-- (Emulator::DRIVE_API *)drive
+- (VirtualC64::DRIVE_API *)drive
 {
-    return (Emulator::DRIVE_API *)obj;
+    return (VirtualC64::DRIVE_API *)obj;
 }
 
 - (DiskProxy *)disk
@@ -1292,9 +1292,9 @@ using namespace vc64;
 
 @implementation DatasetteProxy
 
-- (Emulator::DATASETTE_API *)datasette
+- (VirtualC64::DATASETTE_API *)datasette
 {
-    return (Emulator::DATASETTE_API *)obj;
+    return (VirtualC64::DATASETTE_API *)obj;
 }
 
 - (BOOL)hasTape
@@ -1356,9 +1356,9 @@ using namespace vc64;
 
 @implementation MouseProxy
 
-- (Emulator::MOUSE_API *)mouse
+- (VirtualC64::MOUSE_API *)mouse
 {
-    return (Emulator::MOUSE_API *)obj;
+    return (VirtualC64::MOUSE_API *)obj;
 }
 
 - (BOOL)detectShakeAbs:(NSPoint)pos
@@ -1395,9 +1395,9 @@ using namespace vc64;
 
 @implementation JoystickProxy
 
-- (Emulator::JOYSTICK_API *)joystick
+- (VirtualC64::JOYSTICK_API *)joystick
 {
-    return (Emulator::JOYSTICK_API *)obj;
+    return (VirtualC64::JOYSTICK_API *)obj;
 }
 
 - (void)trigger:(GamePadAction)event
@@ -1414,9 +1414,9 @@ using namespace vc64;
 
 @implementation RecorderProxy
 
-- (Emulator::REC_API *)recorder
+- (VirtualC64::REC_API *)recorder
 {
-    return (Emulator::REC_API *)obj;
+    return (VirtualC64::REC_API *)obj;
 }
 
 - (NSString *)path
@@ -1507,12 +1507,12 @@ using namespace vc64;
 
 @implementation RetroShellProxy
 
-- (Emulator::RSHELL_API *)shell
+- (VirtualC64::RSHELL_API *)shell
 {
-    return (Emulator::RSHELL_API *)obj;
+    return (VirtualC64::RSHELL_API *)obj;
 }
 
-+ (instancetype)make:(Emulator::RSHELL_API *)shell
++ (instancetype)make:(VirtualC64::RSHELL_API *)shell
 {
     if (shell == nullptr) { return nil; }
     
@@ -2398,7 +2398,7 @@ using namespace vc64;
     if (!(self = [super init])) return self;
     
     // Create the emulator instance
-    Emulator *emu = new Emulator();
+    VirtualC64 *emu = new VirtualC64();
     obj = emu;
 
     // Create sub proxys
@@ -2425,14 +2425,14 @@ using namespace vc64;
     return self;
 }
 
-- (Emulator *)emu
+- (VirtualC64 *)emu
 {
-    return (Emulator *)obj;
+    return (VirtualC64 *)obj;
 }
 
 + (DefaultsProxy *) defaults
 {
-    return [[DefaultsProxy alloc] initWith:&Emulator::defaults];
+    return [[DefaultsProxy alloc] initWith:&VirtualC64::defaults];
 }
 
 - (void)dealloc
