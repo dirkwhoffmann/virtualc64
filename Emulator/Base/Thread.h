@@ -111,8 +111,8 @@ protected:
     EmulatorState state = STATE_OFF;
 
     // Warp and track state
-    u8 warp = 0, oldWarp = 0;
-    u8 track = 0, oldTrack = 0;
+    u8 warp = 0;
+    u8 track = 0;
 
     // Counters
     isize suspendCounter = 0;
@@ -163,16 +163,8 @@ public:
 
 private:
 
-    // Returns the current warp and track status (provided by the subclass)
-    virtual bool shouldWarp() { return false; }
-    virtual bool shouldTrack() { return false; }
-
     // Updates the emulator state (implemented by the subclass)
     virtual void update() = 0;
-
-    // Updates the current warp and track state
-    void updateWarp();
-    void updateTrack();
 
     // Computes the number of overdue frames (provided by the subclass)
     virtual isize missingFrames() const = 0;
@@ -263,8 +255,6 @@ public:
 
     // Awakes the thread
     void wakeUp();
-
-public:
     
     // Wait until the thread has terminated
     void join() { if (thread.joinable()) thread.join(); }

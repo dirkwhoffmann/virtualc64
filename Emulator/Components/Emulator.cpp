@@ -773,6 +773,8 @@ Emulator::missingFrames() const
 void
 Emulator::update()
 {
+    shouldWarp() ? warpOn() : warpOff();
+
     Cmd cmd;
     while (cmdQueue.poll(cmd)) {
 

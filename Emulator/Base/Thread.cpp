@@ -37,30 +37,6 @@ Thread::launch()
     thread = std::thread(&Thread::main, this);
 }
 
-void 
-Thread::updateWarp()
-{
-    shouldWarp() ? SET_BIT(warp, 7) : CLR_BIT(warp, 7);
-
-    if (bool(warp) != bool(oldWarp)) {
-
-        warp ? _warpOn() : _warpOff();
-        oldWarp = warp;
-    }
-}
-
-void
-Thread::updateTrack()
-{
-    shouldTrack() ? SET_BIT(track, 7) : CLR_BIT(track, 7);
-
-    if (bool(track) != bool(oldTrack)) {
-
-        track ? _trackOn() : _trackOff();
-        oldTrack = track;
-    }
-}
-
 void
 Thread::resync()
 {
@@ -133,9 +109,7 @@ Thread::main()
 
     while (state != STATE_HALTED) {
 
-        // Update
-        updateWarp();
-        updateTrack();
+        // Update state
         update();
 
         // Compute missing frames
@@ -266,37 +240,61 @@ Thread::halt()
 void
 Thread::warpOn(isize source)
 {
-    assert(!isEmulatorThread());
     assert(source < 7);
 
-    SUSPENDED SET_BIT(warp, source);
+    if (!GET_BIT(warp, source)) {
+
+        SUSPENDED
+
+        auto old = warp;
+        SET_BIT(warp, source);
+        if (!!old != !!warp) _warpOn();
+    }
 }
 
 void
 Thread::warpOff(isize source)
 {
-    assert(!isEmulatorThread());
     assert(source < 7);
 
-    SUSPENDED CLR_BIT(warp, source);
+    if (GET_BIT(warp, source)) {
+
+        SUSPENDED
+
+        auto old = warp;
+        CLR_BIT(warp, source);
+        if (!!old != !!warp) _warpOff();
+    }
 }
 
 void
 Thread::trackOn(isize source)
 {
-    assert(!isEmulatorThread());
     assert(source < 7);
 
-    SUSPENDED SET_BIT(track, source);
+    if (!GET_BIT(track, source)) {
+
+        SUSPENDED
+
+        auto old = track;
+        SET_BIT(track, source);
+        if (!!old != !!track) _trackOn();
+    }
 }
 
 void
 Thread::trackOff(isize source)
 {
-    assert(!isEmulatorThread());
     assert(source < 7);
 
-    SUSPENDED CLR_BIT(track, source);
+    if (GET_BIT(track, source)) {
+
+        SUSPENDED
+
+        auto old = track;
+        CLR_BIT(track, source);
+        if (!!old != !!track) _trackOff();
+    }
 }
 
 void
