@@ -116,11 +116,13 @@ public:
     bool isPressed(C64Key key) const;
     bool shiftLockIsPressed() const;
     bool restoreIsPressed() const;
+    /*
     bool commodoreIsPressed() const { return isPressed(C64Key::commodore); }
     bool ctrlIsPressed() const { return isPressed(C64Key::control); }
     bool runstopIsPressed() const { return isPressed(C64Key::runStop); }
     bool leftShiftIsPressed() const { return isPressed(C64Key::leftShift); }
     bool rightShiftIsPressed() const { return isPressed(C64Key::rightShift); }
+    */
 
     // Presses a key
     void press(C64Key key);
@@ -145,7 +147,7 @@ public:
     // Presses a released key and vice versa
     void toggle(C64Key key) { isPressed(key) ? release(key) : press(key); }
     void toggleShiftLock() { shiftLockIsPressed() ? releaseShiftLock() : pressShiftLock(); }
-    void toggleRestore() { restoreIsPressed() ? releaseRestore() : pressRestore(); }
+    // void toggleRestore() { restoreIsPressed() ? releaseRestore() : pressRestore(); }
     void toggleCommodore() { toggle(C64Key::commodore); }
     void toggleCtrl() { toggle(C64Key::control); }
     void toggleRunstop() { toggle(C64Key::runStop); }

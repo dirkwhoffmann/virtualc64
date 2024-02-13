@@ -767,7 +767,7 @@ VirtualC64::DMA_DEBUGGER_API::getConfig() const
 
 bool VirtualC64::KBD_API::isPressed(C64Key key) const { return keyboard.isPressed(key); }
 bool VirtualC64::KBD_API::shiftLockIsPressed() const { return keyboard.shiftLockIsPressed(); }
-bool VirtualC64::KBD_API::restoreIsPressed() const { return keyboard.shiftLockIsPressed(); }
+// bool VirtualC64::KBD_API::restoreIsPressed() const { return keyboard.shiftLockIsPressed(); }
 
 // Presses a key
 void VirtualC64::KBD_API::press(C64Key key) { keyboard.press(key); }

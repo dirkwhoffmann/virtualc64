@@ -692,31 +692,6 @@ using namespace vc64;
     return [self kb]->isPressed(nr);
 }
 
-- (BOOL)keyIsPressedAtRow:(NSInteger)row col:(NSInteger)col
-{
-    return [self kb]->isPressed(C64Key(row, col));
-}
-
-- (BOOL)controlIsPressed
-{
-    return [self kb]->ctrlIsPressed();
-}
-
-- (BOOL)commodoreIsPressed
-{
-    return [self kb]->commodoreIsPressed();
-}
-
-- (BOOL)leftShiftIsPressed
-{
-    return [self kb]->leftShiftIsPressed();
-}
-
-- (BOOL)rightShiftIsPressed
-{
-    return [self kb]->rightShiftIsPressed();
-}
-
 - (BOOL)shiftLockIsPressed
 {
     return [self kb]->shiftLockIsPressed();

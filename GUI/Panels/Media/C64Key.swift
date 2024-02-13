@@ -31,7 +31,7 @@ func == (lhs: Modifier, rhs: Modifier) -> Bool {
  * until it is released and restore has no key matrix representation. This key
  * is connected to the NMI line.
  */
-struct C64Key: Codable {
+public struct C64Key: Codable {
     
     // Unique key identifier (0 .. 65)
     var nr = -1
@@ -179,18 +179,18 @@ struct C64Key: Codable {
     static let Q            = C64Key(18)
     static let runStop      = C64Key(33)
     
-    // Restore key
+    // Keys not represented inside the key matrix
     static let restore      = C64Key(31)
 }
 
 extension C64Key: Equatable {
-    static func == (lhs: C64Key, rhs: C64Key) -> Bool {
+    public static func == (lhs: C64Key, rhs: C64Key) -> Bool {
         return lhs.nr == rhs.nr
     }
 }
 
 extension C64Key: Hashable {
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         return hasher.combine(nr)
     }
 }

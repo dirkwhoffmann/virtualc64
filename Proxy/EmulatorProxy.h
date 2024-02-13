@@ -431,11 +431,6 @@
 @interface KeyboardProxy : SubComponentProxy { }
 
 - (BOOL)keyIsPressed:(NSInteger)nr;
-- (BOOL)keyIsPressedAtRow:(NSInteger)row col:(NSInteger)col;
-- (BOOL)controlIsPressed;
-- (BOOL)commodoreIsPressed;
-- (BOOL)leftShiftIsPressed;
-- (BOOL)rightShiftIsPressed;
 - (BOOL)shiftLockIsPressed;
 
 - (void)pressKey:(NSInteger)nr;
