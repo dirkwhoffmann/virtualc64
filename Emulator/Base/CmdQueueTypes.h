@@ -57,11 +57,12 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
 // Structures
 //
 
-struct KeyCmd
+typedef struct
 {
     u8 keycode;
     double delay;
-};
+}
+KeyCmd;
 
 typedef struct
 {
@@ -72,7 +73,7 @@ typedef struct
     union {
         
         i64 value;
-        struct KeyCmd key;
+        KeyCmd key;
     };
 }
 Cmd;

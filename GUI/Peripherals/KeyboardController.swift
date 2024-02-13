@@ -14,6 +14,7 @@ class KeyboardController: NSObject {
     var myAppDelegate: MyAppDelegate { return NSApp.delegate as! MyAppDelegate }
     var parent: MyController!
         
+    var c64: EmulatorProxy { return parent.c64 }
     var keyboard: KeyboardProxy { return parent.c64.keyboard }
     var renderer: Renderer { return parent.renderer }
     var pref: Preferences { return parent.pref }

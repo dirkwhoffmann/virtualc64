@@ -109,6 +109,12 @@
 }
 @end
 
+@interface SubComponentProxy : Proxy {
+
+    @public class VirtualC64 *emu;
+}
+@end
+
 
 //
 // C64
@@ -421,7 +427,7 @@
 // Keyboard
 //
 
-@interface KeyboardProxy : CoreComponentProxy { }
+@interface KeyboardProxy : SubComponentProxy { }
 
 - (BOOL)keyIsPressed:(NSInteger)nr;
 - (BOOL)keyIsPressedAtRow:(NSInteger)row col:(NSInteger)col;

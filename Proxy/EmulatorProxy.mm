@@ -70,13 +70,30 @@ using namespace vc64;
 
 @implementation CoreComponentProxy
 
+/*
 -(CoreComponent *)component
 {
     return (CoreComponent *)obj;
 }
+ */
 
 @end
 
+@implementation SubComponentProxy
+
+- (instancetype) initWith:(void *)ref emu:(VirtualC64 *)emuref
+{
+    if (ref == nil || emuref == nil) {
+        return nil;
+    }
+    if (self = [super init]) {
+        obj = ref;
+        emu = emuref;
+    }
+    return self;
+}
+
+@end
 
 //
 // Defaults
@@ -709,7 +726,8 @@ using namespace vc64;
 
 - (void)pressKey:(NSInteger)nr
 {
-    [self kb]->emulator.cmdQueue.put(CMD_KEY_PRESS, { (u8)nr, 0.0 });
+    // [self kb]->emulator.cmdQueue.put(CMD_KEY_PRESS, { (u8)nr, 0.0 });
+    emu->cmdQueue.put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr });
     /*
     [self kb]->abortAutoTyping();
     [self kb]->press(C64Key(nr));
@@ -724,7 +742,7 @@ using namespace vc64;
 
 - (void)pressKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
-    [self kb]->emulator.cmdQueue.put(CMD_KEY_PRESS, { (u8)C64Key(row, col).nr, 0.0 });
+    emu->cmdQueue.put(CMD_KEY_PRESS, { (u8)C64Key(row, col).nr, 0.0 });
 
     // [self kb]->press(C64Key(row, col));
 }
@@ -2417,7 +2435,7 @@ using namespace vc64;
     drive9 = [[DriveProxy alloc] initWithVC1541:&emu->drive9];
     expansionport = [[ExpansionPortProxy alloc] initWith:&emu->expansionport];
     iec = [[IECProxy alloc] initWith:&emu->iec];
-    keyboard = [[KeyboardProxy alloc] initWith:&emu->keyboard];
+    keyboard = [[KeyboardProxy alloc] initWith:&emu->keyboard emu:emu];
     mem = [[MemoryProxy alloc] initWith:&emu->mem];
     port1 = [[ControlPortProxy alloc] initWith:&emu->port1];
     port2 = [[ControlPortProxy alloc] initWith:&emu->port2];
