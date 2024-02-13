@@ -836,23 +836,4 @@ Emulator::refreshRate() const
     }
 }
 
-void Emulator::stateChange(ThreadTransition transition)
-{
-    switch (transition) {
-
-        case    TRANSITION_POWER_OFF:   _c64.powerOff(); break;
-        case    TRANSITION_POWER_ON:    _c64.powerOn(); break;
-        case    TRANSITION_PAUSE:       _c64.pause(); break;
-        case    TRANSITION_RUN:         _c64.run(); break;
-        case    TRANSITION_HALT:        _c64.halt(); break;
-        case    TRANSITION_WARP_ON:     _c64.warpOn(); break;
-        case    TRANSITION_WARP_OFF:    _c64.warpOff(); break;
-        case    TRANSITION_TRACK_ON:    _c64.trackOn(); break;
-        case    TRANSITION_TRACK_OFF:   _c64.trackOff(); break;
-
-        default:
-            break;
-    }
-}
-
 }

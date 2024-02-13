@@ -124,12 +124,22 @@ private:
 
 private:
 
-    void stateChange(ThreadTransition transition) override;
+    // void stateChange(ThreadTransition transition) override;
     void isReady() override;
     bool shouldWarp() override;
     isize missingFrames() const override;
     void update() override;
     void computeFrame() override;
+
+    void _powerOn() override { _c64.powerOn(); }
+    void _powerOff() override { _c64.powerOff(); }
+    void _pause() override { _c64.pause(); }
+    void _run() override { _c64.run(); }
+    void _halt() override { _c64.halt(); }
+    void _warpOn() override { _c64.warpOn(); }
+    void _warpOff() override { _c64.warpOff(); }
+    void _trackOn() override { _c64.trackOn(); }
+    void _trackOff() override { _c64.trackOff(); }
 
 
     //

@@ -107,10 +107,8 @@ protected:
     // The thread object
     std::thread thread;
     
-    // The current thread state and a change request
+    // The current thread state
     EmulatorState state = STATE_OFF;
-    EmulatorState newState = STATE_OFF;
-    std::atomic_flag stateChangeRequest {};
 
     // Warp and track state
     u8 warp = 0, oldWarp = 0;
@@ -240,13 +238,18 @@ public:
     void trackOn(isize source = 0);
     void trackOff(isize source = 0);
 
+    // Signals a state transition
+    virtual void _powerOn() = 0;
+    virtual void _powerOff() = 0;
+    virtual void _pause() = 0;
+    virtual void _run() = 0;
+    virtual void _halt() = 0;
+    virtual void _warpOn() = 0;
+    virtual void _warpOff() = 0;
+    virtual void _trackOn() = 0;
+    virtual void _trackOff() = 0;
+
 private:
-
-    // Initiates a state change
-    void changeStateTo(EmulatorState requestedState);
-
-    // Signals a state change
-    virtual void stateChange(ThreadTransition) = 0;
 
     // Returns if the emulator is ready to runs, throws an exception otherwise
     virtual void isReady() throws = 0;

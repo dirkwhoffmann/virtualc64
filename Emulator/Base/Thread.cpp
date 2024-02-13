@@ -44,7 +44,7 @@ Thread::updateWarp()
 
     if (bool(warp) != bool(oldWarp)) {
 
-        stateChange(warp ? TRANSITION_WARP_ON : TRANSITION_WARP_OFF);
+        warp ? _warpOn() : _warpOff();
         oldWarp = warp;
     }
 }
@@ -56,7 +56,7 @@ Thread::updateTrack()
 
     if (bool(track) != bool(oldTrack)) {
 
-        stateChange(track ? TRANSITION_TRACK_ON : TRANSITION_TRACK_OFF);
+        track ? _trackOn() : _trackOff();
         oldTrack = track;
     }
 }
@@ -143,18 +143,6 @@ Thread::main()
 
         // Synchronize timing
         sleep();
-
-        // Are we requested to change state?
-        /*
-        if (stateChangeRequest.test()) {
-
-            switchState(newState);
-            stateChangeRequest.clear();
-            stateChangeRequest.notify_one();
-
-            if (state == STATE_HALTED) return;
-        }
-        */
     }
 }
 
@@ -166,53 +154,51 @@ Thread::switchState(EmulatorState newState)
 
     if (state == STATE_OFF && newState == STATE_PAUSED) {
 
-        stateChange(TRANSITION_POWER_ON);
+        _powerOn();
         state = STATE_PAUSED;
 
     } else if (state == STATE_OFF && newState == STATE_RUNNING) {
 
-        stateChange(TRANSITION_POWER_ON);
+        _powerOn();
         state = STATE_PAUSED;
 
-        stateChange(TRANSITION_RUN);
+        _run();
         state = STATE_RUNNING;
 
     } else if (state == STATE_PAUSED && newState == STATE_OFF) {
 
-        stateChange(TRANSITION_POWER_OFF);
+        _powerOff();
         state = STATE_OFF;
 
     } else if (state == STATE_PAUSED && newState == STATE_RUNNING) {
 
-        stateChange(TRANSITION_RUN);
+        _run();
         state = STATE_RUNNING;
 
     } else if (state == STATE_RUNNING && newState == STATE_OFF) {
 
-        stateChange(TRANSITION_PAUSE);
+        _pause();
         state = STATE_PAUSED;
 
-        stateChange(TRANSITION_POWER_OFF);
+        _powerOff();
         state = STATE_OFF;
 
     } else if (state == STATE_RUNNING && newState == STATE_PAUSED) {
 
-        stateChange(TRANSITION_PAUSE);
+        _pause();
         state = STATE_PAUSED;
 
     } else if (state == STATE_RUNNING && newState == STATE_SUSPENDED) {
 
-        stateChange(TRANSITION_SUSPEND);
         state = STATE_SUSPENDED;
 
     } else if (state == STATE_SUSPENDED && newState == STATE_RUNNING) {
 
-        stateChange(TRANSITION_RESUME);
         state = STATE_RUNNING;
 
     } else if (newState == STATE_HALTED) {
 
-        stateChange(TRANSITION_HALT);
+        _halt();
         state = STATE_HALTED;
 
     } else {
@@ -227,26 +213,22 @@ Thread::switchState(EmulatorState newState)
 void
 Thread::powerOn()
 {
-    assert(!isEmulatorThread());
     debug(RUN_DEBUG, "powerOn()\n");
 
     if (isPoweredOff()) {
-        
-        // Request a state change and wait until the new state has been reached
-        changeStateTo(STATE_PAUSED);
+
+        switchState(STATE_PAUSED);
     }
 }
 
 void
 Thread::powerOff()
 {
-    assert(!isEmulatorThread());
     debug(RUN_DEBUG, "powerOff()\n");
 
     if (!isPoweredOff()) {
 
-        // Request a state change and wait until the new state has been reached
-        changeStateTo(STATE_OFF);
+        switchState(STATE_OFF);
     }
 }
 
@@ -260,8 +242,7 @@ Thread::run()
         // Throw an exception if the emulator is not ready to run
         isReady();
 
-        // Request a state change and wait until the new state has been reached
-        changeStateTo(STATE_RUNNING);
+        switchState(STATE_RUNNING);
     }
 }
 
@@ -272,16 +253,14 @@ Thread::pause()
 
     if (isRunning()) {
 
-        // Request a state change and wait until the new state has been reached
-        changeStateTo(STATE_PAUSED);
+        switchState(STATE_PAUSED);
     }
 }
 
 void
 Thread::halt()
 {
-    changeStateTo(STATE_HALTED);
-    // join();
+    switchState(STATE_HALTED);
 }
 
 void
@@ -321,31 +300,6 @@ Thread::trackOff(isize source)
 }
 
 void
-Thread::changeStateTo(EmulatorState requestedState)
-{
-    if (requestedState != state) switchState(requestedState);
-    
-    /*
-    assert(!isEmulatorThread());
-    assert(stateChangeRequest.test() == false);
-
-    if (requestedState != state) {
-
-        // Assign new state
-        newState = requestedState;
-
-        // Request the change
-        stateChangeRequest.test_and_set();
-        assert(stateChangeRequest.test() == true);
-
-        // Wait until the change has been performed
-        stateChangeRequest.wait(true);
-        assert(stateChangeRequest.test() == false);
-    }
-    */
-}
-
-void
 Thread::wakeUp()
 {
     trace(TIM_DEBUG, "wakeup: %lld us\n", wakeupClock.restart().asMicroseconds());
@@ -360,7 +314,7 @@ Thread::suspend()
     if (suspendCounter || isRunning()) {
 
         suspendCounter++;
-        changeStateTo(STATE_SUSPENDED);
+        switchState(STATE_SUSPENDED);
     }
 }
 
@@ -371,7 +325,7 @@ Thread::resume()
 
     if (suspendCounter && --suspendCounter == 0) {
         
-        changeStateTo(STATE_RUNNING);
+        switchState(STATE_RUNNING);
         run();
     }
 }
