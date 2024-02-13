@@ -590,7 +590,7 @@ using namespace vc64;
     return [self bridge]->getVoiceInfo((unsigned)nr, (unsigned)voice);
 }
 
-- (SIDStats)getStats
+- (SIDStats)stats
 {
     return [self bridge]->getStats();
 }
@@ -2466,11 +2466,13 @@ using namespace vc64;
     }
 }
 
+/*
 - (NSInteger)cpuLoad
 {
-    double load = [self emu]->getCpuLoad();
+    double load = [self emu]->stats.cpuLoad;
     return (NSInteger)(100 * load);
 }
+*/
 
 - (InspectionTarget)inspectionTarget
 {

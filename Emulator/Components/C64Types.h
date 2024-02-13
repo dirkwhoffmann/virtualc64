@@ -264,6 +264,17 @@ typedef struct
 }
 C64Config;
 
+/*
+typedef struct
+{
+    u64 frame = 0;
+    u16 scanline = 0;
+    u8 rasterCycle = 1;
+    bool ultimax = false;
+}
+C64Info;
+*/
+
 typedef struct
 {
     EventSlot slot;

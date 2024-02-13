@@ -113,7 +113,7 @@ extension Inspector {
         sidFilter3.intValue = (info.filterEnableBits & 0x04) != 0 ? 1 : 0
         
         // Audio buffer
-        let stats = c64.sid.getStats()
+        let stats = c64.sid.stats
         let fillLevel = Int32(stats.fillLevel * 100)
         sidAudioBufferLevel.intValue = fillLevel
         sidAudioBufferLevelText.stringValue = "\(fillLevel) %"

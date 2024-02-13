@@ -47,32 +47,30 @@ public:
 
     // Expose portions of the Emulator API (clean this up)
     using vc64::Emulator::defaults;
-    using vc64::Emulator::host;
-    // using vc64::Emulator::cmdQueue;
     using vc64::Emulator::getInfo;
     using vc64::Emulator::getStats;
-    using vc64::Emulator::Thread::isWarping;
-    using vc64::Emulator::Thread::warpOn;
-    using vc64::Emulator::Thread::warpOff;
-    using vc64::Emulator::Thread::isTracking;
-    using vc64::Emulator::Thread::trackOn;
-    using vc64::Emulator::Thread::trackOff;
-    using vc64::Emulator::Thread::getCpuLoad;
+
+    //
+    // Emulator state
+    //
+
     using vc64::Emulator::Thread::isPoweredOn;
     using vc64::Emulator::Thread::isPoweredOff;
-    /*
-    using vc64::Emulator::Thread::powerOn;
-    using vc64::Emulator::Thread::powerOff;
-    */
     using vc64::Emulator::Thread::isPaused;
     using vc64::Emulator::Thread::isRunning;
-    /*
-    using vc64::Emulator::Thread::run;
-    using vc64::Emulator::Thread::pause;
-    using vc64::Emulator::Thread::halt;
-    using vc64::Emulator::Thread::suspend;
-    using vc64::Emulator::Thread::resume;
-    */
+    using vc64::Emulator::Thread::isWarping;
+    using vc64::Emulator::Thread::isTracking;
+
+    using vc64::Emulator::Thread::warpOn;
+    using vc64::Emulator::Thread::warpOff;
+    using vc64::Emulator::Thread::trackOn;
+    using vc64::Emulator::Thread::trackOff;
+
+
+    //
+    // Synchronizing
+    //
+
     using vc64::Emulator::Thread::wakeUp;
 
 
@@ -95,11 +93,13 @@ public:
     i64 getConfigItem(Option option, long id) const;
     void setConfigItem(Option option, i64 value);
 
-    // Returns the emulated refresh rate of the virtual C64
-    double refreshRate() const;
 
-    // Feeds a command into the command queue
+    //
+    // Command queue
+    //
+
     void put(const Cmd &cmd);
+    void put(CmdType type, i64 payload);
     void put(CmdType type, KeyCmd payload);
 
 

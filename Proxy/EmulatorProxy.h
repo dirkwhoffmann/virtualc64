@@ -173,7 +173,7 @@
 @property (readonly) NSInteger frame;
 @property BOOL warpMode;
 @property BOOL trackMode;
-@property (readonly) NSInteger cpuLoad;
+// @property (readonly) NSInteger cpuLoad;
 
 @property InspectionTarget inspectionTarget;
 - (void) removeInspectionTarget;
@@ -411,7 +411,7 @@
 
 - (SIDInfo)getInfo:(NSInteger)nr;
 - (VoiceInfo)getVoiceInfo:(NSInteger)nr voice:(NSInteger)voice;
-- (SIDStats) getStats;
+@property (readonly) SIDStats stats;
 
 - (void)copyMono:(float *)target size:(NSInteger)n;
 - (void)copyStereo:(float *)target1 buffer2:(float *)target2 size:(NSInteger)n;

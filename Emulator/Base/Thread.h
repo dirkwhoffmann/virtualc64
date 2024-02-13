@@ -117,6 +117,7 @@ protected:
     // Counters
     isize suspendCounter = 0;
     isize frameCounter = 0;
+    isize statsCounter = 0;
 
     // Time stamps
     util::Time baseTime;
@@ -125,8 +126,9 @@ protected:
     util::Clock nonstopClock;
     util::Clock loadClock;
 
-    // The current CPU load in percent
+    // Statistical information (CPU load, frames per second)
     double cpuLoad = 0.0;
+    double fps = 0.0;
 
     // Debug clocks
     util::Clock wakeupClock;
@@ -192,13 +194,9 @@ private:
     // Analyzing
     //
 
-public:
-    
-    double getCpuLoad() { return computeCpuLoad(); }
-
 private:
 
-    double computeCpuLoad();
+    void computeStats();
 
 
     //

@@ -29,7 +29,7 @@ class Emulator : public Thread {
     friend class ::VirtualC64;
 
     EmulatorConfig config = { };
-    EmulatorStats stats = { };
+    // EmulatorStats stats = { };
 
     // The virtual C64
     C64 _c64 = C64(*this);
@@ -143,8 +143,6 @@ private:
 
     //
     // Command queue
-    //
-
     //
 
 public:

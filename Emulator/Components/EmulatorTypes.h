@@ -279,5 +279,6 @@ EmulatorInfo;
 typedef struct
 {
     double cpuLoad;
+    double fps;
 }
 EmulatorStats;

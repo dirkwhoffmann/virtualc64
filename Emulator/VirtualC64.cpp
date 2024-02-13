@@ -102,13 +102,7 @@ VirtualC64::setConfigItem(Option option, i64 value)
     Emulator::setConfigItem(option, value);
 }
 
-double
-VirtualC64::refreshRate() const
-{
-    return Emulator::refreshRate();
-}
-
-void 
+void
 VirtualC64::put(const Cmd &cmd)
 {
     cmdQueue.put(cmd);
@@ -119,6 +113,12 @@ VirtualC64::put(const Cmd &cmd)
 }
 
 void 
+VirtualC64::put(CmdType type, i64 payload)
+{
+    put( Cmd { .type = type, .value = payload } );
+}
+
+void
 VirtualC64::put(CmdType type, KeyCmd payload)
 {
     put( Cmd { .type = type, .key = payload } );

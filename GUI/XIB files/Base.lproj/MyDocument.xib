@@ -234,7 +234,7 @@
                                     <menuItem title="C64 Refresh Rate" tag="1" id="nVn-1n-yKu"/>
                                     <menuItem isSeparatorItem="YES" id="Z0D-Yd-yG2"/>
                                     <menuItem title="Host CPU Load" tag="2" id="fbG-FO-q2S"/>
-                                    <menuItem title="Host CPU Refresh Rate" tag="3" id="L5p-QQ-iKU"/>
+                                    <menuItem title="Host Refresh Rate" tag="3" id="L5p-QQ-iKU"/>
                                     <menuItem isSeparatorItem="YES" id="Dfb-im-XJI"/>
                                     <menuItem title="Audio Buffer Fill Level" tag="4" id="meX-8h-Eo8"/>
                                 </items>

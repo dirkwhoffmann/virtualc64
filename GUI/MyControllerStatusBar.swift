@@ -261,9 +261,7 @@ extension MyController {
             activityBar.fillColor = color[index]
         }
 
-        speedometer.updateWith(cycle: c64.cpu.clock,
-                               emuFrame: Int64(c64.frame),
-                               gpuFrame: renderer.frames)
+        speedometer.updateWith(cycle: c64.cpu.clock, gpuFrame: renderer.frames)
 
         switch activityType.selectedTag() {
 
@@ -275,14 +273,14 @@ extension MyController {
             setColor(color: [.systemRed, .systemYellow, .systemGreen, .systemYellow, .systemRed])
 
         case 1:
-            let fps = speedometer.emuFps
+            let fps = c64.stats.fps
             activityBar.maxValue = 120
             activityBar.doubleValue = fps
             activityInfo.stringValue = String(format: "%d Hz", Int(fps))
             setColor(color: [.systemRed, .systemYellow, .systemGreen, .systemYellow, .systemRed])
 
         case 2:
-            let cpu = c64.cpuLoad
+            let cpu = Int(c64.stats.cpuLoad * 100)
             activityBar.maxValue = 100
             activityBar.integerValue = cpu
             activityInfo.stringValue = String(format: "%d%% CPU", cpu)
@@ -296,7 +294,7 @@ extension MyController {
             setColor(color: [.systemRed, .systemYellow, .systemGreen, .systemYellow, .systemRed])
 
         case 4:
-            let fill = c64.sid.getStats().fillLevel * 100.0
+            let fill = c64.sid.stats.fillLevel * 100.0
             activityBar.maxValue = 100
             activityBar.doubleValue = fill
             activityInfo.stringValue = String(format: "Fill level %d%%", Int(fill))

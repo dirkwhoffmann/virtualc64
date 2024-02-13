@@ -86,18 +86,23 @@ Thread::sleep()
     waitForWakeUp(timeout);
 }
 
-double 
-Thread::computeCpuLoad()
+void
+Thread::computeStats()
 {
-    auto used  = loadClock.getElapsedTime().asSeconds();
-    auto total = nonstopClock.getElapsedTime().asSeconds();
+    if (statsCounter++ == 32) {
 
-    loadClock.restart();
-    loadClock.stop();
-    nonstopClock.restart();
+        auto used  = loadClock.getElapsedTime().asSeconds();
+        auto total = nonstopClock.getElapsedTime().asSeconds();
 
-    cpuLoad = 0.3 * cpuLoad + 0.7 * used / total;
-    return cpuLoad;
+        loadClock.restart();
+        loadClock.stop();
+        nonstopClock.restart();
+
+        cpuLoad = 0.3 * cpuLoad + 0.7 * used / total;
+        fps = 0.3 * fps + 0.7 * statsCounter / total;
+
+        statsCounter = 0;
+    }
 }
 
 void
@@ -117,6 +122,9 @@ Thread::main()
 
         // Synchronize timing
         sleep();
+
+        // Compute statistics
+        computeStats();
     }
 }
 

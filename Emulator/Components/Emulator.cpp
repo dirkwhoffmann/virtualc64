@@ -68,8 +68,9 @@ Emulator::getStats() const
     EmulatorStats result;
 
     result.cpuLoad = cpuLoad;
+    result.fps = fps;
     
-    return stats;
+    return result;
 }
 
 void
