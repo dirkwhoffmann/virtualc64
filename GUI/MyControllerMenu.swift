@@ -11,8 +11,9 @@ extension MyController: NSMenuItemValidation {
     
     open func validateMenuItem(_ item: NSMenuItem) -> Bool {
 
-        let powered = c64.poweredOn
-        let running = c64.running
+        let info = c64.info
+        let powered = info.powered
+        let running = info.running
         var recording: Bool { return c64.recorder.recording }
         
         var driveID: Int { return item.tag }

@@ -28,11 +28,11 @@ class Emulator : public Thread {
     friend class API;
     friend class ::VirtualC64;
 
+    EmulatorConfig config = { };
+    EmulatorStats stats = { };
+
     // The virtual C64
     C64 _c64 = C64(*this);
-
-    // The current configuration
-    EmulatorConfig config = {};
 
 public:
 
@@ -58,11 +58,20 @@ public:
     // Launches the emulator thread
     void launch(const void *listener, Callback *func);
 
-    
 private:
 
     // Initializes all components
     void initialize();
+
+
+    //
+    // Analyzing
+    //
+
+public:
+
+    EmulatorInfo getInfo() const;
+    EmulatorStats getStats() const;
 
 
     //

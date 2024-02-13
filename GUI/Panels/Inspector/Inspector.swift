@@ -330,11 +330,14 @@ class Inspector: DialogController {
         if full {
             
             if c64.running {
+                
                 stopAndGoButton.image = NSImage(named: "pauseTemplate")
                 stopAndGoButton.toolTip = "Pause"
                 stepIntoButton.isEnabled = false
                 stepOverButton.isEnabled = false
+
             } else {
+
                 stopAndGoButton.image = NSImage(named: "runTemplate")
                 stopAndGoButton.toolTip = "Run"
                 stepIntoButton.isEnabled = true

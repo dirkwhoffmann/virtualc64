@@ -186,6 +186,9 @@
 - (void)hardReset;
 - (void)softReset;
 
+@property (readonly) EmulatorInfo info;
+@property (readonly) EmulatorStats stats;
+
 @property (readonly) BOOL poweredOn;
 @property (readonly) BOOL poweredOff;
 @property (readonly) BOOL running;
@@ -448,9 +451,6 @@
 - (void)toggleKeyAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)toggleShiftLock;
 
-- (void)scheduleKeyPress:(NSInteger)nr delay:(double)seconds;
-- (void)scheduleKeyPresses:(NSInteger)nr with:(NSInteger)nr2 delay:(double)seconds;
-- (void)scheduleKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(double)seconds;
 - (void)scheduleKeyRelease:(NSInteger)nr delay:(double)seconds;
 - (void)scheduleKeyReleases:(NSInteger)nr with:(NSInteger)nr2 delay:(double)seconds;
 - (void)scheduleKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(double)seconds;

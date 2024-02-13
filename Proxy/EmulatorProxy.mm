@@ -699,25 +699,29 @@ using namespace vc64;
 
 - (void)pressKey:(NSInteger)nr
 {
-    // [self kb]->emulator.cmdQueue.put(CMD_KEY_PRESS, { (u8)nr, 0.0 });
     [self emu]->cmdQueue.put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr });
     /*
-    [self kb]->abortAutoTyping();
-    [self kb]->press(C64Key(nr));
-    */
+     [self kb]->abortAutoTyping();
+     [self kb]->press(C64Key(nr));
+     */
 }
 
 - (void)pressKeyCombination:(NSInteger)nr with: (NSInteger)nr2
 {
-    [self kb]->press(C64Key(nr));
-    [self kb]->press(C64Key(nr2));
+    [self emu]->cmdQueue.put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr });
+    [self emu]->cmdQueue.put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr2 });
+    /*
+     [self kb]->press(C64Key(nr));
+     [self kb]->press(C64Key(nr2));
+     */
 }
 
 - (void)pressKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
     [self emu]->cmdQueue.put(CMD_KEY_PRESS, { (u8)C64Key(row, col).nr, 0.0 });
-
-    // [self kb]->press(C64Key(row, col));
+    /*
+     [self kb]->press(C64Key(row, col));
+     */
 }
 
 - (void)pressShiftLock
@@ -764,21 +768,6 @@ using namespace vc64;
 - (void)toggleShiftLock
 {
     [self kb]->toggleShiftLock();
-}
-
-- (void)scheduleKeyPress:(NSInteger)nr delay:(double)seconds
-{
-    [self kb]->scheduleKeyPress(C64Key(nr), seconds);
-}
-
-- (void)scheduleKeyPresses:(NSInteger)nr with:(NSInteger)nr2 delay:(double)seconds
-{
-    [self kb]->scheduleKeyPress(std::vector<C64Key> { C64Key(nr), C64Key(nr2) }, seconds);
-}
-
-- (void)scheduleKeyPressAtRow:(NSInteger)row col:(NSInteger)col delay:(double)seconds
-{
-    [self kb]->scheduleKeyPress(C64Key(row, col), seconds);
 }
 
 - (void)scheduleKeyRelease:(NSInteger)nr delay:(double)seconds
@@ -2538,6 +2527,16 @@ using namespace vc64;
 - (void)powerOff
 {
     [self emu]->powerOff();
+}
+
+- (EmulatorInfo)info
+{
+    return [self emu]->getInfo();
+}
+
+- (EmulatorStats)stats
+{
+    return [self emu]->getStats();
 }
 
 - (BOOL)poweredOn

@@ -247,14 +247,7 @@ private:
     bool CNT;
     bool INT;
 
-    
-    //
-    // TOD control
-    //
-    
-    // Cycle nextTodTrigger;
-    
-    
+
     //
     // Sleep logic
     //

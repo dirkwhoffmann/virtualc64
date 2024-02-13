@@ -45,6 +45,33 @@ Emulator::initialize()
     _c64.initialize();
 }
 
+EmulatorInfo 
+Emulator::getInfo() const
+{
+    EmulatorInfo result;
+
+    result.state = state;
+    result.refreshRate = isize(refreshRate());
+    result.powered = isPoweredOn();
+    result.paused = isPaused();
+    result.running = isRunning();
+    result.suspended = isSuspended();
+    result.warping = isWarping();
+    result.tracking = isTracking();
+
+    return result;
+}
+
+EmulatorStats
+Emulator::getStats() const
+{
+    EmulatorStats result;
+
+    result.cpuLoad = cpuLoad;
+    
+    return stats;
+}
+
 void
 Emulator::revertToFactorySettings()
 {

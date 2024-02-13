@@ -50,15 +50,16 @@ extension MyController {
     
     public func refreshStatusBar() {
 
+        let c64state = c64.info
+        let running = c64state.running
+        let tracking = c64state.tracking
+        let warping = c64state.warping
+
         let connected8 = c64.drive8.isConnected()
         let connected9 = c64.drive9.isConnected()
         let on8 = c64.drive8.isSwitchedOn()
         let on9 = c64.drive9.isSwitchedOn()
 
-        let running = c64.running
-        let track = c64.trackMode
-        let warp = c64.warpMode
-        
         let hasCrt = c64.expansionport.cartridgeAttached()
 
         // Floppy drives
@@ -82,8 +83,8 @@ extension MyController {
             trackNumber9: connected9 && on9,
             
             haltIcon: jammed,
-            trackIcon: track,
-            muteIcon: warp || muted,
+            trackIcon: tracking,
+            muteIcon: warping || muted,
             
             tapeIcon: c64.datasette.hasTape,
             tapeCounter: c64.datasette.hasTape,

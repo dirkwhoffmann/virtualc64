@@ -14,6 +14,7 @@
 
 #include "Aliases.h"
 #include "Reflection.h"
+#include "ThreadTypes.h"
 
 //
 // Enumerations
@@ -261,3 +262,22 @@ typedef struct
     isize runAhead;
 }
 EmulatorConfig;
+
+typedef struct
+{
+    EmulatorState state;
+    isize refreshRate;
+    bool powered;
+    bool paused;
+    bool running;
+    bool suspended;
+    bool warping;
+    bool tracking;
+}
+EmulatorInfo;
+
+typedef struct
+{
+    double cpuLoad;
+}
+EmulatorStats;

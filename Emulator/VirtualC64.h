@@ -49,6 +49,8 @@ public:
     using vc64::Emulator::defaults;
     using vc64::Emulator::host;
     using vc64::Emulator::cmdQueue;
+    using vc64::Emulator::getInfo;
+    using vc64::Emulator::getStats;
     using vc64::Emulator::Thread::isWarping;
     using vc64::Emulator::Thread::warpOn;
     using vc64::Emulator::Thread::warpOff;
