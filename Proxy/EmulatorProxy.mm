@@ -699,7 +699,7 @@ using namespace vc64;
 
 - (void)pressKey:(NSInteger)nr
 {
-    [self emu]->cmdQueue.put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr });
+    [self emu]->put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr });
     /*
      [self kb]->abortAutoTyping();
      [self kb]->press(C64Key(nr));
@@ -708,8 +708,8 @@ using namespace vc64;
 
 - (void)pressKeyCombination:(NSInteger)nr with: (NSInteger)nr2
 {
-    [self emu]->cmdQueue.put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr });
-    [self emu]->cmdQueue.put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr2 });
+    [self emu]->put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr });
+    [self emu]->put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr2 });
     /*
      [self kb]->press(C64Key(nr));
      [self kb]->press(C64Key(nr2));
@@ -718,7 +718,7 @@ using namespace vc64;
 
 - (void)pressKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
-    [self emu]->cmdQueue.put(CMD_KEY_PRESS, { (u8)C64Key(row, col).nr, 0.0 });
+    [self emu]->put(CMD_KEY_PRESS, { (u8)C64Key(row, col).nr, 0.0 });
     /*
      [self kb]->press(C64Key(row, col));
      */
@@ -2520,13 +2520,19 @@ using namespace vc64;
 
 - (void)powerOn:(ExceptionWrapper *)ex
 {
+    /*
     try { [self emu]->powerOn(); }
     catch (VC64Error &error) { [ex save:error]; }
+    */
+    [self send:Cmd{.type = CMD_POWER_ON}];
 }
 
 - (void)powerOff
 {
+    /*
     [self emu]->powerOff();
+    */
+    [self send:Cmd{.type = CMD_POWER_OFF}];
 }
 
 - (EmulatorInfo)info
@@ -2561,28 +2567,35 @@ using namespace vc64;
 
 - (void)run:(ExceptionWrapper *)e
 {
+    /*
     try { [self emu]->run(); }
     catch (VC64Error &error) { [e save:error]; }
+    */
+    [self send:Cmd{.type = CMD_RUN}];
 }
 
 - (void)pause
 {
-    [self emu]->pause();
+    // [self emu]->pause();
+    [self send:Cmd{.type = CMD_PAUSE}];
 }
 
 - (void)halt
 {
-    [self emu]->halt();
+    // [self emu]->halt();
+    [self send:Cmd{.type = CMD_HALT}];
 }
 
 - (void)suspend
 {
-    [self emu]->suspend();
+    // [self emu]->suspend();
+    [self send:Cmd{.type = CMD_SUSPEND}];
 }
 
 - (void)resume
 {
-    [self emu]->resume();
+    // [self emu]->resume();
+    [self send:Cmd{.type = CMD_RESUME}];
 }
 
 - (void)continueScript
@@ -2868,12 +2881,12 @@ using namespace vc64;
 
 - (void)send:(Cmd)cmd
 {
-    [self emu]->cmdQueue.put(cmd);
+    [self emu]->put(cmd);
 }
 
 - (void)send:(CmdType)type key:(KeyCmd)keyCmd
 {
-    [self emu]->cmdQueue.put(type, keyCmd);
+    [self emu]->put(type, keyCmd);
 }
 
 @end

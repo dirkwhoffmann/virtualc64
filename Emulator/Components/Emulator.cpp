@@ -771,13 +771,22 @@ Emulator::missingFrames() const
 }
 
 void
-Emulator::computeFrame()
+Emulator::update()
 {
     Cmd cmd;
-
     while (cmdQueue.poll(cmd)) {
 
+        debug(CMD_DEBUG, "Command: %s\n", CmdTypeEnum::key(cmd.type));
+
         switch (cmd.type) {
+
+            case CMD_POWER_ON:  powerOn();  break;
+            case CMD_POWER_OFF: powerOff(); break;
+            case CMD_RUN:       run();      break;
+            case CMD_PAUSE:     pause();    break;
+            case CMD_SUSPEND:   suspend();  break;
+            case CMD_RESUME:    resume();   break;
+            case CMD_HALT:      halt();     break;
 
             case CMD_KEY_PRESS:
             case CMD_KEY_RELEASE:
@@ -790,26 +799,28 @@ Emulator::computeFrame()
                 fatal("Unhandled command: %s\n", CmdTypeEnum::key(cmd.type));
         }
     }
+}
 
+void
+Emulator::computeFrame()
+{
     _c64.execute();
 }
 
 void 
+Emulator::put(const Cmd &cmd)
+{
+    cmdQueue.put(cmd);
+
+    if (cmd.type == CMD_HALT) {
+        join();
+    }
+}
+
+void
 Emulator::process(const Cmd &cmd)
 {
-    switch (cmd.type) {
 
-            debug(CMD_DEBUG, "Command: %s\n", CmdTypeEnum::key(cmd.type));
-
-        case CMD_KEY_PRESS:
-
-            _c64.keyboard.processCommand(cmd);
-            break;
-
-        default:
-            fatal("Unhandled command: %s\n", CmdTypeEnum::key(cmd.type));
-
-    }
 }
 
 double

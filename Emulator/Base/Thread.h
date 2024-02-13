@@ -169,6 +169,9 @@ private:
     virtual bool shouldWarp() { return false; }
     virtual bool shouldTrack() { return false; }
 
+    // Updates the emulator state (implemented by the subclass)
+    virtual void update() = 0;
+
     // Updates the current warp and track state
     void updateWarp();
     void updateTrack();
@@ -231,6 +234,7 @@ public:
     void run() throws;
     void pause();
     void halt();
+
     void warpOn(isize source = 0);
     void warpOff(isize source = 0);
     void trackOn(isize source = 0);
@@ -257,7 +261,7 @@ public:
     // Awakes the thread
     void wakeUp();
 
-private:
+public:
     
     // Wait until the thread has terminated
     void join() { if (thread.joinable()) thread.join(); }

@@ -48,7 +48,7 @@ public:
     // Expose portions of the Emulator API (clean this up)
     using vc64::Emulator::defaults;
     using vc64::Emulator::host;
-    using vc64::Emulator::cmdQueue;
+    // using vc64::Emulator::cmdQueue;
     using vc64::Emulator::getInfo;
     using vc64::Emulator::getStats;
     using vc64::Emulator::Thread::isWarping;
@@ -60,15 +60,19 @@ public:
     using vc64::Emulator::Thread::getCpuLoad;
     using vc64::Emulator::Thread::isPoweredOn;
     using vc64::Emulator::Thread::isPoweredOff;
+    /*
     using vc64::Emulator::Thread::powerOn;
     using vc64::Emulator::Thread::powerOff;
+    */
     using vc64::Emulator::Thread::isPaused;
     using vc64::Emulator::Thread::isRunning;
+    /*
     using vc64::Emulator::Thread::run;
     using vc64::Emulator::Thread::pause;
     using vc64::Emulator::Thread::halt;
     using vc64::Emulator::Thread::suspend;
     using vc64::Emulator::Thread::resume;
+    */
     using vc64::Emulator::Thread::wakeUp;
 
 
@@ -93,6 +97,10 @@ public:
 
     // Returns the emulated refresh rate of the virtual C64
     double refreshRate() const;
+
+    // Feeds a command into the command queue
+    void put(const Cmd &cmd);
+    void put(CmdType type, KeyCmd payload);
 
 
     //

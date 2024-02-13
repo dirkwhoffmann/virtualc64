@@ -23,6 +23,15 @@ enum_long(CMD_TYPE)
 {
     CMD_NONE = 0,
 
+    // Emulator
+    CMD_POWER_ON,
+    CMD_POWER_OFF,
+    CMD_RUN,
+    CMD_PAUSE,
+    CMD_SUSPEND,
+    CMD_RESUME,
+    CMD_HALT,
+
     // Keyboard
     CMD_KEY_PRESS,
     CMD_KEY_RELEASE,
@@ -43,6 +52,15 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
         switch (value) {
 
             case CMD_NONE:                  return "NONE";
+
+            case CMD_POWER_ON:              return "POWER_ON";
+            case CMD_POWER_OFF:             return "POWER_OFF";
+            case CMD_RUN:                   return "RUN";
+            case CMD_PAUSE:                 return "PAUSE";
+            case CMD_SUSPEND:               return "SUSPEND";
+            case CMD_RESUME:                return "RESUME";
+            case CMD_HALT:                  return "HALT";
+
             case CMD_KEY_PRESS:             return "KEY_PRESS";
             case CMD_KEY_RELEASE:           return "KEY_RELEASE";
             case CMD_KEY_TOGGLE:            return "KEY_TOGGLE";

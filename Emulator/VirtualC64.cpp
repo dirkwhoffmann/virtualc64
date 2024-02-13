@@ -108,6 +108,22 @@ VirtualC64::refreshRate() const
     return Emulator::refreshRate();
 }
 
+void 
+VirtualC64::put(const Cmd &cmd)
+{
+    cmdQueue.put(cmd);
+
+    if (cmd.type == CMD_HALT) {
+        join();
+    }
+}
+
+void 
+VirtualC64::put(CmdType type, KeyCmd payload)
+{
+    put( Cmd { .type = type, .key = payload } );
+}
+
 
 //
 // C64

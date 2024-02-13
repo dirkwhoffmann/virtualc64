@@ -128,6 +128,7 @@ private:
     void isReady() override;
     bool shouldWarp() override;
     isize missingFrames() const override;
+    void update() override;
     void computeFrame() override;
 
 
@@ -140,7 +141,7 @@ private:
 public:
 
     // Feeds a command into the command queue
-    //
+    void put(const Cmd &cmd);
 
 private:
 

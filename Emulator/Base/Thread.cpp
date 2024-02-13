@@ -131,11 +131,12 @@ Thread::main()
 
     baseTime = util::Time::now();
 
-    while (1) {
+    while (state != STATE_HALTED) {
 
-        // Update warp and track state
+        // Update
         updateWarp();
         updateTrack();
+        update();
 
         // Compute missing frames
         execute();
@@ -144,6 +145,7 @@ Thread::main()
         sleep();
 
         // Are we requested to change state?
+        /*
         if (stateChangeRequest.test()) {
 
             switchState(newState);
@@ -152,14 +154,13 @@ Thread::main()
 
             if (state == STATE_HALTED) return;
         }
+        */
     }
 }
 
 void
 Thread::switchState(EmulatorState newState)
 {
-    assert(isEmulatorThread());
-
     // Only proceed if the state changes
     if (state == newState) return;
 
@@ -252,7 +253,6 @@ Thread::powerOff()
 void
 Thread::run()
 {
-    assert(!isEmulatorThread());
     debug(RUN_DEBUG, "run()\n");
 
     if (!isRunning()) {
@@ -268,7 +268,6 @@ Thread::run()
 void
 Thread::pause()
 {
-    assert(!isEmulatorThread());
     debug(RUN_DEBUG, "pause()\n");
 
     if (isRunning()) {
@@ -281,10 +280,8 @@ Thread::pause()
 void
 Thread::halt()
 {
-    assert(!isEmulatorThread());
-
     changeStateTo(STATE_HALTED);
-    join();
+    // join();
 }
 
 void
@@ -326,6 +323,9 @@ Thread::trackOff(isize source)
 void
 Thread::changeStateTo(EmulatorState requestedState)
 {
+    if (requestedState != state) switchState(requestedState);
+    
+    /*
     assert(!isEmulatorThread());
     assert(stateChangeRequest.test() == false);
 
@@ -342,6 +342,7 @@ Thread::changeStateTo(EmulatorState requestedState)
         stateChangeRequest.wait(true);
         assert(stateChangeRequest.test() == false);
     }
+    */
 }
 
 void
