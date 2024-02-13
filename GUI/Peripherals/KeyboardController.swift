@@ -148,6 +148,9 @@ class KeyboardController: NSObject {
                 
                 // Press all required keys
                 for key in c64Keys {
+
+                    // let kc = UInt8(C64Key((key.row, key.col)).nr)
+                    // c64.send(.KEY_PRESS, key: KeyCmd(keycode: kc, delay: 0.0))
                     keyboard.pressKey(atRow: key.row, col: key.col)
                 }
 

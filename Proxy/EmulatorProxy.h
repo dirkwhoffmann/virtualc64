@@ -111,7 +111,7 @@
 
 @interface SubComponentProxy : Proxy {
 
-    @public class VirtualC64 *emu;
+    @public void *emu;
 }
 @end
 
@@ -249,7 +249,8 @@
 - (void)setAlarmAbs:(NSInteger)cycle payload:(NSInteger)value;
 - (void)setAlarmRel:(NSInteger)cycle payload:(NSInteger)value;
 
-// - (void)send:(Cmd)cmd;
+- (void)send:(Cmd)cmd;
+- (void)send:(CmdType)type key:(KeyCmd)keyCmd;
 
 @end
 

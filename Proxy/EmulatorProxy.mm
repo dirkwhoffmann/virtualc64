@@ -70,13 +70,6 @@ using namespace vc64;
 
 @implementation CoreComponentProxy
 
-/*
--(CoreComponent *)component
-{
-    return (CoreComponent *)obj;
-}
- */
-
 @end
 
 @implementation SubComponentProxy
@@ -689,6 +682,11 @@ using namespace vc64;
     return (VirtualC64::KBD_API *)obj;
 }
 
+- (VirtualC64 *)emu
+{
+    return (VirtualC64 *)emu;
+}
+
 - (BOOL)keyIsPressed:(NSInteger)nr
 {
     return [self kb]->isPressed(nr);
@@ -727,7 +725,7 @@ using namespace vc64;
 - (void)pressKey:(NSInteger)nr
 {
     // [self kb]->emulator.cmdQueue.put(CMD_KEY_PRESS, { (u8)nr, 0.0 });
-    emu->cmdQueue.put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr });
+    [self emu]->cmdQueue.put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr });
     /*
     [self kb]->abortAutoTyping();
     [self kb]->press(C64Key(nr));
@@ -742,7 +740,7 @@ using namespace vc64;
 
 - (void)pressKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
-    emu->cmdQueue.put(CMD_KEY_PRESS, { (u8)C64Key(row, col).nr, 0.0 });
+    [self emu]->cmdQueue.put(CMD_KEY_PRESS, { (u8)C64Key(row, col).nr, 0.0 });
 
     // [self kb]->press(C64Key(row, col));
 }
@@ -2894,11 +2892,14 @@ using namespace vc64;
     [self emu]->c64.setAlarmRel(cycle, value);
 }
 
-/*
-- (void)send:(Cmd *)cmd
+- (void)send:(Cmd)cmd
 {
     [self emu]->cmdQueue.put(cmd);
 }
-*/
+
+- (void)send:(CmdType)type key:(KeyCmd)keyCmd
+{
+    [self emu]->cmdQueue.put(type, keyCmd);
+}
 
 @end
