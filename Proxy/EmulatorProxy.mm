@@ -2596,12 +2596,12 @@ using namespace vc64;
 
 - (void)requestAutoSnapshot
 {
-    [self emu]->c64.requestAutoSnapshot();
+    [self emu]->put(CMD_SNAPSHOT_AUTO);
 }
 
 - (void)requestUserSnapshot
 {
-    [self emu]->c64.requestUserSnapshot();
+    [self emu]->put(CMD_SNAPSHOT_USER);
 }
 
 - (SnapshotProxy *)latestAutoSnapshot

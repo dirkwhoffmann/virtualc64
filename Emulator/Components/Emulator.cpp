@@ -791,6 +791,12 @@ Emulator::update()
             case CMD_RESUME:    resume();   break;
             case CMD_HALT:      halt();     break;
 
+            case CMD_SNAPSHOT_AUTO:
+            case CMD_SNAPSHOT_USER: 
+
+                _c64.process(cmd);
+                break;
+
             case CMD_KEY_PRESS:
             case CMD_KEY_RELEASE:
             case CMD_KEY_TOGGLE:

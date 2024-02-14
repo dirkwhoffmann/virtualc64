@@ -503,6 +503,7 @@ C64::processFlags()
                          RL::SINGLE_STEP);
 
     // Are we requested to take an auto-snapshot?
+    /*
     if (flags & RL::AUTO_SNAPSHOT) {
         clearFlag(RL::AUTO_SNAPSHOT);
         autoSnapshot = new Snapshot(*this);
@@ -515,6 +516,7 @@ C64::processFlags()
         userSnapshot = new Snapshot(*this);
         msgQueue.put(MSG_USER_SNAPSHOT_TAKEN);
     }
+    */
 
     // Did we reach a breakpoint?
     if (flags & RL::BREAKPOINT) {
@@ -877,6 +879,28 @@ C64::endFrame()
 }
 
 void
+C64::process(const Cmd &cmd)
+{
+    switch (cmd.type) {
+
+        case CMD_SNAPSHOT_AUTO:
+
+            autoSnapshot = new Snapshot(*this);
+            msgQueue.put(MSG_AUTO_SNAPSHOT_TAKEN);
+            break;
+
+        case CMD_SNAPSHOT_USER:
+
+            userSnapshot = new Snapshot(*this);
+            msgQueue.put(MSG_USER_SNAPSHOT_TAKEN);
+            break;
+
+        default:
+            fatalError;
+    }
+}
+
+void
 C64::processEvents(Cycle cycle)
 {
     //
@@ -993,40 +1017,6 @@ C64::clearFlag(u32 flag)
     SYNCHRONIZED
 
     flags &= ~flag;
-}
-
-void
-C64::requestAutoSnapshot()
-{
-    if (!isRunning()) {
-        
-        // Take snapshot immediately
-        // autoSnapshot = Snapshot::makeWithC64(this);
-        autoSnapshot = new Snapshot(*this);
-        msgQueue.put(MSG_AUTO_SNAPSHOT_TAKEN);
-        
-    } else {
-        
-        // Schedule the snapshot to be taken
-        signalAutoSnapshot();
-    }
-}
-
-void
-C64::requestUserSnapshot()
-{
-    if (!isRunning()) {
-        
-        // Take snapshot immediately
-        // userSnapshot = Snapshot::makeWithC64(this);
-        userSnapshot = new Snapshot(*this);
-        msgQueue.put(MSG_USER_SNAPSHOT_TAKEN);
-        
-    } else {
-        
-        // Schedule the snapshot to be taken
-        signalUserSnapshot();
-    }
 }
 
 Snapshot *

@@ -32,6 +32,9 @@ enum_long(CMD_TYPE)
     CMD_RESUME,
     CMD_HALT,
 
+    CMD_SNAPSHOT_AUTO,
+    CMD_SNAPSHOT_USER,
+
     // Keyboard
     CMD_KEY_PRESS,
     CMD_KEY_RELEASE,
@@ -67,6 +70,9 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
             case CMD_SUSPEND:               return "SUSPEND";
             case CMD_RESUME:                return "RESUME";
             case CMD_HALT:                  return "HALT";
+
+            case CMD_SNAPSHOT_AUTO:         return "SNAPSHOT_AUTO";
+            case CMD_SNAPSHOT_USER:         return "SNAPSHOT_USER";
 
             case CMD_KEY_PRESS:             return "KEY_PRESS";
             case CMD_KEY_RELEASE:           return "KEY_RELEASE";

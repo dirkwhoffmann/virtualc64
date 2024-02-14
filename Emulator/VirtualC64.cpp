@@ -223,18 +223,6 @@ VirtualC64::C64_API::isReady()
     c64.isReady();
 }
 
-void 
-VirtualC64::C64_API::requestAutoSnapshot()
-{
-    c64.requestAutoSnapshot();
-}
-
-void 
-VirtualC64::C64_API::requestUserSnapshot()
-{
-    c64.requestUserSnapshot();
-}
-
 Snapshot *
 VirtualC64::C64_API::latestAutoSnapshot()
 {

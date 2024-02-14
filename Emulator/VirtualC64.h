@@ -132,9 +132,6 @@ public:
 
         void isReady();
 
-        void requestAutoSnapshot();
-        void requestUserSnapshot();
-
         Snapshot *latestAutoSnapshot();
         Snapshot *latestUserSnapshot();
 

@@ -400,8 +400,6 @@ public:
     void clearFlag(u32 flags);
     
     // Convenience wrappers
-    void signalAutoSnapshot() { setFlag(RL::AUTO_SNAPSHOT); }
-    void signalUserSnapshot() { setFlag(RL::USER_SNAPSHOT); }
     void signalBreakpoint() { setFlag(RL::BREAKPOINT); }
     void signalWatchpoint() { setFlag(RL::WATCHPOINT); }
     void signalJammed() { setFlag(RL::CPU_JAM); }
@@ -447,10 +445,13 @@ private:
     
 
     //
-    // Managing events
+    // Managing commands and events
     //
 
 public:
+
+    // Processes a command from the command queue
+    void process(const Cmd &cmd);
 
     // Processes all pending events
     void processEvents(Cycle cycle);
@@ -560,14 +561,6 @@ private:
     //
     
 public:
-    
-    /* Requests a snapshot to be taken. Once the snapshot is ready, a message
-     * is written into the message queue. The snapshot can then be picked up by
-     * calling latestAutoSnapshot() or latestUserSnapshot(), depending on the
-     * requested snapshot type.
-     */
-    void requestAutoSnapshot();
-    void requestUserSnapshot();
 
     // Returns the most recent snapshot or nullptr if none was taken
     Snapshot *latestAutoSnapshot();
