@@ -2437,21 +2437,6 @@ using namespace vc64;
     return releaseBuild;
 }
 
-- (NSInteger)frame
-{
-    return [self emu]->c64.getFrame();
-}
-
-- (BOOL)warpMode
-{
-    return [self emu]->isWarping();
-}
-
-- (void)setWarpMode:(BOOL)enable
-{
-    enable ? [self emu]->warpOn() : [self emu]->warpOff();
-}
-
 - (BOOL)trackMode
 {
     return [self emu]->isTracking();
@@ -2465,14 +2450,6 @@ using namespace vc64;
         [self emu]->trackOff();
     }
 }
-
-/*
-- (NSInteger)cpuLoad
-{
-    double load = [self emu]->stats.cpuLoad;
-    return (NSInteger)(100 * load);
-}
-*/
 
 - (InspectionTarget)inspectionTarget
 {
@@ -2732,6 +2709,31 @@ using namespace vc64;
     [self emu]->c64.signalBrk();
 }
 
+- (RomInfo)getRomInfo:(RomType)type
+{
+    return [self emu]->c64.getRomInfo(type);
+}
+
+- (RomInfo)basicRom
+{
+    return [self emu]->c64.getRomInfo(ROM_TYPE_BASIC);
+}
+
+- (RomInfo)charRom
+{
+    return [self emu]->c64.getRomInfo(ROM_TYPE_CHAR);
+}
+
+- (RomInfo)kernalRom
+{
+    return [self emu]->c64.getRomInfo(ROM_TYPE_KERNAL);
+}
+
+- (RomInfo)vc1541Rom
+{
+    return [self emu]->c64.getRomInfo(ROM_TYPE_VC1541);
+}
+/*
 - (BOOL) hasRom:(RomType)type
 {
     return [self emu]->c64.hasRom(type);
@@ -2741,6 +2743,7 @@ using namespace vc64;
 {
     return [self emu]->c64.hasMega65Rom(type);
 }
+*/
 
 - (BOOL) isRom:(RomType)type url:(NSURL *)url
 {
@@ -2767,96 +2770,6 @@ using namespace vc64;
 - (void) deleteRom:(RomType)type
 {
     [self emu]->c64.deleteRom(type);
-}
-
-- (RomIdentifier)romIdentifier:(RomType)type
-{
-    return [self emu]->c64.romIdentifier(type);
-}
-
-- (NSString *)romTitle:(RomType)type
-{
-    return @([self emu]->c64.romTitle(type).c_str());
-}
-
-- (NSString *)basicRomTitle
-{
-    return @([self emu]->c64.romTitle(ROM_TYPE_BASIC).c_str());
-}
-
-- (NSString *)charRomTitle
-{
-    return @([self emu]->c64.romTitle(ROM_TYPE_CHAR).c_str());
-}
-
-- (NSString *)kernalRomTitle
-{
-    return @([self emu]->c64.romTitle(ROM_TYPE_KERNAL).c_str());
-}
-
-- (NSString *)vc1541RomTitle
-{
-    return @([self emu]->c64.romTitle(ROM_TYPE_VC1541).c_str());
-}
-
-- (NSString *)romSubTitle:(RomType)type
-{
-    return @([self emu]->c64.romSubTitle(type).c_str());
-}
-
-- (NSString *)basicRomSubTitle
-{
-    return @([self emu]->c64.romSubTitle(ROM_TYPE_BASIC).c_str());
-}
-
-- (NSString *)charRomSubTitle
-{
-    return @([self emu]->c64.romSubTitle(ROM_TYPE_CHAR).c_str());
-}
-
-- (NSString *)kernalRomSubTitle
-{
-    return @([self emu]->c64.romSubTitle(ROM_TYPE_KERNAL).c_str());
-}
-
-- (NSString *)vc1541RomSubTitle
-{
-    return @([self emu]->c64.romSubTitle(ROM_TYPE_VC1541).c_str());
-}
-
-- (NSString *)romRevision:(RomType)type
-{
-    return @([self emu]->c64.romRevision(type).c_str());
-}
-
-- (NSString *)basicRomRevision
-{
-    return @([self emu]->c64.romRevision(ROM_TYPE_BASIC).c_str());
-}
-
-- (NSString *)charRomRevision
-{
-    return @([self emu]->c64.romRevision(ROM_TYPE_CHAR).c_str());
-}
-
-- (NSString *)kernalRomRevision
-{
-    return @([self emu]->c64.romRevision(ROM_TYPE_KERNAL).c_str());
-}
-
-- (NSString *)vc1541RomRevision
-{
-    return @([self emu]->c64.romRevision(ROM_TYPE_VC1541).c_str());
-}
-
-- (BOOL)isCommodoreRom:(RomIdentifier)rev
-{
-    return RomFile::isCommodoreRom(rev);
-}
-
-- (BOOL)isPatchedRom:(RomIdentifier)rev
-{
-    return RomFile::isPatchedRom(rev);
 }
 
 - (void)flash:(AnyFileProxy *)proxy exception:(ExceptionWrapper *)ex

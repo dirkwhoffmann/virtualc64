@@ -13,11 +13,11 @@ extension MyController {
 
         if WarpMode(rawValue: config.warpMode) == .AUTO {
 
-            return NSImage(named: c64.warpMode ? "hourglass3Template" : "hourglass1Template")
+            return NSImage(named: c64.info.warping ? "hourglass3Template" : "hourglass1Template")
 
         } else {
 
-            return NSImage(named: c64.warpMode ? "warpOnTemplate" : "warpOffTemplate")
+            return NSImage(named: c64.info.warping ? "warpOnTemplate" : "warpOffTemplate")
         }
     }
 

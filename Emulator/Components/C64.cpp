@@ -1078,6 +1078,26 @@ C64::loadSnapshot(const Snapshot &snapshot)
     msgQueue.put(MSG_SNAPSHOT_RESTORED);
 }
 
+RomInfo 
+C64::getRomInfo(RomType type) const
+{
+    RomInfo result = {};
+
+    auto id = romIdentifier(type);
+
+    result.crc32 = romCRC32(type);
+
+    result.title = romTitle(type);
+    result.subtitle = romSubTitle(type);
+    result.revision = romRevision(type);
+    
+    result.isCommodoreRom = RomFile::isCommodoreRom(id);
+    result.isPatchedRom = RomFile::isPatchedRom(id);
+    result.isMega65Rom = hasMega65Rom(type);
+
+    return result;
+}
+
 u32
 C64::romCRC32(RomType type) const
 {
@@ -1118,7 +1138,7 @@ C64::romIdentifier(RomType type) const
     return RomFile::identifier(romFNV64(type));
 }
 
-const string
+const char *
 C64::romTitle(RomType type) const
 {
     RomIdentifier rev = romIdentifier(type);
@@ -1149,7 +1169,7 @@ C64::romTitle(RomType type) const
     }
 }
 
-const string
+const char *
 C64::romSubTitle(u64 fnv) const
 {
     RomIdentifier rev = RomFile::identifier(fnv);
@@ -1161,7 +1181,7 @@ C64::romSubTitle(u64 fnv) const
     return str;
 }
 
-const string
+const char *
 C64::romSubTitle(RomType type) const
 {
     switch (type) {
@@ -1190,7 +1210,7 @@ C64::romSubTitle(RomType type) const
     }
 }
 
-const string
+const char *
 C64::romRevision(RomType type) const
 {
     switch (type) {

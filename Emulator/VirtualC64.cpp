@@ -193,6 +193,12 @@ VirtualC64::C64_API::getFrame()
     return c64.frame;
 }
 
+RomInfo 
+VirtualC64::C64_API::getRomInfo(RomType type) const
+{
+    return c64.getRomInfo(type);
+}
+
 EventInfo
 VirtualC64::C64_API::getEventInfo() const
 {
@@ -252,22 +258,22 @@ RomIdentifier VirtualC64::C64_API::romIdentifier(RomType type) const
     return c64.romIdentifier(type);
 }
 
-const string VirtualC64::C64_API::romTitle(RomType type) const
+const char *VirtualC64::C64_API::romTitle(RomType type) const
 {
     return c64.romTitle(type);
 }
 
-const string VirtualC64::C64_API::romSubTitle(u64 fnv) const
+const char *VirtualC64::C64_API::romSubTitle(u64 fnv) const
 {
     return c64.romSubTitle(fnv);
 }
 
-const string VirtualC64::C64_API::romSubTitle(RomType type) const
+const char *VirtualC64::C64_API::romSubTitle(RomType type) const
 {
     return c64.romSubTitle(type);
 }
 
-const string VirtualC64::C64_API::romRevision(RomType type) const
+const char *VirtualC64::C64_API::romRevision(RomType type) const
 {
     return c64.romRevision(type);
 }

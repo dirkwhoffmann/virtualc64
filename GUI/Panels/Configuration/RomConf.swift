@@ -11,30 +11,31 @@ extension ConfigurationController {
 
     func refreshRomTab() {
         
+        let basicRom = c64.basicRom
+        let charRom = c64.charRom
+        let kernalRom = c64.kernalRom
+        let vc1541Rom = c64.vc1541Rom
+
         let poweredOff         = c64.poweredOff
         
-        let basicIdentifier    = c64.romIdentifier(.BASIC)
-        let hasBasic           = basicIdentifier != .ROM_MISSING
-        let hasCommodoreBasic  = c64.isCommodoreRom(basicIdentifier)
-        let hasMega65Basic     = c64.hasMega65Rom(.BASIC)
-        let hasPatchedBasic    = c64.isPatchedRom(basicIdentifier)
+        let hasBasic           = basicRom.crc32 != 0 // basicIdentifier != .ROM_MISSING
+        let hasCommodoreBasic  = basicRom.isCommodoreRom // c64.isCommodoreRom(basicIdentifier)
+        let hasMega65Basic     = basicRom.isMega65Rom // c64.hasMega65Rom(.BASIC)
+        let hasPatchedBasic    = basicRom.isPatchedRom // c64.isPatchedRom(basicIdentifier)
 
-        let charIdentifier     = c64.romIdentifier(.CHAR)
-        let hasChar            = charIdentifier != .ROM_MISSING
-        let hasCommodoreChar   = c64.isCommodoreRom(charIdentifier)
-        let hasMega65Char      = c64.hasMega65Rom(.CHAR)
-        let hasPatchedChar     = c64.isPatchedRom(charIdentifier)
+        let hasChar            = charRom.crc32 != 0 // charIdentifier != .ROM_MISSING
+        let hasCommodoreChar   = charRom.isCommodoreRom // c64.isCommodoreRom(charIdentifier)
+        let hasMega65Char      = charRom.isMega65Rom // c64.hasMega65Rom(.CHAR)
+        let hasPatchedChar     = charRom.isPatchedRom // c64.isPatchedRom(charIdentifier)
 
-        let kernalIdentifier   = c64.romIdentifier(.KERNAL)
-        let hasKernal          = kernalIdentifier != .ROM_MISSING
-        let hasCommodoreKernal = c64.isCommodoreRom(kernalIdentifier)
-        let hasMega65Kernal    = c64.hasMega65Rom(.KERNAL)
-        let hasPatchedKernal   = c64.isPatchedRom(kernalIdentifier)
+        let hasKernal          = kernalRom.crc32 != 0 //  kernalIdentifier != .ROM_MISSING
+        let hasCommodoreKernal = kernalRom.isCommodoreRom // c64.isCommodoreRom(kernalIdentifier)
+        let hasMega65Kernal    = kernalRom.isMega65Rom // c64.hasMega65Rom(.KERNAL)
+        let hasPatchedKernal   = kernalRom.isPatchedRom // c64.isPatchedRom(kernalIdentifier)
 
-        let vc1541Identifier   = c64.romIdentifier(.VC1541)
-        let hasVC1541          = vc1541Identifier != .ROM_MISSING
-        let hasCommodoreVC1541 = c64.isCommodoreRom(vc1541Identifier)
-        let hasPatchedVC1541   = c64.isPatchedRom(vc1541Identifier)
+        let hasVC1541          = vc1541Rom.crc32 != 0 // vc1541Identifier != .ROM_MISSING
+        let hasCommodoreVC1541 = vc1541Rom.isCommodoreRom //  c64.isCommodoreRom(vc1541Identifier)
+        let hasPatchedVC1541   = vc1541Rom.isPatchedRom // c64.isPatchedRom(vc1541Identifier)
 
         let romMissing = NSImage(named: "rom_missing")
         let romOrig    = NSImage(named: "rom_original")
@@ -78,21 +79,21 @@ extension ConfigurationController {
             hasVC1541          ? romUnknown : romMissing
 
         // Titles and subtitles
-        basicTitle.stringValue = hasBasic ? c64.romTitle(.BASIC) : "Basic Rom"
-        basicSubtitle.stringValue = hasBasic ? c64.romSubTitle(.BASIC) : "Required"
-        basicSubsubtitle.stringValue = c64.romRevision(.BASIC)
+        basicTitle.stringValue = hasBasic ? String(cString: basicRom.title) : "Basic Rom"
+        basicSubtitle.stringValue = hasBasic ? String(cString: basicRom.subtitle) : "Required"
+        basicSubsubtitle.stringValue = String(cString: basicRom.revision)
 
-        charTitle.stringValue = hasChar ? c64.romTitle(.CHAR) : "Character Rom"
-        charSubtitle.stringValue = hasChar ? c64.romSubTitle(.CHAR) : "Required"
-        charSubsubtitle.stringValue = c64.romRevision(.CHAR)
+        charTitle.stringValue = hasChar ? String(cString: charRom.title) : "Character Rom"
+        charSubtitle.stringValue = hasChar ? String(cString: charRom.subtitle) : "Required"
+        charSubsubtitle.stringValue = String(cString: charRom.revision)
 
-        kernalTitle.stringValue = hasKernal ? c64.romTitle(.KERNAL) : "Kernal Rom"
-        kernalSubtitle.stringValue = hasKernal ? c64.romSubTitle(.KERNAL) : "Required"
-        kernalSubsubtitle.stringValue = c64.romRevision(.KERNAL)
+        kernalTitle.stringValue = hasKernal ? String(cString: kernalRom.title) : "Kernal Rom"
+        kernalSubtitle.stringValue = hasKernal ? String(cString: kernalRom.subtitle) : "Required"
+        kernalSubsubtitle.stringValue = String(cString: kernalRom.revision)
 
-        vc1541Title.stringValue = hasVC1541 ? c64.romTitle(.VC1541) : "VC1541 Rom"
-        vc1541Subtitle.stringValue = hasVC1541 ? c64.romSubTitle(.VC1541) : "Optional"
-        vc1541Subsubtitle.stringValue = c64.romRevision(.VC1541)
+        vc1541Title.stringValue = hasVC1541 ? String(cString: vc1541Rom.title) : "VC1541 Rom"
+        vc1541Subtitle.stringValue = hasVC1541 ? String(cString: vc1541Rom.subtitle) : "Optional"
+        vc1541Subsubtitle.stringValue = String(cString: vc1541Rom.revision)
 
         // Hide some controls
         basicDeleteButton.isHidden = !hasBasic

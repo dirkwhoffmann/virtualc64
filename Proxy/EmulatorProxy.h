@@ -170,24 +170,21 @@
 - (void)dealloc;
 - (void)kill;
 
-@property (readonly) NSInteger frame;
-@property BOOL warpMode;
+- (void)launch:(const void *)listener function:(Callback *)func;
+
+@property (readonly) EmulatorInfo info;
+@property (readonly) EmulatorStats stats;
+@property (readonly) EventInfo eventInfo;
+- (EventSlotInfo)getEventSlotInfo:(NSInteger)slot;
+
+
 @property BOOL trackMode;
-// @property (readonly) NSInteger cpuLoad;
 
 @property InspectionTarget inspectionTarget;
 - (void) removeInspectionTarget;
 
-@property (readonly) EventInfo eventInfo;
-- (EventSlotInfo)getEventSlotInfo:(NSInteger)slot;
-
-- (void)launch:(const void *)listener function:(Callback *)func;
-
 - (void)hardReset;
 - (void)softReset;
-
-@property (readonly) EmulatorInfo info;
-@property (readonly) EmulatorStats stats;
 
 @property (readonly) BOOL poweredOn;
 @property (readonly) BOOL poweredOff;
@@ -228,8 +225,12 @@
 - (void)stepOver;
 - (void)signalBrk;
 
-- (BOOL)hasRom:(RomType)type;
-- (BOOL)hasMega65Rom:(RomType)type;
+- (RomInfo)getRomInfo:(RomType)type;
+@property (readonly) RomInfo basicRom;
+@property (readonly) RomInfo charRom;
+@property (readonly) RomInfo kernalRom;
+@property (readonly) RomInfo vc1541Rom;
+
 
 - (BOOL)isRom:(RomType)type url:(NSURL *)url;
 
@@ -237,14 +238,6 @@
 - (void)loadRom:(RomFileProxy *)proxy;
 - (void)saveRom:(RomType)type url:(NSURL *)url exception:(ExceptionWrapper *)ex;
 - (void)deleteRom:(RomType)type;
-
-- (RomIdentifier)romIdentifier:(RomType)type;
-- (BOOL)isCommodoreRom:(RomIdentifier)rev;
-- (BOOL)isPatchedRom:(RomIdentifier)rev;
-
-- (NSString *)romTitle:(RomType)type;
-- (NSString *)romSubTitle:(RomType)type;
-- (NSString *)romRevision:(RomType)type;
 
 - (void)flash:(AnyFileProxy *)container exception:(ExceptionWrapper *)ex;
 - (void)flash:(FileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;

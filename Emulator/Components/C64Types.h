@@ -232,7 +232,7 @@ typedef INSPECTION_TARGET InspectionTarget;
 struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionTarget> {
     
     static constexpr long minVal = 0;
-    static constexpr long maxVal = INSPECTION_SID;
+    static constexpr long maxVal = INSPECTION_EVENTS;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
     
     static const char *prefix() { return "INSPECTION"; }
@@ -240,13 +240,14 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
     {
         switch (value) {
                 
-            case INSPECTION_NONE:  return "NONE";
-            case INSPECTION_C64:   return "C64";
-            case INSPECTION_CPU:   return "CPU";
-            case INSPECTION_CIA:   return "CIA";
-            case INSPECTION_MEM:   return "MEM";
-            case INSPECTION_VIC:   return "VIC";
-            case INSPECTION_SID:   return "SID";
+            case INSPECTION_NONE:   return "NONE";
+            case INSPECTION_C64:    return "C64";
+            case INSPECTION_CPU:    return "CPU";
+            case INSPECTION_CIA:    return "CIA";
+            case INSPECTION_MEM:    return "MEM";
+            case INSPECTION_VIC:    return "VIC";
+            case INSPECTION_SID:    return "SID";
+            case INSPECTION_EVENTS: return "EVENTS";
         }
         return "???";
     }
@@ -274,6 +275,20 @@ typedef struct
 }
 C64Info;
 */
+
+typedef struct
+{
+    u32 crc32;
+
+    const char *title;
+    const char *subtitle;
+    const char *revision;
+
+    bool isCommodoreRom;
+    bool isPatchedRom;
+    bool isMega65Rom;
+}
+RomInfo;
 
 typedef struct
 {

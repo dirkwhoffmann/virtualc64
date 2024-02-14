@@ -583,6 +583,9 @@ public:
     
 public:
     
+    // Queries information about the installed ROMs
+    RomInfo getRomInfo(RomType type) const;
+
     // Computes a Rom checksum
     u32 romCRC32(RomType type) const;
     u64 romFNV64(RomType type) const;
@@ -591,14 +594,14 @@ public:
     RomIdentifier romIdentifier(RomType type) const;
     
     // Returns printable titles for the installed ROMs
-    const string romTitle(RomType type) const;
+    const char *romTitle(RomType type) const;
     
     // Returns printable sub titles for the installed ROMs
-    const string romSubTitle(u64 fnv) const;
-    const string romSubTitle(RomType type) const;
-    
+    const char *romSubTitle(u64 fnv) const;
+    const char *romSubTitle(RomType type) const;
+
     // Returns printable revision strings or hash values for the installed ROMs
-    const string romRevision(RomType type) const;
+    const char *romRevision(RomType type) const;
     
     // Checks if a certain Rom is present
     bool hasRom(RomType type) const;

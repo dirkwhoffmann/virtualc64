@@ -125,6 +125,7 @@ public:
 
         u64 getFrame();
 
+        RomInfo getRomInfo(RomType type) const;
         EventInfo getEventInfo() const;
         EventSlotInfo getSlotInfo(isize nr) const;
 
@@ -141,10 +142,10 @@ public:
         void signalBrk();
 
         RomIdentifier romIdentifier(RomType type) const;
-        const string romTitle(RomType type) const;
-        const string romSubTitle(u64 fnv) const;
-        const string romSubTitle(RomType type) const;
-        const string romRevision(RomType type) const;
+        const char *romTitle(RomType type) const;
+        const char *romSubTitle(u64 fnv) const;
+        const char *romSubTitle(RomType type) const;
+        const char *romRevision(RomType type) const;
 
         bool hasRom(RomType type) const;
         bool hasMega65Rom(RomType type) const;
