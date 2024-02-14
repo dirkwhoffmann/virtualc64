@@ -338,8 +338,6 @@ Keyboard::abortAutoTyping()
 void 
 Keyboard::processCommand(const Cmd &cmd)
 {
-    debug(true, "%d (%f)\n", cmd.key.keycode, cmd.key.delay);
-
     switch (cmd.type) {
 
         case CMD_KEY_PRESS:     press(C64Key(cmd.key.keycode)); break;

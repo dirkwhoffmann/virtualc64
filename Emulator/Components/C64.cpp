@@ -883,6 +883,11 @@ C64::process(const Cmd &cmd)
 {
     switch (cmd.type) {
 
+        case CMD_BRK:
+
+            signalBrk();
+            break;
+
         case CMD_SNAPSHOT_AUTO:
 
             autoSnapshot = new Snapshot(*this);
@@ -895,6 +900,16 @@ C64::process(const Cmd &cmd)
             msgQueue.put(MSG_USER_SNAPSHOT_TAKEN);
             break;
 
+        case CMD_ALARM_ABS:
+
+            setAlarmAbs(cmd.alarm.cycle, cmd.alarm.value);
+            break;
+
+        case CMD_ALARM_REL:
+
+            setAlarmRel(cmd.alarm.cycle, cmd.alarm.value);
+            break;
+            
         default:
             fatalError;
     }

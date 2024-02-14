@@ -205,6 +205,7 @@
 
 - (void)requestAutoSnapshot;
 - (void)requestUserSnapshot;
+
 @property (readonly) SnapshotProxy *latestAutoSnapshot;
 @property (readonly) SnapshotProxy *latestUserSnapshot;
 
@@ -232,7 +233,6 @@
 @property (readonly) RomInfo kernalRom;
 @property (readonly) RomInfo vc1541Rom;
 
-
 - (BOOL)isRom:(RomType)type url:(NSURL *)url;
 
 - (void)loadRom:(NSURL *)url exception:(ExceptionWrapper *)ex;
@@ -242,9 +242,6 @@
 
 - (void)flash:(AnyFileProxy *)container exception:(ExceptionWrapper *)ex;
 - (void)flash:(FileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
-
-- (void)setAlarmAbs:(NSInteger)cycle payload:(NSInteger)value;
-- (void)setAlarmRel:(NSInteger)cycle payload:(NSInteger)value;
 
 - (void)send:(Cmd)cmd;
 - (void)send:(CmdType)type key:(KeyCmd)keyCmd;

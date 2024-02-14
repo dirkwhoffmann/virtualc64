@@ -102,6 +102,7 @@ public:
     void put(CmdType type, i64 payload = 0);
     void put(CmdType type, KeyCmd payload);
     void put(CmdType type, TapeCmd payload);
+    void put(CmdType type, AlarmCmd payload);
 
 
     //
@@ -124,9 +125,6 @@ public:
         void setInspectionTarget(InspectionTarget target, Cycle trigger = 0);
         void removeInspectionTarget();
 
-        u64 getFrame();
-
-        RomInfo getRomInfo(RomType type) const;
         EventInfo getEventInfo() const;
         EventSlotInfo getSlotInfo(isize nr) const;
 
@@ -134,19 +132,9 @@ public:
 
         Snapshot *latestAutoSnapshot();
         Snapshot *latestUserSnapshot();
-
         void loadSnapshot(const Snapshot &snapshot);
 
-        void signalBrk();
-
-        RomIdentifier romIdentifier(RomType type) const;
-        const char *romTitle(RomType type) const;
-        const char *romSubTitle(u64 fnv) const;
-        const char *romSubTitle(RomType type) const;
-        const char *romRevision(RomType type) const;
-
-        bool hasRom(RomType type) const;
-        bool hasMega65Rom(RomType type) const;
+        RomInfo getRomInfo(RomType type) const;
         void loadRom(const string &path);
         void loadRom(const RomFile &file);
         void deleteRom(RomType type);
@@ -155,9 +143,6 @@ public:
         void flash(const AnyFile &file);
         void flash(const AnyCollection &file, isize item);
         void flash(const FileSystem &fs, isize item);
-
-        void setAlarmAbs(Cycle trigger, i64 payload);
-        void setAlarmRel(Cycle trigger, i64 payload);
 
     } c64;
 

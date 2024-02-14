@@ -791,6 +791,7 @@ Emulator::update()
             case CMD_RESUME:    resume();   break;
             case CMD_HALT:      halt();     break;
 
+            case CMD_BRK:
             case CMD_SNAPSHOT_AUTO:
             case CMD_SNAPSHOT_USER: 
 

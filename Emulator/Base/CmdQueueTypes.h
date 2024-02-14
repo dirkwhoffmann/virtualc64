@@ -32,8 +32,12 @@ enum_long(CMD_TYPE)
     CMD_RESUME,
     CMD_HALT,
 
+    // C64
+    CMD_BRK,
     CMD_SNAPSHOT_AUTO,
     CMD_SNAPSHOT_USER,
+    CMD_ALARM_ABS,
+    CMD_ALARM_REL,
 
     // Keyboard
     CMD_KEY_PRESS,
@@ -71,8 +75,11 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
             case CMD_RESUME:                return "RESUME";
             case CMD_HALT:                  return "HALT";
 
+            case CMD_BRK:                   return "BRK";
             case CMD_SNAPSHOT_AUTO:         return "SNAPSHOT_AUTO";
             case CMD_SNAPSHOT_USER:         return "SNAPSHOT_USER";
+            case CMD_ALARM_ABS:             return "ALARM_ABS";
+            case CMD_ALARM_REL:             return "ALARM_REL";
 
             case CMD_KEY_PRESS:             return "KEY_PRESS";
             case CMD_KEY_RELEASE:           return "KEY_RELEASE";
@@ -109,6 +116,13 @@ TapeCmd;
 
 typedef struct
 {
+    i64 cycle;
+    i64 value;
+}
+AlarmCmd;
+
+typedef struct
+{
     // Header
     CmdType type;
 
@@ -118,6 +132,7 @@ typedef struct
         i64 value;
         KeyCmd key;
         TapeCmd tape;
+        AlarmCmd alarm;
     };
 }
 Cmd;

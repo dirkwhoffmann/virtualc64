@@ -710,18 +710,11 @@ using namespace vc64;
 {
     [self emu]->put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr });
     [self emu]->put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr2 });
-    /*
-     [self kb]->press(C64Key(nr));
-     [self kb]->press(C64Key(nr2));
-     */
 }
 
 - (void)pressKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
-    [self emu]->put(CMD_KEY_PRESS, { (u8)C64Key(row, col).nr, 0.0 });
-    /*
-     [self kb]->press(C64Key(row, col));
-     */
+    [self emu]->put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)C64Key(row, col).nr, .delay = 0.0 });
 }
 
 - (void)pressShiftLock
@@ -2718,7 +2711,7 @@ using namespace vc64;
 
 - (void)signalBrk
 {
-    [self emu]->c64.signalBrk();
+    [self emu]->put(CMD_BRK);
 }
 
 - (RomInfo)getRomInfo:(RomType)type
@@ -2794,16 +2787,6 @@ using namespace vc64;
 {
     try { [self emu]->c64.flash(*(FileSystem *)proxy->obj, (unsigned)nr); }
     catch (VC64Error &error) { [ex save:error]; }
-}
-
-- (void)setAlarmAbs:(NSInteger)cycle payload:(NSInteger)value
-{
-    [self emu]->c64.setAlarmAbs(cycle, value);
-}
-
-- (void)setAlarmRel:(NSInteger)cycle payload:(NSInteger)value
-{
-    [self emu]->c64.setAlarmRel(cycle, value);
 }
 
 - (void)send:(Cmd)cmd

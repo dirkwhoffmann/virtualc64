@@ -130,6 +130,12 @@ VirtualC64::put(CmdType type, TapeCmd payload)
     put( Cmd { .type = type, .tape = payload } );
 }
 
+void
+VirtualC64::put(CmdType type, AlarmCmd payload)
+{
+    put( Cmd { .type = type, .alarm = payload } );
+}
+
 
 //
 // C64
@@ -193,13 +199,7 @@ VirtualC64::C64_API::removeInspectionTarget()
     c64.removeInspectionTarget();
 }
 
-u64 
-VirtualC64::C64_API::getFrame()
-{
-    return c64.frame;
-}
-
-RomInfo 
+RomInfo
 VirtualC64::C64_API::getRomInfo(RomType type) const
 {
     return c64.getRomInfo(type);
@@ -241,47 +241,6 @@ VirtualC64::C64_API::loadSnapshot(const Snapshot &snapshot)
     c64.loadSnapshot(snapshot);
 }
 
-void 
-VirtualC64::C64_API::signalBrk()
-{
-    c64.signalBrk();
-}
-
-RomIdentifier VirtualC64::C64_API::romIdentifier(RomType type) const
-{
-    return c64.romIdentifier(type);
-}
-
-const char *VirtualC64::C64_API::romTitle(RomType type) const
-{
-    return c64.romTitle(type);
-}
-
-const char *VirtualC64::C64_API::romSubTitle(u64 fnv) const
-{
-    return c64.romSubTitle(fnv);
-}
-
-const char *VirtualC64::C64_API::romSubTitle(RomType type) const
-{
-    return c64.romSubTitle(type);
-}
-
-const char *VirtualC64::C64_API::romRevision(RomType type) const
-{
-    return c64.romRevision(type);
-}
-
-bool VirtualC64::C64_API::hasRom(RomType type) const
-{
-    return c64.hasRom(type);
-}
-
-bool VirtualC64::C64_API::hasMega65Rom(RomType type) const
-{
-    return c64.hasMega65Rom(type);
-}
-
 void VirtualC64::C64_API::loadRom(const string &path)
 {
     c64.loadRom(path);
@@ -315,16 +274,6 @@ void VirtualC64::C64_API::flash(const AnyCollection &file, isize item)
 void VirtualC64::C64_API::flash(const FileSystem &fs, isize item)
 {
     c64.flash(fs, item);
-}
-
-void VirtualC64::C64_API::setAlarmAbs(Cycle trigger, i64 payload)
-{
-    c64.setAlarmAbs(trigger, payload);
-}
-
-void VirtualC64::C64_API::setAlarmRel(Cycle trigger, i64 payload)
-{
-    c64.setAlarmRel(trigger, payload);
 }
 
 
