@@ -1282,6 +1282,12 @@ using namespace vc64;
     return (VirtualC64::DATASETTE_API *)obj;
 }
 
+- (VirtualC64 *)emu
+{
+    return (VirtualC64 *)emu;
+}
+
+/*
 - (BOOL)hasTape
 {
     return [self datasette]->hasTape();
@@ -1306,30 +1312,36 @@ using namespace vc64;
 {
     return [self datasette]->getCounter();
 }
+*/
+
+- (DatasetteInfo)info
+{
+    return [self datasette]->getInfo();
+}
 
 - (void)pressPlay
 {
-    [self datasette]->pressPlay();
+    [self emu]->put(CMD_DATASETTE_PLAY);
 }
 
 - (void)pressStop
 {
-    [self datasette]->pressStop();
+    [self emu]->put(CMD_DATASETTE_STOP);
 }
 
 - (void)rewind
 {
-    [self datasette]->rewind();
+    [self emu]->put(CMD_DATASETTE_REWIND);
 }
 
 - (void)insertTape:(TAPFileProxy *)proxy
 {
-    [self datasette]->insertTape(*(TAPFile *)proxy->obj);
+    [self emu]->put(CMD_DATASETTE_INSERT, TapeCmd { .tape = proxy->obj });
 }
 
 - (void)ejectTape
 {
-    [self datasette]->ejectTape();
+    [self emu]->put(CMD_DATASETTE_EJECT);
 }
 
 @end
@@ -2391,7 +2403,7 @@ using namespace vc64;
     cia1 = [[CIAProxy alloc] initWith:&emu->cia1];
     cia2 = [[CIAProxy alloc] initWith:&emu->cia2];
     cpu = [[CPUProxy alloc] initWith:&emu->cpu];
-    datasette = [[DatasetteProxy alloc] initWith:&emu->datasette];
+    datasette = [[DatasetteProxy alloc] initWith:&emu->datasette emu:emu];
     dmaDebugger = [[DmaDebuggerProxy alloc] initWith:&emu->dmaDebugger];
     drive8 = [[DriveProxy alloc] initWithVC1541:&emu->drive8];
     drive9 = [[DriveProxy alloc] initWithVC1541:&emu->drive9];

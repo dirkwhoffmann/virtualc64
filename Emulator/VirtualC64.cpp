@@ -124,6 +124,12 @@ VirtualC64::put(CmdType type, KeyCmd payload)
     put( Cmd { .type = type, .key = payload } );
 }
 
+void
+VirtualC64::put(CmdType type, TapeCmd payload)
+{
+    put( Cmd { .type = type, .tape = payload } );
+}
+
 
 //
 // C64
@@ -789,7 +795,6 @@ VirtualC64::DMA_DEBUGGER_API::getConfig() const
 
 bool VirtualC64::KBD_API::isPressed(C64Key key) const { return keyboard.isPressed(key); }
 bool VirtualC64::KBD_API::shiftLockIsPressed() const { return keyboard.shiftLockIsPressed(); }
-// bool VirtualC64::KBD_API::restoreIsPressed() const { return keyboard.shiftLockIsPressed(); }
 
 // Presses a key
 void VirtualC64::KBD_API::press(C64Key key) { keyboard.press(key); }
@@ -835,55 +840,10 @@ void VirtualC64::JOYSTICK_API::trigger(GamePadAction event)
 // Datasette
 //
 
-bool 
-VirtualC64::DATASETTE_API::hasTape() const
+DatasetteInfo 
+VirtualC64::DATASETTE_API::getInfo() const
 {
-    return datasette.hasTape();
-}
-
-isize VirtualC64::DATASETTE_API::getCounter() const
-{
-    return datasette.getCounter();
-}
-
-void VirtualC64::DATASETTE_API::insertTape(TAPFile &file)
-{
-    datasette.insertTape(file);
-}
-
-void VirtualC64::DATASETTE_API::ejectTape()
-{
-    datasette.ejectTape();
-}
-
-u8 VirtualC64::DATASETTE_API::getType() const
-{
-    return datasette.getType();
-}
-
-bool VirtualC64::DATASETTE_API::getMotor() const
-{
-    return datasette.getMotor();
-}
-
-bool VirtualC64::DATASETTE_API::getPlayKey() const
-{
-    return datasette.getPlayKey();
-}
-
-void VirtualC64::DATASETTE_API::pressPlay()
-{
-    datasette.pressPlay();
-}
-
-void VirtualC64::DATASETTE_API::pressStop()
-{
-    datasette.pressStop();
-}
-
-void VirtualC64::DATASETTE_API::rewind(isize seconds)
-{
-    datasette.rewind(seconds);
+    return datasette.getInfo();
 }
 
 

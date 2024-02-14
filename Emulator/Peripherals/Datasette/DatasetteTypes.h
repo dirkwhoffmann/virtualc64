@@ -55,3 +55,13 @@ typedef struct
     bool connected;
 }
 DatasetteConfig;
+
+typedef struct
+{
+    bool hasTape;
+    u8 type;
+    bool motor;
+    bool playKey;
+    isize counter;
+}
+DatasetteInfo;

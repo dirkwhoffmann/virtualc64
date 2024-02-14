@@ -50,6 +50,8 @@ extension MyController {
     
     public func refreshStatusBar() {
 
+        let dsstate = c64.datasette.info
+
         let c64state = c64.info
         let running = c64state.running
         let tracking = c64state.tracking
@@ -86,10 +88,10 @@ extension MyController {
             trackIcon: tracking,
             muteIcon: warping || muted,
             
-            tapeIcon: c64.datasette.hasTape,
-            tapeCounter: c64.datasette.hasTape,
-            tapeProgress: c64.datasette.motor,
-            
+            tapeIcon: dsstate.hasTape,
+            tapeCounter: dsstate.hasTape,
+            tapeProgress: dsstate.motor,
+
             crtIcon: hasCrt,
             
             warpIcon: running,
@@ -205,13 +207,15 @@ extension MyController {
 
     func refreshStatusBarDatasette() {
 
-        if c64.datasette.motor && c64.datasette.playKey {
+        let dsstate = c64.datasette.info
+
+        if dsstate.motor && dsstate.playKey {
             tapeProgress.startAnimation(self)
         } else {
             tapeProgress.stopAnimation(self)
         }
 
-        let counter = c64.datasette.counter
+        let counter = dsstate.counter
         let min = counter / 60
         let sec = counter % 60
         tapeCounter.stringValue = String(format: "%02d:%02d", min, sec)

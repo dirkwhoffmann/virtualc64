@@ -104,15 +104,15 @@ extension MyController: NSMenuItemValidation {
             return validateURLlist(MediaManager.insertedTapes, image: smallTape)
             
         case #selector(MyController.ejectTapeAction(_:)):
-            return c64.datasette.hasTape
-            
+            return c64.datasette.info.hasTape
+
         case #selector(MyController.playOrStopAction(_:)):
-            item.title = c64.datasette.playKey ? "Press Stop Key" : "Press Play On Tape"
-            return c64.datasette.hasTape
-            
+            item.title = c64.datasette.info.playKey ? "Press Stop Key" : "Press Play On Tape"
+            return c64.datasette.info.hasTape
+
         case #selector(MyController.rewindAction(_:)):
-            return c64.datasette.hasTape
-            
+            return c64.datasette.info.hasTape
+
         // Cartridge menu
         case #selector(MyController.attachRecentCartridgeAction(_:)):
             return validateURLlist(MediaManager.attachedCartridges, image: smallCart)
@@ -846,7 +846,7 @@ extension MyController: NSMenuItemValidation {
     
     @IBAction func playOrStopAction(_ sender: Any!) {
 
-        if c64.datasette.playKey {
+        if c64.datasette.info.playKey {
             c64.datasette.pressStop()
         } else {
             c64.datasette.pressPlay()

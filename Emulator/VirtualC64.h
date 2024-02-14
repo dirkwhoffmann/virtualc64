@@ -99,8 +99,9 @@ public:
     //
 
     void put(const Cmd &cmd);
-    void put(CmdType type, i64 payload);
+    void put(CmdType type, i64 payload = 0);
     void put(CmdType type, KeyCmd payload);
+    void put(CmdType type, TapeCmd payload);
 
 
     //
@@ -449,16 +450,7 @@ public:
 
         using API::API;
 
-        bool hasTape() const;
-        isize getCounter() const;
-        void insertTape(TAPFile &file);
-        void ejectTape();
-        u8 getType() const;
-        bool getMotor() const;
-        bool getPlayKey() const;
-        void pressPlay();
-        void pressStop();
-        void rewind(isize seconds = 0);
+        DatasetteInfo getInfo() const;
 
     } datasette;
 

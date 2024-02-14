@@ -14,6 +14,7 @@
 
 #include "DatasetteTypes.h"
 #include "C64Types.h"
+#include "CmdQueue.h"
 #include "SubComponent.h"
 #include "Constants.h"
 #include "Chrono.h"
@@ -153,7 +154,14 @@ public:
     i64 getConfigItem(Option option) const;
     void setConfigItem(Option option, i64 value);
 
-    
+
+    //
+    // Inspecting
+    //
+
+    DatasetteInfo getInfo() const;
+
+
     //
     // Handling tapes
     //
@@ -229,11 +237,15 @@ private:
 
 
     //
-    // Processing events
+    // Processing commands and events
     //
 
 public:
 
+    // Processes a datasette command
+    void processCommand(const Cmd &cmd);
+
+    // Processes a datesette event
     void processMotEvent(EventID event);
     void processDatEvent(EventID event, i64 cycles);
 

@@ -181,7 +181,7 @@ public:
 
 
     //
-    // Processing events
+    // Processing commands and events
     //
 
 public:

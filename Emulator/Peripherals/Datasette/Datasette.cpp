@@ -194,6 +194,20 @@ Datasette::setConfigItem(Option option, i64 value)
     }
 }
 
+DatasetteInfo
+Datasette::getInfo() const
+{
+    DatasetteInfo info;
+
+    info.hasTape = hasTape();
+    info.type = type;
+    info.motor = motor;
+    info.playKey = playKey;
+    info.counter = (isize)counter.asSeconds();
+
+    return info;
+}
+
 util::Time
 Datasette::tapeDuration(isize pos)
 {
@@ -295,9 +309,6 @@ Datasette::pressPlay()
 {
     debug(TAP_DEBUG, "pressPlay\n");
 
-    // Never call this function inside the emulator thread
-    assert(!emulator.isEmulatorThread());
-
     // Only proceed if the device is connected
     if (!config.connected) return;
 
@@ -331,9 +342,6 @@ void
 Datasette::pressStop()
 {
     debug(TAP_DEBUG, "pressStop\n");
-
-    // Never call this function inside the emulator thread
-    assert(!emulator.isEmulatorThread());
 
     // Only proceed if the device is connected
     if (!config.connected) return;
@@ -378,6 +386,24 @@ Datasette::setMotor(bool value)
          * has timed out.
          */
         c64.scheduleRel<SLOT_MOT>(MSEC(200), motor ? MOT_START : MOT_STOP);
+    }
+}
+
+void
+Datasette::processCommand(const Cmd &cmd)
+{
+    auto *tape = (TAPFile *)cmd.tape.tape;
+
+    switch (cmd.type) {
+
+        case CMD_DATASETTE_INSERT:  insertTape(*tape); break;
+        case CMD_DATASETTE_EJECT:   ejectTape(); break;
+        case CMD_DATASETTE_PLAY:    pressPlay(); break;
+        case CMD_DATASETTE_STOP:    pressStop(); break;
+        case CMD_DATASETTE_REWIND:  rewind(); break;
+
+        default:
+            fatalError;
     }
 }
 

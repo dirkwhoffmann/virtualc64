@@ -36,6 +36,13 @@ enum_long(CMD_TYPE)
     CMD_KEY_PRESS,
     CMD_KEY_RELEASE,
     CMD_KEY_TOGGLE,
+
+    // Datasette
+    CMD_DATASETTE_INSERT,
+    CMD_DATASETTE_EJECT,
+    CMD_DATASETTE_PLAY,
+    CMD_DATASETTE_STOP,
+    CMD_DATASETTE_REWIND,
 };
 typedef CMD_TYPE CmdType;
 
@@ -43,7 +50,7 @@ typedef CMD_TYPE CmdType;
 struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = CMD_KEY_TOGGLE;
+    static constexpr long maxVal = CMD_DATASETTE_REWIND;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "CMD"; }
@@ -64,6 +71,12 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
             case CMD_KEY_PRESS:             return "KEY_PRESS";
             case CMD_KEY_RELEASE:           return "KEY_RELEASE";
             case CMD_KEY_TOGGLE:            return "KEY_TOGGLE";
+
+            case CMD_DATASETTE_INSERT:      return "DATASETTE_INSERT";
+            case CMD_DATASETTE_EJECT:       return "DATASETTE_EJECT";
+            case CMD_DATASETTE_PLAY:        return "DATASETTE_PLAY";
+            case CMD_DATASETTE_STOP:        return "DATASETTE_STOP";
+            case CMD_DATASETTE_REWIND:      return "DATASETTE_REWIND";
         }
         return "???";
     }
@@ -84,6 +97,12 @@ KeyCmd;
 
 typedef struct
 {
+    void *tape;
+}
+TapeCmd;
+
+typedef struct
+{
     // Header
     CmdType type;
 
@@ -92,6 +111,7 @@ typedef struct
         
         i64 value;
         KeyCmd key;
+        TapeCmd tape;
     };
 }
 Cmd;

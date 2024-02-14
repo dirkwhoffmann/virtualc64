@@ -15,6 +15,7 @@
 #import "CmdQueueTypes.h"
 #import "ControlPortTypes.h"
 #import "CPUTypes.h"
+#import "DatasetteTypes.h"
 #import "DiskTypes.h"
 #import "DiskAnalyzerTypes.h"
 #import "DriveTypes.h"
@@ -617,13 +618,17 @@
 // Datasette
 //
 
-@interface DatasetteProxy : CoreComponentProxy { }
+@interface DatasetteProxy : SubComponentProxy { }
 
+/*
 @property (readonly) BOOL hasTape;
 @property (readonly) NSInteger type;
 @property (readonly) BOOL motor;
 @property (readonly) BOOL playKey;
 @property (readonly) NSInteger counter;
+*/
+
+@property (readonly) DatasetteInfo info;
 
 - (void)pressPlay;
 - (void)pressStop;

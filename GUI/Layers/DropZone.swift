@@ -67,7 +67,7 @@ class DropZone: Layer {
         inUse[1] = c64.drive9.hasDisk
         inUse[2] = false
         inUse[3] = c64.expansionport.cartridgeAttached()
-        inUse[4] = c64.datasette.hasTape
+        inUse[4] = c64.datasette.info.hasTape
 
         switch type {
 
