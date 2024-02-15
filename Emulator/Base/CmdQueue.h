@@ -45,20 +45,6 @@ private:
 
 
     //
-    // Methods from CoreComponent
-    //
-
-    /*
-private:
-
-    void _reset(bool hard) override { };
-    isize _size() override { return 0; }
-    u64 _checksum() override { return 0; }
-    isize _load(const u8 *buffer) override { return 0; }
-    isize _save(u8 *buffer) override { return 0; }
-    */
-
-    //
     // Managing the queue
     //
 

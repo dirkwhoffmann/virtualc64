@@ -178,6 +178,14 @@
 @property (readonly) EventInfo eventInfo;
 - (EventSlotInfo)getEventSlotInfo:(NSInteger)slot;
 
+@property (readonly) BOOL poweredOn;
+@property (readonly) BOOL poweredOff;
+@property (readonly) BOOL paused;
+@property (readonly) BOOL running;
+@property (readonly) BOOL suspended;
+@property (readonly) BOOL halted;
+@property (readonly) BOOL warping;
+@property (readonly) BOOL tracking;
 
 @property BOOL trackMode;
 
@@ -186,11 +194,6 @@
 
 - (void)hardReset;
 - (void)softReset;
-
-@property (readonly) BOOL poweredOn;
-@property (readonly) BOOL poweredOff;
-@property (readonly) BOOL running;
-@property (readonly) BOOL paused;
 
 - (void)isReady:(ExceptionWrapper *)ex;
 - (void)powerOn:(ExceptionWrapper *)ex;
@@ -243,7 +246,6 @@
 - (void)flash:(AnyFileProxy *)container exception:(ExceptionWrapper *)ex;
 - (void)flash:(FileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
 
-// - (void)send:(Cmd)cmd;
 - (void)send:(CmdType)cmd;
 - (void)send:(CmdType)type value:(NSInteger)value;
 - (void)send:(CmdType)type key:(KeyCmd)keyCmd;
@@ -379,7 +381,7 @@
 - (NSColor *)color:(NSInteger)nr;
 - (UInt32)rgbaColor:(NSInteger)nr palette:(Palette)palette;
 
-@property (readonly) u32 *stableEmuTexture;
+@property (readonly) u32 *texture;
 @property (readonly) u32 *noise;
 
 @end
@@ -595,21 +597,13 @@
 
 @interface DatasetteProxy : SubComponentProxy { }
 
-/*
-@property (readonly) BOOL hasTape;
-@property (readonly) NSInteger type;
-@property (readonly) BOOL motor;
-@property (readonly) BOOL playKey;
-@property (readonly) NSInteger counter;
-*/
-
 @property (readonly) DatasetteInfo info;
 
 - (void)pressPlay;
 - (void)pressStop;
 - (void)rewind;
-- (void)ejectTape;
 - (void)insertTape:(TAPFileProxy *)tape; // TODO: throw??
+- (void)ejectTape;
 
 @end
 

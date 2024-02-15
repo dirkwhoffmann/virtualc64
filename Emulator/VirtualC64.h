@@ -58,6 +58,8 @@ public:
     using vc64::Emulator::Thread::isPoweredOff;
     using vc64::Emulator::Thread::isPaused;
     using vc64::Emulator::Thread::isRunning;
+    using vc64::Emulator::Thread::isSuspended;
+    using vc64::Emulator::Thread::isHalted;
     using vc64::Emulator::Thread::isWarping;
     using vc64::Emulator::Thread::isTracking;
 
@@ -269,7 +271,7 @@ public:
         isize getLinesPerFrame() const;
         bool pal() const;
 
-        u32 *stableEmuTexture() const;
+        u32 *getTexture() const;
         u32 *getNoise() const;
         u32 getColor(isize nr) const;
         u32 getColor(isize nr, Palette palette) const;
@@ -434,6 +436,9 @@ public:
 
         DatasetteInfo getInfo() const;
 
+        void insertTape(TAPFile &file);
+        void ejectTape();
+
     } datasette;
 
 
@@ -550,10 +555,6 @@ public:
         void setModificationFlag(bool value);
         void markDiskAsModified();
         void markDiskAsUnmodified();
-        /*
-         bool isModified() const;
-         void setModified(bool b);
-         */
 
         isize getDeviceNr() const;
         bool getRedLED() const;

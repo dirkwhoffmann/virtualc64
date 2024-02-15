@@ -206,7 +206,7 @@ class Canvas: Layer {
         }
         
         // Get a pointer to most recent texture
-        let buffer = c64.vic.stableEmuTexture
+        let buffer = c64.vic.texture
         precondition(buffer != nil)
 
         // Only proceed if the emulator delivers a new texture

@@ -607,7 +607,7 @@ VirtualC64::VICII_API::pal() const
 }
 
 u32 *
-VirtualC64::VICII_API::stableEmuTexture() const
+VirtualC64::VICII_API::getTexture() const
 {
     return vic.stableEmuTexture();
 }
@@ -781,6 +781,18 @@ DatasetteInfo
 VirtualC64::DATASETTE_API::getInfo() const
 {
     return datasette.getInfo();
+}
+
+void 
+VirtualC64::DATASETTE_API::insertTape(TAPFile &file)
+{
+    datasette.insertTape(file);
+}
+
+void 
+VirtualC64::DATASETTE_API::ejectTape()
+{
+    datasette.ejectTape();
 }
 
 

@@ -516,9 +516,9 @@ using namespace vc64;
     return [self vicii]->getSpriteInfo((unsigned)sprite);
 }
 
-- (u32 *)stableEmuTexture
+- (u32 *)texture
 {
-    return [self vicii]->stableEmuTexture();
+    return [self vicii]->getTexture();
 }
 
 - (NSColor *)color:(NSInteger)nr
@@ -1190,33 +1190,6 @@ using namespace vc64;
     return (VirtualC64 *)emu;
 }
 
-/*
-- (BOOL)hasTape
-{
-    return [self datasette]->hasTape();
-}
-
-- (NSInteger)type
-{
-    return [self datasette]->getType();
-}
-
-- (BOOL)motor
-{
-    return [self datasette]->getMotor();
-}
-
-- (BOOL)playKey
-{
-    return [self datasette]->getPlayKey();
-}
-
-- (NSInteger)counter
-{
-    return [self datasette]->getCounter();
-}
-*/
-
 - (DatasetteInfo)info
 {
     return [self datasette]->getInfo();
@@ -1239,12 +1212,12 @@ using namespace vc64;
 
 - (void)insertTape:(TAPFileProxy *)proxy
 {
-    [self emu]->put(CMD_DATASETTE_INSERT, TapeCmd { .tape = proxy->obj });
+    [self emu]->datasette.insertTape(*(TAPFile *)proxy->obj);
 }
 
 - (void)ejectTape
 {
-    [self emu]->put(CMD_DATASETTE_EJECT);
+    [self emu]->datasette.ejectTape();
 }
 
 @end
@@ -2449,14 +2422,34 @@ using namespace vc64;
     return [self emu]->isPoweredOff();
 }
 
+- (BOOL)paused
+{
+    return [self emu]->isPaused();
+}
+
 - (BOOL)running
 {
     return [self emu]->isRunning();
 }
 
-- (BOOL)paused
+- (BOOL)suspended
 {
-    return [self emu]->isPaused();
+    return [self emu]->isSuspended();
+}
+
+- (BOOL)halted
+{
+    return [self emu]->isHalted();
+}
+
+- (BOOL)warping
+{
+    return [self emu]->isWarping();
+}
+
+- (BOOL)tracking
+{
+    return [self emu]->isTracking();
 }
 
 - (void)run:(ExceptionWrapper *)e

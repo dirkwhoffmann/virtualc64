@@ -396,8 +396,6 @@ Datasette::processCommand(const Cmd &cmd)
 
     switch (cmd.type) {
 
-        case CMD_DATASETTE_INSERT:  insertTape(*tape); break;
-        case CMD_DATASETTE_EJECT:   ejectTape(); break;
         case CMD_DATASETTE_PLAY:    pressPlay(); break;
         case CMD_DATASETTE_STOP:    pressStop(); break;
         case CMD_DATASETTE_REWIND:  rewind(); break;

@@ -805,8 +805,6 @@ Emulator::update()
                 _c64.keyboard.processCommand(cmd);
                 break;
 
-            case CMD_DATASETTE_INSERT:
-            case CMD_DATASETTE_EJECT:
             case CMD_DATASETTE_PLAY:
             case CMD_DATASETTE_STOP:
             case CMD_DATASETTE_REWIND:

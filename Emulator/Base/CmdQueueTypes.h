@@ -45,8 +45,6 @@ enum_long(CMD_TYPE)
     CMD_KEY_TOGGLE,
 
     // Datasette
-    CMD_DATASETTE_INSERT,
-    CMD_DATASETTE_EJECT,
     CMD_DATASETTE_PLAY,
     CMD_DATASETTE_STOP,
     CMD_DATASETTE_REWIND,
@@ -92,8 +90,6 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
             case CMD_KEY_RELEASE:           return "KEY_RELEASE";
             case CMD_KEY_TOGGLE:            return "KEY_TOGGLE";
 
-            case CMD_DATASETTE_INSERT:      return "DATASETTE_INSERT";
-            case CMD_DATASETTE_EJECT:       return "DATASETTE_EJECT";
             case CMD_DATASETTE_PLAY:        return "DATASETTE_PLAY";
             case CMD_DATASETTE_STOP:        return "DATASETTE_STOP";
             case CMD_DATASETTE_REWIND:      return "DATASETTE_REWIND";
