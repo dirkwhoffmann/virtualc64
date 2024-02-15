@@ -13,6 +13,7 @@
 #pragma once
 
 #include "ExpansionPortTypes.h"
+#include "CmdQueueTypes.h"
 #include "SubComponent.h"
 #include "Cartridge.h"
 
@@ -156,7 +157,6 @@ public:
 
     // Removes a cartridge from the expansion port (if any)
     void detachCartridge();
-    void detachCartridgeAndReset();
 
     
     //
@@ -217,14 +217,21 @@ public:
     //
     // Operating LEDs
     //
-
-    // Returns true if the LED is switched on
-    bool getLED() const;
     
     // Switches the LED on or off
     void setLED(bool value);
     
-    
+
+    //
+    // Processing commands
+    //
+
+public:
+
+    // Processes a cartridge command
+    void processCommand(const Cmd &cmd);
+
+
     //
     // Handling delegation calls
     //

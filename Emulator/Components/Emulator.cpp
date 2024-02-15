@@ -814,6 +814,15 @@ Emulator::update()
                 _c64.datasette.processCommand(cmd);
                 break;
 
+            case CMD_CRT_BUTTON_PRESS:
+            case CMD_CRT_BUTTON_RELEASE:
+            case CMD_CRT_SWITCH_LEFT:
+            case CMD_CRT_SWITCH_NEUTRAL:
+            case CMD_CRT_SWITCH_RIGHT:
+
+                _c64.expansionport.processCommand(cmd);
+                break;
+
             default:
                 fatal("Unhandled command: %s\n", CmdTypeEnum::key(cmd.type));
         }

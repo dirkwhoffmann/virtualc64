@@ -373,9 +373,6 @@ public:
     // Returns true if the cartridge has a LED
     bool hasLED() const { return traits.led; }
 
-    // Returns true if the LED is switched on
-    virtual bool getLED() const { return led; }
-    
     // Switches the LED on or off
     virtual void setLED(bool value) { led = value; }
     

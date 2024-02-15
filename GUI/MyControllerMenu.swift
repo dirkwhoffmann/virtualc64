@@ -170,21 +170,21 @@ extension MyController: NSMenuItemValidation {
             let title = String(charptr: c64.expansionport.traits.switchNeutral)
             item.title = title ?? ""
             item.isHidden = title == nil
-            item.state = c64.expansionport.switchIsNeutral() ? .on : .off
+            item.state = c64.expansionport.info.switchPos == 0 ? .on : .off
             return title != nil
             
         case #selector(MyController.setSwitchLeftAction(_:)):
             let title = String(charptr: c64.expansionport.traits.switchLeft)
             item.title = title ?? ""
             item.isHidden = title == nil
-            item.state = c64.expansionport.switchIsLeft() ? .on : .off
+            item.state = c64.expansionport.info.switchPos < 0 ? .on : .off
             return title != nil
             
         case #selector(MyController.setSwitchRightAction(_:)):
             let title = String(charptr: c64.expansionport.traits.switchRight)
             item.title = title ?? ""
             item.isHidden = title == nil
-            item.state = c64.expansionport.switchIsRight() ? .on : .off
+            item.state = c64.expansionport.info.switchPos > 0 ? .on : .off
             return title != nil
 
         default:
@@ -898,7 +898,8 @@ extension MyController: NSMenuItemValidation {
     }
 
     @IBAction func detachCartridgeAction(_ sender: Any!) {
-        c64.expansionport.detachCartridgeAndReset()
+        c64.expansionport.detachCartridge()
+        c64.hardReset()
     }
 
     @IBAction func attachReuDummyAction(_ sender: Any!) {
@@ -935,19 +936,19 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func pressCartridgeButton1Action(_ sender: NSButton!) {
         
-        c64.expansionport.pressButton(1)
-        
+        c64.send(.CRT_BUTTON_PRESS, value: 1)
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.c64.expansionport.releaseButton(1)
+            self.c64.send(.CRT_BUTTON_RELEASE, value: 1)
         }
     }
 
     @IBAction func pressCartridgeButton2Action(_ sender: NSButton!) {
         
-        c64.expansionport.pressButton(2)
-        
+        c64.send(.CRT_BUTTON_PRESS, value: 2)
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.c64.expansionport.releaseButton(2)
+            self.c64.send(.CRT_BUTTON_RELEASE, value: 2)
         }
     }
     
@@ -957,17 +958,17 @@ extension MyController: NSMenuItemValidation {
 
     @IBAction func setSwitchNeutralAction(_ sender: Any!) {
         
-        c64.expansionport.setSwitchPosition(0)
+        c64.send(.CRT_SWITCH_NEUTRAL)
     }
 
     @IBAction func setSwitchLeftAction(_ sender: Any!) {
         
-        c64.expansionport.setSwitchPosition(-1)
+        c64.send(.CRT_SWITCH_LEFT)
     }
 
     @IBAction func setSwitchRightAction(_ sender: Any!) {
         
-        c64.expansionport.setSwitchPosition(1)
+        c64.send(.CRT_SWITCH_RIGHT)
     }
 
     @IBAction func setSwitchDummyAction(_ sender: Any!) {

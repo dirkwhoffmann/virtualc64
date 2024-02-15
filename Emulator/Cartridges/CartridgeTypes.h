@@ -273,11 +273,13 @@ CartridgeTraits;
 
 typedef struct
 {
-    CartridgeType type;
+    CartridgeType type; // DEPRECATED
     bool supported;
     bool gameLineInCrtFile;
     bool exromLineInCrtFile;
     isize numPackets;
+    isize switchPos;
+    bool led;
     /*
     const char *button1;
     const char *button2;

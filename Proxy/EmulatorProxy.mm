@@ -831,12 +831,17 @@ using namespace vc64;
     return (VirtualC64::EXP_PORT_API *)obj;
 }
 
+- (VirtualC64 *)emu
+{
+    return (VirtualC64 *)emu;
+}
+
 - (CartridgeTraits)traits
 {
     return [self eport]->getTraits();
 }
 
-- (CartridgeInfo)getInfo
+- (CartridgeInfo)info
 {
     return [self eport]->getInfo();
 }
@@ -872,19 +877,9 @@ using namespace vc64;
     [self eport]->attachIsepicCartridge();
 }
 
-- (void)detachCartridgeAndReset
+- (void)detachCartridge
 {
-    [self eport]->detachCartridgeAndReset();
-}
-
-- (void)pressButton:(NSInteger)nr
-{
-    [self eport]->pressButton((unsigned)nr);
-}
-
-- (void)releaseButton:(NSInteger)nr
-{
-    [self eport]->releaseButton((unsigned)nr);
+    [self eport]->detachCartridge();
 }
 
 - (BOOL)hasSwitch
@@ -905,31 +900,6 @@ using namespace vc64;
 - (BOOL)validSwitchPosition:(NSInteger)pos
 {
     return [self eport]->validSwitchPosition(pos);
-}
-
-- (BOOL)switchIsNeutral
-{
-    return [self eport]->switchIsNeutral();
-}
-
-- (BOOL)switchIsLeft
-{
-    return [self eport]->switchIsLeft();
-}
-
-- (BOOL)switchIsRight
-{
-    return [self eport]->switchIsRight();
-}
-
-- (void)setSwitchPosition:(NSInteger)pos
-{
-    [self eport]->setSwitch(pos);
-}
-
-- (BOOL)led
-{
-    return [self eport]->getLED();
 }
 
 - (NSInteger)ramCapacity
@@ -2375,7 +2345,7 @@ using namespace vc64;
     dmaDebugger = [[DmaDebuggerProxy alloc] initWith:&emu->dmaDebugger];
     drive8 = [[DriveProxy alloc] initWithVC1541:&emu->drive8];
     drive9 = [[DriveProxy alloc] initWithVC1541:&emu->drive9];
-    expansionport = [[ExpansionPortProxy alloc] initWith:&emu->expansionport];
+    expansionport = [[ExpansionPortProxy alloc] initWith:&emu->expansionport emu:emu];
     iec = [[IECProxy alloc] initWith:&emu->iec];
     keyboard = [[KeyboardProxy alloc] initWith:&emu->keyboard emu:emu];
     mem = [[MemoryProxy alloc] initWith:&emu->mem];
@@ -2483,7 +2453,7 @@ using namespace vc64;
     try { [self emu]->powerOn(); }
     catch (VC64Error &error) { [ex save:error]; }
     */
-    [self send:Cmd{.type = CMD_POWER_ON}];
+    [self send:CMD_POWER_ON];
 }
 
 - (void)powerOff
@@ -2491,7 +2461,7 @@ using namespace vc64;
     /*
     [self emu]->powerOff();
     */
-    [self send:Cmd{.type = CMD_POWER_OFF}];
+    [self send:CMD_POWER_OFF];
 }
 
 - (EmulatorInfo)info
@@ -2526,35 +2496,27 @@ using namespace vc64;
 
 - (void)run:(ExceptionWrapper *)e
 {
-    /*
-    try { [self emu]->run(); }
-    catch (VC64Error &error) { [e save:error]; }
-    */
-    [self send:Cmd{.type = CMD_RUN}];
+    [self send:CMD_RUN];
 }
 
 - (void)pause
 {
-    // [self emu]->pause();
-    [self send:Cmd{.type = CMD_PAUSE}];
+    [self send:CMD_PAUSE];
 }
 
 - (void)halt
 {
-    // [self emu]->halt();
-    [self send:Cmd{.type = CMD_HALT}];
+    [self send:CMD_HALT];
 }
 
 - (void)suspend
 {
-    // [self emu]->suspend();
-    [self send:Cmd{.type = CMD_SUSPEND}];
+    [self send:CMD_SUSPEND];
 }
 
 - (void)resume
 {
-    // [self emu]->resume();
-    [self send:Cmd{.type = CMD_RESUME}];
+    [self send:CMD_RESUME];
 }
 
 - (void)continueScript
@@ -2764,9 +2726,14 @@ using namespace vc64;
     catch (VC64Error &error) { [ex save:error]; }
 }
 
-- (void)send:(Cmd)cmd
+- (void)send:(CmdType)type
 {
-    [self emu]->put(cmd);
+    [self emu]->put(type, 0);
+}
+
+- (void)send:(CmdType)type value:(NSInteger)value
+{
+    [self emu]->put(type, value);
 }
 
 - (void)send:(CmdType)type key:(KeyCmd)keyCmd

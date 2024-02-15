@@ -50,6 +50,13 @@ enum_long(CMD_TYPE)
     CMD_DATASETTE_PLAY,
     CMD_DATASETTE_STOP,
     CMD_DATASETTE_REWIND,
+
+    // Cartridges
+    CMD_CRT_BUTTON_PRESS,
+    CMD_CRT_BUTTON_RELEASE,
+    CMD_CRT_SWITCH_LEFT,
+    CMD_CRT_SWITCH_NEUTRAL,
+    CMD_CRT_SWITCH_RIGHT
 };
 typedef CMD_TYPE CmdType;
 
@@ -57,7 +64,7 @@ typedef CMD_TYPE CmdType;
 struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = CMD_DATASETTE_REWIND;
+    static constexpr long maxVal = CMD_CRT_SWITCH_RIGHT;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "CMD"; }
@@ -90,6 +97,12 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
             case CMD_DATASETTE_PLAY:        return "DATASETTE_PLAY";
             case CMD_DATASETTE_STOP:        return "DATASETTE_STOP";
             case CMD_DATASETTE_REWIND:      return "DATASETTE_REWIND";
+
+            case CMD_CRT_BUTTON_PRESS:      return "CRT_BUTTON_PRESS";
+            case CMD_CRT_BUTTON_RELEASE:    return "CRT_BUTTON_RELEASE";
+            case CMD_CRT_SWITCH_LEFT:       return "CRT_SWITCH_LEFT";
+            case CMD_CRT_SWITCH_NEUTRAL:    return "CRT_SWITCH_NEUTRAL";
+            case CMD_CRT_SWITCH_RIGHT:      return "CRT_SWITCH_RIGHT";
         }
         return "???";
     }

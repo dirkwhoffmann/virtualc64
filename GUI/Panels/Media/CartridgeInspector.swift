@@ -17,7 +17,8 @@ class CartridgeInspector: DialogController {
     @IBOutlet weak var exrom: NSTextField!
     @IBOutlet weak var packets: NSTableView!
 
-    var info: CartridgeInfo?
+    var info: CartridgeInfo = CartridgeInfo()
+    var traits: CartridgeTraits = CartridgeTraits()
     var packetInfos: [CartridgeRomInfo] = []
 
     //
@@ -26,9 +27,10 @@ class CartridgeInspector: DialogController {
 
     func show(expansionPort: ExpansionPortProxy) {
 
-        info = expansionPort.getInfo()
+        info = expansionPort.info
+        traits = expansionPort.traits
 
-        if let info = info, info.numPackets > 0 {
+        if info.numPackets > 0 {
 
             for i in 0 ..< info.numPackets {
                 packetInfos.append(expansionPort.getRomInfo(i))
@@ -50,10 +52,10 @@ class CartridgeInspector: DialogController {
     func update() {
 
         title.stringValue = "Commodore Expansion Port Module"
-        type.stringValue = info!.type.description
-        supported.stringValue = info!.supported ? "Yes" : "No"
-        game.stringValue = info!.gameLineInCrtFile ? "High" : "Low"
-        exrom.stringValue = info!.exromLineInCrtFile ? "High" : "Low"
+        type.stringValue = info.type.description
+        supported.stringValue = info.supported ? "Yes" : "No"
+        game.stringValue = info.gameLineInCrtFile ? "High" : "Low"
+        exrom.stringValue = info.exromLineInCrtFile ? "High" : "Low"
     }
 }
 

@@ -347,16 +347,6 @@ ExpansionPort::detachCartridge()
     }
 }
 
-void
-ExpansionPort::detachCartridgeAndReset()
-{
-    {   SUSPENDED
-        
-        detachCartridge();
-        c64.hardReset();
-    }
-}
-
 isize
 ExpansionPort::getRamCapacity() const
 {
@@ -390,12 +380,14 @@ ExpansionPort::getButtonTitle(isize nr) const
 void
 ExpansionPort::pressButton(isize nr)
 {
+    assert(nr == 1 || nr == 2);
     if (cartridge) cartridge->pressButton(nr);
 }
 
 void
 ExpansionPort::releaseButton(isize nr)
 {
+    assert(nr == 1 || nr == 2);
     if (cartridge) cartridge->releaseButton(nr);
 }
 
@@ -447,16 +439,26 @@ ExpansionPort::validSwitchPosition(isize pos) const
     return cartridge ? cartridge->validSwitchPosition(pos) : false;
 }
 
-bool
-ExpansionPort::getLED() const
-{
-    return cartridge ? cartridge->getLED() : false;
-}
-
 void
 ExpansionPort::setLED(bool value)
 {
     if (cartridge) cartridge->setLED(value);
+}
+
+void
+ExpansionPort::processCommand(const Cmd &cmd)
+{
+    switch (cmd.type) {
+
+        case CMD_CRT_BUTTON_PRESS:      pressButton(cmd.value); break;
+        case CMD_CRT_BUTTON_RELEASE:    releaseButton(cmd.value); break;
+        case CMD_CRT_SWITCH_LEFT:       setSwitch(-1); break;
+        case CMD_CRT_SWITCH_NEUTRAL:    setSwitch(0); break;
+        case CMD_CRT_SWITCH_RIGHT:      setSwitch(1); break;
+
+        default:
+            fatalError;
+    }
 }
 
 void

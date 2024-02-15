@@ -243,7 +243,9 @@
 - (void)flash:(AnyFileProxy *)container exception:(ExceptionWrapper *)ex;
 - (void)flash:(FileSystemProxy *)proxy item:(NSInteger)nr exception:(ExceptionWrapper *)ex;
 
-- (void)send:(Cmd)cmd;
+// - (void)send:(Cmd)cmd;
+- (void)send:(CmdType)cmd;
+- (void)send:(CmdType)type value:(NSInteger)value;
 - (void)send:(CmdType)type key:(KeyCmd)keyCmd;
 
 @end
@@ -472,10 +474,10 @@
 // ExpansionPort
 //
 
-@interface ExpansionPortProxy : CoreComponentProxy { }
+@interface ExpansionPortProxy : SubComponentProxy { }
 
 @property (readonly) CartridgeTraits traits;
-- (CartridgeInfo)getInfo;
+@property (readonly) CartridgeInfo info;
 - (CartridgeRomInfo)getRomInfo:(NSInteger)nr;
 
 - (BOOL)cartridgeAttached;
@@ -483,22 +485,12 @@
 - (void)attachReuCartridge:(NSInteger)capacity;
 - (void)attachGeoRamCartridge:(NSInteger)capacity;
 - (void)attachIsepicCartridge;
-- (void)detachCartridgeAndReset;
-
-- (void)pressButton:(NSInteger)nr;
-- (void)releaseButton:(NSInteger)nr;
+- (void)detachCartridge;
 
 @property (readonly) BOOL hasSwitch;
 - (NSInteger)switchPosition;
 - (NSString *)currentSwitchDescription;
 - (BOOL)validSwitchPosition:(NSInteger)pos;
-- (BOOL)switchIsNeutral;
-- (BOOL)switchIsLeft;
-- (BOOL)switchIsRight;
-- (void)setSwitchPosition:(NSInteger)pos;
-
-// - (BOOL)hasLed;
-- (BOOL)led;
 
 @property (readonly) NSInteger ramCapacity;
 

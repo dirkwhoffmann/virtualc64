@@ -339,6 +339,8 @@ Cartridge::getInfo() const
     result.gameLineInCrtFile = gameLineInCrtFile;
     result.exromLineInCrtFile = exromLineInCrtFile;
     result.numPackets = numPackets;
+    result.switchPos = switchPos;
+    result.led = led;
 
     return result;
 }

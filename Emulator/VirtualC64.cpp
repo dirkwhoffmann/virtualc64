@@ -1027,12 +1027,6 @@ VirtualC64::EXP_PORT_API::detachCartridge()
     expansionport.detachCartridge();
 }
 
-void 
-VirtualC64::EXP_PORT_API::detachCartridgeAndReset()
-{
-    expansionport.detachCartridgeAndReset();
-}
-
 isize 
 VirtualC64::EXP_PORT_API::numButtons() const
 {
@@ -1103,12 +1097,6 @@ void
 VirtualC64::EXP_PORT_API::setSwitch(isize pos)
 {
     return expansionport.setSwitch(pos);
-}
-
-bool
-VirtualC64::EXP_PORT_API::getLED() const
-{
-    return expansionport.getLED();
 }
 
 void 

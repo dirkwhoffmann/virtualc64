@@ -501,7 +501,6 @@ public:
         void attachIsepicCartridge();
 
         void detachCartridge();
-        void detachCartridgeAndReset();
         isize numButtons() const;
         const string getButtonTitle(isize nr) const;
         void pressButton(isize nr);
@@ -514,7 +513,6 @@ public:
         const char *getSwitchDescription() const;
         bool validSwitchPosition(isize pos) const;
         void setSwitch(isize pos);
-        bool getLED() const;
         void setLED(bool value);
         isize getRamCapacity() const;
         bool hasBattery() const;
