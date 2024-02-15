@@ -262,6 +262,8 @@ typedef struct
     CartridgeType type;
     const char *title;
 
+    bool  battery;
+
     isize buttons;
     const char *button1;
     const char *button2;

@@ -90,9 +90,6 @@ private:
     
     // RAM capacity in bytes
     isize ramCapacity = 0;
-    
-    // Indicates whether RAM data is preserved during a reset
-    bool battery = false;
 
     
     //
@@ -201,7 +198,6 @@ protected:
         << exromLineInCrtFile
         << numPackets
         << ramCapacity
-        << battery
         << control
         << switchPos;
     }
@@ -310,12 +306,6 @@ public:
      * size is stored in variable ramCapacity.
      */
     void setRamCapacity(isize size);
-
-    // Returns true if RAM data is preserved during a reset
-    bool getBattery() const { return battery; }
-
-    // Enables or disables persistent RAM
-    void setBattery(bool value) { battery = value; }
 
     // Reads or write RAM cells
     u8 peekRAM(u32 addr) const;

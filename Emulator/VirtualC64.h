@@ -500,8 +500,6 @@ public:
         void detachCartridge();
 
         isize getRamCapacity() const;
-        bool hasBattery() const;
-        void setBattery(bool value);
 
     } expansionport;
 

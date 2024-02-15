@@ -20,6 +20,7 @@ class GeoRAM : public Cartridge {
  
         .type       = CRT_GEO_RAM,
         .title      = "GeoRam",
+        .battery    = true
     };
 
     virtual const CartridgeTraits &getTraits() const override { return traits; }

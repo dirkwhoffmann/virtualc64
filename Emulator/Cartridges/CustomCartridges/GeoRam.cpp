@@ -27,13 +27,6 @@ void
 GeoRAM::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)
-
-    if (!getBattery()) {
-        trace(CRT_DEBUG, "Erasing GeoRAM\n");
-        eraseRAM(0);
-    } else {
-        trace(CRT_DEBUG, "Preserving GeoRAM\n");
-    }
 }
 
 void

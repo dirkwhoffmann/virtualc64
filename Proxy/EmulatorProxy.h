@@ -489,9 +489,6 @@
 
 @property (readonly) NSInteger ramCapacity;
 
-- (BOOL)hasBattery;
-- (void)setBattery:(BOOL)value;
-
 @end
 
 

@@ -353,18 +353,6 @@ ExpansionPort::getRamCapacity() const
     return cartridge ? cartridge->getRamCapacity() : 0;
 }
 
-bool
-ExpansionPort::hasBattery() const
-{
-    return cartridge ? cartridge->getBattery() : false;
-}
-
-void
-ExpansionPort::setBattery(bool value)
-{
-    if (cartridge) cartridge->setBattery(value);
-}
-
 isize
 ExpansionPort::numButtons() const
 {

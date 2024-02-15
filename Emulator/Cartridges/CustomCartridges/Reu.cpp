@@ -28,13 +28,6 @@ Reu::_reset(bool hard)
 {
     RESET_SNAPSHOT_ITEMS(hard)
 
-    if (!getBattery()) {
-        trace(CRT_DEBUG, "Erasing REU contents\n");
-        eraseRAM(0);
-    } else {
-        trace(CRT_DEBUG, "Preserving REU contents\n");
-    }
-
     // Initialize the status register
     sr = isREU1700() ? 0x00 : 0x10;
 

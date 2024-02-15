@@ -1022,18 +1022,6 @@ VirtualC64::EXP_PORT_API::getRamCapacity() const
 }
 
 bool 
-VirtualC64::EXP_PORT_API::hasBattery() const
-{
-    return expansionport.hasBattery();
-}
-
-void 
-VirtualC64::EXP_PORT_API::setBattery(bool value)
-{
-    expansionport.setBattery(value);
-}
-
-bool 
 VirtualC64::IEC_API::isTransferring() const
 {
     return iec.isTransferring();

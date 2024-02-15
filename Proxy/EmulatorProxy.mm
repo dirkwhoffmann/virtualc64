@@ -887,16 +887,6 @@ using namespace vc64;
     return (NSInteger)[self eport]->getRamCapacity();
 }
 
-- (BOOL)hasBattery
-{
-    return [self eport]->hasBattery();
-}
-
-- (void)setBattery:(BOOL)value
-{
-    [self eport]->setBattery(value);
-}
-
 @end
 
 

@@ -202,7 +202,7 @@ Cartridge::_reset(bool hard)
     RESET_SNAPSHOT_ITEMS(hard)
     
     // Reset external RAM
-    if (externalRam && !battery) memset(externalRam, 0xFF, ramCapacity);
+    if (externalRam && !getTraits().battery) memset(externalRam, 0xFF, ramCapacity);
  
     // Reset all chip packets
     for (isize i = 0; i < numPackets; i++) packet[i]->_reset(hard);
@@ -237,7 +237,7 @@ Cartridge::_dump(Category category, std::ostream& os) const
             os << tab("On-Board RAM");
             os << dec(getRamCapacity() / 1024) << " KB" << std::endl;
             os << tab("Battery");
-            os << bol(getBattery()) << std::endl;
+            os << bol(traits.battery) << std::endl;
         }
     }
 }

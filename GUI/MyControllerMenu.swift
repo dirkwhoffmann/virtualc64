@@ -124,20 +124,12 @@ extension MyController: NSMenuItemValidation {
             item.state = (c64.expansionport.traits.type == .REU &&
                           c64.expansionport.ramCapacity == item.tag * 1024) ? .on : .off
 
-        case #selector(MyController.reuBatteryAction(_:)):
-            item.state = c64.expansionport.hasBattery() ? .on : .off
-            return c64.expansionport.traits.type == .REU
-
         case #selector(MyController.attachGeoRamDummyAction(_:)):
             item.state = (c64.expansionport.traits.type == .GEO_RAM) ? .on : .off
 
         case #selector(MyController.attachGeoRamAction(_:)):
             item.state = (c64.expansionport.traits.type == .GEO_RAM &&
                             c64.expansionport.ramCapacity == item.tag * 1024) ? .on : .off
-            
-        case #selector(MyController.geoRamBatteryAction(_:)):
-            item.state = c64.expansionport.hasBattery() ? .on : .off
-            return c64.expansionport.traits.type == .GEO_RAM
 
         case #selector(MyController.attachIsepicAction(_:)):
             item.state = (c64.expansionport.traits.type == .ISEPIC) ? .on : .off
@@ -912,10 +904,6 @@ extension MyController: NSMenuItemValidation {
         c64.expansionport.attachReuCartridge(capacity)
     }
 
-    @IBAction func reuBatteryAction(_ sender: Any!) {
-        c64.expansionport.setBattery(!c64.expansionport.hasBattery())
-    }
-
     @IBAction func attachGeoRamDummyAction(_ sender: Any!) {
         // Dummy action method to enable menu item validation
     }
@@ -924,10 +912,6 @@ extension MyController: NSMenuItemValidation {
 
         let capacity = sender.tag
         c64.expansionport.attachGeoRamCartridge(capacity)
-    }
-
-    @IBAction func geoRamBatteryAction(_ sender: Any!) {
-        c64.expansionport.setBattery(!c64.expansionport.hasBattery())
     }
 
     @IBAction func attachIsepicAction(_ sender: Any!) {

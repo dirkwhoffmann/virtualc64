@@ -1044,13 +1044,6 @@ CQ
                                                 <action selector="attachReuAction:" target="-1" id="fDb-ef-W2q"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="0Py-Sh-MFB"/>
-                                        <menuItem title="RAM battery" id="5BL-9k-xld">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="reuBatteryAction:" target="-1" id="JWy-tU-az6"/>
-                                            </connections>
-                                        </menuItem>
                                     </items>
                                 </menu>
                                 <connections>
@@ -1101,13 +1094,6 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="attachGeoRamAction:" target="-1" id="unP-gr-RPf"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="7sM-8y-EY3"/>
-                                        <menuItem title="RAM battery" id="eNK-2B-o7I">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="geoRamBatteryAction:" target="-1" id="z8D-bF-zgq"/>
                                             </connections>
                                         </menuItem>
                                     </items>

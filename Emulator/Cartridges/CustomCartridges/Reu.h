@@ -20,6 +20,7 @@ class Reu : public Cartridge {
 
         .type       = CRT_REU,
         .title      = "REU",
+        .battery    = true
     };
 
     virtual const CartridgeTraits &getTraits() const override { return traits; }
