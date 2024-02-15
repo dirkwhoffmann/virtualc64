@@ -136,7 +136,7 @@ FinalIII::updateGame()
     expansionport.setGameLine(game() && qD);
 }
 
-const string
+const char *
 FinalIII::getButtonTitle(isize nr) const
 {
     return nr == 1 ? "Freeze" : nr == 2 ? "Reset" : "";
@@ -146,7 +146,7 @@ void
 FinalIII::pressButton(isize nr)
 {
     assert(nr <= numButtons());
-    trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr).c_str());
+    trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
     
     {   SUSPENDED
         
@@ -170,7 +170,7 @@ void
 FinalIII::releaseButton(isize nr)
 {
     assert(nr <= numButtons());
-    trace(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr).c_str());
+    trace(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr));
     
     {   SUSPENDED
         

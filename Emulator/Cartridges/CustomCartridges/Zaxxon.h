@@ -16,11 +16,18 @@
 
 class Zaxxon : public Cartridge {
     
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_ZAXXON,
+            .title      = "Zaxxon",
+        };
+    }
+
 public:
     
     Zaxxon(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "Zaxxon"; }
-    CartridgeType getCartridgeType() const override { return CRT_ZAXXON; }
 
 private:
     

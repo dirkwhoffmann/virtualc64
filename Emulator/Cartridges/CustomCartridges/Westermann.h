@@ -16,12 +16,19 @@
 
 class Westermann : public Cartridge {
     
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_WESTERMANN,
+            .title      = "Westermann",
+        };
+    }
+
 public:
     
     Westermann(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "Westermann"; }
-    CartridgeType getCartridgeType() const override { return CRT_WESTERMANN; }
-    
+
     
     //
     // Accessing cartridge memory

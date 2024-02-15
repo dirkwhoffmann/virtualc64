@@ -55,7 +55,7 @@ WarpSpeed::pokeIO2(u16 addr, u8 value)
     expansionport.setCartridgeMode(CRTMODE_OFF);
 }
 
-const string
+const char *
 WarpSpeed::getButtonTitle(isize nr) const
 {
     return nr == 1 ? "Reset" : "";

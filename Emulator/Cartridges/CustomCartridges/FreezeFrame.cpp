@@ -52,7 +52,7 @@ FreezeFrame::spypeekIO2(u16 addr) const
     return 0;
 }
 
-const string
+const char *
 FreezeFrame::getButtonTitle(isize nr) const
 {
     return nr == 1 ? "Freeze" : "";

@@ -21,12 +21,24 @@
 class ActionReplay3 : public Cartridge {
     
 public:
-    
+
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_ACTION_REPLAY3,
+            .title      = "Action Replay 3",
+
+            .button1    = "Freeze",
+            .button2    = "Reset"
+        };
+    }
+
     ActionReplay3(C64 &ref) : Cartridge(ref) { };
     const char *getDescription() const override { return "AR3"; }
     CartridgeType getCartridgeType() const override { return CRT_ACTION_REPLAY3; }
 
-    
+
     //
     // Accessing cartridge data
     //
@@ -52,7 +64,7 @@ public:
     //
 
     isize numButtons() const override { return 2; }
-    const string getButtonTitle(isize nr) const override;
+    const char *getButtonTitle(isize nr) const override;
     void pressButton(isize nr) override;
     void releaseButton(isize nr) override;
 };
@@ -66,9 +78,19 @@ class ActionReplay : public Cartridge {
         
 public:
         
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_ACTION_REPLAY3,
+            .title      = "Action Replay",
+
+            .button1    = "Freeze",
+            .button2    = "Reset"
+        };
+    }
+
     ActionReplay(C64 &ref);
-    const char *getDescription() const override { return "ActionReplay"; }
-    CartridgeType getCartridgeType() const override { return CRT_ACTION_REPLAY; }
 
     void _reset(bool hard) override;
     void resetCartConfig() override;
@@ -106,7 +128,7 @@ public:
     //
     
     isize numButtons() const override { return 2; }
-    const string getButtonTitle(isize nr) const override;
+    const char *getButtonTitle(isize nr) const override;
     void pressButton(isize nr) override;
     void releaseButton(isize nr) override;
 };
@@ -117,9 +139,21 @@ public:
 //
 
 class AtomicPower : public ActionReplay {
-    
+
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_ATOMIC_POWER,
+            .title      = "Atomic Power",
+
+            .button1    = "Freeze",
+            .button2    = "Reset"
+        };
+    }
+
 public:
-    
+
     AtomicPower(C64 &ref) : ActionReplay(ref) { };
     const char *getDescription() const override { return "AtomicPower"; }
     CartridgeType getCartridgeType() const override { return CRT_ATOMIC_POWER; }

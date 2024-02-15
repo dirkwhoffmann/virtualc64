@@ -16,11 +16,20 @@
 
 class KcsPower : public Cartridge {
     
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_KCS_POWER,
+            .title      = "KCS Power",
+
+            .button1    = "Freeze",
+        };
+    }
+
 public:
     
     KcsPower(C64 &ref);
-    const char *getDescription() const override { return "Ksc"; }
-    CartridgeType getCartridgeType() const override { return CRT_KCS_POWER; }
     
 private:
     
@@ -46,7 +55,7 @@ public:
     //
     
     isize numButtons() const override { return 1; }
-    const string getButtonTitle(isize nr) const override;
+    const char *getButtonTitle(isize nr) const override;
     void pressButton(isize nr) override;
     void releaseButton(isize nr) override;
 };

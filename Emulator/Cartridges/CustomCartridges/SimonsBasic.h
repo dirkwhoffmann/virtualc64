@@ -16,11 +16,18 @@
 
 class SimonsBasic : public Cartridge {
     
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_SIMONS_BASIC,
+            .title      = "Simons Basic",
+        };
+    }
+
 public:
 
     SimonsBasic(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "SimonBasic"; }
-    CartridgeType getCartridgeType() const override { return CRT_SIMONS_BASIC; }
 
 private:
     

@@ -16,6 +16,18 @@
 
 class Expert : public Cartridge {
     
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_EXPERT,
+            .title      = "Expert",
+
+            .button1    = "Reset",
+            .button2    = "ESM"
+        };
+    }
+    
     // Flipflop deciding whether the cartridge is enabled or disabled
     bool active = false;
 
@@ -25,10 +37,8 @@ class Expert : public Cartridge {
     //
     
 public:
-    
+
     Expert(C64 &ref);
-    const char *getDescription() const override { return "Expert"; }
-    CartridgeType getCartridgeType() const override { return CRT_EXPERT; }
 
 private:
     
@@ -90,7 +100,7 @@ private:
     //
     
     isize numButtons() const override { return 2; }
-    const string getButtonTitle(isize nr) const override;
+    const char *getButtonTitle(isize nr) const override;
     void pressButton(isize nr) override;
     
     
@@ -99,7 +109,7 @@ private:
     //
     
     bool hasSwitch() const override { return true; }
-    const string getSwitchDescription(isize pos) const override;
+    const char *getSwitchDescription(isize pos) const override;
     bool switchInPrgPosition() const { return switchIsLeft(); }
     bool switchInOffPosition() const { return switchIsNeutral(); }
     bool switchInOnPosition() const { return switchIsRight(); }

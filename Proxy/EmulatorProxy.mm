@@ -831,9 +831,16 @@ using namespace vc64;
     return (VirtualC64::EXP_PORT_API *)obj;
 }
 
+/*
 - (CartridgeType)cartridgeType
 {
     return [self eport]->getCartridgeType();
+}
+*/
+
+- (CartridgeTraits)traits
+{
+    return [self eport]->getTraits();
 }
 
 - (CartridgeInfo)getInfo
@@ -909,12 +916,12 @@ using namespace vc64;
 
 - (NSString *)switchDescription:(NSInteger)pos
 {
-    return @([self eport]->getSwitchDescription(pos).c_str());
+    return @([self eport]->getSwitchDescription(pos));
 }
 
 - (NSString *)currentSwitchDescription
 {
-    return @([self eport]->getSwitchDescription().c_str());
+    return @([self eport]->getSwitchDescription());
 }
 
 - (BOOL)validSwitchPosition:(NSInteger)pos
@@ -950,11 +957,6 @@ using namespace vc64;
 - (BOOL)led
 {
     return [self eport]->getLED();
-}
-
-- (void)setLed:(BOOL)value
-{
-    [self eport]->setLED(value);
 }
 
 - (NSInteger)ramCapacity

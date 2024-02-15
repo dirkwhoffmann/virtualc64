@@ -141,7 +141,7 @@ Isepic::pokeIO2(u16 addr, u8 value)
     }
 }
 
-const string
+const char *
 Isepic::getSwitchDescription(isize pos) const
 {
     return (pos == -1) ? "Off" : (pos == 1) ? "On" : "";

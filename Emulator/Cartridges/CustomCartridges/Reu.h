@@ -16,6 +16,15 @@
 
 class Reu : public Cartridge {
 
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_REU,
+            .title      = "REU",
+        };
+    }
+
 private:
 
     //
@@ -64,8 +73,6 @@ public:
 
     Reu(C64 &ref) : Cartridge(ref) { };
     Reu(C64 &ref, isize kb);
-    const char *getDescription() const override { return "REU"; }
-    CartridgeType getCartridgeType() const override { return CRT_REU; }
 
 private:
 

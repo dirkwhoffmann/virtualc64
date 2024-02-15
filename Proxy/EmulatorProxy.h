@@ -474,11 +474,12 @@
 
 @interface ExpansionPortProxy : CoreComponentProxy { }
 
+@property (readonly) CartridgeTraits traits;
 - (CartridgeInfo)getInfo;
 - (CartridgeRomInfo)getRomInfo:(NSInteger)nr;
 
 - (BOOL)cartridgeAttached;
-- (CartridgeType)cartridgeType;
+// - (CartridgeType)cartridgeType;
 - (void)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex;
 - (void)attachReuCartridge:(NSInteger)capacity;
 - (void)attachGeoRamCartridge:(NSInteger)capacity;
@@ -502,7 +503,6 @@
 
 - (BOOL)hasLed;
 - (BOOL)led;
-- (void)setLed:(BOOL)value;
 
 @property (readonly) NSInteger ramCapacity;
 

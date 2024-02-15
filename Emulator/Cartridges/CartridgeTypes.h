@@ -260,10 +260,31 @@ struct FlashStateEnum : util::Reflection<FlashStateEnum, FlashState> {
 typedef struct
 {
     CartridgeType type;
+    const char *title;
+
+    const char *button1;
+    const char *button2;
+    const char *switchLeft;
+    const char *switchNeutral;
+    const char *switchRight;
+    const char *led;
+}
+CartridgeTraits;
+
+typedef struct
+{
+    CartridgeType type;
     bool supported;
     bool gameLineInCrtFile;
     bool exromLineInCrtFile;
     isize numPackets;
+    /*
+    const char *button1;
+    const char *button2;
+    const char *switchLeft;
+    const char *switchNeutral;
+    const char *switchRight;
+    */
 }
 CartridgeInfo;
 

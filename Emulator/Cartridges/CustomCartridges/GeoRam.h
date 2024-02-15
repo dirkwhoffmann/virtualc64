@@ -16,6 +16,15 @@
 
 class GeoRAM : public Cartridge {
     
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_GEO_RAM,
+            .title      = "GeoRam",
+        };
+    }
+
 private:
     
     // Selected RAM bank
@@ -33,8 +42,6 @@ public:
     
     GeoRAM(C64 &ref) : Cartridge(ref) { };
     GeoRAM(C64 &ref, isize kb);
-    const char *getDescription() const override { return "GeoRam"; }
-    CartridgeType getCartridgeType() const override { return CRT_GEO_RAM; }
     
 private:
     

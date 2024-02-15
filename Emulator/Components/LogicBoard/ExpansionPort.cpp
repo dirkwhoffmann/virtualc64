@@ -111,6 +111,12 @@ ExpansionPort::_dump(Category category, std::ostream& os) const
     }
 }
 
+CartridgeTraits
+ExpansionPort::getTraits() const
+{
+    return cartridge ? cartridge->traits() : CartridgeTraits { .type = CRT_NONE };
+}
+
 CartridgeInfo
 ExpansionPort::getInfo() const
 {
@@ -421,13 +427,13 @@ ExpansionPort::switchIsRight() const
     return cartridge ? cartridge->switchIsRight() : false;
 }
 
-const string
+const char *
 ExpansionPort::getSwitchDescription(isize pos) const
 {
     return cartridge ? cartridge->getSwitchDescription(pos) : "";
 }
 
-const string
+const char *
 ExpansionPort::getSwitchDescription() const
 {
     return getSwitchDescription(getSwitch());

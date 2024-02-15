@@ -16,11 +16,18 @@
 
 class StructuredBasic : public Cartridge {
         
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_STRUCTURED_BASIC,
+            .title      = "Structured Basic",
+        };
+    }
+
 public:
     
     StructuredBasic(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "StructuredBasic"; }
-    CartridgeType getCartridgeType() const override { return CRT_STRUCTURED_BASIC; }
         
 
     //

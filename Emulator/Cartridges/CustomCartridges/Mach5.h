@@ -16,11 +16,18 @@
 
 class Mach5 : public Cartridge {
 
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_MACH5,
+            .title      = "Mach5",
+        };
+    }
+
 public:
 
     Mach5(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "Mach5"; }
-    CartridgeType getCartridgeType() const override { return CRT_MACH5; }
 
 private:
     

@@ -141,7 +141,7 @@ Expert::pokeIO1(u16 addr, u8 value)
     active = false;
 }
 
-const string
+const char *
 Expert::getButtonTitle(isize nr) const
 {
     return nr == 1 ? "Reset" : nr == 2 ? "ESM" : "";
@@ -151,7 +151,7 @@ void
 Expert::pressButton(isize nr)
 {
     assert(nr <= numButtons());
-    trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr).c_str());
+    trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
     
     {   SUSPENDED
         
@@ -186,7 +186,7 @@ Expert::pressButton(isize nr)
 
 
 
-const string
+const char *
 Expert::getSwitchDescription(isize pos) const
 {
     return (pos == -1) ? "Prg" : (pos == 0) ? "Off" : (pos == 1) ? "On" : "";

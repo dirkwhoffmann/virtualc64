@@ -96,6 +96,7 @@ private:
     
 public:
 
+    CartridgeTraits getTraits() const;
     CartridgeInfo getInfo() const;
     CartridgeRomInfo getRomInfo(isize nr) const;
 
@@ -205,8 +206,8 @@ public:
     /* Returns a textual description for a switch position or nullptr if the
      * switch cannot be positioned this way.
      */
-    const string getSwitchDescription(isize pos) const;
-    const string getSwitchDescription() const;
+    const char *getSwitchDescription(isize pos) const;
+    const char *getSwitchDescription() const;
     bool validSwitchPosition(isize pos) const;
     
     // Puts the switch in the provided position

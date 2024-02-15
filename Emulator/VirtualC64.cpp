@@ -955,6 +955,12 @@ VirtualC64::RSHELL_API::setStream(std::ostream &os)
 // Expansion port
 //
 
+CartridgeTraits 
+VirtualC64::EXP_PORT_API::getTraits() const
+{
+    return expansionport.getTraits();
+}
+
 CartridgeInfo
 VirtualC64::EXP_PORT_API::getInfo() const
 {
@@ -1081,13 +1087,13 @@ VirtualC64::EXP_PORT_API::switchIsRight() const
     return expansionport.switchIsRight();
 }
 
-const string 
+const char *
 VirtualC64::EXP_PORT_API::getSwitchDescription(isize pos) const
 {
     return expansionport.getSwitchDescription(pos);
 }
 
-const string
+const char *
 VirtualC64::EXP_PORT_API::getSwitchDescription() const
 {
     return expansionport.getSwitchDescription();

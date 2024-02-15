@@ -16,12 +16,18 @@
 
 class WarpSpeed : public Cartridge {
     
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_WARPSPEED,
+            .title      = "WarpSpeed",
+        };
+    }
+
 public:
     
     WarpSpeed(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "WarpSpeed"; }
-    CartridgeType getCartridgeType() const override { return CRT_WARPSPEED; }
-
     void resetCartConfig() override;
 
     
@@ -46,6 +52,6 @@ public:
 public:
     
     isize numButtons() const override { return 1; }
-    const string getButtonTitle(isize nr) const override;
+    const char *getButtonTitle(isize nr) const override;
     void pressButton(isize nr) override;
 };

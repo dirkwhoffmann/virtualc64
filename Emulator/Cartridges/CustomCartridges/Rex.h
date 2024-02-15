@@ -16,11 +16,18 @@
 
 class Rex : public Cartridge {
     
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_REX,
+            .title      = "REX",
+        };
+    }
+
 public:
     
     Rex(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "Rex"; }
-    CartridgeType getCartridgeType() const override { return CRT_REX; }
     
     
     //

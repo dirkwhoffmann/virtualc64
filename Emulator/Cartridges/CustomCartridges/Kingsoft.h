@@ -16,12 +16,18 @@
 
 class Kingsoft : public Cartridge {
     
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_KINGSOFT,
+            .title      = "Kingsoft",
+        };
+    }
+
 public:
     
     Kingsoft(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "Kingsoft"; }
-    CartridgeType getCartridgeType() const override { return CRT_KINGSOFT; }
-
     void resetCartConfig() override;
 
     

@@ -16,14 +16,21 @@
 
 class SuperGames : public Cartridge {
     
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_SUPER_GAMES,
+            .title      = "Super Games",
+        };
+    }
+
     // Write protection latch
     bool protect = false;
     
 public:
     
     SuperGames(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "Supergames"; }
-    CartridgeType getCartridgeType() const override { return CRT_SUPER_GAMES; }
 
 
     //

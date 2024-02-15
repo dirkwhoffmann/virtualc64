@@ -16,11 +16,18 @@
 
 class Funplay : public Cartridge {
     
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_FUNPLAY,
+            .title      = "Fun Play",
+        };
+    }
+
 public:
 
     Funplay(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "Funplay"; }
-    CartridgeType getCartridgeType() const override { return CRT_FUNPLAY; }
     
     
     //

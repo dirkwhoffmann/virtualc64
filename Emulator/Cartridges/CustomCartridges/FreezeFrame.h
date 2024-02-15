@@ -15,12 +15,21 @@
 #include "Cartridge.h"
 
 class FreezeFrame : public Cartridge {
-    
+
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_FREEZE_FRAME,
+            .title      = "Freeze Frame",
+
+            .button1    = "Freeze"
+        };
+    }
+
 public:
-    
+
     FreezeFrame(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "FreezeFrame"; }
-    CartridgeType getCartridgeType() const override { return CRT_FREEZE_FRAME; }
     
 private:
 
@@ -44,7 +53,7 @@ public:
     //
     
     isize numButtons() const override { return 1; }
-    const string getButtonTitle(isize nr) const override;
+    const char *getButtonTitle(isize nr) const override;
     void pressButton(isize nr) override;
     void releaseButton(isize nr) override;
 };

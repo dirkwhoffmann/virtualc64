@@ -15,12 +15,19 @@
 #include "Cartridge.h"
 
 class Comal80 : public Cartridge {
-        
+       
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_COMAL80,
+            .title      = "Comal 80",
+        };
+    }
+
 public:
-    
+
     Comal80(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "Comal80"; }
-    CartridgeType getCartridgeType() const override { return CRT_COMAL80; }
     
     void _reset(bool hard) override;
 

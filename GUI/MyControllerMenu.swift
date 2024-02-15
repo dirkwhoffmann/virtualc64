@@ -118,29 +118,29 @@ extension MyController: NSMenuItemValidation {
             return validateURLlist(MediaManager.attachedCartridges, image: smallCart)
 
         case #selector(MyController.attachReuDummyAction(_:)):
-            item.state = (c64.expansionport.cartridgeType() == .REU) ? .on : .off
+            item.state = (c64.expansionport.traits.type == .REU) ? .on : .off
 
         case #selector(MyController.attachReuAction(_:)):
-            item.state = (c64.expansionport.cartridgeType() == .REU &&
+            item.state = (c64.expansionport.traits.type == .REU &&
                           c64.expansionport.ramCapacity == item.tag * 1024) ? .on : .off
 
         case #selector(MyController.reuBatteryAction(_:)):
             item.state = c64.expansionport.hasBattery() ? .on : .off
-            return c64.expansionport.cartridgeType() == .REU
+            return c64.expansionport.traits.type == .REU
 
         case #selector(MyController.attachGeoRamDummyAction(_:)):
-            item.state = (c64.expansionport.cartridgeType() == .GEO_RAM) ? .on : .off
-            
+            item.state = (c64.expansionport.traits.type == .GEO_RAM) ? .on : .off
+
         case #selector(MyController.attachGeoRamAction(_:)):
-            item.state = (c64.expansionport.cartridgeType() == .GEO_RAM &&
+            item.state = (c64.expansionport.traits.type == .GEO_RAM &&
                             c64.expansionport.ramCapacity == item.tag * 1024) ? .on : .off
             
         case #selector(MyController.geoRamBatteryAction(_:)):
             item.state = c64.expansionport.hasBattery() ? .on : .off
-            return c64.expansionport.cartridgeType() == .GEO_RAM
+            return c64.expansionport.traits.type == .GEO_RAM
 
         case #selector(MyController.attachIsepicAction(_:)):
-            item.state = (c64.expansionport.cartridgeType() == .ISEPIC) ? .on : .off
+            item.state = (c64.expansionport.traits.type == .ISEPIC) ? .on : .off
             
         case #selector(MyController.detachCartridgeAction(_:)):
             return c64.expansionport.cartridgeAttached()

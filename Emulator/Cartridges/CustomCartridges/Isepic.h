@@ -16,6 +16,18 @@
 
 class Isepic : public Cartridge {
     
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type           = CRT_ISEPIC,
+            .title          = "Isepic",
+
+            .switchLeft     = "Off",
+            .switchRight    = "On"
+        };
+    }
+
     // Selected page inside the selected RAM bank
     isize page;
 
@@ -31,8 +43,6 @@ class Isepic : public Cartridge {
 public:
     
     Isepic(C64 &ref);
-    const char *getDescription() const override { return "Isepic"; }
-    CartridgeType getCartridgeType() const override { return CRT_ISEPIC; }
     
 private:
     
@@ -91,7 +101,7 @@ private:
     //
     
     bool hasSwitch() const override { return true; }
-    const string getSwitchDescription(isize pos) const override;
+    const char *getSwitchDescription(isize pos) const override;
     void setSwitch(isize pos) override;
     bool switchInOffPosition() const { return switchIsLeft(); }
     bool switchInOnPosition() const { return switchIsRight(); }

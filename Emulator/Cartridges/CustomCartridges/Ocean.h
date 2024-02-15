@@ -16,12 +16,20 @@
 
 class Ocean : public Cartridge {
     
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_OCEAN,
+            .title      = "Ocean",
+        };
+    }
+
 public:
     
     Ocean(C64 &ref);
-    const char *getDescription() const override { return "Ocean"; }
-    CartridgeType getCartridgeType() const override { return CRT_OCEAN; }
 
+    
     //
     // Accessing cartridge memory
     //

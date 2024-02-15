@@ -16,11 +16,18 @@
 
 class MikroAss : public Cartridge {
 
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_MIKRO_ASSEMBLER,
+            .title      = "Mikro Assembler",
+        };
+    }
+
 public:
 
     MikroAss(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "Mikro Assembler"; }
-    CartridgeType getCartridgeType() const override { return CRT_MIKRO_ASSEMBLER; }
 
     
     //

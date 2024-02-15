@@ -16,11 +16,18 @@
 
 class MagicDesk : public Cartridge {
     
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_MAGIC_DESK,
+            .title      = "Magic Desk",
+        };
+    }
+
 public:
     
     MagicDesk(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "MagicDesk"; }
-    CartridgeType getCartridgeType() const override { return CRT_MAGIC_DESK; }
     void resetCartConfig() override;
     
     //

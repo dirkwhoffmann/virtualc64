@@ -16,6 +16,18 @@
 
 class FinalIII : public Cartridge {
     
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_FINAL_III,
+            .title      = "Final Cartridge III",
+
+            .button1    = "Freeze",
+            .button2    = "Reset"
+        };
+    }
+    
     // Indicates whether the freeze button is pressed
     bool freeezeButtonIsPressed = false;
     
@@ -32,11 +44,8 @@ class FinalIII : public Cartridge {
     //
 
 public:
-    
+
     FinalIII(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "FinalIII"; }
-    CartridgeType getCartridgeType() const override { return CRT_FINAL_III; }
-    
     void resetCartConfig() override;
 
 private:
@@ -126,7 +135,7 @@ private:
     //
     
     isize numButtons() const override { return 2; }
-    const string getButtonTitle(isize nr) const override;
+    const char *getButtonTitle(isize nr) const override;
     void pressButton(isize nr) override;
     void releaseButton(isize nr) override;
 };

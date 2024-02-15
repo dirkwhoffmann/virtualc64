@@ -16,11 +16,20 @@
 
 class GameKiller : public Cartridge {
     
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_GAME_KILLER,
+            .title      = "Game Killer",
+
+            .button1    = "Freeze"
+        };
+    }
+
 public:
     
     GameKiller(C64 &ref) : Cartridge(ref) { };
-    const char *getDescription() const override { return "GameKiller"; }
-    CartridgeType getCartridgeType() const override { return CRT_GAME_KILLER; }
     
 private:
     
@@ -44,7 +53,7 @@ private:
     //
     
     isize numButtons() const override { return 1; }
-    const string getButtonTitle(isize nr) const override;
+    const char *getButtonTitle(isize nr) const override;
     void pressButton(isize nr) override;
     void releaseButton(isize nr) override;
 

@@ -16,6 +16,15 @@
 
 class PageFox : public Cartridge {
     
+    virtual CartridgeTraits traits() const override {
+
+        return CartridgeTraits {
+
+            .type       = CRT_PAGEFOX,
+            .title      = "Pagefox",
+        };
+    }
+
     /* The cartridge has a single control register which can be accessed in
      * the $DE80 - $DEFF memory range.
      */
@@ -28,8 +37,6 @@ public:
     //
     
     PageFox(C64 &ref);
-    const char *getDescription() const override { return "PageFox"; }
-    CartridgeType getCartridgeType() const override { return CRT_PAGEFOX; }
     
 private:
     

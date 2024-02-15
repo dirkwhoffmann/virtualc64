@@ -20,13 +20,18 @@
 using namespace vc64;
 
 class Cartridge : public SubComponent {
-    
-    //
-    // Constants
-    //
-    
+
 public:
-    
+
+    virtual CartridgeTraits traits() const {
+
+        return CartridgeTraits {
+
+            .type       = CRT_NORMAL,
+            .title      = "Cartridge",
+        };
+    }
+
     // Maximum number of chip packets on a single cartridge
     static const isize MAX_PACKETS = 128;
     
@@ -34,6 +39,9 @@ public:
     //
     // Cartridge configuration
     //
+
+public:
+
 
 private:
 
@@ -160,7 +168,7 @@ public:
 
 protected:
     
-    const char *getDescription() const override { return "Cartridge"; }
+    const char *getDescription() const override { return traits().title; }
     void _dump(Category category, std::ostream& os) const override;
 
     
@@ -221,7 +229,7 @@ public:
     CartridgeRomInfo getRomInfo(isize nr) const;
 
     // Returns the cartridge type
-    virtual CartridgeType getCartridgeType() const { return CRT_NORMAL; }
+    virtual CartridgeType getCartridgeType() const { return traits().type; }
     
     // Checks whether this cartridge is supported by the emulator yet
     bool isSupported() const { return isSupportedType(getCartridgeType()); }
@@ -325,8 +333,8 @@ public:
     /* Returns a textual description for a button or nullptr, if there is no
      * button with the specified number.
      */
-    virtual const string getButtonTitle(isize nr) const { return ""; }
-    
+    virtual const char *getButtonTitle(isize nr) const { return ""; }
+
     // Presses a button (make sure to call releaseButton() afterwards)
     virtual void pressButton(isize nr) { }
 
@@ -350,10 +358,10 @@ public:
     /* Returns a textual description for a switch position or nullptr if the
      * switch cannot be positioned this way.
      */
-    virtual const string getSwitchDescription(isize pos) const { return ""; }
-    const string getSwitchDescription() const { return getSwitchDescription(getSwitch()); }
-    bool validSwitchPosition(isize pos) const { return getSwitchDescription(pos) != ""; }
-    
+    virtual const char *getSwitchDescription(isize pos) const { return ""; }
+    const char *getSwitchDescription() const { return getSwitchDescription(getSwitch()); }
+    bool validSwitchPosition(isize pos) const { return getSwitchDescription(pos) != nullptr; }
+
     // Puts the switch in a certain position
     virtual void setSwitch(isize pos);
 

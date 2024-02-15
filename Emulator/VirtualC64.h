@@ -487,6 +487,7 @@ public:
 
         using API::API;
 
+        CartridgeTraits getTraits() const;
         CartridgeInfo getInfo() const;
         CartridgeRomInfo getRomInfo(isize nr) const;
 
@@ -510,8 +511,8 @@ public:
         bool switchIsNeutral() const;
         bool switchIsLeft() const;
         bool switchIsRight() const;
-        const string getSwitchDescription(isize pos) const;
-        const string getSwitchDescription() const;
+        const char *getSwitchDescription(isize pos) const;
+        const char *getSwitchDescription() const;
         bool validSwitchPosition(isize pos) const;
         void setSwitch(isize pos);
         bool hasLED() const;
