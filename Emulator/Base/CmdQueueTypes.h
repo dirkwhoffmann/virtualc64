@@ -14,6 +14,7 @@
 
 #include "Aliases.h"
 #include "Reflection.h"
+#include "JoystickTypes.h"
 
 //
 // Enumerations
@@ -43,6 +44,14 @@ enum_long(CMD_TYPE)
     CMD_KEY_PRESS,
     CMD_KEY_RELEASE,
     CMD_KEY_TOGGLE,
+
+    // Mice
+    CMD_MOUSE_MOVE_ABS,
+    CMD_MOUSE_MOVE_REL,
+    CMD_MOUSE_EVENT,
+
+    // Joysticks
+    CMD_JOY_EVENT,
 
     // Floppy disks
     CMD_DSK_MODIFIED,
@@ -94,6 +103,12 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
             case CMD_KEY_RELEASE:           return "KEY_RELEASE";
             case CMD_KEY_TOGGLE:            return "KEY_TOGGLE";
 
+            case CMD_MOUSE_MOVE_ABS:        return "MOUSE_MOVE_ABS";
+            case CMD_MOUSE_MOVE_REL:        return "MOUSE_MOVE_REL";
+            case CMD_MOUSE_EVENT:           return "MOUSE_EVENT";
+
+            case CMD_JOY_EVENT:             return "JOY_EVENT";
+
             case CMD_DSK_MODIFIED:          return "DSK_MODIFIED";
             case CMD_DSK_UNMODIFIED:        return "DSK_UNMODIFIED";
 
@@ -126,6 +141,21 @@ KeyCmd;
 
 typedef struct
 {
+    isize port;
+    double x;
+    double y;
+}
+CoordCmd;
+
+typedef struct
+{
+    isize port;
+    GamePadAction action;
+}
+GamePadCmd;
+
+typedef struct
+{
     void *tape;
 }
 TapeCmd;
@@ -147,6 +177,8 @@ typedef struct
         
         i64 value;
         KeyCmd key;
+        CoordCmd coord;
+        GamePadCmd action;
         TapeCmd tape;
         AlarmCmd alarm;
     };

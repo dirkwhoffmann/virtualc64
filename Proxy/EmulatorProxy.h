@@ -248,7 +248,9 @@
 
 - (void)send:(CmdType)cmd;
 - (void)send:(CmdType)type value:(NSInteger)value;
-- (void)send:(CmdType)type key:(KeyCmd)keyCmd;
+- (void)send:(CmdType)type key:(KeyCmd)cmd;
+- (void)send:(CmdType)type coord:(CoordCmd)cmd;
+- (void)send:(CmdType)type action:(GamePadCmd)cmd;
 
 @end
 
@@ -574,7 +576,7 @@
 - (void)pressPlay;
 - (void)pressStop;
 - (void)rewind;
-- (void)insertTape:(TAPFileProxy *)tape; // TODO: throw??
+- (void)insertTape:(TAPFileProxy *)tape;
 - (void)ejectTape;
 
 @end
@@ -588,9 +590,6 @@
 
 - (BOOL)detectShakeAbs:(NSPoint)pos;
 - (BOOL)detectShakeRel:(NSPoint)pos;
-- (void)setXY:(NSPoint)pos;
-- (void)setDxDy:(NSPoint)pos;
-- (void) trigger:(GamePadAction)event;
 
 @end
 
@@ -600,8 +599,6 @@
 //
 
 @interface JoystickProxy : CoreComponentProxy { }
-
-- (void) trigger:(GamePadAction)event;
 
 @end
 

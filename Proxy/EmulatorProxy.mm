@@ -1158,21 +1158,6 @@ using namespace vc64;
     return [self mouse]->detectShakeDxDy(pos.x, pos.y);
 }
 
-- (void)setXY:(NSPoint)pos
-{
-    [self mouse]->setXY((double)pos.x, (double)pos.y);
-}
-
-- (void)setDxDy:(NSPoint)pos
-{
-    [self mouse]->setDxDy((double)pos.x, (double)pos.y);
-}
-
-- (void)trigger:(GamePadAction)event
-{
-    [self mouse]->trigger(event);
-}
-
 @end
 
 
@@ -1185,11 +1170,6 @@ using namespace vc64;
 - (VirtualC64::JOYSTICK_API *)joystick
 {
     return (VirtualC64::JOYSTICK_API *)obj;
-}
-
-- (void)trigger:(GamePadAction)event
-{
-    [self joystick]->trigger(event);
 }
 
 @end
@@ -2608,9 +2588,19 @@ using namespace vc64;
     [self emu]->put(type, value);
 }
 
-- (void)send:(CmdType)type key:(KeyCmd)keyCmd
+- (void)send:(CmdType)type key:(KeyCmd)cmd
 {
-    [self emu]->put(type, keyCmd);
+    [self emu]->put(type, cmd);
+}
+
+- (void)send:(CmdType)type coord:(CoordCmd)cmd
+{
+    [self emu]->put(type, cmd);
+}
+
+- (void)send:(CmdType)type action:(GamePadCmd)cmd
+{
+    [self emu]->put(type, cmd);
 }
 
 @end

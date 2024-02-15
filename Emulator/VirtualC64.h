@@ -103,6 +103,8 @@ public:
     void put(const Cmd &cmd);
     void put(CmdType type, i64 payload = 0);
     void put(CmdType type, KeyCmd payload);
+    void put(CmdType type, CoordCmd payload);
+    void put(CmdType type, GamePadCmd payload);
     void put(CmdType type, TapeCmd payload);
     void put(CmdType type, AlarmCmd payload);
 

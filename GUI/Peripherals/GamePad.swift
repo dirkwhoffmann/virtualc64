@@ -444,26 +444,34 @@ class GamePad {
     
     @discardableResult
     func processJoystickEvents(events: [GamePadAction]) -> Bool {
-        
+
         let c64 = manager.parent.c64!
-        
-        if port == 1 { for event in events { c64.port1.joystick.trigger(event) } }
-        if port == 2 { for event in events { c64.port2.joystick.trigger(event) } }
-        
+
+        if port == 1 || port == 2 {
+
+            for event in events {
+                c64.send(.JOY_EVENT, action: GamePadCmd(port: port!, action: event))
+            }
+        }
+
         // Notify other components (if requested)
         if notify { myAppDelegate.devicePulled(events: events) }
 
         return events != []
     }
-    
+
     @discardableResult
     func processMouseEvents(events: [GamePadAction]) -> Bool {
-        
+
         let c64 = manager.parent.c64!
-        
-        if port == 1 { for event in events { c64.port1.mouse.trigger(event) } }
-        if port == 2 { for event in events { c64.port2.mouse.trigger(event) } }
-        
+
+        if port == 1 || port == 2 {
+
+            for event in events {
+                c64.send(.MOUSE_EVENT, action: GamePadCmd(port: port!, action: event))
+            }
+        }
+
         return events != []
     }
     
@@ -474,19 +482,21 @@ class GamePad {
         // Check for a shaking mouse
         c64.port1.mouse.detectShakeRel(delta)
 
-        if port == 1 { c64.port1.mouse.setDxDy(delta) }
-        if port == 2 { c64.port2.mouse.setDxDy(delta) }
+        if port == 1 || port == 2 {
+
+            c64.send(.MOUSE_MOVE_REL, coord: CoordCmd(port: port!, x: delta.x, y: delta.y))
+        }
     }
-        
+
     func processKeyDownEvent(macKey: MacKey) -> Bool {
 
         // Only proceed if a keymap is present
         if keyMap == nil { return false }
-                
+
         // Only proceed if this key is used for emulation
         let events = keyDownEvents(macKey)
         if events.isEmpty { return false }
-                
+
         // Process the events
         processKeyboardEvent(events: events)
         return true
@@ -509,13 +519,14 @@ class GamePad {
     func processKeyboardEvent(events: [GamePadAction]) {
 
         let c64 = manager.parent.c64!
-        
-        if isMouse {
-            if port == 1 { for e in events { c64.port1.mouse.trigger(e) } }
-            if port == 2 { for e in events { c64.port2.mouse.trigger(e) } }
-        } else {
-            if port == 1 { for e in events { c64.port1.joystick.trigger(e) } }
-            if port == 2 { for e in events { c64.port2.joystick.trigger(e) } }
+
+        if port == 1 || port == 2 {
+
+            let type  = isMouse ? CmdType.MOUSE_EVENT : CmdType.JOY_EVENT
+
+            for e in events {
+                c64.send(type, action: GamePadCmd(port: port!, action: e))
+            }
         }
     }
 }

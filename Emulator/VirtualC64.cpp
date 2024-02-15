@@ -124,6 +124,18 @@ VirtualC64::put(CmdType type, KeyCmd payload)
     put( Cmd { .type = type, .key = payload } );
 }
 
+void 
+VirtualC64::put(CmdType type, CoordCmd payload)
+{
+    put( Cmd { .type = type, .coord = payload } );
+}
+
+void
+VirtualC64::put(CmdType type, GamePadCmd payload)
+{
+    put( Cmd { .type = type, .action = payload } );
+}
+
 void
 VirtualC64::put(CmdType type, TapeCmd payload)
 {
