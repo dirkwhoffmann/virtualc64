@@ -20,7 +20,7 @@ class KcsPower : public Cartridge {
 
         .type       = CRT_KCS_POWER,
         .title      = "KCS Power",
-
+        .memory     = 128,
         .buttons    = 1,
         .button1    = "Freeze",
     };

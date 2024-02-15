@@ -15,8 +15,7 @@
 
 KcsPower::KcsPower(C64 &ref) : Cartridge(ref)
 {
-    // Allocate 128 bytes on-board RAM
-    setRamCapacity(0x80);
+
 }
 
 void

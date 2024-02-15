@@ -20,6 +20,7 @@ Reu::Reu(C64 &ref, isize kb) : Cartridge(ref)
         throw VC64Error(ERROR_OPT_INVARG, "128, 256, 512, ..., 16384");
     }
 
+    traits.memory = KB(kb);
     setRamCapacity(KB(kb));
 }
 

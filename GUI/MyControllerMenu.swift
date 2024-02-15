@@ -122,14 +122,14 @@ extension MyController: NSMenuItemValidation {
 
         case #selector(MyController.attachReuAction(_:)):
             item.state = (c64.expansionport.traits.type == .REU &&
-                          c64.expansionport.ramCapacity == item.tag * 1024) ? .on : .off
+                          c64.expansionport.traits.memory == item.tag * 1024) ? .on : .off
 
         case #selector(MyController.attachGeoRamDummyAction(_:)):
             item.state = (c64.expansionport.traits.type == .GEO_RAM) ? .on : .off
 
         case #selector(MyController.attachGeoRamAction(_:)):
             item.state = (c64.expansionport.traits.type == .GEO_RAM &&
-                            c64.expansionport.ramCapacity == item.tag * 1024) ? .on : .off
+                          c64.expansionport.traits.memory == item.tag * 1024) ? .on : .off
 
         case #selector(MyController.attachIsepicAction(_:)):
             item.state = (c64.expansionport.traits.type == .ISEPIC) ? .on : .off

@@ -499,8 +499,6 @@ public:
         void attachIsepicCartridge();
         void detachCartridge();
 
-        isize getRamCapacity() const;
-
     } expansionport;
 
 

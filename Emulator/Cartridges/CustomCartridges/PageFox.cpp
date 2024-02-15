@@ -15,8 +15,7 @@
 
 PageFox::PageFox(C64 &ref) : Cartridge(ref)
 {
-    // Allocate 32KB RAM
-    setRamCapacity(0x8000);
+
 }
 
 void

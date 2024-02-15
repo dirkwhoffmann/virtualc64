@@ -1015,12 +1015,6 @@ VirtualC64::EXP_PORT_API::detachCartridge()
     expansionport.detachCartridge();
 }
 
-isize
-VirtualC64::EXP_PORT_API::getRamCapacity() const
-{
-    return expansionport.getRamCapacity();
-}
-
 bool 
 VirtualC64::IEC_API::isTransferring() const
 {

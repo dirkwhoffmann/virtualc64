@@ -347,24 +347,6 @@ ExpansionPort::detachCartridge()
     }
 }
 
-isize
-ExpansionPort::getRamCapacity() const
-{
-    return cartridge ? cartridge->getRamCapacity() : 0;
-}
-
-isize
-ExpansionPort::numButtons() const
-{
-    return cartridge ? cartridge->numButtons() : 0;
-}
-
-const string
-ExpansionPort::getButtonTitle(isize nr) const
-{
-    return cartridge ? cartridge->getButtonTitle(nr) : nullptr;
-}
-
 void
 ExpansionPort::pressButton(isize nr)
 {
@@ -377,48 +359,6 @@ ExpansionPort::releaseButton(isize nr)
 {
     assert(nr == 1 || nr == 2);
     if (cartridge) cartridge->releaseButton(nr);
-}
-
-isize
-ExpansionPort::getSwitch() const
-{
-    return cartridge ? cartridge->getSwitch() : 0;
-}
-
-bool
-ExpansionPort::switchIsNeutral() const
-{
-    return cartridge ? cartridge->switchIsNeutral() : false;
-}
-
-bool
-ExpansionPort::switchIsLeft() const
-{
-    return cartridge ? cartridge->switchIsLeft() : false;
-}
-
-bool
-ExpansionPort::switchIsRight() const
-{
-    return cartridge ? cartridge->switchIsRight() : false;
-}
-
-const char *
-ExpansionPort::getSwitchDescription(isize pos) const
-{
-    return cartridge ? cartridge->getSwitchDescription(pos) : "";
-}
-
-const char *
-ExpansionPort::getSwitchDescription() const
-{
-    return getSwitchDescription(getSwitch());
-}
-
-bool
-ExpansionPort::validSwitchPosition(isize pos) const
-{
-    return cartridge ? cartridge->validSwitchPosition(pos) : false;
 }
 
 void

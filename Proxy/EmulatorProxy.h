@@ -487,8 +487,6 @@
 - (void)attachIsepicCartridge;
 - (void)detachCartridge;
 
-@property (readonly) NSInteger ramCapacity;
-
 @end
 
 

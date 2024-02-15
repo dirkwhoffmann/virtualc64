@@ -21,6 +21,7 @@ class Expert : public Cartridge {
         .type           = CRT_EXPERT,
         .title          = "Expert",
 
+        .memory         = KB(8),
         .battery        = true,
 
         .buttons        = 2,

@@ -158,56 +158,19 @@ public:
     // Removes a cartridge from the expansion port (if any)
     void detachCartridge();
 
-    
+
     //
-    // Managing on-board RAM
+    // Operating buttons, switches, and LEDs
     //
-    
-    // Returns the size of the on-board RAM in bytes
-    isize getRamCapacity() const;
-        
-    
-    //
-    // Operating buttons
-    //
-    
-    // Returns the number of available cartridge buttons
-    isize numButtons() const;
-    
-    // Returns a textual description for a button
-    const string getButtonTitle(isize nr) const;
-    
+
     // Presses a button (make sure to call releaseButton() afterwards)
     void pressButton(isize nr);
     
     // Releases a button (make sure to call pressButton() before)
     void releaseButton(isize nr);
 
-    
-    //
-    // Operating switches
-    //
-
-    // Returns the current switch position
-    isize getSwitch() const;
-    bool switchIsNeutral() const;
-    bool switchIsLeft() const;
-    bool switchIsRight() const;
-    
-    /* Returns a textual description for a switch position or nullptr if the
-     * switch cannot be positioned this way.
-     */
-    const char *getSwitchDescription(isize pos) const;
-    const char *getSwitchDescription() const;
-    bool validSwitchPosition(isize pos) const;
-    
     // Puts the switch in the provided position
     void setSwitch(isize pos) { if (cartridge) cartridge->setSwitch(pos); }
-
-    
-    //
-    // Operating LEDs
-    //
     
     // Switches the LED on or off
     void setLED(bool value);

@@ -164,6 +164,9 @@ Cartridge::makeWithCRTFile(C64 &c64, CRTFile &file)
 Cartridge::Cartridge(C64 &ref) : SubComponent(ref)
 {
     trace(CRT_DEBUG, "Creating cartridge at address %p...\n", (void *)this);
+
+    // Allocate external memory (if any)
+    setRamCapacity(getTraits().memory);
 }
 
 Cartridge::~Cartridge()
@@ -203,7 +206,7 @@ Cartridge::_reset(bool hard)
     
     // Reset external RAM
     if (externalRam && !getTraits().battery) memset(externalRam, 0xFF, ramCapacity);
- 
+
     // Reset all chip packets
     for (isize i = 0; i < numPackets; i++) packet[i]->_reset(hard);
         
@@ -447,6 +450,7 @@ Cartridge::poke(u16 addr, u8 value)
     if (!c64.getUltimax()) mem.ram[addr] = value;
 }
 
+/*
 isize
 Cartridge::getRamCapacity() const
 {
@@ -457,12 +461,14 @@ Cartridge::getRamCapacity() const
     }
     return ramCapacity;
 }
+*/
 
 void
 Cartridge::setRamCapacity(isize size)
 {
     // Free
-    if (getRamCapacity() > 0) {
+    if (externalRam) {
+
         delete [] externalRam;
         ramCapacity = 0;
         externalRam = nullptr;
@@ -470,6 +476,7 @@ Cartridge::setRamCapacity(isize size)
     
     // Allocate
     if (size > 0) {
+
         externalRam = new u8[size];
         ramCapacity = (u64)size;
         memset(externalRam, 0xFF, size);

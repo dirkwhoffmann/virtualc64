@@ -20,6 +20,8 @@ class PageFox : public Cartridge {
 
         .type       = CRT_PAGEFOX,
         .title      = "Pagefox",
+
+        .memory     = KB(32)
     };
 
     virtual const CartridgeTraits &getTraits() const override { return traits; }

@@ -21,9 +21,6 @@ EasyFlash::EasyFlash(C64 &ref) : Cartridge(ref)
         &flashRomL,
         &flashRomH
     };
-    
-    // Allocate 256 bytes on-board RAM
-    setRamCapacity(256);
 }
 
 void

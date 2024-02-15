@@ -144,7 +144,7 @@ class AtomicPower : public ActionReplay {
 
         .type       = CRT_ATOMIC_POWER,
         .title      = "Atomic Power",
-
+        .memory     = KB(8),
         .buttons    = 2,
         .button1    = "Freeze",
         .button2    = "Reset"

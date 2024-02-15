@@ -124,8 +124,7 @@ ActionReplay3::setControlReg(u8 value)
 
 ActionReplay::ActionReplay(C64 &ref) : Cartridge(ref)
 {
-    // Allocate 8KB on-board memory
-    setRamCapacity(0x2000);
+
 }
 
 void

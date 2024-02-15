@@ -20,7 +20,7 @@ class Isepic : public Cartridge {
 
         .type           = CRT_ISEPIC,
         .title          = "Isepic",
-
+        .memory         = KB(2),
         .switches       = 1,
         .switchLeft     = "Off",
         .switchRight    = "On"

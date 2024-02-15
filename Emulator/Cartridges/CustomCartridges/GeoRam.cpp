@@ -20,7 +20,8 @@ GeoRAM::GeoRAM(C64 &ref, isize kb) : GeoRAM(ref)
         throw VC64Error(ERROR_OPT_INVARG, "64, 128, 256, ..., 4096");
     }
 
-    setRamCapacity(kb * 1024);
+    traits.memory = KB(kb);
+    setRamCapacity(KB(kb));
 }
 
 void

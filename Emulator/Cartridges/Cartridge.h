@@ -299,7 +299,7 @@ public:
     //
     
     // Returns the size of the on-board RAM in bytes
-    isize getRamCapacity() const;
+    isize getRamCapacity() const { return getTraits().memory; }
 
     /* Assigns external RAM to this cartridge. This functions frees any
      * previously assigned RAM and allocates memory of the specified size. The

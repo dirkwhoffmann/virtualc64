@@ -882,11 +882,6 @@ using namespace vc64;
     [self eport]->detachCartridge();
 }
 
-- (NSInteger)ramCapacity
-{
-    return (NSInteger)[self eport]->getRamCapacity();
-}
-
 @end
 
 
