@@ -326,7 +326,7 @@ extension MyDocument {
             }
         }
 
-        let modified = drives.filter { $0.hasModifiedDisk }
+        let modified = drives.filter { $0.info.hasModifiedDisk }
 
         if modified.isEmpty || parent.pref.ejectWithoutAsking {
             return true

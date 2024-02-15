@@ -187,3 +187,22 @@ typedef struct
     u8 ejectVolume;
 }
 DriveConfig;
+
+typedef struct
+{
+    bool hasDisk;
+    bool hasUnprotectedDisk;
+    bool hasProtectedDisk;
+    bool hasUnmodifiedDisk;
+    bool hasModifiedDisk;
+
+    bool redLED;
+    bool greenLED;
+
+    bool spinning;
+    bool writing;
+
+    Halftrack halftrack;
+    HeadPos offset;
+}
+DriveInfo;

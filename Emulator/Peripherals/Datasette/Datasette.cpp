@@ -392,8 +392,6 @@ Datasette::setMotor(bool value)
 void
 Datasette::processCommand(const Cmd &cmd)
 {
-    auto *tape = (TAPFile *)cmd.tape.tape;
-
     switch (cmd.type) {
 
         case CMD_DATASETTE_PLAY:    pressPlay(); break;

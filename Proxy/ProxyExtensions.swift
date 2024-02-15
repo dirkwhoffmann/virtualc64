@@ -302,7 +302,7 @@ public extension DriveProxy {
     }
 
     var icon: NSImage {
-        return hasModifiedDisk ? DriveProxy.diskUnsaved : DriveProxy.diskSaved
+        return info.hasModifiedDisk ? DriveProxy.diskUnsaved : DriveProxy.diskSaved
     }
 }
 

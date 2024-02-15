@@ -139,13 +139,15 @@ extension MyController {
 
         case DRIVE8:
             
-            trackNumber8.integerValue = Int((c64.drive8.halftrack() + 1) / 2)
-            trackNumber8.textColor = c64.drive8.writeMode() ? .red : .secondaryLabelColor
+            let info = c64.drive8.info
+            trackNumber8.integerValue = Int((info.halftrack + 1) / 2)
+            trackNumber8.textColor = info.writing ? .red : .secondaryLabelColor
 
         case DRIVE9:
 
-            trackNumber9.integerValue = Int((c64.drive9.halftrack() + 1) / 2)
-            trackNumber9.textColor = c64.drive9.writeMode() ? .red : .secondaryLabelColor
+            let info = c64.drive9.info
+            trackNumber9.integerValue = Int((info.halftrack + 1) / 2)
+            trackNumber9.textColor = info.writing ? .red : .secondaryLabelColor
 
         default:
             fatalError()
@@ -158,13 +160,15 @@ extension MyController {
 
         case DRIVE8:
 
+            let info = c64.drive8.info
             diskIcon8.image = c64.drive8.icon
-            diskIcon8.isHidden = !c64.drive8.isConnected() || !c64.drive8.hasDisk || !statusBar
+            diskIcon8.isHidden = !c64.drive8.isConnected() || !info.hasDisk || !statusBar
 
         case DRIVE9:
 
+            let info = c64.drive9.info
             diskIcon9.image = c64.drive9.icon
-            diskIcon9.isHidden = !c64.drive9.isConnected() || !c64.drive9.hasDisk || !statusBar
+            diskIcon9.isHidden = !c64.drive9.isConnected() || !info.hasDisk || !statusBar
 
         default:
             fatalError()

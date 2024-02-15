@@ -120,7 +120,7 @@ class DiskExporter: DialogController {
 
     func updateIcon() {
 
-        let wp = drive!.hasProtectedDisk
+        let wp = drive!.info.hasProtectedDisk
 
         switch formatPopup.selectedTag() {
 

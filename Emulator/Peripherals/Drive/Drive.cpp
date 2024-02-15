@@ -61,6 +61,29 @@ Drive::_reset(bool hard)
     needsEmulation = config.connected && config.switchedOn;
 }
 
+DriveInfo
+Drive::getInfo() const
+{
+    DriveInfo result;
+
+    result.hasDisk = hasDisk();
+    result.hasUnprotectedDisk = hasUnprotectedDisk();
+    result.hasProtectedDisk = hasProtectedDisk();
+    result.hasUnmodifiedDisk = hasUnmodifiedDisk();
+    result.hasModifiedDisk = hasModifiedDisk();
+
+    result.greenLED = isPoweredOn();
+    result.redLED = redLED;
+
+    result.spinning = spinning;
+    result.writing = writeMode();
+
+    result.halftrack = halftrack;
+    result.offset = offset;
+    
+    return result;
+}
+
 DriveConfig
 Drive::getDefaultConfig()
 {

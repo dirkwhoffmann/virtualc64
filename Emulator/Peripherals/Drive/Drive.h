@@ -300,6 +300,15 @@ private:
 
     
     //
+    // Analyzing
+    //
+
+public:
+
+    DriveInfo getInfo() const;
+
+
+    //
     // Configuring
     //
     

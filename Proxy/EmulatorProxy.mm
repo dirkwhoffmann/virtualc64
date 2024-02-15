@@ -663,10 +663,12 @@ using namespace vc64;
     return (VirtualC64::IEC_API *)obj;
 }
 
+/*
 - (BOOL)transferring
 {
     return [self iec]->isTransferring();
 }
+*/
 
 @end
 
@@ -1036,9 +1038,14 @@ using namespace vc64;
     return [self drive]->getDeviceNr();
 }
 
-- (DriveConfig)getConfig
+- (DriveConfig)config
 {
     return [self drive]->getConfig();
+}
+
+- (DriveInfo)info
+{
+    return [self drive]->getInfo();
 }
 
 - (BOOL)isConnected
@@ -1051,6 +1058,7 @@ using namespace vc64;
     return [self drive]->drive.getConfigItem(OPT_DRV_POWER_SWITCH) != 0;
 }
 
+/*
 - (BOOL)readMode
 {
     return [self drive]->readMode();
@@ -1060,12 +1068,14 @@ using namespace vc64;
 {
     return [self drive]->writeMode();
 }
+*/
 
 - (BOOL)redLED
 {
     return [self drive]->getRedLED();
 }
 
+/*
 - (BOOL)hasDisk
 {
     return [self drive]->hasDisk();
@@ -1090,6 +1100,7 @@ using namespace vc64;
 {
     return [self drive]->hasUnprotectedDisk();
 }
+*/
 
 - (void)setModificationFlag:(BOOL)value
 {
@@ -1136,16 +1147,19 @@ using namespace vc64;
     [self drive]->ejectDisk();
 }
 
+/*
 - (Track)track
 {
     return [self drive]->getTrack();
 }
+*/
 
 - (Halftrack)halftrack
 {
     return [self drive]->getHalftrack();
 }
 
+/*
 - (NSInteger)sizeOfHalftrack:(Halftrack)ht
 {
     return [self drive]->sizeOfHalftrack(ht);
@@ -1165,6 +1179,7 @@ using namespace vc64;
 {
     return [self drive]->readBitFromHead();
 }
+*/
 
 - (BOOL)isRotating
 {

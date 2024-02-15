@@ -80,20 +80,20 @@ extension MyController: NSMenuItemValidation {
             #selector(MyController.exportDiskAction(_:)),
             #selector(MyController.inspectDiskAction(_:)),
             #selector(MyController.inspectVolumeAction(_:)):
-            return drive.hasDisk
-            
+            return drive.info.hasDisk
+
         case #selector(MyController.exportRecentDiskDummyAction8(_:)):
-            return c64.drive8.hasDisk
-            
+            return c64.drive8.info.hasDisk
+
         case #selector(MyController.exportRecentDiskDummyAction9(_:)):
-            return c64.drive9.hasDisk
-                        
+            return c64.drive9.info.hasDisk
+
         case #selector(MyController.exportRecentDiskAction(_:)):
             return validateURLlist(mm.exportedFloppyDisks[driveID], image: smallDisk)
             
         case #selector(MyController.writeProtectAction(_:)):
-            item.state = drive.hasProtectedDisk ? .on : .off
-            return drive.hasDisk
+            item.state = drive.info.hasProtectedDisk ? .on : .off
+            return drive.info.hasDisk
             
         case #selector(MyController.drivePowerAction(_:)):
             item.title = drive.isSwitchedOn() ? "Switch off" : "Switch on"

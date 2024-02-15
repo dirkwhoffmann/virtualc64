@@ -498,8 +498,6 @@
 
 @interface IECProxy : CoreComponentProxy { }
 
-@property (readonly) BOOL transferring;
-
 @end
 
 
@@ -515,19 +513,22 @@
 @property (readonly) DiskProxy *disk;
 @property (readonly) NSInteger id;
 
-- (DriveConfig)getConfig;
+@property (readonly) DriveConfig config;
+@property (readonly) DriveInfo info;
 
 - (BOOL)isConnected;
 - (BOOL)isSwitchedOn;
 
-- (BOOL)readMode;
-- (BOOL)writeMode;
+// - (BOOL)readMode;
+// - (BOOL)writeMode;
 
+/*
 @property (readonly) BOOL hasDisk;
 @property (readonly) BOOL hasModifiedDisk;
 @property (readonly) BOOL hasProtectedDisk;
 @property (readonly) BOOL hasUnmodifiedDisk;
 @property (readonly) BOOL hasUnprotectedDisk;
+*/
 
 - (BOOL)redLED;
 - (void)setModificationFlag:(BOOL)value;
@@ -540,12 +541,14 @@
 - (void)insertFileSystem:(FileSystemProxy *)proxy protected:(BOOL)wp;
 - (void)ejectDisk;
 
-- (Track)track;
+// - (Track)track;
 - (Halftrack)halftrack;
+/*
 - (NSInteger)sizeOfHalftrack:(Halftrack)ht;
 - (NSInteger)sizeOfCurrentHalftrack;
 - (NSInteger)offset;
 - (u8)readBitFromHead;
+*/
 
 - (BOOL)isRotating;
 

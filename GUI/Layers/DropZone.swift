@@ -62,9 +62,11 @@ class DropZone: Layer {
     
         let connected8 = c64.drive8.isConnected()
         let connected9 = c64.drive9.isConnected()
+        let info8 = c64.drive8.info
+        let info9 = c64.drive9.info
 
-        inUse[0] = c64.drive8.hasDisk
-        inUse[1] = c64.drive9.hasDisk
+        inUse[0] = info8.hasDisk
+        inUse[1] = info9.hasDisk
         inUse[2] = false
         inUse[3] = c64.expansionport.cartridgeAttached()
         inUse[4] = c64.datasette.info.hasTape

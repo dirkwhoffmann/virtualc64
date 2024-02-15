@@ -515,8 +515,6 @@ public:
 
         using API::API;
 
-        bool isTransferring() const;
-
     } iec;
 
 
@@ -546,6 +544,8 @@ public:
 
         DISK_API disk;
 
+        DriveInfo getInfo() const;
+
         bool hasDisk() const;
         bool hasPartiallyRemovedDisk() const;
         bool hasProtectedDisk() const;
@@ -564,10 +564,12 @@ public:
         bool writeMode() const;
 
         Halftrack getHalftrack() const;
+        /*
         Track getTrack() const;
         isize sizeOfHalftrack(Halftrack ht);
         isize sizeOfCurrentHalftrack();
         HeadPos getOffset() const;
+        */
 
         void insertNewDisk(DOSType fstype, PETName<16> name);
         void insertD64(const D64File &d64, bool wp);
@@ -576,7 +578,7 @@ public:
         void insertFileSystem(const class FileSystem &device, bool wp);
         void ejectDisk();
 
-        u8 readBitFromHead() const;
+        // u8 readBitFromHead() const;
 
     } drive8, drive9;
 

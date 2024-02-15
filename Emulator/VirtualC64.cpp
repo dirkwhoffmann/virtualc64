@@ -1027,12 +1027,6 @@ VirtualC64::EXP_PORT_API::detachCartridge()
     expansionport.detachCartridge();
 }
 
-bool 
-VirtualC64::IEC_API::isTransferring() const
-{
-    return iec.isTransferring();
-}
-
 bool
 VirtualC64::DISK_API::isWriteProtected() const
 {
@@ -1056,6 +1050,12 @@ void VirtualC64::DISK_API::toggleWriteProtection()
 //
 // Drive
 //
+
+DriveInfo 
+VirtualC64::DRIVE_API::getInfo() const
+{
+    return drive.getInfo();
+}
 
 bool
 VirtualC64::DRIVE_API::hasDisk() const
@@ -1167,6 +1167,7 @@ VirtualC64::DRIVE_API::getHalftrack() const
     return drive.getHalftrack();
 }
 
+/*
 Track
 VirtualC64::DRIVE_API::getTrack() const
 {
@@ -1190,8 +1191,9 @@ VirtualC64::DRIVE_API::getOffset() const
 {
     return drive.getOffset();
 }
+*/
 
-void 
+void
 VirtualC64::DRIVE_API::insertNewDisk(DOSType fstype, PETName<16> name)
 {
     drive.insertNewDisk(fstype, name);
@@ -1227,8 +1229,10 @@ VirtualC64::DRIVE_API::ejectDisk()
     drive.ejectDisk();
 }
 
-u8 
+/*
+u8
 VirtualC64::DRIVE_API::readBitFromHead() const
 {
     return drive.readBitFromHead();
 }
+*/
