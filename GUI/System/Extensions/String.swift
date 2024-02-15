@@ -10,7 +10,16 @@
 import Carbon.HIToolbox
 
 extension String {
-    
+
+    init?(charptr: UnsafePointer<CChar>?) {
+
+        if charptr == nil {
+            return nil
+        } else {
+            self.init(cString: charptr!)
+        }
+    }
+
     init?(keyCode: UInt16, carbonFlags: Int) {
         
         let source = TISCopyCurrentASCIICapableKeyboardLayoutInputSource().takeUnretainedValue()

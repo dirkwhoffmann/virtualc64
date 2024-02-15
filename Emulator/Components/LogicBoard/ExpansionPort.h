@@ -217,10 +217,7 @@ public:
     //
     // Operating LEDs
     //
-    
-    // Returns true if the cartridge has a LED
-    bool hasLED() const;
-    
+
     // Returns true if the LED is switched on
     bool getLED() const;
     

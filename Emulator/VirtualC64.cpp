@@ -1088,12 +1088,6 @@ VirtualC64::EXP_PORT_API::switchIsRight() const
 }
 
 const char *
-VirtualC64::EXP_PORT_API::getSwitchDescription(isize pos) const
-{
-    return expansionport.getSwitchDescription(pos);
-}
-
-const char *
 VirtualC64::EXP_PORT_API::getSwitchDescription() const
 {
     return expansionport.getSwitchDescription();
@@ -1111,13 +1105,7 @@ VirtualC64::EXP_PORT_API::setSwitch(isize pos)
     return expansionport.setSwitch(pos);
 }
 
-bool 
-VirtualC64::EXP_PORT_API::hasLED() const
-{
-    return expansionport.hasLED();
-}
-
-bool 
+bool
 VirtualC64::EXP_PORT_API::getLED() const
 {
     return expansionport.getLED();

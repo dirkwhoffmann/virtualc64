@@ -479,21 +479,17 @@
 - (CartridgeRomInfo)getRomInfo:(NSInteger)nr;
 
 - (BOOL)cartridgeAttached;
-// - (CartridgeType)cartridgeType;
 - (void)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex;
 - (void)attachReuCartridge:(NSInteger)capacity;
 - (void)attachGeoRamCartridge:(NSInteger)capacity;
 - (void)attachIsepicCartridge;
 - (void)detachCartridgeAndReset;
 
-- (NSInteger)numButtons;
-- (NSString *)getButtonTitle:(NSInteger)nr;
 - (void)pressButton:(NSInteger)nr;
 - (void)releaseButton:(NSInteger)nr;
 
 @property (readonly) BOOL hasSwitch;
 - (NSInteger)switchPosition;
-- (NSString *)switchDescription:(NSInteger)pos;
 - (NSString *)currentSwitchDescription;
 - (BOOL)validSwitchPosition:(NSInteger)pos;
 - (BOOL)switchIsNeutral;
@@ -501,7 +497,7 @@
 - (BOOL)switchIsRight;
 - (void)setSwitchPosition:(NSInteger)pos;
 
-- (BOOL)hasLed;
+// - (BOOL)hasLed;
 - (BOOL)led;
 
 @property (readonly) NSInteger ramCapacity;

@@ -141,7 +141,7 @@ extension MyController: NSMenuItemValidation {
 
         case #selector(MyController.attachIsepicAction(_:)):
             item.state = (c64.expansionport.traits.type == .ISEPIC) ? .on : .off
-            
+
         case #selector(MyController.detachCartridgeAction(_:)):
             return c64.expansionport.cartridgeAttached()
 
@@ -149,39 +149,39 @@ extension MyController: NSMenuItemValidation {
             return c64.expansionport.cartridgeAttached()
 
         case #selector(MyController.pressButtonDummyAction(_:)):
-            return c64.expansionport.numButtons() > 0
-            
+            return c64.expansionport.traits.button1 != nil
+
         case #selector(MyController.pressCartridgeButton1Action(_:)):
-            let title = c64.expansionport.getButtonTitle(1)!
-            item.title = title
-            item.isHidden = title == ""
-            return title != ""
-            
+            let title = String(charptr: c64.expansionport.traits.button1)
+            item.title = title ?? ""
+            item.isHidden = title == nil
+            return title != nil
+
         case #selector(MyController.pressCartridgeButton2Action(_:)):
-            let title = c64.expansionport.getButtonTitle(2)!
-            item.title = title
-            item.isHidden = title == ""
-            return title != ""
-            
+            let title = String(charptr: c64.expansionport.traits.button2)
+            item.title = title ?? ""
+            item.isHidden = title == nil
+            return title != nil
+
         case #selector(MyController.setSwitchDummyAction(_:)):
             return c64.expansionport.hasSwitch
             
         case #selector(MyController.setSwitchNeutralAction(_:)):
-            let title = c64.expansionport.switchDescription(0)
+            let title = String(charptr: c64.expansionport.traits.switchNeutral)
             item.title = title ?? ""
             item.isHidden = title == nil
             item.state = c64.expansionport.switchIsNeutral() ? .on : .off
             return title != nil
             
         case #selector(MyController.setSwitchLeftAction(_:)):
-            let title = c64.expansionport.switchDescription(-1)
+            let title = String(charptr: c64.expansionport.traits.switchLeft)
             item.title = title ?? ""
             item.isHidden = title == nil
             item.state = c64.expansionport.switchIsLeft() ? .on : .off
             return title != nil
             
         case #selector(MyController.setSwitchRightAction(_:)):
-            let title = c64.expansionport.switchDescription(1)
+            let title = String(charptr: c64.expansionport.traits.switchRight)
             item.title = title ?? ""
             item.isHidden = title == nil
             item.state = c64.expansionport.switchIsRight() ? .on : .off

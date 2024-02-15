@@ -448,12 +448,6 @@ ExpansionPort::validSwitchPosition(isize pos) const
 }
 
 bool
-ExpansionPort::hasLED() const
-{
-    return cartridge ? cartridge->hasLED() : false;
-}
-
-bool
 ExpansionPort::getLED() const
 {
     return cartridge ? cartridge->getLED() : false;

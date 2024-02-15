@@ -252,7 +252,7 @@ extension MyController {
             if inspector?.window?.isVisible == true { inspector!.continuousRefresh() }
 
             // Update the cartridge LED
-            if c64.expansionport.hasLed() {
+            if c64.expansionport.traits.led != nil {
                 let led = c64.expansionport.led() ? 1 : 0
                 if crtIcon.tag != led {
                     crtIcon.tag = led

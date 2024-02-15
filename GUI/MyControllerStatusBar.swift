@@ -40,7 +40,7 @@ extension MyController {
     var cartridgeSwitch: NSImage? {
         
         if !c64.expansionport.hasSwitch { return nil }
-        
+
         let pos = c64.expansionport.switchPosition()
         
         if pos < 0 { return NSImage(named: "crtSwitchLeftTemplate") }

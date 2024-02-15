@@ -831,13 +831,6 @@ using namespace vc64;
     return (VirtualC64::EXP_PORT_API *)obj;
 }
 
-/*
-- (CartridgeType)cartridgeType
-{
-    return [self eport]->getCartridgeType();
-}
-*/
-
 - (CartridgeTraits)traits
 {
     return [self eport]->getTraits();
@@ -884,16 +877,6 @@ using namespace vc64;
     [self eport]->detachCartridgeAndReset();
 }
 
-- (NSInteger)numButtons
-{
-    return [self eport]->numButtons();
-}
-
-- (NSString *)getButtonTitle:(NSInteger)nr
-{
-    return @([self eport]->getButtonTitle((unsigned)nr).c_str());
-}
-
 - (void)pressButton:(NSInteger)nr
 {
     [self eport]->pressButton((unsigned)nr);
@@ -912,11 +895,6 @@ using namespace vc64;
 - (NSInteger)switchPosition
 {
     return [self eport]->getSwitch();
-}
-
-- (NSString *)switchDescription:(NSInteger)pos
-{
-    return @([self eport]->getSwitchDescription(pos));
 }
 
 - (NSString *)currentSwitchDescription
@@ -947,11 +925,6 @@ using namespace vc64;
 - (void)setSwitchPosition:(NSInteger)pos
 {
     [self eport]->setSwitch(pos);
-}
-
-- (BOOL)hasLed
-{
-    return [self eport]->hasLED();
 }
 
 - (BOOL)led

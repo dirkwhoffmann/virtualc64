@@ -511,11 +511,9 @@ public:
         bool switchIsNeutral() const;
         bool switchIsLeft() const;
         bool switchIsRight() const;
-        const char *getSwitchDescription(isize pos) const;
         const char *getSwitchDescription() const;
         bool validSwitchPosition(isize pos) const;
         void setSwitch(isize pos);
-        bool hasLED() const;
         bool getLED() const;
         void setLED(bool value);
         isize getRamCapacity() const;
