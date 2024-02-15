@@ -21,6 +21,7 @@ class GameKiller : public Cartridge {
         .type       = CRT_GAME_KILLER,
         .title      = "Game Killer",
 
+        .buttons    = 1,
         .button1    = "Freeze"
     };
 

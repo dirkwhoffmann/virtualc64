@@ -272,8 +272,8 @@ ExpansionPort::attachCartridge(Cartridge *c)
         cartridge->reset(true);
         
         msgQueue.put(MSG_CRT_ATTACHED, 1);
-        if (cartridge->hasSwitch()) msgQueue.put(MSG_CART_SWITCH);
-        
+        if (cartridge->getTraits().switches) msgQueue.put(MSG_CART_SWITCH);
+
         debug(EXP_DEBUG, "Cartridge attached to expansion port");
         
     }
@@ -389,12 +389,6 @@ ExpansionPort::releaseButton(isize nr)
 {
     assert(nr == 1 || nr == 2);
     if (cartridge) cartridge->releaseButton(nr);
-}
-
-bool
-ExpansionPort::hasSwitch() const
-{
-    return cartridge ? cartridge->hasSwitch() : false;
 }
 
 isize

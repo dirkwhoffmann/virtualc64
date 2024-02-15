@@ -18,11 +18,17 @@ class Expert : public Cartridge {
    
     CartridgeTraits traits = {
 
-        .type       = CRT_EXPERT,
-        .title      = "Expert",
+        .type           = CRT_EXPERT,
+        .title          = "Expert",
 
-        .button1    = "Reset",
-        .button2    = "ESM"
+        .buttons        = 2,
+        .button1        = "Reset",
+        .button2        = "ESM",
+
+        .switches       = 1,
+        .switchLeft     = "Prg",
+        .switchNeutral  = "Off",
+        .switchRight    = "On"
     };
 
     virtual const CartridgeTraits &getTraits() const override { return traits; }
@@ -107,7 +113,6 @@ private:
     // Operating switches
     //
     
-    bool hasSwitch() const override { return true; }
     const char *getSwitchDescription(isize pos) const override;
     bool switchInPrgPosition() const { return switchIsLeft(); }
     bool switchInOffPosition() const { return switchIsNeutral(); }

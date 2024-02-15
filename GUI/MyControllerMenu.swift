@@ -149,7 +149,7 @@ extension MyController: NSMenuItemValidation {
             return c64.expansionport.cartridgeAttached()
 
         case #selector(MyController.pressButtonDummyAction(_:)):
-            return c64.expansionport.traits.button1 != nil
+            return c64.expansionport.traits.buttons > 0
 
         case #selector(MyController.pressCartridgeButton1Action(_:)):
             let title = String(charptr: c64.expansionport.traits.button1)
@@ -164,7 +164,7 @@ extension MyController: NSMenuItemValidation {
             return title != nil
 
         case #selector(MyController.setSwitchDummyAction(_:)):
-            return c64.expansionport.hasSwitch
+            return c64.expansionport.traits.switches > 0
             
         case #selector(MyController.setSwitchNeutralAction(_:)):
             let title = String(charptr: c64.expansionport.traits.switchNeutral)

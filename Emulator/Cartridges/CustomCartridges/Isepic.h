@@ -21,6 +21,7 @@ class Isepic : public Cartridge {
         .type           = CRT_ISEPIC,
         .title          = "Isepic",
 
+        .switches       = 1,
         .switchLeft     = "Off",
         .switchRight    = "On"
     };
@@ -99,7 +100,6 @@ private:
     // Operating switches
     //
     
-    bool hasSwitch() const override { return true; }
     const char *getSwitchDescription(isize pos) const override;
     void setSwitch(isize pos) override;
     bool switchInOffPosition() const { return switchIsLeft(); }

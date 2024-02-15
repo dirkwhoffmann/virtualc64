@@ -21,6 +21,7 @@ class FinalIII : public Cartridge {
         .type       = CRT_FINAL_III,
         .title      = "Final Cartridge III",
 
+        .buttons    = 2,
         .button1    = "Freeze",
         .button2    = "Reset"
     };

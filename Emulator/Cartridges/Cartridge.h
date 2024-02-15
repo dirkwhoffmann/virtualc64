@@ -346,9 +346,6 @@ public:
     // Operating switches
     //
     
-    // Returns true if the cartridge has a switch
-    virtual bool hasSwitch() const { return false; }
-
     // Returns the current switch position
     virtual isize getSwitch() const { return switchPos; }
     bool switchIsNeutral() const { return getSwitch() == 0; }
@@ -371,7 +368,7 @@ public:
     //
     
     // Returns true if the cartridge has a LED
-    bool hasLED() const { return traits.led; }
+    // bool hasLED() const { return traits.led; }
 
     // Switches the LED on or off
     virtual void setLED(bool value) { led = value; }

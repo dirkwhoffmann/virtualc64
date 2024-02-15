@@ -973,19 +973,7 @@ VirtualC64::EXP_PORT_API::getRomInfo(isize nr) const
     return expansionport.getRomInfo(nr);
 }
 
-CartridgeType 
-VirtualC64::EXP_PORT_API::getCartridgeType() const
-{
-    return expansionport.getCartridgeType();
-}
-
-bool 
-VirtualC64::EXP_PORT_API::getCartridgeAttached() const
-{
-    return expansionport.getCartridgeAttached();
-}
-
-void 
+void
 VirtualC64::EXP_PORT_API::attachCartridge(const string &path, bool reset)
 {
     expansionport.attachCartridge(path, reset);
@@ -1027,85 +1015,7 @@ VirtualC64::EXP_PORT_API::detachCartridge()
     expansionport.detachCartridge();
 }
 
-isize 
-VirtualC64::EXP_PORT_API::numButtons() const
-{
-    return expansionport.numButtons();
-}
-
-const 
-string VirtualC64::EXP_PORT_API::getButtonTitle(isize nr) const
-{
-    return expansionport.getButtonTitle(nr);
-}
-
-void 
-VirtualC64::EXP_PORT_API::pressButton(isize nr)
-{
-    return expansionport.pressButton(nr);
-}
-
-void 
-VirtualC64::EXP_PORT_API::releaseButton(isize nr)
-{
-    return expansionport.releaseButton(nr);
-}
-
-bool 
-VirtualC64::EXP_PORT_API::hasSwitch() const
-{
-    return expansionport.hasSwitch();
-}
-
-isize 
-VirtualC64::EXP_PORT_API::getSwitch() const
-{
-    return expansionport.getSwitch();
-}
-
-bool 
-VirtualC64::EXP_PORT_API::switchIsNeutral() const
-{
-    return expansionport.switchIsNeutral();
-}
-
-bool 
-VirtualC64::EXP_PORT_API::switchIsLeft() const
-{
-    return expansionport.switchIsLeft();
-}
-
-bool 
-VirtualC64::EXP_PORT_API::switchIsRight() const
-{
-    return expansionport.switchIsRight();
-}
-
-const char *
-VirtualC64::EXP_PORT_API::getSwitchDescription() const
-{
-    return expansionport.getSwitchDescription();
-}
-
-bool 
-VirtualC64::EXP_PORT_API::validSwitchPosition(isize pos) const
-{
-    return expansionport.validSwitchPosition(pos);
-}
-
-void 
-VirtualC64::EXP_PORT_API::setSwitch(isize pos)
-{
-    return expansionport.setSwitch(pos);
-}
-
-void 
-VirtualC64::EXP_PORT_API::setLED(bool value)
-{
-    return expansionport.setLED(value);
-}
-
-isize 
+isize
 VirtualC64::EXP_PORT_API::getRamCapacity() const
 {
     return expansionport.getRamCapacity();
@@ -1120,7 +1030,7 @@ VirtualC64::EXP_PORT_API::hasBattery() const
 void 
 VirtualC64::EXP_PORT_API::setBattery(bool value)
 {
-    expansionport.setLED(value);
+    expansionport.setBattery(value);
 }
 
 bool 

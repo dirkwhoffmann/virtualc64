@@ -487,11 +487,6 @@
 - (void)attachIsepicCartridge;
 - (void)detachCartridge;
 
-@property (readonly) BOOL hasSwitch;
-- (NSInteger)switchPosition;
-- (NSString *)currentSwitchDescription;
-- (BOOL)validSwitchPosition:(NSInteger)pos;
-
 @property (readonly) NSInteger ramCapacity;
 
 - (BOOL)hasBattery;

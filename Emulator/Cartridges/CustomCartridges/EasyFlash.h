@@ -21,8 +21,7 @@ class EasyFlash : public Cartridge {
 
         .type       = CRT_EASYFLASH,
         .title      = "EasyFlash",
-
-        .led        = "LED"
+        .leds        = 1
     };
 
     virtual const CartridgeTraits &getTraits() const override { return traits; }

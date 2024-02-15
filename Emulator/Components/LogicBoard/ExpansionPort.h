@@ -193,10 +193,7 @@ public:
     //
     // Operating switches
     //
-    
-    // Returns true if the cartridge has a switch
-    bool hasSwitch() const;
-    
+
     // Returns the current switch position
     isize getSwitch() const;
     bool switchIsNeutral() const;

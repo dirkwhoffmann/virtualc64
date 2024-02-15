@@ -21,6 +21,7 @@ class FreezeFrame : public Cartridge {
         .type       = CRT_FREEZE_FRAME,
         .title      = "Freeze Frame",
 
+        .buttons    = 1,
         .button1    = "Freeze"
     };
 

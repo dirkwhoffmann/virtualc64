@@ -25,6 +25,7 @@ class ActionReplay3 : public Cartridge {
         .type       = CRT_ACTION_REPLAY3,
         .title      = "Action Replay 3",
 
+        .buttons    = 2,
         .button1    = "Freeze",
         .button2    = "Reset"
     };
@@ -80,6 +81,7 @@ class ActionReplay : public Cartridge {
         .type       = CRT_ACTION_REPLAY,
         .title      = "Action Replay",
 
+        .buttons    = 2,
         .button1    = "Freeze",
         .button2    = "Reset"
     };
@@ -143,6 +145,7 @@ class AtomicPower : public ActionReplay {
         .type       = CRT_ATOMIC_POWER,
         .title      = "Atomic Power",
 
+        .buttons    = 2,
         .button1    = "Freeze",
         .button2    = "Reset"
     };

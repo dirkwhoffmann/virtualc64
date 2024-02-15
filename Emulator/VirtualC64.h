@@ -491,29 +491,14 @@ public:
         CartridgeInfo getInfo() const;
         CartridgeRomInfo getRomInfo(isize nr) const;
 
-        CartridgeType getCartridgeType() const;
-        bool getCartridgeAttached() const;
         void attachCartridge(const string &path, bool reset = true);
         void attachCartridge(CRTFile *c, bool reset = true);
         void attachCartridge(Cartridge *c);
         void attachReu(isize capacity);
         void attachGeoRam(isize capacity);
         void attachIsepicCartridge();
-
         void detachCartridge();
-        isize numButtons() const;
-        const string getButtonTitle(isize nr) const;
-        void pressButton(isize nr);
-        void releaseButton(isize nr);
-        bool hasSwitch() const;
-        isize getSwitch() const;
-        bool switchIsNeutral() const;
-        bool switchIsLeft() const;
-        bool switchIsRight() const;
-        const char *getSwitchDescription() const;
-        bool validSwitchPosition(isize pos) const;
-        void setSwitch(isize pos);
-        void setLED(bool value);
+
         isize getRamCapacity() const;
         bool hasBattery() const;
         void setBattery(bool value);

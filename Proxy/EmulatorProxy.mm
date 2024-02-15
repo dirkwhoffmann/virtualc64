@@ -853,7 +853,7 @@ using namespace vc64;
 
 - (BOOL)cartridgeAttached
 {
-    return [self eport]->getCartridgeAttached();
+    return [self eport]->getTraits().type != CRT_NONE;
 }
  
 - (void)attachCartridge:(CRTFileProxy *)c reset:(BOOL)reset exception:(ExceptionWrapper *)ex
@@ -880,26 +880,6 @@ using namespace vc64;
 - (void)detachCartridge
 {
     [self eport]->detachCartridge();
-}
-
-- (BOOL)hasSwitch
-{
-    return [self eport]->hasSwitch();
-}
-
-- (NSInteger)switchPosition
-{
-    return [self eport]->getSwitch();
-}
-
-- (NSString *)currentSwitchDescription
-{
-    return @([self eport]->getSwitchDescription());
-}
-
-- (BOOL)validSwitchPosition:(NSInteger)pos
-{
-    return [self eport]->validSwitchPosition(pos);
 }
 
 - (NSInteger)ramCapacity

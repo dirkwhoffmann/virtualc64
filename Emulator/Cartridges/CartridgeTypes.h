@@ -262,12 +262,16 @@ typedef struct
     CartridgeType type;
     const char *title;
 
+    isize buttons;
     const char *button1;
     const char *button2;
+
+    isize switches;
     const char *switchLeft;
     const char *switchNeutral;
     const char *switchRight;
-    const char *led;
+
+    isize leds;
 }
 CartridgeTraits;
 
@@ -280,13 +284,6 @@ typedef struct
     isize numPackets;
     isize switchPos;
     bool led;
-    /*
-    const char *button1;
-    const char *button2;
-    const char *switchLeft;
-    const char *switchNeutral;
-    const char *switchRight;
-    */
 }
 CartridgeInfo;
 

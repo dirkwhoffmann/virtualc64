@@ -39,13 +39,14 @@ extension MyController {
 
     var cartridgeSwitch: NSImage? {
         
-        if !c64.expansionport.hasSwitch { return nil }
+        if c64.expansionport.traits.switches > 0 {
 
-        let pos = c64.expansionport.switchPosition()
-        
-        if pos < 0 { return NSImage(named: "crtSwitchLeftTemplate") }
-        if pos > 0 { return NSImage(named: "crtSwitchRightTemplate") }
-        return NSImage(named: "crtSwitchNeutralTemplate")
+            let pos = c64.expansionport.info.switchPos
+            if pos < 0 { return NSImage(named: "crtSwitchLeftTemplate") }
+            if pos == 0 { return NSImage(named: "crtSwitchNeutralTemplate") }
+            if pos > 0 { return NSImage(named: "crtSwitchRightTemplate") }
+        }
+        return nil
     }
     
     public func refreshStatusBar() {
