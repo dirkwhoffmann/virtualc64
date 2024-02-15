@@ -14,6 +14,7 @@
 
 #include "DriveTypes.h"
 #include "C64Types.h"
+#include "CmdQueueTypes.h"
 #include "SubComponent.h"
 #include "CPU.h"
 #include "Disk.h"
@@ -488,10 +489,13 @@ public:
     
 
     //
-    // Processing events
+    // Processing commands and events
     //
 
 public:
+
+    // Processes a datasette command
+    void processCommand(const Cmd &cmd);
 
     // Initiates the disk change procedure
     void scheduleFirstDiskChangeEvent(EventID id);

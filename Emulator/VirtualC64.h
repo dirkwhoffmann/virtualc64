@@ -544,45 +544,17 @@ public:
 
         DISK_API disk;
 
+        const DriveConfig &getConfig() const;
         DriveInfo getInfo() const;
 
-        bool hasDisk() const;
-        bool hasPartiallyRemovedDisk() const;
-        bool hasProtectedDisk() const;
-        bool hasModifiedDisk() const;
-        bool hasUnmodifiedDisk() const;
-        bool hasUnprotectedDisk() const;
-        void setModificationFlag(bool value);
-        void markDiskAsModified();
-        void markDiskAsUnmodified();
-
-        isize getDeviceNr() const;
-        bool getRedLED() const;
-        bool isRotating() const;
-        const DriveConfig &getConfig() const;
-        bool readMode() const;
-        bool writeMode() const;
-
-        Halftrack getHalftrack() const;
-        /*
-        Track getTrack() const;
-        isize sizeOfHalftrack(Halftrack ht);
-        isize sizeOfCurrentHalftrack();
-        HeadPos getOffset() const;
-        */
-
-        void insertNewDisk(DOSType fstype, PETName<16> name);
+        void insertBlankDisk(DOSType fstype, PETName<16> name);
         void insertD64(const D64File &d64, bool wp);
         void insertG64(const G64File &g64, bool wp);
         void insertCollection(AnyCollection &archive, bool wp) throws;
         void insertFileSystem(const class FileSystem &device, bool wp);
         void ejectDisk();
 
-        // u8 readBitFromHead() const;
-
     } drive8, drive9;
-
-
 
 
     //

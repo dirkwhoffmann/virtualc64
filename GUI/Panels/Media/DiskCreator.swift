@@ -96,7 +96,7 @@ class DiskCreator: DialogController {
 
     @IBAction func insertAction(_ sender: Any!) {
 
-        drive?.insertNewDisk(dos, name: name)
+        drive?.insertBlankDisk(dos, name: name)
         parent.mm.clearRecentlyExportedDiskURLs(drive: nr)
         hideSheet()
     }

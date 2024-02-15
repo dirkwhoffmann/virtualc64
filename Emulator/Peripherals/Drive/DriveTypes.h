@@ -190,6 +190,8 @@ DriveConfig;
 
 typedef struct
 {
+    isize id;
+    
     bool hasDisk;
     bool hasUnprotectedDisk;
     bool hasProtectedDisk;

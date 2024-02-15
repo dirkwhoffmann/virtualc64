@@ -1051,150 +1051,20 @@ void VirtualC64::DISK_API::toggleWriteProtection()
 // Drive
 //
 
-DriveInfo 
-VirtualC64::DRIVE_API::getInfo() const
-{
-    return drive.getInfo();
-}
-
-bool
-VirtualC64::DRIVE_API::hasDisk() const
-{
-    return drive.hasDisk();
-}
-
-bool 
-VirtualC64::DRIVE_API::hasPartiallyRemovedDisk() const
-{
-    return drive.hasPartiallyRemovedDisk();
-}
-
-bool 
-VirtualC64::DRIVE_API::hasProtectedDisk() const
-{
-    return drive.hasProtectedDisk();
-}
-
-bool 
-VirtualC64::DRIVE_API::hasModifiedDisk() const
-{
-    return drive.hasModifiedDisk();
-}
-
-bool 
-VirtualC64::DRIVE_API::hasUnmodifiedDisk() const
-{
-    return drive.hasUnmodifiedDisk();
-}
-
-bool 
-VirtualC64::DRIVE_API::hasUnprotectedDisk() const
-{
-    return drive.hasUnprotectedDisk();
-}
-
-void 
-VirtualC64::DRIVE_API::setModificationFlag(bool value)
-{
-    drive.setModificationFlag(value);
-}
-
-void 
-VirtualC64::DRIVE_API::markDiskAsModified()
-{
-    drive.markDiskAsModified();
-}
-
-void 
-VirtualC64::DRIVE_API::markDiskAsUnmodified()
-{
-    drive.markDiskAsUnmodified();
-}
-
-/*
-bool
-VirtualC64::DRIVE_API::isModified() const
-{
-    return drive.isModified();
-}
-
-void 
-VirtualC64::DRIVE_API::setModified(bool b)
-{
-    drive.setModified(b);
-}
-*/
-
-isize
-VirtualC64::DRIVE_API::getDeviceNr() const
-{
-    return drive.getDeviceNr();
-}
-
-bool 
-VirtualC64::DRIVE_API::getRedLED() const
-{
-    return drive.getRedLED();
-}
-
-bool 
-VirtualC64::DRIVE_API::isRotating() const
-{
-    return drive.isRotating();
-}
-
 const DriveConfig &
 VirtualC64::DRIVE_API::getConfig() const
 {
     return drive.getConfig();
 }
 
-bool
-VirtualC64::DRIVE_API::readMode() const
+DriveInfo
+VirtualC64::DRIVE_API::getInfo() const
 {
-    return drive.readMode();
+    return drive.getInfo();
 }
-
-bool
-VirtualC64::DRIVE_API::writeMode() const
-{
-    return drive.writeMode();
-}
-
-Halftrack 
-VirtualC64::DRIVE_API::getHalftrack() const
-{
-    return drive.getHalftrack();
-}
-
-/*
-Track
-VirtualC64::DRIVE_API::getTrack() const
-{
-    return drive.getTrack();
-}
-
-isize
-VirtualC64::DRIVE_API::sizeOfHalftrack(Halftrack ht)
-{
-    return drive.sizeOfHalftrack(ht);
-}
-
-isize
-VirtualC64::DRIVE_API::sizeOfCurrentHalftrack()
-{
-    return drive.sizeOfCurrentHalftrack();
-}
-
-HeadPos
-VirtualC64::DRIVE_API::getOffset() const
-{
-    return drive.getOffset();
-}
-*/
 
 void
-VirtualC64::DRIVE_API::insertNewDisk(DOSType fstype, PETName<16> name)
+VirtualC64::DRIVE_API::insertBlankDisk(DOSType fstype, PETName<16> name)
 {
     drive.insertNewDisk(fstype, name);
 }

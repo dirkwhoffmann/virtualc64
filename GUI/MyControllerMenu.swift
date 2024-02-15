@@ -96,7 +96,7 @@ extension MyController: NSMenuItemValidation {
             return drive.info.hasDisk
             
         case #selector(MyController.drivePowerAction(_:)):
-            item.title = drive.isSwitchedOn() ? "Switch off" : "Switch on"
+            item.title = drive.config.switchedOn ? "Switch off" : "Switch on"
             return true
             
         // Tape menu
@@ -596,9 +596,9 @@ extension MyController: NSMenuItemValidation {
         if !proceedWithUnsavedFloppyDisk(drive: drive) { return }
 
         let panel = DiskCreator(with: self, nibName: "DiskCreator")
-        panel?.showSheet(forDrive: drive.id)
+        panel?.showSheet(forDrive: drive.info.id)
 
-        mm.clearRecentlyExportedDiskURLs(drive: drive.id)
+        mm.clearRecentlyExportedDiskURLs(drive: drive.info.id)
     }
     
     @IBAction func insertDiskAction(_ sender: NSMenuItem!) {

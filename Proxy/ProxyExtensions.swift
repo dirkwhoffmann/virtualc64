@@ -294,11 +294,11 @@ public extension DriveProxy {
     static let diskUnsaved = NSImage(named: "diskUnsavedTemplate")!
         
     var greenLedImage: NSImage {        
-        return isSwitchedOn() ? DriveProxy.ledGreen : DriveProxy.ledGray
+        return config.switchedOn ? DriveProxy.ledGreen : DriveProxy.ledGray
     }
     
     var redLedImage: NSImage {
-        return redLED() ? DriveProxy.ledRed : DriveProxy.ledGray
+        return info.redLED ? DriveProxy.ledRed : DriveProxy.ledGray
     }
 
     var icon: NSImage {

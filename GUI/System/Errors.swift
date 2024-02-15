@@ -316,7 +316,7 @@ extension MyDocument {
 
         func name(drive: DriveProxy) -> String {
 
-            switch drive.id {
+            switch drive.info.id {
 
             case DRIVE8: return "Drive 8"
             case DRIVE9: return "Drive 9"

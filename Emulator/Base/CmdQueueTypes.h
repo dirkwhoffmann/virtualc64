@@ -44,6 +44,10 @@ enum_long(CMD_TYPE)
     CMD_KEY_RELEASE,
     CMD_KEY_TOGGLE,
 
+    // Floppy disks
+    CMD_DSK_MODIFIED,
+    CMD_DSK_UNMODIFIED,
+
     // Datasette
     CMD_DATASETTE_PLAY,
     CMD_DATASETTE_STOP,
@@ -89,6 +93,9 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
             case CMD_KEY_PRESS:             return "KEY_PRESS";
             case CMD_KEY_RELEASE:           return "KEY_RELEASE";
             case CMD_KEY_TOGGLE:            return "KEY_TOGGLE";
+
+            case CMD_DSK_MODIFIED:          return "DSK_MODIFIED";
+            case CMD_DSK_UNMODIFIED:        return "DSK_UNMODIFIED";
 
             case CMD_DATASETTE_PLAY:        return "DATASETTE_PLAY";
             case CMD_DATASETTE_STOP:        return "DATASETTE_STOP";

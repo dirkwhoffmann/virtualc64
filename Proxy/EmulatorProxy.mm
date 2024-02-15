@@ -1015,9 +1015,9 @@ using namespace vc64;
 
 @implementation DriveProxy
 
-- (instancetype)initWithVC1541:(VirtualC64::DRIVE_API *)drive
+- (instancetype)initWithVC1541:(VirtualC64::DRIVE_API *)drive emu:(VirtualC64 *)emuref
 {
-    if ([self initWith:drive]) {
+    if ([self initWith:drive emu:emuref]) {
         disk = [[DiskProxy alloc] initWith:drive];
     }
     return self;
@@ -1028,15 +1028,22 @@ using namespace vc64;
     return (VirtualC64::DRIVE_API *)obj;
 }
 
-- (DiskProxy *)disk
+- (VirtualC64 *)emu
 {
-    return [self drive]->hasDisk() ? disk : NULL;
+    return (VirtualC64 *)emu;
 }
 
+- (DiskProxy *)disk
+{
+    return [self drive]->getInfo().hasDisk ? disk : NULL;
+}
+
+/*
 - (NSInteger)id
 {
     return [self drive]->getDeviceNr();
 }
+*/
 
 - (DriveConfig)config
 {
@@ -1046,75 +1053,6 @@ using namespace vc64;
 - (DriveInfo)info
 {
     return [self drive]->getInfo();
-}
-
-- (BOOL)isConnected
-{
-    return [self drive]->drive.getConfigItem(OPT_DRV_CONNECT) != 0;
-}
-
-- (BOOL)isSwitchedOn
-{
-    return [self drive]->drive.getConfigItem(OPT_DRV_POWER_SWITCH) != 0;
-}
-
-/*
-- (BOOL)readMode
-{
-    return [self drive]->readMode();
-}
-
-- (BOOL)writeMode
-{
-    return [self drive]->writeMode();
-}
-*/
-
-- (BOOL)redLED
-{
-    return [self drive]->getRedLED();
-}
-
-/*
-- (BOOL)hasDisk
-{
-    return [self drive]->hasDisk();
-}
-
-- (BOOL)hasModifiedDisk
-{
-    return [self drive]->hasModifiedDisk();
-}
-
-- (BOOL)hasProtectedDisk
-{
-    return [self drive]->hasProtectedDisk();
-}
-
-- (BOOL)hasUnmodifiedDisk
-{
-    return [self drive]->hasUnmodifiedDisk();
-}
-
-- (BOOL)hasUnprotectedDisk
-{
-    return [self drive]->hasUnprotectedDisk();
-}
-*/
-
-- (void)setModificationFlag:(BOOL)value
-{
-    [self drive]->setModificationFlag(value);
-}
-
-- (void)markDiskAsModified
-{
-    [self drive]->markDiskAsModified();
-}
-
-- (void)markDiskAsUnmodified
-{
-    [self drive]->markDiskAsUnmodified();
 }
 
 - (void)insertD64:(D64FileProxy *)proxy protected:(BOOL)wp
@@ -1137,53 +1075,14 @@ using namespace vc64;
     [self drive]->insertFileSystem(*(FileSystem *)proxy->obj, wp);
 }
 
-- (void)insertNewDisk:(DOSType)fsType name:(NSString *)name
+- (void)insertBlankDisk:(DOSType)fsType name:(NSString *)name
 {
-    [self drive]->insertNewDisk(fsType, PETName<16>([name UTF8String]));
+    [self drive]->insertBlankDisk(fsType, PETName<16>([name UTF8String]));
 }
 
 - (void)ejectDisk
 {
     [self drive]->ejectDisk();
-}
-
-/*
-- (Track)track
-{
-    return [self drive]->getTrack();
-}
-*/
-
-- (Halftrack)halftrack
-{
-    return [self drive]->getHalftrack();
-}
-
-/*
-- (NSInteger)sizeOfHalftrack:(Halftrack)ht
-{
-    return [self drive]->sizeOfHalftrack(ht);
-}
-
-- (NSInteger)sizeOfCurrentHalftrack
-{
-    return [self drive]->sizeOfCurrentHalftrack();
-}
-
-- (NSInteger)offset
-{
-    return [self drive]->getOffset();
-}
-
-- (u8)readBitFromHead
-{
-    return [self drive]->readBitFromHead();
-}
-*/
-
-- (BOOL)isRotating
-{
-    return [self drive]->isRotating();
 }
 
 @end
@@ -2296,8 +2195,8 @@ using namespace vc64;
     cpu = [[CPUProxy alloc] initWith:&emu->cpu];
     datasette = [[DatasetteProxy alloc] initWith:&emu->datasette emu:emu];
     dmaDebugger = [[DmaDebuggerProxy alloc] initWith:&emu->dmaDebugger];
-    drive8 = [[DriveProxy alloc] initWithVC1541:&emu->drive8];
-    drive9 = [[DriveProxy alloc] initWithVC1541:&emu->drive9];
+    drive8 = [[DriveProxy alloc] initWithVC1541:&emu->drive8 emu:emu];
+    drive9 = [[DriveProxy alloc] initWithVC1541:&emu->drive9 emu:emu];
     expansionport = [[ExpansionPortProxy alloc] initWith:&emu->expansionport emu:emu];
     iec = [[IECProxy alloc] initWith:&emu->iec];
     keyboard = [[KeyboardProxy alloc] initWith:&emu->keyboard emu:emu];

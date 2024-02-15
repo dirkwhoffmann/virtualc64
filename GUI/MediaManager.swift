@@ -362,7 +362,7 @@ class MediaManager {
         let drive = c64.drive(id)
         try export(disk: drive.disk, to: url)
 
-        drive.markDiskAsUnmodified()
+        c64.send(.DSK_MODIFIED, value: id)
     }
 
     func export(disk: DiskProxy, to url: URL) throws {

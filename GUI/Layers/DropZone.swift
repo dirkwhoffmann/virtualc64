@@ -60,10 +60,11 @@ class DropZone: Layer {
     
     private func setType(_ type: FileType) {
     
-        let connected8 = c64.drive8.isConnected()
-        let connected9 = c64.drive9.isConnected()
         let info8 = c64.drive8.info
+        let config8 = c64.drive8.config
+
         let info9 = c64.drive9.info
+        let config9 = c64.drive9.config
 
         inUse[0] = info8.hasDisk
         inUse[1] = info9.hasDisk
@@ -74,10 +75,10 @@ class DropZone: Layer {
         switch type {
 
         case .T64, .P00, .PRG:
-            enabled = [connected8, connected9, true, false, false]
+            enabled = [config8.connected, config9.connected, true, false, false]
 
         case .FOLDER, .D64, .G64:
-            enabled = [connected8, connected9, false, false, false]
+            enabled = [config8.connected, config9.connected, false, false, false]
 
         case .CRT:
             enabled = [false, false, false, true, false]

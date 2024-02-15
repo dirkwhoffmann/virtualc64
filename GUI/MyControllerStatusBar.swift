@@ -52,16 +52,18 @@ extension MyController {
     public func refreshStatusBar() {
 
         let dsstate = c64.datasette.info
-
+        
         let c64state = c64.info
         let running = c64state.running
         let tracking = c64state.tracking
         let warping = c64state.warping
 
-        let connected8 = c64.drive8.isConnected()
-        let connected9 = c64.drive9.isConnected()
-        let on8 = c64.drive8.isSwitchedOn()
-        let on9 = c64.drive9.isSwitchedOn()
+        let config8 = c64.drive8.config
+        let config9 = c64.drive9.config
+        let connected8 = config8.connected
+        let connected9 = config9.connected
+        let on8 = config8.switchedOn
+        let on9 = config9.switchedOn
 
         let hasCrt = c64.expansionport.cartridgeAttached()
 
@@ -161,14 +163,16 @@ extension MyController {
         case DRIVE8:
 
             let info = c64.drive8.info
+            let config = c64.drive8.config
             diskIcon8.image = c64.drive8.icon
-            diskIcon8.isHidden = !c64.drive8.isConnected() || !info.hasDisk || !statusBar
+            diskIcon8.isHidden = !config.connected || !info.hasDisk || !statusBar
 
         case DRIVE9:
 
             let info = c64.drive9.info
+            let config = c64.drive9.config
             diskIcon9.image = c64.drive9.icon
-            diskIcon9.isHidden = !c64.drive9.isConnected() || !info.hasDisk || !statusBar
+            diskIcon9.isHidden = !config.connected || !info.hasDisk || !statusBar
 
         default:
             fatalError()
@@ -187,7 +191,7 @@ extension MyController {
 
         case DRIVE8:
 
-            if c64.drive8.isRotating() {
+            if c64.drive8.info.spinning {
                 spinning8.startAnimation(self)
                 spinning8.isHidden = !statusBar
             } else {
@@ -197,7 +201,7 @@ extension MyController {
 
         case DRIVE9:
 
-            if c64.drive9.isRotating() {
+            if c64.drive9.info.spinning {
                 spinning9.startAnimation(self)
                 spinning9.isHidden = !statusBar
             } else {

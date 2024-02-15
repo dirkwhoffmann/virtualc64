@@ -505,52 +505,21 @@
 // Drive
 //
 
-@interface DriveProxy : CoreComponentProxy {
-    
+@interface DriveProxy : SubComponentProxy {
+
     DiskProxy *disk;
 }
 
 @property (readonly) DiskProxy *disk;
-@property (readonly) NSInteger id;
-
 @property (readonly) DriveConfig config;
 @property (readonly) DriveInfo info;
 
-- (BOOL)isConnected;
-- (BOOL)isSwitchedOn;
-
-// - (BOOL)readMode;
-// - (BOOL)writeMode;
-
-/*
-@property (readonly) BOOL hasDisk;
-@property (readonly) BOOL hasModifiedDisk;
-@property (readonly) BOOL hasProtectedDisk;
-@property (readonly) BOOL hasUnmodifiedDisk;
-@property (readonly) BOOL hasUnprotectedDisk;
-*/
-
-- (BOOL)redLED;
-- (void)setModificationFlag:(BOOL)value;
-- (void)markDiskAsModified;
-- (void)markDiskAsUnmodified;
-- (void)insertNewDisk:(DOSType)fstype name:(NSString *)name;
+- (void)insertBlankDisk:(DOSType)fstype name:(NSString *)name;
 - (void)insertD64:(D64FileProxy *)proxy protected:(BOOL)wp;
 - (void)insertG64:(G64FileProxy *)proxy protected:(BOOL)wp;
 - (void)insertCollection:(AnyCollectionProxy *)proxy protected:(BOOL)wp;
 - (void)insertFileSystem:(FileSystemProxy *)proxy protected:(BOOL)wp;
 - (void)ejectDisk;
-
-// - (Track)track;
-- (Halftrack)halftrack;
-/*
-- (NSInteger)sizeOfHalftrack:(Halftrack)ht;
-- (NSInteger)sizeOfCurrentHalftrack;
-- (NSInteger)offset;
-- (u8)readBitFromHead;
-*/
-
-- (BOOL)isRotating;
 
 @end
 

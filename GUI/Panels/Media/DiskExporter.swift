@@ -249,9 +249,9 @@ class DiskExporter: DialogController {
                 fatalError()
             }
 
-            drive.markDiskAsUnmodified()
+            c64.send(.DSK_UNMODIFIED, value: drive.info.id)
             if rememberUrl {
-                mm.noteNewRecentlyExportedDiskURL(url, drive: drive.id)
+                mm.noteNewRecentlyExportedDiskURL(url, drive: drive.info.id)
             }
 
         } catch {

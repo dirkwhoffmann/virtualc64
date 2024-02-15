@@ -66,6 +66,8 @@ Drive::getInfo() const
 {
     DriveInfo result;
 
+    result.id = deviceNr;
+    
     result.hasDisk = hasDisk();
     result.hasUnprotectedDisk = hasUnprotectedDisk();
     result.hasProtectedDisk = hasProtectedDisk();
@@ -908,6 +910,19 @@ Drive::vsyncHandler()
             needsEmulation = false;
             msgQueue.put(MSG_DRIVE_POWER_SAVE_ON, deviceNr);
         }
+    }
+}
+
+void
+Drive::processCommand(const Cmd &cmd)
+{
+    switch (cmd.type) {
+
+        case CMD_DSK_MODIFIED:      markDiskAsModified(); break;
+        case CMD_DSK_UNMODIFIED:    markDiskAsUnmodified(); break;
+
+        default:
+            fatalError;
     }
 }
 
