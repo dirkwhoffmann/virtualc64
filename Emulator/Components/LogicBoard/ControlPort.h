@@ -13,6 +13,7 @@
 #pragma once
 
 #include "ControlPortTypes.h"
+#include "CmdQueueTypes.h"
 #include "SubComponent.h"
 #include "Joystick.h"
 #include "Mouse.h"
@@ -97,6 +98,16 @@ public:
     // Reads the pot bits that show up in the SID registers
     u8 readPotX() const;
     u8 readPotY() const;
+
+
+    //
+    // Processing commands and events
+    //
+
+public:
+
+    // Processes a datasette command
+    void processCommand(const Cmd &cmd);
 };
 
 }

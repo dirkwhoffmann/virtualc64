@@ -528,10 +528,6 @@ public:
 
         Drive &drive;
         DISK_API(Emulator &emu, Drive& drive) : API(emu), drive(drive) { }
-
-        bool isWriteProtected() const;
-        void setWriteProtection(bool b);
-        void toggleWriteProtection();
     };
 
 

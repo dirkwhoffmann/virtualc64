@@ -1039,25 +1039,6 @@ VirtualC64::EXP_PORT_API::detachCartridge()
     expansionport.detachCartridge();
 }
 
-bool
-VirtualC64::DISK_API::isWriteProtected() const
-{
-    Disk *disk = drive.disk.get();
-    return disk ? false: disk->isWriteProtected();
-}
-
-void 
-VirtualC64::DISK_API::setWriteProtection(bool b) 
-{
-    Disk *disk = drive.disk.get();
-    if (disk) disk->setWriteProtection(b);
-}
-
-void VirtualC64::DISK_API::toggleWriteProtection()
-{
-    Disk *disk = drive.disk.get();
-    if (disk) disk->toggleWriteProtection();
-}
 
 //
 // Drive

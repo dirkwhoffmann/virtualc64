@@ -816,39 +816,25 @@ Emulator::update()
                 break;
 
             case CMD_MOUSE_MOVE_ABS:
-
-                assert(cmd.coord.port == PORT_1 || cmd.coord.port == PORT_2);
-
-                cmd.coord.port == PORT_1 ?
-                _c64.port1.mouse.setXY(cmd.coord.x, cmd.coord.y) :
-                _c64.port2.mouse.setXY(cmd.coord.x, cmd.coord.y) ;
-                break;
-
             case CMD_MOUSE_MOVE_REL:
 
-                assert(cmd.coord.port == PORT_1 || cmd.coord.port == PORT_2);
+                switch (cmd.coord.port) {
 
-                cmd.coord.port == PORT_1 ?
-                _c64.port1.mouse.setDxDy(cmd.coord.x, cmd.coord.y) :
-                _c64.port2.mouse.setDxDy(cmd.coord.x, cmd.coord.y) ;
+                    case PORT_1: _c64.port1.processCommand(cmd); break;
+                    case PORT_2: _c64.port2.processCommand(cmd); break;
+                    default: fatalError;
+                }
                 break;
 
             case CMD_MOUSE_EVENT:
-
-                assert(cmd.coord.port == PORT_1 || cmd.coord.port == PORT_2);
-
-                cmd.coord.port == PORT_1 ?
-                _c64.port1.mouse.trigger(cmd.action.action) :
-                _c64.port2.mouse.trigger(cmd.action.action) ;
-                break;
-
             case CMD_JOY_EVENT:
 
-                assert(cmd.coord.port == PORT_1 || cmd.coord.port == PORT_2);
+                switch (cmd.action.port) {
 
-                cmd.coord.port == PORT_1 ?
-                _c64.port1.joystick.trigger(cmd.action.action) :
-                _c64.port2.joystick.trigger(cmd.action.action) ;
+                    case PORT_1: _c64.port1.processCommand(cmd); break;
+                    case PORT_2: _c64.port2.processCommand(cmd); break;
+                    default: fatalError;
+                }
                 break;
 
             case CMD_DATASETTE_PLAY:

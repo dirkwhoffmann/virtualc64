@@ -102,4 +102,19 @@ ControlPort::readPotY() const
     return 0xFF;
 }
 
+void
+ControlPort::processCommand(const Cmd &cmd)
+{
+    switch (cmd.type) {
+
+        case CMD_MOUSE_MOVE_ABS:    mouse.setXY(cmd.coord.x, cmd.coord.y); break;
+        case CMD_MOUSE_MOVE_REL:    mouse.setDxDy(cmd.coord.x, cmd.coord.y); break;
+        case CMD_MOUSE_EVENT:       mouse.trigger(cmd.action.action); break;
+        case CMD_JOY_EVENT:         joystick.trigger(cmd.action.action); break;
+
+        default:
+            fatalError;
+    }
+}
+
 }
