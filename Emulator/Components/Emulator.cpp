@@ -805,6 +805,16 @@ Emulator::update()
                 _c64.keyboard.processCommand(cmd);
                 break;
 
+            case CMD_DSK_TOGGLE_WP:
+
+                switch (cmd.value) {
+
+                    case DRIVE8: _c64.drive8.processCommand(cmd); break;
+                    case DRIVE9: _c64.drive9.processCommand(cmd); break;
+                    default: fatalError;
+                }
+                break;
+
             case CMD_MOUSE_MOVE_ABS:
 
                 assert(cmd.coord.port == PORT_1 || cmd.coord.port == PORT_2);

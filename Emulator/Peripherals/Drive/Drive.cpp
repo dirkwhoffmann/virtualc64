@@ -918,6 +918,11 @@ Drive::processCommand(const Cmd &cmd)
 {
     switch (cmd.type) {
 
+            /*
+        case CMD_DSK_PROTECT:       if (disk) disk->setWriteProtection(true); break;
+        case CMD_DSK_UNPROTECT:     if (disk) disk->setWriteProtection(false); break;
+             */
+        case CMD_DSK_TOGGLE_WP:     if (disk) disk->toggleWriteProtection(); break;
         case CMD_DSK_MODIFIED:      markDiskAsModified(); break;
         case CMD_DSK_UNMODIFIED:    markDiskAsUnmodified(); break;
 

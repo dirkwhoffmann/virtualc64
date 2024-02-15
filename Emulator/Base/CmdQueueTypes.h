@@ -54,6 +54,11 @@ enum_long(CMD_TYPE)
     CMD_JOY_EVENT,
 
     // Floppy disks
+    /*
+    CMD_DSK_PROTECT,
+    CMD_DSK_UNPROTECT,
+    */
+    CMD_DSK_TOGGLE_WP,
     CMD_DSK_MODIFIED,
     CMD_DSK_UNMODIFIED,
 
@@ -109,6 +114,11 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
 
             case CMD_JOY_EVENT:             return "JOY_EVENT";
 
+                /*
+            case CMD_DSK_PROTECT:           return "DSK_PROTECT";
+            case CMD_DSK_UNPROTECT:         return "DSK_UNPROTECT";
+                 */
+            case CMD_DSK_TOGGLE_WP:         return "DSK_TOGGLE_WP";
             case CMD_DSK_MODIFIED:          return "DSK_MODIFIED";
             case CMD_DSK_UNMODIFIED:        return "DSK_UNMODIFIED";
 

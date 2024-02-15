@@ -900,22 +900,7 @@ using namespace vc64;
 
 - (VirtualC64::DISK_API *)disk
 {
-    return &[self drive]->disk; // .get();
-}
-
-- (BOOL)writeProtected
-{
-    return [self disk] ? [self disk]->isWriteProtected() : false;
-}
-
-- (void)setWriteProtected:(BOOL)b
-{
-    if ([self disk]) { [self disk]->setWriteProtection(b); }
-}
-
-- (void)toggleWriteProtection
-{
-    if ([self disk]) { [self disk]->toggleWriteProtection(); }
+    return &[self drive]->disk;
 }
 
 @end

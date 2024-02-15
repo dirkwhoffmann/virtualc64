@@ -532,10 +532,6 @@
 
 @interface DiskProxy : CoreComponentProxy { }
     
-- (BOOL)writeProtected;
-- (void)setWriteProtected:(BOOL)b;
-- (void)toggleWriteProtection;
-
 @end
 
 

@@ -766,14 +766,8 @@ extension MyController: NSMenuItemValidation {
 
     func writeProtectAction(drive nr: Int) {
 
-        switch nr {
-
-        case DRIVE8: c64.drive8.disk.toggleWriteProtection()
-        case DRIVE9: c64.drive9.disk.toggleWriteProtection()
-
-        default:
-            fatalError()
-        }
+        precondition(nr == DRIVE8 || nr == DRIVE9)
+        c64.send(.DSK_TOGGLE_WP, value: nr)
     }
 
     @IBAction func drivePowerAction(_ sender: NSMenuItem!) {
