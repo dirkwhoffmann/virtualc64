@@ -15,17 +15,16 @@
 #include "Cartridge.h"
 
 class GameKiller : public Cartridge {
-    
-    virtual CartridgeTraits traits() const override {
 
-        return CartridgeTraits {
+    CartridgeTraits traits = {
 
-            .type       = CRT_GAME_KILLER,
-            .title      = "Game Killer",
+        .type       = CRT_GAME_KILLER,
+        .title      = "Game Killer",
 
-            .button1    = "Freeze"
-        };
-    }
+        .button1    = "Freeze"
+    };
+
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
     

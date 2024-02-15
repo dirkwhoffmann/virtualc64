@@ -16,14 +16,13 @@
 
 class Epyx : public Cartridge {
     
-    virtual CartridgeTraits traits() const override {
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type       = CRT_EPYX_FASTLOAD,
+        .title      = "Epyx Fastload"
+    };
 
-            .type       = CRT_EPYX_FASTLOAD,
-            .title      = "Epyx Fastload",
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
     // Indicates when the capacitor discharges. The Epyx cartridge utilizes a
     // capacitor to switch the ROM on and off. During normal operation, the

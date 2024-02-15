@@ -16,14 +16,13 @@
 
 class Reu : public Cartridge {
 
-    virtual CartridgeTraits traits() const override {
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type       = CRT_REU,
+        .title      = "REU",
+    };
 
-            .type       = CRT_REU,
-            .title      = "REU",
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 private:
 

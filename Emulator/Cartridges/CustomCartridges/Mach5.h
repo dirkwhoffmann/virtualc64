@@ -16,14 +16,13 @@
 
 class Mach5 : public Cartridge {
 
-    virtual CartridgeTraits traits() const override {
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type       = CRT_MACH5,
+        .title      = "Mach5",
+    };
 
-            .type       = CRT_MACH5,
-            .title      = "Mach5",
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
 

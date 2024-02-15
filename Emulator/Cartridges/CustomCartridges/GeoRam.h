@@ -16,14 +16,13 @@
 
 class GeoRAM : public Cartridge {
     
-    virtual CartridgeTraits traits() const override {
+    CartridgeTraits traits = {
+ 
+        .type       = CRT_GEO_RAM,
+        .title      = "GeoRam",
+    };
 
-        return CartridgeTraits {
-
-            .type       = CRT_GEO_RAM,
-            .title      = "GeoRam",
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 private:
     

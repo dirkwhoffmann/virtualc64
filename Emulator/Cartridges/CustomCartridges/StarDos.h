@@ -16,14 +16,13 @@
 
 class StarDos : public Cartridge {
         
-    virtual CartridgeTraits traits() const override {
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type       = CRT_STARDOS,
+        .title      = "StarDOS",
+    };
 
-            .type       = CRT_STARDOS,
-            .title      = "StarDOS",
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
     i64 voltage = 5000000;
     i64 latestVoltageUpdate = 0;

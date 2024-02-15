@@ -16,14 +16,13 @@
 
 class Dinamic : public Cartridge {
 
-    virtual CartridgeTraits traits() const override {
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type       = CRT_DINAMIC,
+        .title      = "Dinamic",
+    };
 
-            .type       = CRT_DINAMIC,
-            .title      = "Dinamic",
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
     

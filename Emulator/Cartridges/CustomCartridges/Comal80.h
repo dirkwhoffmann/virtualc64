@@ -16,14 +16,13 @@
 
 class Comal80 : public Cartridge {
        
-    virtual CartridgeTraits traits() const override {
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type       = CRT_COMAL80,
+        .title      = "Comal 80",
+    };
 
-            .type       = CRT_COMAL80,
-            .title      = "Comal 80",
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
 

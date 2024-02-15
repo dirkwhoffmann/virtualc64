@@ -15,15 +15,14 @@
 #include "Cartridge.h"
 
 class WarpSpeed : public Cartridge {
-    
-    virtual CartridgeTraits traits() const override {
+  
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type       = CRT_WARPSPEED,
+        .title      = "WarpSpeed",
+    };
 
-            .type       = CRT_WARPSPEED,
-            .title      = "WarpSpeed",
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
     

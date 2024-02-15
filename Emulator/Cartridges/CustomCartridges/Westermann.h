@@ -16,14 +16,13 @@
 
 class Westermann : public Cartridge {
     
-    virtual CartridgeTraits traits() const override {
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type       = CRT_WESTERMANN,
+        .title      = "Westermann",
+    };
 
-            .type       = CRT_WESTERMANN,
-            .title      = "Westermann",
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
     

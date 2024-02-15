@@ -96,7 +96,7 @@ private:
     
 public:
 
-    CartridgeTraits getTraits() const;
+    const CartridgeTraits &getTraits() const;
     CartridgeInfo getInfo() const;
     CartridgeRomInfo getRomInfo(isize nr) const;
 

@@ -15,18 +15,17 @@
 #include "Cartridge.h"
 
 class Expert : public Cartridge {
-    
-    virtual CartridgeTraits traits() const override {
+   
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type       = CRT_EXPERT,
+        .title      = "Expert",
 
-            .type       = CRT_EXPERT,
-            .title      = "Expert",
+        .button1    = "Reset",
+        .button2    = "ESM"
+    };
 
-            .button1    = "Reset",
-            .button2    = "ESM"
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
     
     // Flipflop deciding whether the cartridge is enabled or disabled
     bool active = false;

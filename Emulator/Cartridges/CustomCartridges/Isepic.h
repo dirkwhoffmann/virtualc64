@@ -16,17 +16,16 @@
 
 class Isepic : public Cartridge {
     
-    virtual CartridgeTraits traits() const override {
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type           = CRT_ISEPIC,
+        .title          = "Isepic",
 
-            .type           = CRT_ISEPIC,
-            .title          = "Isepic",
+        .switchLeft     = "Off",
+        .switchRight    = "On"
+    };
 
-            .switchLeft     = "Off",
-            .switchRight    = "On"
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
     // Selected page inside the selected RAM bank
     isize page;

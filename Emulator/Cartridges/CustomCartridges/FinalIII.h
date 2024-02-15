@@ -16,18 +16,17 @@
 
 class FinalIII : public Cartridge {
     
-    virtual CartridgeTraits traits() const override {
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type       = CRT_FINAL_III,
+        .title      = "Final Cartridge III",
 
-            .type       = CRT_FINAL_III,
-            .title      = "Final Cartridge III",
+        .button1    = "Freeze",
+        .button2    = "Reset"
+    };
 
-            .button1    = "Freeze",
-            .button2    = "Reset"
-        };
-    }
-    
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
+
     // Indicates whether the freeze button is pressed
     bool freeezeButtonIsPressed = false;
     

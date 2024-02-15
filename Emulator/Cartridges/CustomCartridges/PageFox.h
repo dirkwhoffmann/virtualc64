@@ -16,14 +16,14 @@
 
 class PageFox : public Cartridge {
     
-    virtual CartridgeTraits traits() const override {
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type       = CRT_PAGEFOX,
+        .title      = "Pagefox",
+    };
 
-            .type       = CRT_PAGEFOX,
-            .title      = "Pagefox",
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
+
 
     /* The cartridge has a single control register which can be accessed in
      * the $DE80 - $DEFF memory range.

@@ -15,15 +15,14 @@
 #include "Cartridge.h"
 
 class StructuredBasic : public Cartridge {
+     
+    CartridgeTraits traits = {
         
-    virtual CartridgeTraits traits() const override {
-
-        return CartridgeTraits {
-
-            .type       = CRT_STRUCTURED_BASIC,
-            .title      = "Structured Basic",
-        };
-    }
+        .type       = CRT_STRUCTURED_BASIC,
+        .title      = "Structured Basic",
+    };
+    
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
     

@@ -15,17 +15,16 @@
 #include "Cartridge.h"
 
 class KcsPower : public Cartridge {
-    
-    virtual CartridgeTraits traits() const override {
 
-        return CartridgeTraits {
+    CartridgeTraits traits = {
 
-            .type       = CRT_KCS_POWER,
-            .title      = "KCS Power",
+        .type       = CRT_KCS_POWER,
+        .title      = "KCS Power",
 
-            .button1    = "Freeze",
-        };
-    }
+        .button1    = "Freeze",
+    };
+
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
     

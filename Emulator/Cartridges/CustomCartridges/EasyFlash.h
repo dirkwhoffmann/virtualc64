@@ -17,16 +17,15 @@
 
 class EasyFlash : public Cartridge {
     
-    virtual CartridgeTraits traits() const override {
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type       = CRT_EASYFLASH,
+        .title      = "EasyFlash",
 
-            .type       = CRT_EASYFLASH,
-            .title      = "EasyFlash",
+        .led        = "LED"
+    };
 
-            .led        = "LED"
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
     // Flash Rom mapping to ROML ($8000 - $9FFF)
     FlashRom flashRomL = FlashRom(c64);

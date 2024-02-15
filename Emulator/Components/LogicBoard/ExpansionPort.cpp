@@ -111,10 +111,12 @@ ExpansionPort::_dump(Category category, std::ostream& os) const
     }
 }
 
-CartridgeTraits
+const CartridgeTraits &
 ExpansionPort::getTraits() const
 {
-    return cartridge ? cartridge->traits() : CartridgeTraits { .type = CRT_NONE };
+    static CartridgeTraits none = CartridgeTraits { .type = CRT_NONE };
+
+    return cartridge ? cartridge->getTraits() : none;
 }
 
 CartridgeInfo

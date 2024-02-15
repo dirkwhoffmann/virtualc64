@@ -21,16 +21,15 @@ using namespace vc64;
 
 class Cartridge : public SubComponent {
 
+    CartridgeTraits traits = {
+
+        .type       = CRT_NORMAL,
+        .title      = "Cartridge",
+    };
+
 public:
 
-    virtual CartridgeTraits traits() const {
-
-        return CartridgeTraits {
-
-            .type       = CRT_NORMAL,
-            .title      = "Cartridge",
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const { return traits; }
 
     // Maximum number of chip packets on a single cartridge
     static const isize MAX_PACKETS = 128;
@@ -153,6 +152,7 @@ public:
     Cartridge(C64 &ref);
     ~Cartridge();
 
+
     /* Resets the Game and the Exrom line. The default implementation resets
      * the values to ones found in the CRT file. A few custom cartridges need
      * other start configurations and overwrite this function.
@@ -168,7 +168,7 @@ public:
 
 protected:
     
-    const char *getDescription() const override { return traits().title; }
+    const char *getDescription() const override { return getTraits().title; }
     void _dump(Category category, std::ostream& os) const override;
 
     
@@ -229,7 +229,7 @@ public:
     CartridgeRomInfo getRomInfo(isize nr) const;
 
     // Returns the cartridge type
-    virtual CartridgeType getCartridgeType() const { return traits().type; }
+    virtual CartridgeType getCartridgeType() const { return getTraits().type; }
     
     // Checks whether this cartridge is supported by the emulator yet
     bool isSupported() const { return isSupportedType(getCartridgeType()); }

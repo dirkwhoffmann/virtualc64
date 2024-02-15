@@ -15,15 +15,14 @@
 #include "Cartridge.h"
 
 class SimonsBasic : public Cartridge {
-    
-    virtual CartridgeTraits traits() const override {
+   
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type       = CRT_SIMONS_BASIC,
+        .title      = "Simons Basic",
+    };
 
-            .type       = CRT_SIMONS_BASIC,
-            .title      = "Simons Basic",
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
 

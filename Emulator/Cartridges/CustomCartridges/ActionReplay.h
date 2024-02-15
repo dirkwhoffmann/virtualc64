@@ -19,20 +19,19 @@
 //
 
 class ActionReplay3 : public Cartridge {
-    
+
+    CartridgeTraits traits = {
+
+        .type       = CRT_ACTION_REPLAY3,
+        .title      = "Action Replay 3",
+
+        .button1    = "Freeze",
+        .button2    = "Reset"
+    };
+
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
+
 public:
-
-    virtual CartridgeTraits traits() const override {
-
-        return CartridgeTraits {
-
-            .type       = CRT_ACTION_REPLAY3,
-            .title      = "Action Replay 3",
-
-            .button1    = "Freeze",
-            .button2    = "Reset"
-        };
-    }
 
     ActionReplay3(C64 &ref) : Cartridge(ref) { };
     const char *getDescription() const override { return "AR3"; }
@@ -76,19 +75,18 @@ public:
 
 class ActionReplay : public Cartridge {
         
+    CartridgeTraits traits = {
+
+        .type       = CRT_ACTION_REPLAY,
+        .title      = "Action Replay",
+
+        .button1    = "Freeze",
+        .button2    = "Reset"
+    };
+
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
+
 public:
-        
-    virtual CartridgeTraits traits() const override {
-
-        return CartridgeTraits {
-
-            .type       = CRT_ACTION_REPLAY3,
-            .title      = "Action Replay",
-
-            .button1    = "Freeze",
-            .button2    = "Reset"
-        };
-    }
 
     ActionReplay(C64 &ref);
 
@@ -140,17 +138,16 @@ public:
 
 class AtomicPower : public ActionReplay {
 
-    virtual CartridgeTraits traits() const override {
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type       = CRT_ATOMIC_POWER,
+        .title      = "Atomic Power",
 
-            .type       = CRT_ATOMIC_POWER,
-            .title      = "Atomic Power",
+        .button1    = "Freeze",
+        .button2    = "Reset"
+    };
 
-            .button1    = "Freeze",
-            .button2    = "Reset"
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
 

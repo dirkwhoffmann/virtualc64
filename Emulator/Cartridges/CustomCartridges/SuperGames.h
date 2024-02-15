@@ -15,15 +15,14 @@
 #include "Cartridge.h"
 
 class SuperGames : public Cartridge {
-    
-    virtual CartridgeTraits traits() const override {
+  
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type       = CRT_SUPER_GAMES,
+        .title      = "Super Games",
+    };
 
-            .type       = CRT_SUPER_GAMES,
-            .title      = "Super Games",
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
     // Write protection latch
     bool protect = false;

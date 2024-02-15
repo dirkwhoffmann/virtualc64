@@ -16,14 +16,13 @@
 
 class MikroAss : public Cartridge {
 
-    virtual CartridgeTraits traits() const override {
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type       = CRT_MIKRO_ASSEMBLER,
+        .title      = "Mikro Assembler",
+    };
 
-            .type       = CRT_MIKRO_ASSEMBLER,
-            .title      = "Mikro Assembler",
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
 

@@ -16,16 +16,15 @@
 
 class FreezeFrame : public Cartridge {
 
-    virtual CartridgeTraits traits() const override {
+    CartridgeTraits traits = {
 
-        return CartridgeTraits {
+        .type       = CRT_FREEZE_FRAME,
+        .title      = "Freeze Frame",
 
-            .type       = CRT_FREEZE_FRAME,
-            .title      = "Freeze Frame",
+        .button1    = "Freeze"
+    };
 
-            .button1    = "Freeze"
-        };
-    }
+    virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
 
