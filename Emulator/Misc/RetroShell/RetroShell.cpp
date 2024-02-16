@@ -316,7 +316,7 @@ RetroShell::press(RetroShellKey key, bool shift)
                 SYNCHRONIZED
 
                 *this << '\r' << getPrompt() << input << '\n';
-                commands.push_back(input);
+                commands.push_back({ 0, input});
                 input = "";
                 cursor = 0;
                 emulator.put(Cmd(CMD_RSH_EXECUTE));
@@ -394,41 +394,44 @@ RetroShell::exec()
 {
     SYNCHRONIZED
 
+    std::pair<isize, string> cmd;
+
     try {
 
         while (!commands.empty()) {
 
-            auto cmd = commands.front();
+            cmd = commands.front();
             commands.erase(commands.begin());
 
-            exec(cmd);
+            exec(cmd.second, cmd.first);
         }
 
     } catch (...) { }
 }
 
 void
-RetroShell::exec(const string &command)
+RetroShell::exec(const string &command, isize line)
 {
-    bool ignoreError = false;
-
     // Skip comments
     if (command[0] == '#') return;
 
     try {
-        // Check if the command marked with 'try'
-        ignoreError = command.rfind("try", 0) == 0;
 
         // Call the interpreter
         interpreter.exec(command);
 
+    } catch (ScriptInterruption &) {
+
+        // Rethrow the exception
+        throw;
+
     } catch (std::exception &err) {
 
         // Print error message
-        describe(err);
+        describe(err, line);
 
-        // Rethrow the exception
-        if (!ignoreError) throw;
+        // Rethrow the exception if the command is not prefixed with 'try'
+        if (command.rfind("try", 0)) throw;
     }
 }
 
@@ -436,10 +439,11 @@ void
 RetroShell::execScript(std::stringstream &ss)
 {
     std::string line;
+    isize nr = 1;
 
     while (std::getline(ss, line)) {
 
-        commands.push_back(line);
+        commands.push_back({ nr++, line });
     }
 
     emulator.put(Cmd(CMD_RSH_EXECUTE));
@@ -475,8 +479,10 @@ RetroShell::abortScript()
 }
 
 void
-RetroShell::describe(const std::exception &e)
+RetroShell::describe(const std::exception &e, isize line)
 {
+    if (line)  *this << "Line " << line << ": ";
+
     if (auto err = dynamic_cast<const TooFewArgumentsError *>(&e)) {
 
         *this << err->what() << ": Too few arguments";

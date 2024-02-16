@@ -51,7 +51,7 @@ class RetroShell : public SubComponent {
     string input;
 
     // Command queue (stores all pending commands)
-    std::vector<string> commands;
+    std::vector<std::pair<isize,string>> commands;
 
     // Input prompt
     string prompt = "vc64% ";
@@ -191,7 +191,7 @@ public:
     void exec() throws;
 
     // Executes a single command
-    void exec(const string &command) throws;
+    void exec(const string &command, isize line = 0) throws;
 
     // Executes a shell script
     void execScript(std::stringstream &ss) throws;
@@ -202,7 +202,7 @@ public:
 private:
 
     // Prints a textual description of an error in the console
-    void describe(const std::exception &exception);
+    void describe(const std::exception &exception, isize line = 0);
 
     // Prints help messages for a given command string
     void help(const string &command);
