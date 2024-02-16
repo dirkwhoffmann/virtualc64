@@ -430,26 +430,14 @@
 
 @interface KeyboardProxy : SubComponentProxy { }
 
-- (BOOL)keyIsPressed:(NSInteger)nr;
-- (BOOL)shiftLockIsPressed;
-
+- (BOOL)isPressed:(NSInteger)nr;
 - (void)pressKey:(NSInteger)nr;
-- (void)pressKeyCombination:(NSInteger)nr with: (NSInteger)nr2;
-- (void)pressKeyAtRow:(NSInteger)row col:(NSInteger)col;
-- (void)pressShiftLock;
-
 - (void)releaseKey:(NSInteger)nr;
 - (void)releaseKey:(NSInteger)nr delay:(double)delay;
-- (void)releaseKeyCombination:(NSInteger)nr with: (NSInteger)nr2;
-- (void)releaseKeyAtRow:(NSInteger)row col:(NSInteger)col;
-- (void)releaseShiftLock;
 - (void)releaseAll;
 - (void)releaseAllWithDelay:(double)delay;
-
 - (void)toggleKey:(NSInteger)nr;
 - (void)toggleKeyAtRow:(NSInteger)row col:(NSInteger)col;
-- (void)toggleShiftLock;
-
 - (void)autoType:(NSString *)text;
 
 @end

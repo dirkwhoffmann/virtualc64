@@ -88,6 +88,7 @@ const C64Key C64Key::Q(18);
 const C64Key C64Key::runStop(33);
 
 const C64Key C64Key::restore(31);
+const C64Key C64Key::shiftLock(34);
 
 C64Key::C64Key(isize nr)
 {

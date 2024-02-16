@@ -330,45 +330,7 @@ public:
         using API::API;
 
         bool isPressed(C64Key key) const;
-        bool shiftLockIsPressed() const;
-
-        // Presses a key
-        void press(C64Key key);
-        void pressShiftLock();
-        void pressRestore();
-        void pressCommodore() { press(C64Key::commodore); }
-        void pressCtrl() { press(C64Key::control); }
-        void pressRunstop() { press(C64Key::runStop); }
-        void pressLeftShift() { press(C64Key::leftShift); }
-        void pressRightShift() { press(C64Key::rightShift); }
-
-        // Releases a pressed key
-        void release(C64Key key);
-        void releaseShiftLock();
-        void releaseRestore();
-        void releaseCommodore() { release(C64Key::commodore); }
-        void releaseCtrl() { release(C64Key::control); }
-        void releaseRunstop() { release(C64Key::runStop); }
-        void releaseLeftShift() { release(C64Key::leftShift); }
-        void releaseRightShift() { release(C64Key::rightShift); }
-
-        // Presses a released key and vice versa
-        void toggle(C64Key key) { isPressed(key) ? release(key) : press(key); }
-        void toggleShiftLock() { shiftLockIsPressed() ? releaseShiftLock() : pressShiftLock(); }
-        void toggleCommodore() { toggle(C64Key::commodore); }
-        void toggleCtrl() { toggle(C64Key::control); }
-        void toggleRunstop() { toggle(C64Key::runStop); }
-        void toggleLeftShift() { toggle(C64Key::leftShift); }
-        void toggleRightShift() { toggle(C64Key::rightShift); }
-
-        // Clears the keyboard matrix
-        void releaseAll();
-
-
-        // Auto typing
         void autoType(const string &text);
-
-        // Deletes all pending actions and clears the keyboard matrix
         void abortAutoTyping();
 
     } keyboard;

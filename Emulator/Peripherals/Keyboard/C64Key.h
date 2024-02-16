@@ -111,9 +111,10 @@ struct C64Key {
     static const C64Key Q;
     static const C64Key runStop;
     
-    // Restore key
+    // Keys not represented in the keyboard matrix
     static const C64Key restore;
-    
+    static const C64Key shiftLock;
+
     
     //
     // Initializing

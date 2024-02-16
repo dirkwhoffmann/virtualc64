@@ -77,11 +77,11 @@ class VirtualKeyboardController: DialogController {
         
         var newModifiers: Modifier = []
         
-        if keyboard.leftShiftIsPressed() { newModifiers.insert(.shift) }
-        if keyboard.rightShiftIsPressed() { newModifiers.insert(.shift) }
-        if keyboard.shiftLockIsPressed() { newModifiers.insert(.shift) }
-        if keyboard.controlIsPressed() { newModifiers.insert(.control) }
-        if keyboard.commodoreIsPressed() { newModifiers.insert(.commodore) }
+        if keyboard.isPressed(.shift) { newModifiers.insert(.shift) }
+        if keyboard.isPressed(.rightShift) { newModifiers.insert(.shift) }
+        if keyboard.isPressed(.shiftLock) { newModifiers.insert(.shift) }
+        if keyboard.isPressed(.control) { newModifiers.insert(.control) }
+        if keyboard.isPressed(.commodore) { newModifiers.insert(.commodore) }
         if lowercase { newModifiers.insert(.lowercase) }
                 
         // Update images if the modifier flags have changed
@@ -92,7 +92,7 @@ class VirtualKeyboardController: DialogController {
         
         for nr in 0 ... 65 {
                         
-            if c64.keyboard.keyIsPressed(nr) {
+            if c64.keyboard.isPressed(nr) {
                 keyView[nr]!.image = pressedKeyImage[nr]
             } else {
                 keyView[nr]!.image = keyImage[nr]
@@ -113,14 +113,25 @@ class VirtualKeyboardController: DialogController {
         
     func pressKey(nr: Int) {
 
-        c64.keyboard.pressKey(nr)
-        refresh()
-
         if autoClose {
-            c64.keyboard.releaseAll(withDelay: 0.25)
+
+            if nr == 34 /* SHIFT LOCK */ {
+                c64.keyboard.toggleKey(nr)
+            } else {
+                c64.keyboard.pressKey(nr)
+                c64.keyboard.releaseAll(withDelay: 0.25)
+            }
             cancelAction(self)
+
         } else {
-            c64.keyboard.releaseKey(nr, delay: 0.25)
+
+            if nr == 34 /* SHIFT LOCK */ {
+                c64.keyboard.toggleKey(nr)
+            } else {
+                c64.keyboard.pressKey(nr)
+                c64.keyboard.releaseKey(nr, delay: 0.25)
+            }
+            refresh()
         }
     }
     

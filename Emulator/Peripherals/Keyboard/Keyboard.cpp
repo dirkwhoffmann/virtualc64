@@ -152,23 +152,12 @@ Keyboard::isPressed(C64Key key) const
     assert(key.nr < 66);
 
     switch (key.nr) {
-        case 34: return shiftLockIsPressed();
-        case 31: return restoreIsPressed();
+            
+        case 34: return shiftLock;
+        case 31: return cpu.getNmiLine() & INTSRC_KBD;
     }
 
     return (kbMatrixRow[key.row] & (1 << key.col)) == 0;
-}
-
-bool
-Keyboard::shiftLockIsPressed() const
-{
-    return shiftLock;
-}
-
-bool
-Keyboard::restoreIsPressed() const
-{
-    return cpu.getNmiLine() & INTSRC_KBD;
 }
 
 void
@@ -178,14 +167,11 @@ Keyboard::press(C64Key key)
 
     switch (key.nr) {
 
-        case 34: toggleShiftLock(); return;
-        case 31: pressRestore(); return;
-
-        default:
-            assert(key.nr < 66);
-            break;
+        case 34: shiftLock = true; return;
+        case 31: cpu.pullDownNmiLine(INTSRC_KBD); return;
     }
 
+    assert(key.nr < 66);
     assert(key.row < 8);
     assert(key.col < 8);
 
@@ -202,33 +188,17 @@ Keyboard::press(C64Key key)
 }
 
 void
-Keyboard::pressShiftLock()
-{
-    SYNCHRONIZED
-
-    shiftLock = true;
-}
-
-void
-Keyboard::pressRestore()
-{
-    SYNCHRONIZED
-
-    cpu.pullDownNmiLine(INTSRC_KBD);
-}
-
-void
 Keyboard::release(C64Key key)
 {
     debug(KBD_DEBUG, "release(%ld)\n", key.nr);
 
-    assert(key.nr < 66);
-
     switch (key.nr) {
-        case 34: releaseShiftLock(); return;
-        case 31: releaseRestore(); return;
+
+        case 34: shiftLock = false; return;
+        case 31: cpu.releaseNmiLine(INTSRC_KBD); return;
     }
 
+    assert(key.nr < 66);
     assert(key.row < 8);
     assert(key.col < 8);
 
@@ -247,35 +217,22 @@ Keyboard::release(C64Key key)
     }}
 
 void
-Keyboard::releaseShiftLock()
-{
-    SYNCHRONIZED
-
-    shiftLock = false;
-}
-
-void
-Keyboard::releaseRestore()
-{
-    SYNCHRONIZED
-
-    cpu.releaseNmiLine(INTSRC_KBD);
-}
-
-void
 Keyboard::releaseAll()
 {
     SYNCHRONIZED
 
     debug(KBD_DEBUG, "releaseAll()\n");
 
+    // Clear the keyboard matrix
     for (isize i = 0; i < 8; i++) {
 
         kbMatrixRow[i] = 0xFF; kbMatrixRowCnt[i] = 0;
         kbMatrixCol[i] = 0xFF; kbMatrixColCnt[i] = 0;
 
     }
-    releaseRestore();
+
+    // Release the restore key
+    cpu.releaseNmiLine(INTSRC_KBD);
 }
 
 void
@@ -287,12 +244,19 @@ Keyboard::autoType(const string &text)
 
         auto keys = C64Key::translate(c);
 
-        for (C64Key &k : keys) {
-            pending.insert(trigger, Cmd(CMD_KEY_PRESS, KeyCmd { .keycode = u8(k.nr) }));
-        }
-        trigger += MSEC(100);
-        for (C64Key &k : keys) {
-            pending.insert(trigger, Cmd(CMD_KEY_RELEASE, KeyCmd { .keycode = u8(k.nr) }));
+        if (pending.free() > isize(2 * keys.size())) {
+
+            // Schedule key presses
+            for (C64Key &k : keys) {
+                pending.insert(trigger, Cmd(CMD_KEY_PRESS, KeyCmd { .keycode = u8(k.nr) }));
+            }
+
+            trigger += MSEC(25);
+
+            // Schedule key releases
+            for (C64Key &k : keys) {
+                pending.insert(trigger, Cmd(CMD_KEY_RELEASE, KeyCmd { .keycode = u8(k.nr) }));
+            }
         }
     }
 

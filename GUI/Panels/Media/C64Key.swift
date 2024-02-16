@@ -181,6 +181,7 @@ public struct C64Key: Codable {
     
     // Keys not represented inside the key matrix
     static let restore      = C64Key(31)
+    static let shiftLock    = C64Key(34)
 }
 
 extension C64Key: Equatable {

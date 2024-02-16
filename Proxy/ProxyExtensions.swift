@@ -199,37 +199,10 @@ extension RecorderProxy {
 
 public extension KeyboardProxy {
 
-    func keyIsPressed(_ key: C64Key) -> Bool {
+    func isPressed(_ key: C64Key) -> Bool {
 
-        return keyIsPressed(key.nr)
+        return isPressed(key.nr)
     }
-
-    func controlIsPressed() -> Bool {
-
-        return keyIsPressed(C64Key.control)
-    }
-
-    func commodoreIsPressed() -> Bool {
-
-        return keyIsPressed(C64Key.commodore)
-    }
-
-    func leftShiftIsPressed() -> Bool {
-
-        return keyIsPressed(C64Key.shift)
-    }
-
-    func rightShiftIsPressed() -> Bool {
-
-        return keyIsPressed(C64Key.rightShift)
-    }
-
-    /*
-    func shiftLockIsPressed() -> Bool {
-
-        return keyIsPressed(C64Key.shiftLock)
-    }
-    */
 }
 
 //

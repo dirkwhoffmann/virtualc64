@@ -149,9 +149,7 @@ class KeyboardController: NSObject {
                 // Press all required keys
                 for key in c64Keys {
 
-                    // let kc = UInt8(C64Key((key.row, key.col)).nr)
-                    // c64.send(.KEY_PRESS, key: KeyCmd(keycode: kc, delay: 0.0))
-                    keyboard.pressKey(atRow: key.row, col: key.col)
+                    keyboard.pressKey(key.nr)
                 }
 
                 parent.virtualKeyboard?.refresh()
@@ -191,7 +189,7 @@ class KeyboardController: NSObject {
             // Symbolic key mapping
             if let c64Keys = pressedKeys[macKey.keyCode] {
                 for key in c64Keys {
-                    keyboard.releaseKey(atRow: key.row, col: key.col)
+                    keyboard.releaseKey(key.nr)
                 }
             }
 
@@ -346,10 +344,16 @@ class KeyboardController: NSObject {
         }
     }
 
+    func toggleKey(key: C64Key) {
+
+        keyboard.toggleKey(key.nr)
+    }
+
     func pressKeyCombination(key1: C64Key, key2: C64Key, duration: TimeInterval? = nil) {
 
         // Press keys
-        keyboard.pressKeyCombination(key1.nr, with: key2.nr)
+        keyboard.pressKey(key1.nr)
+        keyboard.pressKey(key2.nr)
 
         // Schedule the key releases
         if let seconds = duration {

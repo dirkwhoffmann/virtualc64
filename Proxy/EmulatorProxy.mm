@@ -689,44 +689,27 @@ using namespace vc64;
     return (VirtualC64 *)emu;
 }
 
-- (BOOL)keyIsPressed:(NSInteger)nr
+- (BOOL)isPressed:(NSInteger)nr
 {
     return [self kb]->isPressed(nr);
-}
-
-- (BOOL)shiftLockIsPressed
-{
-    return [self kb]->shiftLockIsPressed();
 }
 
 - (void)pressKey:(NSInteger)nr
 {
     [self emu]->put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr });
-    /*
-     [self kb]->abortAutoTyping();
-     [self kb]->press(C64Key(nr));
-     */
 }
 
-- (void)pressKeyCombination:(NSInteger)nr with: (NSInteger)nr2
-{
-    [self emu]->put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr });
-    [self emu]->put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)nr2 });
-}
-
+/*
 - (void)pressKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
     [self emu]->put(CMD_KEY_PRESS, KeyCmd { .keycode = (u8)C64Key(row, col).nr, .delay = 0.0 });
 }
-
-- (void)pressShiftLock
-{
-    [self kb]->pressShiftLock();
-}
+*/
 
 - (void)releaseKey:(NSInteger)nr
 {
-    [self kb]->release(C64Key(nr));
+    // [self kb]->release(C64Key(nr));
+    [self emu]->put(CMD_KEY_RELEASE, KeyCmd { .keycode = u8(nr) });
 }
 
 - (void)releaseKey:(NSInteger)nr delay:(double)delay
@@ -734,25 +717,9 @@ using namespace vc64;
     [self emu]->put(CMD_KEY_RELEASE, KeyCmd { .keycode = (u8)nr, .delay = delay });
 }
 
-- (void)releaseKeyCombination:(NSInteger)nr with: (NSInteger)nr2
-{
-    [self kb]->release(C64Key(nr));
-    [self kb]->release(C64Key(nr2));
-}
-
-- (void)releaseKeyAtRow:(NSInteger)row col:(NSInteger)col
-{
-    [self kb]->release(C64Key(row, col));
-}
-
-- (void)releaseShiftLock
-{
-    [self kb]->releaseShiftLock();
-}
-
 - (void)releaseAll
 {
-    [self kb]->releaseAll();
+    [self emu]->put(CMD_KEY_RELEASE_ALL);
 }
 
 - (void)releaseAllWithDelay:(double)delay
@@ -762,17 +729,12 @@ using namespace vc64;
 
 - (void)toggleKey:(NSInteger)nr
 {
-    [self kb]->toggle(nr);
+    [self emu]->put(CMD_KEY_TOGGLE, KeyCmd { .keycode = u8(nr) });
 }
 
 - (void)toggleKeyAtRow:(NSInteger)row col:(NSInteger)col
 {
-    [self kb]->toggle(C64Key(row, col));
-}
-
-- (void)toggleShiftLock
-{
-    [self kb]->toggleShiftLock();
+    [self emu]->put(CMD_KEY_TOGGLE, KeyCmd { .keycode = u8(C64Key(row, col).nr) });
 }
 
 - (void)autoType:(NSString *)text

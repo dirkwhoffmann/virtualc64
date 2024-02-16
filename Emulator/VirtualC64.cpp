@@ -743,27 +743,20 @@ VirtualC64::DMA_DEBUGGER_API::getConfig() const
 // Keyboard
 //
 
-bool VirtualC64::KBD_API::isPressed(C64Key key) const { return keyboard.isPressed(key); }
-bool VirtualC64::KBD_API::shiftLockIsPressed() const { return keyboard.shiftLockIsPressed(); }
+bool VirtualC64::KBD_API::isPressed(C64Key key) const 
+{
+    return keyboard.isPressed(key);
+}
 
-// Presses a key
-void VirtualC64::KBD_API::press(C64Key key) { keyboard.press(key); }
-void VirtualC64::KBD_API::pressShiftLock() { keyboard.pressShiftLock(); }
-void VirtualC64::KBD_API::pressRestore() { keyboard.pressRestore(); }
+void VirtualC64::KBD_API::autoType(const string &text)
+{
+    keyboard.autoType(text);
+}
 
-// Releases a pressed key
-void VirtualC64::KBD_API::release(C64Key key) { keyboard.release(key); }
-void VirtualC64::KBD_API::releaseShiftLock() { keyboard.releaseShiftLock(); }
-void VirtualC64::KBD_API::releaseRestore() { keyboard.releaseRestore(); }
-
-// Clears the keyboard matrix
-void VirtualC64::KBD_API::releaseAll() { keyboard.releaseAll(); }
-
-// Auto typing
-void VirtualC64::KBD_API::autoType(const string &text) { keyboard.autoType(text); }
-
-// Deletes all pending actions and clears the keyboard matrix
-void VirtualC64::KBD_API::abortAutoTyping() { keyboard.abortAutoTyping(); }
+void VirtualC64::KBD_API::abortAutoTyping() 
+{
+    keyboard.abortAutoTyping();
+}
 
 
 //
