@@ -32,7 +32,7 @@ struct ScriptInterruption: util::Exception {
     using Exception::Exception;
 };
 
-class Interpreter: SubComponent
+class Interpreter: SubComponent, public Dumpable
 {
     enum class Shell { Command, Debug };
 

@@ -18,7 +18,7 @@
 
 namespace vc64 {
 
-class ParCable : public SubComponent {
+class ParCable : public SubComponent, public Dumpable {
     
     //
     // Initializing

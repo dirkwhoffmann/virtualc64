@@ -15,16 +15,18 @@
 
 namespace vc64 {
 
-void
-Inspectable::dump(Category category, std::ostream& ss) const
+/*
+template <typename T> void
+Inspectable<T>::dump(Category category, std::ostream& ss) const
 {
     _dump(category, ss);
 }
 
-void
-Inspectable::dump(Category category) const
+template <typename T> void
+Inspectable<T>::dump(Category category) const
 {
     dump(category, std::cout);
 }
+*/
 
 }

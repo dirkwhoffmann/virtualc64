@@ -52,7 +52,7 @@ struct SnapshotHeader {
     Thumbnail screenshot;
 };
 
-class Snapshot : public AnyFile {
+class Snapshot : public AnyFile, public Dumpable {
 
 public:
 

@@ -27,7 +27,7 @@ inline u8 incBCD(u8 x)
  * features an alarm mechanism. When the alarm time is reached, an interrupt
  * is triggered.
  */
-class TOD : public SubComponent {
+class TOD : public SubComponent, public Dumpable {
     
     friend class CIA;
     

@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class IEC : public SubComponent {
+class IEC : public SubComponent, public Dumpable {
 
 public:
     

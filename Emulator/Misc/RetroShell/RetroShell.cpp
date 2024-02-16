@@ -577,7 +577,7 @@ RetroShell::help(const string &command)
 }
 
 void
-RetroShell::dump(CoreObject &component, Category category)
+RetroShell::dump(Dumpable &component, Category category)
 {
     {   SUSPENDED
 
@@ -587,7 +587,7 @@ RetroShell::dump(CoreObject &component, Category category)
 }
 
 void
-RetroShell::dump(CoreObject &component, std::vector <Category> categories)
+RetroShell::dump(Dumpable &component, std::vector <Category> categories)
 {
     {   SUSPENDED
 
@@ -598,7 +598,7 @@ RetroShell::dump(CoreObject &component, std::vector <Category> categories)
 }
 
 void
-RetroShell::_dump(CoreObject &component, Category category)
+RetroShell::_dump(Dumpable &component, Category category)
 {
     std::stringstream ss;
 

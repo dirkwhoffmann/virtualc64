@@ -45,11 +45,9 @@ Emulator::initialize()
     _c64.initialize();
 }
 
-EmulatorInfo 
-Emulator::getInfo() const
+void 
+Emulator::doinspect(EmulatorInfo &result) const
 {
-    EmulatorInfo result;
-
     result.state = state;
     result.refreshRate = isize(refreshRate());
     result.powered = isPoweredOn();
@@ -58,8 +56,6 @@ Emulator::getInfo() const
     result.suspended = isSuspended();
     result.warping = isWarping();
     result.tracking = isTracking();
-
-    return result;
 }
 
 EmulatorStats

@@ -35,17 +35,30 @@ enum class Category
     Tod,
 };
 
-class Inspectable {
+class Dumpable {
+
+public:
+
+    virtual ~Dumpable() { }
+    virtual void _dump(Category category, std::ostream& ss) const { }
+
+    void dump(Category category, std::ostream& ss) const { _dump(category, ss); }
+    void dump(Category category) const { dump(category, std::cout); }
+};
+
+template <typename T>
+class Inspectable : public Dumpable {
+
+    mutable T info;
 
 public:
 
     Inspectable() { }
     virtual ~Inspectable() { }
 
-    virtual void _dump(Category category, std::ostream& ss) const { };
 
-    void dump(Category category, std::ostream& ss) const;
-    void dump(Category category) const;
+    virtual void doinspect(T &result) const { };
+    T &getInfo() const { doinspect(info); return info; }
 };
 
 }

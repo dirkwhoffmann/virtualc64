@@ -19,7 +19,7 @@ namespace vc64 {
 
 class C64;
 
-class RegressionTester : public SubComponent {
+class RegressionTester : public SubComponent, public Dumpable {
 
     // Pixel area ritten to the test image
     static constexpr isize X1 = 104;

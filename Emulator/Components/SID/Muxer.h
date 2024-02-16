@@ -45,7 +45,7 @@ namespace vc64 {
  *           -------------------------------------------------
  */
 
-class Muxer : public SubComponent {
+class Muxer : public SubComponent, public Inspectable<SIDInfo> {
 
     friend C64Memory;
 

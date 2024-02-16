@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-class CIA : public SubComponent {
+class CIA : public SubComponent, public Inspectable<CIAInfo> {
     
     friend class TOD;
     friend class ParCable;

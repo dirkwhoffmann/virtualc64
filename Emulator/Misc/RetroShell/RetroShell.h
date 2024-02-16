@@ -21,7 +21,7 @@
 
 namespace vc64 {
 
-class RetroShell : public SubComponent {
+class RetroShell : public SubComponent, public Dumpable {
 
     friend class Interpreter;
     
@@ -217,12 +217,12 @@ private:
 
 public:
 
-    void dump(CoreObject &component, std::vector <Category> categories);
-    void dump(CoreObject &component, Category category);
+    void dump(Dumpable &component, std::vector <Category> categories);
+    void dump(Dumpable &component, Category category);
 
 private:
 
-    void _dump(CoreObject &component, Category category);
+    void _dump(Dumpable &component, Category category);
 
     
     //

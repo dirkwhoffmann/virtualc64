@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-class C64Memory : public SubComponent {
+class C64Memory : public SubComponent, public Inspectable<MemInfo> {
 
     // Current configuration
     MemConfig config = { };

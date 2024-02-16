@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-class Joystick : public SubComponent {
+class Joystick : public SubComponent, public Dumpable {
     
     // Reference to the control port this device belongs to
     ControlPort &port;

@@ -19,7 +19,7 @@ namespace vc64 {
 /* This class stores some information about the host system. The values have
  * are set by the GUI on start and updated on-the-fly when a value changes.
  */
-class Host : public CoreComponent {
+class Host : public CoreComponent, public Dumpable {
 
     // Refresh rate of the host display
     double refreshRate = 60.0;

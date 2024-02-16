@@ -33,7 +33,7 @@ namespace vc64 {
  *     - Vortex (LMan)
  */
 
-class ReSID : public SubComponent {
+class ReSID : public SubComponent, public Dumpable {
 
     // Number of this SID (0 = primary SID)
     int nr;

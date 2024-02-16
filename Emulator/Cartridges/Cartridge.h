@@ -19,7 +19,7 @@
 
 using namespace vc64;
 
-class Cartridge : public SubComponent {
+class Cartridge : public SubComponent, public Dumpable {
 
     CartridgeTraits traits = {
 

@@ -47,7 +47,7 @@ public:
     bool isShakingRel(double dx);
 };
 
-class Mouse : public SubComponent {
+class Mouse : public SubComponent, public Dumpable {
     
     // Reference to the control port this device belongs to
     ControlPort &port;

@@ -48,7 +48,7 @@ namespace vc64 {
  * the emulator's state model (off, paused, running).
  */
 
-class CoreObject : public Inspectable {
+class CoreObject {
 
 protected:
 

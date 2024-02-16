@@ -405,7 +405,7 @@ Drive::_dump(Category category, std::ostream& os) const
         os << tab("Eject volume");
         os << dec(config.ejectVolume) << std::endl;
         
-        mem.CoreComponent::_dump(Category::BankMap, os);
+        mem.dump(Category::BankMap, os);
     }
     
     if (category == Category::State) {

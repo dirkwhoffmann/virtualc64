@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-class DriveMemory : public SubComponent {
+class DriveMemory : public SubComponent, public Dumpable {
     
 private:
     

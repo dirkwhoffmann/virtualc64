@@ -20,7 +20,7 @@
 
 namespace vc64 {
 
-class ControlPort : public SubComponent {
+class ControlPort : public SubComponent, public Dumpable {
 
     friend class Mouse;
     friend class Joystick;

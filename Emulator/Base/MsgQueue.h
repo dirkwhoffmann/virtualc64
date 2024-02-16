@@ -18,7 +18,7 @@
 
 namespace vc64 {
 
-class MsgQueue : public SubComponent {
+class MsgQueue : public SubComponent, public Dumpable {
 
     // Ring buffer storing all pending messages
     util::RingBuffer <Message, 128> queue;

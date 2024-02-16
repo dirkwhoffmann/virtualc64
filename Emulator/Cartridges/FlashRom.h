@@ -24,7 +24,7 @@ using namespace vc64;
  *       29F040.pdf : Data sheet published by AMD
  *   flash040core.c : Part of the VICE emulator
  */
-class FlashRom : public SubComponent {
+class FlashRom : public SubComponent, public Dumpable {
             
     // Number of sectors in this Flash Rom
     static const isize numSectors = 8;

@@ -20,7 +20,7 @@
 
 namespace vc64 {
 
-class Defaults : public CoreObject {
+class Defaults : public CoreObject, public Dumpable {
 
     mutable util::ReentrantMutex mutex;
 

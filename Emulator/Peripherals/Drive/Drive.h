@@ -33,7 +33,7 @@ namespace vc64 {
  * Schematics:  http://www.baltissen.org/images/1540.gif
  */
 
-class Drive : public SubComponent {
+class Drive : public SubComponent, public Inspectable<DriveInfo> {
 
     friend class DriveMemory;
     friend class VIA1;
