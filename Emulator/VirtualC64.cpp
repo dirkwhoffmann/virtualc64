@@ -112,22 +112,23 @@ VirtualC64::put(const Cmd &cmd)
     }
 }
 
-void 
+/*
+void
 VirtualC64::put(CmdType type, i64 payload)
 {
-    put( Cmd { .type = type, .value = payload } );
+    put(Cmd(type, payload));
 }
 
 void
 VirtualC64::put(CmdType type, KeyCmd payload)
 {
-    put( Cmd { .type = type, .key = payload } );
+    put(Cmd(type, payload));
 }
 
 void 
 VirtualC64::put(CmdType type, CoordCmd payload)
 {
-    put( Cmd { .type = type, .coord = payload } );
+    put(Cmd(type, payload));
 }
 
 void
@@ -147,7 +148,7 @@ VirtualC64::put(CmdType type, AlarmCmd payload)
 {
     put( Cmd { .type = type, .alarm = payload } );
 }
-
+*/
 
 //
 // C64

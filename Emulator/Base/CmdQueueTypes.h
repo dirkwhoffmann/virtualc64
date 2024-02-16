@@ -175,14 +175,15 @@ typedef struct
 }
 AlarmCmd;
 
-typedef struct
+#ifdef __cplusplus
+struct Cmd
 {
     // Header
     CmdType type;
 
     // Payload
     union {
-        
+
         i64 value;
         KeyCmd key;
         CoordCmd coord;
@@ -190,5 +191,14 @@ typedef struct
         TapeCmd tape;
         AlarmCmd alarm;
     };
-}
-Cmd;
+
+    Cmd() { }
+    Cmd(CmdType type, i64 value) : type(type), value(value) { }
+    Cmd(CmdType type, const KeyCmd &cmd) : type(type), key(cmd) { }
+    Cmd(CmdType type, const CoordCmd &cmd) : type(type), coord(cmd) { }
+    Cmd(CmdType type, const GamePadCmd &cmd) : type(type), action(cmd) { }
+    Cmd(CmdType type, const TapeCmd &cmd) : type(type), tape(cmd) { }
+    Cmd(CmdType type, const AlarmCmd &cmd) : type(type), alarm(cmd) { }
+};
+
+#endif

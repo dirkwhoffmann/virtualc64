@@ -288,13 +288,12 @@ Keyboard::autoType(const string &text)
         auto keys = C64Key::translate(c);
 
         for (C64Key &k : keys) {
-            pending.insert(trigger, Cmd { .type = CMD_KEY_PRESS, .key = { .keycode = u8(k.nr) } });
+            pending.insert(trigger, Cmd(CMD_KEY_PRESS, KeyCmd { .keycode = u8(k.nr) }));
         }
         trigger += MSEC(100);
         for (C64Key &k : keys) {
-            pending.insert(trigger, Cmd { .type = CMD_KEY_RELEASE, .key = { .keycode = u8(k.nr) } });
+            pending.insert(trigger, Cmd(CMD_KEY_RELEASE, KeyCmd { .keycode = u8(k.nr) }));
         }
-        trigger += MSEC(100);
     }
 
     if (!c64.hasEvent<SLOT_KEY>()) c64.scheduleImm<SLOT_KEY>(KEY_AUTO_TYPE);
@@ -315,12 +314,10 @@ Keyboard::abortAutoTyping()
 void 
 Keyboard::processCommand(const Cmd &cmd)
 {
-    trace(true, "processCommand %s (%f sec)\n", CmdTypeEnum::key(cmd.type), cmd.key.delay);
-
     if (cmd.key.delay > 0) {
 
         pending.insert(cpu.clock + SEC(cmd.key.delay),
-                       Cmd { .type = cmd.type, .key = KeyCmd { .keycode = cmd.key.keycode }} );
+                       Cmd(cmd.type, KeyCmd { .keycode = cmd.key.keycode }));
         c64.scheduleImm<SLOT_KEY>(KEY_AUTO_TYPE);
         return;
     }
@@ -348,20 +345,17 @@ Keyboard::processKeyEvent(EventID id)
         if (pending.keys[pending.r] > c64.cpu.clock) break;
 
         auto cmd = pending.read();
-        trace(true, "Processing key %d (%ld remaining)\n", cmd.key.keycode, pending.count());
         processCommand(cmd);
     }
 
     // Schedule next event
     if (pending.isEmpty()) {
 
-        printf("Canceling KBD slot\n");
         releaseAll();
         c64.cancel<SLOT_KEY>();
 
     } else {
 
-        printf("Rescheduling at %lld\n", pending.keys[pending.r]);
         c64.rescheduleAbs<SLOT_KEY>(pending.keys[pending.r]);
     }
 }
