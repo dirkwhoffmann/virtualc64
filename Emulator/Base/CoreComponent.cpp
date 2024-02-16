@@ -280,4 +280,10 @@ CoreComponent::trackOff()
     _trackOff();
 }
 
+bool 
+CoreComponent::isEmulatorThread() const
+{
+    return emulator.isEmulatorThread();
+}
+
 }

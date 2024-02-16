@@ -50,6 +50,9 @@ class RetroShell : public SubComponent {
     // Input line
     string input;
 
+    // Pending command to execute
+    string command;
+
     // Input prompt
     string prompt = "vc64% ";
 

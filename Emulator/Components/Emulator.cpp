@@ -854,6 +854,11 @@ Emulator::update()
                 _c64.expansionport.processCommand(cmd);
                 break;
 
+            case CMD_RSH_EXECUTE:
+                
+                _c64.retroShell.exec(string(cmd.shell.command));
+                break;
+
             default:
                 fatal("Unhandled command: %s\n", CmdTypeEnum::key(cmd.type));
         }

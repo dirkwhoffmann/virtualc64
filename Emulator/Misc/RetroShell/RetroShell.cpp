@@ -312,9 +312,10 @@ RetroShell::press(RetroShellKey key, bool shift)
             } else {
 
                 *this << '\r' << getPrompt() << input << '\n';
-                execUserCommand(input);
+                command = input;
                 input = "";
                 cursor = 0;
+                emulator.put(Cmd(CMD_RSH_EXECUTE, ShellCmd { .command = command.c_str() }));
             }
             break;
 
@@ -385,6 +386,8 @@ RetroShell::cursorRel()
 void
 RetroShell::execUserCommand(const string &command)
 {
+    assert(isEmulatorThread());
+
     if (command.empty()) {
 
         if (interpreter.inCommandShell()) {

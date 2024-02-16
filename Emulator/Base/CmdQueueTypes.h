@@ -73,7 +73,10 @@ enum_long(CMD_TYPE)
     CMD_CRT_BUTTON_RELEASE,
     CMD_CRT_SWITCH_LEFT,
     CMD_CRT_SWITCH_NEUTRAL,
-    CMD_CRT_SWITCH_RIGHT
+    CMD_CRT_SWITCH_RIGHT,
+
+    // RetroShell
+    CMD_RSH_EXECUTE
 };
 typedef CMD_TYPE CmdType;
 
@@ -81,7 +84,7 @@ typedef CMD_TYPE CmdType;
 struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = CMD_CRT_SWITCH_RIGHT;
+    static constexpr long maxVal = CMD_RSH_EXECUTE;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "CMD"; }
@@ -129,6 +132,8 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
             case CMD_CRT_SWITCH_LEFT:       return "CRT_SWITCH_LEFT";
             case CMD_CRT_SWITCH_NEUTRAL:    return "CRT_SWITCH_NEUTRAL";
             case CMD_CRT_SWITCH_RIGHT:      return "CRT_SWITCH_RIGHT";
+
+            case CMD_RSH_EXECUTE:           return "RSH_EXECUTE";
         }
         return "???";
     }
@@ -175,6 +180,12 @@ typedef struct
 }
 AlarmCmd;
 
+typedef struct
+{
+    const char *command;
+}
+ShellCmd;
+
 #ifdef __cplusplus
 struct Cmd
 {
@@ -190,6 +201,7 @@ struct Cmd
         GamePadCmd action;
         TapeCmd tape;
         AlarmCmd alarm;
+        ShellCmd shell;
     };
 
     Cmd() { }
@@ -199,6 +211,7 @@ struct Cmd
     Cmd(CmdType type, const GamePadCmd &cmd) : type(type), action(cmd) { }
     Cmd(CmdType type, const TapeCmd &cmd) : type(type), tape(cmd) { }
     Cmd(CmdType type, const AlarmCmd &cmd) : type(type), alarm(cmd) { }
+    Cmd(CmdType type, const ShellCmd &cmd) : type(type), shell(cmd) { }
 };
 
 #endif
