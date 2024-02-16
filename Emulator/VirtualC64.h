@@ -515,7 +515,6 @@ public:
         void execScript(std::stringstream &ss);
         void execScript(const std::ifstream &fs);
         void execScript(const string &contents);
-        void continueScript();
         void setStream(std::ostream &os);
 
     } retroShell;

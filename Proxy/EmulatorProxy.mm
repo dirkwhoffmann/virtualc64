@@ -2313,11 +2313,6 @@ using namespace vc64;
     [self send:CMD_RESUME];
 }
 
-- (void)continueScript
-{
-    [self emu]->retroShell.continueScript();
-}
-
 - (void)requestAutoSnapshot
 {
     [self emu]->put(CMD_SNAPSHOT_AUTO);

@@ -199,9 +199,6 @@ public:
     void execScript(const string &contents) throws;
     void abortScript();
 
-    // Continues a previously interrupted script
-    void continueScript() throws;
-
 private:
 
     // Prints a textual description of an error in the console

@@ -443,14 +443,6 @@ RetroShell::execScript(std::stringstream &ss)
     }
 
     emulator.put(Cmd(CMD_RSH_EXECUTE));
-
-    /*
-    script.str("");
-    script.clear();
-    script << ss.rdbuf();
-    scriptLine = 1;
-    continueScript();
-    */
 }
 
 void
@@ -480,37 +472,6 @@ RetroShell::abortScript()
             c64.cancel<SLOT_RSH>();
         }
     }
-}
-
-void
-RetroShell::continueScript()
-{
-    string command;
-    while(std::getline(script, command)) {
-
-        // Print the command
-        *this << command << '\n';
-
-        // Execute the command
-        try {
-            exec(command);
-
-        } catch (ScriptInterruption &exc) {
-
-            msgQueue.put(MSG_SCRIPT_PAUSE, ScriptMsg { scriptLine, i16(exc.data) });
-            return;
-
-        } catch (std::exception &) {
-
-            *this << "Aborted in line " << scriptLine << '\n';
-            msgQueue.put(MSG_SCRIPT_ABORT, ScriptMsg { scriptLine, 0 });
-            return;
-        }
-
-        scriptLine++;
-    }
-
-    msgQueue.put(MSG_SCRIPT_DONE, ScriptMsg { scriptLine, 0 });
 }
 
 void

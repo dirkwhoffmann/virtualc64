@@ -356,12 +356,7 @@ extension MyController {
             break
 
         case .SCRIPT_DONE,
-                .SCRIPT_PAUSE,
                 .SCRIPT_ABORT:
-            renderer.console.isDirty = true
-
-        case .SCRIPT_WAKEUP:
-            c64.continueScript()
             renderer.console.isDirty = true
 
         case .BASIC_ROM_LOADED,

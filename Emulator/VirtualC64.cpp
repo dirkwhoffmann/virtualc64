@@ -947,12 +947,6 @@ VirtualC64::RSHELL_API::execScript(const string &contents)
 }
 
 void
-VirtualC64::RSHELL_API::continueScript()
-{
-    return retroShell.continueScript();
-}
-
-void
 VirtualC64::RSHELL_API::setStream(std::ostream &os)
 {
     retroShell.setStream(os);

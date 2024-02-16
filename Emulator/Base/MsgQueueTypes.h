@@ -41,9 +41,7 @@ enum_long(MSG_TYPE)
     MSG_CONSOLE_UPDATE,
     MSG_CONSOLE_DEBUGGER,
     MSG_SCRIPT_DONE,
-    MSG_SCRIPT_PAUSE,
     MSG_SCRIPT_ABORT,
-    MSG_SCRIPT_WAKEUP,
 
     // ROMs
     MSG_BASIC_ROM_LOADED,
@@ -151,9 +149,7 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_CONSOLE_UPDATE:        return "CONSOLE_UPDATE";
             case MSG_CONSOLE_DEBUGGER:      return "CONSOLE_DEBUGGER";
             case MSG_SCRIPT_DONE:           return "SCRIPT_DONE";
-            case MSG_SCRIPT_PAUSE:          return "SCRIPT_PAUSE";
             case MSG_SCRIPT_ABORT:          return "SCRIPT_ABORT";
-            case MSG_SCRIPT_WAKEUP:         return "SCRIPT_WAKEUP";
 
             case MSG_BASIC_ROM_LOADED:      return "BASIC_ROM_LOADED";
             case MSG_CHAR_ROM_LOADED:       return "CHAR_ROM_LOADED";

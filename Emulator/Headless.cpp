@@ -88,7 +88,6 @@ Headless::main(int argc, char *argv[])
     while (!returnCode) {
         
         barrier.lock();
-        c64.retroShell.continueScript();
     }
 
     return *returnCode;
@@ -237,12 +236,7 @@ Headless::process(Message msg)
 
             returnCode = 1;
             break;
-
-        case MSG_SCRIPT_PAUSE:
-
-            std::this_thread::sleep_for(std::chrono::seconds(msg.script.delay));
-            break;
-
+            
         default:
             break;
     }
