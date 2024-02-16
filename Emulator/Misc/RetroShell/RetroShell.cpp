@@ -222,6 +222,8 @@ RetroShell::press(RetroShellKey key, bool shift)
     assert(ipos >= 0 && ipos < historyLength());
     assert(cursor >= 0 && cursor <= inputLength());
 
+    abortScript();
+
     switch(key) {
 
         case RSKEY_UP:
@@ -311,11 +313,13 @@ RetroShell::press(RetroShellKey key, bool shift)
 
             } else {
 
+                SYNCHRONIZED
+
                 *this << '\r' << getPrompt() << input << '\n';
-                command = input;
+                commands.push_back(input);
                 input = "";
                 cursor = 0;
-                emulator.put(Cmd(CMD_RSH_EXECUTE, ShellCmd { .command = command.c_str() }));
+                emulator.put(Cmd(CMD_RSH_EXECUTE));
             }
             break;
 
@@ -336,6 +340,8 @@ RetroShell::press(RetroShellKey key, bool shift)
 void
 RetroShell::press(char c)
 {
+    abortScript();
+
     switch (c) {
 
         case '\n':
@@ -383,40 +389,22 @@ RetroShell::cursorRel()
     return cursor - (isize)input.length();
 }
 
-void
-RetroShell::execUserCommand(const string &command)
+void 
+RetroShell::exec()
 {
-    assert(isEmulatorThread());
+    SYNCHRONIZED
 
-    if (command.empty()) {
+    try {
 
-        if (interpreter.inCommandShell()) {
+        while (!commands.empty()) {
 
-            printHelp();
+            auto cmd = commands.front();
+            commands.erase(commands.begin());
 
-        } else {
-
-            if (c64.emulator.isRunning()) {
-
-                c64.emulator.pause();
-
-            } else {
-
-                c64.stepInto();
-                printState();
-            }
+            exec(cmd);
         }
 
-    } else {
-
-        // Add the command to the history buffer
-        history.back() = { command, (isize)command.size() };
-        history.push_back( { "", 0 } );
-        ipos = (isize)history.size() - 1;
-
-        // Execute the command
-        try { exec(command); } catch (...) { };
-    }
+    } catch (...) { }
 }
 
 void
@@ -445,13 +433,24 @@ RetroShell::exec(const string &command)
 }
 
 void
-RetroShell::execScript(const std::stringstream &ss)
+RetroShell::execScript(std::stringstream &ss)
 {
+    std::string line;
+
+    while (std::getline(ss, line)) {
+
+        commands.push_back(line);
+    }
+
+    emulator.put(Cmd(CMD_RSH_EXECUTE));
+
+    /*
     script.str("");
     script.clear();
     script << ss.rdbuf();
     scriptLine = 1;
     continueScript();
+    */
 }
 
 void
@@ -468,6 +467,19 @@ RetroShell::execScript(const string &contents)
     std::stringstream ss;
     ss << contents;
     execScript(ss);
+}
+
+void 
+RetroShell::abortScript()
+{
+    {   SYNCHRONIZED
+
+        if (!commands.empty()) {
+
+            commands.clear();
+            c64.cancel<SLOT_RSH>();
+        }
+    }
 }
 
 void
@@ -614,7 +626,7 @@ RetroShell::_dump(CoreObject &component, Category category)
 void
 RetroShell::serviceEvent()
 {
-    msgQueue.put(MSG_SCRIPT_WAKEUP, ScriptMsg { scriptLine, 0 });
+    emulator.put(Cmd(CMD_RSH_EXECUTE));
     c64.cancel<SLOT_RSH>();
 }
 

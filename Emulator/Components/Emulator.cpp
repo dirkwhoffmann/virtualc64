@@ -856,7 +856,7 @@ Emulator::update()
 
             case CMD_RSH_EXECUTE:
                 
-                _c64.retroShell.exec(string(cmd.shell.command));
+                _c64.retroShell.exec();
                 break;
 
             default:

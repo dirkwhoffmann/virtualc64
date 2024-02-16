@@ -205,7 +205,7 @@ struct Cmd
     };
 
     Cmd() { }
-    Cmd(CmdType type, i64 value) : type(type), value(value) { }
+    Cmd(CmdType type, i64 value = 0) : type(type), value(value) { }
     Cmd(CmdType type, const KeyCmd &cmd) : type(type), key(cmd) { }
     Cmd(CmdType type, const CoordCmd &cmd) : type(type), coord(cmd) { }
     Cmd(CmdType type, const GamePadCmd &cmd) : type(type), action(cmd) { }

@@ -929,7 +929,7 @@ VirtualC64::RSHELL_API::cursorRel()
 }
 
 void 
-VirtualC64::RSHELL_API::execScript(const std::stringstream &ss)
+VirtualC64::RSHELL_API::execScript(std::stringstream &ss)
 {
     retroShell.execScript(ss);
 }

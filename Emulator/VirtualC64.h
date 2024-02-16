@@ -512,7 +512,7 @@ public:
         void press(const string &s);
 
         isize cursorRel();
-        void execScript(const std::stringstream &ss);
+        void execScript(std::stringstream &ss);
         void execScript(const std::ifstream &fs);
         void execScript(const string &contents);
         void continueScript();

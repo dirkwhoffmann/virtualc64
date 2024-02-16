@@ -50,8 +50,8 @@ class RetroShell : public SubComponent {
     // Input line
     string input;
 
-    // Pending command to execute
-    string command;
+    // Command queue (stores all pending commands)
+    std::vector<string> commands;
 
     // Input prompt
     string prompt = "vc64% ";
@@ -187,16 +187,17 @@ public:
 
 public:
 
-    // Main entry point for executing commands that were typed in by the user
-    void execUserCommand(const string &command);
+    // Executes all pending commands
+    void exec() throws;
 
-    // Executes a command
+    // Executes a single command
     void exec(const string &command) throws;
 
     // Executes a shell script
-    void execScript(const std::stringstream &ss) throws;
+    void execScript(std::stringstream &ss) throws;
     void execScript(const std::ifstream &fs) throws;
     void execScript(const string &contents) throws;
+    void abortScript();
 
     // Continues a previously interrupted script
     void continueScript() throws;
