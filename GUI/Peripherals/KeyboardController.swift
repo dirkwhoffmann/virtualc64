@@ -342,7 +342,7 @@ class KeyboardController: NSObject {
 
         // Schedule the key release
         if let seconds = duration {
-            keyboard.scheduleKeyRelease(key.nr, delay: seconds)
+            keyboard.releaseKey(key.nr, delay: seconds)
         }
     }
 
@@ -353,7 +353,8 @@ class KeyboardController: NSObject {
 
         // Schedule the key releases
         if let seconds = duration {
-            keyboard.scheduleKeyReleases(key1.nr, with: key2.nr, delay: seconds)
+            keyboard.releaseKey(key1.nr, delay: seconds)
+            keyboard.releaseKey(key2.nr, delay: seconds)
         }
     }
 

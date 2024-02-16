@@ -43,6 +43,7 @@ enum_long(CMD_TYPE)
     // Keyboard
     CMD_KEY_PRESS,
     CMD_KEY_RELEASE,
+    CMD_KEY_RELEASE_ALL,
     CMD_KEY_TOGGLE,
 
     // Mice
@@ -106,6 +107,7 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
 
             case CMD_KEY_PRESS:             return "KEY_PRESS";
             case CMD_KEY_RELEASE:           return "KEY_RELEASE";
+            case CMD_KEY_RELEASE_ALL:       return "KEY_RELEASE_ALL";
             case CMD_KEY_TOGGLE:            return "KEY_TOGGLE";
 
             case CMD_MOUSE_MOVE_ABS:        return "MOUSE_MOVE_ABS";
@@ -114,10 +116,6 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
 
             case CMD_JOY_EVENT:             return "JOY_EVENT";
 
-                /*
-            case CMD_DSK_PROTECT:           return "DSK_PROTECT";
-            case CMD_DSK_UNPROTECT:         return "DSK_UNPROTECT";
-                 */
             case CMD_DSK_TOGGLE_WP:         return "DSK_TOGGLE_WP";
             case CMD_DSK_MODIFIED:          return "DSK_MODIFIED";
             case CMD_DSK_UNMODIFIED:        return "DSK_UNMODIFIED";

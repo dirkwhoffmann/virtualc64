@@ -800,6 +800,7 @@ Emulator::update()
 
             case CMD_KEY_PRESS:
             case CMD_KEY_RELEASE:
+            case CMD_KEY_RELEASE_ALL:
             case CMD_KEY_TOGGLE:
 
                 _c64.keyboard.processCommand(cmd);

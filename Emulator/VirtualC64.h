@@ -331,14 +331,6 @@ public:
 
         bool isPressed(C64Key key) const;
         bool shiftLockIsPressed() const;
-        /*
-        bool restoreIsPressed() const;
-        bool commodoreIsPressed() const { return isPressed(C64Key::commodore); }
-        bool ctrlIsPressed() const { return isPressed(C64Key::control); }
-        bool runstopIsPressed() const { return isPressed(C64Key::runStop); }
-        bool leftShiftIsPressed() const { return isPressed(C64Key::leftShift); }
-        bool rightShiftIsPressed() const { return isPressed(C64Key::rightShift); }
-        */
 
         // Presses a key
         void press(C64Key key);
@@ -363,7 +355,6 @@ public:
         // Presses a released key and vice versa
         void toggle(C64Key key) { isPressed(key) ? release(key) : press(key); }
         void toggleShiftLock() { shiftLockIsPressed() ? releaseShiftLock() : pressShiftLock(); }
-        // void toggleRestore() { restoreIsPressed() ? releaseRestore() : pressRestore(); }
         void toggleCommodore() { toggle(C64Key::commodore); }
         void toggleCtrl() { toggle(C64Key::control); }
         void toggleRunstop() { toggle(C64Key::runStop); }
@@ -376,16 +367,6 @@ public:
 
         // Auto typing
         void autoType(const string &text);
-
-        void scheduleKeyPress(std::vector<C64Key> keys, double delay);
-        void scheduleKeyPress(C64Key key, double delay) { scheduleKeyPress(std::vector<C64Key>{key}, delay); }
-        void scheduleKeyPress(char c, double delay) { scheduleKeyPress(C64Key::translate(c), delay); }
-
-        void scheduleKeyRelease(std::vector<C64Key> keys, double delay);
-        void scheduleKeyRelease(C64Key key, double delay) { scheduleKeyRelease(std::vector<C64Key>{key}, delay); }
-        void scheduleKeyRelease(char c, double delay) { scheduleKeyRelease(C64Key::translate(c), delay); }
-
-        void scheduleKeyReleaseAll(double delay);
 
         // Deletes all pending actions and clears the keyboard matrix
         void abortAutoTyping();

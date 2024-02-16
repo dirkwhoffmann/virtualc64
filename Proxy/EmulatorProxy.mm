@@ -729,6 +729,11 @@ using namespace vc64;
     [self kb]->release(C64Key(nr));
 }
 
+- (void)releaseKey:(NSInteger)nr delay:(double)delay
+{
+    [self emu]->put(CMD_KEY_RELEASE, KeyCmd { .keycode = (u8)nr, .delay = delay });
+}
+
 - (void)releaseKeyCombination:(NSInteger)nr with: (NSInteger)nr2
 {
     [self kb]->release(C64Key(nr));
@@ -750,6 +755,11 @@ using namespace vc64;
     [self kb]->releaseAll();
 }
 
+- (void)releaseAllWithDelay:(double)delay
+{
+    [self emu]->put(CMD_KEY_RELEASE_ALL, KeyCmd { .delay = delay });
+}
+
 - (void)toggleKey:(NSInteger)nr
 {
     [self kb]->toggle(nr);
@@ -763,26 +773,6 @@ using namespace vc64;
 - (void)toggleShiftLock
 {
     [self kb]->toggleShiftLock();
-}
-
-- (void)scheduleKeyRelease:(NSInteger)nr delay:(double)seconds
-{
-    [self kb]->scheduleKeyRelease(C64Key(nr), seconds);
-}
-
-- (void)scheduleKeyReleases:(NSInteger)nr with:(NSInteger)nr2 delay:(double)seconds
-{
-    [self kb]->scheduleKeyRelease(std::vector<C64Key> { C64Key(nr), C64Key(nr2) }, seconds);
-}
-
-- (void)scheduleKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(double)seconds
-{
-    [self kb]->scheduleKeyRelease(C64Key(row, col), seconds);
-}
-
-- (void)scheduleKeyReleaseAll:(double)seconds
-{
-    [self kb]->scheduleKeyReleaseAll(seconds);
 }
 
 - (void)autoType:(NSString *)text

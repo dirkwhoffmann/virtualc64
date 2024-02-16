@@ -439,19 +439,16 @@
 - (void)pressShiftLock;
 
 - (void)releaseKey:(NSInteger)nr;
+- (void)releaseKey:(NSInteger)nr delay:(double)delay;
 - (void)releaseKeyCombination:(NSInteger)nr with: (NSInteger)nr2;
 - (void)releaseKeyAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)releaseShiftLock;
 - (void)releaseAll;
+- (void)releaseAllWithDelay:(double)delay;
 
 - (void)toggleKey:(NSInteger)nr;
 - (void)toggleKeyAtRow:(NSInteger)row col:(NSInteger)col;
 - (void)toggleShiftLock;
-
-- (void)scheduleKeyRelease:(NSInteger)nr delay:(double)seconds;
-- (void)scheduleKeyReleases:(NSInteger)nr with:(NSInteger)nr2 delay:(double)seconds;
-- (void)scheduleKeyReleaseAtRow:(NSInteger)row col:(NSInteger)col delay:(double)seconds;
-- (void)scheduleKeyReleaseAll:(double)seconds;
 
 - (void)autoType:(NSString *)text;
 
@@ -531,7 +528,7 @@
 //
 
 @interface DiskProxy : CoreComponentProxy { }
-    
+
 @end
 
 

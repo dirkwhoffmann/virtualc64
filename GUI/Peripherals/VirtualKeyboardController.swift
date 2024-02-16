@@ -117,10 +117,10 @@ class VirtualKeyboardController: DialogController {
         refresh()
 
         if autoClose {
-            c64.keyboard.scheduleKeyReleaseAll(2)
+            c64.keyboard.releaseAll(withDelay: 0.25)
             cancelAction(self)
         } else {
-            c64.keyboard.scheduleKeyRelease(nr, delay: 0.25)
+            c64.keyboard.releaseKey(nr, delay: 0.25)
         }
     }
     

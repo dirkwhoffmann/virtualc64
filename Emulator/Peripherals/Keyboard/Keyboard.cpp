@@ -281,42 +281,21 @@ Keyboard::releaseAll()
 void
 Keyboard::autoType(const string &text)
 {
+    auto trigger = c64.cpu.clock;
+
     for (char const &c: text) {
 
-        scheduleKeyPress(c, 0.03);
-        scheduleKeyRelease(c, 0.03);
+        auto keys = C64Key::translate(c);
+
+        for (C64Key &k : keys) {
+            pending.insert(trigger, Cmd { .type = CMD_KEY_PRESS, .key = { .keycode = u8(k.nr) } });
+        }
+        trigger += MSEC(100);
+        for (C64Key &k : keys) {
+            pending.insert(trigger, Cmd { .type = CMD_KEY_RELEASE, .key = { .keycode = u8(k.nr) } });
+        }
+        trigger += MSEC(100);
     }
-}
-
-void
-Keyboard::scheduleKeyPress(std::vector<C64Key> keys, double delay)
-{
-    SYNCHRONIZED
-
-    actions.push(KeyAction(KeyAction::Action::wait, SEC(delay)));
-    actions.push(KeyAction(KeyAction::Action::press, keys));
-
-    if (!c64.hasEvent<SLOT_KEY>()) c64.scheduleImm<SLOT_KEY>(KEY_AUTO_TYPE);
-}
-
-void
-Keyboard::scheduleKeyRelease(std::vector<C64Key> keys, double delay)
-{
-    SYNCHRONIZED
-
-    actions.push(KeyAction(KeyAction::Action::wait, SEC(delay)));
-    actions.push(KeyAction(KeyAction::Action::release, keys));
-
-    if (!c64.hasEvent<SLOT_KEY>()) c64.scheduleImm<SLOT_KEY>(KEY_AUTO_TYPE);
-}
-
-void
-Keyboard::scheduleKeyReleaseAll(double delay)
-{
-    SYNCHRONIZED
-
-    actions.push(KeyAction(KeyAction::Action::wait, SEC(delay)));
-    actions.push(KeyAction(KeyAction::Action::releaseAll, {}));
 
     if (!c64.hasEvent<SLOT_KEY>()) c64.scheduleImm<SLOT_KEY>(KEY_AUTO_TYPE);
 }
@@ -326,11 +305,9 @@ Keyboard::abortAutoTyping()
 {
     SYNCHRONIZED
 
-    if (!actions.empty()) {
+    if (!pending.isEmpty()) {
 
-        std::queue<KeyAction> empty;
-        std::swap(actions, empty);
-
+        pending.clear();
         releaseAll();
     }
 }
@@ -338,11 +315,22 @@ Keyboard::abortAutoTyping()
 void 
 Keyboard::processCommand(const Cmd &cmd)
 {
+    trace(true, "processCommand %s (%f sec)\n", CmdTypeEnum::key(cmd.type), cmd.key.delay);
+
+    if (cmd.key.delay > 0) {
+
+        pending.insert(cpu.clock + SEC(cmd.key.delay),
+                       Cmd { .type = cmd.type, .key = KeyCmd { .keycode = cmd.key.keycode }} );
+        c64.scheduleImm<SLOT_KEY>(KEY_AUTO_TYPE);
+        return;
+    }
+
     switch (cmd.type) {
 
-        case CMD_KEY_PRESS:     press(C64Key(cmd.key.keycode)); break;
-        case CMD_KEY_RELEASE:   release(C64Key(cmd.key.keycode)); break;
-        case CMD_KEY_TOGGLE:    toggle(C64Key(cmd.key.keycode)); break;
+        case CMD_KEY_PRESS:         press(C64Key(cmd.key.keycode)); break;
+        case CMD_KEY_RELEASE:       release(C64Key(cmd.key.keycode)); break;
+        case CMD_KEY_RELEASE_ALL:   releaseAll(); break;
+        case CMD_KEY_TOGGLE:        toggle(C64Key(cmd.key.keycode)); break;
 
         default:
             fatalError;
@@ -355,51 +343,25 @@ Keyboard::processKeyEvent(EventID id)
     SYNCHRONIZED
 
     // Process all pending events
-    while (!actions.empty()) {
+    while (!pending.isEmpty()) {
 
-        auto type = actions.front().type;
-        auto keys = actions.front().keys;
-        auto delay = actions.front().delay;
+        if (pending.keys[pending.r] > c64.cpu.clock) break;
 
-        actions.pop();
-
-        switch (type) {
-
-            case KeyAction::Action::wait:
-
-                debug(KBD_DEBUG, "Waiting %lld cycles\n", delay);
-                c64.rescheduleRel<SLOT_KEY>(delay);
-                return;
-
-            case KeyAction::Action::press:
-
-                for (auto &key: keys) {
-
-                    debug(KBD_DEBUG, "Pressing %ld\n", key.nr);
-                    press(key);
-                    msgQueue.put(MSG_KB_AUTO_PRESS, key.nr);
-                }
-                continue;
-
-            case KeyAction::Action::release:
-
-                for (auto &key: keys) {
-
-                    debug(KBD_DEBUG, "Releasing %ld\n", key.nr);
-                    msgQueue.put(MSG_KB_AUTO_RELEASE, key.nr);
-                    release(key);
-                }
-                continue;
-
-            case KeyAction::Action::releaseAll:
-
-                debug(KBD_DEBUG, "Releasing all\n");
-                releaseAll();
-                msgQueue.put(MSG_KB_AUTO_RELEASE, -1);
-                continue;
-        }
+        auto cmd = pending.read();
+        trace(true, "Processing key %d (%ld remaining)\n", cmd.key.keycode, pending.count());
+        processCommand(cmd);
     }
 
-    releaseAll();
-    c64.cancel<SLOT_KEY>();
+    // Schedule next event
+    if (pending.isEmpty()) {
+
+        printf("Canceling KBD slot\n");
+        releaseAll();
+        c64.cancel<SLOT_KEY>();
+
+    } else {
+
+        printf("Rescheduling at %lld\n", pending.keys[pending.r]);
+        c64.rescheduleAbs<SLOT_KEY>(pending.keys[pending.r]);
+    }
 }

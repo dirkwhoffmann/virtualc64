@@ -119,7 +119,7 @@ struct C64Key {
     // Initializing
     //
     
-    C64Key(isize nr);
+    C64Key(isize nr = 0);
     C64Key(isize row, isize col);
 
     

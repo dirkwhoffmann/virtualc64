@@ -761,16 +761,6 @@ void VirtualC64::KBD_API::releaseAll() { keyboard.releaseAll(); }
 // Auto typing
 void VirtualC64::KBD_API::autoType(const string &text) { keyboard.autoType(text); }
 
-void VirtualC64::KBD_API::scheduleKeyPress(std::vector<C64Key> keys, double delay) {
-    keyboard.scheduleKeyPress(keys, delay);
-}
-void VirtualC64::KBD_API::scheduleKeyRelease(std::vector<C64Key> keys, double delay) {
-    keyboard.scheduleKeyRelease(keys, delay);
-}
-void VirtualC64::KBD_API::scheduleKeyReleaseAll(double delay) {
-    keyboard.scheduleKeyReleaseAll(delay);
-}
-
 // Deletes all pending actions and clears the keyboard matrix
 void VirtualC64::KBD_API::abortAutoTyping() { keyboard.abortAutoTyping(); }
 
