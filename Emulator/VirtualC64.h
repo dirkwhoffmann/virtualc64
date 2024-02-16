@@ -507,14 +507,16 @@ public:
         using API::API;
 
         const char *text();
+        isize cursorRel();
+
         void press(RetroShellKey key, bool shift = false);
         void press(char c);
         void press(const string &s);
 
-        isize cursorRel();
         void execScript(std::stringstream &ss);
         void execScript(const std::ifstream &fs);
         void execScript(const string &contents);
+
         void setStream(std::ostream &os);
 
     } retroShell;

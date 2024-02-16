@@ -904,7 +904,13 @@ VirtualC64::RSHELL_API::text()
     return retroShell.text();
 }
 
-void 
+isize
+VirtualC64::RSHELL_API::cursorRel()
+{
+    return retroShell.cursorRel();
+}
+
+void
 VirtualC64::RSHELL_API::press(RetroShellKey key, bool shift)
 {
     retroShell.press(key, shift); 
@@ -920,12 +926,6 @@ void
 VirtualC64::RSHELL_API::press(const string &s)
 {
     retroShell.press(s);
-}
-
-isize 
-VirtualC64::RSHELL_API::cursorRel()
-{
-    return retroShell.cursorRel();
 }
 
 void 

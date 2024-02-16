@@ -307,20 +307,15 @@ RetroShell::press(RetroShellKey key, bool shift)
 
         case RSKEY_RETURN:
 
-            if (shift) {
+            *this << '\r' << getPrompt() << input << '\n';
+            execUserCommand(input);
+            input = "";
+            cursor = 0;
+            break;
 
-                interpreter.switchInterpreter();
+        case RSKEY_SHIFT_RETURN:
 
-            } else {
-
-                SYNCHRONIZED
-
-                *this << '\r' << getPrompt() << input << '\n';
-                commands.push_back({ 0, input});
-                input = "";
-                cursor = 0;
-                emulator.put(Cmd(CMD_RSH_EXECUTE));
-            }
+            interpreter.switchInterpreter();
             break;
 
         case RSKEY_CR:
@@ -389,7 +384,42 @@ RetroShell::cursorRel()
     return cursor - (isize)input.length();
 }
 
-void 
+void
+RetroShell::execUserCommand(const string &command)
+{
+    if (command.empty()) {
+
+        if (interpreter.inCommandShell()) {
+
+            printHelp();
+
+        } else {
+
+            if (c64.isRunning()) {
+
+                emulator.pause();
+
+            } else {
+
+                c64.stepInto();
+                printState();
+            }
+        }
+
+    } else {
+
+        // Add the command to the history buffer
+        history.back() = { command, (isize)command.size() };
+        history.push_back( { "", 0 } );
+        ipos = (isize)history.size() - 1;
+
+        // Feed the command into the command queue
+        commands.push_back({ 0, input});
+        emulator.put(Cmd(CMD_RSH_EXECUTE));
+    }
+}
+
+void
 RetroShell::exec()
 {
     SYNCHRONIZED

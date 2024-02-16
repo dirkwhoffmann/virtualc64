@@ -187,6 +187,9 @@ public:
 
 public:
 
+    // Main entry point for executing commands that were typed in by the user
+    void execUserCommand(const string &command);
+
     // Executes all pending commands
     void exec() throws;
 

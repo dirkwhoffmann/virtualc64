@@ -31,6 +31,7 @@
 #import "MsgQueueTypes.h"
 #import "ParCableTypes.h"
 #import "PowerSupplyTypes.h"
+#import "RetroShellTypes.h"
 #import "SIDTypes.h"
 #import "VICIITypes.h"
 
@@ -622,19 +623,8 @@ exception:(ExceptionWrapper *)ex;
 @property (readonly) NSInteger cursorRel;
 
 - (NSString *)getText;
-- (void)pressUp;
-- (void)pressDown;
-- (void)pressLeft;
-- (void)pressRight;
-- (void)pressHome;
-- (void)pressEnd;
-- (void)pressBackspace;
-- (void)pressDelete;
-- (void)pressCut;
-- (void)pressReturn;
-- (void)pressShiftReturn;
-- (void)pressTab;
 - (void)pressKey:(char)c;
+- (void)pressSpecialKey:(RetroShellKey)key;
 
 @end
 

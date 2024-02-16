@@ -1240,69 +1240,14 @@ using namespace vc64;
 	return str ? @(str) : nullptr;
 }
 
-- (void)pressUp
-{
-	[self shell]->press(RSKEY_UP);
-}
-
-- (void)pressDown
-{
-	[self shell]->press(RSKEY_DOWN);
-}
-
-- (void)pressLeft
-{
-	[self shell]->press(RSKEY_LEFT);
-}
-
-- (void)pressRight
-{
-	[self shell]->press(RSKEY_RIGHT);
-}
-
-- (void)pressHome
-{
-	[self shell]->press(RSKEY_HOME);
-}
-
-- (void)pressEnd
-{
-	[self shell]->press(RSKEY_END);
-}
-
-- (void)pressBackspace
-{
-	[self shell]->press(RSKEY_BACKSPACE);
-}
-
-- (void)pressDelete
-{
-	[self shell]->press(RSKEY_DEL);
-}
-
-- (void)pressCut
-{
-    [self shell]->press(RSKEY_CUT);
-}
-
-- (void)pressReturn
-{
-	[self shell]->press(RSKEY_RETURN);
-}
-
-- (void)pressShiftReturn
-{
-    [self shell]->press(RSKEY_RETURN, true);
-}
-
-- (void)pressTab
-{
-	[self shell]->press(RSKEY_TAB);
-}
-
 - (void)pressKey:(char)c
 {
 	[self shell]->press(c);
+}
+
+- (void)pressSpecialKey:(RetroShellKey)key
+{
+    [self shell]->press(key);
 }
 
 @end
