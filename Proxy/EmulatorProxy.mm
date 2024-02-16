@@ -2168,24 +2168,17 @@ using namespace vc64;
 
 - (void)powerOn:(ExceptionWrapper *)ex
 {
-    /*
-    try { [self emu]->powerOn(); }
-    catch (VC64Error &error) { [ex save:error]; }
-    */
     [self send:CMD_POWER_ON];
 }
 
 - (void)powerOff
 {
-    /*
-    [self emu]->powerOff();
-    */
     [self send:CMD_POWER_OFF];
 }
 
 - (EmulatorInfo)info
 {
-    return [self emu]->getInfo();
+    return [self emu]->getState();
 }
 
 - (EmulatorStats)stats

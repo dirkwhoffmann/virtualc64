@@ -46,7 +46,7 @@ Emulator::initialize()
 }
 
 void 
-Emulator::doinspect(EmulatorInfo &result) const
+Emulator::recordState(EmulatorInfo &result) const
 {
     result.state = state;
     result.refreshRate = isize(refreshRate());
@@ -58,15 +58,11 @@ Emulator::doinspect(EmulatorInfo &result) const
     result.tracking = isTracking();
 }
 
-EmulatorStats
-Emulator::getStats() const
+void
+Emulator::recordStats(EmulatorStats &result) const
 {
-    EmulatorStats result;
-
     result.cpuLoad = cpuLoad;
-    result.fps = fps;
-    
-    return result;
+    result.fps = fps;    
 }
 
 void

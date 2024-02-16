@@ -23,7 +23,7 @@ class VirtualC64;
 
 namespace vc64 {
 
-class Emulator : public Thread, public Inspectable<EmulatorInfo> {
+class Emulator : public Thread, public Inspectable<EmulatorInfo, EmulatorStats> {
 
     friend class API;
     friend class ::VirtualC64;
@@ -65,14 +65,15 @@ private:
 
 
     //
-    // Analyzing
+    // Methods from Inspectable
     //
 
 public:
 
-    void doinspect(EmulatorInfo &result) const override;
+    void recordState(EmulatorInfo &result) const override;
+    void recordStats(EmulatorStats &result) const override;
 
-    EmulatorStats getStats() const;
+    // EmulatorStats getStats() const;
 
 
     //

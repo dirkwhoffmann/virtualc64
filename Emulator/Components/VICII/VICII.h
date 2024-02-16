@@ -22,7 +22,7 @@
 
 namespace vc64 {
 
-class VICII : public SubComponent, public Inspectable<VICIIInfo> {
+class VICII : public SubComponent, public Inspectable<VICIIInfo, Void> {
 
     friend class C64Memory;
     friend class DmaDebugger;

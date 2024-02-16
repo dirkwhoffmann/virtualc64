@@ -47,7 +47,7 @@ public:
 
     // Expose portions of the Emulator API (clean this up)
     using vc64::Emulator::defaults;
-    using vc64::Emulator::getInfo;
+    using vc64::Emulator::getState;
     using vc64::Emulator::getStats;
 
     //

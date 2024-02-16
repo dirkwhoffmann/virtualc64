@@ -35,6 +35,8 @@ enum class Category
     Tod,
 };
 
+struct Void { };
+
 class Dumpable {
 
 public:
@@ -46,10 +48,11 @@ public:
     void dump(Category category) const { dump(category, std::cout); }
 };
 
-template <typename T>
+template <typename T1, typename T2>
 class Inspectable : public Dumpable {
 
-    mutable T info;
+    mutable T1 info;
+    mutable T2 stats;
 
 public:
 
@@ -57,8 +60,11 @@ public:
     virtual ~Inspectable() { }
 
 
-    virtual void doinspect(T &result) const { };
-    T &getInfo() const { doinspect(info); return info; }
+    virtual void recordState(T1 &result) const { };
+    virtual void recordStats(T2 &result) const { };
+
+    T1 &getState() const { recordState(info); return info; }
+    T2 &getStats() const { recordStats(stats); return stats; }
 };
 
 }

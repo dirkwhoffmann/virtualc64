@@ -21,7 +21,7 @@ using namespace vc64::peddle;
 
 namespace vc64 {
 
-class CPU : public Peddle, public Inspectable<CPUInfo> {
+class CPU : public Peddle, public Inspectable<CPUInfo, Void> {
 
     friend class C64;
     friend class CPUInspector;

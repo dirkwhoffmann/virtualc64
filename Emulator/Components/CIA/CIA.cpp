@@ -106,44 +106,44 @@ CIA::setConfigItem(Option option, i64 value)
 }
 
 void
-CIA::_inspect() const
+CIA::recordState(CIAInfo &result) const
 {
     {   SYNCHRONIZED
         
-        info.portA.port = computePA();
-        info.portA.reg = PRA;
-        info.portA.dir = DDRA;
+        result.portA.port = computePA();
+        result.portA.reg = PRA;
+        result.portA.dir = DDRA;
         
-        info.portB.port = computePB();
-        info.portB.reg = PRB;
-        info.portB.dir = DDRB;
+        result.portB.port = computePB();
+        result.portB.reg = PRB;
+        result.portB.dir = DDRB;
         
-        info.timerA.count = LO_HI(spypeek(0x04), spypeek(0x05));
-        info.timerA.latch = latchA;
-        info.timerA.running = (delay & CIACountA3);
-        info.timerA.toggle = CRA & 0x04;
-        info.timerA.pbout = CRA & 0x02;
-        info.timerA.oneShot = CRA & 0x08;
+        result.timerA.count = LO_HI(spypeek(0x04), spypeek(0x05));
+        result.timerA.latch = latchA;
+        result.timerA.running = (delay & CIACountA3);
+        result.timerA.toggle = CRA & 0x04;
+        result.timerA.pbout = CRA & 0x02;
+        result.timerA.oneShot = CRA & 0x08;
         
-        info.timerB.count = LO_HI(spypeek(0x06), spypeek(0x07));
-        info.timerB.latch = latchB;
-        info.timerB.running = (delay & CIACountB3);
-        info.timerB.toggle = CRB & 0x04;
-        info.timerB.pbout = CRB & 0x02;
-        info.timerB.oneShot = CRB & 0x08;
+        result.timerB.count = LO_HI(spypeek(0x06), spypeek(0x07));
+        result.timerB.latch = latchB;
+        result.timerB.running = (delay & CIACountB3);
+        result.timerB.toggle = CRB & 0x04;
+        result.timerB.pbout = CRB & 0x02;
+        result.timerB.oneShot = CRB & 0x08;
         
-        info.sdr = sdr;
-        info.ssr = sdr;  // ssr not yet implemented
-        info.icr = icr;
-        info.imr = imr;
-        info.intLine = INT;
+        result.sdr = sdr;
+        result.ssr = sdr;  // ssr not yet implemented
+        result.icr = icr;
+        result.imr = imr;
+        result.intLine = INT;
         
-        info.tod = tod.info;
-        info.todIntEnable= imr & 0x04;
+        result.tod = tod.info;
+        result.todIntEnable= imr & 0x04;
         
-        info.idleSince = idleSince();
-        info.idleTotal = idleTotal() + info.idleSince;
-        info.idlePercentage =  cpu.clock ? (double)info.idleTotal / (double)cpu.clock : 100.0;
+        result.idleSince = idleSince();
+        result.idleTotal = idleTotal() + result.idleSince;
+        result.idlePercentage =  cpu.clock ? (double)result.idleTotal / (double)cpu.clock : 100.0;
     }
 }
 

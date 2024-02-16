@@ -35,7 +35,7 @@ namespace vc64 {
  *  As well read the Commodore 64 Programmers Reference Guide pages 260-267.
  */
 
-class ExpansionPort : public SubComponent, public Inspectable<CartridgeInfo> {
+class ExpansionPort : public SubComponent, public Inspectable<CartridgeInfo, Void> {
     
     // Attached cartridge
     std::unique_ptr<Cartridge> cartridge;

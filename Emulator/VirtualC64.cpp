@@ -575,7 +575,7 @@ CIAInfo
 VirtualC64::CIA_API::getInfo() const
 {
     assert(isUserThread());
-    return cia.getInfo();
+    return cia.getState();
 }
 
 

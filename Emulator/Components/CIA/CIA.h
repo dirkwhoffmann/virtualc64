@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-class CIA : public SubComponent, public Inspectable<CIAInfo> {
+class CIA : public SubComponent, public Inspectable<CIAInfo, Void> {
     
     friend class TOD;
     friend class ParCable;
@@ -112,10 +112,10 @@ class CIA : public SubComponent, public Inspectable<CIAInfo> {
 
     // Current configuration
     CIAConfig config = { };
-    
+
     // Result of the latest inspection
-    mutable CIAInfo info = { };
-    
+    // mutable CIAInfo info = { };
+
     
     //
     // Sub components
@@ -304,7 +304,7 @@ private:
 protected:
     
     void _reset(bool hard) override;
-    void _inspect() const override;
+    // void _inspect() const override;
 
 private:
     
@@ -359,12 +359,13 @@ private:
     
     
     //
-    // Analyzing
+    // Methods from Inspectable
     //
 
 public:
     
-    CIAInfo getInfo() const { return CoreComponent::getInfo(info); }
+    void recordState(CIAInfo &result) const override;
+    // void recordStats(CIAStats &result) const override;
 
     
     //
