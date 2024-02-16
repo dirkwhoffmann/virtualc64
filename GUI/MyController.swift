@@ -455,9 +455,6 @@ extension MyController {
         case .CRT_ATTACHED:
             refreshStatusBar()
 
-        case .CART_SWITCH:
-            break
-
         case .KB_AUTO_RELEASE, .KB_AUTO_PRESS:
             if virtualKeyboard?.window?.isVisible == true {
                 virtualKeyboard!.refresh()

@@ -122,6 +122,9 @@ class KeyboardController: NSObject {
     
     func keyDown(with macKey: MacKey) {
 
+        // Abort auto-typing (if active)
+        keyboard.abortAutoTyping()
+        
         // Check if this key is used to emulate a game device
         if parent.gamePad1?.processKeyDownEvent(macKey: macKey) == true {
             if pref.disconnectJoyKeys { return }

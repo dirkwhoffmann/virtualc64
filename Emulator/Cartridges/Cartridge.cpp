@@ -623,5 +623,4 @@ void
 Cartridge::setSwitch(isize pos)
 {
     switchPos = pos;
-    c64.msgQueue.put(MSG_CART_SWITCH);
 }

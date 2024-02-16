@@ -272,8 +272,6 @@ ExpansionPort::attachCartridge(Cartridge *c)
         cartridge->reset(true);
         
         msgQueue.put(MSG_CRT_ATTACHED, 1);
-        if (cartridge->getTraits().switches) msgQueue.put(MSG_CART_SWITCH);
-
         debug(EXP_DEBUG, "Cartridge attached to expansion port");
         
     }

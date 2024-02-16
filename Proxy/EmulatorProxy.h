@@ -431,6 +431,7 @@
 @interface KeyboardProxy : SubComponentProxy { }
 
 - (BOOL)isPressed:(NSInteger)nr;
+
 - (void)pressKey:(NSInteger)nr;
 - (void)releaseKey:(NSInteger)nr;
 - (void)releaseKey:(NSInteger)nr delay:(double)delay;
@@ -438,7 +439,9 @@
 - (void)releaseAllWithDelay:(double)delay;
 - (void)toggleKey:(NSInteger)nr;
 - (void)toggleKeyAtRow:(NSInteger)row col:(NSInteger)col;
+
 - (void)autoType:(NSString *)text;
+- (void)abortAutoTyping;
 
 @end
 

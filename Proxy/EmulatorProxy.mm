@@ -742,6 +742,11 @@ using namespace vc64;
     [self kb]->autoType(string([text UTF8String]));
 }
 
+- (void)abortAutoTyping
+{
+    [self kb]->abortAutoTyping();
+}
+
 @end
 
 

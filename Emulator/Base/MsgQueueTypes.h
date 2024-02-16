@@ -96,7 +96,6 @@ enum_long(MSG_TYPE)
 
     // Peripherals (Expansion port)
     MSG_CRT_ATTACHED,
-    MSG_CART_SWITCH,
 
     // Peripherals (Keyboard)
     MSG_KB_AUTO_PRESS,
@@ -199,7 +198,6 @@ struct MsgTypeEnum : util::Reflection<MsgType, MsgType> {
             case MSG_VC1530_COUNTER:        return "VC1530_COUNTER";
                 
             case MSG_CRT_ATTACHED:          return "CRT_ATTACHED";
-            case MSG_CART_SWITCH:           return "CART_SWITCH";
                 
             case MSG_KB_AUTO_PRESS:         return "KB_AUTO_PRESS";
             case MSG_KB_AUTO_RELEASE:       return "KB_AUTO_RELEASE";
