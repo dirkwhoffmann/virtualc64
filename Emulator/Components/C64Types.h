@@ -177,7 +177,7 @@ enum_i8(EventID)
     INS_CPU,
     INS_MEM,
     INS_CIA,
-    INS_VIC,
+    INS_VICII,
     INS_SID,
     INS_EVENTS,
     INS_EVENT_COUNT
@@ -221,7 +221,7 @@ enum_long(INSPECTION_TARGET)
     INSPECTION_CPU,
     INSPECTION_CIA,
     INSPECTION_MEM,
-    INSPECTION_VIC,
+    INSPECTION_VICII,
     INSPECTION_SID,
     INSPECTION_EVENTS
 
@@ -245,7 +245,7 @@ struct InspectionTargetEnum : util::Reflection<InspectionTargetEnum, InspectionT
             case INSPECTION_CPU:    return "CPU";
             case INSPECTION_CIA:    return "CIA";
             case INSPECTION_MEM:    return "MEM";
-            case INSPECTION_VIC:    return "VIC";
+            case INSPECTION_VICII:  return "VICII";
             case INSPECTION_SID:    return "SID";
             case INSPECTION_EVENTS: return "EVENTS";
         }

@@ -22,7 +22,7 @@
 
 namespace vc64 {
 
-class VICII : public SubComponent, public Inspectable<VICIIInfo, Void> {
+class VICII : public SubComponent, public Inspectable<VICIIInfo, VICIIStats> {
 
     friend class C64Memory;
     friend class DmaDebugger;
@@ -31,11 +31,11 @@ class VICII : public SubComponent, public Inspectable<VICIIInfo, Void> {
     VICIIConfig config = { };
 
     // Result of the latest inspection
-    mutable VICIIInfo info = { };
+    // mutable VICIIInfo info = { };
     mutable SpriteInfo spriteInfo[8] = { };
     
     // Statistics
-    VICIIStats stats = { };
+    // VICIIStats stats = { };
 
     // Chip properties (derived from config.revision)
     bool isPAL;
@@ -609,7 +609,6 @@ private:
 private:
     
     void _reset(bool hard) override;
-    void _inspect() const override;
     void _trackOn() override;
     void _trackOff() override;
 
@@ -706,7 +705,23 @@ private:
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
-    
+
+    //
+    // Methods from Inspectable
+    //
+
+private:
+
+    bool stateIsDirty() const override;
+    void recordState(VICIIInfo &result) const override;
+    void recordStats(VICIIStats &result) const override;
+    void clearStats();
+
+public:
+
+    SpriteInfo getSpriteInfo(isize nr);
+
+
     //
     // Configuring
     //
@@ -726,21 +741,6 @@ private:
     
     void setRevision(VICIIRevision revision);
 
-
-    //
-    // Analyzing
-    //
-    
-public:
-    
-    VICIIInfo getInfo() const { return CoreComponent::getInfo(info); }
-    SpriteInfo getSpriteInfo(isize nr);
-    VICIIStats getStats() { return stats; }
-    
-private:
-    
-    void clearStats();
-    
     
     //
     // Deriving chip properties

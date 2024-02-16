@@ -145,6 +145,85 @@ VICII::getDefaultConfig()
     return defaults;
 }
 
+bool
+VICII::stateIsDirty() const
+{
+    return c64.getInspectionTarget() != INSPECTION_VICII || !isRunning();
+}
+
+void
+VICII::recordState(VICIIInfo &result) const
+{
+    {   SYNCHRONIZED
+
+        u8 ctrl1 = reg.current.ctrl1;
+        u8 ctrl2 = reg.current.ctrl2;
+
+        result.scanline = c64.scanline;
+        result.rasterCycle = c64.rasterCycle;
+        result.yCounter = yCounter;
+        result.xCounter = xCounter;
+        result.vc = vc;
+        result.vcBase = vcBase;
+        result.rc = rc;
+        result.vmli = vmli;
+
+        result.ctrl1 = ctrl1;
+        result.ctrl2 = ctrl2;
+        result.dy = ctrl1 & 0x07;
+        result.dx = ctrl2 & 0x07;
+        result.denBit = DENbit();
+        result.badLine = badLine;
+        result.displayState = displayState;
+        result.vblank = vblank;
+        result.screenGeometry = getScreenGeometry();
+        result.frameFF = flipflops.current;
+        result.displayMode = reg.current.mode;
+        result.borderColor = reg.current.colors[COLREG_BORDER];
+        result.bgColor0 = reg.current.colors[COLREG_BG0];
+        result.bgColor1 = reg.current.colors[COLREG_BG1];
+        result.bgColor2 = reg.current.colors[COLREG_BG2];
+        result.bgColor3 = reg.current.colors[COLREG_BG3];
+
+        result.memSelect = memSelect;
+        result.ultimax = ultimax;
+        result.memoryBankAddr = bankAddr;
+        result.screenMemoryAddr = (u16)(VM13VM12VM11VM10() << 6);
+        result.charMemoryAddr = (CB13CB12CB11() << 10) % 0x4000;
+
+        result.irqLine = rasterIrqLine;
+        result.imr = imr;
+        result.irr = irr;
+
+        result.latchedLPX = latchedLPX;
+        result.latchedLPY = latchedLPY;
+        result.lpLine = lpLine;
+        result.lpIrqHasOccurred = lpIrqHasOccurred;
+
+        for (int i = 0; i < 8; i++) {
+
+            spriteInfo[i].enabled = GET_BIT(reg.current.sprEnable, i);
+            spriteInfo[i].x = reg.current.sprX[i];
+            spriteInfo[i].y = reg.current.sprY[i];
+            spriteInfo[i].color = reg.current.colors[COLREG_SPR0 + i];
+            spriteInfo[i].extraColor1 = reg.current.colors[COLREG_SPR_EX1];
+            spriteInfo[i].extraColor2 = reg.current.colors[COLREG_SPR_EX2];
+            spriteInfo[i].multicolor = GET_BIT(reg.current.sprMC, i);
+            spriteInfo[i].expandX = GET_BIT(reg.current.sprExpandX, i);
+            spriteInfo[i].expandY = GET_BIT(reg.current.sprExpandY, i);
+            spriteInfo[i].priority = GET_BIT(reg.current.sprPriority, i);
+            spriteInfo[i].ssCollision = GET_BIT(spriteSpriteCollision, i);
+            spriteInfo[i].sbCollision = GET_BIT(spriteBackgroundColllision, i);
+        }
+    }
+}
+
+void 
+VICII::recordStats(VICIIStats &result) const
+{
+
+}
+
 void
 VICII::resetConfig()
 {
@@ -336,72 +415,13 @@ VICII::setRevision(VICIIRevision revision)
     msgQueue.put(isPAL ? MSG_PAL : MSG_NTSC);
 }
 
+/*
 void
 VICII::_inspect() const
 {
-    {   SYNCHRONIZED
-        
-        u8 ctrl1 = reg.current.ctrl1;
-        u8 ctrl2 = reg.current.ctrl2;
-        
-        info.scanline = c64.scanline;
-        info.rasterCycle = c64.rasterCycle;
-        info.yCounter = yCounter;
-        info.xCounter = xCounter;
-        info.vc = vc;
-        info.vcBase = vcBase;
-        info.rc = rc;
-        info.vmli = vmli;
-        
-        info.ctrl1 = ctrl1;
-        info.ctrl2 = ctrl2;
-        info.dy = ctrl1 & 0x07;
-        info.dx = ctrl2 & 0x07;
-        info.denBit = DENbit();
-        info.badLine = badLine;
-        info.displayState = displayState;
-        info.vblank = vblank;
-        info.screenGeometry = getScreenGeometry();
-        info.frameFF = flipflops.current;
-        info.displayMode = reg.current.mode;
-        info.borderColor = reg.current.colors[COLREG_BORDER];
-        info.bgColor0 = reg.current.colors[COLREG_BG0];
-        info.bgColor1 = reg.current.colors[COLREG_BG1];
-        info.bgColor2 = reg.current.colors[COLREG_BG2];
-        info.bgColor3 = reg.current.colors[COLREG_BG3];
-        
-        info.memSelect = memSelect;
-        info.ultimax = ultimax;
-        info.memoryBankAddr = bankAddr;
-        info.screenMemoryAddr = (u16)(VM13VM12VM11VM10() << 6);
-        info.charMemoryAddr = (CB13CB12CB11() << 10) % 0x4000;
-        
-        info.irqLine = rasterIrqLine;
-        info.imr = imr;
-        info.irr = irr;
-        
-        info.latchedLPX = latchedLPX;
-        info.latchedLPY = latchedLPY;
-        info.lpLine = lpLine;
-        info.lpIrqHasOccurred = lpIrqHasOccurred;
-        
-        for (int i = 0; i < 8; i++) {
-            
-            spriteInfo[i].enabled = GET_BIT(reg.current.sprEnable, i);
-            spriteInfo[i].x = reg.current.sprX[i];
-            spriteInfo[i].y = reg.current.sprY[i];
-            spriteInfo[i].color = reg.current.colors[COLREG_SPR0 + i];
-            spriteInfo[i].extraColor1 = reg.current.colors[COLREG_SPR_EX1];
-            spriteInfo[i].extraColor2 = reg.current.colors[COLREG_SPR_EX2];
-            spriteInfo[i].multicolor = GET_BIT(reg.current.sprMC, i);
-            spriteInfo[i].expandX = GET_BIT(reg.current.sprExpandX, i);
-            spriteInfo[i].expandY = GET_BIT(reg.current.sprExpandY, i);
-            spriteInfo[i].priority = GET_BIT(reg.current.sprPriority, i);
-            spriteInfo[i].ssCollision = GET_BIT(spriteSpriteCollision, i);
-            spriteInfo[i].sbCollision = GET_BIT(spriteBackgroundColllision, i);
-        }
-    }
+
 }
+*/
 
 void
 VICII::_dump(Category category, std::ostream& os) const

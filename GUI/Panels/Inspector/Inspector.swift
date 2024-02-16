@@ -493,7 +493,7 @@ extension Inspector: NSTabViewDelegate {
             case "CPU":     c64.inspectionTarget = .CPU
             case "Memory":  c64.inspectionTarget = .MEM
             case "CIA":     c64.inspectionTarget = .CIA
-            case "VICII":   c64.inspectionTarget = .VIC
+            case "VICII":   c64.inspectionTarget = .VICII
             case "SID":     c64.inspectionTarget = .SID
             case "Events":  c64.inspectionTarget = .EVENTS
 

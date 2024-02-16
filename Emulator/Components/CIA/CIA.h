@@ -364,8 +364,8 @@ private:
 
 public:
     
+    bool stateIsDirty() const override;
     void recordState(CIAInfo &result) const override;
-    // void recordStats(CIAStats &result) const override;
 
     
     //

@@ -158,7 +158,7 @@ C64::eventName(EventSlot slot, EventID id)
                 case INS_CPU:       return "INS_CPU";
                 case INS_MEM:       return "INS_MEM";
                 case INS_CIA:       return "INS_CIA";
-                case INS_VIC:       return "INS_VIC";
+                case INS_VICII:     return "INS_VICII";
                 case INS_SID:       return "INS_SID";
                 case INS_EVENTS:    return "INS_EVENTS";
                 default:            return "*** INVALID ***";
@@ -366,7 +366,7 @@ C64::getInspectionTarget() const
         case INS_CPU:     return INSPECTION_CPU;
         case INS_MEM:     return INSPECTION_MEM;
         case INS_CIA:     return INSPECTION_CIA;
-        case INS_VIC:     return INSPECTION_VIC;
+        case INS_VICII:   return INSPECTION_VICII;
         case INS_SID:     return INSPECTION_SID;
         case INS_EVENTS:  return INSPECTION_EVENTS;
 
@@ -390,7 +390,7 @@ C64::setInspectionTarget(InspectionTarget target, Cycle trigger)
             case INSPECTION_CPU:     id = INS_CPU; break;
             case INSPECTION_MEM:     id = INS_MEM; break;
             case INSPECTION_CIA:     id = INS_CIA; break;
-            case INSPECTION_VIC:     id = INS_VIC; break;
+            case INSPECTION_VICII:   id = INS_VICII; break;
             case INSPECTION_SID:     id = INS_SID; break;
             case INSPECTION_EVENTS:  id = INS_EVENTS; break;
 
@@ -1005,8 +1005,8 @@ C64::processINSEvent(EventID id)
         case INS_C64:       inspect(); break;
         case INS_CPU:       cpu.inspect(); break;
         case INS_MEM:       mem.inspect(); break;
-        case INS_CIA:       cia1.inspect(); cia2.inspect(); break;
-        case INS_VIC:       vic.inspect(); break;
+        case INS_CIA:       cia1.autoInspect(); cia2.autoInspect(); break;
+        case INS_VICII:     vic.autoInspect(); break;
         case INS_SID:       muxer.inspect(); break;
         case INS_EVENTS:    _inspect(); break;
 

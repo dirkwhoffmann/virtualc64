@@ -592,7 +592,7 @@ VirtualC64::VICII_API::getConfig() const
 VICIIInfo
 VirtualC64::VICII_API::getInfo() const
 {
-    return vic.getInfo();
+    return vic.getState();
 }
 
 SpriteInfo

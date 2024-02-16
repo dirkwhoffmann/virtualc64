@@ -51,6 +51,8 @@ public:
 template <typename T1, typename T2>
 class Inspectable : public Dumpable {
 
+protected:
+    
     mutable T1 info;
     mutable T2 stats;
 
@@ -58,13 +60,27 @@ public:
 
     Inspectable() { }
     virtual ~Inspectable() { }
+    void autoInspect() const { recordState(info); }
 
+    T1 &getState() const {
+
+        if (stateIsDirty()) recordState(info);
+        return info;
+    }
+
+    T2 &getStats() const {
+
+        if (statsIsDirty()) recordStats(stats);
+        return stats;
+    }
+
+private:
+
+    virtual bool stateIsDirty() const { return true; }
+    virtual bool statsIsDirty() const { return true; }
 
     virtual void recordState(T1 &result) const { };
     virtual void recordStats(T2 &result) const { };
-
-    T1 &getState() const { recordState(info); return info; }
-    T2 &getStats() const { recordStats(stats); return stats; }
 };
 
 }

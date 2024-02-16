@@ -105,6 +105,12 @@ CIA::setConfigItem(Option option, i64 value)
     }
 }
 
+bool 
+CIA::stateIsDirty() const
+{
+    return c64.getInspectionTarget() != INSPECTION_C64 || !isRunning();
+}
+
 void
 CIA::recordState(CIAInfo &result) const
 {
