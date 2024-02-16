@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "C64.h"
+#include "Emulator.h"
 
 void
 FinalIII::_dump(Category category, std::ostream& os) const
@@ -86,6 +86,7 @@ void
 FinalIII::nmiDidTrigger()
 {
     if (freeezeButtonIsPressed) {
+
         trace(CRT_DEBUG, "NMI while freeze button is pressed.\n");
         
         /* After the NMI has been processed by the CPU, the cartridge's counter
@@ -146,23 +147,22 @@ void
 FinalIII::pressButton(isize nr)
 {
     assert(nr <= numButtons());
+    assert(isEmulatorThread());
+
     trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
     
-    {   SUSPENDED
-        
-        switch (nr) {
-                
-            case 1: // Freeze
-                
-                freeezeButtonIsPressed = true;
-                updateNMI();
-                break;
-                
-            case 2: // Reset
-                
-                c64.softReset();
-                break;
-        }
+    switch (nr) {
+            
+        case 1: // Freeze
+            
+            freeezeButtonIsPressed = true;
+            updateNMI();
+            break;
+            
+        case 2: // Reset
+            
+            c64.softReset();
+            break;
     }
 }
 

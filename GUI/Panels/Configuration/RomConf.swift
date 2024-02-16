@@ -18,24 +18,24 @@ extension ConfigurationController {
 
         let poweredOff         = c64.poweredOff
         
-        let hasBasic           = basicRom.crc32 != 0 // basicIdentifier != .ROM_MISSING
-        let hasCommodoreBasic  = basicRom.isCommodoreRom // c64.isCommodoreRom(basicIdentifier)
-        let hasMega65Basic     = basicRom.isMega65Rom // c64.hasMega65Rom(.BASIC)
-        let hasPatchedBasic    = basicRom.isPatchedRom // c64.isPatchedRom(basicIdentifier)
+        let hasBasic           = basicRom.crc32 != 0
+        let hasCommodoreBasic  = basicRom.isCommodoreRom
+        let hasMega65Basic     = basicRom.isMega65Rom
+        let hasPatchedBasic    = basicRom.isPatchedRom
 
-        let hasChar            = charRom.crc32 != 0 // charIdentifier != .ROM_MISSING
-        let hasCommodoreChar   = charRom.isCommodoreRom // c64.isCommodoreRom(charIdentifier)
-        let hasMega65Char      = charRom.isMega65Rom // c64.hasMega65Rom(.CHAR)
-        let hasPatchedChar     = charRom.isPatchedRom // c64.isPatchedRom(charIdentifier)
+        let hasChar            = charRom.crc32 != 0
+        let hasCommodoreChar   = charRom.isCommodoreRom
+        let hasMega65Char      = charRom.isMega65Rom
+        let hasPatchedChar     = charRom.isPatchedRom
 
-        let hasKernal          = kernalRom.crc32 != 0 //  kernalIdentifier != .ROM_MISSING
-        let hasCommodoreKernal = kernalRom.isCommodoreRom // c64.isCommodoreRom(kernalIdentifier)
-        let hasMega65Kernal    = kernalRom.isMega65Rom // c64.hasMega65Rom(.KERNAL)
-        let hasPatchedKernal   = kernalRom.isPatchedRom // c64.isPatchedRom(kernalIdentifier)
+        let hasKernal          = kernalRom.crc32 != 0
+        let hasCommodoreKernal = kernalRom.isCommodoreRom
+        let hasMega65Kernal    = kernalRom.isMega65Rom
+        let hasPatchedKernal   = kernalRom.isPatchedRom
 
-        let hasVC1541          = vc1541Rom.crc32 != 0 // vc1541Identifier != .ROM_MISSING
-        let hasCommodoreVC1541 = vc1541Rom.isCommodoreRom //  c64.isCommodoreRom(vc1541Identifier)
-        let hasPatchedVC1541   = vc1541Rom.isPatchedRom // c64.isPatchedRom(vc1541Identifier)
+        let hasVC1541          = vc1541Rom.crc32 != 0
+        let hasCommodoreVC1541 = vc1541Rom.isCommodoreRom
+        let hasPatchedVC1541   = vc1541Rom.isPatchedRom
 
         let romMissing = NSImage(named: "rom_missing")
         let romOrig    = NSImage(named: "rom_original")

@@ -304,14 +304,15 @@ extension MyController {
 
                 renderer.canvas.open(delay: 2)
                 virtualKeyboard = nil
-                toolbar.updateToolbar()
                 inspector?.powerOn()
 
             } else {
 
-                toolbar.updateToolbar()
                 inspector?.powerOff()
             }
+
+            toolbar.updateToolbar()
+            configurator?.refresh()
 
         case .RUN:
             needsSaving = true

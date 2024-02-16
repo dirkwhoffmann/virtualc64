@@ -78,8 +78,6 @@ private:
     template <class T>
     void serialize(T& worker)
     {
-        if (util::isSoftResetter(worker)) return;
-
         worker
 
         << pa
