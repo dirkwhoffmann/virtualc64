@@ -118,6 +118,28 @@ C64Memory::_reset(bool hard)
     }
 }
 
+void 
+C64Memory::newserialize(util::SerCounter &worker)
+{
+    serialize(worker);
+    if (config.saveRoms) worker << rom;
+}
+
+void 
+C64Memory::newserialize(util::SerReader &worker)
+{
+    serialize(worker);
+    if (config.saveRoms) worker << rom;
+}
+
+void 
+C64Memory::newserialize(util::SerWriter &worker)
+{
+    serialize(worker);
+    if (config.saveRoms) worker << rom;
+}
+
+/*
 isize
 C64Memory::_size()
 {
@@ -157,6 +179,7 @@ C64Memory::_save(u8 *buffer)
 
     return (isize)(writer.ptr - buffer);
 }
+*/
 
 MemConfig
 C64Memory::getDefaultConfig()

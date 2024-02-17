@@ -91,6 +91,7 @@ private:
 
     void _reset(bool hard) override;
     
+    /*
     template <class T>
     void applyToRoms(T& worker)
     {
@@ -98,26 +99,40 @@ private:
 
         << rom;
     }
+    */
 
     template <class T>
     void serialize(T& worker)
     {
-        if (util::isResetter(worker)) return;
+        if (util::isSoftResetter(worker)) return;
 
         worker
 
         << ram
-        << colorRam
+        << colorRam;
+
+        if (util::isResetter(worker)) return;
+
+        worker
+
         << peekSrc
-        << pokeTarget;
+        << pokeTarget
+        << config.saveRoms
+        << config.ramPattern;
+
     }
     
     void newserialize(util::SerChecker &worker) override { serialize(worker); }
+    void newserialize(util::SerCounter &worker) override;
+    void newserialize(util::SerResetter &worker) override { serialize(worker); }
+    void newserialize(util::SerReader &worker) override;
+    void newserialize(util::SerWriter &worker) override;
 
+    /*
     isize _size() override;
     isize _load(const u8 *buffer) override;
     isize _save(u8 *buffer) override;
-    
+    */
 
     //
     // Methods from Inspectable
