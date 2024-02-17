@@ -29,6 +29,61 @@ ExpansionPort::_reset(bool hard)
     }
 }
 
+void 
+ExpansionPort::newserialize(util::SerChecker &worker)
+{
+    serialize(worker);
+}
+
+void 
+ExpansionPort::newserialize(util::SerCounter &worker)
+{
+    serialize(worker);
+    if (cartridge) cartridge->newserialize(worker);
+}
+
+void
+ExpansionPort::newserialize(util::SerResetter &worker)
+{
+    serialize(worker);
+
+    if (cartridge) {
+
+        cartridge->newserialize(worker);
+        cartridge->resetCartConfig();
+
+    } else {
+
+        setCartridgeMode(CRTMODE_OFF);
+    }
+}
+
+void
+ExpansionPort::newserialize(util::SerReader &worker)
+{
+    serialize(worker);
+
+    // Delete existing cartridge
+    cartridge = nullptr;
+
+    // Load cartridge (if any)
+    if (crtType != CRT_NONE) {
+
+        cartridge = std::unique_ptr<Cartridge>(Cartridge::makeWithType(c64, crtType));
+        cartridge->newserialize(worker);
+    }
+}
+
+void
+ExpansionPort::newserialize(util::SerWriter &worker)
+{
+    serialize(worker);
+
+    // Save cartridge (if any)
+    if (crtType != CRT_NONE) cartridge->newserialize(worker);
+}
+
+/*
 isize
 ExpansionPort::_size()
 {
@@ -72,6 +127,7 @@ ExpansionPort::_save(u8 *buffer)
     
     return isize(writer.ptr - buffer);
 }
+*/
 
 void
 ExpansionPort::_dump(Category category, std::ostream& os) const

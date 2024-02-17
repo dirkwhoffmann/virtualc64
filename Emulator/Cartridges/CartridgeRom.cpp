@@ -39,6 +39,41 @@ CartridgeRom::_reset(bool hard)
     RESET_SNAPSHOT_ITEMS(hard)
 }
 
+void 
+CartridgeRom::newserialize(util::SerCounter &worker)
+{
+    serialize(worker);
+    worker.count += size;
+}
+
+void 
+CartridgeRom::newserialize(util::SerResetter &worker)
+{
+    assert(false); // TODO
+}
+
+void 
+CartridgeRom::newserialize(util::SerReader &worker)
+{
+    serialize(worker);
+
+    // Delete the old packet and create a new one with the proper size
+    if (rom) delete[] rom;
+    rom = new u8[size];
+
+    // Read packet data
+    for (int i = 0; i < size; i++) rom[i] = util::read8(worker.ptr);
+}
+
+void 
+CartridgeRom::newserialize(util::SerWriter &worker)
+{
+    serialize(worker);
+
+    // Write packet data
+    for (int i = 0; i < size; i++) util::write8(worker.ptr, rom[i]);
+}
+
 isize
 CartridgeRom::_size()
 {

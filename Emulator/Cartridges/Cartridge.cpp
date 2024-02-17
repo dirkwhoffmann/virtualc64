@@ -245,6 +245,81 @@ Cartridge::_dump(Category category, std::ostream& os) const
     }
 }
 
+void 
+Cartridge::newserialize(util::SerCounter &worker)
+{
+    serialize(worker);
+
+    isize result = worker.count;
+
+    // Add ROM size
+    for (isize i = 0; i < numPackets; i++) result += packet[i]->_size();
+
+    // Add RAM size
+    result += ramCapacity;
+
+    // Add sub-class members
+    result += __size();
+
+    worker.count = result;
+}
+
+void 
+Cartridge::newserialize(util::SerResetter &worker)
+{
+
+}
+
+void 
+Cartridge::newserialize(util::SerReader &worker)
+{
+    dealloc();
+
+    serialize(worker);
+
+    // Load ROM
+    for (isize i = 0; i < numPackets; i++) {
+
+        assert(packet[i] == nullptr);
+        packet[i] = new CartridgeRom(c64);
+        packet[i]->newserialize(worker);
+    }
+
+    // Load RAM
+    if (ramCapacity) {
+
+        assert(externalRam == nullptr);
+        externalRam = new u8[ramCapacity];
+        worker.copy(externalRam, ramCapacity);
+    }
+
+    // Load sub-class members
+    worker.ptr += __load(worker.ptr);
+}
+
+void 
+Cartridge::newserialize(util::SerWriter &worker)
+{
+    serialize(worker);
+
+    // Save ROM
+    for (isize i = 0; i < numPackets; i++) {
+
+        assert(packet[i] != nullptr);
+        packet[i]->newserialize(worker);
+    }
+
+    // Save RAM
+    if (ramCapacity) {
+
+        assert(externalRam != nullptr);
+        worker.copy(externalRam, ramCapacity);
+    }
+
+    // Save sub-class members
+    worker.ptr += __save(worker.ptr);
+}
+
 isize
 Cartridge::_size()
 {
