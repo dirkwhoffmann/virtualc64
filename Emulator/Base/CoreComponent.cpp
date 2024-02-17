@@ -55,7 +55,7 @@ CoreComponent::inspect() const
 isize
 CoreComponent::size()
 {
-    isize result = _size();
+    isize result = _size() + newsize();
 
     // Add 8 bytes for the checksum
     result += 8;
@@ -63,7 +63,6 @@ CoreComponent::size()
     for (CoreComponent *c : subComponents) {
 
         result += c->size();
-        result += c->newsize();
     }
     return result;
 }

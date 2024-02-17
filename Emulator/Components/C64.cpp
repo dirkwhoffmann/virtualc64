@@ -193,8 +193,7 @@ C64::C64(class Emulator& ref) : CoreComponent(ref)
         &datasette,
         &retroShell,
         &regressionTester,
-        &recorder,
-        &msgQueue
+        &recorder
     };
 
     // Assign a unique ID to the CPU

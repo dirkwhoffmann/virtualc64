@@ -13,12 +13,13 @@
 #pragma once
 
 #include "MsgQueueTypes.h"
-#include "SubComponent.h"
+#include "CoreObject.h"
+#include "Synchronizable.h"
 #include "RingBuffer.h"
 
 namespace vc64 {
 
-class MsgQueue : public SubComponent, public Dumpable {
+class MsgQueue : CoreObject, Synchronizable, public Dumpable {
 
     // Ring buffer storing all pending messages
     util::RingBuffer <Message, 128> queue;
@@ -34,7 +35,7 @@ class MsgQueue : public SubComponent, public Dumpable {
     // Constructing
     //
     
-    using SubComponent::SubComponent;
+    // using SubComponent::SubComponent;
     
     
     //
@@ -46,19 +47,6 @@ private:
     const char *getDescription() const override { return "MsgQueue"; }
     void _dump(Category category, std::ostream& os) const override { }
 
-
-    //
-    // Methods from CoreComponent
-    //
-
-private:
-
-    void _reset(bool hard) override { };
-    template <class T> void serialize(T& worker) { }
-    isize _size() override { COMPUTE_SNAPSHOT_SIZE }
-    u64 _checksum() override { COMPUTE_SNAPSHOT_CHECKSUM }
-    isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
 
     //
     // Managing the queue

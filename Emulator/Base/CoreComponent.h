@@ -196,21 +196,21 @@ public:
     
     // Returns the size of the internal state in bytes
     isize size();
-    virtual isize _size() = 0;
+    virtual isize _size() { return 0; }
 
     // Computes a checksum for this component
     u64 checksum();
-    virtual u64 _checksum() = 0;
-    
+    virtual u64 _checksum() { return util::fnvInit64(); }
+
     // Loads the internal state from a memory buffer
     virtual isize load(const u8 *buf) throws;
-    virtual isize _load(const u8 *buf) = 0;
+    virtual isize _load(const u8 *buf) { return 0; }
     virtual void didLoad();
     virtual void _didLoad() { };
 
     // Saves the internal state to a memory buffer
     virtual isize save(u8 *buf);
-    virtual isize _save(u8 *buf) = 0;
+    virtual isize _save(u8 *buf) { return 0; }
     virtual void didSave();
     virtual void _didSave() { };
     
