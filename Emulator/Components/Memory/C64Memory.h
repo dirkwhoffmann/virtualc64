@@ -117,7 +117,17 @@ private:
     isize _load(const u8 *buffer) override;
     isize _save(u8 *buffer) override;
     
-    
+
+    //
+    // Methods from Inspectable
+    //
+
+public:
+
+    bool autoInspect() const override;
+    void recordState(MemInfo &result) const override;
+
+
     //
     // Configuring
     //
@@ -138,11 +148,11 @@ public:
     
 public:
     
-    MemInfo getInfo() const { return CoreComponent::getInfo(info); }
-    
+    // MemInfo getInfo() const { return CoreComponent::getInfo(info); }
+
 private:
     
-    void _inspect() const override;
+    // void _inspect() const override;
     
     
     //

@@ -265,17 +265,6 @@ typedef struct
 }
 C64Config;
 
-/*
-typedef struct
-{
-    u64 frame = 0;
-    u16 scanline = 0;
-    u8 rasterCycle = 1;
-    bool ultimax = false;
-}
-C64Info;
-*/
-
 typedef struct
 {
     u32 crc32;
@@ -289,6 +278,17 @@ typedef struct
     bool isMega65Rom;
 }
 RomInfo;
+
+typedef struct
+{
+    Cycle cpuProgress;
+    Cycle cia1Progress;
+    Cycle cia2Progress;
+    i64 frame;
+    long vpos;
+    long hpos;
+}
+C64Info;
 
 typedef struct
 {
@@ -308,17 +308,6 @@ typedef struct
     long hpos;
 }
 EventSlotInfo;
-
-typedef struct
-{
-    Cycle cpuProgress;
-    Cycle cia1Progress;
-    Cycle cia2Progress;
-    i64 frame;
-    long vpos;
-    long hpos;
-}
-EventInfo;
 
 
 //

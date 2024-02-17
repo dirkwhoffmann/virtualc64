@@ -218,10 +218,10 @@ VirtualC64::C64_API::getRomInfo(RomType type) const
     return c64.getRomInfo(type);
 }
 
-EventInfo
-VirtualC64::C64_API::getEventInfo() const
+C64Info
+VirtualC64::C64_API::getInfo() const
 {
-    return c64.getEventInfo();
+    return c64.getState();
 }
 
 EventSlotInfo
@@ -298,7 +298,7 @@ CPUInfo
 VirtualC64::CPU_API::getInfo() const
 {
     assert(isUserThread());
-    return cpu.getInfo();
+    return cpu.getState();
 }
 
 i64
@@ -549,7 +549,7 @@ MemInfo
 VirtualC64::MEM_API::getInfo() const
 {
     assert(isUserThread());
-    return emulator._c64.mem.getInfo();
+    return emulator._c64.mem.getState();
 }
 
 string

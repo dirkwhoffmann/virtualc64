@@ -113,9 +113,6 @@ class CIA : public SubComponent, public Inspectable<CIAInfo, Void> {
     // Current configuration
     CIAConfig config = { };
 
-    // Result of the latest inspection
-    // mutable CIAInfo info = { };
-
     
     //
     // Sub components
@@ -304,7 +301,6 @@ private:
 protected:
     
     void _reset(bool hard) override;
-    // void _inspect() const override;
 
 private:
     
@@ -364,7 +360,7 @@ private:
 
 public:
     
-    bool stateIsDirty() const override;
+    bool autoInspect() const override;
     void recordState(CIAInfo &result) const override;
 
     

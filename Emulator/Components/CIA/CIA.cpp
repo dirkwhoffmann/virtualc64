@@ -106,9 +106,9 @@ CIA::setConfigItem(Option option, i64 value)
 }
 
 bool 
-CIA::stateIsDirty() const
+CIA::autoInspect() const
 {
-    return c64.getInspectionTarget() != INSPECTION_C64 || !isRunning();
+    return c64.getInspectionTarget() == INSPECTION_CIA && isRunning();
 }
 
 void

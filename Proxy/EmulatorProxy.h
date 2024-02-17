@@ -176,7 +176,7 @@
 
 @property (readonly) EmulatorInfo info;
 @property (readonly) EmulatorStats stats;
-@property (readonly) EventInfo eventInfo;
+@property (readonly) C64Info eventInfo;
 - (EventSlotInfo)getEventSlotInfo:(NSInteger)slot;
 
 @property (readonly) BOOL poweredOn;

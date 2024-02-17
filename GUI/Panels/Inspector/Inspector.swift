@@ -287,7 +287,7 @@ class Inspector: DialogController {
     var memInfo: MemInfo!
     var vicInfo: VICIIInfo!
     var sprInfo: SpriteInfo!
-    var eventInfo: EventInfo!
+    var eventInfo: C64Info!
     var isRunning = true
     
     // Number format selection (hexadecimal or decimal)
@@ -495,7 +495,7 @@ extension Inspector: NSTabViewDelegate {
             case "CIA":     c64.inspectionTarget = .CIA
             case "VICII":   c64.inspectionTarget = .VICII
             case "SID":     c64.inspectionTarget = .SID
-            case "Events":  c64.inspectionTarget = .EVENTS
+            case "Events":  c64.inspectionTarget = .C64
 
             default:
                 break

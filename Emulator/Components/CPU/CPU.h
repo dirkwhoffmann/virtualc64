@@ -93,7 +93,6 @@ private:
 private:
     
     void _reset(bool hard) override;
-    void _inspect() const override;
     void _trackOn() override;
     void _trackOff() override;
     
@@ -151,6 +150,16 @@ private:
 
 
     //
+    // Methods from Inspectable
+    //
+
+public:
+
+    bool autoInspect() const override;
+    void recordState(CPUInfo &result) const override;
+
+
+    //
     // Methods from Peddle
     //
 
@@ -181,7 +190,7 @@ public:
 public:
     
     // Returns the result of the latest inspection
-    CPUInfo getInfo() const { return CoreComponent::getInfo(info); }
+    // CPUInfo getInfo() const { return CoreComponent::getInfo(info); }
 
 
     //

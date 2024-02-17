@@ -129,7 +129,7 @@ public:
         void setInspectionTarget(InspectionTarget target, Cycle trigger = 0);
         void removeInspectionTarget();
 
-        EventInfo getEventInfo() const;
+        C64Info getInfo() const;
         EventSlotInfo getSlotInfo(isize nr) const;
 
         void isReady();

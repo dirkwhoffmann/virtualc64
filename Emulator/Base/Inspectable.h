@@ -60,24 +60,28 @@ public:
 
     Inspectable() { }
     virtual ~Inspectable() { }
-    void autoInspect() const { recordState(info); }
 
     T1 &getState() const {
 
-        if (stateIsDirty()) recordState(info);
+        if (!autoInspect()) recordState(info);
         return info;
     }
 
     T2 &getStats() const {
 
-        if (statsIsDirty()) recordStats(stats);
+        if (!autoInspect()) recordStats(stats);
         return stats;
+    }
+
+    virtual void record() const {
+
+        recordState(info);
+        recordStats(stats);
     }
 
 private:
 
-    virtual bool stateIsDirty() const { return true; }
-    virtual bool statsIsDirty() const { return true; }
+    virtual bool autoInspect() const { return false; }
 
     virtual void recordState(T1 &result) const { };
     virtual void recordStats(T2 &result) const { };

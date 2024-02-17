@@ -232,23 +232,29 @@ C64Memory::setConfigItem(Option option, i64 value)
     }
 }
 
+bool
+C64Memory::autoInspect() const
+{
+    return c64.getInspectionTarget() == INSPECTION_MEM && isRunning();
+}
+
 void
-C64Memory::_inspect() const
+C64Memory::recordState(MemInfo &result) const
 {
     {   SYNCHRONIZED
         
-        info.exrom = expansionport.getExromLine();
-        info.game = expansionport.getGameLine();
-        info.loram = cpu.getLoram();
-        info.hiram = cpu.getHiram();
-        info.charen = cpu.getCharen();
+        result.exrom = expansionport.getExromLine();
+        result.game = expansionport.getGameLine();
+        result.loram = cpu.getLoram();
+        result.hiram = cpu.getHiram();
+        result.charen = cpu.getCharen();
         
-        info.bankMap = cpu.readPort();
-        if (expansionport.getGameLine()) info.bankMap |= 0x08;
-        if (expansionport.getExromLine()) info.bankMap |= 0x10;
+        result.bankMap = cpu.readPort();
+        if (expansionport.getGameLine()) result.bankMap |= 0x08;
+        if (expansionport.getExromLine()) result.bankMap |= 0x10;
         
-        for (int i = 0; i < 16; i++) info.peekSrc[i] = peekSrc[i];
-        for (int i = 0; i < 16; i++) info.vicPeekSrc[i] = vic.memSrc[i];
+        for (int i = 0; i < 16; i++) result.peekSrc[i] = peekSrc[i];
+        for (int i = 0; i < 16; i++) result.vicPeekSrc[i] = vic.memSrc[i];
     }
 }
 

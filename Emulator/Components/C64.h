@@ -82,7 +82,7 @@ static constexpr double inspectionInterval = 0.1;
  * Please note that most subcomponents have their own public API. E.g., to
  * query information from VICII, you need to invoke a method on c64.vicii.
  */
-class C64 : public CoreComponent, public Dumpable {
+class C64 : public CoreComponent, public Inspectable<C64Info, Void> {
 
     friend class Emulator;
 
@@ -92,7 +92,7 @@ private:
     C64Config config = {};
 
     // Result of the latest inspection
-    mutable EventInfo eventInfo = {};
+    // mutable C64Info eventInfo = {};
     mutable EventSlotInfo slotInfo[SLOT_COUNT];
 
 
@@ -304,13 +304,6 @@ public:
     void setInspectionTarget(InspectionTarget target, Cycle trigger = 0);
     void removeInspectionTarget() { setInspectionTarget(INSPECTION_NONE); }
 
-    EventInfo getEventInfo() const { return CoreComponent::getInfo(eventInfo); }
-    EventSlotInfo getSlotInfo(isize nr) const;
-
-private:
-
-    void inspectSlot(EventSlot nr) const;
-
     
     //
     // Methods from CoreComponent
@@ -353,6 +346,23 @@ private:
 
 
     //
+    // Methods from Inspectable
+    //
+
+public:
+
+    virtual void record() const override;
+    bool autoInspect() const override;
+    void recordState(C64Info &result) const override;
+
+    EventSlotInfo getSlotInfo(isize nr) const;
+
+private:
+
+    void inspectSlot(EventSlot nr) const;
+
+
+    //
     // Executing
     //
 
@@ -379,7 +389,6 @@ private:
     void _warpOff() override;
     void _trackOn() override;
     void _trackOff() override;
-    void _inspect() const override;
 
 
     //

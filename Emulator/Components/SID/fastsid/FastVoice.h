@@ -231,8 +231,8 @@ private:
     
 public:
     
-    SIDInfo getInfo() const { return CoreComponent::getInfo(info); }
-    VoiceInfo getVoiceInfo(isize nr) const { return CoreComponent::getInfo(voiceInfo[nr]); }
+    // SIDInfo getInfo() const { return CoreComponent::getInfo(info); }
+    VoiceInfo getVoiceInfo(isize nr) const { return voiceInfo[nr]; }
    
     
     //

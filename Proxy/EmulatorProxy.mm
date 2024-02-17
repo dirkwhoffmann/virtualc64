@@ -2135,9 +2135,9 @@ using namespace vc64;
     [self emu]->c64.removeInspectionTarget();
 }
 
-- (EventInfo)eventInfo
+- (C64Info)eventInfo
 {
-    return [self emu]->c64.getEventInfo();
+    return [self emu]->c64.getInfo();
 }
 
 - (EventSlotInfo)getEventSlotInfo:(NSInteger)slot

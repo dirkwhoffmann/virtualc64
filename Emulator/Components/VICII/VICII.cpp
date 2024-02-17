@@ -146,9 +146,9 @@ VICII::getDefaultConfig()
 }
 
 bool
-VICII::stateIsDirty() const
+VICII::autoInspect() const
 {
-    return c64.getInspectionTarget() != INSPECTION_VICII || !isRunning();
+    return c64.getInspectionTarget() == INSPECTION_VICII && isRunning();
 }
 
 void
@@ -414,14 +414,6 @@ VICII::setRevision(VICIIRevision revision)
     
     msgQueue.put(isPAL ? MSG_PAL : MSG_NTSC);
 }
-
-/*
-void
-VICII::_inspect() const
-{
-
-}
-*/
 
 void
 VICII::_dump(Category category, std::ostream& os) const

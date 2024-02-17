@@ -33,7 +33,7 @@ namespace vc64 {
  *     - Vortex (LMan)
  */
 
-class ReSID : public SubComponent, public Dumpable {
+class ReSID : public SubComponent, public Inspectable<SIDInfo, Void> {
 
     // Number of this SID (0 = primary SID)
     int nr;
@@ -42,7 +42,7 @@ class ReSID : public SubComponent, public Dumpable {
     reSID::SID *sid;
     
     // Result of the latest inspection
-    mutable SIDInfo info = { };
+    // mutable SIDInfo info = { };
     mutable VoiceInfo voiceInfo[3] = { };
 
 private:
@@ -134,7 +134,20 @@ private:
     isize didLoadFromBuffer(const u8 *buffer) override;
     isize willSaveToBuffer(u8 *buffer) override;
 
-    
+
+    //
+    // Methods from Inspectable
+    //
+
+public:
+
+    virtual void record() const override;
+    bool autoInspect() const override;
+    void recordState(SIDInfo &result) const override;
+
+    VoiceInfo getVoiceInfo(isize nr) const;
+
+
     //
     // Configuring
     //
@@ -160,15 +173,9 @@ public:
     //
     // Analyzing
     //
-    
-public:
-    
-    SIDInfo getInfo() const { return CoreComponent::getInfo(info); }
-    VoiceInfo getVoiceInfo(isize nr) const { return CoreComponent::getInfo(voiceInfo[nr]); }
-    
+
 private:
     
-    void _inspect() const override;
     void _dump(Category category, std::ostream& os) const override;
     
 

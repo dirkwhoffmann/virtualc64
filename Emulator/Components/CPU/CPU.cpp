@@ -56,27 +56,30 @@ CPU::_reset(bool hard)
     assert(edgeDetector.isClear());
 }
 
-void
-CPU::_inspect() const
-{    
-    {   SYNCHRONIZED
-        
-        info.cycle = clock;
+bool 
+CPU::autoInspect() const
+{
+    return c64.getInspectionTarget() == INSPECTION_CPU && isRunning();
+}
 
-        info.pc0 = reg.pc0;
-        info.sp = reg.sp;
-        info.a = reg.a;
-        info.x = reg.x;
-        info.y = reg.y;
-        info.sr = getP();
+void 
+CPU::recordState(CPUInfo &result) const
+{
+    result.cycle = clock;
 
-        info.irq = irqLine;
-        info.nmi = nmiLine;
-        info.rdy = rdyLine;
-        
-        info.processorPort = readPort();
-        info.processorPortDir = readPortDir();
-    }
+    result.pc0 = reg.pc0;
+    result.sp = reg.sp;
+    result.a = reg.a;
+    result.x = reg.x;
+    result.y = reg.y;
+    result.sr = getP();
+
+    result.irq = irqLine;
+    result.nmi = nmiLine;
+    result.rdy = rdyLine;
+
+    result.processorPort = readPort();
+    result.processorPortDir = readPortDir();
 }
 
 void

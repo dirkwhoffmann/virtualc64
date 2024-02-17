@@ -712,7 +712,7 @@ private:
 
 private:
 
-    bool stateIsDirty() const override;
+    bool autoInspect() const override;
     void recordState(VICIIInfo &result) const override;
     void recordStats(VICIIStats &result) const override;
     void clearStats();

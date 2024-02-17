@@ -12,8 +12,9 @@
 
 #include "config.h"
 #include "TOD.h"
-#include "CIA.h"
-#include "CPU.h"
+#include "C64.h"
+// #include "CIA.h"
+// #include "CPU.h"
 #include "IOUtils.h"
 #include "PowerSupply.h"
 
@@ -29,8 +30,14 @@ TOD::getDescription() const
     return cia.isCIA1() ? "TOD1" : "TOD2";
 }
 
-void
-TOD::_inspect() const
+bool 
+TOD::autoInspect() const
+{
+    return c64.getInspectionTarget() == INSPECTION_CIA && isRunning();
+}
+
+void 
+TOD::recordState(TODInfo &info) const
 {
     {   SYNCHRONIZED
         

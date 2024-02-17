@@ -168,14 +168,17 @@ public:
      * To carry out inspections while the emulator is running, set up an
      * inspection target via C64::setInspectionTarget().
      */
+    /*
     void inspect() const;
     virtual void _inspect() const { }
-    
+    */
+
     /* Base method for building the class specific getInfo() methods. When the
      * emulator is running, the result of the most recent inspection is
      * returned. If the emulator isn't running, the function first updates the
      * cached values in order to return up-to-date results.
      */
+    /*
     template<class T> T getInfo(T &cachedValues) const {
 
         {   SYNCHRONIZED
@@ -184,8 +187,9 @@ public:
             return cachedValues;
         }
     }
+    */
 
-    
+
     //
     // Serializing
     //

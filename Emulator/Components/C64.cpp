@@ -300,49 +300,6 @@ C64::setConfigItem(Option option, i64 value)
 
 }
 
-EventSlotInfo
-C64::getSlotInfo(isize nr) const
-{
-    assert_enum(EventSlot, nr);
-
-    {   SYNCHRONIZED
-
-        // if (!isRunning()) inspectSlot(nr);
-        inspectSlot(nr);
-        return slotInfo[nr];
-    }
-}
-
-void
-C64::inspectSlot(EventSlot nr) const
-{
-    assert_enum(EventSlot, nr);
-
-    auto &info = slotInfo[nr];
-    auto cycle = trigger[nr];
-
-    info.slot = nr;
-    info.eventId = id[nr];
-    info.trigger = cycle;
-    info.triggerRel = cycle - cpu.clock;
-
-    // auto beam = pos + isize(AS_DMA_CYCLES(cycle - clock));
-
-    // Compute clock at pos (0,0)
-    auto clock00 = cpu.clock - vic.getCyclesPerLine() * scanline - rasterCycle;
-
-    // Compute the number of elapsed cycles since then
-    auto diff = cycle - clock00;
-
-    // Split into frame / line / cycle
-    info.frameRel = long(diff / vic.getCyclesPerFrame());
-    diff = diff % vic.getCyclesPerFrame();
-    info.vpos = long(diff / vic.getCyclesPerLine());
-    info.hpos = long(diff % vic.getCyclesPerLine());
-
-    info.eventName = eventName((EventSlot)nr, id[nr]);
-}
-
 void
 C64::updateClockFrequency()
 {
@@ -502,27 +459,11 @@ C64::processFlags()
                          RL::CPU_JAM |
                          RL::SINGLE_STEP);
 
-    // Are we requested to take an auto-snapshot?
-    /*
-    if (flags & RL::AUTO_SNAPSHOT) {
-        clearFlag(RL::AUTO_SNAPSHOT);
-        autoSnapshot = new Snapshot(*this);
-        msgQueue.put(MSG_AUTO_SNAPSHOT_TAKEN);
-    }
-
-    // Are we requested to take a user-snapshot?
-    if (flags & RL::USER_SNAPSHOT) {
-        clearFlag(RL::USER_SNAPSHOT);
-        userSnapshot = new Snapshot(*this);
-        msgQueue.put(MSG_USER_SNAPSHOT_TAKEN);
-    }
-    */
-
     // Did we reach a breakpoint?
     if (flags & RL::BREAKPOINT) {
         clearFlag(RL::BREAKPOINT);
         msgQueue.put(MSG_BREAKPOINT_REACHED, CpuMsg {u16(cpu.debugger.breakpointPC)});
-        inspect();
+        // inspect();
         emulator.switchState(STATE_PAUSED);
     }
 
@@ -530,7 +471,7 @@ C64::processFlags()
     if (flags & RL::WATCHPOINT) {
         clearFlag(RL::WATCHPOINT);
         msgQueue.put(MSG_WATCHPOINT_REACHED, CpuMsg {u16(cpu.debugger.watchpointPC)});
-        inspect();
+        // inspect();
         emulator.switchState(STATE_PAUSED);
     }
 
@@ -597,7 +538,7 @@ C64::_powerOn()
     hardReset();
 
     // Update the recorded debug information
-    inspect();
+    // inspect();
 
     msgQueue.put(MSG_POWER, 1);
 }
@@ -608,7 +549,7 @@ C64::_powerOff()
     debug(RUN_DEBUG, "_powerOff\n");
 
     // Update the recorded debug information
-    inspect();
+    // inspect();
 
     msgQueue.put(MSG_POWER, 0);
 }
@@ -630,7 +571,7 @@ C64::_pause()
     finishInstruction();
     
     // Update the recorded debug information
-    inspect();
+    // inspect();
 
     msgQueue.put(MSG_PAUSE);
 }
@@ -673,23 +614,6 @@ C64::_trackOff()
     debug(RUN_DEBUG, "_trackOff\n");
 
     msgQueue.put(MSG_TRACK, 0);
-}
-
-void
-C64::_inspect() const
-{
-    SYNCHRONIZED
-
-    eventInfo.cpuProgress = cpu.clock;
-    eventInfo.cia1Progress = cia1.sleeping ? cia1.sleepCycle : cpu.clock;
-    eventInfo.cia2Progress = cia2.sleeping ? cia2.sleepCycle : cpu.clock;
-    eventInfo.frame = frame;
-    eventInfo.vpos = scanline;
-    eventInfo.hpos = rasterCycle;
-
-    for (EventSlot i = 0; i < SLOT_COUNT; i++) {
-        inspectSlot(i);
-    }
 }
 
 isize
@@ -786,6 +710,75 @@ C64::_dump(Category category, std::ostream& os) const
         os << (cpu.getC() ? "1" : "0");
         os << std::endl;
     }
+}
+
+void
+C64::record() const
+{
+    Inspectable<C64Info, Void>::record();
+
+    for (EventSlot i = 0; i < SLOT_COUNT; i++) {
+            inspectSlot(i);
+    }
+}
+
+bool 
+C64::autoInspect() const
+{
+    return getInspectionTarget() == INSPECTION_C64 || isRunning();
+}
+
+void
+C64::recordState(C64Info &result) const
+{
+    SYNCHRONIZED
+
+    result.cpuProgress = cpu.clock;
+    result.cia1Progress = cia1.sleeping ? cia1.sleepCycle : cpu.clock;
+    result.cia2Progress = cia2.sleeping ? cia2.sleepCycle : cpu.clock;
+    result.frame = frame;
+    result.vpos = scanline;
+    result.hpos = rasterCycle;
+}
+
+EventSlotInfo
+C64::getSlotInfo(isize nr) const
+{
+    assert_enum(EventSlot, nr);
+
+    {   SYNCHRONIZED
+
+        if (!autoInspect()) { inspectSlot(nr); }
+        return slotInfo[nr];
+    }
+}
+
+void
+C64::inspectSlot(EventSlot nr) const
+{
+    assert_enum(EventSlot, nr);
+
+    auto &info = slotInfo[nr];
+    auto cycle = trigger[nr];
+
+    info.slot = nr;
+    info.eventId = id[nr];
+    info.trigger = cycle;
+    info.triggerRel = cycle - cpu.clock;
+
+    // Compute clock at pos (0,0)
+    auto clock00 = cpu.clock - vic.getCyclesPerLine() * scanline - rasterCycle;
+
+    // Compute the number of elapsed cycles since then
+    auto diff = cycle - clock00;
+
+    // Split into frame / line / cycle
+    info.frameRel = long(diff / vic.getCyclesPerFrame());
+    diff = diff % vic.getCyclesPerFrame();
+    info.vpos = long(diff / vic.getCyclesPerLine());
+    info.hpos = long(diff % vic.getCyclesPerLine());
+
+    info.eventName = eventName((EventSlot)nr, id[nr]);
 }
 
 void
@@ -1002,13 +995,13 @@ C64::processINSEvent(EventID id)
 {
     switch (id) {
 
-        case INS_C64:       inspect(); break;
-        case INS_CPU:       cpu.inspect(); break;
-        case INS_MEM:       mem.inspect(); break;
-        case INS_CIA:       cia1.autoInspect(); cia2.autoInspect(); break;
-        case INS_VICII:     vic.autoInspect(); break;
-        case INS_SID:       muxer.inspect(); break;
-        case INS_EVENTS:    _inspect(); break;
+        case INS_C64:       record(); break;
+        case INS_CPU:       cpu.record(); break;
+        case INS_MEM:       mem.record(); break;
+        case INS_CIA:       cia1.record(); cia2.record(); break;
+        case INS_VICII:     vic.record(); break;
+        case INS_SID:       muxer.record(); break;
+        // case INS_EVENTS:    c64.record(); break;
 
         default:
             fatalError;

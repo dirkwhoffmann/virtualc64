@@ -27,7 +27,7 @@ inline u8 incBCD(u8 x)
  * features an alarm mechanism. When the alarm time is reached, an interrupt
  * is triggered.
  */
-class TOD : public SubComponent, public Dumpable {
+class TOD : public SubComponent, public Inspectable<TODInfo, Void> {
     
     friend class CIA;
     
@@ -98,7 +98,6 @@ private:
 private:
     
     void _reset(bool hard) override;
-    void _inspect() const override;
 
     template <class T>
     void serialize(T& worker)
@@ -119,7 +118,17 @@ private:
     isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
     
-    
+
+    //
+    // Methods from Inspectable
+    //
+
+public:
+
+    bool autoInspect() const override;
+    void recordState(TODInfo &result) const override;
+
+
     //
     // Analyzing
     //
@@ -127,7 +136,7 @@ private:
 public:
     
     // Returns the result of the most recent call to inspect()
-    TODInfo getInfo() const { return CoreComponent::getInfo(info); }
+    // TODInfo getInfo() const { return CoreComponent::getInfo(info); }
 
     
     //

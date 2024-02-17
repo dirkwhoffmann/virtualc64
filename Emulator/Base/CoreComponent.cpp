@@ -43,12 +43,14 @@ CoreComponent::reset(bool hard)
     _reset(hard);
 }
 
+/*
 void
 CoreComponent::inspect() const
 {
     for (CoreComponent *c : subComponents) { c->inspect(); }
     _inspect();
 }
+*/
 
 isize
 CoreComponent::size()
