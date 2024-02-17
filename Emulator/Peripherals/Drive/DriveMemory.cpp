@@ -48,16 +48,6 @@ DriveMemory::_size()
     return counter.count;
 }
 
-u64
-DriveMemory::_checksum()
-{
-    util::SerChecker checker;
-
-    serialize(checker);
-
-    return checker.hash;
-}
-
 isize
 DriveMemory::_load(const u8 *buffer)
 {

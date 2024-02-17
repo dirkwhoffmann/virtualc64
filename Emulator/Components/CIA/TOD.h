@@ -119,8 +119,6 @@ private:
     void newserialize(util::SerReader &worker) override { serialize(worker); }
     void newserialize(util::SerWriter &worker) override { serialize(worker); }
 
-    u64 _checksum() override { COMPUTE_SNAPSHOT_CHECKSUM }
-
 
     //
     // Methods from Inspectable

@@ -198,10 +198,6 @@ public:
     isize size();
     virtual isize _size() { return 0; }
 
-    // Computes a checksum for this component
-    u64 checksum();
-    virtual u64 _checksum() { return util::fnvInit64(); }
-
     // Loads the internal state from a memory buffer
     virtual isize load(const u8 *buf) throws;
     virtual isize _load(const u8 *buf) { return 0; }
@@ -232,7 +228,7 @@ public:
 };
 
 //
-// Standard implementations of _reset, _size, _checksum, _load, and _save
+// Standard implementations of _reset, _size, _load, and _save
 //
 
 #define RESET_SNAPSHOT_ITEMS(hard) \
@@ -248,11 +244,6 @@ serialize(resetter); \
 util::SerCounter counter; \
 serialize(counter); \
 return counter.count;
-
-#define COMPUTE_SNAPSHOT_CHECKSUM \
-util::SerChecker checker; \
-serialize(checker); \
-return checker.hash;
 
 #define LOAD_SNAPSHOT_ITEMS \
 util::SerReader reader(buffer); \

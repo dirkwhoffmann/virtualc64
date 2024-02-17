@@ -67,19 +67,6 @@ CoreComponent::size()
     return result;
 }
 
-u64
-CoreComponent::checksum()
-{
-    u64 result = _checksum();
-
-    // Compute checksums for all subcomponents
-    for (CoreComponent *c : subComponents) {
-        result = util::fnvIt64(result, c->checksum());
-    }
-
-    return result;
-}
-
 isize
 CoreComponent::load(const u8 *buffer)
 {
@@ -107,9 +94,8 @@ CoreComponent::load(const u8 *buffer)
     isize result = (isize)(ptr - buffer);
 
     // Check integrity
-    if (hash != _checksum() || newchecksum() != _checksum() || FORCE_SNAP_CORRUPTED) {
+    if (hash != newchecksum() || FORCE_SNAP_CORRUPTED) {
 
-        printf("Checksum: %lld New checksum: %lld\n", _checksum(), newchecksum());
         debug(SNP_DEBUG, "Corrupted snapshot detected\n");
         throw VC64Error(ERROR_SNAP_CORRUPTED);
     }
@@ -144,7 +130,7 @@ CoreComponent::save(u8 *buffer)
     }
 
     // Save the checksum for this component
-    util::write64(ptr, _checksum());
+    util::write64(ptr, newchecksum());
     
     // Save the internal state of this component
     ptr += _save(ptr);

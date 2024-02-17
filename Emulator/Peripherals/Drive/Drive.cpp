@@ -460,18 +460,6 @@ Drive::_size()
     return counter.count;
 }
 
-u64
-Drive::_checksum()
-{
-    util::SerChecker checker;
-
-    serialize(checker);
-
-    // TODO: Get checksum from disk
-    
-    return checker.hash;
-}
-
 isize
 Drive::_load(const u8 *buffer)
 {

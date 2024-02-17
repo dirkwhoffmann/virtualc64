@@ -132,16 +132,6 @@ C64Memory::_size()
     return counter.count;
 }
 
-u64
-C64Memory::_checksum()
-{
-    util::SerChecker checker;
-
-    serialize(checker);
-
-    return checker.hash;
-}
-
 isize
 C64Memory::_load(const u8 *buffer)
 {

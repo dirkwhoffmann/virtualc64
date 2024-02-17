@@ -21,12 +21,6 @@ PowerSupply::PowerSupply(C64& ref) : SubComponent(ref)
 
 }
 
-void
-PowerSupply::_reset(bool hard)
-{
-    RESET_SNAPSHOT_ITEMS(hard)
-}
-
 PowerSupplyConfig
 PowerSupply::getDefaultConfig()
 {

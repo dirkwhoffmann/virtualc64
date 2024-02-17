@@ -39,22 +39,6 @@ ExpansionPort::_size()
     return counter.count;
 }
 
-/*
-u64
-ExpansionPort::_checksum()
-{
-    util::SerChecker checker;
-
-    serialize(checker);
-
-    if (cartridge) {
-        checker.hash = util::fnvIt64(checker.hash, cartridge->checksum());
-    }
-
-    return checker.hash;
-}
-*/
-
 isize
 ExpansionPort::_load(const u8 *buffer)
 {
