@@ -82,12 +82,12 @@ CoreComponent::load(const u8 *buffer)
         ptr += c->load(ptr);
     }
 
-    // Load the checksum for this component
-    auto hash = util::read64(ptr);
-
     // Load internal state of this component
     ptr += _load(ptr); // DEPRECATED
     ptr += newload(ptr);
+
+    // Load the checksum for this component
+    auto hash = util::read64(ptr);
 
     // Call the delegate
     ptr += didLoadFromBuffer(ptr);
@@ -129,12 +129,12 @@ CoreComponent::save(u8 *buffer)
         ptr += c->save(ptr);
     }
 
-    // Save the checksum for this component
-    util::write64(ptr, newchecksum());
-    
     // Save the internal state of this component
     ptr += _save(ptr);
     ptr += newsave(ptr);
+
+    // Save the checksum for this component
+    util::write64(ptr, newchecksum());
 
     // Call the delegate
     ptr += didSaveToBuffer(ptr);

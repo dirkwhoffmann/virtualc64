@@ -123,6 +123,21 @@ ReSID::_dump(Category category, std::ostream& os) const
     }
 }
 
+void
+ReSID::newserialize(util::SerReader &worker)
+{
+    serialize(worker);
+    sid->write_state(st);
+}
+
+void
+ReSID::newserialize(util::SerWriter &worker)
+{
+    st = sid->read_state();
+    serialize(worker);
+}
+
+/*
 isize
 ReSID::didLoadFromBuffer(const u8 *buffer)
 {
@@ -136,6 +151,8 @@ ReSID::willSaveToBuffer(u8 *buffer)
     st = sid->read_state();
     return 0;
 }
+
+*/
 
 void
 ReSID::record() const

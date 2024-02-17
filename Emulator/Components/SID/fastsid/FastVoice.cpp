@@ -107,12 +107,21 @@ FastVoice::init(FastSID *owner, isize voiceNr, FastVoice *prevVoice)
     sidreg = owner->sidreg + (voiceNr * 7);
 }
 
+void 
+FastVoice::newserialize(util::SerReader &worker)
+{
+    serialize(worker);
+    updateWaveTablePtr();
+}
+
+/*
 isize
 FastVoice::didLoadFromBuffer(const u8 *buffer)
 {
     updateWaveTablePtr();
     return 0;
 }
+*/
 
 void
 FastVoice::updateWaveTablePtr()

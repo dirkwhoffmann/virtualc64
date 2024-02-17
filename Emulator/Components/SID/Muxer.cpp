@@ -431,12 +431,22 @@ Muxer::setSampleRate(double rate)
     }
 }
 
+void 
+Muxer::newserialize(util::SerReader &worker)
+{
+    serialize(worker);
+
+    for (isize i = 0; i < 4; i++) sidStream[i].clear(0);
+}
+
+/*
 isize
 Muxer::didLoadFromBuffer(const u8 *buffer)
 {
     for (isize i = 0; i < 4; i++) sidStream[i].clear(0);
     return 0;
 }
+*/
 
 void
 Muxer::_run()
