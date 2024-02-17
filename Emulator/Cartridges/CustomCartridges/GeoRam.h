@@ -74,10 +74,12 @@ private:
         << page;
     }
 
+    CARTRIDGE_SERIALIZERS
+    /*
     isize __size() override { COMPUTE_SNAPSHOT_SIZE }
     isize __load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
     isize __save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-
+    */
     
     //
     // Accessing cartridge memory

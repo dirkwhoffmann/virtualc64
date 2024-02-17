@@ -389,3 +389,11 @@ public:
     // Called after the C64 CPU has processed the NMI instruction
     virtual void nmiDidTrigger() { }
 };
+
+#define CARTRIDGE_SERIALIZERS \
+void newserialize(util::SerChecker &worker) override { Cartridge::newserialize(worker); serialize(worker); } \
+void newserialize(util::SerCounter &worker) override { Cartridge::newserialize(worker); serialize(worker); } \
+void newserialize(util::SerResetter &worker) override { Cartridge::newserialize(worker); serialize(worker); } \
+void newserialize(util::SerReader &worker) override { Cartridge::newserialize(worker); serialize(worker); } \
+void newserialize(util::SerWriter &worker) override { Cartridge::newserialize(worker); serialize(worker); }
+
