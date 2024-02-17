@@ -71,6 +71,7 @@ private:
         << loadAddress;
     }
     
+    void newserialize(util::SerChecker &worker) override { serialize(worker); }
     isize _size() override;
     u64 _checksum() override { COMPUTE_SNAPSHOT_CHECKSUM }
     isize _load(const u8 *buffer) override;

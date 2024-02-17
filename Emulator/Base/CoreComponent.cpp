@@ -60,7 +60,11 @@ CoreComponent::size()
     // Add 8 bytes for the checksum
     result += 8;
 
-    for (CoreComponent *c : subComponents) { result += c->size(); }
+    for (CoreComponent *c : subComponents) {
+
+        result += c->size();
+        result += c->newsize();
+    }
     return result;
 }
 
@@ -96,15 +100,17 @@ CoreComponent::load(const u8 *buffer)
     auto hash = util::read64(ptr);
 
     // Load internal state of this component
-    ptr += _load(ptr);
+    ptr += _load(ptr); // DEPRECATED
+    ptr += newload(ptr);
 
     // Call the delegate
     ptr += didLoadFromBuffer(ptr);
     isize result = (isize)(ptr - buffer);
 
     // Check integrity
-    if (hash != _checksum() || FORCE_SNAP_CORRUPTED) {
+    if (hash != _checksum() || newchecksum() != _checksum() || FORCE_SNAP_CORRUPTED) {
 
+        printf("Checksum: %lld New checksum: %lld\n", _checksum(), newchecksum());
         debug(SNP_DEBUG, "Corrupted snapshot detected\n");
         throw VC64Error(ERROR_SNAP_CORRUPTED);
     }
@@ -143,6 +149,7 @@ CoreComponent::save(u8 *buffer)
     
     // Save the internal state of this component
     ptr += _save(ptr);
+    ptr += newsave(ptr);
 
     // Call the delegate
     ptr += didSaveToBuffer(ptr);

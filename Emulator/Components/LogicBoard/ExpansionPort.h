@@ -84,9 +84,10 @@ private:
         << gameLine
         << exromLine;
     }
-    
+
+    void newserialize(util::SerChecker &worker) override { serialize(worker); }
     isize _size() override;
-    u64 _checksum() override;
+    u64 _checksum() override { COMPUTE_SNAPSHOT_CHECKSUM };
     isize _load(const u8 *buffer) override;
     isize _save(u8 *buffer) override;
 

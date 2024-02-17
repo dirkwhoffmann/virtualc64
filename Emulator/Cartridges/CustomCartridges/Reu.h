@@ -113,6 +113,7 @@ private:
         << memTypeF;
     }
 
+    void newserialize(util::SerChecker &worker) override { serialize(worker); }
     isize __size() override { COMPUTE_SNAPSHOT_SIZE }
     u64 __checksum() override { COMPUTE_SNAPSHOT_CHECKSUM }
     isize __load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }

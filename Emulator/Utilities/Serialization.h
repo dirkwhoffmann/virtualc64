@@ -21,7 +21,7 @@
 
 namespace util {
 
-class Serializable { };
+class Serializable;
 
 //
 // Basic memory buffer I/O
@@ -551,6 +551,53 @@ template <class T>
 static constexpr bool isResetter(T &worker) {
     return isSoftResetter(worker) || isHardResetter(worker);
 }
+
+
+//
+//
+//
+
+class Serializable {
+
+public:
+
+    virtual ~Serializable() { }
+
+    virtual void newserialize(SerCounter &worker) { }
+    virtual void newserialize(SerChecker &worker) { }
+    virtual void newserialize(SerResetter &worker) { }
+    virtual void newserialize(SerReader &worker) { }
+    virtual void newserialize(SerWriter &worker) { }
+
+
+    isize newsize() {
+
+        util::SerCounter counter;
+        newserialize(counter);
+        return counter.count;
+    }
+
+    u64 newchecksum() {
+
+        util::SerChecker checker;
+        newserialize(checker);
+        return checker.hash;
+    }
+
+    isize newload(const u8 *buffer) {
+
+        util::SerReader reader(buffer);
+        newserialize(reader);
+        return (isize)(reader.ptr - buffer);
+    }
+
+    isize newsave(u8 *buffer) {
+
+        util::SerWriter writer(buffer);
+        newserialize(writer);
+        return (isize)(writer.ptr - buffer);
+    }
+};
 
 }
 

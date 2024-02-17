@@ -39,6 +39,7 @@ ExpansionPort::_size()
     return counter.count;
 }
 
+/*
 u64
 ExpansionPort::_checksum()
 {
@@ -52,6 +53,7 @@ ExpansionPort::_checksum()
 
     return checker.hash;
 }
+*/
 
 isize
 ExpansionPort::_load(const u8 *buffer)

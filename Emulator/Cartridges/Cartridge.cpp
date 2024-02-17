@@ -265,6 +265,7 @@ Cartridge::_size()
     return result;
 }
 
+/*
 u64
 Cartridge::_checksum()
 {
@@ -273,6 +274,7 @@ Cartridge::_checksum()
 
     return util::fnvIt64(checker.hash, __checksum());
 }
+*/
 
 isize
 Cartridge::_load(const u8 *buffer)

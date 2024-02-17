@@ -23,7 +23,7 @@ debugflag TIM_DEBUG       = 0; // Thread synchronization
 debugflag WARP_DEBUG      = 0; // Warp mode
 debugflag CMD_DEBUG       = 0; // Command queue
 debugflag MSG_DEBUG       = 0; // Message queue
-debugflag SNP_DEBUG       = 0; // Serializing (snapshots)
+debugflag SNP_DEBUG       = 1; // Serializing (snapshots)
 
 // CPU
 debugflag CPU_DEBUG       = 0; // CPU
