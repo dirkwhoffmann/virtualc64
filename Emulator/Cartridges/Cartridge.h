@@ -205,16 +205,17 @@ protected:
 public:
 
     void newserialize(util::SerChecker &worker) override { serialize(worker); }
-    void newserialize(util::SerCounter &worker);
-    void newserialize(util::SerResetter &worker);
-    void newserialize(util::SerReader &worker);
-    void newserialize(util::SerWriter &worker);
+    void newserialize(util::SerCounter &worker) override;
+    void newserialize(util::SerResetter &worker) override;
+    void newserialize(util::SerReader &worker) override;
+    void newserialize(util::SerWriter &worker) override;
 
-
+    /*
     isize _size() override;
     isize _load(const u8 *buffer) override;
     isize _save(u8 *buffer) override;
-        
+    */
+
     virtual isize __size() { return 0; }
     virtual u64 __checksum() { return 0; }
     virtual isize __load(const u8 *buffer) { return 0; }

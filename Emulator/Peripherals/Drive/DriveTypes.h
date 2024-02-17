@@ -185,8 +185,17 @@ typedef struct
     u8 stepVolume;
     u8 insertVolume;
     u8 ejectVolume;
+
+    // Save Roms
+    bool saveRoms;
 }
 DriveConfig;
+
+typedef struct
+{
+    bool saveRoms;
+}
+DriveMemConfig;
 
 typedef struct
 {

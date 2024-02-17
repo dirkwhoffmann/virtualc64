@@ -12,7 +12,7 @@
 
 #include "config.h"
 #include "DriveMemory.h"
-#include "C64.h"
+#include "Emulator.h"
 #include "Checksum.h"
 #include "IOUtils.h"
 
@@ -34,6 +34,28 @@ DriveMemory::_reset(bool hard)
     }
 }
 
+void 
+DriveMemory::newserialize(util::SerCounter &worker)
+{
+    serialize(worker);
+    if (config.saveRoms) worker << rom;
+}
+
+void
+DriveMemory::newserialize(util::SerReader &worker)
+{
+    serialize(worker);
+    if (config.saveRoms) worker << rom;
+}
+
+void
+DriveMemory::newserialize(util::SerWriter &worker)
+{
+    serialize(worker);
+    if (config.saveRoms) worker << rom;
+}
+
+/*
 isize
 DriveMemory::_size()
 {
@@ -72,6 +94,60 @@ DriveMemory::_save(u8 *buffer)
     if (saveRoms) applyToRoms(writer);
 
     return (isize)(writer.ptr - buffer);
+}
+*/
+
+DriveMemConfig
+DriveMemory::getDefaultConfig()
+{
+    DriveMemConfig defaults;
+
+    defaults.saveRoms = true;
+
+    return defaults;
+}
+
+void
+DriveMemory::resetConfig()
+{
+    assert(isPoweredOff());
+    auto &defaults = emulator.defaults;
+
+    std::vector <Option> options = {
+
+        OPT_SAVE_ROMS
+    };
+
+    for (auto &option : options) {
+        setConfigItem(option, defaults.get(option));
+    }
+}
+
+i64
+DriveMemory::getConfigItem(Option option) const
+{
+    switch (option) {
+
+        case OPT_SAVE_ROMS:     return config.saveRoms;
+
+        default:
+            fatalError;
+    }
+}
+
+void
+DriveMemory::setConfigItem(Option option, i64 value)
+{
+    switch (option) {
+
+        case OPT_SAVE_ROMS:
+
+            config.saveRoms = value;
+            return;
+
+        default:
+            fatalError;
+    }
 }
 
 void

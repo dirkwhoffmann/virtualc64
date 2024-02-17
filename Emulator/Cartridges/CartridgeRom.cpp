@@ -74,6 +74,7 @@ CartridgeRom::newserialize(util::SerWriter &worker)
     for (int i = 0; i < size; i++) util::write8(worker.ptr, rom[i]);
 }
 
+/*
 isize
 CartridgeRom::_size()
 {
@@ -111,6 +112,7 @@ CartridgeRom::_save(u8 *buffer)
 
     return isize(writer.ptr - buffer);
 }
+*/
 
 bool
 CartridgeRom::mapsToL() const {

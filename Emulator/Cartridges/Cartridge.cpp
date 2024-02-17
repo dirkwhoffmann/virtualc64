@@ -250,18 +250,14 @@ Cartridge::newserialize(util::SerCounter &worker)
 {
     serialize(worker);
 
-    isize result = worker.count;
-
     // Add ROM size
-    for (isize i = 0; i < numPackets; i++) result += packet[i]->_size();
+    for (isize i = 0; i < numPackets; i++) packet[i]->newserialize(worker);
 
     // Add RAM size
-    result += ramCapacity;
+    worker.count += ramCapacity;
 
     // Add sub-class members
-    result += __size();
-
-    worker.count = result;
+    worker.count += __size();
 }
 
 void 
@@ -320,6 +316,7 @@ Cartridge::newserialize(util::SerWriter &worker)
     worker.ptr += __save(worker.ptr);
 }
 
+/*
 isize
 Cartridge::_size()
 {
@@ -397,6 +394,7 @@ Cartridge::_save(u8 *buffer)
     trace(SNP_DEBUG, "Serialized %ld bytes\n", isize(writer.ptr - buffer));
     return isize(writer.ptr - buffer);
 }
+*/
 
 CartridgeInfo
 Cartridge::getInfo() const

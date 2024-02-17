@@ -86,6 +86,28 @@ FlashRom::_dump(Category category, std::ostream& os) const
     }
 }
 
+void 
+FlashRom::newserialize(util::SerCounter &worker)
+{
+    serialize(worker);
+    worker.count += romSize;
+}
+
+void
+FlashRom::newserialize(util::SerReader &worker)
+{
+    serialize(worker);
+    worker.copy(rom, romSize);
+}
+
+void
+FlashRom::newserialize(util::SerWriter &worker)
+{
+    serialize(worker);
+    worker.copy(rom, romSize);
+}
+
+/*
 isize
 FlashRom::didLoadFromBuffer(const u8 *buffer)
 {
@@ -103,6 +125,7 @@ FlashRom::didSaveToBuffer(u8 *buffer)
 
     return romSize;
 }
+*/
 
 u8
 FlashRom::peek(u32 addr)

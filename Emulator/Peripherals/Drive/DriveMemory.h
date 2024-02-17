@@ -19,8 +19,9 @@ namespace vc64 {
 
 class DriveMemory : public SubComponent, public Dumpable {
     
-private:
-    
+    // Current configuration
+    DriveMemConfig config = { };
+
     // Reference to the connected disk drive
     class Drive &drive;
     
@@ -83,6 +84,7 @@ private:
         << usage;
     }
 
+    /*
     template <class T>
     void applyToRoms(T& worker)
     {
@@ -90,13 +92,34 @@ private:
 
         << rom;
     }
+    */
 
     void newserialize(util::SerChecker &worker) override { serialize(worker); }
+    void newserialize(util::SerCounter &worker) override;
+    void newserialize(util::SerResetter &worker) override { serialize(worker); }
+    void newserialize(util::SerReader &worker) override;
+    void newserialize(util::SerWriter &worker) override;
+    /*
     isize _size() override;
     isize _load(const u8 *buffer) override;
     isize _save(u8 *buffer) override;
-    
-    
+    */
+
+
+    //
+    // Configuring
+    //
+
+public:
+
+    static DriveMemConfig getDefaultConfig();
+    const DriveMemConfig &getConfig() const { return config; }
+    void resetConfig() override;
+
+    i64 getConfigItem(Option option) const;
+    void setConfigItem(Option option, i64 value);
+
+
     //
     // Working with Roms
     //

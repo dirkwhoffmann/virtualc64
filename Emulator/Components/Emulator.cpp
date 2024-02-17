@@ -218,6 +218,8 @@ Emulator::configure(Option option, i64 value)
         case OPT_SAVE_ROMS:
 
             _c64.mem.setConfigItem(option, value);
+            _c64.drive8.setConfigItem(option, value);
+            _c64.drive9.setConfigItem(option, value);
             break;
 
         case OPT_DRV_AUTO_CONFIG:

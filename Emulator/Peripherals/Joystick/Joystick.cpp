@@ -123,6 +123,18 @@ Joystick::_dump(Category category, std::ostream& os) const
     }
 }
 
+void 
+Joystick::newserialize(util::SerReader &worker)
+{
+    serialize(worker);
+
+    // Discard any active joystick movements
+    button = false;
+    axisX = 0;
+    axisY = 0;
+}
+
+/*
 isize
 Joystick::didLoadFromBuffer(const u8 *buffer)
 {
@@ -133,6 +145,7 @@ Joystick::didLoadFromBuffer(const u8 *buffer)
 
     return 0;
 }
+*/
 
 void
 Joystick::reload()

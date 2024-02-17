@@ -87,6 +87,49 @@ Datasette::_dump(Category category, std::ostream& os) const
     }
 }
 
+void 
+Datasette::newserialize(util::SerCounter &worker)
+{
+    serialize(worker);
+
+    worker << size;
+    for (isize i = 0; i < size; i++) worker << pulses[i].cycles;
+}
+
+void 
+Datasette::newserialize(util::SerReader &worker)
+{
+    serialize(worker);
+
+    // Free previously allocated memory
+    dealloc();
+
+    // Load size
+    worker << size;
+
+    // Make sure a corrupted value won't steal all memory
+    if (size > 0x8FFFF) { size = 0; }
+
+    // Create a new pulse buffer
+    alloc(size);
+
+    // Load pulses from buffer
+    for (isize i = 0; i < size; i++) worker << pulses[i].cycles;
+}
+
+void 
+Datasette::newserialize(util::SerWriter &worker)
+{
+    serialize(worker);
+
+    // Save size
+    worker << size;
+
+    // Save pulses to buffer
+    for (isize i = 0; i < size; i++) worker << pulses[i].cycles;
+}
+
+/*
 isize
 Datasette::_size()
 {
@@ -136,6 +179,7 @@ Datasette::didSaveToBuffer(u8 *buffer)
 
     return (isize)(writer.ptr - buffer);
 }
+*/
 
 void
 Datasette::resetConfig()

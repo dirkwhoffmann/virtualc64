@@ -441,6 +441,49 @@ Drive::_dump(Category category, std::ostream& os) const
     }
 }
 
+void 
+Drive::newserialize(util::SerCounter &worker)
+{
+    serialize(worker);
+
+    // Add the size of the boolean indicating whether a disk is inserted
+    worker.count += sizeof(bool);
+
+    // Add the disk size
+    if (hasDisk()) disk->serialize(worker);
+}
+
+void
+Drive::newserialize(util::SerReader &worker)
+{
+    // Read own state
+    serialize(worker);
+
+    // Check if the snapshot includes a disk
+    bool diskInSnapshot; worker << diskInSnapshot;
+
+    // If yes, recreate the disk
+    if (diskInSnapshot) {
+        disk = std::make_unique<Disk>(worker);
+    } else {
+        disk = nullptr;
+    }
+}
+
+void
+Drive::newserialize(util::SerWriter &worker)
+{
+    // Write own state
+    serialize(worker);
+
+    // Indicate whether this drive has a disk is inserted
+    worker << hasDisk();
+
+    // If yes, write the disk
+    if (hasDisk()) disk->serialize(worker);
+}
+
+/*
 isize
 Drive::_size()
 {
@@ -506,6 +549,7 @@ Drive::_save(u8 *buffer)
     result = isize(writer.ptr - buffer);
     return result;
 }
+*/
 
 void
 Drive::execute(u64 duration)

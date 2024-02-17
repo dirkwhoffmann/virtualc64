@@ -271,7 +271,8 @@ private:
         << writeShiftreg
         << sync
         << byteReady
-        << watchdog;
+        << watchdog
+        << insertionStatus;
 
         if (util::isResetter(worker)) return;
 
@@ -291,14 +292,20 @@ private:
         << config.stepVolume
         << config.insertVolume
         << config.ejectVolume
-        << insertionStatus;
+        << config.saveRoms;
     }
     
     void newserialize(util::SerChecker &worker) override { serialize(worker); }
+    void newserialize(util::SerCounter &worker) override;
+    void newserialize(util::SerResetter &worker) override { serialize(worker); }
+    void newserialize(util::SerReader &worker) override;
+    void newserialize(util::SerWriter &worker) override;
+
+    /*
     isize _size() override;
     isize _load(const u8 *buffer) override;
     isize _save(u8 *buffer) override;
-
+    */
     
     //
     // Analyzing

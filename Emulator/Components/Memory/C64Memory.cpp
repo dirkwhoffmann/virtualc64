@@ -187,7 +187,8 @@ C64Memory::getDefaultConfig()
     MemConfig defaults;
     
     defaults.ramPattern = RAM_PATTERN_VICE;
-    
+    defaults.saveRoms = true;
+
     return defaults;
 }
 
