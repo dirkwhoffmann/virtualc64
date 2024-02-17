@@ -67,14 +67,8 @@ private:
 
 private:
     
-    void _reset(bool hard) override { RESET_SNAPSHOT_ITEMS(hard) };
+    void _reset(bool hard) override { };
 
-    void newserialize(util::SerChecker &worker) override { serialize(worker); }
-    template <class T> void serialize(T& worker) { }
-    isize _size() override { COMPUTE_SNAPSHOT_SIZE }
-    isize _load(const u8 *buffer) override { LOAD_SNAPSHOT_ITEMS }
-    isize _save(u8 *buffer) override { SAVE_SNAPSHOT_ITEMS }
-    
     
     //
     // Emulating

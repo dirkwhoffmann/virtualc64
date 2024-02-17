@@ -54,12 +54,7 @@ private:
     
     void _reset(bool hard) override { };
     
-    template <class T> void serialize(T& worker) { }
-    isize _size() override { return 0; }
-    isize _load(const u8 *buffer) override {return 0; }
-    isize _save(u8 *buffer) override { return 0; }
-    
-    
+
     //
     // Configuring
     //
