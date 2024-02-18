@@ -359,6 +359,7 @@ public:
 
 public:
 
+    isize size();
     isize load(const u8 *buffer);
     isize save(u8 *buffer);
 

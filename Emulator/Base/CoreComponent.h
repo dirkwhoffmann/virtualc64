@@ -153,20 +153,6 @@ public:
 
 
     //
-    // Serializing
-    //
-    
-    // Returns the size of the internal state in bytes
-    isize size();
-
-    // Loads the internal state from a memory buffer
-    // virtual isize load(const u8 *buf) throws;
-
-    // Saves the internal state to a memory buffer
-    // virtual isize save(u8 *buf);
-
-
-    //
     // Misc
     //
 

@@ -604,18 +604,6 @@ public:
 
     isize newsize() {
 
-        /*
-        auto &id1 = typeid(SerResetter);
-        auto &id2 = typeid(SerSoftResetter);
-
-        printf("%s    %s\n", id1.name(), id2.name());
-
-        SerSoftResetter test;
-        SerResetter &test2 = test;
-
-        printf("test1: %s    test2: %s\n", typeid(test).name(), typeid(test2).name());
-         */
-
         util::SerCounter counter;
         *this << counter;
         return counter.count;

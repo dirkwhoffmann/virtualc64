@@ -617,6 +617,12 @@ C64::_trackOff()
 }
 
 isize
+C64::size()
+{
+    return newsize();
+}
+
+isize
 C64::load(const u8 *buffer)
 {
     assert(!isRunning());
