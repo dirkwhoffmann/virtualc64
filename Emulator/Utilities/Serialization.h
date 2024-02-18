@@ -184,8 +184,7 @@ public:
     template <std::derived_from<Serializable> T>
     SerCounter& operator<<(T &v)
     {
-        v.newserialize(*this);
-        // v << *this;
+        v << *this;
         return *this;
     }
 };
@@ -263,8 +262,7 @@ public:
     template <std::derived_from<Serializable> T>
     SerChecker& operator<<(T &v)
     {
-        v.newserialize(*this);
-        // v << *this;
+        v << *this;
         return *this;
     }
 };
@@ -359,8 +357,7 @@ public:
     template <std::derived_from<Serializable> T>
     SerReader& operator<<(T &v)
     {
-        v.newserialize(*this);
-        // v << *this;
+        v << *this;
         return *this;
     }
 };
@@ -445,8 +442,7 @@ public:
     template <std::derived_from<Serializable> T>
     SerWriter& operator<<(T &v)
     {
-        v.newserialize(*this);
-        // v << *this;
+        v << *this;
         return *this;
     }
 
@@ -524,8 +520,7 @@ public:
     template <std::derived_from<Serializable> T>
     SerResetter& operator<<(T &v)
     {
-        v.newserialize(*this);
-        // v << *this;
+        v << *this;
         return *this;
     }
 };
@@ -568,38 +563,38 @@ public:
 
     virtual ~Serializable() { }
 
-    virtual void newserialize(SerCounter &worker) { }
-    virtual void newserialize(SerChecker &worker) { }
-    virtual void newserialize(SerResetter &worker) = 0; //  { }
-    virtual void newserialize(SerReader &worker) { }
-    virtual void newserialize(SerWriter &worker) { }
+    virtual void operator << (SerCounter &worker) = 0;
+    virtual void operator << (SerChecker &worker) = 0;
+    virtual void operator << (SerResetter &worker) = 0;
+    virtual void operator << (SerReader &worker) = 0;
+    virtual void operator << (SerWriter &worker) = 0;
 
 
     isize newsize() {
 
         util::SerCounter counter;
-        newserialize(counter);
+        *this << counter;
         return counter.count;
     }
 
     u64 newchecksum() {
 
         util::SerChecker checker;
-        newserialize(checker);
+        *this << checker;
         return checker.hash;
     }
 
     isize newload(const u8 *buffer) {
 
         util::SerReader reader(buffer);
-        newserialize(reader);
+        *this << reader;
         return (isize)(reader.ptr - buffer);
     }
 
     isize newsave(u8 *buffer) {
 
         util::SerWriter writer(buffer);
-        newserialize(writer);
+        *this << writer;
         return (isize)(writer.ptr - buffer);
     }
 };
@@ -607,10 +602,10 @@ public:
 }
 
 #define SERIALIZERS(func) \
-void newserialize(util::SerChecker &worker) override { func(worker); } \
-void newserialize(util::SerCounter &worker) override { func(worker); } \
-void newserialize(util::SerResetter &worker) override { func(worker); } \
-void newserialize(util::SerReader &worker) override { func(worker); } \
-void newserialize(util::SerWriter &worker) override { func(worker); } 
+void operator << (util::SerChecker &worker) override { func(worker); } \
+void operator << (util::SerCounter &worker) override { func(worker); } \
+void operator << (util::SerResetter &worker) override { func(worker); } \
+void operator << (util::SerReader &worker) override { func(worker); } \
+void operator << (util::SerWriter &worker) override { func(worker); }
 
 #endif

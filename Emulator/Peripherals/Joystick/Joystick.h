@@ -73,11 +73,11 @@ private:
     {
     }
     
-    void newserialize(util::SerChecker &worker) override { serialize(worker); }
-    void newserialize(util::SerCounter &worker) override { serialize(worker); }
-    void newserialize(util::SerResetter &worker) override { serialize(worker); }
-    void newserialize(util::SerReader &worker) override;
-    void newserialize(util::SerWriter &worker) override { serialize(worker); }
+    void operator << (util::SerChecker &worker) override { serialize(worker); }
+    void operator << (util::SerCounter &worker) override { serialize(worker); }
+    void operator << (util::SerResetter &worker) override { serialize(worker); }
+    void operator << (util::SerReader &worker) override;
+    void operator << (util::SerWriter &worker) override { serialize(worker); }
 
 
     //

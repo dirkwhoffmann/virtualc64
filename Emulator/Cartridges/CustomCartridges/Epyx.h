@@ -72,7 +72,7 @@ private:
 
         << cycle;
     }
-    
+
     CARTRIDGE_SERIALIZERS
 
     

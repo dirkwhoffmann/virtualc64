@@ -108,7 +108,7 @@ FastVoice::init(FastSID *owner, isize voiceNr, FastVoice *prevVoice)
 }
 
 void 
-FastVoice::newserialize(util::SerReader &worker)
+FastVoice::operator << (util::SerReader &worker)
 {
     serialize(worker);
     updateWaveTablePtr();

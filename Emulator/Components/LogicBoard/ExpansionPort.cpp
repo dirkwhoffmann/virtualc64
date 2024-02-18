@@ -30,26 +30,26 @@ ExpansionPort::_reset(bool hard)
 }
 
 void 
-ExpansionPort::newserialize(util::SerChecker &worker)
+ExpansionPort::operator << (util::SerChecker &worker)
 {
     serialize(worker);
 }
 
 void 
-ExpansionPort::newserialize(util::SerCounter &worker)
+ExpansionPort::operator << (util::SerCounter &worker)
 {
     serialize(worker);
-    if (cartridge) cartridge->newserialize(worker);
+    if (cartridge) *cartridge << worker;
 }
 
 void
-ExpansionPort::newserialize(util::SerResetter &worker)
+ExpansionPort::operator << (util::SerResetter &worker)
 {
     serialize(worker);
 
     if (cartridge) {
 
-        cartridge->newserialize(worker);
+        *cartridge << worker;
         cartridge->resetCartConfig();
 
     } else {
@@ -59,7 +59,7 @@ ExpansionPort::newserialize(util::SerResetter &worker)
 }
 
 void
-ExpansionPort::newserialize(util::SerReader &worker)
+ExpansionPort::operator << (util::SerReader &worker)
 {
     serialize(worker);
 
@@ -70,17 +70,17 @@ ExpansionPort::newserialize(util::SerReader &worker)
     if (crtType != CRT_NONE) {
 
         cartridge = std::unique_ptr<Cartridge>(Cartridge::makeWithType(c64, crtType));
-        cartridge->newserialize(worker);
+        *cartridge << worker;
     }
 }
 
 void
-ExpansionPort::newserialize(util::SerWriter &worker)
+ExpansionPort::operator << (util::SerWriter &worker)
 {
     serialize(worker);
 
     // Save cartridge (if any)
-    if (crtType != CRT_NONE) cartridge->newserialize(worker);
+    if (crtType != CRT_NONE) *cartridge << worker;
 }
 
 void

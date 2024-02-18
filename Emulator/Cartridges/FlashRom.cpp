@@ -87,21 +87,21 @@ FlashRom::_dump(Category category, std::ostream& os) const
 }
 
 void 
-FlashRom::newserialize(util::SerCounter &worker)
+FlashRom::operator << (util::SerCounter &worker)
 {
     serialize(worker);
     worker.count += romSize;
 }
 
 void
-FlashRom::newserialize(util::SerReader &worker)
+FlashRom::operator << (util::SerReader &worker)
 {
     serialize(worker);
     worker.copy(rom, romSize);
 }
 
 void
-FlashRom::newserialize(util::SerWriter &worker)
+FlashRom::operator << (util::SerWriter &worker)
 {
     serialize(worker);
     worker.copy(rom, romSize);

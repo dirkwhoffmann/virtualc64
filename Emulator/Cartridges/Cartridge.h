@@ -204,11 +204,11 @@ protected:
     
 public:
 
-    void newserialize(util::SerChecker &worker) override { serialize(worker); }
-    void newserialize(util::SerCounter &worker) override;
-    void newserialize(util::SerResetter &worker) override;
-    void newserialize(util::SerReader &worker) override;
-    void newserialize(util::SerWriter &worker) override;
+    void operator << (util::SerChecker &worker) override { serialize(worker); }
+    void operator << (util::SerCounter &worker) override;
+    void operator << (util::SerResetter &worker) override;
+    void operator << (util::SerReader &worker) override;
+    void operator << (util::SerWriter &worker) override;
 
     
     //
@@ -380,9 +380,9 @@ public:
 };
 
 #define CARTRIDGE_SERIALIZERS \
-void newserialize(util::SerChecker &worker) override { Cartridge::newserialize(worker); serialize(worker); } \
-void newserialize(util::SerCounter &worker) override { Cartridge::newserialize(worker); serialize(worker); } \
-void newserialize(util::SerResetter &worker) override { Cartridge::newserialize(worker); serialize(worker); } \
-void newserialize(util::SerReader &worker) override { Cartridge::newserialize(worker); serialize(worker); } \
-void newserialize(util::SerWriter &worker) override { Cartridge::newserialize(worker); serialize(worker); }
+void operator << (util::SerChecker &worker) override { Cartridge::operator<<(worker); serialize(worker); } \
+void operator << (util::SerCounter &worker) override { Cartridge::operator<<(worker); serialize(worker); } \
+void operator << (util::SerResetter &worker) override { Cartridge::operator<<(worker); serialize(worker); } \
+void operator << (util::SerReader &worker) override { Cartridge::operator<<(worker); serialize(worker); } \
+void operator << (util::SerWriter &worker) override { Cartridge::operator<<(worker); serialize(worker); }
 

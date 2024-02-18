@@ -124,7 +124,7 @@ Joystick::_dump(Category category, std::ostream& os) const
 }
 
 void 
-Joystick::newserialize(util::SerReader &worker)
+Joystick::operator << (util::SerReader &worker)
 {
     serialize(worker);
 

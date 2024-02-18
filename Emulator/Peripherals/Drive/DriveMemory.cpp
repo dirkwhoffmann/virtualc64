@@ -35,21 +35,21 @@ DriveMemory::_reset(bool hard)
 }
 
 void 
-DriveMemory::newserialize(util::SerCounter &worker)
+DriveMemory::operator << (util::SerCounter &worker)
 {
     serialize(worker);
     if (config.saveRoms) worker << rom;
 }
 
 void
-DriveMemory::newserialize(util::SerReader &worker)
+DriveMemory::operator << (util::SerReader &worker)
 {
     serialize(worker);
     if (config.saveRoms) worker << rom;
 }
 
 void
-DriveMemory::newserialize(util::SerWriter &worker)
+DriveMemory::operator << (util::SerWriter &worker)
 {
     serialize(worker);
     if (config.saveRoms) worker << rom;

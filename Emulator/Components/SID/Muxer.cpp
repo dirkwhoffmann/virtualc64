@@ -432,7 +432,7 @@ Muxer::setSampleRate(double rate)
 }
 
 void 
-Muxer::newserialize(util::SerReader &worker)
+Muxer::operator << (util::SerReader &worker)
 {
     serialize(worker);
 

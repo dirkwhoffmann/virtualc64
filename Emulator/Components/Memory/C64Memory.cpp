@@ -119,21 +119,21 @@ C64Memory::_reset(bool hard)
 }
 
 void 
-C64Memory::newserialize(util::SerCounter &worker)
+C64Memory::operator << (util::SerCounter &worker)
 {
     serialize(worker);
     if (config.saveRoms) worker << rom;
 }
 
 void 
-C64Memory::newserialize(util::SerReader &worker)
+C64Memory::operator << (util::SerReader &worker)
 {
     serialize(worker);
     if (config.saveRoms) worker << rom;
 }
 
 void 
-C64Memory::newserialize(util::SerWriter &worker)
+C64Memory::operator << (util::SerWriter &worker)
 {
     serialize(worker);
     if (config.saveRoms) worker << rom;

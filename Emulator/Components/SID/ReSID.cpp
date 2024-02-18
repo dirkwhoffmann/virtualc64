@@ -124,14 +124,14 @@ ReSID::_dump(Category category, std::ostream& os) const
 }
 
 void
-ReSID::newserialize(util::SerReader &worker)
+ReSID::operator << (util::SerReader &worker)
 {
     serialize(worker);
     sid->write_state(st);
 }
 
 void
-ReSID::newserialize(util::SerWriter &worker)
+ReSID::operator << (util::SerWriter &worker)
 {
     st = sid->read_state();
     serialize(worker);

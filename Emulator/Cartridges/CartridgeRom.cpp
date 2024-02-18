@@ -40,20 +40,20 @@ CartridgeRom::_reset(bool hard)
 }
 
 void 
-CartridgeRom::newserialize(util::SerCounter &worker)
+CartridgeRom::operator << (util::SerCounter &worker)
 {
     serialize(worker);
     worker.count += size;
 }
 
 void 
-CartridgeRom::newserialize(util::SerResetter &worker)
+CartridgeRom::operator << (util::SerResetter &worker)
 {
     assert(false); // TODO
 }
 
 void 
-CartridgeRom::newserialize(util::SerReader &worker)
+CartridgeRom::operator << (util::SerReader &worker)
 {
     serialize(worker);
 
@@ -66,7 +66,7 @@ CartridgeRom::newserialize(util::SerReader &worker)
 }
 
 void 
-CartridgeRom::newserialize(util::SerWriter &worker)
+CartridgeRom::operator << (util::SerWriter &worker)
 {
     serialize(worker);
 

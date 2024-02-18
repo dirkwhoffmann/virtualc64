@@ -442,7 +442,7 @@ Drive::_dump(Category category, std::ostream& os) const
 }
 
 void 
-Drive::newserialize(util::SerCounter &worker)
+Drive::operator << (util::SerCounter &worker)
 {
     serialize(worker);
 
@@ -454,7 +454,7 @@ Drive::newserialize(util::SerCounter &worker)
 }
 
 void
-Drive::newserialize(util::SerReader &worker)
+Drive::operator << (util::SerReader &worker)
 {
     // Read own state
     serialize(worker);
@@ -471,7 +471,7 @@ Drive::newserialize(util::SerReader &worker)
 }
 
 void
-Drive::newserialize(util::SerWriter &worker)
+Drive::operator << (util::SerWriter &worker)
 {
     // Write own state
     serialize(worker);

@@ -246,25 +246,25 @@ Cartridge::_dump(Category category, std::ostream& os) const
 }
 
 void 
-Cartridge::newserialize(util::SerCounter &worker)
+Cartridge::operator << (util::SerCounter &worker)
 {
     serialize(worker);
 
     // Add ROM size
-    for (isize i = 0; i < numPackets; i++) packet[i]->newserialize(worker);
+    for (isize i = 0; i < numPackets; i++) *packet[i] << worker;
 
     // Add RAM size
     worker.count += ramCapacity;
 }
 
 void 
-Cartridge::newserialize(util::SerResetter &worker)
+Cartridge::operator << (util::SerResetter &worker)
 {
 
 }
 
 void 
-Cartridge::newserialize(util::SerReader &worker)
+Cartridge::operator << (util::SerReader &worker)
 {
     dealloc();
 
@@ -275,7 +275,7 @@ Cartridge::newserialize(util::SerReader &worker)
 
         assert(packet[i] == nullptr);
         packet[i] = new CartridgeRom(c64);
-        packet[i]->newserialize(worker);
+        *packet[i] << worker;
     }
 
     // Load RAM
@@ -288,7 +288,7 @@ Cartridge::newserialize(util::SerReader &worker)
 }
 
 void 
-Cartridge::newserialize(util::SerWriter &worker)
+Cartridge::operator << (util::SerWriter &worker)
 {
     serialize(worker);
 
@@ -296,7 +296,7 @@ Cartridge::newserialize(util::SerWriter &worker)
     for (isize i = 0; i < numPackets; i++) {
 
         assert(packet[i] != nullptr);
-        packet[i]->newserialize(worker);
+        *packet[i] << worker;
     }
 
     // Save RAM
