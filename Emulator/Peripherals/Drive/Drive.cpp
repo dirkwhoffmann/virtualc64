@@ -234,7 +234,7 @@ Drive::setConfigItem(Option option, i64 value)
             {   SUSPENDED
 
                 config.connected = bool(value);
-                reset(true);
+                hardReset();
             }
             msgQueue.put(value ? MSG_DRIVE_CONNECT : MSG_DRIVE_DISCONNECT, deviceNr);
             return;
@@ -244,7 +244,7 @@ Drive::setConfigItem(Option option, i64 value)
             {   SUSPENDED
                 
                 config.switchedOn = bool(value);
-                reset(true);
+                hardReset();
             }
             msgQueue.put(value ? MSG_DRIVE_POWER_ON : MSG_DRIVE_POWER_OFF, deviceNr);
             return;

@@ -212,11 +212,11 @@ C64::prefix() const
 }
 
 void
-C64::reset(bool hard)
+C64::hardReset()
 {
     // Execute the standard reset routine
-    Serializable::reset(hard);
-    
+    Serializable::hardReset();
+
     // Reinitialize the program counter
     cpu.reg.pc = cpu.reg.pc0 = mem.resetVector();
     
@@ -224,7 +224,20 @@ C64::reset(bool hard)
     msgQueue.put(MSG_RESET);
 }
 
-void 
+void
+C64::softReset()
+{
+    // Execute the standard reset routine
+    Serializable::softReset();
+
+    // Reinitialize the program counter
+    cpu.reg.pc = cpu.reg.pc0 = mem.resetVector();
+
+    // Inform the GUI
+    msgQueue.put(MSG_RESET);
+}
+
+void
 C64::initialize()
 {
     auto load = [&](const string &path) {
@@ -242,12 +255,6 @@ C64::initialize()
     if (auto path = Emulator::defaults.getString("VC1541_PATH"); path != "") load(path);
 
     CoreComponent::initialize();
-}
-
-void
-C64::_initialize()
-{
-    CoreComponent::_initialize();
 }
 
 void

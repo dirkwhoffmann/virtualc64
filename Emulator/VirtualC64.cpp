@@ -161,7 +161,7 @@ VirtualC64::C64_API::hardReset()
 
     {   SUSPENDED
 
-        c64.reset(true);
+        c64.hardReset();
     }
 }
 
@@ -172,7 +172,7 @@ VirtualC64::C64_API::softReset()
 
     {   SUSPENDED
 
-        c64.reset(false);
+        c64.hardReset();
     }
 }
 

@@ -252,7 +252,7 @@ ExpansionPort::attachCartridge(Cartridge *c)
         crtType = c->getCartridgeType();
         
         // Reset cartridge to update exrom and game line on the expansion port
-        cartridge->reset(true);
+        cartridge->hardReset();
         
         msgQueue.put(MSG_CRT_ATTACHED, 1);
         debug(EXP_DEBUG, "Cartridge attached to expansion port");

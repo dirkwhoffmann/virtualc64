@@ -16,18 +16,20 @@
 namespace vc64 {
 
 void 
-Serializable::reset(bool hard) {
+Serializable::hardReset() {
 
-    if (hard) {
-        SerHardResetter resetter;
-        *this << resetter;
-    } else {
-        SerSoftResetter resetter;
-        *this << resetter;
-    }
+    SerHardResetter resetter;
+    *this << resetter;
 }
 
-isize 
+void
+Serializable::softReset() {
+
+    SerSoftResetter resetter;
+    *this << resetter;
+}
+
+isize
 Serializable::size() {
 
     SerCounter counter;

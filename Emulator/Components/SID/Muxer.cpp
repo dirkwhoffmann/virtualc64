@@ -303,8 +303,8 @@ Muxer::setConfigItem(Option option, long id, i64 value)
                 clearSampleBuffer(id);
                 
                 for (int i = 0; i < 4; i++) {
-                    resid[i].reset(true);
-                    fastsid[i].reset(true);
+                    resid[i].hardReset();
+                    fastsid[i].hardReset();
                 }
             }
             return;

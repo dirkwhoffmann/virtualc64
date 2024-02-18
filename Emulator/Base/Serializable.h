@@ -590,7 +590,8 @@ public:
     virtual void operator << (SerReader &worker) = 0;
     virtual void operator << (SerWriter &worker) = 0;
 
-    void reset(bool hard);
+    void hardReset();
+    void softReset();
     isize size();
     u64 checksum();
     isize load(const u8 *buffer);

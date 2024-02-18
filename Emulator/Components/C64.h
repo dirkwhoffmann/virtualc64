@@ -263,14 +263,12 @@ private:
 
 public:
     
-    void reset(bool hard);
-    void hardReset() { reset(true); }
-    void softReset() { reset(false); }
+    void hardReset();
+    void softReset();
 
 private:
 
     void initialize();
-    void _initialize() override;
 
     
     //
