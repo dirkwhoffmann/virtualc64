@@ -19,8 +19,11 @@ PageFox::PageFox(C64 &ref) : Cartridge(ref)
 }
 
 void
-PageFox::_reset(bool hard)
+PageFox::operator << (util::SerResetter &worker) 
 {
+    Cartridge::operator<<(worker); 
+    serialize(worker);
+
     eraseRAM(0);
 }
 

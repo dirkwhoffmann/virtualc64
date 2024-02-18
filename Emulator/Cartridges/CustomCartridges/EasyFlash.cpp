@@ -30,9 +30,10 @@ EasyFlash::resetCartConfig()
 }
 
 void
-EasyFlash::_reset(bool hard)
+EasyFlash::operator << (util::SerResetter &worker)
 {
-    Cartridge::_reset(hard);
+    Cartridge::operator<<(worker);
+    serialize(worker);
     
     eraseRAM(0);
     

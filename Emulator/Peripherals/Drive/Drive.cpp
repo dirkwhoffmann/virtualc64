@@ -51,8 +51,10 @@ Drive::_initialize()
 }
 
 void
-Drive::_reset(bool hard)
+Drive::operator << (util::SerResetter &worker)
 {    
+    serialize(worker);
+    
     cpu.reg.pc = 0xEAA0;
     halftrack = 41;
     

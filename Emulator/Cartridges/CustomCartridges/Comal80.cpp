@@ -14,9 +14,9 @@
 #include "C64.h"
 
 void
-Comal80::_reset(bool hard)
+Comal80::operator << (util::SerResetter &worker)
 {
-    Cartridge::_reset(hard);
+    Cartridge::operator << (worker);
     expansionport.setCartridgeMode(CRTMODE_16K);
     bankIn(0);
 }

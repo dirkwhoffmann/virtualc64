@@ -16,19 +16,6 @@
 
 namespace vc64 {
 
-/*
-void
-ExpansionPort::_reset(bool hard)
-{
-    if (cartridge) {
-        cartridge->reset(hard);
-        cartridge->resetCartConfig();
-    } else {
-        setCartridgeMode(CRTMODE_OFF);
-    }
-}
-*/
-
 void
 ExpansionPort::operator << (util::SerResetter &worker)
 {

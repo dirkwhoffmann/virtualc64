@@ -28,7 +28,7 @@ Mouse::Mouse(C64 &ref, ControlPort& pref) : SubComponent(ref), port(pref)
     };
 }
 
-void Mouse::_reset(bool hard)
+void Mouse::operator << (util::SerResetter &worker)
 {
     targetX = 0;
     targetY = 0;
@@ -74,7 +74,8 @@ Mouse::setConfigItem(Option option, i64 value)
         case OPT_MOUSE_MODEL:
             
             config.model = MouseModel(value);
-            _reset(true);
+            targetX = 0;
+            targetY = 0;
             return;
             
         case OPT_SHAKE_DETECTION:

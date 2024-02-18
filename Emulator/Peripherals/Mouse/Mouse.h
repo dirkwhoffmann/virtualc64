@@ -108,9 +108,7 @@ private:
     // Methods from CoreComponent
     //
 
-private:
-    
-    void _reset(bool hard) override;
+public:
 
     template <class T>
     void serialize(T& worker)
@@ -120,8 +118,13 @@ private:
         worker
 
         << config.model;
+    } 
 
-    } SERIALIZERS(serialize);
+    void operator << (util::SerResetter &worker) override;
+    void operator << (util::SerChecker &worker) override { serialize(worker); }
+    void operator << (util::SerCounter &worker) override { serialize(worker); }
+    void operator << (util::SerReader &worker) override { serialize(worker); }
+    void operator << (util::SerWriter &worker) override { serialize(worker); }
 
     
     //

@@ -41,12 +41,6 @@ CartridgeRom::operator << (util::SerCounter &worker)
 }
 
 void 
-CartridgeRom::operator << (util::SerResetter &worker)
-{
-    assert(false); // TODO
-}
-
-void 
 CartridgeRom::operator << (util::SerReader &worker)
 {
     serialize(worker);

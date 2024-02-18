@@ -28,7 +28,7 @@ Joystick::getDescription() const
 }
 
 void
-Joystick::_reset(bool hard)
+Joystick::operator << (util::SerResetter &worker)
 {    
     // Discard any active joystick movements
     button = false;

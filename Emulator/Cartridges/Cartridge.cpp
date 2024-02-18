@@ -200,19 +200,6 @@ Cartridge::resetCartConfig() {
 }
 
 void
-Cartridge::_reset(bool hard)
-{    
-    // Reset external RAM
-    if (externalRam && !getTraits().battery) memset(externalRam, 0xFF, ramCapacity);
-
-    // Reset all chip packets
-    for (isize i = 0; i < numPackets; i++) packet[i]->_reset(hard);
-        
-    // Bank in visibile chips (chips with low numbers show up first)
-    for (int i = MAX_PACKETS - 1; i >= 0; i--) bankIn(i);
-}
-
-void
 Cartridge::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
@@ -243,7 +230,20 @@ Cartridge::_dump(Category category, std::ostream& os) const
     }
 }
 
-void 
+void
+Cartridge::operator << (util::SerResetter &worker)
+{
+    // Reset external RAM
+    if (externalRam && !getTraits().battery) memset(externalRam, 0xFF, ramCapacity);
+
+    // Reset all chip packets
+    for (isize i = 0; i < numPackets; i++) *packet[i] << worker;
+
+    // Bank in visibile chips (chips with low numbers show up first)
+    for (int i = MAX_PACKETS - 1; i >= 0; i--) bankIn(i);
+}
+
+void
 Cartridge::operator << (util::SerCounter &worker)
 {
     serialize(worker);
@@ -253,12 +253,6 @@ Cartridge::operator << (util::SerCounter &worker)
 
     // Add RAM size
     worker.count += ramCapacity;
-}
-
-void 
-Cartridge::operator << (util::SerResetter &worker)
-{
-
 }
 
 void 

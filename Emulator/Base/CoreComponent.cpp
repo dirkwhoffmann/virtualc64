@@ -42,7 +42,7 @@ CoreComponent::reset(bool hard)
     for (CoreComponent *c : subComponents) { c->reset(hard); }
 
     newreset(hard);
-    _reset(hard);
+    // _reset(hard);
 }
 
 isize

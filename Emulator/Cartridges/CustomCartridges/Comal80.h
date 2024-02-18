@@ -28,7 +28,7 @@ public:
 
     Comal80(C64 &ref) : Cartridge(ref) { };
     
-    void _reset(bool hard) override;
+    void operator << (util::SerResetter &worker) override;
 
     u8 peekIO1(u16 addr) override { return control; }
     u8 spypeekIO1(u16 addr) const override { return control; }

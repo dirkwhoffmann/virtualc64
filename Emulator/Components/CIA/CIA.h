@@ -298,10 +298,6 @@ private:
     // Methods from CoreComponent
     //
 
-protected:
-    
-    void _reset(bool hard) override;
-
 private:
     
     template <class T>
@@ -346,8 +342,13 @@ private:
 
         << config.revision
         << config.timerBBug;
+    } 
 
-    } SERIALIZERS(serialize);
+    void operator << (util::SerResetter &worker) override;
+    void operator << (util::SerChecker &worker) override { serialize(worker); }
+    void operator << (util::SerCounter &worker) override { serialize(worker); }
+    void operator << (util::SerReader &worker) override { serialize(worker); }
+    void operator << (util::SerWriter &worker) override { serialize(worker); }
 
     
     //

@@ -13,12 +13,6 @@
 #include "config.h"
 #include "C64.h"
 
-void
-Dinamic::_reset(bool hard)
-{
-    Cartridge::_reset(hard);
-}
-
 u8
 Dinamic::peekIO1(u16 addr)
 {

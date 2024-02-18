@@ -28,10 +28,6 @@ public:
     
     Dinamic(C64 &ref) : Cartridge(ref) { };
 
-private:
-    
-    void _reset(bool hard) override;
-
     
     //
     // Accessing the cartridge

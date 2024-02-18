@@ -92,7 +92,7 @@ public:
 
     ActionReplay(C64 &ref);
 
-    void _reset(bool hard) override;
+    void operator << (util::SerResetter &worker) override;
     void resetCartConfig() override;
 
     

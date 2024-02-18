@@ -25,12 +25,6 @@ GeoRAM::GeoRAM(C64 &ref, isize kb) : GeoRAM(ref)
 }
 
 void
-GeoRAM::_reset(bool hard)
-{
-    
-}
-
-void
 GeoRAM::_dump(Category category, std::ostream& os) const
 {
     using namespace util;

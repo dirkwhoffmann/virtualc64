@@ -19,7 +19,7 @@
 namespace vc64 {
 
 void
-Mouse1350::_reset(bool hard)
+Mouse1350::operator << (util::SerResetter &worker)
 {
     leftButton = false;
     rightButton = false;

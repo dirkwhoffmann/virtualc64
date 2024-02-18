@@ -19,9 +19,11 @@ KcsPower::KcsPower(C64 &ref) : Cartridge(ref)
 }
 
 void
-KcsPower::_reset(bool hard)
+KcsPower::operator << (util::SerResetter &worker)
 {
-    Cartridge::_reset(hard);
+    Cartridge::operator<<(worker);
+    serialize(worker);
+
     eraseRAM(0xFF);
 }
 

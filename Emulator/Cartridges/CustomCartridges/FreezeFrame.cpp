@@ -14,10 +14,11 @@
 #include "C64.h"
 
 void
-FreezeFrame::_reset(bool hard)
+FreezeFrame::operator << (util::SerResetter &worker)
 {
-    Cartridge::_reset(hard);
-    
+    Cartridge::operator<<(worker); 
+    serialize(worker);
+
     // In Ultimax mode, the same ROM chip that appears in ROML also appears
     // in ROMH. By default, it it appears in ROML only, so let's bank it in
     // ROMH manually.

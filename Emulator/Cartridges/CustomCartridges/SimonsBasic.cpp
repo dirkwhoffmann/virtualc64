@@ -14,8 +14,11 @@
 #include "C64.h"
 
 void
-SimonsBasic::_reset(bool hard)
+SimonsBasic::operator << (util::SerResetter &worker) 
 {
+    Cartridge::operator<<(worker); 
+    serialize(worker);
+
     bankIn(0);
     bankIn(1);
 }

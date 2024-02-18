@@ -39,11 +39,7 @@ public:
     //
     
     PageFox(C64 &ref);
-    
-private:
-    
-    void _reset(bool hard) override;
-    
+        
     
     //
     // Methods from CoreObject
@@ -70,7 +66,11 @@ private:
         << ctrlReg;
     }
     
-    CARTRIDGE_SERIALIZERS
+    void operator << (util::SerResetter &worker) override;
+    void operator << (util::SerChecker &worker) override { Cartridge::operator<<(worker); serialize(worker); }
+    void operator << (util::SerCounter &worker) override { Cartridge::operator<<(worker); serialize(worker); }
+    void operator << (util::SerReader &worker) override { Cartridge::operator<<(worker); serialize(worker); }
+    void operator << (util::SerWriter &worker) override { Cartridge::operator<<(worker); serialize(worker); }
 
     
     //

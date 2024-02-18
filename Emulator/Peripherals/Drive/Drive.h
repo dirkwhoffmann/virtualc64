@@ -248,7 +248,6 @@ private:
 private:
 
     void _initialize() override;
-    void _reset(bool hard) override;
     
     template <class T>
     void serialize(T& worker)
@@ -295,9 +294,9 @@ private:
         << config.saveRoms;
     }
     
+    void operator << (util::SerResetter &worker) override;
     void operator << (util::SerChecker &worker) override { serialize(worker); }
     void operator << (util::SerCounter &worker) override;
-    void operator << (util::SerResetter &worker) override { serialize(worker); }
     void operator << (util::SerReader &worker) override;
     void operator << (util::SerWriter &worker) override;
 

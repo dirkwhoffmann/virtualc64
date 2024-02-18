@@ -25,8 +25,10 @@ VIA6522::VIA6522(C64 &ref, Drive &drvref) : SubComponent(ref), drive(drvref)
 {
 }
 
-void VIA6522::_reset(bool hard)
-{        
+void VIA6522::operator << (util::SerResetter &worker)
+{      
+    serialize(worker);
+    
     t1 = 0x01AA;
     t2 = 0x01AA;
     t1_latch_hi = 0x01;

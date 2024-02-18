@@ -14,9 +14,10 @@
 #include "C64.h"
 
 void
-Epyx::_reset(bool hard)
+Epyx::operator << (util::SerResetter &worker)
 {
-    Cartridge::_reset(hard);
+    Cartridge::operator << (worker);
+    serialize(worker);
     
     dischargeCapacitor();
 }

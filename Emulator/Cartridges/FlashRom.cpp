@@ -60,7 +60,7 @@ FlashRom::loadBank(isize bank, u8 *data)
 }
 
 void
-FlashRom::_reset(bool hard)
+FlashRom::operator << (util::SerResetter &worker)
 {        
     state = FLASH_READ;
     baseState = FLASH_READ;

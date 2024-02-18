@@ -14,9 +14,10 @@
 #include "C64.h"
 
 void
-Mach5::_reset(bool hard)
+Mach5::operator << (util::SerResetter &worker)
 {
-    Cartridge::_reset(hard);
+    Cartridge::operator<<(worker); 
+    serialize(worker);
 }
 
 u8

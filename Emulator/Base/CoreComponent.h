@@ -91,7 +91,7 @@ public:
      * component to implement this function.
      */
     void reset(bool hard);
-    virtual void _reset(bool hard) { };
+    // virtual void _reset(bool hard) { };
 
 
     //

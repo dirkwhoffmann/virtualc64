@@ -608,7 +608,6 @@ private:
 
 private:
     
-    void _reset(bool hard) override;
     void _trackOn() override;
     void _trackOff() override;
 
@@ -698,9 +697,14 @@ private:
         << is656x
 
         << memSrc;
+    } 
 
-    } SERIALIZERS(serialize);
-    
+    void operator << (util::SerResetter &worker) override;
+    void operator << (util::SerChecker &worker) override { serialize(worker); }
+    void operator << (util::SerCounter &worker) override { serialize(worker); }
+    void operator << (util::SerReader &worker) override { serialize(worker); }
+    void operator << (util::SerWriter &worker) override { serialize(worker); }
+
 
     //
     // Methods from Inspectable

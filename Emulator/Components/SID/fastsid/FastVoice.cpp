@@ -53,9 +53,11 @@ static u32 exptable[6] =
 };
 
 void
-FastVoice::_reset(bool hard)
+FastVoice::operator << (util::SerResetter &worker)
 {    
-    updateWaveTablePtr(); 
+    serialize(worker);
+    
+    updateWaveTablePtr();
     lsfr = NSEED;
 }
 

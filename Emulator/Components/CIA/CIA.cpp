@@ -23,8 +23,10 @@ CIA::CIA(C64 &ref) : SubComponent(ref)
 }
 
 void
-CIA::_reset(bool hard)
+CIA::operator << (util::SerResetter &worker)
 {    
+    serialize(worker);
+
     CNT = true;
     INT = 1;
     

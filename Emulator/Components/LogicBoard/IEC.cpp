@@ -16,9 +16,11 @@
 
 namespace vc64 {
 
-void 
-IEC::_reset(bool hard)
-{    
+void
+IEC::operator << (util::SerResetter &worker)
+{
+    serialize(worker);
+    
     atnLine = 1;
     clockLine = 1;
     dataLine = 1;

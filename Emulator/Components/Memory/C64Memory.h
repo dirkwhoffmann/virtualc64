@@ -89,18 +89,6 @@ private:
 
 private:
 
-    void _reset(bool hard) override;
-    
-    /*
-    template <class T>
-    void applyToRoms(T& worker)
-    {
-        worker
-
-        << rom;
-    }
-    */
-
     template <class T>
     void serialize(T& worker)
     {
@@ -122,9 +110,9 @@ private:
 
     }
     
+    void operator << (util::SerResetter &worker) override;
     void operator << (util::SerChecker &worker) override { serialize(worker); }
     void operator << (util::SerCounter &worker) override;
-    void operator << (util::SerResetter &worker) override { serialize(worker); }
     void operator << (util::SerReader &worker) override;
     void operator << (util::SerWriter &worker) override;
 

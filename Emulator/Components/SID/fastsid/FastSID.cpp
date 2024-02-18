@@ -140,8 +140,10 @@ FastSID::initFilter(double sampleRate)
 }
 
 void
-FastSID::_reset(bool hard)
+FastSID::operator << (util::SerResetter &worker)
 {
+    serialize(worker);
+    
     init(sampleRate, cpuFrequency);
 }
 

@@ -101,9 +101,11 @@ C64Memory::C64Memory(C64 &ref) : SubComponent(ref)
 }
 
 void
-C64Memory::_reset(bool hard)
-{    
-    if (hard) {
+C64Memory::operator << (util::SerResetter &worker)
+{
+    serialize(worker);
+    
+    if (util::isHardResetter(worker)) {
         
         // Erase RAM
         eraseWithPattern(config.ramPattern);
