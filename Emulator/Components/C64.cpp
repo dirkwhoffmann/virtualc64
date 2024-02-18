@@ -251,7 +251,7 @@ C64::_initialize()
 }
 
 void
-C64::operator << (util::SerResetter &worker)
+C64::operator << (SerResetter &worker)
 {
     auto insEvent = id[SLOT_INS];
 
@@ -629,7 +629,7 @@ C64::load(const u8 *buffer)
 
     // Load checksum
     isize count = 8;
-    auto hash = util::read64(buffer);
+    auto hash = read64(buffer);
 
     // Load internal state
     count += Serializable::load(buffer);
@@ -652,7 +652,7 @@ C64::save(u8 *buffer)
 {
     // Save checksum
     isize count = 8;
-    util::write64(buffer, checksum());
+    write64(buffer, checksum());
 
     // Save internal state
     count += Serializable::save(buffer);

@@ -101,11 +101,11 @@ C64Memory::C64Memory(C64 &ref) : SubComponent(ref)
 }
 
 void
-C64Memory::operator << (util::SerResetter &worker)
+C64Memory::operator << (SerResetter &worker)
 {
     serialize(worker);
     
-    if (util::isHardResetter(worker)) {
+    if (isHardResetter(worker)) {
         
         // Erase RAM
         eraseWithPattern(config.ramPattern);
@@ -119,21 +119,21 @@ C64Memory::operator << (util::SerResetter &worker)
 }
 
 void 
-C64Memory::operator << (util::SerCounter &worker)
+C64Memory::operator << (SerCounter &worker)
 {
     serialize(worker);
     if (config.saveRoms) worker << rom;
 }
 
 void 
-C64Memory::operator << (util::SerReader &worker)
+C64Memory::operator << (SerReader &worker)
 {
     serialize(worker);
     if (config.saveRoms) worker << rom;
 }
 
 void 
-C64Memory::operator << (util::SerWriter &worker)
+C64Memory::operator << (SerWriter &worker)
 {
     serialize(worker);
     if (config.saveRoms) worker << rom;

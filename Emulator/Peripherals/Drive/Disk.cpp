@@ -178,7 +178,7 @@ Disk::init(AnyCollection &collection, bool wp)
 }
 
 void
-Disk::init(util::SerReader &reader)
+Disk::init(SerReader &reader)
 {
     serialize(reader);
 }

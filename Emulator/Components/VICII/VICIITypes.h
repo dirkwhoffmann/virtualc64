@@ -461,7 +461,10 @@ typedef struct
 SpriteInfo;
     
 #ifdef __cplusplus
-struct VICIIRegisters : util::Serializable
+
+namespace vc64 {
+
+struct VICIIRegisters : Serializable
 {
     // Registers
     u16 sprX[8];     // D000, D002, ..., D00E, upper bits from D010
@@ -497,13 +500,11 @@ struct VICIIRegisters : util::Serializable
         << colors
         << xscroll
         << mode;
-
+        
     } SERIALIZERS(serialize);
-
-
 };
 
-struct SpriteSR : util::Serializable
+struct SpriteSR : Serializable
 {    
     // Shift register data (24 bit)
     u32 data;
@@ -532,7 +533,7 @@ struct SpriteSR : util::Serializable
     void serialize(W& worker)
     {
         worker
-
+        
         << data
         << chunk1
         << chunk2
@@ -540,8 +541,9 @@ struct SpriteSR : util::Serializable
         << mcFlop
         << expFlop
         << colBits;
-
+        
     } SERIALIZERS(serialize);
-
 };
+
+}
 #endif

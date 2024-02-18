@@ -25,7 +25,7 @@ VIA6522::VIA6522(C64 &ref, Drive &drvref) : SubComponent(ref), drive(drvref)
 {
 }
 
-void VIA6522::operator << (util::SerResetter &worker)
+void VIA6522::operator << (SerResetter &worker)
 {      
     serialize(worker);
     

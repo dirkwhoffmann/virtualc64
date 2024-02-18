@@ -24,7 +24,7 @@ DriveMemory::DriveMemory(C64 &ref, Drive &dref) : SubComponent(ref), drive(dref)
 }
 
 void 
-DriveMemory::operator << (util::SerResetter &worker)
+DriveMemory::operator << (SerResetter &worker)
 {
     serialize(worker);
     
@@ -35,21 +35,21 @@ DriveMemory::operator << (util::SerResetter &worker)
 }
 
 void 
-DriveMemory::operator << (util::SerCounter &worker)
+DriveMemory::operator << (SerCounter &worker)
 {
     serialize(worker);
     if (config.saveRoms) worker << rom;
 }
 
 void
-DriveMemory::operator << (util::SerReader &worker)
+DriveMemory::operator << (SerReader &worker)
 {
     serialize(worker);
     if (config.saveRoms) worker << rom;
 }
 
 void
-DriveMemory::operator << (util::SerWriter &worker)
+DriveMemory::operator << (SerWriter &worker)
 {
     serialize(worker);
     if (config.saveRoms) worker << rom;

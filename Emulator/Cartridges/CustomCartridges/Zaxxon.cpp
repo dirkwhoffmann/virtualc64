@@ -14,7 +14,7 @@
 #include "C64.h"
 
 void
-Zaxxon::operator << (util::SerResetter &worker)
+Zaxxon::operator << (SerResetter &worker)
 {
     Cartridge::operator<<(worker); 
     serialize(worker);

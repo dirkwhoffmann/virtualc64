@@ -14,7 +14,7 @@
 #include "C64.h"
 
 void
-Mach5::operator << (util::SerResetter &worker)
+Mach5::operator << (SerResetter &worker)
 {
     Cartridge::operator<<(worker); 
     serialize(worker);

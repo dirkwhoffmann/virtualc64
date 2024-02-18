@@ -128,7 +128,7 @@ ActionReplay::ActionReplay(C64 &ref) : Cartridge(ref)
 }
 
 void
-ActionReplay::operator << (util::SerResetter &worker)
+ActionReplay::operator << (SerResetter &worker)
 {
     Cartridge::operator << (worker);
     setControlReg(0);

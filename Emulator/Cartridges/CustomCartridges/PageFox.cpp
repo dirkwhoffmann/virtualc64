@@ -19,7 +19,7 @@ PageFox::PageFox(C64 &ref) : Cartridge(ref)
 }
 
 void
-PageFox::operator << (util::SerResetter &worker) 
+PageFox::operator << (SerResetter &worker) 
 {
     Cartridge::operator<<(worker); 
     serialize(worker);

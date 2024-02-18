@@ -19,7 +19,7 @@
 namespace vc64 {
 
 void
-Mouse1351::operator << (util::SerResetter &worker)
+Mouse1351::operator << (SerResetter &worker)
 {
     leftButton = false;
     rightButton = false;

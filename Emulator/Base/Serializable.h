@@ -19,7 +19,7 @@
 #include "Buffer.h"
 #include <vector>
 
-namespace util {
+namespace vc64 {
 
 class Serializable;
 
@@ -149,7 +149,7 @@ public:
     COUNTD(const double)
        
     template <class T>
-    auto& operator<<(Allocator<T> &a)
+    auto& operator<<(util::Allocator<T> &a)
     {
         count += 8 + a.size;
         return *this;
@@ -207,7 +207,7 @@ public:
 
     u64 hash;
 
-    SerChecker() { hash = fnvInit64(); }
+    SerChecker() { hash = util::fnvInit64(); }
 
     CHECK(const bool)
     CHECK(const char)
@@ -225,7 +225,7 @@ public:
     CHECK(const double)
        
     template <class T>
-    auto& operator<<(Allocator<T> &a)
+    auto& operator<<(util::Allocator<T> &a)
     {
         hash = util::fnvIt64(hash, a.fnv64());
         return *this;
@@ -310,7 +310,7 @@ public:
     DESERIALIZED(double)
 
     template <class T>
-    auto& operator<<(Allocator<T> &a)
+    auto& operator<<(util::Allocator<T> &a)
     {
         i64 len;
         *this << len;
@@ -405,7 +405,7 @@ public:
     SERIALIZED(const double)
 
     template <class T>
-    auto& operator<<(Allocator<T> &a)
+    auto& operator<<(util::Allocator<T> &a)
     {
         *this << i64(a.size);
         a.copy(ptr);
@@ -459,7 +459,7 @@ public:
 //
 
 #define RESET(type) \
-SerResetter& operator<<(type& v) \
+SerResetter & operator<<(type& v) \
 { \
 v = (type)0; \
 return *this; \
@@ -490,7 +490,7 @@ public:
     RESET(double)
 
     template <class T>
-    auto& operator<<(Allocator<T> &a)
+    auto& operator<<(util::Allocator<T> &a)
     {
         a.clear();
         return *this;
@@ -510,7 +510,7 @@ public:
     }
 
     template <class T, isize N>
-    SerResetter& operator<<(T (&v)[N])
+    SerResetter & operator<<(T (&v)[N])
     {
         for(isize i = 0; i < N; ++i) {
             *this << v[i];
@@ -519,7 +519,7 @@ public:
     }
 
     template <std::derived_from<Serializable> T>
-    SerResetter& operator<<(T &v)
+    SerResetter & operator<<(T &v)
     {
         v << *this;
         return *this;
@@ -600,10 +600,10 @@ public:
 }
 
 #define SERIALIZERS(func) \
-void operator << (util::SerChecker &worker) override { func(worker); } \
-void operator << (util::SerCounter &worker) override { func(worker); } \
-void operator << (util::SerResetter &worker) override { func(worker); } \
-void operator << (util::SerReader &worker) override { func(worker); } \
-void operator << (util::SerWriter &worker) override { func(worker); }
+void operator << (SerChecker &worker) override { func(worker); } \
+void operator << (SerCounter &worker) override { func(worker); } \
+void operator << (SerResetter &worker) override { func(worker); } \
+void operator << (SerReader &worker) override { func(worker); } \
+void operator << (SerWriter &worker) override { func(worker); }
 
 #endif

@@ -81,18 +81,18 @@ public:
         << modeReg
         << bank;
 
-        if (util::isResetter(worker)) return;
+        if (isResetter(worker)) return;
 
         worker
 
         << jumper;
     }
     
-    void operator << (util::SerResetter &worker) override;
-    void operator << (util::SerChecker &worker) override { Cartridge::operator<<(worker); serialize(worker); }
-    void operator << (util::SerCounter &worker) override { Cartridge::operator<<(worker); serialize(worker); }
-    void operator << (util::SerReader &worker) override { Cartridge::operator<<(worker); serialize(worker); }
-    void operator << (util::SerWriter &worker) override { Cartridge::operator<<(worker); serialize(worker); }
+    void operator << (SerResetter &worker) override;
+    void operator << (SerChecker &worker) override { Cartridge::operator<<(worker); serialize(worker); }
+    void operator << (SerCounter &worker) override { Cartridge::operator<<(worker); serialize(worker); }
+    void operator << (SerReader &worker) override { Cartridge::operator<<(worker); serialize(worker); }
+    void operator << (SerWriter &worker) override { Cartridge::operator<<(worker); serialize(worker); }
 
 
     //

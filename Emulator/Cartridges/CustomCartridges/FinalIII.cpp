@@ -38,7 +38,7 @@ FinalIII::resetCartConfig()
 }
 
 void
-FinalIII::operator << (util::SerResetter &worker)
+FinalIII::operator << (SerResetter &worker)
 {
     Cartridge::operator<<(worker); 
     serialize(worker);

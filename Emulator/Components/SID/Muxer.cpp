@@ -41,11 +41,11 @@ Muxer::Muxer(C64 &ref) : SubComponent(ref)
 }
 
 void
-Muxer::operator << (util::SerResetter &worker)
+Muxer::operator << (SerResetter &worker)
 {
     serialize(worker);
     
-    if (util::isHardResetter(worker)) clearStats();
+    if (isHardResetter(worker)) clearStats();
     clear();
 }
 
@@ -432,7 +432,7 @@ Muxer::setSampleRate(double rate)
 }
 
 void 
-Muxer::operator << (util::SerReader &worker)
+Muxer::operator << (SerReader &worker)
 {
     serialize(worker);
 

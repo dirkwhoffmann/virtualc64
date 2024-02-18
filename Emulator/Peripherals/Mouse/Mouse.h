@@ -119,18 +119,18 @@ public:
         << mouse1351
         << mouseNeos;
 
-        if (util::isResetter(worker)) return;
+        if (isResetter(worker)) return;
 
         worker
 
         << config.model;
     } 
 
-    void operator << (util::SerResetter &worker) override;
-    void operator << (util::SerChecker &worker) override { serialize(worker); }
-    void operator << (util::SerCounter &worker) override { serialize(worker); }
-    void operator << (util::SerReader &worker) override { serialize(worker); }
-    void operator << (util::SerWriter &worker) override { serialize(worker); }
+    void operator << (SerResetter &worker) override;
+    void operator << (SerChecker &worker) override { serialize(worker); }
+    void operator << (SerCounter &worker) override { serialize(worker); }
+    void operator << (SerReader &worker) override { serialize(worker); }
+    void operator << (SerWriter &worker) override { serialize(worker); }
 
     
     //

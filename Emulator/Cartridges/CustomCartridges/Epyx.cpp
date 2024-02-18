@@ -14,7 +14,7 @@
 #include "C64.h"
 
 void
-Epyx::operator << (util::SerResetter &worker)
+Epyx::operator << (SerResetter &worker)
 {
     Cartridge::operator << (worker);
     serialize(worker);

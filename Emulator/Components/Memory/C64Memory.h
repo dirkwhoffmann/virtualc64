@@ -92,14 +92,14 @@ public:
     template <class T>
     void serialize(T& worker)
     {
-        if (util::isSoftResetter(worker)) return;
+        if (isSoftResetter(worker)) return;
 
         worker
 
         << ram
         << colorRam;
 
-        if (util::isResetter(worker)) return;
+        if (isResetter(worker)) return;
 
         worker
 
@@ -110,11 +110,11 @@ public:
 
     }
     
-    void operator << (util::SerResetter &worker) override;
-    void operator << (util::SerChecker &worker) override { serialize(worker); }
-    void operator << (util::SerCounter &worker) override;
-    void operator << (util::SerReader &worker) override;
-    void operator << (util::SerWriter &worker) override;
+    void operator << (SerResetter &worker) override;
+    void operator << (SerChecker &worker) override { serialize(worker); }
+    void operator << (SerCounter &worker) override;
+    void operator << (SerReader &worker) override;
+    void operator << (SerWriter &worker) override;
 
 
     //

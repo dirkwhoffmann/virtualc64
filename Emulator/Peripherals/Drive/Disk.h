@@ -117,7 +117,7 @@ public:
     Disk(const G64File &g64, bool wp = false) { init(g64, wp); }
     Disk(const D64File &d64, bool wp = false) { init(d64, wp); } throws
     Disk(AnyCollection &archive, bool wp = false) { init(archive, wp); } throws
-    Disk(util::SerReader &reader) throws { init(reader); }
+    Disk(SerReader &reader) throws { init(reader); }
     
 private:
     
@@ -127,7 +127,7 @@ private:
     void init(const G64File &g64, bool wp);
     void init(const D64File &d64, bool wp) throws;
     void init(AnyCollection &archive, bool wp) throws;
-    void init(util::SerReader &reader) throws;
+    void init(SerReader &reader) throws;
 
     
     //
@@ -149,7 +149,7 @@ public:
     template <class T>
     void serialize(T& worker)
     {
-        if (util::isResetter(worker)) return;
+        if (isResetter(worker)) return;
 
         worker
 

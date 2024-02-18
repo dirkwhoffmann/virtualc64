@@ -47,7 +47,7 @@ struct NoAssign
     NoAssign& operator=(NoAssign const&) = delete;
 };
 
-class CoreComponent : public CoreObject, public util::Serializable, public Suspendable, NoCopy, NoAssign {
+class CoreComponent : public CoreObject, public Serializable, public Suspendable, NoCopy, NoAssign {
 
 public:
 

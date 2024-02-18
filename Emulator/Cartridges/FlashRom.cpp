@@ -60,7 +60,7 @@ FlashRom::loadBank(isize bank, u8 *data)
 }
 
 void
-FlashRom::operator << (util::SerResetter &worker)
+FlashRom::operator << (SerResetter &worker)
 {        
     state = FLASH_READ;
     baseState = FLASH_READ;
@@ -83,21 +83,21 @@ FlashRom::_dump(Category category, std::ostream& os) const
 }
 
 void 
-FlashRom::operator << (util::SerCounter &worker)
+FlashRom::operator << (SerCounter &worker)
 {
     serialize(worker);
     worker.count += romSize;
 }
 
 void
-FlashRom::operator << (util::SerReader &worker)
+FlashRom::operator << (SerReader &worker)
 {
     serialize(worker);
     worker.copy(rom, romSize);
 }
 
 void
-FlashRom::operator << (util::SerWriter &worker)
+FlashRom::operator << (SerWriter &worker)
 {
     serialize(worker);
     worker.copy(rom, romSize);

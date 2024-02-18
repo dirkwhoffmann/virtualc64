@@ -30,7 +30,7 @@ EasyFlash::resetCartConfig()
 }
 
 void
-EasyFlash::operator << (util::SerResetter &worker)
+EasyFlash::operator << (SerResetter &worker)
 {
     Cartridge::operator<<(worker);
     serialize(worker);

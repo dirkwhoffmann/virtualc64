@@ -19,7 +19,7 @@ KcsPower::KcsPower(C64 &ref) : Cartridge(ref)
 }
 
 void
-KcsPower::operator << (util::SerResetter &worker)
+KcsPower::operator << (SerResetter &worker)
 {
     Cartridge::operator<<(worker);
     serialize(worker);

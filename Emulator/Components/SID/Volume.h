@@ -21,7 +21,7 @@ namespace vc64 {
  * to emulate a fading effect. Fading is utilized to avoid cracking noises if,
  * e.g., the emulator is put in pause mode.
  */
-template <typename T> struct AudioVolume : util::Serializable {
+template <typename T> struct AudioVolume : Serializable {
 
     // Current volume
     T current = 1.0;

@@ -455,7 +455,7 @@ private:
      * multiple sources (wired AND) and this variable indicates which sources
      * are holding the line low.
      */
-    util::TimeDelayed <u16,3> baLine = util::TimeDelayed <u16,3> ();
+    TimeDelayed <u16,3> baLine = TimeDelayed <u16,3> ();
     
     /* Start address of the currently selected memory bank. There are four
      * banks in total since the VICII chip can only 'see' 16 KB of memory at
@@ -475,7 +475,7 @@ private:
     u16 bankAddr;
     
     // Result of the lastest g-access
-    util::TimeDelayed <u32,2> gAccessResult = util::TimeDelayed <u32,2> ();
+    TimeDelayed <u32,2> gAccessResult = TimeDelayed <u32,2> ();
     
 
     //
@@ -685,7 +685,7 @@ public:
         << delay
         << bufferoffset;
 
-        if (util::isResetter(worker)) return;
+        if (isResetter(worker)) return;
 
         worker
 
@@ -701,11 +701,11 @@ public:
         << memSrc;
     } 
 
-    void operator << (util::SerResetter &worker) override;
-    void operator << (util::SerChecker &worker) override { serialize(worker); }
-    void operator << (util::SerCounter &worker) override { serialize(worker); }
-    void operator << (util::SerReader &worker) override { serialize(worker); }
-    void operator << (util::SerWriter &worker) override { serialize(worker); }
+    void operator << (SerResetter &worker) override;
+    void operator << (SerChecker &worker) override { serialize(worker); }
+    void operator << (SerCounter &worker) override { serialize(worker); }
+    void operator << (SerReader &worker) override { serialize(worker); }
+    void operator << (SerWriter &worker) override { serialize(worker); }
 
 
     //

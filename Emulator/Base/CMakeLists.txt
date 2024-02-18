@@ -8,8 +8,9 @@ CoreObject.cpp
 CoreComponent.cpp
 SubComponent.cpp
 Synchronizable.cpp
-Inspectable.cpp
+Serializable.cpp
 Suspendable.cpp
+Inspectable.cpp
 Wakeable.cpp
 Thread.cpp
 CmdQueue.cpp

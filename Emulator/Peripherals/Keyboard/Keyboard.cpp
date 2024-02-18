@@ -17,7 +17,7 @@
 #include "IOUtils.h"
 
 void 
-Keyboard::operator << (util::SerResetter &worker)
+Keyboard::operator << (SerResetter &worker)
 {    
     // Reset the keyboard matrix
     releaseAll();

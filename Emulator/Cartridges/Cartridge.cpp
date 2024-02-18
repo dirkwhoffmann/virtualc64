@@ -231,7 +231,7 @@ Cartridge::_dump(Category category, std::ostream& os) const
 }
 
 void
-Cartridge::operator << (util::SerResetter &worker)
+Cartridge::operator << (SerResetter &worker)
 {
     // Reset external RAM
     if (externalRam && !getTraits().battery) memset(externalRam, 0xFF, ramCapacity);
@@ -244,7 +244,7 @@ Cartridge::operator << (util::SerResetter &worker)
 }
 
 void
-Cartridge::operator << (util::SerCounter &worker)
+Cartridge::operator << (SerCounter &worker)
 {
     serialize(worker);
 
@@ -256,7 +256,7 @@ Cartridge::operator << (util::SerCounter &worker)
 }
 
 void 
-Cartridge::operator << (util::SerReader &worker)
+Cartridge::operator << (SerReader &worker)
 {
     dealloc();
 
@@ -280,7 +280,7 @@ Cartridge::operator << (util::SerReader &worker)
 }
 
 void 
-Cartridge::operator << (util::SerWriter &worker)
+Cartridge::operator << (SerWriter &worker)
 {
     serialize(worker);
 

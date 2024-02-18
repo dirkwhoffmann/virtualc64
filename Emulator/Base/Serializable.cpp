@@ -13,16 +13,16 @@
 #include "config.h"
 #include "Serializable.h"
 
-namespace util {
+namespace vc64 {
 
 void 
 Serializable::reset(bool hard) {
 
     if (hard) {
-        util::SerHardResetter resetter;
+        SerHardResetter resetter;
         *this << resetter;
     } else {
-        util::SerSoftResetter resetter;
+        SerSoftResetter resetter;
         *this << resetter;
     }
 }
@@ -30,7 +30,7 @@ Serializable::reset(bool hard) {
 isize 
 Serializable::size() {
 
-    util::SerCounter counter;
+    SerCounter counter;
     *this << counter;
     return counter.count;
 }
@@ -38,7 +38,7 @@ Serializable::size() {
 u64 
 Serializable::checksum() {
 
-    util::SerChecker checker;
+    SerChecker checker;
     *this << checker;
     return checker.hash;
 }
@@ -46,7 +46,7 @@ Serializable::checksum() {
 isize 
 Serializable::load(const u8 *buffer) {
 
-    util::SerReader reader(buffer);
+    SerReader reader(buffer);
     *this << reader;
     return (isize)(reader.ptr - buffer);
 }
@@ -54,7 +54,7 @@ Serializable::load(const u8 *buffer) {
 isize 
 Serializable::save(u8 *buffer) {
 
-    util::SerWriter writer(buffer);
+    SerWriter writer(buffer);
     *this << writer;
     return (isize)(writer.ptr - buffer);
 }

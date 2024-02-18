@@ -34,14 +34,14 @@ CartridgeRom::~CartridgeRom()
 }
 
 void 
-CartridgeRom::operator << (util::SerCounter &worker)
+CartridgeRom::operator << (SerCounter &worker)
 {
     serialize(worker);
     worker.count += size;
 }
 
 void 
-CartridgeRom::operator << (util::SerReader &worker)
+CartridgeRom::operator << (SerReader &worker)
 {
     serialize(worker);
 
@@ -50,16 +50,16 @@ CartridgeRom::operator << (util::SerReader &worker)
     rom = new u8[size];
 
     // Read packet data
-    for (int i = 0; i < size; i++) rom[i] = util::read8(worker.ptr);
+    for (int i = 0; i < size; i++) rom[i] = read8(worker.ptr);
 }
 
 void 
-CartridgeRom::operator << (util::SerWriter &worker)
+CartridgeRom::operator << (SerWriter &worker)
 {
     serialize(worker);
 
     // Write packet data
-    for (int i = 0; i < size; i++) util::write8(worker.ptr, rom[i]);
+    for (int i = 0; i < size; i++) write8(worker.ptr, rom[i]);
 }
 
 bool

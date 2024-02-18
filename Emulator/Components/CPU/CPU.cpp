@@ -43,7 +43,7 @@ CPU::getDescription() const
 }
 
 void
-CPU::operator << (util::SerResetter &worker)
+CPU::operator << (SerResetter &worker)
 {
     serialize(worker);
     

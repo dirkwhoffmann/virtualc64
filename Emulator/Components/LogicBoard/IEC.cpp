@@ -17,7 +17,7 @@
 namespace vc64 {
 
 void
-IEC::operator << (util::SerResetter &worker)
+IEC::operator << (SerResetter &worker)
 {
     serialize(worker);
     

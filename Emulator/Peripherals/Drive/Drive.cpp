@@ -51,7 +51,7 @@ Drive::_initialize()
 }
 
 void
-Drive::operator << (util::SerResetter &worker)
+Drive::operator << (SerResetter &worker)
 {    
     serialize(worker);
     
@@ -442,7 +442,7 @@ Drive::_dump(Category category, std::ostream& os) const
 }
 
 void 
-Drive::operator << (util::SerCounter &worker)
+Drive::operator << (SerCounter &worker)
 {
     serialize(worker);
 
@@ -454,7 +454,7 @@ Drive::operator << (util::SerCounter &worker)
 }
 
 void
-Drive::operator << (util::SerReader &worker)
+Drive::operator << (SerReader &worker)
 {
     // Read own state
     serialize(worker);
@@ -471,7 +471,7 @@ Drive::operator << (util::SerReader &worker)
 }
 
 void
-Drive::operator << (util::SerWriter &worker)
+Drive::operator << (SerWriter &worker)
 {
     // Write own state
     serialize(worker);

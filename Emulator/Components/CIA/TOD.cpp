@@ -48,7 +48,7 @@ TOD::recordState(TODInfo &info) const
 }
 
 void
-TOD::operator << (util::SerResetter &worker)
+TOD::operator << (SerResetter &worker)
 {    
     serialize(worker);
     

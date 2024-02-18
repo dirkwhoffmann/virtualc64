@@ -53,7 +53,7 @@ static u32 exptable[6] =
 };
 
 void
-FastVoice::operator << (util::SerResetter &worker)
+FastVoice::operator << (SerResetter &worker)
 {    
     serialize(worker);
     
@@ -108,7 +108,7 @@ FastVoice::init(FastSID *owner, isize voiceNr, FastVoice *prevVoice)
 }
 
 void 
-FastVoice::operator << (util::SerReader &worker)
+FastVoice::operator << (SerReader &worker)
 {
     serialize(worker);
     updateWaveTablePtr();

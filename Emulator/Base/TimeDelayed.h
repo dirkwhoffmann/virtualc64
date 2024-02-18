@@ -16,7 +16,7 @@
 #include "Serializable.h"
 #include <algorithm>
 
-namespace util {
+namespace vc64 {
 
 template <class T, isize delay> class TimeDelayed : public Serializable {
     

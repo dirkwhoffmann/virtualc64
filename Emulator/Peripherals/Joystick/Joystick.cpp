@@ -28,7 +28,7 @@ Joystick::getDescription() const
 }
 
 void
-Joystick::operator << (util::SerResetter &worker)
+Joystick::operator << (SerResetter &worker)
 {    
     // Discard any active joystick movements
     button = false;
@@ -122,7 +122,7 @@ Joystick::_dump(Category category, std::ostream& os) const
 }
 
 void 
-Joystick::operator << (util::SerReader &worker)
+Joystick::operator << (SerReader &worker)
 {
     serialize(worker);
 

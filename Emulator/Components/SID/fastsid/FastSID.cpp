@@ -140,7 +140,7 @@ FastSID::initFilter(double sampleRate)
 }
 
 void
-FastSID::operator << (util::SerResetter &worker)
+FastSID::operator << (SerResetter &worker)
 {
     serialize(worker);
     

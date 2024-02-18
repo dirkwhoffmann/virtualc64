@@ -14,7 +14,7 @@
 #include "C64.h"
 
 void
-Comal80::operator << (util::SerResetter &worker)
+Comal80::operator << (SerResetter &worker)
 {
     Cartridge::operator << (worker);
     expansionport.setCartridgeMode(CRTMODE_16K);

@@ -28,7 +28,7 @@ Mouse::Mouse(C64 &ref, ControlPort& pref) : SubComponent(ref), port(pref)
     };
 }
 
-void Mouse::operator << (util::SerResetter &worker)
+void Mouse::operator << (SerResetter &worker)
 {
     targetX = 0;
     targetY = 0;

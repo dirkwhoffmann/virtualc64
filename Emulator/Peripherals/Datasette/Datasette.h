@@ -125,18 +125,18 @@ public:
         << nextRisingEdge
         << nextFallingEdge;
 
-        if (util::isResetter(worker)) return;
+        if (isResetter(worker)) return;
 
         worker
 
         << type;
     }
     
-    void operator << (util::SerChecker &worker) override { serialize(worker); }
-    void operator << (util::SerCounter &worker) override;
-    void operator << (util::SerResetter &worker) override { serialize(worker); }
-    void operator << (util::SerReader &worker) override;
-    void operator << (util::SerWriter &worker) override;
+    void operator << (SerChecker &worker) override { serialize(worker); }
+    void operator << (SerCounter &worker) override;
+    void operator << (SerResetter &worker) override { serialize(worker); }
+    void operator << (SerReader &worker) override;
+    void operator << (SerWriter &worker) override;
 
 
     //

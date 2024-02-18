@@ -17,7 +17,7 @@
 namespace vc64 {
 
 void
-ExpansionPort::operator << (util::SerResetter &worker)
+ExpansionPort::operator << (SerResetter &worker)
 {
     serialize(worker);
 
@@ -33,20 +33,20 @@ ExpansionPort::operator << (util::SerResetter &worker)
 }
 
 void
-ExpansionPort::operator << (util::SerChecker &worker)
+ExpansionPort::operator << (SerChecker &worker)
 {
     serialize(worker);
 }
 
 void 
-ExpansionPort::operator << (util::SerCounter &worker)
+ExpansionPort::operator << (SerCounter &worker)
 {
     serialize(worker);
     if (cartridge) *cartridge << worker;
 }
 
 void
-ExpansionPort::operator << (util::SerReader &worker)
+ExpansionPort::operator << (SerReader &worker)
 {
     serialize(worker);
 
@@ -62,7 +62,7 @@ ExpansionPort::operator << (util::SerReader &worker)
 }
 
 void
-ExpansionPort::operator << (util::SerWriter &worker)
+ExpansionPort::operator << (SerWriter &worker)
 {
     serialize(worker);
 

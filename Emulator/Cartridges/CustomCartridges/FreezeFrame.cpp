@@ -14,7 +14,7 @@
 #include "C64.h"
 
 void
-FreezeFrame::operator << (util::SerResetter &worker)
+FreezeFrame::operator << (SerResetter &worker)
 {
     Cartridge::operator<<(worker); 
     serialize(worker);

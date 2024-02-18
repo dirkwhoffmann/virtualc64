@@ -227,7 +227,10 @@ struct DiskErrorCodeEnum : util::Reflection<DiskErrorCodeEnum, DiskErrorCode> {
  */
 
 #ifdef __cplusplus
-struct DiskData : public util::Serializable
+
+namespace vc64 {
+
+struct DiskData : public Serializable
 {
     union {
 
@@ -250,7 +253,6 @@ struct DiskData : public util::Serializable
     } SERIALIZERS(serialize);
 
 };
-#endif
 
 /* Length of each halftrack in bits
  *
@@ -259,8 +261,7 @@ struct DiskData : public util::Serializable
  *     - length.track[i][1] is the length of halftrack above track i
  */
 
-#ifdef __cplusplus
-struct DiskLength : public util::Serializable
+struct DiskLength : public Serializable
 {
     union {
 
@@ -282,6 +283,8 @@ struct DiskLength : public util::Serializable
 
     } SERIALIZERS(serialize);
 };
+
+}
 #endif
 
 // Disk parameters of a standard floppy disk

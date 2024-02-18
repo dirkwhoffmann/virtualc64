@@ -15,8 +15,6 @@
 #include "PeddleUtils.h"
 #include "TimeDelayed.h"
 
-using util::TimeDelayed;
-
 using namespace vc64;
 
 namespace vc64::peddle {

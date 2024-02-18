@@ -82,7 +82,7 @@ Datasette::_dump(Category category, std::ostream& os) const
 }
 
 void 
-Datasette::operator << (util::SerCounter &worker)
+Datasette::operator << (SerCounter &worker)
 {
     serialize(worker);
 
@@ -91,7 +91,7 @@ Datasette::operator << (util::SerCounter &worker)
 }
 
 void 
-Datasette::operator << (util::SerReader &worker)
+Datasette::operator << (SerReader &worker)
 {
     serialize(worker);
 
@@ -112,7 +112,7 @@ Datasette::operator << (util::SerReader &worker)
 }
 
 void 
-Datasette::operator << (util::SerWriter &worker)
+Datasette::operator << (SerWriter &worker)
 {
     serialize(worker);
 

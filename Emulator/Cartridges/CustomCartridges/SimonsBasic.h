@@ -30,7 +30,7 @@ public:
 
 private:
     
-    void operator << (util::SerResetter &worker) override;
+    void operator << (SerResetter &worker) override;
 
     
     //

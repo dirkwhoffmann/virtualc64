@@ -19,7 +19,7 @@
 namespace vc64 {
 
 void
-NeosMouse::operator << (util::SerResetter &worker)
+NeosMouse::operator << (SerResetter &worker)
 {
     leftButton = false;
     rightButton = false;
