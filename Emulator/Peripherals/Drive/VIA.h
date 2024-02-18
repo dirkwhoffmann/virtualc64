@@ -249,7 +249,7 @@ private:
     void serialize(T& worker)
     {
         worker
-        
+
         << pa
         << ca1
         << ca2
@@ -277,13 +277,8 @@ private:
         << tiredness
         << wakeUpCycle
         << idleCounter;
-    }
-    
-    void newserialize(util::SerChecker &worker) override { serialize(worker); }
-    void newserialize(util::SerCounter &worker) override { serialize(worker); }
-    void newserialize(util::SerResetter &worker) override { serialize(worker); }
-    void newserialize(util::SerReader &worker) override { serialize(worker); }
-    void newserialize(util::SerWriter &worker) override { serialize(worker); }
+
+    } SERIALIZERS(serialize);
 
 
     //

@@ -626,7 +626,6 @@ isize
 C64::save(u8 *buffer)
 {
     auto result = CoreComponent::save(buffer);
-
     return result;
 }
 

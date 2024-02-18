@@ -77,20 +77,15 @@ public:
 public:
     
     template <class W>
-    void operator<<(W& worker)
+    void serialize(W& worker)
     {
         worker
         
         << pipeline
         << timeStamp;
-    }
-    
-    void newserialize(util::SerChecker &worker) override { *this << worker; }
-    void newserialize(util::SerCounter &worker) override { *this << worker; }
-    void newserialize(util::SerResetter &worker) override { *this << worker; }
-    void newserialize(util::SerReader &worker) override { *this << worker; }
-    void newserialize(util::SerWriter &worker) override { *this << worker; }
-    
+
+    } SERIALIZERS(serialize);
+
 
     //
     // Accessing

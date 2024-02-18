@@ -184,7 +184,8 @@ public:
     template <std::derived_from<Serializable> T>
     SerCounter& operator<<(T &v)
     {
-        v << *this;
+        v.newserialize(*this);
+        // v << *this;
         return *this;
     }
 };
@@ -262,7 +263,8 @@ public:
     template <std::derived_from<Serializable> T>
     SerChecker& operator<<(T &v)
     {
-        v << *this;
+        v.newserialize(*this);
+        // v << *this;
         return *this;
     }
 };
@@ -357,7 +359,8 @@ public:
     template <std::derived_from<Serializable> T>
     SerReader& operator<<(T &v)
     {
-        v << *this;
+        v.newserialize(*this);
+        // v << *this;
         return *this;
     }
 };
@@ -442,7 +445,8 @@ public:
     template <std::derived_from<Serializable> T>
     SerWriter& operator<<(T &v)
     {
-        v << *this;
+        v.newserialize(*this);
+        // v << *this;
         return *this;
     }
 
@@ -520,7 +524,8 @@ public:
     template <std::derived_from<Serializable> T>
     SerResetter& operator<<(T &v)
     {
-        v << *this;
+        v.newserialize(*this);
+        // v << *this;
         return *this;
     }
 };
@@ -600,5 +605,12 @@ public:
 };
 
 }
+
+#define SERIALIZERS(func) \
+void newserialize(util::SerChecker &worker) override { func(worker); } \
+void newserialize(util::SerCounter &worker) override { func(worker); } \
+void newserialize(util::SerResetter &worker) override { func(worker); } \
+void newserialize(util::SerReader &worker) override { func(worker); } \
+void newserialize(util::SerWriter &worker) override { func(worker); } 
 
 #endif

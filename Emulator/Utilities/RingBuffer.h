@@ -50,18 +50,6 @@ template <class T, isize capacity> struct Array
     void clear(T t) { for (isize i = 0; i < capacity; i++) elements[i] = t; clear(); }
     void align(isize offset) { w = offset; }
 
-    
-    //
-    // Serializing
-    //
-    
-    template <class W>
-    void operator<<(W& worker)
-    {
-        for (isize i = 0; i < capacity; i++) worker << elements[i];
-        worker << w;
-    }
-
 
     //
     // Querying the fill status
@@ -110,18 +98,6 @@ struct SortedArray : public Array<T, capacity>
     //
 
     ~SortedArray() { delete[] keys; }
-
-
-    //
-    // Serializing
-    //
-
-    template <class W>
-    void operator<<(W& worker)
-    {
-        Array<T, capacity>::operator<<(worker);
-        for (isize i = 0; i < capacity; i++) worker << keys[i];
-    }
 
 
     //
@@ -184,19 +160,7 @@ template <class T, isize capacity> struct RingBuffer
     void clear(T t) { for (isize i = 0; i < capacity; i++) elements[i] = t; clear(); }
     void align(isize offset) { w = (r + offset) % capacity; }
 
-    
-    //
-    // Serializing
-    //
-    
-    template <class W>
-    void operator<<(W& worker)
-    {
-        for (isize i = 0; i < capacity; i++) worker << elements[i];
-        worker << this->r << this->w;
-    }
 
-    
     //
     // Querying the fill status
     //
@@ -289,19 +253,6 @@ struct SortedRingBuffer : public RingBuffer<T, capacity>
     //
 
     ~SortedRingBuffer() { delete[] keys; }
-
-
-    //
-    // Serializing
-    //
-
-    template <class W>
-    void operator<<(W& worker)
-    {
-        RingBuffer<T, capacity>::operator<<(worker);
-        for (isize i = 0; i < capacity; i++) worker << keys[i];
-    }
-
 
     // Inserts an element at the proper position
     void insert(i64 key, T element)

@@ -35,21 +35,16 @@ template <typename T> struct AudioVolume : util::Serializable {
 
     // Serializing
     template <class W>
-    void operator<<(W& worker)
+    void serialize(W& worker)
     {
         worker
-        
+
         << current
         << normal
         << target
         << delta;
-    }
 
-    void newserialize(util::SerChecker &worker) override { *this << worker; }
-    void newserialize(util::SerCounter &worker) override { *this << worker; }
-    void newserialize(util::SerResetter &worker) override { *this << worker; }
-    void newserialize(util::SerReader &worker) override { *this << worker; }
-    void newserialize(util::SerWriter &worker) override { *this << worker; }
+    } SERIALIZERS(serialize);
 
     // Setter and getter
     T get() const { return current; }

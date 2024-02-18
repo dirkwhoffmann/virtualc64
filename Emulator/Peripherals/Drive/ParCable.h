@@ -47,13 +47,7 @@ private:
     
     void _reset(bool hard) override;
 
-    void newserialize(util::SerChecker &worker) override { serialize(worker); }
-    void newserialize(util::SerCounter &worker) override { serialize(worker); }
-    void newserialize(util::SerResetter &worker) override { serialize(worker); }
-    void newserialize(util::SerReader &worker) override { serialize(worker); }
-    void newserialize(util::SerWriter &worker) override { serialize(worker); }
-
-    template <class T> void serialize(T& worker) { }
+    template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
     
     //

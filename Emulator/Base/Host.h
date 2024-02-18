@@ -50,12 +50,8 @@ private:
     const char *getDescription() const override { return "Host"; }
     void _dump(Category category, std::ostream& os) const override;
 
-    void newserialize(util::SerChecker &worker) override { }
-    void newserialize(util::SerCounter &worker) override { }
-    void newserialize(util::SerResetter &worker) override { }
-    void newserialize(util::SerReader &worker) override { }
-    void newserialize(util::SerWriter &worker) override { }
-    
+    template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
+
 
     //
     // Methods from CoreComponent
