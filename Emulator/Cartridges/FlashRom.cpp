@@ -61,9 +61,7 @@ FlashRom::loadBank(isize bank, u8 *data)
 
 void
 FlashRom::_reset(bool hard)
-{
-    trace(CRT_DEBUG, "Resetting FlashRom\n");
-    
+{    
     RESET_SNAPSHOT_ITEMS(hard)
     
     state = FLASH_READ;

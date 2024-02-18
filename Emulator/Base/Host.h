@@ -59,7 +59,7 @@ private:
 
 private:
 
-    void _reset(bool hard) override { };
+    void _reset(bool hard) override { RESET_SNAPSHOT_ITEMS(hard) }
 
 
     //

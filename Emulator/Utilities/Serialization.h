@@ -570,6 +570,17 @@ public:
     virtual void operator << (SerWriter &worker) = 0;
 
 
+    void newreset(bool hard) {
+
+        if (hard) {
+            util::SerHardResetter resetter;
+            *this << resetter;
+        } else {
+            util::SerSoftResetter resetter;
+            *this << resetter;
+        }
+    }
+
     isize newsize() {
 
         util::SerCounter counter;

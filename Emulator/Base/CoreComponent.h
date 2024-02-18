@@ -91,7 +91,7 @@ public:
      * component to implement this function.
      */
     void reset(bool hard);
-    virtual void _reset(bool hard) = 0;
+    virtual void _reset(bool hard) { };
 
 
     //
@@ -215,6 +215,9 @@ public:
 // Standard implementation of _reset
 //
 
+// #define RESET_SNAPSHOT_ITEMS(hard) { }
+
+
 #define RESET_SNAPSHOT_ITEMS(hard) \
 if (hard) { \
 util::SerHardResetter resetter; \
@@ -223,5 +226,6 @@ serialize(resetter); \
 util::SerSoftResetter resetter; \
 serialize(resetter); \
 }
+
 
 }

@@ -40,6 +40,9 @@ CoreComponent::reset(bool hard)
     if (hard) assert(!isRunning());
 
     for (CoreComponent *c : subComponents) { c->reset(hard); }
+
+    // newreset(hard);
+    // newreset(hard);
     _reset(hard);
 }
 
