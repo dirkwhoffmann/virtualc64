@@ -65,9 +65,16 @@ private:
     // Methods from CoreComponent
     //
 
-private:
+public:
     
-    template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
+    template <class T> void serialize(T& worker) { 
+
+        worker
+
+        << mouse
+        << joystick;
+
+    } SERIALIZERS(serialize);
 
 
     //

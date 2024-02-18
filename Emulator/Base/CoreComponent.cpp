@@ -42,7 +42,6 @@ CoreComponent::reset(bool hard)
     for (CoreComponent *c : subComponents) { c->reset(hard); }
 
     newreset(hard);
-    // _reset(hard);
 }
 
 isize
@@ -51,12 +50,15 @@ CoreComponent::size()
     isize result = newsize();
 
     // Add 8 bytes for the checksum
-    result += 8;
+    // result += 8;
 
+    /*
     for (CoreComponent *c : subComponents) {
 
         result += c->size();
     }
+    */
+
     return result;
 }
 
@@ -68,25 +70,29 @@ CoreComponent::load(const u8 *buffer)
     const u8 *ptr = buffer;
 
     // Load internal state of all subcomponents
+    /*
     for (CoreComponent *c : subComponents) {
         ptr += c->load(ptr);
     }
+    */
 
     // Load internal state of this component
     ptr += newload(ptr);
 
     // Load the checksum for this component
-    auto hash = util::read64(ptr);
+    // auto hash = util::read64(ptr);
 
     isize result = (isize)(ptr - buffer);
 
     // Check integrity
+    /*
     if (hash != newchecksum() || FORCE_SNAP_CORRUPTED) {
 
         debug(SNP_DEBUG, "Corrupted snapshot detected\n");
         throw VC64Error(ERROR_SNAP_CORRUPTED);
     }
-    
+    */
+
     debug(SNP_DEBUG, "Loaded %ld bytes (expected %ld)\n", result, size());
     return result;
 }
@@ -97,15 +103,17 @@ CoreComponent::save(u8 *buffer)
     u8 *ptr = buffer;
 
     // Save internal state of all subcomponents
+    /*
     for (CoreComponent *c : subComponents) {
         ptr += c->save(ptr);
     }
+    */
 
     // Save the internal state of this component
     ptr += newsave(ptr);
 
     // Save the checksum for this component
-    util::write64(ptr, newchecksum());
+    // util::write64(ptr, newchecksum());
 
     isize result = (isize)(ptr - buffer);
     

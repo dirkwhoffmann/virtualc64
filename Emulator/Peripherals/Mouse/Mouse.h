@@ -113,6 +113,12 @@ public:
     template <class T>
     void serialize(T& worker)
     {
+        worker
+
+        << mouse1350
+        << mouse1351
+        << mouseNeos;
+
         if (util::isResetter(worker)) return;
 
         worker

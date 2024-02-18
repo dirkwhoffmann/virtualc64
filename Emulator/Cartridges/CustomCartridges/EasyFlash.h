@@ -67,13 +67,16 @@ private:
     // Methods from CoreComponent
     //
     
-private:
+public:
 
     template <class T>
     void serialize(T& worker)
     {
         worker
         
+        << flashRomL
+        << flashRomH
+
         << bankReg
         << modeReg
         << bank;

@@ -245,7 +245,7 @@ private:
     // Methods from CoreComponent
     //
 
-private:
+public:
 
     void _initialize() override;
     
@@ -254,6 +254,11 @@ private:
     {
         worker
         
+        << mem
+        << cpu
+        << via1
+        << via2
+
         << spinning
         << redLED
         << elapsedTime

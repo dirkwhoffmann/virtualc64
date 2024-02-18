@@ -54,13 +54,6 @@ private:
 
 
     //
-    // Methods from CoreComponent
-    //
-
-private:
-
-
-    //
     // Configuring
     //
 

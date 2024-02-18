@@ -47,7 +47,7 @@ public:
     // Methods from CoreComponent
     //
 
-private:
+public:
     
     const char *getDescription() const override { return "Mouse1351"; }
 

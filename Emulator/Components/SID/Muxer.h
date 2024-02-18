@@ -145,7 +145,7 @@ private:
     // Methods from CoreComponent
     //
 
-private:
+public:
     
     void _run() override;
     void _pause() override;
@@ -157,6 +157,9 @@ private:
     {
         worker
         
+        << resid
+        << fastsid
+
         << cycles;
 
         if (util::isResetter(worker)) return;

@@ -173,8 +173,8 @@ protected:
     // Methods from CoreComponent
     //
     
-protected:
-                
+public:
+
     template <class T>
     void serialize(T& worker)
     {

@@ -308,12 +308,32 @@ public:
     // Methods from CoreComponent
     //
     
-private:
-    
+public:
+
     template <class T>
     void serialize(T& worker)
     {
         worker
+
+        << mem
+        << cpu
+        << cia1
+        << cia2
+        << vic
+        << muxer
+        << supply
+        << port1
+        << port2
+        << expansionport
+        << iec
+        << keyboard
+        << drive8
+        << drive9
+        << parCable
+        << datasette
+        << retroShell
+        << regressionTester
+        << recorder
 
         << trigger
         << id

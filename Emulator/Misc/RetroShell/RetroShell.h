@@ -97,7 +97,7 @@ private:
     // Methods from CoreComponent
     //
 
-private:
+public:
 
     void _initialize() override;
     void _pause() override;

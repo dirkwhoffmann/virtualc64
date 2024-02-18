@@ -44,8 +44,8 @@ public:
     // Methods from CoreComponent
     //
 
-private:
-    
+public:
+
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
 

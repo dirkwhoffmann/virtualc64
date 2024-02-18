@@ -606,8 +606,8 @@ private:
     // Methods from CoreComponent
     //
 
-private:
-    
+public:
+
     void _trackOn() override;
     void _trackOff() override;
 
@@ -616,6 +616,8 @@ private:
     {
         worker
 
+        << dmaDebugger
+        
         << headless
         << reg.current
         << reg.delayed

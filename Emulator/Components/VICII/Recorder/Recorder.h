@@ -88,8 +88,8 @@ private:
     // Methods from CoreObject
     //
 
-private:
-    
+public:
+
     void _initialize() override;
 
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);

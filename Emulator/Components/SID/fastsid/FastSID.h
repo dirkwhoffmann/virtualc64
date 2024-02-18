@@ -127,13 +127,14 @@ private:
     // Methods from CoreComponent
     //
 
-private:
+public:
         
     template <class T>
     void serialize(T& worker)
     {
         worker
 
+        << voice
         << sidreg
         << speed1
         << latchedDataBus;
