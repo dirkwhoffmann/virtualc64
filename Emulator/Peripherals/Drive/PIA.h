@@ -73,8 +73,6 @@ private:
 
 private:
     
-    void _reset(bool hard) override;
-
     template <class T>
     void serialize(T& worker)
     {

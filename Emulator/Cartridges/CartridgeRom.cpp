@@ -33,12 +33,6 @@ CartridgeRom::~CartridgeRom()
     delete[] rom;
 }
 
-void
-CartridgeRom::_reset(bool hard)
-{
-    RESET_SNAPSHOT_ITEMS(hard)
-}
-
 void 
 CartridgeRom::operator << (util::SerCounter &worker)
 {

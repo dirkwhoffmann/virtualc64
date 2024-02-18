@@ -17,7 +17,6 @@
 void
 StarDos::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS(hard)
     Cartridge::_reset(hard);
 }
 

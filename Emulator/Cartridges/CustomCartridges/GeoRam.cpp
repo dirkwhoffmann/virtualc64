@@ -27,7 +27,7 @@ GeoRAM::GeoRAM(C64 &ref, isize kb) : GeoRAM(ref)
 void
 GeoRAM::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS(hard)
+    
 }
 
 void

@@ -18,9 +18,7 @@ namespace vc64 {
 
 void 
 IEC::_reset(bool hard)
-{
-    RESET_SNAPSHOT_ITEMS(hard)
-    
+{    
     atnLine = 1;
     clockLine = 1;
     dataLine = 1;

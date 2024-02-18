@@ -49,9 +49,7 @@ TOD::recordState(TODInfo &info) const
 
 void
 TOD::_reset(bool hard) 
-{
-    RESET_SNAPSHOT_ITEMS(hard)
-    
+{    
     tod.hour = 1;
     stopped = true;
 }

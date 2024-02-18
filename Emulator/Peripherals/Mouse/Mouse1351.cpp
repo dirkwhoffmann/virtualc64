@@ -21,8 +21,6 @@ namespace vc64 {
 void
 Mouse1351::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS(hard)
-
     leftButton = false;
     rightButton = false;
     mouseX = 0;

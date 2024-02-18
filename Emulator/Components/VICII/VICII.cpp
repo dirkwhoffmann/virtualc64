@@ -45,8 +45,6 @@ VICII::VICII(C64 &ref) : SubComponent(ref), dmaDebugger(ref)
 void 
 VICII::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS(hard)
-
     if (hard) {
 
         clearStats();

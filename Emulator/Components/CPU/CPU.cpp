@@ -45,8 +45,6 @@ CPU::getDescription() const
 void
 CPU::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS(hard)
-
     Peddle::reset();
 
     // Enable or disable CPU debugging

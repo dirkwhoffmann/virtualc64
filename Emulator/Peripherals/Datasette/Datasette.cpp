@@ -49,12 +49,6 @@ Datasette::dealloc()
 }
 
 void
-Datasette::_reset(bool hard)
-{
-    RESET_SNAPSHOT_ITEMS(hard)
-}
-
-void
 Datasette::_dump(Category category, std::ostream& os) const
 {
     using namespace util;

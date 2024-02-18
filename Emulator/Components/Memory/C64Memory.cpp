@@ -102,9 +102,7 @@ C64Memory::C64Memory(C64 &ref) : SubComponent(ref)
 
 void
 C64Memory::_reset(bool hard)
-{
-    RESET_SNAPSHOT_ITEMS(hard)
-    
+{    
     if (hard) {
         
         // Erase RAM

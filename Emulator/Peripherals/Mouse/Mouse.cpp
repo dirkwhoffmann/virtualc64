@@ -30,8 +30,6 @@ Mouse::Mouse(C64 &ref, ControlPort& pref) : SubComponent(ref), port(pref)
 
 void Mouse::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS(hard)
-
     targetX = 0;
     targetY = 0;
 }

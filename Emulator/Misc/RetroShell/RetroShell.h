@@ -100,7 +100,6 @@ private:
 private:
 
     void _initialize() override;
-    void _reset(bool hard) override { RESET_SNAPSHOT_ITEMS(hard) }
     void _pause() override;
 
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);

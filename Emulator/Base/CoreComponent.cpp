@@ -42,18 +42,9 @@ CoreComponent::reset(bool hard)
     for (CoreComponent *c : subComponents) { c->reset(hard); }
 
     // newreset(hard);
-    // newreset(hard);
+    newreset(hard);
     _reset(hard);
 }
-
-/*
-void
-CoreComponent::inspect() const
-{
-    for (CoreComponent *c : subComponents) { c->inspect(); }
-    _inspect();
-}
-*/
 
 isize
 CoreComponent::size()

@@ -154,43 +154,6 @@ public:
 
 
     //
-    // Analyzing
-    //
-
-public:
-
-    /* Collects information about the component and it's subcomponents. Many
-     * components contain an info variable of a class specific type (e.g.,
-     * CPUInfo, MemoryInfo, ...). These variables contain the information shown
-     * in the GUI's inspector window and are updated by calling this function.
-     * Note: Because this function accesses the internal emulator state with
-     * many non-atomic operations, it must not be called on a running emulator.
-     * To carry out inspections while the emulator is running, set up an
-     * inspection target via C64::setInspectionTarget().
-     */
-    /*
-    void inspect() const;
-    virtual void _inspect() const { }
-    */
-
-    /* Base method for building the class specific getInfo() methods. When the
-     * emulator is running, the result of the most recent inspection is
-     * returned. If the emulator isn't running, the function first updates the
-     * cached values in order to return up-to-date results.
-     */
-    /*
-    template<class T> T getInfo(T &cachedValues) const {
-
-        {   SYNCHRONIZED
-
-            if (!isRunning()) inspect();
-            return cachedValues;
-        }
-    }
-    */
-
-
-    //
     // Serializing
     //
     
@@ -210,22 +173,5 @@ public:
 
     bool isEmulatorThread() const;
 };
-
-//
-// Standard implementation of _reset
-//
-
-// #define RESET_SNAPSHOT_ITEMS(hard) { }
-
-
-#define RESET_SNAPSHOT_ITEMS(hard) \
-if (hard) { \
-util::SerHardResetter resetter; \
-serialize(resetter); \
-} else { \
-util::SerSoftResetter resetter; \
-serialize(resetter); \
-}
-
 
 }

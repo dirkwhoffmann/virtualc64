@@ -19,8 +19,6 @@ namespace vc64 {
 void
 ExpansionPort::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS(hard)
-
     if (cartridge) {
         cartridge->reset(hard);
         cartridge->resetCartConfig();

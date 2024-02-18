@@ -201,9 +201,7 @@ Cartridge::resetCartConfig() {
 
 void
 Cartridge::_reset(bool hard)
-{
-    RESET_SNAPSHOT_ITEMS(hard)
-    
+{    
     // Reset external RAM
     if (externalRam && !getTraits().battery) memset(externalRam, 0xFF, ramCapacity);
 

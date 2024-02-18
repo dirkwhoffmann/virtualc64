@@ -27,19 +27,6 @@ PIA6821::PIA6821(C64 &ref, Drive &drvref) : SubComponent(ref), drive(drvref)
 }
 
 void
-PIA6821::_reset(bool hard)
-{
-    RESET_SNAPSHOT_ITEMS(hard)
-    
-    /*
-     ca1 = true;
-     ca2 = true;
-     cb1 = true;
-     cb2 = true;
-     */
-}
-
-void
 PIA6821::setCA1External(bool value)
 {
     bool active = isActiveTransitionCA1(ca1, value);

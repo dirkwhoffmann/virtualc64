@@ -255,8 +255,6 @@ C64::_reset(bool hard)
 {
     auto insEvent = id[SLOT_INS];
 
-    RESET_SNAPSHOT_ITEMS(hard)
-
     // Initialize all event slots
     for (isize i = 0; i < SLOT_COUNT; i++) {
 

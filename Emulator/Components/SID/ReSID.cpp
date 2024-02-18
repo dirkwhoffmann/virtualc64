@@ -39,10 +39,6 @@ ReSID::~ReSID()
 void
 ReSID::_reset(bool hard)
 {
-    assert(sid);
-
-    RESET_SNAPSHOT_ITEMS(hard)
-    
     // Resetting reSID is done by creating a new reSID object. We don't call
     // reSID::reset() because it only performs a soft reset.
 

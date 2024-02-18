@@ -45,7 +45,6 @@ Isepic::_dump(Category category, std::ostream& os) const
 void
 Isepic::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS(hard)
     Cartridge::_reset(hard);
     
     eraseRAM(0);

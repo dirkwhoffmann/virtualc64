@@ -470,7 +470,8 @@ class SerResetter
 protected:
 
     SerResetter() { }
-
+    virtual ~SerResetter() { }
+    
 public:
 
     RESET(bool)

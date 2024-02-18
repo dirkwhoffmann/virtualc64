@@ -22,12 +22,6 @@ ParCable::ParCable(C64& ref) : SubComponent(ref)
 };
 
 void
-ParCable::_reset(bool hard)
-{
-    RESET_SNAPSHOT_ITEMS(hard)
-}
-
-void
 ParCable::_dump(Category category, std::ostream& os) const
 {
     using namespace util;

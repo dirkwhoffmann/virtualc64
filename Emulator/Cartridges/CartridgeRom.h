@@ -49,10 +49,6 @@ public:
     ~CartridgeRom();
     const char *getDescription() const override { return "CartridgeRom"; }
 
-private:
-    
-    void _reset(bool hard) override;
-
     
     //
     // Methods from CoreComponent

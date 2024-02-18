@@ -142,8 +142,6 @@ FastSID::initFilter(double sampleRate)
 void
 FastSID::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS(hard)
-
     init(sampleRate, cpuFrequency);
 }
 

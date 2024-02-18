@@ -32,7 +32,6 @@ EasyFlash::resetCartConfig()
 void
 EasyFlash::_reset(bool hard)
 {
-    RESET_SNAPSHOT_ITEMS(hard)
     Cartridge::_reset(hard);
     
     eraseRAM(0);

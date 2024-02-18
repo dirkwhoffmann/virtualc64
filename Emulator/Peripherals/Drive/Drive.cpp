@@ -53,8 +53,6 @@ Drive::_initialize()
 void
 Drive::_reset(bool hard)
 {    
-    RESET_SNAPSHOT_ITEMS(hard)
-
     cpu.reg.pc = 0xEAA0;
     halftrack = 41;
     

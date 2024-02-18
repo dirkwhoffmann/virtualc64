@@ -42,9 +42,7 @@ Muxer::Muxer(C64 &ref) : SubComponent(ref)
 
 void
 Muxer::_reset(bool hard)
-{
-    RESET_SNAPSHOT_ITEMS(hard)
-    
+{    
     if (hard) clearStats();
     clear();
 }
