@@ -619,15 +619,37 @@ C64::_trackOff()
 isize
 C64::load(const u8 *buffer)
 {
-    auto result = CoreComponent::load(buffer);
-    return result;
+    assert(!isRunning());
+
+    // Load internal state
+    isize count = newload(buffer);
+
+    // Check integrity
+    /*
+     if (hash != newchecksum() || FORCE_SNAP_CORRUPTED) {
+
+     debug(SNP_DEBUG, "Corrupted snapshot detected\n");
+     throw VC64Error(ERROR_SNAP_CORRUPTED);
+     }
+     */
+
+    debug(SNP_DEBUG, "Loaded %ld bytes (expected %ld)\n", count, size());
+    return count;
 }
 
 isize
 C64::save(u8 *buffer)
 {
-    auto result = CoreComponent::save(buffer);
-    return result;
+    // Save the internal state
+    isize count = newsave(buffer);
+
+    // Save the checksum for this component
+    // util::write64(ptr, newchecksum());
+
+    debug(SNP_DEBUG, "Saved %ld bytes (expected %ld)\n", count, size());
+    assert(count == size());
+
+    return count;
 }
 
 void

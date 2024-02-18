@@ -37,31 +37,16 @@ CoreComponent::initialize()
 void
 CoreComponent::reset(bool hard)
 {
-    if (hard) assert(!isRunning());
-
-    for (CoreComponent *c : subComponents) { c->reset(hard); }
-
     newreset(hard);
 }
 
 isize
 CoreComponent::size()
 {
-    isize result = newsize();
-
-    // Add 8 bytes for the checksum
-    // result += 8;
-
-    /*
-    for (CoreComponent *c : subComponents) {
-
-        result += c->size();
-    }
-    */
-
-    return result;
+    return newsize();
 }
 
+#if 0
 isize
 CoreComponent::load(const u8 *buffer)
 {
@@ -122,6 +107,7 @@ CoreComponent::save(u8 *buffer)
 
     return result;
 }
+#endif
 
 void
 CoreComponent::isReady() const

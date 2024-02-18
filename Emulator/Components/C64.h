@@ -359,8 +359,8 @@ public:
 
 public:
 
-    isize load(const u8 *buffer) override;
-    isize save(u8 *buffer) override;
+    isize load(const u8 *buffer);
+    isize save(u8 *buffer);
 
 
     //

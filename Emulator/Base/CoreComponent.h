@@ -91,7 +91,6 @@ public:
      * component to implement this function.
      */
     void reset(bool hard);
-    // virtual void _reset(bool hard) { };
 
 
     //
@@ -161,10 +160,10 @@ public:
     isize size();
 
     // Loads the internal state from a memory buffer
-    virtual isize load(const u8 *buf) throws;
+    // virtual isize load(const u8 *buf) throws;
 
     // Saves the internal state to a memory buffer
-    virtual isize save(u8 *buf);
+    // virtual isize save(u8 *buf);
 
 
     //
