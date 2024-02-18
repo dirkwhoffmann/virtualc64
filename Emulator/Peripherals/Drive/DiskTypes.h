@@ -239,6 +239,7 @@ struct DiskData : public util::Serializable
 
         u8 track[43][2 * maxBytesOnTrack];
     };
+
     template <class W>
     void operator<<(W& worker)
     {
@@ -246,6 +247,13 @@ struct DiskData : public util::Serializable
         
         << track;
     }
+
+    void newserialize(util::SerChecker &worker) override { *this << worker; }
+    void newserialize(util::SerCounter &worker) override { *this << worker; }
+    void newserialize(util::SerResetter &worker) override { *this << worker; }
+    void newserialize(util::SerReader &worker) override { *this << worker; }
+    void newserialize(util::SerWriter &worker) override { *this << worker; }
+
 };
 #endif
 
@@ -277,6 +285,12 @@ struct DiskLength : public util::Serializable
         
         << track;
     }
+
+    void newserialize(util::SerChecker &worker) override { *this << worker; }
+    void newserialize(util::SerCounter &worker) override { *this << worker; }
+    void newserialize(util::SerResetter &worker) override { *this << worker; }
+    void newserialize(util::SerReader &worker) override { *this << worker; }
+    void newserialize(util::SerWriter &worker) override { *this << worker; }
 };
 #endif
 

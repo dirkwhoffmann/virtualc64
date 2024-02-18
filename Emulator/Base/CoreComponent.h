@@ -214,11 +214,12 @@ public:
      * override these methods to add custom behavior if not all elements can be
      * processed by the default implementation.
      */
+    /*
     virtual isize willLoadFromBuffer(const u8 *buf) throws { return 0; }
     virtual isize didLoadFromBuffer(const u8 *buf) throws { return 0; }
     virtual isize willSaveToBuffer(u8 *buf) {return 0; }
     virtual isize didSaveToBuffer(u8 *buf) { return 0; }
-
+    */
 
     //
     // Misc
@@ -239,20 +240,5 @@ serialize(resetter); \
 util::SerSoftResetter resetter; \
 serialize(resetter); \
 }
-
-#define COMPUTE_SNAPSHOT_SIZE \
-util::SerCounter counter; \
-serialize(counter); \
-return counter.count;
-
-#define LOAD_SNAPSHOT_ITEMS \
-util::SerReader reader(buffer); \
-serialize(reader); \
-return (isize)(reader.ptr - buffer);
-
-#define SAVE_SNAPSHOT_ITEMS \
-util::SerWriter writer(buffer); \
-serialize(writer); \
-return (isize)(writer.ptr - buffer);
 
 }

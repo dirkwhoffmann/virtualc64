@@ -26,6 +26,7 @@ class DmaDebugger : public SubComponent, public Dumpable {
     DmaDebuggerConfig config = { };
     
     // Color lookup table. There are 6 colors with different shades
+    // TODO: MOVE TO CONFIG
     u32 debugColor[6][4];
 
     
@@ -54,6 +55,27 @@ private:
     
     void _reset(bool hard) override { };
     
+    template <class T>
+    void serialize(T& worker)
+    {
+        if (util::isResetter(worker)) return;
+
+        worker
+
+        << config.dmaDebug
+        << config.dmaChannel
+        << config.dmaColor
+        << config.dmaDisplayMode
+        << config.dmaOpacity
+        << debugColor;
+    }
+
+    void newserialize(util::SerChecker &worker) override { serialize(worker); }
+    void newserialize(util::SerCounter &worker) override { serialize(worker); }
+    void newserialize(util::SerResetter &worker) override { serialize(worker); }
+    void newserialize(util::SerReader &worker) override { serialize(worker); }
+    void newserialize(util::SerWriter &worker) override { serialize(worker); }
+
 
     //
     // Configuring

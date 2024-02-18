@@ -498,6 +498,12 @@ struct VICIIRegisters : util::Serializable
         << xscroll
         << mode;
     }
+
+    void newserialize(util::SerChecker &worker) override { *this << worker; }
+    void newserialize(util::SerCounter &worker) override { *this << worker; }
+    void newserialize(util::SerResetter &worker) override { *this << worker; }
+    void newserialize(util::SerReader &worker) override { *this << worker; }
+    void newserialize(util::SerWriter &worker) override { *this << worker; }
 };
 
 struct SpriteSR : util::Serializable
@@ -538,5 +544,11 @@ struct SpriteSR : util::Serializable
         << expFlop
         << colBits;
     }
+
+    void newserialize(util::SerChecker &worker) override { *this << worker; }
+    void newserialize(util::SerCounter &worker) override { *this << worker; }
+    void newserialize(util::SerResetter &worker) override { *this << worker; }
+    void newserialize(util::SerReader &worker) override { *this << worker; }
+    void newserialize(util::SerWriter &worker) override { *this << worker; }
 };
 #endif

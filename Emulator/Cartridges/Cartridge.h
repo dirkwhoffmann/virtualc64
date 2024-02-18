@@ -210,17 +210,6 @@ public:
     void newserialize(util::SerReader &worker) override;
     void newserialize(util::SerWriter &worker) override;
 
-    /*
-    isize _size() override;
-    isize _load(const u8 *buffer) override;
-    isize _save(u8 *buffer) override;
-    */
-
-    virtual isize __size() { return 0; }
-    virtual u64 __checksum() { return 0; }
-    virtual isize __load(const u8 *buffer) { return 0; }
-    virtual isize __save(u8 *buffer) { return 0; }
-
     
     //
     // Analyzing

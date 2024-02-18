@@ -74,9 +74,6 @@ CoreComponent::load(const u8 *buffer)
 
     const u8 *ptr = buffer;
 
-    // Call the delegate
-    ptr += willLoadFromBuffer(ptr);
-
     // Load internal state of all subcomponents
     for (CoreComponent *c : subComponents) {
         ptr += c->load(ptr);
@@ -89,8 +86,6 @@ CoreComponent::load(const u8 *buffer)
     // Load the checksum for this component
     auto hash = util::read64(ptr);
 
-    // Call the delegate
-    ptr += didLoadFromBuffer(ptr);
     isize result = (isize)(ptr - buffer);
 
     // Check integrity
@@ -120,9 +115,6 @@ isize
 CoreComponent::save(u8 *buffer)
 {
     u8 *ptr = buffer;
-    
-    // Call the delegate
-    ptr += willSaveToBuffer(ptr);
 
     // Save internal state of all subcomponents
     for (CoreComponent *c : subComponents) {
@@ -136,8 +128,6 @@ CoreComponent::save(u8 *buffer)
     // Save the checksum for this component
     util::write64(ptr, newchecksum());
 
-    // Call the delegate
-    ptr += didSaveToBuffer(ptr);
     isize result = (isize)(ptr - buffer);
     
     debug(SNP_DEBUG, "Saved %ld bytes (expected %ld)\n", result, size());

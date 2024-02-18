@@ -93,7 +93,13 @@ private:
     void _initialize() override;
     void _reset(bool hard) override { };
 
+    void newserialize(util::SerChecker &worker) override { }
+    void newserialize(util::SerCounter &worker) override { }
+    void newserialize(util::SerResetter &worker) override { }
+    void newserialize(util::SerReader &worker) override { }
+    void newserialize(util::SerWriter &worker) override { }
 
+    
     //
     // Querying locations and flags
     //

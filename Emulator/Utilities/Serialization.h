@@ -565,7 +565,7 @@ public:
 
     virtual void newserialize(SerCounter &worker) { }
     virtual void newserialize(SerChecker &worker) { }
-    virtual void newserialize(SerResetter &worker) { }
+    virtual void newserialize(SerResetter &worker) = 0; //  { }
     virtual void newserialize(SerReader &worker) { }
     virtual void newserialize(SerWriter &worker) { }
 

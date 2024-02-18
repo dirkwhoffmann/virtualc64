@@ -255,9 +255,6 @@ Cartridge::newserialize(util::SerCounter &worker)
 
     // Add RAM size
     worker.count += ramCapacity;
-
-    // Add sub-class members
-    worker.count += __size();
 }
 
 void 
@@ -288,9 +285,6 @@ Cartridge::newserialize(util::SerReader &worker)
         externalRam = new u8[ramCapacity];
         worker.copy(externalRam, ramCapacity);
     }
-
-    // Load sub-class members
-    worker.ptr += __load(worker.ptr);
 }
 
 void 
@@ -311,9 +305,6 @@ Cartridge::newserialize(util::SerWriter &worker)
         assert(externalRam != nullptr);
         worker.copy(externalRam, ramCapacity);
     }
-
-    // Save sub-class members
-    worker.ptr += __save(worker.ptr);
 }
 
 /*

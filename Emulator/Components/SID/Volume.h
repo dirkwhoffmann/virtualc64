@@ -44,7 +44,13 @@ template <typename T> struct AudioVolume : util::Serializable {
         << target
         << delta;
     }
-    
+
+    void newserialize(util::SerChecker &worker) override { *this << worker; }
+    void newserialize(util::SerCounter &worker) override { *this << worker; }
+    void newserialize(util::SerResetter &worker) override { *this << worker; }
+    void newserialize(util::SerReader &worker) override { *this << worker; }
+    void newserialize(util::SerWriter &worker) override { *this << worker; }
+
     // Setter and getter
     T get() const { return current; }
     void set(T value) { current = normal = target[0] = value; }

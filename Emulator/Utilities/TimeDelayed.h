@@ -85,7 +85,13 @@ public:
         << timeStamp;
     }
     
+    void newserialize(util::SerChecker &worker) override { *this << worker; }
+    void newserialize(util::SerCounter &worker) override { *this << worker; }
+    void newserialize(util::SerResetter &worker) override { *this << worker; }
+    void newserialize(util::SerReader &worker) override { *this << worker; }
+    void newserialize(util::SerWriter &worker) override { *this << worker; }
     
+
     //
     // Accessing
     //
