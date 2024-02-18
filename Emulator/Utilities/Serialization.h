@@ -469,7 +469,7 @@ class SerResetter
 {
 protected:
 
-    SerResetter() { };
+    SerResetter() { }
 
 public:
 
@@ -539,12 +539,32 @@ public:
 
 template <class T>
 static constexpr bool isSoftResetter(T &worker) {
-    return std::is_same_v<T, SerSoftResetter>;
+
+    auto &id = typeid(worker);
+
+    assert(id == typeid(SerCounter) ||
+           id == typeid(SerChecker) ||
+           id == typeid(SerSoftResetter) ||
+           id == typeid(SerHardResetter) ||
+           id == typeid(SerReader) ||
+           id == typeid(SerWriter));
+
+    return id == typeid(SerSoftResetter);
 }
 
 template <class T>
 static constexpr bool isHardResetter(T &worker) {
-    return std::is_same_v<T, SerHardResetter>;
+
+    auto &id = typeid(worker);
+
+    assert(id == typeid(SerCounter) ||
+           id == typeid(SerChecker) ||
+           id == typeid(SerSoftResetter) ||
+           id == typeid(SerHardResetter) ||
+           id == typeid(SerReader) ||
+           id == typeid(SerWriter));
+
+    return id == typeid(SerHardResetter);
 }
 
 template <class T>
@@ -582,6 +602,18 @@ public:
     }
 
     isize newsize() {
+
+        /*
+        auto &id1 = typeid(SerResetter);
+        auto &id2 = typeid(SerSoftResetter);
+
+        printf("%s    %s\n", id1.name(), id2.name());
+
+        SerSoftResetter test;
+        SerResetter &test2 = test;
+
+        printf("test1: %s    test2: %s\n", typeid(test).name(), typeid(test2).name());
+         */
 
         util::SerCounter counter;
         *this << counter;
