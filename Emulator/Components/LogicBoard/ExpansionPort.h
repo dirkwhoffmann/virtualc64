@@ -71,8 +71,6 @@ public:
 
 private:
     
-    void _reset(bool hard) override;
-
     template <class T>
     void serialize(T& worker)
     {
@@ -85,9 +83,9 @@ private:
         << exromLine;
     }
 
+    void operator << (util::SerResetter &worker) override;
     void operator << (util::SerChecker &worker) override;
     void operator << (util::SerCounter &worker) override;
-    void operator << (util::SerResetter &worker) override;
     void operator << (util::SerReader &worker) override;
     void operator << (util::SerWriter &worker) override;
 

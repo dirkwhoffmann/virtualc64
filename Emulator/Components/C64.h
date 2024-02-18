@@ -271,7 +271,7 @@ private:
 
     void initialize();
     void _initialize() override;
-    void _reset(bool hard) override;
+    // void _reset(bool hard) override;
 
     
     //
@@ -330,8 +330,13 @@ private:
         worker
 
         << durationOfOneCycle;
+    }
 
-    } SERIALIZERS(serialize);
+    void operator << (util::SerResetter &worker) override;
+    void operator << (util::SerChecker &worker) override { serialize(worker); }
+    void operator << (util::SerCounter &worker) override { serialize(worker); }
+    void operator << (util::SerReader &worker) override { serialize(worker); }
+    void operator << (util::SerWriter &worker) override { serialize(worker); }
 
 public:
 

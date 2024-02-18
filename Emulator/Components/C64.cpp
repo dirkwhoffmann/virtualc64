@@ -251,9 +251,12 @@ C64::_initialize()
 }
 
 void
-C64::_reset(bool hard)
+C64::operator << (util::SerResetter &worker)
 {
     auto insEvent = id[SLOT_INS];
+
+    // Reset all items
+    serialize(worker);
 
     // Initialize all event slots
     for (isize i = 0; i < SLOT_COUNT; i++) {

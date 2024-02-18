@@ -16,6 +16,7 @@
 
 namespace vc64 {
 
+/*
 void
 ExpansionPort::_reset(bool hard)
 {
@@ -26,19 +27,7 @@ ExpansionPort::_reset(bool hard)
         setCartridgeMode(CRTMODE_OFF);
     }
 }
-
-void 
-ExpansionPort::operator << (util::SerChecker &worker)
-{
-    serialize(worker);
-}
-
-void 
-ExpansionPort::operator << (util::SerCounter &worker)
-{
-    serialize(worker);
-    if (cartridge) *cartridge << worker;
-}
+*/
 
 void
 ExpansionPort::operator << (util::SerResetter &worker)
@@ -54,6 +43,19 @@ ExpansionPort::operator << (util::SerResetter &worker)
 
         setCartridgeMode(CRTMODE_OFF);
     }
+}
+
+void
+ExpansionPort::operator << (util::SerChecker &worker)
+{
+    serialize(worker);
+}
+
+void 
+ExpansionPort::operator << (util::SerCounter &worker)
+{
+    serialize(worker);
+    if (cartridge) *cartridge << worker;
 }
 
 void
