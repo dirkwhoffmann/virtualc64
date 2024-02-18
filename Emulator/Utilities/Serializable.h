@@ -590,45 +590,11 @@ public:
     virtual void operator << (SerReader &worker) = 0;
     virtual void operator << (SerWriter &worker) = 0;
 
-
-    void reset(bool hard) {
-
-        if (hard) {
-            util::SerHardResetter resetter;
-            *this << resetter;
-        } else {
-            util::SerSoftResetter resetter;
-            *this << resetter;
-        }
-    }
-
-    isize size() {
-
-        util::SerCounter counter;
-        *this << counter;
-        return counter.count;
-    }
-
-    u64 checksum() {
-
-        util::SerChecker checker;
-        *this << checker;
-        return checker.hash;
-    }
-
-    isize load(const u8 *buffer) {
-
-        util::SerReader reader(buffer);
-        *this << reader;
-        return (isize)(reader.ptr - buffer);
-    }
-
-    isize save(u8 *buffer) {
-
-        util::SerWriter writer(buffer);
-        *this << writer;
-        return (isize)(writer.ptr - buffer);
-    }
+    void reset(bool hard);
+    isize size();
+    u64 checksum();
+    isize load(const u8 *buffer);
+    isize save(u8 *buffer);
 };
 
 }

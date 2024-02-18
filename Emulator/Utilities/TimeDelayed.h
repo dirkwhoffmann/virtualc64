@@ -13,7 +13,7 @@
 #pragma once
 
 #include "Macros.h"
-#include "Serialization.h"
+#include "Serializable.h"
 #include <algorithm>
 
 namespace util {

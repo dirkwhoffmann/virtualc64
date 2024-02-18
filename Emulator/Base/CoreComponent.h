@@ -14,7 +14,7 @@
 
 #include "EmulatorTypes.h"
 #include "CoreObject.h"
-#include "Serialization.h"
+#include "Serializable.h"
 #include "Concurrency.h"
 #include "Suspendable.h"
 #include "ThreadTypes.h"
