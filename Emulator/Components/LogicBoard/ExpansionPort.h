@@ -82,7 +82,7 @@ public:
         << gameLine
         << exromLine;
     }
-
+    
     void operator << (SerResetter &worker) override;
     void operator << (SerChecker &worker) override;
     void operator << (SerCounter &worker) override;

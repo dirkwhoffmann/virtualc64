@@ -214,8 +214,11 @@ C64::prefix() const
 void
 C64::hardReset()
 {
-    // Execute the standard reset routine
+    // Start over from a zeroed-out state
     Serializable::hardReset();
+
+    // Let all components perform their specific actions
+    reset(true);
 
     // Reinitialize the program counter
     cpu.reg.pc = cpu.reg.pc0 = mem.resetVector();
@@ -227,8 +230,11 @@ C64::hardReset()
 void
 C64::softReset()
 {
-    // Execute the standard reset routine
+    // Start over from a zeroed-out state
     Serializable::softReset();
+
+    // Let all components perform their specific actions
+    reset(false);
 
     // Reinitialize the program counter
     cpu.reg.pc = cpu.reg.pc0 = mem.resetVector();

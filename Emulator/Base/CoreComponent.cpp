@@ -34,6 +34,14 @@ CoreComponent::initialize()
     }
 }
 
+void 
+CoreComponent::reset(bool hard)
+{
+    for (CoreComponent *c : subComponents) { c->reset(hard); }
+    _reset(hard);
+
+}
+
 void
 CoreComponent::printchecksums()
 {

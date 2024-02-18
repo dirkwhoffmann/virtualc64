@@ -86,7 +86,10 @@ public:
      */
     void initialize();
     virtual void _initialize() { resetConfig(); }
-    
+
+    void reset(bool hard);
+    virtual void _reset(bool hard) { }
+
     // Prints checksums for debugging
     void printchecksums();
 
