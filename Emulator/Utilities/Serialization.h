@@ -591,7 +591,7 @@ public:
     virtual void operator << (SerWriter &worker) = 0;
 
 
-    void newreset(bool hard) {
+    void reset(bool hard) {
 
         if (hard) {
             util::SerHardResetter resetter;
@@ -602,28 +602,28 @@ public:
         }
     }
 
-    isize newsize() {
+    isize size() {
 
         util::SerCounter counter;
         *this << counter;
         return counter.count;
     }
 
-    u64 newchecksum() {
+    u64 checksum() {
 
         util::SerChecker checker;
         *this << checker;
         return checker.hash;
     }
 
-    isize newload(const u8 *buffer) {
+    isize load(const u8 *buffer) {
 
         util::SerReader reader(buffer);
         *this << reader;
         return (isize)(reader.ptr - buffer);
     }
 
-    isize newsave(u8 *buffer) {
+    isize save(u8 *buffer) {
 
         util::SerWriter writer(buffer);
         *this << writer;

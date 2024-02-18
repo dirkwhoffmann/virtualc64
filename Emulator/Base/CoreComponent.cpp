@@ -35,9 +35,10 @@ CoreComponent::initialize()
 }
 
 void
-CoreComponent::reset(bool hard)
+CoreComponent::printchecksums()
 {
-    newreset(hard);
+    for (CoreComponent *c : subComponents) { c->printchecksums(); }
+    debug(true, "Checksum: %llx\n", checksum());
 }
 
 void

@@ -215,7 +215,7 @@ void
 C64::reset(bool hard)
 {
     // Execute the standard reset routine
-    CoreComponent::reset(hard);
+    Serializable::reset(hard);
     
     // Reinitialize the program counter
     cpu.reg.pc = cpu.reg.pc0 = mem.resetVector();
@@ -619,7 +619,7 @@ C64::_trackOff()
 isize
 C64::size()
 {
-    return newsize();
+    return Serializable::size() + 8 /* checksum */;
 }
 
 isize
@@ -627,31 +627,37 @@ C64::load(const u8 *buffer)
 {
     assert(!isRunning());
 
+    // Load checksum
+    isize count = 8;
+    auto hash = util::read64(buffer);
+
     // Load internal state
-    isize count = newload(buffer);
+    count += Serializable::load(buffer);
 
     // Check integrity
-    /*
-     if (hash != newchecksum() || FORCE_SNAP_CORRUPTED) {
-
-     debug(SNP_DEBUG, "Corrupted snapshot detected\n");
-     throw VC64Error(ERROR_SNAP_CORRUPTED);
-     }
-     */
-
     debug(SNP_DEBUG, "Loaded %ld bytes (expected %ld)\n", count, size());
+
+    if (hash != checksum() || FORCE_SNAP_CORRUPTED) {
+
+        debug(SNP_DEBUG, "Corrupted snapshot detected\n");
+        printchecksums();
+        throw VC64Error(ERROR_SNAP_CORRUPTED);
+    }
+
     return count;
 }
 
 isize
 C64::save(u8 *buffer)
 {
-    // Save the internal state
-    isize count = newsave(buffer);
+    // Save checksum
+    isize count = 8;
+    util::write64(buffer, checksum());
 
-    // Save the checksum for this component
-    // util::write64(ptr, newchecksum());
+    // Save internal state
+    count += Serializable::save(buffer);
 
+    // Check integrity
     debug(SNP_DEBUG, "Saved %ld bytes (expected %ld)\n", count, size());
     assert(count == size());
 

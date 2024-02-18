@@ -87,10 +87,8 @@ public:
     void initialize();
     virtual void _initialize() { resetConfig(); }
     
-    /* Resets the component and its subcomponent. It is mandatory for each
-     * component to implement this function.
-     */
-    void reset(bool hard);
+    // Prints checksums for debugging
+    void printchecksums();
 
 
     //
