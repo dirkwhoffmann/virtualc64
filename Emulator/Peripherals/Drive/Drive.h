@@ -299,13 +299,15 @@ public:
         << config.saveRoms;
     }
     
-    void operator << (SerResetter &worker) override;
+    void operator << (SerResetter &worker) override { serialize(worker); };
     void operator << (SerChecker &worker) override { serialize(worker); }
     void operator << (SerCounter &worker) override;
     void operator << (SerReader &worker) override;
     void operator << (SerWriter &worker) override;
 
-    
+    void _reset(bool hard) override;
+
+
     //
     // Analyzing
     //

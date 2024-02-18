@@ -92,15 +92,12 @@ public:
         << ciaClock
         << ciaData
         << idle;
-    } 
 
-    void operator << (SerResetter &worker) override;
-    void operator << (SerChecker &worker) override { serialize(worker); }
-    void operator << (SerCounter &worker) override { serialize(worker); }
-    void operator << (SerReader &worker) override { serialize(worker); }
-    void operator << (SerWriter &worker) override { serialize(worker); }
+    } SERIALIZERS(serialize);
 
-    
+    void _reset(bool hard) override;
+
+
     //
     // Accessing
     //

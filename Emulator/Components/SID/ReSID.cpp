@@ -37,10 +37,8 @@ ReSID::~ReSID()
 }
 
 void
-ReSID::operator << (SerResetter &worker)
+ReSID::_reset(bool hard)
 {
-    serialize(worker);
-
     // Resetting reSID is done by creating a new reSID object. We don't call
     // reSID::reset() because it only performs a soft reset.
 

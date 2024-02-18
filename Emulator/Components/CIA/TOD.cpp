@@ -48,10 +48,8 @@ TOD::recordState(TODInfo &info) const
 }
 
 void
-TOD::operator << (SerResetter &worker)
+TOD::_reset(bool hard)
 {    
-    serialize(worker);
-    
     tod.hour = 1;
     stopped = true;
 }

@@ -41,11 +41,9 @@ Muxer::Muxer(C64 &ref) : SubComponent(ref)
 }
 
 void
-Muxer::operator << (SerResetter &worker)
+Muxer::_reset(bool hard)
 {
-    serialize(worker);
-    
-    if (isHardResetter(worker)) clearStats();
+    if (hard) clearStats();
     clear();
 }
 

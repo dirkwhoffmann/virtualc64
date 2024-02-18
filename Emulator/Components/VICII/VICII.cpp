@@ -43,11 +43,9 @@ VICII::VICII(C64 &ref) : SubComponent(ref), dmaDebugger(ref)
 }
 
 void 
-VICII::operator << (SerResetter &worker)
+VICII::_reset(bool hard)
 {
-    serialize(worker);
-    
-    if (isHardResetter(worker)) {
+    if (hard) {
 
         clearStats();
         

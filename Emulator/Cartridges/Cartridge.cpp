@@ -231,7 +231,7 @@ Cartridge::_dump(Category category, std::ostream& os) const
 }
 
 void
-Cartridge::operator << (SerResetter &worker)
+Cartridge:: operator << (SerResetter &worker)
 {
     // Reset external RAM
     if (externalRam && !getTraits().battery) memset(externalRam, 0xFF, ramCapacity);

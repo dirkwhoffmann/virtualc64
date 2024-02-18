@@ -43,10 +43,8 @@ CPU::getDescription() const
 }
 
 void
-CPU::operator << (SerResetter &worker)
-{
-    serialize(worker);
-    
+CPU::_reset(bool hard)
+{    
     Peddle::reset();
 
     // Enable or disable CPU debugging

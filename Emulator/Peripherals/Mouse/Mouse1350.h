@@ -64,13 +64,9 @@ private:
 
 public:
 
-    template <class T> void serialize(T& worker) { };
+    template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
-    void operator << (SerResetter &worker) override;
-    void operator << (SerChecker &worker) override { serialize(worker); }
-    void operator << (SerCounter &worker) override { serialize(worker); }
-    void operator << (SerReader &worker) override { serialize(worker); }
-    void operator << (SerWriter &worker) override { serialize(worker); }
+    void _reset(bool hard) override;
 
 
     //
