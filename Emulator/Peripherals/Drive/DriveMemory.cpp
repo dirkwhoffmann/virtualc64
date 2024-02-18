@@ -55,48 +55,6 @@ DriveMemory::newserialize(util::SerWriter &worker)
     if (config.saveRoms) worker << rom;
 }
 
-/*
-isize
-DriveMemory::_size()
-{
-    util::SerCounter counter;
-    bool saveRoms = mem.getConfig().saveRoms;
-
-    serialize(counter);
-
-    counter << saveRoms;
-    if (saveRoms) applyToRoms(counter);
-
-    return counter.count;
-}
-
-isize
-DriveMemory::_load(const u8 *buffer)
-{
-    util::SerReader reader(buffer);
-    bool saveRoms;
-
-    reader << saveRoms;
-    serialize(reader);
-    if (saveRoms) applyToRoms(reader);
-
-    return (isize)(reader.ptr - buffer);
-}
-
-isize
-DriveMemory::_save(u8 *buffer)
-{
-    util::SerWriter writer(buffer);
-    bool saveRoms = mem.getConfig().saveRoms;
-
-    writer << saveRoms;
-    serialize(writer);
-    if (saveRoms) applyToRoms(writer);
-
-    return (isize)(writer.ptr - buffer);
-}
-*/
-
 DriveMemConfig
 DriveMemory::getDefaultConfig()
 {

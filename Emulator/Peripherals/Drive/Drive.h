@@ -301,11 +301,6 @@ private:
     void newserialize(util::SerReader &worker) override;
     void newserialize(util::SerWriter &worker) override;
 
-    /*
-    isize _size() override;
-    isize _load(const u8 *buffer) override;
-    isize _save(u8 *buffer) override;
-    */
     
     //
     // Analyzing

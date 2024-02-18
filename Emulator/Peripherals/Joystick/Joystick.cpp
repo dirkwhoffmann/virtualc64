@@ -134,19 +134,6 @@ Joystick::newserialize(util::SerReader &worker)
     axisY = 0;
 }
 
-/*
-isize
-Joystick::didLoadFromBuffer(const u8 *buffer)
-{
-    // Discard any active joystick movements
-    button = false;
-    axisX = 0;
-    axisY = 0;
-
-    return 0;
-}
-*/
-
 void
 Joystick::reload()
 {

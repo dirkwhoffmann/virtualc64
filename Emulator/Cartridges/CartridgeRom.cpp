@@ -74,46 +74,6 @@ CartridgeRom::newserialize(util::SerWriter &worker)
     for (int i = 0; i < size; i++) util::write8(worker.ptr, rom[i]);
 }
 
-/*
-isize
-CartridgeRom::_size()
-{
-    util::SerCounter counter;
-    serialize(counter);
-    
-    return size + counter.count;
-}
-
-isize
-CartridgeRom::_load(const u8 *buffer)
-{
-    util::SerReader reader(buffer);
-    serialize(reader);
-    
-    // Delete the old packet and create a new one with the proper size
-    if (rom) delete[] rom;
-    rom = new u8[size];
-    
-    // Read packet data
-    for (int i = 0; i < size; i++) rom[i] = util::read8(reader.ptr);
-
-    trace(SNP_DEBUG, "Recreated from %ld bytes\n", isize(reader.ptr - buffer));
-    return isize(reader.ptr - buffer);
-}
-
-isize
-CartridgeRom::_save(u8 *buffer)
-{
-    util::SerWriter writer(buffer);
-    serialize(writer);
-
-    // Write packet data
-    for (int i = 0; i < size; i++) util::write8(writer.ptr, rom[i]);
-
-    return isize(writer.ptr - buffer);
-}
-*/
-
 bool
 CartridgeRom::mapsToL() const {
     assert(rom);

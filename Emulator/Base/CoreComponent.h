@@ -196,30 +196,13 @@ public:
     
     // Returns the size of the internal state in bytes
     isize size();
-    virtual isize _size() { return 0; }
 
     // Loads the internal state from a memory buffer
     virtual isize load(const u8 *buf) throws;
-    virtual isize _load(const u8 *buf) { return 0; }
-    virtual void didLoad();
-    virtual void _didLoad() { };
 
     // Saves the internal state to a memory buffer
     virtual isize save(u8 *buf);
-    virtual isize _save(u8 *buf) { return 0; }
-    virtual void didSave();
-    virtual void _didSave() { };
-    
-    /* Delegation methods called inside load() or save(). Some components
-     * override these methods to add custom behavior if not all elements can be
-     * processed by the default implementation.
-     */
-    /*
-    virtual isize willLoadFromBuffer(const u8 *buf) throws { return 0; }
-    virtual isize didLoadFromBuffer(const u8 *buf) throws { return 0; }
-    virtual isize willSaveToBuffer(u8 *buf) {return 0; }
-    virtual isize didSaveToBuffer(u8 *buf) { return 0; }
-    */
+
 
     //
     // Misc
@@ -229,7 +212,7 @@ public:
 };
 
 //
-// Standard implementations of _reset, _size, _load, and _save
+// Standard implementation of _reset
 //
 
 #define RESET_SNAPSHOT_ITEMS(hard) \

@@ -107,26 +107,6 @@ FlashRom::newserialize(util::SerWriter &worker)
     worker.copy(rom, romSize);
 }
 
-/*
-isize
-FlashRom::didLoadFromBuffer(const u8 *buffer)
-{
-    util::SerReader reader(buffer);
-    reader.copy(rom, romSize);
-
-    return romSize;
-}
-
-isize
-FlashRom::didSaveToBuffer(u8 *buffer)
-{
-    util::SerWriter writer(buffer);
-    writer.copy(rom, romSize);
-
-    return romSize;
-}
-*/
-
 u8
 FlashRom::peek(u32 addr)
 {

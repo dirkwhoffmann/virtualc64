@@ -129,58 +129,6 @@ Datasette::newserialize(util::SerWriter &worker)
     for (isize i = 0; i < size; i++) worker << pulses[i].cycles;
 }
 
-/*
-isize
-Datasette::_size()
-{
-    util::SerCounter counter;
-    
-    serialize(counter);
-    
-    counter << size;
-    for (isize i = 0; i < size; i++) counter << pulses[i].cycles;
-
-    return counter.count;
-}
-
-isize
-Datasette::didLoadFromBuffer(const u8 *buffer)
-{
-    util::SerReader reader(buffer);
-
-    // Free previously allocated memory
-    dealloc();
-
-    // Load size
-    reader << size;
-
-    // Make sure a corrupted value won't steal all memory
-    if (size > 0x8FFFF) { size = 0; }
-
-    // Create a new pulse buffer
-    alloc(size);
-
-    // Load pulses from buffer
-    for (isize i = 0; i < size; i++) reader << pulses[i].cycles;
-
-    return (isize)(reader.ptr - buffer);
-}
-
-isize
-Datasette::didSaveToBuffer(u8 *buffer)
-{
-    util::SerWriter writer(buffer);
-
-    // Save size
-    writer << size;
-    
-    // Save pulses to buffer
-    for (isize i = 0; i < size; i++) writer << pulses[i].cycles;
-
-    return (isize)(writer.ptr - buffer);
-}
-*/
-
 void
 Datasette::resetConfig()
 {

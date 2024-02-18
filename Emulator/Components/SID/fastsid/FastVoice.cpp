@@ -114,15 +114,6 @@ FastVoice::newserialize(util::SerReader &worker)
     updateWaveTablePtr();
 }
 
-/*
-isize
-FastVoice::didLoadFromBuffer(const u8 *buffer)
-{
-    updateWaveTablePtr();
-    return 0;
-}
-*/
-
 void
 FastVoice::updateWaveTablePtr()
 {

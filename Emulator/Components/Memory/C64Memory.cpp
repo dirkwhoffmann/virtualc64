@@ -139,48 +139,6 @@ C64Memory::newserialize(util::SerWriter &worker)
     if (config.saveRoms) worker << rom;
 }
 
-/*
-isize
-C64Memory::_size()
-{
-    util::SerCounter counter;
-    bool saveRoms = config.saveRoms;
-
-    serialize(counter);
-
-    counter << saveRoms;
-    if (saveRoms) applyToRoms(counter);
-
-    return counter.count;
-}
-
-isize
-C64Memory::_load(const u8 *buffer)
-{
-    util::SerReader reader(buffer);
-    bool saveRoms;
-
-    reader << saveRoms;
-    serialize(reader);
-    if (saveRoms) applyToRoms(reader);
-
-    return (isize)(reader.ptr - buffer);
-}
-
-isize
-C64Memory::_save(u8 *buffer)
-{
-    util::SerWriter writer(buffer);
-    bool saveRoms = config.saveRoms;
-
-    writer << saveRoms;
-    serialize(writer);
-    if (saveRoms) applyToRoms(writer);
-
-    return (isize)(writer.ptr - buffer);
-}
-*/
-
 MemConfig
 C64Memory::getDefaultConfig()
 {

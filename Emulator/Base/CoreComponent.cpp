@@ -55,7 +55,7 @@ CoreComponent::inspect() const
 isize
 CoreComponent::size()
 {
-    isize result = _size() + newsize();
+    isize result = newsize();
 
     // Add 8 bytes for the checksum
     result += 8;
@@ -80,7 +80,6 @@ CoreComponent::load(const u8 *buffer)
     }
 
     // Load internal state of this component
-    ptr += _load(ptr); // DEPRECATED
     ptr += newload(ptr);
 
     // Load the checksum for this component
@@ -99,18 +98,6 @@ CoreComponent::load(const u8 *buffer)
     return result;
 }
 
-void
-CoreComponent::didLoad()
-{
-    assert(!isRunning());
-
-    for (CoreComponent *c : subComponents) {
-        c->didLoad();
-    }
-
-    _didLoad();
-}
-
 isize
 CoreComponent::save(u8 *buffer)
 {
@@ -122,7 +109,6 @@ CoreComponent::save(u8 *buffer)
     }
 
     // Save the internal state of this component
-    ptr += _save(ptr);
     ptr += newsave(ptr);
 
     // Save the checksum for this component
@@ -134,16 +120,6 @@ CoreComponent::save(u8 *buffer)
     assert(result == size());
 
     return result;
-}
-
-void
-CoreComponent::didSave()
-{
-    for (CoreComponent *c : subComponents) {
-        c->didSave();
-    }
-
-    _didSave();
 }
 
 void

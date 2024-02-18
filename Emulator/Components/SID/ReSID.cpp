@@ -137,23 +137,6 @@ ReSID::newserialize(util::SerWriter &worker)
     serialize(worker);
 }
 
-/*
-isize
-ReSID::didLoadFromBuffer(const u8 *buffer)
-{
-    sid->write_state(st);
-    return 0;
-}
-
-isize
-ReSID::willSaveToBuffer(u8 *buffer)
-{
-    st = sid->read_state();
-    return 0;
-}
-
-*/
-
 void
 ReSID::record() const
 {

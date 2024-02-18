@@ -83,52 +83,6 @@ ExpansionPort::newserialize(util::SerWriter &worker)
     if (crtType != CRT_NONE) cartridge->newserialize(worker);
 }
 
-/*
-isize
-ExpansionPort::_size()
-{
-    util::SerCounter counter;
-    serialize(counter);
-    
-    if (cartridge) counter.count += cartridge->size();
-    return counter.count;
-}
-
-isize
-ExpansionPort::_load(const u8 *buffer)
-{
-    util::SerReader reader(buffer);
-    serialize(reader);
-    
-    // Delete existing cartridge
-    cartridge = nullptr;
-
-    // Load cartridge (if any)
-    if (crtType != CRT_NONE) {
-        
-        cartridge = std::unique_ptr<Cartridge>(Cartridge::makeWithType(c64, crtType));
-        reader.ptr += cartridge->load(reader.ptr);
-    }
-
-    debug(SNP_DEBUG, "Recreated from %ld bytes\n", isize(reader.ptr - buffer));
-    return isize(reader.ptr - buffer);
-}
-
-isize
-ExpansionPort::_save(u8 *buffer)
-{
-    util::SerWriter writer(buffer);
-    serialize(writer);
-
-    // Save cartridge (if any)
-    if (crtType != CRT_NONE) {
-        writer.ptr += cartridge->save(writer.ptr);
-    }
-    
-    return isize(writer.ptr - buffer);
-}
-*/
-
 void
 ExpansionPort::_dump(Category category, std::ostream& os) const
 {

@@ -39,7 +39,6 @@ class Host : public CoreComponent, public Dumpable {
 public:
 
     using CoreComponent::CoreComponent;
-    // Host(Emulator& ref);
 
 
     //
