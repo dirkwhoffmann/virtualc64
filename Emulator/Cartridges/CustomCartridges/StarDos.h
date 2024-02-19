@@ -14,8 +14,10 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class StarDos : public Cartridge {
-        
+
     CartridgeTraits traits = {
 
         .type       = CRT_STARDOS,
@@ -26,14 +28,14 @@ class StarDos : public Cartridge {
 
     i64 voltage = 5000000;
     i64 latestVoltageUpdate = 0;
-    
-    
+
+
     //
     // Initializing
     //
-    
+
 public:
-    
+
     using Cartridge::Cartridge;
 
 
@@ -45,11 +47,11 @@ private:
 
     void _dump(Category category, std::ostream& os) const override;
 
-    
+
     //
     // Methods from CoreComponent
     //
-    
+
 public:
 
     template <class T>
@@ -62,36 +64,38 @@ public:
 
     } CARTRIDGE_SERIALIZERS(serialize);
 
-    
+
     //
     // Accessing cartridge memory
     //
-    
+
     u8 peekIO1(u16 addr) override { charge(); return 0; }
     u8 spypeekIO1(u16 addr) const override { return 0; }
     u8 peekIO2(u16 addr) override { discharge(); return 0; }
     u8 spypeekIO2(u16 addr) const override { return 0; }
     void pokeIO1(u16 addr, u8 value) override { charge(); }
     void pokeIO2(u16 addr, u8 value) override { discharge(); }
-    
+
     //
     // Handling delegation calls
     //
-    
+
 public:
-    
+
     void updatePeekPokeLookupTables() override;
-    
-    
+
+
     //
     // Working with the capacitor
     //
-    
+
 private:
-    
+
     void updateVoltage();
     void charge();
     void discharge();
     void enableROML();
     void disableROML();
 };
+
+}

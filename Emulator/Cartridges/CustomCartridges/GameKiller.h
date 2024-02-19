@@ -14,6 +14,8 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class GameKiller : public Cartridge {
 
     CartridgeTraits traits = {
@@ -28,17 +30,17 @@ class GameKiller : public Cartridge {
     virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
-    
+
     using Cartridge::Cartridge;
-    
+
 private:
-    
+
     //
     // Accessing cartridge memory
     //
-    
+
     void resetCartConfig() override;
-    
+
     u8 peek(u16 addr) override;
     u8 peekIO1(u16 addr) override { return 0; }
     u8 spypeekIO1(u16 addr) const override { return 0; }
@@ -46,18 +48,18 @@ private:
     u8 spypeekIO2(u16 addr) const override { return 0; }
     void pokeIO1(u16 addr, u8 value) override;
     void pokeIO2(u16 addr, u8 value) override;
-    
-    
+
+
     //
     // Operating buttons
     //
-    
+
     isize numButtons() const override { return 1; }
     const char *getButtonTitle(isize nr) const override;
     void pressButton(isize nr) override;
     void releaseButton(isize nr) override;
 
-    
+
     //
     // Handling delegation calls
     //
@@ -66,3 +68,4 @@ private:
     void nmiWillTrigger() override;
 };
 
+}

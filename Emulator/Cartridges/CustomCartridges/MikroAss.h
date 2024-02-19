@@ -14,6 +14,8 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class MikroAss : public Cartridge {
 
     CartridgeTraits traits = {
@@ -27,9 +29,11 @@ class MikroAss : public Cartridge {
 public:
 
     using Cartridge::Cartridge;
-    
+
     u8 peekIO1(u16 addr) override;
     u8 spypeekIO1(u16 addr) const override;
     u8 peekIO2(u16 addr) override;
     u8 spypeekIO2(u16 addr) const override;
 };
+
+}

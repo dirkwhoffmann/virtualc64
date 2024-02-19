@@ -14,6 +14,8 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class WarpSpeed : public Cartridge {
   
     CartridgeTraits traits = {
@@ -54,3 +56,5 @@ public:
     const char *getButtonTitle(isize nr) const override;
     void pressButton(isize nr) override;
 };
+
+}

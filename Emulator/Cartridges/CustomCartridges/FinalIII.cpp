@@ -13,13 +13,15 @@
 #include "config.h"
 #include "Emulator.h"
 
+namespace vc64 {
+
 void
 FinalIII::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
     Cartridge::_dump(category, os);
-    
+
     if (category == Category::State) {
 
         os << std::endl;
@@ -72,7 +74,7 @@ FinalIII::spypeekIO2(u16 addr) const
 
 void
 FinalIII::pokeIO2(u16 addr, u8 value) {
-    
+
     // The control register is mapped to address 0xFF in I/O space 2.
     if (addr == 0xDFFF && writeEnabled()) {
         setControlReg(value);
@@ -85,7 +87,7 @@ FinalIII::nmiDidTrigger()
     if (freeezeButtonIsPressed) {
 
         trace(CRT_DEBUG, "NMI while freeze button is pressed.\n");
-        
+
         /* After the NMI has been processed by the CPU, the cartridge's counter
          * has reached a value that overflows qD to 0. This has two side
          * effects. First, the Game line switches to 0. Second, because qD is
@@ -101,15 +103,15 @@ void
 FinalIII::setControlReg(u8 value)
 {
     control = value;
-    
+
     // Update external lines
     updateNMI();
     updateGame();
     expansionport.setExromLine(exrom());
-    
+
     // Switch memory bank
     bankIn(control & 0x03);
-    
+
 }
 
 bool
@@ -147,17 +149,17 @@ FinalIII::pressButton(isize nr)
     assert(isEmulatorThread());
 
     trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
-    
+
     switch (nr) {
-            
+
         case 1: // Freeze
-            
+
             freeezeButtonIsPressed = true;
             updateNMI();
             break;
-            
+
         case 2: // Reset
-            
+
             c64.softReset();
             break;
     }
@@ -168,13 +170,13 @@ FinalIII::releaseButton(isize nr)
 {
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr));
-    
+
     {   SUSPENDED
-        
+
         switch (nr) {
-                
+
             case 1: // Freeze
-                
+
                 freeezeButtonIsPressed = false;
                 qD = true;
                 updateNMI();
@@ -182,4 +184,6 @@ FinalIII::releaseButton(isize nr)
                 break;
         }
     }
+}
+
 }

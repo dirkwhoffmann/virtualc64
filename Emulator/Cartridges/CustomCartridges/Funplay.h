@@ -14,6 +14,8 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class Funplay : public Cartridge {
 
     CartridgeTraits traits = {
@@ -28,12 +30,14 @@ public:
 
     using Cartridge::Cartridge;
 
-    
+
     //
     // Accessing cartridge memory
     //
-    
+
 public:
-    
+
     void pokeIO1(u16 addr, u8 value) override;
 };
+
+}

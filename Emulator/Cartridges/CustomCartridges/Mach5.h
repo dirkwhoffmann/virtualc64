@@ -14,6 +14,8 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class Mach5 : public Cartridge {
 
     CartridgeTraits traits = {
@@ -28,13 +30,13 @@ public:
 
     using Cartridge::Cartridge;
 
-    
+
     //
     // Accessing cartridge memory
     //
 
 public:
-    
+
     u8 peekIO1(u16 addr) override;
     u8 spypeekIO1(u16 addr) const override;
     u8 peekIO2(u16 addr) override;
@@ -42,3 +44,5 @@ public:
     void pokeIO1(u16 addr, u8 value) override;
     void pokeIO2(u16 addr, u8 value) override;
 };
+
+}

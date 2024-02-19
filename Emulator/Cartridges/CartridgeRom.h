@@ -14,46 +14,46 @@
 
 #include "SubComponent.h"
 
-using namespace vc64;
+namespace vc64 {
 
 class CartridgeRom : public SubComponent {
-    
+
     friend class Cartridge;
-    
+
 protected:
-    
+
     // Rom data
     u8 *rom = nullptr;
-    
+
 public:
-    
+
     // Size of the Rom data in bytes
     u16 size = 0;
-    
+
     /* Load address. This value is taken from the .CRT file. Possible values
      * are $8000 for chips mapping into the ROML area, $A000 for chips mapping
      * into the ROMH area in 16KB game mode, and $E000 for chips mapping into
      * the ROMH area in ultimax mode.
      */
     u16 loadAddress = 0;
-    
-    
+
+
     //
     // Initializing
     //
-    
+
 public:
-    
+
     CartridgeRom(C64 &ref);
     CartridgeRom(C64 &ref, u16 _size, u16 _loadAddress, const u8 *buffer = nullptr);
     ~CartridgeRom();
     const char *getDescription() const override { return "CartridgeRom"; }
 
-    
+
     //
     // Methods from CoreComponent
     //
-    
+
 public:
 
     template <class T>
@@ -66,31 +66,33 @@ public:
         << size
         << loadAddress;
     }
-    
+
     void operator << (SerChecker &worker) override { serialize(worker); }
     void operator << (SerCounter &worker) override;
     void operator << (SerResetter &worker) override { serialize(worker); }
     void operator << (SerReader &worker) override;
     void operator << (SerWriter &worker) override;
 
-    
+
     //
     // Accessing
     //
-    
+
 public:
-    
+
     // Returns true if this Rom chip maps to ROML
     bool mapsToL() const;
-    
+
     // Returns true if this Rom chip maps to ROMH
     bool mapsToH() const;
 
     // Returns true if this Rom chip maps to both ROML and ROMH
     bool mapsToLH() const;
-    
+
     // Reads or writes a byte
     u8 peek(u16 addr);
     u8 spypeek(u16 addr) const;
     void poke(u16 addr, u8 value) { }
 };
+
+}

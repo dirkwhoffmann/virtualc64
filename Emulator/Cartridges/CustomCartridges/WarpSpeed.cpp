@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 void
 WarpSpeed::resetCartConfig()
 {
@@ -70,4 +72,6 @@ WarpSpeed::pressButton(isize nr)
 
         c64.softReset();
     }
+}
+
 }

@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 u8
 Rex::peekIO2(u16 addr)
 {
@@ -20,12 +22,12 @@ Rex::peekIO2(u16 addr)
     if (addr >= 0xDF00 && addr <= 0xDFBF) {
         expansionport.setCartridgeMode(CRTMODE_OFF);
     }
-    
+
     // Any read access to $DFC0 - $DFFF switches to 8KB configuration
     if (addr >= 0xDFC0 && addr <= 0xDFFF) {
         expansionport.setCartridgeMode(CRTMODE_8K);
     }
-    
+
     return 0;
 }
 
@@ -33,4 +35,6 @@ u8
 Rex::spypeekIO2(u16 addr) const
 {
     return 0;
+}
+
 }

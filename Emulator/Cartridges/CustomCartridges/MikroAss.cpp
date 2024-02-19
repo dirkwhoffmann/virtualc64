@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 u8
 MikroAss::peekIO1(u16 addr)
 {
@@ -35,4 +37,6 @@ u8
 MikroAss::spypeekIO2(u16 addr) const
 {
     return spypeekRomL(0x1F00 | LO_BYTE(addr));
+}
+
 }

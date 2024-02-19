@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 void
 SuperGames::_dump(Category category, std::ostream& os) const
 {
@@ -36,11 +38,13 @@ SuperGames::pokeIO2(u16 addr, u8 value)
 
         // Bit 3: Write protection latch
         protect = value & 0b1000;
-                
+
         // Bit 2: Exrom / Game control
         expansionport.setCartridgeMode(value & 0b100 ? CRTMODE_OFF : CRTMODE_16K);
-        
+
         // Bit 0 and 1: Bank select
         bankIn(value & 0b11);
     }
+}
+
 }

@@ -14,8 +14,10 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class Expert : public Cartridge {
-   
+
     CartridgeTraits traits = {
 
         .type           = CRT_EXPERT,
@@ -35,15 +37,15 @@ class Expert : public Cartridge {
     };
 
     virtual const CartridgeTraits &getTraits() const override { return traits; }
-    
+
     // Flipflop deciding whether the cartridge is enabled or disabled
     bool active = false;
 
-    
+
     //
     // Initializing
     //
-    
+
 public:
 
     using Cartridge::Cartridge;
@@ -54,14 +56,14 @@ public:
     //
 
     void _dump(Category category, std::ostream& os) const override;
-    
-    
+
+
     //
     // Methods from CoreComponent
     //
-    
+
 public:
-    
+
     template <class T>
     void serialize(T& worker)
     {
@@ -77,47 +79,49 @@ public:
     //
     // Handling ROM packets
     //
-    
+
     void loadChip(isize nr, const CRTFile &crt) override;
 
-    
+
     //
     // Accessing cartridge memory
     //
-          
+
     void updatePeekPokeLookupTables() override;
     u8 peek(u16 addr) override;
     u8 peekIO1(u16 addr) override;
     u8 spypeekIO1(u16 addr) const override;
     void poke(u16 addr, u8 value) override;
     void pokeIO1(u16 addr, u8 value) override;
-    
+
     bool cartridgeRamIsVisible(u16 addr) const;
     bool cartridgeRamIsWritable(u16 addr) const;
 
-    
+
     //
     // Operating buttons
     //
-    
+
     isize numButtons() const override { return 2; }
     const char *getButtonTitle(isize nr) const override;
     void pressButton(isize nr) override;
-    
-    
+
+
     //
     // Operating switches
     //
-    
+
     const char *getSwitchDescription(isize pos) const override;
     bool switchInPrgPosition() const { return switchIsLeft(); }
     bool switchInOffPosition() const { return switchIsNeutral(); }
     bool switchInOnPosition() const { return switchIsRight(); }
-    
-    
+
+
     //
     // Handling delegation calls
     //
-    
+
     void nmiWillTrigger() override;
 };
+
+}

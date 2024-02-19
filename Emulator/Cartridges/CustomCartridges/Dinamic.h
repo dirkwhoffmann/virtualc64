@@ -14,6 +14,8 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class Dinamic : public Cartridge {
 
     CartridgeTraits traits = {
@@ -25,9 +27,11 @@ class Dinamic : public Cartridge {
     virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
-    
+
     using Cartridge::Cartridge;
 
     u8 peekIO1(u16 addr) override;
     u8 spypeekIO1(u16 addr) const override;
 };
+
+}

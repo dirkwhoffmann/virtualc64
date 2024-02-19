@@ -17,13 +17,15 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 void
 Expert::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
     Cartridge::_dump(category, os);
-    
+
     if (category == Category::State) {
 
         u16 nmi = LO_HI(peekRAM(0x1FFA), peekRAM(0x1FFB));
@@ -53,7 +55,7 @@ Expert::loadChip(isize nr, const CRTFile &crt)
     u16 chipSize = crt.chipSize(nr);
     u16 chipAddr = crt.chipAddr(nr);
     u8 *chipData = crt.chipData(nr);
-    
+
     // Check file integrity
     if (nr != 0 || chipSize != 0x2000 || chipAddr != 0x8000) {
         warn("Corrupted CRT file. Aborting.");
@@ -70,12 +72,12 @@ u8
 Expert::peek(u16 addr)
 {
     if (cartridgeRamIsVisible(addr)) {
-        
+
         // Get value from cartridge RAM
         return peekRAM(addr & 0x1FFF);
-    
+
     } else {
-        
+
         // Get value as if no cartridge was attached
         return mem.peek(addr, 1, 1);
     }
@@ -86,7 +88,7 @@ Expert::peekIO1(u16 addr)
 {
     // Any IO1 access disables the cartridge
     active = false;
-    
+
     return 0;
 }
 
@@ -100,14 +102,14 @@ void
 Expert::poke(u16 addr, u8 value)
 {
     if (cartridgeRamIsVisible(addr)) {
-        
+
         // Write value into cartridge RAM if it is write enabled
         if (cartridgeRamIsWritable(addr)) {
             pokeRAM(addr & 0x1FFF, value);
         }
-    
+
     } else {
-    
+
         // Write value as if no cartridge was attached
         mem.poke(addr, value, 1, 1);
     }
@@ -117,9 +119,9 @@ void
 Expert::pokeIO1(u16 addr, u8 value)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
-    
+
     trace(CRT_DEBUG, "Expert::pokeIO1\n");
-    
+
     // Any IO1 access disabled the cartridge
     active = false;
 }
@@ -135,21 +137,21 @@ Expert::pressButton(isize nr)
 {
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
-    
+
     {   SUSPENDED
-        
+
         switch (nr) {
-                
+
             case 1: // Reset
-                
+
                 if (switchInOnPosition()) { active = true; }
                 c64.softReset();
                 break;
-                
+
             case 2: // ESM (Freeze)
-                
+
                 if (switchInOnPosition()) { active = true; }
-                
+
                 /* The Expert cartridge uses two three-state buffers in parallel
                  * to force the NMI line high, even if a program leaves it low
                  * to protect itself against freezers. The following code is
@@ -158,7 +160,7 @@ Expert::pressButton(isize nr)
                  */
                 u8 oldLine = cpu.getNmiLine();
                 u8 newLine = oldLine | INTSRC_EXP;
-                
+
                 cpu.releaseNmiLine((IntSource)0xFF);
                 cpu.pullDownNmiLine((IntSource)newLine);
                 cpu.releaseNmiLine(INTSRC_EXP);
@@ -202,14 +204,14 @@ Expert::updatePeekPokeLookupTables()
     /* Setting up faked Ultimax mode. We let the Game and Exrom line as they
      * are, but reroute all access to ROML and ROMH into the cartridge.
      */
-    
+
     // Reroute ROML
-     mem.peekSrc[0x8] = mem.pokeTarget[0x8] = M_CRTLO;
-     mem.peekSrc[0x9] = mem.pokeTarget[0x9] = M_CRTLO;
+    mem.peekSrc[0x8] = mem.pokeTarget[0x8] = M_CRTLO;
+    mem.peekSrc[0x9] = mem.pokeTarget[0x9] = M_CRTLO;
 
     // Reroute ROMH
-     mem.peekSrc[0xE] = mem.pokeTarget[0xE] = M_CRTLO;
-     mem.peekSrc[0xF] = mem.pokeTarget[0xF] = M_CRTLO;
+    mem.peekSrc[0xE] = mem.pokeTarget[0xE] = M_CRTLO;
+    mem.peekSrc[0xF] = mem.pokeTarget[0xF] = M_CRTLO;
 }
 
 void
@@ -217,4 +219,6 @@ Expert::nmiWillTrigger()
 {
     // Activate cartridge if switch is in 'ON' position
     if (switchInOnPosition()) { active = 1; }
+}
+
 }

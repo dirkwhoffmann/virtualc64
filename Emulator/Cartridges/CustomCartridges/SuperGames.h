@@ -14,8 +14,10 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class SuperGames : public Cartridge {
-  
+
     CartridgeTraits traits = {
 
         .type       = CRT_SUPER_GAMES,
@@ -26,9 +28,9 @@ class SuperGames : public Cartridge {
 
     // Write protection latch
     bool protect = false;
-    
+
 public:
-    
+
     SuperGames(C64 &ref) : Cartridge(ref) { };
 
 
@@ -40,11 +42,11 @@ private:
 
     void _dump(Category category, std::ostream& os) const override;
 
-    
+
     //
     // Methods from CoreComponent
     //
-    
+
 public:
 
     template <class T>
@@ -56,12 +58,14 @@ public:
 
     } CARTRIDGE_SERIALIZERS(serialize)
 
-    
+
     //
     // Accessing cartridge memory
     //
-    
+
 public:
-    
+
     void pokeIO2(u16 addr, u8 value) override;
 };
+
+}

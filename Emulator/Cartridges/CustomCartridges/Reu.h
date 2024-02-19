@@ -14,6 +14,8 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class Reu : public Cartridge {
 
     CartridgeTraits traits = {
@@ -49,7 +51,7 @@ private:
 
     // Interrupt mask
     u8 imr;
-    
+
     // Address control register
     u8 acr;
 
@@ -193,3 +195,5 @@ public:
     void updatePeekPokeLookupTables() override;
 
 };
+
+}

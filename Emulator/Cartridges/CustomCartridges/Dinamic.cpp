@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 u8
 Dinamic::peekIO1(u16 addr)
 {
@@ -24,4 +26,6 @@ u8
 Dinamic::spypeekIO1(u16 addr) const
 {
     return 0;
+}
+
 }

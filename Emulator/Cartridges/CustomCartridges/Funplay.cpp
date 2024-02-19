@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 void
 Funplay::pokeIO1(u16 addr, u8 value)
 {
@@ -24,15 +26,17 @@ Funplay::pokeIO1(u16 addr, u8 value)
      *
      * A value of $86 is written to disable the cartridge.
      */
-    
+
     if (addr == 0xDE00) {
-        
+
         if (value == 0x86) {
 
             expansionport.setCartridgeMode(CRTMODE_OFF);
             return;
         }
-        
+
         bankIn(((value >> 3) & 0x07) | ((value << 3) & 0x08));
     }
+}
+
 }

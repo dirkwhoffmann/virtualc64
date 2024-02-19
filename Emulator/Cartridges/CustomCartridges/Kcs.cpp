@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 void
 KcsPower::_reset(bool hard)
 {
@@ -36,16 +38,16 @@ u8
 KcsPower::peekIO2(u16 addr)
 {
     if (addr & 0x80) {
-        
+
         /*
          u8 exrom = expansionport.getExromLine() ? 0x80 : 0x00;
          u8 game = expansionport.getGameLine() ? 0x40 : 0x00;
          return exrom | game | (vic.getDataBusPhi1() & 0x3F);
          */
         return peekRAM(addr & 0x7F);
-        
+
     } else {
-        
+
         // Return value from onboard RAM
         return peekRAM(addr & 0x7F);
     }
@@ -99,3 +101,5 @@ KcsPower::releaseButton(isize nr)
         cpu.releaseNmiLine(INTSRC_EXP);
     }
 };
+
+}

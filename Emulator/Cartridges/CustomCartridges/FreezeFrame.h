@@ -14,6 +14,8 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class FreezeFrame : public Cartridge {
 
     CartridgeTraits traits = {
@@ -33,28 +35,30 @@ public:
 
 private:
 
-    
+
     void _reset(bool hard) override;
 
-    
+
     //
     // Accessing cartridge memory
     //
-    
+
 public:
-    
+
     u8 peekIO1(u16 addr) override;
     u8 spypeekIO1(u16 addr) const override;
     u8 peekIO2(u16 addr) override;
     u8 spypeekIO2(u16 addr) const override;
 
-    
+
     //
     // Operating buttons
     //
-    
+
     isize numButtons() const override { return 1; }
     const char *getButtonTitle(isize nr) const override;
     void pressButton(isize nr) override;
     void releaseButton(isize nr) override;
 };
+
+}

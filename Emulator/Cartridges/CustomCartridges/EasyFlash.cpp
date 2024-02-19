@@ -14,10 +14,12 @@
 #include "EasyFlash.h"
 #include "C64.h"
 
+namespace vc64 {
+
 EasyFlash::EasyFlash(C64 &ref) : Cartridge(ref)
 {
     subComponents = std::vector <CoreComponent *> {
-        
+
         &flashRomL,
         &flashRomH
     };
@@ -30,10 +32,10 @@ EasyFlash::resetCartConfig()
 }
 
 void
-EasyFlash::_reset(bool hard) 
-{    
+EasyFlash::_reset(bool hard)
+{
     eraseRAM(0);
-    
+
     // Make sure peekRomL() and peekRomH() conver the whole range
     mappedBytesL = 0x2000;
     mappedBytesH = 0x2000;
@@ -49,7 +51,7 @@ EasyFlash::_dump(Category category, std::ostream& os) const
     if (category == Category::State) {
 
         os << std::endl;
-        
+
         os << tab("Bank Register");
         os << hex(bankReg) << std::endl;
         os << tab("Mode Register");
@@ -71,26 +73,26 @@ EasyFlash::loadChip(isize nr, const CRTFile &crt)
     u16 chipAddr = crt.chipAddr(nr);
     u16 chipBank = crt.chipBank(nr);
     u8 *chipData = crt.chipData(nr);
-    
+
     if(chipSize != 0x2000) {
         warn("Package %ld has chip size %04X. Expected 0x2000.\n", nr, chipSize);
         return;
     }
 
     if (isROMLaddr(chipAddr)) {
-            
+
         trace(CRT_DEBUG, "Loading Rom bank %dL ...\n", chipBank);
         flashRomL.loadBank(chipBank, chipData);
         bank++;
-    
+
     } else if (isROMHaddr(chipAddr)) {
 
         trace(CRT_DEBUG, "Loading Rom bank %dH ...\n", bank / 2);
         flashRomH.loadBank(chipBank, chipData);
         bank++;
-        
+
     } else {
-        
+
         warn("Package %ld has an invalid load address (%04X).", nr, chipAddr);
         return;
     }
@@ -100,18 +102,18 @@ u8
 EasyFlash::peek(u16 addr)
 {
     u8 result;
-    
+
     if (isROMLaddr(addr)) {
-        
+
         result = flashRomL.peek(bank, addr & 0x1FFF);
         return result;
     }
     if (isROMHaddr(addr)) {
-        
+
         result = flashRomH.peek(bank, addr & 0x1FFF);
         return result;
     }
-    
+
     fatalError;
 }
 
@@ -119,18 +121,18 @@ u8
 EasyFlash::spypeek(u16 addr) const
 {
     u8 result;
-    
+
     if (isROMLaddr(addr)) {
-        
+
         result = flashRomL.spypeek(bank, addr & 0x1FFF);
         return result;
     }
     if (isROMHaddr(addr)) {
-        
+
         result = flashRomH.spypeek(bank, addr & 0x1FFF);
         return result;
     }
-    
+
     fatalError;
 }
 
@@ -211,9 +213,9 @@ EasyFlash::pokeModeReg(u8 value)
 {
     modeReg = value;
     // c64.signalBreakpoint();
-    
+
     setLED((value & 0x80) != 0);
-    
+
     u8 MXG = value & 0x07;
     /* MXG
      * 0 (000) : GAME from jumper, EXROM high (i.e. Ultimax or Off)
@@ -225,54 +227,56 @@ EasyFlash::pokeModeReg(u8 value)
      * 6 (110) : 8k Cartridge (Low bank at $8000)
      * 7 (111) : 16k cartridge (Low bank at $8000, high bank at $a000)
      */
-    
+
     bool exrom;
     bool game;
-    
+
     debug(CRT_DEBUG, "MXG = %x\n", MXG);
     switch (MXG) {
-            
+
         case 0b000:
         case 0b001:
-            
+
             game = jumper;
             exrom = 1;
             break;
-            
+
         case 0b010:
         case 0b011:
-            
+
             game = jumper;
             exrom = 0;
             break;
-            
+
         case 0b100:
-            
+
             game = 1;
             exrom = 1;
             break;
-            
+
         case 0b101:
-            
+
             game = 0;
             exrom = 1;
             break;
-            
+
         case 0b110:
-            
+
             game = 1;
             exrom = 0;
             break;
-            
+
         case 0b111:
-            
+
             game = 0;
             exrom = 0;
             break;
-            
+
         default:
             fatalError;
     }
-    
+
     expansionport.setGameAndExrom(game, exrom);
+}
+
 }

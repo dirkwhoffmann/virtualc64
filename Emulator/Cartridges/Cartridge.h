@@ -17,7 +17,7 @@
 #include "CartridgeRom.h"
 #include "CRTFile.h"
 
-using namespace vc64;
+namespace vc64 {
 
 class Cartridge : public SubComponent, public Dumpable {
 
@@ -33,8 +33,8 @@ public:
 
     // Maximum number of chip packets on a single cartridge
     static const isize MAX_PACKETS = 128;
-    
-    
+
+
     //
     // Cartridge configuration
     //
@@ -50,21 +50,21 @@ private:
      */
     bool gameLineInCrtFile = 1;
     bool exromLineInCrtFile = 1;
-    
-    
+
+
     //
     // Rom packets
     //
-    
+
 protected:
 
     isize numPackets = 0;
     CartridgeRom *packet[MAX_PACKETS] = {};
-    
+
     // Indicates which packets are currently mapped to ROML and ROMH
     isize chipL = 0;
     isize chipH = 0;
-    
+
     /* Number of bytes that are mapped to ROML and ROMH. For most cartridges,
      * this value is equals packet[romX]->size which means that the ROM is
      * completely mapped. A value of 0 indicates that no ROM is currently
@@ -78,38 +78,38 @@ protected:
      */
     u16 offsetL = 0;
     u16 offsetH = 0;
-    
+
 private:
-    
+
     //
     // On-board RAM
     //
-    
+
     // Additional RAM
     u8 *externalRam = nullptr;
-    
+
     // RAM capacity in bytes
     isize ramCapacity = 0;
 
-    
+
     //
     // On-board registers
     //
-    
+
 protected:
-    
+
     /* Auxililary control register. Many non-standard cartridges carry an
      * additional register on board.
      */
     u8 control = 0;
-        
-    
+
+
     //
     // Hardware switches
     //
-    
+
 protected:
-    
+
     /* Current position of the cartridge switch (if any). Only a few cartridges
      * have a switch such as ISEPIC and EXPERT.
      */
@@ -117,7 +117,7 @@ protected:
 
     // Status of the cartridge LED (true = on)
     bool led = false;
-    
+
 
     //
     // Class methods
@@ -130,7 +130,7 @@ public:
 
     // Checks whether this cartridge is a supported by the emulator
     static bool isSupportedType(CartridgeType type);
-    
+
     // Returns true if addr is located in the ROML or the ROMH address space
     static bool isROMLaddr(u16 addr);
     static bool isROMHaddr(u16 addr);
@@ -139,13 +139,13 @@ public:
     static Cartridge *makeWithType(C64 &c64, CartridgeType type) throws;
     static Cartridge *makeWithCRTFile(C64 &c64, CRTFile &file) throws;
 
-    
+
     //
     // Initializing
     //
-    
+
 public:
-    
+
     Cartridge(C64 &ref);
     ~Cartridge();
 
@@ -158,28 +158,28 @@ public:
 
     void dealloc();
 
-    
+
     //
     // Methods from CoreObject
     //
 
 protected:
-    
+
     const char *getDescription() const override { return getTraits().title; }
     void _dump(Category category, std::ostream& os) const override;
 
-    
+
     //
     // Methods from CoreComponent
     //
-    
+
 public:
 
     template <class T>
     void serialize(T& worker)
     {
         worker
-        
+
         << chipL
         << chipH
         << mappedBytesL
@@ -199,7 +199,7 @@ public:
         << control
         << switchPos;
     }
-    
+
 public:
 
     void operator << (SerResetter &worker) override;
@@ -220,46 +220,46 @@ public:
 
     // Returns the cartridge type
     virtual CartridgeType getCartridgeType() const { return getTraits().type; }
-    
+
     // Checks whether this cartridge is supported by the emulator yet
     bool isSupported() const { return isSupportedType(getCartridgeType()); }
-        
+
 
     //
     // Accessing
     //
-    
+
 public:
-    
+
     // Returns the initial value of the Game or the Exrom line
     virtual bool getGameLineInCrtFile() const { return gameLineInCrtFile; }
     virtual bool getExromLineInCrtFile() const { return exromLineInCrtFile; }
-        
-    
+
+
     //
     // Handling ROM packets
     //
-    
+
     // Reads in a chip packet from a CRT file
     virtual void loadChip(isize nr, const CRTFile &c);
-    
+
     // Banks in a rom chip into the ROML or the ROMH space
     void bankInROML(isize nr, u16 size, u16 offset);
     void bankInROMH(isize nr, u16 size, u16 offset);
-    
+
     /* Banks in a rom chip. This function calls bankInROML or bankInROMH with
      * the default parameters for this chip as provided in the CRT file.
      */
     virtual void bankIn(isize nr);
-    
+
     //  Banks out a chip (RAM will be visible again)
     void bankOut(isize nr);
 
-    
+
     //
     // Accessing cartridge memory
     //
-    
+
     /* Fallthroughs for the cartridge memory
      *
      *     ROML range: 0x8000 - 0x9FFF
@@ -276,22 +276,22 @@ public:
     virtual void poke(u16 addr, u8 value);
     virtual void pokeRomL(u16 addr, u8 value) { return; }
     virtual void pokeRomH(u16 addr, u8 value) { return; }
-    
+
     // Fallthroughs for the I/O spaces
     virtual u8 peekIO1(u16 addr) { return 0; }
     virtual u8 peekIO2(u16 addr) { return 0; }
 
     virtual u8 spypeekIO1(u16 addr) const { return 0; }
     virtual u8 spypeekIO2(u16 addr) const { return 0; }
-    
+
     virtual void pokeIO1(u16 addr, u8 value) { }
     virtual void pokeIO2(u16 addr, u8 value) { }
 
-    
+
     //
     // Managing on-board RAM
     //
-    
+
     // Returns the size of the on-board RAM in bytes
     isize getRamCapacity() const { return getTraits().memory; }
 
@@ -306,14 +306,14 @@ public:
     void pokeRAM(u32 addr, u8 value);
     void eraseRAM(u8 value);
 
-    
+
     //
     // Operating buttons
     //
 
     // Returns the number of available cartridge buttons
     virtual isize numButtons() const { return 0; }
-    
+
     /* Returns a textual description for a button or nullptr, if there is no
      * button with the specified number.
      */
@@ -329,13 +329,13 @@ public:
     //
     // Operating switches
     //
-    
+
     // Returns the current switch position
     virtual isize getSwitch() const { return switchPos; }
     bool switchIsNeutral() const { return getSwitch() == 0; }
     bool switchIsLeft() const { return getSwitch() < 0; }
     bool switchIsRight() const { return getSwitch() > 0; }
-    
+
     /* Returns a textual description for a switch position or nullptr if the
      * switch cannot be positioned this way.
      */
@@ -346,33 +346,35 @@ public:
     // Puts the switch in a certain position
     virtual void setSwitch(isize pos);
 
-    
+
     //
     // Operating LEDs
     //
-    
+
     // Returns true if the cartridge has a LED
     // bool hasLED() const { return traits.led; }
 
     // Switches the LED on or off
     virtual void setLED(bool value) { led = value; }
-    
-    
+
+
     //
     // Handling delegation calls
     //
-    
+
     /* Emulator thread callback. This function is invoked by the expansion port.
      * Only a few cartridges such as EpyxFastLoader will do some action here.
      */
     virtual void execute() { };
-    
+
     // Modifies the memory source lookup tables if required
     virtual void updatePeekPokeLookupTables() { };
-    
+
     // Called when the C64 CPU is about to trigger an NMI
     virtual void nmiWillTrigger() { }
-    
+
     // Called after the C64 CPU has processed the NMI instruction
     virtual void nmiDidTrigger() { }
 };
+
+}

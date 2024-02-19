@@ -14,6 +14,8 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class Ocean : public Cartridge {
 
     CartridgeTraits traits = {
@@ -25,7 +27,7 @@ class Ocean : public Cartridge {
     virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
-    
+
     using Cartridge::Cartridge;
 
     void bankIn(isize nr) override;
@@ -33,3 +35,5 @@ public:
     u8 peekIO2(u16 addr) override;
     void pokeIO1(u16 addr, u8 value) override;
 };
+
+}

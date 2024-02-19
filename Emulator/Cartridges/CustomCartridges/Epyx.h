@@ -14,8 +14,10 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class Epyx : public Cartridge {
-    
+
     CartridgeTraits traits = {
 
         .type       = CRT_EPYX_FASTLOAD,
@@ -31,16 +33,16 @@ class Epyx : public Cartridge {
     // and the ROM visible. To avoid the ROM to be disabled, the cartridge can
     // either read from ROML or I/O space 1. Both operations discharge the
     // capacitor and keep the ROM alive.
-    
+
     Cycle cycle = 0;
-    
-    
+
+
     //
     // Initializing
     //
-    
+
 public:
-    
+
     using Cartridge::Cartridge;
 
 
@@ -56,9 +58,9 @@ private:
     //
     // Methods from CoreComponent
     //
-    
+
 public:
-    
+
     template <class T>
     void serialize(T& worker)
     {
@@ -75,9 +77,9 @@ public:
     //
     // Methods from Cartridge
     //
-    
+
 public:
-    
+
     void resetCartConfig() override;
     u8 peekRomL(u16 addr) override;
     u8 spypeekRomL(u16 addr) const override;
@@ -88,7 +90,9 @@ public:
     void execute() override;
 
 private:
-    
+
     // Discharges the cartridge's capacitor
     void dischargeCapacitor();
 };
+
+}

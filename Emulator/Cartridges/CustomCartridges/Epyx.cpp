@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 void
 Epyx::_reset(bool hard)
 {
@@ -94,7 +96,9 @@ Epyx::dischargeCapacitor()
 {
     // Switch on cartridge
     expansionport.setCartridgeMode(CRTMODE_8K);
-    
+
     // Schedule cartridge to be switched off in about 512 CPU cycles
     cycle = cpu.clock + 512;
+}
+
 }

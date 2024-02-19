@@ -14,8 +14,10 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class Rex : public Cartridge {
-  
+
     CartridgeTraits traits = {
 
         .type       = CRT_REX,
@@ -25,16 +27,18 @@ class Rex : public Cartridge {
     virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
-    
+
     using Cartridge::Cartridge;
 
-    
+
     //
     // Accessing cartridge memory
     //
-    
+
 public:
-    
+
     u8 peekIO2(u16 addr) override;
     u8 spypeekIO2(u16 addr) const override;
 };
+
+}

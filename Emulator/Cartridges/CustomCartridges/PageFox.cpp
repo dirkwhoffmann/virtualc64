@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 void
 PageFox::_reset(bool hard)
 {
@@ -51,7 +53,7 @@ u8
 PageFox::peekRomL(u16 addr)
 {
     u8 result;
-    
+
     if (ramIsVisible()) {
         result = peekRAM(ramAddrL(addr));
         debug(CRT_DEBUG, "peekRomL(%x) [RAM] = %x\n", addr, result);
@@ -59,7 +61,7 @@ PageFox::peekRomL(u16 addr)
         result = Cartridge::peekRomL(addr);
         debug(CRT_DEBUG, "peekRomL(%x) = %x\n", addr, result);
     }
-    
+
     return result;
 }
 
@@ -67,13 +69,13 @@ u8
 PageFox::spypeekRomL(u16 addr) const
 {
     u8 result;
-    
+
     if (ramIsVisible()) {
         result = peekRAM(ramAddrL(addr));
     } else {
         result = Cartridge::spypeekRomL(addr);
     }
-    
+
     return result;
 }
 
@@ -81,7 +83,7 @@ u8
 PageFox::peekRomH(u16 addr)
 {
     u8 result;
-    
+
     if (ramIsVisible()) {
         result = peekRAM(ramAddrH(addr));
         debug(CRT_DEBUG, "peekRomH(%x) [RAM] = %x\n", addr, result);
@@ -97,7 +99,7 @@ u8
 PageFox::spypeekRomH(u16 addr) const
 {
     u8 result;
-    
+
     if (ramIsVisible()) {
         result = peekRAM(ramAddrH(addr));
     } else {
@@ -150,7 +152,7 @@ PageFox::pokeIO1(u16 addr, u8 value)
     debug(CRT_DEBUG, "pokeIO1(%x, %x)\n", addr, value);
 
     ctrlReg = value;
-    
+
     if (disabled()) {
         expansionport.setCartridgeMode(CRTMODE_OFF);
         debug(CRT_DEBUG, "CRT disabled\n");
@@ -158,10 +160,10 @@ PageFox::pokeIO1(u16 addr, u8 value)
         expansionport.setCartridgeMode(CRTMODE_16K);
         debug(CRT_DEBUG, "16K mode\n");
     }
-    
+
     bankIn(bank());
     mem.updatePeekPokeLookupTables();
-    
+
     // c64.signalStop();
 }
 
@@ -172,4 +174,6 @@ PageFox::updatePeekPokeLookupTables()
         mem.pokeTarget[0x8] = mem.pokeTarget[0x9] = M_CRTLO;
         mem.pokeTarget[0xA] = mem.pokeTarget[0xB] = M_CRTHI;
     }
+}
+
 }

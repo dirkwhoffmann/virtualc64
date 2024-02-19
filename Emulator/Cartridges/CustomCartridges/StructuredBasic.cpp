@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 void
 StructuredBasic::resetCartConfig()
 {
@@ -25,18 +27,18 @@ StructuredBasic::peekIO1(u16 addr)
     trace(CRT_DEBUG, "peekIO1(%x)\n", addr);
 
     switch (addr & 0b11) {
-            
+
         case 0:
         case 1:
             expansionport.setCartridgeMode(CRTMODE_8K);
             bankIn(0);
             break;
-            
+
         case 2:
             expansionport.setCartridgeMode(CRTMODE_8K);
             bankIn(1);
             break;
-            
+
         case 3:
             expansionport.setCartridgeMode(CRTMODE_OFF);
             break;
@@ -56,4 +58,6 @@ StructuredBasic::pokeIO1(u16 addr, u8 value)
     trace(CRT_DEBUG, "pokeIO1(%x,%x)\n", addr, value);
 
     peekIO1(addr);
+}
+
 }

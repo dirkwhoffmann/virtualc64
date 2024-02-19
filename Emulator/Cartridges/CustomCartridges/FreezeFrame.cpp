@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 void
 FreezeFrame::_reset(bool hard)
 {
@@ -77,4 +79,6 @@ FreezeFrame::releaseButton(isize nr)
 
         cpu.releaseNmiLine(INTSRC_EXP);
     }
+}
+
 }

@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 u8
 Mach5::peekIO1(u16 addr)
 {
@@ -49,4 +51,6 @@ Mach5::pokeIO2(u16 addr, u8 value)
 {
     trace(CRT_DEBUG, "Switching Mach5 off\n");
     expansionport.setCartridgeMode(CRTMODE_OFF);
+}
+
 }

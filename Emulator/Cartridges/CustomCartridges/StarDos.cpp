@@ -14,17 +14,19 @@
 #include "C64.h"
 #include <algorithm>
 
+namespace vc64 {
+
 void
 StarDos::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
-
+    
     Cartridge::_dump(category, os);
-
+    
     if (category == Category::State) {
-
+        
         os << std::endl;
-
+        
         os << tab("Voltage");
         os << dec(voltage);
         os << tab("Latest Voltage Update");
@@ -48,7 +50,7 @@ StarDos::updateVoltage()
     // If the capacitor is untouched, it slowly raises to 2.0V
     
     if (voltage < 2000000 /* 2.0V */) {
-
+        
         i64 elapsedCycles = cpu.clock - latestVoltageUpdate;
         voltage += std::min(2000000 - voltage, elapsedCycles * 2);
     }
@@ -60,7 +62,7 @@ StarDos::charge()
 {
     updateVoltage();
     voltage += std::min(5000000ULL /* 5.0V */ - voltage, 78125ULL);
-
+    
     if (voltage > 2700000 /* 2.7V */) {
         enableROML();
     }
@@ -89,3 +91,4 @@ StarDos::disableROML()
     expansionport.setExromLine(1);
 }
 
+}

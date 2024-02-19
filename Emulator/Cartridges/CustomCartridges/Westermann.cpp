@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 u8
 Westermann::peekIO2(u16 addr)
 {
@@ -25,4 +27,6 @@ u8
 Westermann::spypeekIO2(u16 addr) const
 {
     return 0;
+}
+
 }

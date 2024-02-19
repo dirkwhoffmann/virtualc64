@@ -14,22 +14,26 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class StructuredBasic : public Cartridge {
-     
+
     CartridgeTraits traits = {
-        
+
         .type       = CRT_STRUCTURED_BASIC,
         .title      = "Structured Basic",
     };
-    
+
     virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
-    
+
     using Cartridge::Cartridge;
-    
+
     void resetCartConfig() override;
     u8 peekIO1(u16 addr) override;
     u8 spypeekIO1(u16 addr) const override;
     void pokeIO1(u16 addr, u8 value) override;
 };
+
+}

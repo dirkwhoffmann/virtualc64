@@ -14,11 +14,13 @@
 #include "Cartridge.h"
 #include "C64.h"
 
+namespace vc64 {
+
 bool
 Cartridge::isKnownType(CartridgeType type)
 {
     if (FORCE_CRT_UNKNOWN) return false;
-    
+
     return type >= CRT_NORMAL && type <= CRT_GMOD2;
 }
 
@@ -98,7 +100,7 @@ Cartridge *
 Cartridge::makeWithType(C64 &c64, CartridgeType type)
 {
     switch (type) {
-            
+
         case CRT_NORMAL:            return new Cartridge(c64);
         case CRT_ACTION_REPLAY:     return new ActionReplay(c64);
         case CRT_KCS_POWER:         return new KcsPower(c64);
@@ -143,10 +145,10 @@ Cartridge::makeWithCRTFile(C64 &c64, CRTFile &file)
 
     // Only proceed if the cartridge ID is valid
     if (!isKnownType(type)) throw VC64Error(ERROR_CRT_UNKNOWN, std::to_string(type));
-    
+
     // Try to create the cartridge
     Cartridge *cart = makeWithType(c64, file.cartridgeType());
-    
+
     // Remember powerup values for game line and exrom line
     cart->gameLineInCrtFile = file.initialGameLine();
     cart->exromLineInCrtFile = file.initialExromLine();
@@ -156,7 +158,7 @@ Cartridge::makeWithCRTFile(C64 &c64, CRTFile &file)
     for (isize i = 0; i < file.chipCount(); i++) {
         cart->loadChip(i, file);
     }
-    
+
     if (CRT_DEBUG) cart->dump(Category::State);
     return cart;
 }
@@ -183,7 +185,7 @@ Cartridge::dealloc()
         delete packet[i];
         packet[i] = nullptr;
     }
-    
+
     if (externalRam) {
         assert(ramCapacity > 0);
         delete [] externalRam;
@@ -203,18 +205,18 @@ void
 Cartridge::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
-    
+
     if (category == Category::State) {
-        
+
         os << tab("Game line in CRT");
         os << bol(gameLineInCrtFile) << std::endl;
         os << tab("Exrom line in CRT");
         os << bol(exromLineInCrtFile) << std::endl;
         os << tab("Number of packets");
         os << dec(numPackets) << std::endl;
-        
+
         for (isize i = 0; i < numPackets; i++) {
-            
+
             os << tab("Packet " + std::to_string(i));
             os << dec(packet[i]->size / 1024) << " KB starting at ";
             os << hex(packet[i]->loadAddress) << std::endl;
@@ -255,7 +257,7 @@ Cartridge::operator << (SerCounter &worker)
     worker.count += ramCapacity;
 }
 
-void 
+void
 Cartridge::operator << (SerReader &worker)
 {
     dealloc();
@@ -279,7 +281,7 @@ Cartridge::operator << (SerReader &worker)
     }
 }
 
-void 
+void
 Cartridge::operator << (SerWriter &worker)
 {
     serialize(worker);
@@ -353,7 +355,7 @@ Cartridge::peekRomL(u16 addr)
 {
     assert(addr <= 0x1FFF);
     assert(chipL >= 0 && chipL < numPackets);
-    
+
     return packet[chipL] ? packet[chipL]->peek(addr + offsetL) : 0;
 }
 
@@ -362,7 +364,7 @@ Cartridge::peekRomH(u16 addr)
 {
     assert(addr <= 0x1FFF);
     assert(chipH >= 0 && chipH < numPackets);
-    
+
     return packet[chipH] ? packet[chipH]->peek(addr + offsetH) : 0;
 }
 
@@ -386,7 +388,7 @@ Cartridge::spypeekRomL(u16 addr) const
 {
     assert(addr <= 0x1FFF);
     assert(chipL >= 0 && chipL < numPackets);
-    
+
     return packet[chipL] ? packet[chipL]->spypeek(addr + offsetL) : 0;
 }
 
@@ -395,7 +397,7 @@ Cartridge::spypeekRomH(u16 addr) const
 {
     assert(addr <= 0x1FFF);
     assert(chipH >= 0 && chipH < numPackets);
-    
+
     return packet[chipH] ? packet[chipH]->spypeek(addr + offsetH) : 0;
 }
 
@@ -403,32 +405,32 @@ void
 Cartridge::poke(u16 addr, u8 value)
 {
     assert(isROMLaddr(addr) || isROMHaddr(addr));
-    
+
     u16 relAddr = addr & 0x1FFF;
-        
+
     if (isROMLaddr(addr) && relAddr < mappedBytesL) {
         pokeRomL(relAddr, value);
     }
     if (isROMHaddr(addr) && relAddr < mappedBytesH) {
         pokeRomH(relAddr, value);
     }
-        
+
     // Write to RAM if we don't run in Ultimax mode
     if (!c64.getUltimax()) mem.ram[addr] = value;
 }
 
 /*
-isize
-Cartridge::getRamCapacity() const
-{
-    if (ramCapacity == 0) {
-        assert(externalRam == nullptr);
-    } else {
-        assert(externalRam != nullptr);
-    }
-    return ramCapacity;
-}
-*/
+ isize
+ Cartridge::getRamCapacity() const
+ {
+ if (ramCapacity == 0) {
+ assert(externalRam == nullptr);
+ } else {
+ assert(externalRam != nullptr);
+ }
+ return ramCapacity;
+ }
+ */
 
 void
 Cartridge::setRamCapacity(isize size)
@@ -440,7 +442,7 @@ Cartridge::setRamCapacity(isize size)
         ramCapacity = 0;
         externalRam = nullptr;
     }
-    
+
     // Allocate
     if (size > 0) {
 
@@ -475,11 +477,11 @@ void
 Cartridge::loadChip(isize nr, const CRTFile &crt)
 {
     assert(nr < MAX_PACKETS);
-    
+
     u16 size = crt.chipSize(nr);
     u16 start = crt.chipAddr(nr);
     u16 type = crt.chipType(nr);
-    
+
     // Perform some consistency checks
     if (start < 0x8000) {
         warn("Ignoring chip %ld: Start address too low (%04X)\n", nr, start);
@@ -489,33 +491,33 @@ Cartridge::loadChip(isize nr, const CRTFile &crt)
         warn("Ignoring chip %ld: Invalid size (start: %04X size: %04X)/n", nr, start, size);
         return;
     }
-    
+
     // Delete old chip packet if present
     if (packet[nr]) {
         delete packet[nr];
     }
-    
+
     // Create new chip packet
     switch (type) {
-            
+
         case 0: // ROM
             packet[nr] = new CartridgeRom(c64, size, start, crt.chipData(nr));
             break;
-            
+
         case 1: // RAM
             warn("Ignoring chip %ld, because it has type RAM.\n", nr);
             return;
-            
+
         case 2: // Flash ROM
             warn("Chip %ld is a Flash Rom. Creating a Rom instead.\n", nr);
             packet[nr] = new CartridgeRom(c64, size, start, crt.chipData(nr));
             break;
-            
+
         default:
             warn("Ignoring chip %ld, because it has unknown type %d.\n", nr, type);
             return;
     }
-    
+
     numPackets++;
 }
 
@@ -537,30 +539,30 @@ Cartridge::bankInROMH(isize nr, u16 size, u16 offset)
 
 void
 Cartridge::bankIn(isize nr)
-{    
+{
     assert(nr < MAX_PACKETS);
-    
+
     if (packet[nr] == nullptr)
         return;
 
     assert(packet[nr]->size <= 0x4000);
 
     if (packet[nr]->mapsToLH()) {
-        
+
         bankInROML(nr, 0x2000, 0); // chip covers ROML and (part of) ROMH
         bankInROMH(nr, packet[nr]->size - 0x2000, 0x2000);
         debug(CRT_DEBUG, "Banked in chip %ld in ROML and ROMH\n", nr);
-    
+
     } else if (packet[nr]->mapsToL()) {
-        
+
         bankInROML(nr, packet[nr]->size, 0); // chip covers (part of) ROML
         debug(CRT_DEBUG, "Banked in chip %ld in ROML\n", nr);
-        
+
     } else if (packet[nr]->mapsToH()) {
-        
+
         bankInROMH(nr, packet[nr]->size, 0); // chip covers (part of) ROMH
         debug(CRT_DEBUG, "Banked in chip %ld to ROMH\n", nr);
-        
+
     } else {
 
         warn("Cannot map chip %ld. Invalid start address.\n", nr);
@@ -573,13 +575,13 @@ Cartridge::bankOut(isize nr)
     assert(nr < MAX_PACKETS);
 
     if (packet[nr]->mapsToL()) {
-        
+
         chipL = -1;
         mappedBytesL = 0;
         offsetL = 0;
-        
+
     } else if (packet[nr]->mapsToH()) {
-        
+
         chipH = -1;
         mappedBytesH = 0;
         offsetH = 0;
@@ -590,4 +592,6 @@ void
 Cartridge::setSwitch(isize pos)
 {
     switchPos = pos;
+}
+
 }

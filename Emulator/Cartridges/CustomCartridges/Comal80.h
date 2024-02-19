@@ -14,8 +14,10 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class Comal80 : public Cartridge {
-       
+
     CartridgeTraits traits = {
 
         .type       = CRT_COMAL80,
@@ -27,8 +29,8 @@ class Comal80 : public Cartridge {
 public:
 
     using Cartridge::Cartridge;
-    
-    
+
+
     void operator << (SerResetter &worker) override;
 
     u8 peekIO1(u16 addr) override { return control; }
@@ -37,3 +39,5 @@ public:
     u8 spypeekIO2(u16 addr) const override { return 0; }
     void pokeIO1(u16 addr, u8 value) override;
 };
+
+}

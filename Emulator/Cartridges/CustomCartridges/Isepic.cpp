@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 Isepic::Isepic(C64 &ref) : Cartridge(ref)
 {
     // Reset the page selector flipflops
@@ -66,7 +68,7 @@ u8
 Isepic::peekIO1(u16 addr)
 {
     assert(addr >= 0xDE00 && addr <= 0xDEFF);
-    
+
     if (cartIsVisible()) {
         page = ((addr & 0b001) << 2) | (addr & 0b010) | ((addr & 0b100) >> 2);
     }
@@ -145,26 +147,26 @@ void
 Isepic::setSwitch(isize pos)
 {
     {   SUSPENDED
-        
+
         bool oldVisible = cartIsVisible();
         Cartridge::setSwitch(pos);
         bool newVisible = cartIsVisible();
-        
+
         if (oldVisible != newVisible) {
-            
+
             // Enforce a call to updatePeekPokeLookupTables()
             expansionport.setCartridgeMode(CRTMODE_OFF);
-            
+
             if (newVisible) {
-                
+
                 trace(CRT_DEBUG, "Activating Ipsec cartridge\n");
-                
+
                 // Trigger NMI
                 cpu.pullDownNmiLine(INTSRC_EXP);
                 cpu.releaseNmiLine(INTSRC_EXP);
-                
+
             } else {
-                
+
                 trace(CRT_DEBUG, "Hiding Ipsec cartridge\n");
             }
         }
@@ -189,4 +191,6 @@ Isepic::updatePeekPokeLookupTables()
 
     mem.peekSrc[0xF] = M_CRTHI;
     mem.pokeTarget[0xF] = M_CRTHI;
+}
+
 }

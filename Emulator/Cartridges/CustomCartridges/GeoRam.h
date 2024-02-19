@@ -14,10 +14,12 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class GeoRAM : public Cartridge {
-    
+
     CartridgeTraits traits = {
- 
+
         .type       = CRT_GEO_RAM,
         .title      = "GeoRam",
         .battery    = true
@@ -26,23 +28,23 @@ class GeoRAM : public Cartridge {
     virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 private:
-    
+
     // Selected RAM bank
     u8 bank = 0;
-    
+
     // Selected page inside the selected RAM bank
     u8 page = 0;
-    
-    
+
+
     //
     // Initializing
     //
 
 public:
-    
+
     GeoRAM(C64 &ref) : Cartridge(ref) { };
     GeoRAM(C64 &ref, isize kb);
-        
+
 
     //
     // Methods from CoreObject
@@ -52,11 +54,11 @@ private:
 
     void _dump(Category category, std::ostream& os) const override;
 
-    
+
     //
     // Methods from CoreComponent
     //
-    
+
 public:
 
     template <class T>
@@ -75,7 +77,7 @@ public:
     //
     // Accessing cartridge memory
     //
-    
+
 public:
 
     u8 peekIO1(u16 addr) override;
@@ -84,9 +86,11 @@ public:
     u8 spypeekIO2(u16 addr) const override;
     void pokeIO1(u16 addr, u8 value) override;
     void pokeIO2(u16 addr, u8 value) override;
-    
+
 private:
-    
+
     // Maps an address to the proper position in cartridge RAM
     isize offset(u8 addr) const;
 };
+
+}

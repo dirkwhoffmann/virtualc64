@@ -18,21 +18,23 @@
 // Action Replay (hardware revision 3)
 //
 
+namespace vc64 {
+
 u8
 ActionReplay3::peek(u16 addr)
 {
     if (addr >= 0x8000 && addr <= 0x9FFF) {
         return packet[bank()]->peek(addr - 0x8000);
     }
-    
+
     if (addr >= 0xE000 && addr <= 0xFFFF) {
         return packet[bank()]->peek(addr - 0xE000);
     }
-    
+
     if (addr >= 0xA000 && addr <= 0xBFFF) {
         return packet[bank()]->peek(addr - 0xA000);
     }
-    
+
     fatalError;
 }
 
@@ -66,25 +68,25 @@ ActionReplay3::pressButton(isize nr)
 {
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
-    
+
     {   SUSPENDED
-        
+
         switch (nr) {
-                
+
             case 1: // Freeze
-                
+
                 cpu.pullDownNmiLine(INTSRC_EXP);
                 cpu.pullDownIrqLine(INTSRC_EXP);
-                
+
                 /* By setting the control register to 0, exrom/game is set to
                  * 1/0 which activates ultimax mode. This mode is reset later,
                  * in the ActionReplay's interrupt handler.
                  */
                 setControlReg(0);
                 break;
-                
+
             case 2: // Reset
-                
+
                 c64.softReset();
                 break;
         }
@@ -96,13 +98,13 @@ ActionReplay3::releaseButton(isize nr)
 {
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr));
-    
+
     {   SUSPENDED
-        
+
         switch (nr) {
-                
+
             case 1: // Freeze
-                
+
                 cpu.releaseNmiLine(INTSRC_EXP);
                 cpu.releaseIrqLine(INTSRC_EXP);
                 break;
@@ -144,7 +146,7 @@ ActionReplay::peek(u16 addr)
     }
     return Cartridge::peek(addr);
 }
- 
+
 void
 ActionReplay::poke(u16 addr, u8 value)
 {
@@ -169,7 +171,7 @@ u8
 ActionReplay::peekIO2(u16 addr)
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
-    
+
     if (ramIsEnabled(addr)) {
         return peekRAM(0x1F00 + (addr & 0xFF));
     } else {
@@ -181,7 +183,7 @@ u8
 ActionReplay::spypeekIO2(u16 addr) const
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
-    
+
     if (ramIsEnabled(addr)) {
         return peekRAM(0x1F00 + (addr & 0xFF));
     } else {
@@ -193,7 +195,7 @@ void
 ActionReplay::pokeIO1(u16 addr, u8 value)
 {
     if (!disabled())
-    setControlReg(value);
+        setControlReg(value);
 }
 
 void
@@ -201,7 +203,7 @@ ActionReplay::pokeIO2(u16 addr, u8 value)
 {
     assert(addr >= 0xDF00 && addr <= 0xDFFF);
     u16 offset = addr & 0xFF;
-    
+
     if (ramIsEnabled(addr)) {
         pokeRAM(0x1F00 + offset, value);
     }
@@ -218,23 +220,23 @@ ActionReplay::pressButton(isize nr)
 {
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Pressing %s button.\n", getButtonTitle(nr));
-    
+
     {   SUSPENDED
-        
+
         switch (nr) {
-                
+
             case 1: // Freeze
-                
+
                 // Turn Ultimax mode on
                 setControlReg(0x23);
-                
+
                 // Pressing the freeze bottom pulls down both the NMI and the IRQ line
                 cpu.pullDownNmiLine(INTSRC_EXP);
                 cpu.pullDownIrqLine(INTSRC_EXP);
                 break;
-                
+
             case 2: // Reset
-                
+
                 c64.softReset();
                 break;
         }
@@ -246,13 +248,13 @@ ActionReplay::releaseButton(isize nr)
 {
     assert(nr <= numButtons());
     trace(CRT_DEBUG, "Releasing %s button.\n", getButtonTitle(nr));
-    
+
     {   SUSPENDED
-        
+
         switch (nr) {
-                
+
             case 1: // Freeze
-                
+
                 cpu.releaseNmiLine(INTSRC_EXP);
                 cpu.releaseIrqLine(INTSRC_EXP);
                 break;
@@ -264,9 +266,9 @@ void
 ActionReplay::setControlReg(u8 value)
 {
     control = value;
-    
+
     trace(CRT_DEBUG, "PC: %04X setControlReg(%02X)\n", cpu.getPC0(), value);
-    
+
     assert((value & 0x80) == 0);
     /*  "7    extra ROM bank selector (A15) (unused)
      *   6    1 = resets FREEZE-mode (turns back to normal mode)
@@ -278,16 +280,16 @@ ActionReplay::setControlReg(u8 value)
      *   1    1 = /EXROM high
      *   0    1 = /GAME low" [VICE]
      */
-    
+
     expansionport.setGameAndExrom(game(), exrom());
-    
+
     bankInROML(bank(), 0x2000, 0);
     bankInROMH(bank(), 0x2000, 0);
-    
+
     if (disabled()) {
         trace(CRT_DEBUG, "Action Replay cartridge disabled.\n");
     }
-    
+
     if (resetFreezeMode() || disabled()) {
         cpu.releaseNmiLine(INTSRC_EXP);
         cpu.releaseIrqLine(INTSRC_EXP);
@@ -298,20 +300,20 @@ bool
 ActionReplay::ramIsEnabled(u16 addr) const
 {
     if (control & 0x20) {
-        
+
         if (addr >= 0xDF00 && addr <= 0xDFFF) { // RAM mirrored in IO2
             return true;
         }
-        
+
         return addr >= 0x8000 && addr <= 0x9FFF; // RAM mapped to ROML
     }
-    
+
     return false;
 }
 
 
 //
-// Atomic Power 
+// Atomic Power
 //
 
 bool
@@ -330,7 +332,7 @@ bool
 AtomicPower::ramIsEnabled(u16 addr) const
 {
     if (control & 0x20) {
-        
+
         if (addr >= 0xDF00 && addr <= 0xDFFF) { // RAM mirrored in IO2
             return true;
         }
@@ -340,7 +342,8 @@ AtomicPower::ramIsEnabled(u16 addr) const
             return addr >= 0x8000 && addr <= 0x9FFF; // RAM mapped to ROML
         }
     }
- 
+
     return false;
 }
 
+}

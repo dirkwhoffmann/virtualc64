@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 void
 Zaxxon::_reset(bool hard)
 {
@@ -46,4 +48,6 @@ Zaxxon::spypeekRomL(u16 addr) const
     } else {
         return Cartridge::spypeekRomL(addr - 0x1000);
     }
+}
+
 }

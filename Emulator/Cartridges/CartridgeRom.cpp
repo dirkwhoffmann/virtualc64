@@ -13,6 +13,8 @@
 #include "config.h"
 #include "CartridgeRom.h"
 
+namespace vc64 {
+
 CartridgeRom::CartridgeRom(C64 &ref) : SubComponent(ref)
 {
 }
@@ -33,31 +35,31 @@ CartridgeRom::~CartridgeRom()
     delete[] rom;
 }
 
-void 
+void
 CartridgeRom::operator << (SerCounter &worker)
 {
     serialize(worker);
     worker.count += size;
 }
 
-void 
+void
 CartridgeRom::operator << (SerReader &worker)
 {
     serialize(worker);
-
+    
     // Delete the old packet and create a new one with the proper size
     if (rom) delete[] rom;
     rom = new u8[size];
-
+    
     // Read packet data
     for (int i = 0; i < size; i++) rom[i] = read8(worker.ptr);
 }
 
-void 
+void
 CartridgeRom::operator << (SerWriter &worker)
 {
     serialize(worker);
-
+    
     // Write packet data
     for (int i = 0; i < size; i++) write8(worker.ptr, rom[i]);
 }
@@ -92,4 +94,6 @@ CartridgeRom::spypeek(u16 addr) const
 {
     assert(addr < size);
     return rom[addr];
+}
+
 }

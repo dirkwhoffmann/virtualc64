@@ -14,8 +14,10 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class PageFox : public Cartridge {
-    
+
     CartridgeTraits traits = {
 
         .type       = CRT_PAGEFOX,
@@ -31,29 +33,29 @@ class PageFox : public Cartridge {
      * the $DE80 - $DEFF memory range.
      */
     u8 ctrlReg = 0;
-        
+
 public:
-    
+
     //
     // Initializing
     //
-    
+
     using Cartridge::Cartridge;
-        
-    
+
+
     //
     // Methods from CoreObject
     //
-    
+
 private:
-    
+
     void _dump(Category category, std::ostream& os) const override;
-    
-    
+
+
     //
     // Methods from CoreComponent
     //
-    
+
 public:
 
     template <class T>
@@ -73,19 +75,19 @@ public:
     //
     // Intepreting the control register
     //
-        
+
     u16 bankSelect() const { return (ctrlReg & 0b00010) >> 1; }
     u8 chipSelect() const { return (ctrlReg & 0b01100) >> 2; }
     u8 bank() const { return (ctrlReg & 0b00110) >> 1; }
     u8 disabled() const { return (ctrlReg & 0b10000) >> 4; }
     u8 ramIsVisible() const { return chipSelect() == 0b10; }
-    
+
     //
     // Accessing cartridge memory
     //
-    
+
 public:
-    
+
     void resetCartConfig() override;
     u8 peekRomL(u16 addr) override;
     u8 spypeekRomL(u16 addr) const override;
@@ -97,9 +99,11 @@ public:
     u8 spypeekIO1(u16 addr) const override;
     void pokeIO1(u16 addr, u8 value) override;
     void updatePeekPokeLookupTables() override;
-    
+
 private:
-    
+
     u16 ramAddrL(u16 addr) const { return (u16)(bankSelect() << 14 | (addr & 0x1FFF)); }
     u16 ramAddrH(u16 addr) const { return 0x2000 + ramAddrL(addr); }
 };
+
+}

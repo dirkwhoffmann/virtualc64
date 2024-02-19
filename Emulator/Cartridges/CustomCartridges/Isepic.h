@@ -14,8 +14,10 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class Isepic : public Cartridge {
-    
+
     CartridgeTraits traits = {
 
         .type           = CRT_ISEPIC,
@@ -35,13 +37,13 @@ class Isepic : public Cartridge {
     MemoryType oldPeekSource;
     MemoryType oldPokeTarget;
 
-    
+
     //
     // Initialization
     //
-    
+
 public:
-    
+
     Isepic(C64 &ref);
 
 
@@ -51,7 +53,7 @@ public:
 
     void _dump(Category category, std::ostream& os) const override;
 
-    
+
     //
     // Methods from CoreComponent
     //
@@ -76,11 +78,11 @@ public:
 
     void _reset(bool hard) override;
 
-    
+
     //
     // Accessing cartridge memory
     //
-    
+
     u8 peek(u16 addr) override;
     u8 peekIO1(u16 addr) override;
     u8 spypeekIO1(u16 addr) const override;
@@ -89,24 +91,26 @@ public:
     void poke(u16 addr, u8 value) override;
     void pokeIO1(u16 addr, u8 value) override;
     void pokeIO2(u16 addr, u8 value) override;
-    
-    
+
+
     //
     // Operating switches
     //
-    
+
     const char *getSwitchDescription(isize pos) const override;
     void setSwitch(isize pos) override;
     bool switchInOffPosition() const { return switchIsLeft(); }
     bool switchInOnPosition() const { return switchIsRight(); }
-    
+
     bool cartIsVisible() const { return switchInOnPosition(); }
     bool cartIsHidden() const { return !cartIsVisible(); }
-    
-    
+
+
     //
     // Handling delegation calls
     //
-    
+
     void updatePeekPokeLookupTables() override;
 };
+
+}

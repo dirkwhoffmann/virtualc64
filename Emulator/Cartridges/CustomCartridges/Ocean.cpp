@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 void
 Ocean::bankIn(isize nr)
 {
@@ -40,4 +42,6 @@ Ocean::pokeIO1(u16 addr, u8 value)
 {
     // Cartridges use $DE00 to switch banks
     bankIn(value & 0x3F);
+}
+
 }

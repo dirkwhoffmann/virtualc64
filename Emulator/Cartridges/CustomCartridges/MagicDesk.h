@@ -14,6 +14,8 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class MagicDesk : public Cartridge {
 
     CartridgeTraits traits = {
@@ -25,9 +27,9 @@ class MagicDesk : public Cartridge {
     virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
-    
+
     using Cartridge::Cartridge;
-    
+
     void resetCartConfig() override;
 
     u8 peekIO1(u16 addr) override;
@@ -40,3 +42,5 @@ private:
 
     bool disabled() const { return control & 0x80; }
 };
+
+}

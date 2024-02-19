@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 void
 SimonsBasic::_reset(bool hard)
 {
@@ -41,4 +43,6 @@ SimonsBasic::pokeIO1(u16 addr, u8 value)
     if (addr == 0xDE00) {
         expansionport.setCartridgeMode(CRTMODE_16K);
     }
+}
+
 }

@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 void
 MagicDesk::resetCartConfig()
 {
@@ -61,4 +63,6 @@ u8
 MagicDesk::spypeekIO2(u16 addr) const
 {
     return vic.getDataBusPhi1();
+}
+
 }

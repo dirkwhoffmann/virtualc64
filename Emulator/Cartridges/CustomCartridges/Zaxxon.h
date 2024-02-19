@@ -14,8 +14,10 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class Zaxxon : public Cartridge {
-   
+
     CartridgeTraits traits = {
 
         .type       = CRT_ZAXXON,
@@ -25,20 +27,22 @@ class Zaxxon : public Cartridge {
     virtual const CartridgeTraits &getTraits() const override { return traits; }
 
 public:
-    
+
     using Cartridge::Cartridge;
 
 private:
-    
+
     void _reset(bool hard) override;
 
-    
+
     //
     // Accessing cartridge memory
     //
-    
+
 public:
-        
+
     u8 peekRomL(u16 addr) override;
     u8 spypeekRomL(u16 addr) const override;
 };
+
+}

@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 GeoRAM::GeoRAM(C64 &ref, isize kb) : GeoRAM(ref)
 {
     // The RAM capacity must be a power of two between 64 and 4096
@@ -95,8 +97,10 @@ GeoRAM::offset(u8 addr) const
      *  selects a 256-byte page in that block. Since there are only 64
      *  256-byte pages inside of 16k, the value in $dffe ranges from 0 to 63."
      */
-    
+
     isize bankOffset = (bank * 16384) % getRamCapacity();
     isize pageOffset = (page & 0x3F) * 256;
     return bankOffset + pageOffset + addr;
+}
+
 }

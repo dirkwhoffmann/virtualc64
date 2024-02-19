@@ -13,6 +13,8 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 Reu::Reu(C64 &ref, isize kb) : Cartridge(ref)
 {
     // The RAM capacity must be a power of two between 128 and 16384
@@ -523,4 +525,6 @@ Reu::updatePeekPokeLookupTables()
 
     // Reroute accesses to this cartridge
     mem.pokeTarget[0xF] = M_CRTHI;
+}
+
 }

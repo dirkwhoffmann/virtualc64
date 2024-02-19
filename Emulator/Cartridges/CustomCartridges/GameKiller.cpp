@@ -13,11 +13,13 @@
 #include "config.h"
 #include "C64.h"
 
+namespace vc64 {
+
 void
 GameKiller::resetCartConfig()
 {
     debug(CRT_DEBUG, "Starting GameKiller cartridge in NOCART mode\n");
-
+    
     control = 0;
     expansionport.setCartridgeMode(CRTMODE_OFF);
 }
@@ -66,9 +68,9 @@ void
 GameKiller::releaseButton(isize nr)
 {
     if (nr == 1) {
-
+        
         SUSPENDED
-
+        
         cpu.releaseNmiLine(INTSRC_EXP);
     }
 }
@@ -94,3 +96,4 @@ GameKiller::nmiWillTrigger()
     expansionport.setCartridgeMode(CRTMODE_OFF);
 }
 
+}

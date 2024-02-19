@@ -14,8 +14,10 @@
 
 #include "Cartridge.h"
 
+namespace vc64 {
+
 class SimonsBasic : public Cartridge {
-   
+
     CartridgeTraits traits = {
 
         .type       = CRT_SIMONS_BASIC,
@@ -29,17 +31,19 @@ public:
     using Cartridge::Cartridge;
 
 private:
-    
-    void _reset(bool hard) override; 
 
-    
+    void _reset(bool hard) override;
+
+
     //
     // Accessing cartridge memory
     //
-    
+
 public:
 
     u8 peekIO1(u16 addr) override;
     u8 spypeekIO1(u16 addr) const override;
     void pokeIO1(u16 addr, u8 value) override;
 };
+
+}
