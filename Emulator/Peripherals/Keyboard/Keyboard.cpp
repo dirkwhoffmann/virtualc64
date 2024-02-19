@@ -255,6 +255,7 @@ Keyboard::autoType(const string &text)
             for (C64Key &k : keys) {
                 pending.insert(trigger, Cmd(CMD_KEY_RELEASE, KeyCmd { .keycode = u8(k.nr) }));
             }
+            trigger += MSEC(1);
         }
     }
 

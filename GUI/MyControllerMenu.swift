@@ -278,7 +278,7 @@ extension MyController: NSMenuItemValidation {
         do {
             try restoreLatestSnapshot()
         } catch {
-            NSSound.beep()
+            showAlert(.cantRestore, error: error)
         }
     }
     
