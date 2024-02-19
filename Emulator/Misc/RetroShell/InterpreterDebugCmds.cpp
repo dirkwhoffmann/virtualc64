@@ -140,6 +140,20 @@ Interpreter::initDebugShell(Command &root)
         retroShell.dump(host, Category::State);
     });
 
+    root.add({"c64", "checksums"},
+             "Displays checksum of various components",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(c64, Category::Checksums);
+    });
+
+    root.add({"c64", "sizeof"},
+             "Displays static memory footprints of various components",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(c64, Category::Sizeof);
+    });
+
 
     //
     // Memory

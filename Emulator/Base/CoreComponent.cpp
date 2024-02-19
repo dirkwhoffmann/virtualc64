@@ -29,24 +29,22 @@ CoreComponent::initialize()
 
     } catch (std::exception &e) {
 
-        warn("Failed to initialize: %s\n", e.what());
-        fatalError;
+        fatal("Failed to initialize: %s\n", e.what());
     }
 }
 
 void 
 CoreComponent::reset(bool hard)
 {
-    for (CoreComponent *c : subComponents) { c->reset(hard); }
-    _reset(hard);
+    try {
 
-}
+        for (CoreComponent *c : subComponents) { c->reset(hard); }
+        _reset(hard);
 
-void
-CoreComponent::printchecksums()
-{
-    for (CoreComponent *c : subComponents) { c->printchecksums(); }
-    debug(true, "Checksum: %llx\n", checksum());
+    } catch (std::exception &e) {
+
+        fatal("Failed to reset: %s\n", e.what());
+    }
 }
 
 void

@@ -653,7 +653,6 @@ C64::load(const u8 *buffer)
     if (hash != checksum() || FORCE_SNAP_CORRUPTED) {
 
         debug(SNP_DEBUG, "Corrupted snapshot detected\n");
-        printchecksums();
         throw VC64Error(ERROR_SNAP_CORRUPTED);
     }
 
@@ -733,6 +732,15 @@ C64::_dump(Category category, std::ostream& os) const
         os << CIARevisionEnum::key(cia2Rev) << std::endl;
     }
 
+    if (category == Category::Checksums) {
+
+        for (auto &c : subComponents) {
+
+            os << tab(c->getDescription());
+            os << hex(c->checksum()) << std::endl;
+        }
+    }
+
     if (category == Category::Current) {
 
         os << std::setfill('0') << std::uppercase << std::hex << std::left;
@@ -752,6 +760,52 @@ C64::_dump(Category category, std::ostream& os) const
         os << (cpu.getZ() ? "1" : "0");
         os << (cpu.getC() ? "1" : "0");
         os << std::endl;
+    }
+
+    if (category == Category::Sizeof) {
+
+        os << tab("Emulator");
+        os << dec(sizeof(Emulator)) << " Bytes" << std::endl;
+        os << tab("C64");
+        os << dec(sizeof(C64)) << " Bytes" << std::endl;
+        os << tab("C64 Memory");
+        os << dec(sizeof(C64Memory)) << " Bytes" << std::endl;
+        os << tab("Drive Memory");
+        os << dec(sizeof(DriveMemory)) << " Bytes" << std::endl;
+        os << tab("CPU");
+        os << dec(sizeof(CPU)) << " Bytes" << std::endl;
+        os << tab("CIA");
+        os << dec(sizeof(CIA)) << " Bytes" << std::endl;
+        os << tab("VICII");
+        os << dec(sizeof(VICII)) << " Bytes" << std::endl;
+        os << tab("Muxer");
+        os << dec(sizeof(Muxer)) << " Bytes" << std::endl;
+        os << tab("Power supply");
+        os << dec(sizeof(PowerSupply)) << " Bytes" << std::endl;
+        os << tab("Control port");
+        os << dec(sizeof(ControlPort)) << " Bytes" << std::endl;
+        os << tab("Expansion port");
+        os << dec(sizeof(ExpansionPort)) << " Bytes" << std::endl;
+        os << tab("IEC");
+        os << dec(sizeof(IEC)) << " Bytes" << std::endl;
+        os << tab("Keyboard");
+        os << dec(sizeof(Keyboard)) << " Bytes" << std::endl;
+        os << tab("Drive");
+        os << dec(sizeof(Drive)) << " Bytes" << std::endl;
+        os << tab("Parallel Cable");
+        os << dec(sizeof(ParCable)) << " Bytes" << std::endl;
+        os << tab("Datasette");
+        os << dec(sizeof(Datasette)) << " Bytes" << std::endl;
+        os << tab("RetroShell");
+        os << dec(sizeof(RetroShell)) << " Bytes" << std::endl;
+        os << tab("Regression Tester");
+        os << dec(sizeof(RegressionTester)) << " Bytes" << std::endl;
+        os << tab("Recorder");
+        os << dec(sizeof(Recorder)) << " Bytes" << std::endl;
+        os << tab("MsgQueue");
+        os << dec(sizeof(MsgQueue)) << " Bytes" << std::endl;
+        os << tab("CmdQueue");
+        os << dec(sizeof(CmdQueue)) << " Bytes" << std::endl;
     }
 }
 

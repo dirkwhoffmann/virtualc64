@@ -19,6 +19,7 @@ namespace vc64 {
 enum class Category
 {
     BankMap,
+    Checksums,
     Config,
     Current,
     Debug,
@@ -28,6 +29,7 @@ enum class Category
     Layout,
     Properties,
     Registers,
+    Sizeof,
     Slots,
     State,
     Stats,
