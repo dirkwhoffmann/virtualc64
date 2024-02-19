@@ -26,15 +26,10 @@ class MagicDesk : public Cartridge {
 
 public:
     
-    MagicDesk(C64 &ref) : Cartridge(ref) { };
+    using Cartridge::Cartridge;
+    
     void resetCartConfig() override;
-    
-    //
-    // Accessing cartridge memory
-    //
-    
-public:
-    
+
     u8 peekIO1(u16 addr) override;
     u8 spypeekIO1(u16 addr) const override;
     void pokeIO1(u16 addr, u8 value) override;

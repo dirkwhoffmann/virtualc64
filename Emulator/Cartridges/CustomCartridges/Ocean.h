@@ -26,17 +26,9 @@ class Ocean : public Cartridge {
 
 public:
     
-    Ocean(C64 &ref);
+    using Cartridge::Cartridge;
 
-    
-    //
-    // Accessing cartridge memory
-    //
-    
-public:
-    
     void bankIn(isize nr) override;
-
     u8 peekIO1(u16 addr) override;
     u8 peekIO2(u16 addr) override;
     void pokeIO1(u16 addr, u8 value) override;

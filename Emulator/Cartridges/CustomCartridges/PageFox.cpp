@@ -13,17 +13,9 @@
 #include "config.h"
 #include "C64.h"
 
-PageFox::PageFox(C64 &ref) : Cartridge(ref)
-{
-
-}
-
 void
-PageFox::operator << (SerResetter &worker) 
+PageFox::_reset(bool hard)
 {
-    Cartridge::operator<<(worker); 
-    serialize(worker);
-
     eraseRAM(0);
 }
 

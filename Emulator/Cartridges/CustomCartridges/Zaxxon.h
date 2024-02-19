@@ -26,11 +26,11 @@ class Zaxxon : public Cartridge {
 
 public:
     
-    Zaxxon(C64 &ref) : Cartridge(ref) { };
+    using Cartridge::Cartridge;
 
 private:
     
-    void operator << (SerResetter &worker) override;
+    void _reset(bool hard) override;
 
     
     //

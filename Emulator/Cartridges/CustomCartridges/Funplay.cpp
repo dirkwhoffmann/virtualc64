@@ -28,12 +28,11 @@ Funplay::pokeIO1(u16 addr, u8 value)
     if (addr == 0xDE00) {
         
         if (value == 0x86) {
+
             expansionport.setCartridgeMode(CRTMODE_OFF);
             return;
         }
         
-        u8 bank = ((value >> 3) & 0x07) | ((value << 3) & 0x08);
-        assert(bank < 16);
-        bankIn(bank);
+        bankIn(((value >> 3) & 0x07) | ((value << 3) & 0x08));
     }
 }

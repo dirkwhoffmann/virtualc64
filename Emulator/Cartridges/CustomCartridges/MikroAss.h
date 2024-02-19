@@ -26,14 +26,7 @@ class MikroAss : public Cartridge {
 
 public:
 
-    MikroAss(C64 &ref) : Cartridge(ref) { };
-
-    
-    //
-    // Accessing cartridge memory
-    //
-
-public:
+    using Cartridge::Cartridge;
     
     u8 peekIO1(u16 addr) override;
     u8 spypeekIO1(u16 addr) const override;

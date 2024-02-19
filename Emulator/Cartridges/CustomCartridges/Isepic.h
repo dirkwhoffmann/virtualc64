@@ -62,7 +62,7 @@ public:
     void serialize(T& worker)
     {
         worker
-        
+
         << page;
 
         if (isResetter(worker)) return;
@@ -71,15 +71,12 @@ public:
 
         << oldPeekSource
         << oldPokeTarget;
-    }
+
+    } CARTRIDGE_SERIALIZERS(serialize);
+
+    void _reset(bool hard) override;
+
     
-    void operator << (SerResetter &worker) override;
-    void operator << (SerChecker &worker) override { Cartridge::operator<<(worker); serialize(worker); }
-    void operator << (SerCounter &worker) override { Cartridge::operator<<(worker); serialize(worker); }
-    void operator << (SerReader &worker) override { Cartridge::operator<<(worker); serialize(worker); }
-    void operator << (SerWriter &worker) override { Cartridge::operator<<(worker); serialize(worker); }
-
-
     //
     // Accessing cartridge memory
     //

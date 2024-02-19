@@ -30,11 +30,8 @@ EasyFlash::resetCartConfig()
 }
 
 void
-EasyFlash::operator << (SerResetter &worker)
-{
-    Cartridge::operator<<(worker);
-    serialize(worker);
-    
+EasyFlash::_reset(bool hard) 
+{    
     eraseRAM(0);
     
     // Make sure peekRomL() and peekRomH() conver the whole range

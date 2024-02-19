@@ -600,11 +600,18 @@ public:
 
 }
 
-#define SERIALIZERS(func) \
-void operator << (SerChecker &worker) override { func(worker); } \
-void operator << (SerCounter &worker) override { func(worker); } \
-void operator << (SerResetter &worker) override { func(worker); } \
-void operator << (SerReader &worker) override { func(worker); } \
-void operator << (SerWriter &worker) override { func(worker); }
+#define SERIALIZERS(fn) \
+void operator << (SerChecker &worker) override { fn(worker); } \
+void operator << (SerCounter &worker) override { fn(worker); } \
+void operator << (SerResetter &worker) override { fn(worker); } \
+void operator << (SerReader &worker) override { fn(worker); } \
+void operator << (SerWriter &worker) override { fn(worker); }
+
+#define CARTRIDGE_SERIALIZERS(fn) \
+void operator << (SerChecker &worker) override { Cartridge::operator<<(worker); fn(worker); } \
+void operator << (SerCounter &worker) override { Cartridge::operator<<(worker); fn(worker); } \
+void operator << (SerResetter &worker) override { Cartridge::operator<<(worker); fn(worker); } \
+void operator << (SerReader &worker) override { Cartridge::operator<<(worker); fn(worker); } \
+void operator << (SerWriter &worker) override { Cartridge::operator<<(worker); fn(worker); }
 
 #endif

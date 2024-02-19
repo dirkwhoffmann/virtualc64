@@ -89,6 +89,8 @@ public:
     void operator << (SerReader &worker) override;
     void operator << (SerWriter &worker) override;
 
+    void _reset(bool hard) override;
+
 
     //
     // Analyzing

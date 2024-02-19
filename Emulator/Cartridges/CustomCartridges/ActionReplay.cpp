@@ -122,11 +122,6 @@ ActionReplay3::setControlReg(u8 value)
 // Action Replay (hardware revision 4 and above)
 //
 
-ActionReplay::ActionReplay(C64 &ref) : Cartridge(ref)
-{
-
-}
-
 void
 ActionReplay::operator << (SerResetter &worker)
 {

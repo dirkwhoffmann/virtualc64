@@ -45,7 +45,7 @@ class FinalIII : public Cartridge {
 
 public:
 
-    FinalIII(C64 &ref) : Cartridge(ref) { };
+    using Cartridge::Cartridge;
     void resetCartConfig() override;
 
 
@@ -76,14 +76,11 @@ public:
         worker 
 
         << freeezeButtonIsPressed;
-    }
-    
-    void operator << (SerResetter &worker) override;
-    void operator << (SerChecker &worker) override { Cartridge::operator<<(worker); serialize(worker); }
-    void operator << (SerCounter &worker) override { Cartridge::operator<<(worker); serialize(worker); }
-    void operator << (SerReader &worker) override { Cartridge::operator<<(worker); serialize(worker); }
-    void operator << (SerWriter &worker) override { Cartridge::operator<<(worker); serialize(worker); }
 
+    } CARTRIDGE_SERIALIZERS(serialize);
+
+    void _reset(bool hard) override;
+    
 
     //
     // Accessing cartridge memory

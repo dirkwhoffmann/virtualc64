@@ -29,13 +29,13 @@ class KcsPower : public Cartridge {
 
 public:
     
-    KcsPower(C64 &ref);
-    
+    using Cartridge::Cartridge;
+
 private:
     
-    void operator << (SerResetter &worker) override;
-
+    void _reset(bool hard) override;
     
+
     //
     // Accessing cartridge memory
     //

@@ -26,8 +26,8 @@ class Rex : public Cartridge {
 
 public:
     
-    Rex(C64 &ref) : Cartridge(ref) { };
-    
+    using Cartridge::Cartridge;
+
     
     //
     // Accessing cartridge memory

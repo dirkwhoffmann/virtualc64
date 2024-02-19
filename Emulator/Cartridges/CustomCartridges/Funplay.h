@@ -26,8 +26,8 @@ class Funplay : public Cartridge {
 
 public:
 
-    Funplay(C64 &ref) : Cartridge(ref) { };
-    
+    using Cartridge::Cartridge;
+
     
     //
     // Accessing cartridge memory

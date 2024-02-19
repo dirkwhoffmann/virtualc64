@@ -208,7 +208,7 @@ public:
     void operator << (SerReader &worker) override;
     void operator << (SerWriter &worker) override;
 
-    
+
     //
     // Analyzing
     //
@@ -376,11 +376,3 @@ public:
     // Called after the C64 CPU has processed the NMI instruction
     virtual void nmiDidTrigger() { }
 };
-
-#define CARTRIDGE_SERIALIZERS \
-void operator << (SerChecker &worker) override { Cartridge::operator<<(worker); serialize(worker); } \
-void operator << (SerCounter &worker) override { Cartridge::operator<<(worker); serialize(worker); } \
-void operator << (SerResetter &worker) override { Cartridge::operator<<(worker); serialize(worker); } \
-void operator << (SerReader &worker) override { Cartridge::operator<<(worker); serialize(worker); } \
-void operator << (SerWriter &worker) override { Cartridge::operator<<(worker); serialize(worker); }
-

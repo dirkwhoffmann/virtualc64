@@ -70,6 +70,12 @@ ExpansionPort::operator << (SerWriter &worker)
     if (crtType != CRT_NONE) *cartridge << worker;
 }
 
+void 
+ExpansionPort::_reset(bool hard)
+{
+    if (cartridge) cartridge->_reset(hard);
+}
+
 void
 ExpansionPort::_dump(Category category, std::ostream& os) const
 {

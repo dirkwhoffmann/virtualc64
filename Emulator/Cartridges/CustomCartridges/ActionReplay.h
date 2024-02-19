@@ -34,7 +34,7 @@ class ActionReplay3 : public Cartridge {
 
 public:
 
-    ActionReplay3(C64 &ref) : Cartridge(ref) { };
+    using Cartridge::Cartridge;
     const char *getDescription() const override { return "AR3"; }
     CartridgeType getCartridgeType() const override { return CRT_ACTION_REPLAY3; }
 
@@ -90,8 +90,7 @@ class ActionReplay : public Cartridge {
 
 public:
 
-    ActionReplay(C64 &ref);
-
+    using Cartridge::Cartridge;
     void operator << (SerResetter &worker) override;
     void resetCartConfig() override;
 
@@ -154,7 +153,7 @@ class AtomicPower : public ActionReplay {
 
 public:
 
-    AtomicPower(C64 &ref) : ActionReplay(ref) { };
+    using ActionReplay::ActionReplay;
     const char *getDescription() const override { return "AtomicPower"; }
     CartridgeType getCartridgeType() const override { return CRT_ATOMIC_POWER; }
     

@@ -43,11 +43,8 @@ Isepic::_dump(Category category, std::ostream& os) const
 }
 
 void
-Isepic::operator << (SerResetter &worker)
+Isepic::_reset(bool hard)
 {
-    Cartridge::operator<<(worker); 
-    serialize(worker);
-
     eraseRAM(0);
     page = 0;
 }

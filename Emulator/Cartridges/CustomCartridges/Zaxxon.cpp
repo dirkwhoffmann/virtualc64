@@ -14,11 +14,8 @@
 #include "C64.h"
 
 void
-Zaxxon::operator << (SerResetter &worker)
+Zaxxon::_reset(bool hard)
 {
-    Cartridge::operator<<(worker); 
-    serialize(worker);
-
     // Make sure peekRomL() is called for the whole 8KB ROML range.
     mappedBytesL = 0x2000;
 }

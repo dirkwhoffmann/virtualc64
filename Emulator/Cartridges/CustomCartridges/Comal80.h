@@ -26,7 +26,8 @@ class Comal80 : public Cartridge {
 
 public:
 
-    Comal80(C64 &ref) : Cartridge(ref) { };
+    using Cartridge::Cartridge;
+    
     
     void operator << (SerResetter &worker) override;
 

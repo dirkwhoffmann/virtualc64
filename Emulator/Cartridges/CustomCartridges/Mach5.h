@@ -26,11 +26,7 @@ class Mach5 : public Cartridge {
 
 public:
 
-    Mach5(C64 &ref) : Cartridge(ref) { };
-
-private:
-    
-    void operator << (SerResetter &worker) override;
+    using Cartridge::Cartridge;
 
     
     //

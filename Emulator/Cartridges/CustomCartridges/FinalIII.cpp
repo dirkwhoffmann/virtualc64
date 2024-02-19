@@ -38,11 +38,8 @@ FinalIII::resetCartConfig()
 }
 
 void
-FinalIII::operator << (SerResetter &worker)
+FinalIII::_reset(bool hard)
 {
-    Cartridge::operator<<(worker); 
-    serialize(worker);
-    
     qD = true;
     bankIn(0);
 }

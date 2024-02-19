@@ -17,13 +17,6 @@
 #include "config.h"
 #include "C64.h"
 
-Expert::Expert(C64 &ref) : Cartridge(ref)
-{    
-    setSwitch(0);
-
-    trace(CRT_DEBUG, "Expert cartridge created\n");
-}
-
 void
 Expert::_dump(Category category, std::ostream& os) const
 {

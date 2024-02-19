@@ -13,13 +13,6 @@
 #include "config.h"
 #include "C64.h"
 
-void
-Mach5::operator << (SerResetter &worker)
-{
-    Cartridge::operator<<(worker); 
-    serialize(worker);
-}
-
 u8
 Mach5::peekIO1(u16 addr)
 {

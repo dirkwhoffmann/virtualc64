@@ -26,7 +26,7 @@ class Westermann : public Cartridge {
 
 public:
     
-    Westermann(C64 &ref) : Cartridge(ref) { };
+    using Cartridge::Cartridge;
 
     
     //

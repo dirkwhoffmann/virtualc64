@@ -29,7 +29,7 @@ class GameKiller : public Cartridge {
 
 public:
     
-    GameKiller(C64 &ref) : Cartridge(ref) { };
+    using Cartridge::Cartridge;
     
 private:
     

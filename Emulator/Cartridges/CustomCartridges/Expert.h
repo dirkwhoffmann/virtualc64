@@ -46,7 +46,7 @@ class Expert : public Cartridge {
     
 public:
 
-    Expert(C64 &ref);
+    using Cartridge::Cartridge;
 
 
     //
@@ -70,13 +70,8 @@ public:
         worker
 
         << active;
-    }
-    
-    void operator << (SerResetter &worker) override { Cartridge::operator<<(worker); serialize(worker); }
-    void operator << (SerChecker &worker) override { Cartridge::operator<<(worker); serialize(worker); }
-    void operator << (SerCounter &worker) override { Cartridge::operator<<(worker); serialize(worker); }
-    void operator << (SerReader &worker) override { Cartridge::operator<<(worker); serialize(worker); }
-    void operator << (SerWriter &worker) override { Cartridge::operator<<(worker); serialize(worker); }
+
+    } CARTRIDGE_SERIALIZERS(serialize);
 
 
     //

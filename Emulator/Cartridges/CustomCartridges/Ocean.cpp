@@ -13,10 +13,6 @@
 #include "config.h"
 #include "C64.h"
 
-Ocean::Ocean(C64 &ref) : Cartridge(ref)
-{
-};
-
 void
 Ocean::bankIn(isize nr)
 {

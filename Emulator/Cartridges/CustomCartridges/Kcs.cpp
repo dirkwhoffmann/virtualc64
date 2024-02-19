@@ -13,17 +13,9 @@
 #include "config.h"
 #include "C64.h"
 
-KcsPower::KcsPower(C64 &ref) : Cartridge(ref)
-{
-
-}
-
 void
-KcsPower::operator << (SerResetter &worker)
+KcsPower::_reset(bool hard)
 {
-    Cartridge::operator<<(worker);
-    serialize(worker);
-
     eraseRAM(0xFF);
 }
 

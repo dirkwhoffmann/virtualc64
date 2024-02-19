@@ -26,11 +26,11 @@ class SimonsBasic : public Cartridge {
 
 public:
 
-    SimonsBasic(C64 &ref) : Cartridge(ref) { };
+    using Cartridge::Cartridge;
 
 private:
     
-    void operator << (SerResetter &worker) override;
+    void _reset(bool hard) override; 
 
     
     //

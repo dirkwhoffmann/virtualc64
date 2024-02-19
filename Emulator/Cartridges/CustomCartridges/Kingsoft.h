@@ -26,7 +26,7 @@ class Kingsoft : public Cartridge {
 
 public:
     
-    Kingsoft(C64 &ref) : Cartridge(ref) { };
+    using Cartridge::Cartridge;
     void resetCartConfig() override;
 
     

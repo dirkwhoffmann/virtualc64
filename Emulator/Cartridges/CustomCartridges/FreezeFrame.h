@@ -29,11 +29,12 @@ class FreezeFrame : public Cartridge {
 
 public:
 
-    FreezeFrame(C64 &ref) : Cartridge(ref) { };
-    
+    using Cartridge::Cartridge;
+
 private:
 
-    void operator << (SerResetter &worker) override;
+    
+    void _reset(bool hard) override;
 
     
     //

@@ -26,14 +26,7 @@ class StructuredBasic : public Cartridge {
 
 public:
     
-    StructuredBasic(C64 &ref) : Cartridge(ref) { };
-        
-
-    //
-    // Accessing cartridge memory
-    //
-    
-public:
+    using Cartridge::Cartridge;
     
     void resetCartConfig() override;
     u8 peekIO1(u16 addr) override;

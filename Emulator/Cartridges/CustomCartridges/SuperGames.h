@@ -51,11 +51,10 @@ public:
     void serialize(T& worker)
     {
         worker
-        
+
         << protect;
-    }
-    
-    CARTRIDGE_SERIALIZERS
+
+    } CARTRIDGE_SERIALIZERS(serialize)
 
     
     //

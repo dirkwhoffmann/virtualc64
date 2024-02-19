@@ -26,7 +26,7 @@ class WarpSpeed : public Cartridge {
 
 public:
     
-    WarpSpeed(C64 &ref) : Cartridge(ref) { };
+    using Cartridge::Cartridge;
     void resetCartConfig() override;
 
     
