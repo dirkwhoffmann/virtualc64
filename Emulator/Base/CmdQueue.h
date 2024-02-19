@@ -20,7 +20,7 @@
 
 namespace vc64 {
 
-class CmdQueue : CoreObject, Synchronizable, public Dumpable {
+class CmdQueue : CoreObject, Synchronizable {
 
     // Ring buffer storing all pending commands
     util::RingBuffer <Cmd, 128> queue;
@@ -41,7 +41,6 @@ class CmdQueue : CoreObject, Synchronizable, public Dumpable {
 private:
 
     const char *getDescription() const override { return "CmdQueue"; }
-    void _dump(Category category, std::ostream& os) const override { }
 
 
     //

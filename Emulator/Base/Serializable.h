@@ -21,7 +21,36 @@
 
 namespace vc64 {
 
-class Serializable;
+class Serializable {
+
+public:
+
+    virtual ~Serializable() { }
+
+    // Serialization operators (to be implemented by the subclass)
+    virtual void operator << (class SerCounter &worker) = 0;
+    virtual void operator << (class SerChecker &worker) = 0;
+    virtual void operator << (class SerResetter &worker) = 0;
+    virtual void operator << (class SerReader &worker) = 0;
+    virtual void operator << (class SerWriter &worker) = 0;
+
+    // Zeroes out all items
+    void hardReset();
+    void softReset();
+
+    // Calculates the snapshot size
+    isize size();
+
+    // Computes a checksum
+    u64 checksum();
+
+    // Recreates the component from a buffer
+    isize load(const u8 *buffer);
+
+    // Serializes the component into a buffer
+    isize save(u8 *buffer);
+};
+
 
 //
 // Basic memory buffer I/O
@@ -573,30 +602,6 @@ static constexpr bool isResetter(T &worker) {
     return isSoftResetter(worker) || isHardResetter(worker);
 }
 
-
-//
-//
-//
-
-class Serializable {
-
-public:
-
-    virtual ~Serializable() { }
-
-    virtual void operator << (SerCounter &worker) = 0;
-    virtual void operator << (SerChecker &worker) = 0;
-    virtual void operator << (SerResetter &worker) = 0;
-    virtual void operator << (SerReader &worker) = 0;
-    virtual void operator << (SerWriter &worker) = 0;
-
-    void hardReset();
-    void softReset();
-    isize size();
-    u64 checksum();
-    isize load(const u8 *buffer);
-    isize save(u8 *buffer);
-};
 
 }
 

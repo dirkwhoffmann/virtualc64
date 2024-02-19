@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-class MsgQueue : CoreObject, Synchronizable, public Dumpable {
+class MsgQueue : CoreObject, Synchronizable {
 
     // Ring buffer storing all pending messages
     util::RingBuffer <Message, 128> queue;
@@ -45,7 +45,6 @@ class MsgQueue : CoreObject, Synchronizable, public Dumpable {
 private:
 
     const char *getDescription() const override { return "MsgQueue"; }
-    void _dump(Category category, std::ostream& os) const override { }
 
 
     //

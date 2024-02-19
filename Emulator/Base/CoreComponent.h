@@ -60,18 +60,15 @@ public:
 
     CoreComponent(Emulator& ref) : emulator(ref) { }
 
-    /* Initializes the component and it's subcomponents. The initialization
-     * procedure is initiated once, in the constructor of the C64 class. By
-     * default, a component enters it's initial configuration. A component can
-     * perform ustom actions by implementing the _initialize() delegation
-     * function.
+    /* This function is called inside the emulator's launch routine. It iterates
+     * through all components and calls the _initialize() delegate. By default
+     * the initial configuration is setup. 
      */
     void initialize();
     virtual void _initialize() { resetConfig(); }
 
-    /* This function is called inside the C64 reset routines (hardReset,
-     * softReset). It iterates through all components and calls the _reset()
-     * delegation function.
+    /* This function is called inside the C64 reset routines. It iterates
+     * through all components and calls the _reset() delegate.
      */
     void reset(bool hard);
     virtual void _reset(bool hard) { }
