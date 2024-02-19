@@ -113,38 +113,44 @@ void
 CIA::recordState(CIAInfo &result) const
 {
     {   SYNCHRONIZED
-        
+
         result.portA.port = computePA();
         result.portA.reg = PRA;
         result.portA.dir = DDRA;
-        
+
         result.portB.port = computePB();
         result.portB.reg = PRB;
         result.portB.dir = DDRB;
-        
+
         result.timerA.count = LO_HI(spypeek(0x04), spypeek(0x05));
         result.timerA.latch = latchA;
         result.timerA.running = (delay & CIACountA3);
         result.timerA.toggle = CRA & 0x04;
         result.timerA.pbout = CRA & 0x02;
         result.timerA.oneShot = CRA & 0x08;
-        
+
         result.timerB.count = LO_HI(spypeek(0x06), spypeek(0x07));
         result.timerB.latch = latchB;
         result.timerB.running = (delay & CIACountB3);
         result.timerB.toggle = CRB & 0x04;
         result.timerB.pbout = CRB & 0x02;
         result.timerB.oneShot = CRB & 0x08;
-        
+
         result.sdr = sdr;
         result.ssr = sdr;  // ssr not yet implemented
         result.icr = icr;
         result.imr = imr;
         result.intLine = INT;
-        
+
         result.tod = tod.info;
         result.todIntEnable= imr & 0x04;
-        
+    }
+}
+void
+CIA::recordStats(CIAStats &result) const
+{
+    {   SYNCHRONIZED
+
         result.idleSince = idleSince();
         result.idleTotal = idleTotal() + result.idleSince;
         result.idlePercentage =  cpu.clock ? (double)result.idleTotal / (double)cpu.clock : 100.0;

@@ -29,9 +29,9 @@ template <typename T> struct AudioVolume : Serializable {
     // Value of 'current' if no fading takes place
     T normal = 1.0;
 
-    // Target value pipe (used to modulate the volume)
-    T target[2] = { 1.0, 1.0 };
-    T delta[2] = { 1.0, 1.0 };
+    // Target value and delta step
+    T target = 1.0;
+    T delta = 1.0;
 
     // Serializing
     template <class W>
@@ -48,48 +48,39 @@ template <typename T> struct AudioVolume : Serializable {
 
     // Setter and getter
     T get() const { return current; }
-    void set(T value) { current = normal = target[0] = value; }
+    void set(T value) { current = normal = target = value; }
     
     // Returns true if the volume is currently fading in or out
-    bool isFading() const { return current != target[0]; }
+    bool isFading() const { return current != target; }
 
     // Initiates a fading effect
     void fadeIn(isize steps) {
         
-        target[0] = normal;
-        target[1] = normal;
-        delta[0]  = normal / steps;
-        delta[1]  = normal / steps;
+        target = normal;
+        target = normal;
+        delta  = normal / steps;
+        delta  = normal / steps;
     }
     void fadeOut(isize steps) {
         
-        target[0] = 0;
-        target[1] = 0;
-        delta[0]  = normal / steps;
-        delta[1]  = normal / steps;
-    }
-    void fadeOutTemporarily(int steps1, int steps2) {
-        
-        target[0] = 0;
-        target[1] = normal;
-        delta[0]  = normal / steps1;
-        delta[0]  = normal / steps2;
+        target = 0;
+        target = 0;
+        delta  = normal / steps;
+        delta  = normal / steps;
     }
 
     // Shifts the current volume towards the target volume
     void shift() {
         
-        if (current == target[0]) return;
+        if (current == target) return;
         
-        if (current < target[0]) {
-            if ((current += delta[0]) < target[0]) return;
+        if (current < target) {
+            if ((current += delta) < target) return;
         } else {
-            if ((current -= delta[0]) > target[0]) return;
+            if ((current -= delta) > target) return;
         }
         
-        current = target[0];
-        target[0] = target[1];
-        delta[0] = delta[1];
+        current = target;
     }
 };
 

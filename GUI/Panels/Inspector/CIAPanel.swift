@@ -14,7 +14,8 @@ extension Inspector {
     
     private func cacheCIA() {
 
-        ciaInfo = cia1 ? c64.cia1.getInfo() : c64.cia2.getInfo()
+        ciaInfo = cia1 ? c64.cia1.info : c64.cia2.info
+        ciaStats = cia1 ? c64.cia1.stats : c64.cia2.stats
     }
 
     func refreshCIA(count: Int = 0, full: Bool = false) {
@@ -136,8 +137,8 @@ extension Inspector {
         ciaSDR.intValue = Int32(ciaInfo.sdr)
         ciaSSR.intValue = Int32(ciaInfo.ssr)
 
-        let idlePercentage = Int(ciaInfo.idlePercentage * 100)
-        ciaIdleCycles.stringValue = "\(ciaInfo.idleSince) cycles"
+        let idlePercentage = Int(ciaStats.idlePercentage * 100)
+        ciaIdleCycles.stringValue = "\(ciaStats.idleSince) cycles"
         ciaIdleLevel.integerValue = idlePercentage
         ciaIdleLevelText.stringValue = "\(idlePercentage) %"
     }

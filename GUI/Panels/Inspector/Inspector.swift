@@ -284,6 +284,7 @@ class Inspector: DialogController {
     // Cached state of all C64 components
     var cpuInfo: CPUInfo!
     var ciaInfo: CIAInfo!
+    var ciaStats: CIAStats!
     var memInfo: MemInfo!
     var vicInfo: VICIIInfo!
     var sprInfo: SpriteInfo!

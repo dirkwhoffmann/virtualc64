@@ -45,7 +45,7 @@ public:
     VirtualC64();
     ~VirtualC64();
 
-    // Expose portions of the Emulator API (clean this up)
+    // Expose portions of the Emulator API
     using vc64::Emulator::defaults;
     using vc64::Emulator::getState;
     using vc64::Emulator::getStats;
@@ -252,7 +252,9 @@ public:
         CIA &cia;
         CIA_API(Emulator &emu, CIA& cia) : API(emu), cia(cia) { }
 
+        CIAConfig getConfig() const;
         CIAInfo getInfo() const;
+        CIAStats getStats() const;
 
     } cia1, cia2;
 
@@ -295,7 +297,7 @@ public:
         SIDStats getStats() const;
 
         void rampUp();
-        void rampUpFromZero();
+        void rampUp(float from);
         void rampDown();
 
         void copyMono(float *buffer, isize n);
@@ -413,7 +415,6 @@ public:
 
         const string getExecPath() const;
         void setExecPath(const string &path);
-        std::vector<string> &paths() const;
         bool available() const;
         util::Time getDuration() const;
         isize getFrameRate() const;

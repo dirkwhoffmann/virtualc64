@@ -144,10 +144,14 @@ typedef struct
     bool intLine;
     
     TODInfo tod;
-    bool todIntEnable;
-    
+    bool todIntEnable;    
+}
+CIAInfo;
+
+typedef struct
+{
     Cycle idleSince;
     Cycle idleTotal;
     double idlePercentage;
 }
-CIAInfo;
+CIAStats;

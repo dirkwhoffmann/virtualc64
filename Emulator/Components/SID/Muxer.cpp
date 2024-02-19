@@ -604,10 +604,10 @@ Muxer::rampUp()
     ignoreNextUnderOrOverflow();
 }
 
-void
-Muxer::rampUpFromZero()
+void 
+Muxer::rampUp(float from)
 {
-    trace(AUDBUF_DEBUG, "rampUpFromZero()\n");
+    trace(AUDBUF_DEBUG, "rampUp(%f)\n", from);
 
     volL.current = 0;
     volR.current = 0;

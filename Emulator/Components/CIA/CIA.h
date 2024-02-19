@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-class CIA : public SubComponent, public Inspectable<CIAInfo, Void> {
+class CIA : public SubComponent, public Inspectable<CIAInfo, CIAStats> {
 
     friend class TOD;
     friend class ParCable;
@@ -358,6 +358,7 @@ public:
     
     bool autoInspect() const override;
     void recordState(CIAInfo &result) const override;
+    void recordStats(CIAStats &result) const override;
 
     
     //

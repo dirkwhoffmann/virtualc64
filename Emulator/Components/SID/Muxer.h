@@ -245,8 +245,8 @@ public:
      * and targetVolume to simulate a smooth audio fade in.
      */
     void rampUp();
-    void rampUpFromZero();
-    
+    void rampUp(float from);
+
     /* Starts to ramp down the volume. This function configures variables
      * volume and targetVolume to simulate a quick audio fade out.
      */

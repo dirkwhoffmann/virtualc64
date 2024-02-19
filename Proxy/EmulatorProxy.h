@@ -345,7 +345,9 @@
 
 @interface CIAProxy : CoreComponentProxy { }
 
-- (CIAInfo)getInfo;
+@property (readonly) CIAConfig config;
+@property (readonly) CIAInfo info;
+@property (readonly) CIAStats stats;
 
 @end
 
@@ -356,8 +358,8 @@
 
 @interface MemoryProxy : CoreComponentProxy { }
 
-- (MemConfig)getConfig;
-- (MemInfo)getInfo;
+@property (readonly) MemConfig config;
+@property (readonly) MemInfo info;
 
 - (NSString *)memdump:(NSInteger)addr num:(NSInteger)num hex:(BOOL)hex src:(MemoryType)src;
 - (NSString *)txtdump:(NSInteger)addr num:(NSInteger)num src:(MemoryType)src;
@@ -375,8 +377,8 @@
 @property (readonly) NSInteger hPixels;
 @property (readonly) NSInteger vPixels;
 
-- (VICIIConfig)getConfig;
-- (VICIIInfo)getInfo;
+@property (readonly) VICIIConfig config;
+@property (readonly) VICIIInfo info;
 - (SpriteInfo)getSpriteInfo:(NSInteger)sprite;
 
 - (BOOL)isPAL;

@@ -434,12 +434,12 @@ using namespace vc64;
     return (VirtualC64::MEM_API *)obj;
 }
 
-- (MemConfig)getConfig
+- (MemConfig)config
 {
     return [self mem]->getConfig();
 }
 
-- (MemInfo)getInfo
+- (MemInfo)info
 {
     return [self mem]->getInfo();
 }
@@ -468,9 +468,19 @@ using namespace vc64;
     return (VirtualC64::CIA_API *)obj;
 }
 
-- (CIAInfo)getInfo
+- (CIAConfig)config
+{
+    return [self cia]->getConfig();
+}
+
+- (CIAInfo)info
 {
     return [self cia]->getInfo();
+}
+
+- (CIAStats)stats
+{
+    return [self cia]->getStats();
 }
 
 @end
@@ -497,18 +507,19 @@ using namespace vc64;
     return [self vicii]->getLinesPerFrame();
 }
 
-- (VICIIConfig)getConfig
+- (VICIIConfig)config
 {
     return [self vicii]->getConfig();
+}
+
+- (VICIIInfo)info 
+{
+    return [self vicii]->getInfo();
 }
 
 - (BOOL)isPAL
 {
     return [self vicii]->pal();
-}
-
-- (VICIIInfo)getInfo {
-    return [self vicii]->getInfo();
 }
 
 - (SpriteInfo)getSpriteInfo:(NSInteger)sprite
@@ -617,7 +628,7 @@ using namespace vc64;
 
 - (void)rampUpFromZero
 {
-    [self bridge]->rampUpFromZero();
+    [self bridge]->rampUp(0);
 }
 
 - (void)rampDown

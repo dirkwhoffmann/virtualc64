@@ -571,11 +571,22 @@ VirtualC64::MEM_API::txtdump(u16 addr, isize num, MemoryType src) const
 // CIAs
 //
 
+CIAConfig
+VirtualC64::CIA_API::getConfig() const
+{
+    return cia.getConfig();
+}
+
 CIAInfo
 VirtualC64::CIA_API::getInfo() const
 {
-    assert(isUserThread());
     return cia.getState();
+}
+
+CIAStats
+VirtualC64::CIA_API::getStats() const
+{
+    return cia.getStats();
 }
 
 
@@ -684,10 +695,10 @@ VirtualC64::SID_API::rampUp()
 }
 
 void
-VirtualC64::SID_API::rampUpFromZero()
+VirtualC64::SID_API::rampUp(float from)
 {
     assert(isUserThread());
-    muxer.rampUpFromZero();
+    muxer.rampUp(from);
 }
 
 void
@@ -835,12 +846,6 @@ VirtualC64::REC_API::getExecPath() const
 void VirtualC64::REC_API::setExecPath(const string &path)
 {
     FFmpeg::setExecPath(path);
-}
-
-std::vector<string> &
-VirtualC64::REC_API::paths() const
-{
-    return FFmpeg::paths;
 }
 
 bool
