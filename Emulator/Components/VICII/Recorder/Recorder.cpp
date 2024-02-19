@@ -13,6 +13,7 @@
 #include "config.h"
 #include "Recorder.h"
 #include "C64.h"
+#include "Host.h"
 
 namespace vc64 {
 
@@ -48,25 +49,25 @@ Recorder::_dump(Category category, std::ostream& os) const
 string
 Recorder::videoPipePath()
 {
-    return c64.tmp("videoPipe").string();
+    return host.tmp("videoPipe").string();
 }
 
 string
 Recorder::audioPipePath()
 {
-    return c64.tmp("audioPipe").string();
+    return host.tmp("audioPipe").string();
 }
 
 string
 Recorder::videoStreamPath()
 {
-    return c64.tmp("video.mp4").string();
+    return host.tmp("video.mp4").string();
 }
 
 string
 Recorder::audioStreamPath()
 {
-    return c64.tmp("audio.mp4").string();
+    return host.tmp("audio.mp4").string();
 }
 
 util::Time

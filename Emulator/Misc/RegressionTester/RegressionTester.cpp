@@ -26,7 +26,7 @@ RegressionTester::prepare(C64 &c64, C64Model model)
     if (!util::fileExists("/tmp")) throw VC64Error(ERROR_DIR_NOT_FOUND, "/tmp");
 
     // Check if we've got write permissions
-    if (c64.tmp() != "/tmp") throw VC64Error(ERROR_DIR_ACCESS_DENIED, "/tmp");
+    if (host.tmp() != "/tmp") throw VC64Error(ERROR_DIR_ACCESS_DENIED, "/tmp");
 
     // Initialize the emulator according to the specified model
     emulator.configure(model);

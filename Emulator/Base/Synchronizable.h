@@ -29,7 +29,7 @@ public:
 };
 
 /* The following macro can be utilized to prevent multiple threads to enter the
- * same code block. It mimics the behaviour of the well known Java construct
+ * same code block. It mimics the behaviour of the Java construct
  * 'synchronized(this) { }'. To secure a code-block, use the following syntax:
  *
  *     { SYNCHRONIZED <commands> }

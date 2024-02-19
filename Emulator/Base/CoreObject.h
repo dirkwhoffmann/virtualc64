@@ -45,7 +45,7 @@ namespace vc64 {
  * execution of certain code blocks.
  *
  * Thread adds the ability to run the component asynchroneously. It implements
- * the emulator's state model (off, paused, running).
+ * the emulator's state model.
  */
 
 class CoreObject {
@@ -69,14 +69,14 @@ public:
     virtual void prefix() const;
 };
 
-/* This file provides several macros for printing messages:
+/* This file provides multiple macros for printing messages:
  *
  *   - msg    Information message   (Shows up in all builds)
  *   - warn   Warning message       (Shows up in all builds)
  *   - fatal  Error message + Exit  (Shows up in all builds)
- *   - debug  Debug message         (Shows up in debug builds, only)
- *   - plain  Plain debug message   (Shows up in debug builds, only)
- *   - trace  Detailed debug output (Shows up in debug builds, only)
+ *   - debug  Debug message         (Shows up in debug builds only)
+ *   - plain  Plain debug message   (Shows up in debug builds only)
+ *   - trace  Detailed debug output (Shows up in debug builds only)
  *
  * Debug messages are prefixed by the component name and a line number. Trace
  * messages are prefixed by a more detailed string description produced by the

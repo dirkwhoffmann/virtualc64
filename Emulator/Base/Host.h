@@ -13,6 +13,7 @@
 #pragma once
 
 #include "CoreComponent.h"
+#include "IOUtils.h"
 
 namespace vc64 {
 
@@ -61,6 +62,17 @@ public:
 
     i64 getConfigItem(Option option) const;
     void setConfigItem(Option option, i64 value);
+
+
+    //
+    // Working with temporary files and folders
+    //
+
+    // Returns a path to a temporary folder
+    fs::path tmp() const throws;
+
+    // Assembles a path to a temporary file
+    fs::path tmp(const string &name, bool unique = false) const throws;
 };
 
 }

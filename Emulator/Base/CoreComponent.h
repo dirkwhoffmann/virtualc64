@@ -14,6 +14,7 @@
 
 #include "EmulatorTypes.h"
 #include "CoreObject.h"
+#include "Synchronizable.h"
 #include "Serializable.h"
 #include "Concurrency.h"
 #include "Suspendable.h"
@@ -47,7 +48,8 @@ struct NoAssign
     NoAssign& operator=(NoAssign const&) = delete;
 };
 
-class CoreComponent : public CoreObject, public Serializable, public Suspendable, NoCopy, NoAssign {
+class CoreComponent : NoCopy, NoAssign,
+public CoreObject, public Serializable, public Suspendable, public Synchronizable {
 
 public:
 
@@ -56,20 +58,12 @@ public:
 
 protected:
 
-    // Set to false to silence all debug messages for this component
-    bool verbose = true;
-
     // Sub components
     std::vector<CoreComponent *> subComponents;
 
-    /* Mutex for implementing the 'synchronized' macro. The macro can be used
-     * to prevent multiple threads to enter the same code block. It mimics the
-     * behaviour of the well known Java construct 'synchronized(this) { }'.
-     *
-     * DEPRECATED: INHERIT FROM SYNCHRONIZABLE
-     */
-    mutable util::ReentrantMutex mutex;
-    
+    // Set to false to silence all debug messages for this component
+    bool verbose = true;
+
 
     //
     // Initializing
@@ -81,16 +75,21 @@ public:
 
     /* Initializes the component and it's subcomponents. The initialization
      * procedure is initiated once, in the constructor of the C64 class. By
-     * default, a component enters it's initial configuration. Custom actions
-     * can be performed by implementing the _initialize() delegation function.
+     * default, a component enters it's initial configuration. A component can
+     * perform ustom actions by implementing the _initialize() delegation
+     * function.
      */
     void initialize();
     virtual void _initialize() { resetConfig(); }
 
+    /* This function is called inside the C64 reset routines (hardReset,
+     * softReset). It iterates through all components and calls the _reset()
+     * delegation function.
+     */
     void reset(bool hard);
     virtual void _reset(bool hard) { }
 
-    // Prints checksums for debugging
+    // Prints checksums for debugging (DEPRECATED)
     void printchecksums();
 
 

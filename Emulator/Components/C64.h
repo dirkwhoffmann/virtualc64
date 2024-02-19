@@ -681,12 +681,6 @@ private:
 
 public:
 
-    // Returns a path to a temporary folder
-    static fs::path tmp() throws;
-
-    // Assembles a path to a temporary file
-    static fs::path tmp(const string &name, bool unique = false) throws;
-
     // Modifies an internal debug variable (only available in debug builds)
     static void setDebugVariable(const string &name, int val);
 };
