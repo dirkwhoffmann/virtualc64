@@ -194,6 +194,27 @@ private:
     
 public:
 
+    FastVoice& operator= (const FastVoice& other) {
+
+        CLONE(waveTableOffset)
+        CLONE(waveTableCounter)
+        CLONE(step)
+        CLONE(ringmod)
+        CLONE(adsrm)
+        CLONE(adsr)
+        CLONE(adsrInc)
+        CLONE(adsrCmp)
+        CLONE(lsfr)
+        CLONE(filterIO)
+        CLONE(filterType)
+        CLONE(filterLow)
+        CLONE(filterRef)
+        CLONE(filterDy)
+        CLONE(filterResDy)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {

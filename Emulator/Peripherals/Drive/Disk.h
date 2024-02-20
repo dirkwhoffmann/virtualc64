@@ -146,6 +146,16 @@ private:
     
 public:
 
+    Disk& operator= (const Disk& other) {
+
+        CLONE(writeProtected)
+        CLONE(modified)
+        CLONE(data)
+        CLONE(length)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {

@@ -34,6 +34,9 @@ class Emulator : public Thread, public Inspectable<EmulatorInfo, EmulatorStats> 
     // The virtual C64
     C64 _c64 = C64(*this);
 
+    // Experimental
+    C64 runahead = C64(*this);
+
 public:
 
     // Storage for external events

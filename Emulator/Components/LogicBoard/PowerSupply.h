@@ -46,6 +46,7 @@ public:
 
 public:
 
+    PowerSupply& operator= (const PowerSupply& other) { return *this; }
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
 

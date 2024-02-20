@@ -308,6 +308,42 @@ public:
     
 public:
 
+    C64& operator= (const C64& other) {
+
+        CLONE(mem)
+        CLONE(cpu)
+        CLONE(cia1)
+        CLONE(cia2)
+        CLONE(vic)
+        CLONE(muxer)
+        CLONE(supply)
+        CLONE(port1)
+        CLONE(port2)
+        CLONE(expansionport)
+        CLONE(iec)
+        CLONE(keyboard)
+        CLONE(drive8)
+        CLONE(drive9)
+        CLONE(parCable)
+        CLONE(datasette)
+        CLONE(retroShell)
+        CLONE(regressionTester)
+        CLONE(recorder)
+
+        CLONE_ARRAY(trigger)
+        CLONE_ARRAY(id)
+        CLONE_ARRAY(data)
+        CLONE(nextTrigger)
+        CLONE(frame)
+        CLONE(scanline)
+        CLONE(rasterCycle)
+        CLONE(ultimax)
+
+        CLONE(durationOfOneCycle)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {

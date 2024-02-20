@@ -92,6 +92,25 @@ private:
 
 public:
 
+    Reu& operator= (const Reu& other) {
+
+        Cartridge::operator=(other);
+
+        CLONE(sr)
+        CLONE(cr)
+        CLONE(c64Base)
+        CLONE(reuBase)
+        CLONE(upperBankBits)
+        CLONE(tlen)
+        CLONE(imr)
+        CLONE(acr)
+        CLONE(bus)
+        CLONE(memTypeF)
+
+        return *this;
+    }
+    virtual void clone(const Cartridge &other) override { *this = (const Reu &)other; }
+
     template <class T>
     void serialize(T& worker)
     {

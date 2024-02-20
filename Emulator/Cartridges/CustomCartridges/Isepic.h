@@ -60,6 +60,18 @@ public:
 
 public:
 
+    Isepic& operator= (const Isepic& other) {
+
+        Cartridge::operator=(other);
+
+        CLONE(page)
+        CLONE(oldPeekSource)
+        CLONE(oldPokeTarget)
+
+        return *this;
+    }
+    virtual void clone(const Cartridge &other) override { *this = (const Isepic &)other; }
+
     template <class T>
     void serialize(T& worker)
     {

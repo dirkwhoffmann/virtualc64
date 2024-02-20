@@ -66,8 +66,16 @@ private:
     //
 
 public:
-    
-    template <class T> void serialize(T& worker) { 
+
+    ControlPort& operator= (const ControlPort& other) {
+
+        CLONE(mouse)
+        CLONE(joystick)
+
+        return *this;
+    }
+
+    template <class T> void serialize(T& worker) {
 
         worker
 

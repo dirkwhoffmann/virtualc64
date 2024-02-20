@@ -243,6 +243,39 @@ private:
 
 public:
 
+    VIA6522& operator= (const VIA6522& other) {
+
+        CLONE(pa)
+        CLONE(ca1)
+        CLONE(ca2)
+        CLONE(pb)
+        CLONE(cb1)
+        CLONE(cb2)
+        CLONE(ddra)
+        CLONE(ddrb)
+        CLONE(ora)
+        CLONE(orb)
+        CLONE(ira)
+        CLONE(irb)
+        CLONE(t1)
+        CLONE(t1_latch_lo)
+        CLONE(t1_latch_hi)
+        CLONE(t2)
+        CLONE(t2_latch_lo)
+        CLONE(pcr)
+        CLONE(acr)
+        CLONE(ier)
+        CLONE(ifr)
+        CLONE(sr)
+        CLONE(delay)
+        CLONE(feed)
+        CLONE(tiredness)
+        CLONE(wakeUpCycle)
+        CLONE(idleCounter)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {

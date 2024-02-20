@@ -91,6 +91,18 @@ private:
 
 public:
 
+    ReSID& operator= (const ReSID& other) {
+
+        CLONE(st)
+        CLONE(model)
+        CLONE(clockFrequency)
+        CLONE(samplingMethod)
+        CLONE(emulateFilter)
+
+        return *this;
+    }
+
+
     template <class T>
     void serialize(T& worker)
     {

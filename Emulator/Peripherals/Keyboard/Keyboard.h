@@ -62,6 +62,17 @@ private:
     
 public:
 
+    Keyboard& operator= (const Keyboard& other) {
+
+        CLONE_ARRAY(kbMatrixRow)
+        CLONE_ARRAY(kbMatrixCol)
+        CLONE_ARRAY(kbMatrixRowCnt)
+        CLONE_ARRAY(kbMatrixColCnt)
+        CLONE(shiftLock)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {

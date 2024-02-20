@@ -66,6 +66,17 @@ private:
 
 public:
 
+    FinalIII& operator= (const FinalIII& other) {
+
+        Cartridge::operator=(other);
+
+        CLONE(qD)
+        CLONE(freeezeButtonIsPressed)
+
+        return *this;
+    }
+    virtual void clone(const Cartridge &other) override { *this = (const FinalIII &)other; }
+
     template <class T>
     void serialize(T& worker)
     {

@@ -152,6 +152,25 @@ public:
     void _warpOn() override;
     void _warpOff() override;
     
+    Muxer& operator= (const Muxer& other) {
+
+        CLONE_ARRAY(resid)
+        CLONE_ARRAY(fastsid)
+
+        CLONE(cycles)
+
+        CLONE(cycles)
+        CLONE(cpuFrequency)
+        CLONE(volL)
+        CLONE(volR)
+        CLONE_ARRAY(vol)
+        CLONE_ARRAY(pan)
+
+        CLONE(config)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {
@@ -166,6 +185,13 @@ public:
 
         worker
 
+        << cycles
+        << cpuFrequency
+        << volL
+        << volR
+        << vol
+        << pan
+
         << config.revision
         << config.enabled
         << config.address
@@ -175,13 +201,7 @@ public:
         << config.volL
         << config.volR
         << config.vol
-        << config.pan
-        << cycles
-        << cpuFrequency
-        << volL
-        << volR
-        << vol
-        << pan;
+        << config.pan;
     }
     
     void operator << (SerResetter &worker) override { serialize(worker); }

@@ -84,6 +84,14 @@ private:
 
 public:
 
+    FlashRom& operator= (const FlashRom& other) {
+
+        CLONE(state)
+        CLONE(baseState)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {

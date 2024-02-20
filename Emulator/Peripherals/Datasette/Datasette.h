@@ -113,6 +113,20 @@ private:
 
 public:
         
+    Datasette& operator= (const Datasette& other) {
+
+        CLONE(head)
+        CLONE(counter.ticks)
+        CLONE(playKey)
+        CLONE(motor)
+        CLONE(nextRisingEdge)
+        CLONE(nextFallingEdge)
+
+        CLONE(type)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {

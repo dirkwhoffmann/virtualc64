@@ -102,6 +102,7 @@ public:
     void _initialize() override;
     void _pause() override;
 
+    RetroShell& operator= (const RetroShell& other) { return *this; }
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
 

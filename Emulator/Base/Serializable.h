@@ -619,4 +619,7 @@ void operator << (SerResetter &worker) override { Cartridge::operator<<(worker);
 void operator << (SerReader &worker) override { Cartridge::operator<<(worker); fn(worker); } \
 void operator << (SerWriter &worker) override { Cartridge::operator<<(worker); fn(worker); }
 
+#define CLONE(x) x = other.x;
+#define CLONE_ARRAY(x) std::copy(std::begin(other.x), std::end(other.x), std::begin(x));
+
 #endif

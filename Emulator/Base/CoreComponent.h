@@ -35,7 +35,7 @@ struct NoAssign
     NoAssign& operator=(NoAssign const&) = delete;
 };
 
-class CoreComponent : NoCopy, NoAssign,
+class CoreComponent : NoCopy, // NoAssign,
 public CoreObject, public Serializable, public Suspendable, public Synchronizable {
 
 public:
@@ -72,7 +72,6 @@ public:
      */
     void reset(bool hard);
     virtual void _reset(bool hard) { }
-
 
     //
     // Controlling the state (see Thread class for details)

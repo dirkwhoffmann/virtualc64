@@ -95,6 +95,31 @@ public:
     void _trackOn() override;
     void _trackOff() override;
     
+    CPU& operator= (const CPU& other) {
+
+        CLONE(flags)
+        CLONE(next)
+
+        CLONE(reg)
+
+        CLONE(rdyLine)
+        CLONE(rdyLineUp)
+        CLONE(rdyLineDown)
+        CLONE(nmiLine)
+        CLONE(irqLine)
+        CLONE(edgeDetector)
+        CLONE(levelDetector)
+        CLONE(doNmi)
+        CLONE(doIrq)
+        CLONE(dischargeCycleBit3)
+        CLONE(dischargeCycleBit6)
+        CLONE(dischargeCycleBit7)
+
+        CLONE(clock)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {
@@ -102,6 +127,7 @@ public:
 
         << flags
         << next
+
         << reg.pc
         << reg.pc0
         << reg.sp
@@ -122,6 +148,7 @@ public:
         << reg.sr.c
         << reg.pport.data
         << reg.pport.direction
+
         << rdyLine
         << rdyLineUp
         << rdyLineDown

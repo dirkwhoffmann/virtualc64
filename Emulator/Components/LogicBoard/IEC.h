@@ -74,6 +74,25 @@ private:
 
 public:
 
+    IEC& operator= (const IEC& other) {
+
+        CLONE(atnLine)
+        CLONE(clockLine)
+        CLONE(dataLine)
+        CLONE(device1Atn)
+        CLONE(device1Clock)
+        CLONE(device1Data)
+        CLONE(device2Atn)
+        CLONE(device2Clock)
+        CLONE(device2Data)
+        CLONE(ciaAtn)
+        CLONE(ciaClock)
+        CLONE(ciaData)
+        CLONE(idle)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {

@@ -249,6 +249,37 @@ public:
 
     void _initialize() override;
     
+    Drive& operator= (const Drive& other) {
+
+        CLONE(mem)
+        CLONE(cpu)
+        CLONE(via1)
+        CLONE(via2)
+
+        CLONE(spinning)
+        CLONE(redLED)
+        CLONE(elapsedTime)
+        CLONE(nextClock)
+        CLONE(nextCarry)
+        CLONE(carryCounter)
+        CLONE(counterUF4)
+        CLONE(bitReadyTimer)
+        CLONE(byteReadyCounter)
+        CLONE(halftrack)
+        CLONE(offset)
+        CLONE(zone)
+        CLONE(readShiftreg)
+        CLONE(writeShiftreg)
+        CLONE(sync)
+        CLONE(byteReady)
+        CLONE(watchdog)
+        CLONE(insertionStatus)
+
+        CLONE(config)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {

@@ -52,7 +52,15 @@ public:
     //
 
 public:
-        
+       
+    DmaDebugger& operator= (const DmaDebugger& other) {
+
+        for (isize i = 0; i < 6; i++) CLONE_ARRAY(debugColor[i])
+        CLONE(config)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {
@@ -60,12 +68,13 @@ public:
 
         worker
 
+        << debugColor
+
         << config.dmaDebug
         << config.dmaChannel
         << config.dmaColor
         << config.dmaDisplayMode
-        << config.dmaOpacity
-        << debugColor;
+        << config.dmaOpacity;
 
     } SERIALIZERS(serialize);
 

@@ -128,7 +128,24 @@ private:
     //
 
 public:
-        
+       
+    FastSID& operator= (const FastSID& other) {
+
+        CLONE_ARRAY(voice)
+        CLONE_ARRAY(sidreg)
+        CLONE(speed1)
+        CLONE(latchedDataBus)
+
+        CLONE(executedCycles)
+        CLONE(computedSamples)
+
+        CLONE(model)
+        CLONE(cpuFrequency)
+        CLONE(emulateFilter)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {

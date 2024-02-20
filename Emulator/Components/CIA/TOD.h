@@ -97,6 +97,19 @@ private:
     
 public:
     
+    TOD& operator= (const TOD& other) {
+
+        CLONE(tod.value)
+        CLONE(latch.value)
+        CLONE(alarm.value)
+        CLONE(frozen)
+        CLONE(stopped)
+        CLONE(matching)
+        CLONE(nextTodTrigger)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {
@@ -113,8 +126,8 @@ public:
     } SERIALIZERS(serialize);
 
     void _reset(bool hard) override;
-    
 
+    
     //
     // Methods from Inspectable
     //

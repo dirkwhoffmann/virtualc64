@@ -175,6 +175,28 @@ protected:
 
 public:
 
+    Cartridge& operator= (const Cartridge& other) {
+
+        CLONE(chipL)
+        CLONE(chipH)
+        CLONE(mappedBytesL)
+        CLONE(mappedBytesH)
+        CLONE(offsetL)
+        CLONE(offsetH)
+        CLONE(led)
+
+        CLONE(gameLineInCrtFile)
+        CLONE(exromLineInCrtFile)
+        CLONE(numPackets)
+        CLONE(ramCapacity)
+        CLONE(control)
+        CLONE(switchPos)
+
+        return *this;
+    }
+
+    virtual void clone(const Cartridge &other) { *this = other; }
+
     template <class T>
     void serialize(T& worker)
     {

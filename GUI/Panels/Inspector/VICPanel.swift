@@ -13,7 +13,7 @@ extension Inspector {
 
     private func cacheVIC() {
 
-        vicInfo = c64.vic.getInfo()
+        vicInfo = c64.vic.info
         sprInfo = c64.vic.getSpriteInfo(selectedSprite)
     }
     

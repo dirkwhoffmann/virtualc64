@@ -61,6 +61,16 @@ private:
 
 public:
 
+    Epyx& operator= (const Epyx& other) {
+
+        Cartridge::operator=(other);
+
+        CLONE(cycle)
+
+        return *this;
+    }
+    virtual void clone(const Cartridge &other) override { *this = (const Epyx &)other; }
+
     template <class T>
     void serialize(T& worker)
     {

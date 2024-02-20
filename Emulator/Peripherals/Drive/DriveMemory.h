@@ -71,6 +71,14 @@ private:
 
 public:
 
+    DriveMemory& operator= (const DriveMemory& other) {
+
+        CLONE_ARRAY(ram)
+        CLONE_ARRAY(usage)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {

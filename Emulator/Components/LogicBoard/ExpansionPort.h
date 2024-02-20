@@ -71,6 +71,10 @@ public:
 
 public:
 
+public:
+
+    ExpansionPort& operator= (const ExpansionPort& other);
+
     template <class T>
     void serialize(T& worker)
     {

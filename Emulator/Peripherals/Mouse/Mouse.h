@@ -110,6 +110,15 @@ private:
 
 public:
 
+    Mouse& operator= (const Mouse& other) {
+
+        CLONE(mouse1350)
+        CLONE(mouse1351)
+        CLONE(mouseNeos)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {

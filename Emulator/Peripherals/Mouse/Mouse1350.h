@@ -64,8 +64,8 @@ private:
 
 public:
 
+    Mouse1350& operator= (const Mouse1350& other) { return *this; }
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
-
     void _reset(bool hard) override;
 
 

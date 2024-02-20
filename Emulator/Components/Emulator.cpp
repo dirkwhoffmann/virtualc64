@@ -43,6 +43,8 @@ Emulator::initialize()
 {
     resetConfig();
     _c64.initialize();
+
+    // runahead = _c64;
 }
 
 void 

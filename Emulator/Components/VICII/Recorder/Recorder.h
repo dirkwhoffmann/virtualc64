@@ -92,6 +92,7 @@ public:
 
     void _initialize() override;
 
+    Recorder& operator= (const Recorder& other) { return *this; }
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
     

@@ -27,14 +27,19 @@ Joystick::getDescription() const
     return port.nr == PORT_1 ? "Joystick1" : "Joystick2";
 }
 
+/*
 void
 Joystick::_reset(bool hard)
 {
     // Discard any active joystick movements
+    // TODO: DO THIS IN C64::load at the end
+    //       OTHERWISE, IT CORRUPTS THE CHECKSUM
+
     button = false;
     axisX = 0;
     axisY = 0;
 }
+*/
 
 void
 Joystick::resetConfig()
@@ -119,17 +124,6 @@ Joystick::_dump(Category category, std::ostream& os) const
         os << tab("X axis") << dec(axisX) << std::endl;
         os << tab("Y axis") << dec(axisY) << std::endl;
     }
-}
-
-void 
-Joystick::operator << (SerReader &worker)
-{
-    serialize(worker);
-
-    // Discard any active joystick movements
-    button = false;
-    axisX = 0;
-    axisY = 0;
 }
 
 void

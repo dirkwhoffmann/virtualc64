@@ -68,6 +68,7 @@ private:
 
 public:
 
+    RegressionTester& operator= (const RegressionTester& other) { return *this; }
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
 

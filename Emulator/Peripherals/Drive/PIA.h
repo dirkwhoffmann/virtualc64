@@ -73,6 +73,24 @@ private:
 
 public:
 
+    PIA6821& operator= (const PIA6821& other) {
+
+        CLONE(pa)
+        CLONE(pb)
+        CLONE(ora)
+        CLONE(orb)
+        CLONE(ddra)
+        CLONE(ddrb)
+        CLONE(cra)
+        CLONE(crb)
+        CLONE(ca1)
+        CLONE(ca2)
+        CLONE(cb1)
+        CLONE(cb2)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {

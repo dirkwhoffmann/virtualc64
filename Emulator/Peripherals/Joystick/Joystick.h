@@ -66,18 +66,29 @@ private:
 
 public:
 
+    Joystick& operator= (const Joystick& other) {
+
+        CLONE(button)
+        CLONE(axisX)
+        CLONE(axisY)
+        CLONE(bulletCounter)
+        CLONE(nextAutofireFrame)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {
-    }
-    
-    void operator << (SerResetter &worker) override { serialize(worker); }
-    void operator << (SerChecker &worker) override { serialize(worker); }
-    void operator << (SerCounter &worker) override { serialize(worker); }
-    void operator << (SerReader &worker) override;
-    void operator << (SerWriter &worker) override { serialize(worker); }
+        worker
 
-    void _reset(bool hard) override;
+        << button
+        << axisX
+        << axisY
+        << bulletCounter
+        << nextAutofireFrame;
+
+    } SERIALIZERS(serialize);
 
 
     //

@@ -16,6 +16,28 @@
 
 namespace vc64 {
 
+ExpansionPort& 
+ExpansionPort::operator= (const ExpansionPort& other)
+{
+    auto type = getCartridgeType();
+    auto othertype = other.getCartridgeType();
+
+    CLONE(crtType)
+    CLONE(gameLine)
+    CLONE(exromLine)
+
+    if (type != othertype) {
+
+        // Create a new cartridge of the proper type
+        cartridge = std::unique_ptr<Cartridge>(Cartridge::makeWithType(c64, othertype));
+    }
+
+    // Clone the cartridge
+    if (cartridge) cartridge->clone(*other.cartridge);
+
+    return *this;
+}
+
 void
 ExpansionPort::operator << (SerResetter &worker)
 {

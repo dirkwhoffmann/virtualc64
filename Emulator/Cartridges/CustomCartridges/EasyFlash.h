@@ -71,6 +71,23 @@ private:
 
 public:
 
+    EasyFlash& operator= (const EasyFlash& other) {
+
+        Cartridge::operator=(other);
+
+        CLONE(flashRomL)
+        CLONE(flashRomH)
+
+        CLONE(bankReg)
+        CLONE(modeReg)
+        CLONE(bank)
+
+        CLONE(jumper)
+
+        return *this;
+    }
+    virtual void clone(const Cartridge &other) override { *this = (const EasyFlash &)other; }
+
     template <class T>
     void serialize(T& worker)
     {

@@ -101,6 +101,8 @@ Cartridge::makeWithType(C64 &c64, CartridgeType type)
 {
     switch (type) {
 
+        case CRT_NONE:              return nullptr;
+            
         case CRT_NORMAL:            return new Cartridge(c64);
         case CRT_ACTION_REPLAY:     return new ActionReplay(c64);
         case CRT_KCS_POWER:         return new KcsPower(c64);

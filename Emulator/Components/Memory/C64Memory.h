@@ -89,6 +89,19 @@ private:
 
 public:
 
+    C64Memory& operator= (const C64Memory& other) {
+
+        CLONE_ARRAY(ram)
+        CLONE_ARRAY(colorRam)
+
+        CLONE_ARRAY(peekSrc)
+        CLONE_ARRAY(pokeTarget)
+
+        CLONE(config)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {
@@ -105,6 +118,7 @@ public:
 
         << peekSrc
         << pokeTarget
+
         << config.saveRoms
         << config.ramPattern;
 

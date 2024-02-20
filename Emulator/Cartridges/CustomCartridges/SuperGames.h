@@ -49,6 +49,16 @@ private:
 
 public:
 
+    SuperGames& operator= (const SuperGames& other) {
+
+        Cartridge::operator=(other);
+
+        CLONE(protect)
+
+        return *this;
+    }
+    virtual void clone(const Cartridge &other) override { *this = (const SuperGames &)other; }
+
     template <class T>
     void serialize(T& worker)
     {

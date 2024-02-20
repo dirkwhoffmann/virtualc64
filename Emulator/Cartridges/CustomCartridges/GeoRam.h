@@ -61,6 +61,17 @@ private:
 
 public:
 
+    GeoRAM& operator= (const GeoRAM& other) {
+
+        Cartridge::operator=(other);
+
+        CLONE(bank)
+        CLONE(page)
+
+        return *this;
+    }
+    virtual void clone(const Cartridge &other) override { *this = (const GeoRAM &)other; }
+
     template <class T>
     void serialize(T& worker)
     {

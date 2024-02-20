@@ -45,6 +45,7 @@ private:
 
 public:
 
+    ParCable& operator= (const ParCable& other) { return *this; }
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
     

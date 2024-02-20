@@ -77,6 +77,7 @@ private:
 
 public:
     
+    Interpreter& operator= (const Interpreter& other) { return *this; }
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
 

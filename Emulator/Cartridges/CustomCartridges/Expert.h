@@ -64,6 +64,16 @@ public:
 
 public:
 
+    Expert& operator= (const Expert& other) {
+
+        Cartridge::operator=(other);
+
+        CLONE(active)
+
+        return *this;
+    }
+    virtual void clone(const Cartridge &other) override { *this = (const Expert &)other; }
+
     template <class T>
     void serialize(T& worker)
     {

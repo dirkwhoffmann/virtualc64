@@ -54,6 +54,17 @@ private:
 
 public:
 
+    StarDos& operator= (const StarDos& other) {
+
+        Cartridge::operator=(other);
+
+        CLONE(voltage)
+        CLONE(latestVoltageUpdate)
+
+        return *this;
+    }
+    virtual void clone(const Cartridge &other) override { *this = (const StarDos &)other; }
+
     template <class T>
     void serialize(T& worker)
     {

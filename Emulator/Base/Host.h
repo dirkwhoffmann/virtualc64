@@ -51,6 +51,16 @@ private:
     const char *getDescription() const override { return "Host"; }
     void _dump(Category category, std::ostream& os) const override;
 
+    Host& operator= (const Host& other) {
+
+        CLONE(refreshRate)
+        CLONE(sampleRate)
+        CLONE(frameBufferWidth)
+        CLONE(frameBufferHeight)
+
+        return *this;
+    }
+
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
 

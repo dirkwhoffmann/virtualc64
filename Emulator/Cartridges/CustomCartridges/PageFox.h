@@ -58,6 +58,17 @@ private:
 
 public:
 
+    PageFox& operator= (const PageFox& other) {
+
+        Cartridge::operator=(other);
+
+        CLONE(ctrlReg)
+
+        return *this;
+    }
+    virtual void clone(const Cartridge &other) override { *this = (const PageFox &)other; }
+
+
     template <class T>
     void serialize(T& worker)
     {

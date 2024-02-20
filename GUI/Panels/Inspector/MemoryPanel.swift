@@ -92,7 +92,7 @@ extension Inspector {
     private func cacheMemory() {
         
         let oldBankMap = memInfo?.bankMap
-        memInfo = c64.mem.getInfo()
+        memInfo = c64.mem.info
         if oldBankMap != memInfo.bankMap { layoutIsDirty = true }
     }
     

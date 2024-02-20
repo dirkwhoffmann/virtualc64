@@ -300,6 +300,46 @@ private:
 
 public:
     
+    CIA& operator= (const CIA& other) {
+
+        CLONE(tod)
+
+        CLONE(counterA)
+        CLONE(counterB)
+        CLONE(latchA)
+        CLONE(latchB)
+        CLONE(delay)
+        CLONE(feed)
+        CLONE(CRA)
+        CLONE(CRB)
+        CLONE(icr)
+        CLONE(icrAck)
+        CLONE(imr)
+        CLONE(PB67TimerMode)
+        CLONE(PB67TimerOut)
+        CLONE(PB67Toggle)
+        CLONE(PRA)
+        CLONE(PRB)
+        CLONE(DDRA)
+        CLONE(DDRB)
+        CLONE(PA)
+        CLONE(PB)
+        CLONE(sdr)
+        CLONE(serClk)
+        CLONE(serCounter)
+        CLONE(CNT)
+        CLONE(INT)
+        CLONE(tiredness)
+        CLONE(idleCycles)
+        CLONE(sleeping)
+        CLONE(sleepCycle)
+        CLONE(wakeUpCycle)
+
+        CLONE(config)
+
+        return *this;
+    }
+
     template <class T>
     void serialize(T& worker)
     {
