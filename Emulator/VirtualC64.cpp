@@ -51,6 +51,18 @@ VirtualC64::~VirtualC64()
     halt();
 }
 
+u32 *
+VirtualC64::getTexture() const
+{
+    return isPoweredOn() ? _c64.vic.stableEmuTexture() : _c64.vic.getNoise();
+}
+
+u32 *
+VirtualC64::getNoise() const
+{
+    return _c64.vic.getNoise();
+}
+
 void
 VirtualC64::launch(const void *listener, Callback *func)
 {
@@ -628,18 +640,6 @@ bool
 VirtualC64::VICII_API::pal() const
 {
     return vic.pal();
-}
-
-u32 *
-VirtualC64::VICII_API::getTexture() const
-{
-    return vic.stableEmuTexture();
-}
-
-u32 *
-VirtualC64::VICII_API::getNoise() const
-{
-    return vic.getNoise();
 }
 
 u32

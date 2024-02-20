@@ -77,6 +77,14 @@ public:
 
 
     //
+    // Audio and Video
+    //
+
+    u32 *getTexture() const;
+    u32 *getNoise() const;
+
+
+    //
     // Configuring
     //
 
@@ -275,8 +283,6 @@ public:
         isize getLinesPerFrame() const;
         bool pal() const;
 
-        u32 *getTexture() const;
-        u32 *getNoise() const;
         u32 getColor(isize nr) const;
         u32 getColor(isize nr, Palette palette) const;
 

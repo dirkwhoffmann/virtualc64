@@ -23,6 +23,7 @@
 
 namespace vc64 {
 
+/*
 struct NoCopy
 {
     NoCopy() { };
@@ -34,8 +35,9 @@ struct NoAssign
     NoAssign() { };
     NoAssign& operator=(NoAssign const&) = delete;
 };
+*/
 
-class CoreComponent : NoCopy, // NoAssign,
+class CoreComponent : 
 public CoreObject, public Serializable, public Suspendable, public Synchronizable {
 
 public:
@@ -59,6 +61,9 @@ protected:
 public:
 
     CoreComponent(Emulator& ref) : emulator(ref) { }
+
+    bool operator== (CoreComponent &other);
+    bool operator!= (CoreComponent &other) { return !(other == *this); }
 
     /* This function is called inside the emulator's launch routine. It iterates
      * through all components and calls the _initialize() delegate. By default

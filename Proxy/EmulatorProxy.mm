@@ -527,10 +527,12 @@ using namespace vc64;
     return [self vicii]->getSpriteInfo((unsigned)sprite);
 }
 
+/*
 - (u32 *)texture
 {
     return [self vicii]->getTexture();
 }
+*/
 
 - (NSColor *)color:(NSInteger)nr
 {
@@ -551,11 +553,6 @@ using namespace vc64;
 {
     assert (0 <= nr && nr < 16);
     return [self vicii]->getColor((unsigned)nr, palette);
-}
-
-- (u32 *)noise
-{
-    return [self vicii]->getNoise();
 }
 
 @end
@@ -2260,6 +2257,16 @@ using namespace vc64;
 - (void)resume
 {
     [self send:CMD_RESUME];
+}
+
+- (u32 *)texture
+{
+    return [self emu]->getTexture();
+}
+
+- (u32 *)noise
+{
+    return [self emu]->getNoise();
 }
 
 - (void)requestAutoSnapshot

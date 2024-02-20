@@ -190,6 +190,9 @@
 
 @property BOOL trackMode;
 
+@property (readonly) u32 *texture;
+@property (readonly) u32 *noise;
+
 @property InspectionTarget inspectionTarget;
 - (void) removeInspectionTarget;
 
@@ -384,9 +387,6 @@
 - (BOOL)isPAL;
 - (NSColor *)color:(NSInteger)nr;
 - (UInt32)rgbaColor:(NSInteger)nr palette:(Palette)palette;
-
-@property (readonly) u32 *texture;
-@property (readonly) u32 *noise;
 
 @end
 
