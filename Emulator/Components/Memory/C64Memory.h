@@ -92,6 +92,7 @@ public:
     C64Memory& operator= (const C64Memory& other) {
 
         CLONE_ARRAY(ram)
+        CLONE_ARRAY(rom)
         CLONE_ARRAY(colorRam)
 
         CLONE_ARRAY(peekSrc)

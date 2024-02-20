@@ -43,6 +43,8 @@ Emulator::initialize()
 {
     resetConfig();
     _c64.initialize();
+    runahead.initialize();
+    runahead.reset(true);
 }
 
 void 
@@ -867,9 +869,55 @@ void
 Emulator::computeFrame()
 {
     _c64.execute();
+
+    static bool dirty = true;
+
+    // TODO: REMOVE ASAP
+    config.runAhead = 0;
+
+    if (config.runAhead) {
+
+        // TODO: ONLY MARK AS DIRTY WHEN AN EXTERNAL EVENT CAME IN
+        // bool dirty = true;
+
+        if (dirty || RUA_DEBUG) {
+
+            // Create the runahead instance from scratch
+            runahead = _c64;
+            assert(runahead == _c64);
+            runahead.fastForward(config.runAhead);
+
+            dirty = false;
+
+        } else {
+
+            // Emulate the runahead instance for one frame
+            runahead.execute();
+        }
+
+        printf("C64 frame: %lld:%d runahead: %lld:%d\n",
+               _c64.frame, _c64.scanline, runahead.frame, runahead.scanline);
+    }
 }
 
-void 
+u32 *
+Emulator::getTexture() const
+{
+    // Return a noise pattern if the emulator is powered off
+    if (isPoweredOff()) return _c64.vic.getNoise();
+
+    // Get the texture from the proper emulator instance
+    return config.runAhead ? runahead.vic.stableEmuTexture() : _c64.vic.stableEmuTexture();
+    // return _c64.vic.stableEmuTexture();
+}
+
+u32 *
+Emulator::getNoise() const
+{
+    return _c64.vic.getNoise();
+}
+
+void
 Emulator::put(const Cmd &cmd)
 {
     cmdQueue.put(cmd);

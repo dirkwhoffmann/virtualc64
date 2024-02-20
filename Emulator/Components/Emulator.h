@@ -145,6 +145,14 @@ private:
     void _trackOn() override { _c64.trackOn(); }
     void _trackOff() override { _c64.trackOff(); }
 
+    
+    //
+    // Audio and Video
+    //
+
+    u32 *getTexture() const;
+    u32 *getNoise() const;
+
 
     //
     // Command queue

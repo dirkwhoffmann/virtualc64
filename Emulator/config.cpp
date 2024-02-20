@@ -19,6 +19,7 @@ debugflag DEF_DEBUG       = 0; // User defaults
 
 // Runloop
 debugflag RUN_DEBUG       = 0; // Run loop, component states
+debugflag RUA_DEBUG       = 0; // Runahead
 debugflag TIM_DEBUG       = 0; // Thread synchronization
 debugflag WARP_DEBUG      = 0; // Warp mode
 debugflag CMD_DEBUG       = 0; // Command queue

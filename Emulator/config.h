@@ -79,8 +79,9 @@ extern debugflag XFILES;
 extern debugflag CNF_DEBUG;
 extern debugflag DEF_DEBUG;
 
-// Runloop
+// Emulator
 extern debugflag RUN_DEBUG;
+extern debugflag RUA_DEBUG;
 extern debugflag TIM_DEBUG;
 extern debugflag WARP_DEBUG;
 extern debugflag CMD_DEBUG;

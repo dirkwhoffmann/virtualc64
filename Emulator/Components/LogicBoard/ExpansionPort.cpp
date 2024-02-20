@@ -58,6 +58,7 @@ void
 ExpansionPort::operator << (SerChecker &worker)
 {
     serialize(worker);
+    if (cartridge) *cartridge << worker;
 }
 
 void 

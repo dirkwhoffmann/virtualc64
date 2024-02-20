@@ -425,7 +425,10 @@ private:
     template <bool enable8, bool enable9> void execute();
     bool processFlags();
 
-    
+    // Experimental (for runahead)
+    void fastForward(isize frames);
+
+
     //
     // Controlling
     //

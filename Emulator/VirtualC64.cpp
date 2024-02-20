@@ -54,13 +54,13 @@ VirtualC64::~VirtualC64()
 u32 *
 VirtualC64::getTexture() const
 {
-    return isPoweredOn() ? _c64.vic.stableEmuTexture() : _c64.vic.getNoise();
+    return Emulator::getTexture();
 }
 
 u32 *
 VirtualC64::getNoise() const
 {
-    return _c64.vic.getNoise();
+    return Emulator::getNoise();
 }
 
 void

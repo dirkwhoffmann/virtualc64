@@ -523,6 +523,15 @@ C64::processFlags()
     return exit;
 }
 
+void 
+C64::fastForward(isize frames)
+{
+    auto target = frame + frames;
+
+    // Execute until the target frame has been reached
+    while (frame != target) execute();
+}
+
 void
 C64::_isReady() const
 {
@@ -1688,6 +1697,7 @@ C64::setDebugVariable(const string &name, int val)
     else if (name == "DEF_DEBUG")       DEF_DEBUG       = val;
 
     else if (name == "RUN_DEBUG")       RUN_DEBUG       = val;
+    else if (name == "RUA_DEBUG")       RUA_DEBUG       = val;
     else if (name == "TIM_DEBUG")       TIM_DEBUG       = val;
     else if (name == "WARP_DEBUG")      WARP_DEBUG      = val;
     else if (name == "CMD_DEBUG")       CMD_DEBUG       = val;

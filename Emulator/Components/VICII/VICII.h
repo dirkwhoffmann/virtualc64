@@ -616,8 +616,7 @@ public:
         CLONE(dmaDebugger)
 
         CLONE(headless)
-        CLONE(reg.current)
-        CLONE(reg.delayed)
+        CLONE(reg)
         CLONE(rasterIrqLine)
         CLONE(latchedLPX)
         CLONE(latchedLPY)
@@ -633,20 +632,12 @@ public:
         CLONE_ARRAY(videoMatrix)
         CLONE_ARRAY(colorLine)
         CLONE(vmli)
-        CLONE(sr.data)
-        CLONE(sr.canLoad)
-        CLONE(sr.mcFlop)
-        CLONE(sr.latchedChr)
-        CLONE(sr.latchedCol)
-        CLONE(sr.colorbits)
+        CLONE(sr)
         CLONE_ARRAY(spriteSr)
         CLONE(spriteSrActive)
         CLONE(spriteSpriteCollision)
         CLONE(spriteBackgroundColllision)
-        CLONE(flipflops.current.vertical)
-        CLONE(flipflops.current.main)
-        CLONE(flipflops.delayed.vertical)
-        CLONE(flipflops.delayed.main)
+        CLONE(flipflops)
         CLONE(verticalFrameFFsetCond)
         CLONE(leftComparisonVal)
         CLONE(rightComparisonVal)
@@ -680,18 +671,18 @@ public:
         CLONE(bankAddr)
         CLONE(gAccessResult)
         CLONE(delay)
+
+        CLONE_ARRAY(rgbaTable)
+
         CLONE(bufferoffset)
 
-        CLONE(config.revision)
-        CLONE(config.powerSave)
-        CLONE(config.grayDotBug)
-        CLONE(config.glueLogic)
+        CLONE_ARRAY(memSrc)
         CLONE(isPAL)
         CLONE(isNTSC)
         CLONE(is856x)
         CLONE(is656x)
 
-        CLONE_ARRAY(memSrc)
+        CLONE(config)
 
         return *this;
     }
@@ -774,16 +765,16 @@ public:
 
         worker
 
-        << config.revision
-        << config.powerSave
-        << config.grayDotBug
-        << config.glueLogic
+        << memSrc
         << isPAL
         << isNTSC
         << is856x
         << is656x
 
-        << memSrc;
+        << config.revision
+        << config.powerSave
+        << config.grayDotBug
+        << config.glueLogic;
 
     } SERIALIZERS(serialize);
 
