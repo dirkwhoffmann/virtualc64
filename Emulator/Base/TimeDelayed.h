@@ -51,6 +51,14 @@ public:
     
     TimeDelayed() : TimeDelayed(nullptr) { };
     
+    TimeDelayed<T,delay>& operator= (const TimeDelayed<T,delay>& other) {
+
+        std::copy(std::begin(other.pipeline), std::end(other.pipeline), std::begin(pipeline));
+        timeStamp = other.timeStamp;
+
+        return *this;
+    }
+
     // Sets the reference clock (either the C64 clock or a drive clock)
     void setClock(i64 *clock) { this->clock = clock; }
     

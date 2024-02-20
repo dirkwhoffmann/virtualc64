@@ -870,15 +870,13 @@ Emulator::computeFrame()
 {
     _c64.execute();
 
+    // TODO: ADD AS MEMBER VARIABLE AND DYNAMICALLY SET TO TRUE WHEN AN EXTERNAL EVENT COMES IN
     static bool dirty = true;
 
     // TODO: REMOVE ASAP
     config.runAhead = 0;
 
     if (config.runAhead) {
-
-        // TODO: ONLY MARK AS DIRTY WHEN AN EXTERNAL EVENT CAME IN
-        // bool dirty = true;
 
         if (dirty || RUA_DEBUG) {
 
@@ -908,7 +906,6 @@ Emulator::getTexture() const
 
     // Get the texture from the proper emulator instance
     return config.runAhead ? runahead.vic.stableEmuTexture() : _c64.vic.stableEmuTexture();
-    // return _c64.vic.stableEmuTexture();
 }
 
 u32 *
