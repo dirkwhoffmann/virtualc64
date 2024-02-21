@@ -24,57 +24,65 @@ VICII::updateVicFunctionTable()
     vicfunc[64] = nullptr;
     vicfunc[65] = nullptr;
 
+    u16 flags = (dmaDebug() ? DEBUG_CYCLE : 0)  | (headless ? HEADLESS_CYCLE : 0);
+
     // Assign model specific execution functions
     switch (config.revision) {
             
         case VICII_PAL_6569_R1:
         case VICII_PAL_6569_R3:
         case VICII_PAL_8565:
-            
-            if (dmaDebug()) {
-                for (isize i = 1; i <= 63; i++) {
-                    vicfunc[i] = getViciiFunc <PAL_CYCLE | DEBUG_CYCLE> (i);
-                }
-            } else {
-                for (isize i = 1; i <= 63; i++) {
-                    vicfunc[i] = getViciiFunc <PAL_CYCLE> (i);
-                }
+
+            for (isize i = 1; i <= 63; i++) {
+                vicfunc[i] = getViciiFunc(PAL_CYCLE | flags, i);
             }
             break;
 
         case VICII_NTSC_6567_R56A:
-            
-            if (dmaDebug()) {
-                for (isize i = 1; i <= 11; i++) {
-                    vicfunc[i] = getViciiFunc <PAL_CYCLE | DEBUG_CYCLE> (i);
-                }
-                for (isize i = 12; i <= 64; i++) {
-                    vicfunc[i] = getViciiFunc <NTSC_CYCLE | DEBUG_CYCLE> (i);
-                }
-            } else {
-                for (isize i = 1; i <= 11; i++) {
-                    vicfunc[i] = getViciiFunc <PAL_CYCLE> (i);
-                }
-                for (isize i = 12; i <= 64; i++) {
-                    vicfunc[i] = getViciiFunc <NTSC_CYCLE> (i);
-                }
+
+            for (isize i = 1; i <= 11; i++) {
+                vicfunc[i] = getViciiFunc(PAL_CYCLE | flags, i);
+            }
+            for (isize i = 12; i <= 64; i++) {
+                vicfunc[i] = getViciiFunc(NTSC_CYCLE | flags, i);
             }
             break;
 
         case VICII_NTSC_6567:
         case VICII_NTSC_8562:
-            
-            if (dmaDebug()) {
-                for (isize i = 1; i <= 65; i++) {
-                    vicfunc[i] = getViciiFunc <NTSC_CYCLE | DEBUG_CYCLE> (i);
-                }
-            } else {
-                for (isize i = 1; i <= 65; i++) {
-                    vicfunc[i] = getViciiFunc <NTSC_CYCLE> (i);
-                }
+
+            for (isize i = 1; i <= 65; i++) {
+                vicfunc[i] = getViciiFunc(NTSC_CYCLE | flags, i);
             }
             break;
-            
+
+        default:
+            fatalError;
+    }
+}
+
+VICII::ViciiFunc
+VICII::getViciiFunc(u16 flags, isize cycle)
+{
+    switch (flags) {
+
+        case PAL_CYCLE:         
+            return getViciiFunc <PAL_CYCLE> (cycle);
+        case NTSC_CYCLE:        
+            return getViciiFunc <NTSC_CYCLE> (cycle);
+        case PAL_CYCLE | DEBUG_CYCLE: 
+            return getViciiFunc <PAL_CYCLE | DEBUG_CYCLE> (cycle);
+        case NTSC_CYCLE | DEBUG_CYCLE:        
+            return getViciiFunc <NTSC_CYCLE | DEBUG_CYCLE> (cycle);
+        case PAL_CYCLE | HEADLESS_CYCLE:
+            return getViciiFunc <PAL_CYCLE | HEADLESS_CYCLE> (cycle);
+        case NTSC_CYCLE | HEADLESS_CYCLE:
+            return getViciiFunc <NTSC_CYCLE | HEADLESS_CYCLE> (cycle);
+        case PAL_CYCLE | DEBUG_CYCLE| HEADLESS_CYCLE:
+            return getViciiFunc <PAL_CYCLE | DEBUG_CYCLE | HEADLESS_CYCLE> (cycle);
+        case NTSC_CYCLE | DEBUG_CYCLE | HEADLESS_CYCLE:
+            return getViciiFunc <NTSC_CYCLE | DEBUG_CYCLE | HEADLESS_CYCLE> (cycle);
+
         default:
             fatalError;
     }

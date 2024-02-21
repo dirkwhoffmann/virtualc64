@@ -589,6 +589,7 @@ private:
     void resetDmaTextures() { resetDmaTexture(1); resetDmaTexture(2); }
     void resetTexture(u32 *p);
 
+    ViciiFunc getViciiFunc(u16 flags, isize cycle);
     template <u16 flags> ViciiFunc getViciiFunc(isize cycle);
 
     
@@ -1245,38 +1246,6 @@ public:
     template <u16 flags> void cycle63();
     template <u16 flags> void cycle64();
     template <u16 flags> void cycle65();
-
-    // DEPRECATED
-    void cycle1pal();   void cycle1ntsc();
-    void cycle2pal();   void cycle2ntsc();
-    void cycle3pal();   void cycle3ntsc();
-    void cycle4pal();   void cycle4ntsc();
-    void cycle5pal();   void cycle5ntsc();
-    void cycle6pal();   void cycle6ntsc();
-    void cycle7pal();   void cycle7ntsc();
-    void cycle8pal();   void cycle8ntsc();
-    void cycle9pal();   void cycle9ntsc();
-    void cycle10pal();  void cycle10ntsc();
-    void cycle11pal();  void cycle11ntsc();
-    void cycle12();
-    void cycle13();
-    void cycle14();
-    void cycle15();
-    void cycle16();
-    void cycle17();
-    void cycle18();
-    void cycle19to54();
-    void cycle55pal();  void cycle55ntsc();
-    void cycle56();
-    void cycle57pal();  void cycle57ntsc();
-    void cycle58pal();  void cycle58ntsc();
-    void cycle59pal();  void cycle59ntsc();
-    void cycle60pal();  void cycle60ntsc();
-    void cycle61pal();  void cycle61ntsc();
-    void cycle62pal();  void cycle62ntsc();
-    void cycle63pal();  void cycle63ntsc();
-    void cycle64ntsc();
-    void cycle65ntsc();
 
 #define DRAW_SPRITES_DMA1 \
 assert(isFirstDMAcycle); assert(!isSecondDMAcycle); \
