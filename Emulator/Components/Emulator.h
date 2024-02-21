@@ -29,7 +29,6 @@ class Emulator : public Thread, public Inspectable<EmulatorInfo, EmulatorStats> 
     friend class ::VirtualC64;
 
     EmulatorConfig config = { };
-    // EmulatorStats stats = { };
 
     // The virtual C64
     C64 _c64 = C64(*this);

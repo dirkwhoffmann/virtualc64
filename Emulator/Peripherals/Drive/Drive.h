@@ -277,6 +277,14 @@ public:
 
         CLONE(config)
 
+        if (other.disk && !disk) disk = std::make_unique<Disk>();
+        if (!other.disk) disk = nullptr;
+        if (disk) *disk = *other.disk;
+
+        if (other.diskToInsert && !diskToInsert) diskToInsert = std::make_unique<Disk>();
+        if (!other.diskToInsert) diskToInsert = nullptr;
+        if (diskToInsert) *diskToInsert = *other.diskToInsert;
+
         return *this;
     }
 
@@ -331,7 +339,7 @@ public:
     }
     
     void operator << (SerResetter &worker) override { serialize(worker); };
-    void operator << (SerChecker &worker) override { serialize(worker); }
+    void operator << (SerChecker &worker) override;
     void operator << (SerCounter &worker) override;
     void operator << (SerReader &worker) override;
     void operator << (SerWriter &worker) override;

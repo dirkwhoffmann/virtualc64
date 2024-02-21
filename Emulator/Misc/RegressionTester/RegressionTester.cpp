@@ -87,7 +87,7 @@ RegressionTester::dumpTexture(C64 &c64, std::ostream& os)
 
     {   SUSPENDED
 
-        auto buffer = (u32 *)c64.vic.stableEmuTexture();
+        auto buffer = (u32 *)c64.vic.getTexture();
         char *cptr;
 
         for (isize y = Y1; y < Y2; y++) {

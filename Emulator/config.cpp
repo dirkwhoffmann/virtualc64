@@ -19,12 +19,16 @@ debugflag DEF_DEBUG       = 0; // User defaults
 
 // Runloop
 debugflag RUN_DEBUG       = 0; // Run loop, component states
-debugflag RUA_DEBUG       = 0; // Runahead
 debugflag TIM_DEBUG       = 0; // Thread synchronization
 debugflag WARP_DEBUG      = 0; // Warp mode
 debugflag CMD_DEBUG       = 0; // Command queue
 debugflag MSG_DEBUG       = 0; // Message queue
 debugflag SNP_DEBUG       = 0; // Serializing (snapshots)
+
+// Run ahead
+debugflag RUA_DEBUG       = 1; // Run ahead
+debugflag RUA_TEXTURE     = 0; // 0 = Auto, 1 = Original, 2 = Run ahead
+debugflag RUA_ON_STEROIDS = 1; // Update the run-ahead instance in every frame
 
 // CPU
 debugflag CPU_DEBUG       = 0; // CPU

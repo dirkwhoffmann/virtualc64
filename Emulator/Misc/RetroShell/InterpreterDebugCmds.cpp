@@ -82,6 +82,7 @@ Interpreter::initDebugShell(Command &root)
 
     root.newGroup("Debugging components");
 
+    root.add({"thread"},        "The emulator thread");
     root.add({"c64"},           "The virtual Commodore 64");
     root.add({"cpu"},           "MOS 6810 CPU");
     root.add({"memory"},        "Ram and Rom");
@@ -116,6 +117,25 @@ Interpreter::initDebugShell(Command &root)
 
         C64::setDebugVariable(argv[0], int(parseNum(argv, 1)));
     });
+
+    //
+    // Thread
+    //
+
+    root.add({"thread", ""},
+             "Displays the thread state",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(emulator, Category::State);
+    });
+
+    root.add({"thread", "runahead"},
+             "Inspects the run-ahead instance",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(emulator, Category::RunAhead);
+    });
+
 
     //
     // C64

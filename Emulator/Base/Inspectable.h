@@ -29,6 +29,7 @@ enum class Category
     Layout,
     Properties,
     Registers,
+    RunAhead,
     Sizeof,
     Slots,
     State,

@@ -1697,12 +1697,15 @@ C64::setDebugVariable(const string &name, int val)
     else if (name == "DEF_DEBUG")       DEF_DEBUG       = val;
 
     else if (name == "RUN_DEBUG")       RUN_DEBUG       = val;
-    else if (name == "RUA_DEBUG")       RUA_DEBUG       = val;
     else if (name == "TIM_DEBUG")       TIM_DEBUG       = val;
     else if (name == "WARP_DEBUG")      WARP_DEBUG      = val;
     else if (name == "CMD_DEBUG")       CMD_DEBUG       = val;
     else if (name == "MSG_DEBUG")       MSG_DEBUG       = val;
     else if (name == "SNP_DEBUG")       SNP_DEBUG       = val;
+
+    else if (name == "RUA_DEBUG")       RUA_DEBUG       = val;
+    else if (name == "RUA_TEXTURE")     RUA_TEXTURE     = val;
+    else if (name == "RUA_ON_STEROIDS") RUA_ON_STEROIDS = val;
 
     else if (name == "CPU_DEBUG")       CPU_DEBUG       = val;
     else if (name == "IRQ_DEBUG")       IRQ_DEBUG       = val;

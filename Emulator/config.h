@@ -29,7 +29,7 @@
 #define SNP_BETA 0
 
 // Uncomment these settings in a release build
-// #define RELEASEBUILD
+#define RELEASEBUILD
 
 
 //
@@ -81,12 +81,16 @@ extern debugflag DEF_DEBUG;
 
 // Emulator
 extern debugflag RUN_DEBUG;
-extern debugflag RUA_DEBUG;
 extern debugflag TIM_DEBUG;
 extern debugflag WARP_DEBUG;
 extern debugflag CMD_DEBUG;
 extern debugflag MSG_DEBUG;
 extern debugflag SNP_DEBUG;
+
+// Run ahead
+extern debugflag RUA_DEBUG;
+extern debugflag RUA_TEXTURE;
+extern debugflag RUA_ON_STEROIDS;
 
 // CPU
 extern debugflag CPU_DEBUG;

@@ -210,9 +210,10 @@ class Canvas: Layer {
         precondition(buffer != nil)
 
         // Only proceed if the emulator delivers a new texture
-        if prevBuffer == buffer { return }
+        // TODO: THE FOLLOWING LINE DOES NO LONGER WORK WITH RUNAHEAD
+        // if prevBuffer == buffer { return }
         prevBuffer = buffer
-                
+
         // Update the GPU texture
         let w = Int(TEX_WIDTH)
         let h = Int(TEX_HEIGHT)

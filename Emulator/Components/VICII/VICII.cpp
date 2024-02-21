@@ -672,13 +672,13 @@ VICII::isVBlankLine(isize line) const
 }
 
 u32 *
-VICII::stableEmuTexture() const
+VICII::getTexture() const
 {
     return emuTexture == emuTexture1 ? emuTexture2 : emuTexture1;
 }
 
 u32 *
-VICII::stableDmaTexture() const
+VICII::getDmaTexture() const
 {
     return dmaTexture == dmaTexture1 ? dmaTexture2 : dmaTexture1;
 }

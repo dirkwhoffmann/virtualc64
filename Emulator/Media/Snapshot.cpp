@@ -29,7 +29,7 @@ Thumbnail::makeWithC64(const C64 &c64, isize dx, isize dy)
 void
 Thumbnail::take(const C64 &c64, isize dx, isize dy)
 {
-    u32 *source = (u32 *)c64.vic.stableEmuTexture();
+    u32 *source = (u32 *)c64.vic.getTexture();
     u32 *target = screen;
 
     isize xStart = FIRST_VISIBLE_PIXEL;
@@ -141,7 +141,7 @@ Snapshot::takeScreenshot(C64 &c64)
     header->screenshot.width = VISIBLE_PIXELS;
     header->screenshot.height = c64.vic.numVisibleLines();
     
-    u32 *source = (u32 *)c64.vic.stableEmuTexture();
+    u32 *source = (u32 *)c64.vic.getTexture();
     u32 *target = header->screenshot.screen;
 
     isize xStart = FIRST_VISIBLE_PIXEL;

@@ -359,7 +359,7 @@ Recorder::record()
 void
 Recorder::recordVideo()
 {
-    u32 *texture = (u32 *)vic.stableEmuTexture();
+    u32 *texture = (u32 *)vic.getTexture();
     
     isize width = sizeof(u32) * (cutout.x2 - cutout.x1);
     isize height = cutout.y2 - cutout.y1;

@@ -440,11 +440,19 @@ Drive::_dump(Category category, std::ostream& os) const
 }
 
 void 
+Drive::operator << (SerChecker &worker)
+{
+    serialize(worker);
+    if (disk) disk->serialize(worker);
+    if (diskToInsert) diskToInsert->serialize(worker);
+}
+
+void
 Drive::operator << (SerCounter &worker)
 {
     serialize(worker);
 
-    // Add the size of the boolean indicating whether a disk is inserted
+    // Add the size of a boolean indicating whether a disk is inserted
     worker.count += sizeof(bool);
 
     // Add the disk size

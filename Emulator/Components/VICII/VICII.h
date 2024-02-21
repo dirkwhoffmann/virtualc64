@@ -867,8 +867,8 @@ public:
     //
     
     // Returns pointers to the stable textures
-    u32 *stableEmuTexture() const;
-    u32 *stableDmaTexture() const;
+    u32 *getTexture() const;
+    u32 *getDmaTexture() const;
     
     // Returns a pointer to randon noise
     u32 *getNoise() const;

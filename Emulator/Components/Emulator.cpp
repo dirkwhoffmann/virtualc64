@@ -708,8 +708,27 @@ Emulator::_dump(Category category, std::ostream& os) const
         defaults.dump(category, os);
     }
 
+    if (category == Category::RunAhead) {
+
+        os << tab("C64 frame");
+        os << dec(_c64.frame);
+        os << " (" << dec(_c64.scanline) << "," << dec(_c64.rasterCycle) << ")" << std::endl;
+        os << tab("C64 cycle");
+        os << dec(_c64.cpu.clock) << std::endl;
+
+        os << std::endl;
+
+        os << tab("Run-ahead frame");
+        os << dec(runahead.frame);
+        os << " (" << dec(runahead.scanline) << "," << dec(runahead.rasterCycle) << ")" << std::endl;
+        os << tab("Run-ahead cycle");
+        os << dec(runahead.cpu.clock) << std::endl;
+    }
+
     if (category == Category::State) {
 
+        os << tab("Emulator state");
+        os << EmulatorStateEnum::key(state) << std::endl;
         os << tab("Power");
         os << bol(isPoweredOn()) << std::endl;
         os << tab("Running");
@@ -723,8 +742,6 @@ Emulator::_dump(Category category, std::ostream& os) const
         os << std::endl;
         os << tab("Refresh rate");
         os << dec(isize(refreshRate())) << " Fps" << std::endl;
-        os << tab("Emulator state");
-        os << EmulatorStateEnum::key(state) << std::endl;
     }
 }
 
@@ -878,23 +895,29 @@ Emulator::computeFrame()
 
     if (config.runAhead) {
 
-        if (dirty || RUA_DEBUG) {
+        if (dirty || RUA_ON_STEROIDS) {
 
-            // Create the runahead instance from scratch
+            // Recreate the runahead instance from scratch
             runahead = _c64;
-            assert(runahead == _c64);
-            runahead.fastForward(config.runAhead);
 
-            dirty = false;
+            if (debugBuild && runahead != _c64) {
+
+                _c64.dump(Category::Checksums);
+                runahead.dump(Category::Checksums);
+                fatal("Corrupted runahead instance detected");
+            }
+
+            // Advance to the proper frame
+            runahead.fastForward(config.runAhead);
 
         } else {
 
-            // Emulate the runahead instance for one frame
+            // Run the runahead instance in parallel to the main instance
             runahead.execute();
         }
 
-        printf("C64 frame: %lld:%d runahead: %lld:%d\n",
-               _c64.frame, _c64.scanline, runahead.frame, runahead.scanline);
+        debug(RUA_DEBUG, "C64: %lld:%d Runahead: %lld:%d\n",
+              _c64.frame, _c64.scanline, runahead.frame, runahead.scanline);
     }
 }
 
@@ -904,8 +927,12 @@ Emulator::getTexture() const
     // Return a noise pattern if the emulator is powered off
     if (isPoweredOff()) return _c64.vic.getNoise();
 
+    // Debug modes
+    if (RUA_TEXTURE == 1) return _c64.vic.getTexture();
+    if (RUA_TEXTURE == 2) return runahead.vic.getTexture();
+
     // Get the texture from the proper emulator instance
-    return config.runAhead ? runahead.vic.stableEmuTexture() : _c64.vic.stableEmuTexture();
+    return config.runAhead ? runahead.vic.getTexture() : _c64.vic.getTexture();
 }
 
 u32 *
