@@ -27,19 +27,24 @@ Joystick::getDescription() const
     return port.nr == PORT_1 ? "Joystick1" : "Joystick2";
 }
 
-/*
-void
-Joystick::_reset(bool hard)
+
+void 
+Joystick::operator << (SerResetter &worker)
 {
     // Discard any active joystick movements
-    // TODO: DO THIS IN C64::load at the end
-    //       OTHERWISE, IT CORRUPTS THE CHECKSUM
-
     button = false;
     axisX = 0;
     axisY = 0;
 }
-*/
+
+void
+Joystick::operator << (SerReader &worker)
+{
+    // Discard any active joystick movements
+    button = false;
+    axisX = 0;
+    axisY = 0;
+}
 
 void
 Joystick::resetConfig()

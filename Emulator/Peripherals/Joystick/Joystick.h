@@ -77,18 +77,12 @@ public:
         return *this;
     }
 
-    template <class T>
-    void serialize(T& worker)
-    {
-        worker
-
-        << button
-        << axisX
-        << axisY
-        << bulletCounter
-        << nextAutofireFrame;
-
-    } SERIALIZERS(serialize);
+    template <class T> void serialize(T& worker) { }
+    void operator << (SerChecker &worker) override { serialize(worker); }
+    void operator << (SerCounter &worker) override { serialize(worker); }
+    void operator << (SerResetter &worker) override;
+    void operator << (SerReader &worker) override;
+    void operator << (SerWriter &worker) override { serialize(worker); }
 
 
     //
