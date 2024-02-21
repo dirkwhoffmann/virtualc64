@@ -50,7 +50,7 @@ namespace vc64 {
  *                                       isPoweredOn()
  *
  * When an instance of the Thread class is created, a new thread is started
- * which executes the thread's main() function. This function executes
+ * which executes the thread's runLoop() function. This function executes
  * a loop which periodically calls function execute(). After each iteration,
  * the thread is put to sleep to synchronize timing.
  *
@@ -181,7 +181,7 @@ private:
     void resync();
 
     // The main entry point (called when the thread is created)
-    void main();
+    void runLoop();
 
     // Computes all missing frames
     void execute();

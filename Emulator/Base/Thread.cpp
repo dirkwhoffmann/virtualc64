@@ -34,7 +34,7 @@ Thread::launch()
     assert(!thread.joinable());
 
     // Start the thread and enter the main function
-    thread = std::thread(&Thread::main, this);
+    thread = std::thread(&Thread::runLoop, this);
 }
 
 void
@@ -106,10 +106,8 @@ Thread::computeStats()
 }
 
 void
-Thread::main()
+Thread::runLoop()
 {
-    debug(RUN_DEBUG, "main()\n");
-
     baseTime = util::Time::now();
 
     while (state != STATE_HALTED) {
