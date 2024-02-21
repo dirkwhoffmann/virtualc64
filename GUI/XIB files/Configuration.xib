@@ -1683,7 +1683,7 @@ Gw
                                         <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qYR-eZ-gM3">
                                             <rect key="frame" x="97" y="69" width="142" height="28"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="5" tickMarkPosition="above" numberOfTickMarks="6" allowsTickMarkValuesOnly="YES" sliderType="linear" id="3xI-sF-6tx"/>
+                                            <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="12" tickMarkPosition="above" numberOfTickMarks="13" allowsTickMarkValuesOnly="YES" sliderType="linear" id="3xI-sF-6tx"/>
                                             <connections>
                                                 <action selector="prfRunAheadAction:" target="-2" id="c61-wD-2gB"/>
                                             </connections>

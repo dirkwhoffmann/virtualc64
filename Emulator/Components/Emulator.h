@@ -36,9 +36,6 @@ class Emulator : public Thread, public Inspectable<EmulatorInfo, EmulatorStats> 
     // The run-ahead instance
     C64 ahead = C64(*this);
 
-    // Indicates if the run-ahead instance needs an update
-    bool updateRunAhead = true;
-    
 public:
 
     // Storage for external events

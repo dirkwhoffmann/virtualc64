@@ -199,7 +199,7 @@ public:
     u8 rasterCycle = 1;
 
 private:
-    
+
     /* Indicates whether C64 is running in ultimax mode. Ultimax mode can be
      * enabled by external cartridges by pulling game line low and keeping
      * exrom line high. In ultimax mode, most of the C64's RAM and ROM is
@@ -209,6 +209,12 @@ private:
 
     // Duration of a CPU cycle in 1/10 nano seconds
     i64 durationOfOneCycle;
+
+    /* Indicates whether the state has been altered by an external event.
+     * This flag is used to determine whether the run-ahead instance needs to
+     * be recreated.
+     */
+    bool isDirty = false;
 
 
     //
@@ -225,12 +231,6 @@ public:
 
     // Returns a textual description for an event
     static const char *eventName(EventSlot slot, EventID id);
-
-
-    //
-    // Class methods
-    //
-
 
 
     //
@@ -290,6 +290,9 @@ public:
     // Updates the clock frequency and all variables derived from it
     void updateClockFrequency();
     
+    // Indicates that the run-ahead instance needs an update
+    void markAsDirty() { isDirty = true; }
+
     
     //
     // Analyzing

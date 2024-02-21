@@ -28,7 +28,7 @@ debugflag SNP_DEBUG       = 0; // Serializing (snapshots)
 // Run ahead
 debugflag RUA_DEBUG       = 1; // Run ahead
 debugflag RUA_TEXTURE     = 0; // 0 = Auto, 1 = Original, 2 = Run ahead
-debugflag RUA_ON_STEROIDS = 1; // Update the run-ahead instance in every frame
+debugflag RUA_ON_STEROIDS = 0; // Update the run-ahead instance in every frame
 
 // CPU
 debugflag CPU_DEBUG       = 0; // CPU

@@ -69,7 +69,8 @@ public:
         CLONE_ARRAY(kbMatrixRowCnt)
         CLONE_ARRAY(kbMatrixColCnt)
         CLONE(shiftLock)
-
+        CLONE(pending)
+        
         return *this;
     }
 

@@ -71,7 +71,8 @@ public:
 
         CLONE(mouse)
         CLONE(joystick)
-
+        CLONE(device)
+        
         return *this;
     }
 

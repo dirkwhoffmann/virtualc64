@@ -73,18 +73,21 @@ void
 VirtualC64::configure(C64Model model)
 {
     Emulator::configure(model);
+    main.markAsDirty();
 }
 
 void
 VirtualC64::configure(Option option, i64 value)
 {
     Emulator::configure(option, value);
+    main.markAsDirty();
 }
 
 void
 VirtualC64::configure(Option option, long id, i64 value)
 {
     Emulator::configure(option, id, value);
+    main.markAsDirty();
 }
 
 i64
@@ -103,55 +106,15 @@ void
 VirtualC64::setConfigItem(Option option, i64 value)
 {
     Emulator::setConfigItem(option, value);
+    main.markAsDirty();
 }
 
 void
 VirtualC64::put(const Cmd &cmd)
 {
-    cmdQueue.put(cmd);
-
-    if (cmd.type == CMD_HALT) {
-        join();
-    }
+    Emulator::put(cmd);
 }
 
-/*
-void
-VirtualC64::put(CmdType type, i64 payload)
-{
-    put(Cmd(type, payload));
-}
-
-void
-VirtualC64::put(CmdType type, KeyCmd payload)
-{
-    put(Cmd(type, payload));
-}
-
-void 
-VirtualC64::put(CmdType type, CoordCmd payload)
-{
-    put(Cmd(type, payload));
-}
-
-void
-VirtualC64::put(CmdType type, GamePadCmd payload)
-{
-    put( Cmd { .type = type, .action = payload } );
-}
-
-void
-VirtualC64::put(CmdType type, TapeCmd payload)
-{
-    put( Cmd { .type = type, .tape = payload } );
-}
-
-void
-VirtualC64::put(CmdType type, AlarmCmd payload)
-{
-    put( Cmd { .type = type, .alarm = payload } );
-}
-*/
 
 //
 // C64
@@ -165,6 +128,7 @@ VirtualC64::C64_API::hardReset()
     {   SUSPENDED
 
         c64.hardReset();
+        c64.markAsDirty();
     }
 }
 
@@ -176,6 +140,7 @@ VirtualC64::C64_API::softReset()
     {   SUSPENDED
 
         c64.hardReset();
+        c64.markAsDirty();
     }
 }
 
@@ -260,36 +225,43 @@ VirtualC64::C64_API::loadSnapshot(const Snapshot &snapshot)
 void VirtualC64::C64_API::loadRom(const string &path)
 {
     c64.loadRom(path);
+    c64.markAsDirty();
 }
 
 void VirtualC64::C64_API::loadRom(const RomFile &file)
 {
     c64.loadRom(file);
+    c64.markAsDirty();
 }
 
 void VirtualC64::C64_API::deleteRom(RomType type)
 {
     c64.deleteRom(type);
+    c64.markAsDirty();
 }
 
 void VirtualC64::C64_API::saveRom(RomType rom, const string &path)
 {
     c64.saveRom(rom, path);
+    c64.markAsDirty();
 }
 
 void VirtualC64::C64_API::flash(const AnyFile &file)
 {
     c64.flash(file);
+    c64.markAsDirty();
 }
 
 void VirtualC64::C64_API::flash(const AnyCollection &file, isize item)
 {
     c64.flash(file, item);
+    c64.markAsDirty();
 }
 
 void VirtualC64::C64_API::flash(const FileSystem &fs, isize item)
 {
     c64.flash(fs, item);
+    c64.markAsDirty();
 }
 
 
@@ -753,11 +725,13 @@ bool VirtualC64::KBD_API::isPressed(C64Key key) const
 void VirtualC64::KBD_API::autoType(const string &text)
 {
     keyboard.autoType(text);
+    c64.markAsDirty();
 }
 
 void VirtualC64::KBD_API::abortAutoTyping() 
 {
     keyboard.abortAutoTyping();
+    c64.markAsDirty();
 }
 
 
@@ -768,6 +742,7 @@ void VirtualC64::KBD_API::abortAutoTyping()
 void VirtualC64::JOYSTICK_API::trigger(GamePadAction event)
 {
     joystick.trigger(event);
+    c64.markAsDirty();
 }
 
 
@@ -785,12 +760,14 @@ void
 VirtualC64::DATASETTE_API::insertTape(TAPFile &file)
 {
     datasette.insertTape(file);
+    c64.markAsDirty();
 }
 
 void 
 VirtualC64::DATASETTE_API::ejectTape()
 {
     datasette.ejectTape();
+    c64.markAsDirty();
 }
 
 
@@ -811,16 +788,19 @@ bool VirtualC64::MOUSE_API::detectShakeDxDy(double dx, double dy)
 void VirtualC64::MOUSE_API::setXY(double x, double y)
 {
     mouse.setXY(x, y);
+    c64.markAsDirty();
 }
 
 void VirtualC64::MOUSE_API::setDxDy(double dx, double dy)
 {
     mouse.setDxDy(dx, dy);
+    c64.markAsDirty();
 }
 
 void VirtualC64::MOUSE_API::trigger(GamePadAction event)
 {
     mouse.trigger(event);
+    c64.markAsDirty();
 }
 
 
@@ -975,42 +955,49 @@ void
 VirtualC64::EXP_PORT_API::attachCartridge(const string &path, bool reset)
 {
     expansionport.attachCartridge(path, reset);
+    c64.markAsDirty();
 }
 
 void 
 VirtualC64::EXP_PORT_API::attachCartridge(CRTFile *c, bool reset)
 {
     expansionport.attachCartridge(c, reset);
+    c64.markAsDirty();
 }
 
 void 
 VirtualC64::EXP_PORT_API::attachCartridge(Cartridge *c)
 {
     expansionport.attachCartridge(c);
+    c64.markAsDirty();
 }
 
 void 
 VirtualC64::EXP_PORT_API::attachReu(isize capacity)
 {
     expansionport.attachReu(capacity);
+    c64.markAsDirty();
 }
 
 void 
 VirtualC64::EXP_PORT_API::attachGeoRam(isize capacity)
 {
     expansionport.attachGeoRam(capacity);
+    c64.markAsDirty();
 }
 
 void 
 VirtualC64::EXP_PORT_API::attachIsepicCartridge()
 {
     expansionport.attachIsepicCartridge();
+    c64.markAsDirty();
 }
 
 void 
 VirtualC64::EXP_PORT_API::detachCartridge()
 {
     expansionport.detachCartridge();
+    c64.markAsDirty();
 }
 
 
@@ -1034,42 +1021,40 @@ void
 VirtualC64::DRIVE_API::insertBlankDisk(DOSType fstype, PETName<16> name)
 {
     drive.insertNewDisk(fstype, name);
+    c64.markAsDirty();
 }
 
 void
 VirtualC64::DRIVE_API::insertD64(const D64File &d64, bool wp)
 {
     drive.insertD64(d64, wp);
+    c64.markAsDirty();
 }
 
 void
 VirtualC64::DRIVE_API::insertG64(const G64File &g64, bool wp)
 {
     drive.insertG64(g64, wp);
+    c64.markAsDirty();
 }
 
 void
 VirtualC64::DRIVE_API::insertCollection(AnyCollection &archive, bool wp)
 {
     drive.insertCollection(archive, wp);
+    c64.markAsDirty();
 }
 
 void
 VirtualC64::DRIVE_API::insertFileSystem(const class FileSystem &device, bool wp)
 {
     drive.insertFileSystem(device, wp);
+    c64.markAsDirty();
 }
 
 void
 VirtualC64::DRIVE_API::ejectDisk()
 {
     drive.ejectDisk();
+    c64.markAsDirty();
 }
-
-/*
-u8
-VirtualC64::DRIVE_API::readBitFromHead() const
-{
-    return drive.readBitFromHead();
-}
-*/

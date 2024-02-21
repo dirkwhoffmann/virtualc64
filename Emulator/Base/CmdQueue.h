@@ -51,7 +51,7 @@ public:
 
     // Sends a command
     void put(const Cmd &cmd);
-    void put(CmdType type, KeyCmd payload);
+    // void put(CmdType type, KeyCmd payload);
 
     // Polls a command
     bool poll(Cmd &cmd);

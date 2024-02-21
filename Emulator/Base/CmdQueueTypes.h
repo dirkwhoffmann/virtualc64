@@ -55,10 +55,6 @@ enum_long(CMD_TYPE)
     CMD_JOY_EVENT,
 
     // Floppy disks
-    /*
-    CMD_DSK_PROTECT,
-    CMD_DSK_UNPROTECT,
-    */
     CMD_DSK_TOGGLE_WP,
     CMD_DSK_MODIFIED,
     CMD_DSK_UNMODIFIED,

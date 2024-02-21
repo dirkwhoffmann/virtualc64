@@ -674,8 +674,8 @@ Emulator::setConfigItem(Option option, i64 value)
 
         case OPT_RUN_AHEAD:
 
-            if (value < 0 || value > 5) {
-                throw VC64Error(ERROR_OPT_INVARG, "0...5");
+            if (value < 0 || value > 12) {
+                throw VC64Error(ERROR_OPT_INVARG, "0...12");
             }
 
             config.runAhead = isize(value);
@@ -819,6 +819,8 @@ Emulator::update()
 
         debug(CMD_DEBUG, "Command: %s\n", CmdTypeEnum::key(cmd.type));
 
+        main.markAsDirty();
+
         switch (cmd.type) {
 
             case CMD_POWER_ON:  powerOn();  break;
@@ -910,16 +912,18 @@ Emulator::computeFrame()
 
     if (config.runAhead) {
 
-        if (updateRunAhead || RUA_ON_STEROIDS) {
+        if (main.isDirty || RUA_ON_STEROIDS) {
+
+            debug(RUA_DEBUG, "%lld: Recomputing run-ahead instance\n", main.frame);
 
             // Recreate the runahead instance from scratch
-            ahead = main; updateRunAhead = false;
+            ahead = main; main.isDirty = false;
 
             if (debugBuild && ahead != main) {
 
                 main.dump(Category::Checksums);
                 ahead.dump(Category::Checksums);
-                fatal("Corrupted run-ahead clone");
+                fatal("Corrupted run-ahead clone detected");
             }
 
             // Advance to the proper frame
@@ -931,8 +935,10 @@ Emulator::computeFrame()
             ahead.execute();
         }
 
+        /*
         debug(RUA_DEBUG, "C64: %lld:%d Runahead: %lld:%d\n",
               main.frame, main.scanline, ahead.frame, ahead.scanline);
+        */
     }
 }
 
@@ -960,7 +966,7 @@ void
 Emulator::put(const Cmd &cmd)
 {
     cmdQueue.put(cmd);
-
+    
     if (cmd.type == CMD_HALT) {
         join();
     }
