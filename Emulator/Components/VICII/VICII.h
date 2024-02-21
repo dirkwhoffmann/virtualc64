@@ -55,9 +55,10 @@ public:
     typedef void (VICII::*ViciiFunc)(void);
     ViciiFunc vicfunc[66];
 
-    // Indicates if VICII is run in headless mode (skipping pixel synthesis)
-    bool headless = false;
-    
+    // Indicates if VICII runs in headless mode (skipping pixel synthesis)
+    // DEPRECATED. USE VARIABLE deprecated in C64 CLASS INSTEAD
+    [[deprecated]] bool headless = false;
+
     
     //
     // I/O space (CPU accessible)
@@ -616,7 +617,6 @@ public:
 
         CLONE(dmaDebugger)
 
-        CLONE(headless)
         CLONE(reg)
         CLONE(rasterIrqLine)
         CLONE(latchedLPX)

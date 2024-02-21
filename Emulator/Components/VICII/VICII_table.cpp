@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "VICII.h"
+#include "C64.h"
 
 namespace vc64 {
 
@@ -24,7 +25,7 @@ VICII::updateVicFunctionTable()
     vicfunc[64] = nullptr;
     vicfunc[65] = nullptr;
 
-    u16 flags = (dmaDebug() ? DEBUG_CYCLE : 0)  | (headless ? HEADLESS_CYCLE : 0);
+    u16 flags = (dmaDebug() ? DEBUG_CYCLE : 0)  | (c64.getHeadless() ? HEADLESS_CYCLE : 0);
 
     // Assign model specific execution functions
     switch (config.revision) {

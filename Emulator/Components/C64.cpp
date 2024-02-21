@@ -326,6 +326,16 @@ C64::updateClockFrequency()
     durationOfOneCycle = 10000000000 / vic.getFrequency();
 }
 
+void 
+C64::setHeadless(bool enable)
+{
+    if (headless != enable) {
+
+        headless = enable;
+        vic.updateVicFunctionTable();
+    }
+}
+
 InspectionTarget
 C64::getInspectionTarget() const
 {
@@ -528,8 +538,11 @@ C64::fastForward(isize frames)
 {
     auto target = frame + frames;
 
-    // Execute until the target frame has been reached
-    while (frame != target) execute();
+    while (frame < target) {
+
+        // Compute all frames except the last one in headless mode
+        execute();
+    }
 }
 
 void

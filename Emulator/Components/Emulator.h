@@ -132,7 +132,9 @@ private:
     isize missingFrames() const override;
     void update() override;
     bool shouldWarp();
+
     void computeFrame() override;
+    void recreateRunAheadInstance();
 
     void _powerOn() override { main.powerOn(); }
     void _powerOff() override { main.powerOff(); }

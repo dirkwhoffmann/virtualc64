@@ -908,38 +908,49 @@ Emulator::update()
 void
 Emulator::computeFrame()
 {
-    main.execute();
+    // Check if this frame should be executed in headless mode
+    auto headless = isWarping() && getConfigItem(OPT_VIC_POWER_SAVE) && (main.frame & 7) != 0;
 
     if (config.runAhead) {
 
-        if (main.isDirty || RUA_ON_STEROIDS) {
+        // Run the main instance
+        main.setHeadless(true);
+        main.execute();
 
-            debug(RUA_DEBUG, "%lld: Recomputing run-ahead instance\n", main.frame);
+        // Recreate the run-ahead instance if necessary
+        if (main.isDirty || RUA_ON_STEROIDS) recreateRunAheadInstance();
 
-            // Recreate the runahead instance from scratch
-            ahead = main; main.isDirty = false;
+        // Run the runahead instance
+        ahead.setHeadless(headless);
+        ahead.execute();
 
-            if (debugBuild && ahead != main) {
+    } else {
 
-                main.dump(Category::Checksums);
-                ahead.dump(Category::Checksums);
-                fatal("Corrupted run-ahead clone detected");
-            }
-
-            // Advance to the proper frame
-            ahead.fastForward(config.runAhead);
-
-        } else {
-
-            // Run the runahead instance in parallel to the main instance
-            ahead.execute();
-        }
-
-        /*
-        debug(RUA_DEBUG, "C64: %lld:%d Runahead: %lld:%d\n",
-              main.frame, main.scanline, ahead.frame, ahead.scanline);
-        */
+        // Only run the main instance
+        main.setHeadless(headless);
+        main.execute();
     }
+}
+
+void 
+Emulator::recreateRunAheadInstance()
+{
+    debug(RUA_DEBUG, "%lld: Recomputing run-ahead instance\n", main.frame);
+
+    // Recreate the runahead instance from scratch
+    ahead = main; 
+    main.isDirty = false;
+
+    if (debugBuild && ahead != main) {
+
+        main.dump(Category::Checksums);
+        ahead.dump(Category::Checksums);
+        fatal("Corrupted run-ahead clone detected");
+    }
+
+    // Advance to the proper frame
+    ahead.setHeadless(true);
+    ahead.fastForward(config.runAhead - 1);
 }
 
 u32 *

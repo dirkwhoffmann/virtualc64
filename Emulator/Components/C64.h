@@ -187,15 +187,10 @@ public:
     // The total number of frames drawn since power up
     u64 frame = 0;
     
-    /* The currently drawn scanline. The first scanline is numbered 0. The
-     * number of the last scanline varies between PAL and NTSC models.
-     */
+    // The currently drawn scanline (first scanline = 0)
     u16 scanline = 0;
     
-    /* The currently executed scanline cycle. The first scanline cycle is
-     * numbered 1. The number of the last cycle varies between PAL and NTSC
-     * models.
-     */
+    // The currently executed scanline cycle (first cylce = 1)
     u8 rasterCycle = 1;
 
 private:
@@ -207,14 +202,20 @@ private:
      */
     bool ultimax = false;
 
-    // Duration of a CPU cycle in 1/10 nano seconds
-    i64 durationOfOneCycle;
+    /* Indicates if headless mode is activated. If yes, the pixel drawing code
+     * is skipped. Headless mode is used to accelerate warp mode and to speed
+     * up the computation of some frames in run-ahead mode.
+     */
+    bool headless = false;
 
     /* Indicates whether the state has been altered by an external event.
      * This flag is used to determine whether the run-ahead instance needs to
      * be recreated.
      */
     bool isDirty = false;
+
+    // Duration of a CPU cycle in 1/10 nano seconds
+    i64 durationOfOneCycle;
 
 
     //
@@ -293,7 +294,11 @@ public:
     // Indicates that the run-ahead instance needs an update
     void markAsDirty() { isDirty = true; }
 
-    
+    // Enables or disables headless mode
+    bool getHeadless() const { return headless; }
+    void setHeadless(bool enable);
+
+
     //
     // Analyzing
     //

@@ -1071,9 +1071,6 @@ VICII::beginFrame()
     
     // Clear statistics
     clearStats();
-    
-    // Check if this frame should be executed in headless mode
-    headless = emulator.isWarping() && config.powerSave && (c64.frame & 7) != 0;
 }
 
 void
