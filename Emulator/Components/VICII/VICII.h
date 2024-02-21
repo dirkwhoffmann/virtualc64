@@ -1249,24 +1249,24 @@ public:
 
 #define DRAW_SPRITES_DMA1 \
 assert(isFirstDMAcycle); assert(!isSecondDMAcycle); \
-if (!headless) { drawSpritesSlowPath(); }
+if (!(flags & HEADLESS_CYCLE)) { drawSpritesSlowPath(); }
 
 #define DRAW_SPRITES_DMA2 \
 assert(!isFirstDMAcycle); assert(isSecondDMAcycle); \
-if (!headless) { drawSpritesSlowPath(); }
+if (!(flags & HEADLESS_CYCLE)) { drawSpritesSlowPath(); }
 
 #define DRAW_SPRITES \
 assert(!isFirstDMAcycle && !isSecondDMAcycle); \
-if (spriteDisplay && !headless) { drawSprites(); }
-    
+if (spriteDisplay && !(flags & HEADLESS_CYCLE)) { drawSprites(); }
+
 #define DRAW_SPRITES59 \
-if ((spriteDisplayDelayed || spriteDisplay || isSecondDMAcycle) && !headless) \
+if ((spriteDisplayDelayed || spriteDisplay || isSecondDMAcycle) && !(flags & HEADLESS_CYCLE)) \
 { drawSpritesSlowPath(); }
     
-#define DRAW   if (!vblank && !headless) { drawCanvas(); drawBorder(); };
-#define DRAW17 if (!vblank && !headless) { drawCanvas(); drawBorder17(); };
-#define DRAW55 if (!vblank && !headless) { drawCanvas(); drawBorder55(); };
-#define DRAW59 if (!vblank && !headless) { drawCanvas(); drawBorder(); };
+#define DRAW   if (!vblank && !(flags & HEADLESS_CYCLE)) { drawCanvas(); drawBorder(); };
+#define DRAW17 if (!vblank && !(flags & HEADLESS_CYCLE)) { drawCanvas(); drawBorder17(); };
+#define DRAW55 if (!vblank && !(flags & HEADLESS_CYCLE)) { drawCanvas(); drawBorder55(); };
+#define DRAW59 if (!vblank && !(flags & HEADLESS_CYCLE)) { drawCanvas(); drawBorder(); };
 
 #define END_CYCLE \
 dataBusPhi2 = 0xFF; \
