@@ -31,11 +31,14 @@ class Emulator : public Thread, public Inspectable<EmulatorInfo, EmulatorStats> 
     EmulatorConfig config = { };
 
     // The virtual C64
-    C64 _c64 = C64(*this);
+    C64 main = C64(*this);
 
-    // Experimental
-    C64 runahead = C64(*this);
+    // The run-ahead instance
+    C64 ahead = C64(*this);
 
+    // Indicates if the run-ahead instance needs an update
+    bool updateRunAhead = true;
+    
 public:
 
     // Storage for external events
@@ -134,15 +137,15 @@ private:
     bool shouldWarp();
     void computeFrame() override;
 
-    void _powerOn() override { _c64.powerOn(); }
-    void _powerOff() override { _c64.powerOff(); }
-    void _pause() override { _c64.pause(); }
-    void _run() override { _c64.run(); }
-    void _halt() override { _c64.halt(); }
-    void _warpOn() override { _c64.warpOn(); }
-    void _warpOff() override { _c64.warpOff(); }
-    void _trackOn() override { _c64.trackOn(); }
-    void _trackOff() override { _c64.trackOff(); }
+    void _powerOn() override { main.powerOn(); }
+    void _powerOff() override { main.powerOff(); }
+    void _pause() override { main.pause(); }
+    void _run() override { main.run(); }
+    void _halt() override { main.halt(); }
+    void _warpOn() override { main.warpOn(); }
+    void _warpOff() override { main.warpOff(); }
+    void _trackOn() override { main.trackOn(); }
+    void _trackOff() override { main.trackOff(); }
 
     
     //
@@ -178,7 +181,7 @@ public:
     
     class Emulator &emulator;
 
-    API(Emulator& ref) : References(ref._c64), emulator(ref) { }
+    API(Emulator& ref) : References(ref.main), emulator(ref) { }
 
     void suspend() { emulator.suspend(); }
     void resume() { emulator.resume(); }

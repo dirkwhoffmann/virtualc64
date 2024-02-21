@@ -39,12 +39,29 @@ Emulator::~Emulator()
 }
 
 void
+Emulator::launch(const void *listener, Callback *func)
+{
+    // Add listener
+    main.msgQueue.setListener(listener, func);
+
+    // Run the initialization procedure
+    initialize();
+
+    // Launch the emulator thread
+    Thread::launch();
+}
+
+void
 Emulator::initialize()
 {
+    // Initialize all components
     resetConfig();
-    _c64.initialize();
-    runahead.initialize();
-    runahead.reset(true);
+    main.initialize();
+    ahead.initialize();
+
+    // Perform a hard reset
+    main.hardReset();
+    ahead.hardReset();
 }
 
 void 
@@ -149,7 +166,7 @@ Emulator::configure(Option option, i64 value)
         case OPT_HOST_SAMPLE_RATE:
 
             host.setConfigItem(option, value);
-            _c64.muxer.setConfigItem(option, value);
+            main.muxer.setConfigItem(option, value);
             break;
 
         case OPT_HOST_REFRESH_RATE:
@@ -171,7 +188,7 @@ Emulator::configure(Option option, i64 value)
         case OPT_SB_COLLISIONS:
         case OPT_GLUE_LOGIC:
 
-            _c64.vic.setConfigItem(option, value);
+            main.vic.setConfigItem(option, value);
             break;
 
         case OPT_CUT_LAYERS:
@@ -180,28 +197,28 @@ Emulator::configure(Option option, i64 value)
         case OPT_DMA_DEBUG_MODE:
         case OPT_DMA_DEBUG_OPACITY:
 
-            _c64.vic.dmaDebugger.setConfigItem(option, value);
+            main.vic.dmaDebugger.setConfigItem(option, value);
             break;
 
         case OPT_POWER_GRID:
 
-            _c64.supply.setConfigItem(option, value);
+            main.supply.setConfigItem(option, value);
             break;
 
         case OPT_CIA_REVISION:
         case OPT_TIMER_B_BUG:
 
-            _c64.cia1.setConfigItem(option, value);
-            _c64.cia2.setConfigItem(option, value);
+            main.cia1.setConfigItem(option, value);
+            main.cia2.setConfigItem(option, value);
             break;
 
         case OPT_SID_ENABLE:
         case OPT_SID_ADDRESS:
 
-            _c64.muxer.setConfigItem(option, 0, value);
-            _c64.muxer.setConfigItem(option, 1, value);
-            _c64.muxer.setConfigItem(option, 2, value);
-            _c64.muxer.setConfigItem(option, 3, value);
+            main.muxer.setConfigItem(option, 0, value);
+            main.muxer.setConfigItem(option, 1, value);
+            main.muxer.setConfigItem(option, 2, value);
+            main.muxer.setConfigItem(option, 3, value);
 
         case OPT_SID_REVISION:
         case OPT_SID_FILTER:
@@ -213,19 +230,19 @@ Emulator::configure(Option option, i64 value)
         case OPT_AUDVOLL:
         case OPT_AUDVOLR:
 
-            _c64.muxer.setConfigItem(option, value);
+            main.muxer.setConfigItem(option, value);
             break;
 
         case OPT_RAM_PATTERN:
 
-            _c64.mem.setConfigItem(option, value);
+            main.mem.setConfigItem(option, value);
             break;
 
         case OPT_SAVE_ROMS:
 
-            _c64.mem.setConfigItem(option, value);
-            _c64.drive8.mem.setConfigItem(option, value);
-            _c64.drive9.mem.setConfigItem(option, value);
+            main.mem.setConfigItem(option, value);
+            main.drive8.mem.setConfigItem(option, value);
+            main.drive9.mem.setConfigItem(option, value);
             break;
 
         case OPT_DRV_AUTO_CONFIG:
@@ -244,28 +261,28 @@ Emulator::configure(Option option, i64 value)
         case OPT_DRV_INSERT_VOL:
         case OPT_DRV_EJECT_VOL:
 
-            _c64.drive8.setConfigItem(option, value);
-            _c64.drive9.setConfigItem(option, value);
+            main.drive8.setConfigItem(option, value);
+            main.drive9.setConfigItem(option, value);
             break;
 
         case OPT_DAT_MODEL:
         case OPT_DAT_CONNECT:
-            _c64.datasette.setConfigItem(option, value);
+            main.datasette.setConfigItem(option, value);
 
         case OPT_MOUSE_MODEL:
         case OPT_SHAKE_DETECTION:
         case OPT_MOUSE_VELOCITY:
 
-            _c64.port1.mouse.setConfigItem(option, value);
-            _c64.port2.mouse.setConfigItem(option, value);
+            main.port1.mouse.setConfigItem(option, value);
+            main.port2.mouse.setConfigItem(option, value);
             break;
 
         case OPT_AUTOFIRE:
         case OPT_AUTOFIRE_BULLETS:
         case OPT_AUTOFIRE_DELAY:
 
-            _c64.port1.joystick.setConfigItem(option, value);
-            _c64.port2.joystick.setConfigItem(option, value);
+            main.port1.joystick.setConfigItem(option, value);
+            main.port2.joystick.setConfigItem(option, value);
             break;
 
         default:
@@ -274,7 +291,7 @@ Emulator::configure(Option option, i64 value)
     }
 
     if (std::find(quiet.begin(), quiet.end(), option) == quiet.end()) {
-        _c64.msgQueue.put(MSG_CONFIG, option);
+        main.msgQueue.put(MSG_CONFIG, option);
     }
 }
 
@@ -309,15 +326,15 @@ Emulator::configure(Option option, long id, i64 value)
         case OPT_DMA_DEBUG_CHANNEL:
         case OPT_DMA_DEBUG_COLOR:
 
-            _c64.vic.dmaDebugger.setConfigItem(option, id, value);
+            main.vic.dmaDebugger.setConfigItem(option, id, value);
             break;
 
         case OPT_CIA_REVISION:
         case OPT_TIMER_B_BUG:
 
             switch (id) {
-                case 0: _c64.cia1.setConfigItem(option, value); break;
-                case 1: _c64.cia2.setConfigItem(option, value); break;
+                case 0: main.cia1.setConfigItem(option, value); break;
+                case 1: main.cia2.setConfigItem(option, value); break;
                 default: fatalError;
             }
             break;
@@ -327,8 +344,8 @@ Emulator::configure(Option option, long id, i64 value)
         case OPT_MOUSE_VELOCITY:
 
             switch (id) {
-                case PORT_1: _c64.port1.mouse.setConfigItem(option, value); break;
-                case PORT_2: _c64.port2.mouse.setConfigItem(option, value); break;
+                case PORT_1: main.port1.mouse.setConfigItem(option, value); break;
+                case PORT_2: main.port2.mouse.setConfigItem(option, value); break;
                 default: fatalError;
             }
             break;
@@ -338,8 +355,8 @@ Emulator::configure(Option option, long id, i64 value)
         case OPT_AUTOFIRE_DELAY:
 
             switch (id) {
-                case PORT_1: _c64.port1.joystick.setConfigItem(option, value); break;
-                case PORT_2: _c64.port2.joystick.setConfigItem(option, value); break;
+                case PORT_1: main.port1.joystick.setConfigItem(option, value); break;
+                case PORT_2: main.port2.joystick.setConfigItem(option, value); break;
                 default: fatalError;
             }
             break;
@@ -356,7 +373,7 @@ Emulator::configure(Option option, long id, i64 value)
         case OPT_AUDVOLL:
         case OPT_AUDVOLR:
 
-            _c64.muxer.setConfigItem(option, id, value);
+            main.muxer.setConfigItem(option, id, value);
             break;
 
         case OPT_DRV_AUTO_CONFIG:
@@ -376,8 +393,8 @@ Emulator::configure(Option option, long id, i64 value)
         case OPT_DRV_EJECT_VOL:
 
             switch (id) {
-                case DRIVE8: _c64.drive8.setConfigItem(option, value); break;
-                case DRIVE9: _c64.drive9.setConfigItem(option, value); break;
+                case DRIVE8: main.drive8.setConfigItem(option, value); break;
+                case DRIVE9: main.drive9.setConfigItem(option, value); break;
                 default: fatalError;
             }
             break;
@@ -388,7 +405,7 @@ Emulator::configure(Option option, long id, i64 value)
     }
 
     if (std::find(quiet.begin(), quiet.end(), option) == quiet.end()) {
-        _c64.msgQueue.put(MSG_CONFIG, option);
+        main.msgQueue.put(MSG_CONFIG, option);
     }
 }
 
@@ -518,7 +535,7 @@ Emulator::getConfigItem(Option option) const
         case OPT_CONTRAST:
         case OPT_SATURATION:
 
-            return _c64.vic.getConfigItem(option);
+            return main.vic.getConfigItem(option);
 
         case OPT_DMA_DEBUG_ENABLE:
         case OPT_DMA_DEBUG_MODE:
@@ -526,17 +543,17 @@ Emulator::getConfigItem(Option option) const
         case OPT_CUT_LAYERS:
         case OPT_CUT_OPACITY:
 
-            return _c64.vic.dmaDebugger.getConfigItem(option);
+            return main.vic.dmaDebugger.getConfigItem(option);
 
         case OPT_CIA_REVISION:
         case OPT_TIMER_B_BUG:
 
-            assert(_c64.cia1.getConfigItem(option) == _c64.cia2.getConfigItem(option));
-            return _c64.cia1.getConfigItem(option);
+            assert(main.cia1.getConfigItem(option) == main.cia2.getConfigItem(option));
+            return main.cia1.getConfigItem(option);
 
         case OPT_POWER_GRID:
 
-            return _c64.supply.getConfigItem(option);
+            return main.supply.getConfigItem(option);
 
         case OPT_SID_REVISION:
         case OPT_SID_POWER_SAVE:
@@ -546,17 +563,17 @@ Emulator::getConfigItem(Option option) const
         case OPT_AUDVOLL:
         case OPT_AUDVOLR:
 
-            return _c64.muxer.getConfigItem(option);
+            return main.muxer.getConfigItem(option);
 
         case OPT_RAM_PATTERN:
         case OPT_SAVE_ROMS:
 
-            return _c64.mem.getConfigItem(option);
+            return main.mem.getConfigItem(option);
 
         case OPT_DAT_MODEL:
         case OPT_DAT_CONNECT:
 
-            return _c64.datasette.getConfigItem(option);
+            return main.datasette.getConfigItem(option);
 
         default:
             fatalError;
@@ -566,14 +583,14 @@ Emulator::getConfigItem(Option option) const
 i64
 Emulator::getConfigItem(Option option, long id) const
 {
-    const Drive &drive = id == DRIVE8 ? _c64.drive8 : _c64.drive9;
+    const Drive &drive = id == DRIVE8 ? main.drive8 : main.drive9;
 
     switch (option) {
 
         case OPT_DMA_DEBUG_CHANNEL:
         case OPT_DMA_DEBUG_COLOR:
 
-            return _c64.vic.dmaDebugger.getConfigItem(option, id);
+            return main.vic.dmaDebugger.getConfigItem(option, id);
 
         case OPT_SID_ENABLE:
         case OPT_SID_ADDRESS:
@@ -581,7 +598,7 @@ Emulator::getConfigItem(Option option, long id) const
         case OPT_AUDVOL:
 
             assert(id >= 0 && id <= 3);
-            return _c64.muxer.getConfigItem(option, id);
+            return main.muxer.getConfigItem(option, id);
 
         case OPT_DRV_CONNECT:
         case OPT_DRV_AUTO_CONFIG:
@@ -605,16 +622,16 @@ Emulator::getConfigItem(Option option, long id) const
         case OPT_SHAKE_DETECTION:
         case OPT_MOUSE_VELOCITY:
 
-            if (id == PORT_1) return _c64.port1.mouse.getConfigItem(option);
-            if (id == PORT_2) return _c64.port2.mouse.getConfigItem(option);
+            if (id == PORT_1) return main.port1.mouse.getConfigItem(option);
+            if (id == PORT_2) return main.port2.mouse.getConfigItem(option);
             fatalError;
 
         case OPT_AUTOFIRE:
         case OPT_AUTOFIRE_BULLETS:
         case OPT_AUTOFIRE_DELAY:
 
-            if (id == PORT_1) return _c64.port1.joystick.getConfigItem(option);
-            if (id == PORT_2) return _c64.port2.joystick.getConfigItem(option);
+            if (id == PORT_1) return main.port1.joystick.getConfigItem(option);
+            if (id == PORT_2) return main.port2.joystick.getConfigItem(option);
             fatalError;
 
         default:
@@ -710,19 +727,23 @@ Emulator::_dump(Category category, std::ostream& os) const
 
     if (category == Category::RunAhead) {
 
-        os << tab("C64 frame");
-        os << dec(_c64.frame);
-        os << " (" << dec(_c64.scanline) << "," << dec(_c64.rasterCycle) << ")" << std::endl;
-        os << tab("C64 cycle");
-        os << dec(_c64.cpu.clock) << std::endl;
+        os << "Primary instance:" << std::endl << std::endl;
 
-        os << std::endl;
+        os << tab("Frame");
+        os << dec(main.frame) << std::endl;
+        os << tab("Beam");
+        os << "(" << dec(main.scanline) << "," << dec(main.rasterCycle) << ")" << std::endl;
+        os << tab("Cycle");
+        os << dec(main.cpu.clock) << std::endl << std::endl;
 
-        os << tab("Run-ahead frame");
-        os << dec(runahead.frame);
-        os << " (" << dec(runahead.scanline) << "," << dec(runahead.rasterCycle) << ")" << std::endl;
-        os << tab("Run-ahead cycle");
-        os << dec(runahead.cpu.clock) << std::endl;
+        os << "Run-ahead instance:" << std::endl << std::endl;
+
+        os << tab("Frame");
+        os << dec(ahead.frame) << std::endl;
+        os << tab("Beam");
+        os << " (" << dec(ahead.scanline) << "," << dec(ahead.rasterCycle) << ")" << std::endl;
+        os << tab("Cycle");
+        os << dec(ahead.cpu.clock) << std::endl;
     }
 
     if (category == Category::State) {
@@ -748,13 +769,13 @@ Emulator::_dump(Category category, std::ostream& os) const
 void
 Emulator::isReady()
 {
-    _c64.isReady();
+    main.isReady();
 }
 
 bool
 Emulator::shouldWarp()
 {
-    if (_c64.cpu.clock < SEC(config.warpBoot)) {
+    if (main.cpu.clock < SEC(config.warpBoot)) {
 
         return true;
 
@@ -762,7 +783,7 @@ Emulator::shouldWarp()
 
         switch (config.warpMode) {
 
-            case WARP_AUTO:     return _c64.iec.isTransferring();
+            case WARP_AUTO:     return main.iec.isTransferring();
             case WARP_NEVER:    return false;
             case WARP_ALWAYS:   return true;
 
@@ -812,7 +833,7 @@ Emulator::update()
             case CMD_SNAPSHOT_AUTO:
             case CMD_SNAPSHOT_USER: 
 
-                _c64.process(cmd);
+                main.process(cmd);
                 break;
 
             case CMD_KEY_PRESS:
@@ -820,15 +841,15 @@ Emulator::update()
             case CMD_KEY_RELEASE_ALL:
             case CMD_KEY_TOGGLE:
 
-                _c64.keyboard.processCommand(cmd);
+                main.keyboard.processCommand(cmd);
                 break;
 
             case CMD_DSK_TOGGLE_WP:
 
                 switch (cmd.value) {
 
-                    case DRIVE8: _c64.drive8.processCommand(cmd); break;
-                    case DRIVE9: _c64.drive9.processCommand(cmd); break;
+                    case DRIVE8: main.drive8.processCommand(cmd); break;
+                    case DRIVE9: main.drive9.processCommand(cmd); break;
                     default: fatalError;
                 }
                 break;
@@ -838,8 +859,8 @@ Emulator::update()
 
                 switch (cmd.coord.port) {
 
-                    case PORT_1: _c64.port1.processCommand(cmd); break;
-                    case PORT_2: _c64.port2.processCommand(cmd); break;
+                    case PORT_1: main.port1.processCommand(cmd); break;
+                    case PORT_2: main.port2.processCommand(cmd); break;
                     default: fatalError;
                 }
                 break;
@@ -849,8 +870,8 @@ Emulator::update()
 
                 switch (cmd.action.port) {
 
-                    case PORT_1: _c64.port1.processCommand(cmd); break;
-                    case PORT_2: _c64.port2.processCommand(cmd); break;
+                    case PORT_1: main.port1.processCommand(cmd); break;
+                    case PORT_2: main.port2.processCommand(cmd); break;
                     default: fatalError;
                 }
                 break;
@@ -859,7 +880,7 @@ Emulator::update()
             case CMD_DATASETTE_STOP:
             case CMD_DATASETTE_REWIND:
 
-                _c64.datasette.processCommand(cmd);
+                main.datasette.processCommand(cmd);
                 break;
 
             case CMD_CRT_BUTTON_PRESS:
@@ -868,12 +889,12 @@ Emulator::update()
             case CMD_CRT_SWITCH_NEUTRAL:
             case CMD_CRT_SWITCH_RIGHT:
 
-                _c64.expansionport.processCommand(cmd);
+                main.expansionport.processCommand(cmd);
                 break;
 
             case CMD_RSH_EXECUTE:
                 
-                _c64.retroShell.exec();
+                main.retroShell.exec();
                 break;
 
             default:
@@ -885,39 +906,33 @@ Emulator::update()
 void
 Emulator::computeFrame()
 {
-    _c64.execute();
-
-    // TODO: ADD AS MEMBER VARIABLE AND DYNAMICALLY SET TO TRUE WHEN AN EXTERNAL EVENT COMES IN
-    static bool dirty = true;
-
-    // TODO: REMOVE ASAP
-    config.runAhead = 0;
+    main.execute();
 
     if (config.runAhead) {
 
-        if (dirty || RUA_ON_STEROIDS) {
+        if (updateRunAhead || RUA_ON_STEROIDS) {
 
             // Recreate the runahead instance from scratch
-            runahead = _c64;
+            ahead = main; updateRunAhead = false;
 
-            if (debugBuild && runahead != _c64) {
+            if (debugBuild && ahead != main) {
 
-                _c64.dump(Category::Checksums);
-                runahead.dump(Category::Checksums);
-                fatal("Corrupted runahead instance detected");
+                main.dump(Category::Checksums);
+                ahead.dump(Category::Checksums);
+                fatal("Corrupted run-ahead clone");
             }
 
             // Advance to the proper frame
-            runahead.fastForward(config.runAhead);
+            ahead.fastForward(config.runAhead);
 
         } else {
 
             // Run the runahead instance in parallel to the main instance
-            runahead.execute();
+            ahead.execute();
         }
 
         debug(RUA_DEBUG, "C64: %lld:%d Runahead: %lld:%d\n",
-              _c64.frame, _c64.scanline, runahead.frame, runahead.scanline);
+              main.frame, main.scanline, ahead.frame, ahead.scanline);
     }
 }
 
@@ -925,20 +940,20 @@ u32 *
 Emulator::getTexture() const
 {
     // Return a noise pattern if the emulator is powered off
-    if (isPoweredOff()) return _c64.vic.getNoise();
+    if (isPoweredOff()) return main.vic.getNoise();
 
     // Debug modes
-    if (RUA_TEXTURE == 1) return _c64.vic.getTexture();
-    if (RUA_TEXTURE == 2) return runahead.vic.getTexture();
+    if (RUA_TEXTURE == 1) return main.vic.getTexture();
+    if (RUA_TEXTURE == 2) return ahead.vic.getTexture();
 
     // Get the texture from the proper emulator instance
-    return config.runAhead ? runahead.vic.getTexture() : _c64.vic.getTexture();
+    return config.runAhead ? ahead.vic.getTexture() : main.vic.getTexture();
 }
 
 u32 *
 Emulator::getNoise() const
 {
-    return _c64.vic.getNoise();
+    return main.vic.getNoise();
 }
 
 void
@@ -966,7 +981,7 @@ Emulator::refreshRate() const
 
     } else {
 
-        return _c64.vic.getFps() * config.timeLapse / 100.0;
+        return main.vic.getFps() * config.timeLapse / 100.0;
     }
 }
 

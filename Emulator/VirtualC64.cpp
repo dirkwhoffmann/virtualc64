@@ -29,20 +29,20 @@ VirtualC64::VirtualC64() :
 c64(*this),
 mem(*this),
 cpu(*this),
-cia1(*this, _c64.cia1),
-cia2(*this, _c64.cia2),
+cia1(*this, main.cia1),
+cia2(*this, main.cia2),
 vicii(*this),
 muxer(*this),
 dmaDebugger(*this),
 keyboard(*this),
 datasette(*this),
-port1(*this, _c64.port1),
-port2(*this, _c64.port2),
+port1(*this, main.port1),
+port2(*this, main.port2),
 recorder(*this),
 expansionport(*this),
 iec(*this),
-drive8(*this, _c64.drive8),
-drive9(*this, _c64.drive9),
+drive8(*this, main.drive8),
+drive9(*this, main.drive9),
 retroShell(*this)
 { }
 
@@ -66,16 +66,7 @@ VirtualC64::getNoise() const
 void
 VirtualC64::launch(const void *listener, Callback *func)
 {
-    _c64.msgQueue.setListener(listener, func);
-
-    // Initialize all components
-    initialize();
-
-    // Reset the emulator
-    _c64.hardReset();
-
-    // Launch the emulator thread
-    Thread::launch();
+    Emulator::launch(listener, func);
 }
 
 void
@@ -554,14 +545,14 @@ MemConfig
 VirtualC64::MEM_API::getConfig() const
 {
     assert(isUserThread());
-    return emulator._c64.mem.getConfig();
+    return emulator.main.mem.getConfig();
 }
 
 MemInfo
 VirtualC64::MEM_API::getInfo() const
 {
     assert(isUserThread());
-    return emulator._c64.mem.getState();
+    return emulator.main.mem.getState();
 }
 
 string

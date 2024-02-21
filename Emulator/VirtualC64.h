@@ -227,8 +227,8 @@ public:
 
         CPU_API(Emulator &emu) :
         API(emu),
-        breakpoints(emu, emu._c64.cpu.debugger.breakpoints),
-        watchpoints(emu, emu._c64.cpu.debugger.watchpoints) { }
+        breakpoints(emu, emu.main.cpu.debugger.breakpoints),
+        watchpoints(emu, emu.main.cpu.debugger.watchpoints) { }
 
         CPUInfo getInfo() const;
         i64 clock() const;
