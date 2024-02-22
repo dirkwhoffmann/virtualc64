@@ -30,7 +30,7 @@ Interpreter::initDebugShell(Command &root)
     // Top-level commands
     //
 
-    root.newGroup("Controlling the instruction stream");
+    root.setGroup("Controlling the instruction stream");
 
     root.add({"pause"},
              "Pauses emulation",
@@ -64,7 +64,7 @@ Interpreter::initDebugShell(Command &root)
              "Redirects the program counter",
              [this](Arguments& argv, long value) {
 
-        cpu.jump((u16)parseNum(argv));
+        cpu.jump((u16)parseNum(argv[0]));
     });
 
     root.add({"disassemble"}, { }, { Arg::address },
@@ -73,14 +73,14 @@ Interpreter::initDebugShell(Command &root)
 
         std::stringstream ss;
 
-        auto addr = argv.empty() ? cpu.getPC0() : u16(parseNum(argv));
+        auto addr = argv.empty() ? cpu.getPC0() : u16(parseNum(argv[0]));
         cpu.disassembler.disassembleRange(ss, addr, 16);
 
         retroShell << '\n' << ss << '\n';
     });
 
 
-    root.newGroup("Debugging components");
+    root.setGroup("Debugging components");
 
     root.add({"thread"},        "The emulator thread");
     root.add({"c64"},           "The virtual Commodore 64");
@@ -91,13 +91,13 @@ Interpreter::initDebugShell(Command &root)
     root.add({"vicii"},         "Video Interface Controller");
     root.add({"sid"},           "Sound Interface Device");
 
-    root.newGroup("Debugging ports");
+    root.setGroup("Debugging ports");
 
     root.add({"controlport1"},  "Control port 1");
     root.add({"controlport2"},  "Control port 2");
     root.add({"expansion"},     "Expansion port");
 
-    root.newGroup("Debugging peripherals");
+    root.setGroup("Debugging peripherals");
 
     root.add({"keyboard"},      "Keyboard");
     root.add({"mouse"},         "mouse");
@@ -115,7 +115,7 @@ Interpreter::initDebugShell(Command &root)
              "Sets an internal debug variable",
              [this](Arguments& argv, long value) {
 
-        C64::setDebugVariable(argv[0], int(parseNum(argv, 1)));
+        C64::setDebugVariable(argv[0], int(parseNum(argv[0], 1)));
     });
 
     //
@@ -141,7 +141,7 @@ Interpreter::initDebugShell(Command &root)
     // C64
     //
 
-    root.newGroup("");
+    root.setGroup("");
 
     root.add({"c64"},
              "Displays the component state");
@@ -191,7 +191,7 @@ Interpreter::initDebugShell(Command &root)
              [this](Arguments& argv, long value) {
 
         std::stringstream ss;
-        mem.memDump(ss, u16(parseNum(argv)));
+        mem.memDump(ss, u16(parseNum(argv[0])));
         retroShell << '\n' << ss << '\n';
     });
 
@@ -199,8 +199,8 @@ Interpreter::initDebugShell(Command &root)
              "Reads a byte from memory",
              [this](Arguments& argv, long value) {
 
-        auto addr = u16(parseNum(argv));
-        MemoryType type = argv.size() == 1 ? mem.peekSrc[addr >> 12] : parseEnum <MemoryTypeEnum> (argv, 1);
+        auto addr = u16(parseNum(argv[0]));
+        MemoryType type = argv.size() == 1 ? mem.peekSrc[addr >> 12] : parseEnum <MemoryTypeEnum> (argv[0], 1);
         auto byte = mem.peek(addr, type);
 
         std::stringstream ss;
@@ -213,9 +213,9 @@ Interpreter::initDebugShell(Command &root)
              "Writes a byte into memory",
              [this](Arguments& argv, long value) {
 
-        auto addr = u16(parseNum(argv, 0));
-        auto byte = u8(parseNum(argv, 1));
-        MemoryType type = argv.size() == 2 ? mem.pokeTarget[addr >> 12] : parseEnum <MemoryTypeEnum> (argv, 2);
+        auto addr = u16(parseNum(argv[0]));
+        auto byte = u8(parseNum(argv[1]));
+        MemoryType type = argv.size() == 2 ? mem.pokeTarget[addr >> 12] : parseEnum <MemoryTypeEnum> (argv[2]);
 
         mem.poke(addr, byte, type);
     });

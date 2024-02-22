@@ -20,20 +20,11 @@ Interpreter::Interpreter(C64 &ref) : SubComponent(ref)
 {
     initCommandShell(commandShellRoot);
     initDebugShell(debugShellRoot);
-
-    // Hide some commands
-    commandShellRoot.hide({"regression"});
-    commandShellRoot.hide({"screenshot"});
-    commandShellRoot.hide({"joshua"});
-    commandShellRoot.hide({"wait"});
-    debugShellRoot.hide({"joshua"});
-    debugShellRoot.hide({"wait"});
 }
 
 Arguments
 Interpreter::split(const string& userInput)
 {
-    isize userInputSize = (isize)userInput.size();
     std::stringstream ss(userInput);
     Arguments result;
 
@@ -41,7 +32,7 @@ Interpreter::split(const string& userInput)
     bool str = false; // String mode
     bool esc = false; // Escape mode
     
-    for (isize i = 0; i < userInputSize; i++) {
+    for (usize i = 0; i < userInput.size(); i++) {
 
         char c = userInput[i];
         
@@ -84,7 +75,7 @@ Interpreter::autoComplete(const string& userInput)
 
     // Add a space if the command has been fully completed
     if (!tokens.empty() && getRoot().seek(tokens)) result += " ";
-
+    
     return result;
 }
 
@@ -101,6 +92,24 @@ Interpreter::autoComplete(Arguments &argv)
     }
 }
 
+bool 
+Interpreter::isBool(const string &argv) 
+{
+    return util::isBool(argv);
+}
+
+bool
+Interpreter::isOnOff(const string  &argv) 
+{
+    return util::isOnOff(argv);
+}
+
+long
+Interpreter::isNum(const string &argv) 
+{
+    return util::isNum(argv);
+}
+
 bool
 Interpreter::parseBool(const string &argv)
 {
@@ -114,7 +123,7 @@ Interpreter::parseBool(const string &argv, bool fallback)
 }
 
 bool
-Interpreter::parseOnOff(const string &argv)
+Interpreter::parseOnOff(const string &argv) 
 {
     return util::parseOnOff(argv);
 }
@@ -126,7 +135,7 @@ Interpreter::parseOnOff(const string &argv, bool fallback)
 }
 
 long
-Interpreter::parseNum(const string &argv)
+Interpreter::parseNum(const string &argv) 
 {
     return util::parseNum(argv);
 }
@@ -136,6 +145,32 @@ Interpreter::parseNum(const string &argv, long fallback)
 {
     try { return parseNum(argv); } catch(...) { return fallback; }
 }
+
+string
+Interpreter::parseSeq(const string &argv) 
+{
+    return util::parseSeq(argv);
+}
+
+string
+Interpreter::parseSeq(const string &argv, const string &fallback)
+{
+    try { return parseSeq(argv); } catch(...) { return fallback; }
+}
+
+/*
+template <typename T> long
+Interpreter::parseEnum(const string &argv) 
+{
+    return util::parseEnum<T>(argv);
+}
+
+template <typename T> long
+Interpreter::parseEnum(const string &argv, long fallback)
+{
+    try { return parseEnum<T>(argv); } catch(...) { return fallback; }
+}
+*/
 
 Command &
 Interpreter::getRoot()
@@ -177,10 +212,10 @@ Interpreter::exec(const string& userInput, bool verbose)
 
     // Skip empty lines
     if (tokens.empty()) return;
-
+    
     // Remove the 'try' keyword
     if (tokens.front() == "try") tokens.erase(tokens.begin());
-
+    
     // Auto complete the token list
     autoComplete(tokens);
 
@@ -196,16 +231,16 @@ Interpreter::exec(const Arguments &argv, bool verbose)
         for (const auto &it : argv) retroShell << it << ' ';
         retroShell << '\n';
     }
-
+    
     // Skip empty lines
     if (argv.empty()) return;
-
+    
     // Seek the command in the command tree
     Command *current = &getRoot(), *next;
     Arguments args = argv;
 
     while (!args.empty() && ((next = current->seek(args.front())) != nullptr)) {
-
+        
         current = current->seek(args.front());
         args.erase(args.begin());
     }
@@ -218,11 +253,11 @@ Interpreter::exec(const Arguments &argv, bool verbose)
     if (!current->callback && args.empty()) {
         throw TooFewArgumentsError(current->fullName);
     }
-
+    
     // Check the argument count
     if ((isize)args.size() < current->minArgs()) throw TooFewArgumentsError(current->fullName);
     if ((isize)args.size() > current->maxArgs()) throw TooManyArgumentsError(current->fullName);
-
+    
     // Call the command handler
     current->callback(args, current->param);
 }
@@ -255,7 +290,7 @@ Interpreter::help(const Arguments &argv)
     for (auto &it : argv) {
         if (current->seek(it) != nullptr) current = current->seek(it);
     }
-
+    
     help(*current);
 }
 
@@ -272,7 +307,7 @@ Interpreter::help(const Command& current)
     for (auto &it : current.subCommands) {
         tab = std::max(tab, (isize)it.fullName.length());
     }
-    tab += isize(indent.size());
+    tab += indent.size();
 
     isize group = -1;
 
@@ -281,7 +316,7 @@ Interpreter::help(const Command& current)
         // Only proceed if the command is visible
         if (it.hidden) continue;
 
-        // Print group description (when a new group begins)
+        // Print group description when a new group begins
         if (group != it.group) {
 
             group = it.group;
@@ -297,7 +332,7 @@ Interpreter::help(const Command& current)
         retroShell << it.fullName;
         retroShell.tab(tab);
         retroShell << " : ";
-        retroShell << it.help;
+        retroShell << it.help.second;
         retroShell << '\n';
     }
 

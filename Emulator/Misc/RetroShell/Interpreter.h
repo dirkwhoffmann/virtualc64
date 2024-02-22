@@ -99,6 +99,9 @@ private:
     void autoComplete(Arguments &argv);
 
     // Parses an argument of a certain type
+    bool isBool(const string &argv);
+    bool isOnOff(const string &argv);
+    long isNum(const string &argv);
     bool parseBool(const string  &argv);
     bool parseBool(const string  &argv, bool fallback);
     bool parseOnOff(const string &argv);
@@ -109,11 +112,14 @@ private:
     u16 parseAddr(const string &argv, long fallback) { return (u16)parseNum(argv, fallback); }
 
     // DEPRECATED
-    bool parseBool(Arguments &argv, isize n = 0) { return util::parseBool(argv[n]); }
-    bool parseOnOff(Arguments &argv, isize n = 0) { return util::parseOnOff(argv[n]); }
-    long parseNum(Arguments &argv, isize n = 0) { return util::parseNum(argv[n]); }
-
-    template <typename T> long parseEnum(Arguments &argv, isize n = 0) { return util::parseEnum<T>(argv[n]); }
+    string parseSeq(const string &argv);
+    string parseSeq(const string &argv, const string &fallback);
+    template <typename T> long parseEnum(const string &argv) {
+        return util::parseEnum<T>(argv);
+    }
+    template <typename T> long parseEnum(const string &argv, long fallback) {
+        try { return util::parseEnum<T>(argv); } catch(...) { return fallback; }
+    }
 
 
     //
@@ -132,19 +138,20 @@ public:
     bool inDebugShell() { return shell == Shell::Debug; }
 
     
+
     //
     // Executing commands
     //
-    
+
 public:
-    
+
     // Executes a single command
     void exec(const string& userInput, bool verbose = false) throws;
     void exec(const Arguments &argv, bool verbose = false) throws;
 
     // Prints a usage string for a command
     void usage(const Command &command);
-    
+
     // Displays a help text for a (partially typed in) command
     void help(const string &userInput);
     void help(const Arguments &argv);

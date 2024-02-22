@@ -44,20 +44,25 @@ struct EnumParseError : public ParseError {
     using ParseError::ParseError;
 };
 
+bool isBool(const string& token);
+bool isOnOff(const string& token);
+bool isNum(const string& token);
+
 bool parseBool(const string& token) throws;
 bool parseOnOff(const string& token) throws;
 long parseNum(const string& token) throws;
+string parseSeq(const string& token) throws;
 
 template <typename Enum> long parseEnum(const string& key)
 {
     string upperKey;
     for (auto c : key) { upperKey += (char)std::toupper(c); }
-    
+
     auto p = Enum::pairs();
-    
+
     auto it = p.find(upperKey);
     if (it == p.end()) throw EnumParseError(key, Enum::keyList());
-    
+
     return it->second;
 }
 

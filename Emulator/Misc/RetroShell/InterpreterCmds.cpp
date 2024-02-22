@@ -23,7 +23,7 @@ Interpreter::initCommons(Command &root)
     // Common commands
     //
 
-    root.newGroup("Controlling the shell");
+    root.setGroup("Controlling the shell");
 
     root.add({"."},
              "Enters or exists the debugger",
@@ -77,7 +77,7 @@ Interpreter::initCommons(Command &root)
              "Pauses the execution of a command script",
              [this](Arguments& argv, long value) {
 
-        auto cycles = parseNum(argv) * vic.getFrequency();
+        auto cycles = parseNum(argv[0]) * vic.getFrequency();
         c64.scheduleRel<SLOT_RSH>(cycles, RSH_WAKEUP);
         throw ScriptInterruption("");
     });
@@ -92,12 +92,12 @@ Interpreter::initCommandShell(Command &root)
     // Top-level commands
     //
 
-    root.newGroup("* Regression testing");
+    root.setGroup("* Regression testing");
 
     root.add({"regression"},    "Runs the regression tester");
     root.add({"screenshot"},    "Manages screenshots");
 
-    root.newGroup("Controlling components");
+    root.setGroup("Controlling components");
 
     root.add({"emulator"},      "The emulator thread");
     root.add({"c64"},           "The virtual Commodore 64");
@@ -109,7 +109,7 @@ Interpreter::initCommandShell(Command &root)
     root.add({"sid"},           "Sound Interface Device");
     root.add({"expansion"},     "Expansion port");
 
-    root.newGroup("Controlling peripherals");
+    root.setGroup("Controlling peripherals");
 
     root.add({"monitor"},       "C64 monitor");
     root.add({"keyboard"},      "Keyboard");
@@ -125,13 +125,13 @@ Interpreter::initCommandShell(Command &root)
     // Regression testing
     //
 
-    root.newGroup("");
+    root.setGroup("");
 
     root.add({"regression", "setup"}, { C64ModelEnum::argList() },
              "Initializes the test environment",
              [this](Arguments& argv, long value) {
 
-        auto model = parseEnum <C64ModelEnum> (argv);
+        auto model = parseEnum <C64ModelEnum> (argv[0]);
         regressionTester.prepare(c64, model);
 
         // Pause the script to give the C64 some time to boot
@@ -160,10 +160,10 @@ Interpreter::initCommandShell(Command &root)
              "Adjusts the texture cutout",
              [this](Arguments& argv, long value) {
 
-        isize x1 = parseNum(argv, 0);
-        isize y1 = parseNum(argv, 1);
-        isize x2 = parseNum(argv, 2);
-        isize y2 = parseNum(argv, 3);
+        isize x1 = parseNum(argv[0], 0);
+        isize y1 = parseNum(argv[0], 1);
+        isize x2 = parseNum(argv[0], 2);
+        isize y2 = parseNum(argv[0], 3);
 
         regressionTester.x1 = x1;
         regressionTester.y1 = y1;
@@ -216,14 +216,14 @@ Interpreter::initCommandShell(Command &root)
              "Enables or disables warp mode on startup",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_WARP_BOOT, parseNum(argv));
+        configure(OPT_WARP_BOOT, parseNum(argv[0]));
     });
 
     root.add({"c64", "set", "warpmode"}, { WarpModeEnum::argList() },
              "Selects the warp mode",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_WARP_MODE, parseEnum <WarpModeEnum> (argv));
+        configure(OPT_WARP_MODE, parseEnum <WarpModeEnum> (argv[0]));
     });
 
     root.add({"c64", "set", "vsync"}, { Arg::onoff },
@@ -244,14 +244,14 @@ Interpreter::initCommandShell(Command &root)
              "Sets the number of run-ahead frames",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_RUN_AHEAD, parseNum(argv));
+        configure(OPT_RUN_AHEAD, parseNum(argv[0]));
     });
 
     root.add({"c64", "power"}, { Arg::onoff },
              "Switches the C64 on or off",
              [this](Arguments& argv, long value) {
 
-        parseOnOff(argv) ? c64.emulator.run() : c64.emulator.powerOff();
+        parseOnOff(argv[0]) ? c64.emulator.run() : c64.emulator.powerOff();
     });
 
     root.add({"c64", "reset"},
@@ -265,7 +265,7 @@ Interpreter::initCommandShell(Command &root)
              "Initializes the emulator with factory defaults",
              [this](Arguments& argv, long value) {
 
-        emulator.configure(parseEnum<C64ModelEnum>(argv));
+        emulator.configure(parseEnum<C64ModelEnum>(argv[0]));
     });
 
     
@@ -287,14 +287,14 @@ Interpreter::initCommandShell(Command &root)
              "Save Roms to snapshot files",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_SAVE_ROMS, parseBool(argv));
+        configure(OPT_SAVE_ROMS, parseBool(argv[0]));
     });
 
     root.add({"memory", "set", "raminit" }, { RamPatternEnum::argList() },
              "Determines how Ram is initialized on startup",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_RAM_PATTERN, parseEnum<RamPatternEnum>(argv));
+        configure(OPT_RAM_PATTERN, parseEnum<RamPatternEnum>(argv[0]));
     });
 
     root.add({"memory", "load"}, { Arg::path },
@@ -340,7 +340,7 @@ Interpreter::initCommandShell(Command &root)
                  "Selects the emulated chip model",
                  [this](Arguments& argv, long value) {
 
-            configure(OPT_CIA_REVISION, value, parseEnum <CIARevisionEnum> (argv));
+            configure(OPT_CIA_REVISION, value, parseEnum <CIARevisionEnum> (argv[0]));
 
         }, i);
 
@@ -348,7 +348,7 @@ Interpreter::initCommandShell(Command &root)
                  "Enables or disables the timer B hardware bug",
                  [this](Arguments& argv, long value) {
 
-            configure(OPT_TIMER_B_BUG, value, parseBool(argv));
+            configure(OPT_TIMER_B_BUG, value, parseBool(argv[0]));
 
         }, i);
     }
@@ -372,7 +372,7 @@ Interpreter::initCommandShell(Command &root)
              "Selects the emulated chip model",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_VIC_REVISION, parseEnum <VICIIRevisionEnum> (argv));
+        configure(OPT_VIC_REVISION, parseEnum <VICIIRevisionEnum> (argv[0]));
 
     });
 
@@ -380,28 +380,28 @@ Interpreter::initCommandShell(Command &root)
              "Enables or disables the gray dot bug",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_GRAY_DOT_BUG, parseBool(argv));
+        configure(OPT_GRAY_DOT_BUG, parseBool(argv[0]));
     });
 
     root.add({"vicii", "set", "gluelogic"}, { Arg::onoff },
              "Configures the logic board",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_GLUE_LOGIC, parseBool(argv));
+        configure(OPT_GLUE_LOGIC, parseBool(argv[0]));
     });
 
     root.add({"vicii", "set", "sscollisions"}, { Arg::onoff },
              "Enables or disables sprite-sprite collision detection",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_SS_COLLISIONS, parseBool(argv));
+        configure(OPT_SS_COLLISIONS, parseBool(argv[0]));
     });
 
     root.add({"vicii", "set", "sbcollisions"}, { Arg::onoff },
              "Enables or disables sprite-background collision detection",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_SB_COLLISIONS, parseBool(argv));
+        configure(OPT_SB_COLLISIONS, parseBool(argv[0]));
     });
 
     
@@ -434,42 +434,42 @@ Interpreter::initCommandShell(Command &root)
              "Visualizes refresh cycles",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_DMA_DEBUG_CHANNEL, 0, parseBool(argv));
+        configure(OPT_DMA_DEBUG_CHANNEL, 0, parseBool(argv[0]));
     });
 
     root.add({"dmadebugger", "iaccesses"}, { Arg::onoff },
              "Visualizes idle accesses",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_DMA_DEBUG_CHANNEL, 1, parseBool(argv));
+        configure(OPT_DMA_DEBUG_CHANNEL, 1, parseBool(argv[0]));
     });
 
     root.add({"dmadebugger", "caccesses"}, { Arg::onoff },
              "Visualizes character accesses",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_DMA_DEBUG_CHANNEL, 2, parseBool(argv));
+        configure(OPT_DMA_DEBUG_CHANNEL, 2, parseBool(argv[0]));
     });
 
     root.add({"dmadebugger", "gaccesses"}, { Arg::onoff },
              "Visualizes graphics accesses",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_DMA_DEBUG_CHANNEL, 3, parseBool(argv));
+        configure(OPT_DMA_DEBUG_CHANNEL, 3, parseBool(argv[0]));
     });
 
     root.add({"dmadebugger", "paccesses"}, { Arg::onoff },
              "Visualizes sprite pointer accesses",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_DMA_DEBUG_CHANNEL, 4, parseBool(argv));
+        configure(OPT_DMA_DEBUG_CHANNEL, 4, parseBool(argv[0]));
     });
 
     root.add({"dmadebugger", "saccesses"}, { Arg::onoff },
              "Visualizes sprite accesses",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_DMA_DEBUG_CHANNEL, 5, parseBool(argv));
+        configure(OPT_DMA_DEBUG_CHANNEL, 5, parseBool(argv[0]));
     });
 
 
@@ -534,7 +534,7 @@ Interpreter::initCommandShell(Command &root)
              "Selects the SID backend",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_SID_ENGINE, parseEnum <SIDEngineEnum> (argv));
+        configure(OPT_SID_ENGINE, parseEnum <SIDEngineEnum> (argv[0]));
 
     });
 
@@ -542,7 +542,7 @@ Interpreter::initCommandShell(Command &root)
              "Selects the emulated chip model",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_SID_REVISION, parseEnum <SIDRevisionEnum> (argv));
+        configure(OPT_SID_REVISION, parseEnum <SIDRevisionEnum> (argv[0]));
 
     });
 
@@ -550,7 +550,7 @@ Interpreter::initCommandShell(Command &root)
              "Selects the sampling method",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_SID_SAMPLING, parseEnum <SamplingMethodEnum> (argv));
+        configure(OPT_SID_SAMPLING, parseEnum <SamplingMethodEnum> (argv[0]));
 
     });
 
@@ -558,7 +558,7 @@ Interpreter::initCommandShell(Command &root)
              "Configures the audio filter",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_SID_FILTER, parseBool(argv));
+        configure(OPT_SID_FILTER, parseBool(argv[0]));
     });
 
     root.add({"sid", "set", "volume"},
@@ -568,42 +568,42 @@ Interpreter::initCommandShell(Command &root)
              "Sets the volume for the first SID",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDVOL, 0, parseNum(argv));
+        configure(OPT_AUDVOL, 0, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "volume", "channel1"}, { Arg::volume },
              "Sets the volume for the second SID",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDVOL, 1, parseNum(argv));
+        configure(OPT_AUDVOL, 1, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "volume", "channel2"}, { Arg::volume },
              "Sets the volume for the third SID",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDVOL, 2, parseNum(argv));
+        configure(OPT_AUDVOL, 2, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "volume", "channel3"}, { Arg::volume },
              "Sets the volume for the fourth SID",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDVOL, 3, parseNum(argv));
+        configure(OPT_AUDVOL, 3, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "volume", "left"}, { Arg::volume },
              "Sets the master volume for the left speaker",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDVOLL, parseNum(argv));
+        configure(OPT_AUDVOLL, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "volume", "right"}, { Arg::volume },
              "Sets the master volume for the right speaker",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDVOLR, parseNum(argv));
+        configure(OPT_AUDVOLR, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "pan"},
@@ -613,28 +613,28 @@ Interpreter::initCommandShell(Command &root)
              "Sets the pan for the first SID",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDPAN, 0, parseNum(argv));
+        configure(OPT_AUDPAN, 0, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "pan", "channel1"}, { Arg::value },
              "Sets the pan for the second SID",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDPAN, 1, parseNum(argv));
+        configure(OPT_AUDPAN, 1, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "pan", "channel2"}, { Arg::value },
              "Sets the pan for the third SID",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDPAN, 2, parseNum(argv));
+        configure(OPT_AUDPAN, 2, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "pan", "channel3"}, { Arg::value },
              "Sets the pan for the fourth SID",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDPAN, 3, parseNum(argv));
+        configure(OPT_AUDPAN, 3, parseNum(argv[0]));
     });
 
 
@@ -658,14 +658,14 @@ Interpreter::initCommandShell(Command &root)
              "Attaches a REU expansion cartridge",
              [this](Arguments& argv, long value) {
 
-        expansionport.attachReu(parseNum(argv));
+        expansionport.attachReu(parseNum(argv[0]));
     });
 
     root.add({"expansion", "attach", "georam"}, { "<KB>" },
              "Attaches a GeoRAM expansion cartridge",
              [this](Arguments& argv, long value) {
 
-        expansionport.attachGeoRam(parseNum(argv));
+        expansionport.attachGeoRam(parseNum(argv[0]));
     });
 
     
@@ -677,14 +677,14 @@ Interpreter::initCommandShell(Command &root)
              "Presses a key",
              [this](Arguments& argv, long value) {
 
-        keyboard.press(C64Key(parseNum(argv)));
+        keyboard.press(C64Key(parseNum(argv[0])));
     });
 
     root.add({"keyboard", "release"}, { Arg::value },
              "Presses a key",
              [this](Arguments& argv, long value) {
 
-        keyboard.release(C64Key(parseNum(argv)));
+        keyboard.release(C64Key(parseNum(argv[0])));
     });
 
     root.add({"keyboard", "type"},
@@ -816,7 +816,7 @@ Interpreter::initCommandShell(Command &root)
              "Rewinds the tape to a specific position",
              [this](Arguments& argv, long value) {
 
-        datasette.rewind(parseNum(argv));
+        datasette.rewind(parseNum(argv[0]));
     });
 
 
@@ -824,7 +824,7 @@ Interpreter::initCommandShell(Command &root)
     // Joystick
     //
 
-    root.newGroup("");
+    root.setGroup("");
 
     for (isize i = PORT_1; i <= PORT_2; i++) {
 
@@ -849,7 +849,7 @@ Interpreter::initCommandShell(Command &root)
                  "Enables or disables auto fire mode",
                  [this](Arguments& argv, long value) {
 
-            configure(OPT_AUTOFIRE, value, parseBool(argv));
+            configure(OPT_AUTOFIRE, value, parseBool(argv[0]));
 
         }, i);
 
@@ -857,7 +857,7 @@ Interpreter::initCommandShell(Command &root)
                  "Sets the number of bullets per auto fire shot",
                  [this](Arguments& argv, long value) {
 
-            configure(OPT_AUTOFIRE_BULLETS, value, parseNum(argv));
+            configure(OPT_AUTOFIRE_BULLETS, value, parseNum(argv[0]));
 
         }, i);
 
@@ -866,7 +866,7 @@ Interpreter::initCommandShell(Command &root)
                  "Sets the auto fire delay in frames",
                  [this](Arguments& argv, long value) {
 
-            configure(OPT_AUTOFIRE_DELAY, value, parseNum(argv));
+            configure(OPT_AUTOFIRE_DELAY, value, parseNum(argv[0]));
 
         }, i);
 
@@ -953,7 +953,7 @@ Interpreter::initCommandShell(Command &root)
     // Mouse
     //
 
-    root.newGroup("");
+    root.setGroup("");
 
     for (isize i = PORT_1; i <= PORT_2; i++) {
 
@@ -978,7 +978,7 @@ Interpreter::initCommandShell(Command &root)
                  "Selects the mouse model",
                  [this](Arguments& argv, long value) {
 
-            configure(OPT_MOUSE_MODEL, value, parseEnum <MouseModelEnum> (argv));
+            configure(OPT_MOUSE_MODEL, value, parseEnum <MouseModelEnum> (argv[0]));
 
         }, i);
 
@@ -986,7 +986,7 @@ Interpreter::initCommandShell(Command &root)
                  "Sets the horizontal and vertical mouse velocity",
                  [this](Arguments& argv, long value) {
 
-            configure(OPT_MOUSE_VELOCITY, value, parseNum(argv));
+            configure(OPT_MOUSE_VELOCITY, value, parseNum(argv[0]));
 
         }, i);
 
@@ -994,7 +994,7 @@ Interpreter::initCommandShell(Command &root)
                  "Enables or disables the shake detector",
                  [this](Arguments& argv, long value) {
 
-            configure(OPT_SHAKE_DETECTION, value, parseBool(argv));
+            configure(OPT_SHAKE_DETECTION, value, parseBool(argv[0]));
 
         }, i);
 
