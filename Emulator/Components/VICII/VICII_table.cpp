@@ -29,7 +29,7 @@ VICII::initFuncTable(VICIIRevision revision, u16 flags)
 {
     auto *table = functable[revision][flags];
 
-    switch (config.revision) {
+    switch (revision) {
 
         case VICII_PAL_6569_R1:
         case VICII_PAL_6569_R3:
@@ -55,6 +55,7 @@ VICII::initFuncTable(VICIIRevision revision, u16 flags)
 
             for (isize i = 1; i <= 65; i++) {
                 table[i] = getViciiFunc(flags, i);
+                assert(table[i] != nullptr);
             }
             break;
 
@@ -66,46 +67,14 @@ VICII::initFuncTable(VICIIRevision revision, u16 flags)
 void
 VICII::updateVicFunctionTable()
 {    
-    trace(VIC_DEBUG, "updateVicFunctionTable (dmaDebug: %d)\n", dmaDebug());
+    trace(VIC_DEBUG, "updateVicFunctionTable\n");
     
-    vicfunc[0] = nullptr;
-    vicfunc[64] = nullptr;
-    vicfunc[65] = nullptr;
-
     u16 flags = c64.getHeadless() ? HEADLESS_CYCLE : dmaDebug() ? DEBUG_CYCLE : 0;
+    
+    for (isize i = 1; i < 66; i++) {
 
-    // Assign model specific execution functions
-    switch (config.revision) {
-            
-        case VICII_PAL_6569_R1:
-        case VICII_PAL_6569_R3:
-        case VICII_PAL_8565:
-
-            for (isize i = 1; i <= 63; i++) {
-                vicfunc[i] = getViciiFunc(PAL_CYCLE | flags, i);
-            }
-            break;
-
-        case VICII_NTSC_6567_R56A:
-
-            for (isize i = 1; i <= 11; i++) {
-                vicfunc[i] = getViciiFunc(PAL_CYCLE | flags, i);
-            }
-            for (isize i = 12; i <= 64; i++) {
-                vicfunc[i] = getViciiFunc(flags, i);
-            }
-            break;
-
-        case VICII_NTSC_6567:
-        case VICII_NTSC_8562:
-
-            for (isize i = 1; i <= 65; i++) {
-                vicfunc[i] = getViciiFunc(flags, i);
-            }
-            break;
-
-        default:
-            fatalError;
+        vicfunc[i] = functable[config.revision][flags][i];
+        if (i <= 63) assert(vicfunc[i] != nullptr);
     }
 }
 

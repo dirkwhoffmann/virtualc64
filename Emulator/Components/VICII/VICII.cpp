@@ -30,6 +30,13 @@ VICII::VICII(C64 &ref) : SubComponent(ref), dmaDebugger(ref)
 {    
     subComponents = std::vector<CoreComponent *> { &dmaDebugger };
 
+    initFuncTable(VICII_PAL_6569_R1);
+    initFuncTable(VICII_PAL_6569_R3);
+    initFuncTable(VICII_PAL_8565);
+    initFuncTable(VICII_NTSC_6567_R56A);
+    initFuncTable(VICII_NTSC_6567);
+    initFuncTable(VICII_NTSC_8562);
+
     // Assign reference clock to all time delayed variables
     baLine.setClock(&cpu.clock);
     gAccessResult.setClock(&cpu.clock);
@@ -46,13 +53,6 @@ void
 VICII::_initialize()
 {
     CoreComponent::_initialize();
-
-    initFuncTable(VICII_PAL_6569_R1);
-    initFuncTable(VICII_PAL_6569_R3);
-    initFuncTable(VICII_PAL_8565);
-    initFuncTable(VICII_NTSC_6567_R56A);
-    initFuncTable(VICII_NTSC_6567);
-    initFuncTable(VICII_NTSC_8562);
 }
 
 void
@@ -399,8 +399,7 @@ VICII::setRevision(VICIIRevision revision)
         updatePalette();
         resetEmuTextures();
         resetDmaTextures();
-        vic.updateVicFunctionTable();
-        
+
         isPAL =
         revision == VICII_PAL_6569_R1 ||
         revision == VICII_PAL_6569_R3 ||
@@ -413,14 +412,8 @@ VICII::setRevision(VICIIRevision revision)
         isNTSC = !isPAL;
         is656x = !is856x;
 
+        vic.updateVicFunctionTable();
         c64.updateClockFrequency();
-
-        /*
-        // Update other components
-        isize newFrequency = VICII::getFrequency();
-        muxer.setClockFrequency((u32)newFrequency);
-        c64.updateClockFrequency(config.revision);
-        */
     }
     
     msgQueue.put(isPAL ? MSG_PAL : MSG_NTSC);
@@ -560,13 +553,13 @@ VICII::getSpriteInfo(isize nr)
 void
 VICII::_trackOn()
 {
-    updateVicFunctionTable();
+
 }
 
 void
 VICII::_trackOff()
 {
-    updateVicFunctionTable();
+
 }
 
 bool
@@ -1066,7 +1059,8 @@ VICII::updateSpriteShiftRegisters()
 void 
 VICII::beginFrame()
 {
-    lpIrqHasOccurred = false;
+    // Setup cycle-specific callbacks
+    updateVicFunctionTable();
 
     /* "The VIC does five read accesses in every raster line for the refresh of
      *  the dynamic RAM. An 8 bit refresh counter (REF) is used to generate 256
@@ -1081,7 +1075,9 @@ VICII::beginFrame()
      *  and is irrelevant." [C.B.]
      */
     vcBase = 0;
-    
+
+    lpIrqHasOccurred = false;
+
     // Clear statistics
     clearStats();
 }
@@ -1090,8 +1086,8 @@ void
 VICII::endFrame()
 {
     // Only proceed if the current frame hasn't been executed in headless mode
-    if (headless) return;
-    
+    if (c64.getHeadless()) return;
+
     // Run the DMA debugger if enabled
     bool debug = dmaDebugger.config.dmaDebug;
     if (debug) dmaDebugger.computeOverlay(emuTexture, dmaTexture);

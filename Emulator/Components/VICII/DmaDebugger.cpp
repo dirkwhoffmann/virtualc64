@@ -123,7 +123,7 @@ DmaDebugger::setConfigItem(Option option, i64 value)
                 config.dmaDebug = value;
                 vic.resetDmaTextures();
                 vic.resetEmuTextures();
-                vic.updateVicFunctionTable();
+                // vic.updateVicFunctionTable();
                 msgQueue.put(MSG_DMA_DEBUG, value);
             }
             return;

@@ -172,15 +172,15 @@ extension MyController {
                             device: MTLCreateSystemDefaultDevice()!,
                             controller: self)
 
-        // Apply all GUI related user defaults
-        pref.applyUserDefaults()
-        config.applyUserDefaults()
-
         // Setup window
         configureWindow()
 
-        // Enable message processing
+        // Launch the emulator
         launch()
+
+        // Apply all GUI related user defaults
+        pref.applyUserDefaults()
+        config.applyUserDefaults()
 
         do {
             // Let the C64 throw an exception if it is not ready to power on

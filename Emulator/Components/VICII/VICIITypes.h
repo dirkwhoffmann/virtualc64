@@ -35,8 +35,8 @@
 
 // Cycle flags
 static const u16 PAL_CYCLE      = 0b0001;
-static const u16 DEBUG_CYCLE    = 0b0100;
-static const u16 HEADLESS_CYCLE = 0b1000;
+static const u16 DEBUG_CYCLE    = 0b0010;
+static const u16 HEADLESS_CYCLE = 0b0100;
 
 /* Depths of different drawing layers
  *

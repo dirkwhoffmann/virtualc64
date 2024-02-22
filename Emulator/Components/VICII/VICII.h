@@ -69,17 +69,10 @@ public:
     typedef void (VICII::*ViciiFunc)(void);
     ViciiFunc functable[6][8][66] = { };
 
-    /* OLD CODE: The VICII function table. Each entry in this table is a pointer to a
-     * VICII method executed in a certain scanline cycle. vicfunc[0] is a
-     * stub. It is never called, because the first cycle is numbered 1.
-     */
+    // Function pointers currently in use
     ViciiFunc vicfunc[66];
 
-    // Indicates if VICII runs in headless mode (skipping pixel synthesis)
-    // DEPRECATED. USE VARIABLE deprecated in C64 CLASS INSTEAD
-    [[deprecated]] bool headless = false;
 
-    
     //
     // I/O space (CPU accessible)
     //
@@ -711,6 +704,7 @@ public:
 
         CLONE(config)
 
+        updateVicFunctionTable();
         return *this;
     }
 
@@ -721,7 +715,6 @@ public:
 
         << dmaDebugger
 
-        << headless
         << reg.current
         << reg.delayed
         << rasterIrqLine

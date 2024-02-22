@@ -332,7 +332,6 @@ C64::setHeadless(bool enable)
     if (headless != enable) {
 
         headless = enable;
-        vic.updateVicFunctionTable();
     }
 }
 
@@ -442,6 +441,9 @@ C64::execute()
             //
 
             if (nextTrigger <= cycle) processEvents(cycle);
+            if (vic.vicfunc[rasterCycle] == nullptr) {
+                trace(true, "ALERT!!!\n");
+            }
             (vic.*vic.vicfunc[rasterCycle])();
 
 
