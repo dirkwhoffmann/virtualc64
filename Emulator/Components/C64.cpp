@@ -326,15 +326,6 @@ C64::updateClockFrequency()
     durationOfOneCycle = 10000000000 / vic.getFrequency();
 }
 
-void 
-C64::setHeadless(bool enable)
-{
-    if (headless != enable) {
-
-        headless = enable;
-    }
-}
-
 InspectionTarget
 C64::getInspectionTarget() const
 {
@@ -385,6 +376,18 @@ C64::setInspectionTarget(InspectionTarget target, Cycle trigger)
 void
 C64::execute()
 {
+    if (getConfigItem(OPT_VIC_POWER_SAVE)) {
+        execute(emulator.isWarping() && (frame & 7) != 0);
+    } else {
+        execute(false);
+    }
+}
+
+void 
+C64::execute(bool headless)
+{
+    setHeadless(headless);
+
     cpu.debugger.watchpointPC = -1;
     cpu.debugger.breakpointPC = -1;
 
@@ -540,11 +543,8 @@ C64::fastForward(isize frames)
 {
     auto target = frame + frames;
 
-    while (frame < target) {
-
-        // Compute all frames except the last one in headless mode
-        execute();
-    }
+    // Execute until the target frame has been reached
+    while (frame < target) executeHeadless();
 }
 
 void
@@ -1719,7 +1719,6 @@ C64::setDebugVariable(const string &name, int val)
     else if (name == "SNP_DEBUG")       SNP_DEBUG       = val;
 
     else if (name == "RUA_DEBUG")       RUA_DEBUG       = val;
-    else if (name == "RUA_TEXTURE")     RUA_TEXTURE     = val;
     else if (name == "RUA_ON_STEROIDS") RUA_ON_STEROIDS = val;
 
     else if (name == "CPU_DEBUG")       CPU_DEBUG       = val;

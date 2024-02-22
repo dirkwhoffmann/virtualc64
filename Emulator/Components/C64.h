@@ -296,7 +296,7 @@ public:
 
     // Enables or disables headless mode
     bool getHeadless() const { return headless; }
-    void setHeadless(bool enable);
+    void setHeadless(bool value) { headless = value; }
 
 
     //
@@ -430,6 +430,8 @@ private:
 private:
 
     void execute();
+    void execute(bool headless);
+    void executeHeadless() { execute(true); }
     template <bool enable8, bool enable9> void execute();
     bool processFlags();
 

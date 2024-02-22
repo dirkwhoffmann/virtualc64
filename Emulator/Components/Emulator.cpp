@@ -908,26 +908,20 @@ Emulator::update()
 void
 Emulator::computeFrame()
 {
-    // Check if this frame should be executed in headless mode
-    auto headless = isWarping() && getConfigItem(OPT_VIC_POWER_SAVE) && (main.frame & 7) != 0;
-
     if (config.runAhead) {
 
         // Run the main instance
-        main.setHeadless(true);
-        main.execute();
+        main.executeHeadless();
 
         // Recreate the run-ahead instance if necessary
         if (main.isDirty || RUA_ON_STEROIDS) recreateRunAheadInstance();
 
         // Run the runahead instance
-        ahead.setHeadless(headless);
         ahead.execute();
 
     } else {
 
-        // Only run the main instance
-        main.setHeadless(headless);
+        // Run the main instance
         main.execute();
     }
 }
@@ -935,13 +929,12 @@ Emulator::computeFrame()
 void 
 Emulator::recreateRunAheadInstance()
 {
-    debug(RUA_DEBUG, "%lld: Recomputing run-ahead instance\n", main.frame);
+    debug(RUA_DEBUG, "%lld: Recomputing the run-ahead instance\n", main.frame);
 
     // Recreate the runahead instance from scratch
-    ahead = main; 
-    main.isDirty = false;
+    ahead = main; main.isDirty = false;
 
-    if (debugBuild && ahead != main) {
+    if (RUA_DEBUG && ahead != main) {
 
         main.dump(Category::Checksums);
         ahead.dump(Category::Checksums);
@@ -949,7 +942,6 @@ Emulator::recreateRunAheadInstance()
     }
 
     // Advance to the proper frame
-    ahead.setHeadless(true);
     ahead.fastForward(config.runAhead - 1);
 }
 
@@ -958,10 +950,6 @@ Emulator::getTexture() const
 {
     // Return a noise pattern if the emulator is powered off
     if (isPoweredOff()) return main.vic.getNoise();
-
-    // Debug modes
-    if (RUA_TEXTURE == 1) return main.vic.getTexture();
-    if (RUA_TEXTURE == 2) return ahead.vic.getTexture();
 
     // Get the texture from the proper emulator instance
     return config.runAhead ? ahead.vic.getTexture() : main.vic.getTexture();
