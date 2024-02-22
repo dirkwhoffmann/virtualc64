@@ -730,8 +730,9 @@ private:
 
 public:
 
-    // Modifies an internal debug variable (only available in debug builds)
-    static void setDebugVariable(const string &name, int val);
+    // Gets or sets an internal debug variable (only available in debug builds)
+    static bool getDebugVariable(DebugFlag flag);
+    static void setDebugVariable(DebugFlag flag, bool val);
 };
 
 }

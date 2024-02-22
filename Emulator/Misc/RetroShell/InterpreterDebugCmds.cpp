@@ -27,6 +27,44 @@ Interpreter::initDebugShell(Command &root)
     initCommons(root);
 
     //
+    // Debug variables
+    //
+
+    if (debugBuild) {
+
+        root.add({"debug"}, {}, {DebugFlagEnum::argList(), Arg::boolean},
+                 "Sets a debug flag",
+                 [this](Arguments& argv, long value) {
+
+            DebugFlag flag;
+
+            switch (argv.size()) {
+
+                case 0:
+                    printf("0\n");
+                    break;
+
+                case 1:
+                    flag = parseEnum<DebugFlagEnum>(argv[0]);
+
+                    retroShell << argv[0] << " = " << c64.getDebugVariable(flag) << '\n';
+                    break;
+
+                case 2:
+                    flag = parseEnum<DebugFlagEnum>(argv[0]);
+
+                    printf("2\"n");
+                    c64.setDebugVariable(flag, parseBool(argv[1]));
+                    break;
+
+                default:
+                    fatalError;
+            }
+        });
+    }
+
+    
+    //
     // Top-level commands
     //
 
@@ -107,7 +145,7 @@ Interpreter::initDebugShell(Command &root)
     root.add({"drive9"},        "Floppy drive 9");
     root.add({"parcable"},      "Parallel drive cable");
 
-    
+
     //
     // Thread
     //

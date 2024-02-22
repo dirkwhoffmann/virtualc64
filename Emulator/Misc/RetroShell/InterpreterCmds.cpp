@@ -84,7 +84,7 @@ Interpreter::initCommons(Command &root)
 
     root.setGroup("Configuring components");
 
-    root.add({"get"}, {OptionEnum::argList()},  {Arg::value},
+    root.add({"get"}, {OptionEnum::argList()}, {Arg::value},
              "Display a configuration option",
              [this](Arguments& argv, long value) {
 
@@ -101,19 +101,12 @@ Interpreter::initCommons(Command &root)
              "Sets a configuration option",
              [this](Arguments& argv, long value) {
 
-        try {
+        auto opt = parseEnum<OptionEnum>(argv[0]);
 
-            C64::setDebugVariable(argv[0], int(parseNum(argv[1])));
-
-        } catch (...) {
-
-            auto opt = parseEnum<OptionEnum>(argv[0]);
-
-            if (argv.size() == 2) {
-                emulator.configure(opt, parseNum(argv[1]));
-            } else {
-                emulator.configure(opt, parseNum(argv[1]), parseNum(argv[2]));
-            }
+        if (argv.size() == 2) {
+            emulator.configure(opt, parseNum(argv[1]));
+        } else {
+            emulator.configure(opt, parseNum(argv[1]), parseNum(argv[2]));
         }
     });
 }
