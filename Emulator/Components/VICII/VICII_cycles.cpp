@@ -30,8 +30,8 @@ namespace vc64 {
  *                   |  Phi2.4 BA logic
  */
 
-#define PAL if constexpr (bool(flags & PAL_CYCLE))
-#define NTSC if constexpr (bool(flags & NTSC_CYCLE))
+#define PAL if constexpr ((flags & PAL_CYCLE))
+#define NTSC if constexpr (!(flags & PAL_CYCLE))
 
 template <u16 flags> void
 VICII::cycle1()
@@ -773,7 +773,7 @@ template <u16 flags> void
 VICII::cycle64()
 {
     // NTSC only cycle
-    assert(bool(flags & NTSC_CYCLE));
+    assert(!(flags & PAL_CYCLE));
 
     // Phi2.5 Fetch (previous cycle)
     NTSC { sAccess1 <flags,2> (); }
@@ -800,7 +800,7 @@ template <u16 flags> void
 VICII::cycle65()
 {
     // NTSC only cycle
-    assert(bool(flags & NTSC_CYCLE));
+    assert(!(flags & PAL_CYCLE));
 
     // Phi1.1 Frame logic
     checkVerticalFrameFF();
@@ -1128,13 +1128,11 @@ template void VICII::cycle63<args>(); \
 template void VICII::cycle64<args>(); \
 template void VICII::cycle65<args>();
 
+VICIIFUNCS(0)
+VICIIFUNCS(DEBUG_CYCLE)
+VICIIFUNCS(HEADLESS_CYCLE)
 VICIIFUNCS(PAL_CYCLE)
-VICIIFUNCS(NTSC_CYCLE)
 VICIIFUNCS(PAL_CYCLE | DEBUG_CYCLE)
-VICIIFUNCS(NTSC_CYCLE | DEBUG_CYCLE)
 VICIIFUNCS(PAL_CYCLE | HEADLESS_CYCLE)
-VICIIFUNCS(NTSC_CYCLE | HEADLESS_CYCLE)
-VICIIFUNCS(PAL_CYCLE | DEBUG_CYCLE | HEADLESS_CYCLE) // DEPRECATED
-VICIIFUNCS(NTSC_CYCLE | DEBUG_CYCLE| HEADLESS_CYCLE) // DEPRECATED
 
 }

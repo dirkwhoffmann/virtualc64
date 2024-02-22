@@ -46,7 +46,7 @@ VICII::initFuncTable(VICIIRevision revision, u16 flags)
                 table[i] = getViciiFunc(PAL_CYCLE | flags, i);
             }
             for (isize i = 12; i <= 64; i++) {
-                table[i] = getViciiFunc(NTSC_CYCLE | flags, i);
+                table[i] = getViciiFunc(flags, i);
             }
             break;
 
@@ -54,7 +54,7 @@ VICII::initFuncTable(VICIIRevision revision, u16 flags)
         case VICII_NTSC_8562:
 
             for (isize i = 1; i <= 65; i++) {
-                table[i] = getViciiFunc(NTSC_CYCLE | flags, i);
+                table[i] = getViciiFunc(flags, i);
             }
             break;
 
@@ -72,7 +72,7 @@ VICII::updateVicFunctionTable()
     vicfunc[64] = nullptr;
     vicfunc[65] = nullptr;
 
-    u16 flags = (dmaDebug() ? DEBUG_CYCLE : 0)  | (c64.getHeadless() ? HEADLESS_CYCLE : 0);
+    u16 flags = c64.getHeadless() ? HEADLESS_CYCLE : dmaDebug() ? DEBUG_CYCLE : 0;
 
     // Assign model specific execution functions
     switch (config.revision) {
@@ -92,7 +92,7 @@ VICII::updateVicFunctionTable()
                 vicfunc[i] = getViciiFunc(PAL_CYCLE | flags, i);
             }
             for (isize i = 12; i <= 64; i++) {
-                vicfunc[i] = getViciiFunc(NTSC_CYCLE | flags, i);
+                vicfunc[i] = getViciiFunc(flags, i);
             }
             break;
 
@@ -100,7 +100,7 @@ VICII::updateVicFunctionTable()
         case VICII_NTSC_8562:
 
             for (isize i = 1; i <= 65; i++) {
-                vicfunc[i] = getViciiFunc(NTSC_CYCLE | flags, i);
+                vicfunc[i] = getViciiFunc(flags, i);
             }
             break;
 
@@ -120,23 +120,24 @@ VICII::getViciiFunc(u16 flags, isize cycle)
 {
     switch (flags) {
 
-        case PAL_CYCLE:         
+        case 0:
+            return getViciiFunc <0> (cycle);
+
+        case DEBUG_CYCLE:
+            return getViciiFunc <DEBUG_CYCLE> (cycle);
+
+        case HEADLESS_CYCLE:
+            return getViciiFunc <HEADLESS_CYCLE> (cycle);
+
+        case PAL_CYCLE:
             return getViciiFunc <PAL_CYCLE> (cycle);
-        case NTSC_CYCLE:        
-            return getViciiFunc <NTSC_CYCLE> (cycle);
-        case PAL_CYCLE | DEBUG_CYCLE: 
+
+        case PAL_CYCLE | DEBUG_CYCLE:
             return getViciiFunc <PAL_CYCLE | DEBUG_CYCLE> (cycle);
-        case NTSC_CYCLE | DEBUG_CYCLE:        
-            return getViciiFunc <NTSC_CYCLE | DEBUG_CYCLE> (cycle);
+
         case PAL_CYCLE | HEADLESS_CYCLE:
             return getViciiFunc <PAL_CYCLE | HEADLESS_CYCLE> (cycle);
-        case NTSC_CYCLE | HEADLESS_CYCLE:
-            return getViciiFunc <NTSC_CYCLE | HEADLESS_CYCLE> (cycle);
-        case PAL_CYCLE | DEBUG_CYCLE| HEADLESS_CYCLE:
-            return getViciiFunc <PAL_CYCLE | DEBUG_CYCLE | HEADLESS_CYCLE> (cycle);
-        case NTSC_CYCLE | DEBUG_CYCLE | HEADLESS_CYCLE:
-            return getViciiFunc <NTSC_CYCLE | DEBUG_CYCLE | HEADLESS_CYCLE> (cycle);
-
+            
         default:
             fatalError;
     }
