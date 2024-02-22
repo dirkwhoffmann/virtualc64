@@ -1731,11 +1731,11 @@ C64::setDebugVariable(const string &name, int val)
     else if (name == "CIA_ON_STEROIDS") CIA_ON_STEROIDS = val;
 
 
-    else if (name == "VIC_DEBUG")       VIC_DEBUG       = val;
-    else if (name == "VICREG_DEBUG")    VICREG_DEBUG    = val;
+    else if (name == "VICII_DEBUG")     VICII_DEBUG     = val;
+    else if (name == "VICIIREG_DEBUG")  VICII_REG_DEBUG = val;
+    else if (name == "VICII_SAFE_MODE") VICII_SAFE_MODE = val;
+    else if (name == "VICII_STATS")     VICII_STATS     = val;
     else if (name == "RASTERIRQ_DEBUG") RASTERIRQ_DEBUG = val;
-    else if (name == "VIC_SAFE_MODE")   VIC_SAFE_MODE   = val;
-    else if (name == "VIC_STATS")       VIC_STATS       = val;
 
     else if (name == "SID_DEBUG")       SID_DEBUG       = val;
     else if (name == "SID_EXEC")        SID_EXEC        = val;

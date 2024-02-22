@@ -105,11 +105,11 @@ extern debugflag CIAREG_DEBUG;
 extern debugflag CIA_ON_STEROIDS;
 
 // VICII
-extern debugflag VIC_DEBUG;
-extern debugflag VICREG_DEBUG;
+extern debugflag VICII_DEBUG;
+extern debugflag VICII_REG_DEBUG;
+extern debugflag VICII_SAFE_MODE;
+extern debugflag VICII_STATS;
 extern debugflag RASTERIRQ_DEBUG;
-extern debugflag VIC_SAFE_MODE;
-extern debugflag VIC_STATS;
 
 // SID
 extern debugflag SID_DEBUG;

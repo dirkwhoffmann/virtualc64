@@ -116,7 +116,11 @@ public:
     RetroShell &operator<<(char value);
     RetroShell &operator<<(const string &value);
     RetroShell &operator<<(int value);
+    RetroShell &operator<<(unsigned int value);
     RetroShell &operator<<(long value);
+    RetroShell &operator<<(unsigned long value);
+    RetroShell &operator<<(long long value);
+    RetroShell &operator<<(unsigned long long value);
     RetroShell &operator<<(std::stringstream &stream);
 
     // Returns the prompt

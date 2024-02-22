@@ -68,7 +68,35 @@ RetroShell::operator<<(int value)
 }
 
 RetroShell&
+RetroShell::operator<<(unsigned int value)
+{
+    *this << std::to_string(value);
+    return *this;
+}
+
+RetroShell &
 RetroShell::operator<<(long value)
+{
+    *this << std::to_string(value);
+    return *this;
+}
+
+RetroShell &
+RetroShell::operator<<(unsigned long value)
+{
+    *this << std::to_string(value);
+    return *this;
+}
+
+RetroShell &
+RetroShell::operator<<(long long value)
+{
+    *this << std::to_string(value);
+    return *this;
+}
+
+RetroShell &
+RetroShell::operator<<(unsigned long long value)
 {
     *this << std::to_string(value);
     return *this;

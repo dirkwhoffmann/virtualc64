@@ -81,6 +81,41 @@ Interpreter::initCommons(Command &root)
         c64.scheduleRel<SLOT_RSH>(cycles, RSH_WAKEUP);
         throw ScriptInterruption("");
     });
+
+    root.setGroup("Configuring components");
+
+    root.add({"get"}, {OptionEnum::argList()},  {Arg::value},
+             "Display a configuration option",
+             [this](Arguments& argv, long value) {
+
+        auto opt = parseEnum<OptionEnum>(argv[0]);
+
+        if (argv.size() == 2) {
+            retroShell << emulator.getConfigItem(opt) << '\n';
+        } else {
+            retroShell << emulator.getConfigItem(opt, parseNum(argv[1])) << '\n';
+        }
+    });
+
+    root.add({"set"}, {OptionEnum::argList(), Arg::value},  {Arg::value},
+             "Sets a configuration option",
+             [this](Arguments& argv, long value) {
+
+        try {
+
+            C64::setDebugVariable(argv[0], int(parseNum(argv[1])));
+
+        } catch (...) {
+
+            auto opt = parseEnum<OptionEnum>(argv[0]);
+
+            if (argv.size() == 2) {
+                emulator.configure(opt, parseNum(argv[1]));
+            } else {
+                emulator.configure(opt, parseNum(argv[1]), parseNum(argv[2]));
+            }
+        }
+    });
 }
 
 void

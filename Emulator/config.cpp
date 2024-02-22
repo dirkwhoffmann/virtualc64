@@ -42,11 +42,11 @@ debugflag CIAREG_DEBUG    = 0; // CIA registers
 debugflag CIA_ON_STEROIDS = 0; // Keep the CIAs awake all the time
 
 // VICII
-debugflag VIC_DEBUG       = 0; // Video Interface Controller II
-debugflag VICREG_DEBUG    = 0; // VICII registers
+debugflag VICII_DEBUG     = 0; // Video Interface Controller II
+debugflag VICII_REG_DEBUG = 0; // VICII registers
 debugflag RASTERIRQ_DEBUG = 0; // Raster interrupt
-debugflag VIC_SAFE_MODE   = 0; // Disable performance optimizations
-debugflag VIC_STATS       = 0; // Collect statistical information
+debugflag VICII_SAFE_MODE = 0; // Disable performance optimizations
+debugflag VICII_STATS     = 0; // Collect statistical information
 
 // SID
 debugflag SID_DEBUG       = 0; // Sound Interface Device
