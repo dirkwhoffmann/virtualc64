@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class CartridgeRom : public SubComponent {
+class CartridgeRom final : public SubComponent {
 
     friend class Cartridge;
 

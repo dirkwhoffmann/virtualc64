@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class Mouse1351 : public SubComponent {
+class Mouse1351 final : public SubComponent {
     
     // Mouse position
     i64 mouseX;

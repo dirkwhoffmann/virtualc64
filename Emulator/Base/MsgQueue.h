@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-class MsgQueue : CoreObject, Synchronizable {
+class MsgQueue final : CoreObject, Synchronizable {
 
     // Ring buffer storing all pending messages
     util::RingBuffer <Message, 128> queue;

@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class Ocean : public Cartridge {
+class Ocean final : public Cartridge {
 
     CartridgeTraits traits = {
 

@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class StarDos : public Cartridge {
+class StarDos final : public Cartridge {
 
     CartridgeTraits traits = {
 

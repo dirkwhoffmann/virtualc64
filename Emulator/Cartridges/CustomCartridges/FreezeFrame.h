@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class FreezeFrame : public Cartridge {
+class FreezeFrame final : public Cartridge {
 
     CartridgeTraits traits = {
 

@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-class EasyFlash : public Cartridge {
+class EasyFlash final : public Cartridge {
 
     CartridgeTraits traits = {
 

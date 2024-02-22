@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class Westermann : public Cartridge {
+class Westermann final : public Cartridge {
 
     CartridgeTraits traits = {
 

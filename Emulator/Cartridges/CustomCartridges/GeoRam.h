@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class GeoRAM : public Cartridge {
+class GeoRAM final : public Cartridge {
 
     CartridgeTraits traits = {
 

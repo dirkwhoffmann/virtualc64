@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class FinalIII : public Cartridge {
+class FinalIII final : public Cartridge {
 
     CartridgeTraits traits = {
 

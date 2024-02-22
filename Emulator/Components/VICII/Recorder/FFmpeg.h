@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-class FFmpeg {
+class FFmpeg final {
 
 public:
 

@@ -20,7 +20,7 @@
 
 namespace vc64 {
 
-class Keyboard : public SubComponent, public Dumpable {
+class Keyboard final : public SubComponent, public Dumpable {
 
     // The keyboard matrix (indexed by row or by column)
     u8 kbMatrixRow[8] = { };

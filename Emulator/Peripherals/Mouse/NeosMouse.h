@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class NeosMouse : public SubComponent {
+class NeosMouse final : public SubComponent {
     
     // Mouse position
     i64 mouseX;

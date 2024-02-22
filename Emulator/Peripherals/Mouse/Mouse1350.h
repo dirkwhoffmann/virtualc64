@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class Mouse1350 : public SubComponent {
+class Mouse1350 final : public SubComponent {
     
 private:
     

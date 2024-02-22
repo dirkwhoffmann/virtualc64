@@ -20,7 +20,7 @@
 
 namespace vc64 {
 
-class ActionReplay3 : public Cartridge {
+class ActionReplay3 final : public Cartridge {
 
     CartridgeTraits traits = {
 
@@ -139,7 +139,7 @@ public:
 // Atomic Power (a derivation of the Action Replay cartridge)
 //
 
-class AtomicPower : public ActionReplay {
+class AtomicPower final : public ActionReplay {
 
     CartridgeTraits traits = {
 

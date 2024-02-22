@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class Kingsoft : public Cartridge {
+class Kingsoft final : public Cartridge {
 
     CartridgeTraits traits = {
 

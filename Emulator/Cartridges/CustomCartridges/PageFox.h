@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class PageFox : public Cartridge {
+class PageFox final : public Cartridge {
 
     CartridgeTraits traits = {
 

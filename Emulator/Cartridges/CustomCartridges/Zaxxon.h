@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class Zaxxon : public Cartridge {
+class Zaxxon final : public Cartridge {
 
     CartridgeTraits traits = {
 

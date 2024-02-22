@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class Mach5 : public Cartridge {
+class Mach5 final : public Cartridge {
 
     CartridgeTraits traits = {
 

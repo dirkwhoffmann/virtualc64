@@ -581,7 +581,7 @@ public:
 // CIA1
 //
 
-class CIA1 : public CIA {
+class CIA1 final : public CIA {
 
 public:
 
@@ -611,7 +611,7 @@ private:
 // CIA2
 //
 
-class CIA2 : public CIA {
+class CIA2 final : public CIA {
 
     friend class ParCable;
     

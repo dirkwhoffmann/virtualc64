@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class MikroAss : public Cartridge {
+class MikroAss final : public Cartridge {
 
     CartridgeTraits traits = {
 

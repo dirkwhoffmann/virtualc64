@@ -66,7 +66,7 @@ using namespace vc64;
 #define NSEED 0x7ffff8
 
 
-class FastVoice : public SubComponent {
+class FastVoice final : public SubComponent {
     
     friend class FastSID;
     

@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class MagicDesk : public Cartridge {
+class MagicDesk final : public Cartridge {
 
     CartridgeTraits traits = {
 

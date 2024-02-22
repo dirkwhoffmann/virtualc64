@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-class CPUInspector {
+class CPUInspector final {
 
     class CPU &cpu;
 

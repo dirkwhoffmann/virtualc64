@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class Isepic : public Cartridge {
+class Isepic final : public Cartridge {
 
     CartridgeTraits traits = {
 

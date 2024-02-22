@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class Comal80 : public Cartridge {
+class Comal80 final : public Cartridge {
 
     CartridgeTraits traits = {
 

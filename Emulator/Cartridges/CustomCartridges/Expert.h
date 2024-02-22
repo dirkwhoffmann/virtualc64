@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class Expert : public Cartridge {
+class Expert final : public Cartridge {
 
     CartridgeTraits traits = {
 

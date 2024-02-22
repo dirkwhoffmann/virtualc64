@@ -18,7 +18,7 @@
 
 namespace vc64 {
 
-class DmaDebugger : public SubComponent, public Dumpable {
+class DmaDebugger final : public SubComponent, public Dumpable {
 
     friend class VICII;
     

@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class SimonsBasic : public Cartridge {
+class SimonsBasic final : public Cartridge {
 
     CartridgeTraits traits = {
 

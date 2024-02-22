@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-class DiskAnalyzer: public CoreObject {
+class DiskAnalyzer final : public CoreObject {
 
     // friend class Disk;
     

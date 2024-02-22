@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class Dinamic : public Cartridge {
+class Dinamic final : public Cartridge {
 
     CartridgeTraits traits = {
 

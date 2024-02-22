@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class GameKiller : public Cartridge {
+class GameKiller final : public Cartridge {
 
     CartridgeTraits traits = {
 

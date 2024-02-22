@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class Reu : public Cartridge {
+class Reu final : public Cartridge {
 
     CartridgeTraits traits = {
 

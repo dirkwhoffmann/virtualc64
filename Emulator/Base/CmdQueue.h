@@ -20,7 +20,7 @@
 
 namespace vc64 {
 
-class CmdQueue : CoreObject, Synchronizable {
+class CmdQueue final : CoreObject, Synchronizable {
 
     // Ring buffer storing all pending commands
     util::RingBuffer <Cmd, 128> queue;

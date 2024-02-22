@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class StructuredBasic : public Cartridge {
+class StructuredBasic final : public Cartridge {
 
     CartridgeTraits traits = {
 

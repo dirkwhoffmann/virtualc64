@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class KcsPower : public Cartridge {
+class KcsPower final : public Cartridge {
 
     CartridgeTraits traits = {
 

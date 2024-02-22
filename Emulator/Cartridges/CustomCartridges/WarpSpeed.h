@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class WarpSpeed : public Cartridge {
+class WarpSpeed final : public Cartridge {
   
     CartridgeTraits traits = {
 

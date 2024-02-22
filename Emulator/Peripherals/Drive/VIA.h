@@ -544,8 +544,8 @@ public:
 /* First virtual VIA6522 controller. VIA1 serves as hardware interface between
  * the VC1541 CPU and the IEC bus.
  */
-class VIA1 : public VIA6522 {
-    
+class VIA1 final : public VIA6522 {
+
 public:
     
     VIA1(C64 &ref, Drive &drvref) : VIA6522(ref, drvref) { }
@@ -566,8 +566,8 @@ public:
 /* Second virtual VIA6522 controller. VIA2 serves as hardware interface between
  * the VC1541 CPU and the drive logic.
  */
-class VIA2 : public VIA6522 {
-    
+class VIA2 final : public VIA6522 {
+
 public:
     
     VIA2(C64 &ref, Drive &drvref) : VIA6522(ref, drvref) { }

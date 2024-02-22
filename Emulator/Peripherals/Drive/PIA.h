@@ -176,8 +176,8 @@ protected:
 // PIA (DolphinDOS 3)
 //
 
-class PiaDolphin : public PIA6821 {
-    
+class PiaDolphin final : public PIA6821 {
+
 public:
 
     using PIA6821::PIA6821;

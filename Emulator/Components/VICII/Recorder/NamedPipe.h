@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class NamedPipe {
+class NamedPipe final {
 
     int pipe = -1;
     string name;

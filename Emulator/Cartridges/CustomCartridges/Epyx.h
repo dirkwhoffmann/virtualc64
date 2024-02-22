@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class Epyx : public Cartridge {
+class Epyx final : public Cartridge {
 
     CartridgeTraits traits = {
 

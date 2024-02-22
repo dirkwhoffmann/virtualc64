@@ -16,7 +16,7 @@
 
 namespace vc64 {
 
-class Funplay : public Cartridge {
+class Funplay final : public Cartridge {
 
     CartridgeTraits traits = {
 

@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-class Recorder : public SubComponent, public Dumpable {
+class Recorder final : public SubComponent, public Dumpable {
 
     //
     // Handles

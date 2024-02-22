@@ -18,7 +18,7 @@
 
 namespace vc64 {
 
-class PowerSupply : public SubComponent {
+class PowerSupply final : public SubComponent {
     
     // Current configuration
     PowerSupplyConfig config = { };

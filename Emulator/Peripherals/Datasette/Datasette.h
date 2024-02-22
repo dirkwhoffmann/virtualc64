@@ -35,7 +35,7 @@ public:
     util::Time delay() const;
 };
 
-class Datasette : public SubComponent, public Inspectable<DatasetteInfo, Void> {
+class Datasette final : public SubComponent, public Inspectable<DatasetteInfo, Void> {
 
     // Current configuration
     DatasetteConfig config = { };
