@@ -43,6 +43,19 @@ VICII::VICII(C64 &ref) : SubComponent(ref), dmaDebugger(ref)
 }
 
 void 
+VICII::_initialize()
+{
+    CoreComponent::_initialize();
+
+    initFuncTable(VICII_PAL_6569_R1);
+    initFuncTable(VICII_PAL_6569_R3);
+    initFuncTable(VICII_PAL_8565);
+    initFuncTable(VICII_NTSC_6567_R56A);
+    initFuncTable(VICII_NTSC_6567);
+    initFuncTable(VICII_NTSC_8562);
+}
+
+void
 VICII::_reset(bool hard)
 {
     if (hard) {

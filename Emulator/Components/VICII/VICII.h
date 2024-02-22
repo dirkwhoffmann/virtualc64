@@ -47,12 +47,32 @@ public:
     
     // Sub components
     DmaDebugger dmaDebugger;
-    
+
     /* The VICII function table. Each entry in this table is a pointer to a
+     * VICII method executed in a certain scanline cycle:
+     *
+     *   functable[model][flags][cycle]
+     *
+     *   model: VICII revision
+     *
+     *   flags: One or more of the following:
+     *
+     *     CYCLE_PAL       : Emulates a PAL cycle, NTSC otherwise
+     *     CYCLE_DMA       : Runs the DMA debugger code for the specific cycle
+     *     CYLCE_HEADLESS  : Skips all pixel-drawing related code
+     *
+     *   cycle: 1 .. 65 (cycle 0 is a stub and never called)
+     *
+     *   CYCLE_DMA and CYCLE_HEADLESS must be be set simultaneously as this
+     *   combination does not make sense.
+     */
+    typedef void (VICII::*ViciiFunc)(void);
+    ViciiFunc functable[6][8][66] = { };
+
+    /* OLD CODE: The VICII function table. Each entry in this table is a pointer to a
      * VICII method executed in a certain scanline cycle. vicfunc[0] is a
      * stub. It is never called, because the first cycle is numbered 1.
      */
-    typedef void (VICII::*ViciiFunc)(void);
     ViciiFunc vicfunc[66];
 
     // Indicates if VICII runs in headless mode (skipping pixel synthesis)
@@ -580,6 +600,11 @@ public:
 
     VICII(C64 &ref);
 
+    void _initialize() override;
+
+    void initFuncTable(VICIIRevision revision);
+    void initFuncTable(VICIIRevision revision, u16 flags);
+
     void updateVicFunctionTable();
 
 private:
@@ -590,6 +615,7 @@ private:
     void resetDmaTextures() { resetDmaTexture(1); resetDmaTexture(2); }
     void resetTexture(u32 *p);
 
+    ViciiFunc getViciiFunc(VICIIRevision revision, u16 flags, isize cycle);
     ViciiFunc getViciiFunc(u16 flags, isize cycle);
     template <u16 flags> ViciiFunc getViciiFunc(isize cycle);
 

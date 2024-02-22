@@ -17,6 +17,53 @@
 namespace vc64 {
 
 void
+VICII::initFuncTable(VICIIRevision revision)
+{
+    initFuncTable(revision, 0);
+    initFuncTable(revision, DEBUG_CYCLE);
+    initFuncTable(revision, HEADLESS_CYCLE);
+}
+
+void
+VICII::initFuncTable(VICIIRevision revision, u16 flags)
+{
+    auto *table = functable[revision][flags];
+
+    switch (config.revision) {
+
+        case VICII_PAL_6569_R1:
+        case VICII_PAL_6569_R3:
+        case VICII_PAL_8565:
+
+            for (isize i = 1; i <= 63; i++) {
+                table[i] = getViciiFunc(PAL_CYCLE | flags, i);
+            }
+            break;
+
+        case VICII_NTSC_6567_R56A:
+
+            for (isize i = 1; i <= 11; i++) {
+                table[i] = getViciiFunc(PAL_CYCLE | flags, i);
+            }
+            for (isize i = 12; i <= 64; i++) {
+                table[i] = getViciiFunc(NTSC_CYCLE | flags, i);
+            }
+            break;
+
+        case VICII_NTSC_6567:
+        case VICII_NTSC_8562:
+
+            for (isize i = 1; i <= 65; i++) {
+                table[i] = getViciiFunc(NTSC_CYCLE | flags, i);
+            }
+            break;
+
+        default:
+            fatalError;
+    }
+}
+
+void
 VICII::updateVicFunctionTable()
 {    
     trace(VIC_DEBUG, "updateVicFunctionTable (dmaDebug: %d)\n", dmaDebug());
@@ -60,6 +107,12 @@ VICII::updateVicFunctionTable()
         default:
             fatalError;
     }
+}
+
+VICII::ViciiFunc
+VICII::getViciiFunc(VICIIRevision revision, u16 flags, isize cycle)
+{
+    return nullptr;
 }
 
 VICII::ViciiFunc
