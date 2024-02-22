@@ -91,6 +91,9 @@ private:
     // RAM capacity in bytes
     isize ramCapacity = 0;
 
+    // Total number of write accesses
+    i64 writes = 0;
+
 
     //
     // On-board registers
@@ -193,6 +196,7 @@ public:
         CLONE(exromLineInCrtFile)
         CLONE(numPackets)
         CLONE(ramCapacity)
+        CLONE(writes)
         CLONE(control)
         CLONE(switchPos)
 
@@ -222,6 +226,7 @@ public:
         << exromLineInCrtFile
         << numPackets
         << ramCapacity
+        << writes
         << control
         << switchPos;
     }

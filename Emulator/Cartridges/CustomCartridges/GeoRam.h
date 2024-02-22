@@ -22,6 +22,7 @@ class GeoRAM final : public Cartridge {
 
         .type       = CRT_GEO_RAM,
         .title      = "GeoRam",
+        .memory     = 0,            // Set in constructor
         .battery    = true
     };
 

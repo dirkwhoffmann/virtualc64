@@ -249,7 +249,7 @@ Cartridge::cloneRomAndRam(const Cartridge& other)
         }
     }
 
-    if (other.externalRam) {
+    if (writes != other.writes && other.externalRam) {
 
         if (!externalRam) externalRam = new u8[other.ramCapacity];
         memcpy(externalRam, other.externalRam, ramCapacity);
@@ -443,19 +443,6 @@ Cartridge::poke(u16 addr, u8 value)
     if (!c64.getUltimax()) mem.ram[addr] = value;
 }
 
-/*
- isize
- Cartridge::getRamCapacity() const
- {
- if (ramCapacity == 0) {
- assert(externalRam == nullptr);
- } else {
- assert(externalRam != nullptr);
- }
- return ramCapacity;
- }
- */
-
 void
 Cartridge::setRamCapacity(isize size)
 {
@@ -488,6 +475,7 @@ Cartridge::pokeRAM(u32 addr, u8 value)
 {
     assert(addr < ramCapacity);
     externalRam[addr] = value;
+    writes++;
 }
 
 void
@@ -495,6 +483,7 @@ Cartridge::eraseRAM(u8 value)
 {
     assert(externalRam != nullptr);
     memset(externalRam, value, ramCapacity);
+    writes += ramCapacity;
 }
 
 void

@@ -22,6 +22,7 @@ class Reu final : public Cartridge {
 
         .type       = CRT_REU,
         .title      = "REU",
+        .memory     = 0,            // Set in constructor
         .battery    = true
     };
 
