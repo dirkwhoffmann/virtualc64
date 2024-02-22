@@ -235,6 +235,28 @@ Cartridge::_dump(Category category, std::ostream& os) const
 }
 
 void
+Cartridge::cloneRomAndRam(const Cartridge& other)
+{
+    if (numPackets != other.numPackets) {
+
+        dealloc();
+
+        for (isize i = 0; i < other.numPackets; i++) {
+
+            assert(other.packet[i] != nullptr);
+            packet[i] = new CartridgeRom(c64);
+            packet[i] = other.packet[i];
+        }
+    }
+
+    if (other.externalRam) {
+
+        if (!externalRam) externalRam = new u8[other.ramCapacity];
+        memcpy(externalRam, other.externalRam, ramCapacity);
+    }
+}
+
+void
 Cartridge:: operator << (SerResetter &worker)
 {
     // Reset external RAM

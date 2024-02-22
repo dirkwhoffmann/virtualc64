@@ -28,6 +28,8 @@ ExpansionPort::operator= (const ExpansionPort& other)
 
     if (type != othertype) {
 
+        printf("Creating cartridge clone\n");
+
         // Create a new cartridge of the proper type
         cartridge = std::unique_ptr<Cartridge>(Cartridge::makeWithType(c64, othertype));
     }

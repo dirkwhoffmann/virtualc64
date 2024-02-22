@@ -177,6 +177,10 @@ public:
 
     Cartridge& operator= (const Cartridge& other) {
 
+        printf("Cloning cartridge\n");
+
+        cloneRomAndRam(other);
+
         CLONE(chipL)
         CLONE(chipH)
         CLONE(mappedBytesL)
@@ -194,7 +198,7 @@ public:
 
         return *this;
     }
-
+    void cloneRomAndRam(const Cartridge& other);
     virtual void clone(const Cartridge &other) { *this = other; }
 
     template <class T>
