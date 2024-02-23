@@ -49,6 +49,10 @@ public:
 
     // Dumps the current configuration into a stream
     void dumpConfig(std::ostream& os) const;
+
+    // Experimental
+    string keyList() { return OptionEnum::keyList([&](long i) { return isValidOption(i); }); }
+    string argList() { return OptionEnum::argList([&](long i) { return isValidOption(i); }); }
 };
 
 }

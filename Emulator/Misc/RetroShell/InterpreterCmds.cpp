@@ -343,11 +343,22 @@ Interpreter::initCommandShell(Command &root)
                  "Displays the current configuration",
                  [this](Arguments& argv, long value) {
 
-            if (value == 0) retroShell.dump(cia1, Category::Config);
-            if (value == 1) retroShell.dump(cia2, Category::Config);
+            value == 0 ? 
+            retroShell.dump(cia1, Category::Config) :
+            retroShell.dump(cia2, Category::Config) ;
 
         }, i);
 
+        root.add({cia, "set"}, { c64.cia1.argList(), Arg::value },
+                 "Configures the component",
+                 [this](Arguments& argv, long value) {
+
+            value == 0 ?
+            cia1.Configurable::setOption(argv[0], argv[1]) :
+            cia2.Configurable::setOption(argv[0], argv[1]) ;
+        }, i);
+
+        /*
         root.add({cia, "set"},
                  "Configures the component");
         
@@ -366,6 +377,7 @@ Interpreter::initCommandShell(Command &root)
             configure(OPT_CIA_TIMER_B_BUG, value, parseBool(argv[0]));
 
         }, i);
+        */
     }
 
 
