@@ -853,11 +853,6 @@ public:
     const VICIIConfig &getConfig() const { return config; }
     void resetConfig() override;
 
-    /*
-    i64 getConfigItem(Option option) const;
-    void setConfigItem(Option option, i64 value);
-    */
-
     bool dmaDebug() const { return dmaDebugger.config.dmaDebug; }
 
 private:

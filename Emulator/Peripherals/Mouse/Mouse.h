@@ -49,6 +49,13 @@ public:
 
 class Mouse final : public SubComponent, public Dumpable {
     
+    ConfigOptions options = {
+
+        { OPT_MOUSE_MODEL,          "Mouse model" },
+        { OPT_MOUSE_SHAKE_DETECT,   "Detect a shaking mouse" },
+        { OPT_MOUSE_VELOCITY,       "Mouse speed" }
+    };
+
     // Reference to the control port this device belongs to
     ControlPort &port;
 
@@ -140,6 +147,17 @@ public:
 
 
     //
+    // Methods from Configurable
+    //
+
+    const ConfigOptions &getOptions() const override { return options; }
+
+    // Gets or sets a config option
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
+
+
+    //
     // Configuring
     //
     
@@ -147,9 +165,6 @@ public:
     
     const MouseConfig &getConfig() const { return config; }
     void resetConfig() override;
-
-    i64 getConfigItem(Option option) const;
-    void setConfigItem(Option option, i64 value);
     
 private:
     

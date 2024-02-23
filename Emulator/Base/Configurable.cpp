@@ -259,6 +259,14 @@ Configurable::isValidOption(Option opt) const
 }
 
 void 
+Configurable::resetConfig(const Defaults &defaults)
+{
+    for (auto &option : getOptions()) {
+        setOption(option.first, defaults.get(option.first));
+    }
+}
+
+void
 Configurable::dumpConfig(std::ostream& os) const
 {
     using namespace util;

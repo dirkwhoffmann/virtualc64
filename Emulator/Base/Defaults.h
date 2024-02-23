@@ -75,12 +75,12 @@ public:
 
 public:
 
-    string getString(const string &key) throws;
-    i64 getInt(const string &key) throws;
-    i64 get(Option option) throws;
-    i64 get(Option option, isize nr) throws;
+    string getString(const string &key) const throws;
+    i64 getInt(const string &key) const throws;
+    i64 get(Option option) const throws;
+    i64 get(Option option, isize nr) const throws;
 
-    string getFallback(const string &key) throws;
+    string getFallback(const string &key) const throws;
 
     void setString(const string &key, const string &value);
     void set(Option option, i64 value);

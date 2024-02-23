@@ -238,6 +238,9 @@ VICII::recordStats(VICIIStats &result) const
 void
 VICII::resetConfig()
 {
+    Configurable::resetConfig(emulator.defaults);
+
+    /*
     assert(isPoweredOff());
     auto &defaults = emulator.defaults;
 
@@ -259,6 +262,7 @@ VICII::resetConfig()
     for (auto &option : options) {
         setOption(option, defaults.get(option));
     }
+    */
 }
 
 i64

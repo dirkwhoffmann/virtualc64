@@ -19,6 +19,13 @@ namespace vc64 {
 
 class Joystick final : public SubComponent, public Dumpable {
     
+    ConfigOptions options = {
+
+        { OPT_JOY_AUTOFIRE,         "Autofire status" },
+        { OPT_JOY_AUTOFIRE_BULLETS, "Number of auto-fire bullets" },
+        { OPT_JOY_AUTOFIRE_DELAY,   "Delay between two shots" }
+    };
+
     // Reference to the control port this device belongs to
     ControlPort &port;
 
@@ -86,6 +93,17 @@ public:
 
 
     //
+    // Methods from Configurable
+    //
+
+    const ConfigOptions &getOptions() const override { return options; }
+
+    // Gets or sets a config option
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
+
+
+    //
     // Configuring
     //
     
@@ -93,9 +111,6 @@ public:
 
     const JoystickConfig &getConfig() const { return config; }
     void resetConfig() override;
-
-    i64 getConfigItem(Option option) const;
-    void setConfigItem(Option option, i64 value);
     
     
     //

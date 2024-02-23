@@ -37,23 +37,11 @@ void Mouse::_reset(bool hard)
 void
 Mouse::resetConfig()
 {
-    assert(isPoweredOff());
-    auto &defaults = emulator.defaults;
-
-    std::vector <Option> options = {
-
-        OPT_MOUSE_MODEL,
-        OPT_MOUSE_SHAKE_DETECT,
-        OPT_MOUSE_VELOCITY
-    };
-
-    for (auto &option : options) {
-        setConfigItem(option, defaults.get(option));
-    }
+    Configurable::resetConfig(emulator.defaults);
 }
 
 i64
-Mouse::getConfigItem(Option option) const
+Mouse::getOption(Option option) const
 {
     switch (option) {
 
@@ -67,7 +55,7 @@ Mouse::getConfigItem(Option option) const
 }
 
 void
-Mouse::setConfigItem(Option option, i64 value)
+Mouse::setOption(Option option, i64 value)
 {    
     switch (option) {
             

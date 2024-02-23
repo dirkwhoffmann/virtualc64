@@ -52,6 +52,9 @@ CIA::getDefaultConfig()
 void
 CIA::resetConfig()
 {
+    Configurable::resetConfig(emulator.defaults);
+
+    /*
     assert(isPoweredOff());
     auto &defaults = emulator.defaults;
 
@@ -64,6 +67,7 @@ CIA::resetConfig()
     for (auto &option : options) {
         setConfigItem(option, defaults.get(option));
     }
+    */
 }
 
 i64

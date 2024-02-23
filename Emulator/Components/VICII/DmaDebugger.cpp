@@ -50,6 +50,9 @@ DmaDebugger::getDefaultConfig()
 void
 DmaDebugger::resetConfig()
 {
+    Configurable::resetConfig(emulator.defaults);
+
+    /*
     assert(isPoweredOff());
     auto &defaults = emulator.defaults;
 
@@ -77,6 +80,7 @@ DmaDebugger::resetConfig()
     for (auto &option : options) {
         setOption(option, defaults.get(option));
     }
+    */
 }
 
 i64

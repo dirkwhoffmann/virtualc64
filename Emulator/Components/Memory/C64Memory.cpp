@@ -151,6 +151,9 @@ C64Memory::getDefaultConfig()
 void
 C64Memory::resetConfig()
 {
+    Configurable::resetConfig(emulator.defaults);
+
+    /*
     assert(isPoweredOff());
     auto &defaults = emulator.defaults;
 
@@ -163,10 +166,11 @@ C64Memory::resetConfig()
     for (auto &option : options) {
         setConfigItem(option, defaults.get(option));
     }
+    */
 }
 
 i64
-C64Memory::getConfigItem(Option option) const
+C64Memory::getOption(Option option) const
 {
     switch (option) {
             
@@ -179,7 +183,7 @@ C64Memory::getConfigItem(Option option) const
 }
 
 void
-C64Memory::setConfigItem(Option option, i64 value)
+C64Memory::setOption(Option option, i64 value)
 {
     switch (option) {
             

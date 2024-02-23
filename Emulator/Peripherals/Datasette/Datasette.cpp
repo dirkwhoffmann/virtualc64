@@ -126,22 +126,11 @@ Datasette::operator << (SerWriter &worker)
 void
 Datasette::resetConfig()
 {
-    assert(isPoweredOff());
-    auto &defaults = emulator.defaults;
-
-    std::vector <Option> options = {
-
-        OPT_DAT_MODEL,
-        OPT_DAT_CONNECT
-    };
-
-    for (auto &option : options) {
-        setConfigItem(option, defaults.get(option));
-    }
+    Configurable::resetConfig(emulator.defaults);
 }
 
 i64
-Datasette::getConfigItem(Option option) const
+Datasette::getOption(Option option) const
 {
     switch (option) {
 
@@ -154,7 +143,7 @@ Datasette::getConfigItem(Option option) const
 }
 
 void
-Datasette::setConfigItem(Option option, i64 value)
+Datasette::setOption(Option option, i64 value)
 {
     switch (option) {
 

@@ -49,23 +49,11 @@ Joystick::operator << (SerReader &worker)
 void
 Joystick::resetConfig()
 {
-    assert(isPoweredOff());
-    auto &defaults = emulator.defaults;
-
-    std::vector <Option> options = {
-
-        OPT_JOY_AUTOFIRE,
-        OPT_JOY_AUTOFIRE_BULLETS,
-        OPT_JOY_AUTOFIRE_DELAY
-    };
-
-    for (auto &option : options) {
-        setConfigItem(option, defaults.get(option));
-    }
+    Configurable::resetConfig(emulator.defaults);
 }
 
 i64
-Joystick::getConfigItem(Option option) const
+Joystick::getOption(Option option) const
 {
     switch (option) {
             
@@ -79,7 +67,7 @@ Joystick::getConfigItem(Option option) const
 }
 
 void
-Joystick::setConfigItem(Option option, i64 value)
+Joystick::setOption(Option option, i64 value)
 {
     switch (option) {
             

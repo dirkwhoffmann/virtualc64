@@ -247,12 +247,12 @@ Emulator::configure(Option option, i64 value)
 
         case OPT_RAM_PATTERN:
 
-            main.mem.setConfigItem(option, value);
+            main.mem.setOption(option, value);
             break;
 
         case OPT_SAVE_ROMS:
 
-            main.mem.setConfigItem(option, value);
+            main.mem.setOption(option, value);
             main.drive8.mem.setConfigItem(option, value);
             main.drive9.mem.setConfigItem(option, value);
             break;
@@ -280,22 +280,22 @@ Emulator::configure(Option option, i64 value)
         case OPT_DAT_MODEL:
         case OPT_DAT_CONNECT:
 
-            main.datasette.setConfigItem(option, value);
+            main.datasette.setOption(option, value);
 
         case OPT_MOUSE_MODEL:
         case OPT_MOUSE_SHAKE_DETECT:
         case OPT_MOUSE_VELOCITY:
 
-            main.port1.mouse.setConfigItem(option, value);
-            main.port2.mouse.setConfigItem(option, value);
+            main.port1.mouse.setOption(option, value);
+            main.port2.mouse.setOption(option, value);
             break;
 
         case OPT_JOY_AUTOFIRE:
         case OPT_JOY_AUTOFIRE_BULLETS:
         case OPT_JOY_AUTOFIRE_DELAY:
 
-            main.port1.joystick.setConfigItem(option, value);
-            main.port2.joystick.setConfigItem(option, value);
+            main.port1.joystick.setOption(option, value);
+            main.port2.joystick.setOption(option, value);
             break;
 
         default:
@@ -443,8 +443,8 @@ Emulator::configure(Option option, long id, i64 value)
         case OPT_MOUSE_VELOCITY:
 
             switch (id) {
-                case PORT_1: main.port1.mouse.setConfigItem(option, value); break;
-                case PORT_2: main.port2.mouse.setConfigItem(option, value); break;
+                case PORT_1: main.port1.mouse.setOption(option, value); break;
+                case PORT_2: main.port2.mouse.setOption(option, value); break;
                 default: fatalError;
             }
             break;
@@ -454,8 +454,8 @@ Emulator::configure(Option option, long id, i64 value)
         case OPT_JOY_AUTOFIRE_DELAY:
 
             switch (id) {
-                case PORT_1: main.port1.joystick.setConfigItem(option, value); break;
-                case PORT_2: main.port2.joystick.setConfigItem(option, value); break;
+                case PORT_1: main.port1.joystick.setOption(option, value); break;
+                case PORT_2: main.port2.joystick.setOption(option, value); break;
                 default: fatalError;
             }
             break;
@@ -736,12 +736,12 @@ Emulator::getConfigItem(Option option) const
         case OPT_RAM_PATTERN:
         case OPT_SAVE_ROMS:
 
-            return main.mem.getConfigItem(option);
+            return main.mem.getOption(option);
 
         case OPT_DAT_MODEL:
         case OPT_DAT_CONNECT:
 
-            return main.datasette.getConfigItem(option);
+            return main.datasette.getOption(option);
 
         default:
             fatalError;
@@ -785,16 +785,16 @@ Emulator::getConfigItem(Option option, long id) const
         case OPT_MOUSE_SHAKE_DETECT:
         case OPT_MOUSE_VELOCITY:
 
-            if (id == PORT_1) return main.port1.mouse.getConfigItem(option);
-            if (id == PORT_2) return main.port2.mouse.getConfigItem(option);
+            if (id == PORT_1) return main.port1.mouse.getOption(option);
+            if (id == PORT_2) return main.port2.mouse.getOption(option);
             fatalError;
 
         case OPT_JOY_AUTOFIRE:
         case OPT_JOY_AUTOFIRE_BULLETS:
         case OPT_JOY_AUTOFIRE_DELAY:
 
-            if (id == PORT_1) return main.port1.joystick.getConfigItem(option);
-            if (id == PORT_2) return main.port2.joystick.getConfigItem(option);
+            if (id == PORT_1) return main.port1.joystick.getOption(option);
+            if (id == PORT_2) return main.port2.joystick.getOption(option);
             fatalError;
 
         default:

@@ -19,12 +19,15 @@ namespace vc64 {
 
 class C64Memory final : public SubComponent, public Inspectable<MemInfo, Void> {
 
+    ConfigOptions options = {
+
+        { OPT_RAM_PATTERN,  "RAM initialization pattern" },
+        { OPT_SAVE_ROMS,    "Save Roms into snapshots" }
+    };
+
     // Current configuration
     MemConfig config = { };
-    
-    // Result of the latest inspection
-    mutable MemInfo info = { };
-    
+
 public:
     
     /* C64 bank mapping
@@ -145,6 +148,17 @@ public:
 
 
     //
+    // Methods from Configurable
+    //
+
+    const ConfigOptions &getOptions() const override { return options; }
+
+    // Gets or sets a config option
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
+
+
+    //
     // Configuring
     //
     
@@ -153,24 +167,8 @@ public:
     static MemConfig getDefaultConfig();
     const MemConfig &getConfig() const { return config; }
     void resetConfig() override;
+    
 
-    i64 getConfigItem(Option option) const;
-    void setConfigItem(Option option, i64 value);
-    
-    
-    //
-    // Analyzing
-    //
-    
-public:
-    
-    // MemInfo getInfo() const { return CoreComponent::getInfo(info); }
-
-private:
-    
-    // void _inspect() const override;
-    
-    
     //
     // Accessing
     //

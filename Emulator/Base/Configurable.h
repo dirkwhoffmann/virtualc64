@@ -14,6 +14,7 @@
 
 #include "EmulatorTypes.h"
 #include "Reflection.h"
+#include "Defaults.h"
 #include <algorithm>
 
 namespace vc64 {
@@ -34,7 +35,7 @@ public:
 
     virtual ~Configurable() { };
 
-    // Returns all available config options
+    // Returns the available config options
     virtual const ConfigOptions &getOptions() const { return options; }
 
     // Returns true iff a specific option is available
@@ -48,6 +49,9 @@ public:
     virtual void setOption(Option opt, i64 value) { }
     void setOption(const string &opt, const string &value) { setOption(str2opt(opt), value); }
     void setOption(Option opt, const string &value) { setOption(opt, str2arg(opt, value)); }
+
+    // Resets all config options
+    void resetConfig(const Defaults &defaults);
 
     // Dumps the current configuration
     void dumpConfig(std::ostream& os) const;
