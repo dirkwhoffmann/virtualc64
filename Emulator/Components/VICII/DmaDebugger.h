@@ -22,6 +22,27 @@ class DmaDebugger final : public SubComponent, public Dumpable {
 
     friend class VICII;
     
+    ConfigOptions options = {
+
+        { OPT_DMA_DEBUG_ENABLE,     "Enable or disable DMA debugging" },
+        { OPT_DMA_DEBUG_MODE,       "Overlay mode" },
+        { OPT_DMA_DEBUG_OPACITY,    "Overlay opacity" },
+        { OPT_VICII_CUT_LAYERS,     "Cutout graphics layers" },
+        { OPT_VICII_CUT_OPACITY,    "Cutout opacity" },
+        { OPT_DMA_DEBUG_CHANNEL0,   "Enable or disable channel 0" },
+        { OPT_DMA_DEBUG_CHANNEL1,   "Enable or disable channel 1" },
+        { OPT_DMA_DEBUG_CHANNEL2,   "Enable or disable channel 2" },
+        { OPT_DMA_DEBUG_CHANNEL3,   "Enable or disable channel 3" },
+        { OPT_DMA_DEBUG_CHANNEL4,   "Enable or disable channel 4" },
+        { OPT_DMA_DEBUG_CHANNEL5,   "Enable or disable channel 5" },
+        { OPT_DMA_DEBUG_COLOR0,     "Color for channel 0" },
+        { OPT_DMA_DEBUG_COLOR1,     "Color for channel 1" },
+        { OPT_DMA_DEBUG_COLOR2,     "Color for channel 2" },
+        { OPT_DMA_DEBUG_COLOR3,     "Color for channel 3" },
+        { OPT_DMA_DEBUG_COLOR4,     "Color for channel 4" },
+        { OPT_DMA_DEBUG_COLOR5,     "Color for channel 5" }
+    };
+
     // Current configuration
     DmaDebuggerConfig config = { };
     
@@ -80,6 +101,17 @@ public:
 
 
     //
+    // Methods from Configurable
+    //
+
+    const ConfigOptions &getOptions() const override { return options; }
+
+    // Gets or sets a config option
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
+
+
+    //
     // Configuring
     //
     
@@ -88,11 +120,6 @@ public:
     static DmaDebuggerConfig getDefaultConfig();
     const DmaDebuggerConfig &getConfig() const { return config; }
     void resetConfig() override;
-
-    i64 getConfigItem(Option option) const;
-    i64 getConfigItem(Option option, long id) const;
-    void setConfigItem(Option option, i64 value);
-    void setConfigItem(Option option, long id, i64 value);
     
     
     //

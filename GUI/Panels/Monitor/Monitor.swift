@@ -126,13 +126,29 @@ class Monitor: DialogController {
         let b = Int(sender.color.blueComponent * 255)
         let bgr = (b << 16) | (g << 8) | (r << 0)
         
-        c64.configure(.DMA_DEBUG_COLOR, id: sender.tag, value: bgr)
+        switch sender.tag {
+        case 0:  c64.configure(.DMA_DEBUG_COLOR0, value: bgr)
+        case 1:  c64.configure(.DMA_DEBUG_COLOR1, value: bgr)
+        case 2:  c64.configure(.DMA_DEBUG_COLOR2, value: bgr)
+        case 3:  c64.configure(.DMA_DEBUG_COLOR3, value: bgr)
+        case 4:  c64.configure(.DMA_DEBUG_COLOR4, value: bgr)
+        case 5:  c64.configure(.DMA_DEBUG_COLOR5, value: bgr)
+        default: break
+        }
         refresh()
     }
 
     @IBAction func busChannelAction(_ sender: NSButton!) {
-        
-        c64.configure(.DMA_DEBUG_ENABLE, id: sender.tag, enable: sender.state == .on)
+
+        switch sender.tag {
+        case 0:  c64.configure(.DMA_DEBUG_CHANNEL0, enable: sender.state == .on)
+        case 1:  c64.configure(.DMA_DEBUG_CHANNEL1, enable: sender.state == .on)
+        case 2:  c64.configure(.DMA_DEBUG_CHANNEL2, enable: sender.state == .on)
+        case 3:  c64.configure(.DMA_DEBUG_CHANNEL3, enable: sender.state == .on)
+        case 4:  c64.configure(.DMA_DEBUG_CHANNEL4, enable: sender.state == .on)
+        case 5:  c64.configure(.DMA_DEBUG_CHANNEL5, enable: sender.state == .on)
+        default: break
+        }
         refresh()
     }
 

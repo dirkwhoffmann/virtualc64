@@ -79,6 +79,18 @@ Configurable::arg2str(Option opt, i64 arg) const
         case OPT_DMA_DEBUG_ENABLE:          return toBool(arg);
         case OPT_DMA_DEBUG_MODE:            return DmaDisplayModeEnum::key(arg);
         case OPT_DMA_DEBUG_OPACITY:         return toNum(arg);
+        case OPT_DMA_DEBUG_CHANNEL0:        return toBool(arg);
+        case OPT_DMA_DEBUG_CHANNEL1:        return toBool(arg);
+        case OPT_DMA_DEBUG_CHANNEL2:        return toBool(arg);
+        case OPT_DMA_DEBUG_CHANNEL3:        return toBool(arg);
+        case OPT_DMA_DEBUG_CHANNEL4:        return toBool(arg);
+        case OPT_DMA_DEBUG_CHANNEL5:        return toBool(arg);
+        case OPT_DMA_DEBUG_COLOR0:          return toNum(arg);
+        case OPT_DMA_DEBUG_COLOR1:          return toNum(arg);
+        case OPT_DMA_DEBUG_COLOR2:          return toNum(arg);
+        case OPT_DMA_DEBUG_COLOR3:          return toNum(arg);
+        case OPT_DMA_DEBUG_COLOR4:          return toNum(arg);
+        case OPT_DMA_DEBUG_COLOR5:          return toNum(arg);
 
         case OPT_POWER_GRID:                return PowerGridEnum::key(arg);
 
@@ -169,6 +181,18 @@ Configurable::str2arg(Option opt, const string &arg) const
         case OPT_DMA_DEBUG_ENABLE:          return parseBool(arg);
         case OPT_DMA_DEBUG_MODE:            return parseEnum<DmaDisplayModeEnum>(arg);
         case OPT_DMA_DEBUG_OPACITY:         return parseNum(arg);
+        case OPT_DMA_DEBUG_CHANNEL0:        return parseBool(arg);
+        case OPT_DMA_DEBUG_CHANNEL1:        return parseBool(arg);
+        case OPT_DMA_DEBUG_CHANNEL2:        return parseBool(arg);
+        case OPT_DMA_DEBUG_CHANNEL3:        return parseBool(arg);
+        case OPT_DMA_DEBUG_CHANNEL4:        return parseBool(arg);
+        case OPT_DMA_DEBUG_CHANNEL5:        return parseBool(arg);
+        case OPT_DMA_DEBUG_COLOR0:          return parseNum(arg);
+        case OPT_DMA_DEBUG_COLOR1:          return parseNum(arg);
+        case OPT_DMA_DEBUG_COLOR2:          return parseNum(arg);
+        case OPT_DMA_DEBUG_COLOR3:          return parseNum(arg);
+        case OPT_DMA_DEBUG_COLOR4:          return parseNum(arg);
+        case OPT_DMA_DEBUG_COLOR5:          return parseNum(arg);
 
         case OPT_POWER_GRID:                return parseEnum<PowerGridEnum>(arg);
 

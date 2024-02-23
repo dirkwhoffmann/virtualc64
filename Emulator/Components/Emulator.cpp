@@ -196,8 +196,20 @@ Emulator::configure(Option option, i64 value)
         case OPT_DMA_DEBUG_ENABLE:
         case OPT_DMA_DEBUG_MODE:
         case OPT_DMA_DEBUG_OPACITY:
+        case OPT_DMA_DEBUG_CHANNEL0:
+        case OPT_DMA_DEBUG_CHANNEL1:
+        case OPT_DMA_DEBUG_CHANNEL2:
+        case OPT_DMA_DEBUG_CHANNEL3:
+        case OPT_DMA_DEBUG_CHANNEL4:
+        case OPT_DMA_DEBUG_CHANNEL5:
+        case OPT_DMA_DEBUG_COLOR0:
+        case OPT_DMA_DEBUG_COLOR1:
+        case OPT_DMA_DEBUG_COLOR2:
+        case OPT_DMA_DEBUG_COLOR3:
+        case OPT_DMA_DEBUG_COLOR4:
+        case OPT_DMA_DEBUG_COLOR5:
 
-            main.vic.dmaDebugger.setConfigItem(option, value);
+            main.vic.dmaDebugger.setOption(option, value);
             break;
 
         case OPT_POWER_GRID:
@@ -416,13 +428,6 @@ Emulator::configure(Option option, long id, i64 value)
 
     switch (option) {
 
-        case OPT_DMA_DEBUG_ENABLE:
-        case OPT_DMA_DEBUG_CHANNEL:
-        case OPT_DMA_DEBUG_COLOR:
-
-            main.vic.dmaDebugger.setConfigItem(option, id, value);
-            break;
-
         case OPT_CIA_REVISION:
         case OPT_CIA_TIMER_B_BUG:
 
@@ -514,19 +519,29 @@ Emulator::configure(Option option, long id, const string &value)
     switch (option) {
 
         case OPT_DMA_DEBUG_ENABLE:      return config(parseBool);
-        case OPT_DMA_DEBUG_CHANNEL:     return config(parseNum);
-        case OPT_DMA_DEBUG_COLOR:       return config(parseNum);
+        case OPT_DMA_DEBUG_CHANNEL0:    return config(parseBool);
+        case OPT_DMA_DEBUG_CHANNEL1:    return config(parseBool);
+        case OPT_DMA_DEBUG_CHANNEL2:    return config(parseBool);
+        case OPT_DMA_DEBUG_CHANNEL3:    return config(parseBool);
+        case OPT_DMA_DEBUG_CHANNEL4:    return config(parseBool);
+        case OPT_DMA_DEBUG_CHANNEL5:    return config(parseBool);
+        case OPT_DMA_DEBUG_COLOR0:      return config(parseNum);
+        case OPT_DMA_DEBUG_COLOR1:      return config(parseNum);
+        case OPT_DMA_DEBUG_COLOR2:      return config(parseNum);
+        case OPT_DMA_DEBUG_COLOR3:      return config(parseNum);
+        case OPT_DMA_DEBUG_COLOR4:      return config(parseNum);
+        case OPT_DMA_DEBUG_COLOR5:      return config(parseNum);
 
         case OPT_CIA_REVISION:          return config(parseEnum<CIARevisionEnum>);
-        case OPT_CIA_TIMER_B_BUG:           return config(parseBool);
+        case OPT_CIA_TIMER_B_BUG:       return config(parseBool);
 
         case OPT_MOUSE_MODEL:           return config(parseEnum<MouseModelEnum>);
-        case OPT_MOUSE_SHAKE_DETECT:       return config(parseBool);
+        case OPT_MOUSE_SHAKE_DETECT:    return config(parseBool);
         case OPT_MOUSE_VELOCITY:        return config(parseNum);
 
-        case OPT_JOY_AUTOFIRE:              return config(parseBool);
-        case OPT_JOY_AUTOFIRE_BULLETS:      return config(parseNum);
-        case OPT_JOY_AUTOFIRE_DELAY:        return config(parseNum);
+        case OPT_JOY_AUTOFIRE:          return config(parseBool);
+        case OPT_JOY_AUTOFIRE_BULLETS:  return config(parseNum);
+        case OPT_JOY_AUTOFIRE_DELAY:    return config(parseNum);
 
         case OPT_SID_ENABLE:            return config(parseBool);
         case OPT_SID_ADDRESS:           return config(parseNum);
@@ -535,10 +550,10 @@ Emulator::configure(Option option, long id, const string &value)
         case OPT_SID_POWER_SAVE:        return config(parseBool);
         case OPT_SID_ENGINE:            return config(parseEnum<SIDEngineEnum>);
         case OPT_SID_SAMPLING:          return config(parseEnum<SamplingMethodEnum>);
-        case OPT_AUD_PAN:                return config(parseNum);
-        case OPT_AUD_VOL:                return config(parseNum);
-        case OPT_AUD_VOL_L:               return config(parseNum);
-        case OPT_AUD_VOL_R:               return config(parseNum);
+        case OPT_AUD_PAN:               return config(parseNum);
+        case OPT_AUD_VOL:               return config(parseNum);
+        case OPT_AUD_VOL_L:             return config(parseNum);
+        case OPT_AUD_VOL_R:             return config(parseNum);
 
         case OPT_DRV_AUTO_CONFIG:       return config(parseBool);
         case OPT_DRV_TYPE:              return config(parseEnum<DriveTypeEnum>);
@@ -696,7 +711,7 @@ Emulator::getConfigItem(Option option) const
         case OPT_VICII_CUT_LAYERS:
         case OPT_VICII_CUT_OPACITY:
 
-            return main.vic.dmaDebugger.getConfigItem(option);
+            return main.vic.dmaDebugger.getOption(option);
 
         case OPT_CIA_REVISION:
         case OPT_CIA_TIMER_B_BUG:
@@ -739,11 +754,6 @@ Emulator::getConfigItem(Option option, long id) const
     const Drive &drive = id == DRIVE8 ? main.drive8 : main.drive9;
 
     switch (option) {
-
-        case OPT_DMA_DEBUG_CHANNEL:
-        case OPT_DMA_DEBUG_COLOR:
-
-            return main.vic.dmaDebugger.getConfigItem(option, id);
 
         case OPT_SID_ENABLE:
         case OPT_SID_ADDRESS:

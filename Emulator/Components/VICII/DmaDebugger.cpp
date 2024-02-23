@@ -60,59 +60,57 @@ DmaDebugger::resetConfig()
         OPT_DMA_DEBUG_OPACITY,
         OPT_VICII_CUT_LAYERS,
         OPT_VICII_CUT_OPACITY,
+        OPT_DMA_DEBUG_CHANNEL0,
+        OPT_DMA_DEBUG_CHANNEL1,
+        OPT_DMA_DEBUG_CHANNEL2,
+        OPT_DMA_DEBUG_CHANNEL3,
+        OPT_DMA_DEBUG_CHANNEL4,
+        OPT_DMA_DEBUG_CHANNEL5,
+        OPT_DMA_DEBUG_COLOR0,
+        OPT_DMA_DEBUG_COLOR1,
+        OPT_DMA_DEBUG_COLOR2,
+        OPT_DMA_DEBUG_COLOR3,
+        OPT_DMA_DEBUG_COLOR4,
+        OPT_DMA_DEBUG_COLOR5
     };
 
     for (auto &option : options) {
-        setConfigItem(option, defaults.get(option));
-    }
-
-    std::vector <Option> moreOptions = {
-
-        OPT_DMA_DEBUG_CHANNEL,
-        OPT_DMA_DEBUG_COLOR
-    };
-
-    for (auto &option : moreOptions) {
-        for (isize i = 0; i < 6; i++) {
-            setConfigItem(option, i, defaults.get(option, i));
-        }
+        setOption(option, defaults.get(option));
     }
 }
 
 i64
-DmaDebugger::getConfigItem(Option option) const
+DmaDebugger::getOption(Option option) const
 {
     switch (option) {
             
-        case OPT_DMA_DEBUG_ENABLE:  return config.dmaDebug;
-        case OPT_DMA_DEBUG_MODE:    return config.dmaDisplayMode;
-        case OPT_DMA_DEBUG_OPACITY: return config.dmaOpacity;
+        case OPT_DMA_DEBUG_ENABLE:      return config.dmaDebug;
+        case OPT_DMA_DEBUG_MODE:        return config.dmaDisplayMode;
+        case OPT_DMA_DEBUG_OPACITY:     return config.dmaOpacity;
 
-        case OPT_VICII_CUT_LAYERS:        return config.cutLayers;
-        case OPT_VICII_CUT_OPACITY:       return config.cutOpacity;
+        case OPT_VICII_CUT_LAYERS:      return config.cutLayers;
+        case OPT_VICII_CUT_OPACITY:     return config.cutOpacity;
 
-        default:
-            fatalError;
-    }
-}
+        case OPT_DMA_DEBUG_CHANNEL0:    return config.dmaChannel[0];
+        case OPT_DMA_DEBUG_CHANNEL1:    return config.dmaChannel[1];
+        case OPT_DMA_DEBUG_CHANNEL2:    return config.dmaChannel[2];
+        case OPT_DMA_DEBUG_CHANNEL3:    return config.dmaChannel[3];
+        case OPT_DMA_DEBUG_CHANNEL4:    return config.dmaChannel[4];
+        case OPT_DMA_DEBUG_CHANNEL5:    return config.dmaChannel[5];
+        case OPT_DMA_DEBUG_COLOR0:      return config.dmaColor[0];
+        case OPT_DMA_DEBUG_COLOR1:      return config.dmaColor[1];
+        case OPT_DMA_DEBUG_COLOR2:      return config.dmaColor[2];
+        case OPT_DMA_DEBUG_COLOR3:      return config.dmaColor[3];
+        case OPT_DMA_DEBUG_COLOR4:      return config.dmaColor[4];
+        case OPT_DMA_DEBUG_COLOR5:      return config.dmaColor[5];
 
-i64
-DmaDebugger::getConfigItem(Option option, long id) const
-{
-    assert(id >= 0 && id < MEMACCESS_COUNT);
-    
-    switch (option) {
-            
-        case OPT_DMA_DEBUG_CHANNEL: return config.dmaChannel[id];
-        case OPT_DMA_DEBUG_COLOR:   return config.dmaColor[id];
-            
         default:
             fatalError;
     }
 }
 
 void
-DmaDebugger::setConfigItem(Option option, i64 value)
+DmaDebugger::setOption(Option option, i64 value)
 {
     switch (option) {
             
@@ -136,47 +134,26 @@ DmaDebugger::setConfigItem(Option option, i64 value)
             config.dmaDisplayMode = (DmaDisplayMode)value;
             return;
 
-        case OPT_DMA_DEBUG_OPACITY:
-            
-            config.dmaOpacity = (u8)value;
-            return;
-            
-        case OPT_VICII_CUT_LAYERS:
-            
-            config.cutLayers = (u16)value;
-            return;
-            
-        case OPT_VICII_CUT_OPACITY:
-            
-            config.cutOpacity = (u8)value;
-            return;
+        case OPT_DMA_DEBUG_OPACITY:     config.dmaOpacity = (u8)value; return;
+        case OPT_VICII_CUT_LAYERS:      config.cutLayers = (u16)value; return;
+        case OPT_VICII_CUT_OPACITY:     config.cutOpacity = (u8)value; return;
+
+        case OPT_DMA_DEBUG_CHANNEL0:    config.dmaChannel[0] = value; return;
+        case OPT_DMA_DEBUG_CHANNEL1:    config.dmaChannel[1] = value; return;
+        case OPT_DMA_DEBUG_CHANNEL2:    config.dmaChannel[2] = value; return;
+        case OPT_DMA_DEBUG_CHANNEL3:    config.dmaChannel[3] = value; return;
+        case OPT_DMA_DEBUG_CHANNEL4:    config.dmaChannel[4] = value; return;
+        case OPT_DMA_DEBUG_CHANNEL5:    config.dmaChannel[5] = value; return;
+
+        case OPT_DMA_DEBUG_COLOR0:      setDmaDebugColor(0, GpuColor((u32)value)); return;
+        case OPT_DMA_DEBUG_COLOR1:      setDmaDebugColor(1, GpuColor((u32)value)); return;
+        case OPT_DMA_DEBUG_COLOR2:      setDmaDebugColor(2, GpuColor((u32)value)); return;
+        case OPT_DMA_DEBUG_COLOR3:      setDmaDebugColor(3, GpuColor((u32)value)); return;
+        case OPT_DMA_DEBUG_COLOR4:      setDmaDebugColor(4, GpuColor((u32)value)); return;
+        case OPT_DMA_DEBUG_COLOR5:      setDmaDebugColor(5, GpuColor((u32)value)); return;
 
         default:
             fatalError;
-    }
-}
-
-void
-DmaDebugger::setConfigItem(Option option, long id, i64 value)
-{
-    if (!MemAccessEnum::isValid(id)) return;
-    
-    MemAccess access = (MemAccess)id;
-    
-    switch (option) {
-            
-        case OPT_DMA_DEBUG_CHANNEL:
-            
-            config.dmaChannel[access] = value;
-            return;
-            
-        case OPT_DMA_DEBUG_COLOR:
-            
-            setDmaDebugColor(access, GpuColor((u32)value));
-            return;
-            
-        default:
-            return;
     }
 }
 

@@ -457,6 +457,7 @@ Interpreter::initCommandShell(Command &root)
         configure(OPT_DMA_DEBUG_ENABLE, false);
     });
 
+    /*
     root.add({"dmadebugger", "raccesses"}, { Arg::onoff },
              "Visualizes refresh cycles",
              [this](Arguments& argv, long value) {
@@ -498,6 +499,7 @@ Interpreter::initCommandShell(Command &root)
 
         configure(OPT_DMA_DEBUG_CHANNEL, 5, parseBool(argv[0]));
     });
+    */
 
 
     //
