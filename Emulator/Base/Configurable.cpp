@@ -228,8 +228,10 @@ Configurable::str2arg(Option opt, const string &arg) const
 bool
 Configurable::isValidOption(Option opt) const
 {
-    auto opts = getOptions();
-    return std::find(opts.begin(), opts.end(), opt) != opts.end();
+    for (auto &it: getOptions()) {
+        if (it.first == opt) return true;
+    }
+    return false;
 }
 
 void 
@@ -239,8 +241,13 @@ Configurable::dumpConfig(std::ostream& os) const
 
     for (auto &opt: getOptions()) {
 
-        os << tab(opt2str(opt));
-        os << arg2str(opt, getOption(opt)) << std::endl;
+        auto name = opt2str(opt.first);
+        auto help = "(" + opt.second + ")";
+        auto arg  = arg2str(opt.first, getOption(opt.first));
+
+        os << tab(name);
+        os << std::setw(16) << std::left << std::setfill(' ') << arg;
+        os <<help << std::endl;
     }
 }
 

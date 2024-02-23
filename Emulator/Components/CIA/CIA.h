@@ -24,10 +24,10 @@ class CIA : public SubComponent, public Inspectable<CIAInfo, CIAStats> {
     friend class TOD;
     friend class ParCable;
 
-    const std::vector<Option> options = {
+    ConfigOptions options = {
 
-        OPT_CIA_REVISION,
-        OPT_CIA_TIMER_B_BUG
+        { OPT_CIA_REVISION,     "Chip Revision" },
+        { OPT_CIA_TIMER_B_BUG,  "Timer B bug" }
     };
 
 
@@ -412,7 +412,7 @@ public:
     // Methods from Configurable
     //
 
-    const std::vector<Option> &getOptions() const override { return options; }
+    const ConfigOptions &getOptions() const override { return options; }
 
     // Gets or sets a config option
     i64 getOption(Option opt) const override { return getConfigItem(opt); }

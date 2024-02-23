@@ -18,9 +18,11 @@
 
 namespace vc64 {
 
+typedef std::vector<std::pair<Option,string>> ConfigOptions;
+
 class Configurable
 {
-    constexpr static std::vector<Option> options = { };
+    constexpr static ConfigOptions options = { };
 
     // Converters
     string opt2str(Option opt) const;
@@ -33,7 +35,7 @@ public:
     virtual ~Configurable() { };
 
     // Returns all available config options
-    virtual const std::vector<Option> &getOptions() const { return options; }
+    virtual const ConfigOptions &getOptions() const { return options; }
 
     // Checks if a specific option is available
     bool isValidOption(Option opt) const;
