@@ -188,7 +188,7 @@ Emulator::configure(Option option, i64 value)
         case OPT_VICII_SB_COLLISIONS:
         case OPT_GLUE_LOGIC:
 
-            main.vic.setConfigItem(option, value);
+            main.vic.setOption(option, value);
             break;
 
         case OPT_VICII_CUT_LAYERS:
@@ -688,7 +688,7 @@ Emulator::getConfigItem(Option option) const
         case OPT_VICII_CONTRAST:
         case OPT_VICII_SATURATION:
 
-            return main.vic.getConfigItem(option);
+            return main.vic.getOption(option);
 
         case OPT_DMA_DEBUG_ENABLE:
         case OPT_DMA_DEBUG_MODE:

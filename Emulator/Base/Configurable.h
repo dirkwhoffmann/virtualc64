@@ -37,22 +37,22 @@ public:
     // Returns all available config options
     virtual const ConfigOptions &getOptions() const { return options; }
 
-    // Checks if a specific option is available
+    // Returns true iff a specific option is available
     bool isValidOption(Option opt) const;
 
-    // Gets or sets a config option
+    // Gets a config options
     virtual i64 getOption(Option opt) const { return 0; }
-    virtual void setOption(Option opt, i64 value) { }
-
-    // Convinient wrappers
     i64 getOption(const string &opt) const { return getOption(str2opt(opt)); }
+
+    // Sets a config option
+    virtual void setOption(Option opt, i64 value) { }
     void setOption(const string &opt, const string &value) { setOption(str2opt(opt), value); }
     void setOption(Option opt, const string &value) { setOption(opt, str2arg(opt, value)); }
 
-    // Dumps the current configuration into a stream
+    // Dumps the current configuration
     void dumpConfig(std::ostream& os) const;
 
-    // Experimental
+    // Returns a textual description for all available options
     string keyList() { return OptionEnum::keyList([&](long i) { return isValidOption(i); }); }
     string argList() { return OptionEnum::argList([&](long i) { return isValidOption(i); }); }
 };

@@ -257,26 +257,26 @@ VICII::resetConfig()
     };
 
     for (auto &option : options) {
-        setConfigItem(option, defaults.get(option));
+        setOption(option, defaults.get(option));
     }
 }
 
 i64
-VICII::getConfigItem(Option option) const
+VICII::getOption(Option option) const
 {
     switch (option) {
             
-        case OPT_VICII_REVISION:      return config.revision;
-        case OPT_VICII_POWER_SAVE:    return config.powerSave;
-        case OPT_VICII_PALETTE:           return config.palette;
-        case OPT_VICII_BRIGHTNESS:        return config.brightness;
-        case OPT_VICII_CONTRAST:          return config.contrast;
-        case OPT_VICII_SATURATION:        return config.saturation;
-        case OPT_VICII_GRAY_DOT_BUG:      return config.grayDotBug;
-        case OPT_GLUE_LOGIC:        return config.glueLogic;
-        case OPT_VICII_HIDE_SPRITES:      return config.hideSprites;
-        case OPT_VICII_SS_COLLISIONS:     return config.checkSSCollisions;
-        case OPT_VICII_SB_COLLISIONS:     return config.checkSBCollisions;
+        case OPT_VICII_REVISION:        return config.revision;
+        case OPT_VICII_POWER_SAVE:      return config.powerSave;
+        case OPT_VICII_PALETTE:         return config.palette;
+        case OPT_VICII_BRIGHTNESS:      return config.brightness;
+        case OPT_VICII_CONTRAST:        return config.contrast;
+        case OPT_VICII_SATURATION:      return config.saturation;
+        case OPT_VICII_GRAY_DOT_BUG:    return config.grayDotBug;
+        case OPT_GLUE_LOGIC:            return config.glueLogic;
+        case OPT_VICII_HIDE_SPRITES:    return config.hideSprites;
+        case OPT_VICII_SS_COLLISIONS:   return config.checkSSCollisions;
+        case OPT_VICII_SB_COLLISIONS:   return config.checkSBCollisions;
 
         default:
             fatalError;
@@ -284,7 +284,7 @@ VICII::getConfigItem(Option option) const
 }
 
 void
-VICII::setConfigItem(Option option, i64 value)
+VICII::setOption(Option option, i64 value)
 {
     switch (option) {
             
