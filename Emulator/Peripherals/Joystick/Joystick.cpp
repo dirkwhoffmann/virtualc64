@@ -54,9 +54,9 @@ Joystick::resetConfig()
 
     std::vector <Option> options = {
 
-        OPT_AUTOFIRE,
-        OPT_AUTOFIRE_BULLETS,
-        OPT_AUTOFIRE_DELAY
+        OPT_JOY_AUTOFIRE,
+        OPT_JOY_AUTOFIRE_BULLETS,
+        OPT_JOY_AUTOFIRE_DELAY
     };
 
     for (auto &option : options) {
@@ -69,9 +69,9 @@ Joystick::getConfigItem(Option option) const
 {
     switch (option) {
             
-        case OPT_AUTOFIRE:          return (i64)config.autofire;
-        case OPT_AUTOFIRE_BULLETS:  return (i64)config.autofireBullets;
-        case OPT_AUTOFIRE_DELAY:    return (i64)config.autofireDelay;
+        case OPT_JOY_AUTOFIRE:          return (i64)config.autofire;
+        case OPT_JOY_AUTOFIRE_BULLETS:  return (i64)config.autofireBullets;
+        case OPT_JOY_AUTOFIRE_DELAY:    return (i64)config.autofireDelay;
             
         default:
             fatalError;
@@ -83,7 +83,7 @@ Joystick::setConfigItem(Option option, i64 value)
 {
     switch (option) {
             
-        case OPT_AUTOFIRE:
+        case OPT_JOY_AUTOFIRE:
             
             config.autofire = bool(value);
             
@@ -91,7 +91,7 @@ Joystick::setConfigItem(Option option, i64 value)
             if (value == false) button = false;
             return;
 
-        case OPT_AUTOFIRE_BULLETS:
+        case OPT_JOY_AUTOFIRE_BULLETS:
             
             config.autofireBullets = isize(value);
             
@@ -99,7 +99,7 @@ Joystick::setConfigItem(Option option, i64 value)
             if (bulletCounter > 0) reload();
             return;
 
-        case OPT_AUTOFIRE_DELAY:
+        case OPT_JOY_AUTOFIRE_DELAY:
             
             config.autofireDelay = isize(value);
             return;

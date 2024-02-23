@@ -19,28 +19,28 @@ namespace vc64 {
 
 Defaults::Defaults()
 {
-    setFallback(OPT_WARP_BOOT, 0);
-    setFallback(OPT_WARP_MODE, WARP_NEVER);
-    setFallback(OPT_VSYNC, false);
-    setFallback(OPT_TIME_LAPSE, 100);
-    setFallback(OPT_RUN_AHEAD, 0);
+    setFallback(OPT_EMU_WARP_BOOT, 0);
+    setFallback(OPT_EMU_WARP_MODE, WARP_NEVER);
+    setFallback(OPT_EMU_VSYNC, false);
+    setFallback(OPT_EMU_TIME_LAPSE, 100);
+    setFallback(OPT_EMU_RUN_AHEAD, 0);
 
     setFallback(OPT_POWER_GRID, GRID_STABLE_50HZ);
 
     setFallback(OPT_CIA_REVISION, MOS_6526);
-    setFallback(OPT_TIMER_B_BUG, true);
+    setFallback(OPT_CIA_TIMER_B_BUG, true);
 
-    setFallback(OPT_VIC_REVISION, VICII_PAL_8565);
-    setFallback(OPT_VIC_POWER_SAVE, true);
-    setFallback(OPT_GRAY_DOT_BUG, true);
+    setFallback(OPT_VICII_REVISION, VICII_PAL_8565);
+    setFallback(OPT_VICII_POWER_SAVE, true);
+    setFallback(OPT_VICII_GRAY_DOT_BUG, true);
     setFallback(OPT_GLUE_LOGIC, GLUE_LOGIC_DISCRETE);
-    setFallback(OPT_PALETTE, PALETTE_COLOR);
-    setFallback(OPT_BRIGHTNESS, 50);
-    setFallback(OPT_CONTRAST, 100);
-    setFallback(OPT_SATURATION, 50);
-    setFallback(OPT_HIDE_SPRITES, false);
-    setFallback(OPT_SB_COLLISIONS, true);
-    setFallback(OPT_SS_COLLISIONS, true);
+    setFallback(OPT_VICII_PALETTE, PALETTE_COLOR);
+    setFallback(OPT_VICII_BRIGHTNESS, 50);
+    setFallback(OPT_VICII_CONTRAST, 100);
+    setFallback(OPT_VICII_SATURATION, 50);
+    setFallback(OPT_VICII_HIDE_SPRITES, false);
+    setFallback(OPT_VICII_SB_COLLISIONS, true);
+    setFallback(OPT_VICII_SS_COLLISIONS, true);
 
     setFallback(OPT_DMA_DEBUG_ENABLE, false);
     setFallback(OPT_DMA_DEBUG_MODE, DMA_DISPLAY_MODE_FG_LAYER);
@@ -57,16 +57,16 @@ Defaults::Defaults()
     setFallback(OPT_DMA_DEBUG_COLOR, 3, GpuColor(0x00, 0xFF, 0xFF).abgr);
     setFallback(OPT_DMA_DEBUG_COLOR, 4, GpuColor(0x00, 0xFF, 0x00).abgr);
     setFallback(OPT_DMA_DEBUG_COLOR, 5, GpuColor(0x00, 0x80, 0xFF).abgr);
-    setFallback(OPT_CUT_LAYERS, 0xFF);
-    setFallback(OPT_CUT_OPACITY, 0xFF);
+    setFallback(OPT_VICII_CUT_LAYERS, 0xFF);
+    setFallback(OPT_VICII_CUT_OPACITY, 0xFF);
 
     setFallback(OPT_SID_REVISION, MOS_8580);
     setFallback(OPT_SID_POWER_SAVE, false);
     setFallback(OPT_SID_FILTER, false);
     setFallback(OPT_SID_ENGINE, SIDENGINE_RESID);
     setFallback(OPT_SID_SAMPLING, SAMPLING_INTERPOLATE);
-    setFallback(OPT_AUDVOLL, 50);
-    setFallback(OPT_AUDVOLR, 50);
+    setFallback(OPT_AUD_VOL_L, 50);
+    setFallback(OPT_AUD_VOL_R, 50);
 
     setFallback(OPT_SID_ENABLE, 0, true);
     setFallback(OPT_SID_ENABLE, {1, 2, 3}, false);
@@ -74,8 +74,8 @@ Defaults::Defaults()
     setFallback(OPT_SID_ADDRESS, 1, 0xD420);
     setFallback(OPT_SID_ADDRESS, 2, 0xD440);
     setFallback(OPT_SID_ADDRESS, 3, 0xD460);
-    setFallback(OPT_AUDVOL, {0, 1, 2, 3}, 400);
-    setFallback(OPT_AUDPAN, {0, 1, 2, 3}, 0);
+    setFallback(OPT_AUD_VOL, {0, 1, 2, 3}, 400);
+    setFallback(OPT_AUD_PAN, {0, 1, 2, 3}, 0);
 
     setFallback(OPT_RAM_PATTERN, RAM_PATTERN_VICE);
     setFallback(OPT_SAVE_ROMS, true);
@@ -102,12 +102,12 @@ Defaults::Defaults()
     setFallback(OPT_DAT_MODEL, DATASETTE_C1530);
     setFallback(OPT_DAT_CONNECT, true);
 
-    setFallback(OPT_AUTOFIRE, false);
-    setFallback(OPT_AUTOFIRE_BULLETS, -3);
-    setFallback(OPT_AUTOFIRE_DELAY, 125);
+    setFallback(OPT_JOY_AUTOFIRE, false);
+    setFallback(OPT_JOY_AUTOFIRE_BULLETS, -3);
+    setFallback(OPT_JOY_AUTOFIRE_DELAY, 125);
 
     setFallback(OPT_MOUSE_MODEL, MOUSE_C1350);
-    setFallback(OPT_SHAKE_DETECTION, true);
+    setFallback(OPT_MOUSE_SHAKE_DETECT, true);
     setFallback(OPT_MOUSE_VELOCITY, 100);
 
     setFallback("BASIC_PATH", "");

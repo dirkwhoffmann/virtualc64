@@ -28,28 +28,26 @@ enum_long(OPT)
     OPT_HOST_FRAMEBUF_WIDTH,
     OPT_HOST_FRAMEBUF_HEIGHT,
 
-    // C64
-    OPT_WARP_BOOT,
-    OPT_WARP_MODE,
-    OPT_VSYNC,
-    OPT_TIME_LAPSE,
-    OPT_RUN_AHEAD,
+    // Emulator
+    OPT_EMU_WARP_BOOT,
+    OPT_EMU_WARP_MODE,
+    OPT_EMU_VSYNC,
+    OPT_EMU_TIME_LAPSE,
+    OPT_EMU_RUN_AHEAD,
 
     // VICII
-    OPT_VIC_REVISION,
-    OPT_PALETTE,
-    OPT_BRIGHTNESS,
-    OPT_CONTRAST,
-    OPT_SATURATION,
-    OPT_GRAY_DOT_BUG,
-    OPT_VIC_POWER_SAVE,
-
-    // Sprite debugger
-    OPT_HIDE_SPRITES,
-    OPT_CUT_LAYERS,
-    OPT_CUT_OPACITY,
-    OPT_SS_COLLISIONS,
-    OPT_SB_COLLISIONS,
+    OPT_VICII_REVISION,
+    OPT_VICII_PALETTE,
+    OPT_VICII_BRIGHTNESS,
+    OPT_VICII_CONTRAST,
+    OPT_VICII_SATURATION,
+    OPT_VICII_GRAY_DOT_BUG,
+    OPT_VICII_POWER_SAVE,
+    OPT_VICII_HIDE_SPRITES,
+    OPT_VICII_CUT_LAYERS,
+    OPT_VICII_CUT_OPACITY,
+    OPT_VICII_SS_COLLISIONS,
+    OPT_VICII_SB_COLLISIONS,
 
     // DMA Debugger
     OPT_DMA_DEBUG_ENABLE,
@@ -66,7 +64,7 @@ enum_long(OPT)
 
     // CIA
     OPT_CIA_REVISION,
-    OPT_TIMER_B_BUG,
+    OPT_CIA_TIMER_B_BUG,
 
     // SID
     OPT_SID_ENABLE,
@@ -76,10 +74,12 @@ enum_long(OPT)
     OPT_SID_POWER_SAVE,
     OPT_SID_ENGINE,
     OPT_SID_SAMPLING,
-    OPT_AUDPAN,
-    OPT_AUDVOL,
-    OPT_AUDVOLL,
-    OPT_AUDVOLR,
+
+    // Audio backend
+    OPT_AUD_PAN,
+    OPT_AUD_VOL,
+    OPT_AUD_VOL_L,
+    OPT_AUD_VOL_R,
 
     // Memory
     OPT_RAM_PATTERN,
@@ -108,13 +108,13 @@ enum_long(OPT)
 
     // Mouse
     OPT_MOUSE_MODEL,
-    OPT_SHAKE_DETECTION,
+    OPT_MOUSE_SHAKE_DETECT,
     OPT_MOUSE_VELOCITY,
 
     // Joystick
-    OPT_AUTOFIRE,
-    OPT_AUTOFIRE_BULLETS,
-    OPT_AUTOFIRE_DELAY,
+    OPT_JOY_AUTOFIRE,
+    OPT_JOY_AUTOFIRE_BULLETS,
+    OPT_JOY_AUTOFIRE_DELAY,
 
     OPT_COUNT
 };
@@ -124,7 +124,7 @@ typedef OPT Option;
 struct OptionEnum : util::Reflection<OptionEnum, Option> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = OPT_AUTOFIRE_DELAY;
+    static constexpr long maxVal = OPT_JOY_AUTOFIRE_DELAY;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "OPT"; }
@@ -137,25 +137,25 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_HOST_FRAMEBUF_WIDTH:   return "HOST_FRAMEBUF_WIDTH";
             case OPT_HOST_FRAMEBUF_HEIGHT:  return "HOST_FRAMEBUF_HEIGHT";
 
-            case OPT_WARP_BOOT:             return "WARP_BOOT";
-            case OPT_WARP_MODE:             return "WARP_MODE";
-            case OPT_VSYNC:                 return "VSYNC";
-            case OPT_TIME_LAPSE:            return "TIME_LAPSE";
-            case OPT_RUN_AHEAD:             return "RUN_AHEAD";
+            case OPT_EMU_WARP_BOOT:         return "WARP_BOOT";
+            case OPT_EMU_WARP_MODE:         return "WARP_MODE";
+            case OPT_EMU_VSYNC:             return "VSYNC";
+            case OPT_EMU_TIME_LAPSE:        return "TIME_LAPSE";
+            case OPT_EMU_RUN_AHEAD:         return "RUN_AHEAD";
 
-            case OPT_VIC_REVISION:          return "VIC_REVISION";
-            case OPT_PALETTE:               return "PALETTE";
-            case OPT_BRIGHTNESS:            return "BRIGHTNESS";
-            case OPT_CONTRAST:              return "CONTRAST";
-            case OPT_SATURATION:            return "SATURATION";
-            case OPT_GRAY_DOT_BUG:          return "GRAY_DOT_BUG";
-            case OPT_VIC_POWER_SAVE:        return "VIC_POWER_SAVE";
+            case OPT_VICII_REVISION:        return "VIC_REVISION";
+            case OPT_VICII_PALETTE:         return "PALETTE";
+            case OPT_VICII_BRIGHTNESS:      return "BRIGHTNESS";
+            case OPT_VICII_CONTRAST:        return "CONTRAST";
+            case OPT_VICII_SATURATION:      return "SATURATION";
+            case OPT_VICII_GRAY_DOT_BUG:    return "GRAY_DOT_BUG";
+            case OPT_VICII_POWER_SAVE:      return "VIC_POWER_SAVE";
 
-            case OPT_HIDE_SPRITES:          return "HIDE_SPRITES";
-            case OPT_CUT_LAYERS:            return "CUT_LAYERS";
-            case OPT_CUT_OPACITY:           return "CUT_OPACITY";
-            case OPT_SS_COLLISIONS:         return "SS_COLLISIONS";
-            case OPT_SB_COLLISIONS:         return "SB_COLLISIONS";
+            case OPT_VICII_HIDE_SPRITES:    return "HIDE_SPRITES";
+            case OPT_VICII_CUT_LAYERS:      return "CUT_LAYERS";
+            case OPT_VICII_CUT_OPACITY:     return "CUT_OPACITY";
+            case OPT_VICII_SS_COLLISIONS:   return "SS_COLLISIONS";
+            case OPT_VICII_SB_COLLISIONS:   return "SB_COLLISIONS";
 
             case OPT_DMA_DEBUG_ENABLE:      return "DMA_DEBUG_ENABLE";
             case OPT_DMA_DEBUG_MODE:        return "DMA_DEBUG_MODE";
@@ -168,7 +168,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_GLUE_LOGIC:            return "GLUE_LOGIC";
 
             case OPT_CIA_REVISION:          return "CIA_REVISION";
-            case OPT_TIMER_B_BUG:           return "TIMER_B_BUG";
+            case OPT_CIA_TIMER_B_BUG:       return "TIMER_B_BUG";
 
             case OPT_SID_ENABLE:            return "SID_ENABLE";
             case OPT_SID_ADDRESS:           return "SID_ADDRESS";
@@ -177,10 +177,10 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_SID_POWER_SAVE:        return "SID_POWER_SAVE";
             case OPT_SID_ENGINE:            return "SID_ENGINE";
             case OPT_SID_SAMPLING:          return "SID_SAMPLING";
-            case OPT_AUDPAN:                return "AUDPAN";
-            case OPT_AUDVOL:                return "AUDVOL";
-            case OPT_AUDVOLL:               return "AUDVOLL";
-            case OPT_AUDVOLR:               return "AUDVOLR";
+            case OPT_AUD_PAN:               return "AUDPAN";
+            case OPT_AUD_VOL:               return "AUDVOL";
+            case OPT_AUD_VOL_L:             return "AUDVOLL";
+            case OPT_AUD_VOL_R:             return "AUDVOLR";
 
             case OPT_RAM_PATTERN:           return "RAM_PATTERN";
             case OPT_SAVE_ROMS:             return "SAVE_ROMS";
@@ -205,12 +205,12 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_DAT_CONNECT:           return "DAT_CONNECT";
 
             case OPT_MOUSE_MODEL:           return "MOUSE_MODEL";
-            case OPT_SHAKE_DETECTION:       return "SHAKE_DETECTION";
+            case OPT_MOUSE_SHAKE_DETECT:    return "SHAKE_DETECTION";
             case OPT_MOUSE_VELOCITY:        return "MOUSE_VELOCITY";
 
-            case OPT_AUTOFIRE:              return "AUTOFIRE";
-            case OPT_AUTOFIRE_BULLETS:      return "AUTOFIRE_BULLETS";
-            case OPT_AUTOFIRE_DELAY:        return "AUTOFIRE_DELAY";
+            case OPT_JOY_AUTOFIRE:          return "AUTOFIRE";
+            case OPT_JOY_AUTOFIRE_BULLETS:  return "AUTOFIRE_BULLETS";
+            case OPT_JOY_AUTOFIRE_DELAY:    return "AUTOFIRE_DELAY";
 
             case OPT_COUNT:                 return "???";
         }

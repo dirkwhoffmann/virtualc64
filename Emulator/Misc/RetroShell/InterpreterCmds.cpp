@@ -231,35 +231,35 @@ Interpreter::initCommandShell(Command &root)
              "Enables or disables warp mode on startup",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_WARP_BOOT, parseNum(argv[0]));
+        configure(OPT_EMU_WARP_BOOT, parseNum(argv[0]));
     });
 
     root.add({"c64", "set", "warpmode"}, { WarpModeEnum::argList() },
              "Selects the warp mode",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_WARP_MODE, parseEnum <WarpModeEnum> (argv[0]));
+        configure(OPT_EMU_WARP_MODE, parseEnum <WarpModeEnum> (argv[0]));
     });
 
     root.add({"c64", "set", "vsync"}, { Arg::onoff },
              "Enables or disables VSYNC",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_VSYNC, parseBool(argv[0]));
+        configure(OPT_EMU_VSYNC, parseBool(argv[0]));
     });
 
     root.add({"c64", "set", "timelapse"}, { Arg::value },
              "Increases or decreases the native frame rate",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_TIME_LAPSE, parseNum(argv[0]));
+        configure(OPT_EMU_TIME_LAPSE, parseNum(argv[0]));
     });
 
     root.add({"c64", "set", "runahead"}, { Arg::value },
              "Sets the number of run-ahead frames",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_RUN_AHEAD, parseNum(argv[0]));
+        configure(OPT_EMU_RUN_AHEAD, parseNum(argv[0]));
     });
 
     root.add({"c64", "power"}, { Arg::onoff },
@@ -363,7 +363,7 @@ Interpreter::initCommandShell(Command &root)
                  "Enables or disables the timer B hardware bug",
                  [this](Arguments& argv, long value) {
 
-            configure(OPT_TIMER_B_BUG, value, parseBool(argv[0]));
+            configure(OPT_CIA_TIMER_B_BUG, value, parseBool(argv[0]));
 
         }, i);
     }
@@ -387,7 +387,7 @@ Interpreter::initCommandShell(Command &root)
              "Selects the emulated chip model",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_VIC_REVISION, parseEnum <VICIIRevisionEnum> (argv[0]));
+        configure(OPT_VICII_REVISION, parseEnum <VICIIRevisionEnum> (argv[0]));
 
     });
 
@@ -395,7 +395,7 @@ Interpreter::initCommandShell(Command &root)
              "Enables or disables the gray dot bug",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_GRAY_DOT_BUG, parseBool(argv[0]));
+        configure(OPT_VICII_GRAY_DOT_BUG, parseBool(argv[0]));
     });
 
     root.add({"vicii", "set", "gluelogic"}, { Arg::onoff },
@@ -409,14 +409,14 @@ Interpreter::initCommandShell(Command &root)
              "Enables or disables sprite-sprite collision detection",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_SS_COLLISIONS, parseBool(argv[0]));
+        configure(OPT_VICII_SS_COLLISIONS, parseBool(argv[0]));
     });
 
     root.add({"vicii", "set", "sbcollisions"}, { Arg::onoff },
              "Enables or disables sprite-background collision detection",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_SB_COLLISIONS, parseBool(argv[0]));
+        configure(OPT_VICII_SB_COLLISIONS, parseBool(argv[0]));
     });
 
     
@@ -506,28 +506,28 @@ Interpreter::initCommandShell(Command &root)
              "Selects the color palette",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_PALETTE, util::parseEnum <PaletteEnum> (argv.front()));
+        configure(OPT_VICII_PALETTE, util::parseEnum <PaletteEnum> (argv.front()));
     });
 
     root.add({"monitor", "set", "brightness"}, { Arg::value },
              "Adjusts the monitor brightness",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_BRIGHTNESS, util::parseNum(argv.front()));
+        configure(OPT_VICII_BRIGHTNESS, util::parseNum(argv.front()));
     });
 
     root.add({"monitor", "set", "contrast"}, { Arg::value },
              "Adjusts the monitor contrast",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_CONTRAST, util::parseNum(argv.front()));
+        configure(OPT_VICII_CONTRAST, util::parseNum(argv.front()));
     });
 
     root.add({"monitor", "set", "saturation"}, { Arg::value },
              "Adjusts the color saturation",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_SATURATION, util::parseNum(argv.front()));
+        configure(OPT_VICII_SATURATION, util::parseNum(argv.front()));
     });
 
     
@@ -583,42 +583,42 @@ Interpreter::initCommandShell(Command &root)
              "Sets the volume for the first SID",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDVOL, 0, parseNum(argv[0]));
+        configure(OPT_AUD_VOL, 0, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "volume", "channel1"}, { Arg::volume },
              "Sets the volume for the second SID",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDVOL, 1, parseNum(argv[0]));
+        configure(OPT_AUD_VOL, 1, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "volume", "channel2"}, { Arg::volume },
              "Sets the volume for the third SID",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDVOL, 2, parseNum(argv[0]));
+        configure(OPT_AUD_VOL, 2, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "volume", "channel3"}, { Arg::volume },
              "Sets the volume for the fourth SID",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDVOL, 3, parseNum(argv[0]));
+        configure(OPT_AUD_VOL, 3, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "volume", "left"}, { Arg::volume },
              "Sets the master volume for the left speaker",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDVOLL, parseNum(argv[0]));
+        configure(OPT_AUD_VOL_L, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "volume", "right"}, { Arg::volume },
              "Sets the master volume for the right speaker",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDVOLR, parseNum(argv[0]));
+        configure(OPT_AUD_VOL_R, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "pan"},
@@ -628,28 +628,28 @@ Interpreter::initCommandShell(Command &root)
              "Sets the pan for the first SID",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDPAN, 0, parseNum(argv[0]));
+        configure(OPT_AUD_PAN, 0, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "pan", "channel1"}, { Arg::value },
              "Sets the pan for the second SID",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDPAN, 1, parseNum(argv[0]));
+        configure(OPT_AUD_PAN, 1, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "pan", "channel2"}, { Arg::value },
              "Sets the pan for the third SID",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDPAN, 2, parseNum(argv[0]));
+        configure(OPT_AUD_PAN, 2, parseNum(argv[0]));
     });
 
     root.add({"sid", "set", "pan", "channel3"}, { Arg::value },
              "Sets the pan for the fourth SID",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_AUDPAN, 3, parseNum(argv[0]));
+        configure(OPT_AUD_PAN, 3, parseNum(argv[0]));
     });
 
 
@@ -864,7 +864,7 @@ Interpreter::initCommandShell(Command &root)
                  "Enables or disables auto fire mode",
                  [this](Arguments& argv, long value) {
 
-            configure(OPT_AUTOFIRE, value, parseBool(argv[0]));
+            configure(OPT_JOY_AUTOFIRE, value, parseBool(argv[0]));
 
         }, i);
 
@@ -872,7 +872,7 @@ Interpreter::initCommandShell(Command &root)
                  "Sets the number of bullets per auto fire shot",
                  [this](Arguments& argv, long value) {
 
-            configure(OPT_AUTOFIRE_BULLETS, value, parseNum(argv[0]));
+            configure(OPT_JOY_AUTOFIRE_BULLETS, value, parseNum(argv[0]));
 
         }, i);
 
@@ -881,7 +881,7 @@ Interpreter::initCommandShell(Command &root)
                  "Sets the auto fire delay in frames",
                  [this](Arguments& argv, long value) {
 
-            configure(OPT_AUTOFIRE_DELAY, value, parseNum(argv[0]));
+            configure(OPT_JOY_AUTOFIRE_DELAY, value, parseNum(argv[0]));
 
         }, i);
 
@@ -1009,7 +1009,7 @@ Interpreter::initCommandShell(Command &root)
                  "Enables or disables the shake detector",
                  [this](Arguments& argv, long value) {
 
-            configure(OPT_SHAKE_DETECTION, value, parseBool(argv[0]));
+            configure(OPT_MOUSE_SHAKE_DETECT, value, parseBool(argv[0]));
 
         }, i);
 

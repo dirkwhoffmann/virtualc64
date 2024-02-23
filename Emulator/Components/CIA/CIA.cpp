@@ -58,7 +58,7 @@ CIA::resetConfig()
     std::vector <Option> options = {
 
         OPT_CIA_REVISION,
-        OPT_TIMER_B_BUG
+        OPT_CIA_TIMER_B_BUG
     };
 
     for (auto &option : options) {
@@ -72,7 +72,7 @@ CIA::getConfigItem(Option option) const
     switch (option) {
             
         case OPT_CIA_REVISION:  return config.revision;
-        case OPT_TIMER_B_BUG:   return config.timerBBug;
+        case OPT_CIA_TIMER_B_BUG:   return config.timerBBug;
 
         default:
             fatalError;
@@ -93,7 +93,7 @@ CIA::setConfigItem(Option option, i64 value)
             config.revision = (CIARevision)value;
             return;
             
-        case OPT_TIMER_B_BUG:
+        case OPT_CIA_TIMER_B_BUG:
             
             config.timerBBug = value;
             return;

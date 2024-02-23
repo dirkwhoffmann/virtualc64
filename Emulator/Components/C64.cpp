@@ -376,7 +376,7 @@ C64::setInspectionTarget(InspectionTarget target, Cycle trigger)
 void
 C64::execute()
 {
-    if (getConfigItem(OPT_VIC_POWER_SAVE)) {
+    if (getConfigItem(OPT_VICII_POWER_SAVE)) {
         execute(emulator.isWarping() && (frame & 7) != 0);
     } else {
         execute(false);
@@ -739,7 +739,7 @@ C64::_dump(Category category, std::ostream& os) const
 
     if (category == Category::Summary) {
 
-        auto vicRev = (VICIIRevision)getConfigItem(OPT_VIC_REVISION);
+        auto vicRev = (VICIIRevision)getConfigItem(OPT_VICII_REVISION);
         auto sidRev = (SIDRevision)getConfigItem(OPT_SID_REVISION);
         auto cia1Rev = (CIARevision)cia1.getConfigItem(OPT_CIA_REVISION);
         auto cia2Rev = (CIARevision)cia2.getConfigItem(OPT_CIA_REVISION);

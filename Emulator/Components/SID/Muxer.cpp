@@ -97,8 +97,8 @@ Muxer::resetConfig()
         OPT_SID_FILTER,
         OPT_SID_ENGINE,
         OPT_SID_SAMPLING,
-        OPT_AUDVOLL,
-        OPT_AUDVOLR
+        OPT_AUD_VOL_L,
+        OPT_AUD_VOL_R
     };
 
     for (auto &option : options) {
@@ -109,8 +109,8 @@ Muxer::resetConfig()
 
         OPT_SID_ENABLE,
         OPT_SID_ADDRESS,
-        OPT_AUDVOL,
-        OPT_AUDPAN
+        OPT_AUD_VOL,
+        OPT_AUD_PAN
     };
 
     for (auto &option : moreOptions) {
@@ -140,10 +140,10 @@ Muxer::getConfigItem(Option option) const
         case OPT_SID_SAMPLING:
             return config.sampling;
             
-        case OPT_AUDVOLL:
+        case OPT_AUD_VOL_L:
             return config.volL;
 
-        case OPT_AUDVOLR:
+        case OPT_AUD_VOL_R:
             return config.volR;
             
         default:
@@ -163,10 +163,10 @@ Muxer::getConfigItem(Option option, long id) const
         case OPT_SID_ADDRESS:
             return config.address[id];
             
-        case OPT_AUDVOL:
+        case OPT_AUD_VOL:
             return config.vol[id];
 
-        case OPT_AUDPAN:
+        case OPT_AUD_PAN:
             return config.pan[id];
 
         default:
@@ -250,7 +250,7 @@ Muxer::setConfigItem(Option option, i64 value)
             }
             return;
         }
-        case OPT_AUDVOLL:
+        case OPT_AUD_VOL_L:
             
             config.volL = std::clamp(value, 0LL, 100LL);
             volL.set(powf((float)config.volL / 50, 1.4f));
@@ -260,7 +260,7 @@ Muxer::setConfigItem(Option option, i64 value)
             }
             return;
             
-        case OPT_AUDVOLR:
+        case OPT_AUD_VOL_R:
 
             config.volR = std::clamp(value, 0LL, 100LL);
             volR.set(powf((float)config.volR / 50, 1.4f));
@@ -331,7 +331,7 @@ Muxer::setConfigItem(Option option, long id, i64 value)
             }
             return;
         }
-        case OPT_AUDVOL:
+        case OPT_AUD_VOL:
             
             assert(id >= 0 && id <= 3);
 
@@ -346,7 +346,7 @@ Muxer::setConfigItem(Option option, long id, i64 value)
 
             return;
             
-        case OPT_AUDPAN:
+        case OPT_AUD_PAN:
             
             assert(id >= 0 && id <= 3);
 

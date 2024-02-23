@@ -27,28 +27,28 @@ class Configuration {
     //
     
     var vicRevision: Int {
-        get { return c64.getConfig(.VIC_REVISION) }
-        set { c64.configure(.VIC_REVISION, value: newValue) }
+        get { return c64.getConfig(.VICII_REVISION) }
+        set { c64.configure(.VICII_REVISION, value: newValue) }
     }
 
     var vicGrayDotBug: Bool {
-        get { return c64.getConfig(.GRAY_DOT_BUG) != 0 }
-        set { c64.configure(.GRAY_DOT_BUG, enable: newValue) }
+        get { return c64.getConfig(.VICII_GRAY_DOT_BUG) != 0 }
+        set { c64.configure(.VICII_GRAY_DOT_BUG, enable: newValue) }
     }
     
     var vicHideSprites: Bool {
-        get { return c64.getConfig(.HIDE_SPRITES) != 0 }
-        set { c64.configure(.HIDE_SPRITES, enable: newValue) }
+        get { return c64.getConfig(.VICII_HIDE_SPRITES) != 0 }
+        set { c64.configure(.VICII_HIDE_SPRITES, enable: newValue) }
     }
         
     var vicCutLayers: Int {
-        get { return c64.getConfig(.CUT_LAYERS) }
-        set { c64.configure(.CUT_LAYERS, value: newValue) }
+        get { return c64.getConfig(.VICII_CUT_LAYERS) }
+        set { c64.configure(.VICII_CUT_LAYERS, value: newValue) }
     }
     
     var vicCutOpacity: Int {
-        get { return c64.getConfig(.CUT_OPACITY) }
-        set { c64.configure(.CUT_OPACITY, value: newValue) }
+        get { return c64.getConfig(.VICII_CUT_OPACITY) }
+        set { c64.configure(.VICII_CUT_OPACITY, value: newValue) }
     }
         
     var ciaRevision: Int {
@@ -57,8 +57,8 @@ class Configuration {
     }
     
     var ciaTimerBBug: Bool {
-        get { return c64.getConfig(.TIMER_B_BUG) != 0}
-        set { c64.configure(.TIMER_B_BUG, enable: newValue) }
+        get { return c64.getConfig(.CIA_TIMER_B_BUG) != 0}
+        set { c64.configure(.CIA_TIMER_B_BUG, enable: newValue) }
     }
     
     var sidRevision: Int {
@@ -212,8 +212,8 @@ class Configuration {
     }
 
     var viciiPowerSave: Bool {
-        get { return c64.getConfig(.VIC_POWER_SAVE) != 0 }
-        set { c64.configure(.VIC_POWER_SAVE, enable: newValue) }
+        get { return c64.getConfig(.VICII_POWER_SAVE) != 0 }
+        set { c64.configure(.VICII_POWER_SAVE, enable: newValue) }
     }
 
     var sidPowerSave: Bool {
@@ -222,37 +222,37 @@ class Configuration {
     }
 
     var ssCollisions: Bool {
-        get { return c64.getConfig(.SS_COLLISIONS) != 0 }
-        set { c64.configure(.SS_COLLISIONS, enable: newValue) }
+        get { return c64.getConfig(.VICII_SS_COLLISIONS) != 0 }
+        set { c64.configure(.VICII_SS_COLLISIONS, enable: newValue) }
     }
 
     var sbCollisions: Bool {
-        get { return c64.getConfig(.SB_COLLISIONS) != 0 }
-        set { c64.configure(.SB_COLLISIONS, enable: newValue) }
+        get { return c64.getConfig(.VICII_SB_COLLISIONS) != 0 }
+        set { c64.configure(.VICII_SB_COLLISIONS, enable: newValue) }
     }
 
     var warpMode: Int {
-        get { return c64.getConfig(.WARP_MODE) }
-        set { c64.configure(.WARP_MODE, value: newValue) }
+        get { return c64.getConfig(.EMU_WARP_MODE) }
+        set { c64.configure(.EMU_WARP_MODE, value: newValue) }
     }
 
     var warpBoot: Int {
-        get { return c64.getConfig(.WARP_BOOT) }
-        set { c64.configure(.WARP_BOOT, value: newValue) }
+        get { return c64.getConfig(.EMU_WARP_BOOT) }
+        set { c64.configure(.EMU_WARP_BOOT, value: newValue) }
     }
 
     var vsync: Bool {
-        get { return c64.getConfig(.VSYNC) != 0 }
-        set { c64.configure(.VSYNC, enable: newValue) }
+        get { return c64.getConfig(.EMU_VSYNC) != 0 }
+        set { c64.configure(.EMU_VSYNC, enable: newValue) }
     }
     var timeLapse: Int {
-        get { return c64.getConfig(.TIME_LAPSE) }
-        set { c64.configure(.TIME_LAPSE, value: newValue) }
+        get { return c64.getConfig(.EMU_TIME_LAPSE) }
+        set { c64.configure(.EMU_TIME_LAPSE, value: newValue) }
     }
 
     var runAhead: Int {
-        get { return c64.getConfig(.RUN_AHEAD) }
-        set { c64.configure(.RUN_AHEAD, value: newValue) }
+        get { return c64.getConfig(.EMU_RUN_AHEAD) }
+        set { c64.configure(.EMU_RUN_AHEAD, value: newValue) }
     }
 
     //
@@ -292,44 +292,44 @@ class Configuration {
         set { c64.configure(.SID_SAMPLING, value: newValue) }
     }
     var vol0: Int {
-        get { return c64.getConfig(.AUDVOL, id: 0) }
-        set { c64.configure(.AUDVOL, id: 0, value: newValue) }
+        get { return c64.getConfig(.AUD_VOL, id: 0) }
+        set { c64.configure(.AUD_VOL, id: 0, value: newValue) }
     }
     var vol1: Int {
-        get { return c64.getConfig(.AUDVOL, id: 1) }
-        set { c64.configure(.AUDVOL, id: 1, value: newValue) }
+        get { return c64.getConfig(.AUD_VOL, id: 1) }
+        set { c64.configure(.AUD_VOL, id: 1, value: newValue) }
     }
     var vol2: Int {
-        get { return c64.getConfig(.AUDVOL, id: 2) }
-        set { c64.configure(.AUDVOL, id: 2, value: newValue) }
+        get { return c64.getConfig(.AUD_VOL, id: 2) }
+        set { c64.configure(.AUD_VOL, id: 2, value: newValue) }
     }
     var vol3: Int {
-        get { return c64.getConfig(.AUDVOL, id: 3) }
-        set { c64.configure(.AUDVOL, id: 3, value: newValue) }
+        get { return c64.getConfig(.AUD_VOL, id: 3) }
+        set { c64.configure(.AUD_VOL, id: 3, value: newValue) }
     }
     var pan0: Int {
-        get { return c64.getConfig(.AUDPAN, id: 0) }
-        set { c64.configure(.AUDPAN, id: 0, value: newValue) }
+        get { return c64.getConfig(.AUD_PAN, id: 0) }
+        set { c64.configure(.AUD_PAN, id: 0, value: newValue) }
     }
     var pan1: Int {
-        get { return c64.getConfig(.AUDPAN, id: 1) }
-        set { c64.configure(.AUDPAN, id: 1, value: newValue) }
+        get { return c64.getConfig(.AUD_PAN, id: 1) }
+        set { c64.configure(.AUD_PAN, id: 1, value: newValue) }
     }
     var pan2: Int {
-        get { return c64.getConfig(.AUDPAN, id: 2) }
-        set { c64.configure(.AUDPAN, id: 2, value: newValue) }
+        get { return c64.getConfig(.AUD_PAN, id: 2) }
+        set { c64.configure(.AUD_PAN, id: 2, value: newValue) }
     }
     var pan3: Int {
-        get { return c64.getConfig(.AUDPAN, id: 3) }
-        set { c64.configure(.AUDPAN, id: 3, value: newValue) }
+        get { return c64.getConfig(.AUD_PAN, id: 3) }
+        set { c64.configure(.AUD_PAN, id: 3, value: newValue) }
     }
     var volL: Int {
-        get { return c64.getConfig(.AUDVOLL) }
-        set { c64.configure(.AUDVOLL, value: newValue) }
+        get { return c64.getConfig(.AUD_VOL_L) }
+        set { c64.configure(.AUD_VOL_L, value: newValue) }
     }
     var volR: Int {
-        get { return c64.getConfig(.AUDVOLR) }
-        set { c64.configure(.AUDVOLR, value: newValue) }
+        get { return c64.getConfig(.AUD_VOL_R) }
+        set { c64.configure(.AUD_VOL_R, value: newValue) }
     }
     var stepVolume: Int {
         get { return c64.getConfig(.DRV_STEP_VOL, drive: DRIVE8) }
@@ -357,20 +357,20 @@ class Configuration {
     //
 
     var palette: Int {
-        get { return c64.getConfig(.PALETTE) }
-        set { c64.configure(.PALETTE, value: newValue) }
+        get { return c64.getConfig(.VICII_PALETTE) }
+        set { c64.configure(.VICII_PALETTE, value: newValue) }
     }
     var brightness: Int {
-        get { return c64.getConfig(.BRIGHTNESS) }
-        set { c64.configure(.BRIGHTNESS, value: newValue) }
+        get { return c64.getConfig(.VICII_BRIGHTNESS) }
+        set { c64.configure(.VICII_BRIGHTNESS, value: newValue) }
     }
     var contrast: Int {
-        get { return c64.getConfig(.CONTRAST) }
-        set { c64.configure(.CONTRAST, value: newValue) }
+        get { return c64.getConfig(.VICII_CONTRAST) }
+        set { c64.configure(.VICII_CONTRAST, value: newValue) }
     }
     var saturation: Int {
-        get { c64.getConfig(.SATURATION) }
-        set { c64.configure(.SATURATION, value: newValue) }
+        get { c64.getConfig(.VICII_SATURATION) }
+        set { c64.configure(.VICII_SATURATION, value: newValue) }
     }
     var hCenter: Float = 0 {
         didSet { renderer.canvas.updateTextureRect() }

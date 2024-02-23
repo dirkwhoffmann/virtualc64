@@ -58,8 +58,8 @@ DmaDebugger::resetConfig()
         OPT_DMA_DEBUG_ENABLE,
         OPT_DMA_DEBUG_MODE,
         OPT_DMA_DEBUG_OPACITY,
-        OPT_CUT_LAYERS,
-        OPT_CUT_OPACITY,
+        OPT_VICII_CUT_LAYERS,
+        OPT_VICII_CUT_OPACITY,
     };
 
     for (auto &option : options) {
@@ -88,8 +88,8 @@ DmaDebugger::getConfigItem(Option option) const
         case OPT_DMA_DEBUG_MODE:    return config.dmaDisplayMode;
         case OPT_DMA_DEBUG_OPACITY: return config.dmaOpacity;
 
-        case OPT_CUT_LAYERS:        return config.cutLayers;
-        case OPT_CUT_OPACITY:       return config.cutOpacity;
+        case OPT_VICII_CUT_LAYERS:        return config.cutLayers;
+        case OPT_VICII_CUT_OPACITY:       return config.cutOpacity;
 
         default:
             fatalError;
@@ -141,12 +141,12 @@ DmaDebugger::setConfigItem(Option option, i64 value)
             config.dmaOpacity = (u8)value;
             return;
             
-        case OPT_CUT_LAYERS:
+        case OPT_VICII_CUT_LAYERS:
             
             config.cutLayers = (u16)value;
             return;
             
-        case OPT_CUT_OPACITY:
+        case OPT_VICII_CUT_OPACITY:
             
             config.cutOpacity = (u8)value;
             return;

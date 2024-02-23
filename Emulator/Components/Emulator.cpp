@@ -111,11 +111,11 @@ Emulator::resetConfig()
 
     std::vector <Option> options = {
 
-        OPT_WARP_BOOT,
-        OPT_WARP_MODE,
-        OPT_VSYNC,
-        OPT_TIME_LAPSE,
-        OPT_RUN_AHEAD,
+        OPT_EMU_WARP_BOOT,
+        OPT_EMU_WARP_MODE,
+        OPT_EMU_VSYNC,
+        OPT_EMU_TIME_LAPSE,
+        OPT_EMU_RUN_AHEAD,
     };
 
     for (auto &option : options) {
@@ -131,17 +131,17 @@ Emulator::configure(Option option, i64 value)
     // The following options do not send a message to the GUI
     static std::vector<Option> quiet = {
 
-        OPT_BRIGHTNESS,
-        OPT_CONTRAST,
-        OPT_SATURATION,
-        OPT_CUT_OPACITY,
+        OPT_VICII_BRIGHTNESS,
+        OPT_VICII_CONTRAST,
+        OPT_VICII_SATURATION,
+        OPT_VICII_CUT_OPACITY,
         OPT_DMA_DEBUG_OPACITY,
         OPT_MOUSE_VELOCITY,
-        OPT_AUTOFIRE_DELAY,
-        OPT_AUDPAN,
-        OPT_AUDVOL,
-        OPT_AUDVOLL,
-        OPT_AUDVOLR,
+        OPT_JOY_AUTOFIRE_DELAY,
+        OPT_AUD_PAN,
+        OPT_AUD_VOL,
+        OPT_AUD_VOL_L,
+        OPT_AUD_VOL_R,
         OPT_DRV_PAN,
         OPT_DRV_POWER_VOL,
         OPT_DRV_STEP_VOL,
@@ -154,11 +154,11 @@ Emulator::configure(Option option, i64 value)
 
     switch (option) {
 
-        case OPT_WARP_MODE:
-        case OPT_WARP_BOOT:
-        case OPT_VSYNC:
-        case OPT_TIME_LAPSE:
-        case OPT_RUN_AHEAD:
+        case OPT_EMU_WARP_MODE:
+        case OPT_EMU_WARP_BOOT:
+        case OPT_EMU_VSYNC:
+        case OPT_EMU_TIME_LAPSE:
+        case OPT_EMU_RUN_AHEAD:
 
             setConfigItem(option, value);
             break;
@@ -176,23 +176,23 @@ Emulator::configure(Option option, i64 value)
             host.setConfigItem(option, value);
             break;
 
-        case OPT_VIC_REVISION:
-        case OPT_PALETTE:
-        case OPT_BRIGHTNESS:
-        case OPT_CONTRAST:
-        case OPT_SATURATION:
-        case OPT_GRAY_DOT_BUG:
-        case OPT_VIC_POWER_SAVE:
-        case OPT_HIDE_SPRITES:
-        case OPT_SS_COLLISIONS:
-        case OPT_SB_COLLISIONS:
+        case OPT_VICII_REVISION:
+        case OPT_VICII_PALETTE:
+        case OPT_VICII_BRIGHTNESS:
+        case OPT_VICII_CONTRAST:
+        case OPT_VICII_SATURATION:
+        case OPT_VICII_GRAY_DOT_BUG:
+        case OPT_VICII_POWER_SAVE:
+        case OPT_VICII_HIDE_SPRITES:
+        case OPT_VICII_SS_COLLISIONS:
+        case OPT_VICII_SB_COLLISIONS:
         case OPT_GLUE_LOGIC:
 
             main.vic.setConfigItem(option, value);
             break;
 
-        case OPT_CUT_LAYERS:
-        case OPT_CUT_OPACITY:
+        case OPT_VICII_CUT_LAYERS:
+        case OPT_VICII_CUT_OPACITY:
         case OPT_DMA_DEBUG_ENABLE:
         case OPT_DMA_DEBUG_MODE:
         case OPT_DMA_DEBUG_OPACITY:
@@ -206,7 +206,7 @@ Emulator::configure(Option option, i64 value)
             break;
 
         case OPT_CIA_REVISION:
-        case OPT_TIMER_B_BUG:
+        case OPT_CIA_TIMER_B_BUG:
 
             main.cia1.setConfigItem(option, value);
             main.cia2.setConfigItem(option, value);
@@ -225,10 +225,10 @@ Emulator::configure(Option option, i64 value)
         case OPT_SID_SAMPLING:
         case OPT_SID_POWER_SAVE:
         case OPT_SID_ENGINE:
-        case OPT_AUDPAN:
-        case OPT_AUDVOL:
-        case OPT_AUDVOLL:
-        case OPT_AUDVOLR:
+        case OPT_AUD_PAN:
+        case OPT_AUD_VOL:
+        case OPT_AUD_VOL_L:
+        case OPT_AUD_VOL_R:
 
             main.muxer.setConfigItem(option, value);
             break;
@@ -267,19 +267,20 @@ Emulator::configure(Option option, i64 value)
 
         case OPT_DAT_MODEL:
         case OPT_DAT_CONNECT:
+
             main.datasette.setConfigItem(option, value);
 
         case OPT_MOUSE_MODEL:
-        case OPT_SHAKE_DETECTION:
+        case OPT_MOUSE_SHAKE_DETECT:
         case OPT_MOUSE_VELOCITY:
 
             main.port1.mouse.setConfigItem(option, value);
             main.port2.mouse.setConfigItem(option, value);
             break;
 
-        case OPT_AUTOFIRE:
-        case OPT_AUTOFIRE_BULLETS:
-        case OPT_AUTOFIRE_DELAY:
+        case OPT_JOY_AUTOFIRE:
+        case OPT_JOY_AUTOFIRE_BULLETS:
+        case OPT_JOY_AUTOFIRE_DELAY:
 
             main.port1.joystick.setConfigItem(option, value);
             main.port2.joystick.setConfigItem(option, value);
@@ -304,84 +305,84 @@ void Emulator::configure(Option option, const string &value)
 
     switch (option) {
 
-        case OPT_WARP_MODE:             return config(parseEnum<VICIIRevisionEnum>);
-        case OPT_WARP_BOOT:             return config(parseBool);
-        case OPT_VSYNC:                 return config(parseBool);
-        case OPT_TIME_LAPSE:            return config(parseNum);
-        case OPT_RUN_AHEAD:             return config(parseNum);
+        case OPT_EMU_WARP_MODE:             return config(parseEnum<VICIIRevisionEnum>);
+        case OPT_EMU_WARP_BOOT:             return config(parseBool);
+        case OPT_EMU_VSYNC:                 return config(parseBool);
+        case OPT_EMU_TIME_LAPSE:            return config(parseNum);
+        case OPT_EMU_RUN_AHEAD:             return config(parseNum);
 
-        case OPT_HOST_SAMPLE_RATE:      return config(parseNum);
+        case OPT_HOST_SAMPLE_RATE:          return config(parseNum);
 
-        case OPT_HOST_REFRESH_RATE:     return config(parseNum);
-        case OPT_HOST_FRAMEBUF_WIDTH:   return config(parseNum);
-        case OPT_HOST_FRAMEBUF_HEIGHT:  return config(parseNum);
+        case OPT_HOST_REFRESH_RATE:         return config(parseNum);
+        case OPT_HOST_FRAMEBUF_WIDTH:       return config(parseNum);
+        case OPT_HOST_FRAMEBUF_HEIGHT:      return config(parseNum);
 
-        case OPT_VIC_REVISION:          return config(parseEnum<VICIIRevisionEnum>);
-        case OPT_PALETTE:               return config(parseEnum<PaletteEnum>);
-        case OPT_BRIGHTNESS:            return config(parseNum);
-        case OPT_CONTRAST:              return config(parseNum);
-        case OPT_SATURATION:            return config(parseNum);
-        case OPT_GRAY_DOT_BUG:          return config(parseBool);
-        case OPT_VIC_POWER_SAVE:        return config(parseBool);
-        case OPT_HIDE_SPRITES:          return config(parseBool);
-        case OPT_SS_COLLISIONS:         return config(parseBool);
-        case OPT_SB_COLLISIONS:         return config(parseBool);
-        case OPT_GLUE_LOGIC:            return config(parseEnum<GlueLogicEnum>);
+        case OPT_VICII_REVISION:            return config(parseEnum<VICIIRevisionEnum>);
+        case OPT_VICII_PALETTE:             return config(parseEnum<PaletteEnum>);
+        case OPT_VICII_BRIGHTNESS:          return config(parseNum);
+        case OPT_VICII_CONTRAST:            return config(parseNum);
+        case OPT_VICII_SATURATION:          return config(parseNum);
+        case OPT_VICII_GRAY_DOT_BUG:        return config(parseBool);
+        case OPT_VICII_POWER_SAVE:          return config(parseBool);
+        case OPT_VICII_HIDE_SPRITES:        return config(parseBool);
+        case OPT_VICII_SS_COLLISIONS:       return config(parseBool);
+        case OPT_VICII_SB_COLLISIONS:       return config(parseBool);
+        case OPT_GLUE_LOGIC:                return config(parseEnum<GlueLogicEnum>);
 
-        case OPT_CUT_LAYERS:            return config(parseNum);
-        case OPT_CUT_OPACITY:           return config(parseNum);
-        case OPT_DMA_DEBUG_ENABLE:      return config(parseBool);
-        case OPT_DMA_DEBUG_MODE:        return config(parseEnum<DmaDisplayModeEnum>);
-        case OPT_DMA_DEBUG_OPACITY:     return config(parseNum);
+        case OPT_VICII_CUT_LAYERS:          return config(parseNum);
+        case OPT_VICII_CUT_OPACITY:         return config(parseNum);
+        case OPT_DMA_DEBUG_ENABLE:          return config(parseBool);
+        case OPT_DMA_DEBUG_MODE:            return config(parseEnum<DmaDisplayModeEnum>);
+        case OPT_DMA_DEBUG_OPACITY:         return config(parseNum);
 
-        case OPT_POWER_GRID:            return config(parseEnum<PowerGridEnum>);
+        case OPT_POWER_GRID:                return config(parseEnum<PowerGridEnum>);
 
-        case OPT_CIA_REVISION:          return config(parseEnum<CIARevisionEnum>);
-        case OPT_TIMER_B_BUG:           return config(parseBool);
+        case OPT_CIA_REVISION:              return config(parseEnum<CIARevisionEnum>);
+        case OPT_CIA_TIMER_B_BUG:           return config(parseBool);
 
-        case OPT_SID_ENABLE:            return config(parseNum);
-        case OPT_SID_ADDRESS:           return config(parseNum);
+        case OPT_SID_ENABLE:                return config(parseNum);
+        case OPT_SID_ADDRESS:               return config(parseNum);
 
-        case OPT_SID_REVISION:          return config(parseEnum<SIDRevisionEnum>);
-        case OPT_SID_FILTER:            return config(parseBool);
-        case OPT_SID_SAMPLING:          return config(parseEnum<SamplingMethodEnum>);
-        case OPT_SID_POWER_SAVE:        return config(parseBool);
-        case OPT_SID_ENGINE:            return config(parseEnum<SIDEngineEnum>);
-        case OPT_AUDPAN:                return config(parseNum);
-        case OPT_AUDVOL:                return config(parseNum);
-        case OPT_AUDVOLL:               return config(parseNum);
-        case OPT_AUDVOLR:               return config(parseNum);
+        case OPT_SID_REVISION:              return config(parseEnum<SIDRevisionEnum>);
+        case OPT_SID_FILTER:                return config(parseBool);
+        case OPT_SID_SAMPLING:              return config(parseEnum<SamplingMethodEnum>);
+        case OPT_SID_POWER_SAVE:            return config(parseBool);
+        case OPT_SID_ENGINE:                return config(parseEnum<SIDEngineEnum>);
+        case OPT_AUD_PAN:                   return config(parseNum);
+        case OPT_AUD_VOL:                   return config(parseNum);
+        case OPT_AUD_VOL_L:                 return config(parseNum);
+        case OPT_AUD_VOL_R:                 return config(parseNum);
 
-        case OPT_RAM_PATTERN:           return config(parseEnum<RamPatternEnum>);
+        case OPT_RAM_PATTERN:               return config(parseEnum<RamPatternEnum>);
 
-        case OPT_SAVE_ROMS:             return config(parseBool);
+        case OPT_SAVE_ROMS:                 return config(parseBool);
 
-        case OPT_DRV_AUTO_CONFIG:       return config(parseBool);
-        case OPT_DRV_TYPE:              return config(parseEnum<DriveTypeEnum>);
-        case OPT_DRV_RAM:               return config(parseEnum<DriveRamEnum>);
-        case OPT_DRV_PARCABLE:          return config(parseEnum<ParCableTypeEnum>);
-        case OPT_DRV_CONNECT:           return config(parseBool);
-        case OPT_DRV_POWER_SWITCH:      return config(parseBool);
-        case OPT_DRV_POWER_SAVE:        return config(parseBool);
-        case OPT_DRV_EJECT_DELAY:       return config(parseNum);
-        case OPT_DRV_SWAP_DELAY:        return config(parseNum);
-        case OPT_DRV_INSERT_DELAY:      return config(parseNum);
-        case OPT_DRV_PAN:               return config(parseNum);
-        case OPT_DRV_POWER_VOL:         return config(parseNum);
-        case OPT_DRV_STEP_VOL:          return config(parseNum);
-        case OPT_DRV_INSERT_VOL:        return config(parseNum);
-        case OPT_DRV_EJECT_VOL:         return config(parseNum);
+        case OPT_DRV_AUTO_CONFIG:           return config(parseBool);
+        case OPT_DRV_TYPE:                  return config(parseEnum<DriveTypeEnum>);
+        case OPT_DRV_RAM:                   return config(parseEnum<DriveRamEnum>);
+        case OPT_DRV_PARCABLE:              return config(parseEnum<ParCableTypeEnum>);
+        case OPT_DRV_CONNECT:               return config(parseBool);
+        case OPT_DRV_POWER_SWITCH:          return config(parseBool);
+        case OPT_DRV_POWER_SAVE:            return config(parseBool);
+        case OPT_DRV_EJECT_DELAY:           return config(parseNum);
+        case OPT_DRV_SWAP_DELAY:            return config(parseNum);
+        case OPT_DRV_INSERT_DELAY:          return config(parseNum);
+        case OPT_DRV_PAN:                   return config(parseNum);
+        case OPT_DRV_POWER_VOL:             return config(parseNum);
+        case OPT_DRV_STEP_VOL:              return config(parseNum);
+        case OPT_DRV_INSERT_VOL:            return config(parseNum);
+        case OPT_DRV_EJECT_VOL:             return config(parseNum);
 
-        case OPT_DAT_MODEL:             return config(parseEnum<DatasetteModelEnum>);
-        case OPT_DAT_CONNECT:           return config(parseBool);
+        case OPT_DAT_MODEL:                 return config(parseEnum<DatasetteModelEnum>);
+        case OPT_DAT_CONNECT:               return config(parseBool);
 
-        case OPT_MOUSE_MODEL:           return config(parseEnum<MouseModelEnum>);
-        case OPT_SHAKE_DETECTION:       return config(parseBool);
-        case OPT_MOUSE_VELOCITY:        return config(parseNum);
+        case OPT_MOUSE_MODEL:               return config(parseEnum<MouseModelEnum>);
+        case OPT_MOUSE_SHAKE_DETECT:        return config(parseBool);
+        case OPT_MOUSE_VELOCITY:            return config(parseNum);
 
-        case OPT_AUTOFIRE:              return config(parseBool);
-        case OPT_AUTOFIRE_BULLETS:      return config(parseNum);
-        case OPT_AUTOFIRE_DELAY:        return config(parseNum);
+        case OPT_JOY_AUTOFIRE:              return config(parseBool);
+        case OPT_JOY_AUTOFIRE_BULLETS:      return config(parseNum);
+        case OPT_JOY_AUTOFIRE_DELAY:        return config(parseNum);
 
         default:
             warn("Unrecognized option: %s\n", OptionEnum::key(option));
@@ -401,11 +402,11 @@ Emulator::configure(Option option, long id, i64 value)
     static std::vector<Option> quiet = {
 
         OPT_MOUSE_VELOCITY,
-        OPT_AUTOFIRE_DELAY,
-        OPT_AUDPAN,
-        OPT_AUDVOL,
-        OPT_AUDVOLL,
-        OPT_AUDVOLR,
+        OPT_JOY_AUTOFIRE_DELAY,
+        OPT_AUD_PAN,
+        OPT_AUD_VOL,
+        OPT_AUD_VOL_L,
+        OPT_AUD_VOL_R,
         OPT_DRV_PAN,
         OPT_DRV_POWER_VOL,
         OPT_DRV_STEP_VOL,
@@ -423,7 +424,7 @@ Emulator::configure(Option option, long id, i64 value)
             break;
 
         case OPT_CIA_REVISION:
-        case OPT_TIMER_B_BUG:
+        case OPT_CIA_TIMER_B_BUG:
 
             switch (id) {
                 case 0: main.cia1.setConfigItem(option, value); break;
@@ -433,7 +434,7 @@ Emulator::configure(Option option, long id, i64 value)
             break;
 
         case OPT_MOUSE_MODEL:
-        case OPT_SHAKE_DETECTION:
+        case OPT_MOUSE_SHAKE_DETECT:
         case OPT_MOUSE_VELOCITY:
 
             switch (id) {
@@ -443,9 +444,9 @@ Emulator::configure(Option option, long id, i64 value)
             }
             break;
 
-        case OPT_AUTOFIRE:
-        case OPT_AUTOFIRE_BULLETS:
-        case OPT_AUTOFIRE_DELAY:
+        case OPT_JOY_AUTOFIRE:
+        case OPT_JOY_AUTOFIRE_BULLETS:
+        case OPT_JOY_AUTOFIRE_DELAY:
 
             switch (id) {
                 case PORT_1: main.port1.joystick.setConfigItem(option, value); break;
@@ -461,10 +462,10 @@ Emulator::configure(Option option, long id, i64 value)
         case OPT_SID_POWER_SAVE:
         case OPT_SID_ENGINE:
         case OPT_SID_SAMPLING:
-        case OPT_AUDPAN:
-        case OPT_AUDVOL:
-        case OPT_AUDVOLL:
-        case OPT_AUDVOLR:
+        case OPT_AUD_PAN:
+        case OPT_AUD_VOL:
+        case OPT_AUD_VOL_L:
+        case OPT_AUD_VOL_R:
 
             main.muxer.setConfigItem(option, id, value);
             break;
@@ -517,15 +518,15 @@ Emulator::configure(Option option, long id, const string &value)
         case OPT_DMA_DEBUG_COLOR:       return config(parseNum);
 
         case OPT_CIA_REVISION:          return config(parseEnum<CIARevisionEnum>);
-        case OPT_TIMER_B_BUG:           return config(parseBool);
+        case OPT_CIA_TIMER_B_BUG:           return config(parseBool);
 
         case OPT_MOUSE_MODEL:           return config(parseEnum<MouseModelEnum>);
-        case OPT_SHAKE_DETECTION:       return config(parseBool);
+        case OPT_MOUSE_SHAKE_DETECT:       return config(parseBool);
         case OPT_MOUSE_VELOCITY:        return config(parseNum);
 
-        case OPT_AUTOFIRE:              return config(parseBool);
-        case OPT_AUTOFIRE_BULLETS:      return config(parseNum);
-        case OPT_AUTOFIRE_DELAY:        return config(parseNum);
+        case OPT_JOY_AUTOFIRE:              return config(parseBool);
+        case OPT_JOY_AUTOFIRE_BULLETS:      return config(parseNum);
+        case OPT_JOY_AUTOFIRE_DELAY:        return config(parseNum);
 
         case OPT_SID_ENABLE:            return config(parseBool);
         case OPT_SID_ADDRESS:           return config(parseNum);
@@ -534,10 +535,10 @@ Emulator::configure(Option option, long id, const string &value)
         case OPT_SID_POWER_SAVE:        return config(parseBool);
         case OPT_SID_ENGINE:            return config(parseEnum<SIDEngineEnum>);
         case OPT_SID_SAMPLING:          return config(parseEnum<SamplingMethodEnum>);
-        case OPT_AUDPAN:                return config(parseNum);
-        case OPT_AUDVOL:                return config(parseNum);
-        case OPT_AUDVOLL:               return config(parseNum);
-        case OPT_AUDVOLR:               return config(parseNum);
+        case OPT_AUD_PAN:                return config(parseNum);
+        case OPT_AUD_VOL:                return config(parseNum);
+        case OPT_AUD_VOL_L:               return config(parseNum);
+        case OPT_AUD_VOL_R:               return config(parseNum);
 
         case OPT_DRV_AUTO_CONFIG:       return config(parseBool);
         case OPT_DRV_TYPE:              return config(parseEnum<DriveTypeEnum>);
@@ -574,10 +575,10 @@ Emulator::configure(C64Model model)
 
             case C64_MODEL_PAL:
 
-                configure(OPT_VIC_REVISION, VICII_PAL_6569_R3);
-                configure(OPT_GRAY_DOT_BUG, false);
+                configure(OPT_VICII_REVISION, VICII_PAL_6569_R3);
+                configure(OPT_VICII_GRAY_DOT_BUG, false);
                 configure(OPT_CIA_REVISION, MOS_6526);
-                configure(OPT_TIMER_B_BUG,  true);
+                configure(OPT_CIA_TIMER_B_BUG,  true);
                 configure(OPT_SID_REVISION, MOS_6581);
                 configure(OPT_SID_FILTER,   true);
                 configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
@@ -587,10 +588,10 @@ Emulator::configure(C64Model model)
 
             case C64_MODEL_PAL_II:
 
-                configure(OPT_VIC_REVISION, VICII_PAL_8565);
-                configure(OPT_GRAY_DOT_BUG, true);
+                configure(OPT_VICII_REVISION, VICII_PAL_8565);
+                configure(OPT_VICII_GRAY_DOT_BUG, true);
                 configure(OPT_CIA_REVISION, MOS_8521);
-                configure(OPT_TIMER_B_BUG,  false);
+                configure(OPT_CIA_TIMER_B_BUG,  false);
                 configure(OPT_SID_REVISION, MOS_8580);
                 configure(OPT_SID_FILTER,   true);
                 configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
@@ -600,10 +601,10 @@ Emulator::configure(C64Model model)
 
             case C64_MODEL_PAL_OLD:
 
-                configure(OPT_VIC_REVISION, VICII_PAL_6569_R1);
-                configure(OPT_GRAY_DOT_BUG, false);
+                configure(OPT_VICII_REVISION, VICII_PAL_6569_R1);
+                configure(OPT_VICII_GRAY_DOT_BUG, false);
                 configure(OPT_CIA_REVISION, MOS_6526);
-                configure(OPT_TIMER_B_BUG,  true);
+                configure(OPT_CIA_TIMER_B_BUG,  true);
                 configure(OPT_SID_REVISION, MOS_6581);
                 configure(OPT_SID_FILTER,   true);
                 configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
@@ -613,10 +614,10 @@ Emulator::configure(C64Model model)
 
             case C64_MODEL_NTSC:
 
-                configure(OPT_VIC_REVISION, VICII_NTSC_6567);
-                configure(OPT_GRAY_DOT_BUG, false);
+                configure(OPT_VICII_REVISION, VICII_NTSC_6567);
+                configure(OPT_VICII_GRAY_DOT_BUG, false);
                 configure(OPT_CIA_REVISION, MOS_6526);
-                configure(OPT_TIMER_B_BUG,  false);
+                configure(OPT_CIA_TIMER_B_BUG,  false);
                 configure(OPT_SID_REVISION, MOS_6581);
                 configure(OPT_SID_FILTER,   true);
                 configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
@@ -626,10 +627,10 @@ Emulator::configure(C64Model model)
 
             case C64_MODEL_NTSC_II:
 
-                configure(OPT_VIC_REVISION, VICII_NTSC_8562);
-                configure(OPT_GRAY_DOT_BUG, true);
+                configure(OPT_VICII_REVISION, VICII_NTSC_8562);
+                configure(OPT_VICII_GRAY_DOT_BUG, true);
                 configure(OPT_CIA_REVISION, MOS_8521);
-                configure(OPT_TIMER_B_BUG,  true);
+                configure(OPT_CIA_TIMER_B_BUG,  true);
                 configure(OPT_SID_REVISION, MOS_8580);
                 configure(OPT_SID_FILTER,   true);
                 configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
@@ -639,10 +640,10 @@ Emulator::configure(C64Model model)
 
             case C64_MODEL_NTSC_OLD:
 
-                configure(OPT_VIC_REVISION, VICII_NTSC_6567_R56A);
-                configure(OPT_GRAY_DOT_BUG, false);
+                configure(OPT_VICII_REVISION, VICII_NTSC_6567_R56A);
+                configure(OPT_VICII_GRAY_DOT_BUG, false);
                 configure(OPT_CIA_REVISION, MOS_6526);
-                configure(OPT_TIMER_B_BUG,  false);
+                configure(OPT_CIA_TIMER_B_BUG,  false);
                 configure(OPT_SID_REVISION, MOS_6581);
                 configure(OPT_SID_FILTER,   true);
                 configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
@@ -661,11 +662,11 @@ Emulator::getConfigItem(Option option) const
 {
     switch (option) {
 
-        case OPT_WARP_BOOT:     return config.warpBoot;
-        case OPT_WARP_MODE:     return config.warpMode;
-        case OPT_VSYNC:         return config.vsync;
-        case OPT_TIME_LAPSE:    return config.timeLapse;
-        case OPT_RUN_AHEAD:     return config.runAhead;
+        case OPT_EMU_WARP_BOOT:     return config.warpBoot;
+        case OPT_EMU_WARP_MODE:     return config.warpMode;
+        case OPT_EMU_VSYNC:         return config.vsync;
+        case OPT_EMU_TIME_LAPSE:    return config.timeLapse;
+        case OPT_EMU_RUN_AHEAD:     return config.runAhead;
 
         case OPT_HOST_REFRESH_RATE:
         case OPT_HOST_SAMPLE_RATE:
@@ -674,31 +675,31 @@ Emulator::getConfigItem(Option option) const
 
             return host.getConfigItem(option);
 
-        case OPT_VIC_REVISION:
-        case OPT_VIC_POWER_SAVE:
-        case OPT_GRAY_DOT_BUG:
+        case OPT_VICII_REVISION:
+        case OPT_VICII_POWER_SAVE:
+        case OPT_VICII_GRAY_DOT_BUG:
         case OPT_GLUE_LOGIC:
-        case OPT_HIDE_SPRITES:
-        case OPT_SS_COLLISIONS:
-        case OPT_SB_COLLISIONS:
+        case OPT_VICII_HIDE_SPRITES:
+        case OPT_VICII_SS_COLLISIONS:
+        case OPT_VICII_SB_COLLISIONS:
 
-        case OPT_PALETTE:
-        case OPT_BRIGHTNESS:
-        case OPT_CONTRAST:
-        case OPT_SATURATION:
+        case OPT_VICII_PALETTE:
+        case OPT_VICII_BRIGHTNESS:
+        case OPT_VICII_CONTRAST:
+        case OPT_VICII_SATURATION:
 
             return main.vic.getConfigItem(option);
 
         case OPT_DMA_DEBUG_ENABLE:
         case OPT_DMA_DEBUG_MODE:
         case OPT_DMA_DEBUG_OPACITY:
-        case OPT_CUT_LAYERS:
-        case OPT_CUT_OPACITY:
+        case OPT_VICII_CUT_LAYERS:
+        case OPT_VICII_CUT_OPACITY:
 
             return main.vic.dmaDebugger.getConfigItem(option);
 
         case OPT_CIA_REVISION:
-        case OPT_TIMER_B_BUG:
+        case OPT_CIA_TIMER_B_BUG:
 
             assert(main.cia1.getConfigItem(option) == main.cia2.getConfigItem(option));
             return main.cia1.getConfigItem(option);
@@ -712,8 +713,8 @@ Emulator::getConfigItem(Option option) const
         case OPT_SID_FILTER:
         case OPT_SID_ENGINE:
         case OPT_SID_SAMPLING:
-        case OPT_AUDVOLL:
-        case OPT_AUDVOLR:
+        case OPT_AUD_VOL_L:
+        case OPT_AUD_VOL_R:
 
             return main.muxer.getConfigItem(option);
 
@@ -746,8 +747,8 @@ Emulator::getConfigItem(Option option, long id) const
 
         case OPT_SID_ENABLE:
         case OPT_SID_ADDRESS:
-        case OPT_AUDPAN:
-        case OPT_AUDVOL:
+        case OPT_AUD_PAN:
+        case OPT_AUD_VOL:
 
             assert(id >= 0 && id <= 3);
             return main.muxer.getConfigItem(option, id);
@@ -771,16 +772,16 @@ Emulator::getConfigItem(Option option, long id) const
             return drive.getConfigItem(option);
 
         case OPT_MOUSE_MODEL:
-        case OPT_SHAKE_DETECTION:
+        case OPT_MOUSE_SHAKE_DETECT:
         case OPT_MOUSE_VELOCITY:
 
             if (id == PORT_1) return main.port1.mouse.getConfigItem(option);
             if (id == PORT_2) return main.port2.mouse.getConfigItem(option);
             fatalError;
 
-        case OPT_AUTOFIRE:
-        case OPT_AUTOFIRE_BULLETS:
-        case OPT_AUTOFIRE_DELAY:
+        case OPT_JOY_AUTOFIRE:
+        case OPT_JOY_AUTOFIRE_BULLETS:
+        case OPT_JOY_AUTOFIRE_DELAY:
 
             if (id == PORT_1) return main.port1.joystick.getConfigItem(option);
             if (id == PORT_2) return main.port2.joystick.getConfigItem(option);
@@ -796,12 +797,12 @@ Emulator::setConfigItem(Option option, i64 value)
 {
     switch (option) {
 
-        case OPT_WARP_BOOT:
+        case OPT_EMU_WARP_BOOT:
 
             config.warpBoot = isize(value);
             return;
 
-        case OPT_WARP_MODE:
+        case OPT_EMU_WARP_MODE:
 
             if (!WarpModeEnum::isValid(value)) {
                 throw VC64Error(ERROR_OPT_INVARG, WarpModeEnum::keyList());
@@ -810,12 +811,12 @@ Emulator::setConfigItem(Option option, i64 value)
             config.warpMode = WarpMode(value);
             return;
 
-        case OPT_VSYNC:
+        case OPT_EMU_VSYNC:
 
             config.vsync = bool(value);
             return;
 
-        case OPT_TIME_LAPSE:
+        case OPT_EMU_TIME_LAPSE:
 
             if (value < 50 || value > 200) {
                 throw VC64Error(ERROR_OPT_INVARG, "50...200");
@@ -824,7 +825,7 @@ Emulator::setConfigItem(Option option, i64 value)
             config.timeLapse = isize(value);
             return;
 
-        case OPT_RUN_AHEAD:
+        case OPT_EMU_RUN_AHEAD:
 
             if (value < 0 || value > 12) {
                 throw VC64Error(ERROR_OPT_INVARG, "0...12");

@@ -43,7 +43,7 @@ Mouse::resetConfig()
     std::vector <Option> options = {
 
         OPT_MOUSE_MODEL,
-        OPT_SHAKE_DETECTION,
+        OPT_MOUSE_SHAKE_DETECT,
         OPT_MOUSE_VELOCITY
     };
 
@@ -58,7 +58,7 @@ Mouse::getConfigItem(Option option) const
     switch (option) {
 
         case OPT_MOUSE_MODEL:      return config.model;
-        case OPT_SHAKE_DETECTION:  return config.shakeDetection;
+        case OPT_MOUSE_SHAKE_DETECT:  return config.shakeDetection;
         case OPT_MOUSE_VELOCITY:   return config.velocity;
 
         default:
@@ -78,7 +78,7 @@ Mouse::setConfigItem(Option option, i64 value)
             targetY = 0;
             return;
             
-        case OPT_SHAKE_DETECTION:
+        case OPT_MOUSE_SHAKE_DETECT:
             
             config.shakeDetection = bool(value);
             return;

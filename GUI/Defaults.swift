@@ -745,11 +745,11 @@ extension DefaultsProxy {
 
         debug(.defaults)
 
-        remove(.VIC_REVISION)
-        remove(.VIC_POWER_SAVE)
+        remove(.VICII_REVISION)
+        remove(.VICII_POWER_SAVE)
 
         remove(.CIA_REVISION)
-        remove(.TIMER_B_BUG)
+        remove(.CIA_TIMER_B_BUG)
 
         remove(.SID_REVISION)
         remove(.SID_FILTER)
@@ -772,11 +772,11 @@ extension Configuration {
 
         c64.suspend()
 
-        defaults.set(.VIC_REVISION, vicRevision)
-        defaults.set(.GRAY_DOT_BUG, vicGrayDotBug)
+        defaults.set(.VICII_REVISION, vicRevision)
+        defaults.set(.VICII_GRAY_DOT_BUG, vicGrayDotBug)
 
         defaults.set(.CIA_REVISION, ciaRevision)
-        defaults.set(.TIMER_B_BUG, ciaTimerBBug)
+        defaults.set(.CIA_TIMER_B_BUG, ciaTimerBBug)
 
         defaults.set(.SID_REVISION, sidRevision)
         defaults.set(.SID_FILTER, sidFilter)
@@ -804,11 +804,11 @@ extension Configuration {
 
         c64.suspend()
 
-        vicRevision = defaults.get(.VIC_REVISION)
-        vicGrayDotBug = defaults.get(.GRAY_DOT_BUG) != 0
+        vicRevision = defaults.get(.VICII_REVISION)
+        vicGrayDotBug = defaults.get(.VICII_GRAY_DOT_BUG) != 0
 
         ciaRevision = defaults.get(.CIA_REVISION)
-        ciaTimerBBug = defaults.get(.TIMER_B_BUG) != 0
+        ciaTimerBBug = defaults.get(.CIA_TIMER_B_BUG) != 0
 
         sidRevision = defaults.get(.SID_REVISION)
         sidFilter = defaults.get(.SID_FILTER) != 0
@@ -944,15 +944,15 @@ extension DefaultsProxy {
 
         remove(.DRV_POWER_SAVE, DRIVE8)
         remove(.DRV_POWER_SAVE, DRIVE9)
-        remove(.VIC_POWER_SAVE)
+        remove(.VICII_POWER_SAVE)
+        remove(.VICII_SS_COLLISIONS)
+        remove(.VICII_SB_COLLISIONS)
         remove(.SID_POWER_SAVE)
-        remove(.SS_COLLISIONS)
-        remove(.SB_COLLISIONS)
-        remove(.WARP_MODE)
-        remove(.WARP_BOOT)
-        remove(.VSYNC)
-        remove(.TIME_LAPSE)
-        remove(.RUN_AHEAD)
+        remove(.EMU_WARP_MODE)
+        remove(.EMU_WARP_BOOT)
+        remove(.EMU_VSYNC)
+        remove(.EMU_TIME_LAPSE)
+        remove(.EMU_RUN_AHEAD)
     }
 }
 
@@ -967,15 +967,15 @@ extension Configuration {
 
         defaults.set(.DRV_POWER_SAVE, DRIVE8, drive8PowerSave)
         defaults.set(.DRV_POWER_SAVE, DRIVE9, drive9PowerSave)
-        defaults.set(.VIC_POWER_SAVE, viciiPowerSave)
         defaults.set(.SID_POWER_SAVE, sidPowerSave)
-        defaults.set(.SS_COLLISIONS, ssCollisions)
-        defaults.set(.SB_COLLISIONS, sbCollisions)
-        defaults.set(.WARP_MODE, warpMode)
-        defaults.set(.WARP_BOOT, warpBoot)
-        defaults.set(.VSYNC, vsync)
-        defaults.set(.TIME_LAPSE, timeLapse)
-        defaults.set(.RUN_AHEAD, runAhead)
+        defaults.set(.VICII_POWER_SAVE, viciiPowerSave)
+        defaults.set(.VICII_SS_COLLISIONS, ssCollisions)
+        defaults.set(.VICII_SB_COLLISIONS, sbCollisions)
+        defaults.set(.EMU_WARP_MODE, warpMode)
+        defaults.set(.EMU_WARP_BOOT, warpBoot)
+        defaults.set(.EMU_VSYNC, vsync)
+        defaults.set(.EMU_TIME_LAPSE, timeLapse)
+        defaults.set(.EMU_RUN_AHEAD, runAhead)
 
         defaults.save()
 
@@ -991,15 +991,15 @@ extension Configuration {
 
         drive8PowerSave = defaults.get(.DRV_POWER_SAVE, DRIVE8) != 0
         drive9PowerSave = defaults.get(.DRV_POWER_SAVE, DRIVE9) != 0
-        viciiPowerSave = defaults.get(.VIC_POWER_SAVE) != 0
         sidPowerSave = defaults.get(.SID_POWER_SAVE) != 0
-        ssCollisions = defaults.get(.SS_COLLISIONS) != 0
-        sbCollisions = defaults.get(.SB_COLLISIONS) != 0
-        warpMode = defaults.get(.WARP_MODE)
-        warpBoot = defaults.get(.WARP_BOOT)
-        vsync = defaults.get(.VSYNC) != 0
-        timeLapse = defaults.get(.TIME_LAPSE)
-        runAhead = defaults.get(.RUN_AHEAD)
+        viciiPowerSave = defaults.get(.VICII_POWER_SAVE) != 0
+        ssCollisions = defaults.get(.VICII_SS_COLLISIONS) != 0
+        sbCollisions = defaults.get(.VICII_SB_COLLISIONS) != 0
+        warpMode = defaults.get(.EMU_WARP_MODE)
+        warpBoot = defaults.get(.EMU_WARP_BOOT)
+        vsync = defaults.get(.EMU_VSYNC) != 0
+        timeLapse = defaults.get(.EMU_TIME_LAPSE)
+        runAhead = defaults.get(.EMU_RUN_AHEAD)
 
         c64.resume()
     }
@@ -1024,10 +1024,10 @@ extension DefaultsProxy {
         remove(.SID_ENGINE)
         remove(.SID_SAMPLING)
         remove(.SID_FILTER)
-        remove(.AUDVOL, [0, 1, 2, 3])
-        remove(.AUDPAN, [0, 1, 2, 3])
-        remove(.AUDVOLL)
-        remove(.AUDVOLR)
+        remove(.AUD_VOL, [0, 1, 2, 3])
+        remove(.AUD_PAN, [0, 1, 2, 3])
+        remove(.AUD_VOL_L)
+        remove(.AUD_VOL_R)
         remove(.DRV_STEP_VOL, [DRIVE8, DRIVE9])
         remove(.DRV_INSERT_VOL, [DRIVE8, DRIVE9])
         remove(.DRV_EJECT_VOL, [DRIVE8, DRIVE9])
@@ -1044,16 +1044,16 @@ extension Configuration {
 
         c64.suspend()
 
-        defaults.set(.AUDVOL, 0, vol0)
-        defaults.set(.AUDVOL, 1, vol1)
-        defaults.set(.AUDVOL, 2, vol2)
-        defaults.set(.AUDVOL, 3, vol3)
-        defaults.set(.AUDPAN, 0, pan0)
-        defaults.set(.AUDPAN, 1, pan1)
-        defaults.set(.AUDPAN, 2, pan2)
-        defaults.set(.AUDPAN, 3, pan3)
-        defaults.set(.AUDVOLL, volL)
-        defaults.set(.AUDVOLR, volR)
+        defaults.set(.AUD_VOL, 0, vol0)
+        defaults.set(.AUD_VOL, 1, vol1)
+        defaults.set(.AUD_VOL, 2, vol2)
+        defaults.set(.AUD_VOL, 3, vol3)
+        defaults.set(.AUD_PAN, 0, pan0)
+        defaults.set(.AUD_PAN, 1, pan1)
+        defaults.set(.AUD_PAN, 2, pan2)
+        defaults.set(.AUD_PAN, 3, pan3)
+        defaults.set(.AUD_VOL_L, volL)
+        defaults.set(.AUD_VOL_R, volR)
         defaults.set(.SID_SAMPLING, sidSampling)
         defaults.set(.DRV_PAN, DRIVE8, drive8Pan)
         defaults.set(.DRV_PAN, DRIVE9, drive9Pan)
@@ -1073,21 +1073,21 @@ extension Configuration {
 
         c64.suspend()
 
-        vol0 = defaults.get(.AUDVOL, 0)
-        vol1 = defaults.get(.AUDVOL, 1)
-        vol2 = defaults.get(.AUDVOL, 2)
-        vol3 = defaults.get(.AUDVOL, 3)
+        vol0 = defaults.get(.AUD_VOL, 0)
+        vol1 = defaults.get(.AUD_VOL, 1)
+        vol2 = defaults.get(.AUD_VOL, 2)
+        vol3 = defaults.get(.AUD_VOL, 3)
 
-        pan0 = defaults.get(.AUDPAN, 0)
-        pan1 = defaults.get(.AUDPAN, 1)
-        pan2 = defaults.get(.AUDPAN, 2)
-        pan3 = defaults.get(.AUDPAN, 3)
+        pan0 = defaults.get(.AUD_PAN, 0)
+        pan1 = defaults.get(.AUD_PAN, 1)
+        pan2 = defaults.get(.AUD_PAN, 2)
+        pan3 = defaults.get(.AUD_PAN, 3)
 
         drive8Pan = defaults.get(.DRV_PAN, DRIVE8)
         drive9Pan = defaults.get(.DRV_PAN, DRIVE9)
 
-        volL = defaults.get(.AUDVOLL)
-        volR = defaults.get(.AUDVOLR)
+        volL = defaults.get(.AUD_VOL_L)
+        volR = defaults.get(.AUD_VOL_R)
         sidSampling = defaults.get(.SID_SAMPLING)
         stepVolume = defaults.get(.DRV_STEP_VOL, DRIVE8)
         insertVolume = defaults.get(.DRV_INSERT_VOL, DRIVE8)
@@ -1198,10 +1198,10 @@ extension DefaultsProxy {
 
         debug(.defaults)
 
-        remove(.PALETTE)
-        remove(.BRIGHTNESS)
-        remove(.CONTRAST)
-        remove(.SATURATION)
+        remove(.VICII_PALETTE)
+        remove(.VICII_BRIGHTNESS)
+        remove(.VICII_CONTRAST)
+        remove(.VICII_SATURATION)
     }
 
     func removeGeometryUserDefaults() {
@@ -1260,10 +1260,10 @@ extension Configuration {
 
         c64.suspend()
 
-        defaults.set(.PALETTE, palette)
-        defaults.set(.BRIGHTNESS, brightness)
-        defaults.set(.CONTRAST, contrast)
-        defaults.set(.SATURATION, saturation)
+        defaults.set(.VICII_PALETTE, palette)
+        defaults.set(.VICII_BRIGHTNESS, brightness)
+        defaults.set(.VICII_CONTRAST, contrast)
+        defaults.set(.VICII_SATURATION, saturation)
 
         defaults.save()
 
@@ -1333,10 +1333,10 @@ extension Configuration {
 
         c64.suspend()
 
-        palette = defaults.get(.PALETTE)
-        brightness = defaults.get(.BRIGHTNESS)
-        contrast = defaults.get(.CONTRAST)
-        saturation = defaults.get(.SATURATION)
+        palette = defaults.get(.VICII_PALETTE)
+        brightness = defaults.get(.VICII_BRIGHTNESS)
+        contrast = defaults.get(.VICII_CONTRAST)
+        saturation = defaults.get(.VICII_SATURATION)
 
         c64.resume()
     }
