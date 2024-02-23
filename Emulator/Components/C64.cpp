@@ -1747,6 +1747,7 @@ C64::getDebugVariable(DebugFlag flag)
         case FLAG_PIA_DEBUG:        return PIA_DEBUG;
         case FLAG_IEC_DEBUG:        return IEC_DEBUG;
         case FLAG_DSK_DEBUG:        return DSK_DEBUG;
+        case FLAG_DSKCHG_DEBUG:     return DSKCHG_DEBUG;
         case FLAG_GCR_DEBUG:        return GCR_DEBUG;
         case FLAG_FS_DEBUG:         return FS_DEBUG;
         case FLAG_PAR_DEBUG:        return PAR_DEBUG;
@@ -1765,12 +1766,23 @@ C64::getDebugVariable(DebugFlag flag)
         case FLAG_REC_DEBUG:        return REC_DEBUG;
         case FLAG_REU_DEBUG:        return REU_DEBUG;
 
+        case FLAG_FORCE_ROM_MISSING:        return FORCE_ROM_MISSING;
+        case FLAG_FORCE_MEGA64_MISMATCH:    return FORCE_MEGA64_MISMATCH;
+        case FLAG_FORCE_SNAP_TOO_OLD:       return FORCE_SNAP_TOO_OLD;
+        case FLAG_FORCE_SNAP_TOO_NEW:       return FORCE_SNAP_TOO_NEW;
+        case FLAG_FORCE_SNAP_IS_BETA:       return FORCE_SNAP_IS_BETA;
+        case FLAG_FORCE_SNAP_CORRUPTED:     return FORCE_SNAP_CORRUPTED;
+        case FLAG_FORCE_CRT_UNKNOWN:        return FORCE_CRT_UNKNOWN;
+        case FLAG_FORCE_CRT_UNSUPPORTED:    return FORCE_CRT_UNSUPPORTED;
+        case FLAG_FORCE_RECORDING_ERROR:    return FORCE_RECORDING_ERROR;
+        case FLAG_FORCE_NO_FFMPEG:          return FORCE_NO_FFMPEG;
+
         default:
-            throw VC64Error(ERROR_OPT_UNSUPPORTED, "Unknown debug variable: " + std::to_string(flag));
+            throw VC64Error(ERROR_OPT_UNSUPPORTED, 
+                            "Unhandled debug variable: " + string(DebugFlagEnum::key(flag)));
     }
 
 #endif
-}
 }
 
 void
@@ -1822,6 +1834,7 @@ C64::setDebugVariable(DebugFlag flag, bool val)
         case FLAG_PIA_DEBUG:        PIA_DEBUG       = val; break;
         case FLAG_IEC_DEBUG:        IEC_DEBUG       = val; break;
         case FLAG_DSK_DEBUG:        DSK_DEBUG       = val; break;
+        case FLAG_DSKCHG_DEBUG:     DSKCHG_DEBUG    = val; break;
         case FLAG_GCR_DEBUG:        GCR_DEBUG       = val; break;
         case FLAG_FS_DEBUG:         FS_DEBUG        = val; break;
         case FLAG_PAR_DEBUG:        PAR_DEBUG       = val; break;
@@ -1840,8 +1853,22 @@ C64::setDebugVariable(DebugFlag flag, bool val)
         case FLAG_REC_DEBUG:        REC_DEBUG       = val; break;
         case FLAG_REU_DEBUG:        REU_DEBUG       = val; break;
 
+        case FLAG_FORCE_ROM_MISSING:        FORCE_ROM_MISSING = val; break;
+        case FLAG_FORCE_MEGA64_MISMATCH:    FORCE_MEGA64_MISMATCH = val; break;
+        case FLAG_FORCE_SNAP_TOO_OLD:       FORCE_SNAP_TOO_OLD = val; break;
+        case FLAG_FORCE_SNAP_TOO_NEW:       FORCE_SNAP_TOO_NEW = val; break;
+        case FLAG_FORCE_SNAP_IS_BETA:       FORCE_SNAP_IS_BETA = val; break;
+        case FLAG_FORCE_SNAP_CORRUPTED:     FORCE_SNAP_CORRUPTED = val; break;
+        case FLAG_FORCE_CRT_UNKNOWN:        FORCE_CRT_UNKNOWN = val; break;
+        case FLAG_FORCE_CRT_UNSUPPORTED:    FORCE_CRT_UNSUPPORTED = val; break;
+        case FLAG_FORCE_RECORDING_ERROR:    FORCE_RECORDING_ERROR = val; break;
+        case FLAG_FORCE_NO_FFMPEG:          FORCE_NO_FFMPEG = val; break;
+
         default:
-            throw VC64Error(ERROR_OPT_UNSUPPORTED, "Unknown debug variable: " + std::to_string(flag));
+            throw VC64Error(ERROR_OPT_UNSUPPORTED,
+                            "Unhandled debug variable: " + string(DebugFlagEnum::key(flag)));
     }
 #endif
+}
+
 }

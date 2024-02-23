@@ -73,7 +73,7 @@ FlashRom::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
-    if (category == Category::Debug) {
+    if (category == Category::State) {
 
         os << std::endl;
 

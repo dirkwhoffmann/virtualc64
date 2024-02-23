@@ -236,7 +236,6 @@ enum_long(DEBUG_FLAG)
 
     // Run ahead
     FLAG_RUA_DEBUG,
-    FLAG_RUA_TEXTURE,
     FLAG_RUA_ON_STEROIDS,
 
     // CPU
@@ -331,7 +330,6 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
 
                 // Run ahead
             case FLAG_RUA_DEBUG:                return "RUA_DEBUG";
-            case FLAG_RUA_TEXTURE:              return "RUA_TEXTURE";
             case FLAG_RUA_ON_STEROIDS:          return "RUA_ON_STEROIDS";
 
                 // CPU

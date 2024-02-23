@@ -34,7 +34,7 @@ GeoRAM::_dump(Category category, std::ostream& os) const
     Cartridge::_dump(category, os);
     os << std::endl;
 
-    if (category == Category::Debug) {
+    if (category == Category::State) {
 
         os << tab("Bank");
         os << dec(bank) << std::endl;

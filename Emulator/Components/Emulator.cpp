@@ -295,6 +295,100 @@ Emulator::configure(Option option, i64 value)
     }
 }
 
+void Emulator::configure(Option option, const string &value)
+{
+    debug(CNF_DEBUG, "configure(%s, \"%s\")\n", OptionEnum::key(option), value.c_str());
+
+    using namespace util;
+    auto config = [&](std::function<i64(const string &)> func) { configure(option, func(value)); };
+
+    switch (option) {
+
+        case OPT_WARP_MODE:             return config(parseEnum<VICIIRevisionEnum>);
+        case OPT_WARP_BOOT:             return config(parseBool);
+        case OPT_VSYNC:                 return config(parseBool);
+        case OPT_TIME_LAPSE:            return config(parseNum);
+        case OPT_RUN_AHEAD:             return config(parseNum);
+
+        case OPT_HOST_SAMPLE_RATE:      return config(parseNum);
+
+        case OPT_HOST_REFRESH_RATE:     return config(parseNum);
+        case OPT_HOST_FRAMEBUF_WIDTH:   return config(parseNum);
+        case OPT_HOST_FRAMEBUF_HEIGHT:  return config(parseNum);
+
+        case OPT_VIC_REVISION:          return config(parseEnum<VICIIRevisionEnum>);
+        case OPT_PALETTE:               return config(parseEnum<PaletteEnum>);
+        case OPT_BRIGHTNESS:            return config(parseNum);
+        case OPT_CONTRAST:              return config(parseNum);
+        case OPT_SATURATION:            return config(parseNum);
+        case OPT_GRAY_DOT_BUG:          return config(parseBool);
+        case OPT_VIC_POWER_SAVE:        return config(parseBool);
+        case OPT_HIDE_SPRITES:          return config(parseBool);
+        case OPT_SS_COLLISIONS:         return config(parseBool);
+        case OPT_SB_COLLISIONS:         return config(parseBool);
+        case OPT_GLUE_LOGIC:            return config(parseEnum<GlueLogicEnum>);
+
+        case OPT_CUT_LAYERS:            return config(parseNum);
+        case OPT_CUT_OPACITY:           return config(parseNum);
+        case OPT_DMA_DEBUG_ENABLE:      return config(parseBool);
+        case OPT_DMA_DEBUG_MODE:        return config(parseEnum<DmaDisplayModeEnum>);
+        case OPT_DMA_DEBUG_OPACITY:     return config(parseNum);
+
+        case OPT_POWER_GRID:            return config(parseEnum<PowerGridEnum>);
+
+        case OPT_CIA_REVISION:          return config(parseEnum<CIARevisionEnum>);
+        case OPT_TIMER_B_BUG:           return config(parseBool);
+
+        case OPT_SID_ENABLE:            return config(parseNum);
+        case OPT_SID_ADDRESS:           return config(parseNum);
+
+        case OPT_SID_REVISION:          return config(parseEnum<SIDRevisionEnum>);
+        case OPT_SID_FILTER:            return config(parseBool);
+        case OPT_SID_SAMPLING:          return config(parseEnum<SamplingMethodEnum>);
+        case OPT_SID_POWER_SAVE:        return config(parseBool);
+        case OPT_SID_ENGINE:            return config(parseEnum<SIDEngineEnum>);
+        case OPT_AUDPAN:                return config(parseNum);
+        case OPT_AUDVOL:                return config(parseNum);
+        case OPT_AUDVOLL:               return config(parseNum);
+        case OPT_AUDVOLR:               return config(parseNum);
+
+        case OPT_RAM_PATTERN:           return config(parseEnum<RamPatternEnum>);
+
+        case OPT_SAVE_ROMS:             return config(parseBool);
+
+        case OPT_DRV_AUTO_CONFIG:       return config(parseBool);
+        case OPT_DRV_TYPE:              return config(parseEnum<DriveTypeEnum>);
+        case OPT_DRV_RAM:               return config(parseEnum<DriveRamEnum>);
+        case OPT_DRV_PARCABLE:          return config(parseEnum<ParCableTypeEnum>);
+        case OPT_DRV_CONNECT:           return config(parseBool);
+        case OPT_DRV_POWER_SWITCH:      return config(parseBool);
+        case OPT_DRV_POWER_SAVE:        return config(parseBool);
+        case OPT_DRV_EJECT_DELAY:       return config(parseNum);
+        case OPT_DRV_SWAP_DELAY:        return config(parseNum);
+        case OPT_DRV_INSERT_DELAY:      return config(parseNum);
+        case OPT_DRV_PAN:               return config(parseNum);
+        case OPT_DRV_POWER_VOL:         return config(parseNum);
+        case OPT_DRV_STEP_VOL:          return config(parseNum);
+        case OPT_DRV_INSERT_VOL:        return config(parseNum);
+        case OPT_DRV_EJECT_VOL:         return config(parseNum);
+
+        case OPT_DAT_MODEL:             return config(parseEnum<DatasetteModelEnum>);
+        case OPT_DAT_CONNECT:           return config(parseBool);
+
+        case OPT_MOUSE_MODEL:           return config(parseEnum<MouseModelEnum>);
+        case OPT_SHAKE_DETECTION:       return config(parseBool);
+        case OPT_MOUSE_VELOCITY:        return config(parseNum);
+
+        case OPT_AUTOFIRE:              return config(parseBool);
+        case OPT_AUTOFIRE_BULLETS:      return config(parseNum);
+        case OPT_AUTOFIRE_DELAY:        return config(parseNum);
+
+        default:
+            warn("Unrecognized option: %s\n", OptionEnum::key(option));
+            fatalError;
+    }
+}
+
 void
 Emulator::configure(Option option, long id, i64 value)
 {
@@ -320,7 +414,6 @@ Emulator::configure(Option option, long id, i64 value)
     };
 
     switch (option) {
-
 
         case OPT_DMA_DEBUG_ENABLE:
         case OPT_DMA_DEBUG_CHANNEL:
@@ -406,6 +499,65 @@ Emulator::configure(Option option, long id, i64 value)
 
     if (std::find(quiet.begin(), quiet.end(), option) == quiet.end()) {
         main.msgQueue.put(MSG_CONFIG, option);
+    }
+}
+
+void 
+Emulator::configure(Option option, long id, const string &value)
+{
+    debug(CNF_DEBUG, "configure(%s, %ld, \"%s\")\n", OptionEnum::key(option), id, value.c_str());
+
+    using namespace util;
+    auto config = [&](std::function<i64(const string &)> func) { configure(option, id, func(value)); };
+
+    switch (option) {
+
+        case OPT_DMA_DEBUG_ENABLE:      return config(parseBool);
+        case OPT_DMA_DEBUG_CHANNEL:     return config(parseNum);
+        case OPT_DMA_DEBUG_COLOR:       return config(parseNum);
+
+        case OPT_CIA_REVISION:          return config(parseEnum<CIARevisionEnum>);
+        case OPT_TIMER_B_BUG:           return config(parseBool);
+
+        case OPT_MOUSE_MODEL:           return config(parseEnum<MouseModelEnum>);
+        case OPT_SHAKE_DETECTION:       return config(parseBool);
+        case OPT_MOUSE_VELOCITY:        return config(parseNum);
+
+        case OPT_AUTOFIRE:              return config(parseBool);
+        case OPT_AUTOFIRE_BULLETS:      return config(parseNum);
+        case OPT_AUTOFIRE_DELAY:        return config(parseNum);
+
+        case OPT_SID_ENABLE:            return config(parseBool);
+        case OPT_SID_ADDRESS:           return config(parseNum);
+        case OPT_SID_REVISION:          return config(parseEnum<SIDRevisionEnum>);
+        case OPT_SID_FILTER:            return config(parseBool);
+        case OPT_SID_POWER_SAVE:        return config(parseBool);
+        case OPT_SID_ENGINE:            return config(parseEnum<SIDEngineEnum>);
+        case OPT_SID_SAMPLING:          return config(parseEnum<SamplingMethodEnum>);
+        case OPT_AUDPAN:                return config(parseNum);
+        case OPT_AUDVOL:                return config(parseNum);
+        case OPT_AUDVOLL:               return config(parseNum);
+        case OPT_AUDVOLR:               return config(parseNum);
+
+        case OPT_DRV_AUTO_CONFIG:       return config(parseBool);
+        case OPT_DRV_TYPE:              return config(parseEnum<DriveTypeEnum>);
+        case OPT_DRV_RAM:               return config(parseEnum<DriveRamEnum>);
+        case OPT_DRV_PARCABLE:          return config(parseEnum<ParCableTypeEnum>);
+        case OPT_DRV_CONNECT:           return config(parseBool);
+        case OPT_DRV_POWER_SWITCH:      return config(parseBool);
+        case OPT_DRV_POWER_SAVE:        return config(parseBool);
+        case OPT_DRV_EJECT_DELAY:       return config(parseNum);
+        case OPT_DRV_SWAP_DELAY:        return config(parseNum);
+        case OPT_DRV_INSERT_DELAY:      return config(parseNum);
+        case OPT_DRV_PAN:               return config(parseNum);
+        case OPT_DRV_POWER_VOL:         return config(parseNum);
+        case OPT_DRV_STEP_VOL:          return config(parseNum);
+        case OPT_DRV_INSERT_VOL:        return config(parseNum);
+        case OPT_DRV_EJECT_VOL:         return config(parseNum);
+
+        default:
+            warn("Unrecognized option: %s\n", OptionEnum::key(option));
+            fatalError;
     }
 }
 
@@ -718,6 +870,15 @@ Emulator::_dump(Category category, std::ostream& os) const
         os << tab("Run ahead");
         os << dec(config.runAhead) << " frames" << std::endl;
         os << std::endl;
+    }
+
+    if (category == Category::Debug) {
+
+        for (isize i = DebugFlagEnum::minVal; i < DebugFlagEnum::maxVal; i++) {
+
+            os << tab(DebugFlagEnum::key(i));
+            os << bol(main.getDebugVariable(i)) << std::endl;
+        }
     }
 
     if (category == Category::Defaults) {

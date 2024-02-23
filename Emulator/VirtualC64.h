@@ -96,8 +96,10 @@ public:
 
     // Sets a single configuration option
     void configure(Option option, i64 value) throws;
+    void configure(Option option, const string &value) throws;
     void configure(Option option, long id, i64 value) throws;
-
+    void configure(Option option, long id, const string &value) throws;
+    
     // Queries a single configuration option
     i64 getConfigItem(Option option) const;
     i64 getConfigItem(Option option, long id) const;

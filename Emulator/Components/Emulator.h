@@ -75,8 +75,6 @@ public:
     void recordState(EmulatorInfo &result) const override;
     void recordStats(EmulatorStats &result) const override;
 
-    // EmulatorStats getStats() const;
-
 
     //
     // Configuring
@@ -89,7 +87,9 @@ public:
 
     // Sets a single configuration option
     void configure(Option option, i64 value) throws;
+    void configure(Option option, const string &value) throws;
     void configure(Option option, long id, i64 value) throws;
+    void configure(Option option, long id, const string &value) throws;
 
     // Queries a single configuration option
     i64 getConfigItem(Option option) const;

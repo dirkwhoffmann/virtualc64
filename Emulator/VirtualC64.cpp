@@ -83,8 +83,22 @@ VirtualC64::configure(Option option, i64 value)
     main.markAsDirty();
 }
 
+void 
+VirtualC64::configure(Option option, const string &value)
+{
+    Emulator::configure(option, value);
+    main.markAsDirty();
+}
+
 void
 VirtualC64::configure(Option option, long id, i64 value)
+{
+    Emulator::configure(option, id, value);
+    main.markAsDirty();
+}
+
+void 
+VirtualC64::configure(Option option, long id, const string &value)
 {
     Emulator::configure(option, id, value);
     main.markAsDirty();

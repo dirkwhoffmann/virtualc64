@@ -632,10 +632,11 @@ RetroShell::_dump(Dumpable &component, Category category)
 
     switch (category) {
 
-        case Category::Slots:       ss << "Slots:\n\n"; break;
         case Category::Config:      ss << "Configuration:\n\n"; break;
+        case Category::Debug:       ss << "Debug variables:\n\n"; break;
         case Category::Properties:  ss << "Properties:\n\n"; break;
         case Category::Registers:   ss << "Registers:\n\n"; break;
+        case Category::Slots:       ss << "Slots:\n\n"; break;
         case Category::State:       ss << "State:\n\n"; break;
         case Category::Stats:       ss << "Statistics:\n\n"; break;
 

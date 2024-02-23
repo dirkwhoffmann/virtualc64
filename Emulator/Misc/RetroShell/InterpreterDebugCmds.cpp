@@ -33,7 +33,7 @@ Interpreter::initDebugShell(Command &root)
     if (debugBuild) {
 
         root.add({"debug"}, {}, {DebugFlagEnum::argList(), Arg::boolean},
-                 "Sets a debug flag",
+                 "Views or modifies debug flags",
                  [this](Arguments& argv, long value) {
 
             DebugFlag flag;
@@ -41,19 +41,19 @@ Interpreter::initDebugShell(Command &root)
             switch (argv.size()) {
 
                 case 0:
-                    printf("0\n");
+
+                    retroShell.dump(emulator, Category::Debug);
                     break;
 
                 case 1:
-                    flag = parseEnum<DebugFlagEnum>(argv[0]);
 
+                    flag = parseEnum<DebugFlagEnum>(argv[0]);
                     retroShell << argv[0] << " = " << c64.getDebugVariable(flag) << '\n';
                     break;
 
                 case 2:
-                    flag = parseEnum<DebugFlagEnum>(argv[0]);
 
-                    printf("2\"n");
+                    flag = parseEnum<DebugFlagEnum>(argv[0]);
                     c64.setDebugVariable(flag, parseBool(argv[1]));
                     break;
 
