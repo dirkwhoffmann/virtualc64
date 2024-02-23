@@ -23,10 +23,10 @@ Interpreter::initCommons(Command &root)
     // Common commands
     //
 
-    root.setGroup("Controlling the shell");
+    root.setGroup("Shell commands");
 
     root.add({"."},
-             "Enters or exists the debugger",
+             "Enter or exit the debugger",
              [this](Arguments& argv, long value) {
 
         retroShell.clear();
@@ -35,21 +35,21 @@ Interpreter::initCommons(Command &root)
     });
 
     root.add({"clear"},
-             "Clears the console window",
+             "Clear the console window",
              [this](Arguments& argv, long value) {
 
         retroShell.clear();
     });
 
     root.add({"close"},
-             "Hides the console window",
+             "Hide the console window",
              [this](Arguments& argv, long value) {
 
         msgQueue.put(MSG_CONSOLE_CLOSE);
     });
 
     root.add({"help"}, { }, {Arg::command},
-             "Prints usage information",
+             "Print usage information",
              [this](Arguments& argv, long value) {
 
         retroShell.help(argv.empty() ? "" : argv.front());
@@ -65,7 +65,7 @@ Interpreter::initCommons(Command &root)
     });
 
     root.add({"source"}, {Arg::path},
-             "Processes a command script",
+             "Process a command script",
              [this](Arguments& argv, long value) {
 
         auto stream = std::ifstream(argv.front());
@@ -74,7 +74,7 @@ Interpreter::initCommons(Command &root)
     });
 
     root.add({"wait"}, {Arg::value, Arg::seconds},
-             "Pauses the execution of a command script",
+             "", // "Pause the execution of a command script",
              [this](Arguments& argv, long value) {
 
         auto cycles = parseNum(argv[0]) * vic.getFrequency();
@@ -82,10 +82,10 @@ Interpreter::initCommons(Command &root)
         throw ScriptInterruption("");
     });
 
-    root.setGroup("Configuring components");
+    root.setGroup("Configuration commands");
 
     root.add({"config"}, {OptionEnum::argList(), Arg::value},  {Arg::value},
-             "Sets a configuration option",
+             "Configure the emulator",
              [this](Arguments& argv, long value) {
 
         auto opt = parseEnum<OptionEnum>(argv[0]);
@@ -107,14 +107,14 @@ Interpreter::initCommandShell(Command &root)
     // Top-level commands
     //
 
-    root.setGroup("* Regression testing");
+    root.setGroup("Regression tester");
 
-    root.add({"regression"},    "Runs the regression tester");
-    root.add({"screenshot"},    "Manages screenshots");
+    root.add({"regression"},    ""); // Run the regression tester");
+    root.add({"screenshot"},    ""); // Take screenshots");
 
-    root.setGroup("Controlling components");
+    root.setGroup("Components");
 
-    root.add({"emulator"},      "The emulator thread");
+    root.add({"emulator"},      "Emulator thread");
     root.add({"c64"},           "The virtual Commodore 64");
     root.add({"memory"},        "Ram and Rom");
     root.add({"cia1"},          "Complex Interface Adapter 1");
@@ -124,7 +124,7 @@ Interpreter::initCommandShell(Command &root)
     root.add({"sid"},           "Sound Interface Device");
     root.add({"expansion"},     "Expansion port");
 
-    root.setGroup("Controlling peripherals");
+    root.setGroup("Peripherals");
 
     root.add({"monitor"},       "C64 monitor");
     root.add({"keyboard"},      "Keyboard");

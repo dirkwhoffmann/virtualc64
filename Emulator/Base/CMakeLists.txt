@@ -4,6 +4,7 @@ target_sources(vc64Core PRIVATE
 
 Error.cpp
 Colors.cpp
+Configurable.cpp
 CoreObject.cpp
 CoreComponent.cpp
 SubComponent.cpp

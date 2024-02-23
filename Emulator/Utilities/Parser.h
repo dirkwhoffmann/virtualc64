@@ -21,7 +21,7 @@ struct ParseError : public std::exception {
 
     string token;
     string expected;
-    
+
     ParseError(const string &t) : token(t) { }
     ParseError(const string &t, const string &e) : token(t), expected(e) { }
 
@@ -64,6 +64,19 @@ template <typename Enum> long parseEnum(const string& key)
     if (it == p.end()) throw EnumParseError(key, Enum::keyList());
 
     return it->second;
+}
+
+template <typename Enum> long parsePartialEnum(const string& key, std::function<bool(long)> accept)
+{
+    string upperKey;
+    for (auto c : key) { upperKey += (char)std::toupper(c); }
+
+    for (isize i = Enum::minVal; i <= Enum::maxVal; i++) {
+
+        if (Enum::key(i) == upperKey && accept(i)) return i;
+    }
+
+    throw EnumParseError(key, Enum::keyList());
 }
 
 }

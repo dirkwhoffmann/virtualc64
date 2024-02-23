@@ -164,10 +164,13 @@ CIA::_dump(Category category, std::ostream& os) const
     
     if (category == Category::Config) {
 
+        dumpConfig(os);
+        /*
         os << tab("Revision");
         os << CIARevisionEnum::key(config.revision) << std::endl;
         os << tab("Timer B bug");
         os << bol(config.timerBBug) << std::endl;
+        */
     }
 
     if (category == Category::Registers) {

@@ -16,6 +16,7 @@
 #include "CoreObject.h"
 #include "Synchronizable.h"
 #include "Serializable.h"
+#include "Configurable.h"
 #include "Concurrency.h"
 #include "Suspendable.h"
 #include "ThreadTypes.h"
@@ -38,7 +39,7 @@ struct NoAssign
 */
 
 class CoreComponent : 
-public CoreObject, public Serializable, public Suspendable, public Synchronizable {
+public CoreObject, public Serializable, public Suspendable, public Synchronizable, public Configurable {
 
 public:
 

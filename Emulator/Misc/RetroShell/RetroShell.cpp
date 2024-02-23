@@ -200,7 +200,7 @@ RetroShell::welcome()
         *this << VirtualC64::build() << '\n';
         *this << '\n';
         *this << "Copyright (C) Dirk W. Hoffmann. www.dirkwhoffmann.de" << '\n';
-        *this << "Licensed under the GNU General Public License v3" << '\n';
+        *this << "https://github.com/dirkwhoffmann/virtualc64" << '\n';
         *this << '\n';
     }
 
