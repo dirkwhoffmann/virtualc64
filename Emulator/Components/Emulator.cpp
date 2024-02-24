@@ -164,7 +164,7 @@ Emulator::setOption(Option opt, i64 value)
 }
 
 void
-Emulator::configure(Option option, i64 value)
+Emulator::set(Option option, i64 value)
 {
     debug(CNF_DEBUG, "configure(%s, %lld)\n", OptionEnum::key(option), value);
 
@@ -348,12 +348,12 @@ Emulator::configure(Option option, i64 value)
     }
 }
 
-void Emulator::configure(Option option, const string &value)
+void Emulator::set(Option option, const string &value)
 {
     debug(CNF_DEBUG, "configure(%s, \"%s\")\n", OptionEnum::key(option), value.c_str());
 
     using namespace util;
-    auto config = [&](std::function<i64(const string &)> func) { configure(option, func(value)); };
+    auto config = [&](std::function<i64(const string &)> func) { set(option, func(value)); };
 
     switch (option) {
 
@@ -443,7 +443,7 @@ void Emulator::configure(Option option, const string &value)
 }
 
 void
-Emulator::configure(Option option, long id, i64 value)
+Emulator::set(Option option, long id, i64 value)
 {
     debug(CNF_DEBUG, "configure(%s, %ld, %lld)\n", OptionEnum::key(option), id, value);
 
@@ -553,12 +553,12 @@ Emulator::configure(Option option, long id, i64 value)
 }
 
 void 
-Emulator::configure(Option option, long id, const string &value)
+Emulator::set(Option option, long id, const string &value)
 {
     debug(CNF_DEBUG, "configure(%s, %ld, \"%s\")\n", OptionEnum::key(option), id, value.c_str());
 
     using namespace util;
-    auto config = [&](std::function<i64(const string &)> func) { configure(option, id, func(value)); };
+    auto config = [&](std::function<i64(const string &)> func) { set(option, id, func(value)); };
 
     switch (option) {
 
@@ -622,7 +622,7 @@ Emulator::configure(Option option, long id, const string &value)
 }
 
 void
-Emulator::configure(C64Model model)
+Emulator::set(C64Model model)
 {
     assert_enum(C64Model, model);
 
@@ -634,80 +634,80 @@ Emulator::configure(C64Model model)
 
             case C64_MODEL_PAL:
 
-                configure(OPT_VICII_REVISION, VICII_PAL_6569_R3);
-                configure(OPT_VICII_GRAY_DOT_BUG, false);
-                configure(OPT_CIA_REVISION, MOS_6526);
-                configure(OPT_CIA_TIMER_B_BUG,  true);
-                configure(OPT_SID_REVISION, MOS_6581);
-                configure(OPT_SID_FILTER,   true);
-                configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
-                configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-                configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                set(OPT_VICII_REVISION, VICII_PAL_6569_R3);
+                set(OPT_VICII_GRAY_DOT_BUG, false);
+                set(OPT_CIA_REVISION, MOS_6526);
+                set(OPT_CIA_TIMER_B_BUG,  true);
+                set(OPT_SID_REVISION, MOS_6581);
+                set(OPT_SID_FILTER,   true);
+                set(OPT_POWER_GRID,   GRID_STABLE_50HZ);
+                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
                 break;
 
             case C64_MODEL_PAL_II:
 
-                configure(OPT_VICII_REVISION, VICII_PAL_8565);
-                configure(OPT_VICII_GRAY_DOT_BUG, true);
-                configure(OPT_CIA_REVISION, MOS_8521);
-                configure(OPT_CIA_TIMER_B_BUG,  false);
-                configure(OPT_SID_REVISION, MOS_8580);
-                configure(OPT_SID_FILTER,   true);
-                configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
-                configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
-                configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                set(OPT_VICII_REVISION, VICII_PAL_8565);
+                set(OPT_VICII_GRAY_DOT_BUG, true);
+                set(OPT_CIA_REVISION, MOS_8521);
+                set(OPT_CIA_TIMER_B_BUG,  false);
+                set(OPT_SID_REVISION, MOS_8580);
+                set(OPT_SID_FILTER,   true);
+                set(OPT_POWER_GRID,   GRID_STABLE_50HZ);
+                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
+                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
                 break;
 
             case C64_MODEL_PAL_OLD:
 
-                configure(OPT_VICII_REVISION, VICII_PAL_6569_R1);
-                configure(OPT_VICII_GRAY_DOT_BUG, false);
-                configure(OPT_CIA_REVISION, MOS_6526);
-                configure(OPT_CIA_TIMER_B_BUG,  true);
-                configure(OPT_SID_REVISION, MOS_6581);
-                configure(OPT_SID_FILTER,   true);
-                configure(OPT_POWER_GRID,   GRID_STABLE_50HZ);
-                configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-                configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                set(OPT_VICII_REVISION, VICII_PAL_6569_R1);
+                set(OPT_VICII_GRAY_DOT_BUG, false);
+                set(OPT_CIA_REVISION, MOS_6526);
+                set(OPT_CIA_TIMER_B_BUG,  true);
+                set(OPT_SID_REVISION, MOS_6581);
+                set(OPT_SID_FILTER,   true);
+                set(OPT_POWER_GRID,   GRID_STABLE_50HZ);
+                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
                 break;
 
             case C64_MODEL_NTSC:
 
-                configure(OPT_VICII_REVISION, VICII_NTSC_6567);
-                configure(OPT_VICII_GRAY_DOT_BUG, false);
-                configure(OPT_CIA_REVISION, MOS_6526);
-                configure(OPT_CIA_TIMER_B_BUG,  false);
-                configure(OPT_SID_REVISION, MOS_6581);
-                configure(OPT_SID_FILTER,   true);
-                configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
-                configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-                configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                set(OPT_VICII_REVISION, VICII_NTSC_6567);
+                set(OPT_VICII_GRAY_DOT_BUG, false);
+                set(OPT_CIA_REVISION, MOS_6526);
+                set(OPT_CIA_TIMER_B_BUG,  false);
+                set(OPT_SID_REVISION, MOS_6581);
+                set(OPT_SID_FILTER,   true);
+                set(OPT_POWER_GRID,   GRID_STABLE_60HZ);
+                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
                 break;
 
             case C64_MODEL_NTSC_II:
 
-                configure(OPT_VICII_REVISION, VICII_NTSC_8562);
-                configure(OPT_VICII_GRAY_DOT_BUG, true);
-                configure(OPT_CIA_REVISION, MOS_8521);
-                configure(OPT_CIA_TIMER_B_BUG,  true);
-                configure(OPT_SID_REVISION, MOS_8580);
-                configure(OPT_SID_FILTER,   true);
-                configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
-                configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
-                configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                set(OPT_VICII_REVISION, VICII_NTSC_8562);
+                set(OPT_VICII_GRAY_DOT_BUG, true);
+                set(OPT_CIA_REVISION, MOS_8521);
+                set(OPT_CIA_TIMER_B_BUG,  true);
+                set(OPT_SID_REVISION, MOS_8580);
+                set(OPT_SID_FILTER,   true);
+                set(OPT_POWER_GRID,   GRID_STABLE_60HZ);
+                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
+                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
                 break;
 
             case C64_MODEL_NTSC_OLD:
 
-                configure(OPT_VICII_REVISION, VICII_NTSC_6567_R56A);
-                configure(OPT_VICII_GRAY_DOT_BUG, false);
-                configure(OPT_CIA_REVISION, MOS_6526);
-                configure(OPT_CIA_TIMER_B_BUG,  false);
-                configure(OPT_SID_REVISION, MOS_6581);
-                configure(OPT_SID_FILTER,   true);
-                configure(OPT_POWER_GRID,   GRID_STABLE_60HZ);
-                configure(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-                configure(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                set(OPT_VICII_REVISION, VICII_NTSC_6567_R56A);
+                set(OPT_VICII_GRAY_DOT_BUG, false);
+                set(OPT_CIA_REVISION, MOS_6526);
+                set(OPT_CIA_TIMER_B_BUG,  false);
+                set(OPT_SID_REVISION, MOS_6581);
+                set(OPT_SID_FILTER,   true);
+                set(OPT_POWER_GRID,   GRID_STABLE_60HZ);
+                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
                 break;
 
             default:
@@ -717,15 +717,17 @@ Emulator::configure(C64Model model)
 }
 
 i64
-Emulator::getConfigItem(Option option) const
+Emulator::get(Option option) const
 {
     switch (option) {
 
-        case OPT_EMU_WARP_BOOT:     return config.warpBoot;
-        case OPT_EMU_WARP_MODE:     return config.warpMode;
-        case OPT_EMU_VSYNC:         return config.vsync;
-        case OPT_EMU_TIME_LAPSE:    return config.timeLapse;
-        case OPT_EMU_RUN_AHEAD:     return config.runAhead;
+        case OPT_EMU_WARP_BOOT:
+        case OPT_EMU_WARP_MODE:
+        case OPT_EMU_VSYNC:
+        case OPT_EMU_TIME_LAPSE:
+        case OPT_EMU_RUN_AHEAD:
+
+            return getOption(option);
 
         case OPT_HOST_REFRESH_RATE:
         case OPT_HOST_SAMPLE_RATE:
@@ -793,7 +795,7 @@ Emulator::getConfigItem(Option option) const
 }
 
 i64
-Emulator::getConfigItem(Option option, long id) const
+Emulator::get(Option option, long id) const
 {
     const Drive &drive = id == DRIVE8 ? main.drive8 : main.drive9;
 

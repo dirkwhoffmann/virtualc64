@@ -72,48 +72,48 @@ VirtualC64::launch(const void *listener, Callback *func)
 void
 VirtualC64::configure(C64Model model)
 {
-    Emulator::configure(model);
+    Emulator::set(model);
     main.markAsDirty();
 }
 
 void
 VirtualC64::configure(Option option, i64 value)
 {
-    Emulator::configure(option, value);
+    Emulator::set(option, value);
     main.markAsDirty();
 }
 
 void 
 VirtualC64::configure(Option option, const string &value)
 {
-    Emulator::configure(option, value);
+    Emulator::set(option, value);
     main.markAsDirty();
 }
 
 void
 VirtualC64::configure(Option option, long id, i64 value)
 {
-    Emulator::configure(option, id, value);
+    Emulator::set(option, id, value);
     main.markAsDirty();
 }
 
 void 
 VirtualC64::configure(Option option, long id, const string &value)
 {
-    Emulator::configure(option, id, value);
+    Emulator::set(option, id, value);
     main.markAsDirty();
 }
 
 i64
 VirtualC64::getConfigItem(Option option) const
 {
-    return Emulator::getConfigItem(option);
+    return Emulator::get(option);
 }
 
 i64
 VirtualC64::getConfigItem(Option option, long id) const
 {
-    return Emulator::getConfigItem(option, id);
+    return Emulator::get(option, id);
 }
 
 void

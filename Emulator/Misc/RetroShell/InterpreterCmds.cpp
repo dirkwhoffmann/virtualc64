@@ -91,9 +91,9 @@ Interpreter::initCommons(Command &root)
         auto opt = parseEnum<OptionEnum>(argv[0]);
 
         if (argv.size() == 2) {
-            emulator.configure(opt, argv[1]);
+            emulator.set(opt, argv[1]);
         } else {
-            emulator.configure(opt, parseNum(argv[1]), argv[2]);
+            emulator.set(opt, parseNum(argv[1]), argv[2]);
         }
     });
 }
@@ -280,7 +280,7 @@ Interpreter::initCommandShell(Command &root)
              "Initializes the emulator with factory defaults",
              [this](Arguments& argv, long value) {
 
-        emulator.configure(parseEnum<C64ModelEnum>(argv[0]));
+        emulator.set(parseEnum<C64ModelEnum>(argv[0]));
     });
 
     
@@ -366,7 +366,7 @@ Interpreter::initCommandShell(Command &root)
                  "Selects the emulated chip model",
                  [this](Arguments& argv, long value) {
 
-            configure(OPT_CIA_REVISION, value, parseEnum <CIARevisionEnum> (argv[0]));
+            set(OPT_CIA_REVISION, value, parseEnum <CIARevisionEnum> (argv[0]));
 
         }, i);
 
@@ -374,7 +374,7 @@ Interpreter::initCommandShell(Command &root)
                  "Enables or disables the timer B hardware bug",
                  [this](Arguments& argv, long value) {
 
-            configure(OPT_CIA_TIMER_B_BUG, value, parseBool(argv[0]));
+            set(OPT_CIA_TIMER_B_BUG, value, parseBool(argv[0]));
 
         }, i);
         */
@@ -462,42 +462,42 @@ Interpreter::initCommandShell(Command &root)
              "Visualizes refresh cycles",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_DMA_DEBUG_CHANNEL, 0, parseBool(argv[0]));
+        set(OPT_DMA_DEBUG_CHANNEL, 0, parseBool(argv[0]));
     });
 
     root.add({"dmadebugger", "iaccesses"}, { Arg::onoff },
              "Visualizes idle accesses",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_DMA_DEBUG_CHANNEL, 1, parseBool(argv[0]));
+        set(OPT_DMA_DEBUG_CHANNEL, 1, parseBool(argv[0]));
     });
 
     root.add({"dmadebugger", "caccesses"}, { Arg::onoff },
              "Visualizes character accesses",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_DMA_DEBUG_CHANNEL, 2, parseBool(argv[0]));
+        set(OPT_DMA_DEBUG_CHANNEL, 2, parseBool(argv[0]));
     });
 
     root.add({"dmadebugger", "gaccesses"}, { Arg::onoff },
              "Visualizes graphics accesses",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_DMA_DEBUG_CHANNEL, 3, parseBool(argv[0]));
+        set(OPT_DMA_DEBUG_CHANNEL, 3, parseBool(argv[0]));
     });
 
     root.add({"dmadebugger", "paccesses"}, { Arg::onoff },
              "Visualizes sprite pointer accesses",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_DMA_DEBUG_CHANNEL, 4, parseBool(argv[0]));
+        set(OPT_DMA_DEBUG_CHANNEL, 4, parseBool(argv[0]));
     });
 
     root.add({"dmadebugger", "saccesses"}, { Arg::onoff },
              "Visualizes sprite accesses",
              [this](Arguments& argv, long value) {
 
-        configure(OPT_DMA_DEBUG_CHANNEL, 5, parseBool(argv[0]));
+        set(OPT_DMA_DEBUG_CHANNEL, 5, parseBool(argv[0]));
     });
     */
 

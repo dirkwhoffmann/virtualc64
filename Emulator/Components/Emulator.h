@@ -103,17 +103,17 @@ public:
 public:
 
     // Configures the emulator to match a specific C64 model
-    void configure(C64Model model);
+    void set(C64Model model);
 
     // Sets a single configuration option
-    void configure(Option option, i64 value) throws;
-    void configure(Option option, const string &value) throws;
-    void configure(Option option, long id, i64 value) throws;
-    void configure(Option option, long id, const string &value) throws;
+    void set(Option option, i64 value) throws;
+    void set(Option option, const string &value) throws;
+    void set(Option option, long id, i64 value) throws;
+    void set(Option option, long id, const string &value) throws;
 
     // Queries a single configuration option
-    i64 getConfigItem(Option option) const;
-    i64 getConfigItem(Option option, long id) const;
+    i64 get(Option option) const;
+    i64 get(Option option, long id) const;
 
     // Returns the emulated refresh rate of the virtual C64
     double refreshRate() const override;

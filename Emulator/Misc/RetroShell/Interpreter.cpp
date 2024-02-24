@@ -342,13 +342,13 @@ Interpreter::help(const Command& current)
 void 
 Interpreter::configure(Option option, i64 value)
 {
-    emulator.configure(option, value);
+    emulator.set(option, value);
 }
 
 void 
 Interpreter::configure(Option option, long id, i64 value)
 {
-    emulator.configure(option, id, value);
+    emulator.set(option, id, value);
 }
 
 
