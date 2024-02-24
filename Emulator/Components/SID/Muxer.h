@@ -219,7 +219,6 @@ public:
 public:
     
     const MuxerConfig &getConfig() const { return config; }
-    void resetConfig() override;
 
     bool isEnabled(isize nr) const { return sid[nr].config.enabled; }
 

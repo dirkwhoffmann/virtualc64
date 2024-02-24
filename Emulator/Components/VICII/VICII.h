@@ -850,7 +850,6 @@ public:
 public:
     
     const VICIIConfig &getConfig() const { return config; }
-    void resetConfig() override;
 
     bool dmaDebug() const { return dmaDebugger.config.dmaDebug; }
 

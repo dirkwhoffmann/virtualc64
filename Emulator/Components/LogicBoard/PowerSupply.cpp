@@ -21,12 +21,6 @@ PowerSupply::PowerSupply(C64& ref) : SubComponent(ref)
 
 }
 
-void
-PowerSupply::resetConfig()
-{
-    Configurable::resetConfig(emulator.defaults);
-}
-
 i64
 PowerSupply::getOption(Option option) const
 {

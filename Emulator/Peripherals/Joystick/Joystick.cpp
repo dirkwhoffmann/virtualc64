@@ -46,12 +46,6 @@ Joystick::operator << (SerReader &worker)
     axisY = 0;
 }
 
-void
-Joystick::resetConfig()
-{
-    Configurable::resetConfig(emulator.defaults);
-}
-
 i64
 Joystick::getOption(Option option) const
 {

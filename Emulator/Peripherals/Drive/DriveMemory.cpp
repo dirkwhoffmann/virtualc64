@@ -53,12 +53,6 @@ DriveMemory::operator << (SerWriter &worker)
     if (config.saveRoms) worker << rom;
 }
 
-void
-DriveMemory::resetConfig()
-{
-    Configurable::resetConfig(emulator.defaults);
-}
-
 i64
 DriveMemory::getOption(Option option) const
 {

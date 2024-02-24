@@ -164,7 +164,6 @@ public:
 public:
     
     const MouseConfig &getConfig() const { return config; }
-    void resetConfig() override;
     
 private:
     

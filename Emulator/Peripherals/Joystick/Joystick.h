@@ -110,8 +110,7 @@ public:
 public:
 
     const JoystickConfig &getConfig() const { return config; }
-    void resetConfig() override;
-    
+
     
     //
     // Using the device

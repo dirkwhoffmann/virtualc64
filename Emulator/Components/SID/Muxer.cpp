@@ -50,12 +50,6 @@ Muxer::clear()
     stream.unlock();
 }
 
-void
-Muxer::resetConfig()
-{
-    Configurable::resetConfig(emulator.defaults);
-}
-
 i64
 Muxer::getOption(Option option) const
 {

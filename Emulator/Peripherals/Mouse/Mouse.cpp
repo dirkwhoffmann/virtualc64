@@ -34,12 +34,6 @@ void Mouse::_reset(bool hard)
     targetY = 0;
 }
 
-void
-Mouse::resetConfig()
-{
-    Configurable::resetConfig(emulator.defaults);
-}
-
 i64
 Mouse::getOption(Option option) const
 {

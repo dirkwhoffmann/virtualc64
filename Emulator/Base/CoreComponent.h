@@ -79,6 +79,10 @@ public:
     void reset(bool hard);
     virtual void _reset(bool hard) { }
 
+    // Returns to the default options
+    virtual void resetConfig();
+
+
     //
     // Controlling the state (see Thread class for details)
     //
@@ -129,19 +133,11 @@ private:
 
 
     //
-    // Configuring
-    //
-
-public:
-
-    // Initializes all configuration items with their default values
-    virtual void resetConfig() { };
-
-
-    //
     // Misc
     //
 
+public:
+    
     bool isEmulatorThread() const;
 };
 

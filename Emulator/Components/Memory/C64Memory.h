@@ -165,7 +165,6 @@ public:
 public:
     
     const MemConfig &getConfig() const { return config; }
-    void resetConfig() override;
     
 
     //

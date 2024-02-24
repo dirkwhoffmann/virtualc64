@@ -426,7 +426,6 @@ public:
 public:
     
     const CIAConfig &getConfig() const { return config; }
-    void resetConfig() override;
 
 
     //

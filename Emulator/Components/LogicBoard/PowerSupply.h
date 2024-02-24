@@ -73,7 +73,6 @@ public:
 public:
     
     const PowerSupplyConfig &getConfig() const { return config; }
-    void resetConfig() override;
 
     
     //

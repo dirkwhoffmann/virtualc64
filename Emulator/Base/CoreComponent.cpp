@@ -53,6 +53,12 @@ CoreComponent::reset(bool hard)
     }
 }
 
+void 
+CoreComponent::resetConfig()
+{
+    Configurable::resetConfig(emulator.defaults);
+}
+
 void
 CoreComponent::isReady() const
 {

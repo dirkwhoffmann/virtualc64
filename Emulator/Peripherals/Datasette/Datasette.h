@@ -177,7 +177,6 @@ public:
 public:
 
     const DatasetteConfig &getConfig() const { return config; }
-    void resetConfig() override;
 
 
     //

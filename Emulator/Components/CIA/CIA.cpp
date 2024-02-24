@@ -38,12 +38,6 @@ CIA::_reset(bool hard)
     updatePB();
 }
 
-void
-CIA::resetConfig()
-{
-    Configurable::resetConfig(emulator.defaults);
-}
-
 i64
 CIA::getOption(Option option) const
 {

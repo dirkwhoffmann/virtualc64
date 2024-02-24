@@ -87,37 +87,17 @@ Drive::getInfo() const
 void
 Drive::resetConfig()
 {
-    assert(isPoweredOff());
     auto &defaults = emulator.defaults;
 
-    std::vector <Option> options = {
+    for (auto &option : getOptions()) {
 
-        OPT_DRV_AUTO_CONFIG,
-        OPT_DRV_TYPE,
-        OPT_DRV_RAM,
-        OPT_DRV_PARCABLE,
-        OPT_DRV_CONNECT,
-        OPT_DRV_POWER_SWITCH,
-        OPT_DRV_POWER_SAVE,
-        OPT_DRV_EJECT_DELAY,
-        OPT_DRV_SWAP_DELAY,
-        OPT_DRV_INSERT_DELAY,
-        OPT_DRV_PAN,
-        OPT_DRV_POWER_VOL,
-        OPT_DRV_STEP_VOL,
-        OPT_DRV_INSERT_VOL,
-        OPT_DRV_EJECT_VOL
-    };
+        if (option.first == OPT_DRV_CONNECT && !canConnect()) {
 
-    for (auto &option : options) {
-
-        if (option == OPT_DRV_CONNECT && !canConnect()) {
-
-            setOption(option, false);
+            setOption(option.first, false);
 
         } else {
 
-            setOption(option, defaults.get(option, deviceNr));
+            setOption(option.first, defaults.get(option.first, deviceNr));
         }
     }
 }

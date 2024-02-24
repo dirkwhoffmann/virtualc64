@@ -118,7 +118,6 @@ public:
 public:
     
     const DmaDebuggerConfig &getConfig() const { return config; }
-    void resetConfig() override;
 
     
     //

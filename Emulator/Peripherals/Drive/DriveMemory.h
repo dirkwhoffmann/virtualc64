@@ -122,7 +122,6 @@ public:
 public:
 
     const DriveMemConfig &getConfig() const { return config; }
-    void resetConfig() override;
 
 
     //

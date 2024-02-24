@@ -137,12 +137,6 @@ C64Memory::operator << (SerWriter &worker)
     if (config.saveRoms) worker << rom;
 }
 
-void
-C64Memory::resetConfig()
-{
-    Configurable::resetConfig(emulator.defaults);
-}
-
 i64
 C64Memory::getOption(Option option) const
 {

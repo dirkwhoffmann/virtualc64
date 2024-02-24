@@ -212,12 +212,6 @@ VICII::recordStats(VICIIStats &result) const
 
 }
 
-void
-VICII::resetConfig()
-{
-    Configurable::resetConfig(emulator.defaults);
-}
-
 i64
 VICII::getOption(Option option) const
 {

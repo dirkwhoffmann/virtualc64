@@ -18,12 +18,7 @@ namespace vc64 {
 
 DmaDebugger::DmaDebugger(C64 &ref) : SubComponent(ref)
 {
-}
 
-void
-DmaDebugger::resetConfig()
-{
-    Configurable::resetConfig(emulator.defaults);
 }
 
 i64

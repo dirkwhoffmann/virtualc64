@@ -123,12 +123,6 @@ Datasette::operator << (SerWriter &worker)
     for (isize i = 0; i < size; i++) worker << pulses[i].cycles;
 }
 
-void
-Datasette::resetConfig()
-{
-    Configurable::resetConfig(emulator.defaults);
-}
-
 i64
 Datasette::getOption(Option option) const
 {
