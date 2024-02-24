@@ -89,6 +89,8 @@ public:
     // Methods from Configurable
     //
 
+public:
+
     const ConfigOptions &getOptions() const override { return options; }
 
     // Gets or sets a config option
@@ -97,23 +99,25 @@ public:
 
 
     //
-    // Configuring
+    // Main entry points for configuring the emulator
     //
 
 public:
 
+    // Queries an option
+    i64 get(Option option) const;
+    i64 get(Option option, long id) const;
+
     // Configures the emulator to match a specific C64 model
     void set(C64Model model);
 
-    // Sets a single configuration option
+    // Sets an option
     void set(Option option, i64 value) throws;
-    void set(Option option, const string &value) throws;
     void set(Option option, long id, i64 value) throws;
-    void set(Option option, long id, const string &value) throws;
 
-    // Queries a single configuration option
-    i64 get(Option option) const;
-    i64 get(Option option, long id) const;
+    // Convenience wrappers
+    void set(Option option, const string &value) throws;
+    void set(Option option, long id, const string &value) throws;
 
     // Returns the emulated refresh rate of the virtual C64
     double refreshRate() const override;

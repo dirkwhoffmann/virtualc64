@@ -69,51 +69,51 @@ VirtualC64::launch(const void *listener, Callback *func)
     Emulator::launch(listener, func);
 }
 
+i64
+VirtualC64::get(Option option) const
+{
+    return Emulator::get(option);
+}
+
+i64 
+VirtualC64::get(Option option, long id) const
+{
+    return Emulator::get(option, id);
+}
+
 void
-VirtualC64::configure(C64Model model)
+VirtualC64::set(C64Model model)
 {
     Emulator::set(model);
     main.markAsDirty();
 }
 
-void
-VirtualC64::configure(Option option, i64 value)
+void 
+VirtualC64::set(Option option, i64 value) throws
 {
     Emulator::set(option, value);
     main.markAsDirty();
 }
 
 void 
-VirtualC64::configure(Option option, const string &value)
+VirtualC64::set(Option option, long id, i64 value) throws
+{
+    Emulator::set(option, id, value);
+    main.markAsDirty();
+}
+
+void
+VirtualC64::set(Option option, const string &value) throws
 {
     Emulator::set(option, value);
     main.markAsDirty();
 }
 
-void
-VirtualC64::configure(Option option, long id, i64 value)
-{
-    Emulator::set(option, id, value);
-    main.markAsDirty();
-}
-
 void 
-VirtualC64::configure(Option option, long id, const string &value)
+VirtualC64::set(Option option, long id, const string &value) throws
 {
     Emulator::set(option, id, value);
     main.markAsDirty();
-}
-
-i64
-VirtualC64::getConfigItem(Option option) const
-{
-    return Emulator::get(option);
-}
-
-i64
-VirtualC64::getConfigItem(Option option, long id) const
-{
-    return Emulator::get(option, id);
 }
 
 void

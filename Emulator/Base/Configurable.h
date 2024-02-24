@@ -25,15 +25,15 @@ class Configurable
 {
     constexpr static ConfigOptions options = { };
 
+public:
+
+    virtual ~Configurable() { };
+
     // Converters
     string opt2str(Option opt) const;
     Option str2opt(const string &opt) const;
     string arg2str(Option opt, i64 arg) const;
     i64 str2arg(Option opt, const string &arg) const;
-
-public:
-
-    virtual ~Configurable() { };
 
     // Returns the available config options
     virtual const ConfigOptions &getOptions() const { return options; }

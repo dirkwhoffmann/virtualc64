@@ -91,18 +91,20 @@ public:
     // Launches the emulator thread
     void launch(const void *listener, Callback *func);
 
-    // Configures the emulator to match a specific C64 model
-    void configure(C64Model model);
+    // Queries an option
+    i64 get(Option option) const;
+    i64 get(Option option, long id) const;
 
-    // Sets a single configuration option
-    void configure(Option option, i64 value) throws;
-    void configure(Option option, const string &value) throws;
-    void configure(Option option, long id, i64 value) throws;
-    void configure(Option option, long id, const string &value) throws;
-    
-    // Queries a single configuration option
-    i64 getConfigItem(Option option) const;
-    i64 getConfigItem(Option option, long id) const;
+    // Configures the emulator to match a specific C64 model
+    void set(C64Model model);
+
+    // Sets an option
+    void set(Option option, i64 value) throws;
+    void set(Option option, long id, i64 value) throws;
+
+    // Convenience wrappers
+    void set(Option option, const string &value) throws;
+    void set(Option option, long id, const string &value) throws;
 
 
     //

@@ -163,6 +163,236 @@ Emulator::setOption(Option opt, i64 value)
     }
 }
 
+i64
+Emulator::get(Option option) const
+{
+    switch (option) {
+
+        case OPT_EMU_WARP_BOOT:
+        case OPT_EMU_WARP_MODE:
+        case OPT_EMU_VSYNC:
+        case OPT_EMU_TIME_LAPSE:
+        case OPT_EMU_RUN_AHEAD:
+
+            return getOption(option);
+
+        case OPT_HOST_REFRESH_RATE:
+        case OPT_HOST_SAMPLE_RATE:
+        case OPT_HOST_FRAMEBUF_WIDTH:
+        case OPT_HOST_FRAMEBUF_HEIGHT:
+
+            return host.getOption(option);
+
+        case OPT_VICII_REVISION:
+        case OPT_VICII_POWER_SAVE:
+        case OPT_VICII_GRAY_DOT_BUG:
+        case OPT_GLUE_LOGIC:
+        case OPT_VICII_HIDE_SPRITES:
+        case OPT_VICII_SS_COLLISIONS:
+        case OPT_VICII_SB_COLLISIONS:
+
+        case OPT_VICII_PALETTE:
+        case OPT_VICII_BRIGHTNESS:
+        case OPT_VICII_CONTRAST:
+        case OPT_VICII_SATURATION:
+
+            return main.vic.getOption(option);
+
+        case OPT_DMA_DEBUG_ENABLE:
+        case OPT_DMA_DEBUG_MODE:
+        case OPT_DMA_DEBUG_OPACITY:
+        case OPT_VICII_CUT_LAYERS:
+        case OPT_VICII_CUT_OPACITY:
+
+            return main.vic.dmaDebugger.getOption(option);
+
+        case OPT_CIA_REVISION:
+        case OPT_CIA_TIMER_B_BUG:
+
+            assert(main.cia1.getOption(option) == main.cia2.getOption(option));
+            return main.cia1.getOption(option);
+
+        case OPT_POWER_GRID:
+
+            return main.supply.getOption(option);
+
+        case OPT_SID_REVISION:
+        case OPT_SID_POWER_SAVE:
+        case OPT_SID_FILTER:
+        case OPT_SID_ENGINE:
+        case OPT_SID_SAMPLING:
+        case OPT_AUD_VOL_L:
+        case OPT_AUD_VOL_R:
+
+            return main.muxer.getOption(option);
+
+        case OPT_RAM_PATTERN:
+        case OPT_SAVE_ROMS:
+
+            return main.mem.getOption(option);
+
+        case OPT_DAT_MODEL:
+        case OPT_DAT_CONNECT:
+
+            return main.datasette.getOption(option);
+
+        default:
+            fatalError;
+    }
+}
+
+i64
+Emulator::get(Option option, long id) const
+{
+    const Drive &drive = id == DRIVE8 ? main.drive8 : main.drive9;
+
+    switch (option) {
+
+        case OPT_SID_ENABLE:
+        case OPT_SID_ADDRESS:
+        case OPT_AUD_PAN:
+        case OPT_AUD_VOL:
+
+            if (id == 0) return main.muxer.sid[0].getOption(option);
+            if (id == 1) return main.muxer.sid[1].getOption(option);
+            if (id == 2) return main.muxer.sid[2].getOption(option);
+            if (id == 3) return main.muxer.sid[3].getOption(option);
+            fatalError;
+
+        case OPT_DRV_CONNECT:
+        case OPT_DRV_AUTO_CONFIG:
+        case OPT_DRV_TYPE:
+        case OPT_DRV_RAM:
+        case OPT_DRV_PARCABLE:
+        case OPT_DRV_POWER_SAVE:
+        case OPT_DRV_POWER_SWITCH:
+        case OPT_DRV_EJECT_DELAY:
+        case OPT_DRV_SWAP_DELAY:
+        case OPT_DRV_INSERT_DELAY:
+        case OPT_DRV_PAN:
+        case OPT_DRV_POWER_VOL:
+        case OPT_DRV_STEP_VOL:
+        case OPT_DRV_INSERT_VOL:
+        case OPT_DRV_EJECT_VOL:
+
+            return drive.getOption(option);
+
+        case OPT_MOUSE_MODEL:
+        case OPT_MOUSE_SHAKE_DETECT:
+        case OPT_MOUSE_VELOCITY:
+
+            if (id == PORT_1) return main.port1.mouse.getOption(option);
+            if (id == PORT_2) return main.port2.mouse.getOption(option);
+            fatalError;
+
+        case OPT_JOY_AUTOFIRE:
+        case OPT_JOY_AUTOFIRE_BULLETS:
+        case OPT_JOY_AUTOFIRE_DELAY:
+
+            if (id == PORT_1) return main.port1.joystick.getOption(option);
+            if (id == PORT_2) return main.port2.joystick.getOption(option);
+            fatalError;
+
+        default:
+            fatalError;
+    }
+}
+
+void
+Emulator::set(C64Model model)
+{
+    assert_enum(C64Model, model);
+
+    {   SUSPENDED
+
+        revertToFactorySettings();
+
+        switch(model) {
+
+            case C64_MODEL_PAL:
+
+                set(OPT_VICII_REVISION, VICII_PAL_6569_R3);
+                set(OPT_VICII_GRAY_DOT_BUG, false);
+                set(OPT_CIA_REVISION, MOS_6526);
+                set(OPT_CIA_TIMER_B_BUG,  true);
+                set(OPT_SID_REVISION, MOS_6581);
+                set(OPT_SID_FILTER,   true);
+                set(OPT_POWER_GRID,   GRID_STABLE_50HZ);
+                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                break;
+
+            case C64_MODEL_PAL_II:
+
+                set(OPT_VICII_REVISION, VICII_PAL_8565);
+                set(OPT_VICII_GRAY_DOT_BUG, true);
+                set(OPT_CIA_REVISION, MOS_8521);
+                set(OPT_CIA_TIMER_B_BUG,  false);
+                set(OPT_SID_REVISION, MOS_8580);
+                set(OPT_SID_FILTER,   true);
+                set(OPT_POWER_GRID,   GRID_STABLE_50HZ);
+                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
+                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                break;
+
+            case C64_MODEL_PAL_OLD:
+
+                set(OPT_VICII_REVISION, VICII_PAL_6569_R1);
+                set(OPT_VICII_GRAY_DOT_BUG, false);
+                set(OPT_CIA_REVISION, MOS_6526);
+                set(OPT_CIA_TIMER_B_BUG,  true);
+                set(OPT_SID_REVISION, MOS_6581);
+                set(OPT_SID_FILTER,   true);
+                set(OPT_POWER_GRID,   GRID_STABLE_50HZ);
+                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                break;
+
+            case C64_MODEL_NTSC:
+
+                set(OPT_VICII_REVISION, VICII_NTSC_6567);
+                set(OPT_VICII_GRAY_DOT_BUG, false);
+                set(OPT_CIA_REVISION, MOS_6526);
+                set(OPT_CIA_TIMER_B_BUG,  false);
+                set(OPT_SID_REVISION, MOS_6581);
+                set(OPT_SID_FILTER,   true);
+                set(OPT_POWER_GRID,   GRID_STABLE_60HZ);
+                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                break;
+
+            case C64_MODEL_NTSC_II:
+
+                set(OPT_VICII_REVISION, VICII_NTSC_8562);
+                set(OPT_VICII_GRAY_DOT_BUG, true);
+                set(OPT_CIA_REVISION, MOS_8521);
+                set(OPT_CIA_TIMER_B_BUG,  true);
+                set(OPT_SID_REVISION, MOS_8580);
+                set(OPT_SID_FILTER,   true);
+                set(OPT_POWER_GRID,   GRID_STABLE_60HZ);
+                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
+                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                break;
+
+            case C64_MODEL_NTSC_OLD:
+
+                set(OPT_VICII_REVISION, VICII_NTSC_6567_R56A);
+                set(OPT_VICII_GRAY_DOT_BUG, false);
+                set(OPT_CIA_REVISION, MOS_6526);
+                set(OPT_CIA_TIMER_B_BUG,  false);
+                set(OPT_SID_REVISION, MOS_6581);
+                set(OPT_SID_FILTER,   true);
+                set(OPT_POWER_GRID,   GRID_STABLE_60HZ);
+                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
+                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
+                break;
+
+            default:
+                fatalError;
+        }
+    }
+}
+
 void
 Emulator::set(Option option, i64 value)
 {
@@ -348,100 +578,6 @@ Emulator::set(Option option, i64 value)
     }
 }
 
-void Emulator::set(Option option, const string &value)
-{
-    debug(CNF_DEBUG, "configure(%s, \"%s\")\n", OptionEnum::key(option), value.c_str());
-
-    using namespace util;
-    auto config = [&](std::function<i64(const string &)> func) { set(option, func(value)); };
-
-    switch (option) {
-
-        case OPT_EMU_WARP_MODE:             return config(parseEnum<VICIIRevisionEnum>);
-        case OPT_EMU_WARP_BOOT:             return config(parseBool);
-        case OPT_EMU_VSYNC:                 return config(parseBool);
-        case OPT_EMU_TIME_LAPSE:            return config(parseNum);
-        case OPT_EMU_RUN_AHEAD:             return config(parseNum);
-
-        case OPT_HOST_SAMPLE_RATE:          return config(parseNum);
-
-        case OPT_HOST_REFRESH_RATE:         return config(parseNum);
-        case OPT_HOST_FRAMEBUF_WIDTH:       return config(parseNum);
-        case OPT_HOST_FRAMEBUF_HEIGHT:      return config(parseNum);
-
-        case OPT_VICII_REVISION:            return config(parseEnum<VICIIRevisionEnum>);
-        case OPT_VICII_PALETTE:             return config(parseEnum<PaletteEnum>);
-        case OPT_VICII_BRIGHTNESS:          return config(parseNum);
-        case OPT_VICII_CONTRAST:            return config(parseNum);
-        case OPT_VICII_SATURATION:          return config(parseNum);
-        case OPT_VICII_GRAY_DOT_BUG:        return config(parseBool);
-        case OPT_VICII_POWER_SAVE:          return config(parseBool);
-        case OPT_VICII_HIDE_SPRITES:        return config(parseBool);
-        case OPT_VICII_SS_COLLISIONS:       return config(parseBool);
-        case OPT_VICII_SB_COLLISIONS:       return config(parseBool);
-        case OPT_GLUE_LOGIC:                return config(parseEnum<GlueLogicEnum>);
-
-        case OPT_VICII_CUT_LAYERS:          return config(parseNum);
-        case OPT_VICII_CUT_OPACITY:         return config(parseNum);
-        case OPT_DMA_DEBUG_ENABLE:          return config(parseBool);
-        case OPT_DMA_DEBUG_MODE:            return config(parseEnum<DmaDisplayModeEnum>);
-        case OPT_DMA_DEBUG_OPACITY:         return config(parseNum);
-
-        case OPT_POWER_GRID:                return config(parseEnum<PowerGridEnum>);
-
-        case OPT_CIA_REVISION:              return config(parseEnum<CIARevisionEnum>);
-        case OPT_CIA_TIMER_B_BUG:           return config(parseBool);
-
-        case OPT_SID_ENABLE:                return config(parseNum);
-        case OPT_SID_ADDRESS:               return config(parseNum);
-
-        case OPT_SID_REVISION:              return config(parseEnum<SIDRevisionEnum>);
-        case OPT_SID_FILTER:                return config(parseBool);
-        case OPT_SID_SAMPLING:              return config(parseEnum<SamplingMethodEnum>);
-        case OPT_SID_POWER_SAVE:            return config(parseBool);
-        case OPT_SID_ENGINE:                return config(parseEnum<SIDEngineEnum>);
-        case OPT_AUD_PAN:                   return config(parseNum);
-        case OPT_AUD_VOL:                   return config(parseNum);
-        case OPT_AUD_VOL_L:                 return config(parseNum);
-        case OPT_AUD_VOL_R:                 return config(parseNum);
-
-        case OPT_RAM_PATTERN:               return config(parseEnum<RamPatternEnum>);
-
-        case OPT_SAVE_ROMS:                 return config(parseBool);
-
-        case OPT_DRV_AUTO_CONFIG:           return config(parseBool);
-        case OPT_DRV_TYPE:                  return config(parseEnum<DriveTypeEnum>);
-        case OPT_DRV_RAM:                   return config(parseEnum<DriveRamEnum>);
-        case OPT_DRV_PARCABLE:              return config(parseEnum<ParCableTypeEnum>);
-        case OPT_DRV_CONNECT:               return config(parseBool);
-        case OPT_DRV_POWER_SWITCH:          return config(parseBool);
-        case OPT_DRV_POWER_SAVE:            return config(parseBool);
-        case OPT_DRV_EJECT_DELAY:           return config(parseNum);
-        case OPT_DRV_SWAP_DELAY:            return config(parseNum);
-        case OPT_DRV_INSERT_DELAY:          return config(parseNum);
-        case OPT_DRV_PAN:                   return config(parseNum);
-        case OPT_DRV_POWER_VOL:             return config(parseNum);
-        case OPT_DRV_STEP_VOL:              return config(parseNum);
-        case OPT_DRV_INSERT_VOL:            return config(parseNum);
-        case OPT_DRV_EJECT_VOL:             return config(parseNum);
-
-        case OPT_DAT_MODEL:                 return config(parseEnum<DatasetteModelEnum>);
-        case OPT_DAT_CONNECT:               return config(parseBool);
-
-        case OPT_MOUSE_MODEL:               return config(parseEnum<MouseModelEnum>);
-        case OPT_MOUSE_SHAKE_DETECT:        return config(parseBool);
-        case OPT_MOUSE_VELOCITY:            return config(parseNum);
-
-        case OPT_JOY_AUTOFIRE:              return config(parseBool);
-        case OPT_JOY_AUTOFIRE_BULLETS:      return config(parseNum);
-        case OPT_JOY_AUTOFIRE_DELAY:        return config(parseNum);
-
-        default:
-            warn("Unrecognized option: %s\n", OptionEnum::key(option));
-            fatalError;
-    }
-}
-
 void
 Emulator::set(Option option, long id, i64 value)
 {
@@ -552,303 +688,15 @@ Emulator::set(Option option, long id, i64 value)
     }
 }
 
-void 
-Emulator::set(Option option, long id, const string &value)
+void Emulator::set(Option option, const string &value)
 {
-    debug(CNF_DEBUG, "configure(%s, %ld, \"%s\")\n", OptionEnum::key(option), id, value.c_str());
-
-    using namespace util;
-    auto config = [&](std::function<i64(const string &)> func) { set(option, id, func(value)); };
-
-    switch (option) {
-
-        case OPT_DMA_DEBUG_ENABLE:      return config(parseBool);
-        case OPT_DMA_DEBUG_CHANNEL0:    return config(parseBool);
-        case OPT_DMA_DEBUG_CHANNEL1:    return config(parseBool);
-        case OPT_DMA_DEBUG_CHANNEL2:    return config(parseBool);
-        case OPT_DMA_DEBUG_CHANNEL3:    return config(parseBool);
-        case OPT_DMA_DEBUG_CHANNEL4:    return config(parseBool);
-        case OPT_DMA_DEBUG_CHANNEL5:    return config(parseBool);
-        case OPT_DMA_DEBUG_COLOR0:      return config(parseNum);
-        case OPT_DMA_DEBUG_COLOR1:      return config(parseNum);
-        case OPT_DMA_DEBUG_COLOR2:      return config(parseNum);
-        case OPT_DMA_DEBUG_COLOR3:      return config(parseNum);
-        case OPT_DMA_DEBUG_COLOR4:      return config(parseNum);
-        case OPT_DMA_DEBUG_COLOR5:      return config(parseNum);
-
-        case OPT_CIA_REVISION:          return config(parseEnum<CIARevisionEnum>);
-        case OPT_CIA_TIMER_B_BUG:       return config(parseBool);
-
-        case OPT_MOUSE_MODEL:           return config(parseEnum<MouseModelEnum>);
-        case OPT_MOUSE_SHAKE_DETECT:    return config(parseBool);
-        case OPT_MOUSE_VELOCITY:        return config(parseNum);
-
-        case OPT_JOY_AUTOFIRE:          return config(parseBool);
-        case OPT_JOY_AUTOFIRE_BULLETS:  return config(parseNum);
-        case OPT_JOY_AUTOFIRE_DELAY:    return config(parseNum);
-
-        case OPT_SID_ENABLE:            return config(parseBool);
-        case OPT_SID_ADDRESS:           return config(parseNum);
-        case OPT_SID_REVISION:          return config(parseEnum<SIDRevisionEnum>);
-        case OPT_SID_FILTER:            return config(parseBool);
-        case OPT_SID_POWER_SAVE:        return config(parseBool);
-        case OPT_SID_ENGINE:            return config(parseEnum<SIDEngineEnum>);
-        case OPT_SID_SAMPLING:          return config(parseEnum<SamplingMethodEnum>);
-        case OPT_AUD_PAN:               return config(parseNum);
-        case OPT_AUD_VOL:               return config(parseNum);
-        case OPT_AUD_VOL_L:             return config(parseNum);
-        case OPT_AUD_VOL_R:             return config(parseNum);
-
-        case OPT_DRV_AUTO_CONFIG:       return config(parseBool);
-        case OPT_DRV_TYPE:              return config(parseEnum<DriveTypeEnum>);
-        case OPT_DRV_RAM:               return config(parseEnum<DriveRamEnum>);
-        case OPT_DRV_PARCABLE:          return config(parseEnum<ParCableTypeEnum>);
-        case OPT_DRV_CONNECT:           return config(parseBool);
-        case OPT_DRV_POWER_SWITCH:      return config(parseBool);
-        case OPT_DRV_POWER_SAVE:        return config(parseBool);
-        case OPT_DRV_EJECT_DELAY:       return config(parseNum);
-        case OPT_DRV_SWAP_DELAY:        return config(parseNum);
-        case OPT_DRV_INSERT_DELAY:      return config(parseNum);
-        case OPT_DRV_PAN:               return config(parseNum);
-        case OPT_DRV_POWER_VOL:         return config(parseNum);
-        case OPT_DRV_STEP_VOL:          return config(parseNum);
-        case OPT_DRV_INSERT_VOL:        return config(parseNum);
-        case OPT_DRV_EJECT_VOL:         return config(parseNum);
-
-        default:
-            warn("Unrecognized option: %s\n", OptionEnum::key(option));
-            fatalError;
-    }
+    set(option, str2arg(option, value));
 }
 
 void
-Emulator::set(C64Model model)
+Emulator::set(Option option, long id, const string &value)
 {
-    assert_enum(C64Model, model);
-
-    {   SUSPENDED
-
-        revertToFactorySettings();
-
-        switch(model) {
-
-            case C64_MODEL_PAL:
-
-                set(OPT_VICII_REVISION, VICII_PAL_6569_R3);
-                set(OPT_VICII_GRAY_DOT_BUG, false);
-                set(OPT_CIA_REVISION, MOS_6526);
-                set(OPT_CIA_TIMER_B_BUG,  true);
-                set(OPT_SID_REVISION, MOS_6581);
-                set(OPT_SID_FILTER,   true);
-                set(OPT_POWER_GRID,   GRID_STABLE_50HZ);
-                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
-                break;
-
-            case C64_MODEL_PAL_II:
-
-                set(OPT_VICII_REVISION, VICII_PAL_8565);
-                set(OPT_VICII_GRAY_DOT_BUG, true);
-                set(OPT_CIA_REVISION, MOS_8521);
-                set(OPT_CIA_TIMER_B_BUG,  false);
-                set(OPT_SID_REVISION, MOS_8580);
-                set(OPT_SID_FILTER,   true);
-                set(OPT_POWER_GRID,   GRID_STABLE_50HZ);
-                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
-                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
-                break;
-
-            case C64_MODEL_PAL_OLD:
-
-                set(OPT_VICII_REVISION, VICII_PAL_6569_R1);
-                set(OPT_VICII_GRAY_DOT_BUG, false);
-                set(OPT_CIA_REVISION, MOS_6526);
-                set(OPT_CIA_TIMER_B_BUG,  true);
-                set(OPT_SID_REVISION, MOS_6581);
-                set(OPT_SID_FILTER,   true);
-                set(OPT_POWER_GRID,   GRID_STABLE_50HZ);
-                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
-                break;
-
-            case C64_MODEL_NTSC:
-
-                set(OPT_VICII_REVISION, VICII_NTSC_6567);
-                set(OPT_VICII_GRAY_DOT_BUG, false);
-                set(OPT_CIA_REVISION, MOS_6526);
-                set(OPT_CIA_TIMER_B_BUG,  false);
-                set(OPT_SID_REVISION, MOS_6581);
-                set(OPT_SID_FILTER,   true);
-                set(OPT_POWER_GRID,   GRID_STABLE_60HZ);
-                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
-                break;
-
-            case C64_MODEL_NTSC_II:
-
-                set(OPT_VICII_REVISION, VICII_NTSC_8562);
-                set(OPT_VICII_GRAY_DOT_BUG, true);
-                set(OPT_CIA_REVISION, MOS_8521);
-                set(OPT_CIA_TIMER_B_BUG,  true);
-                set(OPT_SID_REVISION, MOS_8580);
-                set(OPT_SID_FILTER,   true);
-                set(OPT_POWER_GRID,   GRID_STABLE_60HZ);
-                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_IC);
-                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
-                break;
-
-            case C64_MODEL_NTSC_OLD:
-
-                set(OPT_VICII_REVISION, VICII_NTSC_6567_R56A);
-                set(OPT_VICII_GRAY_DOT_BUG, false);
-                set(OPT_CIA_REVISION, MOS_6526);
-                set(OPT_CIA_TIMER_B_BUG,  false);
-                set(OPT_SID_REVISION, MOS_6581);
-                set(OPT_SID_FILTER,   true);
-                set(OPT_POWER_GRID,   GRID_STABLE_60HZ);
-                set(OPT_GLUE_LOGIC,   GLUE_LOGIC_DISCRETE);
-                set(OPT_RAM_PATTERN,   RAM_PATTERN_VICE);
-                break;
-
-            default:
-                fatalError;
-        }
-    }
-}
-
-i64
-Emulator::get(Option option) const
-{
-    switch (option) {
-
-        case OPT_EMU_WARP_BOOT:
-        case OPT_EMU_WARP_MODE:
-        case OPT_EMU_VSYNC:
-        case OPT_EMU_TIME_LAPSE:
-        case OPT_EMU_RUN_AHEAD:
-
-            return getOption(option);
-
-        case OPT_HOST_REFRESH_RATE:
-        case OPT_HOST_SAMPLE_RATE:
-        case OPT_HOST_FRAMEBUF_WIDTH:
-        case OPT_HOST_FRAMEBUF_HEIGHT:
-
-            return host.getOption(option);
-
-        case OPT_VICII_REVISION:
-        case OPT_VICII_POWER_SAVE:
-        case OPT_VICII_GRAY_DOT_BUG:
-        case OPT_GLUE_LOGIC:
-        case OPT_VICII_HIDE_SPRITES:
-        case OPT_VICII_SS_COLLISIONS:
-        case OPT_VICII_SB_COLLISIONS:
-
-        case OPT_VICII_PALETTE:
-        case OPT_VICII_BRIGHTNESS:
-        case OPT_VICII_CONTRAST:
-        case OPT_VICII_SATURATION:
-
-            return main.vic.getOption(option);
-
-        case OPT_DMA_DEBUG_ENABLE:
-        case OPT_DMA_DEBUG_MODE:
-        case OPT_DMA_DEBUG_OPACITY:
-        case OPT_VICII_CUT_LAYERS:
-        case OPT_VICII_CUT_OPACITY:
-
-            return main.vic.dmaDebugger.getOption(option);
-
-        case OPT_CIA_REVISION:
-        case OPT_CIA_TIMER_B_BUG:
-
-            assert(main.cia1.getOption(option) == main.cia2.getOption(option));
-            return main.cia1.getOption(option);
-
-        case OPT_POWER_GRID:
-
-            return main.supply.getOption(option);
-
-        case OPT_SID_REVISION:
-        case OPT_SID_POWER_SAVE:
-        case OPT_SID_FILTER:
-        case OPT_SID_ENGINE:
-        case OPT_SID_SAMPLING:
-        case OPT_AUD_VOL_L:
-        case OPT_AUD_VOL_R:
-
-            return main.muxer.getOption(option);
-
-        case OPT_RAM_PATTERN:
-        case OPT_SAVE_ROMS:
-
-            return main.mem.getOption(option);
-
-        case OPT_DAT_MODEL:
-        case OPT_DAT_CONNECT:
-
-            return main.datasette.getOption(option);
-
-        default:
-            fatalError;
-    }
-}
-
-i64
-Emulator::get(Option option, long id) const
-{
-    const Drive &drive = id == DRIVE8 ? main.drive8 : main.drive9;
-
-    switch (option) {
-
-        case OPT_SID_ENABLE:
-        case OPT_SID_ADDRESS:
-        case OPT_AUD_PAN:
-        case OPT_AUD_VOL:
-
-            if (id == 0) return main.muxer.sid[0].getOption(option);
-            if (id == 1) return main.muxer.sid[1].getOption(option);
-            if (id == 2) return main.muxer.sid[2].getOption(option);
-            if (id == 3) return main.muxer.sid[3].getOption(option);
-            fatalError;
-
-        case OPT_DRV_CONNECT:
-        case OPT_DRV_AUTO_CONFIG:
-        case OPT_DRV_TYPE:
-        case OPT_DRV_RAM:
-        case OPT_DRV_PARCABLE:
-        case OPT_DRV_POWER_SAVE:
-        case OPT_DRV_POWER_SWITCH:
-        case OPT_DRV_EJECT_DELAY:
-        case OPT_DRV_SWAP_DELAY:
-        case OPT_DRV_INSERT_DELAY:
-        case OPT_DRV_PAN:
-        case OPT_DRV_POWER_VOL:
-        case OPT_DRV_STEP_VOL:
-        case OPT_DRV_INSERT_VOL:
-        case OPT_DRV_EJECT_VOL:
-
-            return drive.getOption(option);
-
-        case OPT_MOUSE_MODEL:
-        case OPT_MOUSE_SHAKE_DETECT:
-        case OPT_MOUSE_VELOCITY:
-
-            if (id == PORT_1) return main.port1.mouse.getOption(option);
-            if (id == PORT_2) return main.port2.mouse.getOption(option);
-            fatalError;
-
-        case OPT_JOY_AUTOFIRE:
-        case OPT_JOY_AUTOFIRE_BULLETS:
-        case OPT_JOY_AUTOFIRE_DELAY:
-
-            if (id == PORT_1) return main.port1.joystick.getOption(option);
-            if (id == PORT_2) return main.port2.joystick.getOption(option);
-            fatalError;
-
-        default:
-            fatalError;
-    }
+    set(option, id, str2arg(option, value));
 }
 
 i64
