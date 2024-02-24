@@ -23,10 +23,13 @@ class SID final : public SubComponent
     // Number of this SID (0 = primary SID)
     int nr;
 
+public:
+
     // Backends
     ReSID resid = ReSID(c64, nr);
     FastSID fastsid = FastSID(c64, nr);
 
+    
     //
     // Initializing
     //
@@ -34,7 +37,6 @@ class SID final : public SubComponent
 public:
 
     SID(C64 &ref, int n);
-    ~SID();
 
 
     //
@@ -85,6 +87,26 @@ public:
     void _reset(bool hard) override { };
 
 
+    //
+    // Bridge functions
+    //
+
+public:
+
+    u32 getClockFrequency() const;
+    void setClockFrequency(u32 frequency);
+
+    SIDRevision getRevision() const;
+    void setRevision(SIDRevision revision);
+
+    double getSampleRate() const;
+    void setSampleRate(double rate);
+
+    bool getAudioFilter() const;
+    void setAudioFilter(bool enable);
+
+    SamplingMethod getSamplingMethod() const;
+    void setSamplingMethod(SamplingMethod method);
 };
 
 };

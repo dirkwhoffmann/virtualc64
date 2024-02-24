@@ -21,23 +21,14 @@
 namespace vc64 {
 
 Muxer::Muxer(C64 &ref) : SubComponent(ref)
-{        
+{
     subComponents = std::vector<CoreComponent *> {
-        
-        &resid[0],
-        &resid[1],
-        &resid[2],
-        &resid[3],
-        &fastsid[0],
-        &fastsid[1],
-        &fastsid[2],
-        &fastsid[3]
-    };
 
-    for (int i = 0; i < 4; i++) {
-        resid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
-        fastsid[i].setClockFrequency(PAL_CLOCK_FREQUENCY);
-    }
+        &sid[0],
+        &sid[1],
+        &sid[2],
+        &sid[3]
+    };
 }
 
 void
@@ -203,10 +194,10 @@ Muxer::setConfigItem(Option option, i64 value)
             {   SUSPENDED
                 
                 config.revision = SIDRevision(value);
-                for (int i = 0; i < 4; i++) {
-                    resid[i].setRevision(SIDRevision(value));
-                    fastsid[i].setRevision(SIDRevision(value));
-                }
+                sid[0].setRevision(SIDRevision(value));
+                sid[1].setRevision(SIDRevision(value));
+                sid[2].setRevision(SIDRevision(value));
+                sid[3].setRevision(SIDRevision(value));
             }
             return;
         }
@@ -215,10 +206,10 @@ Muxer::setConfigItem(Option option, i64 value)
             {   SUSPENDED
                 
                 config.filter = bool(value);
-                for (int i = 0; i < 4; i++) {
-                    resid[i].setAudioFilter(bool(value));
-                    fastsid[i].setAudioFilter(bool(value));
-                }
+                sid[0].setAudioFilter(bool(value));
+                sid[1].setAudioFilter(bool(value));
+                sid[2].setAudioFilter(bool(value));
+                sid[3].setAudioFilter(bool(value));
             }
             return;
         }
@@ -243,10 +234,10 @@ Muxer::setConfigItem(Option option, i64 value)
             {   SUSPENDED
                 
                 config.sampling = SamplingMethod(value);
-                for (int i = 0; i < 4; i++) {
-                    resid[i].setSamplingMethod(SamplingMethod(value));
-                    // Note: fastSID has no such option
-                }
+                sid[0].setSamplingMethod(SamplingMethod(value));
+                sid[1].setSamplingMethod(SamplingMethod(value));
+                sid[2].setSamplingMethod(SamplingMethod(value));
+                sid[3].setSamplingMethod(SamplingMethod(value));
             }
             return;
         }
@@ -299,11 +290,10 @@ Muxer::setConfigItem(Option option, long id, i64 value)
                 
                 REPLACE_BIT(config.enabled, id, value);
                 clearSampleBuffer(id);
-                
-                for (int i = 0; i < 4; i++) {
-                    resid[i].hardReset();
-                    fastsid[i].hardReset();
-                }
+                sid[0].hardReset();
+                sid[1].hardReset();
+                sid[2].hardReset();
+                sid[3].hardReset();
             }
             return;
         }
@@ -374,14 +364,11 @@ Muxer::isMuted() const
 u32
 Muxer::getClockFrequency()
 {
-    u32 result = resid[0].getClockFrequency();
-    
-    for (int i = 0; i < 4; i++) {
-        assert(resid[i].getClockFrequency() == result);
-        assert(fastsid[i].getClockFrequency() == result);
-    }
-    
-    return result;
+    assert(sid[0].getClockFrequency() == sid[1].getClockFrequency());
+    assert(sid[0].getClockFrequency() == sid[2].getClockFrequency());
+    assert(sid[0].getClockFrequency() == sid[3].getClockFrequency());
+
+    return sid[0].getClockFrequency();
 }
 
 void
@@ -391,29 +378,20 @@ Muxer::setClockFrequency(u32 frequency)
 
     cpuFrequency = frequency;
 
-    for (int i = 0; i < 4; i++) {
-        resid[i].setClockFrequency(frequency);
-        fastsid[i].setClockFrequency(frequency);
-    }
+    sid[0].setClockFrequency(frequency);
+    sid[1].setClockFrequency(frequency);
+    sid[2].setClockFrequency(frequency);
+    sid[3].setClockFrequency(frequency);
 }
 
 double
 Muxer::getSampleRate() const
 {
-    double result = resid[0].getSampleRate();
-    
-    for (int i = 0; i < 4; i++) {
-        if (resid[i].getSampleRate() != result) {
-            warn("%f != %f\n", resid[i].getSampleRate(), result);
-        }
-        if (fastsid[i].getSampleRate() != result) {
-            warn("%f != %f\n", fastsid[i].getSampleRate(), result);
-        }
-        assert(resid[i].getSampleRate() == result);
-        assert(fastsid[i].getSampleRate() == result);
-    }
-    
-    return result;
+    assert(sid[0].getSampleRate() == sid[1].getSampleRate());
+    assert(sid[0].getSampleRate() == sid[2].getSampleRate());
+    assert(sid[0].getSampleRate() == sid[3].getSampleRate());
+
+    return sid[0].getSampleRate();
 }
 
 void
@@ -423,10 +401,10 @@ Muxer::setSampleRate(double rate)
 
     sampleRate = rate;
     
-    for (int i = 0; i < 4; i++) {
-        resid[i].setSampleRate(rate);
-        fastsid[i].setSampleRate(rate);
-    }
+    sid[0].setSampleRate(rate);
+    sid[1].setSampleRate(rate);
+    sid[2].setSampleRate(rate);
+    sid[3].setSampleRate(rate);
 }
 
 void 
@@ -519,8 +497,8 @@ Muxer::_dump(Category category, std::ostream& os, isize nr) const
 {
     switch (config.engine) {
             
-        case SIDENGINE_FASTSID: fastsid[nr].dump(category, os); break;
-        case SIDENGINE_RESID:   resid[nr].dump(category, os); break;
+        case SIDENGINE_RESID:   sid[nr].resid.dump(category, os); break;
+        case SIDENGINE_FASTSID: sid[nr].fastsid.dump(category, os); break;
 
         default:
             fatalError;
@@ -549,8 +527,8 @@ Muxer::getInfo(isize nr)
     
     switch (config.engine) {
             
-        case SIDENGINE_FASTSID: info = fastsid[nr].getInfo(); break;
-        case SIDENGINE_RESID:   info = resid[nr].getState(); break;
+        case SIDENGINE_RESID:   info = sid[nr].resid.getState(); break;
+        case SIDENGINE_FASTSID: info = sid[nr].fastsid.getInfo(); break;
 
         default:
             fatalError;
@@ -569,8 +547,8 @@ Muxer::getVoiceInfo(isize nr, isize voice)
 
     switch (config.engine) {
             
-        case SIDENGINE_FASTSID: return fastsid[nr].getVoiceInfo(voice);
-        case SIDENGINE_RESID:   return resid[nr].getVoiceInfo(voice);
+        case SIDENGINE_RESID:   return sid[nr].resid.getVoiceInfo(voice);
+        case SIDENGINE_FASTSID: return sid[nr].fastsid.getVoiceInfo(voice);
 
         default:
             fatalError;
@@ -584,8 +562,8 @@ Muxer::getSID(isize nr)
     
     switch (config.engine) {
             
-        case SIDENGINE_FASTSID: return fastsid[nr];
-        case SIDENGINE_RESID:   return resid[nr];
+        case SIDENGINE_RESID:   return sid[nr].resid;
+        case SIDENGINE_FASTSID: return sid[nr].fastsid;
 
         default:
             fatalError;
@@ -668,9 +646,9 @@ Muxer::peek(u16 addr)
     
     switch (config.engine) {
             
-        case SIDENGINE_FASTSID: return fastsid[sidNr].peek(addr);
-        case SIDENGINE_RESID:   return resid[sidNr].peek(addr);
-            
+        case SIDENGINE_RESID:   return sid[sidNr].resid.peek(addr);
+        case SIDENGINE_FASTSID: return sid[sidNr].fastsid.peek(addr);
+
         default:
             fatalError;
     }
@@ -689,11 +667,11 @@ Muxer::spypeek(u16 addr) const
         if (addr == 0x1A) { return port1.readPotY() & port2.readPotY(); }
     }
 
-    /* At the moment, only FastSID allows us to peek into the SID registers
+    /* Currently, only FastSID allows us to peek into the SID registers
      * without causing side effects. Hence, we get the return value from there,
      * regardless of the selected SID engine.
      */
-    return fastsid[sidNr].spypeek(addr);
+    return sid[sidNr].fastsid.spypeek(addr);
 }
 
 u8
@@ -732,8 +710,8 @@ Muxer::poke(u16 addr, u8 value)
     addr &= 0x1F;
     
     // Keep both SID implementations up to date
-    resid[sidNr].poke(addr, value);
-    fastsid[sidNr].poke(addr, value);
+    sid[sidNr].resid.poke(addr, value);
+    sid[sidNr].fastsid.poke(addr, value);
 }
 
 void
@@ -784,13 +762,13 @@ Muxer::executeCycles(isize numCycles)
         case SIDENGINE_FASTSID:
 
             // Run the primary SID (which is always enabled)
-            numSamples = fastsid[0].executeCycles(numCycles, sidStream[0]);
-            
+            numSamples = sid[0].fastsid.executeCycles(numCycles, sidStream[0]);
+
             // Run all other SIDS (if any)
             if (config.enabled > 1) {
                 for (isize i = 1; i < 4; i++) {
                     if (isEnabled(i)) {
-                        isize numSamples2 = fastsid[i].executeCycles(numCycles, sidStream[i]);
+                        isize numSamples2 = sid[i].fastsid.executeCycles(numCycles, sidStream[i]);
                         numSamples = std::min(numSamples, numSamples2);
                     }
                 }
@@ -800,13 +778,13 @@ Muxer::executeCycles(isize numCycles)
         case SIDENGINE_RESID:
 
             // Run the primary SID (which is always enabled)
-            numSamples = resid[0].executeCycles(numCycles, sidStream[0]);
-            
+            numSamples = sid[0].resid.executeCycles(numCycles, sidStream[0]);
+
             // Run all other SIDS (if any)
             if (config.enabled > 1) {
                 for (isize i = 1; i < 4; i++) {
                     if (isEnabled(i)) {
-                        isize numSamples2 = resid[i].executeCycles(numCycles, sidStream[i]);
+                        isize numSamples2 = sid[i].resid.executeCycles(numCycles, sidStream[i]);
                         numSamples = std::min(numSamples, numSamples2);
                     }
                 }

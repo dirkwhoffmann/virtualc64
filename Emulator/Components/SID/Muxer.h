@@ -17,8 +17,7 @@
 #include "Constants.h"
 #include "Volume.h"
 #include "SIDStreams.h"
-#include "FastSID.h"
-#include "ReSID.h"
+#include "SID.h"
 #include "Chrono.h"
 
 namespace vc64 {
@@ -60,6 +59,15 @@ class Muxer final : public SubComponent, public Inspectable<SIDInfo, Void> {
     // Sub components
     //
 
+    SID sid[4] =  {
+
+        SID(c64, 0),
+        SID(c64, 1),
+        SID(c64, 2),
+        SID(c64, 3)
+    };
+
+    /*
     FastSID fastsid[4] = {
         
         FastSID(c64, 0),
@@ -75,6 +83,7 @@ class Muxer final : public SubComponent, public Inspectable<SIDInfo, Void> {
         ReSID(c64, 2),
         ReSID(c64, 3)
     };
+    */
 
 private:
     
@@ -154,8 +163,7 @@ public:
     
     Muxer& operator= (const Muxer& other) {
 
-        CLONE_ARRAY(resid)
-        CLONE_ARRAY(fastsid)
+        CLONE_ARRAY(sid)
 
         CLONE(cycles)
 
@@ -176,9 +184,7 @@ public:
     {
         worker
         
-        << resid
-        << fastsid
-
+        << sid
         << cycles;
 
         if (isResetter(worker)) return;
