@@ -52,6 +52,7 @@ public:
 
     // Resets all config options
     void resetConfig(const Defaults &defaults);
+    void resetConfig(const Defaults &defaults, isize i);
 
     // Dumps the current configuration
     void dumpConfig(std::ostream& os) const;

@@ -21,6 +21,13 @@ namespace vc64 {
 class SID final : public SubComponent
 {
     friend class Muxer;
+
+    ConfigOptions options = {
+
+        { OPT_SID_ADDRESS,  "Mapped location in memory" },
+        { OPT_AUD_VOL,      "Volume" },
+        { OPT_AUD_PAN,      "Speaker location" }
+    };
     
     // Number of this SID (0 = primary SID)
     int nr;
@@ -104,6 +111,17 @@ public:
 
 
     //
+    // Methods from Configurable
+    //
+
+    const ConfigOptions &getOptions() const override { return options; }
+
+    // Gets or sets a config option
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
+
+    
+    //
     // Configuring
     //
 
@@ -111,9 +129,6 @@ public:
 
     const SIDConfig &getConfig() const { return config; }
     void resetConfig() override;
-
-    i64 getConfigItem(Option option) const;
-    void setConfigItem(Option option, i64 value);
 
 
     //

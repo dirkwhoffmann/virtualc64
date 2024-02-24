@@ -267,6 +267,14 @@ Configurable::resetConfig(const Defaults &defaults)
 }
 
 void
+Configurable::resetConfig(const Defaults &defaults, isize i)
+{
+    for (auto &option : getOptions()) {
+        setOption(option.first, defaults.get(option.first, i));
+    }
+}
+
+void
 Configurable::dumpConfig(std::ostream& os) const
 {
     using namespace util;

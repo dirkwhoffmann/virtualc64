@@ -21,9 +21,12 @@ SID::SID(C64 &ref, int n) : SubComponent(ref), nr(n)
     setClockFrequency(PAL_CLOCK_FREQUENCY);
 }
 
-void 
+void
 SID::resetConfig()
 {
+    Configurable::resetConfig(emulator.defaults, nr);
+
+    /*
     assert(isPoweredOff());
     auto &defaults = emulator.defaults;
 
@@ -38,10 +41,11 @@ SID::resetConfig()
     for (auto &option : options) {
         setConfigItem(option, defaults.get(option, nr));
     }
+    */
 }
 
-i64 
-SID::getConfigItem(Option option) const
+i64
+SID::getOption(Option option) const
 {
 
     switch (option) {
@@ -66,7 +70,7 @@ SID::getConfigItem(Option option) const
 }
 
 void 
-SID::setConfigItem(Option option, i64 value)
+SID::setOption(Option option, i64 value)
 {
     bool wasMuted = c64.muxer.isMuted();
 

@@ -476,7 +476,7 @@ Emulator::configure(Option option, long id, i64 value)
         case OPT_AUD_PAN:
         case OPT_AUD_VOL:
 
-            main.muxer.sid[id].setConfigItem(option, value);
+            main.muxer.sid[id].setOption(option, value);
             break;
 
         case OPT_DRV_AUTO_CONFIG:
