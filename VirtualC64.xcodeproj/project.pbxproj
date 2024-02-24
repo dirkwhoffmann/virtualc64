@@ -168,6 +168,8 @@
 		506A724A21C0341900DA0AC3 /* ConfigurationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A724921C0341900DA0AC3 /* ConfigurationController.swift */; };
 		506A8A882B88D00200B95383 /* Configurable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506A8A862B88D00200B95383 /* Configurable.cpp */; };
 		506A8A892B88D00200B95383 /* Configurable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506A8A862B88D00200B95383 /* Configurable.cpp */; };
+		506A8A8C2B89DAF800B95383 /* SID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506A8A8A2B89DAF800B95383 /* SID.cpp */; };
+		506A8A8D2B89DAF800B95383 /* SID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 506A8A8A2B89DAF800B95383 /* SID.cpp */; };
 		506B13C224C1C40600814BB0 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506B13C124C1C40600814BB0 /* PreferencesController.swift */; };
 		506D3DCE20223E5E009742CF /* MyApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCD20223E5E009742CF /* MyApplication.swift */; };
 		506D3DD020224BF4009742CF /* MyDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D3DCF20224BF4009742CF /* MyDocument.swift */; };
@@ -747,6 +749,8 @@
 		506A724921C0341900DA0AC3 /* ConfigurationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationController.swift; sourceTree = "<group>"; };
 		506A8A862B88D00200B95383 /* Configurable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Configurable.cpp; sourceTree = "<group>"; };
 		506A8A872B88D00200B95383 /* Configurable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Configurable.h; sourceTree = "<group>"; };
+		506A8A8A2B89DAF800B95383 /* SID.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SID.cpp; sourceTree = "<group>"; };
+		506A8A8B2B89DAF800B95383 /* SID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SID.h; sourceTree = "<group>"; };
 		506B13C124C1C40600814BB0 /* PreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
 		506D3DCD20223E5E009742CF /* MyApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyApplication.swift; sourceTree = "<group>"; };
 		506D3DCF20224BF4009742CF /* MyDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDocument.swift; sourceTree = "<group>"; };
@@ -1515,6 +1519,8 @@
 				50C9318D2589E41D00D8BB94 /* Volume.h */,
 				504C433224AF29AC00E69CAE /* Muxer.h */,
 				504C431224AF29AC00E69CAE /* Muxer.cpp */,
+				506A8A8B2B89DAF800B95383 /* SID.h */,
+				506A8A8A2B89DAF800B95383 /* SID.cpp */,
 				50549B48257D288E006FE39C /* SIDStreams.h */,
 				50549B47257D288E006FE39C /* SIDStreams.cpp */,
 				504C433324AF29AC00E69CAE /* ReSID.h */,
@@ -2151,6 +2157,7 @@
 				50726F742961C9D10031F2F5 /* C64Memory.cpp in Sources */,
 				50726FA42961CA1C0031F2F5 /* T64File.cpp in Sources */,
 				50726F882961CA0D0031F2F5 /* Comal80.cpp in Sources */,
+				506A8A8D2B89DAF800B95383 /* SID.cpp in Sources */,
 				50726F5D2961C9AC0031F2F5 /* VICII.cpp in Sources */,
 				50726F5E2961C9AC0031F2F5 /* VICII_debug.cpp in Sources */,
 				50726F652961C9B30031F2F5 /* NamedPipe.cpp in Sources */,
@@ -2439,6 +2446,7 @@
 				5077AC682B5ACC5100EFAC85 /* config.cpp in Sources */,
 				5036E0B7261AEF000048E66A /* Interpreter.cpp in Sources */,
 				504C439D24AF29AC00E69CAE /* version.cc in Sources */,
+				506A8A8C2B89DAF800B95383 /* SID.cpp in Sources */,
 				504C436324AF29AC00E69CAE /* Kingsoft.cpp in Sources */,
 				50D8421820A82CF500EB859A /* MetalViewEvents.swift in Sources */,
 				507E7AA024FB881500AB433C /* ScreenshotViewer.swift in Sources */,

@@ -212,6 +212,7 @@ public:
 
     void _reset(bool hard) override;
 
+    
     //
     // Configuring
     //
