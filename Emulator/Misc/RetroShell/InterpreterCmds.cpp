@@ -378,44 +378,18 @@ Interpreter::initCommandShell(Command &root)
         retroShell.dump(vic, Category::Config);
     });
 
-    root.add({"vicii", "set"},
-             "Configures the component");
+    root.add({"vicii", "set"}, "Configures the component");
 
-    root.add({"vicii", "set", "revision"}, { VICIIRevisionEnum::argList() },
-             "Selects the emulated chip model",
-             [this](Arguments& argv, long value) {
+    for (auto &option : vic.getOptions()) {
 
-        configure(OPT_VICII_REVISION, parseEnum <VICIIRevisionEnum> (argv[0]));
+        root.add({"vicii", "set", OptionEnum::key(option.first)}, { Arg::value },
+                 option.second,
+                 [this](Arguments& argv, long value) {
 
-    });
+            vic.Configurable::setOption(value, argv[0]);
 
-    root.add({"vicii", "set", "graydotbug"}, { Arg::onoff },
-             "Enables or disables the gray dot bug",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_VICII_GRAY_DOT_BUG, parseBool(argv[0]));
-    });
-
-    root.add({"vicii", "set", "gluelogic"}, { Arg::onoff },
-             "Configures the logic board",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_GLUE_LOGIC, parseBool(argv[0]));
-    });
-
-    root.add({"vicii", "set", "sscollisions"}, { Arg::onoff },
-             "Enables or disables sprite-sprite collision detection",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_VICII_SS_COLLISIONS, parseBool(argv[0]));
-    });
-
-    root.add({"vicii", "set", "sbcollisions"}, { Arg::onoff },
-             "Enables or disables sprite-background collision detection",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_VICII_SB_COLLISIONS, parseBool(argv[0]));
-    });
+        }, option.first);
+    }
 
     
     //
