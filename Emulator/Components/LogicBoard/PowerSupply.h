@@ -18,63 +18,48 @@
 
 namespace vc64 {
 
-class PowerSupply final : public SubComponent {
-    
+class PowerSupply final : public SubComponent, public Dumpable {
+
+    PowerSupplyConfig config = { };
+
     ConfigOptions options = {
 
         { OPT_POWER_GRID,   "Power grid" }
     };
 
-    // Current configuration
-    PowerSupplyConfig config = { };
 
-    
     //
-    // Initializing
+    // Methods
     //
     
 public:
     
     PowerSupply(C64& ref);
-    
-    
-    //
-    // Methods from CoreObject
-    //
-    
     const char *getDescription() const override { return "PowerSupply"; }
-
-
-    //
-    // Methods from CoreComponent
-    //
-
-public:
 
     PowerSupply& operator= (const PowerSupply& other) { return *this; }
     template <class T> void serialize(T& worker) { } SERIALIZERS(serialize);
 
 
     //
-    // Methods from Configurable
+    // Configuring
     //
 
-    const ConfigOptions &getOptions() const override { return options; }
+public:
 
-    // Gets or sets a config option
+    const PowerSupplyConfig &getConfig() const { return config; }
+    const ConfigOptions &getOptions() const override { return options; }
     i64 getOption(Option opt) const override;
     void setOption(Option opt, i64 value) override;
 
 
     //
-    // Configuring
+    // Inspecting
     //
-    
-public:
-    
-    const PowerSupplyConfig &getConfig() const { return config; }
 
-    
+    void _dump(Category category, std::ostream& os) const override;
+
+
     //
     // Using the device
     //

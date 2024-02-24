@@ -50,19 +50,12 @@ private:
 
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
 
     IEC(C64 &ref) : SubComponent(ref) { };
-
-
-    //
-    // Methods from CoreObject
-    //
-
-private:
 
     const char *getDescription() const override { return "IEC"; }
     void _dump(Category category, std::ostream& os) const override;

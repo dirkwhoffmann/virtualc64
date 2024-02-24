@@ -123,6 +123,7 @@ Interpreter::initCommandShell(Command &root)
     root.add({"dmadebugger"},   "DMA Debugger");
     root.add({"sid"},           "Sound Interface Device");
     root.add({"expansion"},     "Expansion port");
+    root.add({"powersupply"},   "Power supply");
 
     root.setGroup("Peripherals");
 
@@ -357,27 +358,6 @@ Interpreter::initCommandShell(Command &root)
             cia1.Configurable::setOption(argv[0], argv[1]) :
             cia2.Configurable::setOption(argv[0], argv[1]) ;
         }, i);
-
-        /*
-        root.add({cia, "set"},
-                 "Configures the component");
-        
-        root.add({cia, "set", "revision"}, { CIARevisionEnum::argList() },
-                 "Selects the emulated chip model",
-                 [this](Arguments& argv, long value) {
-
-            set(OPT_CIA_REVISION, value, parseEnum <CIARevisionEnum> (argv[0]));
-
-        }, i);
-
-        root.add({cia, "set", "timerbbug"}, { Arg::onoff },
-                 "Enables or disables the timer B hardware bug",
-                 [this](Arguments& argv, long value) {
-
-            set(OPT_CIA_TIMER_B_BUG, value, parseBool(argv[0]));
-
-        }, i);
-        */
     }
 
 
@@ -698,6 +678,25 @@ Interpreter::initCommandShell(Command &root)
     });
 
     
+    //
+    // Power supply
+    //
+
+    root.add({"powersupply", ""},
+             "Displays the current configuration",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(powerSupply, Category::Config);
+    });
+
+    root.add({"powersupply", "set"}, { c64.supply.argList(), Arg::value },
+             "Configures the component",
+             [this](Arguments& argv, long value) {
+
+        powerSupply.Configurable::setOption(argv[0], argv[1]);
+    });
+
+
     //
     // Keyboard
     //

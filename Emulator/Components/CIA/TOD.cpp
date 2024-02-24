@@ -131,14 +131,14 @@ TOD::increment()
     }
 
     checkIrq();
-    nextTodTrigger += oscillator.todTickDelay(cia.CRA);
+    nextTodTrigger += powerSupply.todTickDelay(cia.CRA);
 }
 
 void
 TOD::cont()
 {
     stopped = false;
-    nextTodTrigger = cpu.clock + oscillator.todTickDelay(cia.CRA);
+    nextTodTrigger = cpu.clock + powerSupply.todTickDelay(cia.CRA);
 }
 
 void

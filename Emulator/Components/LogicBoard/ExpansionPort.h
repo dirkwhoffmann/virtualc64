@@ -37,7 +37,7 @@ namespace vc64 {
 
 class ExpansionPort final : public SubComponent, public Inspectable<CartridgeInfo, Void> {
     
-    // Attached cartridge
+    // Attached cartridge or nullptr
     std::unique_ptr<Cartridge> cartridge;
     
     // Type of the attached cartridge
@@ -49,29 +49,15 @@ class ExpansionPort final : public SubComponent, public Inspectable<CartridgeInf
     
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
     
     ExpansionPort(C64 &ref) : SubComponent(ref) { };
 
-
-    //
-    // Methods from CoreObject
-    //
-
     const char *getDescription() const override { return "ExpansionPort"; }
     void _dump(Category category, std::ostream& os) const override;
-
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
-
-public:
 
     ExpansionPort& operator= (const ExpansionPort& other);
 

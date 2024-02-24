@@ -74,7 +74,7 @@ protected:
     Keyboard &keyboard;
     C64Memory &mem;
     MsgQueue &msgQueue;
-    PowerSupply &oscillator;
+    PowerSupply &powerSupply;
     ParCable &parCable;
     Recorder &recorder;
     RegressionTester &regressionTester;

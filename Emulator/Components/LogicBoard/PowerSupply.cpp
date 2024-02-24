@@ -52,6 +52,17 @@ PowerSupply::setOption(Option option, i64 value)
     }
 }
 
+void
+PowerSupply::_dump(Category category, std::ostream& os) const
+{
+    using namespace util;
+
+    if (category == Category::Config) {
+
+        dumpConfig(os);
+    }
+}
+
 Cycle
 PowerSupply::todTickDelay(u8 cra)
 {

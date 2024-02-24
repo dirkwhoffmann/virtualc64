@@ -43,29 +43,13 @@ public:
 
 
     //
-    // Initializing
+    // Methods
     //
     
 public:
 
     ControlPort(C64 &ref, isize id);
-
-
-    //
-    // Methods from CoreObject
-    //
-
-private:
-    
     const char *getDescription() const override { return "ControlPort"; }
-    void _dump(Category category, std::ostream& os) const override;
-
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
 
     ControlPort& operator= (const ControlPort& other) {
 
@@ -84,6 +68,13 @@ public:
         << joystick;
 
     } SERIALIZERS(serialize);
+
+
+    //
+    // Inspecting
+    //
+
+    void _dump(Category category, std::ostream& os) const override;
 
 
     //
