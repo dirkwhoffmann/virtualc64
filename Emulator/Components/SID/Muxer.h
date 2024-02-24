@@ -59,6 +59,8 @@ class Muxer final : public SubComponent, public Inspectable<SIDInfo, Void> {
     // Sub components
     //
 
+public:
+    
     SID sid[4] =  {
 
         SID(c64, 0),
@@ -66,24 +68,6 @@ class Muxer final : public SubComponent, public Inspectable<SIDInfo, Void> {
         SID(c64, 2),
         SID(c64, 3)
     };
-
-    /*
-    FastSID fastsid[4] = {
-        
-        FastSID(c64, 0),
-        FastSID(c64, 1),
-        FastSID(c64, 2),
-        FastSID(c64, 3)
-    };
-    
-    ReSID resid[4] = {
-        
-        ReSID(c64, 0),
-        ReSID(c64, 1),
-        ReSID(c64, 2),
-        ReSID(c64, 3)
-    };
-    */
 
 private:
     
@@ -102,12 +86,6 @@ private:
     // Master volumes (fadable)
     Volume volL;
     Volume volR;
-
-    // Channel volumes
-    float vol[4] = { 0, 0, 0, 0 };
-
-    // Panning factors
-    float pan[4] = { 0, 0, 0, 0 };
 
 public:
 
@@ -171,8 +149,6 @@ public:
         CLONE(cpuFrequency)
         CLONE(volL)
         CLONE(volR)
-        CLONE_ARRAY(vol)
-        CLONE_ARRAY(pan)
 
         CLONE(config)
 
@@ -195,19 +171,14 @@ public:
         << cpuFrequency
         << volL
         << volR
-        << vol
-        << pan
 
         << config.revision
         << config.enabled
-        << config.address
         << config.filter
         << config.engine
         << config.sampling
         << config.volL
-        << config.volR
-        << config.vol
-        << config.pan;
+        << config.volR;
     }
     
     void operator << (SerResetter &worker) override { serialize(worker); }
@@ -225,7 +196,7 @@ public:
     
 public:
     
-    static MuxerConfig getDefaultConfig();
+    // static MuxerConfig getDefaultConfig();
     const MuxerConfig &getConfig() const { return config; }
     void resetConfig() override;
 

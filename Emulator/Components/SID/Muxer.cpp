@@ -50,6 +50,7 @@ Muxer::clear()
     stream.unlock();
 }
 
+/*
 MuxerConfig
 Muxer::getDefaultConfig()
 {
@@ -75,6 +76,7 @@ Muxer::getDefaultConfig()
     
     return defaults;
 }
+*/
 
 void
 Muxer::resetConfig()
@@ -99,9 +101,9 @@ Muxer::resetConfig()
     std::vector <Option> moreOptions = {
 
         OPT_SID_ENABLE,
-        OPT_SID_ADDRESS,
-        OPT_AUD_VOL,
-        OPT_AUD_PAN
+        // OPT_SID_ADDRESS,
+        // OPT_AUD_VOL,
+        // OPT_AUD_PAN
     };
 
     for (auto &option : moreOptions) {
@@ -145,12 +147,12 @@ Muxer::getConfigItem(Option option) const
 i64
 Muxer::getConfigItem(Option option, long id) const
 {
-    
     switch (option) {
             
         case OPT_SID_ENABLE:
             return GET_BIT(config.enabled, id);
             
+            /*
         case OPT_SID_ADDRESS:
             return config.address[id];
             
@@ -159,6 +161,7 @@ Muxer::getConfigItem(Option option, long id) const
 
         case OPT_AUD_PAN:
             return config.pan[id];
+             */
 
         default:
             fatalError;
@@ -269,7 +272,7 @@ Muxer::setConfigItem(Option option, i64 value)
 void
 Muxer::setConfigItem(Option option, long id, i64 value)
 {
-    bool wasMuted = isMuted();
+    // bool wasMuted = isMuted();
 
     switch (option) {
 
@@ -297,6 +300,8 @@ Muxer::setConfigItem(Option option, long id, i64 value)
             }
             return;
         }
+
+            /*
         case OPT_SID_ADDRESS:
         {
             assert(id >= 0 && id <= 3);
@@ -343,7 +348,8 @@ Muxer::setConfigItem(Option option, long id, i64 value)
             config.pan[id] = value;
             pan[id] = float(0.5 * (sin(config.pan[id] * M_PI / 200.0) + 1));
             return;
-
+             */
+            
         default:
             fatalError;
     }
@@ -355,10 +361,10 @@ Muxer::isMuted() const
     if (config.volL == 0 && config.volR == 0) return true;
     
     return
-    config.vol[0] == 0 &&
-    config.vol[1] == 0 &&
-    config.vol[2] == 0 &&
-    config.vol[3] == 0;
+    sid[0].config.vol == 0 &&
+    sid[1].config.vol == 0 &&
+    sid[2].config.vol == 0 &&
+    sid[3].config.vol == 0;
 }
 
 u32
@@ -462,11 +468,11 @@ Muxer::_dump(Category category, std::ostream& os) const
         os << tab("Enable mask");
         os << dec(config.enabled) << std::endl;
         os << tab("1st extra SID");
-        os << hex(config.address[1]) << std::endl;
+        os << hex(sid[1].config.address) << std::endl;
         os << tab("2nd extra SID");
-        os << hex(config.address[2]) << std::endl;
+        os << hex(sid[2].config.address) << std::endl;
         os << tab("3rd extra SID");
-        os << hex(config.address[3]) << std::endl;
+        os << hex(sid[3].config.address) << std::endl;
         os << tab("Filter");
         os << bol(config.filter) << std::endl;
         os << tab("Engine");
@@ -474,13 +480,13 @@ Muxer::_dump(Category category, std::ostream& os) const
         os << tab("Sampling");
         os << SamplingMethodEnum::key(config.sampling) << std::endl;
         os << tab("Volume 1");
-        os << config.vol[0] << std::endl;
+        os << sid[0].config.vol << std::endl;
         os << tab("Volume 2");
-        os << config.vol[1] << std::endl;
+        os << sid[1].config.vol << std::endl;
         os << tab("Volume 3");
-        os << config.vol[2] << std::endl;
+        os << sid[2].config.vol << std::endl;
         os << tab("Volume 4");
-        os << config.vol[3] << std::endl;
+        os << sid[3].config.vol << std::endl;
         os << tab("Volume L");
         os << config.volL << std::endl;
         os << tab("Volume R");
@@ -610,9 +616,9 @@ Muxer::mappedSID(u16 addr) const
 {
     addr &= 0xFFE0;
     
-    if (isEnabled(1) && addr == config.address[1]) return 1;
-    if (isEnabled(2) && addr == config.address[2]) return 2;
-    if (isEnabled(3) && addr == config.address[3]) return 3;
+    if (isEnabled(1) && addr == sid[1].config.address) return 1;
+    if (isEnabled(2) && addr == sid[2].config.address) return 2;
+    if (isEnabled(3) && addr == sid[3].config.address) return 3;
 
     return 0;
 }
@@ -812,17 +818,17 @@ Muxer::mixSingleSID(isize numSamples)
     }
     
     debug(SID_EXEC, "vol0: %f pan0: %f volL: %f volR: %f\n",
-          vol[0], pan[0], volL.current, volR.current);
+          sid[0].vol, sid[0].pan, volL.current, volR.current);
 
     // Convert sound samples to floating point values and write into ringbuffer
     for (isize i = 0; i < numSamples; i++) {
         
         // Read SID sample from ring buffer
-        float ch0 = (float)sidStream[0].read() * vol[0];
-        
+        float ch0 = (float)sidStream[0].read() * sid[0].vol;
+
         // Compute left and right channel output
-        float l = ch0 * (1 - pan[0]);
-        float r = ch0 * pan[0];
+        float l = ch0 * (1 - sid[0].pan);
+        float r = ch0 * sid[0].pan;
 
         // Apply master volume
         l *= volL.current;
@@ -848,27 +854,27 @@ Muxer::mixMultiSID(isize numSamples)
     }
     
     debug(SID_EXEC, "vol0: %f pan0: %f volL: %f volR: %f\n",
-          vol[0], pan[0], volL.current, volR.current);
+          sid[0].vol, sid[0].pan, volL.current, volR.current);
 
     // Convert sound samples to floating point values and write into ringbuffer
     for (isize i = 0; i < numSamples; i++) {
         
         float ch0, ch1, ch2, ch3, l, r;
         
-        ch0 = (float)sidStream[0].read()  * vol[0];
-        ch1 = (float)sidStream[1].read(0) * vol[1];
-        ch2 = (float)sidStream[2].read(0) * vol[2];
-        ch3 = (float)sidStream[3].read(0) * vol[3];
+        ch0 = (float)sidStream[0].read()  * sid[0].vol;
+        ch1 = (float)sidStream[1].read(0) * sid[1].vol;
+        ch2 = (float)sidStream[2].read(0) * sid[2].vol;
+        ch3 = (float)sidStream[3].read(0) * sid[3].vol;
 
         // Compute left channel output
         l =
-        ch0 * (1 - pan[0]) + ch1 * (1 - pan[1]) +
-        ch2 * (1 - pan[2]) + ch3 * (1 - pan[3]);
+        ch0 * (1 - sid[0].pan) + ch1 * (1 - sid[1].pan) +
+        ch2 * (1 - sid[2].pan) + ch3 * (1 - sid[3].pan);
 
         // Compute right channel output
         r =
-        ch0 * pan[0] + ch1 * pan[1] +
-        ch2 * pan[2] + ch3 * pan[3];
+        ch0 * sid[0].pan + ch1 * sid[1].pan +
+        ch2 * sid[2].pan + ch3 * sid[0].pan;
 
         // Apply master volume
         l *= volL.current;

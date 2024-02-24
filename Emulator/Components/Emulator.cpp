@@ -461,18 +461,22 @@ Emulator::configure(Option option, long id, i64 value)
             break;
 
         case OPT_SID_ENABLE:
-        case OPT_SID_ADDRESS:
         case OPT_SID_REVISION:
         case OPT_SID_FILTER:
         case OPT_SID_POWER_SAVE:
         case OPT_SID_ENGINE:
         case OPT_SID_SAMPLING:
-        case OPT_AUD_PAN:
-        case OPT_AUD_VOL:
         case OPT_AUD_VOL_L:
         case OPT_AUD_VOL_R:
 
             main.muxer.setConfigItem(option, id, value);
+            break;
+
+        case OPT_SID_ADDRESS:
+        case OPT_AUD_PAN:
+        case OPT_AUD_VOL:
+
+            main.muxer.sid[id].setConfigItem(option, value);
             break;
 
         case OPT_DRV_AUTO_CONFIG:

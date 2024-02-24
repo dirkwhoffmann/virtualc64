@@ -112,11 +112,21 @@ struct SamplingMethodEnum : util::Reflection<SamplingMethodEnum, SamplingMethod>
 
 typedef struct
 {
+    // Location of the SID registers in memory
+    u16 address;
+
+    // Channel volumes and pan factors
+    i64 vol;
+    i64 pan;
+}
+SIDConfig;
+
+typedef struct
+{
     // Hardware settings
     SIDRevision revision;
     bool powerSave;
     u8 enabled;
-    u16 address[4];
     bool filter;
     
     // Emlation engine settings
@@ -126,10 +136,6 @@ typedef struct
     // Master volume (left and right channel)
     i64 volL;
     i64 volR;
-
-    // Channel volumes and pan factors
-    i64 vol[4];
-    i64 pan[4];
 }
 MuxerConfig;
 

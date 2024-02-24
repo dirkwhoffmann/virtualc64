@@ -20,8 +20,19 @@ namespace vc64 {
 
 class SID final : public SubComponent
 {
+    friend class Muxer;
+    
     // Number of this SID (0 = primary SID)
     int nr;
+
+    // Current configuration
+    SIDConfig config = { };
+
+    // Channel volume
+    float vol = 0.0;
+
+    // Panning factor
+    float pan = 0.0;
 
 public:
 
@@ -46,6 +57,7 @@ public:
 private:
 
     const char *getDescription() const override { return "SID"; }
+    // void _dump(Category category, std::ostream& os) const override { };
 
 
     //
@@ -59,7 +71,7 @@ public:
         CLONE(resid)
         CLONE(fastsid)
 
-        // CLONE(config)
+        CLONE(config)
 
         return *this;
     }
@@ -68,14 +80,18 @@ public:
     template <class T>
     void serialize(T& worker)
     {
-        if (isResetter(worker)) return;
-
         worker
 
         << resid
         << fastsid;
 
-        // TODO: Config
+        if (isResetter(worker)) return;
+
+        worker
+
+        << config.address
+        << config.vol
+        << config.pan;
     }
 
     void operator << (SerResetter &worker) override { serialize(worker); }
@@ -85,6 +101,19 @@ public:
     void operator << (SerWriter &worker) override { serialize(worker); }
 
     void _reset(bool hard) override { };
+
+
+    //
+    // Configuring
+    //
+
+public:
+
+    const SIDConfig &getConfig() const { return config; }
+    void resetConfig() override;
+
+    i64 getConfigItem(Option option) const;
+    void setConfigItem(Option option, i64 value);
 
 
     //

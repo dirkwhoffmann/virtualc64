@@ -74,6 +74,13 @@ static const bool betaRelease = 0;
 static const bool betaRelease = 1;
 #endif
 
+#ifdef __EMSCRIPTEN__
+static const bool emscripten = 0;
+#else
+static const bool emscripten = 1;
+#endif
+
+
 // General
 extern debugflag XFILES;
 extern debugflag CNF_DEBUG;
