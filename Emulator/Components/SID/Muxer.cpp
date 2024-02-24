@@ -50,57 +50,14 @@ Muxer::clear()
     stream.unlock();
 }
 
-/*
-MuxerConfig
-Muxer::getDefaultConfig()
-{
-    MuxerConfig defaults;
-    
-    defaults.revision = MOS_8580;
-    defaults.powerSave = false;
-    defaults.enabled = 1;
-    defaults.address[0] = 0xD400;
-    defaults.address[1] = 0xD420;
-    defaults.address[2] = 0xD440;
-    defaults.address[3] = 0xD460;
-    defaults.filter = true;
-    defaults.engine = SIDENGINE_RESID;
-    defaults.sampling = SAMPLING_INTERPOLATE;
-    defaults.volL = 50;
-    defaults.volR = 50;
-    
-    for (isize i = 0; i < 4; i++) {
-        defaults.vol[i] = 400;
-        defaults.pan[i] = 0;
-    }
-    
-    return defaults;
-}
-*/
-
 void
 Muxer::resetConfig()
 {
-    assert(isPoweredOff());
-    auto &defaults = emulator.defaults;
-
-    std::vector <Option> options = {
-
-        OPT_SID_REVISION,
-        OPT_SID_FILTER,
-        OPT_SID_ENGINE,
-        OPT_SID_SAMPLING,
-        OPT_AUD_VOL_L,
-        OPT_AUD_VOL_R
-    };
-
-    for (auto &option : options) {
-        setConfigItem(option, defaults.get(option));
-    }
+    Configurable::resetConfig(emulator.defaults);
 }
 
 i64
-Muxer::getConfigItem(Option option) const
+Muxer::getOption(Option option) const
 {
     switch (option) {
             
@@ -130,14 +87,8 @@ Muxer::getConfigItem(Option option) const
     }
 }
 
-i64
-Muxer::getConfigItem(Option option, long id) const
-{
-    fatalError;
-}
-
 void
-Muxer::setConfigItem(Option option, i64 value)
+Muxer::setOption(Option option, i64 value)
 {
     bool wasMuted = isMuted();
 
@@ -235,12 +186,6 @@ Muxer::setConfigItem(Option option, i64 value)
         default:
             fatalError;
     }
-}
-
-void
-Muxer::setConfigItem(Option option, long id, i64 value)
-{
-    fatalError;
 }
 
 bool

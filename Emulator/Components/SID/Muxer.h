@@ -208,10 +208,9 @@ public:
     const ConfigOptions &getOptions() const override { return options; }
 
     // Gets or sets a config option
-    /*
     i64 getOption(Option opt) const override;
     void setOption(Option opt, i64 value) override;
-    */
+
 
     //
     // Configuring
@@ -219,15 +218,8 @@ public:
     
 public:
     
-    // static MuxerConfig getDefaultConfig();
     const MuxerConfig &getConfig() const { return config; }
     void resetConfig() override;
-
-    i64 getConfigItem(Option option) const;
-    i64 getConfigItem(Option option, long id) const;
-
-    void setConfigItem(Option option, i64 value);
-    void setConfigItem(Option option, long id, i64 value);
 
     bool isEnabled(isize nr) const { return sid[nr].config.enabled; }
 

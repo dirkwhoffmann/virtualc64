@@ -164,7 +164,6 @@ public:
     
 public:
     
-    static MemConfig getDefaultConfig();
     const MemConfig &getConfig() const { return config; }
     void resetConfig() override;
     

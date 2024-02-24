@@ -133,6 +133,7 @@ VICII::resetTexture(u32 *p)
     }
 }
 
+/*
 VICIIConfig
 VICII::getDefaultConfig()
 {
@@ -155,6 +156,7 @@ VICII::getDefaultConfig()
     
     return defaults;
 }
+*/
 
 bool
 VICII::autoInspect() const

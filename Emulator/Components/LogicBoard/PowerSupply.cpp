@@ -21,34 +21,14 @@ PowerSupply::PowerSupply(C64& ref) : SubComponent(ref)
 
 }
 
-PowerSupplyConfig
-PowerSupply::getDefaultConfig()
-{
-    PowerSupplyConfig defaults;
-
-    defaults.powerGrid = GRID_STABLE_50HZ;
-    
-    return defaults;
-}
-
 void
 PowerSupply::resetConfig()
 {
-    assert(isPoweredOff());
-    auto &defaults = emulator.defaults;
-
-    std::vector <Option> options = {
-
-        OPT_POWER_GRID
-    };
-
-    for (auto &option : options) {
-        setConfigItem(option, defaults.get(option));
-    }
+    Configurable::resetConfig(emulator.defaults);
 }
 
 i64
-PowerSupply::getConfigItem(Option option) const
+PowerSupply::getOption(Option option) const
 {
     switch (option) {
             
@@ -60,7 +40,7 @@ PowerSupply::getConfigItem(Option option) const
 }
 
 void
-PowerSupply::setConfigItem(Option option, i64 value)
+PowerSupply::setOption(Option option, i64 value)
 {
     switch (option) {
             

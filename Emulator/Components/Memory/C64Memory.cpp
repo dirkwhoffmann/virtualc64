@@ -137,36 +137,10 @@ C64Memory::operator << (SerWriter &worker)
     if (config.saveRoms) worker << rom;
 }
 
-MemConfig
-C64Memory::getDefaultConfig()
-{
-    MemConfig defaults;
-    
-    defaults.ramPattern = RAM_PATTERN_VICE;
-    defaults.saveRoms = true;
-
-    return defaults;
-}
-
 void
 C64Memory::resetConfig()
 {
     Configurable::resetConfig(emulator.defaults);
-
-    /*
-    assert(isPoweredOff());
-    auto &defaults = emulator.defaults;
-
-    std::vector <Option> options = {
-
-        OPT_RAM_PATTERN,
-        OPT_SAVE_ROMS
-    };
-
-    for (auto &option : options) {
-        setConfigItem(option, defaults.get(option));
-    }
-    */
 }
 
 i64

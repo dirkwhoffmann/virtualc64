@@ -20,6 +20,11 @@ namespace vc64 {
 
 class PowerSupply final : public SubComponent {
     
+    ConfigOptions options = {
+
+        { OPT_POWER_GRID,   "Power grid" }
+    };
+
     // Current configuration
     PowerSupplyConfig config = { };
 
@@ -51,17 +56,24 @@ public:
 
 
     //
+    // Methods from Configurable
+    //
+
+    const ConfigOptions &getOptions() const override { return options; }
+
+    // Gets or sets a config option
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
+
+
+    //
     // Configuring
     //
     
 public:
     
-    static PowerSupplyConfig getDefaultConfig();
     const PowerSupplyConfig &getConfig() const { return config; }
     void resetConfig() override;
-
-    i64 getConfigItem(Option option) const;
-    void setConfigItem(Option option, i64 value);
 
     
     //

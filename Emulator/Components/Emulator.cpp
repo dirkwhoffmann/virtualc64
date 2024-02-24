@@ -166,7 +166,7 @@ Emulator::configure(Option option, i64 value)
         case OPT_HOST_SAMPLE_RATE:
 
             host.setConfigItem(option, value);
-            main.muxer.setConfigItem(option, value);
+            main.muxer.setOption(option, value);
             break;
 
         case OPT_HOST_REFRESH_RATE:
@@ -214,7 +214,7 @@ Emulator::configure(Option option, i64 value)
 
         case OPT_POWER_GRID:
 
-            main.supply.setConfigItem(option, value);
+            main.supply.setOption(option, value);
             break;
 
         case OPT_CIA_REVISION:
@@ -227,10 +227,10 @@ Emulator::configure(Option option, i64 value)
         case OPT_SID_ENABLE:
         case OPT_SID_ADDRESS:
 
-            main.muxer.setConfigItem(option, 0, value);
-            main.muxer.setConfigItem(option, 1, value);
-            main.muxer.setConfigItem(option, 2, value);
-            main.muxer.setConfigItem(option, 3, value);
+            main.muxer.sid[0].setOption(option, value);
+            main.muxer.sid[1].setOption(option, value);
+            main.muxer.sid[2].setOption(option, value);
+            main.muxer.sid[3].setOption(option, value);
 
         case OPT_SID_REVISION:
         case OPT_SID_FILTER:
@@ -242,7 +242,7 @@ Emulator::configure(Option option, i64 value)
         case OPT_AUD_VOL_L:
         case OPT_AUD_VOL_R:
 
-            main.muxer.setConfigItem(option, value);
+            main.muxer.setOption(option, value);
             break;
 
         case OPT_RAM_PATTERN:
@@ -468,7 +468,7 @@ Emulator::configure(Option option, long id, i64 value)
         case OPT_AUD_VOL_L:
         case OPT_AUD_VOL_R:
 
-            main.muxer.setConfigItem(option, id, value);
+            main.muxer.setOption(option, value);
             break;
 
         case OPT_SID_ENABLE:
@@ -725,7 +725,7 @@ Emulator::getConfigItem(Option option) const
 
         case OPT_POWER_GRID:
 
-            return main.supply.getConfigItem(option);
+            return main.supply.getOption(option);
 
         case OPT_SID_REVISION:
         case OPT_SID_POWER_SAVE:
@@ -735,7 +735,7 @@ Emulator::getConfigItem(Option option) const
         case OPT_AUD_VOL_L:
         case OPT_AUD_VOL_R:
 
-            return main.muxer.getConfigItem(option);
+            return main.muxer.getOption(option);
 
         case OPT_RAM_PATTERN:
         case OPT_SAVE_ROMS:
@@ -764,8 +764,11 @@ Emulator::getConfigItem(Option option, long id) const
         case OPT_AUD_PAN:
         case OPT_AUD_VOL:
 
-            assert(id >= 0 && id <= 3);
-            return main.muxer.getConfigItem(option, id);
+            if (id == 0) return main.muxer.sid[0].getOption(option);
+            if (id == 1) return main.muxer.sid[1].getOption(option);
+            if (id == 2) return main.muxer.sid[2].getOption(option);
+            if (id == 3) return main.muxer.sid[3].getOption(option);
+            fatalError;
 
         case OPT_DRV_CONNECT:
         case OPT_DRV_AUTO_CONFIG:

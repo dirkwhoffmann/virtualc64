@@ -849,7 +849,7 @@ public:
     
 public:
     
-    static VICIIConfig getDefaultConfig();
+    // static VICIIConfig getDefaultConfig();
     const VICIIConfig &getConfig() const { return config; }
     void resetConfig() override;
 

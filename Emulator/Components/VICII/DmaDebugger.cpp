@@ -20,6 +20,7 @@ DmaDebugger::DmaDebugger(C64 &ref) : SubComponent(ref)
 {
 }
 
+/*
 DmaDebuggerConfig
 DmaDebugger::getDefaultConfig()
 {
@@ -46,6 +47,7 @@ DmaDebugger::getDefaultConfig()
 
     return defaults;
 }
+*/
 
 void
 DmaDebugger::resetConfig()

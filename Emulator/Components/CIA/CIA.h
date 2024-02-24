@@ -425,7 +425,7 @@ public:
     
 public:
     
-    static CIAConfig getDefaultConfig();
+    // static CIAConfig getDefaultConfig();
     const CIAConfig &getConfig() const { return config; }
     void resetConfig() override;
 

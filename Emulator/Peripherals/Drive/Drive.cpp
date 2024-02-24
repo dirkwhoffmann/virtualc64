@@ -84,6 +84,7 @@ Drive::getInfo() const
     return result;
 }
 
+/*
 DriveConfig
 Drive::getDefaultConfig()
 {
@@ -107,6 +108,7 @@ Drive::getDefaultConfig()
 
     return defaults;
 }
+*/
 
 void
 Drive::resetConfig()

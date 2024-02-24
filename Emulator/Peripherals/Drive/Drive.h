@@ -362,7 +362,7 @@ public:
     
 public:
 
-    static DriveConfig getDefaultConfig();
+    // static DriveConfig getDefaultConfig();
     const DriveConfig &getConfig() const { return config; }
     void resetConfig() override;
 

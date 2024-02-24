@@ -53,6 +53,7 @@ DriveMemory::operator << (SerWriter &worker)
     if (config.saveRoms) worker << rom;
 }
 
+/*
 DriveMemConfig
 DriveMemory::getDefaultConfig()
 {
@@ -62,6 +63,7 @@ DriveMemory::getDefaultConfig()
 
     return defaults;
 }
+*/
 
 void
 DriveMemory::resetConfig()

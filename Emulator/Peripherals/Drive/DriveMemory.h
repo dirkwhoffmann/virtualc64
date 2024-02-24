@@ -105,7 +105,7 @@ public:
 
 public:
 
-    static DriveMemConfig getDefaultConfig();
+    // static DriveMemConfig getDefaultConfig();
     const DriveMemConfig &getConfig() const { return config; }
     void resetConfig() override;
 

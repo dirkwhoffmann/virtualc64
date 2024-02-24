@@ -38,6 +38,7 @@ CIA::_reset(bool hard)
     updatePB();
 }
 
+/*
 CIAConfig
 CIA::getDefaultConfig()
 {
@@ -48,26 +49,12 @@ CIA::getDefaultConfig()
     
     return defaults;
 }
+*/
 
 void
 CIA::resetConfig()
 {
     Configurable::resetConfig(emulator.defaults);
-
-    /*
-    assert(isPoweredOff());
-    auto &defaults = emulator.defaults;
-
-    std::vector <Option> options = {
-
-        OPT_CIA_REVISION,
-        OPT_CIA_TIMER_B_BUG
-    };
-
-    for (auto &option : options) {
-        setConfigItem(option, defaults.get(option));
-    }
-    */
 }
 
 i64
