@@ -38,19 +38,6 @@ CIA::_reset(bool hard)
     updatePB();
 }
 
-/*
-CIAConfig
-CIA::getDefaultConfig()
-{
-    CIAConfig defaults;
-
-    defaults.revision = MOS_6526;
-    defaults.timerBBug = true;
-    
-    return defaults;
-}
-*/
-
 void
 CIA::resetConfig()
 {
@@ -58,7 +45,7 @@ CIA::resetConfig()
 }
 
 i64
-CIA::getConfigItem(Option option) const
+CIA::getOption(Option option) const
 {
     switch (option) {
             
@@ -71,7 +58,7 @@ CIA::getConfigItem(Option option) const
 }
 
 void
-CIA::setConfigItem(Option option, i64 value)
+CIA::setOption(Option option, i64 value)
 {
     switch (option) {
             

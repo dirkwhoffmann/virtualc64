@@ -165,7 +165,7 @@ Emulator::configure(Option option, i64 value)
 
         case OPT_HOST_SAMPLE_RATE:
 
-            host.setConfigItem(option, value);
+            host.setOption(option, value);
             main.muxer.setOption(option, value);
             break;
 
@@ -173,7 +173,7 @@ Emulator::configure(Option option, i64 value)
         case OPT_HOST_FRAMEBUF_WIDTH:
         case OPT_HOST_FRAMEBUF_HEIGHT:
 
-            host.setConfigItem(option, value);
+            host.setOption(option, value);
             break;
 
         case OPT_VICII_REVISION:
@@ -220,8 +220,8 @@ Emulator::configure(Option option, i64 value)
         case OPT_CIA_REVISION:
         case OPT_CIA_TIMER_B_BUG:
 
-            main.cia1.setConfigItem(option, value);
-            main.cia2.setConfigItem(option, value);
+            main.cia1.setOption(option, value);
+            main.cia2.setOption(option, value);
             break;
 
         case OPT_SID_ENABLE:
@@ -273,8 +273,8 @@ Emulator::configure(Option option, i64 value)
         case OPT_DRV_INSERT_VOL:
         case OPT_DRV_EJECT_VOL:
 
-            main.drive8.setConfigItem(option, value);
-            main.drive9.setConfigItem(option, value);
+            main.drive8.setOption(option, value);
+            main.drive9.setOption(option, value);
             break;
 
         case OPT_DAT_MODEL:
@@ -432,8 +432,8 @@ Emulator::configure(Option option, long id, i64 value)
         case OPT_CIA_TIMER_B_BUG:
 
             switch (id) {
-                case 0: main.cia1.setConfigItem(option, value); break;
-                case 1: main.cia2.setConfigItem(option, value); break;
+                case 0: main.cia1.setOption(option, value); break;
+                case 1: main.cia2.setOption(option, value); break;
                 default: fatalError;
             }
             break;
@@ -496,8 +496,8 @@ Emulator::configure(Option option, long id, i64 value)
         case OPT_DRV_EJECT_VOL:
 
             switch (id) {
-                case DRIVE8: main.drive8.setConfigItem(option, value); break;
-                case DRIVE9: main.drive9.setConfigItem(option, value); break;
+                case DRIVE8: main.drive8.setOption(option, value); break;
+                case DRIVE9: main.drive9.setOption(option, value); break;
                 default: fatalError;
             }
             break;
@@ -692,7 +692,7 @@ Emulator::getConfigItem(Option option) const
         case OPT_HOST_FRAMEBUF_WIDTH:
         case OPT_HOST_FRAMEBUF_HEIGHT:
 
-            return host.getConfigItem(option);
+            return host.getOption(option);
 
         case OPT_VICII_REVISION:
         case OPT_VICII_POWER_SAVE:
@@ -720,8 +720,8 @@ Emulator::getConfigItem(Option option) const
         case OPT_CIA_REVISION:
         case OPT_CIA_TIMER_B_BUG:
 
-            assert(main.cia1.getConfigItem(option) == main.cia2.getConfigItem(option));
-            return main.cia1.getConfigItem(option);
+            assert(main.cia1.getOption(option) == main.cia2.getOption(option));
+            return main.cia1.getOption(option);
 
         case OPT_POWER_GRID:
 
@@ -786,7 +786,7 @@ Emulator::getConfigItem(Option option, long id) const
         case OPT_DRV_INSERT_VOL:
         case OPT_DRV_EJECT_VOL:
 
-            return drive.getConfigItem(option);
+            return drive.getOption(option);
 
         case OPT_MOUSE_MODEL:
         case OPT_MOUSE_SHAKE_DETECT:
@@ -1161,7 +1161,7 @@ Emulator::refreshRate() const
 {
     if (config.vsync) {
 
-        return double(host.getConfigItem(OPT_HOST_REFRESH_RATE));
+        return double(host.getOption(OPT_HOST_REFRESH_RATE));
 
     } else {
 

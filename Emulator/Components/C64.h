@@ -279,14 +279,6 @@ private:
 public:
 
     const C64Config &getConfig() const { return config; }
-    void resetConfig() override;
-
-    // Gets a single configuration item
-    i64 getConfigItem(Option option) const;
-    i64 getConfigItem(Option option, long id) const;
-    
-    // Sets a single configuration item
-    void setConfigItem(Option option, i64 value);
 
     // Updates the clock frequency and all variables derived from it
     void updateClockFrequency();

@@ -139,17 +139,17 @@ Drive::resetConfig()
 
         if (option == OPT_DRV_CONNECT && !canConnect()) {
 
-            setConfigItem(option, false);
+            setOption(option, false);
 
         } else {
 
-            setConfigItem(option, defaults.get(option, deviceNr));
+            setOption(option, defaults.get(option, deviceNr));
         }
     }
 }
 
 i64
-Drive::getConfigItem(Option option) const
+Drive::getOption(Option option) const
 {
     switch (option) {
             
@@ -175,7 +175,7 @@ Drive::getConfigItem(Option option) const
 }
 
 void
-Drive::setConfigItem(Option option, i64 value)
+Drive::setOption(Option option, i64 value)
 {
     debug(CNF_DEBUG, "%s, %lld\n", OptionEnum::key(option), value);
 
@@ -316,9 +316,9 @@ Drive::autoConfigure()
         case VC1541C_02:
             
             debug(CNF_DEBUG, "autoConfigure: VC1541C\n");
-            setConfigItem(OPT_DRV_TYPE, DRIVE_VC1541C);
-            setConfigItem(OPT_DRV_RAM, DRVRAM_NONE);
-            setConfigItem(OPT_DRV_PARCABLE, PAR_CABLE_NONE);
+            setOption(OPT_DRV_TYPE, DRIVE_VC1541C);
+            setOption(OPT_DRV_RAM, DRVRAM_NONE);
+            setOption(OPT_DRV_PARCABLE, PAR_CABLE_NONE);
             break;
             
         case VC1541_II_1987:
@@ -329,36 +329,36 @@ Drive::autoConfigure()
         case VC1541_64ER_V3:
 
             debug(CNF_DEBUG, "autoConfigure: VC1541 II\n");
-            setConfigItem(OPT_DRV_TYPE, DRIVE_VC1541II);
-            setConfigItem(OPT_DRV_RAM, DRVRAM_NONE);
-            setConfigItem(OPT_DRV_PARCABLE, PAR_CABLE_NONE);
+            setOption(OPT_DRV_TYPE, DRIVE_VC1541II);
+            setOption(OPT_DRV_RAM, DRVRAM_NONE);
+            setOption(OPT_DRV_PARCABLE, PAR_CABLE_NONE);
             break;
 
         case VC1541_SPEEDDOS_PLUS:
         case VC1541_SPEEDDOS_27:
 
             debug(CNF_DEBUG, "autoConfigure: VC1541 SpeedDOS\n");
-            setConfigItem(OPT_DRV_TYPE, DRIVE_VC1541II);
-            setConfigItem(OPT_DRV_RAM, DRVRAM_NONE);
-            setConfigItem(OPT_DRV_PARCABLE, PAR_CABLE_STANDARD);
+            setOption(OPT_DRV_TYPE, DRIVE_VC1541II);
+            setOption(OPT_DRV_RAM, DRVRAM_NONE);
+            setOption(OPT_DRV_PARCABLE, PAR_CABLE_STANDARD);
             break;
 
         case VC1541_DOLPHIN_20:
         case VC1541_DOLPHIN_20_SLVDR:
 
             debug(CNF_DEBUG, "autoConfig: Dolphin DOS\n");
-            setConfigItem(OPT_DRV_TYPE, DRIVE_VC1541II);
-            setConfigItem(OPT_DRV_RAM, DRVRAM_8000_9FFF);
-            setConfigItem(OPT_DRV_PARCABLE, PAR_CABLE_STANDARD);
+            setOption(OPT_DRV_TYPE, DRIVE_VC1541II);
+            setOption(OPT_DRV_RAM, DRVRAM_8000_9FFF);
+            setOption(OPT_DRV_PARCABLE, PAR_CABLE_STANDARD);
             break;
 
         case VC1541_DOLPHIN_30:
         case VC1541_DOLPHIN_30_SLVDR:
 
             debug(CNF_DEBUG, "autoConfig: Dolphin DOS 3\n");
-            setConfigItem(OPT_DRV_TYPE, DRIVE_VC1541II);
-            setConfigItem(OPT_DRV_RAM, DRVRAM_6000_7FFF);
-            setConfigItem(OPT_DRV_PARCABLE, PAR_CABLE_DOLPHIN3);
+            setOption(OPT_DRV_TYPE, DRIVE_VC1541II);
+            setOption(OPT_DRV_RAM, DRVRAM_6000_7FFF);
+            setOption(OPT_DRV_PARCABLE, PAR_CABLE_DOLPHIN3);
             break;
             
         default:

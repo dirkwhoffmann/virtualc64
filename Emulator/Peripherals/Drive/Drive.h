@@ -35,6 +35,25 @@ namespace vc64 {
 
 class Drive final : public SubComponent, public Inspectable<DriveInfo, Void> {
 
+    ConfigOptions options = {
+
+        { OPT_DRV_AUTO_CONFIG,  "Derive config based on ROM" },
+        { OPT_DRV_TYPE,         "Drive model" },
+        { OPT_DRV_RAM,          "Drive RAM" },
+        { OPT_DRV_PARCABLE,     "Parallel cable" },
+        { OPT_DRV_CONNECT,      "Connected" },
+        { OPT_DRV_POWER_SWITCH, "Power switch" },
+        { OPT_DRV_POWER_SAVE,   "Power-save mode" },
+        { OPT_DRV_EJECT_DELAY,  "Eject delay" },
+        { OPT_DRV_SWAP_DELAY,   "Disk swap delay" },
+        { OPT_DRV_INSERT_DELAY, "Disk insert delay" },
+        { OPT_DRV_PAN,          "Drive location" },
+        { OPT_DRV_POWER_VOL,    "Powerup volume" },
+        { OPT_DRV_STEP_VOL,     "Head step volume" },
+        { OPT_DRV_INSERT_VOL,   "Disk insertion volume" },
+        { OPT_DRV_EJECT_VOL,    "Disk eject volume" }
+    };
+
     friend class DriveMemory;
     friend class VIA1;
     friend class VIA2;
@@ -357,6 +376,17 @@ public:
 
 
     //
+    // Methods from Configurable
+    //
+
+    const ConfigOptions &getOptions() const override { return options; }
+
+    // Gets or sets a config option
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
+
+
+    //
     // Configuring
     //
     
@@ -365,9 +395,6 @@ public:
     // static DriveConfig getDefaultConfig();
     const DriveConfig &getConfig() const { return config; }
     void resetConfig() override;
-
-    i64 getConfigItem(Option option) const;
-    void setConfigItem(Option option, i64 value);
 
     // Updates the current configuration according to the installed ROM
     void autoConfigure();

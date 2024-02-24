@@ -288,6 +288,7 @@ C64::operator << (SerResetter &worker)
     rasterCycle = 1;
 }
 
+/*
 void
 C64::resetConfig()
 {
@@ -301,17 +302,12 @@ C64::getConfigItem(Option option) const
     return 0;
 }
 
-i64
-C64::getConfigItem(Option option, long id) const
-{
-    return 0;
-}
-
 void
 C64::setConfigItem(Option option, i64 value)
 {
 
 }
+*/
 
 void
 C64::updateClockFrequency()
@@ -376,7 +372,7 @@ C64::setInspectionTarget(InspectionTarget target, Cycle trigger)
 void
 C64::execute()
 {
-    if (getConfigItem(OPT_VICII_POWER_SAVE)) {
+    if (emulator.getConfigItem(OPT_VICII_POWER_SAVE)) {
         execute(emulator.isWarping() && (frame & 7) != 0);
     } else {
         execute(false);
@@ -739,10 +735,10 @@ C64::_dump(Category category, std::ostream& os) const
 
     if (category == Category::Summary) {
 
-        auto vicRev = (VICIIRevision)getConfigItem(OPT_VICII_REVISION);
-        auto sidRev = (SIDRevision)getConfigItem(OPT_SID_REVISION);
-        auto cia1Rev = (CIARevision)cia1.getConfigItem(OPT_CIA_REVISION);
-        auto cia2Rev = (CIARevision)cia2.getConfigItem(OPT_CIA_REVISION);
+        auto vicRev = (VICIIRevision)emulator.getConfigItem(OPT_VICII_REVISION);
+        auto sidRev = (SIDRevision)emulator.getConfigItem(OPT_SID_REVISION);
+        auto cia1Rev = (CIARevision)cia1.getOption(OPT_CIA_REVISION);
+        auto cia2Rev = (CIARevision)cia2.getOption(OPT_CIA_REVISION);
 
         os << tab("Model");
         os << (vic.pal() ? "PAL" : "NTSC") << std::endl;

@@ -22,6 +22,14 @@ namespace vc64 {
  */
 class Host final : public CoreComponent, public Dumpable {
 
+    ConfigOptions options = {
+
+        { OPT_HOST_REFRESH_RATE,    "Video refresh rate" },
+        { OPT_HOST_SAMPLE_RATE,     "Audio sample rate" },
+        { OPT_HOST_FRAMEBUF_WIDTH,  "Window height" },
+        { OPT_HOST_FRAMEBUF_HEIGHT, "Window width" }
+    };
+    
     // Refresh rate of the host display
     double refreshRate = 60.0;
 
@@ -65,19 +73,24 @@ private:
 
 
     //
-    // Configuring
+    // Methods from Configurable
     //
 
 public:
 
-    i64 getConfigItem(Option option) const;
-    void setConfigItem(Option option, i64 value);
+    const ConfigOptions &getOptions() const override { return options; }
+
+    // Gets or sets a config option
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
 
 
     //
     // Working with temporary files and folders
     //
 
+public:
+    
     // Returns a path to a temporary folder
     fs::path tmp() const throws;
 

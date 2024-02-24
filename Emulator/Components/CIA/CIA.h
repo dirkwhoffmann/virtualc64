@@ -415,8 +415,8 @@ public:
     const ConfigOptions &getOptions() const override { return options; }
 
     // Gets or sets a config option
-    i64 getOption(Option opt) const override { return getConfigItem(opt); }
-    void setOption(Option opt, i64 value) override { setConfigItem(opt, value); }
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
 
 
     //
@@ -428,9 +428,6 @@ public:
     // static CIAConfig getDefaultConfig();
     const CIAConfig &getConfig() const { return config; }
     void resetConfig() override;
-
-    i64 getConfigItem(Option option) const;
-    void setConfigItem(Option option, i64 value);
 
 
     //

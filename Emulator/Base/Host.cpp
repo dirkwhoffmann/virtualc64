@@ -17,15 +17,8 @@
 
 namespace vc64 {
 
-/*
-Host::Host(Emulator& ref) : CoreComponent(ref)
-{
-
-}
-*/
-
 i64
-Host::getConfigItem(Option option) const
+Host::getOption(Option option) const
 {
     switch (option) {
 
@@ -40,7 +33,7 @@ Host::getConfigItem(Option option) const
 }
 
 void
-Host::setConfigItem(Option option, i64 value)
+Host::setOption(Option option, i64 value)
 {
     switch (option) {
 
