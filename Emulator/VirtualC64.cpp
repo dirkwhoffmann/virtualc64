@@ -116,15 +116,6 @@ VirtualC64::getConfigItem(Option option, long id) const
     return Emulator::getConfigItem(option, id);
 }
 
-/*
-void
-VirtualC64::setConfigItem(Option option, i64 value)
-{
-    Emulator::setConfigItem(option, value);
-    main.markAsDirty();
-}
-*/
-
 void
 VirtualC64::put(const Cmd &cmd)
 {

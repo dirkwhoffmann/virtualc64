@@ -103,7 +103,6 @@ public:
     // Queries a single configuration option
     i64 getConfigItem(Option option) const;
     i64 getConfigItem(Option option, long id) const;
-    // void setConfigItem(Option option, i64 value);
 
 
     //

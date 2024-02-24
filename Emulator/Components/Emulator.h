@@ -114,16 +114,12 @@ public:
     // Queries a single configuration option
     i64 getConfigItem(Option option) const;
     i64 getConfigItem(Option option, long id) const;
-    /*
-    void setConfigItem(Option option, i64 value);
-    */
 
     // Returns the emulated refresh rate of the virtual C64
     double refreshRate() const override;
 
 private:
 
-    static EmulatorConfig getDefaultConfig();
     const EmulatorConfig &getConfig() const { return config; }
     void resetConfig();
 

@@ -25,23 +25,6 @@ void
 SID::resetConfig()
 {
     Configurable::resetConfig(emulator.defaults, nr);
-
-    /*
-    assert(isPoweredOff());
-    auto &defaults = emulator.defaults;
-
-    std::vector <Option> options = {
-
-        // OPT_SID_ENABLE,
-        OPT_SID_ADDRESS,
-        OPT_AUD_VOL,
-        OPT_AUD_PAN
-    };
-
-    for (auto &option : options) {
-        setConfigItem(option, defaults.get(option, nr));
-    }
-    */
 }
 
 i64

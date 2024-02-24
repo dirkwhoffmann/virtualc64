@@ -84,32 +84,6 @@ Drive::getInfo() const
     return result;
 }
 
-/*
-DriveConfig
-Drive::getDefaultConfig()
-{
-    DriveConfig defaults;
-    
-    defaults.autoConfig = true;
-    defaults.type = DRIVE_VC1541II;
-    defaults.ram = DRVRAM_NONE;
-    defaults.parCable = PAR_CABLE_NONE;
-    defaults.powerSave = true;
-    defaults.connected = false;
-    defaults.switchedOn = true;
-    defaults.ejectDelay = 30;
-    defaults.swapDelay = 30;
-    defaults.insertDelay = 30;
-    defaults.pan = 0;
-    defaults.powerVolume = 50;
-    defaults.stepVolume = 50;
-    defaults.insertVolume = 50;
-    defaults.ejectVolume = 50;
-
-    return defaults;
-}
-*/
-
 void
 Drive::resetConfig()
 {

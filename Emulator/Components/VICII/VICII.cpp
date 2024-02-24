@@ -133,31 +133,6 @@ VICII::resetTexture(u32 *p)
     }
 }
 
-/*
-VICIIConfig
-VICII::getDefaultConfig()
-{
-    VICIIConfig defaults;
-    
-    defaults.revision = VICII_PAL_8565;
-    defaults.powerSave = true;
-    defaults.grayDotBug = true;
-    defaults.glueLogic = GLUE_LOGIC_DISCRETE;
-
-    defaults.palette = PALETTE_COLOR;
-    defaults.brightness = 50;
-    defaults.contrast = 100;
-    defaults.saturation = 50;
-    
-    defaults.hideSprites = false;
-    
-    defaults.checkSSCollisions = true;
-    defaults.checkSBCollisions = true;
-    
-    return defaults;
-}
-*/
-
 bool
 VICII::autoInspect() const
 {
@@ -241,30 +216,6 @@ void
 VICII::resetConfig()
 {
     Configurable::resetConfig(emulator.defaults);
-
-    /*
-    assert(isPoweredOff());
-    auto &defaults = emulator.defaults;
-
-    std::vector <Option> options = {
-
-        OPT_VICII_REVISION,
-        OPT_VICII_POWER_SAVE,
-        OPT_VICII_GRAY_DOT_BUG,
-        OPT_GLUE_LOGIC,
-        OPT_VICII_PALETTE,
-        OPT_VICII_BRIGHTNESS,
-        OPT_VICII_CONTRAST,
-        OPT_VICII_SATURATION,
-        OPT_VICII_HIDE_SPRITES,
-        OPT_VICII_SB_COLLISIONS,
-        OPT_VICII_SS_COLLISIONS
-    };
-
-    for (auto &option : options) {
-        setOption(option, defaults.get(option));
-    }
-    */
 }
 
 i64

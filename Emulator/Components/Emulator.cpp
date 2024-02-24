@@ -94,37 +94,10 @@ Emulator::revertToFactorySettings()
     initialize();
 }
 
-EmulatorConfig
-Emulator::getDefaultConfig()
-{
-    EmulatorConfig defaults;
-
-    defaults.warpMode = WARP_AUTO;
-
-    return defaults;
-}
-
 void
 Emulator::resetConfig()
 {
     Configurable::resetConfig(defaults);
-
-    /*
-    assert(isPoweredOff());
-
-    std::vector <Option> options = {
-
-        OPT_EMU_WARP_BOOT,
-        OPT_EMU_WARP_MODE,
-        OPT_EMU_VSYNC,
-        OPT_EMU_TIME_LAPSE,
-        OPT_EMU_RUN_AHEAD,
-    };
-
-    for (auto &option : options) {
-        setConfigItem(option, defaults.get(option));
-    }
-    */
 }
 
 i64 
