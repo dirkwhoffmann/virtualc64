@@ -350,14 +350,20 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({cia, "set"}, { c64.cia1.argList(), Arg::value },
-                 "Configures the component",
-                 [this](Arguments& argv, long value) {
+        root.add({cia, "set"}, "Configures the component");
 
-            value == 0 ?
-            cia1.Configurable::setOption(argv[0], argv[1]) :
-            cia2.Configurable::setOption(argv[0], argv[1]) ;
-        }, i);
+        for (auto &option : cia1.getOptions()) {
+
+            root.add({cia, "set", OptionEnum::key(option.first)}, { Arg::value },
+                     option.second,
+                     [this](Arguments& argv, long value) {
+
+                HI_WORD(value) == 0 ?
+                cia1.Configurable::setOption(LO_WORD(value), argv[0]) :
+                cia2.Configurable::setOption(LO_WORD(value), argv[0]) ;
+
+            }, HI_W_LO_W(i, option.first));
+        }
     }
 
 

@@ -121,7 +121,6 @@ struct Command {
              std::pair<const string &, const string &> help,
              std::function<void (Arguments&, long)> func = nullptr, long param = 0);
 
-
     void clone(const string &alias,
                const std::vector<string> &tokens,
                long param = 0);
@@ -130,6 +129,11 @@ struct Command {
                const std::vector<string> &tokens,
                const string &help,
                long param = 0);
+
+    /*
+    void registerSetCommand(const string &cmd, const ConfigOptions &options,
+                            std::function<void (Arguments&, long)> func = nullptr, long param = 0);
+    */
 
     // Returns arguments counts
     isize minArgs() const { return isize(requiredArgs.size()); }
