@@ -23,11 +23,20 @@ class VirtualC64;
 
 namespace vc64 {
 
-class Emulator : public Thread, public Inspectable<EmulatorInfo, EmulatorStats> {
+class Emulator : public Thread, public Inspectable<EmulatorInfo, EmulatorStats>, public Configurable {
 
     friend class API;
     friend class ::VirtualC64;
 
+    ConfigOptions options = {
+
+        { OPT_EMU_WARP_BOOT,    "Warp boot" },
+        { OPT_EMU_WARP_MODE,    "Warp mode" },
+        { OPT_EMU_VSYNC,        "VSYNC mode" },
+        { OPT_EMU_TIME_LAPSE,   "Speed adjustment" },
+        { OPT_EMU_RUN_AHEAD,    "Run-ahead frames" }
+    };
+    
     EmulatorConfig config = { };
 
     // The virtual C64
@@ -77,6 +86,17 @@ public:
 
 
     //
+    // Methods from Configurable
+    //
+
+    const ConfigOptions &getOptions() const override { return options; }
+
+    // Gets or sets a config option
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
+
+
+    //
     // Configuring
     //
 
@@ -94,7 +114,9 @@ public:
     // Queries a single configuration option
     i64 getConfigItem(Option option) const;
     i64 getConfigItem(Option option, long id) const;
+    /*
     void setConfigItem(Option option, i64 value);
+    */
 
     // Returns the emulated refresh rate of the virtual C64
     double refreshRate() const override;

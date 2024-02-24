@@ -107,6 +107,9 @@ Emulator::getDefaultConfig()
 void
 Emulator::resetConfig()
 {
+    Configurable::resetConfig(defaults);
+
+    /*
     assert(isPoweredOff());
 
     std::vector <Option> options = {
@@ -120,6 +123,70 @@ Emulator::resetConfig()
 
     for (auto &option : options) {
         setConfigItem(option, defaults.get(option));
+    }
+    */
+}
+
+i64 
+Emulator::getOption(Option opt) const
+{
+    switch (opt) {
+
+        case OPT_EMU_WARP_BOOT:     return config.warpBoot;
+        case OPT_EMU_WARP_MODE:     return config.warpMode;
+        case OPT_EMU_VSYNC:         return config.vsync;
+        case OPT_EMU_TIME_LAPSE:    return config.timeLapse;
+        case OPT_EMU_RUN_AHEAD:     return config.runAhead;
+
+        default:
+            fatalError;
+    }
+}
+
+void
+Emulator::setOption(Option opt, i64 value)
+{
+    switch (opt) {
+
+        case OPT_EMU_WARP_BOOT:
+
+            config.warpBoot = isize(value);
+            return;
+
+        case OPT_EMU_WARP_MODE:
+
+            if (!WarpModeEnum::isValid(value)) {
+                throw VC64Error(ERROR_OPT_INVARG, WarpModeEnum::keyList());
+            }
+
+            config.warpMode = WarpMode(value);
+            return;
+
+        case OPT_EMU_VSYNC:
+
+            config.vsync = bool(value);
+            return;
+
+        case OPT_EMU_TIME_LAPSE:
+
+            if (value < 50 || value > 200) {
+                throw VC64Error(ERROR_OPT_INVARG, "50...200");
+            }
+
+            config.timeLapse = isize(value);
+            return;
+
+        case OPT_EMU_RUN_AHEAD:
+
+            if (value < 0 || value > 12) {
+                throw VC64Error(ERROR_OPT_INVARG, "0...12");
+            }
+
+            config.runAhead = isize(value);
+            return;
+
+        default:
+            fatalError;
     }
 }
 
@@ -160,7 +227,7 @@ Emulator::configure(Option option, i64 value)
         case OPT_EMU_TIME_LAPSE:
         case OPT_EMU_RUN_AHEAD:
 
-            setConfigItem(option, value);
+            setOption(option, value);
             break;
 
         case OPT_HOST_SAMPLE_RATE:
@@ -253,8 +320,8 @@ Emulator::configure(Option option, i64 value)
         case OPT_SAVE_ROMS:
 
             main.mem.setOption(option, value);
-            main.drive8.mem.setConfigItem(option, value);
-            main.drive9.mem.setConfigItem(option, value);
+            main.drive8.mem.setOption(option, value);
+            main.drive9.mem.setOption(option, value);
             break;
 
         case OPT_DRV_AUTO_CONFIG:
@@ -803,53 +870,6 @@ Emulator::getConfigItem(Option option, long id) const
             if (id == PORT_1) return main.port1.joystick.getOption(option);
             if (id == PORT_2) return main.port2.joystick.getOption(option);
             fatalError;
-
-        default:
-            fatalError;
-    }
-}
-
-void
-Emulator::setConfigItem(Option option, i64 value)
-{
-    switch (option) {
-
-        case OPT_EMU_WARP_BOOT:
-
-            config.warpBoot = isize(value);
-            return;
-
-        case OPT_EMU_WARP_MODE:
-
-            if (!WarpModeEnum::isValid(value)) {
-                throw VC64Error(ERROR_OPT_INVARG, WarpModeEnum::keyList());
-            }
-
-            config.warpMode = WarpMode(value);
-            return;
-
-        case OPT_EMU_VSYNC:
-
-            config.vsync = bool(value);
-            return;
-
-        case OPT_EMU_TIME_LAPSE:
-
-            if (value < 50 || value > 200) {
-                throw VC64Error(ERROR_OPT_INVARG, "50...200");
-            }
-
-            config.timeLapse = isize(value);
-            return;
-
-        case OPT_EMU_RUN_AHEAD:
-
-            if (value < 0 || value > 12) {
-                throw VC64Error(ERROR_OPT_INVARG, "0...12");
-            }
-
-            config.runAhead = isize(value);
-            return;
 
         default:
             fatalError;

@@ -53,36 +53,14 @@ DriveMemory::operator << (SerWriter &worker)
     if (config.saveRoms) worker << rom;
 }
 
-/*
-DriveMemConfig
-DriveMemory::getDefaultConfig()
-{
-    DriveMemConfig defaults;
-
-    defaults.saveRoms = true;
-
-    return defaults;
-}
-*/
-
 void
 DriveMemory::resetConfig()
 {
-    assert(isPoweredOff());
-    auto &defaults = emulator.defaults;
-
-    std::vector <Option> options = {
-
-        OPT_SAVE_ROMS
-    };
-
-    for (auto &option : options) {
-        setConfigItem(option, defaults.get(option));
-    }
+    Configurable::resetConfig(emulator.defaults);
 }
 
 i64
-DriveMemory::getConfigItem(Option option) const
+DriveMemory::getOption(Option option) const
 {
     switch (option) {
 
@@ -94,7 +72,7 @@ DriveMemory::getConfigItem(Option option) const
 }
 
 void
-DriveMemory::setConfigItem(Option option, i64 value)
+DriveMemory::setOption(Option option, i64 value)
 {
     switch (option) {
 

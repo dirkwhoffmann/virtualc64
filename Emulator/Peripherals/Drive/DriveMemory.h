@@ -19,6 +19,11 @@ namespace vc64 {
 
 class DriveMemory final : public SubComponent, public Dumpable {
     
+    ConfigOptions options = {
+
+        { OPT_SAVE_ROMS,    "Save ROMs in snapshots" }
+    };
+
     // Current configuration
     DriveMemConfig config = { };
 
@@ -100,17 +105,24 @@ public:
 
 
     //
+    // Methods from Configurable
+    //
+
+    const ConfigOptions &getOptions() const override { return options; }
+
+    // Gets or sets a config option
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
+
+
+    //
     // Configuring
     //
 
 public:
 
-    // static DriveMemConfig getDefaultConfig();
     const DriveMemConfig &getConfig() const { return config; }
     void resetConfig() override;
-
-    i64 getConfigItem(Option option) const;
-    void setConfigItem(Option option, i64 value);
 
 
     //

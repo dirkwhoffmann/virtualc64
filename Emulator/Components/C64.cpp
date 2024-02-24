@@ -288,27 +288,6 @@ C64::operator << (SerResetter &worker)
     rasterCycle = 1;
 }
 
-/*
-void
-C64::resetConfig()
-{
-
-}
-
-
-i64
-C64::getConfigItem(Option option) const
-{
-    return 0;
-}
-
-void
-C64::setConfigItem(Option option, i64 value)
-{
-
-}
-*/
-
 void
 C64::updateClockFrequency()
 {
