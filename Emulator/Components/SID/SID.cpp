@@ -50,19 +50,10 @@ SID::getOption(Option option) const
 
     switch (option) {
 
-            /*
-        case OPT_SID_ENABLE:
-            return config.enabled;
-             */
-
-        case OPT_SID_ADDRESS:
-            return config.address;
-
-        case OPT_AUD_VOL:
-            return config.vol;
-
-        case OPT_AUD_PAN:
-            return config.pan;
+        case OPT_SID_ENABLE:     return config.enabled;
+        case OPT_SID_ADDRESS:    return config.address;
+        case OPT_AUD_VOL:        return config.vol;
+        case OPT_AUD_PAN:        return config.pan;
 
         default:
             fatalError;
@@ -76,7 +67,6 @@ SID::setOption(Option option, i64 value)
 
     switch (option) {
 
-            /*
         case OPT_SID_ENABLE:
         {
             if (nr == 0 && value == false) {
@@ -91,12 +81,12 @@ SID::setOption(Option option, i64 value)
             {   SUSPENDED
 
                 config.enabled = value;
-                c64.muxer.clearSampleBuffer(id);
+                c64.muxer.clearSampleBuffer(nr);
                 c64.muxer.hardReset();
             }
             return;
         }
-             */
+
         case OPT_SID_ADDRESS:
         {
             if (nr == 0 && value != 0xD400) {

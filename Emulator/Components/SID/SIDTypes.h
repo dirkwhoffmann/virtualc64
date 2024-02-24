@@ -112,6 +112,9 @@ struct SamplingMethodEnum : util::Reflection<SamplingMethodEnum, SamplingMethod>
 
 typedef struct
 {
+    // Indicates if this SID is plugged in
+    bool enabled;
+
     // Location of the SID registers in memory
     u16 address;
 
@@ -126,7 +129,6 @@ typedef struct
     // Hardware settings
     SIDRevision revision;
     bool powerSave;
-    u8 enabled;
     bool filter;
     
     // Emlation engine settings

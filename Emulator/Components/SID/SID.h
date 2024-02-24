@@ -24,6 +24,7 @@ class SID final : public SubComponent
 
     ConfigOptions options = {
 
+        { OPT_SID_ENABLE,   "Enables or disables a SID" },
         { OPT_SID_ADDRESS,  "Mapped location in memory" },
         { OPT_AUD_VOL,      "Volume" },
         { OPT_AUD_PAN,      "Speaker location" }
@@ -96,6 +97,7 @@ public:
 
         worker
 
+        << config.enabled
         << config.address
         << config.vol
         << config.pan;

@@ -97,20 +97,6 @@ Muxer::resetConfig()
     for (auto &option : options) {
         setConfigItem(option, defaults.get(option));
     }
-
-    std::vector <Option> moreOptions = {
-
-        OPT_SID_ENABLE,
-        // OPT_SID_ADDRESS,
-        // OPT_AUD_VOL,
-        // OPT_AUD_PAN
-    };
-
-    for (auto &option : moreOptions) {
-        for (isize i = 0; i < 4; i++) {
-            setConfigItem(option, i, defaults.get(option, i));
-        }
-    }
 }
 
 i64
@@ -147,25 +133,7 @@ Muxer::getConfigItem(Option option) const
 i64
 Muxer::getConfigItem(Option option, long id) const
 {
-    switch (option) {
-            
-        case OPT_SID_ENABLE:
-            return GET_BIT(config.enabled, id);
-            
-            /*
-        case OPT_SID_ADDRESS:
-            return config.address[id];
-            
-        case OPT_AUD_VOL:
-            return config.vol[id];
-
-        case OPT_AUD_PAN:
-            return config.pan[id];
-             */
-
-        default:
-            fatalError;
-    }
+    fatalError;
 }
 
 void
@@ -272,87 +240,7 @@ Muxer::setConfigItem(Option option, i64 value)
 void
 Muxer::setConfigItem(Option option, long id, i64 value)
 {
-    // bool wasMuted = isMuted();
-
-    switch (option) {
-
-        case OPT_SID_ENABLE:
-        {
-            assert(id >= 0 && id <= 3);
-
-            if (id == 0 && value == false) {
-                warn("SID 0 can't be disabled\n");
-                return;
-            }
-            
-            if (!!GET_BIT(config.enabled, id) == value) {
-                return;
-            }
-            
-            {   SUSPENDED
-                
-                REPLACE_BIT(config.enabled, id, value);
-                clearSampleBuffer(id);
-                sid[0].hardReset();
-                sid[1].hardReset();
-                sid[2].hardReset();
-                sid[3].hardReset();
-            }
-            return;
-        }
-
-            /*
-        case OPT_SID_ADDRESS:
-        {
-            assert(id >= 0 && id <= 3);
-
-            if (id == 0 && value != 0xD400) {
-                warn("SID 0 can't be remapped\n");
-                return;
-            }
-
-            if (value < 0xD400 || value > 0xD7E0 || (value & 0x1F)) {
-                throw VC64Error(ERROR_OPT_INVARG, "D400, D420 ... D7E0");
-            }
-
-            if (config.address[id] == value) {
-                return;
-            }
-            
-            {   SUSPENDED
-                
-                config.address[id] = (u16)value;
-                clearSampleBuffer(id);
-            }
-            return;
-        }
-        case OPT_AUD_VOL:
-            
-            assert(id >= 0 && id <= 3);
-
-            config.vol[id] = std::clamp(value, 0LL, 100LL);
-            vol[id] = powf((float)config.vol[id] / 100, 1.4f) * 0.000025f;
-#ifdef __EMSCRIPTEN__
-            vol[id] *= 0.15f;
-#endif
-            if (wasMuted != isMuted()) {
-                msgQueue.put(MSG_MUTE, isMuted());
-            }
-
-            return;
-            
-        case OPT_AUD_PAN:
-            
-            assert(id >= 0 && id <= 3);
-
-            config.pan[id] = value;
-            pan[id] = float(0.5 * (sin(config.pan[id] * M_PI / 200.0) + 1));
-            return;
-             */
-            
-        default:
-            fatalError;
-    }
+    fatalError;
 }
 
 bool
@@ -465,14 +353,6 @@ Muxer::_dump(Category category, std::ostream& os) const
         os << SIDRevisionEnum::key(config.revision) << std::endl;
         os << tab("Power save mode");
         os << bol(config.powerSave, "during warp", "never") << std::endl;
-        os << tab("Enable mask");
-        os << dec(config.enabled) << std::endl;
-        os << tab("1st extra SID");
-        os << hex(sid[1].config.address) << std::endl;
-        os << tab("2nd extra SID");
-        os << hex(sid[2].config.address) << std::endl;
-        os << tab("3rd extra SID");
-        os << hex(sid[3].config.address) << std::endl;
         os << tab("Filter");
         os << bol(config.filter) << std::endl;
         os << tab("Engine");
@@ -491,6 +371,19 @@ Muxer::_dump(Category category, std::ostream& os) const
         os << config.volL << std::endl;
         os << tab("Volume R");
         os << config.volR << std::endl;
+
+        if (sid[1].config.enabled) {
+            os << tab("1st extra SID");
+            os << hex(sid[1].config.address) << std::endl;
+        }
+        if (sid[2].config.enabled) {
+            os << tab("2nd extra SID");
+            os << hex(sid[2].config.address) << std::endl;
+        }
+        if (sid[3].config.enabled) {
+            os << tab("3rd extra SID");
+            os << hex(sid[3].config.address) << std::endl;
+        }
 
     } else {
 
@@ -630,7 +523,7 @@ Muxer::peek(u16 addr)
     executeUntil(cpu.clock);
 
     // Select the target SID
-    isize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
+    isize sidNr = mappedSID(addr);
 
     addr &= 0x1F;
 
@@ -664,7 +557,7 @@ u8
 Muxer::spypeek(u16 addr) const
 {
     // Select the target SID
-    isize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
+    isize sidNr = mappedSID(addr);
 
     addr &= 0x1F;
 
@@ -711,7 +604,7 @@ Muxer::poke(u16 addr, u8 value)
     executeUntil(cpu.clock);
 
     // Select the target SID
-    isize sidNr = config.enabled > 1 ? mappedSID(addr) : 0;
+    isize sidNr = mappedSID(addr);
 
     addr &= 0x1F;
     
@@ -771,12 +664,12 @@ Muxer::executeCycles(isize numCycles)
             numSamples = sid[0].fastsid.executeCycles(numCycles, sidStream[0]);
 
             // Run all other SIDS (if any)
-            if (config.enabled > 1) {
-                for (isize i = 1; i < 4; i++) {
-                    if (isEnabled(i)) {
-                        isize numSamples2 = sid[i].fastsid.executeCycles(numCycles, sidStream[i]);
-                        numSamples = std::min(numSamples, numSamples2);
-                    }
+            for (isize i = 1; i < 4; i++) {
+
+                if (isEnabled(i)) {
+
+                    isize numSamples2 = sid[i].fastsid.executeCycles(numCycles, sidStream[i]);
+                    numSamples = std::min(numSamples, numSamples2);
                 }
             }
             break;
@@ -787,12 +680,12 @@ Muxer::executeCycles(isize numCycles)
             numSamples = sid[0].resid.executeCycles(numCycles, sidStream[0]);
 
             // Run all other SIDS (if any)
-            if (config.enabled > 1) {
-                for (isize i = 1; i < 4; i++) {
-                    if (isEnabled(i)) {
-                        isize numSamples2 = sid[i].resid.executeCycles(numCycles, sidStream[i]);
-                        numSamples = std::min(numSamples, numSamples2);
-                    }
+            for (isize i = 1; i < 4; i++) {
+
+                if (isEnabled(i)) {
+
+                    isize numSamples2 = sid[i].resid.executeCycles(numCycles, sidStream[i]);
+                    numSamples = std::min(numSamples, numSamples2);
                 }
             }
             break;
@@ -802,8 +695,12 @@ Muxer::executeCycles(isize numCycles)
     }
     
     // Produce the final stereo stream
-    (config.enabled > 1) ? mixMultiSID(numSamples) : mixSingleSID(numSamples);
-    
+    if (isEnabled(1) || isEnabled(2) || isEnabled(3)) {
+        mixMultiSID(numSamples);
+    } else {
+        mixSingleSID(numSamples);
+    }
+
     return numCycles;
 }
 

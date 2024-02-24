@@ -48,6 +48,17 @@ class Muxer final : public SubComponent, public Inspectable<SIDInfo, Void> {
 
     friend C64Memory;
 
+    ConfigOptions options = {
+
+        { OPT_SID_REVISION,     "Chip revision" },
+        { OPT_SID_POWER_SAVE,   "Power-save mode" },
+        { OPT_SID_FILTER,       "Audio filter" },
+        { OPT_SID_ENGINE,       "SID backend" },
+        { OPT_SID_SAMPLING,     "Sampling mode" },
+        { OPT_AUD_VOL_L,        "Master volume (left speaker)" },
+        { OPT_AUD_VOL_R,        "Master volume (right speaker)" }
+    };
+    
     // Current configuration
     MuxerConfig config = { };
     
@@ -173,7 +184,6 @@ public:
         << volR
 
         << config.revision
-        << config.enabled
         << config.filter
         << config.engine
         << config.sampling
@@ -189,7 +199,20 @@ public:
 
     void _reset(bool hard) override;
 
-    
+
+
+    //
+    // Methods from Configurable
+    //
+
+    const ConfigOptions &getOptions() const override { return options; }
+
+    // Gets or sets a config option
+    /*
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
+    */
+
     //
     // Configuring
     //
@@ -206,8 +229,8 @@ public:
     void setConfigItem(Option option, i64 value);
     void setConfigItem(Option option, long id, i64 value);
 
-    bool isEnabled(isize nr) const { return GET_BIT(config.enabled, nr); }
-    
+    bool isEnabled(isize nr) const { return sid[nr].config.enabled; }
+
     bool isMuted() const;
 
     u32 getClockFrequency();

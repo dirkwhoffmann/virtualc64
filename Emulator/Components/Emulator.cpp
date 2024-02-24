@@ -460,7 +460,6 @@ Emulator::configure(Option option, long id, i64 value)
             }
             break;
 
-        case OPT_SID_ENABLE:
         case OPT_SID_REVISION:
         case OPT_SID_FILTER:
         case OPT_SID_POWER_SAVE:
@@ -472,6 +471,7 @@ Emulator::configure(Option option, long id, i64 value)
             main.muxer.setConfigItem(option, id, value);
             break;
 
+        case OPT_SID_ENABLE:
         case OPT_SID_ADDRESS:
         case OPT_AUD_PAN:
         case OPT_AUD_VOL:
