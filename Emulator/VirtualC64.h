@@ -299,10 +299,10 @@ public:
 
         using API::API;
 
-        SIDConfig getConfig() const;
+        MuxerConfig getConfig() const;
         SIDInfo getInfo(isize nr) const;
         VoiceInfo getVoiceInfo(isize nr, isize voice) const;
-        SIDStats getStats() const;
+        MuxerStats getStats() const;
 
         void rampUp();
         void rampUp(float from);

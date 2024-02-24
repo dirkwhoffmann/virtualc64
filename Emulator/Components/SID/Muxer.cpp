@@ -50,10 +50,10 @@ Muxer::clear()
     stream.unlock();
 }
 
-SIDConfig
+MuxerConfig
 Muxer::getDefaultConfig()
 {
-    SIDConfig defaults;
+    MuxerConfig defaults;
     
     defaults.revision = MOS_8580;
     defaults.powerSave = false;
@@ -505,7 +505,7 @@ Muxer::_dump(Category category, std::ostream& os, isize nr) const
     }
 }
 
-SIDStats
+MuxerStats
 Muxer::getStats()
 {
     stats.fillLevel = stream.fillLevel();

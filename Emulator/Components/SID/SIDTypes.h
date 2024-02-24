@@ -131,7 +131,7 @@ typedef struct
     i64 vol[4];
     i64 pan[4];
 }
-SIDConfig;
+MuxerConfig;
 
 typedef struct
 {
@@ -144,7 +144,7 @@ typedef struct
     // Number of buffer overflows since power up
     u64 bufferOverflows;
 }
-SIDStats;
+MuxerStats;
 
 typedef struct
 {

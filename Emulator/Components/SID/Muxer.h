@@ -49,10 +49,10 @@ class Muxer final : public SubComponent, public Inspectable<SIDInfo, Void> {
     friend C64Memory;
 
     // Current configuration
-    SIDConfig config = { };
+    MuxerConfig config = { };
     
     // Statistics
-    SIDStats stats = { };
+    MuxerStats stats = { };
 
     
     //
@@ -225,8 +225,8 @@ public:
     
 public:
     
-    static SIDConfig getDefaultConfig();
-    const SIDConfig &getConfig() const { return config; }
+    static MuxerConfig getDefaultConfig();
+    const MuxerConfig &getConfig() const { return config; }
     void resetConfig() override;
 
     i64 getConfigItem(Option option) const;
@@ -255,7 +255,7 @@ public:
     SIDInfo getInfo(isize nr);
     VoiceInfo getVoiceInfo(isize nr, isize voice);
     CoreComponent &getSID(isize nr);
-    SIDStats getStats();
+    MuxerStats getStats();
     
 private:
     
