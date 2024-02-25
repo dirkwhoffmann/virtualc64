@@ -421,6 +421,8 @@
 		50DD82A02614D47E00B84EB3 /* Chrono.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50DD829E2614D47E00B84EB3 /* Chrono.cpp */; };
 		50DEAD8F2008E615008A8761 /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DEAD8E2008E615008A8761 /* Shaders.swift */; };
 		50DF719425021FCA00953E2E /* Keycap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DF719325021FCA00953E2E /* Keycap.swift */; };
+		50E17E212B8B26AC0029747D /* Option.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E17E1F2B8B26AC0029747D /* Option.cpp */; };
+		50E17E222B8B26AC0029747D /* Option.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E17E1F2B8B26AC0029747D /* Option.cpp */; };
 		50E2D9AC25991E4B009A986B /* AnyCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E2D9AA25991E4B009A986B /* AnyCollection.cpp */; };
 		50E9B92D201F299500065A89 /* MyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92C201F299500065A89 /* MyController.swift */; };
 		50E9B92F201FA92C00065A89 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9B92E201FA92C00065A89 /* Alerts.swift */; };
@@ -951,6 +953,9 @@
 		50DD829F2614D47E00B84EB3 /* Chrono.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Chrono.h; sourceTree = "<group>"; };
 		50DEAD8E2008E615008A8761 /* Shaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
 		50DF719325021FCA00953E2E /* Keycap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keycap.swift; sourceTree = "<group>"; };
+		50E17E1F2B8B26AC0029747D /* Option.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Option.cpp; sourceTree = "<group>"; };
+		50E17E232B8B26D70029747D /* Option.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Option.h; sourceTree = "<group>"; };
+		50E17E242B8B26EB0029747D /* OptionTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OptionTypes.h; sourceTree = "<group>"; };
 		50E2D9AA25991E4B009A986B /* AnyCollection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnyCollection.cpp; sourceTree = "<group>"; };
 		50E2D9AB25991E4B009A986B /* AnyCollection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnyCollection.h; sourceTree = "<group>"; };
 		50E56AF629D48A0E00EBCE76 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -1753,6 +1758,9 @@
 				5078BEAC264D72C000EDA161 /* CMakeLists.txt */,
 				50A2D7B024AF94B400671F38 /* Aliases.h */,
 				50A2D7AE24AF944500671F38 /* Constants.h */,
+				50E17E242B8B26EB0029747D /* OptionTypes.h */,
+				50E17E232B8B26D70029747D /* Option.h */,
+				50E17E1F2B8B26AC0029747D /* Option.cpp */,
 				5055D5B226158849005D3DA6 /* ErrorTypes.h */,
 				500C7C43259FC09B00F5CC1F /* Error.h */,
 				5055D5B32615886E005D3DA6 /* Error.cpp */,
@@ -2184,6 +2192,7 @@
 				50726F762961C9DC0031F2F5 /* VIA.cpp in Sources */,
 				50726F7C2961C9DC0031F2F5 /* Disk.cpp in Sources */,
 				50726FBA2961CA2F0031F2F5 /* RegressionTester.cpp in Sources */,
+				50E17E222B8B26AC0029747D /* Option.cpp in Sources */,
 				50726FB12961CA230031F2F5 /* FSDirEntry.cpp in Sources */,
 				50726F802961C9E80031F2F5 /* Mouse1351.cpp in Sources */,
 				50726F9A2961CA0D0031F2F5 /* FinalIII.cpp in Sources */,
@@ -2224,6 +2233,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50E17E212B8B26AC0029747D /* Option.cpp in Sources */,
 				50B9F2812826392400BDFE7B /* MediaManager.swift in Sources */,
 				504C438A24AF29AC00E69CAE /* Mouse1350.cpp in Sources */,
 				50AD303C28141F0B00D9A7A6 /* Buffer.cpp in Sources */,
