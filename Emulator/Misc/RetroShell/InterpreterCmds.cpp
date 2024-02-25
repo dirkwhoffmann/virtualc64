@@ -24,7 +24,7 @@ Interpreter::initCommons(Command &root)
     // Common commands
     //
 
-    root.setGroup("Shell commands");
+    root.pushGroup("Shell commands");
 
     root.add({"."},
              "Enter or exit the debugger",
@@ -93,12 +93,12 @@ Interpreter::initCommandShell(Command &root)
     // Top-level commands
     //
 
-    root.setGroup("Regression tester");
+    root.pushGroup("Regression tester");
 
     root.add({"regression"},    ""); // Run the regression tester
     root.add({"screenshot"},    ""); // Take a screenshot and exit
 
-    root.setGroup("Components");
+    root.pushGroup("Components");
 
     root.add({"emulator"},      "Emulator thread");
     root.add({"c64"},           "The virtual Commodore 64");
@@ -111,7 +111,7 @@ Interpreter::initCommandShell(Command &root)
     root.add({"expansion"},     "Expansion port");
     root.add({"powersupply"},   "Power supply");
 
-    root.setGroup("Peripherals");
+    root.pushGroup("Peripherals");
 
     root.add({"monitor"},       "C64 monitor");
     root.add({"keyboard"},      "Keyboard");
@@ -127,7 +127,7 @@ Interpreter::initCommandShell(Command &root)
     // Regression testing (hidden commands)
     //
 
-    root.setGroup("");
+    root.pushGroup("");
 
     root.add({"regression", "setup"}, { C64ModelEnum::argList() },
              "Initializes the test environment",
@@ -658,7 +658,7 @@ Interpreter::initCommandShell(Command &root)
     // Joystick
     //
 
-    root.setGroup("");
+    root.pushGroup("");
 
     for (isize i = PORT_1; i <= PORT_2; i++) {
 
@@ -775,7 +775,7 @@ Interpreter::initCommandShell(Command &root)
     // Mouse
     //
 
-    root.setGroup("");
+    root.pushGroup("");
 
     for (isize i = PORT_1; i <= PORT_2; i++) {
 

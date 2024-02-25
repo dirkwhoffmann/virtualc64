@@ -58,7 +58,7 @@ Interpreter::initDebugShell(Command &root)
     // Program execution
     //
 
-    root.setGroup("Program execution");
+    root.pushGroup("Program execution");
 
     root.add({"goto"}, { }, { Arg::value },
              std::pair <string, string>("g[oto]", "Goto address"),
@@ -89,32 +89,37 @@ Interpreter::initDebugShell(Command &root)
     // Monitoring
     //
 
-    root.setGroup("Monitoring");
+    root.pushGroup("Monitoring");
 
     root.add({"i"},
              "Inspect a component");
 
-    root.setGroup("Components");
+    root.pushGroup("Components");
 
     root.add({"i", "emulator"},      "Emulator");
     root.add({"i", "c64"},           "C64");
 
+    root.popGroup();
 
-    root.setGroup("Peripherals");
+    root.pushGroup("Peripherals");
 
     root.add({"i", "keyboard"},      "Keyboard");
     root.add({"i", "mouse"},         "Mouse");
     root.add({"i", "joystick"},      "Joystick");
 
-    root.setGroup("Miscellaneous");
+    root.popGroup();
+
+    root.pushGroup("Miscellaneous");
 
     root.add({"i", "host"},          "Host machine");
     root.add({"i", "server"},        "Remote server");
 
+    root.popGroup();
+
     root.add({"r"},
              "Show registers");
 
-
+    root.popGroup();
 /*
 
     root.add({"disassemble"}, { }, { Arg::address },
@@ -131,7 +136,7 @@ Interpreter::initDebugShell(Command &root)
     */
 
 
-    root.setGroup("Debugging components");
+    root.pushGroup("Debugging components");
 
     root.add({"thread"},        "The emulator thread");
     root.add({"c64"},           "The virtual Commodore 64");
@@ -142,13 +147,13 @@ Interpreter::initDebugShell(Command &root)
     root.add({"vicii"},         "Video Interface Controller");
     root.add({"sid"},           "Sound Interface Device");
 
-    root.setGroup("Debugging ports");
+    root.pushGroup("Debugging ports");
 
     root.add({"controlport1"},  "Control port 1");
     root.add({"controlport2"},  "Control port 2");
     root.add({"expansion"},     "Expansion port");
 
-    root.setGroup("Debugging peripherals");
+    root.pushGroup("Debugging peripherals");
 
     root.add({"keyboard"},      "Keyboard");
     root.add({"mouse"},         "mouse");
@@ -182,7 +187,7 @@ Interpreter::initDebugShell(Command &root)
     // C64
     //
 
-    root.setGroup("");
+    root.pushGroup("");
 
     root.add({"c64"},
              "Displays the component state");

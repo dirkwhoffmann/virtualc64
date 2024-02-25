@@ -13,8 +13,9 @@
 #pragma once
 
 #include "Aliases.h"
-#include <vector>
 #include <functional>
+#include <vector>
+#include <stack>
 
 namespace vc64 {
 
@@ -49,8 +50,8 @@ struct Command {
     // Textual descriptions of all command groups
     static std::vector<string> groups;
 
-    // Currently selected group (used in command registration)
-    static isize currentGroup;
+    // Group stack
+    static std::stack<isize> groupStack;
 
     // Group of this command
     isize group;
@@ -87,8 +88,9 @@ struct Command {
     // Methods
     //
 
-    // Creates a new command group
-    void setGroup(const string &description, const string &postfix = ":");
+    // Begins or ends a command group
+    void pushGroup(const string &description, const string &postfix = ":");
+    void popGroup();
 
     // Creates a new node in the command tree
     void add(const std::vector<string> &tokens,
