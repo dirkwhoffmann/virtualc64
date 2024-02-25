@@ -79,6 +79,7 @@ public:
     DriveMemory& operator= (const DriveMemory& other) {
 
         CLONE_ARRAY(ram)
+        CLONE_ARRAY(rom)
         CLONE_ARRAY(usage)
 
         return *this;

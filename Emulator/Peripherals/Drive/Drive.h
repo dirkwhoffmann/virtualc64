@@ -242,29 +242,15 @@ public:
     
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
     
     Drive(isize nr, C64 &ref);
-    
-    
-    //
-    // Methods from CoreObject
-    //
-
-private:
-    
     const char *getDescription() const override;
-    void _dump(Category category, std::ostream& os) const override;
-
     
-    //
-    // Methods from CoreComponent
-    //
-
-public:
+    void _dump(Category category, std::ostream& os) const override;
 
     void _initialize() override;
     
@@ -367,32 +353,15 @@ public:
 
 
     //
-    // Analyzing
+    // Configuring
     //
 
-public:
-
-    DriveInfo getInfo() const;
-
-
-    //
-    // Methods from Configurable
-    //
-
+    const DriveConfig &getConfig() const { return config; }
     const ConfigOptions &getOptions() const override { return options; }
 
     // Gets or sets a config option
     i64 getOption(Option opt) const override;
     void setOption(Option opt, i64 value) override;
-
-
-    //
-    // Configuring
-    //
-    
-public:
-
-    const DriveConfig &getConfig() const { return config; }
     void resetConfig() override;
 
     // Updates the current configuration according to the installed ROM
@@ -402,7 +371,17 @@ public:
     bool hasParCable() { return config.parCable != PAR_CABLE_NONE; }
     ParCableType getParCableType() const { return config.parCable; }
 
-    
+
+    //
+    // Inspecting
+    //
+
+public:
+
+    // TODO: Implement recordInfo
+    DriveInfo getInfo() const;
+
+
     //
     // Working with the drive
     //

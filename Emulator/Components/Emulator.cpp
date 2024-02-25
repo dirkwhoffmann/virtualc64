@@ -243,7 +243,7 @@ Emulator::get(Option option) const
 }
 
 i64
-Emulator::get(Option option, long id) const
+Emulator::get(Option option, isize id) const
 {
     const Drive &drive = id == DRIVE8 ? main.drive8 : main.drive9;
 
@@ -580,7 +580,7 @@ Emulator::set(Option option, i64 value)
 }
 
 void
-Emulator::set(Option option, long id, i64 value)
+Emulator::set(Option option, isize id, i64 value)
 {
     debug(CNF_DEBUG, "configure(%s, %ld, %lld)\n", OptionEnum::key(option), id, value);
 
@@ -696,7 +696,7 @@ Emulator::set(Option opt, const string &value)
 }
 
 void 
-Emulator::set(Option opt, long id, const string &value)
+Emulator::set(Option opt, isize id, const string &value)
 {
     set(opt, id, OptionParser::create(opt)->parse(value));
 }
@@ -708,7 +708,7 @@ Emulator::set(const string &opt, const string &value)
 }
 
 void
-Emulator::set(const string &opt, long id, const string &value)
+Emulator::set(const string &opt, isize id, const string &value)
 {
     set(util::parseEnum<OptionEnum>(opt), id, value);
 }
