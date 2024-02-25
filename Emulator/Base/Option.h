@@ -27,16 +27,16 @@ public:
     OptionParser(Option opt) : opt(opt), arg(0) { };
     virtual ~OptionParser() = default;
 
-    // Factory method for creating the proper parser instance
+    // Factory method for creating the proper parser instance for an option
     static std::unique_ptr<OptionParser> create(Option opt);
 
+    // Parses an argument provides as string
     virtual i64 parse(const string &arg) { return 0; }
-    static i64 parse(Option opt, const string &arg) { return 0; }
 
-    virtual string asString() { return "asString: TODO:"; }
-    virtual string keyList() { return "keyList: TODO"; }
-    virtual string argList() { return "argList: TODO"; }
-    // const char *help();
+    // Data providers
+    virtual string asString() = 0;
+    virtual string keyList() = 0;
+    virtual string argList() = 0;
 };
 
 class BoolParser : public OptionParser {
@@ -47,8 +47,8 @@ public:
 
     virtual i64 parse(const string &s) override { arg = util::parseBool(s); return arg; }
     virtual string asString() override { return arg ? "true" : "false"; }
-    virtual string keyList() override { return "<bool>"; }
-    virtual string argList() override { return "<bool>"; }
+    virtual string keyList() override { return "true, false"; }
+    virtual string argList() override { return "{ true | false }"; }
 };
 
 class NumParser : public OptionParser {
@@ -59,8 +59,8 @@ public:
 
     virtual i64 parse(const string &s) override { arg = util::parseNum(s); return arg; }
     virtual string asString() override { return std::to_string(arg); }
-    virtual string keyList() override { return "<num>"; }
-    virtual string argList() override { return "<num>"; }
+    virtual string keyList() override { return "<value>"; }
+    virtual string argList() override { return "<value>"; }
 };
 
 template <typename T>

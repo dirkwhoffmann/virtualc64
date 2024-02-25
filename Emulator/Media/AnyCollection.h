@@ -22,7 +22,7 @@ public:
     
     AnyCollection() : AnyFile() { }
     AnyCollection(isize capacity) : AnyFile(capacity) { }
-    virtual ~AnyCollection() { }
+    virtual ~AnyCollection() = default;
     
     // Returns the name of this collection
     virtual PETName<16> collectionName() = 0;

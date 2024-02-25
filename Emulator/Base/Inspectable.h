@@ -44,7 +44,7 @@ class Dumpable {
 
 public:
 
-    virtual ~Dumpable() { }
+    virtual ~Dumpable() = default;
     virtual void _dump(Category category, std::ostream& ss) const { }
 
     void dump(Category category, std::ostream& ss) const { _dump(category, ss); }
@@ -62,7 +62,7 @@ protected:
 public:
 
     Inspectable() { }
-    virtual ~Inspectable() { }
+    virtual ~Inspectable() = default;
 
     T1 &getState() const {
 

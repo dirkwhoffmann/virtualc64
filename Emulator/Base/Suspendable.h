@@ -21,7 +21,7 @@ class Suspendable {
 public:
     
     Suspendable() { }
-    virtual ~Suspendable() { }
+    virtual ~Suspendable() = default;
 
     virtual void suspend() = 0;
     virtual void resume() = 0;

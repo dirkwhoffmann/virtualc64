@@ -27,7 +27,7 @@ class Configurable
 
 public:
 
-    virtual ~Configurable() { };
+    virtual ~Configurable() = default;
 
     // Returns the available config options
     virtual const ConfigOptions &getOptions() const { return options; }

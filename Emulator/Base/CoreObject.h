@@ -60,7 +60,7 @@ protected:
     
 public:
     
-    virtual ~CoreObject() { };
+    virtual ~CoreObject() = default;
     
     // Returns the name for this component (e.g., "CPU" or "VICII")
     virtual const char *getDescription() const = 0;

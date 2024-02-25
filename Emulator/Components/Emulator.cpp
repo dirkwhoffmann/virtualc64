@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "Emulator.h"
+#include "Option.h"
 
 namespace vc64 {
 
@@ -686,6 +687,18 @@ Emulator::set(Option option, long id, i64 value)
     if (std::find(quiet.begin(), quiet.end(), option) == quiet.end()) {
         main.msgQueue.put(MSG_CONFIG, option);
     }
+}
+
+void
+Emulator::set(Option opt, const string &value)
+{
+    set(opt, OptionParser::create(opt)->parse(value));
+}
+
+void
+Emulator::set(const string &opt, const string &value)
+{
+    set(util::parseEnum<OptionEnum>(opt), value);
 }
 
 i64

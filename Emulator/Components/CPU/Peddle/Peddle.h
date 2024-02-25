@@ -170,7 +170,7 @@ protected:
 public:
 
     Peddle(C64 &ref);
-    virtual ~Peddle();
+    virtual ~Peddle() = default;
 
 
     //

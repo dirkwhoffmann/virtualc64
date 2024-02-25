@@ -30,11 +30,6 @@ Peddle::Peddle(C64 &ref) : SubComponent(ref)
     registerInstructions();
 }
 
-Peddle::~Peddle()
-{
-
-}
-
 void
 Peddle::setModel(CPURevision cpuModel)
 {

@@ -42,7 +42,7 @@ Configurable::isValidOption(Option opt) const
 void
 Configurable::setOption(Option opt, const string &value) 
 {
-    setOption(opt, OptionParser(opt).parse(value));
+    setOption(opt, OptionParser::create(opt)->parse(value));
 }
 
 void

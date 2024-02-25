@@ -25,7 +25,7 @@ class Serializable {
 
 public:
 
-    virtual ~Serializable() { }
+    virtual ~Serializable() = default;
 
     // Serialization operators (to be implemented by the subclass)
     virtual void operator << (class SerCounter &worker) = 0;
@@ -499,7 +499,7 @@ class SerResetter
 protected:
 
     SerResetter() { }
-    virtual ~SerResetter() { }
+    virtual ~SerResetter() = default;
     
 public:
 
