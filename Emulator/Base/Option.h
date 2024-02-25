@@ -36,7 +36,7 @@ public:
     virtual string asString() { return "asString: TODO:"; }
     virtual string keyList() { return "keyList: TODO"; }
     virtual string argList() { return "argList: TODO"; }
-    const char *help();
+    // const char *help();
 };
 
 class BoolParser : public OptionParser {

@@ -385,7 +385,7 @@ Interpreter::initCommandShell(Command &root)
 
         root.add({"vicii", "set", OptionEnum::key(option.first)}, 
                  { OptionParser::create(option.first)->argList() },
-                 option.second,
+                 OptionEnum::help(option.first),
                  [this](Arguments& argv, long value) {
 
             vic.Configurable::setOption(value, argv[0]);
