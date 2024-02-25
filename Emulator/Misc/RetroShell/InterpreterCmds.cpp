@@ -200,7 +200,7 @@ Interpreter::initCommandShell(Command &root)
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
-            emulator.Configurable::setOption(opt, argv[0]);
+            emulator.set(opt, argv[0]);
 
         }, opt);
     }
@@ -265,7 +265,7 @@ Interpreter::initCommandShell(Command &root)
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
-            mem.Configurable::setOption(opt, argv[0]);
+            emulator.set(opt, argv[0]);
 
         }, opt);
     }
@@ -316,9 +316,7 @@ Interpreter::initCommandShell(Command &root)
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                HI_WORD(value) == 0 ?
-                cia1.Configurable::setOption(LO_WORD(value), argv[0]) :
-                cia2.Configurable::setOption(LO_WORD(value), argv[0]) ;
+                emulator.set(LO_WORD(value), HI_WORD(value), argv[0]);
 
             }, HI_W_LO_W(i, opt));
         }
@@ -344,7 +342,7 @@ Interpreter::initCommandShell(Command &root)
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
-            vic.Configurable::setOption(opt, argv[0]);
+            emulator.set(opt, argv[0]);
 
         }, opt);
     }
@@ -384,7 +382,7 @@ Interpreter::initCommandShell(Command &root)
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
-            vic.Configurable::setOption(opt, argv[0]);
+            emulator.set(opt, argv[0]);
 
         }, opt);
     }
@@ -410,7 +408,7 @@ Interpreter::initCommandShell(Command &root)
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
-            muxer.Configurable::setOption(opt, argv[0]);
+            emulator.set(opt, argv[0]);
 
         }, opt);
     }
@@ -467,7 +465,7 @@ Interpreter::initCommandShell(Command &root)
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
-            powerSupply.Configurable::setOption(opt, argv[0]);
+            emulator.set(opt, argv[0]);
 
         }, opt);
     }
@@ -591,9 +589,7 @@ Interpreter::initCommandShell(Command &root)
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                HI_WORD(value) == 0 ?
-                drive8.Configurable::setOption(LO_WORD(value), argv[0]) :
-                drive9.Configurable::setOption(LO_WORD(value), argv[0]) ;
+                emulator.set(LO_WORD(value), HI_WORD(value), argv[0]);
 
             }, HI_W_LO_W(i, opt));
         }
@@ -648,7 +644,7 @@ Interpreter::initCommandShell(Command &root)
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
-            datasette.Configurable::setOption(opt, argv[0]);
+            emulator.set(opt, argv[0]);
 
         }, opt);
     }
@@ -685,9 +681,7 @@ Interpreter::initCommandShell(Command &root)
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                HI_WORD(value) == PORT_1 ?
-                c64.port1.joystick.Configurable::setOption(LO_WORD(value), argv[0]) :
-                c64.port2.joystick.Configurable::setOption(LO_WORD(value), argv[0]) ;
+                emulator.set(LO_WORD(value), HI_WORD(value), argv[0]);
 
             }, HI_W_LO_W(i, opt));
         }
@@ -802,9 +796,7 @@ Interpreter::initCommandShell(Command &root)
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                HI_WORD(value) == PORT_1 ?
-                c64.port1.mouse.Configurable::setOption(LO_WORD(value), argv[0]) :
-                c64.port2.mouse.Configurable::setOption(LO_WORD(value), argv[0]) ;
+                emulator.set(LO_WORD(value), HI_WORD(value), argv[0]);
 
             }, HI_W_LO_W(i, opt));
         }

@@ -695,10 +695,22 @@ Emulator::set(Option opt, const string &value)
     set(opt, OptionParser::create(opt)->parse(value));
 }
 
+void 
+Emulator::set(Option opt, long id, const string &value)
+{
+    set(opt, id, OptionParser::create(opt)->parse(value));
+}
+
 void
 Emulator::set(const string &opt, const string &value)
 {
     set(util::parseEnum<OptionEnum>(opt), value);
+}
+
+void
+Emulator::set(const string &opt, long id, const string &value)
+{
+    set(util::parseEnum<OptionEnum>(opt), id, value);
 }
 
 i64
