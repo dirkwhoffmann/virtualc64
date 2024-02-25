@@ -19,7 +19,7 @@
 
 namespace vc64 {
 
-typedef std::vector<std::pair<Option,string>> ConfigOptions;
+typedef std::vector<Option> ConfigOptions;
 
 class Configurable
 {

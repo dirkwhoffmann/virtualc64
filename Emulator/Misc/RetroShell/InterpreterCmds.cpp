@@ -353,17 +353,18 @@ Interpreter::initCommandShell(Command &root)
 
         root.add({cia, "set"}, "Configures the component");
 
-        for (auto &option : cia1.getOptions()) {
+        for (auto &opt : cia1.getOptions()) {
 
-            root.add({cia, "set", OptionEnum::key(option.first)}, { Arg::value },
-                     option.second,
+            root.add({cia, "set", OptionEnum::key(opt)},
+                     {OptionParser::create(opt)->argList()},
+                     OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
                 HI_WORD(value) == 0 ?
                 cia1.Configurable::setOption(LO_WORD(value), argv[0]) :
                 cia2.Configurable::setOption(LO_WORD(value), argv[0]) ;
 
-            }, HI_W_LO_W(i, option.first));
+            }, HI_W_LO_W(i, opt));
         }
     }
 
@@ -381,16 +382,16 @@ Interpreter::initCommandShell(Command &root)
 
     root.add({"vicii", "set"}, "Configures the component");
 
-    for (auto &option : vic.getOptions()) {
+    for (auto &opt : vic.getOptions()) {
 
-        root.add({"vicii", "set", OptionEnum::key(option.first)}, 
-                 { OptionParser::create(option.first)->argList() },
-                 OptionEnum::help(option.first),
-                 [this](Arguments& argv, long value) {
+        root.add({"vicii", "set", OptionEnum::key(opt)},
+                 {OptionParser::create(opt)->argList()},
+                 OptionEnum::help(opt),
+                 [this](Arguments& argv, long opt) {
 
-            vic.Configurable::setOption(value, argv[0]);
+            vic.Configurable::setOption(opt, argv[0]);
 
-        }, option.first);
+        }, opt);
     }
 
 
@@ -419,92 +420,19 @@ Interpreter::initCommandShell(Command &root)
         configure(OPT_DMA_DEBUG_ENABLE, false);
     });
 
-    /*
-    root.add({"dmadebugger", "raccesses"}, { Arg::onoff },
-             "Visualizes refresh cycles",
-             [this](Arguments& argv, long value) {
+    root.add({"dmadebugger", "set"}, "Configures the component");
 
-        set(OPT_DMA_DEBUG_CHANNEL, 0, parseBool(argv[0]));
-    });
+    for (auto &opt : vic.dmaDebugger.getOptions()) {
 
-    root.add({"dmadebugger", "iaccesses"}, { Arg::onoff },
-             "Visualizes idle accesses",
-             [this](Arguments& argv, long value) {
+        root.add({"dmadebugger", "set", OptionEnum::key(opt)},
+                 {OptionParser::create(opt)->argList()},
+                 OptionEnum::help(opt),
+                 [this](Arguments& argv, long opt) {
 
-        set(OPT_DMA_DEBUG_CHANNEL, 1, parseBool(argv[0]));
-    });
+            vic.Configurable::setOption(opt, argv[0]);
 
-    root.add({"dmadebugger", "caccesses"}, { Arg::onoff },
-             "Visualizes character accesses",
-             [this](Arguments& argv, long value) {
-
-        set(OPT_DMA_DEBUG_CHANNEL, 2, parseBool(argv[0]));
-    });
-
-    root.add({"dmadebugger", "gaccesses"}, { Arg::onoff },
-             "Visualizes graphics accesses",
-             [this](Arguments& argv, long value) {
-
-        set(OPT_DMA_DEBUG_CHANNEL, 3, parseBool(argv[0]));
-    });
-
-    root.add({"dmadebugger", "paccesses"}, { Arg::onoff },
-             "Visualizes sprite pointer accesses",
-             [this](Arguments& argv, long value) {
-
-        set(OPT_DMA_DEBUG_CHANNEL, 4, parseBool(argv[0]));
-    });
-
-    root.add({"dmadebugger", "saccesses"}, { Arg::onoff },
-             "Visualizes sprite accesses",
-             [this](Arguments& argv, long value) {
-
-        set(OPT_DMA_DEBUG_CHANNEL, 5, parseBool(argv[0]));
-    });
-    */
-
-
-    //
-    // Monitor
-    //
-
-    root.add({"monitor", ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        retroShell.dump(vic.dmaDebugger, Category::Config);
-    });
-
-    root.add({"monitor", "set"},
-             "Configures the component");
-
-    root.add({"monitor", "set", "palette"}, { PaletteEnum::argList() },
-             "Selects the color palette",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_VICII_PALETTE, util::parseEnum <PaletteEnum> (argv.front()));
-    });
-
-    root.add({"monitor", "set", "brightness"}, { Arg::value },
-             "Adjusts the monitor brightness",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_VICII_BRIGHTNESS, util::parseNum(argv.front()));
-    });
-
-    root.add({"monitor", "set", "contrast"}, { Arg::value },
-             "Adjusts the monitor contrast",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_VICII_CONTRAST, util::parseNum(argv.front()));
-    });
-
-    root.add({"monitor", "set", "saturation"}, { Arg::value },
-             "Adjusts the color saturation",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_VICII_SATURATION, util::parseNum(argv.front()));
-    });
+        }, opt);
+    }
 
     
     //
@@ -518,115 +446,19 @@ Interpreter::initCommandShell(Command &root)
         retroShell.dump(muxer, Category::Config);
     });
 
-    root.add({"sid", "set"},
-             "Configures the component");
+    root.add({"sid", "set"}, "Configures the component");
 
-    root.add({"sid", "set", "engine"}, { SIDEngineEnum::argList() },
-             "Selects the SID backend",
-             [this](Arguments& argv, long value) {
+    for (auto &opt : muxer.getOptions()) {
 
-        configure(OPT_SID_ENGINE, parseEnum <SIDEngineEnum> (argv[0]));
+        root.add({"sid", "set", OptionEnum::key(opt)},
+                 {OptionParser::create(opt)->argList()},
+                 OptionEnum::help(opt),
+                 [this](Arguments& argv, long opt) {
 
-    });
+            muxer.Configurable::setOption(opt, argv[0]);
 
-    root.add({"sid", "set", "revision"}, { SIDRevisionEnum::argList() },
-             "Selects the emulated chip model",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_SID_REVISION, parseEnum <SIDRevisionEnum> (argv[0]));
-
-    });
-
-    root.add({"sid", "set", "sampling"}, { SamplingMethodEnum::argList() },
-             "Selects the sampling method",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_SID_SAMPLING, parseEnum <SamplingMethodEnum> (argv[0]));
-
-    });
-
-    root.add({"sid", "set", "filter"}, { Arg::onoff },
-             "Configures the audio filter",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_SID_FILTER, parseBool(argv[0]));
-    });
-
-    root.add({"sid", "set", "volume"},
-             "Sets the volume");
-
-    root.add({"sid", "set", "volume", "channel0"}, { Arg::volume },
-             "Sets the volume for the first SID",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_AUD_VOL, 0, parseNum(argv[0]));
-    });
-
-    root.add({"sid", "set", "volume", "channel1"}, { Arg::volume },
-             "Sets the volume for the second SID",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_AUD_VOL, 1, parseNum(argv[0]));
-    });
-
-    root.add({"sid", "set", "volume", "channel2"}, { Arg::volume },
-             "Sets the volume for the third SID",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_AUD_VOL, 2, parseNum(argv[0]));
-    });
-
-    root.add({"sid", "set", "volume", "channel3"}, { Arg::volume },
-             "Sets the volume for the fourth SID",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_AUD_VOL, 3, parseNum(argv[0]));
-    });
-
-    root.add({"sid", "set", "volume", "left"}, { Arg::volume },
-             "Sets the master volume for the left speaker",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_AUD_VOL_L, parseNum(argv[0]));
-    });
-
-    root.add({"sid", "set", "volume", "right"}, { Arg::volume },
-             "Sets the master volume for the right speaker",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_AUD_VOL_R, parseNum(argv[0]));
-    });
-
-    root.add({"sid", "set", "pan"},
-             "Sets the pan for one of the four SIDs");
-    
-    root.add({"sid", "set", "pan", "channel0"}, { Arg::value },
-             "Sets the pan for the first SID",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_AUD_PAN, 0, parseNum(argv[0]));
-    });
-
-    root.add({"sid", "set", "pan", "channel1"}, { Arg::value },
-             "Sets the pan for the second SID",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_AUD_PAN, 1, parseNum(argv[0]));
-    });
-
-    root.add({"sid", "set", "pan", "channel2"}, { Arg::value },
-             "Sets the pan for the third SID",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_AUD_PAN, 2, parseNum(argv[0]));
-    });
-
-    root.add({"sid", "set", "pan", "channel3"}, { Arg::value },
-             "Sets the pan for the fourth SID",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_AUD_PAN, 3, parseNum(argv[0]));
-    });
+        }, opt);
+    }
 
 
     //

@@ -30,11 +30,11 @@ class Emulator : public Thread, public Inspectable<EmulatorInfo, EmulatorStats>,
 
     ConfigOptions options = {
 
-        { OPT_EMU_WARP_BOOT,    "Warp boot" },
-        { OPT_EMU_WARP_MODE,    "Warp mode" },
-        { OPT_EMU_VSYNC,        "VSYNC mode" },
-        { OPT_EMU_TIME_LAPSE,   "Speed adjustment" },
-        { OPT_EMU_RUN_AHEAD,    "Run-ahead frames" }
+        OPT_EMU_WARP_BOOT,
+        OPT_EMU_WARP_MODE,
+        OPT_EMU_VSYNC,
+        OPT_EMU_TIME_LAPSE,
+        OPT_EMU_RUN_AHEAD
     };
     
     EmulatorConfig config = { };

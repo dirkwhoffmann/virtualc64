@@ -37,21 +37,21 @@ class Drive final : public SubComponent, public Inspectable<DriveInfo, Void> {
 
     ConfigOptions options = {
 
-        { OPT_DRV_AUTO_CONFIG,  "Derive config based on ROM" },
-        { OPT_DRV_TYPE,         "Drive model" },
-        { OPT_DRV_RAM,          "Drive RAM" },
-        { OPT_DRV_PARCABLE,     "Parallel cable" },
-        { OPT_DRV_CONNECT,      "Connected" },
-        { OPT_DRV_POWER_SWITCH, "Power switch" },
-        { OPT_DRV_POWER_SAVE,   "Power-save mode" },
-        { OPT_DRV_EJECT_DELAY,  "Eject delay" },
-        { OPT_DRV_SWAP_DELAY,   "Disk swap delay" },
-        { OPT_DRV_INSERT_DELAY, "Disk insert delay" },
-        { OPT_DRV_PAN,          "Drive location" },
-        { OPT_DRV_POWER_VOL,    "Powerup volume" },
-        { OPT_DRV_STEP_VOL,     "Head step volume" },
-        { OPT_DRV_INSERT_VOL,   "Disk insertion volume" },
-        { OPT_DRV_EJECT_VOL,    "Disk eject volume" }
+        OPT_DRV_AUTO_CONFIG,
+        OPT_DRV_TYPE,
+        OPT_DRV_RAM,
+        OPT_DRV_PARCABLE,
+        OPT_DRV_CONNECT,
+        OPT_DRV_POWER_SWITCH,
+        OPT_DRV_POWER_SAVE,
+        OPT_DRV_EJECT_DELAY,
+        OPT_DRV_SWAP_DELAY,
+        OPT_DRV_INSERT_DELAY,
+        OPT_DRV_PAN,
+        OPT_DRV_POWER_VOL,
+        OPT_DRV_STEP_VOL,
+        OPT_DRV_INSERT_VOL,
+        OPT_DRV_EJECT_VOL
     };
 
     friend class DriveMemory;

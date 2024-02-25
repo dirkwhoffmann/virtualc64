@@ -24,7 +24,7 @@ class PowerSupply final : public SubComponent, public Dumpable {
 
     ConfigOptions options = {
 
-        { OPT_POWER_GRID,   "Power grid" }
+        OPT_POWER_GRID
     };
 
 

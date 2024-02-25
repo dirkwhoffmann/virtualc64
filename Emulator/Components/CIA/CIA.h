@@ -26,8 +26,8 @@ class CIA : public SubComponent, public Inspectable<CIAInfo, CIAStats> {
 
     ConfigOptions options = {
 
-        { OPT_CIA_REVISION,     "Chip Revision" },
-        { OPT_CIA_TIMER_B_BUG,  "Timer B bug" }
+        OPT_CIA_REVISION,
+        OPT_CIA_TIMER_B_BUG
     };
 
 

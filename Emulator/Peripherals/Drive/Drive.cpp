@@ -89,15 +89,15 @@ Drive::resetConfig()
 {
     auto &defaults = emulator.defaults;
 
-    for (auto &option : getOptions()) {
+    for (auto &opt : getOptions()) {
 
-        if (option.first == OPT_DRV_CONNECT && !canConnect()) {
+        if (opt == OPT_DRV_CONNECT && !canConnect()) {
 
-            setOption(option.first, false);
+            setOption(opt, false);
 
         } else {
 
-            setOption(option.first, defaults.get(option.first, deviceNr));
+            setOption(opt, defaults.get(opt, deviceNr));
         }
     }
 }

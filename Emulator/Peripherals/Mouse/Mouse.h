@@ -51,9 +51,9 @@ class Mouse final : public SubComponent, public Dumpable {
     
     ConfigOptions options = {
 
-        { OPT_MOUSE_MODEL,          "Mouse model" },
-        { OPT_MOUSE_SHAKE_DETECT,   "Detect a shaking mouse" },
-        { OPT_MOUSE_VELOCITY,       "Mouse speed" }
+        OPT_MOUSE_MODEL,
+        OPT_MOUSE_SHAKE_DETECT,
+        OPT_MOUSE_VELOCITY
     };
 
     // Reference to the control port this device belongs to

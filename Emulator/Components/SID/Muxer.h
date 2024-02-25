@@ -50,13 +50,13 @@ class Muxer final : public SubComponent, public Inspectable<SIDInfo, Void> {
 
     ConfigOptions options = {
 
-        { OPT_SID_REVISION,     "Chip revision" },
-        { OPT_SID_POWER_SAVE,   "Power-save mode" },
-        { OPT_SID_FILTER,       "Audio filter" },
-        { OPT_SID_ENGINE,       "SID backend" },
-        { OPT_SID_SAMPLING,     "Sampling mode" },
-        { OPT_AUD_VOL_L,        "Master volume (left speaker)" },
-        { OPT_AUD_VOL_R,        "Master volume (right speaker)" }
+        OPT_SID_REVISION,
+        OPT_SID_POWER_SAVE,
+        OPT_SID_FILTER,
+        OPT_SID_ENGINE,
+        OPT_SID_SAMPLING,
+        OPT_AUD_VOL_L,
+        OPT_AUD_VOL_R
     };
     
     // Current configuration

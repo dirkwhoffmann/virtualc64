@@ -39,8 +39,8 @@ class Datasette final : public SubComponent, public Inspectable<DatasetteInfo, V
 
     ConfigOptions options = {
 
-        { OPT_DAT_MODEL,    "Datasette model" },
-        { OPT_DAT_CONNECT,  "Connection status" }
+        OPT_DAT_MODEL,
+        OPT_DAT_CONNECT
     };
 
     // Current configuration

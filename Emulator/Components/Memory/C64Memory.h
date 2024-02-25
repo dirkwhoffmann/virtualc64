@@ -21,8 +21,8 @@ class C64Memory final : public SubComponent, public Inspectable<MemInfo, Void> {
 
     ConfigOptions options = {
 
-        { OPT_RAM_PATTERN,  "RAM initialization pattern" },
-        { OPT_SAVE_ROMS,    "Save Roms into snapshots" }
+        OPT_RAM_PATTERN,
+        OPT_SAVE_ROMS
     };
 
     // Current configuration

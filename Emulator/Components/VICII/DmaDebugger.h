@@ -24,23 +24,23 @@ class DmaDebugger final : public SubComponent, public Dumpable {
     
     ConfigOptions options = {
 
-        { OPT_DMA_DEBUG_ENABLE,     "Enable or disable DMA debugging" },
-        { OPT_DMA_DEBUG_MODE,       "Overlay mode" },
-        { OPT_DMA_DEBUG_OPACITY,    "Overlay opacity" },
-        { OPT_VICII_CUT_LAYERS,     "Cutout graphics layers" },
-        { OPT_VICII_CUT_OPACITY,    "Cutout opacity" },
-        { OPT_DMA_DEBUG_CHANNEL0,   "Enable or disable channel 0" },
-        { OPT_DMA_DEBUG_CHANNEL1,   "Enable or disable channel 1" },
-        { OPT_DMA_DEBUG_CHANNEL2,   "Enable or disable channel 2" },
-        { OPT_DMA_DEBUG_CHANNEL3,   "Enable or disable channel 3" },
-        { OPT_DMA_DEBUG_CHANNEL4,   "Enable or disable channel 4" },
-        { OPT_DMA_DEBUG_CHANNEL5,   "Enable or disable channel 5" },
-        { OPT_DMA_DEBUG_COLOR0,     "Color for channel 0" },
-        { OPT_DMA_DEBUG_COLOR1,     "Color for channel 1" },
-        { OPT_DMA_DEBUG_COLOR2,     "Color for channel 2" },
-        { OPT_DMA_DEBUG_COLOR3,     "Color for channel 3" },
-        { OPT_DMA_DEBUG_COLOR4,     "Color for channel 4" },
-        { OPT_DMA_DEBUG_COLOR5,     "Color for channel 5" }
+        OPT_DMA_DEBUG_ENABLE,
+        OPT_DMA_DEBUG_MODE,
+        OPT_DMA_DEBUG_OPACITY,
+        OPT_VICII_CUT_LAYERS,
+        OPT_VICII_CUT_OPACITY,
+        OPT_DMA_DEBUG_CHANNEL0,
+        OPT_DMA_DEBUG_CHANNEL1,
+        OPT_DMA_DEBUG_CHANNEL2,
+        OPT_DMA_DEBUG_CHANNEL3,
+        OPT_DMA_DEBUG_CHANNEL4,
+        OPT_DMA_DEBUG_CHANNEL5,
+        OPT_DMA_DEBUG_COLOR0,
+        OPT_DMA_DEBUG_COLOR1,
+        OPT_DMA_DEBUG_COLOR2,
+        OPT_DMA_DEBUG_COLOR3,
+        OPT_DMA_DEBUG_COLOR4,
+        OPT_DMA_DEBUG_COLOR5
     };
 
     // Current configuration

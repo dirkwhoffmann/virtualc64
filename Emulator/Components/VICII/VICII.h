@@ -28,18 +28,18 @@ class VICII final : public SubComponent, public Inspectable<VICIIInfo, VICIIStat
     friend class DmaDebugger;
     
     ConfigOptions options = {
-
-        { OPT_VICII_REVISION,       "Chip Revision" },
-        { OPT_VICII_POWER_SAVE,     "Enable fast paths" },
-        { OPT_VICII_PALETTE,        "Color palette" },
-        { OPT_VICII_BRIGHTNESS,     "Color brightness" },
-        { OPT_VICII_CONTRAST,       "Color contrast" },
-        { OPT_VICII_SATURATION,     "Color saturation" },
-        { OPT_VICII_GRAY_DOT_BUG,   "Gray dot bug" },
-        { OPT_GLUE_LOGIC,           "Glue logic type" },
-        { OPT_VICII_HIDE_SPRITES,   "Hide certain sprites" },
-        { OPT_VICII_SS_COLLISIONS,  "Check sprite-sprite collisions" },
-        { OPT_VICII_SB_COLLISIONS,  "Check sprite-background collisions" }
+        
+        OPT_VICII_REVISION,
+        OPT_VICII_POWER_SAVE,
+        OPT_VICII_PALETTE,
+        OPT_VICII_BRIGHTNESS,
+        OPT_VICII_CONTRAST,
+        OPT_VICII_SATURATION,
+        OPT_VICII_GRAY_DOT_BUG,
+        OPT_GLUE_LOGIC,
+        OPT_VICII_HIDE_SPRITES,
+        OPT_VICII_SS_COLLISIONS,
+        OPT_VICII_SB_COLLISIONS
     };
     
     // Current configuration

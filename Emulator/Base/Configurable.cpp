@@ -253,7 +253,7 @@ bool
 Configurable::isValidOption(Option opt) const
 {
     for (auto &it: getOptions()) {
-        if (it.first == opt) return true;
+        if (it == opt) return true;
     }
     return false;
 }
@@ -262,7 +262,7 @@ void
 Configurable::resetConfig(const Defaults &defaults)
 {
     for (auto &option : getOptions()) {
-        setOption(option.first, defaults.get(option.first));
+        setOption(option, defaults.get(option));
     }
 }
 
@@ -270,7 +270,7 @@ void
 Configurable::resetConfig(const Defaults &defaults, isize i)
 {
     for (auto &option : getOptions()) {
-        setOption(option.first, defaults.get(option.first, i));
+        setOption(option, defaults.get(option, i));
     }
 }
 
@@ -281,9 +281,9 @@ Configurable::dumpConfig(std::ostream& os) const
 
     for (auto &opt: getOptions()) {
 
-        auto name = opt2str(opt.first);
-        auto help = "(" + opt.second + ")";
-        auto arg  = arg2str(opt.first, getOption(opt.first));
+        auto name = opt2str(opt);
+        auto help = "(" + string(OptionEnum::help(opt)) + ")";
+        auto arg  = arg2str(opt, getOption(opt));
 
         os << tab(name);
         os << std::setw(16) << std::left << std::setfill(' ') << arg;

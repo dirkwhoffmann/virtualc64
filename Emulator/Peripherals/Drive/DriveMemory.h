@@ -21,7 +21,7 @@ class DriveMemory final : public SubComponent, public Dumpable {
     
     ConfigOptions options = {
 
-        { OPT_SAVE_ROMS,    "Save ROMs in snapshots" }
+        OPT_SAVE_ROMS
     };
 
     // Current configuration

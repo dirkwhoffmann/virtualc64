@@ -21,9 +21,9 @@ class Joystick final : public SubComponent, public Dumpable {
     
     ConfigOptions options = {
 
-        { OPT_JOY_AUTOFIRE,         "Autofire status" },
-        { OPT_JOY_AUTOFIRE_BULLETS, "Number of auto-fire bullets" },
-        { OPT_JOY_AUTOFIRE_DELAY,   "Delay between two shots" }
+        OPT_JOY_AUTOFIRE,
+        OPT_JOY_AUTOFIRE_BULLETS,
+        OPT_JOY_AUTOFIRE_DELAY
     };
 
     // Reference to the control port this device belongs to

@@ -24,10 +24,10 @@ class Host final : public CoreComponent, public Dumpable {
 
     ConfigOptions options = {
 
-        { OPT_HOST_REFRESH_RATE,    "Video refresh rate" },
-        { OPT_HOST_SAMPLE_RATE,     "Audio sample rate" },
-        { OPT_HOST_FRAMEBUF_WIDTH,  "Window height" },
-        { OPT_HOST_FRAMEBUF_HEIGHT, "Window width" }
+        OPT_HOST_REFRESH_RATE,
+        OPT_HOST_SAMPLE_RATE,
+        OPT_HOST_FRAMEBUF_WIDTH,
+        OPT_HOST_FRAMEBUF_HEIGHT
     };
     
     // Refresh rate of the host display

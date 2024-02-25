@@ -24,10 +24,10 @@ class SID final : public SubComponent
 
     ConfigOptions options = {
 
-        { OPT_SID_ENABLE,   "Enables or disables a SID" },
-        { OPT_SID_ADDRESS,  "Mapped location in memory" },
-        { OPT_AUD_VOL,      "Volume" },
-        { OPT_AUD_PAN,      "Speaker location" }
+        OPT_SID_ENABLE,
+        OPT_SID_ADDRESS,
+        OPT_AUD_VOL,
+        OPT_AUD_PAN
     };
     
     // Number of this SID (0 = primary SID)
