@@ -377,26 +377,7 @@ VICII::_dump(Category category, std::ostream& os) const
 
     if (category == Category::Config) {
 
-        os << tab("Chip model");
-        os << VICIIRevisionEnum::key(config.revision) << std::endl;
-        os << tab("Power save mode");
-        os << bol(config.powerSave, "during warp", "never") << std::endl;
-        os << tab("Gray dot bug");
-        os << bol(config.grayDotBug) << std::endl;
-        os << tab("PAL");
-        os << bol(isPAL) << std::endl;
-        os << tab("NTSC");
-        os << bol (isNTSC) << std::endl;
-        os << tab("is656x");
-        os << bol(is656x) << std::endl;
-        os << tab("is856x");
-        os << bol(is856x) << std::endl;
-        os << tab("Glue logic");
-        os << GlueLogicEnum::key(config.glueLogic) << std::endl;
-        os << tab("Check SS collisions");
-        os << bol(config.checkSSCollisions) << std::endl;
-        os << tab("Check SB collisions");
-        os << bol(config.checkSBCollisions) << std::endl;
+        dumpConfig(os);
     }
 
     if (category == Category::State) {

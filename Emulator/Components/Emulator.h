@@ -116,8 +116,10 @@ public:
     void set(Option option, long id, i64 value) throws;
 
     // Convenience wrappers
-    void set(Option option, const string &value) throws;
-    void set(Option option, long id, const string &value) throws;
+    /*
+    [[deprecated]] void set(Option option, const string &value) throws;
+    [[deprecated]] void set(Option option, long id, const string &value) throws;
+    */
 
     // Returns the emulated refresh rate of the virtual C64
     double refreshRate() const override;

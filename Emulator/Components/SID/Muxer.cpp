@@ -288,6 +288,9 @@ Muxer::_dump(Category category, std::ostream& os) const
     
     if (category == Category::Config) {
         
+        dumpConfig(os);
+
+        /*
         os << tab("Chip revision");
         os << SIDRevisionEnum::key(config.revision) << std::endl;
         os << tab("Power save mode");
@@ -323,6 +326,7 @@ Muxer::_dump(Category category, std::ostream& os) const
             os << tab("3rd extra SID");
             os << hex(sid[3].config.address) << std::endl;
         }
+        */
 
     } else {
 

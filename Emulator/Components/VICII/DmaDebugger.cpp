@@ -106,6 +106,9 @@ DmaDebugger::_dump(Category category, std::ostream& os) const
     
     if (category == Category::Config) {
         
+        dumpConfig(os);
+        
+        /*
         os << tab("Enabled");
         os << bol(config.dmaDebug) << std::endl;
         os << tab("Display mode");
@@ -119,6 +122,7 @@ DmaDebugger::_dump(Category category, std::ostream& os) const
             os << tab(channel);
             os << bol(config.dmaChannel[i], "shown", "hidden") << std::endl;
         }
+        */
     }
 }
 

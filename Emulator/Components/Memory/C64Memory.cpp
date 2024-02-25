@@ -207,10 +207,7 @@ C64Memory::_dump(Category category, std::ostream& os) const
     
     if (category == Category::Config) {
         
-        os << tab("Ram pattern");
-        os << RamPatternEnum::key(config.ramPattern) << std::endl;
-        os << tab("Save Roms in snapshots");
-        os << bol(config.saveRoms) << std::endl;
+        dumpConfig(os);
     }
     
     if (category == Category::State) {

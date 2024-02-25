@@ -29,12 +29,6 @@ public:
 
     virtual ~Configurable() { };
 
-    // Converters
-    string opt2str(Option opt) const;
-    Option str2opt(const string &opt) const;
-    string arg2str(Option opt, i64 arg) const;
-    i64 str2arg(Option opt, const string &arg) const;
-
     // Returns the available config options
     virtual const ConfigOptions &getOptions() const { return options; }
 
@@ -43,12 +37,11 @@ public:
 
     // Gets a config options
     virtual i64 getOption(Option opt) const { return 0; }
-    i64 getOption(const string &opt) const { return getOption(str2opt(opt)); }
 
     // Sets a config option
     virtual void setOption(Option opt, i64 value) { }
-    void setOption(const string &opt, const string &value) { setOption(str2opt(opt), value); }
-    void setOption(Option opt, const string &value) { setOption(opt, str2arg(opt, value)); }
+    void setOption(Option opt, const string &value);
+    void setOption(const string &opt, const string &value);
 
     // Resets all config options
     void resetConfig(const Defaults &defaults);

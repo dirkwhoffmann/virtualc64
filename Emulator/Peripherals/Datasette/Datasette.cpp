@@ -55,8 +55,7 @@ Datasette::_dump(Category category, std::ostream& os) const
 
     if (category == Category::Config) {
 
-        os << tab("Model") << DatasetteModelEnum::key(config.model) << std::endl;
-        os << tab("Connected") << bol(config.connected) << std::endl;
+        dumpConfig(os);
     }
 
     if (category == Category::State) {

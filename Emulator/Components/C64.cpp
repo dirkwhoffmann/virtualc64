@@ -682,6 +682,7 @@ C64::_dump(Category category, std::ostream& os) const
 
     if (category == Category::Config) {
 
+        dumpConfig(os);
     }
 
     if (category == Category::State) {

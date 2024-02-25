@@ -12,6 +12,7 @@
 
 #include "config.h"
 #include "Option.h"
+#include "EmulatorTypes.h"
 #include "VICIITypes.h"
 #include "DatasetteTypes.h"
 #include "MemoryTypes.h"
@@ -33,7 +34,7 @@ OptionParser::create(Option opt)
 
     switch (opt) {
 
-        case OPT_EMU_WARP_MODE:             return enumParser.template operator()<VICIIRevisionEnum>();
+        case OPT_EMU_WARP_MODE:             return enumParser.template operator()<WarpModeEnum>();
         case OPT_EMU_WARP_BOOT:             return boolParser();
         case OPT_EMU_VSYNC:                 return boolParser();
         case OPT_EMU_TIME_LAPSE:            return numParser();

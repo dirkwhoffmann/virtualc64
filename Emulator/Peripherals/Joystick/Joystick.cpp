@@ -98,10 +98,7 @@ Joystick::_dump(Category category, std::ostream& os) const
 
     if (category == Category::Config) {
         
-        os << tab("Joystick nr") << dec(port.nr) << std::endl;
-        os << tab("Auto fire") << bol(config.autofire) << std::endl;
-        os << tab("Auto fire bullets") << dec(config.autofireBullets) << std::endl;
-        os << tab("Auto fire delay") << dec(config.autofireDelay) << std::endl;
+        dumpConfig(os);
     }
 
     if (category == Category::State) {

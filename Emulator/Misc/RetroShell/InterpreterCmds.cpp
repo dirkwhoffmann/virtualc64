@@ -82,21 +82,6 @@ Interpreter::initCommons(Command &root)
         c64.scheduleRel<SLOT_RSH>(cycles, RSH_WAKEUP);
         throw ScriptInterruption("");
     });
-
-    root.setGroup("Configuration commands");
-
-    root.add({"config"}, {OptionEnum::argList(), Arg::value},  {Arg::value},
-             "Configure the emulator",
-             [this](Arguments& argv, long value) {
-
-        auto opt = parseEnum<OptionEnum>(argv[0]);
-
-        if (argv.size() == 2) {
-            emulator.set(opt, argv[1]);
-        } else {
-            emulator.set(opt, parseNum(argv[1]), argv[2]);
-        }
-    });
 }
 
 void
@@ -110,8 +95,8 @@ Interpreter::initCommandShell(Command &root)
 
     root.setGroup("Regression tester");
 
-    root.add({"regression"},    ""); // Run the regression tester");
-    root.add({"screenshot"},    ""); // Take screenshots");
+    root.add({"regression"},    ""); // Run the regression tester
+    root.add({"screenshot"},    ""); // Take a screenshot and exit
 
     root.setGroup("Components");
 
@@ -139,7 +124,7 @@ Interpreter::initCommandShell(Command &root)
 
 
     //
-    // Regression testing
+    // Regression testing (hidden commands)
     //
 
     root.setGroup("");
@@ -207,6 +192,19 @@ Interpreter::initCommandShell(Command &root)
         retroShell.dump(emulator, Category::Config);
     });
 
+    root.add({"emulator", "set"}, "Configures the component");
+    for (auto &opt : emulator.getOptions()) {
+
+        root.add({"emulator", "set", OptionEnum::key(opt)},
+                 {OptionParser::create(opt)->argList()},
+                 OptionEnum::help(opt),
+                 [this](Arguments& argv, long opt) {
+
+            emulator.Configurable::setOption(opt, argv[0]);
+
+        }, opt);
+    }
+
 
     //
     // C64
@@ -224,44 +222,6 @@ Interpreter::initCommandShell(Command &root)
              [this](Arguments& argv, long value) {
 
         retroShell.dump(c64, Category::Defaults);
-    });
-
-    root.add({"c64", "set"},
-             "Configures the component");
-
-    root.add({"c64", "set", "warpboot"}, { Arg::seconds },
-             "Enables or disables warp mode on startup",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_EMU_WARP_BOOT, parseNum(argv[0]));
-    });
-
-    root.add({"c64", "set", "warpmode"}, { WarpModeEnum::argList() },
-             "Selects the warp mode",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_EMU_WARP_MODE, parseEnum <WarpModeEnum> (argv[0]));
-    });
-
-    root.add({"c64", "set", "vsync"}, { Arg::onoff },
-             "Enables or disables VSYNC",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_EMU_VSYNC, parseBool(argv[0]));
-    });
-
-    root.add({"c64", "set", "timelapse"}, { Arg::value },
-             "Increases or decreases the native frame rate",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_EMU_TIME_LAPSE, parseNum(argv[0]));
-    });
-
-    root.add({"c64", "set", "runahead"}, { Arg::value },
-             "Sets the number of run-ahead frames",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_EMU_RUN_AHEAD, parseNum(argv[0]));
     });
 
     root.add({"c64", "power"}, { Arg::onoff },
@@ -297,22 +257,18 @@ Interpreter::initCommandShell(Command &root)
         retroShell.dump(mem, Category::Config);
     });
 
-    root.add({"memory", "set"},
-             "Configures the component");
+    root.add({"memory", "set"}, "Configures the component");
+    for (auto &opt : mem.getOptions()) {
 
-    root.add({"memory", "set", "saveroms"}, { Arg::onoff },
-             "Save Roms to snapshot files",
-             [this](Arguments& argv, long value) {
+        root.add({"memory", "set", OptionEnum::key(opt)},
+                 {OptionParser::create(opt)->argList()},
+                 OptionEnum::help(opt),
+                 [this](Arguments& argv, long opt) {
 
-        configure(OPT_SAVE_ROMS, parseBool(argv[0]));
-    });
+            mem.Configurable::setOption(opt, argv[0]);
 
-    root.add({"memory", "set", "raminit" }, { RamPatternEnum::argList() },
-             "Determines how Ram is initialized on startup",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_RAM_PATTERN, parseEnum<RamPatternEnum>(argv[0]));
-    });
+        }, opt);
+    }
 
     root.add({"memory", "load"}, { Arg::path },
              "Installs a Rom image",

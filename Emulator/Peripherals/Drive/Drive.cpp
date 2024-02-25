@@ -334,6 +334,9 @@ Drive::_dump(Category category, std::ostream& os) const
     
     if (category == Category::Config) {
 
+        dumpConfig(os);
+
+        /*
         os << tab("Auto config");
         os << bol(config.autoConfig) << std::endl;
         os << tab("Drive type");
@@ -358,7 +361,8 @@ Drive::_dump(Category category, std::ostream& os) const
         os << dec(config.insertVolume) << std::endl;
         os << tab("Eject volume");
         os << dec(config.ejectVolume) << std::endl;
-        
+        */
+        os << std::endl;
         mem.dump(Category::BankMap, os);
     }
     
