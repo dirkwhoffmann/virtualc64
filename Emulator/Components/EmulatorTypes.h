@@ -182,7 +182,7 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
             case FLAG_LIP_DEBUG:                return "LIP_DEBUG";
 
                 // Other components
-            case FLAG_REC_DEBUG:                return "REC_DEBUG:";
+            case FLAG_REC_DEBUG:                return "REC_DEBUG";
             case FLAG_REU_DEBUG:                return "REU_DEBUG";
 
                 // Forced error conditions
@@ -196,6 +196,93 @@ struct DebugFlagEnum : util::Reflection<DebugFlagEnum, DebugFlag>
             case FLAG_FORCE_CRT_UNSUPPORTED:    return "FORCE_CRT_UNSUPPORTED";
             case FLAG_FORCE_RECORDING_ERROR:    return "FORCE_RECORDING_ERROR";
             case FLAG_FORCE_NO_FFMPEG:          return "FORCE_NO_FFMPEG";
+        }
+        return "???";
+    }
+
+    static const char *help(DebugFlag value)
+    {
+        switch (value) {
+
+            case FLAG_XFILES:                   return "Report paranormal activity";
+            case FLAG_CNF_DEBUG:                return "Configuration";
+            case FLAG_DEF_DEBUG:                return "User defaults";
+
+                // Emulator
+            case FLAG_RUN_DEBUG:                return "Run loop, component states";
+            case FLAG_TIM_DEBUG:                return "Thread synchronization";
+            case FLAG_WARP_DEBUG:               return "Warp mode";
+            case FLAG_CMD_DEBUG:                return "Command queue";
+            case FLAG_MSG_DEBUG:                return "Message queue";
+            case FLAG_SNP_DEBUG:                return "Serializing (snapshots)";
+
+                // Run ahead
+            case FLAG_RUA_DEBUG:                return "Run-ahead mode";
+            case FLAG_RUA_ON_STEROIDS:          return "Update the run-ahead instance in every frame";
+
+                // CPU
+            case FLAG_CPU_DEBUG:                return "CPU";
+            case FLAG_IRQ_DEBUG:                return "Interrupts";
+
+                // Memory
+            case FLAG_MEM_DEBUG:                return "RAM and ROM";
+
+                // CIAs
+            case FLAG_CIA_DEBUG:                return "Complex Interface Adapter";
+            case FLAG_CIAREG_DEBUG:             return "CIA registers";
+            case FLAG_CIA_ON_STEROIDS:          return "Keep CIAs awake all the time";
+
+                // VICII
+            case FLAG_VICII_DEBUG:              return "Video Interface Controller";
+            case FLAG_VICII_REG_DEBUG:          return "VICII registers";
+            case FLAG_VICII_SAFE_MODE:          return "Disable performance optimizations";
+            case FLAG_VICII_STATS:              return "Collect statistical information";
+            case FLAG_RASTERIRQ_DEBUG:          return "Raster interrupt";
+
+                // SID
+            case FLAG_SID_DEBUG:                return "Sound Interface Device";
+            case FLAG_SID_EXEC:                 return "Sound Interface Device (Execution)";
+            case FLAG_SIDREG_DEBUG:             return "Sound Interface Device (Registers)";
+            case FLAG_AUDBUF_DEBUG:             return "Audio buffers";
+
+                // Drive
+            case FLAG_VIA_DEBUG:                return "Versatile Interface Adapter";
+            case FLAG_PIA_DEBUG:                return "Peripheral Interface Adapter";
+            case FLAG_IEC_DEBUG:                return "IEC bus";
+            case FLAG_DSK_DEBUG:                return "Disk controller execution";
+            case FLAG_DSKCHG_DEBUG:             return "Disk change procedure";
+            case FLAG_GCR_DEBUG:                return "Disk encoding / decoding";
+            case FLAG_FS_DEBUG:                 return "File System Classes";
+            case FLAG_PAR_DEBUG:                return "Parallel cable";
+
+                // Media
+            case FLAG_CRT_DEBUG:                return "Cartridges";
+            case FLAG_FILE_DEBUG:               return "Media files (D64,T64,...)";
+
+                // Peripherals
+            case FLAG_JOY_DEBUG:                return "Joystick";
+            case FLAG_DRV_DEBUG:                return "Floppy drives";
+            case FLAG_TAP_DEBUG:                return "Datasette";
+            case FLAG_KBD_DEBUG:                return "Keyboard";
+            case FLAG_PRT_DEBUG:                return "Control ports and connected devices";
+            case FLAG_EXP_DEBUG:                return "Expansion port";
+            case FLAG_LIP_DEBUG:                return "Light pen";
+
+                // Other components
+            case FLAG_REC_DEBUG:                return "Screen recorder";
+            case FLAG_REU_DEBUG:                return "REU memory expansion";
+
+                // Forced error conditions
+            case FLAG_FORCE_ROM_MISSING:        return "";
+            case FLAG_FORCE_MEGA64_MISMATCH:    return "";
+            case FLAG_FORCE_SNAP_TOO_OLD:       return "";
+            case FLAG_FORCE_SNAP_TOO_NEW:       return "";
+            case FLAG_FORCE_SNAP_IS_BETA:       return "";
+            case FLAG_FORCE_SNAP_CORRUPTED:     return "";
+            case FLAG_FORCE_CRT_UNKNOWN:        return "";
+            case FLAG_FORCE_CRT_UNSUPPORTED:    return "";
+            case FLAG_FORCE_RECORDING_ERROR:    return "";
+            case FLAG_FORCE_NO_FFMPEG:          return "";
         }
         return "???";
     }

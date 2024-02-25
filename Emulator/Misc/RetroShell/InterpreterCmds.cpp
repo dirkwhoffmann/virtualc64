@@ -337,7 +337,6 @@ Interpreter::initCommandShell(Command &root)
     });
 
     root.add({"vicii", "set"}, "Configures the component");
-
     for (auto &opt : vic.getOptions()) {
 
         root.add({"vicii", "set", OptionEnum::key(opt)},

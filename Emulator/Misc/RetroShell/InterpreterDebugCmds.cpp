@@ -30,80 +30,92 @@ Interpreter::initDebugShell(Command &root)
     // Debug variables
     //
 
+    root.add({"debug"}, "Debug variables");
+
+    root.add({"debug", ""}, {},
+             "Display all debug variables",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(emulator, Category::Debug);
+    });
+
     if (debugBuild) {
 
-        root.add({"debug"}, {}, {DebugFlagEnum::argList(), Arg::boolean},
-                 "Views or modifies debug flags",
-                 [this](Arguments& argv, long value) {
+        for (isize i = DebugFlagEnum::minVal; i < DebugFlagEnum::maxVal; i++) {
 
-            DebugFlag flag;
+            root.add({"debug", DebugFlagEnum::key(i)}, { Arg::boolean },
+                     DebugFlagEnum::help(i),
+                     [this](Arguments& argv, long value) {
 
-            switch (argv.size()) {
+                c64.setDebugVariable(value, util::parseBool(argv[0]));
 
-                case 0:
-
-                    retroShell.dump(emulator, Category::Debug);
-                    break;
-
-                case 1:
-
-                    flag = parseEnum<DebugFlagEnum>(argv[0]);
-                    retroShell << argv[0] << " = " << c64.getDebugVariable(flag) << '\n';
-                    break;
-
-                case 2:
-
-                    flag = parseEnum<DebugFlagEnum>(argv[0]);
-                    c64.setDebugVariable(flag, parseBool(argv[1]));
-                    break;
-
-                default:
-                    fatalError;
-            }
-        });
+            }, i);
+        }
     }
 
     
     //
-    // Top-level commands
+    // Program execution
     //
 
-    root.setGroup("Controlling the instruction stream");
+    root.setGroup("Program execution");
 
-    root.add({"pause"},
-             "Pauses emulation",
+    root.add({"goto"}, { }, { Arg::value },
+             std::pair <string, string>("g[oto]", "Goto address"),
              [this](Arguments& argv, long value) {
 
-        c64.emulator.pause();
+        argv.empty() ? emulator.run() : cpu.jump(parseAddr(argv[0]));
     });
+    root.clone("g", {"goto"});
 
-    root.add({"continue"},
-             "Continues emulation",
-             [this](Arguments& argv, long value) {
-
-        c64.emulator.run();
-    });
-
-    root.add({"step"},
-             "Steps into the next instruction",
+    root.add({"step"}, { }, { },
+             std::pair <string, string>("s[tep]", "Step into the next instruction"),
              [this](Arguments& argv, long value) {
 
         c64.stepInto();
     });
+    root.clone("s", {"step"});
 
-    root.add({"next"},
-             "Steps over the next instruction",
+    root.add({"next"}, { }, { },
+             std::pair <string, string>("n[next]", "Step over the next instruction"),
              [this](Arguments& argv, long value) {
 
         c64.stepOver();
     });
+    root.clone("n", {"next"});
 
-    root.add({"goto"}, { Arg::address },
-             "Redirects the program counter",
-             [this](Arguments& argv, long value) {
 
-        cpu.jump((u16)parseNum(argv[0]));
-    });
+    //
+    // Monitoring
+    //
+
+    root.setGroup("Monitoring");
+
+    root.add({"i"},
+             "Inspect a component");
+
+    root.setGroup("Components");
+
+    root.add({"i", "emulator"},      "Emulator");
+    root.add({"i", "c64"},           "C64");
+
+
+    root.setGroup("Peripherals");
+
+    root.add({"i", "keyboard"},      "Keyboard");
+    root.add({"i", "mouse"},         "Mouse");
+    root.add({"i", "joystick"},      "Joystick");
+
+    root.setGroup("Miscellaneous");
+
+    root.add({"i", "host"},          "Host machine");
+    root.add({"i", "server"},        "Remote server");
+
+    root.add({"r"},
+             "Show registers");
+
+
+/*
 
     root.add({"disassemble"}, { }, { Arg::address },
              "Runs disassembler",
@@ -116,6 +128,7 @@ Interpreter::initDebugShell(Command &root)
 
         retroShell << '\n' << ss << '\n';
     });
+    */
 
 
     root.setGroup("Debugging components");

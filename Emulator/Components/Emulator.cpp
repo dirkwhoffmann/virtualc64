@@ -688,19 +688,6 @@ Emulator::set(Option option, long id, i64 value)
     }
 }
 
-/*
-void Emulator::set(Option option, const string &value)
-{
-    set(option, str2arg(option, value));
-}
-
-void
-Emulator::set(Option option, long id, const string &value)
-{
-    set(option, id, str2arg(option, value));
-}
-*/
-
 i64
 Emulator::overrideOption(Option option, i64 value)
 {
@@ -723,19 +710,6 @@ Emulator::_dump(Category category, std::ostream& os) const
     if (category == Category::Config) {
 
         dumpConfig(os);
-        /*
-        os << tab("Warp mode");
-        os << WarpModeEnum::key(config.warpMode) << std::endl;
-        os << tab("Warp boot");
-        os << dec(config.warpBoot) << " seconds" << std::endl;
-        os << tab("VSYNC");
-        os << bol(config.vsync) << std::endl;
-        os << tab("Time lapse");
-        os << dec(config.timeLapse) << "%" << std::endl;
-        os << tab("Run ahead");
-        os << dec(config.runAhead) << " frames" << std::endl;
-        os << std::endl;
-        */
     }
 
     if (category == Category::Debug) {

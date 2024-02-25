@@ -34,7 +34,7 @@ debugflag CPU_DEBUG       = 0; // CPU
 debugflag IRQ_DEBUG       = 0; // Interrupts
 
 // Memory
-debugflag MEM_DEBUG       = 0; // RAM, ROM
+debugflag MEM_DEBUG       = 0; // RAM and ROM
 
 // CIAs
 debugflag CIA_DEBUG       = 0; // Complex Interface Adapter
@@ -44,9 +44,9 @@ debugflag CIA_ON_STEROIDS = 0; // Keep the CIAs awake all the time
 // VICII
 debugflag VICII_DEBUG     = 0; // Video Interface Controller II
 debugflag VICII_REG_DEBUG = 0; // VICII registers
-debugflag RASTERIRQ_DEBUG = 0; // Raster interrupt
 debugflag VICII_SAFE_MODE = 0; // Disable performance optimizations
 debugflag VICII_STATS     = 0; // Collect statistical information
+debugflag RASTERIRQ_DEBUG = 0; // Raster interrupt
 
 // SID
 debugflag SID_DEBUG       = 0; // Sound Interface Device
@@ -59,7 +59,7 @@ debugflag VIA_DEBUG       = 0; // Versatile Interface Adapter
 debugflag PIA_DEBUG       = 0; // Peripheral Interface Adapter
 debugflag IEC_DEBUG       = 0; // IEC bus
 debugflag DSK_DEBUG       = 0; // Disk controller execution
-debugflag DSKCHG_DEBUG    = 0; // Disk changing procedure
+debugflag DSKCHG_DEBUG    = 0; // Disk change procedure
 debugflag GCR_DEBUG       = 0; // Disk encoding / decoding
 debugflag FS_DEBUG        = 0; // File System Classes
 debugflag PAR_DEBUG       = 0; // Parallel cable
@@ -70,7 +70,7 @@ debugflag FILE_DEBUG      = 0; // Media files (D64,T64,...)
 
 // Peripherals
 debugflag JOY_DEBUG       = 0; // Joystick
-debugflag DRV_DEBUG       = 0; // Floppy drive
+debugflag DRV_DEBUG       = 0; // Floppy drives
 debugflag TAP_DEBUG       = 0; // Datasette
 debugflag KBD_DEBUG       = 0; // Keyboard
 debugflag PRT_DEBUG       = 0; // Control ports and connected devices

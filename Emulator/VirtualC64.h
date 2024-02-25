@@ -102,12 +102,7 @@ public:
     void set(Option option, i64 value) throws;
     void set(Option option, long id, i64 value) throws;
 
-    // Convenience wrappers
-    /*
-    [[deprecated]] void set(Option option, const string &value) throws;
-    [[deprecated]] void set(Option option, long id, const string &value) throws;
-    */
-
+    
     //
     // Command queue
     //

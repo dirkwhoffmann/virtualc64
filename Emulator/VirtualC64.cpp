@@ -102,22 +102,6 @@ VirtualC64::set(Option option, long id, i64 value) throws
     main.markAsDirty();
 }
 
-/*
-void
-VirtualC64::set(Option option, const string &value) throws
-{
-    Emulator::set(option, value);
-    main.markAsDirty();
-}
-
-void 
-VirtualC64::set(Option option, long id, const string &value) throws
-{
-    Emulator::set(option, id, value);
-    main.markAsDirty();
-}
-*/
-
 void
 VirtualC64::put(const Cmd &cmd)
 {
