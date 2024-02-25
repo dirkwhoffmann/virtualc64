@@ -503,12 +503,19 @@ Interpreter::initCommandShell(Command &root)
         retroShell.dump(powerSupply, Category::Config);
     });
 
-    root.add({"powersupply", "set"}, { c64.supply.argList(), Arg::value },
-             "Configures the component",
-             [this](Arguments& argv, long value) {
+    root.add({"powersupply", "set"}, "Configures the component");
 
-        powerSupply.Configurable::setOption(argv[0], argv[1]);
-    });
+    for (auto &opt : powerSupply.getOptions()) {
+
+        root.add({"powersupply", "set", OptionEnum::key(opt)},
+                 {OptionParser::create(opt)->argList()},
+                 OptionEnum::help(opt),
+                 [this](Arguments& argv, long opt) {
+
+            powerSupply.Configurable::setOption(opt, argv[0]);
+
+        }, opt);
+    }
 
 
     //
@@ -619,6 +626,22 @@ Interpreter::initCommandShell(Command &root)
             drive.insertNewDisk(type, PETName<16>("NEW DISK"));
 
         }, i);
+
+        root.add({drive, "set"}, "Configures the component");
+
+        for (auto &opt : drive8.getOptions()) {
+
+            root.add({drive, "set", OptionEnum::key(opt)},
+                     {OptionParser::create(opt)->argList()},
+                     OptionEnum::help(opt),
+                     [this](Arguments& argv, long value) {
+
+                HI_WORD(value) == 0 ?
+                drive8.Configurable::setOption(LO_WORD(value), argv[0]) :
+                drive9.Configurable::setOption(LO_WORD(value), argv[0]) ;
+
+            }, HI_W_LO_W(i, opt));
+        }
     }
 
 
@@ -661,6 +684,20 @@ Interpreter::initCommandShell(Command &root)
         datasette.rewind(parseNum(argv[0]));
     });
 
+    root.add({"datasette", "set"}, "Configures the component");
+
+    for (auto &opt : datasette.getOptions()) {
+
+        root.add({"datasette", "set", OptionEnum::key(opt)},
+                 {OptionParser::create(opt)->argList()},
+                 OptionEnum::help(opt),
+                 [this](Arguments& argv, long opt) {
+
+            datasette.Configurable::setOption(opt, argv[0]);
+
+        }, opt);
+    }
+
 
     //
     // Joystick
@@ -684,33 +721,21 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({"joystick", nr, "set"},
-                 "Configures the component");
+        root.add({"joystick", nr, "set"}, "Configures the component");
 
-        root.add({"joystick", nr, "set", "autofire"}, { Arg::onoff },
-                 "Enables or disables auto fire mode",
-                 [this](Arguments& argv, long value) {
+        for (auto &opt : c64.port1.joystick.getOptions()) {
 
-            configure(OPT_JOY_AUTOFIRE, value, parseBool(argv[0]));
+            root.add({"joystick", nr, "set", OptionEnum::key(opt)},
+                     {OptionParser::create(opt)->argList()},
+                     OptionEnum::help(opt),
+                     [this](Arguments& argv, long value) {
 
-        }, i);
+                HI_WORD(value) == PORT_1 ?
+                c64.port1.joystick.Configurable::setOption(LO_WORD(value), argv[0]) :
+                c64.port2.joystick.Configurable::setOption(LO_WORD(value), argv[0]) ;
 
-        root.add({"joystick", nr, "set", "bullets"}, { Arg::value },
-                 "Sets the number of bullets per auto fire shot",
-                 [this](Arguments& argv, long value) {
-
-            configure(OPT_JOY_AUTOFIRE_BULLETS, value, parseNum(argv[0]));
-
-        }, i);
-
-
-        root.add({"joystick", nr, "set", "delay"}, { Arg::value },
-                 "Sets the auto fire delay in frames",
-                 [this](Arguments& argv, long value) {
-
-            configure(OPT_JOY_AUTOFIRE_DELAY, value, parseNum(argv[0]));
-
-        }, i);
+            }, HI_W_LO_W(i, opt));
+        }
 
         root.add({"joystick", nr, "press"},
                  "Presses the joystick button",
@@ -813,55 +838,21 @@ Interpreter::initCommandShell(Command &root)
 
         }, i);
 
-        root.add({"mouse", nr, "set"},
-                 "Configures the component");
+        root.add({"mouse", nr, "set"}, "Configures the component");
 
-        root.add({"mouse", nr, "set", "model"}, { MouseModelEnum::argList() },
-                 "Selects the mouse model",
-                 [this](Arguments& argv, long value) {
+        for (auto &opt : c64.port1.mouse.getOptions()) {
 
-            configure(OPT_MOUSE_MODEL, value, parseEnum <MouseModelEnum> (argv[0]));
+            root.add({"mouse", nr, "set", OptionEnum::key(opt)},
+                     {OptionParser::create(opt)->argList()},
+                     OptionEnum::help(opt),
+                     [this](Arguments& argv, long value) {
 
-        }, i);
+                HI_WORD(value) == PORT_1 ?
+                c64.port1.mouse.Configurable::setOption(LO_WORD(value), argv[0]) :
+                c64.port2.mouse.Configurable::setOption(LO_WORD(value), argv[0]) ;
 
-        root.add({"mouse", nr, "set", "velocity"}, { Arg::value },
-                 "Sets the horizontal and vertical mouse velocity",
-                 [this](Arguments& argv, long value) {
-
-            configure(OPT_MOUSE_VELOCITY, value, parseNum(argv[0]));
-
-        }, i);
-
-        root.add({"mouse", nr, "set", "shakedetector"}, { Arg::onoff },
-                 "Enables or disables the shake detector",
-                 [this](Arguments& argv, long value) {
-
-            configure(OPT_MOUSE_SHAKE_DETECT, value, parseBool(argv[0]));
-
-        }, i);
-
-        /*
-        root.add({"mouse", nr, "press"},
-                 "Presses a mouse button");
-
-        root.add({"mouse", nr, "press", "left"},
-                 "Presses the left mouse button",
-                 [this](Arguments& argv, long value) {
-
-            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
-            port.mouse.pressAndReleaseLeft();
-
-        }, i);
-
-        root.add({"mouse", nr, "press", "right"},
-                 "Presses the right mouse button",
-                 [this](Arguments& argv, long value) {
-
-            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
-            port.mouse.pressAndReleaseRight();
-
-        }, i);
-        */
+            }, HI_W_LO_W(i, opt));
+        }
     }
 
 
