@@ -13,6 +13,7 @@
 #include "config.h"
 #include "Interpreter.h"
 #include "Emulator.h"
+#include "Option.h"
 
 namespace vc64 {
 
@@ -382,7 +383,8 @@ Interpreter::initCommandShell(Command &root)
 
     for (auto &option : vic.getOptions()) {
 
-        root.add({"vicii", "set", OptionEnum::key(option.first)}, { Arg::value },
+        root.add({"vicii", "set", OptionEnum::key(option.first)}, 
+                 { OptionParser::create(option.first)->argList() },
                  option.second,
                  [this](Arguments& argv, long value) {
 
@@ -391,7 +393,7 @@ Interpreter::initCommandShell(Command &root)
         }, option.first);
     }
 
-    
+
     //
     // DMA Debugger
     //

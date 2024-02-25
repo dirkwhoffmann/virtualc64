@@ -19,16 +19,16 @@ namespace vc64 {
 
 class OptionParser {
 
-protected:
+public:
 
     Option opt;
     i64 arg;
 
     OptionParser(Option opt) : opt(opt), arg(0) { };
-    virtual ~OptionParser() { };
+    virtual ~OptionParser() = default;
 
     // Factory method for creating the proper parser instance
-    static OptionParser create(Option opt);
+    static std::unique_ptr<OptionParser> create(Option opt);
 
     virtual i64 parse(const string &arg) { return 0; }
     static i64 parse(Option opt, const string &arg) { return 0; }
@@ -41,6 +41,8 @@ protected:
 
 class BoolParser : public OptionParser {
 
+public:
+
     using OptionParser::OptionParser;
 
     virtual i64 parse(const string &s) override { arg = util::parseBool(s); return arg; }
@@ -51,6 +53,8 @@ class BoolParser : public OptionParser {
 
 class NumParser : public OptionParser {
 
+public:
+    
     using OptionParser::OptionParser;
 
     virtual i64 parse(const string &s) override { arg = util::parseNum(s); return arg; }

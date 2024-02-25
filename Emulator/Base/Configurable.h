@@ -12,7 +12,7 @@
 
 #pragma once
 
-#include "EmulatorTypes.h"
+#include "OptionTypes.h"
 #include "Reflection.h"
 #include "Defaults.h"
 #include <algorithm>

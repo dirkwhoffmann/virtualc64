@@ -20,6 +20,7 @@
 // Enumerations
 //
 
+/*
 enum_long(OPT)
 {
     // Host
@@ -238,6 +239,7 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
     }
 };
 #endif
+*/
 
 enum_long(DEBUG_FLAG)
 {

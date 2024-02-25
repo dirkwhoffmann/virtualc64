@@ -29,6 +29,7 @@
 #import "MemoryTypes.h"
 #import "MouseTypes.h"
 #import "MsgQueueTypes.h"
+#import "OptionTypes.h"
 #import "ParCableTypes.h"
 #import "PowerSupplyTypes.h"
 #import "RetroShellTypes.h"

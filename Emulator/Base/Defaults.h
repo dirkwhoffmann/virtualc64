@@ -13,9 +13,8 @@
 #pragma once
 
 #include "CoreObject.h"
-#include "EmulatorTypes.h"
+#include "OptionTypes.h"
 #include "Concurrency.h"
-//#include "CoreComponent.h"
 #include "IOUtils.h"
 
 namespace vc64 {
