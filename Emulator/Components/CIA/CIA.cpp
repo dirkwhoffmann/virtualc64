@@ -292,10 +292,12 @@ CIA::scheduleNextExecution()
 void
 CIA::scheduleWakeUp()
 {
+    auto event = isSleeping() ? CIA_WAKEUP : CIA_EXECUTE;
+
     if (isCIA1()) {
-        c64.scheduleAbs<SLOT_CIA1>(wakeUpCycle, CIA_WAKEUP);
+        c64.scheduleAbs<SLOT_CIA1>(wakeUpCycle, event);
     } else {
-        c64.scheduleAbs<SLOT_CIA2>(wakeUpCycle, CIA_WAKEUP);
+        c64.scheduleAbs<SLOT_CIA2>(wakeUpCycle, event);
     }
 }
 
@@ -629,7 +631,6 @@ CIA::executeOneCycle()
     this->delay = delay;
     
     // Sleep if threshold is reached
-    // if (tiredness > 8 && !CIA_ON_STEROIDS) sleep();
     if (tiredness > 8 && !CIA_ON_STEROIDS) {
         sleep();
         scheduleWakeUp();
@@ -643,19 +644,25 @@ CIA::sleep()
 {
     // Don't call this method on a sleeping CIA
     assert(!sleeping);
-    
+
     // Determine maximum possible sleep cycle based on timer counts
     Cycle sleepA = cpu.clock + ((counterA > 2) ? (counterA - 1) : 0);
     Cycle sleepB = cpu.clock + ((counterB > 2) ? (counterB - 1) : 0);
-    
+
     // CIAs with stopped timers can sleep forever
     if (!(feed & CIACountA0)) sleepA = INT64_MAX;
     if (!(feed & CIACountB0)) sleepB = INT64_MAX;
 
-    // ZZzzz
-    sleepCycle = cpu.clock;
-    wakeUpCycle = std::min(sleepA, sleepB);;
-    sleeping = true;
+    // Determine the wakeup cycle
+    auto wakeupAt = std::min(sleepA, sleepB);
+
+    if (wakeupAt > cpu.clock) {
+
+        // ZZzzz
+        sleepCycle = cpu.clock;
+        wakeUpCycle = wakeupAt;
+        sleeping = true;
+    }
     tiredness = 0;
 }
 

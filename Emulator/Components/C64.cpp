@@ -419,9 +419,6 @@ C64::execute()
             //
 
             if (nextTrigger <= cycle) processEvents(cycle);
-            if (vic.vicfunc[rasterCycle] == nullptr) {
-                trace(true, "ALERT!!!\n");
-            }
             (vic.*vic.vicfunc[rasterCycle])();
 
 
