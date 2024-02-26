@@ -27,6 +27,8 @@ class Joystick final : public SubComponent, public Dumpable {
         OPT_AUTOFIRE_DELAY
     };
 
+    const long nr;
+    
     // Reference to the control port this device belongs to
     ControlPort &port;
 
@@ -42,13 +44,7 @@ class Joystick final : public SubComponent, public Dumpable {
     // Vertical joystick position (-1 = up, 1 = down, 0 = released)
     int axisY = 0;
 
-    // Bullet counter used in multi-fire mode
-    i64 bulletCounter = 0;
-    
-    // Next frame to auto-press or auto-release the fire button
-    i64 nextAutofireFrame = 0;
-    
-    
+
     //
     // Methods
     //
@@ -65,8 +61,6 @@ public:
         CLONE(button)
         CLONE(axisX)
         CLONE(axisY)
-        CLONE(bulletCounter)
-        CLONE(nextAutofireFrame)
 
         return *this;
     }
@@ -103,18 +97,25 @@ public:
     // Triggers a gamepad event
     void trigger(GamePadAction event);
 
-    /* Execution function for this control port. This method needs to be
-     * invoked at the end of each frame to make the auto-fire mechanism work.
-     */
-    void execute();
-    
+
+    //
+    // Auto fire
+    //
+
+public:
+
+    // Processes an auto-fire event
+    void processEvent();
+
 private:
     
-    // Reloads the autofire magazine
+    // Indicates if the device is currently auto-firing
+    bool isAutofiring();
+
+    // Reloads the auto-fire gun
     void reload();
-    
-    // Updates variable nextAutofireFrame
-    void scheduleNextShot();
+    void reload(isize bullets);
+    template <long Slot> void reload(isize bullets);
 };
 
 }

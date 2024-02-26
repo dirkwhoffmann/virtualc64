@@ -58,7 +58,7 @@ extension PreferencesController {
         conAutofire.state = pref.autofire ? .on : .off
         conAutofireCease.state = pref.autofireBursts ? .on : .off
         conAutofireBullets.integerValue = pref.autofireBullets
-        conAutofireFrequency.doubleValue = pref.autofireFrequency
+        conAutofireFrequency.integerValue = pref.autofireFrequency
         conAutofireCease.isEnabled = conAutofire.state == .on
         conAutofireCeaseText.textColor = conAutofire.state == .on ? .controlTextColor : .disabledControlTextColor
         conAutofireBullets.isEnabled = conAutofire.state == .on
@@ -158,7 +158,7 @@ extension PreferencesController {
     
     @IBAction func conAutofireFrequencyAction(_ sender: NSSlider!) {
         
-        pref.autofireFrequency = sender.doubleValue
+        pref.autofireFrequency = sender.integerValue
         refresh()
     }
             

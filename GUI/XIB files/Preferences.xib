@@ -726,9 +726,9 @@ DQ
                                             </connections>
                                         </popUpButton>
                                         <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nzG-Ti-25y">
-                                            <rect key="frame" x="76" y="297" width="132" height="24"/>
+                                            <rect key="frame" x="76" y="297" width="132" height="28"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <sliderCell key="cell" state="on" alignment="left" minValue="1" maxValue="4" doubleValue="1" tickMarkPosition="above" numberOfTickMarks="7" sliderType="linear" id="l4R-ah-kmt"/>
+                                            <sliderCell key="cell" state="on" alignment="left" minValue="1" maxValue="25" doubleValue="6" tickMarkPosition="above" numberOfTickMarks="10" sliderType="linear" id="l4R-ah-kmt"/>
                                             <connections>
                                                 <action selector="conAutofireFrequencyAction:" target="-2" id="BbQ-CC-v6y"/>
                                             </connections>

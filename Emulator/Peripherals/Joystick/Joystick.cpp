@@ -17,7 +17,7 @@
 
 namespace vc64 {
 
-Joystick::Joystick(C64& ref, ControlPort& pref) : SubComponent(ref), port(pref)
+Joystick::Joystick(C64& ref, ControlPort& pref) : SubComponent(ref), nr(pref.nr), port(pref)
 {
 };
 
@@ -69,23 +69,16 @@ Joystick::setOption(Option option, i64 value)
         case OPT_AUTOFIRE:
             
             config.autofire = bool(value);
-            
-            // Release button immediately if autofire-mode is switches off
-            if (value == false) button = false;
             return;
 
         case OPT_AUTOFIRE_BURSTS:
 
             config.autofireBursts = bool(value);
-            reload();
             return;
 
         case OPT_AUTOFIRE_BULLETS:
             
             config.autofireBullets = isize(value);
-            
-            // Update the bullet counter if we're currently firing
-            if (bulletCounter > 0) reload();
             return;
 
         case OPT_AUTOFIRE_DELAY:
@@ -115,18 +108,6 @@ Joystick::_dump(Category category, std::ostream& os) const
         os << tab("X axis") << dec(axisX) << std::endl;
         os << tab("Y axis") << dec(axisY) << std::endl;
     }
-}
-
-void
-Joystick::reload()
-{
-    bulletCounter = (config.autofireBullets < 0) ? INT64_MAX : config.autofireBullets;
-}
-
-void
-Joystick::scheduleNextShot()
-{
-    nextAutofireFrame = c64.frame + config.autofireDelay;
 }
 
 u8
@@ -160,23 +141,15 @@ Joystick::trigger(GamePadAction event)
             
         case PRESS_FIRE:
             
+            button = true;
+            
             if (config.autofire) {
-                if (bulletCounter) {
-                    
-                    // Cease fire
-                    bulletCounter = 0;
-                    button = false;
-                    
-                } else {
 
-                    // Load magazine
-                    button = true;
-                    reload();
-                    scheduleNextShot();
+                if (isAutofiring() && !config.autofireBursts) {
+                    reload(0); // Stop shooting
+                } else {
+                    reload();  // Start or continue shooting
                 }
-                
-            } else {
-                button = true;
             }
             break;
 
@@ -193,26 +166,71 @@ Joystick::trigger(GamePadAction event)
 }
 
 void
-Joystick::execute()
+Joystick::processEvent()
 {
-    // Only proceed if auto fire is enabled
-    if (!config.autofire || config.autofireDelay < 0) return;
+    // Get the number of remaining bullets
+    auto shots = nr == PORT_1 ? c64.data[SLOT_AFI1] : c64.data[SLOT_AFI2];
+    assert(shots > 0);
 
-    // Only proceed if a trigger frame has been reached
-    if ((i64)c64.frame != nextAutofireFrame) return;
-    
-    // Only proceed if there are bullets left
-    if (bulletCounter == 0) return;
-    
+    // Cancel the current event
+    nr == PORT_1 ? c64.cancel<SLOT_AFI1>() : c64.cancel<SLOT_AFI2>();
+
+    // Fire and reload
     if (button) {
+
         button = false;
-        printf("FIRE RELEASE\n");
-        bulletCounter--;
+        reload(shots - 1);
+
     } else {
+
         button = true;
-        printf("FIRE PRESS\n");
+        reload(shots);
     }
-    scheduleNextShot();
+}
+
+bool
+Joystick::isAutofiring()
+{
+    return nr == PORT_1 ? c64.isPending<SLOT_AFI1>() : c64.isPending<SLOT_AFI2>();
+}
+
+void
+Joystick::reload()
+{
+    reload(config.autofireBursts ? config.autofireBullets : LONG_MAX);
+}
+
+void
+Joystick::reload(isize bullets)
+{
+    nr == PORT_1 ? reload <SLOT_AFI1> (bullets) : reload <SLOT_AFI2> (bullets);
+}
+
+template <long Slot> void
+Joystick::reload(isize bullets)
+{
+    if (bullets > 0 && config.autofire) {
+
+        if (c64.isPending<Slot>()) {
+
+            // Just add bullets (shooting is in progress)
+            trace(JOY_DEBUG, "Filling up to %ld bullets\n", bullets);
+            c64.data[Slot] = bullets;
+
+        } else {
+
+            // Fire the first shot
+            auto cycle = config.autofireDelay * vic.getCyclesPerFrame();
+            trace(JOY_DEBUG, "Next auto-fire event in %ld cycles\n", cycle);
+            c64.scheduleRel<Slot>(cycle, AFI_FIRE, bullets);
+        }
+
+    } else {
+
+        // Release the fire button and cancel any pending event
+        c64.cancel<Slot>();
+        button = false;
+    }
 }
 
 }

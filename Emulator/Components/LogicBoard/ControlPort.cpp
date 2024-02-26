@@ -47,7 +47,6 @@ ControlPort::execute()
 {
     switch (device) {
             
-        case CPDEVICE_JOYSTICK: joystick.execute(); break;
         case CPDEVICE_MOUSE: mouse.execute(); break;
             
         default:

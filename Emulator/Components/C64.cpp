@@ -96,6 +96,17 @@ C64::eventName(EventSlot slot, EventID id)
             }
             break;
 
+        case SLOT_AFI1:
+        case SLOT_AFI2:
+
+            switch (id) {
+
+                case EVENT_NONE:    return "none";
+                case AFI_FIRE:      return "AFI_FIRE";
+                default:            return "*** INVALID ***";
+            }
+            break;
+
         case SLOT_MOT:
 
             switch (id) {
@@ -1036,10 +1047,15 @@ C64::processEvents(Cycle cycle)
             // Check tertiary slots
             //
 
+            if (isDue<SLOT_AFI1>(cycle)) {
+                port1.joystick.processEvent();
+            }
+            if (isDue<SLOT_AFI2>(cycle)) {
+                port2.joystick.processEvent();
+            }
             if (isDue<SLOT_MOT>(cycle)) {
                 datasette.processMotEvent(id[SLOT_MOT]);
             }
-
             if (isDue<SLOT_DC8>(cycle)) {
                 drive8.processDiskChangeEvent(id[SLOT_DC8]);
             }

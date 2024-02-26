@@ -68,6 +68,8 @@ enum_long(SLOT)
     SLOT_TER,                       // Enables tertiary slots
 
     // Tertiary slots
+    SLOT_AFI1,                      // Auto-fire (joystick port 1)
+    SLOT_AFI2,                      // Auto-fire (joystick port 2)
     SLOT_MOT,                       // Datasette motor
     SLOT_DC8,                       // Disk change (Drive 8)
     SLOT_DC9,                       // Disk change (Drive 9)
@@ -151,10 +153,15 @@ enum_i8(EventID)
     // Events in tertiary event table
     //
 
+    // Auto-fire
+    AFI_FIRE            = 1,
+    AFI_EVENT_COUNT,
+
     // Datasette motor
     MOT_START           = 1,
     MOT_STOP,
-
+    MOT_EVENT_COUNT,
+    
     // Disk change
     DCH_INSERT          = 1,
     DCH_EJECT,

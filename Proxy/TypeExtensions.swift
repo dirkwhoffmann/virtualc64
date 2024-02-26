@@ -21,6 +21,8 @@ extension EventSlot: CustomStringConvertible {
         case ._DAT:     return "Datasette Data"
         case ._TER:     return "Next Tertiary Event"
 
+        case ._AFI1:    return "Auto-fire Port 1"
+        case ._AFI2:    return "Auto-fire Port 2"
         case ._MOT:     return "Datasette Motor"
         case ._DC8:     return "Disk Change Drive 8"
         case ._DC9:     return "Disk Change Drive 9"

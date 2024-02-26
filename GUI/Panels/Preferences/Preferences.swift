@@ -103,11 +103,10 @@ class Preferences {
             }
         }
     }
-    var autofireFrequency = 1.0 {
+    var autofireFrequency = 5 {
         didSet {
-            let autofireDelay = Int(50.0 / autofireFrequency)
             for c64 in myAppDelegate.proxies {
-                c64.configure(.AUTOFIRE_DELAY, value: autofireDelay)
+                c64.configure(.AUTOFIRE_DELAY, value: autofireFrequency)
             }
         }
     }

@@ -92,7 +92,6 @@ private:
     C64Config config = {};
 
     // Result of the latest inspection
-    // mutable C64Info eventInfo = {};
     mutable EventSlotInfo slotInfo[SLOT_COUNT];
 
 

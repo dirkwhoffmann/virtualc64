@@ -561,7 +561,7 @@ extension Preferences {
 
         autofire = defaults.bool(Keys.Con.autofire)
         autofireBullets = defaults.int(Keys.Con.autofireBullets)
-        autofireFrequency = defaults.double(Keys.Con.autofireFrequency)
+        autofireFrequency = defaults.int(Keys.Con.autofireFrequency)
 
         retainMouseKeyComb = defaults.int(Keys.Con.retainMouseKeyComb)
         retainMouseWithKeys = defaults.bool(Keys.Con.retainMouseWithKeys)
