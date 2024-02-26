@@ -76,6 +76,7 @@ struct GamePadActionEnum : util::Reflection<GamePadActionEnum, GamePadAction> {
 typedef struct
 {
     bool autofire;
+    bool autofireBursts;
     isize autofireBullets;
     isize autofireDelay;
 }

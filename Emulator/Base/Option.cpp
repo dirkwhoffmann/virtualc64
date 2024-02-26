@@ -120,9 +120,10 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_MOUSE_SHAKE_DETECT:        return boolParser();
         case OPT_MOUSE_VELOCITY:            return numParser();
 
-        case OPT_JOY_AUTOFIRE:              return boolParser();
-        case OPT_JOY_AUTOFIRE_BULLETS:      return numParser();
-        case OPT_JOY_AUTOFIRE_DELAY:        return numParser();
+        case OPT_AUTOFIRE:                  return boolParser();
+        case OPT_AUTOFIRE_BURSTS:           return boolParser();
+        case OPT_AUTOFIRE_BULLETS:          return numParser();
+        case OPT_AUTOFIRE_DELAY:            return numParser();
 
     }
     fatalError;

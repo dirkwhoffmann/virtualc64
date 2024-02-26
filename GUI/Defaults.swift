@@ -484,7 +484,7 @@ extension DefaultsProxy {
 
         // Joysticks
         register(Keys.Con.autofire, false)
-        register(Keys.Con.autofireBullets, -3)
+        register(Keys.Con.autofireBullets, 3)
         register(Keys.Con.autofireFrequency, 2.5)
 
         // Mouse

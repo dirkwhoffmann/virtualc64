@@ -107,9 +107,10 @@ Defaults::Defaults()
     setFallback(OPT_DAT_MODEL, DATASETTE_C1530);
     setFallback(OPT_DAT_CONNECT, true);
 
-    setFallback(OPT_JOY_AUTOFIRE, false);
-    setFallback(OPT_JOY_AUTOFIRE_BULLETS, -3);
-    setFallback(OPT_JOY_AUTOFIRE_DELAY, 125);
+    setFallback(OPT_AUTOFIRE, false);
+    setFallback(OPT_AUTOFIRE_BURSTS, false);
+    setFallback(OPT_AUTOFIRE_BULLETS, 3);
+    setFallback(OPT_AUTOFIRE_DELAY, 125);
 
     setFallback(OPT_MOUSE_MODEL, MOUSE_C1350);
     setFallback(OPT_MOUSE_SHAKE_DETECT, true);

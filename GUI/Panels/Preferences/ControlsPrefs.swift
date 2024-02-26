@@ -56,8 +56,8 @@ extension PreferencesController {
         
         // Joysticks
         conAutofire.state = pref.autofire ? .on : .off
-        conAutofireCease.state = pref.autofireBullets > 0 ? .on : .off
-        conAutofireBullets.integerValue = Int(pref.autofireBullets.magnitude)
+        conAutofireCease.state = pref.autofireBursts ? .on : .off
+        conAutofireBullets.integerValue = pref.autofireBullets
         conAutofireFrequency.doubleValue = pref.autofireFrequency
         conAutofireCease.isEnabled = conAutofire.state == .on
         conAutofireCeaseText.textColor = conAutofire.state == .on ? .controlTextColor : .disabledControlTextColor
@@ -146,9 +146,7 @@ extension PreferencesController {
     
     @IBAction func conAutofireCeaseAction(_ sender: NSButton!) {
         
-        let sign = sender.state == .on ? 1 : -1
-        let bullets = pref.autofireBullets.magnitude
-        pref.autofireBullets = Int(bullets) * sign
+        pref.autofireBursts = (sender.state == .on)
         refresh()
     }
     

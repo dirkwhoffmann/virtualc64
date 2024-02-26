@@ -122,9 +122,10 @@ enum_long(OPT)
     OPT_MOUSE_VELOCITY,
 
     // Joystick
-    OPT_JOY_AUTOFIRE,
-    OPT_JOY_AUTOFIRE_BULLETS,
-    OPT_JOY_AUTOFIRE_DELAY,
+    OPT_AUTOFIRE,
+    OPT_AUTOFIRE_BURSTS,
+    OPT_AUTOFIRE_BULLETS,
+    OPT_AUTOFIRE_DELAY,
 
     OPT_COUNT
 };
@@ -134,7 +135,7 @@ typedef OPT Option;
 struct OptionEnum : util::Reflection<OptionEnum, Option> {
 
     static constexpr long minVal = 0;
-    static constexpr long maxVal = OPT_JOY_AUTOFIRE_DELAY;
+    static constexpr long maxVal = OPT_AUTOFIRE_DELAY;
     static bool isValid(auto value) { return value >= minVal && value <= maxVal; }
 
     static const char *prefix() { return "OPT"; }
@@ -228,9 +229,10 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_MOUSE_SHAKE_DETECT:    return "SHAKE_DETECTION";
             case OPT_MOUSE_VELOCITY:        return "MOUSE_VELOCITY";
 
-            case OPT_JOY_AUTOFIRE:          return "AUTOFIRE";
-            case OPT_JOY_AUTOFIRE_BULLETS:  return "AUTOFIRE_BULLETS";
-            case OPT_JOY_AUTOFIRE_DELAY:    return "AUTOFIRE_DELAY";
+            case OPT_AUTOFIRE:              return "AUTOFIRE";
+            case OPT_AUTOFIRE_BURSTS:       return "AUTOFIRE_BURSTS";
+            case OPT_AUTOFIRE_BULLETS:      return "AUTOFIRE_BULLETS";
+            case OPT_AUTOFIRE_DELAY:        return "AUTOFIRE_DELAY";
 
             case OPT_COUNT:                 return "???";
         }
@@ -327,9 +329,10 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
             case OPT_MOUSE_SHAKE_DETECT:    return "Detect a shaked mouse";
             case OPT_MOUSE_VELOCITY:        return "Mouse velocity";
 
-            case OPT_JOY_AUTOFIRE:          return "Autofire";
-            case OPT_JOY_AUTOFIRE_BULLETS:  return "Number of bullets ";
-            case OPT_JOY_AUTOFIRE_DELAY:    return "Autofire delay";
+            case OPT_AUTOFIRE:              return "Autofire";
+            case OPT_AUTOFIRE_BURSTS:       return "Burst mode";
+            case OPT_AUTOFIRE_BULLETS:      return "Number of bullets per burst";
+            case OPT_AUTOFIRE_DELAY:        return "Autofire delay in frames";
 
             case OPT_COUNT:                 return "???";
         }

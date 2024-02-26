@@ -51,9 +51,10 @@ Joystick::getOption(Option option) const
 {
     switch (option) {
             
-        case OPT_JOY_AUTOFIRE:          return (i64)config.autofire;
-        case OPT_JOY_AUTOFIRE_BULLETS:  return (i64)config.autofireBullets;
-        case OPT_JOY_AUTOFIRE_DELAY:    return (i64)config.autofireDelay;
+        case OPT_AUTOFIRE:          return (i64)config.autofire;
+        case OPT_AUTOFIRE_BURSTS:   return (i64)config.autofireBursts;
+        case OPT_AUTOFIRE_BULLETS:  return (i64)config.autofireBullets;
+        case OPT_AUTOFIRE_DELAY:    return (i64)config.autofireDelay;
             
         default:
             fatalError;
@@ -65,7 +66,7 @@ Joystick::setOption(Option option, i64 value)
 {
     switch (option) {
             
-        case OPT_JOY_AUTOFIRE:
+        case OPT_AUTOFIRE:
             
             config.autofire = bool(value);
             
@@ -73,7 +74,13 @@ Joystick::setOption(Option option, i64 value)
             if (value == false) button = false;
             return;
 
-        case OPT_JOY_AUTOFIRE_BULLETS:
+        case OPT_AUTOFIRE_BURSTS:
+
+            config.autofireBursts = bool(value);
+            reload();
+            return;
+
+        case OPT_AUTOFIRE_BULLETS:
             
             config.autofireBullets = isize(value);
             
@@ -81,7 +88,7 @@ Joystick::setOption(Option option, i64 value)
             if (bulletCounter > 0) reload();
             return;
 
-        case OPT_JOY_AUTOFIRE_DELAY:
+        case OPT_AUTOFIRE_DELAY:
             
             config.autofireDelay = isize(value);
             return;
@@ -199,9 +206,11 @@ Joystick::execute()
     
     if (button) {
         button = false;
+        printf("FIRE RELEASE\n");
         bulletCounter--;
     } else {
         button = true;
+        printf("FIRE PRESS\n");
     }
     scheduleNextShot();
 }

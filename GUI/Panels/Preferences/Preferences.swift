@@ -85,14 +85,21 @@ class Preferences {
     var autofire = false {
         didSet {
             for c64 in myAppDelegate.proxies {
-                c64.configure(.JOY_AUTOFIRE, enable: autofire)
+                c64.configure(.AUTOFIRE, enable: autofire)
+            }
+        }
+    }
+    var autofireBursts = false {
+        didSet {
+            for c64 in myAppDelegate.proxies {
+                c64.configure(.AUTOFIRE_BURSTS, enable: autofireBursts)
             }
         }
     }
     var autofireBullets = 0 {
         didSet {
             for c64 in myAppDelegate.proxies {
-                c64.configure(.JOY_AUTOFIRE_BULLETS, value: autofireBullets)
+                c64.configure(.AUTOFIRE_BULLETS, value: autofireBullets)
             }
         }
     }
@@ -100,7 +107,7 @@ class Preferences {
         didSet {
             let autofireDelay = Int(50.0 / autofireFrequency)
             for c64 in myAppDelegate.proxies {
-                c64.configure(.JOY_AUTOFIRE_DELAY, value: autofireDelay)
+                c64.configure(.AUTOFIRE_DELAY, value: autofireDelay)
             }
         }
     }

@@ -287,9 +287,10 @@ Emulator::get(Option option, isize id) const
             if (id == PORT_2) return main.port2.mouse.getOption(option);
             fatalError;
 
-        case OPT_JOY_AUTOFIRE:
-        case OPT_JOY_AUTOFIRE_BULLETS:
-        case OPT_JOY_AUTOFIRE_DELAY:
+        case OPT_AUTOFIRE:
+        case OPT_AUTOFIRE_BULLETS:
+        case OPT_AUTOFIRE_BURSTS:
+        case OPT_AUTOFIRE_DELAY:
 
             if (id == PORT_1) return main.port1.joystick.getOption(option);
             if (id == PORT_2) return main.port2.joystick.getOption(option);
@@ -409,7 +410,7 @@ Emulator::set(Option option, i64 value)
         OPT_VICII_CUT_OPACITY,
         OPT_DMA_DEBUG_OPACITY,
         OPT_MOUSE_VELOCITY,
-        OPT_JOY_AUTOFIRE_DELAY,
+        OPT_AUTOFIRE_DELAY,
         OPT_AUD_PAN,
         OPT_AUD_VOL,
         OPT_AUD_VOL_L,
@@ -557,9 +558,10 @@ Emulator::set(Option option, i64 value)
             main.port2.mouse.setOption(option, value);
             break;
 
-        case OPT_JOY_AUTOFIRE:
-        case OPT_JOY_AUTOFIRE_BULLETS:
-        case OPT_JOY_AUTOFIRE_DELAY:
+        case OPT_AUTOFIRE:
+        case OPT_AUTOFIRE_BURSTS:
+        case OPT_AUTOFIRE_BULLETS:
+        case OPT_AUTOFIRE_DELAY:
 
             main.port1.joystick.setOption(option, value);
             main.port2.joystick.setOption(option, value);
@@ -587,7 +589,7 @@ Emulator::set(Option option, isize id, i64 value)
     static std::vector<Option> quiet = {
 
         OPT_MOUSE_VELOCITY,
-        OPT_JOY_AUTOFIRE_DELAY,
+        OPT_AUTOFIRE_DELAY,
         OPT_AUD_PAN,
         OPT_AUD_VOL,
         OPT_AUD_VOL_L,
@@ -622,9 +624,10 @@ Emulator::set(Option option, isize id, i64 value)
             }
             break;
 
-        case OPT_JOY_AUTOFIRE:
-        case OPT_JOY_AUTOFIRE_BULLETS:
-        case OPT_JOY_AUTOFIRE_DELAY:
+        case OPT_AUTOFIRE:
+        case OPT_AUTOFIRE_BURSTS:
+        case OPT_AUTOFIRE_BULLETS:
+        case OPT_AUTOFIRE_DELAY:
 
             switch (id) {
                 case PORT_1: main.port1.joystick.setOption(option, value); break;
