@@ -62,10 +62,22 @@ public:
         CLONE(axisX)
         CLONE(axisY)
 
+        CLONE(config)
+
         return *this;
     }
 
-    template <class T> void serialize(T& worker) { }
+    template <class T> void serialize(T& worker) { 
+
+        if (isResetter(worker)) return;
+
+        worker 
+
+        << config.autofire
+        << config.autofireBursts
+        << config.autofireBullets
+        << config.autofireDelay;
+    }
     void operator << (SerChecker &worker) override { serialize(worker); }
     void operator << (SerCounter &worker) override { serialize(worker); }
     void operator << (SerResetter &worker) override;
