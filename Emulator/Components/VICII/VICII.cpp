@@ -1089,7 +1089,11 @@ VICII::beginScanline()
     u16 line = c64.scanline;
 
     // Check if a new frame begins
-    if (line == 0) beginFrame();
+    if (line == 0) {
+
+        beginFrame();
+        muxer.beginFrame();
+    }
 
     // Reset some variables
     verticalFrameFFsetCond = false;

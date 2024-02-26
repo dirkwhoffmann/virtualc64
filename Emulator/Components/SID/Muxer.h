@@ -89,7 +89,7 @@ private:
     u32 cpuFrequency = PAL_CLOCK_FREQUENCY;
     
     // Sample rate (44.1 kHz per default)
-    double sampleRate = 44100.0;
+    double sampleRate = 0;
 
     // Time stamp of the last write pointer alignment
     util::Time lastAlignment;
@@ -299,6 +299,9 @@ public:
     
     // Signals to ignore the next underflow or overflow condition.
     void ignoreNextUnderOrOverflow();
+
+    // Prepares for a new frame
+    void beginFrame();
 
     /* Executes SID until a certain cycle is reached. The function returns the
      * number of produced sound samples (not yet).

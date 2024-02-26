@@ -91,6 +91,15 @@ Interpreter::initDebugShell(Command &root)
 
     root.pushGroup("Monitoring");
 
+    root.add({"d"}, { }, { Arg::address },
+             "Disassemble instructions",
+             [this](Arguments& argv, long value) {
+
+        std::stringstream ss;
+        cpu.disassembler.disassembleRange(ss, parseAddr(argv[0], cpu.getPC0()), 16);
+        retroShell << '\n' << ss << '\n';
+    });
+
     root.add({"i"},
              "Inspect a component");
 

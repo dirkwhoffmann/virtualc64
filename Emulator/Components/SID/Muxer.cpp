@@ -88,11 +88,6 @@ Muxer::setOption(Option option, i64 value)
 
     switch (option) {
 
-        case OPT_HOST_SAMPLE_RATE:
-        {
-            setSampleRate(double(value));
-            return;
-        }
         case OPT_SID_POWER_SAVE:
         {
             {   SUSPENDED
@@ -230,14 +225,16 @@ Muxer::getSampleRate() const
 void
 Muxer::setSampleRate(double rate)
 {
-    trace(true, "Setting sample rate to %f\n", rate);
+    if (sampleRate != rate) {
 
-    sampleRate = rate;
-    
-    sid[0].setSampleRate(rate);
-    sid[1].setSampleRate(rate);
-    sid[2].setSampleRate(rate);
-    sid[3].setSampleRate(rate);
+        trace(SID_DEBUG, "Setting sample rate to %f\n", rate);
+
+        sampleRate = rate;
+        sid[0].setSampleRate(rate);
+        sid[1].setSampleRate(rate);
+        sid[2].setSampleRate(rate);
+        sid[3].setSampleRate(rate);
+    }
 }
 
 void 
@@ -554,6 +551,12 @@ Muxer::poke(u16 addr, u8 value)
     // Keep both SID implementations up to date
     sid[sidNr].resid.poke(addr, value);
     sid[sidNr].fastsid.poke(addr, value);
+}
+
+void 
+Muxer::beginFrame()
+{
+    setSampleRate(host.getOption(OPT_HOST_SAMPLE_RATE)); 
 }
 
 void

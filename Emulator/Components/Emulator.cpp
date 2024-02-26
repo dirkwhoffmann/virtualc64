@@ -437,7 +437,6 @@ Emulator::set(Option option, i64 value)
         case OPT_HOST_SAMPLE_RATE:
 
             host.setOption(option, value);
-            main.muxer.setOption(option, value);
             break;
 
         case OPT_HOST_REFRESH_RATE:
