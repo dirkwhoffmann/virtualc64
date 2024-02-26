@@ -200,39 +200,18 @@ public:
     void _reset(bool hard) override;
 
 
-
     //
-    // Methods from Configurable
+    // Configuring
     //
 
+    const MuxerConfig &getConfig() const { return config; }
     const ConfigOptions &getOptions() const override { return options; }
-
-    // Gets or sets a config option
     i64 getOption(Option opt) const override;
     void setOption(Option opt, i64 value) override;
 
 
     //
-    // Configuring
-    //
-    
-public:
-    
-    const MuxerConfig &getConfig() const { return config; }
-
-    bool isEnabled(isize nr) const { return sid[nr].config.enabled; }
-
-    bool isMuted() const;
-
-    u32 getClockFrequency();
-    void setClockFrequency(u32 frequency);
-    
-    double getSampleRate() const;
-    void setSampleRate(double rate);
-    
-
-    //
-    // Analyzing
+    // Inspecting
     //
 
 public:
@@ -242,6 +221,13 @@ public:
     CoreComponent &getSID(isize nr);
     MuxerStats getStats();
     
+    bool isEnabled(isize nr) const { return sid[nr].config.enabled; }
+    bool isMuted() const;
+    u32 getClockFrequency();
+    void setClockFrequency(u32 frequency);
+    double getSampleRate() const;
+    void setSampleRate(double rate);
+
 private:
     
     void clearStats();

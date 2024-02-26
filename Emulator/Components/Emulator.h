@@ -58,7 +58,7 @@ public:
 
     
     //
-    // Initializing
+    // Methods
     //
 
 public:
@@ -69,33 +69,29 @@ public:
     // Launches the emulator thread
     void launch(const void *listener, Callback *func);
 
-private:
-
     // Initializes all components
     void initialize();
 
 
     //
-    // Methods from Inspectable
+    // Configuring
+    //
+
+public:
+
+    const ConfigOptions &getOptions() const override { return options; }
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
+
+
+    //
+    // Inspecting
     //
 
 public:
 
     void recordState(EmulatorInfo &result) const override;
     void recordStats(EmulatorStats &result) const override;
-
-
-    //
-    // Methods from Configurable
-    //
-
-public:
-
-    const ConfigOptions &getOptions() const override { return options; }
-
-    // Gets or sets a config option
-    i64 getOption(Option opt) const override;
-    void setOption(Option opt, i64 value) override;
 
 
     //

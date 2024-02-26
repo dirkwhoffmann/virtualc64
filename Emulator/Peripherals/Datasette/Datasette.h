@@ -91,7 +91,7 @@ class Datasette final : public SubComponent, public Inspectable<DatasetteInfo, V
     
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
@@ -102,23 +102,9 @@ public:
     void alloc(isize capacity);
     void dealloc();
 
-    
-    //
-    // Methods from CoreObject
-    //
-
-private:
-    
     const char *getDescription() const override { return "Datasette"; }
     void _dump(Category category, std::ostream& os) const override;
 
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
-        
     Datasette& operator= (const Datasette& other) {
 
         CLONE(head)
@@ -160,28 +146,22 @@ public:
 
 
     //
-    // Methods from Configurable
-    //
-
-    const ConfigOptions &getOptions() const override { return options; }
-
-    // Gets or sets a config option
-    i64 getOption(Option opt) const override;
-    void setOption(Option opt, i64 value) override;
-
-    
-    //
     // Configuring
     //
 
 public:
 
     const DatasetteConfig &getConfig() const { return config; }
+    const ConfigOptions &getOptions() const override { return options; }
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
 
 
     //
     // Inspecting
     //
+
+public:
 
     DatasetteInfo getInfo() const;
 

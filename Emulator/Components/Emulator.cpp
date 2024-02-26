@@ -57,6 +57,7 @@ Emulator::initialize()
 {
     // Initialize all components
     resetConfig();
+    host.resetConfig();
     main.initialize();
     ahead.initialize();
 
@@ -435,10 +436,6 @@ Emulator::set(Option option, i64 value)
             break;
 
         case OPT_HOST_SAMPLE_RATE:
-
-            host.setOption(option, value);
-            break;
-
         case OPT_HOST_REFRESH_RATE:
         case OPT_HOST_FRAMEBUF_WIDTH:
         case OPT_HOST_FRAMEBUF_HEIGHT:

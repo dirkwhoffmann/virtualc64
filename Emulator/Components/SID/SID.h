@@ -18,7 +18,7 @@
 
 namespace vc64 {
 
-class SID final : public SubComponent
+class SID final : public SubComponent, public Dumpable
 {
     friend class Muxer;
 
@@ -50,29 +50,15 @@ public:
 
     
     //
-    // Initializing
+    // Methods
     //
 
 public:
 
     SID(C64 &ref, int n);
 
-
-    //
-    // Methods from CoreObject
-    //
-
-private:
-
     const char *getDescription() const override { return "SID"; }
-    // void _dump(Category category, std::ostream& os) const override { };
-
-
-    //
-    // Methods from CoreComponent
-    //
-
-public:
+    void _dump(Category category, std::ostream& os) const override { };
 
     SID& operator= (const SID& other) {
 
@@ -101,36 +87,23 @@ public:
         << config.address
         << config.vol
         << config.pan;
-    }
 
-    void operator << (SerResetter &worker) override { serialize(worker); }
-    void operator << (SerChecker &worker) override { serialize(worker); }
-    void operator << (SerCounter &worker) override { serialize(worker); }
-    void operator << (SerReader &worker) override  { serialize(worker); }
-    void operator << (SerWriter &worker) override { serialize(worker); }
+    } SERIALIZERS(serialize);
 
     void _reset(bool hard) override { };
 
 
-    //
-    // Methods from Configurable
-    //
-
-    const ConfigOptions &getOptions() const override { return options; }
-
-    // Gets or sets a config option
-    i64 getOption(Option opt) const override;
-    void setOption(Option opt, i64 value) override;
-
-    
     //
     // Configuring
     //
 
 public:
 
-    const SIDConfig &getConfig() const { return config; }
     void resetConfig() override;
+    const SIDConfig &getConfig() const { return config; }
+    const ConfigOptions &getOptions() const override { return options; }
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
 
 
     //

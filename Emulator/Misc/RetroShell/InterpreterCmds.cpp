@@ -110,6 +110,7 @@ Interpreter::initCommandShell(Command &root)
     root.add({"sid"},           "Sound Interface Device");
     root.add({"expansion"},     "Expansion port");
     root.add({"powersupply"},   "Power supply");
+    root.add({"host"},          "Host computer");
 
     root.pushGroup("Peripherals");
 
@@ -461,6 +462,32 @@ Interpreter::initCommandShell(Command &root)
     for (auto &opt : powerSupply.getOptions()) {
 
         root.add({"powersupply", "set", OptionEnum::key(opt)},
+                 {OptionParser::create(opt)->argList()},
+                 OptionEnum::help(opt),
+                 [this](Arguments& argv, long opt) {
+
+            emulator.set(opt, argv[0]);
+
+        }, opt);
+    }
+
+
+    //
+    // Host
+    //
+
+    root.add({"host", ""},
+             "Displays the current configuration",
+             [this](Arguments& argv, long value) {
+
+        retroShell.dump(host, Category::Config);
+    });
+
+    root.add({"host", "set"}, "Configures the component");
+
+    for (auto &opt : powerSupply.getOptions()) {
+
+        root.add({"host", "set", OptionEnum::key(opt)},
                  {OptionParser::create(opt)->argList()},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {

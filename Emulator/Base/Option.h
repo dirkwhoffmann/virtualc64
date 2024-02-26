@@ -25,10 +25,11 @@ public:
     i64 arg;
 
     OptionParser(Option opt) : opt(opt), arg(0) { };
+    OptionParser(Option opt, i64 arg) : opt(opt), arg(arg) { };
     virtual ~OptionParser() = default;
 
     // Factory method for creating the proper parser instance for an option
-    static std::unique_ptr<OptionParser> create(Option opt);
+    static std::unique_ptr<OptionParser> create(Option opt, i64 arg = 0);
 
     // Parses an argument provides as string
     virtual i64 parse(const string &arg) { return 0; }

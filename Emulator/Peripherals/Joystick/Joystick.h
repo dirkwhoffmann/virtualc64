@@ -49,29 +49,15 @@ class Joystick final : public SubComponent, public Dumpable {
     
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
     
     Joystick(C64 &ref, ControlPort& pref);
-    
-    
-    //
-    // Methods from CoreObject
-    //
 
-private:
-    
     const char *getDescription() const override;
     void _dump(Category category, std::ostream& os) const override;
-
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
 
     Joystick& operator= (const Joystick& other) {
 
@@ -93,23 +79,15 @@ public:
 
 
     //
-    // Methods from Configurable
-    //
-
-    const ConfigOptions &getOptions() const override { return options; }
-
-    // Gets or sets a config option
-    i64 getOption(Option opt) const override;
-    void setOption(Option opt, i64 value) override;
-
-
-    //
     // Configuring
     //
-    
+
 public:
 
     const JoystickConfig &getConfig() const { return config; }
+    const ConfigOptions &getOptions() const override { return options; }
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
 
     
     //

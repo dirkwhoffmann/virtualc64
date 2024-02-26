@@ -358,8 +358,6 @@ public:
 
     const DriveConfig &getConfig() const { return config; }
     const ConfigOptions &getOptions() const override { return options; }
-
-    // Gets or sets a config option
     i64 getOption(Option opt) const override;
     void setOption(Option opt, i64 value) override;
     void resetConfig() override;

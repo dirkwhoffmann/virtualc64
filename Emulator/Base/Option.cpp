@@ -26,11 +26,11 @@
 namespace vc64 {
 
 std::unique_ptr<OptionParser>
-OptionParser::create(Option opt)
+OptionParser::create(Option opt, i64 arg)
 {
-    auto enumParser = [&]<typename T>() { return std::unique_ptr<EnumParser<T>>(new EnumParser<T>(opt)); };
-    auto boolParser = [&]() { return std::unique_ptr<BoolParser>(new BoolParser(opt)); };
-    auto numParser  = [&]() { return std::unique_ptr<NumParser>(new NumParser(opt)); };
+    auto enumParser = [&]<typename T>() { return std::unique_ptr<EnumParser<T>>(new EnumParser<T>(opt, arg)); };
+    auto boolParser = [&]() { return std::unique_ptr<BoolParser>(new BoolParser(opt, arg)); };
+    auto numParser  = [&]() { return std::unique_ptr<NumParser>(new NumParser(opt, arg)); };
 
     switch (opt) {
 
@@ -41,7 +41,6 @@ OptionParser::create(Option opt)
         case OPT_EMU_RUN_AHEAD:             return numParser();
 
         case OPT_HOST_SAMPLE_RATE:          return numParser();
-
         case OPT_HOST_REFRESH_RATE:         return numParser();
         case OPT_HOST_FRAMEBUF_WIDTH:       return numParser();
         case OPT_HOST_FRAMEBUF_HEIGHT:      return numParser();

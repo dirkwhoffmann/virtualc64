@@ -22,10 +22,10 @@ Host::getOption(Option option) const
 {
     switch (option) {
 
-        case OPT_HOST_REFRESH_RATE:     return i64(refreshRate);
-        case OPT_HOST_SAMPLE_RATE:      return i64(sampleRate);
-        case OPT_HOST_FRAMEBUF_WIDTH:   return i64(frameBufferWidth);
-        case OPT_HOST_FRAMEBUF_HEIGHT:  return i64(frameBufferHeight);
+        case OPT_HOST_REFRESH_RATE:     return i64(config.refreshRate);
+        case OPT_HOST_SAMPLE_RATE:      return i64(config.sampleRate);
+        case OPT_HOST_FRAMEBUF_WIDTH:   return i64(config.frameBufferWidth);
+        case OPT_HOST_FRAMEBUF_HEIGHT:  return i64(config.frameBufferHeight);
 
         default:
             fatalError;
@@ -39,22 +39,22 @@ Host::setOption(Option option, i64 value)
 
         case OPT_HOST_REFRESH_RATE:
 
-            refreshRate = double(value);
+            config.refreshRate = isize(value);
             return;
 
         case OPT_HOST_SAMPLE_RATE:
 
-            sampleRate = double(value);
+            config.sampleRate = isize(value);
             return;
 
         case OPT_HOST_FRAMEBUF_WIDTH:
 
-            frameBufferWidth = isize(value);
+            config.frameBufferWidth = isize(value);
             return;
 
         case OPT_HOST_FRAMEBUF_HEIGHT:
 
-            frameBufferHeight = isize(value);
+            config.frameBufferHeight = isize(value);
             return;
 
         default:
@@ -67,15 +67,9 @@ Host::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
 
-    if (category == Category::State) {
+    if (category == Category::Config) {
 
-        os << tab("Audio sample rate");
-        os << flt(sampleRate) << " Hz" << std::endl;
-        os << tab("Monitor refresh rate");
-        os << flt(refreshRate) << " Hz" << std::endl;
-        os << tab("Frame buffer size");
-        os << dec(frameBufferWidth) << " x ";
-        os << dec(frameBufferHeight) << " Texels" << std::endl;
+        dumpConfig(os);
     }
 }
 

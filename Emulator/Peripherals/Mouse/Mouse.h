@@ -147,24 +147,16 @@ public:
 
 
     //
-    // Methods from Configurable
+    // Configuring
     //
 
-    const ConfigOptions &getOptions() const override { return options; }
+public:
 
-    // Gets or sets a config option
+    const MouseConfig &getConfig() const { return config; }
+    const ConfigOptions &getOptions() const override { return options; }
     i64 getOption(Option opt) const override;
     void setOption(Option opt, i64 value) override;
 
-
-    //
-    // Configuring
-    //
-    
-public:
-    
-    const MouseConfig &getConfig() const { return config; }
-    
 private:
     
     void updateScalingFactors();

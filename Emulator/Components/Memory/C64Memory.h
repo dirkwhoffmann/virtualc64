@@ -68,29 +68,15 @@ public:
     
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
     
     C64Memory(C64 &ref);
-    
-    
-    //
-    // Methods from CoreObject
-    //
-    
-private:
-    
+
     const char *getDescription() const override { return "C64Memory"; }
     void _dump(Category category, std::ostream& os) const override;
-
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
 
     C64Memory& operator= (const C64Memory& other) {
 
@@ -138,7 +124,17 @@ public:
 
 
     //
-    // Methods from Inspectable
+    // Configuring
+    //
+
+    const MemConfig &getConfig() const { return config; }
+    const ConfigOptions &getOptions() const override { return options; }
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
+
+
+    //
+    // Inspecting
     //
 
 public:
@@ -146,26 +142,6 @@ public:
     bool autoInspect() const override;
     void recordState(MemInfo &result) const override;
 
-
-    //
-    // Methods from Configurable
-    //
-
-    const ConfigOptions &getOptions() const override { return options; }
-
-    // Gets or sets a config option
-    i64 getOption(Option opt) const override;
-    void setOption(Option opt, i64 value) override;
-
-
-    //
-    // Configuring
-    //
-    
-public:
-    
-    const MemConfig &getConfig() const { return config; }
-    
 
     //
     // Accessing

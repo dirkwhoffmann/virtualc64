@@ -52,29 +52,15 @@ public:
     
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
     
     DriveMemory(C64 &ref, Drive &drive);
-    
-    
-    //
-    // Methods from CoreObject
-    //
 
-private:
-    
     const char *getDescription() const override { return "DriveMemory"; }
     void _dump(Category category, std::ostream& os) const override;
-
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
 
     DriveMemory& operator= (const DriveMemory& other) {
 
@@ -106,23 +92,13 @@ public:
 
 
     //
-    // Methods from Configurable
-    //
-
-    const ConfigOptions &getOptions() const override { return options; }
-
-    // Gets or sets a config option
-    i64 getOption(Option opt) const override;
-    void setOption(Option opt, i64 value) override;
-
-
-    //
     // Configuring
     //
 
-public:
-
     const DriveMemConfig &getConfig() const { return config; }
+    const ConfigOptions &getOptions() const override { return options; }
+    i64 getOption(Option opt) const override;
+    void setOption(Option opt, i64 value) override;
 
 
     //

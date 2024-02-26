@@ -76,7 +76,7 @@ Configurable::dumpConfig(std::ostream& os) const
 
         auto name = OptionEnum::key(opt);
         auto help = OptionEnum::help(opt);
-        auto arg  = OptionParser::create(opt)->asString();
+        auto arg  = OptionParser::create(opt, getOption(opt))->asString();
 
         os << tab(name);
         os << std::setw(16) << std::left << std::setfill(' ') << arg;

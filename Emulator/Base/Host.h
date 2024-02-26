@@ -15,6 +15,20 @@
 #include "CoreComponent.h"
 #include "IOUtils.h"
 
+typedef struct
+{
+    // Refresh rate of the host display
+    isize refreshRate;
+
+    // Audio sample rate of the host computer
+    isize sampleRate;
+
+    // Framebuffer dimensions
+    isize frameBufferWidth;
+    isize frameBufferHeight;
+}
+HostConfig;
+
 namespace vc64 {
 
 /* This class stores some information about the host system. The values have
@@ -30,42 +44,24 @@ class Host final : public CoreComponent, public Dumpable {
         OPT_HOST_FRAMEBUF_HEIGHT
     };
     
-    // Refresh rate of the host display
-    double refreshRate = 60.0;
-
-    // Audio sample rate of the host computer
-    double sampleRate = 44100.0;
-
-    // Framebuffer dimensions
-    isize frameBufferWidth = 0;
-    isize frameBufferHeight = 0;
+    // Current configuration
+    HostConfig config = { };
 
 
     //
-    // Initializing
+    // Methods
     //
 
 public:
 
     using CoreComponent::CoreComponent;
 
-
-    //
-    // Methods from CoreObject
-    //
-
-private:
-
     const char *getDescription() const override { return "Host"; }
     void _dump(Category category, std::ostream& os) const override;
 
     Host& operator= (const Host& other) {
 
-        CLONE(refreshRate)
-        CLONE(sampleRate)
-        CLONE(frameBufferWidth)
-        CLONE(frameBufferHeight)
-
+        CLONE(config)
         return *this;
     }
 
@@ -73,14 +69,13 @@ private:
 
 
     //
-    // Methods from Configurable
+    // Configuring
     //
 
 public:
 
+    const HostConfig &getConfig() const { return config; }
     const ConfigOptions &getOptions() const override { return options; }
-
-    // Gets or sets a config option
     i64 getOption(Option opt) const override;
     void setOption(Option opt, i64 value) override;
 
