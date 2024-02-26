@@ -936,7 +936,7 @@ Emulator::computeFrame()
     if (config.runAhead) {
 
         // Run the main instance
-        main.executeHeadless();
+        main.execute();
 
         // Recreate the run-ahead instance if necessary
         if (main.isDirty || RUA_ON_STEROIDS) recreateRunAheadInstance();

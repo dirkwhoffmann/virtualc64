@@ -527,7 +527,7 @@ C64::fastForward(isize frames)
     auto target = frame + frames;
 
     // Execute until the target frame has been reached
-    while (frame < target) executeHeadless();
+    while (frame < target) execute();
 }
 
 void
