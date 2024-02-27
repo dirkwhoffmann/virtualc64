@@ -36,11 +36,21 @@
 // Build settings
 //
 
-
 #if defined(__clang__)
+
+#define alwaysinline __attribute__((always_inline))
 #pragma GCC diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #pragma GCC diagnostic ignored "-Wgnu-anonymous-struct"
 #pragma GCC diagnostic ignored "-Wnested-anon-types"
+
+#elif defined(__GNUC__) || defined(__GNUG__)
+
+#define alwaysinline __attribute__((always_inline))
+
+#elif defined(_MSC_VER)
+
+#define alwaysinline __forceinline
+
 #endif
 
 

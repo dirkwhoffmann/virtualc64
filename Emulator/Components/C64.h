@@ -427,6 +427,7 @@ private:
     void execute(bool headless);
     void executeHeadless() { execute(true); }
     template <bool enable8, bool enable9> void execute();
+    template <bool enable8, bool enable9> alwaysinline void executeCycle();
     bool processFlags();
 
     // Experimental (for runahead)

@@ -403,44 +403,7 @@ C64::execute()
 
         for (; rasterCycle <= lastCycle; rasterCycle++) {
 
-            //
-            // Run the emulator for one cycle
-            //
-            
-            //  <---------- o2 low phase ----------->|<- o2 high phase ->|
-            //                                       |                   |
-            // ,-- C64 ------------------------------|-------------------|--,
-            // |   ,-----,     ,-----,     ,-----,   |    ,-----,        |  |
-            // |   |     |     |     |     |     |   |    |     |        |  |
-            // '-->| CIA | --> | CIA | --> | VIC | --|--> | CPU | -------|--'
-            //     |  1  |     |  2  |     |     |   |    |     |        |
-            //     '-----'     '-----'     '-----'   |    '-----'        |
-            //                                       |                   |
-            //                                       |    ,--------,     |
-            //                                       |    |        |     |
-            // ,-- Drive ----------------------------|--> | VC1541 | ----|--,
-            // |                                     |    |        |     |  |
-            // |                                     |    '--------'     |  |
-            // '-------------------------------------|-------------------|--'
-
-            Cycle cycle = ++cpu.clock;
-
-            //
-            // First clock phase (o2 low)
-            //
-
-            if (nextTrigger <= cycle) processEvents(cycle);
-            (vic.*vic.vicfunc[rasterCycle])();
-
-
-            //
-            // Second clock phase (o2 high)
-            //
-
-            cpu.execute<MOS_6510>();
-            if constexpr (enable8) { drive8.execute(durationOfOneCycle); }
-            if constexpr (enable9) { drive9.execute(durationOfOneCycle); }
-
+            executeCycle<enable8, enable9>();
 
             //
             // Process run loop flags
@@ -459,6 +422,48 @@ C64::execute()
     
     trace(TIM_DEBUG, "Syncing at scanline %d\n", scanline);
     assert(flags == 0);
+}
+
+template <bool enable8, bool enable9>
+alwaysinline void C64::executeCycle()
+{
+    //
+    // Run the emulator for one cycle
+    //
+
+    //  <---------- o2 low phase ----------->|<- o2 high phase ->|
+    //                                       |                   |
+    // ,-- C64 ------------------------------|-------------------|--,
+    // |   ,-----,     ,-----,     ,-----,   |    ,-----,        |  |
+    // |   |     |     |     |     |     |   |    |     |        |  |
+    // '-->| CIA | --> | CIA | --> | VIC | --|--> | CPU | -------|--'
+    //     |  1  |     |  2  |     |     |   |    |     |        |
+    //     '-----'     '-----'     '-----'   |    '-----'        |
+    //                                       |                   |
+    //                                       |    ,--------,     |
+    //                                       |    |        |     |
+    // ,-- Drive ----------------------------|--> | VC1541 | ----|--,
+    // |                                     |    |        |     |  |
+    // |                                     |    '--------'     |  |
+    // '-------------------------------------|-------------------|--'
+
+    Cycle cycle = ++cpu.clock;
+
+    //
+    // First clock phase (o2 low)
+    //
+
+    if (nextTrigger <= cycle) processEvents(cycle);
+    (vic.*vic.vicfunc[rasterCycle])();
+
+
+    //
+    // Second clock phase (o2 high)
+    //
+
+    cpu.execute<MOS_6510>();
+    if constexpr (enable8) { drive8.execute(durationOfOneCycle); }
+    if constexpr (enable9) { drive9.execute(durationOfOneCycle); }
 }
 
 bool
