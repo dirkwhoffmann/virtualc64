@@ -428,7 +428,9 @@ private:
     void executeHeadless() { execute(true); }
     template <bool enable8, bool enable9> void execute();
     template <bool enable8, bool enable9> alwaysinline void executeCycle();
-    bool processFlags();
+    template <bool enable8, bool enable9> void finishInstruction();
+    void processFlags();
+
 
     // Experimental (for runahead)
     void fastForward(isize frames);
@@ -494,12 +496,6 @@ public:
     // Executes a single clock cycle.
     void executeOneCycle();
 
-    /* Finishes the current instruction. This function is called when the
-     * emulator threads terminates in order to reach a clean state. It emulates
-     * the CPU until the next fetch cycle is reached.
-     */
-    void finishInstruction();
-    
     // Finishes the current frame
     void finishFrame();
     

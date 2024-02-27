@@ -392,34 +392,45 @@ C64::execute(bool headless)
 template <bool enable8, bool enable9> void
 C64::execute()
 {
-    bool exit = false;
     auto lastCycle = vic.getCyclesPerLine();
 
-    do {
+    try {
 
-        // Run the emulator for the (rest of the) current scanline
-        for (; rasterCycle <= lastCycle; rasterCycle++) {
+        do {
 
-            // Execute one cycle
-            executeCycle<enable8, enable9>();
+            // Run the emulator for the (rest of the) current scanline
+            for (; rasterCycle <= lastCycle; rasterCycle++) {
 
-            // Process all pending run loop flags
-            if (flags && processFlags()) { rasterCycle++; exit = true; break; }
-        }
+                // Execute one cycle
+                executeCycle<enable8, enable9>();
 
-        // Check if the current scanline is completed
-        if (rasterCycle > lastCycle) endScanline();
+                // Process all pending flags
+                if (flags) processFlags();
+            }
 
-        // Check if the current frame is completed
-        if (scanline == 0) exit = true;
+            // Finish the scanline
+            assert(rasterCycle > lastCycle);
+            endScanline();
 
-    } while (!exit);
-    
-    // Finish the current instruction
-    while (!cpu.inFetchPhase()) executeCycle<enable8, enable9>();
+        } while (scanline != 0);
 
-    trace(TIM_DEBUG, "Syncing at scanline %d\n", scanline);
-    assert(flags == 0);
+        // Finish the current instruction
+        finishInstruction<enable8, enable9>();
+
+        trace(TIM_DEBUG, "Syncing at scanline %d\n", scanline);
+        assert(flags == 0);
+
+    } catch (...) {
+
+        // Finish the scanline
+        if (rasterCycle == lastCycle) endScanline();
+
+        // Finish the current instruction
+        finishInstruction<enable8, enable9>();
+
+        // Rethrow the exception
+        throw;
+    }
 }
 
 template <bool enable8, bool enable9>
@@ -464,49 +475,49 @@ alwaysinline void C64::executeCycle()
     if constexpr (enable9) { drive9.execute(durationOfOneCycle); }
 }
 
-bool
+template <bool enable8, bool enable9> void 
+C64::finishInstruction()
+{
+    while (!cpu.inFetchPhase()) executeCycle<enable8,enable9>();
+}
+
+void
 C64::processFlags()
 {
-    // The following flags will terminate the loop
-    bool exit = flags & (RL::BREAKPOINT |
-                         RL::WATCHPOINT |
-                         RL::STOP |
-                         RL::CPU_JAM ); // |
-                         // RL::SINGLE_STEP);
+    bool interrupt = false;
 
     // Did we reach a breakpoint?
     if (flags & RL::BREAKPOINT) {
         clearFlag(RL::BREAKPOINT);
         msgQueue.put(MSG_BREAKPOINT_REACHED, CpuMsg {u16(cpu.debugger.breakpointPC)});
-        // inspect();
-        emulator.switchState(STATE_PAUSED);
+        interrupt = true;
     }
 
     // Did we reach a watchpoint?
     if (flags & RL::WATCHPOINT) {
         clearFlag(RL::WATCHPOINT);
         msgQueue.put(MSG_WATCHPOINT_REACHED, CpuMsg {u16(cpu.debugger.watchpointPC)});
-        // inspect();
-        emulator.switchState(STATE_PAUSED);
+        interrupt = true;
     }
 
     // Are we requested to terminate the run loop?
     if (flags & RL::STOP) {
         clearFlag(RL::STOP);
-        emulator.switchState(STATE_PAUSED);
+        interrupt = true;
     }
 
     // Are we requested to pull the NMI line down?
     if (flags & RL::EXTERNAL_NMI) {
         clearFlag(RL::EXTERNAL_NMI);
         cpu.pullDownNmiLine(INTSRC_EXP);
+        interrupt = true;
     }
 
     // Is the CPU jammed due the execution of an illegal instruction?
     if (flags & RL::CPU_JAM) {
         clearFlag(RL::CPU_JAM);
         msgQueue.put(MSG_CPU_JAMMED);
-        emulator.switchState(STATE_PAUSED);
+        interrupt = true;
     }
 
     // Are we requested to simulate a BRK instruction
@@ -521,15 +532,12 @@ C64::processFlags()
 
         if (!stepTo || *stepTo == cpu.getPC0()) {
 
-            printf("Pausing...\n");
-            emulator.switchState(STATE_PAUSED);
-            printf("Paused...\n");
             clearFlag(RL::SINGLE_STEP);
-            exit = true;
+            interrupt = true;
         }
     }
 
-    return exit;
+    if (interrupt) throw util::Exception();
 }
 
 void 
@@ -598,12 +606,7 @@ C64::_pause()
 {
     debug(RUN_DEBUG, "_pause\n");
 
-    // Finish the current instruction to reach a clean state
-    finishInstruction();
-    
-    // Update the recorded debug information
-    // inspect();
-
+    assert(cpu.inFetchPhase());
     msgQueue.put(MSG_PAUSE);
 }
 
@@ -903,49 +906,12 @@ C64::stopAndGo()
     isRunning() ? emulator.pause() : emulator.run();
 }
 
-/*
-void
-C64::stepInto()
-{
-    if (isRunning()) return;
-    
-    // Execute the next instruction
-    executeOneCycle();
-    finishInstruction();
-    
-    // Inform the GUI
-    msgQueue.put(MSG_STEP);
-}
-
-void
-C64::stepOver()
-{
-    if (isRunning()) return;
-    
-    // If the next instruction is a JSR instruction (0x20), we set a breakpoint
-    // at the next memory location. Otherwise, stepOver behaves like stepInto.
-    if (mem.spypeek(cpu.getPC0()) == 0x20) {
-        cpu.debugger.setSoftStopAtNextInstr();
-        run();
-    } else {
-        stepInto();
-    }
-}
-*/
-
 void
 C64::executeOneCycle()
 {
     setFlag(RL::SINGLE_STEP);
     execute();
     clearFlag(RL::SINGLE_STEP);
-}
-
-void
-C64::finishInstruction()
-{
-    assert(cpu.inFetchPhase());
-    // while (!cpu.inFetchPhase()) executeOneCycle();
 }
 
 void

@@ -55,9 +55,17 @@ Thread::execute()
 
     if (std::abs(missing) <= 5) {
 
-        // Execute all missing frames
         loadClock.go();
-        for (isize i = 0; i < missing; i++, frameCounter++) computeFrame();
+        try {
+
+            // Execute all missing frames
+            for (isize i = 0; i < missing; i++, frameCounter++) computeFrame();
+
+        } catch (...) {
+
+            // Interruption
+            switchState(STATE_PAUSED);
+        }
         loadClock.stop();
 
     } else {
