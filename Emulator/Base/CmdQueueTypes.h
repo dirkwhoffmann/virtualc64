@@ -24,17 +24,6 @@ enum_long(CMD_TYPE)
 {
     CMD_NONE = 0,
 
-    // Emulator
-    /*
-    CMD_POWER_ON,
-    CMD_POWER_OFF,
-    CMD_RUN,
-    CMD_PAUSE,
-    CMD_SUSPEND,
-    CMD_RESUME,
-    CMD_HALT,
-    */
-
     // C64
     CMD_BRK,
     CMD_SNAPSHOT_AUTO,
@@ -91,16 +80,6 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
         switch (value) {
 
             case CMD_NONE:                  return "NONE";
-
-            /*
-            case CMD_POWER_ON:              return "POWER_ON";
-            case CMD_POWER_OFF:             return "POWER_OFF";
-            case CMD_RUN:                   return "RUN";
-            case CMD_PAUSE:                 return "PAUSE";
-            case CMD_SUSPEND:               return "SUSPEND";
-            case CMD_RESUME:                return "RESUME";
-            case CMD_HALT:                  return "HALT";
-            */
 
             case CMD_BRK:                   return "BRK";
             case CMD_SNAPSHOT_AUTO:         return "SNAPSHOT_AUTO";

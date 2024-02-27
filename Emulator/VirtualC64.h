@@ -59,6 +59,7 @@ public:
     using vc64::Emulator::Thread::run;
     using vc64::Emulator::Thread::pause;
     using vc64::Emulator::Thread::halt;
+    using vc64::Emulator::Thread::stopAndGo;
     using vc64::Emulator::Thread::suspend;
     using vc64::Emulator::Thread::resume;
 
@@ -138,12 +139,6 @@ public:
         // Performs a hard or soft reset
         void hardReset();
         void softReset();
-
-        void stopAndGo();
-        /*
-        void stepInto();
-        void stepOver();
-        */
 
         InspectionTarget getInspectionTarget() const;
         void setInspectionTarget(InspectionTarget target, Cycle trigger = 0);

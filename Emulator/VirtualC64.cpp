@@ -149,12 +149,13 @@ VirtualC64::C64_API::softReset()
     }
 }
 
-void 
+/*
+void
 VirtualC64::C64_API::stopAndGo()
 {
     c64.stopAndGo();
 }
-
+*/
 /*
 void
 VirtualC64::C64_API::stepInto()

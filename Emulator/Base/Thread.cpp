@@ -255,6 +255,12 @@ Thread::pause()
     }
 }
 
+void 
+Thread::stopAndGo()
+{
+    isRunning() ? pause() : run();
+}
+
 void
 Thread::halt()
 {

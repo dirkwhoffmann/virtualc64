@@ -2378,7 +2378,7 @@ using namespace vc64;
 
 - (void)stopAndGo
 {
-    [self emu]->c64.stopAndGo();
+    [self emu]->stopAndGo();
 }
 
 - (void)stepInto

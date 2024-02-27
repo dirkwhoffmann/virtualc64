@@ -478,7 +478,7 @@ public:
     void signalBrk() { setFlag(RL::EXTERNAL_BRK); }
 
     // Runs or pauses the emulator
-    void stopAndGo();
+    // void stopAndGo();
 
     /* Executes a single instruction. This function is used for single-stepping
      * through the code inside the debugger. It starts the execution thread and

@@ -898,11 +898,13 @@ C64::inspectSlot(EventSlot nr) const
     info.eventName = eventName((EventSlot)nr, id[nr]);
 }
 
+/*
 void
 C64::stopAndGo()
 {
     isRunning() ? emulator.pause() : emulator.run();
 }
+*/
 
 void
 C64::executeOneCycle()

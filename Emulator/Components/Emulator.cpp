@@ -867,16 +867,6 @@ Emulator::update()
         main.markAsDirty();
 
         switch (cmd.type) {
-
-            /*
-            case CMD_POWER_ON:  powerOn();  break;
-            case CMD_POWER_OFF: powerOff(); break;
-            case CMD_RUN:       run();      break;
-            case CMD_PAUSE:     pause();    break;
-            case CMD_SUSPEND:   suspend();  break;
-            case CMD_RESUME:    resume();   break;
-            case CMD_HALT:      halt();     break;
-            */
                 
             case CMD_BRK:
             case CMD_SNAPSHOT_AUTO:
@@ -957,18 +947,26 @@ Emulator::computeFrame()
 {
     if (config.runAhead) {
 
-        // Run the main instance
-        main.execute();
+        try {
 
-        // Recreate the run-ahead instance if necessary
-        if (main.isDirty || RUA_ON_STEROIDS) recreateRunAheadInstance();
+            // Run the main instance
+            main.execute();
 
-        // Run the runahead instance
-        ahead.execute();
+            // Recreate the run-ahead instance if necessary
+            if (main.isDirty || RUA_ON_STEROIDS) recreateRunAheadInstance();
+
+            // Run the runahead instance
+            ahead.execute();
+
+        } catch (StateChangeException &) {
+
+            ahead.markAsDirty();
+            throw;
+        }
 
     } else {
 
-        // Run the main instance
+        // Only run the main instance
         main.execute();
     }
 }
