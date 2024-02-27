@@ -409,7 +409,6 @@ C64::execute()
             }
 
             // Finish the scanline
-            assert(rasterCycle > lastCycle);
             endScanline();
 
         } while (scanline != 0);
@@ -417,10 +416,7 @@ C64::execute()
         // Finish the current instruction
         finishInstruction<enable8, enable9>();
 
-        trace(TIM_DEBUG, "Syncing at scanline %d\n", scanline);
-        assert(flags == 0);
-
-    } catch (...) {
+    } catch (StateChangeException &) {
 
         // Finish the scanline
         if (rasterCycle == lastCycle) endScanline();
@@ -431,6 +427,8 @@ C64::execute()
         // Rethrow the exception
         throw;
     }
+
+    assert(flags == 0);
 }
 
 template <bool enable8, bool enable9>
@@ -537,7 +535,7 @@ C64::processFlags()
         }
     }
 
-    if (interrupt) throw util::Exception();
+    if (interrupt) throw StateChangeException(STATE_PAUSED);
 }
 
 void 

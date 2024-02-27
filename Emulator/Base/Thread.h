@@ -100,6 +100,8 @@ namespace vc64 {
  * the recorded information in a trace buffer.
  */
 
+typedef util::Exception StateChangeException;
+
 class Thread : public CoreObject, public Suspendable, Wakeable {
 
 protected:

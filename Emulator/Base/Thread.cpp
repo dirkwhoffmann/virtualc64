@@ -61,10 +61,10 @@ Thread::execute()
             // Execute all missing frames
             for (isize i = 0; i < missing; i++, frameCounter++) computeFrame();
 
-        } catch (...) {
+        } catch (StateChangeException &exc) {
 
             // Interruption
-            switchState(STATE_PAUSED);
+            switchState((EmulatorState)exc.data);
         }
         loadClock.stop();
 
