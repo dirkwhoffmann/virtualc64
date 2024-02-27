@@ -51,6 +51,18 @@ VirtualC64::~VirtualC64()
     halt();
 }
 
+void
+VirtualC64::stepInto()
+{
+    Emulator::stepInto();
+}
+
+void
+VirtualC64::stepOver()
+{
+    Emulator::stepOver();
+}
+
 u32 *
 VirtualC64::getTexture() const
 {
@@ -143,6 +155,7 @@ VirtualC64::C64_API::stopAndGo()
     c64.stopAndGo();
 }
 
+/*
 void
 VirtualC64::C64_API::stepInto()
 {
@@ -154,6 +167,7 @@ VirtualC64::C64_API::stepOver()
 {
     c64.stepOver();
 }
+*/
 
 InspectionTarget
 VirtualC64::C64_API::getInspectionTarget() const

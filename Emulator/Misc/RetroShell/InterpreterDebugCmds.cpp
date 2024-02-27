@@ -72,7 +72,7 @@ Interpreter::initDebugShell(Command &root)
              std::pair <string, string>("s[tep]", "Step into the next instruction"),
              [this](Arguments& argv, long value) {
 
-        c64.stepInto();
+        emulator.stepInto();
     });
     root.clone("s", {"step"});
 
@@ -80,7 +80,7 @@ Interpreter::initDebugShell(Command &root)
              std::pair <string, string>("n[next]", "Step over the next instruction"),
              [this](Arguments& argv, long value) {
 
-        c64.stepOver();
+        emulator.stepOver();
     });
     root.clone("n", {"next"});
 

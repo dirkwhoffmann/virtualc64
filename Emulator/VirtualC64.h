@@ -76,6 +76,9 @@ public:
     using vc64::Emulator::Thread::trackOn;
     using vc64::Emulator::Thread::trackOff;
 
+    void stepInto();
+    void stepOver();
+
 
     //
     // Synchronizing
@@ -137,8 +140,10 @@ public:
         void softReset();
 
         void stopAndGo();
+        /*
         void stepInto();
         void stepOver();
+        */
 
         InspectionTarget getInspectionTarget() const;
         void setInspectionTarget(InspectionTarget target, Cycle trigger = 0);

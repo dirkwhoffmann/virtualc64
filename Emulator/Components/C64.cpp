@@ -397,29 +397,27 @@ C64::execute()
 
     do {
 
-        //
         // Run the emulator for the (rest of the) current scanline
-        //
-
         for (; rasterCycle <= lastCycle; rasterCycle++) {
 
+            // Execute one cycle
             executeCycle<enable8, enable9>();
 
-            //
-            // Process run loop flags
-            //
-
+            // Process all pending run loop flags
             if (flags && processFlags()) { rasterCycle++; exit = true; break; }
         }
 
-        // Finish the current scanline if we are at the end
+        // Check if the current scanline is completed
         if (rasterCycle > lastCycle) endScanline();
 
-        // Check if we have completed an entire frame
+        // Check if the current frame is completed
         if (scanline == 0) exit = true;
 
     } while (!exit);
     
+    // Finish the current instruction
+    while (!cpu.inFetchPhase()) executeCycle<enable8, enable9>();
+
     trace(TIM_DEBUG, "Syncing at scanline %d\n", scanline);
     assert(flags == 0);
 }
@@ -521,14 +519,13 @@ C64::processFlags()
     // Are we requested to run for a single cycle?
     if (flags & RL::SINGLE_STEP) {
 
-        if (cpu.inFetchPhase()) {
+        if (!stepTo || *stepTo == cpu.getPC0()) {
 
-            if (!stepTo || *stepTo == cpu.getPC0()) {
-                
-                emulator.switchState(STATE_PAUSED);
-                clearFlag(RL::SINGLE_STEP);
-                exit = true;
-            }
+            printf("Pausing...\n");
+            emulator.switchState(STATE_PAUSED);
+            printf("Paused...\n");
+            clearFlag(RL::SINGLE_STEP);
+            exit = true;
         }
     }
 
@@ -906,6 +903,7 @@ C64::stopAndGo()
     isRunning() ? emulator.pause() : emulator.run();
 }
 
+/*
 void
 C64::stepInto()
 {
@@ -933,6 +931,7 @@ C64::stepOver()
         stepInto();
     }
 }
+*/
 
 void
 C64::executeOneCycle()
@@ -945,7 +944,8 @@ C64::executeOneCycle()
 void
 C64::finishInstruction()
 {
-    while (!cpu.inFetchPhase()) executeOneCycle();
+    assert(cpu.inFetchPhase());
+    // while (!cpu.inFetchPhase()) executeOneCycle();
 }
 
 void

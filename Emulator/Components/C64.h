@@ -482,14 +482,14 @@ public:
      * through the code inside the debugger. It starts the execution thread and
      * terminates it after the next instruction has been executed.
      */
-    void stepInto();
-    
+    // void stepInto();
+
     /* Emulates the C64 until the instruction following the current one is
      * reached. This function is used for single-stepping through the code
      * inside the debugger. It sets a soft breakpoint to PC+n where n is the
      * length bytes of the current instruction and starts the emulator thread.
      */
-    void stepOver();
+    // void stepOver();
 
     // Executes a single clock cycle.
     void executeOneCycle();

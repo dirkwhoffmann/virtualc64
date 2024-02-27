@@ -2383,12 +2383,12 @@ using namespace vc64;
 
 - (void)stepInto
 {
-    [self emu]->c64.stepInto();
+    [self emu]->stepInto();
 }
 
 - (void)stepOver
 {
-    [self emu]->c64.stepOver();
+    [self emu]->stepOver();
 }
 
 - (void)signalBrk
