@@ -452,12 +452,13 @@ C64::execute()
         // Finish the current scanline if we are at the end
         if (rasterCycle > lastCycle) endScanline();
 
-        // Check if we have reached the next sync point
+        // Check if we have completed an entire frame
         if (scanline == 0) exit = true;
 
     } while (!exit);
     
     trace(TIM_DEBUG, "Syncing at scanline %d\n", scanline);
+    assert(flags == 0);
 }
 
 bool
@@ -467,8 +468,8 @@ C64::processFlags()
     bool exit = flags & (RL::BREAKPOINT |
                          RL::WATCHPOINT |
                          RL::STOP |
-                         RL::CPU_JAM |
-                         RL::SINGLE_STEP);
+                         RL::CPU_JAM ); // |
+                         // RL::SINGLE_STEP);
 
     // Did we reach a breakpoint?
     if (flags & RL::BREAKPOINT) {
@@ -514,10 +515,18 @@ C64::processFlags()
 
     // Are we requested to run for a single cycle?
     if (flags & RL::SINGLE_STEP) {
-        clearFlag(RL::SINGLE_STEP);
+
+        if (cpu.inFetchPhase()) {
+
+            if (!stepTo || *stepTo == cpu.getPC0()) {
+                
+                emulator.switchState(STATE_PAUSED);
+                clearFlag(RL::SINGLE_STEP);
+                exit = true;
+            }
+        }
     }
 
-    assert(flags == 0);
     return exit;
 }
 

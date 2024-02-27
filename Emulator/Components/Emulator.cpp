@@ -66,7 +66,27 @@ Emulator::initialize()
     ahead.hardReset();
 }
 
+void
+Emulator::stepInto()
+{
+    if (isRunning()) return;
+
+    main.stepTo = { };
+    main.setFlag(RL::SINGLE_STEP);
+    run();
+}
+
 void 
+Emulator::stepOver()
+{
+    if (isRunning()) return;
+
+    main.stepTo = main.cpu.getAddressOfNextInstruction();
+    main.setFlag(RL::SINGLE_STEP);
+    run();
+}
+
+void
 Emulator::recordState(EmulatorInfo &result) const
 {
     result.state = state;
@@ -848,6 +868,7 @@ Emulator::update()
 
         switch (cmd.type) {
 
+            /*
             case CMD_POWER_ON:  powerOn();  break;
             case CMD_POWER_OFF: powerOff(); break;
             case CMD_RUN:       run();      break;
@@ -855,7 +876,8 @@ Emulator::update()
             case CMD_SUSPEND:   suspend();  break;
             case CMD_RESUME:    resume();   break;
             case CMD_HALT:      halt();     break;
-
+            */
+                
             case CMD_BRK:
             case CMD_SNAPSHOT_AUTO:
             case CMD_SNAPSHOT_USER: 
@@ -990,10 +1012,6 @@ void
 Emulator::put(const Cmd &cmd)
 {
     cmdQueue.put(cmd);
-    
-    if (cmd.type == CMD_HALT) {
-        join();
-    }
 }
 
 void

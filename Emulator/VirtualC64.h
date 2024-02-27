@@ -54,6 +54,14 @@ public:
     // Emulator state
     //
 
+    using vc64::Emulator::Thread::powerOn;
+    using vc64::Emulator::Thread::powerOff;
+    using vc64::Emulator::Thread::run;
+    using vc64::Emulator::Thread::pause;
+    using vc64::Emulator::Thread::halt;
+    using vc64::Emulator::Thread::suspend;
+    using vc64::Emulator::Thread::resume;
+
     using vc64::Emulator::Thread::isPoweredOn;
     using vc64::Emulator::Thread::isPoweredOff;
     using vc64::Emulator::Thread::isPaused;

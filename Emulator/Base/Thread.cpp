@@ -112,11 +112,19 @@ Thread::runLoop()
 
     while (state != STATE_HALTED) {
 
-        // Update state
+        // Prepare for the next frame
         update();
 
         // Compute missing frames
         execute();
+
+        // Change state if requested
+        if (stateChangeRequest.test()) {
+
+            switchState(newState);
+            stateChangeRequest.clear();
+            stateChangeRequest.notify_one();
+        }
 
         // Synchronize timing
         sleep();
@@ -129,6 +137,8 @@ Thread::runLoop()
 void
 Thread::switchState(EmulatorState newState)
 {
+    assert(isEmulatorThread());
+
     // Only proceed if the state changes
     if (state == newState) return;
 
@@ -197,7 +207,7 @@ Thread::powerOn()
 
     if (isPoweredOff()) {
 
-        switchState(STATE_PAUSED);
+        changeStateTo(STATE_PAUSED);
     }
 }
 
@@ -208,7 +218,7 @@ Thread::powerOff()
 
     if (!isPoweredOff()) {
 
-        switchState(STATE_OFF);
+        changeStateTo(STATE_OFF);
     }
 }
 
@@ -222,7 +232,7 @@ Thread::run()
         // Throw an exception if the emulator is not ready to run
         isReady();
 
-        switchState(STATE_RUNNING);
+        changeStateTo(STATE_RUNNING);
     }
 }
 
@@ -233,14 +243,15 @@ Thread::pause()
 
     if (isRunning()) {
 
-        switchState(STATE_PAUSED);
+        changeStateTo(STATE_PAUSED);
     }
 }
 
 void
 Thread::halt()
 {
-    switchState(STATE_HALTED);
+    changeStateTo(STATE_HALTED);
+    join();
 }
 
 void
@@ -304,6 +315,24 @@ Thread::trackOff(isize source)
 }
 
 void
+Thread::changeStateTo(EmulatorState requestedState)
+{
+    assert(!isEmulatorThread());
+    assert(stateChangeRequest.test() == false);
+
+    // Assign new state
+    newState = requestedState;
+
+    // Request the change
+    stateChangeRequest.test_and_set();
+    assert(stateChangeRequest.test() == true);
+
+    // Wait until the change has been performed
+    stateChangeRequest.wait(true);
+    assert(stateChangeRequest.test() == false);
+}
+
+void
 Thread::wakeUp()
 {
     trace(TIM_DEBUG, "wakeup: %lld us\n", wakeupClock.restart().asMicroseconds());
@@ -318,7 +347,7 @@ Thread::suspend()
     if (suspendCounter || isRunning()) {
 
         suspendCounter++;
-        switchState(STATE_SUSPENDED);
+        changeStateTo(STATE_SUSPENDED);
     }
 }
 
@@ -329,7 +358,7 @@ Thread::resume()
 
     if (suspendCounter && --suspendCounter == 0) {
         
-        switchState(STATE_RUNNING);
+        changeStateTo(STATE_RUNNING);
         run();
     }
 }

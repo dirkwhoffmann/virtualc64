@@ -429,8 +429,7 @@ RetroShell::execUserCommand(const string &command)
 
             } else {
 
-                c64.stepInto();
-                printState();
+                emulator.stepInto();
             }
         }
 

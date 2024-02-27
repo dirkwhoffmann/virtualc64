@@ -2176,12 +2176,12 @@ using namespace vc64;
 
 - (void)powerOn:(ExceptionWrapper *)ex
 {
-    [self send:CMD_POWER_ON];
+    [self emu]->powerOn();
 }
 
 - (void)powerOff
 {
-    [self send:CMD_POWER_OFF];
+    [self emu]->powerOff();
 }
 
 - (EmulatorInfo)info
@@ -2236,27 +2236,27 @@ using namespace vc64;
 
 - (void)run:(ExceptionWrapper *)e
 {
-    [self send:CMD_RUN];
+    [self emu]->run();
 }
 
 - (void)pause
 {
-    [self send:CMD_PAUSE];
+    [self emu]->pause();
 }
 
 - (void)halt
 {
-    [self send:CMD_HALT];
+    [self emu]->halt();
 }
 
 - (void)suspend
 {
-    [self send:CMD_SUSPEND];
+    [self emu]->suspend();
 }
 
 - (void)resume
 {
-    [self send:CMD_RESUME];
+    [self emu]->resume();
 }
 
 - (u32 *)texture

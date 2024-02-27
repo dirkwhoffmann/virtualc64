@@ -216,6 +216,9 @@ private:
     // Duration of a CPU cycle in 1/10 nano seconds
     i64 durationOfOneCycle;
 
+    // Target address for step mode
+    std::optional<u16> stepTo;
+
 
     //
     // Static methods

@@ -56,7 +56,7 @@ public:
     // Information about the host system
     Host host = Host(*this);
 
-    
+
     //
     // Methods
     //
@@ -71,6 +71,14 @@ public:
 
     // Initializes all components
     void initialize();
+
+
+    //
+    // Execution control
+    //
+
+    void stepInto();
+    void stepOver();
 
 
     //
