@@ -837,7 +837,7 @@ C64::record() const
 bool 
 C64::autoInspect() const
 {
-    return getInspectionTarget() == INSPECTION_C64 || isRunning();
+    return getInspectionTarget() == INSPECTION_C64 && isRunning();
 }
 
 void

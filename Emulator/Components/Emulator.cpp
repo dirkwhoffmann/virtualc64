@@ -71,11 +71,9 @@ Emulator::stepInto()
 {
     if (isRunning()) return;
 
-    printf("Step into...\n");
     main.stepTo = { };
     main.setFlag(RL::SINGLE_STEP);
     run();
-    printf("state = %s\n", EmulatorStateEnum::key(state));
 }
 
 void 
@@ -85,7 +83,6 @@ Emulator::stepOver()
 
     main.stepTo = main.cpu.getAddressOfNextInstruction();
     auto value = *main.stepTo;
-    printf("Step over to %x...\n", value);
     main.setFlag(RL::SINGLE_STEP);
     run();
 }
@@ -1001,7 +998,9 @@ Emulator::getTexture() const
     if (isPoweredOff()) return main.vic.getNoise();
 
     // Get the texture from the proper emulator instance
-    return config.runAhead ? ahead.vic.getTexture() : main.vic.getTexture();
+    return config.runAhead && isRunning() ?
+    ahead.vic.getTexture() :
+    main.vic.getTexture();
 }
 
 u32 *

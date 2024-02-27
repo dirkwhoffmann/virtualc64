@@ -91,13 +91,17 @@ class InstrTableView: NSTableView {
     func refresh(count: Int = 0, full: Bool = false, addr: Int = 0) {
         
         if full {
+
             assignFormatter(inspector.fmt16, column: "addr")
             cache()
             reloadData()
+            jumpTo(addr: addr)
+
+        } else {
+
+            // In animation mode, jump to the currently executed instruction
+            if count != 0 { jumpTo(addr: addr) }
         }
-        
-        // In animation mode, jump to the currently executed instruction
-        if count != 0 { jumpTo(addr: addr) }
     }
     
     func jumpTo(addr: Int) {

@@ -152,39 +152,39 @@ Thread::switchState(EmulatorState newState)
 
     if (state == STATE_OFF && newState == STATE_PAUSED) {
 
-        _powerOn();
         state = STATE_PAUSED;
+        _powerOn();
 
     } else if (state == STATE_OFF && newState == STATE_RUNNING) {
 
-        _powerOn();
         state = STATE_PAUSED;
+        _powerOn();
 
-        _run();
         state = STATE_RUNNING;
+        _run();
 
     } else if (state == STATE_PAUSED && newState == STATE_OFF) {
 
-        _powerOff();
         state = STATE_OFF;
+        _powerOff();
 
     } else if (state == STATE_PAUSED && newState == STATE_RUNNING) {
 
-        _run();
         state = STATE_RUNNING;
+        _run();
 
     } else if (state == STATE_RUNNING && newState == STATE_OFF) {
 
-        _pause();
         state = STATE_PAUSED;
+        _pause();
 
-        _powerOff();
         state = STATE_OFF;
+        _powerOff();
 
     } else if (state == STATE_RUNNING && newState == STATE_PAUSED) {
 
-        _pause();
         state = STATE_PAUSED;
+        _pause();
 
     } else if (state == STATE_RUNNING && newState == STATE_SUSPENDED) {
 
@@ -196,8 +196,8 @@ Thread::switchState(EmulatorState newState)
 
     } else if (newState == STATE_HALTED) {
 
-        _halt();
         state = STATE_HALTED;
+        _halt();
 
     } else {
 
