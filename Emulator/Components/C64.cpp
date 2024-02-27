@@ -419,7 +419,7 @@ C64::execute()
     } catch (StateChangeException &) {
 
         // Finish the scanline
-        if (rasterCycle == lastCycle) endScanline();
+        if (++rasterCycle > lastCycle) endScanline();
 
         // Finish the current instruction
         finishInstruction<enable8, enable9>();
@@ -427,8 +427,6 @@ C64::execute()
         // Rethrow the exception
         throw;
     }
-
-    assert(flags == 0);
 }
 
 template <bool enable8, bool enable9>
@@ -476,7 +474,11 @@ alwaysinline void C64::executeCycle()
 template <bool enable8, bool enable9> void 
 C64::finishInstruction()
 {
-    while (!cpu.inFetchPhase()) executeCycle<enable8,enable9>();
+    while (!cpu.inFetchPhase()) {
+
+        executeCycle<enable8,enable9>();
+        rasterCycle++;
+    }
 }
 
 void
@@ -528,7 +530,7 @@ C64::processFlags()
     // Are we requested to run for a single cycle?
     if (flags & RL::SINGLE_STEP) {
 
-        if (!stepTo || *stepTo == cpu.getPC0()) {
+        if (!stepTo.has_value() || *stepTo == cpu.getPC0()) {
 
             clearFlag(RL::SINGLE_STEP);
             interrupt = true;
@@ -571,12 +573,7 @@ C64::_powerOn()
 {
     debug(RUN_DEBUG, "_powerOn\n");
     
-    // Perform a reset
     hardReset();
-
-    // Update the recorded debug information
-    // inspect();
-
     msgQueue.put(MSG_POWER, 1);
 }
 
@@ -585,9 +582,6 @@ C64::_powerOff()
 {
     debug(RUN_DEBUG, "_powerOff\n");
 
-    // Update the recorded debug information
-    // inspect();
-
     msgQueue.put(MSG_POWER, 0);
 }
 
@@ -595,6 +589,7 @@ void
 C64::_run()
 {
     debug(RUN_DEBUG, "_run\n");
+    assert(cpu.inFetchPhase());
 
     msgQueue.put(MSG_RUN);
 }
@@ -603,8 +598,8 @@ void
 C64::_pause()
 {
     debug(RUN_DEBUG, "_pause\n");
-
     assert(cpu.inFetchPhase());
+
     msgQueue.put(MSG_PAUSE);
 }
 

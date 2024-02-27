@@ -71,9 +71,11 @@ Emulator::stepInto()
 {
     if (isRunning()) return;
 
+    printf("Step into...\n");
     main.stepTo = { };
     main.setFlag(RL::SINGLE_STEP);
     run();
+    printf("state = %s\n", EmulatorStateEnum::key(state));
 }
 
 void 
@@ -82,6 +84,8 @@ Emulator::stepOver()
     if (isRunning()) return;
 
     main.stepTo = main.cpu.getAddressOfNextInstruction();
+    auto value = *main.stepTo;
+    printf("Step over to %x...\n", value);
     main.setFlag(RL::SINGLE_STEP);
     run();
 }

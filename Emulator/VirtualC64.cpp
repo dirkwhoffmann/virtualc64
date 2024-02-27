@@ -149,27 +149,6 @@ VirtualC64::C64_API::softReset()
     }
 }
 
-/*
-void
-VirtualC64::C64_API::stopAndGo()
-{
-    c64.stopAndGo();
-}
-*/
-/*
-void
-VirtualC64::C64_API::stepInto()
-{
-    c64.stepInto();
-}
-
-void
-VirtualC64::C64_API::stepOver()
-{
-    c64.stepOver();
-}
-*/
-
 InspectionTarget
 VirtualC64::C64_API::getInspectionTarget() const
 {

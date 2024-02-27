@@ -217,7 +217,7 @@ private:
     i64 durationOfOneCycle;
 
     // Target address for step mode
-    std::optional<u16> stepTo;
+    std::optional<u16> stepTo = { };
 
 
     //
@@ -476,22 +476,6 @@ public:
     void signalStop() { setFlag(RL::STOP); }
     void signalExpPortNmi() { setFlag(RL::EXTERNAL_NMI); }
     void signalBrk() { setFlag(RL::EXTERNAL_BRK); }
-
-    // Runs or pauses the emulator
-    // void stopAndGo();
-
-    /* Executes a single instruction. This function is used for single-stepping
-     * through the code inside the debugger. It starts the execution thread and
-     * terminates it after the next instruction has been executed.
-     */
-    // void stepInto();
-
-    /* Emulates the C64 until the instruction following the current one is
-     * reached. This function is used for single-stepping through the code
-     * inside the debugger. It sets a soft breakpoint to PC+n where n is the
-     * length bytes of the current instruction and starts the emulator thread.
-     */
-    // void stepOver();
 
     // Executes a single clock cycle.
     void executeOneCycle();
