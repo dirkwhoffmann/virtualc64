@@ -600,6 +600,9 @@ C64::_pause()
     debug(RUN_DEBUG, "_pause\n");
     assert(cpu.inFetchPhase());
 
+    // Clear pending runloop flags
+    flags = 0;
+    
     msgQueue.put(MSG_PAUSE);
 }
 
@@ -694,6 +697,9 @@ void
 C64::_dump(Category category, std::ostream& os) const
 {
     using namespace util;
+    auto append = [&](const string &s1, const string &s2) {
+        return s1.empty() ? s2 : s1 + ", " + s2;
+    };
 
     if (category == Category::Config) {
 
@@ -712,6 +718,18 @@ C64::_dump(Category category, std::ostream& os) const
         os << bol(emulator.isWarping()) << std::endl;
         os << tab("Tracking");
         os << bol(emulator.isTracking()) << std::endl;
+        os << std::endl;
+
+        string str = "";
+        if (flags & RL::WARP_ON)        str = append(str, "WARP_ON");
+        if (flags & RL::WARP_OFF)       str = append(str, "WARP_OFF");
+        if (flags & RL::BREAKPOINT)     str = append(str, "BREAKPOINT");
+        if (flags & RL::WATCHPOINT)     str = append(str, "WATCHPOINT");
+        if (flags & RL::CPU_JAM)        str = append(str, "CPU_JAM");
+        if (flags & RL::SINGLE_STEP)    str = append(str, "SINGLE_STEP");
+
+        os << tab("Runloop flags");
+        os << (str.empty() ? "-" : str) << std::endl;
         os << std::endl;
 
         os << tab("Ultimax mode");

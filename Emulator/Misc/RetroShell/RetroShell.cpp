@@ -606,27 +606,22 @@ RetroShell::help(const string &command)
 void
 RetroShell::dump(Dumpable &component, Category category)
 {
-    {   SUSPENDED
-
-        *this << '\n';
-        _dump(component, category);
-    }
+    *this << '\n';
+    _dump(component, category);
 }
 
 void
 RetroShell::dump(Dumpable &component, std::vector <Category> categories)
 {
-    {   SUSPENDED
-
-        *this << '\n';
-        for(auto &category : categories) _dump(component, category);
-
-    }
+    *this << '\n';
+    for(auto &category : categories) _dump(component, category);
 }
 
 void
 RetroShell::_dump(Dumpable &component, Category category)
 {
+    assert(isEmulatorThread());
+
     std::stringstream ss;
 
     switch (category) {
