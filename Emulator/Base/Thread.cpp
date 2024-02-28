@@ -30,11 +30,22 @@ Thread::~Thread()
 void
 Thread::launch()
 {
-    // Make sure to call this function only once
-    assert(!thread.joinable());
+    assert(!isLaunched());
 
     // Start the thread and enter the main function
     thread = std::thread(&Thread::runLoop, this);
+
+    assert(isLaunched());
+}
+
+void 
+Thread::assertLaunched()
+{
+    if (!isLaunched()) {
+        
+        throw std::runtime_error(string("The emulator thread hasn't been lauchend yet. "
+                                        "Missing call to launch()."));
+    }
 }
 
 void
@@ -333,6 +344,7 @@ Thread::changeStateTo(EmulatorState requestedState)
 {
     assert(!isEmulatorThread());
     assert(stateChangeRequest.test() == false);
+    assertLaunched();
 
     // Assign new state
     newState = requestedState;

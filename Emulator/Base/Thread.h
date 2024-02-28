@@ -149,10 +149,16 @@ public:
     
     const char *getDescription() const override { return "Thread"; }
 
+    // Checks the launch state
+    bool isLaunched() const { return thread.joinable(); }
+
 protected:
 
     // Launches the emulator thread
     void launch();
+
+    // Sanity check
+    void assertLaunched();
 
 
     //

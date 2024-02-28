@@ -42,7 +42,6 @@ class ReSID final : public SubComponent, public Inspectable<SIDInfo, Void> {
     reSID::SID *sid;
     
     // Result of the latest inspection
-    // mutable SIDInfo info = { };
     mutable VoiceInfo voiceInfo[3] = { };
 
 private:

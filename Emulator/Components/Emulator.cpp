@@ -42,11 +42,11 @@ Emulator::~Emulator()
 void
 Emulator::launch(const void *listener, Callback *func)
 {
+    // Initialize the emulator if needed
+    if (!isInitialized()) initialize();
+
     // Add listener
     main.msgQueue.setListener(listener, func);
-
-    // Run the initialization procedure
-    initialize();
 
     // Launch the emulator thread
     Thread::launch();
@@ -55,6 +55,8 @@ Emulator::launch(const void *listener, Callback *func)
 void
 Emulator::initialize()
 {
+    assert(!isInitialized());
+
     // Initialize all components
     resetConfig();
     host.resetConfig();
@@ -64,6 +66,14 @@ Emulator::initialize()
     // Perform a hard reset
     main.hardReset();
     ahead.hardReset();
+
+    assert(isInitialized());
+}
+
+bool 
+Emulator::isInitialized() const
+{
+    return main.vic.vicfunc[1] != nullptr;
 }
 
 void
@@ -82,7 +92,6 @@ Emulator::stepOver()
     if (isRunning()) return;
 
     main.stepTo = main.cpu.getAddressOfNextInstruction();
-    auto value = *main.stepTo;
     main.setFlag(RL::SINGLE_STEP);
     run();
 }
@@ -422,6 +431,8 @@ Emulator::set(Option option, i64 value)
 {
     debug(CNF_DEBUG, "configure(%s, %lld)\n", OptionEnum::key(option), value);
 
+    if (!isInitialized()) initialize();
+
     // The following options do not send a message to the GUI
     static std::vector<Option> quiet = {
 
@@ -602,6 +613,8 @@ void
 Emulator::set(Option option, isize id, i64 value)
 {
     debug(CNF_DEBUG, "configure(%s, %ld, %lld)\n", OptionEnum::key(option), id, value);
+
+    if (!isInitialized()) initialize();
 
     // Check if this option has been locked for debugging
     value = overrideOption(option, value);

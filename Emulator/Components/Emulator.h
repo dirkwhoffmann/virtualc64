@@ -72,6 +72,9 @@ public:
     // Initializes all components
     void initialize();
 
+    // Checks the initialization state
+    bool isInitialized() const;
+
 
     //
     // Execution control

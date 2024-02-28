@@ -360,8 +360,6 @@ VICII::setRevision(VICIIRevision revision)
         assert(isPoweredOff());
     }
 
-    trace(true, "Setting revision to %s\n", VICIIRevisionEnum::key(revision));
-
     recorder.stopRecording();
 
     config.revision = revision;
