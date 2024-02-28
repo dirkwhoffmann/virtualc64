@@ -48,23 +48,23 @@ class ReSID final : public SubComponent, public Inspectable<SIDInfo, Void> {
 private:
     
     // ReSID state
-    reSID::SID::State st;
-    
+    reSID::SID::State st = { };
+
     // The emulated chip model
-    SIDRevision model;
-    
+    SIDRevision model = 0;
+
     // Clock frequency
-    u32 clockFrequency;
-    
+    u32 clockFrequency = 0;
+
     // Sample rate (usually set to 44.1 kHz or 48.0 kHz)
-    double sampleRate;
-    
+    double sampleRate = 0;
+
     // Sampling method
-    SamplingMethod samplingMethod;
-    
+    SamplingMethod samplingMethod = 0;
+
     // Switches filter emulation on or off
-    bool emulateFilter;
-    
+    bool emulateFilter = true;
+
     
     //
     // Initializing
