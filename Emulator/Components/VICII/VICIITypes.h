@@ -341,6 +341,7 @@ typedef struct
 {
     // Silicon
     VICIIRevision revision;
+    VICIIRevision awaiting;
     bool powerSave;
     bool grayDotBug;
     GlueLogic glueLogic;

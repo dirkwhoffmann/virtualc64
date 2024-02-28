@@ -623,7 +623,7 @@ private:
     void resetDmaTextures() { resetDmaTexture(1); resetDmaTexture(2); }
     void resetTexture(u32 *p);
 
-    ViciiFunc getViciiFunc(VICIIRevision revision, u16 flags, isize cycle);
+    // ViciiFunc getViciiFunc(VICIIRevision revision, u16 flags, isize cycle);
     ViciiFunc getViciiFunc(u16 flags, isize cycle);
     template <u16 flags> ViciiFunc getViciiFunc(isize cycle);
 
@@ -807,6 +807,7 @@ public:
         << is656x
 
         << config.revision
+        << config.awaiting
         << config.powerSave
         << config.grayDotBug
         << config.glueLogic;
@@ -847,6 +848,7 @@ public:
 
 private:
     
+    void updateRevision();
     void setRevision(VICIIRevision revision);
 
     

@@ -78,11 +78,13 @@ VICII::updateVicFunctionTable()
     }
 }
 
+/*
 VICII::ViciiFunc
 VICII::getViciiFunc(VICIIRevision revision, u16 flags, isize cycle)
 {
     return nullptr;
 }
+*/
 
 VICII::ViciiFunc
 VICII::getViciiFunc(u16 flags, isize cycle)

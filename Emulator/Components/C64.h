@@ -481,7 +481,7 @@ public:
     void executeOneCycle();
 
     // Finishes the current frame
-    void finishFrame();
+    [[deprecated]] void finishFrame();
     
 private:
 

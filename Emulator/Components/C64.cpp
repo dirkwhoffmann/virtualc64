@@ -602,7 +602,7 @@ C64::_pause()
 
     // Clear pending runloop flags
     flags = 0;
-    
+
     msgQueue.put(MSG_PAUSE);
 }
 
@@ -944,6 +944,7 @@ C64::endScanline()
     scanline++;
     
     if (scanline >= vic.getLinesPerFrame()) {
+        
         scanline = 0;
         endFrame();
     }

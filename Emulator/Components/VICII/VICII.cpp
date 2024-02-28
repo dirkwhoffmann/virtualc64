@@ -217,7 +217,7 @@ VICII::getOption(Option option) const
 {
     switch (option) {
             
-        case OPT_VICII_REVISION:        return config.revision;
+        case OPT_VICII_REVISION:        return config.awaiting; // revision;
         case OPT_VICII_POWER_SAVE:      return config.powerSave;
         case OPT_VICII_PALETTE:         return config.palette;
         case OPT_VICII_BRIGHTNESS:      return config.brightness;
@@ -245,7 +245,11 @@ VICII::setOption(Option option, i64 value)
                 throw VC64Error(ERROR_OPT_INVARG, VICIIRevisionEnum::keyList());
             }
             
-            setRevision(VICIIRevision(value));
+            config.awaiting = VICIIRevision(value);
+
+            // If the emulator is powered off, perform the change immediately
+            if (isPoweredOff()) updateRevision();
+
             return;
 
         case OPT_VICII_POWER_SAVE:
@@ -327,45 +331,59 @@ VICII::setOption(Option option, i64 value)
     }
 }
 
+void 
+VICII::updateRevision()
+{
+    // Replace the VICII revision if requested
+    if (config.revision != config.awaiting) setRevision(config.awaiting);
+}
+
 void
 VICII::setRevision(VICIIRevision revision)
 {
     assert_enum(VICIIRevision, revision);
-    
-    {   SUSPENDED
-        
-        if (isPoweredOn()) {
-            
-            /* If the VICII revision is changed while the emulator is powered
-             * on, we take some precautions. Firstly, we interrupt a running
-             * screen capture. Secondly, we move the emulator to a safe spot by
-             * finishing the current frame.
-             */
-            recorder.stopRecording();
-            c64.finishFrame();
-        }
-        
-        config.revision = revision;
-        isFirstDMAcycle = isSecondDMAcycle = 0;
-        updatePalette();
-        resetEmuTextures();
-        resetDmaTextures();
 
-        isPAL =
-        revision == VICII_PAL_6569_R1 ||
-        revision == VICII_PAL_6569_R3 ||
-        revision == VICII_PAL_8565;
-        
-        is856x =
-        revision == VICII_PAL_8565 ||
-        revision == VICII_NTSC_8562;
-        
-        isNTSC = !isPAL;
-        is656x = !is856x;
+    /* Changing the VICII revision is only allowed in certain emulator states.
+     * If the emulator is powered off, the operation is harmless and can be
+     * performed immediately. Changing the VICII revision on the fly must be
+     * carried out with caution. I.e., it is only permitted to alter the
+     * revision at the beginning of a frame, as changing it in the middle would
+     * corrupt several internal data structures.
+     */
+    if (isEmulatorThread()) {
 
-        vic.updateVicFunctionTable();
-        c64.updateClockFrequency();
+        assert(scanline() == 0);
+        assert(rastercycle() == 1);
+
+    } else {
+
+        assert(isPoweredOff());
     }
+
+    trace(true, "Setting revision to %s\n", VICIIRevisionEnum::key(revision));
+
+    recorder.stopRecording();
+
+    config.revision = revision;
+    isFirstDMAcycle = isSecondDMAcycle = 0;
+    updatePalette();
+    resetEmuTextures();
+    resetDmaTextures();
+
+    isPAL =
+    revision == VICII_PAL_6569_R1 ||
+    revision == VICII_PAL_6569_R3 ||
+    revision == VICII_PAL_8565;
+
+    is856x =
+    revision == VICII_PAL_8565 ||
+    revision == VICII_NTSC_8562;
+
+    isNTSC = !isPAL;
+    is656x = !is856x;
+
+    vic.updateVicFunctionTable();
+    c64.updateClockFrequency();
     
     msgQueue.put(isPAL ? MSG_PAL : MSG_NTSC);
 }
@@ -1017,6 +1035,9 @@ VICII::beginFrame()
 void
 VICII::endFrame()
 {
+    // Update the VICII revision if requested
+    updateRevision();
+
     // Only proceed if the current frame hasn't been executed in headless mode
     if (c64.getHeadless()) return;
 
