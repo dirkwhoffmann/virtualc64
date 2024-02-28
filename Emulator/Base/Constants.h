@@ -14,7 +14,7 @@
 
 #include "Aliases.h"
 
-#ifdef __cplusplus
+namespace vc64 {
 
 //
 // Frequencies
@@ -69,4 +69,4 @@ static const long FIRST_VISIBLE_LINE       = 16;
 static const long TEX_HEIGHT               = 312;  // PAL height
 static const long TEX_WIDTH                = 520;  // NTSC width
 
-#endif
+}

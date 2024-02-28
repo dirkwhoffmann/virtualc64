@@ -7,7 +7,7 @@
 // See https://www.gnu.org for license information
 // -----------------------------------------------------------------------------
 
-#import "Constants.h"
+#import "Aliases.h"
 #import "config.h"
 #import "C64Types.h"
 #import "CartridgeTypes.h"
