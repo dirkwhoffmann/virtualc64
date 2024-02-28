@@ -605,7 +605,9 @@ VICII::poke(u16 addr, u8 value)
             reg.current.colors[addr - 0x20] = value & 0xF;
             
             // Emulate the gray dot bug
-            if (config.grayDotBug) reg.delayed.colors[addr - 0x20] = 0xF;
+            if (hasGrayCodeBug() && config.grayDotBug) {
+                reg.delayed.colors[addr - 0x20] = 0xF;
+            }
 
             break;
     }

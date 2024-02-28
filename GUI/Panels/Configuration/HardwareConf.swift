@@ -30,21 +30,26 @@ extension ConfigurationController {
         
         switch VICIIRevision(rawValue: config.vicRevision) {
             
-        case .PAL_6569_R1,
-             .PAL_6569_R3,
-             .PAL_8565:
-            
+        case .PAL_6569_R1, .PAL_6569_R3:
+
             hwVicIcon.image = NSImage(named: "pref_vicii_pal")
-            
-        case .NTSC_6567_R56A:
+            hwVicGrayDotBug.isEnabled = false
+
+        case .PAL_8565:
+
+            hwVicIcon.image = NSImage(named: "pref_vicii_pal")
+            hwVicGrayDotBug.isEnabled = true
+
+        case .NTSC_6567_R56A, .NTSC_6567:
+
+            hwVicIcon.image = NSImage(named: "pref_vicii_ntsc")
+            hwVicGrayDotBug.isEnabled = false
+
+        case .NTSC_8562:
             
             hwVicIcon.image = NSImage(named: "pref_vicii_ntsc")
-            
-        case .NTSC_6567,
-             .NTSC_8562:
-            
-            hwVicIcon.image = NSImage(named: "pref_vicii_ntsc")
-            
+            hwVicGrayDotBug.isEnabled = true
+
         default:
             assert(false)
         }

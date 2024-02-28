@@ -890,13 +890,17 @@ public:
     static isize numVisibleLines(VICIIRevision rev);
     long numVisibleLines() const { return numVisibleLines(config.revision); }
     
+    // Indicates if VICII is affected by the gray-dot bug
+    static bool hasGrayCodeBug(VICIIRevision rev);
+    bool hasGrayCodeBug() const { return hasGrayCodeBug(config.revision); }
+
     // Returns true if the end of the scanline has been reached
     bool isLastCycleInLine(isize cycle) const;
 
     // Returns true if scanline belongs to the VBLANK area
     bool isVBlankLine(isize line) const;
-    
-    
+
+
     //
     // Accessing the screen buffer and display properties
     //

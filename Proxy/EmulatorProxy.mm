@@ -2391,11 +2391,6 @@ using namespace vc64;
     [self emu]->stepOver();
 }
 
-- (void)signalBrk
-{
-    [self emu]->put(CMD_CPU_BRK);
-}
-
 - (RomInfo)getRomInfo:(RomType)type
 {
     return [self emu]->c64.getRomInfo(type);

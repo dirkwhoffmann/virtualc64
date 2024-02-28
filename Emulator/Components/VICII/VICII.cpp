@@ -217,7 +217,7 @@ VICII::getOption(Option option) const
 {
     switch (option) {
             
-        case OPT_VICII_REVISION:        return config.awaiting; // revision;
+        case OPT_VICII_REVISION:        return config.awaiting;
         case OPT_VICII_POWER_SAVE:      return config.powerSave;
         case OPT_VICII_PALETTE:         return config.palette;
         case OPT_VICII_BRIGHTNESS:      return config.brightness;
@@ -600,6 +600,12 @@ VICII::numVisibleLines(VICIIRevision rev)
         default:
             return 284;
     }
+}
+
+bool
+VICII::hasGrayCodeBug(VICIIRevision rev)
+{
+    return rev == VICII_PAL_8565 || rev == VICII_NTSC_8562;
 }
 
 bool

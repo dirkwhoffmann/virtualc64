@@ -486,41 +486,33 @@ C64::processFlags()
 {
     bool interrupt = false;
 
-    // Did we reach a breakpoint?
     if (flags & RL::BREAKPOINT) {
+
         clearFlag(RL::BREAKPOINT);
         msgQueue.put(MSG_BREAKPOINT_REACHED, CpuMsg {u16(cpu.debugger.breakpointPC)});
         interrupt = true;
     }
 
-    // Did we reach a watchpoint?
     if (flags & RL::WATCHPOINT) {
+
         clearFlag(RL::WATCHPOINT);
         msgQueue.put(MSG_WATCHPOINT_REACHED, CpuMsg {u16(cpu.debugger.watchpointPC)});
         interrupt = true;
     }
 
-    // Are we requested to terminate the run loop?
     if (flags & RL::STOP) {
+
         clearFlag(RL::STOP);
         interrupt = true;
     }
 
-    // Is the CPU jammed due the execution of an illegal instruction?
     if (flags & RL::CPU_JAM) {
+
         clearFlag(RL::CPU_JAM);
         msgQueue.put(MSG_CPU_JAMMED);
         interrupt = true;
     }
 
-    // Are we requested to simulate a BRK instruction
-    if (flags & RL::EXTERNAL_BRK) {
-        clearFlag(RL::EXTERNAL_BRK);
-        cpu.next = BRK;
-        cpu.reg.pc0 = cpu.reg.pc - 1;
-    }
-
-    // Are we requested to run for a single cycle?
     if (flags & RL::SINGLE_STEP) {
 
         if (!stepTo.has_value() || *stepTo == cpu.getPC0()) {
@@ -964,7 +956,8 @@ C64::process(const Cmd &cmd)
 
         case CMD_CPU_BRK:
 
-            signalBrk();
+            cpu.next = BRK;
+            cpu.reg.pc0 = cpu.reg.pc - 1;
             break;
 
         case CMD_CPU_NMI:

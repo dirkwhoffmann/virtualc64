@@ -474,7 +474,6 @@ public:
     void signalWatchpoint() { setFlag(RL::WATCHPOINT); }
     void signalJammed() { setFlag(RL::CPU_JAM); }
     void signalStop() { setFlag(RL::STOP); }
-    void signalBrk() { setFlag(RL::EXTERNAL_BRK); }
 
     // Executes a single clock cycle.
     void executeOneCycle();

@@ -232,7 +232,6 @@
 - (void)stopAndGo;
 - (void)stepInto;
 - (void)stepOver;
-- (void)signalBrk;
 
 - (RomInfo)getRomInfo:(RomType)type;
 @property (readonly) RomInfo basicRom;

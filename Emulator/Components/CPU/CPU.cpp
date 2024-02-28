@@ -270,8 +270,6 @@ void
 CPU::breakpointReached(u16 addr) const
 {
     c64.signalBreakpoint();
-    // EXPERIMENTAL
-    // c64.signalBrk();
 }
 
 void
