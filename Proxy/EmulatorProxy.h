@@ -48,6 +48,7 @@
 @class AnyCollectionProxy;
 @class EmulatorProxy;
 @class CIAProxy;
+@class Constants;
 @class ControlPortProxy;
 @class CPUProxy;
 @class CRTFileProxy;
@@ -116,6 +117,19 @@
 
     @public void *emu;
 }
+@end
+
+//
+// Constants
+//
+
+@interface Constants : NSObject {
+
+}
+
+@property (readonly, class) NSInteger texWidth;
+@property (readonly, class) NSInteger texHeight;
+
 @end
 
 

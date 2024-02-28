@@ -547,8 +547,6 @@ private:
     u32 *emuTexture2 = new u32[TEX_HEIGHT * TEX_WIDTH];
     u32 *dmaTexture1 = new u32[TEX_HEIGHT * TEX_WIDTH];
     u32 *dmaTexture2 = new u32[TEX_HEIGHT * TEX_WIDTH];
-    /*
-     */
 
     /* Pointer to the current working texture. This variable points either to
      * the first or the second texture buffer. After a frame has been finished,

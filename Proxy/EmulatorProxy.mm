@@ -2030,6 +2030,18 @@ using namespace vc64;
 
 
 //
+// Constants
+//
+
+@implementation Constants
+
++ (NSInteger)texWidth { return TEX_WIDTH; }
++ (NSInteger)texHeight { return TEX_HEIGHT; }
+
+@end
+
+
+//
 // Emulator
 //
 

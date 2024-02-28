@@ -14,6 +14,8 @@
 
 #include "Aliases.h"
 
+#ifdef __cplusplus
+
 //
 // Frequencies
 //
@@ -60,9 +62,11 @@ static const long LAST_VISIBLE_PIXEL       = 487;  // 104 + 32 + 320 + 31
 static const long PAL_PIXELS               = 504;  // 104 + 32 + 320 + 32 + 16
 static const long NTSC_PIXELS              = 520;  // 104 + 32 + 320 + 32 + 32
 
+// Vertical parameters
+static const long FIRST_VISIBLE_LINE       = 16;
+
 // Width and height of the emulator texture
 static const long TEX_HEIGHT               = 312;  // PAL height
 static const long TEX_WIDTH                = 520;  // NTSC width
 
-// Vertical parameters
-static const long FIRST_VISIBLE_LINE       = 16;
+#endif
