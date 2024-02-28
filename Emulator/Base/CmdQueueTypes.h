@@ -25,11 +25,14 @@ enum_long(CMD_TYPE)
     CMD_NONE = 0,
 
     // C64
-    CMD_BRK,
     CMD_SNAPSHOT_AUTO,
     CMD_SNAPSHOT_USER,
     CMD_ALARM_ABS,
     CMD_ALARM_REL,
+
+    // CPU
+    CMD_CPU_BRK,
+    CMD_CPU_NMI,
 
     // Keyboard
     CMD_KEY_PRESS,
@@ -81,11 +84,13 @@ struct CmdTypeEnum : util::Reflection<CmdType, CmdType> {
 
             case CMD_NONE:                  return "NONE";
 
-            case CMD_BRK:                   return "BRK";
             case CMD_SNAPSHOT_AUTO:         return "SNAPSHOT_AUTO";
             case CMD_SNAPSHOT_USER:         return "SNAPSHOT_USER";
             case CMD_ALARM_ABS:             return "ALARM_ABS";
             case CMD_ALARM_REL:             return "ALARM_REL";
+
+            case CMD_CPU_BRK:               return "CPU_BRK";
+            case CMD_CPU_NMI:               return "CPU_NMI";
 
             case CMD_KEY_PRESS:             return "KEY_PRESS";
             case CMD_KEY_RELEASE:           return "KEY_RELEASE";

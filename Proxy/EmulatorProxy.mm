@@ -2393,7 +2393,7 @@ using namespace vc64;
 
 - (void)signalBrk
 {
-    [self emu]->put(CMD_BRK);
+    [self emu]->put(CMD_CPU_BRK);
 }
 
 - (RomInfo)getRomInfo:(RomType)type

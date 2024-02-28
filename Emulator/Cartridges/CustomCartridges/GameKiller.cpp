@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 
 #include "config.h"
-#include "C64.h"
+#include "Emulator.h"
 
 namespace vc64 {
 
@@ -60,7 +60,7 @@ void
 GameKiller::pressButton(isize nr)
 {
     if (nr == 1) {
-        c64.signalExpPortNmi();
+        emulator.put(CMD_CPU_NMI, 1);
     }
 }
 
@@ -68,10 +68,7 @@ void
 GameKiller::releaseButton(isize nr)
 {
     if (nr == 1) {
-        
-        SUSPENDED
-        
-        cpu.releaseNmiLine(INTSRC_EXP);
+        emulator.put(CMD_CPU_NMI, 0);
     }
 }
 

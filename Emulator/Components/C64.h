@@ -474,15 +474,11 @@ public:
     void signalWatchpoint() { setFlag(RL::WATCHPOINT); }
     void signalJammed() { setFlag(RL::CPU_JAM); }
     void signalStop() { setFlag(RL::STOP); }
-    void signalExpPortNmi() { setFlag(RL::EXTERNAL_NMI); }
     void signalBrk() { setFlag(RL::EXTERNAL_BRK); }
 
     // Executes a single clock cycle.
     void executeOneCycle();
 
-    // Finishes the current frame
-    [[deprecated]] void finishFrame();
-    
 private:
 
     // Invoked after executing the last cycle of a scanline

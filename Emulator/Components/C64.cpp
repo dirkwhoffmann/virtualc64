@@ -506,13 +506,6 @@ C64::processFlags()
         interrupt = true;
     }
 
-    // Are we requested to pull the NMI line down?
-    if (flags & RL::EXTERNAL_NMI) {
-        clearFlag(RL::EXTERNAL_NMI);
-        cpu.pullDownNmiLine(INTSRC_EXP);
-        interrupt = true;
-    }
-
     // Is the CPU jammed due the execution of an illegal instruction?
     if (flags & RL::CPU_JAM) {
         clearFlag(RL::CPU_JAM);
@@ -928,12 +921,6 @@ C64::executeOneCycle()
 }
 
 void
-C64::finishFrame()
-{
-    while (scanline != 0 || rasterCycle > 1) executeOneCycle();
-}
-
-void
 C64::endScanline()
 {
     cia1.tod.increment();
@@ -975,9 +962,18 @@ C64::process(const Cmd &cmd)
 {
     switch (cmd.type) {
 
-        case CMD_BRK:
+        case CMD_CPU_BRK:
 
             signalBrk();
+            break;
+
+        case CMD_CPU_NMI:
+
+            if (cmd.value) {
+                cpu.pullDownNmiLine(INTSRC_EXP);
+            } else {
+                cpu.releaseNmiLine(INTSRC_EXP);
+            }
             break;
 
         case CMD_SNAPSHOT_AUTO:

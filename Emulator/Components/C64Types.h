@@ -333,9 +333,8 @@ constexpr u32 WARP_OFF      = (1 << 2);
 constexpr u32 BREAKPOINT    = (1 << 3);
 constexpr u32 WATCHPOINT    = (1 << 4);
 constexpr u32 CPU_JAM       = (1 << 5);
-constexpr u32 EXTERNAL_NMI  = (1 << 6);
-constexpr u32 EXTERNAL_BRK  = (1 << 7);
-constexpr u32 SINGLE_STEP   = (1 << 8);
+constexpr u32 EXTERNAL_BRK  = (1 << 6);
+constexpr u32 SINGLE_STEP   = (1 << 7);
 
 };
 

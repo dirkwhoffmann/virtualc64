@@ -194,6 +194,7 @@ public:
 
     // Feeds a command into the command queue
     void put(const Cmd &cmd);
+    void put(CmdType type, i64 payload) { put (Cmd(type, payload)); }
 
 private:
 
