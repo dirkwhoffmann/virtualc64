@@ -343,7 +343,7 @@ RetroShell::press(RetroShellKey key, bool shift)
 
         case RSKEY_SHIFT_RETURN:
 
-            interpreter.switchInterpreter();
+            execUserCommand(".");
             break;
 
         case RSKEY_CR:
@@ -441,7 +441,7 @@ RetroShell::execUserCommand(const string &command)
         ipos = (isize)history.size() - 1;
 
         // Feed the command into the command queue
-        commands.push_back({ 0, input});
+        commands.push_back({ 0, command});
         emulator.put(Cmd(CMD_RSH_EXECUTE));
     }
 }

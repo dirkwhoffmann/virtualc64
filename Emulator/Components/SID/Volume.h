@@ -33,7 +33,21 @@ template <typename T> struct AudioVolume : Serializable {
     T target = 1.0;
     T delta = 1.0;
 
-    // Serializing
+
+    //
+    // Methods
+    //
+
+    AudioVolume<T>& operator= (const AudioVolume<T>& other) {
+
+        CLONE(current)
+        CLONE(normal)
+        CLONE(target)
+        CLONE(delta)
+
+        return *this;
+    }
+    
     template <class W>
     void serialize(W& worker)
     {

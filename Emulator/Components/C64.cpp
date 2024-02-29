@@ -756,7 +756,24 @@ C64::_dump(Category category, std::ostream& os) const
 
             os << tab(c->getDescription());
             os << hex(c->checksum()) << std::endl;
+
+            for (auto &cc : c->subComponents) {
+
+                os << tab(cc->getDescription());
+                os << hex(cc->checksum()) << std::endl;
+            }
         }
+
+        os << tab("VolumeL");
+        os << flt(muxer.volL.current) << " ";
+        os << flt(muxer.volL.normal) << " ";
+        os << flt(muxer.volL.target) << " ";
+        os << flt(muxer.volL.delta) << " " << std::endl;
+        os << tab("VolumeR");
+        os << flt(muxer.volR.current) << " ";
+        os << flt(muxer.volR.normal) << " ";
+        os << flt(muxer.volR.target) << " ";
+        os << flt(muxer.volR.delta) << " " << std::endl;
     }
 
     if (category == Category::Current) {

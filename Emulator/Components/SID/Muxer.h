@@ -94,6 +94,8 @@ private:
     // Time stamp of the last write pointer alignment
     util::Time lastAlignment;
 
+public: // REMOVE ASAP
+    
     // Master volumes (fadable)
     Volume volL;
     Volume volR;
@@ -117,34 +119,18 @@ public:
     
     
     //
-    // Initializing
+    // Methods
     //
     
 public:
 
     Muxer(C64 &ref);
-
-    // Resets the output buffer
     void clear();
 
-    
-    //
-    // Methods from CoreObject
-    //
-
-private:
-    
     const char *getDescription() const override { return "Muxer"; }
     void _dump(Category category, std::ostream& os) const override;
     void _dump(Category category, std::ostream& os, isize nr) const;
 
-    
-    //
-    // Methods from CoreComponent
-    //
-
-public:
-    
     void _run() override;
     void _pause() override;
     void _warpOn() override;
@@ -156,7 +142,6 @@ public:
 
         CLONE(cycles)
 
-        CLONE(cycles)
         CLONE(cpuFrequency)
         CLONE(volL)
         CLONE(volR)
@@ -171,14 +156,18 @@ public:
     {
         worker
         
-        << sid
+        << sid;
+
+        if (isSoftResetter(worker)) return;
+
+        worker
+
         << cycles;
 
         if (isResetter(worker)) return;
 
         worker
 
-        << cycles
         << cpuFrequency
         << volL
         << volR

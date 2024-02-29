@@ -30,9 +30,7 @@ Interpreter::initCommons(Command &root)
              "Enter or exit the debugger",
              [this](Arguments& argv, long value) {
 
-        retroShell.clear();
         switchInterpreter();
-        retroShell.welcome();
     });
 
     root.add({"clear"},
@@ -87,48 +85,21 @@ Interpreter::initCommons(Command &root)
 void
 Interpreter::initCommandShell(Command &root)
 {
+    //
+    // Shared commands
+    //
+
     initCommons(root);
 
+
     //
-    // Top-level commands
+    // Regression tester
     //
 
     root.pushGroup("Regression tester");
-
-    root.add({"regression"},    ""); // Run the regression tester
-    root.add({"screenshot"},    ""); // Take a screenshot and exit
-
-    root.pushGroup("Components");
-
-    root.add({"emulator"},      "Emulator thread");
-    root.add({"c64"},           "The virtual Commodore 64");
-    root.add({"memory"},        "Ram and Rom");
-    root.add({"cia1"},          "Complex Interface Adapter 1");
-    root.add({"cia2"},          "Complex Interface Adapter 2");
-    root.add({"vicii"},         "Video Interface Controller");
-    root.add({"dmadebugger"},   "DMA Debugger");
-    root.add({"sid"},           "Sound Interface Device");
-    root.add({"expansion"},     "Expansion port");
-    root.add({"powersupply"},   "Power supply");
-    root.add({"host"},          "Host computer");
-
-    root.pushGroup("Peripherals");
-
-    root.add({"monitor"},       "C64 monitor");
-    root.add({"keyboard"},      "Keyboard");
-    root.add({"mouse"},         "mouse");
-    root.add({"joystick"},      "Joystick");
-    root.add({"datasette"},     "Commodore tape drive");
-    root.add({"drive8"},        "Floppy drive 8");
-    root.add({"drive9"},        "Floppy drive 9");
-    root.add({"parcable"},      "Parallel drive cable");
-
-
-    //
-    // Regression testing (hidden commands)
-    //
-
     root.pushGroup("");
+
+    root.add({"regression"}, ""); // Run the regression tester
 
     root.add({"regression", "setup"}, { C64ModelEnum::argList() },
              "Initializes the test environment",
@@ -142,6 +113,7 @@ Interpreter::initCommandShell(Command &root)
         throw ScriptInterruption("");
     });
 
+    root.add({"screenshot"}, ""); // Take a screenshot and exit
     root.add({"regression", "run"}, { Arg::path },
              "Launches a regression test",
              [this](Arguments& argv, long value) {
@@ -181,10 +153,17 @@ Interpreter::initCommandShell(Command &root)
         regressionTester.dumpTexture(c64, argv.front());
     });
 
-    
     //
-    // Emulator
+    // Components
     //
+
+    root.pushGroup("Components");
+
+    //
+    // Components (Emulator)
+    //
+
+    root.add({"emulator"}, "Emulator thread");
 
     root.add({"emulator", ""},
              "Displays the current configuration",
@@ -206,10 +185,11 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
+    //
+    // Components (C64)
+    //
 
-    //
-    // C64
-    //
+    root.add({"c64"}, "The virtual Commodore 64");
 
     root.add({"c64", ""},
              "Displays the current configuration",
@@ -246,10 +226,12 @@ Interpreter::initCommandShell(Command &root)
         emulator.set(parseEnum<C64ModelEnum>(argv[0]));
     });
 
-    
+
     //
-    // Memory
+    // Components (Memory)
     //
+
+    root.add({"memory"}, "Ram and Rom");
 
     root.add({"memory", ""},
              "Displays the current configuration",
@@ -291,18 +273,20 @@ Interpreter::initCommandShell(Command &root)
 
 
     //
-    // CIA
+    // Components (CIA)
     //
 
     for (isize i = 0; i < 2; i++) {
 
         string cia = (i == 0) ? "cia1" : "cia2";
 
+        root.add({cia}, "Complex Interface Adapter " + std::to_string(i));
+
         root.add({cia, ""},
                  "Displays the current configuration",
                  [this](Arguments& argv, long value) {
 
-            value == 0 ? 
+            value == 0 ?
             retroShell.dump(cia1, Category::Config) :
             retroShell.dump(cia2, Category::Config) ;
 
@@ -317,16 +301,17 @@ Interpreter::initCommandShell(Command &root)
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                emulator.set(LO_WORD(value), HI_WORD(value), argv[0]);
+                emulator.set(HI_WORD(value), LO_WORD(value), argv[0]);
 
-            }, HI_W_LO_W(i, opt));
+            }, HI_W_LO_W(opt, i));
         }
     }
 
+    //
+    // Components (VICII)
+    //
 
-    //
-    // VICII
-    //
+    root.add({"vicii"}, "Video Interface Controller");
 
     root.add({"vicii", ""},
              "Displays the current configuration",
@@ -350,8 +335,10 @@ Interpreter::initCommandShell(Command &root)
 
 
     //
-    // DMA Debugger
+    // Components (DMA Debugger)
     //
+
+    root.add({"dmadebugger"},   "DMA Debugger");
 
     root.add({"dmadebugger", ""},
              "Displays the current configuration",
@@ -388,23 +375,59 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
-    
     //
-    // SID
+    // Components (SID)
     //
 
-    root.add({"sid", ""},
+    root.add({"sid"}, "Sound Interface Device");
+
+    for (isize i = 1; i <= 4; i++) {
+
+        string nr = std::to_string(i);
+
+        root.add({"sid", nr},
+                 "SID " + nr + (i == 1 ? " (primary SID)" : ""));
+
+        root.add({"sid", nr, ""},
+                 "Displays the current configuration",
+                 [this](Arguments& argv, long value) {
+
+            retroShell.dump(muxer.sid[value], Category::Config);
+        }, i);
+
+        root.add({"sid", nr, "set"}, "Configures the component");
+
+        for (auto &opt : muxer.getOptions()) {
+
+            root.add({"sid", nr, "set", OptionEnum::key(opt)},
+                     {OptionParser::create(opt)->argList()},
+                     OptionEnum::help(opt),
+                     [this](Arguments& argv, long value) {
+
+                emulator.set(HI_WORD(value), LO_WORD(value), argv[0]);
+
+            }, HI_W_LO_W(opt, i));
+        }
+    }
+
+    //
+    // Components (Muxer)
+    //
+
+    root.add({"muxer"}, "Audio backend");
+
+    root.add({"muxer", ""},
              "Displays the current configuration",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(muxer, Category::Config);
     });
 
-    root.add({"sid", "set"}, "Configures the component");
+    root.add({"muxer", "set"}, "Configures the component");
 
     for (auto &opt : muxer.getOptions()) {
 
-        root.add({"sid", "set", OptionEnum::key(opt)},
+        root.add({"muxer", "set", OptionEnum::key(opt)},
                  {OptionParser::create(opt)->argList()},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
@@ -414,10 +437,11 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
+    //
+    // Components (Expansion port)
+    //
 
-    //
-    // Expansion port
-    //
+    root.add({"expansion"}, "Expansion port");
 
     root.add({"expansion", "attach"},
              "Attaches a cartridge");
@@ -445,10 +469,12 @@ Interpreter::initCommandShell(Command &root)
         expansionport.attachGeoRam(parseNum(argv[0]));
     });
 
-    
+
     //
-    // Power supply
+    // Components (Power supply)
     //
+
+    root.add({"powersupply"},   "Power supply");
 
     root.add({"powersupply", ""},
              "Displays the current configuration",
@@ -473,8 +499,10 @@ Interpreter::initCommandShell(Command &root)
 
 
     //
-    // Host
+    // Components (Host)
     //
+
+    root.add({"host"},          "Host computer");
 
     root.add({"host", ""},
              "Displays the current configuration",
@@ -499,8 +527,17 @@ Interpreter::initCommandShell(Command &root)
 
 
     //
-    // Keyboard
+    // Peripherals
     //
+
+    root.pushGroup("Peripherals");
+
+    root.add({"monitor"},       "C64 monitor");
+
+    //
+    // Peripherals (Keyboard)
+    //
+    root.add({"keyboard"},      "Keyboard");
 
     root.add({"keyboard", "press"}, { Arg::value },
              "Presses a key",
@@ -540,147 +577,50 @@ Interpreter::initCommandShell(Command &root)
         keyboard.autoType("run\n");
     });
 
-
     //
-    // Drive
+    // Peripherals (Mouse)
     //
 
-    for (isize i = 0; i < 2; i++) {
+    root.pushGroup("");
+    root.add({"mouse"}, "Mouse");
 
-        string drive = (i == 0) ? "drive8" : "drive9";
+    for (isize i = PORT_1; i <= PORT_2; i++) {
 
-        root.add({drive, ""},
+        string nr = (i == 1) ? "1" : "2";
+
+        root.add({"mouse", nr},
+                 "Mouse in port " + nr);
+
+        root.add({"mouse", nr, ""},
                  "Displays the current configuration",
                  [this](Arguments& argv, long value) {
 
-            auto &drive = value ? drive9 : drive8;
-            retroShell.dump(drive, Category::Config);
+            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
+            retroShell.dump(port.mouse, Category::Config);
 
         }, i);
 
-        root.add({drive, "connect"},
-                 "Connects the drive",
-                 [this](Arguments& argv, long value) {
+        root.add({"mouse", nr, "set"}, "Configures the component");
 
-            auto id = value ? DRIVE9 : DRIVE8;
-            configure(OPT_DRV_CONNECT, id, true);
+        for (auto &opt : c64.port1.mouse.getOptions()) {
 
-        }, i);
-
-        root.add({drive, "disconnect"},
-                 "Disconnects the drive",
-                 [this](Arguments& argv, long value) {
-
-            auto id = value ? DRIVE9 : DRIVE8;
-            configure(OPT_DRV_CONNECT, id, false);
-
-        }, i);
-
-        root.add({drive, "eject"},
-                 "Ejects a floppy disk",
-                 [this](Arguments& argv, long value) {
-
-            auto &drive = value ? drive9 : drive8;
-            drive.ejectDisk();
-
-        }, i);
-
-        root.add({drive, "insert"}, { Arg::path },
-                 "Inserts a floppy disk",
-                 [this](Arguments& argv, long value) {
-
-            auto path = argv.front();
-            if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
-
-            auto &drive = value ? drive9 : drive8;
-            drive.insertDisk(path, false);
-
-        }, i);
-
-        root.add({drive, "newdisk"}, { DOSTypeEnum::argList() },
-                 "Inserts a new blank disk",
-                 [this](Arguments& argv, long value) {
-
-            auto type = util::parseEnum <DOSTypeEnum> (argv.front());
-            auto &drive = value ? drive9 : drive8;
-            drive.insertNewDisk(type, PETName<16>("NEW DISK"));
-
-        }, i);
-
-        root.add({drive, "set"}, "Configures the component");
-
-        for (auto &opt : drive8.getOptions()) {
-
-            root.add({drive, "set", OptionEnum::key(opt)},
+            root.add({"mouse", nr, "set", OptionEnum::key(opt)},
                      {OptionParser::create(opt)->argList()},
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                emulator.set(LO_WORD(value), HI_WORD(value), argv[0]);
+                emulator.set(HI_WORD(value), LO_WORD(value), argv[0]);
 
-            }, HI_W_LO_W(i, opt));
+            }, HI_W_LO_W(opt, i));
         }
     }
 
 
     //
-    // Datasette
+    // Peripherals (Joystick)
     //
 
-    root.add({"datasette", ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        retroShell.dump(datasette, Category::Config);
-    });
-
-    root.add({"datasette", "connect"},
-             "Connects the datasette",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_DAT_CONNECT, true);
-    });
-
-    root.add({"datasette", "disconnect"},
-             "Disconnects the datasette",
-             [this](Arguments& argv, long value) {
-
-        configure(OPT_DAT_CONNECT, false);
-    });
-
-    root.add({"datasette", "rewind"},
-             "Rewinds the tape",
-             [this](Arguments& argv, long value) {
-
-        datasette.rewind();
-    });
-
-    root.add({"datasette", "rewind", "to"}, { Arg::value },
-             "Rewinds the tape to a specific position",
-             [this](Arguments& argv, long value) {
-
-        datasette.rewind(parseNum(argv[0]));
-    });
-
-    root.add({"datasette", "set"}, "Configures the component");
-
-    for (auto &opt : datasette.getOptions()) {
-
-        root.add({"datasette", "set", OptionEnum::key(opt)},
-                 {OptionParser::create(opt)->argList()},
-                 OptionEnum::help(opt),
-                 [this](Arguments& argv, long opt) {
-
-            emulator.set(opt, argv[0]);
-
-        }, opt);
-    }
-
-
-    //
-    // Joystick
-    //
-
+    root.add({"joystick"}, "Joystick");
     root.pushGroup("");
 
     for (isize i = PORT_1; i <= PORT_2; i++) {
@@ -708,9 +648,9 @@ Interpreter::initCommandShell(Command &root)
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                emulator.set(LO_WORD(value), HI_WORD(value), argv[0]);
+                emulator.set(HI_WORD(value), LO_WORD(value), argv[0]);
 
-            }, HI_W_LO_W(i, opt));
+            }, HI_W_LO_W(opt, i));
         }
 
         root.add({"joystick", nr, "press"},
@@ -793,41 +733,182 @@ Interpreter::initCommandShell(Command &root)
     }
 
     //
-    // Mouse
+    // Peripherals (Datasette)
     //
 
-    root.pushGroup("");
+    root.add({"datasette"}, "Commodore tape drive");
 
-    for (isize i = PORT_1; i <= PORT_2; i++) {
+    root.add({"datasette", ""},
+             "Displays the current configuration",
+             [this](Arguments& argv, long value) {
 
-        string nr = (i == 1) ? "1" : "2";
+        retroShell.dump(datasette, Category::Config);
+    });
 
-        root.add({"mouse", nr},
-                 "Mouse in port " + nr);
+    root.add({"datasette", "connect"},
+             "Connects the datasette",
+             [this](Arguments& argv, long value) {
 
-        root.add({"mouse", nr, ""},
+        configure(OPT_DAT_CONNECT, true);
+    });
+
+    root.add({"datasette", "disconnect"},
+             "Disconnects the datasette",
+             [this](Arguments& argv, long value) {
+
+        configure(OPT_DAT_CONNECT, false);
+    });
+
+    root.add({"datasette", "rewind"},
+             "Rewinds the tape",
+             [this](Arguments& argv, long value) {
+
+        datasette.rewind();
+    });
+
+    root.add({"datasette", "rewind", "to"}, { Arg::value },
+             "Rewinds the tape to a specific position",
+             [this](Arguments& argv, long value) {
+
+        datasette.rewind(parseNum(argv[0]));
+    });
+
+    root.add({"datasette", "set"}, "Configures the component");
+
+    for (auto &opt : datasette.getOptions()) {
+
+        root.add({"datasette", "set", OptionEnum::key(opt)},
+                 {OptionParser::create(opt)->argList()},
+                 OptionEnum::help(opt),
+                 [this](Arguments& argv, long opt) {
+
+            emulator.set(opt, argv[0]);
+
+        }, opt);
+    }
+
+
+    //
+    // Peripherals (Drives)
+    //
+
+    for (isize i = 0; i < 2; i++) {
+
+        string drive = (i == 0) ? "drive8" : "drive9";
+
+        root.add({drive}, "Floppy drive " + std::to_string(i + 8));
+
+        root.add({drive, ""},
                  "Displays the current configuration",
                  [this](Arguments& argv, long value) {
 
-            auto &port = (value == PORT_1) ? c64.port1 : c64.port2;
-            retroShell.dump(port.mouse, Category::Config);
+            auto &drive = value ? drive9 : drive8;
+            retroShell.dump(drive, Category::Config);
 
         }, i);
 
-        root.add({"mouse", nr, "set"}, "Configures the component");
+        root.add({drive, "connect"},
+                 "Connects the drive",
+                 [this](Arguments& argv, long value) {
 
-        for (auto &opt : c64.port1.mouse.getOptions()) {
+            auto id = value ? DRIVE9 : DRIVE8;
+            configure(OPT_DRV_CONNECT, id, true);
 
-            root.add({"mouse", nr, "set", OptionEnum::key(opt)},
+        }, i);
+
+        root.add({drive, "disconnect"},
+                 "Disconnects the drive",
+                 [this](Arguments& argv, long value) {
+
+            auto id = value ? DRIVE9 : DRIVE8;
+            configure(OPT_DRV_CONNECT, id, false);
+
+        }, i);
+
+        root.add({drive, "eject"},
+                 "Ejects a floppy disk",
+                 [this](Arguments& argv, long value) {
+
+            auto &drive = value ? drive9 : drive8;
+            drive.ejectDisk();
+
+        }, i);
+
+        root.add({drive, "insert"}, { Arg::path },
+                 "Inserts a floppy disk",
+                 [this](Arguments& argv, long value) {
+
+            auto path = argv.front();
+            if (!util::fileExists(path)) throw VC64Error(ERROR_FILE_NOT_FOUND, path);
+
+            auto &drive = value ? drive9 : drive8;
+            drive.insertDisk(path, false);
+
+        }, i);
+
+        root.add({drive, "newdisk"}, { DOSTypeEnum::argList() },
+                 "Inserts a new blank disk",
+                 [this](Arguments& argv, long value) {
+
+            auto type = util::parseEnum <DOSTypeEnum> (argv.front());
+            auto &drive = value ? drive9 : drive8;
+            drive.insertNewDisk(type, PETName<16>("NEW DISK"));
+
+        }, i);
+
+        root.add({drive, "set"}, "Configures the component");
+
+        for (auto &opt : drive8.getOptions()) {
+
+            root.add({drive, "set", OptionEnum::key(opt)},
                      {OptionParser::create(opt)->argList()},
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                emulator.set(LO_WORD(value), HI_WORD(value), argv[0]);
+                emulator.set(HI_WORD(value), LO_WORD(value), argv[0]);
 
-            }, HI_W_LO_W(i, opt));
+            }, HI_W_LO_W(opt, i));
         }
     }
+
+    //
+    // Peripherals (Parallel cable)
+    //
+
+    root.add({"parcable"},      "Parallel drive cable");
+
+
+    //
+    // Regression testing (hidden commands)
+    //
+
+ 
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //
+    // Joystick
+    //
+
+
+
+    //
+    // Mouse
+    //
+
 
 
     //

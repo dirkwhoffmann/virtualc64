@@ -46,8 +46,6 @@ public:
     // Reference to the emulator this instance belongs to
     class Emulator &emulator;
 
-protected:
-
     // Sub components
     std::vector<CoreComponent *> subComponents;
 

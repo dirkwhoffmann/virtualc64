@@ -42,7 +42,7 @@ void
 Thread::assertLaunched()
 {
     if (!isLaunched()) {
-        
+
         throw std::runtime_error(string("The emulator thread hasn't been lauchend yet. "
                                         "Missing call to launch()."));
     }
@@ -313,10 +313,9 @@ void
 Thread::trackOn(isize source)
 {
     assert(source < 7);
+    assert(isEmulatorThread());
 
     if (!GET_BIT(track, source)) {
-
-        SUSPENDED
 
         auto old = track;
         SET_BIT(track, source);
@@ -328,10 +327,9 @@ void
 Thread::trackOff(isize source)
 {
     assert(source < 7);
+    assert(isEmulatorThread());
 
     if (GET_BIT(track, source)) {
-
-        SUSPENDED
 
         auto old = track;
         CLR_BIT(track, source);
