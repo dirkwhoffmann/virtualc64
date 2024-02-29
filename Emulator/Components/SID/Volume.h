@@ -53,10 +53,15 @@ template <typename T> struct AudioVolume : Serializable {
     {
         worker
 
-        << current
         << normal
         << target
         << delta;
+
+        if (isChecker(worker)) return;
+
+        worker
+
+        << current;
 
     } SERIALIZERS(serialize);
 

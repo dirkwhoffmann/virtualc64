@@ -23,9 +23,12 @@ public:
 
     Option opt;
     i64 arg;
+    string unit;
 
     OptionParser(Option opt) : opt(opt), arg(0) { };
+    OptionParser(Option opt, const string &unit) : opt(opt), arg(0), unit(unit) { };
     OptionParser(Option opt, i64 arg) : opt(opt), arg(arg) { };
+    OptionParser(Option opt, i64 arg, const string &unit) : opt(opt), arg(arg), unit(unit) { };
     virtual ~OptionParser() = default;
 
     // Factory method for creating the proper parser instance for an option
@@ -59,7 +62,7 @@ public:
     using OptionParser::OptionParser;
 
     virtual i64 parse(const string &s) override { arg = util::parseNum(s); return arg; }
-    virtual string asString() override { return std::to_string(arg); }
+    virtual string asString() override { return std::to_string(arg) + unit; }
     virtual string keyList() override { return "<value>"; }
     virtual string argList() override { return "<value>"; }
 };

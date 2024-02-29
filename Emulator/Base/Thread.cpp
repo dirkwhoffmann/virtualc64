@@ -340,20 +340,22 @@ Thread::trackOff(isize source)
 void
 Thread::changeStateTo(EmulatorState requestedState)
 {
-    assert(!isEmulatorThread());
-    assert(stateChangeRequest.test() == false);
     assertLaunched();
 
     // Assign new state
     newState = requestedState;
 
     // Request the change
+    // assert(stateChangeRequest.test() == false);
     stateChangeRequest.test_and_set();
     assert(stateChangeRequest.test() == true);
 
-    // Wait until the change has been performed
-    stateChangeRequest.wait(true);
-    assert(stateChangeRequest.test() == false);
+    if (!isEmulatorThread()) {
+
+        // Wait until the change has been performed
+        stateChangeRequest.wait(true);
+        assert(stateChangeRequest.test() == false);
+    }
 }
 
 void

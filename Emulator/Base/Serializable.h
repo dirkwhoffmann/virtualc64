@@ -602,6 +602,10 @@ static constexpr bool isResetter(T &worker) {
     return isSoftResetter(worker) || isHardResetter(worker);
 }
 
+template <class T>
+static constexpr bool isChecker(T &worker) {
+    return typeid(worker) == typeid(SerHardResetter);
+}
 
 }
 

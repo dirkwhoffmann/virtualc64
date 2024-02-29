@@ -30,26 +30,26 @@ OptionParser::create(Option opt, i64 arg)
 {
     auto enumParser = [&]<typename T>() { return std::unique_ptr<EnumParser<T>>(new EnumParser<T>(opt, arg)); };
     auto boolParser = [&]() { return std::unique_ptr<BoolParser>(new BoolParser(opt, arg)); };
-    auto numParser  = [&]() { return std::unique_ptr<NumParser>(new NumParser(opt, arg)); };
+    auto numParser  = [&](string unit = "") { return std::unique_ptr<NumParser>(new NumParser(opt, arg, unit)); };
 
     switch (opt) {
 
         case OPT_EMU_WARP_MODE:             return enumParser.template operator()<WarpModeEnum>();
-        case OPT_EMU_WARP_BOOT:             return boolParser();
+        case OPT_EMU_WARP_BOOT:             return numParser(" sec");
         case OPT_EMU_VSYNC:                 return boolParser();
-        case OPT_EMU_TIME_LAPSE:            return numParser();
-        case OPT_EMU_RUN_AHEAD:             return numParser();
+        case OPT_EMU_TIME_LAPSE:            return numParser("%");
+        case OPT_EMU_RUN_AHEAD:             return numParser(" frames");
 
-        case OPT_HOST_SAMPLE_RATE:          return numParser();
-        case OPT_HOST_REFRESH_RATE:         return numParser();
-        case OPT_HOST_FRAMEBUF_WIDTH:       return numParser();
-        case OPT_HOST_FRAMEBUF_HEIGHT:      return numParser();
+        case OPT_HOST_SAMPLE_RATE:          return numParser(" Hz");
+        case OPT_HOST_REFRESH_RATE:         return numParser(" fps");
+        case OPT_HOST_FRAMEBUF_WIDTH:       return numParser(" pixels");
+        case OPT_HOST_FRAMEBUF_HEIGHT:      return numParser(" pixels");
 
         case OPT_VICII_REVISION:            return enumParser.template operator()<VICIIRevisionEnum>();
         case OPT_VICII_PALETTE:             return enumParser.template operator()<PaletteEnum>();
-        case OPT_VICII_BRIGHTNESS:          return numParser();
-        case OPT_VICII_CONTRAST:            return numParser();
-        case OPT_VICII_SATURATION:          return numParser();
+        case OPT_VICII_BRIGHTNESS:          return numParser("%");
+        case OPT_VICII_CONTRAST:            return numParser("%");
+        case OPT_VICII_SATURATION:          return numParser("%");
         case OPT_VICII_GRAY_DOT_BUG:        return boolParser();
         case OPT_VICII_POWER_SAVE:          return boolParser();
         case OPT_VICII_HIDE_SPRITES:        return boolParser();
@@ -58,10 +58,10 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_GLUE_LOGIC:                return enumParser.template operator()<GlueLogicEnum>();
 
         case OPT_VICII_CUT_LAYERS:          return numParser();
-        case OPT_VICII_CUT_OPACITY:         return numParser();
+        case OPT_VICII_CUT_OPACITY:         return numParser("%");
         case OPT_DMA_DEBUG_ENABLE:          return boolParser();
         case OPT_DMA_DEBUG_MODE:            return enumParser.template operator()<DmaDisplayModeEnum>();
-        case OPT_DMA_DEBUG_OPACITY:         return numParser();
+        case OPT_DMA_DEBUG_OPACITY:         return numParser("%");
         case OPT_DMA_DEBUG_CHANNEL0:        return boolParser();
         case OPT_DMA_DEBUG_CHANNEL1:        return boolParser();
         case OPT_DMA_DEBUG_CHANNEL2:        return boolParser();
@@ -89,9 +89,9 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_SID_POWER_SAVE:            return boolParser();
         case OPT_SID_ENGINE:                return enumParser.template operator()<SIDEngineEnum>();
         case OPT_AUD_PAN:                   return numParser();
-        case OPT_AUD_VOL:                   return numParser();
-        case OPT_AUD_VOL_L:                 return numParser();
-        case OPT_AUD_VOL_R:                 return numParser();
+        case OPT_AUD_VOL:                   return numParser("%");
+        case OPT_AUD_VOL_L:                 return numParser("%");
+        case OPT_AUD_VOL_R:                 return numParser("%");
 
         case OPT_RAM_PATTERN:               return enumParser.template operator()<RamPatternEnum>();
 
@@ -104,14 +104,14 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_DRV_CONNECT:               return boolParser();
         case OPT_DRV_POWER_SWITCH:          return boolParser();
         case OPT_DRV_POWER_SAVE:            return boolParser();
-        case OPT_DRV_EJECT_DELAY:           return numParser();
-        case OPT_DRV_SWAP_DELAY:            return numParser();
-        case OPT_DRV_INSERT_DELAY:          return numParser();
+        case OPT_DRV_EJECT_DELAY:           return numParser(" frames");
+        case OPT_DRV_SWAP_DELAY:            return numParser(" frames");
+        case OPT_DRV_INSERT_DELAY:          return numParser(" frames");
         case OPT_DRV_PAN:                   return numParser();
-        case OPT_DRV_POWER_VOL:             return numParser();
-        case OPT_DRV_STEP_VOL:              return numParser();
-        case OPT_DRV_INSERT_VOL:            return numParser();
-        case OPT_DRV_EJECT_VOL:             return numParser();
+        case OPT_DRV_POWER_VOL:             return numParser("%");
+        case OPT_DRV_STEP_VOL:              return numParser("%");
+        case OPT_DRV_INSERT_VOL:            return numParser("%");
+        case OPT_DRV_EJECT_VOL:             return numParser("%");
 
         case OPT_DAT_MODEL:                 return enumParser.template operator()<DatasetteModelEnum>();
         case OPT_DAT_CONNECT:               return boolParser();
@@ -123,7 +123,7 @@ OptionParser::create(Option opt, i64 arg)
         case OPT_AUTOFIRE:                  return boolParser();
         case OPT_AUTOFIRE_BURSTS:           return boolParser();
         case OPT_AUTOFIRE_BULLETS:          return numParser();
-        case OPT_AUTOFIRE_DELAY:            return numParser();
+        case OPT_AUTOFIRE_DELAY:            return numParser(" frames");
 
     }
     fatalError;

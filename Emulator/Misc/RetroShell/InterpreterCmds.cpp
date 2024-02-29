@@ -102,7 +102,7 @@ Interpreter::initCommandShell(Command &root)
     root.add({"regression"}, ""); // Run the regression tester
 
     root.add({"regression", "setup"}, { C64ModelEnum::argList() },
-             "Initializes the test environment",
+             "Initialize the test environment",
              [this](Arguments& argv, long value) {
 
         auto model = parseEnum <C64ModelEnum> (argv[0]);
@@ -115,24 +115,24 @@ Interpreter::initCommandShell(Command &root)
 
     root.add({"screenshot"}, ""); // Take a screenshot and exit
     root.add({"regression", "run"}, { Arg::path },
-             "Launches a regression test",
+             "Launch a regression test",
              [this](Arguments& argv, long value) {
 
         regressionTester.run(argv.front());
     });
 
     root.add({"screenshot", "set"},
-             "Configures the screenshot");
+             "Configure the screenshot");
 
     root.add({"screenshot", "set", "filename"}, { Arg::path },
-             "Assigns the screen shot filename",
+             "Assign the screen shot filename",
              [this](Arguments& argv, long value) {
 
         regressionTester.dumpTexturePath = argv.front();
     });
 
     root.add({"screenshot", "set", "cutout"}, { Arg::value, Arg::value, Arg::value, Arg::value },
-             "Adjusts the texture cutout",
+             "Adjust the texture cutout",
              [this](Arguments& argv, long value) {
 
         isize x1 = parseNum(argv[0], 0);
@@ -147,7 +147,7 @@ Interpreter::initCommandShell(Command &root)
     });
 
     root.add({"screenshot", "save"}, { Arg::path },
-             "Saves a screenshot and exits the emulator",
+             "Save a screenshot and exits the emulator",
              [this](Arguments& argv, long value) {
 
         regressionTester.dumpTexture(c64, argv.front());
@@ -163,19 +163,19 @@ Interpreter::initCommandShell(Command &root)
     // Components (Emulator)
     //
 
-    root.add({"emulator"}, "Emulator thread");
+    root.add({"c64"}, "Commodore 64");
 
-    root.add({"emulator", ""},
-             "Displays the current configuration",
+    root.add({"c64", ""},
+             "Display the current configuration",
              [this](Arguments& argv, long value) {
 
         retroShell.dump(emulator, Category::Config);
     });
 
-    root.add({"emulator", "set"}, "Configures the component");
+    root.add({"c64", "set"}, "Configure the component");
     for (auto &opt : emulator.getOptions()) {
 
-        root.add({"emulator", "set", OptionEnum::key(opt)},
+        root.add({"c64", "set", OptionEnum::key(opt)},
                  {OptionParser::create(opt)->argList()},
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
@@ -185,42 +185,29 @@ Interpreter::initCommandShell(Command &root)
         }, opt);
     }
 
-    //
-    // Components (C64)
-    //
-
-    root.add({"c64"}, "The virtual Commodore 64");
-
-    root.add({"c64", ""},
-             "Displays the current configuration",
-             [this](Arguments& argv, long value) {
-
-        retroShell.dump(c64, Category::Config);
-    });
-
     root.add({"c64", "defaults"},
-             "Displays the user defaults storage",
+             "Display the user defaults storage",
              [this](Arguments& argv, long value) {
 
-        retroShell.dump(c64, Category::Defaults);
+        retroShell.dump(emulator, Category::Defaults);
     });
 
     root.add({"c64", "power"}, { Arg::onoff },
-             "Switches the C64 on or off",
+             "Switch the C64 on or off",
              [this](Arguments& argv, long value) {
 
         parseOnOff(argv[0]) ? c64.emulator.run() : c64.emulator.powerOff();
     });
 
     root.add({"c64", "reset"},
-             "Performs a hard reset",
+             "Perform a hard reset",
              [this](Arguments& argv, long value) {
 
         c64.hardReset();
     });
 
     root.add({"c64", "init"}, { C64ModelEnum::argList() },
-             "Initializes the emulator with factory defaults",
+             "Initialize the emulator with factory defaults",
              [this](Arguments& argv, long value) {
 
         emulator.set(parseEnum<C64ModelEnum>(argv[0]));

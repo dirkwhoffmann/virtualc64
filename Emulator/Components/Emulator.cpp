@@ -55,8 +55,6 @@ Emulator::launch(const void *listener, Callback *func)
 void
 Emulator::initialize()
 {
-    assert(!isInitialized());
-
     // Initialize all components
     resetConfig();
     host.resetConfig();
