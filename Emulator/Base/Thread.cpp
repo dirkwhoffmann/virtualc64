@@ -158,8 +158,88 @@ Thread::switchState(EmulatorState newState)
 {
     assert(isEmulatorThread());
 
-    // Only proceed if the state changes
-    if (state == newState) return;
+    auto invalid = [&]() {
+        
+        assert(false);
+        fatal("Invalid state transition: %s -> %s\n",
+              EmulatorStateEnum::key(state), EmulatorStateEnum::key(newState));
+    };
+
+    debug(RUN_DEBUG,
+          "switchState: %s -> %s\n",
+          EmulatorStateEnum::key(state), EmulatorStateEnum::key(newState));
+
+    while (state != newState) {
+
+        switch (newState) {
+
+            case STATE_OFF:
+
+                switch (state) {
+
+                    case STATE_PAUSED:      state = STATE_OFF; _powerOff(); break;
+                    case STATE_RUNNING:
+                    case STATE_SUSPENDED:   state = STATE_PAUSED; _pause(); break;
+
+                    default:
+                        invalid();
+                }
+                break;
+
+            case STATE_PAUSED:
+
+                switch (state) {
+
+                    case STATE_OFF:         state = STATE_PAUSED; _powerOn(); break;
+                    case STATE_RUNNING:
+                    case STATE_SUSPENDED:   state = STATE_PAUSED; _pause(); break;
+
+                    default:
+                        invalid();
+                }
+                break;
+
+            case STATE_RUNNING:
+
+                switch (state) {
+
+                    case STATE_OFF:         state = STATE_PAUSED; _powerOn(); break;
+                    case STATE_PAUSED:      state = STATE_RUNNING; _run(); break;
+                    case STATE_SUSPENDED:   state = STATE_PAUSED; break;
+
+                    default:
+                        invalid();
+                }
+                break;
+
+            case STATE_SUSPENDED:
+
+                switch (state) {
+
+                    case STATE_RUNNING:     state = STATE_SUSPENDED; break;
+
+                    default:
+                        invalid();
+                }
+                break;
+
+            case STATE_HALTED:
+
+                switch (state) {
+
+                    case STATE_OFF:     state = STATE_HALTED; _halt(); break;
+                    case STATE_PAUSED:  state = STATE_OFF; _powerOff(); break;
+                    case STATE_RUNNING: state = STATE_PAUSED; _pause(); break;
+
+                    default:
+                        invalid();
+                }
+        }
+    }
+
+    debug(RUN_DEBUG, "switchState: %s\n", EmulatorStateEnum::key(state));
+
+    /*
 
     if (state == STATE_OFF && newState == STATE_PAUSED) {
 
@@ -184,7 +264,8 @@ Thread::switchState(EmulatorState newState)
         state = STATE_RUNNING;
         _run();
 
-    } else if (state == STATE_RUNNING && newState == STATE_OFF) {
+    } else if ((state == STATE_RUNNING && newState == STATE_OFF) ||
+               (state == STATE_SUSPENDED && newState == STATE_OFF)) {
 
         state = STATE_PAUSED;
         _pause();
@@ -192,7 +273,8 @@ Thread::switchState(EmulatorState newState)
         state = STATE_OFF;
         _powerOff();
 
-    } else if (state == STATE_RUNNING && newState == STATE_PAUSED) {
+    } else if ((state == STATE_RUNNING && newState == STATE_PAUSED) ||
+               (state == STATE_SUSPENDED && newState == STATE_PAUSED)) {
 
         state = STATE_PAUSED;
         _pause();
@@ -213,10 +295,12 @@ Thread::switchState(EmulatorState newState)
     } else {
 
         // Invalid state transition
+        warn("Invalid state transition: %s -> %s\n",
+             EmulatorStateEnum::key(state), EmulatorStateEnum::key(newState));
+
         fatalError;
     }
-
-    debug(RUN_DEBUG, "Changed state to %s\n", EmulatorStateEnum::key(state));
+    */
 }
 
 void
@@ -342,19 +426,28 @@ Thread::changeStateTo(EmulatorState requestedState)
 {
     assertLaunched();
 
-    // Assign new state
-    newState = requestedState;
+    if (isEmulatorThread()) {
 
-    // Request the change
-    // assert(stateChangeRequest.test() == false);
-    stateChangeRequest.test_and_set();
-    assert(stateChangeRequest.test() == true);
+        // Switch immediately
+        switchState(requestedState);
+        assert(state == requestedState);
 
-    if (!isEmulatorThread()) {
+    } else {
 
-        // Wait until the change has been performed
-        stateChangeRequest.wait(true);
+        // Remember the requested state
+        newState = requestedState;
+
+        // Request the change
         assert(stateChangeRequest.test() == false);
+        stateChangeRequest.test_and_set();
+        assert(stateChangeRequest.test() == true);
+
+        if (!isEmulatorThread()) {
+
+            // Wait until the change has been performed
+            stateChangeRequest.wait(true);
+            assert(stateChangeRequest.test() == false);
+        }
     }
 }
 
@@ -368,24 +461,38 @@ Thread::wakeUp()
 void
 Thread::suspend()
 {
-    debug(RUN_DEBUG, "Suspending (%ld)...\n", suspendCounter);
-    
-    if (suspendCounter || isRunning()) {
+    if (!isEmulatorThread()) {
 
-        suspendCounter++;
-        changeStateTo(STATE_SUSPENDED);
+        debug(RUN_DEBUG, "Suspending (%ld)...\n", suspendCounter);
+
+        if (suspendCounter || isRunning()) {
+
+            suspendCounter++;
+            changeStateTo(STATE_SUSPENDED);
+        }
+
+    } else {
+
+        debug(RUN_DEBUG, "Skipping suspend (%ld)...\n", suspendCounter);
     }
 }
 
 void
 Thread::resume()
 {
-    debug(RUN_DEBUG, "Resuming (%ld)...\n", suspendCounter);
+    if (!isEmulatorThread()) {
 
-    if (suspendCounter && --suspendCounter == 0) {
-        
-        changeStateTo(STATE_RUNNING);
-        run();
+        debug(RUN_DEBUG, "Resuming (%ld)...\n", suspendCounter);
+
+        if (suspendCounter && --suspendCounter == 0) {
+
+            changeStateTo(STATE_RUNNING);
+            run();
+        }
+
+    } else {
+
+        debug(RUN_DEBUG, "Skipping resume (%ld)...\n", suspendCounter);
     }
 }
 

@@ -1,0 +1,175 @@
+\doxysection{Virtual\+C64 Class Reference}
+\hypertarget{class_virtual_c64}{}\label{class_virtual_c64}\index{VirtualC64@{VirtualC64}}
+Inheritance diagram for Virtual\+C64\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_virtual_c64}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_c64___a_p_i}{C64\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_c_i_a___a_p_i}{CIA\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_c_p___a_p_i}{CP\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_c_p_u___a_p_i}{CPU\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_d_a_t_a_s_e_t_t_e___a_p_i}{DATASETTE\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_d_i_s_k___a_p_i}{DISK\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_d_m_a___d_e_b_u_g_g_e_r___a_p_i}{DMA\+\_\+\+DEBUGGER\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_d_r_i_v_e___a_p_i}{DRIVE\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i}{EXP\+\_\+\+PORT\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_g_u_a_r_d___a_p_i}{GUARD\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_i_e_c___a_p_i}{IEC\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_j_o_y_s_t_i_c_k___a_p_i}{JOYSTICK\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_k_b_d___a_p_i}{KBD\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_m_e_m___a_p_i}{MEM\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_m_o_u_s_e___a_p_i}{MOUSE\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_r_e_c___a_p_i}{REC\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_r_s_h_e_l_l___a_p_i}{RSHELL\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_s_i_d___a_p_i}{SID\+\_\+\+API}}
+\item 
+struct \mbox{\hyperlink{struct_virtual_c64_1_1_v_i_c_i_i___a_p_i}{VICII\+\_\+\+API}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_virtual_c64_a161f20c6fa850cb631390fe28b58d79c}\label{class_virtual_c64_a161f20c6fa850cb631390fe28b58d79c} 
+void {\bfseries step\+Into} ()
+\item 
+\Hypertarget{class_virtual_c64_a8ffd6fa8a6c4097d679106357bafb85b}\label{class_virtual_c64_a8ffd6fa8a6c4097d679106357bafb85b} 
+void {\bfseries step\+Over} ()
+\item 
+\Hypertarget{class_virtual_c64_a2328503412f9342f271bb85edf634128}\label{class_virtual_c64_a2328503412f9342f271bb85edf634128} 
+u32 \texorpdfstring{$\ast$}{*} {\bfseries get\+Texture} () const
+\item 
+\Hypertarget{class_virtual_c64_ab6f3babeba6fe9942705ce4d0ee46903}\label{class_virtual_c64_ab6f3babeba6fe9942705ce4d0ee46903} 
+u32 \texorpdfstring{$\ast$}{*} {\bfseries get\+Noise} () const
+\item 
+\Hypertarget{class_virtual_c64_adc2d8190ca673dc5263881182d48effa}\label{class_virtual_c64_adc2d8190ca673dc5263881182d48effa} 
+void {\bfseries launch} (const void \texorpdfstring{$\ast$}{*}listener, Callback \texorpdfstring{$\ast$}{*}func)
+\item 
+\Hypertarget{class_virtual_c64_aa90fefdc0ac225fa42171a96bc169c5a}\label{class_virtual_c64_aa90fefdc0ac225fa42171a96bc169c5a} 
+i64 {\bfseries get} (Option option) const
+\item 
+\Hypertarget{class_virtual_c64_ac34d478e23f8aefec5f0cac5508ce33a}\label{class_virtual_c64_ac34d478e23f8aefec5f0cac5508ce33a} 
+i64 {\bfseries get} (Option option, long id) const
+\item 
+\Hypertarget{class_virtual_c64_a0fe88a8972d006fd042e32c477fd8649}\label{class_virtual_c64_a0fe88a8972d006fd042e32c477fd8649} 
+void {\bfseries set} (C64\+Model model)
+\item 
+\Hypertarget{class_virtual_c64_a5044a51bce1455e8dc300d77c05cf939}\label{class_virtual_c64_a5044a51bce1455e8dc300d77c05cf939} 
+void {\bfseries set} (Option option, i64 value) throws
+\item 
+\Hypertarget{class_virtual_c64_a26293c22d6d674a7afbb656bac93f3f7}\label{class_virtual_c64_a26293c22d6d674a7afbb656bac93f3f7} 
+void {\bfseries set} (Option option, long id, i64 value) throws
+\item 
+\Hypertarget{class_virtual_c64_aba0326d79d52fb569aeba85db9bd67c3}\label{class_virtual_c64_aba0326d79d52fb569aeba85db9bd67c3} 
+void {\bfseries put} (const Cmd \&cmd)
+\item 
+\Hypertarget{class_virtual_c64_ae46f53e58ffebac8e641b0154149b337}\label{class_virtual_c64_ae46f53e58ffebac8e641b0154149b337} 
+void {\bfseries put} (Cmd\+Type type, i64 payload=0)
+\item 
+\Hypertarget{class_virtual_c64_a47ed6c2c7b4c8faa3628a7e5eb1f526b}\label{class_virtual_c64_a47ed6c2c7b4c8faa3628a7e5eb1f526b} 
+void {\bfseries put} (Cmd\+Type type, Key\+Cmd payload)
+\item 
+\Hypertarget{class_virtual_c64_a864a6c0d1b037237a8d4c62cfb3b0a02}\label{class_virtual_c64_a864a6c0d1b037237a8d4c62cfb3b0a02} 
+void {\bfseries put} (Cmd\+Type type, Coord\+Cmd payload)
+\item 
+\Hypertarget{class_virtual_c64_ab629a663cfcecf7ad7b1561f1778e068}\label{class_virtual_c64_ab629a663cfcecf7ad7b1561f1778e068} 
+void {\bfseries put} (Cmd\+Type type, Game\+Pad\+Cmd payload)
+\item 
+\Hypertarget{class_virtual_c64_a9cefbb32ff4492548c348f2346c845a4}\label{class_virtual_c64_a9cefbb32ff4492548c348f2346c845a4} 
+void {\bfseries put} (Cmd\+Type type, Tape\+Cmd payload)
+\item 
+\Hypertarget{class_virtual_c64_a748407d15849ef3eb050248a1986afd3}\label{class_virtual_c64_a748407d15849ef3eb050248a1986afd3} 
+void {\bfseries put} (Cmd\+Type type, Alarm\+Cmd payload)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_virtual_c64_a43ebd54660892e4438319149a3f08561}\label{class_virtual_c64_a43ebd54660892e4438319149a3f08561} 
+static string {\bfseries version} ()
+\item 
+\Hypertarget{class_virtual_c64_af225a63e1c37cf8e67f9203f70bf0efc}\label{class_virtual_c64_af225a63e1c37cf8e67f9203f70bf0efc} 
+static string {\bfseries build} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_virtual_c64_af2f325265e2cd7d188b85b31be062b24}\label{class_virtual_c64_af2f325265e2cd7d188b85b31be062b24} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_c64___a_p_i}{Virtual\+C64\+::\+C64\+\_\+\+API}} {\bfseries c64}
+\item 
+\Hypertarget{class_virtual_c64_a21e326ade8227588172a07904a8f5f42}\label{class_virtual_c64_a21e326ade8227588172a07904a8f5f42} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_m_e_m___a_p_i}{Virtual\+C64\+::\+MEM\+\_\+\+API}} {\bfseries mem}
+\item 
+\Hypertarget{class_virtual_c64_a1422d27428dcec81bf45d9dd55c17573}\label{class_virtual_c64_a1422d27428dcec81bf45d9dd55c17573} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_c_p_u___a_p_i}{Virtual\+C64\+::\+CPU\+\_\+\+API}} {\bfseries cpu}
+\item 
+\Hypertarget{class_virtual_c64_a4468d0b19a817ec0f1081f115a0f1985}\label{class_virtual_c64_a4468d0b19a817ec0f1081f115a0f1985} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_c_i_a___a_p_i}{Virtual\+C64\+::\+CIA\+\_\+\+API}} {\bfseries cia1}
+\item 
+\Hypertarget{class_virtual_c64_ac51faac99e8f6196e1bcb940ca6d2f8b}\label{class_virtual_c64_ac51faac99e8f6196e1bcb940ca6d2f8b} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_c_i_a___a_p_i}{Virtual\+C64\+::\+CIA\+\_\+\+API}} {\bfseries cia2}
+\item 
+\Hypertarget{class_virtual_c64_acab17c08373a26e9b4680f1d24f2b08a}\label{class_virtual_c64_acab17c08373a26e9b4680f1d24f2b08a} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_v_i_c_i_i___a_p_i}{Virtual\+C64\+::\+VICII\+\_\+\+API}} {\bfseries vicii}
+\item 
+\Hypertarget{class_virtual_c64_a2d9570de7d007839a910f0e37cf4d37f}\label{class_virtual_c64_a2d9570de7d007839a910f0e37cf4d37f} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_s_i_d___a_p_i}{Virtual\+C64\+::\+SID\+\_\+\+API}} {\bfseries muxer}
+\item 
+\Hypertarget{class_virtual_c64_a6c77c62a64e2eb8cd3e4e5a94685d9f8}\label{class_virtual_c64_a6c77c62a64e2eb8cd3e4e5a94685d9f8} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_d_m_a___d_e_b_u_g_g_e_r___a_p_i}{Virtual\+C64\+::\+DMA\+\_\+\+DEBUGGER\+\_\+\+API}} {\bfseries dma\+Debugger}
+\item 
+\Hypertarget{class_virtual_c64_ac854798101145c9d95f29821e829a9a5}\label{class_virtual_c64_ac854798101145c9d95f29821e829a9a5} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_k_b_d___a_p_i}{Virtual\+C64\+::\+KBD\+\_\+\+API}} {\bfseries keyboard}
+\item 
+\Hypertarget{class_virtual_c64_a9dec628c2928b2f3987adef819ffccd9}\label{class_virtual_c64_a9dec628c2928b2f3987adef819ffccd9} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_d_a_t_a_s_e_t_t_e___a_p_i}{Virtual\+C64\+::\+DATASETTE\+\_\+\+API}} {\bfseries datasette}
+\item 
+\Hypertarget{class_virtual_c64_a047c411bfd819875375c7a546918afc3}\label{class_virtual_c64_a047c411bfd819875375c7a546918afc3} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_c_p___a_p_i}{Virtual\+C64\+::\+CP\+\_\+\+API}} {\bfseries port1}
+\item 
+\Hypertarget{class_virtual_c64_ae409f4f387165daadee1e5fb315945c0}\label{class_virtual_c64_ae409f4f387165daadee1e5fb315945c0} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_c_p___a_p_i}{Virtual\+C64\+::\+CP\+\_\+\+API}} {\bfseries port2}
+\item 
+\Hypertarget{class_virtual_c64_a27ed316a043baf0a807ead7700ed0fad}\label{class_virtual_c64_a27ed316a043baf0a807ead7700ed0fad} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_r_e_c___a_p_i}{Virtual\+C64\+::\+REC\+\_\+\+API}} {\bfseries recorder}
+\item 
+\Hypertarget{class_virtual_c64_a1cc7192b987427c43981325f3a8b1cec}\label{class_virtual_c64_a1cc7192b987427c43981325f3a8b1cec} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i}{Virtual\+C64\+::\+EXP\+\_\+\+PORT\+\_\+\+API}} {\bfseries expansionport}
+\item 
+\Hypertarget{class_virtual_c64_adc28d43876e75abe2141d6c8e31c836f}\label{class_virtual_c64_adc28d43876e75abe2141d6c8e31c836f} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_i_e_c___a_p_i}{Virtual\+C64\+::\+IEC\+\_\+\+API}} {\bfseries iec}
+\item 
+\Hypertarget{class_virtual_c64_ac6c468ea0dcc33308945bc1abdb3c39d}\label{class_virtual_c64_ac6c468ea0dcc33308945bc1abdb3c39d} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_d_r_i_v_e___a_p_i}{Virtual\+C64\+::\+DRIVE\+\_\+\+API}} {\bfseries drive8}
+\item 
+\Hypertarget{class_virtual_c64_ae1eca7e1edd38f01c463979df532b3c4}\label{class_virtual_c64_ae1eca7e1edd38f01c463979df532b3c4} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_d_r_i_v_e___a_p_i}{Virtual\+C64\+::\+DRIVE\+\_\+\+API}} {\bfseries drive9}
+\item 
+\Hypertarget{class_virtual_c64_a2cef48dde1fa6fadf8a189607fe45ff9}\label{class_virtual_c64_a2cef48dde1fa6fadf8a189607fe45ff9} 
+\mbox{\hyperlink{struct_virtual_c64_1_1_r_s_h_e_l_l___a_p_i}{Virtual\+C64\+::\+RSHELL\+\_\+\+API}} {\bfseries retro\+Shell}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/Virtual\+C64.\+h\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/Virtual\+C64.\+cpp\end{DoxyCompactItemize}

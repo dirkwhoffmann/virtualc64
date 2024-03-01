@@ -1,0 +1,185 @@
+\doxysection{config.\+h}
+\hypertarget{config_8h_source}{}\label{config_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/config.h@{/Users/hoff/Retro/virtualc64/Emulator/config.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//}}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ Release\ settings}}
+\DoxyCodeLine{00017\ \textcolor{comment}{//}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ Version\ number}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ VER\_MAJOR\ 5}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ VER\_MINOR\ 0}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ VER\_SUBMINOR\ 0}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ VER\_BETA\ 1}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{comment}{//\ Snapshot\ version\ number}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ SNP\_MAJOR\ 5}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ SNP\_MINOR\ 0}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ SNP\_SUBMINOR\ 0}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ SNP\_BETA\ 1}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{comment}{//\ Uncomment\ these\ settings\ in\ a\ release\ build}}
+\DoxyCodeLine{00032\ \textcolor{comment}{//\ \#define\ RELEASEBUILD}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{comment}{//}}
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ Build\ settings}}
+\DoxyCodeLine{00037\ \textcolor{comment}{//}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#if\ defined(\_\_clang\_\_)}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ alwaysinline\ \_\_attribute\_\_((always\_inline))}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#pragma\ GCC\ diagnostic\ ignored\ "{}-\/Wgnu-\/zero-\/variadic-\/macro-\/arguments"{}}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#pragma\ GCC\ diagnostic\ ignored\ "{}-\/Wgnu-\/anonymous-\/struct"{}}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#pragma\ GCC\ diagnostic\ ignored\ "{}-\/Wnested-\/anon-\/types"{}}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#elif\ defined(\_\_GNUC\_\_)\ ||\ defined(\_\_GNUG\_\_)}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ alwaysinline\ \_\_attribute\_\_((always\_inline))}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#elif\ defined(\_MSC\_VER)}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#define\ alwaysinline\ \_\_forceinline}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{comment}{//}}
+\DoxyCodeLine{00058\ \textcolor{comment}{//\ Configuration\ overrides}}
+\DoxyCodeLine{00059\ \textcolor{comment}{//}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#define\ OVERRIDES\ \{\ \}}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \textcolor{comment}{//}}
+\DoxyCodeLine{00065\ \textcolor{comment}{//\ Debug\ settings}}
+\DoxyCodeLine{00066\ \textcolor{comment}{//}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#ifdef\ RELEASEBUILD}}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#ifndef\ NDEBUG}}
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#define\ NDEBUG}}
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00072\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ releaseBuild\ =\ 1;}
+\DoxyCodeLine{00073\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ debugBuild\ =\ 0;}
+\DoxyCodeLine{00074\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ debugflag;}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00076\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ releaseBuild\ =\ 0;}
+\DoxyCodeLine{00077\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ debugBuild\ =\ 1;}
+\DoxyCodeLine{00078\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{int}\ debugflag;}
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{\#if\ VER\_BETA\ ==\ 0}}
+\DoxyCodeLine{00082\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ betaRelease\ =\ 0;}
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00084\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ betaRelease\ =\ 1;}
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\#ifdef\ \_\_EMSCRIPTEN\_\_}}
+\DoxyCodeLine{00088\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ emscripten\ =\ 1;}
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00090\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ emscripten\ =\ 0;}
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{comment}{//\ General}}
+\DoxyCodeLine{00095\ \textcolor{keyword}{extern}\ debugflag\ XFILES;}
+\DoxyCodeLine{00096\ \textcolor{keyword}{extern}\ debugflag\ CNF\_DEBUG;}
+\DoxyCodeLine{00097\ \textcolor{keyword}{extern}\ debugflag\ DEF\_DEBUG;}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \textcolor{comment}{//\ Emulator}}
+\DoxyCodeLine{00100\ \textcolor{keyword}{extern}\ debugflag\ RUN\_DEBUG;}
+\DoxyCodeLine{00101\ \textcolor{keyword}{extern}\ debugflag\ TIM\_DEBUG;}
+\DoxyCodeLine{00102\ \textcolor{keyword}{extern}\ debugflag\ WARP\_DEBUG;}
+\DoxyCodeLine{00103\ \textcolor{keyword}{extern}\ debugflag\ CMD\_DEBUG;}
+\DoxyCodeLine{00104\ \textcolor{keyword}{extern}\ debugflag\ MSG\_DEBUG;}
+\DoxyCodeLine{00105\ \textcolor{keyword}{extern}\ debugflag\ SNP\_DEBUG;}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \textcolor{comment}{//\ Run\ ahead}}
+\DoxyCodeLine{00108\ \textcolor{keyword}{extern}\ debugflag\ RUA\_DEBUG;}
+\DoxyCodeLine{00109\ \textcolor{keyword}{extern}\ debugflag\ RUA\_ON\_STEROIDS;}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \textcolor{comment}{//\ CPU}}
+\DoxyCodeLine{00112\ \textcolor{keyword}{extern}\ debugflag\ CPU\_DEBUG;}
+\DoxyCodeLine{00113\ \textcolor{keyword}{extern}\ debugflag\ IRQ\_DEBUG;}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \textcolor{comment}{//\ Memory}}
+\DoxyCodeLine{00116\ \textcolor{keyword}{extern}\ debugflag\ MEM\_DEBUG;}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \textcolor{comment}{//\ CIAs}}
+\DoxyCodeLine{00119\ \textcolor{keyword}{extern}\ debugflag\ CIA\_DEBUG;}
+\DoxyCodeLine{00120\ \textcolor{keyword}{extern}\ debugflag\ CIAREG\_DEBUG;}
+\DoxyCodeLine{00121\ \textcolor{keyword}{extern}\ debugflag\ CIA\_ON\_STEROIDS;}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \textcolor{comment}{//\ VICII}}
+\DoxyCodeLine{00124\ \textcolor{keyword}{extern}\ debugflag\ VICII\_DEBUG;}
+\DoxyCodeLine{00125\ \textcolor{keyword}{extern}\ debugflag\ VICII\_REG\_DEBUG;}
+\DoxyCodeLine{00126\ \textcolor{keyword}{extern}\ debugflag\ VICII\_SAFE\_MODE;}
+\DoxyCodeLine{00127\ \textcolor{keyword}{extern}\ debugflag\ VICII\_STATS;}
+\DoxyCodeLine{00128\ \textcolor{keyword}{extern}\ debugflag\ RASTERIRQ\_DEBUG;}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \textcolor{comment}{//\ SID}}
+\DoxyCodeLine{00131\ \textcolor{keyword}{extern}\ debugflag\ SID\_DEBUG;}
+\DoxyCodeLine{00132\ \textcolor{keyword}{extern}\ debugflag\ SID\_EXEC;}
+\DoxyCodeLine{00133\ \textcolor{keyword}{extern}\ debugflag\ SIDREG\_DEBUG;}
+\DoxyCodeLine{00134\ \textcolor{keyword}{extern}\ debugflag\ AUDBUF\_DEBUG;}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \textcolor{comment}{//\ Drive}}
+\DoxyCodeLine{00137\ \textcolor{keyword}{extern}\ debugflag\ VIA\_DEBUG;}
+\DoxyCodeLine{00138\ \textcolor{keyword}{extern}\ debugflag\ PIA\_DEBUG;}
+\DoxyCodeLine{00139\ \textcolor{keyword}{extern}\ debugflag\ IEC\_DEBUG;}
+\DoxyCodeLine{00140\ \textcolor{keyword}{extern}\ debugflag\ DSK\_DEBUG;}
+\DoxyCodeLine{00141\ \textcolor{keyword}{extern}\ debugflag\ DSKCHG\_DEBUG;}
+\DoxyCodeLine{00142\ \textcolor{keyword}{extern}\ debugflag\ GCR\_DEBUG;}
+\DoxyCodeLine{00143\ \textcolor{keyword}{extern}\ debugflag\ FS\_DEBUG;}
+\DoxyCodeLine{00144\ \textcolor{keyword}{extern}\ debugflag\ PAR\_DEBUG;}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \textcolor{comment}{//\ Media}}
+\DoxyCodeLine{00147\ \textcolor{keyword}{extern}\ debugflag\ CRT\_DEBUG;}
+\DoxyCodeLine{00148\ \textcolor{keyword}{extern}\ debugflag\ FILE\_DEBUG;}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \textcolor{comment}{//\ Peripherals}}
+\DoxyCodeLine{00151\ \textcolor{keyword}{extern}\ debugflag\ JOY\_DEBUG;}
+\DoxyCodeLine{00152\ \textcolor{keyword}{extern}\ debugflag\ DRV\_DEBUG;}
+\DoxyCodeLine{00153\ \textcolor{keyword}{extern}\ debugflag\ TAP\_DEBUG;}
+\DoxyCodeLine{00154\ \textcolor{keyword}{extern}\ debugflag\ KBD\_DEBUG;}
+\DoxyCodeLine{00155\ \textcolor{keyword}{extern}\ debugflag\ PRT\_DEBUG;}
+\DoxyCodeLine{00156\ \textcolor{keyword}{extern}\ debugflag\ EXP\_DEBUG;}
+\DoxyCodeLine{00157\ \textcolor{keyword}{extern}\ debugflag\ LIP\_DEBUG;}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \textcolor{comment}{//\ Other\ components}}
+\DoxyCodeLine{00160\ \textcolor{keyword}{extern}\ debugflag\ REC\_DEBUG;}
+\DoxyCodeLine{00161\ \textcolor{keyword}{extern}\ debugflag\ REU\_DEBUG;}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \textcolor{comment}{//}}
+\DoxyCodeLine{00165\ \textcolor{comment}{//\ Forced\ error\ conditions}}
+\DoxyCodeLine{00166\ \textcolor{comment}{//}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \textcolor{keyword}{extern}\ debugflag\ FORCE\_ROM\_MISSING;}
+\DoxyCodeLine{00169\ \textcolor{keyword}{extern}\ debugflag\ FORCE\_MEGA64\_MISMATCH;}
+\DoxyCodeLine{00170\ \textcolor{keyword}{extern}\ debugflag\ FORCE\_SNAP\_TOO\_OLD;}
+\DoxyCodeLine{00171\ \textcolor{keyword}{extern}\ debugflag\ FORCE\_SNAP\_TOO\_NEW;}
+\DoxyCodeLine{00172\ \textcolor{keyword}{extern}\ debugflag\ FORCE\_SNAP\_IS\_BETA;}
+\DoxyCodeLine{00173\ \textcolor{keyword}{extern}\ debugflag\ FORCE\_SNAP\_CORRUPTED;}
+\DoxyCodeLine{00174\ \textcolor{keyword}{extern}\ debugflag\ FORCE\_CRT\_UNKNOWN;}
+\DoxyCodeLine{00175\ \textcolor{keyword}{extern}\ debugflag\ FORCE\_CRT\_UNSUPPORTED;}
+\DoxyCodeLine{00176\ \textcolor{keyword}{extern}\ debugflag\ FORCE\_RECORDING\_ERROR;}
+\DoxyCodeLine{00177\ \textcolor{keyword}{extern}\ debugflag\ FORCE\_NO\_FFMPEG;}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \textcolor{preprocessor}{\#include\ <assert.h>}}
+
+\end{DoxyCode}

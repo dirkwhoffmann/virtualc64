@@ -604,7 +604,7 @@ static constexpr bool isResetter(T &worker) {
 
 template <class T>
 static constexpr bool isChecker(T &worker) {
-    return typeid(worker) == typeid(SerHardResetter);
+    return typeid(worker) == typeid(SerChecker);
 }
 
 }
