@@ -16,19 +16,34 @@
 #include "Reflection.h"
 
 
+/** \addtogroup topic_state_model
+    @{ 
+ */
+
 //
 // Enumerations
 //
 
-enum_long(EMULATOR_STATE)
+/** Emulator state */
+enum_long_swift(EmulatorState)
+enum_long_c(EmulatorState)
 {
+    /// The emulator is powered off
     STATE_OFF,
+
+    /// The emulator is powered on, but currently paused
     STATE_PAUSED,
+
+    /// The emulator is up and running
     STATE_RUNNING,
+
+    /// The emulator is shortly paused to perform an internal state change
     STATE_SUSPENDED,
+
+    /// The emulator has been shut down
     STATE_HALTED
 };
-typedef EMULATOR_STATE EmulatorState;
+// typedef EMULATOR_STATE EmulatorState;
 
 #ifdef __cplusplus
 struct EmulatorStateEnum : util::Reflection<EmulatorStateEnum, EmulatorState>
@@ -52,3 +67,5 @@ struct EmulatorStateEnum : util::Reflection<EmulatorStateEnum, EmulatorState>
     }
 };
 #endif
+
+/** @} */

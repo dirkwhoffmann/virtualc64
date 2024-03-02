@@ -1,0 +1,26 @@
+\doxysection{Synchronizingg the emulator thread}
+\hypertarget{group___sync}{}\label{group___sync}\index{Synchronizingg the emulator thread@{Synchronizingg the emulator thread}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group___sync_gaca3821452aac3065cf92f63db8121674}{Virtual\+C64\+::wake\+Up}} ()
+\begin{DoxyCompactList}\small\item\em Sends a wakeup signal to the emulator thread. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{group___sync_gaca3821452aac3065cf92f63db8121674}\label{group___sync_gaca3821452aac3065cf92f63db8121674} 
+\index{Synchronizingg the emulator thread@{Synchronizingg the emulator thread}!wakeUp@{wakeUp}}
+\index{wakeUp@{wakeUp}!Synchronizingg the emulator thread@{Synchronizingg the emulator thread}}
+\doxysubsubsection{\texorpdfstring{wakeUp()}{wakeUp()}}
+{\footnotesize\ttfamily void Virtual\+C64\+::wake\+Up (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sends a wakeup signal to the emulator thread. 
+
+Some thread mode require the GUI to send a wakeup signal. Once this signal is received, the next frame is computed. 

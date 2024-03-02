@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="readme_8md" kind="file" language="Markdown">
+    <compoundname>readme.md</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline></codeline>
+<codeline></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">VirtualC64<sp/>is<sp/>a<sp/>high-precision<sp/>emulation<sp/>core<sp/>for<sp/>the<sp/>Commodore<sp/>64<sp/>personal<sp/>computer.<sp/>This<sp/>site<sp/>contains<sp/>the<sp/>necesarry<sp/>information<sp/>for<sp/>developers<sp/>to<sp/>incoorporate<sp/>the<sp/>emulation<sp/>core<sp/>in<sp/>own<sp/>projects.<sp/></highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">##<sp/>Example<sp/>Section</highlight></codeline>
+<codeline></codeline>
+<codeline><highlight class="normal">\image<sp/>html<sp/>banner.png<sp/>width=100%</highlight></codeline>
+    </programlisting>
+    <location file="readme.md"/>
+  </compounddef>
+</doxygen>

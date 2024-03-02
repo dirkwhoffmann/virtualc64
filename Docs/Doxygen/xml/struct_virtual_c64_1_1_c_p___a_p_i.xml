@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_virtual_c64_1_1_c_p___a_p_i" kind="struct" language="C++" prot="public">
+    <compoundname>VirtualC64::CP_API</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">API</basecompoundref>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_virtual_c64_1_1_c_p___a_p_i_1a7563804bfc139690355eb4c54064a679" prot="public" static="no" mutable="no">
+        <type>ControlPort &amp;</type>
+        <definition>ControlPort&amp; VirtualC64::CP_API::port</definition>
+        <argsstring></argsstring>
+        <name>port</name>
+        <qualifiedname>VirtualC64::CP_API::port</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="439" column="21" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="439" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_virtual_c64_1_1_c_p___a_p_i_1a2b939998e2b4a8280b796d17554bdda2" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_j_o_y_s_t_i_c_k___a_p_i" kindref="compound">JOYSTICK_API</ref></type>
+        <definition>JOYSTICK_API VirtualC64::CP_API::joystick</definition>
+        <argsstring></argsstring>
+        <name>joystick</name>
+        <qualifiedname>VirtualC64::CP_API::joystick</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="443" column="22" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="443" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_virtual_c64_1_1_c_p___a_p_i_1a57ebc5e548eaba926d6ace1c8d3ec967" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_m_o_u_s_e___a_p_i" kindref="compound">MOUSE_API</ref></type>
+        <definition>MOUSE_API VirtualC64::CP_API::mouse</definition>
+        <argsstring></argsstring>
+        <name>mouse</name>
+        <qualifiedname>VirtualC64::CP_API::mouse</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="444" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="444" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c_p___a_p_i_1a9aa6a41c9ca1c95a1ab5725d4dec7e55" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>VirtualC64::CP_API::CP_API</definition>
+        <argsstring>(Emulator &amp;emu, ControlPort &amp;port)</argsstring>
+        <name>CP_API</name>
+        <qualifiedname>VirtualC64::CP_API::CP_API</qualifiedname>
+        <param>
+          <type>Emulator &amp;</type>
+          <declname>emu</declname>
+        </param>
+        <param>
+          <type>ControlPort &amp;</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="440" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="440" bodyend="441"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::CP_API</label>
+        <link refid="struct_virtual_c64_1_1_c_p___a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::CP_API</label>
+        <link refid="struct_virtual_c64_1_1_c_p___a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>joystick</edgelabel>
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>mouse</edgelabel>
+        </childnode>
+      </node>
+      <node id="3">
+        <label>VirtualC64::JOYSTICK_API</label>
+        <link refid="struct_virtual_c64_1_1_j_o_y_s_t_i_c_k___a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>VirtualC64::MOUSE_API</label>
+        <link refid="struct_virtual_c64_1_1_m_o_u_s_e___a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="437" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="437" bodyend="446"/>
+    <listofallmembers>
+      <member refid="struct_virtual_c64_1_1_c_p___a_p_i_1a9aa6a41c9ca1c95a1ab5725d4dec7e55" prot="public" virt="non-virtual"><scope>VirtualC64::CP_API</scope><name>CP_API</name></member>
+      <member refid="struct_virtual_c64_1_1_c_p___a_p_i_1a2b939998e2b4a8280b796d17554bdda2" prot="public" virt="non-virtual"><scope>VirtualC64::CP_API</scope><name>joystick</name></member>
+      <member refid="struct_virtual_c64_1_1_c_p___a_p_i_1a57ebc5e548eaba926d6ace1c8d3ec967" prot="public" virt="non-virtual"><scope>VirtualC64::CP_API</scope><name>mouse</name></member>
+      <member refid="struct_virtual_c64_1_1_c_p___a_p_i_1a7563804bfc139690355eb4c54064a679" prot="public" virt="non-virtual"><scope>VirtualC64::CP_API</scope><name>port</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

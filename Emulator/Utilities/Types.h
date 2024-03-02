@@ -90,6 +90,9 @@ enum _name : _type
 #define enum_long(_name) enum_generic(_name, long)
 #define enum_i8(_name) enum_generic(_name, i8)
 
+#define enum_long_swift(_name) enum_generic(_name, long)
+#define enum_long_c(_name)
+
 #else
 
 // Definition for C
@@ -100,4 +103,6 @@ enum : _type
 #define enum_long(_name) enum_generic(_name, long)
 #define enum_i8(_name) enum_generic(_name, i8)
 
+#define enum_long_swift(_name)
+#define enum_long_c(_name) enum _name : long
 #endif

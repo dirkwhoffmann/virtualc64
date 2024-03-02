@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="group___sync" kind="group">
+    <compoundname>Sync</compoundname>
+    <title>Synchronizingg the emulator thread</title>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="group___sync_1gaca3821452aac3065cf92f63db8121674" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::wakeUp</definition>
+        <argsstring>()</argsstring>
+        <name>wakeUp</name>
+        <qualifiedname>VirtualC64::wakeUp</qualifiedname>
+        <briefdescription>
+<para>Sends a wakeup signal to the emulator thread. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Some thread mode require the GUI to send a wakeup signal. Once this signal is received, the next frame is computed. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="115" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="115" bodyend="115"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

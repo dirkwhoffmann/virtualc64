@@ -1,0 +1,222 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i" kind="struct" language="C++" prot="public">
+    <compoundname>VirtualC64::EXP_PORT_API</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">API</basecompoundref>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1a5ddcf9c9c491960527b5ff772299bf27" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>CartridgeTraits</type>
+        <definition>CartridgeTraits VirtualC64::EXP_PORT_API::getTraits</definition>
+        <argsstring>() const</argsstring>
+        <name>getTraits</name>
+        <qualifiedname>VirtualC64::EXP_PORT_API::getTraits</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="482" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1aea9ae1c84375d7fc0905aedddd4d87c9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>CartridgeInfo</type>
+        <definition>CartridgeInfo VirtualC64::EXP_PORT_API::getInfo</definition>
+        <argsstring>() const</argsstring>
+        <name>getInfo</name>
+        <qualifiedname>VirtualC64::EXP_PORT_API::getInfo</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="483" column="23"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1a922d0e15d00b00f08c772a9eb7afa2e1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>CartridgeRomInfo</type>
+        <definition>CartridgeRomInfo VirtualC64::EXP_PORT_API::getRomInfo</definition>
+        <argsstring>(isize nr) const</argsstring>
+        <name>getRomInfo</name>
+        <qualifiedname>VirtualC64::EXP_PORT_API::getRomInfo</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="484" column="26"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1ad0335eb6d3cd4555fee1cd963ed2df72" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::EXP_PORT_API::attachCartridge</definition>
+        <argsstring>(const string &amp;path, bool reset=true)</argsstring>
+        <name>attachCartridge</name>
+        <qualifiedname>VirtualC64::EXP_PORT_API::attachCartridge</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>reset</declname>
+          <defval>true</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="486" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1a5f87ed15361cfe935da965e94dcda3bd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::EXP_PORT_API::attachCartridge</definition>
+        <argsstring>(CRTFile *c, bool reset=true)</argsstring>
+        <name>attachCartridge</name>
+        <qualifiedname>VirtualC64::EXP_PORT_API::attachCartridge</qualifiedname>
+        <param>
+          <type>CRTFile *</type>
+          <declname>c</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>reset</declname>
+          <defval>true</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="487" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1a4a40c51e863bd483d504b33d85399094" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::EXP_PORT_API::attachCartridge</definition>
+        <argsstring>(Cartridge *c)</argsstring>
+        <name>attachCartridge</name>
+        <qualifiedname>VirtualC64::EXP_PORT_API::attachCartridge</qualifiedname>
+        <param>
+          <type>Cartridge *</type>
+          <declname>c</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="488" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1a4b62b1c6ba246e367f29f25da1c09544" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::EXP_PORT_API::attachReu</definition>
+        <argsstring>(isize capacity)</argsstring>
+        <name>attachReu</name>
+        <qualifiedname>VirtualC64::EXP_PORT_API::attachReu</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>capacity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="489" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1a661832823ed2385b601801c15853b8db" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::EXP_PORT_API::attachGeoRam</definition>
+        <argsstring>(isize capacity)</argsstring>
+        <name>attachGeoRam</name>
+        <qualifiedname>VirtualC64::EXP_PORT_API::attachGeoRam</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>capacity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="490" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1ada5472574b31c579f135ce45039cce09" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::EXP_PORT_API::attachIsepicCartridge</definition>
+        <argsstring>()</argsstring>
+        <name>attachIsepicCartridge</name>
+        <qualifiedname>VirtualC64::EXP_PORT_API::attachIsepicCartridge</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="491" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1adb6e875958b165fdee45e0498ba2ae74" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::EXP_PORT_API::detachCartridge</definition>
+        <argsstring>()</argsstring>
+        <name>detachCartridge</name>
+        <qualifiedname>VirtualC64::EXP_PORT_API::detachCartridge</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="492" column="14"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::EXP_PORT_API</label>
+        <link refid="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::EXP_PORT_API</label>
+        <link refid="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="478" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="478" bodyend="494"/>
+    <listofallmembers>
+      <member refid="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1ad0335eb6d3cd4555fee1cd963ed2df72" prot="public" virt="non-virtual"><scope>VirtualC64::EXP_PORT_API</scope><name>attachCartridge</name></member>
+      <member refid="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1a5f87ed15361cfe935da965e94dcda3bd" prot="public" virt="non-virtual"><scope>VirtualC64::EXP_PORT_API</scope><name>attachCartridge</name></member>
+      <member refid="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1a4a40c51e863bd483d504b33d85399094" prot="public" virt="non-virtual"><scope>VirtualC64::EXP_PORT_API</scope><name>attachCartridge</name></member>
+      <member refid="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1a661832823ed2385b601801c15853b8db" prot="public" virt="non-virtual"><scope>VirtualC64::EXP_PORT_API</scope><name>attachGeoRam</name></member>
+      <member refid="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1ada5472574b31c579f135ce45039cce09" prot="public" virt="non-virtual"><scope>VirtualC64::EXP_PORT_API</scope><name>attachIsepicCartridge</name></member>
+      <member refid="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1a4b62b1c6ba246e367f29f25da1c09544" prot="public" virt="non-virtual"><scope>VirtualC64::EXP_PORT_API</scope><name>attachReu</name></member>
+      <member refid="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1adb6e875958b165fdee45e0498ba2ae74" prot="public" virt="non-virtual"><scope>VirtualC64::EXP_PORT_API</scope><name>detachCartridge</name></member>
+      <member refid="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1aea9ae1c84375d7fc0905aedddd4d87c9" prot="public" virt="non-virtual"><scope>VirtualC64::EXP_PORT_API</scope><name>getInfo</name></member>
+      <member refid="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1a922d0e15d00b00f08c772a9eb7afa2e1" prot="public" virt="non-virtual"><scope>VirtualC64::EXP_PORT_API</scope><name>getRomInfo</name></member>
+      <member refid="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i_1a5ddcf9c9c491960527b5ff772299bf27" prot="public" virt="non-virtual"><scope>VirtualC64::EXP_PORT_API</scope><name>getTraits</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

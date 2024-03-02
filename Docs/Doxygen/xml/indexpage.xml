@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="indexpage" kind="page">
+    <compoundname>index</compoundname>
+    <title>VirtualC64</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><anchor id="index_1md_readme"/></para>
+<para><ref refid="class_virtual_c64" kindref="compound">VirtualC64</ref> is a high-precision emulation core for the Commodore 64 personal computer. This site contains the necesarry information for developers to incoorporate the emulation core in own projects.</para>
+<sect2 id="index_1autotoc_md0">
+<title>Example Section</title><para><image type="html" name="banner.png" width="100%"></image>
+ </para>
+</sect2>
+    </detaileddescription>
+    <location file="readme.md"/>
+  </compounddef>
+</doxygen>

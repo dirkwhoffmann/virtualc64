@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_headless" kind="class" language="C++" prot="public">
+    <compoundname>vc64::Headless</compoundname>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvc64_1_1_headless_1aa5dd2fbb290cd4ed589058801266a87e" prot="private" static="no" mutable="no">
+        <type>map&lt; string, string &gt;</type>
+        <definition>map&lt;string,string&gt; vc64::Headless::keys</definition>
+        <argsstring></argsstring>
+        <name>keys</name>
+        <qualifiedname>vc64::Headless::keys</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" line="32" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_headless_1a6fc9732fb29eb7b2a2dac9d74c795471" prot="private" static="no" mutable="no">
+        <type><ref refid="class_virtual_c64" kindref="compound">VirtualC64</ref></type>
+        <definition>VirtualC64 vc64::Headless::c64</definition>
+        <argsstring></argsstring>
+        <name>c64</name>
+        <qualifiedname>vc64::Headless::c64</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" line="35" column="16" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_headless_1aeae18116a3d770c61be2e6ea56202aeb" prot="private" static="no" mutable="no">
+        <type>util::Mutex</type>
+        <definition>util::Mutex vc64::Headless::barrier</definition>
+        <argsstring></argsstring>
+        <name>barrier</name>
+        <qualifiedname>vc64::Headless::barrier</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" line="38" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvc64_1_1_headless_1ab36fc114d259e5f0879042929355569a" prot="private" static="no" mutable="no">
+        <type>std::optional&lt; int &gt;</type>
+        <definition>std::optional&lt;int&gt; vc64::Headless::returnCode</definition>
+        <argsstring></argsstring>
+        <name>returnCode</name>
+        <qualifiedname>vc64::Headless::returnCode</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" line="41" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvc64_1_1_headless_1a4710fe69c796869b119ec91387352838" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int vc64::Headless::main</definition>
+        <argsstring>(int argc, char *argv[])</argsstring>
+        <name>main</name>
+        <qualifiedname>vc64::Headless::main</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>argc</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>argv</declname>
+          <array>[]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" line="51" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Headless.cpp" bodystart="67" bodyend="94"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_headless_1a1e1bf2b01fe36c35375f7d8fcfc3f53d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Headless::process</definition>
+        <argsstring>(Message msg)</argsstring>
+        <name>process</name>
+        <qualifiedname>vc64::Headless::process</qualifiedname>
+        <param>
+          <type>Message</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" line="72" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Headless.cpp" bodystart="216" bodyend="245"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_headless_1aa30b4b364fa55b3c83d39569b3d839a5" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Headless::parseArguments</definition>
+        <argsstring>(int argc, char *argv[])</argsstring>
+        <name>parseArguments</name>
+        <qualifiedname>vc64::Headless::parseArguments</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>argc</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>argv</declname>
+          <array>[]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" line="56" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Headless.cpp" bodystart="109" bodyend="166"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_headless_1a054d6528b30b9aeb946d65bf408fcca7" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vc64::Headless::checkArguments</definition>
+        <argsstring>() throws</argsstring>
+        <name>checkArguments</name>
+        <qualifiedname>vc64::Headless::checkArguments</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" line="59" column="10" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Headless.cpp" bodystart="171" bodyend="195"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_headless_1ae39efe3a25f491c6aab36b3f21b38c9b" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string vc64::Headless::selfTestScript</definition>
+        <argsstring>()</argsstring>
+        <name>selfTestScript</name>
+        <qualifiedname>vc64::Headless::selfTestScript</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" line="62" column="12" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Headless.cpp" bodystart="198" bodyend="207"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" line="29" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Headless.h" bodystart="29" bodyend="73"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_headless_1aeae18116a3d770c61be2e6ea56202aeb" prot="private" virt="non-virtual"><scope>vc64::Headless</scope><name>barrier</name></member>
+      <member refid="classvc64_1_1_headless_1a6fc9732fb29eb7b2a2dac9d74c795471" prot="private" virt="non-virtual"><scope>vc64::Headless</scope><name>c64</name></member>
+      <member refid="classvc64_1_1_headless_1a054d6528b30b9aeb946d65bf408fcca7" prot="private" virt="non-virtual"><scope>vc64::Headless</scope><name>checkArguments</name></member>
+      <member refid="classvc64_1_1_headless_1aa5dd2fbb290cd4ed589058801266a87e" prot="private" virt="non-virtual"><scope>vc64::Headless</scope><name>keys</name></member>
+      <member refid="classvc64_1_1_headless_1a4710fe69c796869b119ec91387352838" prot="public" virt="non-virtual"><scope>vc64::Headless</scope><name>main</name></member>
+      <member refid="classvc64_1_1_headless_1aa30b4b364fa55b3c83d39569b3d839a5" prot="private" virt="non-virtual"><scope>vc64::Headless</scope><name>parseArguments</name></member>
+      <member refid="classvc64_1_1_headless_1a1e1bf2b01fe36c35375f7d8fcfc3f53d" prot="public" virt="non-virtual"><scope>vc64::Headless</scope><name>process</name></member>
+      <member refid="classvc64_1_1_headless_1ab36fc114d259e5f0879042929355569a" prot="private" virt="non-virtual"><scope>vc64::Headless</scope><name>returnCode</name></member>
+      <member refid="classvc64_1_1_headless_1ae39efe3a25f491c6aab36b3f21b38c9b" prot="private" virt="non-virtual"><scope>vc64::Headless</scope><name>selfTestScript</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

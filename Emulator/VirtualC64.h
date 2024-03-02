@@ -10,14 +10,19 @@
 // SPDX-License-Identifier: GPL-3.0-or-later OR MPL-2.0
 // -----------------------------------------------------------------------------
 
-/*
- * This files declares the emulator's public API.
- */
-
 #pragma once
 
 #include "Emulator.h"
 
+/** Public API
+ *
+ * This class declares the emulator's public API. It consists of functions
+ * controlling the emulator state, such as running or pausing the emulator, as
+ * well as functions configuring the various components. The class contains
+ * separate sub-APIs for the subcomponents of the emulator. For example, a
+ * VICII API provides additional functions that interact directly with the
+ * VICII graphics chip.
+ */
 class VirtualC64 : vc64::Emulator {
 
     using vc64::Emulator::Thread::Suspendable;
@@ -29,10 +34,12 @@ class VirtualC64 : vc64::Emulator {
 
 public:
 
-    // Returns a version string for this release
+    /** Returns a version string for this release.
+     *  E.g., "5.0b1"
+     */
     static string version();
 
-    // Returns a build number string for this release
+    /// Returns a build number string for this release.
     static string build();
 
 
@@ -50,15 +57,27 @@ public:
     using vc64::Emulator::getState;
     using vc64::Emulator::getStats;
 
-    //
-    // Emulator state
-    //
+    /// @name Controlling the emulator state
+    /// @{
 
-    using vc64::Emulator::Thread::powerOn;
-    using vc64::Emulator::Thread::powerOff;
-    using vc64::Emulator::Thread::run;
-    using vc64::Emulator::Thread::pause;
-    using vc64::Emulator::Thread::halt;
+    /// Switches the emulator on
+    void powerOn() { Emulator::Thread::powerOn(); }
+
+    /// Switches the emulator off
+    void powerOff() { Emulator::Thread::powerOff(); }
+
+    /// Starts emulation
+    void run() { Emulator::Thread::run(); }
+
+    /// Stops emulation
+    void pause() { Emulator::Thread::pause(); }
+
+    /*! Terminates the emulator thread
+     *  This function puts the emulator into halt state and terminates the
+     *  emulator thread. Entering this state is part of the shutdown procedure.
+     */
+    void halt() { Emulator::Thread::halt(); }
+
     using vc64::Emulator::Thread::stopAndGo;
     using vc64::Emulator::Thread::suspend;
     using vc64::Emulator::Thread::resume;
@@ -77,16 +96,25 @@ public:
     using vc64::Emulator::Thread::trackOn;
     using vc64::Emulator::Thread::trackOff;
 
+    /// Steps a single instruction
     void stepInto();
+
+    /// Steps to the next instruction
     void stepOver();
 
+    /// @}
 
-    //
-    // Synchronizing
-    //
+    ///
+    /// @name Synchronizing the emulator thread
+    /// @{
 
-    using vc64::Emulator::Thread::wakeUp;
+    /** Sends a wakeup signal to the emulator thread.
+     *  Some thread mode require the GUI to send a wakeup signal. Once this
+     *  signal is received, the next frame is computed.
+     */
+    void wakeUp() { vc64::Emulator::Thread::wakeUp(); }
 
+    /// @}
 
     //
     // Audio and Video

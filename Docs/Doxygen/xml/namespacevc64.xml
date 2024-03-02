@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="namespacevc64" kind="namespace" language="C++">
+    <compoundname>vc64</compoundname>
+    <innerclass refid="classvc64_1_1_thread" prot="public">vc64::Thread</innerclass>
+    <sectiondef kind="typedef">
+      <member refid="group__topic__state__model_1ga2d45fe1f5a2e80dbc85acca426f26970" kind="typedef"><name>StateChangeException</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Thread.h" line="72" column="1"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,8 @@
+<map id="VirtualC64::DRIVE_API" name="VirtualC64::DRIVE_API">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,169,167,195"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="59,5,102,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="84,47,88,169,83,169,79,47"/>
+<area shape="rect" id="Node000003" href="$struct_virtual_c64_1_1_d_i_s_k___a_p_i.html" title=" " alt="" coords="102,80,254,106"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="111,38,164,78,161,82,107,43"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="156,119,101,171,97,167,152,115"/>
+</map>

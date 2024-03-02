@@ -1,0 +1,9 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="10,5,97,31"/>
+<area shape="rect" id="Node000001" href="$classvc64_1_1_thread.html" title="Implements the emulator&#39;s state model." alt="" coords="150,55,247,80"/>
+<area shape="poly" id="edge20_Node000000_Node000001" title=" " alt="" coords="109,34,159,52,157,57,107,39"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,55,102,80"/>
+<area shape="poly" id="edge21_Node000002_Node000001" title=" " alt="" coords="117,65,149,65,149,70,117,70"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="14,104,93,130"/>
+<area shape="poly" id="edge22_Node000003_Node000001" title=" " alt="" coords="107,96,158,78,159,83,109,101"/>
+</map>

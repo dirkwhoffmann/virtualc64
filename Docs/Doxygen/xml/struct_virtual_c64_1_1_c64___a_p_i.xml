@@ -1,0 +1,384 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_virtual_c64_1_1_c64___a_p_i" kind="struct" language="C++" prot="public">
+    <compoundname>VirtualC64::C64_API</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">API</basecompoundref>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1a11387f5e45fbdd1c357b7838eb7e9ea4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::C64_API::hardReset</definition>
+        <argsstring>()</argsstring>
+        <name>hardReset</name>
+        <qualifiedname>VirtualC64::C64_API::hardReset</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="168" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1a629e9aa4339054046b7a206701e13df2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::C64_API::softReset</definition>
+        <argsstring>()</argsstring>
+        <name>softReset</name>
+        <qualifiedname>VirtualC64::C64_API::softReset</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="169" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1a778a96e9ee28bda47d3499eacf370adf" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>InspectionTarget</type>
+        <definition>InspectionTarget VirtualC64::C64_API::getInspectionTarget</definition>
+        <argsstring>() const</argsstring>
+        <name>getInspectionTarget</name>
+        <qualifiedname>VirtualC64::C64_API::getInspectionTarget</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="171" column="26"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1a63c34b2e7533962974f3fbd351b22fb2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::C64_API::setInspectionTarget</definition>
+        <argsstring>(InspectionTarget target, Cycle trigger=0)</argsstring>
+        <name>setInspectionTarget</name>
+        <qualifiedname>VirtualC64::C64_API::setInspectionTarget</qualifiedname>
+        <param>
+          <type>InspectionTarget</type>
+          <declname>target</declname>
+        </param>
+        <param>
+          <type>Cycle</type>
+          <declname>trigger</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="172" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1a99186c5f05ef197622438418832030d5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::C64_API::removeInspectionTarget</definition>
+        <argsstring>()</argsstring>
+        <name>removeInspectionTarget</name>
+        <qualifiedname>VirtualC64::C64_API::removeInspectionTarget</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="173" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1a66503467184a7005807bc6aa97e4f688" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>C64Info</type>
+        <definition>C64Info VirtualC64::C64_API::getInfo</definition>
+        <argsstring>() const</argsstring>
+        <name>getInfo</name>
+        <qualifiedname>VirtualC64::C64_API::getInfo</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="175" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1aab0b66adb4f442445a7146bb5e830ab7" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>EventSlotInfo</type>
+        <definition>EventSlotInfo VirtualC64::C64_API::getSlotInfo</definition>
+        <argsstring>(isize nr) const</argsstring>
+        <name>getSlotInfo</name>
+        <qualifiedname>VirtualC64::C64_API::getSlotInfo</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="176" column="23"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1acc8b6704af20a135bc3af11edfda281c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::C64_API::isReady</definition>
+        <argsstring>()</argsstring>
+        <name>isReady</name>
+        <qualifiedname>VirtualC64::C64_API::isReady</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="178" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1ad9a34456c81fc8db9beca1d431b2f54c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>Snapshot *</type>
+        <definition>Snapshot * VirtualC64::C64_API::latestAutoSnapshot</definition>
+        <argsstring>()</argsstring>
+        <name>latestAutoSnapshot</name>
+        <qualifiedname>VirtualC64::C64_API::latestAutoSnapshot</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="180" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1a4aba74700c0302995793e706b52a0474" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>Snapshot *</type>
+        <definition>Snapshot * VirtualC64::C64_API::latestUserSnapshot</definition>
+        <argsstring>()</argsstring>
+        <name>latestUserSnapshot</name>
+        <qualifiedname>VirtualC64::C64_API::latestUserSnapshot</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="181" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1a2bd85c92729dc80e03cd0c6151058566" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::C64_API::loadSnapshot</definition>
+        <argsstring>(const Snapshot &amp;snapshot)</argsstring>
+        <name>loadSnapshot</name>
+        <qualifiedname>VirtualC64::C64_API::loadSnapshot</qualifiedname>
+        <param>
+          <type>const Snapshot &amp;</type>
+          <declname>snapshot</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="182" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1af5aad655ffda8d13d0d4fc15666796a5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>RomInfo</type>
+        <definition>RomInfo VirtualC64::C64_API::getRomInfo</definition>
+        <argsstring>(RomType type) const</argsstring>
+        <name>getRomInfo</name>
+        <qualifiedname>VirtualC64::C64_API::getRomInfo</qualifiedname>
+        <param>
+          <type>RomType</type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="184" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1a31c13908a1fb0b9a23bd140a5e65c208" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::C64_API::loadRom</definition>
+        <argsstring>(const string &amp;path)</argsstring>
+        <name>loadRom</name>
+        <qualifiedname>VirtualC64::C64_API::loadRom</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="185" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1aaa1f44f20d5f24afc8fbb9abd388d751" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::C64_API::loadRom</definition>
+        <argsstring>(const RomFile &amp;file)</argsstring>
+        <name>loadRom</name>
+        <qualifiedname>VirtualC64::C64_API::loadRom</qualifiedname>
+        <param>
+          <type>const RomFile &amp;</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="186" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1afb7562cddde52a2914dc0f82a6065168" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::C64_API::deleteRom</definition>
+        <argsstring>(RomType type)</argsstring>
+        <name>deleteRom</name>
+        <qualifiedname>VirtualC64::C64_API::deleteRom</qualifiedname>
+        <param>
+          <type>RomType</type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="187" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1a36254e7a246496c0a68b812105bcc232" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::C64_API::saveRom</definition>
+        <argsstring>(RomType rom, const string &amp;path)</argsstring>
+        <name>saveRom</name>
+        <qualifiedname>VirtualC64::C64_API::saveRom</qualifiedname>
+        <param>
+          <type>RomType</type>
+          <declname>rom</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="188" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1ae0ee8e9345828cc75eb598d791aa57b0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::C64_API::flash</definition>
+        <argsstring>(const AnyFile &amp;file)</argsstring>
+        <name>flash</name>
+        <qualifiedname>VirtualC64::C64_API::flash</qualifiedname>
+        <param>
+          <type>const AnyFile &amp;</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="190" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1a9e696b0341d41b32c719de70eb28c791" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::C64_API::flash</definition>
+        <argsstring>(const AnyCollection &amp;file, isize item)</argsstring>
+        <name>flash</name>
+        <qualifiedname>VirtualC64::C64_API::flash</qualifiedname>
+        <param>
+          <type>const AnyCollection &amp;</type>
+          <declname>file</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>item</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="191" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c64___a_p_i_1a6dc8c5c7bf1169454aafbe7134276567" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::C64_API::flash</definition>
+        <argsstring>(const FileSystem &amp;fs, isize item)</argsstring>
+        <name>flash</name>
+        <qualifiedname>VirtualC64::C64_API::flash</qualifiedname>
+        <param>
+          <type>const FileSystem &amp;</type>
+          <declname>fs</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>item</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="192" column="14"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::C64_API</label>
+        <link refid="struct_virtual_c64_1_1_c64___a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::C64_API</label>
+        <link refid="struct_virtual_c64_1_1_c64___a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="163" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="163" bodyend="194"/>
+    <listofallmembers>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1afb7562cddde52a2914dc0f82a6065168" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>deleteRom</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1ae0ee8e9345828cc75eb598d791aa57b0" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>flash</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1a9e696b0341d41b32c719de70eb28c791" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>flash</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1a6dc8c5c7bf1169454aafbe7134276567" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>flash</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1a66503467184a7005807bc6aa97e4f688" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>getInfo</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1a778a96e9ee28bda47d3499eacf370adf" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>getInspectionTarget</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1af5aad655ffda8d13d0d4fc15666796a5" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>getRomInfo</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1aab0b66adb4f442445a7146bb5e830ab7" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>getSlotInfo</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1a11387f5e45fbdd1c357b7838eb7e9ea4" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>hardReset</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1acc8b6704af20a135bc3af11edfda281c" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>isReady</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1ad9a34456c81fc8db9beca1d431b2f54c" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>latestAutoSnapshot</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1a4aba74700c0302995793e706b52a0474" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>latestUserSnapshot</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1a31c13908a1fb0b9a23bd140a5e65c208" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>loadRom</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1aaa1f44f20d5f24afc8fbb9abd388d751" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>loadRom</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1a2bd85c92729dc80e03cd0c6151058566" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>loadSnapshot</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1a99186c5f05ef197622438418832030d5" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>removeInspectionTarget</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1a36254e7a246496c0a68b812105bcc232" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>saveRom</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1a63c34b2e7533962974f3fbd351b22fb2" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>setInspectionTarget</name></member>
+      <member refid="struct_virtual_c64_1_1_c64___a_p_i_1a629e9aa4339054046b7a206701e13df2" prot="public" virt="non-virtual"><scope>VirtualC64::C64_API</scope><name>softReset</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

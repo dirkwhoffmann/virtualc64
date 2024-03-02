@@ -1,0 +1,80 @@
+\doxysection{State model}
+\hypertarget{group__topic__state__mode}{}\label{group__topic__state__mode}\index{State model@{State model}}
+
+
+This topic describes the state model of \doxylink{class_virtual_c64}{Virtual\+C64}.  
+
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classvc64_1_1_thread}{vc64\+::\+Thread}}
+\begin{DoxyCompactList}\small\item\em Implements the emulator\textquotesingle{}s state model. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef util\+::\+Exception \mbox{\hyperlink{group__topic__state__mode_ga2d45fe1f5a2e80dbc85acca426f26970}{vc64\+::\+State\+Change\+Exception}}
+\begin{DoxyCompactList}\small\item\em Requests a state change from within the emulator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This topic describes the state model of \doxylink{class_virtual_c64}{Virtual\+C64}. 
+
+After lauching, the emulator runs as a single thread alongside the GUI. The thread exists during the lifetime of the application, but may not compute new frames all the time. The exact behavior is controlled by the internal state.
+
+The following states are distinguished\+:
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Off\+:}} The emulator is turned off
+\item {\bfseries{Paused\+:}} The emulator is turned on but not running
+\item {\bfseries{Running\+:}} The emulator is turned on and running
+\item {\bfseries{Suspended\+:}} The emulator is paused for a short period of time
+\item {\bfseries{Halted\+:}} The emulator is shutting down
+\end{DoxyItemize}
+
+
+
+The thread executes an infinite loop which periodically calls function vc64\+::\+Thread\+::execute. After each iteration, the thread is put to sleep to synchronize timing.\hypertarget{group__topic__state__mode_autotoc_md1}{}\doxysubsubsection{\texorpdfstring{Suspend / Resume}{Suspend / Resume}}\label{group__topic__state__mode_autotoc_md1}
+The Thread class provides a suspend-\/resume mechanism for pausing the thread temporarily. This functionality is utilized frequently by the GUI to carry out atomic operations that cannot be performed while the emulator is running. To pause the emulator temporarily, the critical code section can be embedded in a suspend/resume block like this\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{suspend();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Modify\ the\ internal\ state}}
+\DoxyCodeLine{}
+\DoxyCodeLine{resume();}
+
+\end{DoxyCode}
+
+
+It it safe to nest multiple suspend/resume blocks, but it is essential that each call to \doxylink{classvc64_1_1_thread_a6545b249dacdb26eac8b104c07f3bbc2}{suspend} is followed by a call to Thread class \doxylink{classvc64_1_1_thread_a294d7de030baf69ae6f96f9f6bfc8ba6}{resume}. As a result, the critical code section must not be exited in the middle, e.\+g., by throwing an exception. It is therefore recommended to use the {\ttfamily SUSPENDED} macro which is exit-\/safe. It is used in the following way\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{\ \ SUSPENDED}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \textcolor{comment}{//\ Modify\ the\ internal\ state,}}
+\DoxyCodeLine{\ \ \ \textcolor{comment}{//\ return,\ or\ throw\ an\ exceptions\ as\ you\ like}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{group__topic__state__mode_autotoc_md2}{}\doxysubsubsection{\texorpdfstring{Synchronization}{Synchronization}}\label{group__topic__state__mode_autotoc_md2}
+The Thread class is responsible for timing synchronization. I.\+e., it has to ensure that the proper amount of frames are executed per second. To synchronize timing, the thread waits for an external wake-\/up signal. When the wake-\/up signal comes in (by calling \doxylink{classvc64_1_1_thread_a4bf669b15db347f665f0459d18a90680}{wake\+Up}, the thread computes the computes computes all missing frames. If the number of missing frames exceeds a threshold, the thread resynchronizes itself by calling resync.\hypertarget{group__topic__state__mode_autotoc_md3}{}\doxysubsubsection{\texorpdfstring{Warp mode}{Warp mode}}\label{group__topic__state__mode_autotoc_md3}
+To speed up emulation (e.\+g., during disk accesses), the emulator may be put into warp mode. In this mode, timing synchronization is disabled causing the emulator to run as fast as possible.
+
+Similar to warp mode, the emulator may be put into track mode. This mode is enabled when the GUI debugger is opend and disabled when the debugger is closed. In track mode, several time-\/consuming tasks are performed that are usually left out. E.\+g., the CPU tracks all executed instructions and stores the recorded information in a trace buffer. 
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{group__topic__state__mode_ga2d45fe1f5a2e80dbc85acca426f26970}\label{group__topic__state__mode_ga2d45fe1f5a2e80dbc85acca426f26970} 
+\index{State model@{State model}!StateChangeException@{StateChangeException}}
+\index{StateChangeException@{StateChangeException}!State model@{State model}}
+\doxysubsubsection{\texorpdfstring{StateChangeException}{StateChangeException}}
+{\footnotesize\ttfamily typedef util\+::\+Exception \mbox{\hyperlink{group__topic__state__mode_ga2d45fe1f5a2e80dbc85acca426f26970}{vc64\+::\+State\+Change\+Exception}}}
+
+
+
+Requests a state change from within the emulator. 
+
+This exception is thrown inside the emulator core when the CPU stops execution in the middle of frame. This happens when a breakpoint or watchpoint is hit, or when the CPU halts due to the execution of a jamming instruction 

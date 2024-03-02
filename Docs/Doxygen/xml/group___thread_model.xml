@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="group___thread_model" kind="group">
+    <compoundname>ThreadModel</compoundname>
+    <title>Thread model</title>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<sect1 id="group___thread_model_1autotoc_md1">
+<title>Thread model</title><para>This class manages the emulator thread that runs side by side with the GUI. The thread exists during the lifetime of the emulator, but may not run the emulator all the time. The exact behavior is controlled by the internal state.</para>
+<para>The following states are distinguished:</para>
+<para><itemizedlist>
+<listitem><para><bold>Off:</bold> The emulator is turned off</para>
+</listitem><listitem><para><bold>Paused:</bold> The emulator is turned on but not running</para>
+</listitem><listitem><para><bold>Running:</bold> The emulator is turned on and running</para>
+</listitem><listitem><para><bold>Suspended:</bold> The emulator is paused for a short period of time</para>
+</listitem><listitem><para><bold>Halted:</bold> The emulator is shutting down</para>
+</listitem></itemizedlist>
+</para>
+<para><image type="html" name="thread.png" width="0.75"></image>
+</para>
+<para><itemizedlist>
+<listitem><para>When an instance of the Thread class is created, a new thread is started</para>
+</listitem><listitem><para>which executes the thread&apos;s runLoop() function. This function executes</para>
+</listitem><listitem><para>a loop which periodically calls function execute(). After each iteration,</para>
+</listitem><listitem><para>the thread is put to sleep to synchronize timing.</para>
+</listitem><listitem></listitem><listitem><para>Suspend / Resume:</para>
+</listitem><listitem></listitem><listitem><para>The Thread class provides a suspend-resume mechanism for pausing the thread</para>
+</listitem><listitem><para>temporarily. This functionality is utilized frequently by the GUI to carry</para>
+</listitem><listitem><para>out atomic operations that cannot be performed while the emulator is running.</para>
+</listitem><listitem><para>To pause the emulator temporarily, the critical code section can be embedded</para>
+</listitem><listitem><para>in a suspend/resume block like this:</para>
+</listitem><listitem><para><computeroutput></computeroutput></para>
+</listitem><listitem><para><computeroutput> suspend();</computeroutput></para>
+</listitem><listitem><para><computeroutput> // Modify the internal state</computeroutput></para>
+</listitem><listitem><para><computeroutput> resume(); *</computeroutput></para>
+</listitem><listitem><para>It it safe to nest multiple suspend/resume blocks, but it is essential</para>
+</listitem><listitem><para>that each call to suspend() is followed by a call to resume(). As a result,</para>
+</listitem><listitem><para>the critical code section must not be exited in the middle, e.g., by</para>
+</listitem><listitem><para>throwing an exception. It is therefore recommended to use the SUSPENDED</para>
+</listitem><listitem><para>macro which is exit-safe. It is used in the following way:</para>
+</listitem><listitem></listitem><listitem><para>{ SUSPENDED</para>
+</listitem><listitem></listitem><listitem><para>Do something with the internal state;</para>
+</listitem><listitem><para>return or throw an exceptions as you like;</para>
+</listitem><listitem><para>}</para>
+</listitem><listitem></listitem><listitem><para>Synchronization:</para>
+</listitem><listitem></listitem><listitem><para>The Thread class is responsible for timing synchronization. I.e., it has to</para>
+</listitem><listitem><para>ensure that the proper amount of frames are executed per second. To</para>
+</listitem><listitem><para>synchronize timing, the thread waits for an external wake-up signal. When</para>
+</listitem><listitem><para>the wake-up signal comes in (by calling wakeup()), the thread computes the</para>
+</listitem><listitem><para>computes computes all missing frames. If the number of missing frames</para>
+</listitem><listitem><para>exceeds a threshold, the thread resynchronizes itself by calling resync().</para>
+</listitem><listitem></listitem><listitem><para>Warp mode:</para>
+</listitem><listitem></listitem><listitem><para>To speed up emulation (e.g., during disk accesses), the emulator may be put</para>
+</listitem><listitem><para>into warp mode. In this mode, timing synchronization is disabled causing the</para>
+</listitem><listitem><para>emulator to run as fast as possible.</para>
+</listitem><listitem></listitem><listitem><para>Similar to warp mode, the emulator may be put into track mode. This mode is</para>
+</listitem><listitem><para>enabled when the GUI debugger is opend and disabled when the debugger is</para>
+</listitem><listitem><para>closed. In track mode, several time-consuming tasks are performed that are</para>
+</listitem><listitem><para>usually left out. E.g., the CPU tracks all executed instructions and stores</para>
+</listitem><listitem><para>the recorded information in a trace buffer. </para>
+</listitem></itemizedlist>
+</para>
+</sect1>
+    </detaileddescription>
+  </compounddef>
+</doxygen>

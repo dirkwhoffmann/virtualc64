@@ -1,0 +1,8 @@
+<map id="VirtualC64::CPU_API" name="VirtualC64::CPU_API">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,184,154,210"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="53,5,96,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="78,47,82,184,76,184,72,47"/>
+<area shape="rect" id="Node000003" href="$struct_virtual_c64_1_1_g_u_a_r_d___a_p_i.html" title=" " alt="" coords="95,80,264,106"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="106,38,164,78,161,82,103,42"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="159,119,93,185,89,182,156,115"/>
+</map>

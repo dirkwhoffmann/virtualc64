@@ -237,7 +237,7 @@ public:
 
 
     //
-    // Initializing
+    // Methods
     //
     
 public:
@@ -245,27 +245,10 @@ public:
     C64(class Emulator& ref);
     ~C64();
 
-
-    //
-    // Methods from CoreObject
-    //
-
-public:
-
     void prefix() const override;
-
-private:
-
     const char *getDescription() const override { return "C64"; }
     void _dump(Category category, std::ostream& os) const override;
 
-
-    //
-    // Methods from CoreComponent
-    //
-
-public:
-    
     void hardReset();
     void softReset();
 

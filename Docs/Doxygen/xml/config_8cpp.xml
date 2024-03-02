@@ -1,0 +1,902 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="config_8cpp" kind="file" language="C++">
+    <compoundname>config.cpp</compoundname>
+    <includes refid="config_8h" local="yes">config.h</includes>
+    <incdepgraph>
+      <node id="1">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/config.cpp</label>
+        <link refid="config_8cpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>config.h</label>
+        <link refid="config_8h_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>assert.h</label>
+      </node>
+    </incdepgraph>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="config_8cpp_1a3d4f5ac3f33fbfe253041bf6b62280ac" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag XFILES</definition>
+        <argsstring></argsstring>
+        <name>XFILES</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="16" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1afa44693736ade8c8834f221f7617e181" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag CNF_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>CNF_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="17" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a0daebbfc1ad6cad8d51cdb20b86bb51a" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag DEF_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>DEF_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="18" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a2dba1395c4cb950ef7c57beba233d50b" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag RUN_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>RUN_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="21" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a681fc99a198414b2773d10840cb216aa" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag TIM_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>TIM_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="22" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a1e21cf6375f3c5d50e8cd1b0ef2600ff" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag WARP_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>WARP_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="23" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a3c552b1acb93907608228687b9db61c7" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag CMD_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>CMD_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="24" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a6da714933cb641aff64cf6204a51a314" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag MSG_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>MSG_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="25" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a799892a7a974e614da692848505b4712" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag SNP_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>SNP_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="26" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1add17b4360ef27860ac0d19f1ec892251" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag RUA_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>RUA_DEBUG</name>
+        <initializer>= 1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="29" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a83b56b9156f82cfc73a69530be3c1d6c" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag RUA_ON_STEROIDS</definition>
+        <argsstring></argsstring>
+        <name>RUA_ON_STEROIDS</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="30" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a8853c6fd9b348b3756e705f85e037179" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag CPU_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>CPU_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="33" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a8d36019b4ed5db184c90d6b5c2b7a877" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag IRQ_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>IRQ_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="34" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a804141620b092398eaf3330634df88ef" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag MEM_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>MEM_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="37" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a80bd51013400c96d396e1f2c8c152d29" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag CIA_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>CIA_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="40" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1ad4e10095e216e878d73d278ad5402d68" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag CIAREG_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>CIAREG_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="41" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a2b2b42b24858b5f9eba63a923904d065" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag CIA_ON_STEROIDS</definition>
+        <argsstring></argsstring>
+        <name>CIA_ON_STEROIDS</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="42" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a58f0e8fe74bdebe412ea1cc51ee0e730" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag VICII_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>VICII_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="45" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a15797e7c60017f6d4c1c2b81e96ebea6" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag VICII_REG_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>VICII_REG_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="46" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a88a197e1d1d4ee176ef422024dd443ba" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag VICII_SAFE_MODE</definition>
+        <argsstring></argsstring>
+        <name>VICII_SAFE_MODE</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="47" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a7668da22c2b560b854da46de95de2db4" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag VICII_STATS</definition>
+        <argsstring></argsstring>
+        <name>VICII_STATS</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="48" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a406d951181332eab1414c7ca87598894" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag RASTERIRQ_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>RASTERIRQ_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="49" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a41b33539be9c33dcf3689aa7210bfcb8" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag SID_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>SID_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="52" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1ae7fc4596aa2dc7cad5073635c2ceea2e" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag SID_EXEC</definition>
+        <argsstring></argsstring>
+        <name>SID_EXEC</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="53" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1abf85a7bf6f3e761a6dd1692bcd463dbf" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag SIDREG_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>SIDREG_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="54" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a7470c4c5fbedfb14f675fe6fec38b1ff" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag AUDBUF_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>AUDBUF_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="55" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1afac9bfe178e75166e8e19778577c02a9" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag VIA_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>VIA_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="58" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a0b686570ca3e8f7d24bd4801c09a70cb" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag PIA_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>PIA_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="59" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="59" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a18c920d5d836b36c61dd7f12b4eca6f5" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag IEC_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>IEC_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="60" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a07466fbbcb16ea2a864ec35c6fa38bd8" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag DSK_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>DSK_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="61" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1aa196297850db103571f62df39dc9510e" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag DSKCHG_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>DSKCHG_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="62" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1ae88a6c065c7367a8a5c4fbb943df20b8" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag GCR_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>GCR_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="63" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a6b20d68b83c3b3206bce7bcdb85f3ed6" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag FS_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>FS_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="64" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1aff244ed60d302cf49c575440014440fb" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag PAR_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>PAR_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="65" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a46a862c3565f40245fb69ad751d99ae9" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag CRT_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>CRT_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="68" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a236462377a6fef1dbaf8b50afc11796c" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag FILE_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>FILE_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="69" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a4f2ba4ccdcff1cb2d4ec4cd04838a83b" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag JOY_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>JOY_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="72" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a000d0791141c8f193292dabcc48b77ad" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag DRV_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>DRV_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="73" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1adc97d7e03309e504099b76a81bb7ccd5" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag TAP_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>TAP_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="74" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1afbaf02d3fd308884635c973a1b69fc39" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag KBD_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>KBD_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="75" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a6c6da31bdb8462ff1d09d0702d252e90" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag PRT_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>PRT_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="76" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a1829d4b836ac3be41f6879a479d33a0f" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag EXP_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>EXP_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="77" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a23b98fc7f9b43afcebb916499c4a36a1" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag LIP_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>LIP_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="78" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a92f06d462bdd01203ab028221e434f41" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag REC_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>REC_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="81" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a58d5c50f6cf90f1d87fb91ef015338a0" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag REU_DEBUG</definition>
+        <argsstring></argsstring>
+        <name>REU_DEBUG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="82" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1aaae3f2d283228a890f702c6d96341b6a" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag FORCE_ROM_MISSING</definition>
+        <argsstring></argsstring>
+        <name>FORCE_ROM_MISSING</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="89" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a3b5fd8baf5b7b8dee20d70e18a2d9e1a" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag FORCE_MEGA64_MISMATCH</definition>
+        <argsstring></argsstring>
+        <name>FORCE_MEGA64_MISMATCH</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="90" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1aa0bdccc903069b94a7f298df072c3041" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag FORCE_SNAP_TOO_OLD</definition>
+        <argsstring></argsstring>
+        <name>FORCE_SNAP_TOO_OLD</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="91" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1ac78d4051439ad2f51a3fb3dc721768f1" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag FORCE_SNAP_TOO_NEW</definition>
+        <argsstring></argsstring>
+        <name>FORCE_SNAP_TOO_NEW</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="92" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1ad40432c675901adb832823033aa210db" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag FORCE_SNAP_IS_BETA</definition>
+        <argsstring></argsstring>
+        <name>FORCE_SNAP_IS_BETA</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="93" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a91764e3dcb4f11c23b7e466def5db93a" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag FORCE_SNAP_CORRUPTED</definition>
+        <argsstring></argsstring>
+        <name>FORCE_SNAP_CORRUPTED</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="94" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a8d0f306355baacf26e4b4a2b21c3b32d" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag FORCE_CRT_UNKNOWN</definition>
+        <argsstring></argsstring>
+        <name>FORCE_CRT_UNKNOWN</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="95" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="95" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1ac3d18f9af5ed637307dcaba030c62089" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag FORCE_CRT_UNSUPPORTED</definition>
+        <argsstring></argsstring>
+        <name>FORCE_CRT_UNSUPPORTED</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="96" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1a2957077fc5ac537c457658ad91258747" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag FORCE_RECORDING_ERROR</definition>
+        <argsstring></argsstring>
+        <name>FORCE_RECORDING_ERROR</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="97" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="config_8cpp_1af9e0ea1c34c2982a61c59cab3d7720d7" prot="public" static="no" mutable="no">
+        <type>debugflag</type>
+        <definition>debugflag FORCE_NO_FFMPEG</definition>
+        <argsstring></argsstring>
+        <name>FORCE_NO_FFMPEG</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" line="98" column="11" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/config.cpp" bodystart="98" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="comment">//<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>VirtualC64</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Copyright<sp/>(C)<sp/>Dirk<sp/>W.<sp/>Hoffmann.<sp/>www.dirkwhoffmann.de</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="comment">//<sp/>This<sp/>FILE<sp/>is<sp/>dual-licensed.<sp/>You<sp/>are<sp/>free<sp/>to<sp/>choose<sp/>between:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>-<sp/>The<sp/>GNU<sp/>General<sp/>Public<sp/>License<sp/>v3<sp/>(or<sp/>any<sp/>later<sp/>version)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>-<sp/>The<sp/>Mozilla<sp/>Public<sp/>License<sp/>v2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="comment">//<sp/>SPDX-License-Identifier:<sp/>GPL-3.0-or-later<sp/>OR<sp/>MPL-2.0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;config.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="comment">//<sp/>General</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal">debugflag<sp/>XFILES<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Report<sp/>paranormal<sp/>activity</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal">debugflag<sp/>CNF_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Configuration</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal">debugflag<sp/>DEF_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>User<sp/>defaults</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Runloop</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal">debugflag<sp/>RUN_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Run<sp/>loop,<sp/>component<sp/>states</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal">debugflag<sp/>TIM_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Thread<sp/>synchronization</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal">debugflag<sp/>WARP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Warp<sp/>mode</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal">debugflag<sp/>CMD_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Command<sp/>queue</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal">debugflag<sp/>MSG_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Message<sp/>queue</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal">debugflag<sp/>SNP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Serializing<sp/>(snapshots)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Run<sp/>ahead</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal">debugflag<sp/>RUA_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>1;<sp/></highlight><highlight class="comment">//<sp/>Run<sp/>ahead</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal">debugflag<sp/>RUA_ON_STEROIDS<sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Update<sp/>the<sp/>run-ahead<sp/>instance<sp/>in<sp/>every<sp/>frame</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="comment">//<sp/>CPU</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal">debugflag<sp/>CPU_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>CPU</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal">debugflag<sp/>IRQ_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Interrupts</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Memory</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal">debugflag<sp/>MEM_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>RAM<sp/>and<sp/>ROM</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="comment">//<sp/>CIAs</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal">debugflag<sp/>CIA_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Complex<sp/>Interface<sp/>Adapter</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal">debugflag<sp/>CIAREG_DEBUG<sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>CIA<sp/>registers</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal">debugflag<sp/>CIA_ON_STEROIDS<sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Keep<sp/>the<sp/>CIAs<sp/>awake<sp/>all<sp/>the<sp/>time</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="comment">//<sp/>VICII</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal">debugflag<sp/>VICII_DEBUG<sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Video<sp/>Interface<sp/>Controller<sp/>II</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal">debugflag<sp/>VICII_REG_DEBUG<sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>VICII<sp/>registers</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal">debugflag<sp/>VICII_SAFE_MODE<sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Disable<sp/>performance<sp/>optimizations</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal">debugflag<sp/>VICII_STATS<sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Collect<sp/>statistical<sp/>information</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal">debugflag<sp/>RASTERIRQ_DEBUG<sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Raster<sp/>interrupt</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="comment">//<sp/>SID</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal">debugflag<sp/>SID_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Sound<sp/>Interface<sp/>Device</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal">debugflag<sp/>SID_EXEC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Sound<sp/>Interface<sp/>Device<sp/>(Execution)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal">debugflag<sp/>SIDREG_DEBUG<sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Sound<sp/>Interface<sp/>Device<sp/>(Registers)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal">debugflag<sp/>AUDBUF_DEBUG<sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Audio<sp/>buffers</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Drive</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal">debugflag<sp/>VIA_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Versatile<sp/>Interface<sp/>Adapter</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal">debugflag<sp/>PIA_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Peripheral<sp/>Interface<sp/>Adapter</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal">debugflag<sp/>IEC_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>IEC<sp/>bus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal">debugflag<sp/>DSK_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Disk<sp/>controller<sp/>execution</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal">debugflag<sp/>DSKCHG_DEBUG<sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Disk<sp/>change<sp/>procedure</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal">debugflag<sp/>GCR_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Disk<sp/>encoding<sp/>/<sp/>decoding</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal">debugflag<sp/>FS_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>File<sp/>System<sp/>Classes</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal">debugflag<sp/>PAR_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Parallel<sp/>cable</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Media</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal">debugflag<sp/>CRT_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Cartridges</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal">debugflag<sp/>FILE_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Media<sp/>files<sp/>(D64,T64,...)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Peripherals</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal">debugflag<sp/>JOY_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Joystick</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal">debugflag<sp/>DRV_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Floppy<sp/>drives</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal">debugflag<sp/>TAP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Datasette</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal">debugflag<sp/>KBD_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Keyboard</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal">debugflag<sp/>PRT_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Control<sp/>ports<sp/>and<sp/>connected<sp/>devices</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal">debugflag<sp/>EXP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Expansion<sp/>port</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal">debugflag<sp/>LIP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Light<sp/>pen</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Other<sp/>components</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal">debugflag<sp/>REC_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>Screen<sp/>recorder</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal">debugflag<sp/>REU_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;<sp/></highlight><highlight class="comment">//<sp/>REU<sp/>memory<sp/>expansion</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Forced<sp/>error<sp/>conditions</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal">debugflag<sp/>FORCE_ROM_MISSING<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal">debugflag<sp/>FORCE_MEGA64_MISMATCH<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="91"><highlight class="normal">debugflag<sp/>FORCE_SNAP_TOO_OLD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="92"><highlight class="normal">debugflag<sp/>FORCE_SNAP_TOO_NEW<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="93"><highlight class="normal">debugflag<sp/>FORCE_SNAP_IS_BETA<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="94"><highlight class="normal">debugflag<sp/>FORCE_SNAP_CORRUPTED<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="95"><highlight class="normal">debugflag<sp/>FORCE_CRT_UNKNOWN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal">debugflag<sp/>FORCE_CRT_UNSUPPORTED<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="97"><highlight class="normal">debugflag<sp/>FORCE_RECORDING_ERROR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="98"><highlight class="normal">debugflag<sp/>FORCE_NO_FFMPEG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/config.cpp"/>
+  </compounddef>
+</doxygen>

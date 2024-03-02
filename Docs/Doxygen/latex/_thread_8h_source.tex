@@ -1,0 +1,201 @@
+\doxysection{Thread.\+h}
+\hypertarget{_thread_8h_source}{}\label{_thread_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Base/Thread.h@{/Users/hoff/Retro/virtualc64/Emulator/Base/Thread.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}ThreadTypes.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}CoreComponent.h"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}Chrono.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}Wakeable.h"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00072\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00079\ \textcolor{keyword}{typedef}\ util::Exception\ \mbox{\hyperlink{group__topic__state__model_ga2d45fe1f5a2e80dbc85acca426f26970}{StateChangeException}};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00086\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvc64_1_1_thread}{Thread}}\ :\ \textcolor{keyword}{public}\ CoreObject,\ \textcolor{keyword}{public}\ Suspendable,\ Wakeable\ \{}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{comment}{//\ The\ thread\ object}}
+\DoxyCodeLine{00091\ \ \ \ \ std::thread\ thread;}
+\DoxyCodeLine{00092\ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{comment}{//\ The\ current\ thread\ state\ and\ a\ change\ request}}
+\DoxyCodeLine{00094\ \ \ \ \ \mbox{\hyperlink{group__topic__state__model_gab511da6438c372168afb4add4e99f836}{EmulatorState}}\ state\ =\ \mbox{\hyperlink{group__topic__state__model_ggab511da6438c372168afb4add4e99f836a4038ca872e1ed104c16122c365bd3ca0}{STATE\_OFF}};}
+\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{group__topic__state__model_gab511da6438c372168afb4add4e99f836}{EmulatorState}}\ newState\ =\ \mbox{\hyperlink{group__topic__state__model_ggab511da6438c372168afb4add4e99f836a4038ca872e1ed104c16122c365bd3ca0}{STATE\_OFF}};}
+\DoxyCodeLine{00096\ \ \ \ \ std::atomic\_flag\ stateChangeRequest\ \{\};}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//\ Warp\ and\ track\ state}}
+\DoxyCodeLine{00099\ \ \ \ \ u8\ warp\ =\ 0;}
+\DoxyCodeLine{00100\ \ \ \ \ u8\ track\ =\ 0;}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{comment}{//\ Counters}}
+\DoxyCodeLine{00103\ \ \ \ \ isize\ suspendCounter\ =\ 0;}
+\DoxyCodeLine{00104\ \ \ \ \ isize\ frameCounter\ =\ 0;}
+\DoxyCodeLine{00105\ \ \ \ \ isize\ statsCounter\ =\ 0;}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{comment}{//\ Time\ stamps}}
+\DoxyCodeLine{00108\ \ \ \ \ util::Time\ baseTime;}
+\DoxyCodeLine{00109\ \ \ \ \ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{comment}{//\ Clocks\ for\ measuring\ the\ CPU\ load}}
+\DoxyCodeLine{00111\ \ \ \ \ util::Clock\ nonstopClock;}
+\DoxyCodeLine{00112\ \ \ \ \ util::Clock\ loadClock;}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{comment}{//\ Statistical\ information\ (CPU\ load,\ frames\ per\ second)}}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{double}\ cpuLoad\ =\ 0.0;}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordtype}{double}\ fps\ =\ 0.0;}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//\ Debug\ clocks}}
+\DoxyCodeLine{00119\ \ \ \ \ util::Clock\ wakeupClock;}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{comment}{//\ Initializing}}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00127\ \ \ \ \ }
+\DoxyCodeLine{00128\ \ \ \ \ \mbox{\hyperlink{classvc64_1_1_thread}{Thread}}();}
+\DoxyCodeLine{00129\ \ \ \ \ \mbox{\hyperlink{classvc64_1_1_thread}{\string~Thread}}();}
+\DoxyCodeLine{00130\ \ \ \ \ }
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *getDescription()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}Thread"{}};\ \}}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{comment}{//\ Checks\ the\ launch\ state}}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordtype}{bool}\ isLaunched()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ thread.joinable();\ \}}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \ \ \ \ \textcolor{comment}{//\ Launches\ the\ emulator\ thread}}
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keywordtype}{void}\ launch();}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{comment}{//\ Sanity\ check}}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keywordtype}{void}\ assertLaunched();}
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{comment}{//\ Executing}}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00148\ \ \ \ \ }
+\DoxyCodeLine{00149\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{comment}{//\ Returns\ true\ if\ this\ functions\ is\ called\ from\ within\ the\ emulator\ thread}}
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordtype}{bool}\ isEmulatorThread()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ std::this\_thread::get\_id()\ ==\ thread.get\_id();\ \}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{comment}{//\ Performs\ a\ state\ change}}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{void}\ switchState(\mbox{\hyperlink{group__topic__state__model_gab511da6438c372168afb4add4e99f836}{EmulatorState}}\ newState);}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{comment}{//\ Updates\ the\ emulator\ state\ (implemented\ by\ the\ subclass)}}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ update()\ =\ 0;}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{comment}{//\ Computes\ the\ number\ of\ overdue\ frames\ (provided\ by\ the\ subclass)}}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keyword}{virtual}\ isize\ missingFrames()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{comment}{//\ Target\ frame\ rate\ of\ this\ thread\ (provided\ by\ the\ subclass)}}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{double}\ refreshRate()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \ \ \ \ \textcolor{comment}{//\ The\ code\ to\ be\ executed\ in\ each\ iteration\ (implemented\ by\ the\ subclass)}}
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ computeFrame()\ =\ 0;}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{comment}{//\ Rectifies\ an\ out-\/of-\/sync\ condition.\ Resets\ all\ counters\ and\ clocks.}}
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keywordtype}{void}\ resync();}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordtype}{void}\ runLoop();}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{comment}{//\ Computes\ all\ missing\ frames}}
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keywordtype}{void}\ execute();}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{comment}{//\ Suspends\ the\ thread\ till\ the\ next\ wakeup\ pulse}}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordtype}{void}\ sleep();}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{comment}{//\ Analyzing}}
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{keywordtype}{void}\ computeStats();}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{comment}{//\ Managing\ states}}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classvc64_1_1_thread_a6545b249dacdb26eac8b104c07f3bbc2}{suspend}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classvc64_1_1_thread_a294d7de030baf69ae6f96f9f6bfc8ba6}{resume}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordtype}{bool}\ isPoweredOn()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ !=\ \mbox{\hyperlink{group__topic__state__model_ggab511da6438c372168afb4add4e99f836a4038ca872e1ed104c16122c365bd3ca0}{STATE\_OFF}};\ \}}
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordtype}{bool}\ isPoweredOff()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ \mbox{\hyperlink{group__topic__state__model_ggab511da6438c372168afb4add4e99f836a4038ca872e1ed104c16122c365bd3ca0}{STATE\_OFF}};\ \}}
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keywordtype}{bool}\ isPaused()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ \mbox{\hyperlink{group__topic__state__model_ggab511da6438c372168afb4add4e99f836a6291ce9aab12208cc66968c97a1ce7dd}{STATE\_PAUSED}};\ \}}
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordtype}{bool}\ isRunning()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ \mbox{\hyperlink{group__topic__state__model_ggab511da6438c372168afb4add4e99f836addfe11c6d06c4e27bd6efc18cc4862a6}{STATE\_RUNNING}};\ \}}
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordtype}{bool}\ isSuspended()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ \mbox{\hyperlink{group__topic__state__model_ggab511da6438c372168afb4add4e99f836a9acde879501201b19fcb37cdd08eff6d}{STATE\_SUSPENDED}};\ \}}
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordtype}{bool}\ isHalted()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ \mbox{\hyperlink{group__topic__state__model_ggab511da6438c372168afb4add4e99f836a99bff5383ce10ea512c8443243adf5b3}{STATE\_HALTED}};\ \}}
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keywordtype}{bool}\ isWarping()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ warp\ !=\ 0;\ \}}
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordtype}{bool}\ isTracking()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ track\ !=\ 0;\ \}}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordtype}{void}\ powerOn();}
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keywordtype}{void}\ powerOff();}
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{keywordtype}{void}\ run()\ throws;}
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keywordtype}{void}\ pause();}
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{keywordtype}{void}\ stopAndGo();}
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keywordtype}{void}\ halt();}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keywordtype}{void}\ warpOn(isize\ source\ =\ 0);}
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{keywordtype}{void}\ warpOff(isize\ source\ =\ 0);}
+\DoxyCodeLine{00230\ \ \ \ \ \textcolor{keywordtype}{void}\ trackOn(isize\ source\ =\ 0);}
+\DoxyCodeLine{00231\ \ \ \ \ \textcolor{keywordtype}{void}\ trackOff(isize\ source\ =\ 0);}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{comment}{//\ Signals\ a\ state\ transition}}
+\DoxyCodeLine{00234\ \ \ \ \ virtual\ \textcolor{keywordtype}{void}\ \_powerOn()\ =\ 0;}
+\DoxyCodeLine{00235\ \ \ \ \ virtual\ \textcolor{keywordtype}{void}\ \_powerOff()\ =\ 0;}
+\DoxyCodeLine{00236\ \ \ \ \ virtual\ \textcolor{keywordtype}{void}\ \_pause()\ =\ 0;}
+\DoxyCodeLine{00237\ \ \ \ \ virtual\ \textcolor{keywordtype}{void}\ \_run()\ =\ 0;}
+\DoxyCodeLine{00238\ \ \ \ \ virtual\ \textcolor{keywordtype}{void}\ \_halt()\ =\ 0;}
+\DoxyCodeLine{00239\ \ \ \ \ virtual\ \textcolor{keywordtype}{void}\ \_warpOn()\ =\ 0;}
+\DoxyCodeLine{00240\ \ \ \ \ virtual\ \textcolor{keywordtype}{void}\ \_warpOff()\ =\ 0;}
+\DoxyCodeLine{00241\ \ \ \ \ virtual\ \textcolor{keywordtype}{void}\ \_trackOn()\ =\ 0;}
+\DoxyCodeLine{00242\ \ \ \ \ virtual\ \textcolor{keywordtype}{void}\ \_trackOff()\ =\ 0;}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00244\ private:}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00246\ \ \ \ \ \textcolor{comment}{//\ Initiates\ a\ state\ change}}
+\DoxyCodeLine{00247\ \ \ \ \ \textcolor{keywordtype}{void}\ changeStateTo(\mbox{\hyperlink{group__topic__state__model_gab511da6438c372168afb4add4e99f836}{EmulatorState}}\ requestedState);}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ private:}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00251\ \ \ \ \ \textcolor{comment}{//\ Returns\ if\ the\ emulator\ is\ ready\ to\ runs,\ throws\ an\ exception\ otherwise}}
+\DoxyCodeLine{00252\ \ \ \ \ virtual\ \textcolor{keywordtype}{void}\ isReady()\ throws\ =\ 0;}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00255\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00256\ \ \ \ \ \textcolor{comment}{//\ Synchronizing}}
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ public:}
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00264\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classvc64_1_1_thread_a4bf669b15db347f665f0459d18a90680}{wakeUp}}();}
+\DoxyCodeLine{00265\ \ \ \ \ }
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{comment}{//\ Wait\ until\ the\ thread\ has\ terminated}}
+\DoxyCodeLine{00267\ \ \ \ \ \textcolor{keywordtype}{void}\ join()\ \{\ \textcolor{keywordflow}{if}\ (thread.joinable())\ thread.join();\ \}}
+\DoxyCodeLine{00268\ \};}
+\DoxyCodeLine{00269\ }
+\DoxyCodeLine{00272\ \}}
+
+\end{DoxyCode}

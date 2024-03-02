@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="_thread_types_8h" kind="file" language="C++">
+    <compoundname>ThreadTypes.h</compoundname>
+    <includes local="yes">Aliases.h</includes>
+    <includes local="yes">Reflection.h</includes>
+    <includedby refid="_thread_8h" local="yes">/Users/hoff/Retro/virtualc64/Emulator/Base/Thread.h</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/ThreadTypes.h</label>
+        <link refid="_thread_types_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>Aliases.h</label>
+      </node>
+      <node id="3">
+        <label>Reflection.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/Thread.h</label>
+        <link refid="_thread_8h_source"/>
+      </node>
+      <node id="1">
+        <label>/Users/hoff/Retro/virtualc64/Emulator/Base/ThreadTypes.h</label>
+        <link refid="_thread_types_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="enum">
+      <member refid="group__topic__state__model_1gab511da6438c372168afb4add4e99f836" kind="enum"><name>EmulatorState</name></member>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="comment">//<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>VirtualC64</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Copyright<sp/>(C)<sp/>Dirk<sp/>W.<sp/>Hoffmann.<sp/>www.dirkwhoffmann.de</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="comment">//<sp/>This<sp/>FILE<sp/>is<sp/>dual-licensed.<sp/>You<sp/>are<sp/>free<sp/>to<sp/>choose<sp/>between:</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>-<sp/>The<sp/>GNU<sp/>General<sp/>Public<sp/>License<sp/>v3<sp/>(or<sp/>any<sp/>later<sp/>version)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="comment">//<sp/><sp/><sp/><sp/><sp/>-<sp/>The<sp/>Mozilla<sp/>Public<sp/>License<sp/>v2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="comment">//<sp/>SPDX-License-Identifier:<sp/>GPL-3.0-or-later<sp/>OR<sp/>MPL-2.0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//<sp/>-----------------------------------------------------------------------------</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#pragma<sp/>once</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Aliases.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Reflection.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Enumerations</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal">enum_long_swift(<ref refid="group__topic__state__model_1gab511da6438c372168afb4add4e99f836" kindref="member">EmulatorState</ref>)</highlight></codeline>
+<codeline lineno="29" refid="group__topic__state__model_1gab511da6438c372168afb4add4e99f836" refkind="member"><highlight class="normal">enum_long_c(<ref refid="group__topic__state__model_1gab511da6438c372168afb4add4e99f836" kindref="member">EmulatorState</ref>)</highlight></codeline>
+<codeline lineno="30"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="32" refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836a4038ca872e1ed104c16122c365bd3ca0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836a4038ca872e1ed104c16122c365bd3ca0" kindref="member">STATE_OFF</ref>,</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836a6291ce9aab12208cc66968c97a1ce7dd" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836a6291ce9aab12208cc66968c97a1ce7dd" kindref="member">STATE_PAUSED</ref>,</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836addfe11c6d06c4e27bd6efc18cc4862a6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836addfe11c6d06c4e27bd6efc18cc4862a6" kindref="member">STATE_RUNNING</ref>,</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836a9acde879501201b19fcb37cdd08eff6d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836a9acde879501201b19fcb37cdd08eff6d" kindref="member">STATE_SUSPENDED</ref>,</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836a99bff5383ce10ea512c8443243adf5b3" kindref="member">STATE_HALTED</ref></highlight></codeline>
+<codeline lineno="45" refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836a99bff5383ce10ea512c8443243adf5b3" refkind="member"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="comment">//<sp/>typedef<sp/>EMULATOR_STATE<sp/>EmulatorState;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>__cplusplus</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">EmulatorStateEnum<sp/>:<sp/>util::Reflection&lt;EmulatorStateEnum,<sp/>EmulatorState&gt;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>minVal<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">constexpr</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>maxVal<sp/>=<sp/><ref refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836a99bff5383ce10ea512c8443243adf5b3" kindref="member">STATE_HALTED</ref>;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>isValid(</highlight><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>val)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>val<sp/>&gt;=<sp/>minVal<sp/>&amp;&amp;<sp/>val<sp/>&lt;=<sp/>maxVal;<sp/>}</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*prefix()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;STATE&quot;</highlight><highlight class="normal">;<sp/>}</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*key(<ref refid="group__topic__state__model_1gab511da6438c372168afb4add4e99f836" kindref="member">EmulatorState</ref><sp/>value)</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(value)<sp/>{</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836a4038ca872e1ed104c16122c365bd3ca0" kindref="member">STATE_OFF</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;OFF&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836a6291ce9aab12208cc66968c97a1ce7dd" kindref="member">STATE_PAUSED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;PAUSED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836addfe11c6d06c4e27bd6efc18cc4862a6" kindref="member">STATE_RUNNING</ref>:<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;RUNNING&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836a9acde879501201b19fcb37cdd08eff6d" kindref="member">STATE_SUSPENDED</ref>:<sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;SUSPENDED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836a99bff5383ce10ea512c8443243adf5b3" kindref="member">STATE_HALTED</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;HALTED&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;???&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="68"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/ThreadTypes.h"/>
+  </compounddef>
+</doxygen>

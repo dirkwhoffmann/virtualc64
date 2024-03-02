@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_virtual_c64_1_1_r_e_c___a_p_i" kind="struct" language="C++" prot="public">
+    <compoundname>VirtualC64::REC_API</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">API</basecompoundref>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="struct_virtual_c64_1_1_r_e_c___a_p_i_1ada5fcf3892dd8fde27006cb793d30628" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const string</type>
+        <definition>const string VirtualC64::REC_API::getExecPath</definition>
+        <argsstring>() const</argsstring>
+        <name>getExecPath</name>
+        <qualifiedname>VirtualC64::REC_API::getExecPath</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="457" column="22"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_r_e_c___a_p_i_1a998c741d83ec66a59a2de6cd5170ff94" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::REC_API::setExecPath</definition>
+        <argsstring>(const string &amp;path)</argsstring>
+        <name>setExecPath</name>
+        <qualifiedname>VirtualC64::REC_API::setExecPath</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="458" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_r_e_c___a_p_i_1aa009e49ad2dde675b877fae335376bf8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool VirtualC64::REC_API::available</definition>
+        <argsstring>() const</argsstring>
+        <name>available</name>
+        <qualifiedname>VirtualC64::REC_API::available</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="459" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_r_e_c___a_p_i_1a99cb44150b392b93b77b0ab3835ca6cc" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>util::Time</type>
+        <definition>util::Time VirtualC64::REC_API::getDuration</definition>
+        <argsstring>() const</argsstring>
+        <name>getDuration</name>
+        <qualifiedname>VirtualC64::REC_API::getDuration</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="460" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_r_e_c___a_p_i_1aad7944d5d4a60807430a1f3d4c5aff91" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize VirtualC64::REC_API::getFrameRate</definition>
+        <argsstring>() const</argsstring>
+        <name>getFrameRate</name>
+        <qualifiedname>VirtualC64::REC_API::getFrameRate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="461" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_r_e_c___a_p_i_1a9a43a77f6ff95399972708193d8496c5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize VirtualC64::REC_API::getBitRate</definition>
+        <argsstring>() const</argsstring>
+        <name>getBitRate</name>
+        <qualifiedname>VirtualC64::REC_API::getBitRate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="462" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_r_e_c___a_p_i_1acee653b06cbe59d790a65ce70bbe535c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize VirtualC64::REC_API::getSampleRate</definition>
+        <argsstring>() const</argsstring>
+        <name>getSampleRate</name>
+        <qualifiedname>VirtualC64::REC_API::getSampleRate</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="463" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_r_e_c___a_p_i_1a0e6809f8bf8b6705a3716b2364283983" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool VirtualC64::REC_API::isRecording</definition>
+        <argsstring>() const</argsstring>
+        <name>isRecording</name>
+        <qualifiedname>VirtualC64::REC_API::isRecording</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="464" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_r_e_c___a_p_i_1ab335f64e2155d352f016351a87f70d51" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::REC_API::startRecording</definition>
+        <argsstring>(isize x1, isize y1, isize x2, isize y2, isize bitRate, isize aspectX, isize aspectY)</argsstring>
+        <name>startRecording</name>
+        <qualifiedname>VirtualC64::REC_API::startRecording</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>x1</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>y1</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>x2</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>y2</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>bitRate</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>aspectX</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>aspectY</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="465" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_r_e_c___a_p_i_1a5a44fb7187084a95793e793d21ac12a0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::REC_API::stopRecording</definition>
+        <argsstring>()</argsstring>
+        <name>stopRecording</name>
+        <qualifiedname>VirtualC64::REC_API::stopRecording</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="468" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_r_e_c___a_p_i_1a3e58d19d9271b738d82b407f702d6a44" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool VirtualC64::REC_API::exportAs</definition>
+        <argsstring>(const string &amp;path)</argsstring>
+        <name>exportAs</name>
+        <qualifiedname>VirtualC64::REC_API::exportAs</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>path</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="469" column="14"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::REC_API</label>
+        <link refid="struct_virtual_c64_1_1_r_e_c___a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::REC_API</label>
+        <link refid="struct_virtual_c64_1_1_r_e_c___a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="453" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="453" bodyend="471"/>
+    <listofallmembers>
+      <member refid="struct_virtual_c64_1_1_r_e_c___a_p_i_1aa009e49ad2dde675b877fae335376bf8" prot="public" virt="non-virtual"><scope>VirtualC64::REC_API</scope><name>available</name></member>
+      <member refid="struct_virtual_c64_1_1_r_e_c___a_p_i_1a3e58d19d9271b738d82b407f702d6a44" prot="public" virt="non-virtual"><scope>VirtualC64::REC_API</scope><name>exportAs</name></member>
+      <member refid="struct_virtual_c64_1_1_r_e_c___a_p_i_1a9a43a77f6ff95399972708193d8496c5" prot="public" virt="non-virtual"><scope>VirtualC64::REC_API</scope><name>getBitRate</name></member>
+      <member refid="struct_virtual_c64_1_1_r_e_c___a_p_i_1a99cb44150b392b93b77b0ab3835ca6cc" prot="public" virt="non-virtual"><scope>VirtualC64::REC_API</scope><name>getDuration</name></member>
+      <member refid="struct_virtual_c64_1_1_r_e_c___a_p_i_1ada5fcf3892dd8fde27006cb793d30628" prot="public" virt="non-virtual"><scope>VirtualC64::REC_API</scope><name>getExecPath</name></member>
+      <member refid="struct_virtual_c64_1_1_r_e_c___a_p_i_1aad7944d5d4a60807430a1f3d4c5aff91" prot="public" virt="non-virtual"><scope>VirtualC64::REC_API</scope><name>getFrameRate</name></member>
+      <member refid="struct_virtual_c64_1_1_r_e_c___a_p_i_1acee653b06cbe59d790a65ce70bbe535c" prot="public" virt="non-virtual"><scope>VirtualC64::REC_API</scope><name>getSampleRate</name></member>
+      <member refid="struct_virtual_c64_1_1_r_e_c___a_p_i_1a0e6809f8bf8b6705a3716b2364283983" prot="public" virt="non-virtual"><scope>VirtualC64::REC_API</scope><name>isRecording</name></member>
+      <member refid="struct_virtual_c64_1_1_r_e_c___a_p_i_1a998c741d83ec66a59a2de6cd5170ff94" prot="public" virt="non-virtual"><scope>VirtualC64::REC_API</scope><name>setExecPath</name></member>
+      <member refid="struct_virtual_c64_1_1_r_e_c___a_p_i_1ab335f64e2155d352f016351a87f70d51" prot="public" virt="non-virtual"><scope>VirtualC64::REC_API</scope><name>startRecording</name></member>
+      <member refid="struct_virtual_c64_1_1_r_e_c___a_p_i_1a5a44fb7187084a95793e793d21ac12a0" prot="public" virt="non-virtual"><scope>VirtualC64::REC_API</scope><name>stopRecording</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

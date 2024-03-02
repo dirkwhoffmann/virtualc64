@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_virtual_c64_1_1_k_b_d___a_p_i" kind="struct" language="C++" prot="public">
+    <compoundname>VirtualC64::KBD_API</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">API</basecompoundref>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="struct_virtual_c64_1_1_k_b_d___a_p_i_1a4bb04cfb31e46179935ed3419ce8bbb3" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool VirtualC64::KBD_API::isPressed</definition>
+        <argsstring>(C64Key key) const</argsstring>
+        <name>isPressed</name>
+        <qualifiedname>VirtualC64::KBD_API::isPressed</qualifiedname>
+        <param>
+          <type>C64Key</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="375" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_k_b_d___a_p_i_1a5a9a491ad6098a2a0b4f5eca8b8e877b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::KBD_API::autoType</definition>
+        <argsstring>(const string &amp;text)</argsstring>
+        <name>autoType</name>
+        <qualifiedname>VirtualC64::KBD_API::autoType</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>text</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="376" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_k_b_d___a_p_i_1a6511781715eb86595c70851bb17ab0b6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::KBD_API::abortAutoTyping</definition>
+        <argsstring>()</argsstring>
+        <name>abortAutoTyping</name>
+        <qualifiedname>VirtualC64::KBD_API::abortAutoTyping</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="377" column="14"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::KBD_API</label>
+        <link refid="struct_virtual_c64_1_1_k_b_d___a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::KBD_API</label>
+        <link refid="struct_virtual_c64_1_1_k_b_d___a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="371" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="371" bodyend="379"/>
+    <listofallmembers>
+      <member refid="struct_virtual_c64_1_1_k_b_d___a_p_i_1a6511781715eb86595c70851bb17ab0b6" prot="public" virt="non-virtual"><scope>VirtualC64::KBD_API</scope><name>abortAutoTyping</name></member>
+      <member refid="struct_virtual_c64_1_1_k_b_d___a_p_i_1a5a9a491ad6098a2a0b4f5eca8b8e877b" prot="public" virt="non-virtual"><scope>VirtualC64::KBD_API</scope><name>autoType</name></member>
+      <member refid="struct_virtual_c64_1_1_k_b_d___a_p_i_1a4bb04cfb31e46179935ed3419ce8bbb3" prot="public" virt="non-virtual"><scope>VirtualC64::KBD_API</scope><name>isPressed</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
