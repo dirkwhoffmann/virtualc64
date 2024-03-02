@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_virtual_c64_1_1_joystick_a_p_i" kind="struct" language="C++" prot="public">
+    <compoundname>VirtualC64::JoystickAPI</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">API</basecompoundref>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_virtual_c64_1_1_joystick_a_p_i_1a76748cea66c85eed15b5c96f0b09809e" prot="public" static="no" mutable="no">
+        <type>Joystick &amp;</type>
+        <definition>Joystick&amp; VirtualC64::JoystickAPI::joystick</definition>
+        <argsstring></argsstring>
+        <name>joystick</name>
+        <qualifiedname>VirtualC64::JoystickAPI::joystick</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="409" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="409" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="struct_virtual_c64_1_1_joystick_a_p_i_1a5cd673d57c000f58454d774472c11810" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>VirtualC64::JoystickAPI::JoystickAPI</definition>
+        <argsstring>(Emulator &amp;emu, Joystick &amp;joystick)</argsstring>
+        <name>JoystickAPI</name>
+        <qualifiedname>VirtualC64::JoystickAPI::JoystickAPI</qualifiedname>
+        <param>
+          <type>Emulator &amp;</type>
+          <declname>emu</declname>
+        </param>
+        <param>
+          <type>Joystick &amp;</type>
+          <declname>joystick</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="410" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="410" bodyend="410"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_joystick_a_p_i_1a31a770097717effd40a4a15f85a59383" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::JoystickAPI::trigger</definition>
+        <argsstring>(GamePadAction event)</argsstring>
+        <name>trigger</name>
+        <qualifiedname>VirtualC64::JoystickAPI::trigger</qualifiedname>
+        <param>
+          <type>GamePadAction</type>
+          <declname>event</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="413" column="14"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::JoystickAPI</label>
+        <link refid="struct_virtual_c64_1_1_joystick_a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::JoystickAPI</label>
+        <link refid="struct_virtual_c64_1_1_joystick_a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="407" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="407" bodyend="414"/>
+    <listofallmembers>
+      <member refid="struct_virtual_c64_1_1_joystick_a_p_i_1a76748cea66c85eed15b5c96f0b09809e" prot="public" virt="non-virtual"><scope>VirtualC64::JoystickAPI</scope><name>joystick</name></member>
+      <member refid="struct_virtual_c64_1_1_joystick_a_p_i_1a5cd673d57c000f58454d774472c11810" prot="public" virt="non-virtual"><scope>VirtualC64::JoystickAPI</scope><name>JoystickAPI</name></member>
+      <member refid="struct_virtual_c64_1_1_joystick_a_p_i_1a31a770097717effd40a4a15f85a59383" prot="public" virt="non-virtual"><scope>VirtualC64::JoystickAPI</scope><name>trigger</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

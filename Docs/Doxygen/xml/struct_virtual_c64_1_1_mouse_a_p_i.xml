@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_virtual_c64_1_1_mouse_a_p_i" kind="struct" language="C++" prot="public">
+    <compoundname>VirtualC64::MouseAPI</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">API</basecompoundref>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_virtual_c64_1_1_mouse_a_p_i_1a186fc31a49dde7e9444a0041d0a726f7" prot="public" static="no" mutable="no">
+        <type>Mouse &amp;</type>
+        <definition>Mouse&amp; VirtualC64::MouseAPI::mouse</definition>
+        <argsstring></argsstring>
+        <name>mouse</name>
+        <qualifiedname>VirtualC64::MouseAPI::mouse</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="388" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="388" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="struct_virtual_c64_1_1_mouse_a_p_i_1a407b1272c63a9339c37580b90cf72f76" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>VirtualC64::MouseAPI::MouseAPI</definition>
+        <argsstring>(Emulator &amp;emu, Mouse &amp;mouse)</argsstring>
+        <name>MouseAPI</name>
+        <qualifiedname>VirtualC64::MouseAPI::MouseAPI</qualifiedname>
+        <param>
+          <type>Emulator &amp;</type>
+          <declname>emu</declname>
+        </param>
+        <param>
+          <type>Mouse &amp;</type>
+          <declname>mouse</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="389" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="389" bodyend="389"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_mouse_a_p_i_1a4c29b90df259c4941785e553641107df" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool VirtualC64::MouseAPI::detectShakeXY</definition>
+        <argsstring>(double x, double y)</argsstring>
+        <name>detectShakeXY</name>
+        <qualifiedname>VirtualC64::MouseAPI::detectShakeXY</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>y</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="391" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_mouse_a_p_i_1aebffa6d6668149558ee9df71dfa032e7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool VirtualC64::MouseAPI::detectShakeDxDy</definition>
+        <argsstring>(double dx, double dy)</argsstring>
+        <name>detectShakeDxDy</name>
+        <qualifiedname>VirtualC64::MouseAPI::detectShakeDxDy</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>dx</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>dy</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="392" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_mouse_a_p_i_1a0219d6fb5c84646d7ba05d2414b89b49" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::MouseAPI::setXY</definition>
+        <argsstring>(double x, double y)</argsstring>
+        <name>setXY</name>
+        <qualifiedname>VirtualC64::MouseAPI::setXY</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>y</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="395" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_mouse_a_p_i_1a0631b2b9b5676a2700035f3043c43a24" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::MouseAPI::setDxDy</definition>
+        <argsstring>(double dx, double dy)</argsstring>
+        <name>setDxDy</name>
+        <qualifiedname>VirtualC64::MouseAPI::setDxDy</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>dx</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>dy</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="396" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_mouse_a_p_i_1a7bdced4ff2d76c54b0f13f8dec695298" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::MouseAPI::trigger</definition>
+        <argsstring>(GamePadAction event)</argsstring>
+        <name>trigger</name>
+        <qualifiedname>VirtualC64::MouseAPI::trigger</qualifiedname>
+        <param>
+          <type>GamePadAction</type>
+          <declname>event</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="399" column="14"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::MouseAPI</label>
+        <link refid="struct_virtual_c64_1_1_mouse_a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::MouseAPI</label>
+        <link refid="struct_virtual_c64_1_1_mouse_a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="386" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="386" bodyend="400"/>
+    <listofallmembers>
+      <member refid="struct_virtual_c64_1_1_mouse_a_p_i_1aebffa6d6668149558ee9df71dfa032e7" prot="public" virt="non-virtual"><scope>VirtualC64::MouseAPI</scope><name>detectShakeDxDy</name></member>
+      <member refid="struct_virtual_c64_1_1_mouse_a_p_i_1a4c29b90df259c4941785e553641107df" prot="public" virt="non-virtual"><scope>VirtualC64::MouseAPI</scope><name>detectShakeXY</name></member>
+      <member refid="struct_virtual_c64_1_1_mouse_a_p_i_1a186fc31a49dde7e9444a0041d0a726f7" prot="public" virt="non-virtual"><scope>VirtualC64::MouseAPI</scope><name>mouse</name></member>
+      <member refid="struct_virtual_c64_1_1_mouse_a_p_i_1a407b1272c63a9339c37580b90cf72f76" prot="public" virt="non-virtual"><scope>VirtualC64::MouseAPI</scope><name>MouseAPI</name></member>
+      <member refid="struct_virtual_c64_1_1_mouse_a_p_i_1a0631b2b9b5676a2700035f3043c43a24" prot="public" virt="non-virtual"><scope>VirtualC64::MouseAPI</scope><name>setDxDy</name></member>
+      <member refid="struct_virtual_c64_1_1_mouse_a_p_i_1a0219d6fb5c84646d7ba05d2414b89b49" prot="public" virt="non-virtual"><scope>VirtualC64::MouseAPI</scope><name>setXY</name></member>
+      <member refid="struct_virtual_c64_1_1_mouse_a_p_i_1a7bdced4ff2d76c54b0f13f8dec695298" prot="public" virt="non-virtual"><scope>VirtualC64::MouseAPI</scope><name>trigger</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

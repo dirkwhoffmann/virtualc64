@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_virtual_c64_1_1_memory_a_p_i" kind="struct" language="C++" prot="public">
+    <compoundname>VirtualC64::MemoryAPI</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">API</basecompoundref>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="struct_virtual_c64_1_1_memory_a_p_i_1aff2d05f690d78b46a268429e55ea8885" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>MemConfig</type>
+        <definition>MemConfig VirtualC64::MemoryAPI::getConfig</definition>
+        <argsstring>() const</argsstring>
+        <name>getConfig</name>
+        <qualifiedname>VirtualC64::MemoryAPI::getConfig</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="206" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_memory_a_p_i_1aacc6a486910d5ed676a3c98bbe958a8d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>MemInfo</type>
+        <definition>MemInfo VirtualC64::MemoryAPI::getInfo</definition>
+        <argsstring>() const</argsstring>
+        <name>getInfo</name>
+        <qualifiedname>VirtualC64::MemoryAPI::getInfo</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="207" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_memory_a_p_i_1a05b79754f022b7d403b1fcd5948bcbcd" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string VirtualC64::MemoryAPI::memdump</definition>
+        <argsstring>(u16 addr, isize num, bool hex, isize pads, MemoryType src) const</argsstring>
+        <name>memdump</name>
+        <qualifiedname>VirtualC64::MemoryAPI::memdump</qualifiedname>
+        <param>
+          <type>u16</type>
+          <declname>addr</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>num</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>hex</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>pads</declname>
+        </param>
+        <param>
+          <type>MemoryType</type>
+          <declname>src</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="210" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_memory_a_p_i_1a6f8716bcb84619e27ccb1d869b7ca441" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string VirtualC64::MemoryAPI::txtdump</definition>
+        <argsstring>(u16 addr, isize num, MemoryType src) const</argsstring>
+        <name>txtdump</name>
+        <qualifiedname>VirtualC64::MemoryAPI::txtdump</qualifiedname>
+        <param>
+          <type>u16</type>
+          <declname>addr</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>num</declname>
+        </param>
+        <param>
+          <type>MemoryType</type>
+          <declname>src</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="211" column="16"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::MemoryAPI</label>
+        <link refid="struct_virtual_c64_1_1_memory_a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::MemoryAPI</label>
+        <link refid="struct_virtual_c64_1_1_memory_a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="201" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="201" bodyend="213"/>
+    <listofallmembers>
+      <member refid="struct_virtual_c64_1_1_memory_a_p_i_1aff2d05f690d78b46a268429e55ea8885" prot="public" virt="non-virtual"><scope>VirtualC64::MemoryAPI</scope><name>getConfig</name></member>
+      <member refid="struct_virtual_c64_1_1_memory_a_p_i_1aacc6a486910d5ed676a3c98bbe958a8d" prot="public" virt="non-virtual"><scope>VirtualC64::MemoryAPI</scope><name>getInfo</name></member>
+      <member refid="struct_virtual_c64_1_1_memory_a_p_i_1a05b79754f022b7d403b1fcd5948bcbcd" prot="public" virt="non-virtual"><scope>VirtualC64::MemoryAPI</scope><name>memdump</name></member>
+      <member refid="struct_virtual_c64_1_1_memory_a_p_i_1a6f8716bcb84619e27ccb1d869b7ca441" prot="public" virt="non-virtual"><scope>VirtualC64::MemoryAPI</scope><name>txtdump</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

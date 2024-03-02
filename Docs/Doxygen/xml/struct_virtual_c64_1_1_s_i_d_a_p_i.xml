@@ -1,0 +1,272 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_virtual_c64_1_1_s_i_d_a_p_i" kind="struct" language="C++" prot="public">
+    <compoundname>VirtualC64::SIDAPI</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">API</basecompoundref>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="struct_virtual_c64_1_1_s_i_d_a_p_i_1a5de79346f288e123fe49237390eb2745" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>MuxerConfig</type>
+        <definition>MuxerConfig VirtualC64::SIDAPI::getConfig</definition>
+        <argsstring>() const</argsstring>
+        <name>getConfig</name>
+        <qualifiedname>VirtualC64::SIDAPI::getConfig</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="335" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_s_i_d_a_p_i_1ab5a5ad508065da4c70b048fdce002608" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>SIDInfo</type>
+        <definition>SIDInfo VirtualC64::SIDAPI::getInfo</definition>
+        <argsstring>(isize nr) const</argsstring>
+        <name>getInfo</name>
+        <qualifiedname>VirtualC64::SIDAPI::getInfo</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="336" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_s_i_d_a_p_i_1a70e3729bda794d6084a743d91b6ccea5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>VoiceInfo</type>
+        <definition>VoiceInfo VirtualC64::SIDAPI::getVoiceInfo</definition>
+        <argsstring>(isize nr, isize voice) const</argsstring>
+        <name>getVoiceInfo</name>
+        <qualifiedname>VirtualC64::SIDAPI::getVoiceInfo</qualifiedname>
+        <param>
+          <type>isize</type>
+          <declname>nr</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>voice</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="337" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_s_i_d_a_p_i_1ad0a2f0e0c1420ff038261725df674e1d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>MuxerStats</type>
+        <definition>MuxerStats VirtualC64::SIDAPI::getStats</definition>
+        <argsstring>() const</argsstring>
+        <name>getStats</name>
+        <qualifiedname>VirtualC64::SIDAPI::getStats</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="338" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_s_i_d_a_p_i_1ac033a686a671ea310282b92d09ed4a7d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::SIDAPI::rampUp</definition>
+        <argsstring>()</argsstring>
+        <name>rampUp</name>
+        <qualifiedname>VirtualC64::SIDAPI::rampUp</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="340" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_s_i_d_a_p_i_1a38be5eb6a415db84eb8c008fffd02cdd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::SIDAPI::rampUp</definition>
+        <argsstring>(float from)</argsstring>
+        <name>rampUp</name>
+        <qualifiedname>VirtualC64::SIDAPI::rampUp</qualifiedname>
+        <param>
+          <type>float</type>
+          <declname>from</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="341" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_s_i_d_a_p_i_1aa38f9258fc233c563557b35bd0def279" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::SIDAPI::rampDown</definition>
+        <argsstring>()</argsstring>
+        <name>rampDown</name>
+        <qualifiedname>VirtualC64::SIDAPI::rampDown</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="342" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_s_i_d_a_p_i_1afebbb76a57a0d71ae6edaa6ae765cf5a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::SIDAPI::copyMono</definition>
+        <argsstring>(float *buffer, isize n)</argsstring>
+        <name>copyMono</name>
+        <qualifiedname>VirtualC64::SIDAPI::copyMono</qualifiedname>
+        <param>
+          <type>float *</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="344" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_s_i_d_a_p_i_1a74ead0efcf01269e577473e27c7715cf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::SIDAPI::copyStereo</definition>
+        <argsstring>(float *left, float *right, isize n)</argsstring>
+        <name>copyStereo</name>
+        <qualifiedname>VirtualC64::SIDAPI::copyStereo</qualifiedname>
+        <param>
+          <type>float *</type>
+          <declname>left</declname>
+        </param>
+        <param>
+          <type>float *</type>
+          <declname>right</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="345" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_s_i_d_a_p_i_1ab2c563edad24555d09af4b02d0a0d826" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::SIDAPI::copyInterleaved</definition>
+        <argsstring>(float *buffer, isize n)</argsstring>
+        <name>copyInterleaved</name>
+        <qualifiedname>VirtualC64::SIDAPI::copyInterleaved</qualifiedname>
+        <param>
+          <type>float *</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="346" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_s_i_d_a_p_i_1a5d37a73557ae9c80a04f55d7a04223f6" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>float</type>
+        <definition>float VirtualC64::SIDAPI::draw</definition>
+        <argsstring>(u32 *buffer, isize width, isize height, float maxAmp, u32 color, isize sid=-1) const</argsstring>
+        <name>draw</name>
+        <qualifiedname>VirtualC64::SIDAPI::draw</qualifiedname>
+        <param>
+          <type>u32 *</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>width</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>height</declname>
+        </param>
+        <param>
+          <type>float</type>
+          <declname>maxAmp</declname>
+        </param>
+        <param>
+          <type>u32</type>
+          <declname>color</declname>
+        </param>
+        <param>
+          <type>isize</type>
+          <declname>sid</declname>
+          <defval>-1</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="348" column="15"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::SIDAPI</label>
+        <link refid="struct_virtual_c64_1_1_s_i_d_a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::SIDAPI</label>
+        <link refid="struct_virtual_c64_1_1_s_i_d_a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="331" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="331" bodyend="350"/>
+    <listofallmembers>
+      <member refid="struct_virtual_c64_1_1_s_i_d_a_p_i_1ab2c563edad24555d09af4b02d0a0d826" prot="public" virt="non-virtual"><scope>VirtualC64::SIDAPI</scope><name>copyInterleaved</name></member>
+      <member refid="struct_virtual_c64_1_1_s_i_d_a_p_i_1afebbb76a57a0d71ae6edaa6ae765cf5a" prot="public" virt="non-virtual"><scope>VirtualC64::SIDAPI</scope><name>copyMono</name></member>
+      <member refid="struct_virtual_c64_1_1_s_i_d_a_p_i_1a74ead0efcf01269e577473e27c7715cf" prot="public" virt="non-virtual"><scope>VirtualC64::SIDAPI</scope><name>copyStereo</name></member>
+      <member refid="struct_virtual_c64_1_1_s_i_d_a_p_i_1a5d37a73557ae9c80a04f55d7a04223f6" prot="public" virt="non-virtual"><scope>VirtualC64::SIDAPI</scope><name>draw</name></member>
+      <member refid="struct_virtual_c64_1_1_s_i_d_a_p_i_1a5de79346f288e123fe49237390eb2745" prot="public" virt="non-virtual"><scope>VirtualC64::SIDAPI</scope><name>getConfig</name></member>
+      <member refid="struct_virtual_c64_1_1_s_i_d_a_p_i_1ab5a5ad508065da4c70b048fdce002608" prot="public" virt="non-virtual"><scope>VirtualC64::SIDAPI</scope><name>getInfo</name></member>
+      <member refid="struct_virtual_c64_1_1_s_i_d_a_p_i_1ad0a2f0e0c1420ff038261725df674e1d" prot="public" virt="non-virtual"><scope>VirtualC64::SIDAPI</scope><name>getStats</name></member>
+      <member refid="struct_virtual_c64_1_1_s_i_d_a_p_i_1a70e3729bda794d6084a743d91b6ccea5" prot="public" virt="non-virtual"><scope>VirtualC64::SIDAPI</scope><name>getVoiceInfo</name></member>
+      <member refid="struct_virtual_c64_1_1_s_i_d_a_p_i_1aa38f9258fc233c563557b35bd0def279" prot="public" virt="non-virtual"><scope>VirtualC64::SIDAPI</scope><name>rampDown</name></member>
+      <member refid="struct_virtual_c64_1_1_s_i_d_a_p_i_1ac033a686a671ea310282b92d09ed4a7d" prot="public" virt="non-virtual"><scope>VirtualC64::SIDAPI</scope><name>rampUp</name></member>
+      <member refid="struct_virtual_c64_1_1_s_i_d_a_p_i_1a38be5eb6a415db84eb8c008fffd02cdd" prot="public" virt="non-virtual"><scope>VirtualC64::SIDAPI</scope><name>rampUp</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

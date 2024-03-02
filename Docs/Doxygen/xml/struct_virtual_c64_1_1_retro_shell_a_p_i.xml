@@ -1,0 +1,206 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_virtual_c64_1_1_retro_shell_a_p_i" kind="struct" language="C++" prot="public">
+    <compoundname>VirtualC64::RetroShellAPI</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">API</basecompoundref>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1a29925f4db82640da252a518c625ba833" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * VirtualC64::RetroShellAPI::text</definition>
+        <argsstring>()</argsstring>
+        <name>text</name>
+        <qualifiedname>VirtualC64::RetroShellAPI::text</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="551" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1a58b58a90b1b534ca931aba22903754ae" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>isize</type>
+        <definition>isize VirtualC64::RetroShellAPI::cursorRel</definition>
+        <argsstring>()</argsstring>
+        <name>cursorRel</name>
+        <qualifiedname>VirtualC64::RetroShellAPI::cursorRel</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="552" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1a97f02a53cdd2ef397d5c25d12917ed8c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::RetroShellAPI::press</definition>
+        <argsstring>(RetroShellKey key, bool shift=false)</argsstring>
+        <name>press</name>
+        <qualifiedname>VirtualC64::RetroShellAPI::press</qualifiedname>
+        <param>
+          <type>RetroShellKey</type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>shift</declname>
+          <defval>false</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="554" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1a2306d0efcb4893e699f5ed2212acc99e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::RetroShellAPI::press</definition>
+        <argsstring>(char c)</argsstring>
+        <name>press</name>
+        <qualifiedname>VirtualC64::RetroShellAPI::press</qualifiedname>
+        <param>
+          <type>char</type>
+          <declname>c</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="555" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1a7e293152916898d646e344edc2237327" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::RetroShellAPI::press</definition>
+        <argsstring>(const string &amp;s)</argsstring>
+        <name>press</name>
+        <qualifiedname>VirtualC64::RetroShellAPI::press</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="556" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1adcdb0ff9faf420a7d851d2e83cdfa0c1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::RetroShellAPI::execScript</definition>
+        <argsstring>(std::stringstream &amp;ss)</argsstring>
+        <name>execScript</name>
+        <qualifiedname>VirtualC64::RetroShellAPI::execScript</qualifiedname>
+        <param>
+          <type>std::stringstream &amp;</type>
+          <declname>ss</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="558" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1ad4d7a73a488ceb3461277d489776b000" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::RetroShellAPI::execScript</definition>
+        <argsstring>(const std::ifstream &amp;fs)</argsstring>
+        <name>execScript</name>
+        <qualifiedname>VirtualC64::RetroShellAPI::execScript</qualifiedname>
+        <param>
+          <type>const std::ifstream &amp;</type>
+          <declname>fs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="559" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1ae6b8a1e91171f5200b48dff8592ffa47" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::RetroShellAPI::execScript</definition>
+        <argsstring>(const string &amp;contents)</argsstring>
+        <name>execScript</name>
+        <qualifiedname>VirtualC64::RetroShellAPI::execScript</qualifiedname>
+        <param>
+          <type>const string &amp;</type>
+          <declname>contents</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="560" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_retro_shell_a_p_i_1a4df4697d5f30dea710b776c5610f1153" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::RetroShellAPI::setStream</definition>
+        <argsstring>(std::ostream &amp;os)</argsstring>
+        <name>setStream</name>
+        <qualifiedname>VirtualC64::RetroShellAPI::setStream</qualifiedname>
+        <param>
+          <type>std::ostream &amp;</type>
+          <declname>os</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="562" column="14"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::RetroShellAPI</label>
+        <link refid="struct_virtual_c64_1_1_retro_shell_a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::RetroShellAPI</label>
+        <link refid="struct_virtual_c64_1_1_retro_shell_a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="547" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="547" bodyend="564"/>
+    <listofallmembers>
+      <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1a58b58a90b1b534ca931aba22903754ae" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>cursorRel</name></member>
+      <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1adcdb0ff9faf420a7d851d2e83cdfa0c1" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>execScript</name></member>
+      <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1ad4d7a73a488ceb3461277d489776b000" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>execScript</name></member>
+      <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1ae6b8a1e91171f5200b48dff8592ffa47" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>execScript</name></member>
+      <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1a97f02a53cdd2ef397d5c25d12917ed8c" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>press</name></member>
+      <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1a2306d0efcb4893e699f5ed2212acc99e" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>press</name></member>
+      <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1a7e293152916898d646e344edc2237327" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>press</name></member>
+      <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1a4df4697d5f30dea710b776c5610f1153" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>setStream</name></member>
+      <member refid="struct_virtual_c64_1_1_retro_shell_a_p_i_1a29925f4db82640da252a518c625ba833" prot="public" virt="non-virtual"><scope>VirtualC64::RetroShellAPI</scope><name>text</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -6,7 +6,7 @@
     <briefdescription>
     </briefdescription>
     <detaileddescription>
-<para><anchor id="index_1md_readme"/> Welcome to the official <ref refid="class_virtual_c64" kindref="compound">VirtualC64</ref> API documentation. Here you will find a detailed view of <ref refid="class_virtual_c64" kindref="compound">VirtualC64</ref>&apos;s public API. It summarizes the necesarry information for developers to incoorporate the emulation core in own projects. For more information about <ref refid="class_virtual_c64" kindref="compound">VirtualC64</ref> plase visit the <ulink url="https://dirkwhoffmann.github.io/virtualc64/">official website</ulink>.</para>
+<para><anchor id="index_1md_readme"/> Welcome to the official <ref refid="class_virtual_c64" kindref="compound">VirtualC64</ref> documentation. Here you will find a detailed view of <ref refid="class_virtual_c64" kindref="compound">VirtualC64</ref>&apos;s public API. It summarizes the necesarry information for developers to incoorporate the emulation core in own projects. For more information about <ref refid="class_virtual_c64" kindref="compound">VirtualC64</ref> plase visit the <ulink url="https://dirkwhoffmann.github.io/virtualc64/">official website</ulink>.</para>
 <para><image type="html" name="ad-vc.png" width="400px"></image>
 </para>
 <sect1 id="index_1autotoc_md1">

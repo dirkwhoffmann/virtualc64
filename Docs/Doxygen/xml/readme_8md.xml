@@ -9,7 +9,7 @@
     <programlisting>
 <codeline><highlight class="normal">#<sp/>Welcome</highlight></codeline>
 <codeline></codeline>
-<codeline><highlight class="normal">Welcome<sp/>to<sp/>the<sp/>official<sp/>VirtualC64<sp/>API<sp/>documentation.<sp/>Here<sp/>you<sp/>will<sp/>find<sp/>a<sp/>detailed<sp/>view<sp/>of<sp/>VirtualC64&apos;s<sp/>public<sp/>API.<sp/>It<sp/>summarizes<sp/>the<sp/>necesarry<sp/>information<sp/>for<sp/>developers<sp/>to<sp/>incoorporate<sp/>the<sp/>emulation<sp/>core<sp/>in<sp/>own<sp/>projects.<sp/>For<sp/>more<sp/>information<sp/>about<sp/>VirtualC64<sp/>plase<sp/>visit<sp/>the<sp/>[official<sp/>website](https://dirkwhoffmann.github.io/virtualc64/).</highlight></codeline>
+<codeline><highlight class="normal">Welcome<sp/>to<sp/>the<sp/>official<sp/>VirtualC64<sp/>documentation.<sp/>Here<sp/>you<sp/>will<sp/>find<sp/>a<sp/>detailed<sp/>view<sp/>of<sp/>VirtualC64&apos;s<sp/>public<sp/>API.<sp/>It<sp/>summarizes<sp/>the<sp/>necesarry<sp/>information<sp/>for<sp/>developers<sp/>to<sp/>incoorporate<sp/>the<sp/>emulation<sp/>core<sp/>in<sp/>own<sp/>projects.<sp/>For<sp/>more<sp/>information<sp/>about<sp/>VirtualC64<sp/>plase<sp/>visit<sp/>the<sp/>[official<sp/>website](https://dirkwhoffmann.github.io/virtualc64/).</highlight></codeline>
 <codeline></codeline>
 <codeline><highlight class="normal">\image<sp/>html<sp/>ad-vc.png<sp/>width=400px</highlight></codeline>
 <codeline></codeline>

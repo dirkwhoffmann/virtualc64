@@ -1,5 +1,13 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,5,115,31"/>
-<area shape="rect" id="Node000001" href="$class_virtual_c64.html" title="Public API." alt="" coords="163,5,245,31"/>
-<area shape="poly" id="edge24_Node000000_Node000001" title=" " alt="" coords="130,16,162,16,162,21,130,21"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="17,55,104,80"/>
+<area shape="rect" id="Node000001" href="$classvc64_1_1_cmd_queue.html" title=" " alt="" coords="164,31,287,56"/>
+<area shape="poly" id="edge20_Node000000_Node000001" title=" " alt="" coords="119,56,163,50,164,55,120,62"/>
+<area shape="rect" id="Node000003" href="$classvc64_1_1_thread.html" title="Implements the emulator&#39;s state model." alt="" coords="177,104,274,130"/>
+<area shape="poly" id="edge21_Node000000_Node000003" title=" " alt="" coords="119,82,181,101,179,106,118,87"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="12,104,109,130"/>
+<area shape="poly" id="edge22_Node000004_Node000003" title=" " alt="" coords="124,114,176,114,176,120,124,120"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,116,31"/>
+<area shape="poly" id="edge23_Node000002_Node000001" title=" " alt="" coords="132,26,164,31,163,37,131,32"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="21,153,100,179"/>
+<area shape="poly" id="edge24_Node000005_Node000003" title=" " alt="" coords="114,148,179,128,181,133,115,153"/>
 </map>

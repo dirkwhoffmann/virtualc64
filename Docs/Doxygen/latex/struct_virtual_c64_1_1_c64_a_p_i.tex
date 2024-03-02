@@ -1,0 +1,67 @@
+\doxysection{Virtual\+C64\+::C64\+API Struct Reference}
+\hypertarget{struct_virtual_c64_1_1_c64_a_p_i}{}\label{struct_virtual_c64_1_1_c64_a_p_i}\index{VirtualC64::C64API@{VirtualC64::C64API}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_a03e956395af6b3c43c1f1e0825a2602e}\label{struct_virtual_c64_1_1_c64_a_p_i_a03e956395af6b3c43c1f1e0825a2602e} 
+void {\bfseries hard\+Reset} ()
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_ad3a93d8cdac877aec6b45fdcf730f918}\label{struct_virtual_c64_1_1_c64_a_p_i_ad3a93d8cdac877aec6b45fdcf730f918} 
+void {\bfseries soft\+Reset} ()
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_a458146bd0d8f238f5d1484f1d0f3e959}\label{struct_virtual_c64_1_1_c64_a_p_i_a458146bd0d8f238f5d1484f1d0f3e959} 
+Inspection\+Target {\bfseries get\+Inspection\+Target} () const
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_a48ce5bfd7985fdc658732010aee32b29}\label{struct_virtual_c64_1_1_c64_a_p_i_a48ce5bfd7985fdc658732010aee32b29} 
+void {\bfseries set\+Inspection\+Target} (Inspection\+Target target, Cycle trigger=0)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_ac6947f8a9a7ccf9f07e6d092cf9dd166}\label{struct_virtual_c64_1_1_c64_a_p_i_ac6947f8a9a7ccf9f07e6d092cf9dd166} 
+void {\bfseries remove\+Inspection\+Target} ()
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_a511dc9a036139239dbd85e633e2df217}\label{struct_virtual_c64_1_1_c64_a_p_i_a511dc9a036139239dbd85e633e2df217} 
+C64\+Info {\bfseries get\+Info} () const
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_a4b0a4ac228c21884853cafbcab57bd65}\label{struct_virtual_c64_1_1_c64_a_p_i_a4b0a4ac228c21884853cafbcab57bd65} 
+Event\+Slot\+Info {\bfseries get\+Slot\+Info} (isize nr) const
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_a9a69cef9f13981485c0a2ce282504370}\label{struct_virtual_c64_1_1_c64_a_p_i_a9a69cef9f13981485c0a2ce282504370} 
+void {\bfseries is\+Ready} ()
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_acf569a61608b4bb18837d6cd526b635c}\label{struct_virtual_c64_1_1_c64_a_p_i_acf569a61608b4bb18837d6cd526b635c} 
+Snapshot \texorpdfstring{$\ast$}{*} {\bfseries latest\+Auto\+Snapshot} ()
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_ac99bbc3ab3c3e992bfe09d83e6d428ae}\label{struct_virtual_c64_1_1_c64_a_p_i_ac99bbc3ab3c3e992bfe09d83e6d428ae} 
+Snapshot \texorpdfstring{$\ast$}{*} {\bfseries latest\+User\+Snapshot} ()
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_ae50b8a844367bd2b95223baf9f6d309b}\label{struct_virtual_c64_1_1_c64_a_p_i_ae50b8a844367bd2b95223baf9f6d309b} 
+void {\bfseries load\+Snapshot} (const Snapshot \&snapshot)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_a2537c5c0acbd27ee192c17c0463d63c4}\label{struct_virtual_c64_1_1_c64_a_p_i_a2537c5c0acbd27ee192c17c0463d63c4} 
+Rom\+Info {\bfseries get\+Rom\+Info} (Rom\+Type type) const
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_acb4a3117f2c3588d6623d566ae3d9b8e}\label{struct_virtual_c64_1_1_c64_a_p_i_acb4a3117f2c3588d6623d566ae3d9b8e} 
+void {\bfseries load\+Rom} (const string \&path)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_aed32c6fa1c5265b26a031a3b1e37d634}\label{struct_virtual_c64_1_1_c64_a_p_i_aed32c6fa1c5265b26a031a3b1e37d634} 
+void {\bfseries load\+Rom} (const Rom\+File \&file)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_af6c082e2d054fbbb8743c4551a911aac}\label{struct_virtual_c64_1_1_c64_a_p_i_af6c082e2d054fbbb8743c4551a911aac} 
+void {\bfseries delete\+Rom} (Rom\+Type type)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_ac28cd85b343369ec99a1700038a5a250}\label{struct_virtual_c64_1_1_c64_a_p_i_ac28cd85b343369ec99a1700038a5a250} 
+void {\bfseries save\+Rom} (Rom\+Type rom, const string \&path)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_a3ddb4cec481e146ec202ec663b7a70d7}\label{struct_virtual_c64_1_1_c64_a_p_i_a3ddb4cec481e146ec202ec663b7a70d7} 
+void {\bfseries flash} (const Any\+File \&file)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_adf7827090a4cfea9cc7931a981964521}\label{struct_virtual_c64_1_1_c64_a_p_i_adf7827090a4cfea9cc7931a981964521} 
+void {\bfseries flash} (const Any\+Collection \&file, isize item)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_c64_a_p_i_abfb78db4b67e30199806c8b588394859}\label{struct_virtual_c64_1_1_c64_a_p_i_abfb78db4b67e30199806c8b588394859} 
+void {\bfseries flash} (const File\+System \&fs, isize item)
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/Virtual\+C64.\+h\end{DoxyCompactItemize}

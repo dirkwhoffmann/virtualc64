@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_virtual_c64_1_1_datasette_a_p_i" kind="struct" language="C++" prot="public">
+    <compoundname>VirtualC64::DatasetteAPI</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">API</basecompoundref>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="struct_virtual_c64_1_1_datasette_a_p_i_1add9b3763e5e367fa2a10588d3b0622d1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>DatasetteInfo</type>
+        <definition>DatasetteInfo VirtualC64::DatasetteAPI::getInfo</definition>
+        <argsstring>() const</argsstring>
+        <name>getInfo</name>
+        <qualifiedname>VirtualC64::DatasetteAPI::getInfo</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="425" column="23"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_datasette_a_p_i_1ae0894118c64a59833ba33568384026c1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::DatasetteAPI::insertTape</definition>
+        <argsstring>(TAPFile &amp;file)</argsstring>
+        <name>insertTape</name>
+        <qualifiedname>VirtualC64::DatasetteAPI::insertTape</qualifiedname>
+        <param>
+          <type>TAPFile &amp;</type>
+          <declname>file</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="427" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_datasette_a_p_i_1a524a6bdfd74669c3e4deb5193e93d29e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::DatasetteAPI::ejectTape</definition>
+        <argsstring>()</argsstring>
+        <name>ejectTape</name>
+        <qualifiedname>VirtualC64::DatasetteAPI::ejectTape</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="428" column="14"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::DatasetteAPI</label>
+        <link refid="struct_virtual_c64_1_1_datasette_a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::DatasetteAPI</label>
+        <link refid="struct_virtual_c64_1_1_datasette_a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="421" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="421" bodyend="430"/>
+    <listofallmembers>
+      <member refid="struct_virtual_c64_1_1_datasette_a_p_i_1a524a6bdfd74669c3e4deb5193e93d29e" prot="public" virt="non-virtual"><scope>VirtualC64::DatasetteAPI</scope><name>ejectTape</name></member>
+      <member refid="struct_virtual_c64_1_1_datasette_a_p_i_1add9b3763e5e367fa2a10588d3b0622d1" prot="public" virt="non-virtual"><scope>VirtualC64::DatasetteAPI</scope><name>getInfo</name></member>
+      <member refid="struct_virtual_c64_1_1_datasette_a_p_i_1ae0894118c64a59833ba33568384026c1" prot="public" virt="non-virtual"><scope>VirtualC64::DatasetteAPI</scope><name>insertTape</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

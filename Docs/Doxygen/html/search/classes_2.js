@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['datasette_5fapi_0',['DATASETTE_API',['../struct_virtual_c64_1_1_d_a_t_a_s_e_t_t_e___a_p_i.html',1,'VirtualC64']]],
-  ['disk_5fapi_1',['DISK_API',['../struct_virtual_c64_1_1_d_i_s_k___a_p_i.html',1,'VirtualC64']]],
-  ['dma_5fdebugger_5fapi_2',['DMA_DEBUGGER_API',['../struct_virtual_c64_1_1_d_m_a___d_e_b_u_g_g_e_r___a_p_i.html',1,'VirtualC64']]],
-  ['drive_5fapi_3',['DRIVE_API',['../struct_virtual_c64_1_1_d_r_i_v_e___a_p_i.html',1,'VirtualC64']]]
+  ['c64api_0',['C64API',['../struct_virtual_c64_1_1_c64_a_p_i.html',1,'VirtualC64']]],
+  ['ciaapi_1',['CIAAPI',['../struct_virtual_c64_1_1_c_i_a_a_p_i.html',1,'VirtualC64']]],
+  ['cmdqueue_2',['CmdQueue',['../classvc64_1_1_cmd_queue.html',1,'vc64']]],
+  ['controlportapi_3',['ControlPortAPI',['../struct_virtual_c64_1_1_control_port_a_p_i.html',1,'VirtualC64']]],
+  ['coordcmd_4',['CoordCmd',['../struct_coord_cmd.html',1,'']]],
+  ['cpuapi_5',['CPUAPI',['../struct_virtual_c64_1_1_c_p_u_a_p_i.html',1,'VirtualC64']]]
 ];

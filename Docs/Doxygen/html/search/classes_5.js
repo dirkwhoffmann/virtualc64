@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['iec_5fapi_0',['IEC_API',['../struct_virtual_c64_1_1_i_e_c___a_p_i.html',1,'VirtualC64']]]
+  ['gamepadcmd_0',['GamePadCmd',['../struct_game_pad_cmd.html',1,'']]],
+  ['guardapi_1',['GuardAPI',['../struct_virtual_c64_1_1_guard_a_p_i.html',1,'VirtualC64']]]
 ];

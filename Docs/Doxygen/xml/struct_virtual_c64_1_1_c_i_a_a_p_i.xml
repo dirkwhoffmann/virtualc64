@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_virtual_c64_1_1_c_i_a_a_p_i" kind="struct" language="C++" prot="public">
+    <compoundname>VirtualC64::CIAAPI</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">API</basecompoundref>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_virtual_c64_1_1_c_i_a_a_p_i_1a945d0a71c064cc0342b7a374389b90bd" prot="public" static="no" mutable="no">
+        <type>CIA &amp;</type>
+        <definition>CIA&amp; VirtualC64::CIAAPI::cia</definition>
+        <argsstring></argsstring>
+        <name>cia</name>
+        <qualifiedname>VirtualC64::CIAAPI::cia</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="295" column="13" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="295" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c_i_a_a_p_i_1ad57d9a4186af61c67631e60069b893d5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>VirtualC64::CIAAPI::CIAAPI</definition>
+        <argsstring>(Emulator &amp;emu, CIA &amp;cia)</argsstring>
+        <name>CIAAPI</name>
+        <qualifiedname>VirtualC64::CIAAPI::CIAAPI</qualifiedname>
+        <param>
+          <type>Emulator &amp;</type>
+          <declname>emu</declname>
+        </param>
+        <param>
+          <type>CIA &amp;</type>
+          <declname>cia</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="296" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="296" bodyend="296"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c_i_a_a_p_i_1a1fe221982e9109a78e9c723b8ff05219" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>CIAConfig</type>
+        <definition>CIAConfig VirtualC64::CIAAPI::getConfig</definition>
+        <argsstring>() const</argsstring>
+        <name>getConfig</name>
+        <qualifiedname>VirtualC64::CIAAPI::getConfig</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="298" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c_i_a_a_p_i_1a678771553209acc9eb0e90693a774119" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>CIAInfo</type>
+        <definition>CIAInfo VirtualC64::CIAAPI::getInfo</definition>
+        <argsstring>() const</argsstring>
+        <name>getInfo</name>
+        <qualifiedname>VirtualC64::CIAAPI::getInfo</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="299" column="17"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_c_i_a_a_p_i_1a1594302e44b3f0a5408e5e2f130581d8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>CIAStats</type>
+        <definition>CIAStats VirtualC64::CIAAPI::getStats</definition>
+        <argsstring>() const</argsstring>
+        <name>getStats</name>
+        <qualifiedname>VirtualC64::CIAAPI::getStats</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="300" column="18"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::CIAAPI</label>
+        <link refid="struct_virtual_c64_1_1_c_i_a_a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::CIAAPI</label>
+        <link refid="struct_virtual_c64_1_1_c_i_a_a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="293" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="293" bodyend="302"/>
+    <listofallmembers>
+      <member refid="struct_virtual_c64_1_1_c_i_a_a_p_i_1a945d0a71c064cc0342b7a374389b90bd" prot="public" virt="non-virtual"><scope>VirtualC64::CIAAPI</scope><name>cia</name></member>
+      <member refid="struct_virtual_c64_1_1_c_i_a_a_p_i_1ad57d9a4186af61c67631e60069b893d5" prot="public" virt="non-virtual"><scope>VirtualC64::CIAAPI</scope><name>CIAAPI</name></member>
+      <member refid="struct_virtual_c64_1_1_c_i_a_a_p_i_1a1fe221982e9109a78e9c723b8ff05219" prot="public" virt="non-virtual"><scope>VirtualC64::CIAAPI</scope><name>getConfig</name></member>
+      <member refid="struct_virtual_c64_1_1_c_i_a_a_p_i_1a678771553209acc9eb0e90693a774119" prot="public" virt="non-virtual"><scope>VirtualC64::CIAAPI</scope><name>getInfo</name></member>
+      <member refid="struct_virtual_c64_1_1_c_i_a_a_p_i_1a1594302e44b3f0a5408e5e2f130581d8" prot="public" virt="non-virtual"><scope>VirtualC64::CIAAPI</scope><name>getStats</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -3,6 +3,7 @@
   <compounddef id="namespacevc64" kind="namespace" language="C++">
     <compoundname>vc64</compoundname>
     <innerclass refid="classvc64_1_1_bool_parser" prot="public">vc64::BoolParser</innerclass>
+    <innerclass refid="classvc64_1_1_cmd_queue" prot="public">vc64::CmdQueue</innerclass>
     <innerclass refid="classvc64_1_1_enum_parser" prot="public">vc64::EnumParser</innerclass>
     <innerclass refid="classvc64_1_1_num_parser" prot="public">vc64::NumParser</innerclass>
     <innerclass refid="classvc64_1_1_option_parser" prot="public">vc64::OptionParser</innerclass>
@@ -15,6 +16,6 @@
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" line="18" column="1"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueue.h" line="21" column="1"/>
   </compounddef>
 </doxygen>

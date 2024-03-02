@@ -951,6 +951,8 @@ WARN_LOGFILE           =
 
 INPUT                  = "readme.md" \
                          "../../Emulator/VirtualC64.h" \
+                         "../../Emulator/Base/CmdQueueTypes.h" \
+                         "../../Emulator/Base/CmdQueue.h" \
                          "../../Emulator/Base/ErrorTypes.h" \
                          "../../Emulator/Base/Error.h" \
                          "../../Emulator/Base/OptionTypes.h" \

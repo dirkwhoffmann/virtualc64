@@ -1,27 +1,30 @@
 var hierarchy =
 [
+    [ "AlarmCmd", "struct_alarm_cmd.html", null ],
     [ "API", null, [
-      [ "VirtualC64::C64_API", "struct_virtual_c64_1_1_c64___a_p_i.html", null ],
-      [ "VirtualC64::CIA_API", "struct_virtual_c64_1_1_c_i_a___a_p_i.html", null ],
-      [ "VirtualC64::CPU_API", "struct_virtual_c64_1_1_c_p_u___a_p_i.html", null ],
-      [ "VirtualC64::CP_API", "struct_virtual_c64_1_1_c_p___a_p_i.html", null ],
-      [ "VirtualC64::DATASETTE_API", "struct_virtual_c64_1_1_d_a_t_a_s_e_t_t_e___a_p_i.html", null ],
-      [ "VirtualC64::DISK_API", "struct_virtual_c64_1_1_d_i_s_k___a_p_i.html", null ],
-      [ "VirtualC64::DMA_DEBUGGER_API", "struct_virtual_c64_1_1_d_m_a___d_e_b_u_g_g_e_r___a_p_i.html", null ],
-      [ "VirtualC64::DRIVE_API", "struct_virtual_c64_1_1_d_r_i_v_e___a_p_i.html", null ],
-      [ "VirtualC64::EXP_PORT_API", "struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i.html", null ],
-      [ "VirtualC64::GUARD_API", "struct_virtual_c64_1_1_g_u_a_r_d___a_p_i.html", null ],
-      [ "VirtualC64::IEC_API", "struct_virtual_c64_1_1_i_e_c___a_p_i.html", null ],
-      [ "VirtualC64::JOYSTICK_API", "struct_virtual_c64_1_1_j_o_y_s_t_i_c_k___a_p_i.html", null ],
-      [ "VirtualC64::KBD_API", "struct_virtual_c64_1_1_k_b_d___a_p_i.html", null ],
-      [ "VirtualC64::MEM_API", "struct_virtual_c64_1_1_m_e_m___a_p_i.html", null ],
-      [ "VirtualC64::MOUSE_API", "struct_virtual_c64_1_1_m_o_u_s_e___a_p_i.html", null ],
-      [ "VirtualC64::REC_API", "struct_virtual_c64_1_1_r_e_c___a_p_i.html", null ],
-      [ "VirtualC64::RSHELL_API", "struct_virtual_c64_1_1_r_s_h_e_l_l___a_p_i.html", null ],
-      [ "VirtualC64::SID_API", "struct_virtual_c64_1_1_s_i_d___a_p_i.html", null ],
-      [ "VirtualC64::VICII_API", "struct_virtual_c64_1_1_v_i_c_i_i___a_p_i.html", null ]
+      [ "VirtualC64::C64API", "struct_virtual_c64_1_1_c64_a_p_i.html", null ],
+      [ "VirtualC64::CIAAPI", "struct_virtual_c64_1_1_c_i_a_a_p_i.html", null ],
+      [ "VirtualC64::CPUAPI", "struct_virtual_c64_1_1_c_p_u_a_p_i.html", null ],
+      [ "VirtualC64::ControlPortAPI", "struct_virtual_c64_1_1_control_port_a_p_i.html", null ],
+      [ "VirtualC64::DatasetteAPI", "struct_virtual_c64_1_1_datasette_a_p_i.html", null ],
+      [ "VirtualC64::DiskAPI", "struct_virtual_c64_1_1_disk_a_p_i.html", null ],
+      [ "VirtualC64::DmaDebuggerAPI", "struct_virtual_c64_1_1_dma_debugger_a_p_i.html", null ],
+      [ "VirtualC64::DriveAPI", "struct_virtual_c64_1_1_drive_a_p_i.html", null ],
+      [ "VirtualC64::ExpansionPortAPI", "struct_virtual_c64_1_1_expansion_port_a_p_i.html", null ],
+      [ "VirtualC64::GuardAPI", "struct_virtual_c64_1_1_guard_a_p_i.html", null ],
+      [ "VirtualC64::IECAPI", "struct_virtual_c64_1_1_i_e_c_a_p_i.html", null ],
+      [ "VirtualC64::JoystickAPI", "struct_virtual_c64_1_1_joystick_a_p_i.html", null ],
+      [ "VirtualC64::KeyboardAPI", "struct_virtual_c64_1_1_keyboard_a_p_i.html", null ],
+      [ "VirtualC64::MemoryAPI", "struct_virtual_c64_1_1_memory_a_p_i.html", null ],
+      [ "VirtualC64::MouseAPI", "struct_virtual_c64_1_1_mouse_a_p_i.html", null ],
+      [ "VirtualC64::RecorderAPI", "struct_virtual_c64_1_1_recorder_a_p_i.html", null ],
+      [ "VirtualC64::RetroShellAPI", "struct_virtual_c64_1_1_retro_shell_a_p_i.html", null ],
+      [ "VirtualC64::SIDAPI", "struct_virtual_c64_1_1_s_i_d_a_p_i.html", null ],
+      [ "VirtualC64::VICIIAPI", "struct_virtual_c64_1_1_v_i_c_i_i_a_p_i.html", null ]
     ] ],
+    [ "CoordCmd", "struct_coord_cmd.html", null ],
     [ "CoreObject", null, [
+      [ "vc64::CmdQueue", "classvc64_1_1_cmd_queue.html", null ],
       [ "vc64::Thread", "classvc64_1_1_thread.html", null ]
     ] ],
     [ "vc64::Emulator", null, [
@@ -30,14 +33,21 @@ var hierarchy =
     [ "util::Exception", null, [
       [ "vc64::VC64Error", "structvc64_1_1_v_c64_error.html", null ]
     ] ],
+    [ "GamePadCmd", "struct_game_pad_cmd.html", null ],
+    [ "KeyCmd", "struct_key_cmd.html", null ],
     [ "vc64::OptionParser", "classvc64_1_1_option_parser.html", [
       [ "vc64::BoolParser", "classvc64_1_1_bool_parser.html", null ],
       [ "vc64::EnumParser< T >", "classvc64_1_1_enum_parser.html", null ],
       [ "vc64::NumParser", "classvc64_1_1_num_parser.html", null ]
     ] ],
+    [ "ShellCmd", "struct_shell_cmd.html", null ],
     [ "Suspendable", null, [
       [ "vc64::Thread", "classvc64_1_1_thread.html", null ]
     ] ],
+    [ "Synchronizable", null, [
+      [ "vc64::CmdQueue", "classvc64_1_1_cmd_queue.html", null ]
+    ] ],
+    [ "TapeCmd", "struct_tape_cmd.html", null ],
     [ "Wakeable", null, [
       [ "vc64::Thread", "classvc64_1_1_thread.html", null ]
     ] ]

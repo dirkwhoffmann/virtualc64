@@ -3,7 +3,242 @@
   <compounddef id="group__doxy__types" kind="group">
     <compoundname>doxy_types</compoundname>
     <title>Types</title>
+    <innerclass refid="struct_key_cmd" prot="public">KeyCmd</innerclass>
+    <innerclass refid="struct_coord_cmd" prot="public">CoordCmd</innerclass>
+    <innerclass refid="struct_game_pad_cmd" prot="public">GamePadCmd</innerclass>
+    <innerclass refid="struct_tape_cmd" prot="public">TapeCmd</innerclass>
+    <innerclass refid="struct_alarm_cmd" prot="public">AlarmCmd</innerclass>
+    <innerclass refid="struct_shell_cmd" prot="public">ShellCmd</innerclass>
     <sectiondef kind="enum">
+      <memberdef kind="enum" id="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" prot="public" static="no" strong="no">
+        <type>long</type>
+        <name>CMD_TYPE</name>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a93c1ce1fac89139d9f4df4b6db21b1cc" prot="public">
+          <name>CMD_NONE</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+<para>None. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ac8e628de5d800200ea73ca97d6ef1e91" prot="public">
+          <name>CMD_SNAPSHOT_AUTO</name>
+          <briefdescription>
+<para>Take a snapshot (emulator triggered) </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a7aa07e1b63a8309e8356d855537043d0" prot="public">
+          <name>CMD_SNAPSHOT_USER</name>
+          <briefdescription>
+<para>Take a snapshot (user triggered) </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a998871469ccfa34ee7b9b304e5086e37" prot="public">
+          <name>CMD_ALARM_ABS</name>
+          <briefdescription>
+<para>Schedule an alarm (absolute cycle) </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ab25e2356709a51ea2257298a1f74eae9" prot="public">
+          <name>CMD_ALARM_REL</name>
+          <briefdescription>
+<para>Schedule an alarm (relative cycle) </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ab4c2c070b619b1f808238cc49c31a8f7" prot="public">
+          <name>CMD_CPU_BRK</name>
+          <briefdescription>
+<para>Let the CPU execute a BRK instruction. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a1ee50b12ac4517b6b8848792a903bd8e" prot="public">
+          <name>CMD_CPU_NMI</name>
+          <briefdescription>
+<para>Emulate an external expansion port NMI. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a0d00e2f0cba95a7ae85699036485fd7f" prot="public">
+          <name>CMD_KEY_PRESS</name>
+          <briefdescription>
+<para>Press a key on the C64 keyboard. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3af74c08e0d502f1233a3e12e8c5dff7f5" prot="public">
+          <name>CMD_KEY_RELEASE</name>
+          <briefdescription>
+<para>Release a key on the C64 keyboard. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3aba97321e55d4e9320993cfe49f1e68b9" prot="public">
+          <name>CMD_KEY_RELEASE_ALL</name>
+          <briefdescription>
+<para>Clear the keyboard matrix. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3aa9859a03cc385ec099f044fe68d819e9" prot="public">
+          <name>CMD_KEY_TOGGLE</name>
+          <briefdescription>
+<para>Press or release a key on the C64 keyboard. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a9700907d31668e74487df274bd415d0e" prot="public">
+          <name>CMD_MOUSE_MOVE_ABS</name>
+          <briefdescription>
+<para>Signal a mouse movement (absolut coordinates) </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a95a4824dcfff64873d6e718545e6ab04" prot="public">
+          <name>CMD_MOUSE_MOVE_REL</name>
+          <briefdescription>
+<para>Signal a mouse movement (relative coordinates) </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a0e4d2eac3e3a9bb323dd933d7d2bfdfc" prot="public">
+          <name>CMD_MOUSE_EVENT</name>
+          <briefdescription>
+<para>Signal a mouse button event. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a685bf3a2b9e507d383cdd8eef9527e25" prot="public">
+          <name>CMD_JOY_EVENT</name>
+          <briefdescription>
+<para>Signal a joystick button event. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a8533d86b1ac4bda87ba9db602acf98e3" prot="public">
+          <name>CMD_DSK_TOGGLE_WP</name>
+          <briefdescription>
+<para>Toggle write-protection. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a3debc19e1cad98e6b0f484445c306f30" prot="public">
+          <name>CMD_DSK_MODIFIED</name>
+          <briefdescription>
+<para>Signal that the disk has been saved. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a6ae7661f4ed38ef563c81680b681c64d" prot="public">
+          <name>CMD_DSK_UNMODIFIED</name>
+          <briefdescription>
+<para>Signan that the disk needs saving. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a2e51e8d28a5df7a2ad790e7d7a4cc5af" prot="public">
+          <name>CMD_DATASETTE_PLAY</name>
+          <briefdescription>
+<para>Press the datasette play key. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a257c1eff3f5a2ae97064df677b809936" prot="public">
+          <name>CMD_DATASETTE_STOP</name>
+          <briefdescription>
+<para>Press the datasette stop key. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a945c23a37311b1df5a129778a17f4cf9" prot="public">
+          <name>CMD_DATASETTE_REWIND</name>
+          <briefdescription>
+<para>Rewind the tape. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ad9116107b0be9868d4d2563f40e33fd4" prot="public">
+          <name>CMD_CRT_BUTTON_PRESS</name>
+          <briefdescription>
+<para>Press a cartridge button. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a61105b208370c0fad8cb6b925ac3ef3e" prot="public">
+          <name>CMD_CRT_BUTTON_RELEASE</name>
+          <briefdescription>
+<para>Release a cartridge button. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ad969b2766e60e084e39b47424e11e6ea" prot="public">
+          <name>CMD_CRT_SWITCH_LEFT</name>
+          <briefdescription>
+<para>Pull the cartridge switch left. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3ad6b727e3d07c4845f09dc5eab83d3bcc" prot="public">
+          <name>CMD_CRT_SWITCH_NEUTRAL</name>
+          <briefdescription>
+<para>Put the cartridge switch in neutral position. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3a092eb67ee6a7425139087d44561a030c" prot="public">
+          <name>CMD_CRT_SWITCH_RIGHT</name>
+          <briefdescription>
+<para>Pull the cartridge switch right. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="group__doxy__types_1gga63ebdc688313e444b486514798e48df3af91039778727323fb4b230805558c27a" prot="public">
+          <name>CMD_RSH_EXECUTE</name>
+          <briefdescription>
+<para>Execute a script command. </para>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>Emulator command. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="27" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="28" bodyend="74"/>
+      </memberdef>
       <memberdef kind="enum" id="group__doxy__types_1ga52f90e25735e172d279183e61d90d3e3" prot="public" static="no" strong="no">
         <type>long</type>
         <name>ERROR_CODE</name>
@@ -1096,6 +1331,19 @@
       </memberdef>
     </sectiondef>
     <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="group__doxy__types_1ga76f5773e557fe72d1b4afa723e530566" prot="public" static="no">
+        <type><ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CMD_TYPE</ref></type>
+        <definition>typedef CMD_TYPE CmdType</definition>
+        <argsstring></argsstring>
+        <name>CmdType</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" line="75" column="18" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/CmdQueueTypes.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
       <memberdef kind="typedef" id="group__doxy__types_1ga750bfc12acff352beabb828ba5629a4e" prot="public" static="no">
         <type><ref refid="group__doxy__types_1ga52f90e25735e172d279183e61d90d3e3" kindref="member">ERROR_CODE</ref></type>
         <definition>typedef ERROR_CODE ErrorCode</definition>

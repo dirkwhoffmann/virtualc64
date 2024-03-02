@@ -2,6 +2,8 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
   <compounddef id="dir_9110424d8d329f8b6a25ed0145171490" kind="dir">
     <compoundname>/Users/hoff/Retro/virtualc64/Emulator/Base</compoundname>
+    <innerfile refid="_cmd_queue_8h">CmdQueue.h</innerfile>
+    <innerfile refid="_cmd_queue_types_8h">CmdQueueTypes.h</innerfile>
     <innerfile refid="_error_8h">Error.h</innerfile>
     <innerfile refid="_error_types_8h">ErrorTypes.h</innerfile>
     <innerfile refid="_option_8h">Option.h</innerfile>

@@ -181,9 +181,9 @@ using namespace vc64;
 
 @implementation GuardsProxy
 
-- (VirtualC64::GUARD_API *)guards
+- (VirtualC64::GuardAPI *)guards
 {
-    return (VirtualC64::GUARD_API *)obj;
+    return (VirtualC64::GuardAPI *)obj;
 }
 
 - (NSInteger)count
@@ -270,9 +270,9 @@ using namespace vc64;
 
 @implementation CPUProxy
 
-- (VirtualC64::CPU_API *)cpu
+- (VirtualC64::CPUAPI *)cpu
 {
-    return (VirtualC64::CPU_API *)obj;
+    return (VirtualC64::CPUAPI *)obj;
 }
 
 - (CPUInfo)info
@@ -429,9 +429,9 @@ using namespace vc64;
 
 @implementation MemoryProxy
 
-- (VirtualC64::MEM_API *)mem
+- (VirtualC64::MemoryAPI *)mem
 {
-    return (VirtualC64::MEM_API *)obj;
+    return (VirtualC64::MemoryAPI *)obj;
 }
 
 - (MemConfig)config
@@ -463,9 +463,9 @@ using namespace vc64;
 
 @implementation CIAProxy
 
-- (VirtualC64::CIA_API *)cia
+- (VirtualC64::CIAAPI *)cia
 {
-    return (VirtualC64::CIA_API *)obj;
+    return (VirtualC64::CIAAPI *)obj;
 }
 
 - (CIAConfig)config
@@ -492,9 +492,9 @@ using namespace vc64;
 
 @implementation VICIIProxy
 
-- (VirtualC64::VICII_API *)vicii
+- (VirtualC64::VICIIAPI *)vicii
 {
-    return (VirtualC64::VICII_API *)obj;
+    return (VirtualC64::VICIIAPI *)obj;
 }
 
 - (NSInteger)hPixels
@@ -564,9 +564,9 @@ using namespace vc64;
 
 @implementation DmaDebuggerProxy
 
-- (VirtualC64::DMA_DEBUGGER_API *)debugger
+- (VirtualC64::DmaDebuggerAPI *)debugger
 {
-    return (VirtualC64::DMA_DEBUGGER_API *)obj;
+    return (VirtualC64::DmaDebuggerAPI *)obj;
 }
 
 - (DmaDebuggerConfig)getConfig
@@ -583,9 +583,9 @@ using namespace vc64;
 
 @implementation SIDProxy
 
-- (VirtualC64::SID_API *)bridge
+- (VirtualC64::SIDAPI *)bridge
 {
-    return (VirtualC64::SID_API *)obj;
+    return (VirtualC64::SIDAPI *)obj;
 }
 
 - (SIDInfo)getInfo:(NSInteger)nr
@@ -666,9 +666,9 @@ using namespace vc64;
 
 @implementation IECProxy
 
-- (VirtualC64::IEC_API *)iec
+- (VirtualC64::IECAPI *)iec
 {
-    return (VirtualC64::IEC_API *)obj;
+    return (VirtualC64::IECAPI *)obj;
 }
 
 /*
@@ -687,9 +687,9 @@ using namespace vc64;
 
 @implementation KeyboardProxy
 
-- (VirtualC64::KBD_API *)kb
+- (VirtualC64::KeyboardAPI *)kb
 {
-    return (VirtualC64::KBD_API *)obj;
+    return (VirtualC64::KeyboardAPI *)obj;
 }
 
 - (VirtualC64 *)emu
@@ -771,7 +771,7 @@ using namespace vc64;
 {
     if (self = [super init]) {
         
-        VirtualC64::CP_API *port = (VirtualC64::CP_API *)ref;
+        VirtualC64::ControlPortAPI *port = (VirtualC64::ControlPortAPI *)ref;
         obj = ref;
         joystick = [[JoystickProxy alloc] initWith:&port->joystick];
         mouse = [[MouseProxy alloc] initWith:&port->mouse];
@@ -779,9 +779,9 @@ using namespace vc64;
     return self;
 }
 
-- (VirtualC64::CP_API *)port
+- (VirtualC64::ControlPortAPI *)port
 {
-    return (VirtualC64::CP_API *)obj;
+    return (VirtualC64::ControlPortAPI *)obj;
 }
 
 @end
@@ -793,9 +793,9 @@ using namespace vc64;
 
 @implementation ExpansionPortProxy
 
-- (VirtualC64::EXP_PORT_API *)eport
+- (VirtualC64::ExpansionPortAPI *)eport
 {
-    return (VirtualC64::EXP_PORT_API *)obj;
+    return (VirtualC64::ExpansionPortAPI *)obj;
 }
 
 - (VirtualC64 *)emu
@@ -858,12 +858,12 @@ using namespace vc64;
 
 @implementation DiskProxy
 
-- (VirtualC64::DRIVE_API *)drive
+- (VirtualC64::DriveAPI *)drive
 {
-    return (VirtualC64::DRIVE_API *)obj;
+    return (VirtualC64::DriveAPI *)obj;
 }
 
-- (VirtualC64::DISK_API *)disk
+- (VirtualC64::DiskAPI *)disk
 {
     return &[self drive]->disk;
 }
@@ -965,7 +965,7 @@ using namespace vc64;
 
 @implementation DriveProxy
 
-- (instancetype)initWithVC1541:(VirtualC64::DRIVE_API *)drive emu:(VirtualC64 *)emuref
+- (instancetype)initWithVC1541:(VirtualC64::DriveAPI *)drive emu:(VirtualC64 *)emuref
 {
     if ([self initWith:drive emu:emuref]) {
         disk = [[DiskProxy alloc] initWith:drive];
@@ -973,9 +973,9 @@ using namespace vc64;
     return self;
 }
 
-- (VirtualC64::DRIVE_API *)drive
+- (VirtualC64::DriveAPI *)drive
 {
-    return (VirtualC64::DRIVE_API *)obj;
+    return (VirtualC64::DriveAPI *)obj;
 }
 
 - (VirtualC64 *)emu
@@ -1044,9 +1044,9 @@ using namespace vc64;
 
 @implementation DatasetteProxy
 
-- (VirtualC64::DATASETTE_API *)datasette
+- (VirtualC64::DatasetteAPI *)datasette
 {
-    return (VirtualC64::DATASETTE_API *)obj;
+    return (VirtualC64::DatasetteAPI *)obj;
 }
 
 - (VirtualC64 *)emu
@@ -1093,9 +1093,9 @@ using namespace vc64;
 
 @implementation MouseProxy
 
-- (VirtualC64::MOUSE_API *)mouse
+- (VirtualC64::MouseAPI *)mouse
 {
-    return (VirtualC64::MOUSE_API *)obj;
+    return (VirtualC64::MouseAPI *)obj;
 }
 
 - (BOOL)detectShakeAbs:(NSPoint)pos
@@ -1117,9 +1117,9 @@ using namespace vc64;
 
 @implementation JoystickProxy
 
-- (VirtualC64::JOYSTICK_API *)joystick
+- (VirtualC64::JoystickAPI *)joystick
 {
-    return (VirtualC64::JOYSTICK_API *)obj;
+    return (VirtualC64::JoystickAPI *)obj;
 }
 
 @end
@@ -1131,9 +1131,9 @@ using namespace vc64;
 
 @implementation RecorderProxy
 
-- (VirtualC64::REC_API *)recorder
+- (VirtualC64::RecorderAPI *)recorder
 {
-    return (VirtualC64::REC_API *)obj;
+    return (VirtualC64::RecorderAPI *)obj;
 }
 
 - (NSString *)path
@@ -1224,12 +1224,12 @@ using namespace vc64;
 
 @implementation RetroShellProxy
 
-- (VirtualC64::RSHELL_API *)shell
+- (VirtualC64::RetroShellAPI *)shell
 {
-    return (VirtualC64::RSHELL_API *)obj;
+    return (VirtualC64::RetroShellAPI *)obj;
 }
 
-+ (instancetype)make:(VirtualC64::RSHELL_API *)shell
++ (instancetype)make:(VirtualC64::RetroShellAPI *)shell
 {
     if (shell == nullptr) { return nil; }
     

@@ -160,7 +160,7 @@ public:
     // C64
     //
 
-    struct C64_API : public API {
+    struct C64API : public API {
 
         using API::API;
 
@@ -198,7 +198,7 @@ public:
     // Memory
     //
 
-    struct MEM_API : API {
+    struct MemoryAPI : API {
 
         using API::API;
 
@@ -217,10 +217,10 @@ public:
     // Guards
     //
 
-    struct GUARD_API : API {
+    struct GuardAPI : API {
 
         Guards &guards;
-        GUARD_API(Emulator &emu, Guards& guards) : API(emu), guards(guards) { }
+        GuardAPI(Emulator &emu, Guards& guards) : API(emu), guards(guards) { }
 
         long elements() const;
         u32 guardAddr(long nr) const;
@@ -253,14 +253,14 @@ public:
     // CPU
     //
 
-    struct CPU_API : API {
+    struct CPUAPI : API {
 
         using API::API;
 
-        GUARD_API breakpoints;
-        GUARD_API watchpoints;
+        GuardAPI breakpoints;
+        GuardAPI watchpoints;
 
-        CPU_API(Emulator &emu) :
+        CPUAPI(Emulator &emu) :
         API(emu),
         breakpoints(emu, emu.main.cpu.debugger.breakpoints),
         watchpoints(emu, emu.main.cpu.debugger.watchpoints) { }
@@ -290,10 +290,10 @@ public:
     // CIAs
     //
 
-    struct CIA_API : API {
+    struct CIAAPI : API {
 
         CIA &cia;
-        CIA_API(Emulator &emu, CIA& cia) : API(emu), cia(cia) { }
+        CIAAPI(Emulator &emu, CIA& cia) : API(emu), cia(cia) { }
 
         CIAConfig getConfig() const;
         CIAInfo getInfo() const;
@@ -306,7 +306,7 @@ public:
     // VICII
     //
 
-    struct VICII_API : API {
+    struct VICIIAPI : API {
 
         using API::API;
 
@@ -328,7 +328,7 @@ public:
     // SID
     //
 
-    struct SID_API : API {
+    struct SIDAPI : API {
 
         using API::API;
 
@@ -354,7 +354,7 @@ public:
     // DMA Debugger
     //
 
-    struct DMA_DEBUGGER_API : API {
+    struct DmaDebuggerAPI : API {
 
         using API::API;
 
@@ -368,7 +368,7 @@ public:
     // Keyboard
     //
 
-    struct KBD_API : API {
+    struct KeyboardAPI : API {
 
         using API::API;
 
@@ -383,10 +383,10 @@ public:
     // Mouse
     //
 
-    struct MOUSE_API : API {
+    struct MouseAPI : API {
 
         Mouse &mouse;
-        MOUSE_API(Emulator &emu, Mouse& mouse) : API(emu), mouse(mouse) { }
+        MouseAPI(Emulator &emu, Mouse& mouse) : API(emu), mouse(mouse) { }
 
         bool detectShakeXY(double x, double y);
         bool detectShakeDxDy(double dx, double dy);
@@ -404,10 +404,10 @@ public:
     // Joystick
     //
 
-    struct JOYSTICK_API : API {
+    struct JoystickAPI : API {
 
         Joystick &joystick;
-        JOYSTICK_API(Emulator &emu, Joystick& joystick) : API(emu), joystick(joystick) { }
+        JoystickAPI(Emulator &emu, Joystick& joystick) : API(emu), joystick(joystick) { }
 
         // Triggers a gamepad event
         void trigger(GamePadAction event);
@@ -415,10 +415,10 @@ public:
 
 
     //
-    // Mouse
+    // Datasette
     //
 
-    struct DATASETTE_API : API {
+    struct DatasetteAPI : API {
 
         using API::API;
 
@@ -434,14 +434,14 @@ public:
     // Control port
     //
 
-    struct CP_API : API {
+    struct ControlPortAPI : API {
 
         ControlPort &port;
-        CP_API(Emulator &emu, ControlPort& port) :
+        ControlPortAPI(Emulator &emu, ControlPort& port) :
         API(emu), port(port), joystick(emu, port.joystick), mouse(emu, port.mouse) { }
 
-        JOYSTICK_API joystick;
-        MOUSE_API mouse;
+        JoystickAPI joystick;
+        MouseAPI mouse;
 
     } port1, port2;
 
@@ -450,7 +450,7 @@ public:
     // Recorder
     //
 
-    struct REC_API : API {
+    struct RecorderAPI : API {
 
         using API::API;
 
@@ -475,7 +475,7 @@ public:
     // Expansion port
     //
 
-    struct EXP_PORT_API : API {
+    struct ExpansionPortAPI : API {
 
         using API::API;
 
@@ -498,7 +498,7 @@ public:
     // IEC bus
     //
 
-    struct IEC_API : API {
+    struct IECAPI : API {
 
         using API::API;
 
@@ -509,10 +509,10 @@ public:
     // Disk
     //
 
-    struct DISK_API : API {
+    struct DiskAPI : API {
 
         Drive &drive;
-        DISK_API(Emulator &emu, Drive& drive) : API(emu), drive(drive) { }
+        DiskAPI(Emulator &emu, Drive& drive) : API(emu), drive(drive) { }
     };
 
 
@@ -520,12 +520,12 @@ public:
     // Drive
     //
 
-    struct DRIVE_API : API {
+    struct DriveAPI : API {
 
         Drive &drive;
-        DRIVE_API(Emulator &emu, Drive& drive) : API(emu), drive(drive), disk(emu, drive) { }
+        DriveAPI(Emulator &emu, Drive& drive) : API(emu), drive(drive), disk(emu, drive) { }
 
-        DISK_API disk;
+        DiskAPI disk;
 
         const DriveConfig &getConfig() const;
         DriveInfo getInfo() const;
@@ -544,7 +544,7 @@ public:
     // RetroShell
     //
 
-    struct RSHELL_API : API {
+    struct RetroShellAPI : API {
 
         using API::API;
 

@@ -1,0 +1,262 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="struct_virtual_c64_1_1_drive_a_p_i" kind="struct" language="C++" prot="public">
+    <compoundname>VirtualC64::DriveAPI</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">API</basecompoundref>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct_virtual_c64_1_1_drive_a_p_i_1ab242d0dbb7d999c84c4ef9f851ba9fac" prot="public" static="no" mutable="no">
+        <type>Drive &amp;</type>
+        <definition>Drive&amp; VirtualC64::DriveAPI::drive</definition>
+        <argsstring></argsstring>
+        <name>drive</name>
+        <qualifiedname>VirtualC64::DriveAPI::drive</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="525" column="15" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="525" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct_virtual_c64_1_1_drive_a_p_i_1ae56ff5d5e440fb56a88dd8714a9e3af4" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_disk_a_p_i" kindref="compound">DiskAPI</ref></type>
+        <definition>DiskAPI VirtualC64::DriveAPI::disk</definition>
+        <argsstring></argsstring>
+        <name>disk</name>
+        <qualifiedname>VirtualC64::DriveAPI::disk</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="528" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="528" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="struct_virtual_c64_1_1_drive_a_p_i_1a054703d9ef05a24e55a35b8afce46cef" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>VirtualC64::DriveAPI::DriveAPI</definition>
+        <argsstring>(Emulator &amp;emu, Drive &amp;drive)</argsstring>
+        <name>DriveAPI</name>
+        <qualifiedname>VirtualC64::DriveAPI::DriveAPI</qualifiedname>
+        <param>
+          <type>Emulator &amp;</type>
+          <declname>emu</declname>
+        </param>
+        <param>
+          <type>Drive &amp;</type>
+          <declname>drive</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="526" column="9" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="526" bodyend="526"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_drive_a_p_i_1a4805bee802212284eb07d1d13d017942" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const DriveConfig &amp;</type>
+        <definition>const DriveConfig &amp; VirtualC64::DriveAPI::getConfig</definition>
+        <argsstring>() const</argsstring>
+        <name>getConfig</name>
+        <qualifiedname>VirtualC64::DriveAPI::getConfig</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="530" column="27"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_drive_a_p_i_1af54b54ff03b46153bc6c9ea440c992df" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>DriveInfo</type>
+        <definition>DriveInfo VirtualC64::DriveAPI::getInfo</definition>
+        <argsstring>() const</argsstring>
+        <name>getInfo</name>
+        <qualifiedname>VirtualC64::DriveAPI::getInfo</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="531" column="19"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_drive_a_p_i_1a6bb4682bd44453817590eb1eb5d02da3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::DriveAPI::insertBlankDisk</definition>
+        <argsstring>(DOSType fstype, PETName&lt; 16 &gt; name)</argsstring>
+        <name>insertBlankDisk</name>
+        <qualifiedname>VirtualC64::DriveAPI::insertBlankDisk</qualifiedname>
+        <param>
+          <type>DOSType</type>
+          <declname>fstype</declname>
+        </param>
+        <param>
+          <type>PETName&lt; 16 &gt;</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="533" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_drive_a_p_i_1a8625d9d7e8179749751acf63b75bbf69" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::DriveAPI::insertD64</definition>
+        <argsstring>(const D64File &amp;d64, bool wp)</argsstring>
+        <name>insertD64</name>
+        <qualifiedname>VirtualC64::DriveAPI::insertD64</qualifiedname>
+        <param>
+          <type>const D64File &amp;</type>
+          <declname>d64</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>wp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="534" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_drive_a_p_i_1a4244f12d48a1fbdbccfa8c582a8245f1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::DriveAPI::insertG64</definition>
+        <argsstring>(const G64File &amp;g64, bool wp)</argsstring>
+        <name>insertG64</name>
+        <qualifiedname>VirtualC64::DriveAPI::insertG64</qualifiedname>
+        <param>
+          <type>const G64File &amp;</type>
+          <declname>g64</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>wp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="535" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_drive_a_p_i_1a9a87e8fcc6d5824c45377252991fee49" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::DriveAPI::insertCollection</definition>
+        <argsstring>(AnyCollection &amp;archive, bool wp) throws</argsstring>
+        <name>insertCollection</name>
+        <qualifiedname>VirtualC64::DriveAPI::insertCollection</qualifiedname>
+        <param>
+          <type>AnyCollection &amp;</type>
+          <declname>archive</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>wp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="536" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_drive_a_p_i_1a70d71b514d79c1984077dd189d899db6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::DriveAPI::insertFileSystem</definition>
+        <argsstring>(const class FileSystem &amp;device, bool wp)</argsstring>
+        <name>insertFileSystem</name>
+        <qualifiedname>VirtualC64::DriveAPI::insertFileSystem</qualifiedname>
+        <param>
+          <type>const class FileSystem &amp;</type>
+          <declname>device</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>wp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="537" column="14"/>
+      </memberdef>
+      <memberdef kind="function" id="struct_virtual_c64_1_1_drive_a_p_i_1a88fc7e13884475c7f86b5b6128c8b80a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void VirtualC64::DriveAPI::ejectDisk</definition>
+        <argsstring>()</argsstring>
+        <name>ejectDisk</name>
+        <qualifiedname>VirtualC64::DriveAPI::ejectDisk</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="538" column="14"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="1">
+        <label>VirtualC64::DriveAPI</label>
+        <link refid="struct_virtual_c64_1_1_drive_a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>API</label>
+      </node>
+      <node id="3">
+        <label>VirtualC64::DiskAPI</label>
+        <link refid="struct_virtual_c64_1_1_disk_a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>VirtualC64::DriveAPI</label>
+        <link refid="struct_virtual_c64_1_1_drive_a_p_i"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>disk</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="523" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="523" bodyend="540"/>
+    <listofallmembers>
+      <member refid="struct_virtual_c64_1_1_drive_a_p_i_1ae56ff5d5e440fb56a88dd8714a9e3af4" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>disk</name></member>
+      <member refid="struct_virtual_c64_1_1_drive_a_p_i_1ab242d0dbb7d999c84c4ef9f851ba9fac" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>drive</name></member>
+      <member refid="struct_virtual_c64_1_1_drive_a_p_i_1a054703d9ef05a24e55a35b8afce46cef" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>DriveAPI</name></member>
+      <member refid="struct_virtual_c64_1_1_drive_a_p_i_1a88fc7e13884475c7f86b5b6128c8b80a" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>ejectDisk</name></member>
+      <member refid="struct_virtual_c64_1_1_drive_a_p_i_1a4805bee802212284eb07d1d13d017942" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>getConfig</name></member>
+      <member refid="struct_virtual_c64_1_1_drive_a_p_i_1af54b54ff03b46153bc6c9ea440c992df" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>getInfo</name></member>
+      <member refid="struct_virtual_c64_1_1_drive_a_p_i_1a6bb4682bd44453817590eb1eb5d02da3" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>insertBlankDisk</name></member>
+      <member refid="struct_virtual_c64_1_1_drive_a_p_i_1a9a87e8fcc6d5824c45377252991fee49" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>insertCollection</name></member>
+      <member refid="struct_virtual_c64_1_1_drive_a_p_i_1a8625d9d7e8179749751acf63b75bbf69" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>insertD64</name></member>
+      <member refid="struct_virtual_c64_1_1_drive_a_p_i_1a70d71b514d79c1984077dd189d899db6" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>insertFileSystem</name></member>
+      <member refid="struct_virtual_c64_1_1_drive_a_p_i_1a4244f12d48a1fbdbccfa8c582a8245f1" prot="public" virt="non-virtual"><scope>VirtualC64::DriveAPI</scope><name>insertG64</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

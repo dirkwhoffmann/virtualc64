@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['wakeup_0',['wakeUp',['../class_virtual_c64.html#aca3821452aac3065cf92f63db8121674',1,'VirtualC64::wakeUp()'],['../classvc64_1_1_thread.html#a4bf669b15db347f665f0459d18a90680',1,'vc64::Thread::wakeUp()']]],
-  ['warp_20mode_1',['Warp mode',['../group__topic__state__model.html#autotoc_md5',1,'']]],
-  ['welcome_2',['Welcome',['../index.html',1,'']]],
-  ['where_20to_20go_20from_20here_3',['Where to go from here?',['../index.html#autotoc_md2',1,'']]]
+  ['vc64error_0',['VC64Error',['../structvc64_1_1_v_c64_error.html',1,'vc64']]],
+  ['version_1',['version',['../class_virtual_c64.html#a17ff135464512a12d1610cabb9758d67',1,'VirtualC64']]],
+  ['viciiapi_2',['VICIIAPI',['../struct_virtual_c64_1_1_v_i_c_i_i_a_p_i.html',1,'VirtualC64']]],
+  ['virtualc64_3',['VirtualC64',['../class_virtual_c64.html',1,'']]]
 ];

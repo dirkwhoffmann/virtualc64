@@ -107,14 +107,33 @@ $(function(){initNavTree('group__doxy__types.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle"><div class="title">Types</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_key_cmd.html">KeyCmd</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_coord_cmd.html">CoordCmd</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_game_pad_cmd.html">GamePadCmd</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_tape_cmd.html">TapeCmd</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_alarm_cmd.html">AlarmCmd</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_shell_cmd.html">ShellCmd</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:ga76f5773e557fe72d1b4afa723e530566" id="r_ga76f5773e557fe72d1b4afa723e530566"><td class="memItemLeft" align="right" valign="top"><a id="ga76f5773e557fe72d1b4afa723e530566" name="ga76f5773e557fe72d1b4afa723e530566"></a>
+typedef <a class="el" href="#ga63ebdc688313e444b486514798e48df3">CMD_TYPE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>CmdType</b></td></tr>
+<tr class="separator:ga76f5773e557fe72d1b4afa723e530566"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga750bfc12acff352beabb828ba5629a4e" id="r_ga750bfc12acff352beabb828ba5629a4e"><td class="memItemLeft" align="right" valign="top"><a id="ga750bfc12acff352beabb828ba5629a4e" name="ga750bfc12acff352beabb828ba5629a4e"></a>
 typedef <a class="el" href="#ga52f90e25735e172d279183e61d90d3e3">ERROR_CODE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ErrorCode</b></td></tr>
 <tr class="separator:ga750bfc12acff352beabb828ba5629a4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,6 +146,44 @@ typedef <a class="el" href="#ga44fb3bfc9b3abc142d662a5ffb4e9cbc">EMULATOR_STATE<
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
+<tr class="memitem:ga63ebdc688313e444b486514798e48df3" id="r_ga63ebdc688313e444b486514798e48df3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga63ebdc688313e444b486514798e48df3">CMD_TYPE</a> : long { <br />
+&#160;&#160;<a class="el" href="#gga63ebdc688313e444b486514798e48df3a93c1ce1fac89139d9f4df4b6db21b1cc">CMD_NONE</a> = 0
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3ac8e628de5d800200ea73ca97d6ef1e91">CMD_SNAPSHOT_AUTO</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3a7aa07e1b63a8309e8356d855537043d0">CMD_SNAPSHOT_USER</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3a998871469ccfa34ee7b9b304e5086e37">CMD_ALARM_ABS</a>
+, <br />
+&#160;&#160;<a class="el" href="#gga63ebdc688313e444b486514798e48df3ab25e2356709a51ea2257298a1f74eae9">CMD_ALARM_REL</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3ab4c2c070b619b1f808238cc49c31a8f7">CMD_CPU_BRK</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3a1ee50b12ac4517b6b8848792a903bd8e">CMD_CPU_NMI</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3a0d00e2f0cba95a7ae85699036485fd7f">CMD_KEY_PRESS</a>
+, <br />
+&#160;&#160;<a class="el" href="#gga63ebdc688313e444b486514798e48df3af74c08e0d502f1233a3e12e8c5dff7f5">CMD_KEY_RELEASE</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3aba97321e55d4e9320993cfe49f1e68b9">CMD_KEY_RELEASE_ALL</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3aa9859a03cc385ec099f044fe68d819e9">CMD_KEY_TOGGLE</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3a9700907d31668e74487df274bd415d0e">CMD_MOUSE_MOVE_ABS</a>
+, <br />
+&#160;&#160;<a class="el" href="#gga63ebdc688313e444b486514798e48df3a95a4824dcfff64873d6e718545e6ab04">CMD_MOUSE_MOVE_REL</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3a0e4d2eac3e3a9bb323dd933d7d2bfdfc">CMD_MOUSE_EVENT</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3a685bf3a2b9e507d383cdd8eef9527e25">CMD_JOY_EVENT</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3a8533d86b1ac4bda87ba9db602acf98e3">CMD_DSK_TOGGLE_WP</a>
+, <br />
+&#160;&#160;<a class="el" href="#gga63ebdc688313e444b486514798e48df3a3debc19e1cad98e6b0f484445c306f30">CMD_DSK_MODIFIED</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3a6ae7661f4ed38ef563c81680b681c64d">CMD_DSK_UNMODIFIED</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3a2e51e8d28a5df7a2ad790e7d7a4cc5af">CMD_DATASETTE_PLAY</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3a257c1eff3f5a2ae97064df677b809936">CMD_DATASETTE_STOP</a>
+, <br />
+&#160;&#160;<a class="el" href="#gga63ebdc688313e444b486514798e48df3a945c23a37311b1df5a129778a17f4cf9">CMD_DATASETTE_REWIND</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3ad9116107b0be9868d4d2563f40e33fd4">CMD_CRT_BUTTON_PRESS</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3a61105b208370c0fad8cb6b925ac3ef3e">CMD_CRT_BUTTON_RELEASE</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3ad969b2766e60e084e39b47424e11e6ea">CMD_CRT_SWITCH_LEFT</a>
+, <br />
+&#160;&#160;<a class="el" href="#gga63ebdc688313e444b486514798e48df3ad6b727e3d07c4845f09dc5eab83d3bcc">CMD_CRT_SWITCH_NEUTRAL</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3a092eb67ee6a7425139087d44561a030c">CMD_CRT_SWITCH_RIGHT</a>
+, <a class="el" href="#gga63ebdc688313e444b486514798e48df3af91039778727323fb4b230805558c27a">CMD_RSH_EXECUTE</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:ga63ebdc688313e444b486514798e48df3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emulator command.  <a href="#ga63ebdc688313e444b486514798e48df3">More...</a><br /></td></tr>
+<tr class="separator:ga63ebdc688313e444b486514798e48df3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga52f90e25735e172d279183e61d90d3e3" id="r_ga52f90e25735e172d279183e61d90d3e3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga52f90e25735e172d279183e61d90d3e3">ERROR_CODE</a> : long { <br />
 &#160;&#160;<a class="el" href="#gga52f90e25735e172d279183e61d90d3e3aadeb5032c03491611646c1c64f7c0e0c">ERROR_OK</a>
 , <a class="el" href="#gga52f90e25735e172d279183e61d90d3e3a2c8108ceb9a85cecbbe3af50dbc1cf8c">ERROR_UNKNOWN</a>
@@ -309,6 +366,78 @@ Enumerations</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga63ebdc688313e444b486514798e48df3" name="ga63ebdc688313e444b486514798e48df3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga63ebdc688313e444b486514798e48df3">&#9670;&#160;</a></span>CMD_TYPE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#ga63ebdc688313e444b486514798e48df3">CMD_TYPE</a> : long</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Emulator command. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3a93c1ce1fac89139d9f4df4b6db21b1cc" name="gga63ebdc688313e444b486514798e48df3a93c1ce1fac89139d9f4df4b6db21b1cc"></a>CMD_NONE&#160;</td><td class="fielddoc"><p>None. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3ac8e628de5d800200ea73ca97d6ef1e91" name="gga63ebdc688313e444b486514798e48df3ac8e628de5d800200ea73ca97d6ef1e91"></a>CMD_SNAPSHOT_AUTO&#160;</td><td class="fielddoc"><p>Take a snapshot (emulator triggered) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3a7aa07e1b63a8309e8356d855537043d0" name="gga63ebdc688313e444b486514798e48df3a7aa07e1b63a8309e8356d855537043d0"></a>CMD_SNAPSHOT_USER&#160;</td><td class="fielddoc"><p>Take a snapshot (user triggered) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3a998871469ccfa34ee7b9b304e5086e37" name="gga63ebdc688313e444b486514798e48df3a998871469ccfa34ee7b9b304e5086e37"></a>CMD_ALARM_ABS&#160;</td><td class="fielddoc"><p>Schedule an alarm (absolute cycle) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3ab25e2356709a51ea2257298a1f74eae9" name="gga63ebdc688313e444b486514798e48df3ab25e2356709a51ea2257298a1f74eae9"></a>CMD_ALARM_REL&#160;</td><td class="fielddoc"><p>Schedule an alarm (relative cycle) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3ab4c2c070b619b1f808238cc49c31a8f7" name="gga63ebdc688313e444b486514798e48df3ab4c2c070b619b1f808238cc49c31a8f7"></a>CMD_CPU_BRK&#160;</td><td class="fielddoc"><p>Let the CPU execute a BRK instruction. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3a1ee50b12ac4517b6b8848792a903bd8e" name="gga63ebdc688313e444b486514798e48df3a1ee50b12ac4517b6b8848792a903bd8e"></a>CMD_CPU_NMI&#160;</td><td class="fielddoc"><p>Emulate an external expansion port NMI. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3a0d00e2f0cba95a7ae85699036485fd7f" name="gga63ebdc688313e444b486514798e48df3a0d00e2f0cba95a7ae85699036485fd7f"></a>CMD_KEY_PRESS&#160;</td><td class="fielddoc"><p>Press a key on the C64 keyboard. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3af74c08e0d502f1233a3e12e8c5dff7f5" name="gga63ebdc688313e444b486514798e48df3af74c08e0d502f1233a3e12e8c5dff7f5"></a>CMD_KEY_RELEASE&#160;</td><td class="fielddoc"><p>Release a key on the C64 keyboard. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3aba97321e55d4e9320993cfe49f1e68b9" name="gga63ebdc688313e444b486514798e48df3aba97321e55d4e9320993cfe49f1e68b9"></a>CMD_KEY_RELEASE_ALL&#160;</td><td class="fielddoc"><p>Clear the keyboard matrix. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3aa9859a03cc385ec099f044fe68d819e9" name="gga63ebdc688313e444b486514798e48df3aa9859a03cc385ec099f044fe68d819e9"></a>CMD_KEY_TOGGLE&#160;</td><td class="fielddoc"><p>Press or release a key on the C64 keyboard. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3a9700907d31668e74487df274bd415d0e" name="gga63ebdc688313e444b486514798e48df3a9700907d31668e74487df274bd415d0e"></a>CMD_MOUSE_MOVE_ABS&#160;</td><td class="fielddoc"><p>Signal a mouse movement (absolut coordinates) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3a95a4824dcfff64873d6e718545e6ab04" name="gga63ebdc688313e444b486514798e48df3a95a4824dcfff64873d6e718545e6ab04"></a>CMD_MOUSE_MOVE_REL&#160;</td><td class="fielddoc"><p>Signal a mouse movement (relative coordinates) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3a0e4d2eac3e3a9bb323dd933d7d2bfdfc" name="gga63ebdc688313e444b486514798e48df3a0e4d2eac3e3a9bb323dd933d7d2bfdfc"></a>CMD_MOUSE_EVENT&#160;</td><td class="fielddoc"><p>Signal a mouse button event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3a685bf3a2b9e507d383cdd8eef9527e25" name="gga63ebdc688313e444b486514798e48df3a685bf3a2b9e507d383cdd8eef9527e25"></a>CMD_JOY_EVENT&#160;</td><td class="fielddoc"><p>Signal a joystick button event. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3a8533d86b1ac4bda87ba9db602acf98e3" name="gga63ebdc688313e444b486514798e48df3a8533d86b1ac4bda87ba9db602acf98e3"></a>CMD_DSK_TOGGLE_WP&#160;</td><td class="fielddoc"><p>Toggle write-protection. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3a3debc19e1cad98e6b0f484445c306f30" name="gga63ebdc688313e444b486514798e48df3a3debc19e1cad98e6b0f484445c306f30"></a>CMD_DSK_MODIFIED&#160;</td><td class="fielddoc"><p>Signal that the disk has been saved. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3a6ae7661f4ed38ef563c81680b681c64d" name="gga63ebdc688313e444b486514798e48df3a6ae7661f4ed38ef563c81680b681c64d"></a>CMD_DSK_UNMODIFIED&#160;</td><td class="fielddoc"><p>Signan that the disk needs saving. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3a2e51e8d28a5df7a2ad790e7d7a4cc5af" name="gga63ebdc688313e444b486514798e48df3a2e51e8d28a5df7a2ad790e7d7a4cc5af"></a>CMD_DATASETTE_PLAY&#160;</td><td class="fielddoc"><p>Press the datasette play key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3a257c1eff3f5a2ae97064df677b809936" name="gga63ebdc688313e444b486514798e48df3a257c1eff3f5a2ae97064df677b809936"></a>CMD_DATASETTE_STOP&#160;</td><td class="fielddoc"><p>Press the datasette stop key. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3a945c23a37311b1df5a129778a17f4cf9" name="gga63ebdc688313e444b486514798e48df3a945c23a37311b1df5a129778a17f4cf9"></a>CMD_DATASETTE_REWIND&#160;</td><td class="fielddoc"><p>Rewind the tape. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3ad9116107b0be9868d4d2563f40e33fd4" name="gga63ebdc688313e444b486514798e48df3ad9116107b0be9868d4d2563f40e33fd4"></a>CMD_CRT_BUTTON_PRESS&#160;</td><td class="fielddoc"><p>Press a cartridge button. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3a61105b208370c0fad8cb6b925ac3ef3e" name="gga63ebdc688313e444b486514798e48df3a61105b208370c0fad8cb6b925ac3ef3e"></a>CMD_CRT_BUTTON_RELEASE&#160;</td><td class="fielddoc"><p>Release a cartridge button. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3ad969b2766e60e084e39b47424e11e6ea" name="gga63ebdc688313e444b486514798e48df3ad969b2766e60e084e39b47424e11e6ea"></a>CMD_CRT_SWITCH_LEFT&#160;</td><td class="fielddoc"><p>Pull the cartridge switch left. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3ad6b727e3d07c4845f09dc5eab83d3bcc" name="gga63ebdc688313e444b486514798e48df3ad6b727e3d07c4845f09dc5eab83d3bcc"></a>CMD_CRT_SWITCH_NEUTRAL&#160;</td><td class="fielddoc"><p>Put the cartridge switch in neutral position. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3a092eb67ee6a7425139087d44561a030c" name="gga63ebdc688313e444b486514798e48df3a092eb67ee6a7425139087d44561a030c"></a>CMD_CRT_SWITCH_RIGHT&#160;</td><td class="fielddoc"><p>Pull the cartridge switch right. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga63ebdc688313e444b486514798e48df3af91039778727323fb4b230805558c27a" name="gga63ebdc688313e444b486514798e48df3af91039778727323fb4b230805558c27a"></a>CMD_RSH_EXECUTE&#160;</td><td class="fielddoc"><p>Execute a script command. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a id="ga44fb3bfc9b3abc142d662a5ffb4e9cbc" name="ga44fb3bfc9b3abc142d662a5ffb4e9cbc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga44fb3bfc9b3abc142d662a5ffb4e9cbc">&#9670;&#160;</a></span>EMULATOR_STATE</h2>
 

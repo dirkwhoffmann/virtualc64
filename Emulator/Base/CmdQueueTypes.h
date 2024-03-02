@@ -16,57 +16,61 @@
 #include "Reflection.h"
 #include "JoystickTypes.h"
 
+/// @addtogroup doxy_types Types
+/// @{
+
 //
 // Enumerations
 //
 
+/// Emulator command
 enum_long(CMD_TYPE)
 {
-    CMD_NONE = 0,
+    CMD_NONE = 0,               ///< None
 
     // C64
-    CMD_SNAPSHOT_AUTO,
-    CMD_SNAPSHOT_USER,
-    CMD_ALARM_ABS,
-    CMD_ALARM_REL,
+    CMD_SNAPSHOT_AUTO,          ///< Take a snapshot (emulator triggered)
+    CMD_SNAPSHOT_USER,          ///< Take a snapshot (user triggered)
+    CMD_ALARM_ABS,              ///< Schedule an alarm (absolute cycle)
+    CMD_ALARM_REL,              ///< Schedule an alarm (relative cycle)
 
     // CPU
-    CMD_CPU_BRK,
-    CMD_CPU_NMI,
+    CMD_CPU_BRK,                ///< Let the CPU execute a BRK instruction
+    CMD_CPU_NMI,                ///< Emulate an external expansion port NMI
 
     // Keyboard
-    CMD_KEY_PRESS,
-    CMD_KEY_RELEASE,
-    CMD_KEY_RELEASE_ALL,
-    CMD_KEY_TOGGLE,
+    CMD_KEY_PRESS,              ///< Press a key on the C64 keyboard
+    CMD_KEY_RELEASE,            ///< Release a key on the C64 keyboard
+    CMD_KEY_RELEASE_ALL,        ///< Clear the keyboard matrix
+    CMD_KEY_TOGGLE,             ///< Press or release a key on the C64 keyboard
 
     // Mice
-    CMD_MOUSE_MOVE_ABS,
-    CMD_MOUSE_MOVE_REL,
-    CMD_MOUSE_EVENT,
+    CMD_MOUSE_MOVE_ABS,         ///< Signal a mouse movement (absolut coordinates)
+    CMD_MOUSE_MOVE_REL,         ///< Signal a mouse movement (relative coordinates)
+    CMD_MOUSE_EVENT,            ///< Signal a mouse button event
 
     // Joysticks
-    CMD_JOY_EVENT,
+    CMD_JOY_EVENT,              ///< Signal a joystick button event
 
     // Floppy disks
-    CMD_DSK_TOGGLE_WP,
-    CMD_DSK_MODIFIED,
-    CMD_DSK_UNMODIFIED,
+    CMD_DSK_TOGGLE_WP,          ///< Toggle write-protection
+    CMD_DSK_MODIFIED,           ///< Signal that the disk has been saved
+    CMD_DSK_UNMODIFIED,         ///< Signan that the disk needs saving
 
     // Datasette
-    CMD_DATASETTE_PLAY,
-    CMD_DATASETTE_STOP,
-    CMD_DATASETTE_REWIND,
+    CMD_DATASETTE_PLAY,         ///< Press the datasette play key
+    CMD_DATASETTE_STOP,         ///< Press the datasette stop key
+    CMD_DATASETTE_REWIND,       ///< Rewind the tape
 
     // Cartridges
-    CMD_CRT_BUTTON_PRESS,
-    CMD_CRT_BUTTON_RELEASE,
-    CMD_CRT_SWITCH_LEFT,
-    CMD_CRT_SWITCH_NEUTRAL,
-    CMD_CRT_SWITCH_RIGHT,
+    CMD_CRT_BUTTON_PRESS,       ///< Press a cartridge button
+    CMD_CRT_BUTTON_RELEASE,     ///< Release a cartridge button
+    CMD_CRT_SWITCH_LEFT,        ///< Pull the cartridge switch left
+    CMD_CRT_SWITCH_NEUTRAL,     ///< Put the cartridge switch in neutral position
+    CMD_CRT_SWITCH_RIGHT,       ///< Pull the cartridge switch right
 
     // RetroShell
-    CMD_RSH_EXECUTE
+    CMD_RSH_EXECUTE             ///< Execute a script command
 };
 typedef CMD_TYPE CmdType;
 
@@ -199,3 +203,5 @@ struct Cmd
 };
 
 #endif
+
+/// @}

@@ -4,25 +4,25 @@
     <compoundname>VirtualC64</compoundname>
     <basecompoundref prot="private" virt="non-virtual">vc64::Emulator</basecompoundref>
     <includes refid="_virtual_c64_8h" local="no">VirtualC64.h</includes>
-    <innerclass refid="struct_virtual_c64_1_1_c64___a_p_i" prot="public">VirtualC64::C64_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_c_i_a___a_p_i" prot="public">VirtualC64::CIA_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_c_p___a_p_i" prot="public">VirtualC64::CP_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_c_p_u___a_p_i" prot="public">VirtualC64::CPU_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_d_a_t_a_s_e_t_t_e___a_p_i" prot="public">VirtualC64::DATASETTE_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_d_i_s_k___a_p_i" prot="public">VirtualC64::DISK_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_d_m_a___d_e_b_u_g_g_e_r___a_p_i" prot="public">VirtualC64::DMA_DEBUGGER_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_d_r_i_v_e___a_p_i" prot="public">VirtualC64::DRIVE_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i" prot="public">VirtualC64::EXP_PORT_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_g_u_a_r_d___a_p_i" prot="public">VirtualC64::GUARD_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_i_e_c___a_p_i" prot="public">VirtualC64::IEC_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_j_o_y_s_t_i_c_k___a_p_i" prot="public">VirtualC64::JOYSTICK_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_k_b_d___a_p_i" prot="public">VirtualC64::KBD_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_m_e_m___a_p_i" prot="public">VirtualC64::MEM_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_m_o_u_s_e___a_p_i" prot="public">VirtualC64::MOUSE_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_r_e_c___a_p_i" prot="public">VirtualC64::REC_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_r_s_h_e_l_l___a_p_i" prot="public">VirtualC64::RSHELL_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_s_i_d___a_p_i" prot="public">VirtualC64::SID_API</innerclass>
-    <innerclass refid="struct_virtual_c64_1_1_v_i_c_i_i___a_p_i" prot="public">VirtualC64::VICII_API</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_c64_a_p_i" prot="public">VirtualC64::C64API</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_c_i_a_a_p_i" prot="public">VirtualC64::CIAAPI</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_control_port_a_p_i" prot="public">VirtualC64::ControlPortAPI</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_c_p_u_a_p_i" prot="public">VirtualC64::CPUAPI</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_datasette_a_p_i" prot="public">VirtualC64::DatasetteAPI</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_disk_a_p_i" prot="public">VirtualC64::DiskAPI</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_dma_debugger_a_p_i" prot="public">VirtualC64::DmaDebuggerAPI</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_drive_a_p_i" prot="public">VirtualC64::DriveAPI</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_expansion_port_a_p_i" prot="public">VirtualC64::ExpansionPortAPI</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_guard_a_p_i" prot="public">VirtualC64::GuardAPI</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_i_e_c_a_p_i" prot="public">VirtualC64::IECAPI</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_joystick_a_p_i" prot="public">VirtualC64::JoystickAPI</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_keyboard_a_p_i" prot="public">VirtualC64::KeyboardAPI</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_memory_a_p_i" prot="public">VirtualC64::MemoryAPI</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_mouse_a_p_i" prot="public">VirtualC64::MouseAPI</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_recorder_a_p_i" prot="public">VirtualC64::RecorderAPI</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_retro_shell_a_p_i" prot="public">VirtualC64::RetroShellAPI</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_s_i_d_a_p_i" prot="public">VirtualC64::SIDAPI</innerclass>
+    <innerclass refid="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i" prot="public">VirtualC64::VICIIAPI</innerclass>
     <sectiondef kind="user-defined">
       <header>Controlling the emulator state</header>
       <memberdef kind="function" id="class_virtual_c64_1a1ab04f504353c522229531fb22a732fe" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
@@ -151,9 +151,9 @@
       </memberdef>
     </sectiondef>
     <sectiondef kind="public-attrib">
-      <memberdef kind="variable" id="class_virtual_c64_1af2f325265e2cd7d188b85b31be062b24" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_c64___a_p_i" kindref="compound">VirtualC64::C64_API</ref></type>
-        <definition>VirtualC64::C64_API VirtualC64::c64</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1a472096a1d73b55903d2767d372b46cb2" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_c64_a_p_i" kindref="compound">VirtualC64::C64API</ref></type>
+        <definition>VirtualC64::C64API VirtualC64::c64</definition>
         <argsstring></argsstring>
         <name>c64</name>
         <qualifiedname>VirtualC64::c64</qualifiedname>
@@ -165,9 +165,9 @@
         </inbodydescription>
         <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="194" column="9"/>
       </memberdef>
-      <memberdef kind="variable" id="class_virtual_c64_1a21e326ade8227588172a07904a8f5f42" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_m_e_m___a_p_i" kindref="compound">VirtualC64::MEM_API</ref></type>
-        <definition>VirtualC64::MEM_API VirtualC64::mem</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1a76d4385f411fd5b2367573e3a88b86d8" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_memory_a_p_i" kindref="compound">VirtualC64::MemoryAPI</ref></type>
+        <definition>VirtualC64::MemoryAPI VirtualC64::mem</definition>
         <argsstring></argsstring>
         <name>mem</name>
         <qualifiedname>VirtualC64::mem</qualifiedname>
@@ -179,9 +179,9 @@
         </inbodydescription>
         <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="213" column="9"/>
       </memberdef>
-      <memberdef kind="variable" id="class_virtual_c64_1a1422d27428dcec81bf45d9dd55c17573" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_c_p_u___a_p_i" kindref="compound">VirtualC64::CPU_API</ref></type>
-        <definition>VirtualC64::CPU_API VirtualC64::cpu</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1a8f1c2204c2952caf8355953466f1aedd" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_c_p_u_a_p_i" kindref="compound">VirtualC64::CPUAPI</ref></type>
+        <definition>VirtualC64::CPUAPI VirtualC64::cpu</definition>
         <argsstring></argsstring>
         <name>cpu</name>
         <qualifiedname>VirtualC64::cpu</qualifiedname>
@@ -193,9 +193,9 @@
         </inbodydescription>
         <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="286" column="9"/>
       </memberdef>
-      <memberdef kind="variable" id="class_virtual_c64_1a4468d0b19a817ec0f1081f115a0f1985" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_c_i_a___a_p_i" kindref="compound">VirtualC64::CIA_API</ref></type>
-        <definition>VirtualC64::CIA_API VirtualC64::cia1</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1a014575d53b523b082bfcb82b8f41dfda" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_c_i_a_a_p_i" kindref="compound">VirtualC64::CIAAPI</ref></type>
+        <definition>VirtualC64::CIAAPI VirtualC64::cia1</definition>
         <argsstring></argsstring>
         <name>cia1</name>
         <qualifiedname>VirtualC64::cia1</qualifiedname>
@@ -207,9 +207,9 @@
         </inbodydescription>
         <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="302" column="10"/>
       </memberdef>
-      <memberdef kind="variable" id="class_virtual_c64_1ac51faac99e8f6196e1bcb940ca6d2f8b" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_c_i_a___a_p_i" kindref="compound">VirtualC64::CIA_API</ref></type>
-        <definition>VirtualC64::CIA_API VirtualC64::cia2</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1a8fd94dfea6bc44df0a5f6011839418bc" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_c_i_a_a_p_i" kindref="compound">VirtualC64::CIAAPI</ref></type>
+        <definition>VirtualC64::CIAAPI VirtualC64::cia2</definition>
         <argsstring></argsstring>
         <name>cia2</name>
         <qualifiedname>VirtualC64::cia2</qualifiedname>
@@ -221,9 +221,9 @@
         </inbodydescription>
         <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="302" column="15"/>
       </memberdef>
-      <memberdef kind="variable" id="class_virtual_c64_1acab17c08373a26e9b4680f1d24f2b08a" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_v_i_c_i_i___a_p_i" kindref="compound">VirtualC64::VICII_API</ref></type>
-        <definition>VirtualC64::VICII_API VirtualC64::vicii</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1aa65548f8252729ebe6912e0eb0591778" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i" kindref="compound">VirtualC64::VICIIAPI</ref></type>
+        <definition>VirtualC64::VICIIAPI VirtualC64::vicii</definition>
         <argsstring></argsstring>
         <name>vicii</name>
         <qualifiedname>VirtualC64::vicii</qualifiedname>
@@ -235,9 +235,9 @@
         </inbodydescription>
         <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="324" column="11"/>
       </memberdef>
-      <memberdef kind="variable" id="class_virtual_c64_1a2d9570de7d007839a910f0e37cf4d37f" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_s_i_d___a_p_i" kindref="compound">VirtualC64::SID_API</ref></type>
-        <definition>VirtualC64::SID_API VirtualC64::muxer</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1ae868e28547d54efedea05c3bba33cbe1" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_s_i_d_a_p_i" kindref="compound">VirtualC64::SIDAPI</ref></type>
+        <definition>VirtualC64::SIDAPI VirtualC64::muxer</definition>
         <argsstring></argsstring>
         <name>muxer</name>
         <qualifiedname>VirtualC64::muxer</qualifiedname>
@@ -249,9 +249,9 @@
         </inbodydescription>
         <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="350" column="11"/>
       </memberdef>
-      <memberdef kind="variable" id="class_virtual_c64_1a6c77c62a64e2eb8cd3e4e5a94685d9f8" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_d_m_a___d_e_b_u_g_g_e_r___a_p_i" kindref="compound">VirtualC64::DMA_DEBUGGER_API</ref></type>
-        <definition>VirtualC64::DMA_DEBUGGER_API VirtualC64::dmaDebugger</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1a939a30d5f1fa7e62ae57a1d9c4e4d4f5" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_dma_debugger_a_p_i" kindref="compound">VirtualC64::DmaDebuggerAPI</ref></type>
+        <definition>VirtualC64::DmaDebuggerAPI VirtualC64::dmaDebugger</definition>
         <argsstring></argsstring>
         <name>dmaDebugger</name>
         <qualifiedname>VirtualC64::dmaDebugger</qualifiedname>
@@ -263,9 +263,9 @@
         </inbodydescription>
         <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="364" column="17"/>
       </memberdef>
-      <memberdef kind="variable" id="class_virtual_c64_1ac854798101145c9d95f29821e829a9a5" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_k_b_d___a_p_i" kindref="compound">VirtualC64::KBD_API</ref></type>
-        <definition>VirtualC64::KBD_API VirtualC64::keyboard</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1af57574d16d1e4ab9984b4a60e727cb19" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_keyboard_a_p_i" kindref="compound">VirtualC64::KeyboardAPI</ref></type>
+        <definition>VirtualC64::KeyboardAPI VirtualC64::keyboard</definition>
         <argsstring></argsstring>
         <name>keyboard</name>
         <qualifiedname>VirtualC64::keyboard</qualifiedname>
@@ -277,9 +277,9 @@
         </inbodydescription>
         <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="379" column="14"/>
       </memberdef>
-      <memberdef kind="variable" id="class_virtual_c64_1a9dec628c2928b2f3987adef819ffccd9" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_d_a_t_a_s_e_t_t_e___a_p_i" kindref="compound">VirtualC64::DATASETTE_API</ref></type>
-        <definition>VirtualC64::DATASETTE_API VirtualC64::datasette</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1ab575b365c58f8ec34a5e98c1519ac7b9" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_datasette_a_p_i" kindref="compound">VirtualC64::DatasetteAPI</ref></type>
+        <definition>VirtualC64::DatasetteAPI VirtualC64::datasette</definition>
         <argsstring></argsstring>
         <name>datasette</name>
         <qualifiedname>VirtualC64::datasette</qualifiedname>
@@ -291,9 +291,9 @@
         </inbodydescription>
         <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="430" column="15"/>
       </memberdef>
-      <memberdef kind="variable" id="class_virtual_c64_1a047c411bfd819875375c7a546918afc3" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_c_p___a_p_i" kindref="compound">VirtualC64::CP_API</ref></type>
-        <definition>VirtualC64::CP_API VirtualC64::port1</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1a40721f21d0ed80b51c71e0e1c7f59f4c" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_control_port_a_p_i" kindref="compound">VirtualC64::ControlPortAPI</ref></type>
+        <definition>VirtualC64::ControlPortAPI VirtualC64::port1</definition>
         <argsstring></argsstring>
         <name>port1</name>
         <qualifiedname>VirtualC64::port1</qualifiedname>
@@ -305,9 +305,9 @@
         </inbodydescription>
         <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="446" column="11"/>
       </memberdef>
-      <memberdef kind="variable" id="class_virtual_c64_1ae409f4f387165daadee1e5fb315945c0" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_c_p___a_p_i" kindref="compound">VirtualC64::CP_API</ref></type>
-        <definition>VirtualC64::CP_API VirtualC64::port2</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1ad0a4943431f9fe192fc585b76a268f21" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_control_port_a_p_i" kindref="compound">VirtualC64::ControlPortAPI</ref></type>
+        <definition>VirtualC64::ControlPortAPI VirtualC64::port2</definition>
         <argsstring></argsstring>
         <name>port2</name>
         <qualifiedname>VirtualC64::port2</qualifiedname>
@@ -319,9 +319,9 @@
         </inbodydescription>
         <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="446" column="17"/>
       </memberdef>
-      <memberdef kind="variable" id="class_virtual_c64_1a27ed316a043baf0a807ead7700ed0fad" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_r_e_c___a_p_i" kindref="compound">VirtualC64::REC_API</ref></type>
-        <definition>VirtualC64::REC_API VirtualC64::recorder</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1afa0c94a6a4231b13ebcd02ec6a384b15" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_recorder_a_p_i" kindref="compound">VirtualC64::RecorderAPI</ref></type>
+        <definition>VirtualC64::RecorderAPI VirtualC64::recorder</definition>
         <argsstring></argsstring>
         <name>recorder</name>
         <qualifiedname>VirtualC64::recorder</qualifiedname>
@@ -333,9 +333,9 @@
         </inbodydescription>
         <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="471" column="14"/>
       </memberdef>
-      <memberdef kind="variable" id="class_virtual_c64_1a1cc7192b987427c43981325f3a8b1cec" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i" kindref="compound">VirtualC64::EXP_PORT_API</ref></type>
-        <definition>VirtualC64::EXP_PORT_API VirtualC64::expansionport</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1a88265800e09ca2145d19a44d1a1f76a5" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_expansion_port_a_p_i" kindref="compound">VirtualC64::ExpansionPortAPI</ref></type>
+        <definition>VirtualC64::ExpansionPortAPI VirtualC64::expansionport</definition>
         <argsstring></argsstring>
         <name>expansionport</name>
         <qualifiedname>VirtualC64::expansionport</qualifiedname>
@@ -347,9 +347,9 @@
         </inbodydescription>
         <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="494" column="19"/>
       </memberdef>
-      <memberdef kind="variable" id="class_virtual_c64_1adc28d43876e75abe2141d6c8e31c836f" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_i_e_c___a_p_i" kindref="compound">VirtualC64::IEC_API</ref></type>
-        <definition>VirtualC64::IEC_API VirtualC64::iec</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1a61fc7bfcd2e3058ab21bc39c54ff9f75" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_i_e_c_a_p_i" kindref="compound">VirtualC64::IECAPI</ref></type>
+        <definition>VirtualC64::IECAPI VirtualC64::iec</definition>
         <argsstring></argsstring>
         <name>iec</name>
         <qualifiedname>VirtualC64::iec</qualifiedname>
@@ -361,9 +361,9 @@
         </inbodydescription>
         <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="505" column="9"/>
       </memberdef>
-      <memberdef kind="variable" id="class_virtual_c64_1ac6c468ea0dcc33308945bc1abdb3c39d" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_d_r_i_v_e___a_p_i" kindref="compound">VirtualC64::DRIVE_API</ref></type>
-        <definition>VirtualC64::DRIVE_API VirtualC64::drive8</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1a58a84246652cdb87e12c44305f6cffe7" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_drive_a_p_i" kindref="compound">VirtualC64::DriveAPI</ref></type>
+        <definition>VirtualC64::DriveAPI VirtualC64::drive8</definition>
         <argsstring></argsstring>
         <name>drive8</name>
         <qualifiedname>VirtualC64::drive8</qualifiedname>
@@ -375,9 +375,9 @@
         </inbodydescription>
         <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="540" column="12"/>
       </memberdef>
-      <memberdef kind="variable" id="class_virtual_c64_1ae1eca7e1edd38f01c463979df532b3c4" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_d_r_i_v_e___a_p_i" kindref="compound">VirtualC64::DRIVE_API</ref></type>
-        <definition>VirtualC64::DRIVE_API VirtualC64::drive9</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1ae57be64d160101dbf1c9548267e81c8a" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_drive_a_p_i" kindref="compound">VirtualC64::DriveAPI</ref></type>
+        <definition>VirtualC64::DriveAPI VirtualC64::drive9</definition>
         <argsstring></argsstring>
         <name>drive9</name>
         <qualifiedname>VirtualC64::drive9</qualifiedname>
@@ -389,9 +389,9 @@
         </inbodydescription>
         <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="540" column="19"/>
       </memberdef>
-      <memberdef kind="variable" id="class_virtual_c64_1a2cef48dde1fa6fadf8a189607fe45ff9" prot="public" static="no" mutable="no">
-        <type><ref refid="struct_virtual_c64_1_1_r_s_h_e_l_l___a_p_i" kindref="compound">VirtualC64::RSHELL_API</ref></type>
-        <definition>VirtualC64::RSHELL_API VirtualC64::retroShell</definition>
+      <memberdef kind="variable" id="class_virtual_c64_1a189b10a131ecbd898db42fc821d90745" prot="public" static="no" mutable="no">
+        <type><ref refid="struct_virtual_c64_1_1_retro_shell_a_p_i" kindref="compound">VirtualC64::RetroShellAPI</ref></type>
+        <definition>VirtualC64::RetroShellAPI VirtualC64::retroShell</definition>
         <argsstring></argsstring>
         <name>retroShell</name>
         <qualifiedname>VirtualC64::retroShell</qualifiedname>
@@ -647,7 +647,7 @@
         <name>put</name>
         <qualifiedname>VirtualC64::put</qualifiedname>
         <param>
-          <type>CmdType</type>
+          <type><ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref></type>
           <declname>type</declname>
         </param>
         <param>
@@ -670,11 +670,11 @@
         <name>put</name>
         <qualifiedname>VirtualC64::put</qualifiedname>
         <param>
-          <type>CmdType</type>
+          <type><ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref></type>
           <declname>type</declname>
         </param>
         <param>
-          <type>KeyCmd</type>
+          <type><ref refid="struct_key_cmd" kindref="compound">KeyCmd</ref></type>
           <declname>payload</declname>
         </param>
         <briefdescription>
@@ -692,11 +692,11 @@
         <name>put</name>
         <qualifiedname>VirtualC64::put</qualifiedname>
         <param>
-          <type>CmdType</type>
+          <type><ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref></type>
           <declname>type</declname>
         </param>
         <param>
-          <type>CoordCmd</type>
+          <type><ref refid="struct_coord_cmd" kindref="compound">CoordCmd</ref></type>
           <declname>payload</declname>
         </param>
         <briefdescription>
@@ -714,11 +714,11 @@
         <name>put</name>
         <qualifiedname>VirtualC64::put</qualifiedname>
         <param>
-          <type>CmdType</type>
+          <type><ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref></type>
           <declname>type</declname>
         </param>
         <param>
-          <type>GamePadCmd</type>
+          <type><ref refid="struct_game_pad_cmd" kindref="compound">GamePadCmd</ref></type>
           <declname>payload</declname>
         </param>
         <briefdescription>
@@ -736,11 +736,11 @@
         <name>put</name>
         <qualifiedname>VirtualC64::put</qualifiedname>
         <param>
-          <type>CmdType</type>
+          <type><ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref></type>
           <declname>type</declname>
         </param>
         <param>
-          <type>TapeCmd</type>
+          <type><ref refid="struct_tape_cmd" kindref="compound">TapeCmd</ref></type>
           <declname>payload</declname>
         </param>
         <briefdescription>
@@ -758,11 +758,11 @@
         <name>put</name>
         <qualifiedname>VirtualC64::put</qualifiedname>
         <param>
-          <type>CmdType</type>
+          <type><ref refid="group__doxy__types_1ga63ebdc688313e444b486514798e48df3" kindref="member">CmdType</ref></type>
           <declname>type</declname>
         </param>
         <param>
-          <type>AlarmCmd</type>
+          <type><ref refid="struct_alarm_cmd" kindref="compound">AlarmCmd</ref></type>
           <declname>payload</declname>
         </param>
         <briefdescription>
@@ -850,20 +850,20 @@
         </childnode>
       </node>
       <node id="3">
-        <label>VirtualC64::C64_API</label>
-        <link refid="struct_virtual_c64_1_1_c64___a_p_i"/>
+        <label>VirtualC64::C64API</label>
+        <link refid="struct_virtual_c64_1_1_c64_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
       </node>
       <node id="8">
-        <label>VirtualC64::CIA_API</label>
-        <link refid="struct_virtual_c64_1_1_c_i_a___a_p_i"/>
+        <label>VirtualC64::CIAAPI</label>
+        <link refid="struct_virtual_c64_1_1_c_i_a_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
       </node>
       <node id="6">
-        <label>VirtualC64::CPU_API</label>
-        <link refid="struct_virtual_c64_1_1_c_p_u___a_p_i"/>
+        <label>VirtualC64::CPUAPI</label>
+        <link refid="struct_virtual_c64_1_1_c_p_u_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
         <childnode refid="7" relation="usage">
@@ -872,8 +872,8 @@
         </childnode>
       </node>
       <node id="14">
-        <label>VirtualC64::CP_API</label>
-        <link refid="struct_virtual_c64_1_1_c_p___a_p_i"/>
+        <label>VirtualC64::ControlPortAPI</label>
+        <link refid="struct_virtual_c64_1_1_control_port_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
         <childnode refid="15" relation="usage">
@@ -884,26 +884,26 @@
         </childnode>
       </node>
       <node id="13">
-        <label>VirtualC64::DATASETTE_API</label>
-        <link refid="struct_virtual_c64_1_1_d_a_t_a_s_e_t_t_e___a_p_i"/>
+        <label>VirtualC64::DatasetteAPI</label>
+        <link refid="struct_virtual_c64_1_1_datasette_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
       </node>
       <node id="21">
-        <label>VirtualC64::DISK_API</label>
-        <link refid="struct_virtual_c64_1_1_d_i_s_k___a_p_i"/>
+        <label>VirtualC64::DiskAPI</label>
+        <link refid="struct_virtual_c64_1_1_disk_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
       </node>
       <node id="11">
-        <label>VirtualC64::DMA_DEBUGGER_API</label>
-        <link refid="struct_virtual_c64_1_1_d_m_a___d_e_b_u_g_g_e_r___a_p_i"/>
+        <label>VirtualC64::DmaDebuggerAPI</label>
+        <link refid="struct_virtual_c64_1_1_dma_debugger_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
       </node>
       <node id="20">
-        <label>VirtualC64::DRIVE_API</label>
-        <link refid="struct_virtual_c64_1_1_d_r_i_v_e___a_p_i"/>
+        <label>VirtualC64::DriveAPI</label>
+        <link refid="struct_virtual_c64_1_1_drive_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
         <childnode refid="21" relation="usage">
@@ -911,68 +911,68 @@
         </childnode>
       </node>
       <node id="18">
-        <label>VirtualC64::EXP_PORT_API</label>
-        <link refid="struct_virtual_c64_1_1_e_x_p___p_o_r_t___a_p_i"/>
+        <label>VirtualC64::ExpansionPortAPI</label>
+        <link refid="struct_virtual_c64_1_1_expansion_port_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
       </node>
       <node id="7">
-        <label>VirtualC64::GUARD_API</label>
-        <link refid="struct_virtual_c64_1_1_g_u_a_r_d___a_p_i"/>
+        <label>VirtualC64::GuardAPI</label>
+        <link refid="struct_virtual_c64_1_1_guard_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
       </node>
       <node id="19">
-        <label>VirtualC64::IEC_API</label>
-        <link refid="struct_virtual_c64_1_1_i_e_c___a_p_i"/>
+        <label>VirtualC64::IECAPI</label>
+        <link refid="struct_virtual_c64_1_1_i_e_c_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
       </node>
       <node id="15">
-        <label>VirtualC64::JOYSTICK_API</label>
-        <link refid="struct_virtual_c64_1_1_j_o_y_s_t_i_c_k___a_p_i"/>
+        <label>VirtualC64::JoystickAPI</label>
+        <link refid="struct_virtual_c64_1_1_joystick_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
       </node>
       <node id="12">
-        <label>VirtualC64::KBD_API</label>
-        <link refid="struct_virtual_c64_1_1_k_b_d___a_p_i"/>
+        <label>VirtualC64::KeyboardAPI</label>
+        <link refid="struct_virtual_c64_1_1_keyboard_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
       </node>
       <node id="5">
-        <label>VirtualC64::MEM_API</label>
-        <link refid="struct_virtual_c64_1_1_m_e_m___a_p_i"/>
+        <label>VirtualC64::MemoryAPI</label>
+        <link refid="struct_virtual_c64_1_1_memory_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
       </node>
       <node id="16">
-        <label>VirtualC64::MOUSE_API</label>
-        <link refid="struct_virtual_c64_1_1_m_o_u_s_e___a_p_i"/>
+        <label>VirtualC64::MouseAPI</label>
+        <link refid="struct_virtual_c64_1_1_mouse_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
       </node>
       <node id="17">
-        <label>VirtualC64::REC_API</label>
-        <link refid="struct_virtual_c64_1_1_r_e_c___a_p_i"/>
+        <label>VirtualC64::RecorderAPI</label>
+        <link refid="struct_virtual_c64_1_1_recorder_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
       </node>
       <node id="22">
-        <label>VirtualC64::RSHELL_API</label>
-        <link refid="struct_virtual_c64_1_1_r_s_h_e_l_l___a_p_i"/>
+        <label>VirtualC64::RetroShellAPI</label>
+        <link refid="struct_virtual_c64_1_1_retro_shell_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
       </node>
       <node id="10">
-        <label>VirtualC64::SID_API</label>
-        <link refid="struct_virtual_c64_1_1_s_i_d___a_p_i"/>
+        <label>VirtualC64::SIDAPI</label>
+        <link refid="struct_virtual_c64_1_1_s_i_d_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
       </node>
       <node id="9">
-        <label>VirtualC64::VICII_API</label>
-        <link refid="struct_virtual_c64_1_1_v_i_c_i_i___a_p_i"/>
+        <label>VirtualC64::VICIIAPI</label>
+        <link refid="struct_virtual_c64_1_1_v_i_c_i_i_a_p_i"/>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
       </node>
@@ -983,28 +983,28 @@
     <location file="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" line="26" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/VirtualC64.h" bodystart="26" bodyend="565"/>
     <listofallmembers>
       <member refid="class_virtual_c64_1ad0c1b1fd2fb7da11c0975cabbc58ca5a" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>build</name></member>
-      <member refid="class_virtual_c64_1af2f325265e2cd7d188b85b31be062b24" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>c64</name></member>
-      <member refid="class_virtual_c64_1a4468d0b19a817ec0f1081f115a0f1985" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>cia1</name></member>
-      <member refid="class_virtual_c64_1ac51faac99e8f6196e1bcb940ca6d2f8b" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>cia2</name></member>
-      <member refid="class_virtual_c64_1a1422d27428dcec81bf45d9dd55c17573" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>cpu</name></member>
-      <member refid="class_virtual_c64_1a9dec628c2928b2f3987adef819ffccd9" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>datasette</name></member>
-      <member refid="class_virtual_c64_1a6c77c62a64e2eb8cd3e4e5a94685d9f8" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>dmaDebugger</name></member>
-      <member refid="class_virtual_c64_1ac6c468ea0dcc33308945bc1abdb3c39d" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>drive8</name></member>
-      <member refid="class_virtual_c64_1ae1eca7e1edd38f01c463979df532b3c4" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>drive9</name></member>
-      <member refid="class_virtual_c64_1a1cc7192b987427c43981325f3a8b1cec" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>expansionport</name></member>
+      <member refid="class_virtual_c64_1a472096a1d73b55903d2767d372b46cb2" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>c64</name></member>
+      <member refid="class_virtual_c64_1a014575d53b523b082bfcb82b8f41dfda" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>cia1</name></member>
+      <member refid="class_virtual_c64_1a8fd94dfea6bc44df0a5f6011839418bc" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>cia2</name></member>
+      <member refid="class_virtual_c64_1a8f1c2204c2952caf8355953466f1aedd" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>cpu</name></member>
+      <member refid="class_virtual_c64_1ab575b365c58f8ec34a5e98c1519ac7b9" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>datasette</name></member>
+      <member refid="class_virtual_c64_1a939a30d5f1fa7e62ae57a1d9c4e4d4f5" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>dmaDebugger</name></member>
+      <member refid="class_virtual_c64_1a58a84246652cdb87e12c44305f6cffe7" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>drive8</name></member>
+      <member refid="class_virtual_c64_1ae57be64d160101dbf1c9548267e81c8a" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>drive9</name></member>
+      <member refid="class_virtual_c64_1a88265800e09ca2145d19a44d1a1f76a5" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>expansionport</name></member>
       <member refid="class_virtual_c64_1aa90fefdc0ac225fa42171a96bc169c5a" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>get</name></member>
       <member refid="class_virtual_c64_1ac34d478e23f8aefec5f0cac5508ce33a" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>get</name></member>
       <member refid="class_virtual_c64_1ab6f3babeba6fe9942705ce4d0ee46903" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>getNoise</name></member>
       <member refid="class_virtual_c64_1a2328503412f9342f271bb85edf634128" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>getTexture</name></member>
       <member refid="class_virtual_c64_1a9b9f7e4a1f9bc8337bae87dde9c0a62a" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>halt</name></member>
-      <member refid="class_virtual_c64_1adc28d43876e75abe2141d6c8e31c836f" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>iec</name></member>
-      <member refid="class_virtual_c64_1ac854798101145c9d95f29821e829a9a5" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>keyboard</name></member>
+      <member refid="class_virtual_c64_1a61fc7bfcd2e3058ab21bc39c54ff9f75" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>iec</name></member>
+      <member refid="class_virtual_c64_1af57574d16d1e4ab9984b4a60e727cb19" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>keyboard</name></member>
       <member refid="class_virtual_c64_1adc2d8190ca673dc5263881182d48effa" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>launch</name></member>
-      <member refid="class_virtual_c64_1a21e326ade8227588172a07904a8f5f42" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>mem</name></member>
-      <member refid="class_virtual_c64_1a2d9570de7d007839a910f0e37cf4d37f" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>muxer</name></member>
+      <member refid="class_virtual_c64_1a76d4385f411fd5b2367573e3a88b86d8" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>mem</name></member>
+      <member refid="class_virtual_c64_1ae868e28547d54efedea05c3bba33cbe1" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>muxer</name></member>
       <member refid="class_virtual_c64_1a7b197d691ef31ddf63681397eccd3851" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>pause</name></member>
-      <member refid="class_virtual_c64_1a047c411bfd819875375c7a546918afc3" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>port1</name></member>
-      <member refid="class_virtual_c64_1ae409f4f387165daadee1e5fb315945c0" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>port2</name></member>
+      <member refid="class_virtual_c64_1a40721f21d0ed80b51c71e0e1c7f59f4c" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>port1</name></member>
+      <member refid="class_virtual_c64_1ad0a4943431f9fe192fc585b76a268f21" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>port2</name></member>
       <member refid="class_virtual_c64_1a3cfac56baa9484282f2d48d4dc60b7b3" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>powerOff</name></member>
       <member refid="class_virtual_c64_1a1ab04f504353c522229531fb22a732fe" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>powerOn</name></member>
       <member refid="class_virtual_c64_1aba0326d79d52fb569aeba85db9bd67c3" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>put</name></member>
@@ -1014,8 +1014,8 @@
       <member refid="class_virtual_c64_1ab629a663cfcecf7ad7b1561f1778e068" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>put</name></member>
       <member refid="class_virtual_c64_1a9cefbb32ff4492548c348f2346c845a4" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>put</name></member>
       <member refid="class_virtual_c64_1a748407d15849ef3eb050248a1986afd3" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>put</name></member>
-      <member refid="class_virtual_c64_1a27ed316a043baf0a807ead7700ed0fad" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>recorder</name></member>
-      <member refid="class_virtual_c64_1a2cef48dde1fa6fadf8a189607fe45ff9" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>retroShell</name></member>
+      <member refid="class_virtual_c64_1afa0c94a6a4231b13ebcd02ec6a384b15" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>recorder</name></member>
+      <member refid="class_virtual_c64_1a189b10a131ecbd898db42fc821d90745" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>retroShell</name></member>
       <member refid="class_virtual_c64_1a468f440c88ff5f399e67364425a43556" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>run</name></member>
       <member refid="class_virtual_c64_1a0fe88a8972d006fd042e32c477fd8649" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>set</name></member>
       <member refid="class_virtual_c64_1a5044a51bce1455e8dc300d77c05cf939" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>set</name></member>
@@ -1023,7 +1023,7 @@
       <member refid="class_virtual_c64_1a161f20c6fa850cb631390fe28b58d79c" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>stepInto</name></member>
       <member refid="class_virtual_c64_1a8ffd6fa8a6c4097d679106357bafb85b" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>stepOver</name></member>
       <member refid="class_virtual_c64_1a17ff135464512a12d1610cabb9758d67" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>version</name></member>
-      <member refid="class_virtual_c64_1acab17c08373a26e9b4680f1d24f2b08a" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>vicii</name></member>
+      <member refid="class_virtual_c64_1aa65548f8252729ebe6912e0eb0591778" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>vicii</name></member>
       <member refid="class_virtual_c64_1a66d2273e3309cc11a01e78e96752d4f0" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>VirtualC64</name></member>
       <member refid="class_virtual_c64_1aca3821452aac3065cf92f63db8121674" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>wakeUp</name></member>
       <member refid="class_virtual_c64_1a1e8ba2e0f24f784a8b096986b2543d26" prot="public" virt="non-virtual"><scope>VirtualC64</scope><name>~VirtualC64</name></member>

@@ -1,0 +1,76 @@
+\doxysection{Virtual\+C64\+::Guard\+API Struct Reference}
+\hypertarget{struct_virtual_c64_1_1_guard_a_p_i}{}\label{struct_virtual_c64_1_1_guard_a_p_i}\index{VirtualC64::GuardAPI@{VirtualC64::GuardAPI}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_a800b73177bab607d0e74610d41654a66}\label{struct_virtual_c64_1_1_guard_a_p_i_a800b73177bab607d0e74610d41654a66} 
+{\bfseries Guard\+API} (Emulator \&emu, Guards \&guards)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_a7ca8dd62e48356faa07a2412c1eed0e6}\label{struct_virtual_c64_1_1_guard_a_p_i_a7ca8dd62e48356faa07a2412c1eed0e6} 
+long {\bfseries elements} () const
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_a082113d3f43a7fa55729a8d4d5cf3d87}\label{struct_virtual_c64_1_1_guard_a_p_i_a082113d3f43a7fa55729a8d4d5cf3d87} 
+u32 {\bfseries guard\+Addr} (long nr) const
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_a3a240d227f1186e32ed480c3cc150431}\label{struct_virtual_c64_1_1_guard_a_p_i_a3a240d227f1186e32ed480c3cc150431} 
+bool {\bfseries is\+Enabled} (long nr) const
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_a77924f4a3cf6eb4ab31aaa42f8390213}\label{struct_virtual_c64_1_1_guard_a_p_i_a77924f4a3cf6eb4ab31aaa42f8390213} 
+bool {\bfseries is\+Disabled} (long nr) const
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_aae7a1a8fc95dab888a4df1f7f903e209}\label{struct_virtual_c64_1_1_guard_a_p_i_aae7a1a8fc95dab888a4df1f7f903e209} 
+bool {\bfseries is\+Set\+At} (u32 addr) const
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_a133823fd82390f1611ede118f347418d}\label{struct_virtual_c64_1_1_guard_a_p_i_a133823fd82390f1611ede118f347418d} 
+bool {\bfseries is\+Set\+And\+Enabled\+At} (u32 addr) const
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_a68c31f33f5a56b075d74990636a67404}\label{struct_virtual_c64_1_1_guard_a_p_i_a68c31f33f5a56b075d74990636a67404} 
+bool {\bfseries is\+Set\+And\+Disabled\+At} (u32 addr) const
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_a656d20636c619088735dfd9c279bdb4e}\label{struct_virtual_c64_1_1_guard_a_p_i_a656d20636c619088735dfd9c279bdb4e} 
+bool {\bfseries is\+Set\+And\+Conditional\+At} (u32 addr) const
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_ac5365f6f1734f9eaac4021b741436804}\label{struct_virtual_c64_1_1_guard_a_p_i_ac5365f6f1734f9eaac4021b741436804} 
+void {\bfseries set\+Enable} (long nr, bool val)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_a6297022e677c17d67bd42a3e5ec2c9a6}\label{struct_virtual_c64_1_1_guard_a_p_i_a6297022e677c17d67bd42a3e5ec2c9a6} 
+void {\bfseries enable} (long nr)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_abd94d94996fe1b61f5acc45f6b530e2a}\label{struct_virtual_c64_1_1_guard_a_p_i_abd94d94996fe1b61f5acc45f6b530e2a} 
+void {\bfseries disable} (long nr)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_a6d5e4c39f7455ab15b2c48f717b253c8}\label{struct_virtual_c64_1_1_guard_a_p_i_a6d5e4c39f7455ab15b2c48f717b253c8} 
+void {\bfseries set\+Enable\+At} (u32 addr, bool val)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_ad600c3fbd47bee896af036c14cbc9df0}\label{struct_virtual_c64_1_1_guard_a_p_i_ad600c3fbd47bee896af036c14cbc9df0} 
+void {\bfseries enable\+At} (u32 addr)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_a7fb126585b2a20e9bba5d44a1e26f08b}\label{struct_virtual_c64_1_1_guard_a_p_i_a7fb126585b2a20e9bba5d44a1e26f08b} 
+void {\bfseries disable\+At} (u32 addr)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_af10c7a443fb16d5214fc566c1ae5c982}\label{struct_virtual_c64_1_1_guard_a_p_i_af10c7a443fb16d5214fc566c1ae5c982} 
+void {\bfseries add\+At} (u32 addr, long skip=0)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_a789de7e9a244b985d8f1bcd0107c791f}\label{struct_virtual_c64_1_1_guard_a_p_i_a789de7e9a244b985d8f1bcd0107c791f} 
+void {\bfseries remove\+At} (u32 addr)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_a967da3611b86c446c685309d256265f6}\label{struct_virtual_c64_1_1_guard_a_p_i_a967da3611b86c446c685309d256265f6} 
+void {\bfseries remove} (long nr)
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_a274ebd096ff6c72a707c0233eedaa5c0}\label{struct_virtual_c64_1_1_guard_a_p_i_a274ebd096ff6c72a707c0233eedaa5c0} 
+void {\bfseries remove\+All} ()
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_a4df4870291e3131b62d1f090105f7968}\label{struct_virtual_c64_1_1_guard_a_p_i_a4df4870291e3131b62d1f090105f7968} 
+void {\bfseries replace} (long nr, u32 addr)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_virtual_c64_1_1_guard_a_p_i_a72959e8c5ddcd331c1f23051e5db4177}\label{struct_virtual_c64_1_1_guard_a_p_i_a72959e8c5ddcd331c1f23051e5db4177} 
+Guards \& {\bfseries guards}
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/hoff/\+Retro/virtualc64/\+Emulator/Virtual\+C64.\+h\end{DoxyCompactItemize}

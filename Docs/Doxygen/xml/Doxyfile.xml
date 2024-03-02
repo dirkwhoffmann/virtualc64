@@ -124,6 +124,8 @@
   <option  id='INPUT' default='no' type='stringlist'>
     <value><![CDATA[readme.md]]></value>
     <value><![CDATA[../../Emulator/VirtualC64.h]]></value>
+    <value><![CDATA[../../Emulator/Base/CmdQueueTypes.h]]></value>
+    <value><![CDATA[../../Emulator/Base/CmdQueue.h]]></value>
     <value><![CDATA[../../Emulator/Base/ErrorTypes.h]]></value>
     <value><![CDATA[../../Emulator/Base/Error.h]]></value>
     <value><![CDATA[../../Emulator/Base/OptionTypes.h]]></value>
