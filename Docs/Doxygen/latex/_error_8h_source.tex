@@ -1,0 +1,39 @@
+\doxysection{Error.\+h}
+\hypertarget{_error_8h_source}{}\label{_error_8h_source}\index{/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h@{/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ This\ file\ is\ part\ of\ VirtualC64}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ Dirk\ W.\ Hoffmann.\ www.dirkwhoffmann.de}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ This\ FILE\ is\ dual-\/licensed.\ You\ are\ free\ to\ choose\ between:}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ GNU\ General\ Public\ License\ v3\ (or\ any\ later\ version)}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ \ \ \ \ -\/\ The\ Mozilla\ Public\ License\ v2}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ GPL-\/3.0-\/or-\/later\ OR\ MPL-\/2.0}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}ErrorTypes.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}Exception.h"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }vc64\ \{}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{//}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ VCError}}
+\DoxyCodeLine{00022\ \textcolor{comment}{//}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvc64_1_1_v_c64_error}{VC64Error}}\ :\ \textcolor{keyword}{public}\ util::Exception}
+\DoxyCodeLine{00025\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{structvc64_1_1_v_c64_error}{VC64Error}}(\mbox{\hyperlink{group__doxy__types_ga52f90e25735e172d279183e61d90d3e3}{ErrorCode}}\ code,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\ \&s);}
+\DoxyCodeLine{00027\ \ \ \ \ \mbox{\hyperlink{structvc64_1_1_v_c64_error}{VC64Error}}(\mbox{\hyperlink{group__doxy__types_ga52f90e25735e172d279183e61d90d3e3}{ErrorCode}}\ code,\ \textcolor{keywordtype}{long}\ v)\ :\ \mbox{\hyperlink{structvc64_1_1_v_c64_error}{VC64Error}}(code,\ std::to\_string(v))\ \{\ \};}
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{structvc64_1_1_v_c64_error}{VC64Error}}(\mbox{\hyperlink{group__doxy__types_ga52f90e25735e172d279183e61d90d3e3}{ErrorCode}}\ code)\ :\ \mbox{\hyperlink{structvc64_1_1_v_c64_error}{VC64Error}}(code,\ \textcolor{stringliteral}{"{}"{}})\ \{\ \}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *what()\ \textcolor{keyword}{const}\ \textcolor{keywordflow}{throw}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00031\ \};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \}}
+
+\end{DoxyCode}

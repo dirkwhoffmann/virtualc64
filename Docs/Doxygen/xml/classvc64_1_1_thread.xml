@@ -22,12 +22,12 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Thread.h" line="91" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Thread.h" bodystart="91" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="classvc64_1_1_thread_1ac6dc66f77d11416a3a77eac236fab2d5" prot="protected" static="no" mutable="no">
-        <type><ref refid="group__topic__state__model_1gab511da6438c372168afb4add4e99f836" kindref="member">EmulatorState</ref></type>
+        <type><ref refid="group__doxy__types_1ga44fb3bfc9b3abc142d662a5ffb4e9cbc" kindref="member">EmulatorState</ref></type>
         <definition>EmulatorState vc64::Thread::state</definition>
         <argsstring></argsstring>
         <name>state</name>
         <qualifiedname>vc64::Thread::state</qualifiedname>
-        <initializer>= <ref refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836a4038ca872e1ed104c16122c365bd3ca0" kindref="member">STATE_OFF</ref></initializer>
+        <initializer>= <ref refid="group__doxy__types_1gga44fb3bfc9b3abc142d662a5ffb4e9cbca4038ca872e1ed104c16122c365bd3ca0" kindref="member">STATE_OFF</ref></initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -37,12 +37,12 @@
         <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Thread.h" line="94" column="19" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Thread.h" bodystart="94" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="classvc64_1_1_thread_1a586fd7f3cfab7564f531b4e672e2c325" prot="protected" static="no" mutable="no">
-        <type><ref refid="group__topic__state__model_1gab511da6438c372168afb4add4e99f836" kindref="member">EmulatorState</ref></type>
+        <type><ref refid="group__doxy__types_1ga44fb3bfc9b3abc142d662a5ffb4e9cbc" kindref="member">EmulatorState</ref></type>
         <definition>EmulatorState vc64::Thread::newState</definition>
         <argsstring></argsstring>
         <name>newState</name>
         <qualifiedname>vc64::Thread::newState</qualifiedname>
-        <initializer>= <ref refid="group__topic__state__model_1ggab511da6438c372168afb4add4e99f836a4038ca872e1ed104c16122c365bd3ca0" kindref="member">STATE_OFF</ref></initializer>
+        <initializer>= <ref refid="group__doxy__types_1gga44fb3bfc9b3abc142d662a5ffb4e9cbca4038ca872e1ed104c16122c365bd3ca0" kindref="member">STATE_OFF</ref></initializer>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -306,7 +306,7 @@
         <name>switchState</name>
         <qualifiedname>vc64::Thread::switchState</qualifiedname>
         <param>
-          <type><ref refid="group__topic__state__model_1gab511da6438c372168afb4add4e99f836" kindref="member">EmulatorState</ref></type>
+          <type><ref refid="group__doxy__types_1ga44fb3bfc9b3abc142d662a5ffb4e9cbc" kindref="member">EmulatorState</ref></type>
           <declname>newState</declname>
         </param>
         <briefdescription>
@@ -944,7 +944,7 @@
         <name>changeStateTo</name>
         <qualifiedname>vc64::Thread::changeStateTo</qualifiedname>
         <param>
-          <type><ref refid="group__topic__state__model_1gab511da6438c372168afb4add4e99f836" kindref="member">EmulatorState</ref></type>
+          <type><ref refid="group__doxy__types_1ga44fb3bfc9b3abc142d662a5ffb4e9cbc" kindref="member">EmulatorState</ref></type>
           <declname>requestedState</declname>
         </param>
         <briefdescription>

@@ -15,18 +15,12 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+/// @addtogroup doxy_types Types
+/// @{
 
-/** \addtogroup topic_state_model
-    @{ 
+/** Emulator state 
  */
-
-//
-// Enumerations
-//
-
-/** Emulator state */
-enum_long_swift(EmulatorState)
-enum_long_c(EmulatorState)
+enum_long(EMULATOR_STATE)
 {
     /// The emulator is powered off
     STATE_OFF,
@@ -43,7 +37,7 @@ enum_long_c(EmulatorState)
     /// The emulator has been shut down
     STATE_HALTED
 };
-// typedef EMULATOR_STATE EmulatorState;
+typedef EMULATOR_STATE EmulatorState;
 
 #ifdef __cplusplus
 struct EmulatorStateEnum : util::Reflection<EmulatorStateEnum, EmulatorState>
@@ -68,4 +62,4 @@ struct EmulatorStateEnum : util::Reflection<EmulatorStateEnum, EmulatorState>
 };
 #endif
 
-/** @} */
+/// @}

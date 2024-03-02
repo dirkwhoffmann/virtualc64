@@ -48,7 +48,7 @@ Configurable::setOption(Option opt, const string &value)
 void
 Configurable::setOption(const string &opt, const string &value)
 {
-    setOption(util::parseEnum<OptionEnum>(opt), value);
+    setOption(Option(util::parseEnum<OptionEnum>(opt)), value);
 }
 
 void

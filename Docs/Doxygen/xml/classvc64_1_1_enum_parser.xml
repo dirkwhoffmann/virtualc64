@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvc64_1_1_enum_parser" kind="class" language="C++" prot="public">
+    <compoundname>vc64::EnumParser</compoundname>
+    <basecompoundref refid="classvc64_1_1_option_parser" prot="public" virt="non-virtual">vc64::OptionParser</basecompoundref>
+    <templateparamlist>
+      <param>
+        <type>typename T</type>
+      </param>
+    </templateparamlist>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvc64_1_1_enum_parser_1a25776da8648eb4f5a4537851d95e5e8c" prot="private" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>i64</type>
+        <definition>virtual i64 vc64::EnumParser&lt; T &gt;::parse</definition>
+        <argsstring>(const string &amp;s) override</argsstring>
+        <name>parse</name>
+        <qualifiedname>vc64::EnumParser::parse</qualifiedname>
+        <reimplements refid="classvc64_1_1_option_parser_1ab11e745cbd9c96bfd4d80c51e8f0ff07">parse</reimplements>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" line="75" column="17" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" bodystart="75" bodyend="75"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_enum_parser_1acb4962e7a1cba3018cdf9b3e51e0b3f5" prot="private" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>string</type>
+        <definition>virtual string vc64::EnumParser&lt; T &gt;::asString</definition>
+        <argsstring>() override</argsstring>
+        <name>asString</name>
+        <qualifiedname>vc64::EnumParser::asString</qualifiedname>
+        <reimplements refid="classvc64_1_1_option_parser_1a9a4a38a08c389b6eccb416c93afe4842">asString</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" line="76" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" bodystart="76" bodyend="76"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_enum_parser_1a2100cfab2025ac2636a22136dbf0769f" prot="private" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>string</type>
+        <definition>virtual string vc64::EnumParser&lt; T &gt;::keyList</definition>
+        <argsstring>() override</argsstring>
+        <name>keyList</name>
+        <qualifiedname>vc64::EnumParser::keyList</qualifiedname>
+        <reimplements refid="classvc64_1_1_option_parser_1a4f95c90f8f4a6218d6c30fe87bef16b3">keyList</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" line="77" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" bodystart="77" bodyend="77"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_enum_parser_1a32088c0bdd19bd08881cafcbe704c5e3" prot="private" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>string</type>
+        <definition>virtual string vc64::EnumParser&lt; T &gt;::argList</definition>
+        <argsstring>() override</argsstring>
+        <name>argList</name>
+        <qualifiedname>vc64::EnumParser::argList</qualifiedname>
+        <reimplements refid="classvc64_1_1_option_parser_1a2b4f947b773bd1be0e130e784176b474">argList</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" line="78" column="20" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" bodystart="78" bodyend="78"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_enum_parser_1a71a52016c1b90b93d99bb46fc6b068fb" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::OptionParser::OptionParser</definition>
+        <argsstring>(Option opt)</argsstring>
+        <name>OptionParser</name>
+        <qualifiedname>vc64::EnumParser::OptionParser</qualifiedname>
+        <param>
+          <type><ref refid="group__doxy__types_1ga273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" line="73" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" bodystart="28" bodyend="28"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_enum_parser_1aef519970194c94fb4a4ac88e08219b45" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::OptionParser::OptionParser</definition>
+        <argsstring>(Option opt, const string &amp;unit)</argsstring>
+        <name>OptionParser</name>
+        <qualifiedname>vc64::EnumParser::OptionParser</qualifiedname>
+        <param>
+          <type><ref refid="group__doxy__types_1ga273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>unit</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" line="73" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" bodystart="29" bodyend="29"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_enum_parser_1a0c11163b6c375c3a4697fd0f44c214cf" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::OptionParser::OptionParser</definition>
+        <argsstring>(Option opt, i64 arg)</argsstring>
+        <name>OptionParser</name>
+        <qualifiedname>vc64::EnumParser::OptionParser</qualifiedname>
+        <param>
+          <type><ref refid="group__doxy__types_1ga273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>arg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" line="73" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" bodystart="30" bodyend="30"/>
+      </memberdef>
+      <memberdef kind="function" id="classvc64_1_1_enum_parser_1abbca8f9e6f7d8df5f3d2ebb70108faca" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::OptionParser::OptionParser</definition>
+        <argsstring>(Option opt, i64 arg, const string &amp;unit)</argsstring>
+        <name>OptionParser</name>
+        <qualifiedname>vc64::EnumParser::OptionParser</qualifiedname>
+        <param>
+          <type><ref refid="group__doxy__types_1ga273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
+          <declname>opt</declname>
+        </param>
+        <param>
+          <type>i64</type>
+          <declname>arg</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>unit</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" line="73" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" bodystart="31" bodyend="31"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>vc64::EnumParser&lt; T &gt;</label>
+        <link refid="classvc64_1_1_enum_parser"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>vc64::OptionParser</label>
+        <link refid="classvc64_1_1_option_parser"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="1">
+        <label>vc64::EnumParser&lt; T &gt;</label>
+        <link refid="classvc64_1_1_enum_parser"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>vc64::OptionParser</label>
+        <link refid="classvc64_1_1_option_parser"/>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" line="71" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Option.h" bodystart="71" bodyend="79"/>
+    <listofallmembers>
+      <member refid="classvc64_1_1_option_parser_1a4532880358769aefedad03ad69ebd2f7" prot="public" virt="non-virtual"><scope>vc64::EnumParser</scope><name>arg</name></member>
+      <member refid="classvc64_1_1_enum_parser_1a32088c0bdd19bd08881cafcbe704c5e3" prot="private" virt="virtual"><scope>vc64::EnumParser</scope><name>argList</name></member>
+      <member refid="classvc64_1_1_enum_parser_1acb4962e7a1cba3018cdf9b3e51e0b3f5" prot="private" virt="virtual"><scope>vc64::EnumParser</scope><name>asString</name></member>
+      <member refid="classvc64_1_1_option_parser_1a363fa7483ef0dfc051b197743bf7b730" prot="public" virt="non-virtual"><scope>vc64::EnumParser</scope><name>create</name></member>
+      <member refid="classvc64_1_1_enum_parser_1a2100cfab2025ac2636a22136dbf0769f" prot="private" virt="virtual"><scope>vc64::EnumParser</scope><name>keyList</name></member>
+      <member refid="classvc64_1_1_option_parser_1a4bddf89c169fdc77dd7a5d9434dbd167" prot="public" virt="non-virtual"><scope>vc64::EnumParser</scope><name>opt</name></member>
+      <member refid="classvc64_1_1_enum_parser_1a71a52016c1b90b93d99bb46fc6b068fb" prot="private" virt="non-virtual"><scope>vc64::EnumParser</scope><name>OptionParser</name></member>
+      <member refid="classvc64_1_1_enum_parser_1aef519970194c94fb4a4ac88e08219b45" prot="private" virt="non-virtual"><scope>vc64::EnumParser</scope><name>OptionParser</name></member>
+      <member refid="classvc64_1_1_enum_parser_1a0c11163b6c375c3a4697fd0f44c214cf" prot="private" virt="non-virtual"><scope>vc64::EnumParser</scope><name>OptionParser</name></member>
+      <member refid="classvc64_1_1_enum_parser_1abbca8f9e6f7d8df5f3d2ebb70108faca" prot="private" virt="non-virtual"><scope>vc64::EnumParser</scope><name>OptionParser</name></member>
+      <member refid="classvc64_1_1_enum_parser_1a25776da8648eb4f5a4537851d95e5e8c" prot="private" virt="virtual"><scope>vc64::EnumParser</scope><name>parse</name></member>
+      <member refid="classvc64_1_1_option_parser_1a65bcea4692f8a8243f29745afc8afdce" prot="public" virt="non-virtual"><scope>vc64::EnumParser</scope><name>unit</name></member>
+      <member refid="classvc64_1_1_option_parser_1a26e74952f36444539789dc988f054147" prot="public" virt="virtual"><scope>vc64::EnumParser</scope><name>~OptionParser</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

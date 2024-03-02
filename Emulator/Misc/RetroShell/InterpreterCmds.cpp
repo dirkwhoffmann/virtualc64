@@ -180,7 +180,7 @@ Interpreter::initCommandShell(Command &root)
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
-            emulator.set(opt, argv[0]);
+            emulator.set(Option(opt), argv[0]);
 
         }, opt);
     }
@@ -235,7 +235,7 @@ Interpreter::initCommandShell(Command &root)
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
-            emulator.set(opt, argv[0]);
+            emulator.set(Option(opt), argv[0]);
 
         }, opt);
     }
@@ -288,7 +288,7 @@ Interpreter::initCommandShell(Command &root)
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                emulator.set(HI_WORD(value), LO_WORD(value), argv[0]);
+                emulator.set(Option(HI_WORD(value)), LO_WORD(value), argv[0]);
 
             }, HI_W_LO_W(opt, i));
         }
@@ -315,7 +315,7 @@ Interpreter::initCommandShell(Command &root)
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
-            emulator.set(opt, argv[0]);
+            emulator.set(Option(opt), argv[0]);
 
         }, opt);
     }
@@ -357,7 +357,7 @@ Interpreter::initCommandShell(Command &root)
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
-            emulator.set(opt, argv[0]);
+            emulator.set(Option(opt), argv[0]);
 
         }, opt);
     }
@@ -391,7 +391,7 @@ Interpreter::initCommandShell(Command &root)
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                emulator.set(HI_WORD(value), LO_WORD(value), argv[0]);
+                emulator.set(Option(HI_WORD(value)), LO_WORD(value), argv[0]);
 
             }, HI_W_LO_W(opt, i));
         }
@@ -419,7 +419,7 @@ Interpreter::initCommandShell(Command &root)
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
-            emulator.set(opt, argv[0]);
+            emulator.set(Option(opt), argv[0]);
 
         }, opt);
     }
@@ -479,7 +479,7 @@ Interpreter::initCommandShell(Command &root)
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
-            emulator.set(opt, argv[0]);
+            emulator.set(Option(opt), argv[0]);
 
         }, opt);
     }
@@ -507,7 +507,7 @@ Interpreter::initCommandShell(Command &root)
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
-            emulator.set(opt, argv[0]);
+            emulator.set(Option(opt), argv[0]);
 
         }, opt);
     }
@@ -596,7 +596,7 @@ Interpreter::initCommandShell(Command &root)
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                emulator.set(HI_WORD(value), LO_WORD(value), argv[0]);
+                emulator.set(Option(HI_WORD(value)), LO_WORD(value), argv[0]);
 
             }, HI_W_LO_W(opt, i));
         }
@@ -635,7 +635,7 @@ Interpreter::initCommandShell(Command &root)
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                emulator.set(HI_WORD(value), LO_WORD(value), argv[0]);
+                emulator.set(Option(HI_WORD(value)), LO_WORD(value), argv[0]);
 
             }, HI_W_LO_W(opt, i));
         }
@@ -769,7 +769,7 @@ Interpreter::initCommandShell(Command &root)
                  OptionEnum::help(opt),
                  [this](Arguments& argv, long opt) {
 
-            emulator.set(opt, argv[0]);
+            emulator.set(Option(opt), argv[0]);
 
         }, opt);
     }
@@ -852,7 +852,7 @@ Interpreter::initCommandShell(Command &root)
                      OptionEnum::help(opt),
                      [this](Arguments& argv, long value) {
 
-                emulator.set(HI_WORD(value), LO_WORD(value), argv[0]);
+                emulator.set(Option(HI_WORD(value)), LO_WORD(value), argv[0]);
 
             }, HI_W_LO_W(opt, i));
         }

@@ -523,7 +523,7 @@
         <name>get</name>
         <qualifiedname>VirtualC64::get</qualifiedname>
         <param>
-          <type>Option</type>
+          <type><ref refid="group__doxy__types_1ga273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
           <declname>option</declname>
         </param>
         <briefdescription>
@@ -541,7 +541,7 @@
         <name>get</name>
         <qualifiedname>VirtualC64::get</qualifiedname>
         <param>
-          <type>Option</type>
+          <type><ref refid="group__doxy__types_1ga273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
           <declname>option</declname>
         </param>
         <param>
@@ -581,7 +581,7 @@
         <name>set</name>
         <qualifiedname>VirtualC64::set</qualifiedname>
         <param>
-          <type>Option</type>
+          <type><ref refid="group__doxy__types_1ga273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
           <declname>option</declname>
         </param>
         <param>
@@ -603,7 +603,7 @@
         <name>set</name>
         <qualifiedname>VirtualC64::set</qualifiedname>
         <param>
-          <type>Option</type>
+          <type><ref refid="group__doxy__types_1ga273e435dabd576e6dcff3f18024d1fa8" kindref="member">Option</ref></type>
           <declname>option</declname>
         </param>
         <param>

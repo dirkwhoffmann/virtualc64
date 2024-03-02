@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VirtualC64: VirtualC64</title>
+<title>VirtualC64: Welcome</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,17 +106,45 @@ $(function(){initNavTree('index.html',''); initResizable(); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title"><a class="el" href="class_virtual_c64.html" title="Public API.">VirtualC64</a> </div></div>
+  <div class="headertitle"><div class="title">Welcome </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_readme"></a></p>
-<p><a class="el" href="class_virtual_c64.html" title="Public API.">VirtualC64</a> is a high-precision emulation core for the Commodore 64 personal computer. This site contains the necesarry information for developers to incoorporate the emulation core in own projects.</p>
-<h2><a class="anchor" id="autotoc_md0"></a>
-Example Section</h2>
+<div class="textblock"><p><a class="anchor" id="md_readme"></a> Welcome to the official <a class="el" href="class_virtual_c64.html" title="Public API.">VirtualC64</a> API documentation. Here you will find a detailed view of <a class="el" href="class_virtual_c64.html" title="Public API.">VirtualC64</a>'s public API. It summarizes the necesarry information for developers to incoorporate the emulation core in own projects. For more information about <a class="el" href="class_virtual_c64.html" title="Public API.">VirtualC64</a> plase visit the <a href="https://dirkwhoffmann.github.io/virtualc64/">official website</a>.</p>
 <div class="image">
-<img src="banner.png" alt="" width="100%"/>
+<img src="ad-vc.png" alt="" width="400px"/>
 </div>
- </div></div><!-- PageDoc -->
+<h1><a class="anchor" id="autotoc_md1"></a>
+Example</h1>
+<p><a class="el" href="class_virtual_c64.html" title="Public API.">VirtualC64</a> is implemented in C++20 with high portability in mind. The following code snippet demonstrates the general usage model of the emulator core.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;VirtualC64.h&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) </div>
+<div class="line">{</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Create an emulator instance</span></div>
+<div class="line">    <a class="code hl_class" href="class_virtual_c64.html">VirtualC64</a> c64;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Launch the emulator thread (with messageReceiver defined elsewhere)</span></div>
+<div class="line">    c64.launch(<span class="keyword">this</span>, messageReceiver);</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Configure the emulator</span></div>
+<div class="line">    c64.set(<a class="code hl_enumvalue" href="group__doxy__types.html#gga273e435dabd576e6dcff3f18024d1fa8a097615e0e27fb679e172516082f1a5b6">OPT_VICII_REVISION</a>, VICII_PAL_6569_R3);</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Start the emulator</span></div>
+<div class="line">    c64.<a class="code hl_function" href="class_virtual_c64.html#a468f440c88ff5f399e67364425a43556">run</a>() </div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">//</span></div>
+<div class="line">    <span class="comment">// Interact with the emulator</span></div>
+<div class="line">    <span class="comment">// </span></div>
+<div class="line">}</div>
+<div class="ttc" id="aclass_virtual_c64_html"><div class="ttname"><a href="class_virtual_c64.html">VirtualC64</a></div><div class="ttdoc">Public API.</div><div class="ttdef"><b>Definition</b> VirtualC64.h:26</div></div>
+<div class="ttc" id="aclass_virtual_c64_html_a468f440c88ff5f399e67364425a43556"><div class="ttname"><a href="class_virtual_c64.html#a468f440c88ff5f399e67364425a43556">VirtualC64::run</a></div><div class="ttdeci">void run()</div><div class="ttdoc">Starts emulation.</div><div class="ttdef"><b>Definition</b> VirtualC64.h:70</div></div>
+<div class="ttc" id="agroup__doxy__types_html_gga273e435dabd576e6dcff3f18024d1fa8a097615e0e27fb679e172516082f1a5b6"><div class="ttname"><a href="group__doxy__types.html#gga273e435dabd576e6dcff3f18024d1fa8a097615e0e27fb679e172516082f1a5b6">OPT_VICII_REVISION</a></div><div class="ttdeci">@ OPT_VICII_REVISION</div><div class="ttdoc">Chip revision.</div><div class="ttdef"><b>Definition</b> OptionTypes.h:42</div></div>
+</div><!-- fragment --><p>For a runnable demo program, please see the Headless application in the main folder. It creates an emulator instance and utilizes it to perform some simple smoke tests.</p>
+<h1><a class="anchor" id="autotoc_md2"></a>
+Where to go from here?</h1>
+<p>Start with the <a class="el" href="class_virtual_c64.html" title="Public API.">VirtualC64</a> class which is provides the public API. </p>
+</div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"/>
 </div><!-- contents -->
 </div><!-- doc-content -->

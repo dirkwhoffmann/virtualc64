@@ -735,13 +735,13 @@ Emulator::set(Option opt, isize id, const string &value)
 void
 Emulator::set(const string &opt, const string &value)
 {
-    set(util::parseEnum<OptionEnum>(opt), value);
+    set(Option(util::parseEnum<OptionEnum>(opt)), value);
 }
 
 void
 Emulator::set(const string &opt, isize id, const string &value)
 {
-    set(util::parseEnum<OptionEnum>(opt), id, value);
+    set(Option(util::parseEnum<OptionEnum>(opt)), id, value);
 }
 
 i64

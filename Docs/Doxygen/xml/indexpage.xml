@@ -2,16 +2,42 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
   <compounddef id="indexpage" kind="page">
     <compoundname>index</compoundname>
-    <title>VirtualC64</title>
+    <title>Welcome</title>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
-<para><anchor id="index_1md_readme"/></para>
-<para><ref refid="class_virtual_c64" kindref="compound">VirtualC64</ref> is a high-precision emulation core for the Commodore 64 personal computer. This site contains the necesarry information for developers to incoorporate the emulation core in own projects.</para>
-<sect2 id="index_1autotoc_md0">
-<title>Example Section</title><para><image type="html" name="banner.png" width="100%"></image>
- </para>
-</sect2>
+<para><anchor id="index_1md_readme"/> Welcome to the official <ref refid="class_virtual_c64" kindref="compound">VirtualC64</ref> API documentation. Here you will find a detailed view of <ref refid="class_virtual_c64" kindref="compound">VirtualC64</ref>&apos;s public API. It summarizes the necesarry information for developers to incoorporate the emulation core in own projects. For more information about <ref refid="class_virtual_c64" kindref="compound">VirtualC64</ref> plase visit the <ulink url="https://dirkwhoffmann.github.io/virtualc64/">official website</ulink>.</para>
+<para><image type="html" name="ad-vc.png" width="400px"></image>
+</para>
+<sect1 id="index_1autotoc_md1">
+<title>Example</title><para><ref refid="class_virtual_c64" kindref="compound">VirtualC64</ref> is implemented in C++20 with high portability in mind. The following code snippet demonstrates the general usage model of the emulator core.</para>
+<para><programlisting filename=".cpp"><codeline><highlight class="preprocessor">#include<sp/>&quot;VirtualC64.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>main(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>argc,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*argv[])<sp/></highlight></codeline>
+<codeline><highlight class="normal">{</highlight></codeline>
+<codeline><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Create<sp/>an<sp/>emulator<sp/>instance</highlight><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_virtual_c64" kindref="compound">VirtualC64</ref><sp/>c64;</highlight></codeline>
+<codeline><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Launch<sp/>the<sp/>emulator<sp/>thread<sp/>(with<sp/>messageReceiver<sp/>defined<sp/>elsewhere)</highlight><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>c64.launch(</highlight><highlight class="keyword">this</highlight><highlight class="normal">,<sp/>messageReceiver);</highlight></codeline>
+<codeline><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Configure<sp/>the<sp/>emulator</highlight><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>c64.set(<ref refid="group__doxy__types_1gga273e435dabd576e6dcff3f18024d1fa8a097615e0e27fb679e172516082f1a5b6" kindref="member">OPT_VICII_REVISION</ref>,<sp/>VICII_PAL_6569_R3);</highlight></codeline>
+<codeline><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Start<sp/>the<sp/>emulator</highlight><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/>c64.<ref refid="class_virtual_c64_1a468f440c88ff5f399e67364425a43556" kindref="member">run</ref>()<sp/></highlight></codeline>
+<codeline><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Interact<sp/>with<sp/>the<sp/>emulator</highlight><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline><highlight class="normal">}</highlight></codeline>
+</programlisting></para>
+<para>For a runnable demo program, please see the Headless application in the main folder. It creates an emulator instance and utilizes it to perform some simple smoke tests.</para>
+</sect1>
+<sect1 id="index_1autotoc_md2">
+<title>Where to go from here?</title><para>Start with the <ref refid="class_virtual_c64" kindref="compound">VirtualC64</ref> class which is provides the public API. </para>
+</sect1>
     </detaileddescription>
     <location file="readme.md"/>
   </compounddef>

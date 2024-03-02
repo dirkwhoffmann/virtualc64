@@ -124,9 +124,12 @@
   <option  id='INPUT' default='no' type='stringlist'>
     <value><![CDATA[readme.md]]></value>
     <value><![CDATA[../../Emulator/VirtualC64.h]]></value>
-    <value><![CDATA[../../Emulator/Base/Thread.h]]></value>
+    <value><![CDATA[../../Emulator/Base/ErrorTypes.h]]></value>
+    <value><![CDATA[../../Emulator/Base/Error.h]]></value>
+    <value><![CDATA[../../Emulator/Base/OptionTypes.h]]></value>
+    <value><![CDATA[../../Emulator/Base/Option.h]]></value>
     <value><![CDATA[../../Emulator/Base/ThreadTypes.h]]></value>
-    <value><![CDATA[mainpage.hpp]]></value>
+    <value><![CDATA[../../Emulator/Base/Thread.h]]></value>
   </option>
   <option  id='INPUT_ENCODING' default='yes' type='string'><value><![CDATA[UTF-8]]></value></option>
   <option  id='INPUT_FILE_ENCODING' default='yes' type='stringlist'>
@@ -351,8 +354,6 @@
   </option>
   <option  id='PREDEFINED' default='no' type='stringlist'>
     <value><![CDATA["enum_long(_x)=enum _x : long"]]></value>
-    <value><![CDATA["enum_long_c(_x)=enum _x : long"]]></value>
-    <value><![CDATA[enum_long_swift(x)=]]></value>
   </option>
   <option  id='EXPAND_AS_DEFINED' default='yes' type='stringlist'>
   </option>

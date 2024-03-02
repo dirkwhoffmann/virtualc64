@@ -33,8 +33,8 @@
 \DoxyCodeLine{00091\ \ \ \ \ std::thread\ thread;}
 \DoxyCodeLine{00092\ \ \ \ \ }
 \DoxyCodeLine{00093\ \ \ \ \ \textcolor{comment}{//\ The\ current\ thread\ state\ and\ a\ change\ request}}
-\DoxyCodeLine{00094\ \ \ \ \ \mbox{\hyperlink{group__topic__state__model_gab511da6438c372168afb4add4e99f836}{EmulatorState}}\ state\ =\ \mbox{\hyperlink{group__topic__state__model_ggab511da6438c372168afb4add4e99f836a4038ca872e1ed104c16122c365bd3ca0}{STATE\_OFF}};}
-\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{group__topic__state__model_gab511da6438c372168afb4add4e99f836}{EmulatorState}}\ newState\ =\ \mbox{\hyperlink{group__topic__state__model_ggab511da6438c372168afb4add4e99f836a4038ca872e1ed104c16122c365bd3ca0}{STATE\_OFF}};}
+\DoxyCodeLine{00094\ \ \ \ \ \mbox{\hyperlink{group__doxy__types_ga44fb3bfc9b3abc142d662a5ffb4e9cbc}{EmulatorState}}\ state\ =\ \mbox{\hyperlink{group__doxy__types_gga44fb3bfc9b3abc142d662a5ffb4e9cbca4038ca872e1ed104c16122c365bd3ca0}{STATE\_OFF}};}
+\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{group__doxy__types_ga44fb3bfc9b3abc142d662a5ffb4e9cbc}{EmulatorState}}\ newState\ =\ \mbox{\hyperlink{group__doxy__types_gga44fb3bfc9b3abc142d662a5ffb4e9cbca4038ca872e1ed104c16122c365bd3ca0}{STATE\_OFF}};}
 \DoxyCodeLine{00096\ \ \ \ \ std::atomic\_flag\ stateChangeRequest\ \{\};}
 \DoxyCodeLine{00097\ }
 \DoxyCodeLine{00098\ \ \ \ \ \textcolor{comment}{//\ Warp\ and\ track\ state}}
@@ -94,7 +94,7 @@
 \DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordtype}{bool}\ isEmulatorThread()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ std::this\_thread::get\_id()\ ==\ thread.get\_id();\ \}}
 \DoxyCodeLine{00153\ }
 \DoxyCodeLine{00154\ \ \ \ \ \textcolor{comment}{//\ Performs\ a\ state\ change}}
-\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{void}\ switchState(\mbox{\hyperlink{group__topic__state__model_gab511da6438c372168afb4add4e99f836}{EmulatorState}}\ newState);}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordtype}{void}\ switchState(\mbox{\hyperlink{group__doxy__types_ga44fb3bfc9b3abc142d662a5ffb4e9cbc}{EmulatorState}}\ newState);}
 \DoxyCodeLine{00156\ }
 \DoxyCodeLine{00157\ \textcolor{keyword}{private}:}
 \DoxyCodeLine{00158\ }
@@ -141,12 +141,12 @@
 \DoxyCodeLine{00206\ }
 \DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classvc64_1_1_thread_a294d7de030baf69ae6f96f9f6bfc8ba6}{resume}}()\ \textcolor{keyword}{override};}
 \DoxyCodeLine{00211\ }
-\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordtype}{bool}\ isPoweredOn()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ !=\ \mbox{\hyperlink{group__topic__state__model_ggab511da6438c372168afb4add4e99f836a4038ca872e1ed104c16122c365bd3ca0}{STATE\_OFF}};\ \}}
-\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordtype}{bool}\ isPoweredOff()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ \mbox{\hyperlink{group__topic__state__model_ggab511da6438c372168afb4add4e99f836a4038ca872e1ed104c16122c365bd3ca0}{STATE\_OFF}};\ \}}
-\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keywordtype}{bool}\ isPaused()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ \mbox{\hyperlink{group__topic__state__model_ggab511da6438c372168afb4add4e99f836a6291ce9aab12208cc66968c97a1ce7dd}{STATE\_PAUSED}};\ \}}
-\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordtype}{bool}\ isRunning()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ \mbox{\hyperlink{group__topic__state__model_ggab511da6438c372168afb4add4e99f836addfe11c6d06c4e27bd6efc18cc4862a6}{STATE\_RUNNING}};\ \}}
-\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordtype}{bool}\ isSuspended()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ \mbox{\hyperlink{group__topic__state__model_ggab511da6438c372168afb4add4e99f836a9acde879501201b19fcb37cdd08eff6d}{STATE\_SUSPENDED}};\ \}}
-\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordtype}{bool}\ isHalted()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ \mbox{\hyperlink{group__topic__state__model_ggab511da6438c372168afb4add4e99f836a99bff5383ce10ea512c8443243adf5b3}{STATE\_HALTED}};\ \}}
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordtype}{bool}\ isPoweredOn()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ !=\ \mbox{\hyperlink{group__doxy__types_gga44fb3bfc9b3abc142d662a5ffb4e9cbca4038ca872e1ed104c16122c365bd3ca0}{STATE\_OFF}};\ \}}
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordtype}{bool}\ isPoweredOff()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ \mbox{\hyperlink{group__doxy__types_gga44fb3bfc9b3abc142d662a5ffb4e9cbca4038ca872e1ed104c16122c365bd3ca0}{STATE\_OFF}};\ \}}
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keywordtype}{bool}\ isPaused()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ \mbox{\hyperlink{group__doxy__types_gga44fb3bfc9b3abc142d662a5ffb4e9cbca6291ce9aab12208cc66968c97a1ce7dd}{STATE\_PAUSED}};\ \}}
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordtype}{bool}\ isRunning()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ \mbox{\hyperlink{group__doxy__types_gga44fb3bfc9b3abc142d662a5ffb4e9cbcaddfe11c6d06c4e27bd6efc18cc4862a6}{STATE\_RUNNING}};\ \}}
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordtype}{bool}\ isSuspended()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ \mbox{\hyperlink{group__doxy__types_gga44fb3bfc9b3abc142d662a5ffb4e9cbca9acde879501201b19fcb37cdd08eff6d}{STATE\_SUSPENDED}};\ \}}
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordtype}{bool}\ isHalted()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ state\ ==\ \mbox{\hyperlink{group__doxy__types_gga44fb3bfc9b3abc142d662a5ffb4e9cbca99bff5383ce10ea512c8443243adf5b3}{STATE\_HALTED}};\ \}}
 \DoxyCodeLine{00218\ \ \ \ \ \textcolor{keywordtype}{bool}\ isWarping()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ warp\ !=\ 0;\ \}}
 \DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordtype}{bool}\ isTracking()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ track\ !=\ 0;\ \}}
 \DoxyCodeLine{00220\ }
@@ -176,7 +176,7 @@
 \DoxyCodeLine{00244\ private:}
 \DoxyCodeLine{00245\ }
 \DoxyCodeLine{00246\ \ \ \ \ \textcolor{comment}{//\ Initiates\ a\ state\ change}}
-\DoxyCodeLine{00247\ \ \ \ \ \textcolor{keywordtype}{void}\ changeStateTo(\mbox{\hyperlink{group__topic__state__model_gab511da6438c372168afb4add4e99f836}{EmulatorState}}\ requestedState);}
+\DoxyCodeLine{00247\ \ \ \ \ \textcolor{keywordtype}{void}\ changeStateTo(\mbox{\hyperlink{group__doxy__types_ga44fb3bfc9b3abc142d662a5ffb4e9cbc}{EmulatorState}}\ requestedState);}
 \DoxyCodeLine{00248\ }
 \DoxyCodeLine{00249\ private:}
 \DoxyCodeLine{00250\ }

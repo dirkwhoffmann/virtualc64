@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['virtualc64_0',['VirtualC64',['../index.html',1,'']]]
+  ['welcome_0',['Welcome',['../index.html',1,'']]]
 ];

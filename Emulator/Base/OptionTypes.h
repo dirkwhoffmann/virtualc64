@@ -15,117 +15,120 @@
 #include "Aliases.h"
 #include "Reflection.h"
 
+/// @addtogroup doxy_types Types
+/// @{
 
 //
 // Enumerations
 //
 
+/// Configuration option
 enum_long(OPT)
 {
     // Host
-    OPT_HOST_REFRESH_RATE,
-    OPT_HOST_SAMPLE_RATE,
-    OPT_HOST_FRAMEBUF_WIDTH,
-    OPT_HOST_FRAMEBUF_HEIGHT,
+    OPT_HOST_REFRESH_RATE,       ///< Refresh rate of the host display
+    OPT_HOST_SAMPLE_RATE,        ///< Refresh rate of the host display
+    OPT_HOST_FRAMEBUF_WIDTH,     ///< Current width of the emulator window
+    OPT_HOST_FRAMEBUF_HEIGHT,    ///< Current height of the emulator window
 
     // Emulator
-    OPT_EMU_WARP_BOOT,
-    OPT_EMU_WARP_MODE,
-    OPT_EMU_VSYNC,
-    OPT_EMU_TIME_LAPSE,
-    OPT_EMU_RUN_AHEAD,
+    OPT_EMU_WARP_BOOT,          ///< Warp-boot time in seconds
+    OPT_EMU_WARP_MODE,          ///< Warp activation mode
+    OPT_EMU_VSYNC,              ///< Adapt the frame rate to the VSYNC signal
+    OPT_EMU_TIME_LAPSE,         ///< Speed adjustment in percent
+    OPT_EMU_RUN_AHEAD,          ///< Number of run-ahead frames
 
     // VICII
-    OPT_VICII_REVISION,
-    OPT_VICII_PALETTE,
-    OPT_VICII_BRIGHTNESS,
-    OPT_VICII_CONTRAST,
-    OPT_VICII_SATURATION,
-    OPT_VICII_GRAY_DOT_BUG,
-    OPT_VICII_POWER_SAVE,
-    OPT_VICII_HIDE_SPRITES,
-    OPT_VICII_CUT_LAYERS,
-    OPT_VICII_CUT_OPACITY,
-    OPT_VICII_SS_COLLISIONS,
-    OPT_VICII_SB_COLLISIONS,
+    OPT_VICII_REVISION,         ///< Chip revision
+    OPT_VICII_PALETTE,          ///< Color palette
+    OPT_VICII_BRIGHTNESS,       ///< Monitor brightness
+    OPT_VICII_CONTRAST,         ///< Monitor contrast
+    OPT_VICII_SATURATION,       ///< Monitor color saturation
+    OPT_VICII_GRAY_DOT_BUG,     ///< Emulate gray-dot bug
+    OPT_VICII_POWER_SAVE,       ///< Enable fast-paths
+    OPT_VICII_HIDE_SPRITES,     ///< Hide some sprites
+    OPT_VICII_CUT_LAYERS,       ///< Cutout some graphics layers
+    OPT_VICII_CUT_OPACITY,      ///< Cutout opacity
+    OPT_VICII_SS_COLLISIONS,    ///< Check for sprite-sprite collisions
+    OPT_VICII_SB_COLLISIONS,    ///< Check for sprite-background collisions
 
     // DMA Debugger
-    OPT_DMA_DEBUG_ENABLE,
-    OPT_DMA_DEBUG_MODE,
-    OPT_DMA_DEBUG_OPACITY,
-    OPT_DMA_DEBUG_CHANNEL0,
-    OPT_DMA_DEBUG_CHANNEL1,
-    OPT_DMA_DEBUG_CHANNEL2,
-    OPT_DMA_DEBUG_CHANNEL3,
-    OPT_DMA_DEBUG_CHANNEL4,
-    OPT_DMA_DEBUG_CHANNEL5,
-    OPT_DMA_DEBUG_COLOR0,
-    OPT_DMA_DEBUG_COLOR1,
-    OPT_DMA_DEBUG_COLOR2,
-    OPT_DMA_DEBUG_COLOR3,
-    OPT_DMA_DEBUG_COLOR4,
-    OPT_DMA_DEBUG_COLOR5,
+    OPT_DMA_DEBUG_ENABLE,       ///< Global on/off switch for the DMA debugger
+    OPT_DMA_DEBUG_MODE,         ///< DMA texture overlay mode
+    OPT_DMA_DEBUG_OPACITY,      ///< DMA texture opacity
+    OPT_DMA_DEBUG_CHANNEL0,     ///< Enable or disable channel 0
+    OPT_DMA_DEBUG_CHANNEL1,     ///< Enable or disable channel 1
+    OPT_DMA_DEBUG_CHANNEL2,     ///< Enable or disable channel 2
+    OPT_DMA_DEBUG_CHANNEL3,     ///< Enable or disable channel 3
+    OPT_DMA_DEBUG_CHANNEL4,     ///< Enable or disable channel 4
+    OPT_DMA_DEBUG_CHANNEL5,     ///< Enable or disable channel 5
+    OPT_DMA_DEBUG_COLOR0,       ///< Color for channel 0
+    OPT_DMA_DEBUG_COLOR1,       ///< Color for channel 1
+    OPT_DMA_DEBUG_COLOR2,       ///< Color for channel 2
+    OPT_DMA_DEBUG_COLOR3,       ///< Color for channel 3
+    OPT_DMA_DEBUG_COLOR4,       ///< Color for channel 4
+    OPT_DMA_DEBUG_COLOR5,       ///< Color for channel 5
 
     // Power supply
-    OPT_POWER_GRID,
+    OPT_POWER_GRID,             ///< Power-grid stability (affects TOD)
 
     // Logic board
-    OPT_GLUE_LOGIC,
+    OPT_GLUE_LOGIC,             ///< VICII glue-logic type
 
     // CIA
-    OPT_CIA_REVISION,
-    OPT_CIA_TIMER_B_BUG,
+    OPT_CIA_REVISION,           ///< Chip revision
+    OPT_CIA_TIMER_B_BUG,        ///< Emulate timer B bug
 
     // SID
-    OPT_SID_ENABLE,
-    OPT_SID_ADDRESS,
-    OPT_SID_REVISION,
-    OPT_SID_FILTER,
-    OPT_SID_POWER_SAVE,
-    OPT_SID_ENGINE,
-    OPT_SID_SAMPLING,
+    OPT_SID_ENABLE,             ///< Enable or disable SID
+    OPT_SID_ADDRESS,            ///< Mapping address in memory
+    OPT_SID_REVISION,           ///< Chip revision
+    OPT_SID_FILTER,             ///< Enable or disables the audio filter
+    OPT_SID_POWER_SAVE,         ///< Enable fast-paths
+    OPT_SID_ENGINE,             ///< SID backend (e.g., reSID)
+    OPT_SID_SAMPLING,           ///< Audio sampling mode
 
     // Audio backend
-    OPT_AUD_PAN,
-    OPT_AUD_VOL,
-    OPT_AUD_VOL_L,
-    OPT_AUD_VOL_R,
+    OPT_AUD_PAN,                ///< Pan
+    OPT_AUD_VOL,                ///< Master volume
+    OPT_AUD_VOL_L,              ///< Left channel volume
+    OPT_AUD_VOL_R,              ///< Right channel volume
 
     // Memory
-    OPT_RAM_PATTERN,
-    OPT_SAVE_ROMS,
+    OPT_RAM_PATTERN,            ///< Ram initialization pattern
+    OPT_SAVE_ROMS,              ///< Save Roms in snapshots
 
     // Drive
-    OPT_DRV_AUTO_CONFIG,
-    OPT_DRV_TYPE,
-    OPT_DRV_RAM,
-    OPT_DRV_PARCABLE,
-    OPT_DRV_CONNECT,
-    OPT_DRV_POWER_SWITCH,
-    OPT_DRV_POWER_SAVE,
-    OPT_DRV_EJECT_DELAY,
-    OPT_DRV_SWAP_DELAY,
-    OPT_DRV_INSERT_DELAY,
-    OPT_DRV_PAN,
-    OPT_DRV_POWER_VOL,
-    OPT_DRV_STEP_VOL,
-    OPT_DRV_INSERT_VOL,
-    OPT_DRV_EJECT_VOL,
+    OPT_DRV_AUTO_CONFIG,        ///< Auto-configure drives based on the Drive Rom
+    OPT_DRV_TYPE,               ///< Drive model
+    OPT_DRV_RAM,                ///< Drive Ram
+    OPT_DRV_PARCABLE,           ///< Parallel cable type
+    OPT_DRV_CONNECT,            ///< Connection status
+    OPT_DRV_POWER_SWITCH,       ///< Power switch (on/off)
+    OPT_DRV_POWER_SAVE,         ///< Enable fast-paths
+    OPT_DRV_EJECT_DELAY,        ///< Disk ejection delay
+    OPT_DRV_SWAP_DELAY,         ///< Disk swap delay
+    OPT_DRV_INSERT_DELAY,       ///< Disk insertion delay
+    OPT_DRV_PAN,                ///< Pan
+    OPT_DRV_POWER_VOL,          ///< Volume (power-up sound)
+    OPT_DRV_STEP_VOL,           ///< Volume (head steps)
+    OPT_DRV_INSERT_VOL,         ///< Volume (disk insertion)
+    OPT_DRV_EJECT_VOL,          ///< Volume (disk ejection)
 
     // Datasette
-    OPT_DAT_MODEL,
-    OPT_DAT_CONNECT,
+    OPT_DAT_MODEL,              ///< Datasette model
+    OPT_DAT_CONNECT,            ///< Connection status
 
     // Mouse
-    OPT_MOUSE_MODEL,
-    OPT_MOUSE_SHAKE_DETECT,
-    OPT_MOUSE_VELOCITY,
+    OPT_MOUSE_MODEL,            ///< Mouse model
+    OPT_MOUSE_SHAKE_DETECT,     ///< Detect a shaking mouse
+    OPT_MOUSE_VELOCITY,         ///< Mouse velocity
 
     // Joystick
-    OPT_AUTOFIRE,
-    OPT_AUTOFIRE_BURSTS,
-    OPT_AUTOFIRE_BULLETS,
-    OPT_AUTOFIRE_DELAY,
+    OPT_AUTOFIRE,               ///< Autofire status [on/off]
+    OPT_AUTOFIRE_BURSTS,        ///< Burst mode (on/off)
+    OPT_AUTOFIRE_BULLETS,       ///< Number of bullets per burst
+    OPT_AUTOFIRE_DELAY,         ///< Delay between two shots [frames]
 
     OPT_COUNT
 };
@@ -340,3 +343,5 @@ struct OptionEnum : util::Reflection<OptionEnum, Option> {
     }
 };
 #endif
+
+/// @}

@@ -108,8 +108,7 @@ $(function(){initNavTree('group__topic__state__model.html',''); initResizable();
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle"><div class="title">State model</div></div>
 </div><!--header-->
 <div class="contents">
@@ -128,20 +127,6 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ga2d45fe1f5a2e80dbc85acca426f26970" id="r_ga2d45fe1f5a2e80dbc85acca426f26970"><td class="memItemLeft" align="right" valign="top">typedef util::Exception&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga2d45fe1f5a2e80dbc85acca426f26970">vc64::StateChangeException</a></td></tr>
 <tr class="memdesc:ga2d45fe1f5a2e80dbc85acca426f26970"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requests a state change from within the emulator.  <br /></td></tr>
 <tr class="separator:ga2d45fe1f5a2e80dbc85acca426f26970"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gab511da6438c372168afb4add4e99f836" id="r_gab511da6438c372168afb4add4e99f836"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gab511da6438c372168afb4add4e99f836">EmulatorState</a> : long { <br />
-&#160;&#160;<a class="el" href="#ggab511da6438c372168afb4add4e99f836a4038ca872e1ed104c16122c365bd3ca0">STATE_OFF</a>
-, <a class="el" href="#ggab511da6438c372168afb4add4e99f836a6291ce9aab12208cc66968c97a1ce7dd">STATE_PAUSED</a>
-, <a class="el" href="#ggab511da6438c372168afb4add4e99f836addfe11c6d06c4e27bd6efc18cc4862a6">STATE_RUNNING</a>
-, <a class="el" href="#ggab511da6438c372168afb4add4e99f836a9acde879501201b19fcb37cdd08eff6d">STATE_SUSPENDED</a>
-, <br />
-&#160;&#160;<a class="el" href="#ggab511da6438c372168afb4add4e99f836a99bff5383ce10ea512c8443243adf5b3">STATE_HALTED</a>
-<br />
- }</td></tr>
-<tr class="memdesc:gab511da6438c372168afb4add4e99f836"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emulator state.  <a href="#gab511da6438c372168afb4add4e99f836">More...</a><br /></td></tr>
-<tr class="separator:gab511da6438c372168afb4add4e99f836"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>This topic describes the state model of <a class="el" href="class_virtual_c64.html" title="Public API.">VirtualC64</a>. </p>
@@ -158,7 +143,7 @@ Enumerations</h2></td></tr>
 <img src="thread.png" alt=""/>
 </div>
 <p>The thread executes an infinite loop which periodically calls function vc64::Thread::execute. After each iteration, the thread is put to sleep to synchronize timing.</p>
-<h2><a class="anchor" id="autotoc_md1"></a>
+<h2><a class="anchor" id="autotoc_md3"></a>
 Suspend / Resume</h2>
 <p>The Thread class provides a suspend-resume mechanism for pausing the thread temporarily. This functionality is utilized frequently by the GUI to carry out atomic operations that cannot be performed while the emulator is running. To pause the emulator temporarily, the critical code section can be embedded in a suspend/resume block like this:</p>
 <div class="fragment"><div class="line">suspend();</div>
@@ -172,10 +157,10 @@ Suspend / Resume</h2>
 <div class="line">   <span class="comment">// Modify the internal state,</span></div>
 <div class="line">   <span class="comment">// return, or throw an exceptions as you like</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
 Synchronization</h2>
 <p>The Thread class is responsible for timing synchronization. I.e., it has to ensure that the proper amount of frames are executed per second. To synchronize timing, the thread waits for an external wake-up signal. When the wake-up signal comes in (by calling <a class="el" href="classvc64_1_1_thread.html#a4bf669b15db347f665f0459d18a90680">wakeUp</a>, the thread computes the computes computes all missing frames. If the number of missing frames exceeds a threshold, the thread resynchronizes itself by calling resync.</p>
-<h2><a class="anchor" id="autotoc_md3"></a>
+<h2><a class="anchor" id="autotoc_md5"></a>
 Warp mode</h2>
 <p>To speed up emulation (e.g., during disk accesses), the emulator may be put into warp mode. In this mode, timing synchronization is disabled causing the emulator to run as fast as possible.</p>
 <p>Similar to warp mode, the emulator may be put into track mode. This mode is enabled when the GUI debugger is opend and disabled when the debugger is closed. In track mode, several time-consuming tasks are performed that are usually left out. E.g., the CPU tracks all executed instructions and stores the recorded information in a trace buffer. </p>
@@ -194,35 +179,6 @@ Warp mode</h2>
 
 <p>Requests a state change from within the emulator. </p>
 <p>This exception is thrown inside the emulator core when the CPU stops execution in the middle of frame. This happens when a breakpoint or watchpoint is hit, or when the CPU halts due to the execution of a jamming instruction </p>
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="gab511da6438c372168afb4add4e99f836" name="gab511da6438c372168afb4add4e99f836"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab511da6438c372168afb4add4e99f836">&#9670;&#160;</a></span>EmulatorState</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="#gab511da6438c372168afb4add4e99f836">EmulatorState</a> : long</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Emulator state. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggab511da6438c372168afb4add4e99f836a4038ca872e1ed104c16122c365bd3ca0" name="ggab511da6438c372168afb4add4e99f836a4038ca872e1ed104c16122c365bd3ca0"></a>STATE_OFF&#160;</td><td class="fielddoc"><p>The emulator is powered off. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggab511da6438c372168afb4add4e99f836a6291ce9aab12208cc66968c97a1ce7dd" name="ggab511da6438c372168afb4add4e99f836a6291ce9aab12208cc66968c97a1ce7dd"></a>STATE_PAUSED&#160;</td><td class="fielddoc"><p>The emulator is powered on, but currently paused. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggab511da6438c372168afb4add4e99f836addfe11c6d06c4e27bd6efc18cc4862a6" name="ggab511da6438c372168afb4add4e99f836addfe11c6d06c4e27bd6efc18cc4862a6"></a>STATE_RUNNING&#160;</td><td class="fielddoc"><p>The emulator is up and running. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggab511da6438c372168afb4add4e99f836a9acde879501201b19fcb37cdd08eff6d" name="ggab511da6438c372168afb4add4e99f836a9acde879501201b19fcb37cdd08eff6d"></a>STATE_SUSPENDED&#160;</td><td class="fielddoc"><p>The emulator is shortly paused to perform an internal state change. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggab511da6438c372168afb4add4e99f836a99bff5383ce10ea512c8443243adf5b3" name="ggab511da6438c372168afb4add4e99f836a99bff5383ce10ea512c8443243adf5b3"></a>STATE_HALTED&#160;</td><td class="fielddoc"><p>The emulator has been shut down. </p>
-</td></tr>
-</table>
 
 </div>
 </div>

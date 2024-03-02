@@ -2,7 +2,12 @@
 <doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
   <compounddef id="namespacevc64" kind="namespace" language="C++">
     <compoundname>vc64</compoundname>
+    <innerclass refid="classvc64_1_1_bool_parser" prot="public">vc64::BoolParser</innerclass>
+    <innerclass refid="classvc64_1_1_enum_parser" prot="public">vc64::EnumParser</innerclass>
+    <innerclass refid="classvc64_1_1_num_parser" prot="public">vc64::NumParser</innerclass>
+    <innerclass refid="classvc64_1_1_option_parser" prot="public">vc64::OptionParser</innerclass>
     <innerclass refid="classvc64_1_1_thread" prot="public">vc64::Thread</innerclass>
+    <innerclass refid="structvc64_1_1_v_c64_error" prot="public">vc64::VC64Error</innerclass>
     <sectiondef kind="typedef">
       <member refid="group__topic__state__model_1ga2d45fe1f5a2e80dbc85acca426f26970" kind="typedef"><name>StateChangeException</name></member>
     </sectiondef>
@@ -10,6 +15,6 @@
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
-    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Thread.h" line="72" column="1"/>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" line="18" column="1"/>
   </compounddef>
 </doxygen>

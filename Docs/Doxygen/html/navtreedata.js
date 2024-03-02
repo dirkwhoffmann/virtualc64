@@ -25,6 +25,7 @@
 var NAVTREE =
 [
   [ "VirtualC64", "index.html", [
+    [ "Welcome", "index.html", "index" ],
     [ "Topics", "topics.html", "topics" ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -43,7 +44,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_thread_8h_source.html"
+"_error_8h_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

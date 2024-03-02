@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['vicii_5fapi_0',['VICII_API',['../struct_virtual_c64_1_1_v_i_c_i_i___a_p_i.html',1,'VirtualC64']]],
-  ['virtualc64_1',['VirtualC64',['../class_virtual_c64.html',1,'']]]
+  ['rec_5fapi_0',['REC_API',['../struct_virtual_c64_1_1_r_e_c___a_p_i.html',1,'VirtualC64']]],
+  ['rshell_5fapi_1',['RSHELL_API',['../struct_virtual_c64_1_1_r_s_h_e_l_l___a_p_i.html',1,'VirtualC64']]]
 ];

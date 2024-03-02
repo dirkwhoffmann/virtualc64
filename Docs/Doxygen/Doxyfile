@@ -951,9 +951,12 @@ WARN_LOGFILE           =
 
 INPUT                  = "readme.md" \
                          "../../Emulator/VirtualC64.h" \
-                         "../../Emulator/Base/Thread.h" \
+                         "../../Emulator/Base/ErrorTypes.h" \
+                         "../../Emulator/Base/Error.h" \
+                         "../../Emulator/Base/OptionTypes.h" \
+                         "../../Emulator/Base/Option.h" \
                          "../../Emulator/Base/ThreadTypes.h" \
-                         "mainpage.hpp"
+                         "../../Emulator/Base/Thread.h"
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -2425,9 +2428,7 @@ INCLUDE_FILE_PATTERNS  =
 # recursively expanded use the := operator instead of the = operator.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-PREDEFINED             = enum_long(_x)="enum _x : long" \
-                         enum_long_c(_x)="enum _x : long" \
-                         enum_long_swift(x)=
+PREDEFINED             = enum_long(_x)="enum _x : long" 
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this
 # tag can be used to specify a list of macro names that should be expanded. The

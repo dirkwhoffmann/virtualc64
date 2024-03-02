@@ -27,6 +27,14 @@ var hierarchy =
     [ "vc64::Emulator", null, [
       [ "VirtualC64", "class_virtual_c64.html", null ]
     ] ],
+    [ "util::Exception", null, [
+      [ "vc64::VC64Error", "structvc64_1_1_v_c64_error.html", null ]
+    ] ],
+    [ "vc64::OptionParser", "classvc64_1_1_option_parser.html", [
+      [ "vc64::BoolParser", "classvc64_1_1_bool_parser.html", null ],
+      [ "vc64::EnumParser< T >", "classvc64_1_1_enum_parser.html", null ],
+      [ "vc64::NumParser", "classvc64_1_1_num_parser.html", null ]
+    ] ],
     [ "Suspendable", null, [
       [ "vc64::Thread", "classvc64_1_1_thread.html", null ]
     ] ],

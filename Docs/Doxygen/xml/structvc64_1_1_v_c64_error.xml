@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="structvc64_1_1_v_c64_error" kind="struct" language="C++" prot="public">
+    <compoundname>vc64::VC64Error</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">util::Exception</basecompoundref>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="structvc64_1_1_v_c64_error_1a59b73380582de7235b879b3ec7e1cf99" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>vc64::VC64Error::VC64Error</definition>
+        <argsstring>(ErrorCode code, const string &amp;s)</argsstring>
+        <name>VC64Error</name>
+        <qualifiedname>vc64::VC64Error::VC64Error</qualifiedname>
+        <param>
+          <type><ref refid="group__doxy__types_1ga52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref></type>
+          <declname>code</declname>
+        </param>
+        <param>
+          <type>const string &amp;</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" line="26" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_v_c64_error_1a6d669678a700a6a7941c2fca433b49f5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::VC64Error::VC64Error</definition>
+        <argsstring>(ErrorCode code, long v)</argsstring>
+        <name>VC64Error</name>
+        <qualifiedname>vc64::VC64Error::VC64Error</qualifiedname>
+        <param>
+          <type><ref refid="group__doxy__types_1ga52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref></type>
+          <declname>code</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" line="27" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" bodystart="27" bodyend="27"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_v_c64_error_1aeb9df48bedc6eec26b46bebb91da6847" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>vc64::VC64Error::VC64Error</definition>
+        <argsstring>(ErrorCode code)</argsstring>
+        <name>VC64Error</name>
+        <qualifiedname>vc64::VC64Error::VC64Error</qualifiedname>
+        <param>
+          <type><ref refid="group__doxy__types_1ga52f90e25735e172d279183e61d90d3e3" kindref="member">ErrorCode</ref></type>
+          <declname>code</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" line="28" column="5" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" bodystart="28" bodyend="28"/>
+      </memberdef>
+      <memberdef kind="function" id="structvc64_1_1_v_c64_error_1a8cd6bd53c28d0704ae016f7a535ea3a5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * vc64::VC64Error::what</definition>
+        <argsstring>() const override</argsstring>
+        <name>what</name>
+        <qualifiedname>vc64::VC64Error::what</qualifiedname>
+        <exceptions> throw ()</exceptions>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" line="30" column="16"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>util::Exception</label>
+      </node>
+      <node id="1">
+        <label>vc64::VC64Error</label>
+        <link refid="structvc64_1_1_v_c64_error"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>util::Exception</label>
+      </node>
+      <node id="1">
+        <label>vc64::VC64Error</label>
+        <link refid="structvc64_1_1_v_c64_error"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" line="24" column="1" bodyfile="/Users/hoff/Retro/virtualc64/Emulator/Base/Error.h" bodystart="25" bodyend="31"/>
+    <listofallmembers>
+      <member refid="structvc64_1_1_v_c64_error_1a59b73380582de7235b879b3ec7e1cf99" prot="public" virt="non-virtual"><scope>vc64::VC64Error</scope><name>VC64Error</name></member>
+      <member refid="structvc64_1_1_v_c64_error_1a6d669678a700a6a7941c2fca433b49f5" prot="public" virt="non-virtual"><scope>vc64::VC64Error</scope><name>VC64Error</name></member>
+      <member refid="structvc64_1_1_v_c64_error_1aeb9df48bedc6eec26b46bebb91da6847" prot="public" virt="non-virtual"><scope>vc64::VC64Error</scope><name>VC64Error</name></member>
+      <member refid="structvc64_1_1_v_c64_error_1a8cd6bd53c28d0704ae016f7a535ea3a5" prot="public" virt="non-virtual"><scope>vc64::VC64Error</scope><name>what</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

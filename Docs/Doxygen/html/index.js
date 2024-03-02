@@ -1,4 +1,5 @@
 var index =
 [
-    [ "Developer Reference Manual", "index.html#autotoc_md1", null ]
+    [ "Example", "index.html#autotoc_md1", null ],
+    [ "Where to go from here?", "index.html#autotoc_md2", null ]
 ];

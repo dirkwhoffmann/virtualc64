@@ -27,19 +27,19 @@ template <class T, typename E> struct Reflection {
     static const char *key(long nr) { return T::key((E)nr); }
 
     // Collects all key / value pairs
-    static std::map <string, long> pairs() {
-        
-        std::map <string,long> result;
-                
-        for (isize i = T::minVal; i <= T::maxVal; i++) {
-            if (T::isValid(i)) result.insert(std::make_pair(key(i), i));
+    static std::map <string, E> pairs() {
+
+        std::map <string, E> result;
+
+        for (auto i = T::minVal; i <= T::maxVal; i++) {
+            if (T::isValid(i)) result.insert(std::make_pair(key(i), E(i)));
         }
 
         return result;
     }
 
     // Returns a list in form of a colon seperated string
-    static string keyList(std::function<bool(long)> filter = [](long){ return true; }, const string &delim = ", ") {
+    static string keyList(std::function<bool(E)> filter = [](E){ return true; }, const string &delim = ", ") {
 
         string result;
 
@@ -54,11 +54,35 @@ template <class T, typename E> struct Reflection {
         return result;
     }
 
+    // DEPRECATED
+    /*
+    static string keyList(std::function<bool(long)> filter = [](long){ return true; }, const string &delim = ", ") {
+
+        string result;
+
+        for (auto &it : pairs()) {
+
+            if (!filter(it.second)) continue;
+
+            if (result != "") result += delim;
+            result += it.first;
+        }
+
+        return result;
+    }
+    */
+
     // Convinience wrapper
+    static string argList(std::function<bool(E)> filter = [](E){ return true; }) {
+
+        return "{ " + keyList(filter, " | ") + " }";
+    }
+    /*
     static string argList(std::function<bool(long)> filter = [](long){ return true; }) {
 
         return "{ " + keyList(filter, " | ") + " }";
     }
+    */
 };
 
 }
